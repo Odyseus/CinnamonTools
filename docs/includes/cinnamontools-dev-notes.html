@@ -43,13 +43,29 @@
             
   <div class="section" id="development-notes">
 <h1>Development notes<a class="headerlink" href="#development-notes" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="z-config-py-file-in-xlets-directories">
-<h2>z_config.py file in xlets directories<a class="headerlink" href="#z-config-py-file-in-xlets-directories" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="xlets-development-commandments">
+<h2>Xlets development <em>commandments</em><a class="headerlink" href="#xlets-development-commandments" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Eradicate from your thoughts the existence of Node.js.</p></li>
+<li><p>If a Python module is required, make it part of the Python application if possible. Otherwise, create a mechanism to install required modules.</p></li>
+<li><p>Try to use <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside the initialization code of an xlet if possible. Take into account the following:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">_expandAppletContextMenu</span></code> method call should NOT be inside <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code>.</p></li>
+<li><p>Avoid using <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside an extension code for obvious reasons.</p></li>
+<li><p>Be aware of using <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside a <em>very advanced</em> xlet. For example, using <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> to delay the initialization of the <strong>Window list applet</strong> or the <strong>System Tray applet</strong> will inevitably break these applets initialization process.</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="z-config-py-file-inside-xlets-directories">
+<h2>z_config.py file inside xlets directories<a class="headerlink" href="#z-config-py-file-inside-xlets-directories" title="Permalink to this headline">¶</a></h2>
 <p>This file contains a single variable called <strong>settings</strong> (a dictionary). These settings are read and applied when an xlet is built.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>I was forced to implement this configuration file due to one single reason. If I manually create the symbolic links inside the xlets folders, and since I’m working directly inside a Dropbox folder, the symbolic links are constantly <em>resolving themselves</em> (a Dropbox <em>feature</em>). So I came up with the idea of creating those symbolic links when the xlets are built.</p>
-<p>Right now it only contains a single setting (<code class="docutils literal notranslate"><span class="pre">symlinks</span></code>). But it has the potential of containg more settings in the future.</p>
+<p>Right now it only contains a single setting (<code class="docutils literal notranslate"><span class="pre">symlinks</span></code>). But it has the potential of containing more settings in the future.</p>
 </div>
 <p>Example:</p>
 <div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
@@ -59,8 +75,7 @@
             <span class="p">(</span><span class="s2">&quot;../applet.js&quot;</span><span class="p">,</span> <span class="s2">&quot;applet.js&quot;</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;../HELP.html&quot;</span><span class="p">,</span> <span class="s2">&quot;HELP.html&quot;</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;../icon.png&quot;</span><span class="p">,</span> <span class="s2">&quot;icon.png&quot;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;../utils.js&quot;</span><span class="p">,</span> <span class="s2">&quot;utils.js&quot;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;../settings-schema-for-3.2-plus.json&quot;</span><span class="p">,</span> <span class="s2">&quot;settings-schema.json&quot;</span><span class="p">)</span>
+            <span class="p">(</span><span class="s2">&quot;../utils.js&quot;</span><span class="p">,</span> <span class="s2">&quot;utils.js&quot;</span><span class="p">)</span>
         <span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -73,12 +88,12 @@
 <p>In the example above, the <code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key will generate the symbolic links inside a folder called <strong>3.8</strong> (the folder will be created if it doesn’t exists). The first tuple will be used to create a symbolic link called <strong>icons</strong> whose target will be <strong>../icons</strong>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>It’s important to make all symbolic links targets relative.</p>
+<p>It’s important to make all symbolic links targets relative, not absolute.</p>
 </div>
 </div>
 </div>
-<div class="section" id="z-create-localized-help-py-file-in-xlets-directories">
-<h2>z_create_localized_help.py file in xlets directories<a class="headerlink" href="#z-create-localized-help-py-file-in-xlets-directories" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="z-create-localized-help-py-file-inside-xlets-directories">
+<h2>z_create_localized_help.py file inside xlets directories<a class="headerlink" href="#z-create-localized-help-py-file-inside-xlets-directories" title="Permalink to this headline">¶</a></h2>
 <p>This file is used to generate the <strong>HELP.html</strong> page for each xlet.</p>
 </div>
 <div class="section" id="eol-ideas-plans">
@@ -105,11 +120,12 @@
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Development notes</a><ul>
-<li><a class="reference internal" href="#z-config-py-file-in-xlets-directories">z_config.py file in xlets directories</a><ul>
+<li><a class="reference internal" href="#xlets-development-commandments">Xlets development <em>commandments</em></a></li>
+<li><a class="reference internal" href="#z-config-py-file-inside-xlets-directories">z_config.py file inside xlets directories</a><ul>
 <li><a class="reference internal" href="#symlinks-key"><code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#z-create-localized-help-py-file-in-xlets-directories">z_create_localized_help.py file in xlets directories</a></li>
+<li><a class="reference internal" href="#z-create-localized-help-py-file-inside-xlets-directories">z_create_localized_help.py file inside xlets directories</a></li>
 <li><a class="reference internal" href="#eol-ideas-plans"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
 </ul>
 </li>

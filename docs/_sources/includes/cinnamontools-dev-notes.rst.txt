@@ -2,9 +2,19 @@
 Development notes
 =================
 
+Xlets development *commandments*
+--------------------------------
 
-z_config.py file in xlets directories
--------------------------------------
+1. Eradicate from your thoughts the existence of Node.js.
+2. If a Python module is required, make it part of the Python application if possible. Otherwise, create a mechanism to install required modules.
+3. Try to use ``Mainloop.idle_add`` inside the initialization code of an xlet if possible. Take into account the following:
+
+     a) The ``_expandAppletContextMenu`` method call should NOT be inside ``Mainloop.idle_add``.
+     b) Avoid using ``Mainloop.idle_add`` inside an extension code for obvious reasons.
+     c) Be aware of using ``Mainloop.idle_add`` inside a *very advanced* xlet. For example, using ``Mainloop.idle_add`` to delay the initialization of the **Window list applet** or the **System Tray applet** will inevitably break these applets initialization process.
+
+z_config.py file inside xlets directories
+-----------------------------------------
 
 This file contains a single variable called **settings** (a dictionary). These settings are read and applied when an xlet is built.
 
@@ -12,7 +22,7 @@ This file contains a single variable called **settings** (a dictionary). These s
 
     I was forced to implement this configuration file due to one single reason. If I manually create the symbolic links inside the xlets folders, and since I'm working directly inside a Dropbox folder, the symbolic links are constantly *resolving themselves* (a Dropbox *feature*). So I came up with the idea of creating those symbolic links when the xlets are built.
 
-    Right now it only contains a single setting (``symlinks``). But it has the potential of containg more settings in the future.
+    Right now it only contains a single setting (``symlinks``). But it has the potential of containing more settings in the future.
 
 Example:
 
@@ -25,8 +35,7 @@ Example:
                 ("../applet.js", "applet.js"),
                 ("../HELP.html", "HELP.html"),
                 ("../icon.png", "icon.png"),
-                ("../utils.js", "utils.js"),
-                ("../settings-schema-for-3.2-plus.json", "settings-schema.json")
+                ("../utils.js", "utils.js")
             ]
         }
     }
@@ -43,11 +52,11 @@ In the example above, the ``symlinks`` key will generate the symbolic links insi
 
 .. warning::
 
-    It's important to make all symbolic links targets relative.
+    It's important to make all symbolic links targets relative, not absolute.
 
 
-z_create_localized_help.py file in xlets directories
-----------------------------------------------------
+z_create_localized_help.py file inside xlets directories
+--------------------------------------------------------
 
 This file is used to generate the **HELP.html** page for each xlet.
 
