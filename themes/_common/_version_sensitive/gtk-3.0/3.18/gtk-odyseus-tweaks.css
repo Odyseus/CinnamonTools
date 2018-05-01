@@ -1,0 +1,126 @@
+/**
+ * START
+ * Gtk3 switches with the same appearance that the Cinnamon switches.
+ */
+GtkSwitch {
+    font: 1;
+    -GtkSwitch-slider-width: 52;
+    -GtkSwitch-slider-height: 24;
+}
+
+GtkSwitch.trough,
+GtkSwitch.slider {
+    background-size: 52px 24px;
+    background-repeat: no-repeat;
+    background-position: right center;
+    color: transparent;
+    border-color: transparent;
+    border-image: none;
+    border-style: none;
+    box-shadow: none;
+}
+
+GtkSwitch.trough:dir(rtl),
+GtkSwitch.slider:dir(rtl) {
+    background-position: left center;
+}
+
+GtkSwitch.trough {
+    background-image: -gtk-scaled(url("extra-assets/switch.svg"), url("extra-assets/switch@2.svg"));
+}
+
+.list-row:selected GtkSwitch.trough,
+GtkInfoBar GtkSwitch.trough {
+    background-image: -gtk-scaled(url("extra-assets/switch-selected.svg"), url("extra-assets/switch-selected@2.svg"));
+}
+
+.header-bar GtkSwitch.trough,
+.primary-toolbar GtkSwitch.trough,
+.primary-toolbar .toolbar GtkSwitch.trough,
+.primary-toolbar .inline-toolbar GtkSwitch.trough {
+    background-image: -gtk-scaled(url("extra-assets/switch-header.svg"), url("extra-assets/switch-header@2.svg"));
+}
+
+GtkSwitch.trough:active {
+    background-image: -gtk-scaled(url("extra-assets/switch-active.svg"), url("extra-assets/switch-active@2.svg"));
+}
+
+.list-row:selected GtkSwitch.trough:active,
+GtkInfoBar GtkSwitch.trough:active {
+    background-image: -gtk-scaled(url("extra-assets/switch-active-selected.svg"), url("extra-assets/switch-active-selected@2.svg"));
+}
+
+.header-bar GtkSwitch.trough:active,
+.primary-toolbar GtkSwitch.trough:active,
+.primary-toolbar .toolbar GtkSwitch.trough:active,
+.primary-toolbar .inline-toolbar GtkSwitch.trough:active {
+    background-image: -gtk-scaled(url("extra-assets/switch-active-header.svg"), url("extra-assets/switch-active-header@2.svg"));
+}
+
+GtkSwitch.trough:insensitive {
+    background-image: -gtk-scaled(url("extra-assets/switch-insensitive.svg"), url("extra-assets/switch-insensitive@2.svg"));
+}
+
+.list-row:selected GtkSwitch.trough:insensitive,
+GtkInfoBar GtkSwitch.trough:insensitive {
+    background-image: -gtk-scaled(url("extra-assets/switch-insensitive-selected.svg"), url("extra-assets/switch-insensitive-selected@2.svg"));
+}
+
+.header-bar GtkSwitch.trough:insensitive,
+.primary-toolbar GtkSwitch.trough:insensitive,
+.primary-toolbar .toolbar GtkSwitch.trough:insensitive,
+.primary-toolbar .inline-toolbar GtkSwitch.trough:insensitive {
+    background-image: -gtk-scaled(url("extra-assets/switch-insensitive-header.svg"), url("extra-assets/switch-insensitive-header@2.svg"));
+}
+
+GtkSwitch.trough:active:insensitive {
+    background-image: -gtk-scaled(url("extra-assets/switch-active-insensitive.svg"), url("extra-assets/switch-active-insensitive@2.svg"));
+}
+
+.list-row:selected GtkSwitch.trough:active:insensitive,
+GtkInfoBar GtkSwitch.trough:active:insensitive {
+    background-image: -gtk-scaled(url("extra-assets/switch-active-insensitive-selected.svg"), url("extra-assets/switch-active-insensitive-selected@2.svg"));
+}
+
+.header-bar GtkSwitch.trough:active:insensitive,
+.primary-toolbar GtkSwitch.trough:active:insensitive,
+.primary-toolbar .toolbar GtkSwitch.trough:active:insensitive,
+.primary-toolbar .inline-toolbar GtkSwitch.trough:active:insensitive {
+    background-image: -gtk-scaled(url("extra-assets/switch-active-insensitive-header.svg"), url("extra-assets/switch-active-insensitive-header@2.svg"));
+}
+
+/**
+ * END
+ * Gtk3 switches with the same appearance that the Cinnamon switches.
+ */
+
+/**
+ * START
+ * Remove dashed lines feedback from scrolled windows.
+ */
+.undershoot.top,
+.undershoot.right,
+.undershoot.bottom,
+.undershoot.left {
+    background-image: none;
+}
+
+/**
+ * END
+ * Remove dashed lines feedback from scrolled windows.
+ */
+
+/**
+ * START
+ * Display scroll bar arrows in all gtk3 applications.
+ */
+.scrollbar {
+    -GtkScrollbar-has-backward-stepper: 1;
+    -GtkScrollbar-has-forward-stepper: 1;
+    -GtkRange-slider-width: 11;
+}
+
+/**
+ * END
+ * Display scroll bar arrows in all gtk3 applications.
+ */

@@ -1,0 +1,27 @@
+{
+    "website": "https://github.com/Feuerfuchs/Collapsible-Systray-Cinnamon-Applet",
+    "description": "A replacement for the abandoned System Tray Collapsible Cinnamon applet",
+    "max-instances": 1,
+    "cinnamon-version": [
+        "3.0",
+        "3.2",
+        "3.4",
+        "3.6",
+        "3.8",
+        "4.0",
+        "4.2",
+        "4.4",
+        "4.6",
+        "4.8",
+        "5.0",
+        "5.2",
+        "5.4",
+        "5.6",
+        "5.8",
+        "6.0"
+    ],
+    "uuid": "{{UUID}}",
+    "version": "1.6",
+    "icon": "indicator-applet",
+    "name": "Collapsible Systray (Fork By Odyseus)"
+}

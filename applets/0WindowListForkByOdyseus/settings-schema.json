@@ -1,0 +1,95 @@
+{
+    "pref_show_all_workspaces": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Show windows from all workspaces"
+    },
+    "pref_enable_alerts": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Show an alert in the window list when a window from another workspace requires attention"
+    },
+    "pref_enable_scrolling": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Enable mouse-wheel scrolling in the window list"
+    },
+    "pref_reverse_scrolling": {
+        "type": "checkbox",
+        "dependency": "pref_enable_scrolling",
+        "default": false,
+        "description": "Reverse the direction of mouse-wheel scrolling in the window list"
+    },
+    "pref_middle_click_close": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Middle click to close window"
+    },
+    "pref_buttons_use_entire_space": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Window buttons can have different sizes and use the entire space available"
+    },
+    "pref_window_preview": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Show window thumbnails on hover"
+    },
+    "pref_window_preview_show_label": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Show title above thumbnail",
+        "dependency": "pref_window_preview"
+    },
+    "pref_window_preview_scale": {
+        "type": "radiogroup",
+        "default": 1,
+        "description": "Thumbnail size",
+        "options": {
+            "Small": 0.75,
+            "Medium": 1,
+            "Large": 1.25,
+            "Largest": 1.5
+        },
+        "dependency": "pref_window_preview"
+    },
+    "pref_window_preview_scale": {
+        "type": "spinbutton",
+        "indent": true,
+        "default": 1,
+        "min": 0.25,
+        "max": 5,
+        "step": 0.25,
+        "dependency": "pref_window_preview",
+        "units": "pixels",
+        "description": "Window preview scale factor."
+    },
+    "pref_hide_tooltips": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Do not display tooltips"
+    },
+    "pref_hide_labels": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Hide labels in the window list buttons (*)",
+        "tooltip": "(*) After changing this settings, Cinnamon needs to be restarted (depends on the Cinnamon version) for the window button icon to have the correct final size."
+    },
+    "pref_invert_menu_items_order": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Invert context menu items order"
+    },
+    "pref_sub_menu_placement": {
+        "type": "combobox",
+        "indent": true,
+        "default": 1,
+        "description": "Where to display the \"Preferences\" sub-menu?",
+        "tooltip": "If the option \"Invert context menu items order\" is enabled, the \"Top of menu\" will actually be the \"Bottom of menu\" and vice versa.",
+        "options": {
+            "Do not display": 0,
+            "Top of menu": 1,
+            "Bottom of menu": 2
+        }
+    }
+}

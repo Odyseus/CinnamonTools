@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Cinnamon Tools’ development documentation &#8212; Cinnamon Tools  documentation</title>
+    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/cinnamon-logo.svg"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Requirements" href="includes/cinnamontools-requirements.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="includes/cinnamontools-requirements.html" title="Requirements"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Cinnamon Tools  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cinnamon-tools-development-documentation">
+<h1>Cinnamon Tools’ development documentation<a class="headerlink" href="#cinnamon-tools-development-documentation" title="Permalink to this headline">¶</a></h1>
+<p>A collection of xlets for the Cinnamon Desktop Environment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The use of this Python application is merely to assist in the development of the xlets in this repository (creating this documentation, creating the xlet’s localized help pages, updating the xlet’s POT files, etc.). It is also used to <em>build</em> the xlets into their final usable state.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All xlets in the repository aren’t directly usable, they need to be <em>built</em>. <em>Building</em> an xlet just means that the <em>raw xlet</em> (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (&lt;xlet_name&gt;&#64;&lt;custom_domain_name&gt;) to all files (files content and file names). It will also compile the <code class="docutils literal notranslate"><span class="pre">gsettings</span></code> files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, etc.).</p>
+<p>The same principle applies to the themes in this repository (they need to be <em>built</em>). Although, the process is totally different.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Technically, the generic term <strong>xlet</strong> applies to applets, extensions, desklets and themes. But I will be using the explicit term <strong>theme</strong> for themes and <strong>xlet</strong> for the rest of xlets.</p>
+</div>
+</div>
+<div class="section" id="table-of-content">
+<h1>Table of Content<a class="headerlink" href="#table-of-content" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="includes/cinnamontools-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/cinnamontools-usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-usage.html#cli-help-page"><abbr title="Command Line Interface">CLI</abbr> help page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-usage.html#detailed-usage">Detailed Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="includes/cinnamontools-dev-notes.html">Development notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-dev-notes.html#z-config-py-file-in-xlets-directories">z_config.py file in xlets directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-dev-notes.html#z-create-localized-help-py-file-in-xlets-directories">z_create_localized_help.py file in xlets directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-dev-notes.html#eol-ideas-plans"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="includes/cinnamontools-code-styling.html">Code styling/guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-code-styling.html#css-sass">CSS/SASS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-code-styling.html#javascript">JavaScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-code-styling.html#python">Python</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="includes/cinnamontools-help-pages.html">Help pages for all xlets in this repository</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-help-pages.html#applets">Applets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-help-pages.html#extensions">Extensions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="coverage/python.html"><span class="doc">Undocumented Python objects</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/cinnamon-logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Cinnamon Tools’ development documentation</a></li>
+<li><a class="reference internal" href="#table-of-content">Table of Content</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="includes/cinnamontools-requirements.html"
+                        title="next chapter">Requirements</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="includes/cinnamontools-requirements.html" title="Requirements"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Cinnamon Tools  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2018, Odyseus.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>

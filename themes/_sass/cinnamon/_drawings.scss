@@ -1,0 +1,174 @@
+// Name: button
+// Description: Styles for button elements.
+@mixin button($state) {
+    border-radius: 3px;
+
+    @if $state == normal {
+        color: $fg_color;
+        background-gradient-direction: vertical;
+        background-gradient-start: $button_bg_a;
+        background-gradient-end: $button_bg_b;
+        border: 1px solid $border_button;
+    } @else if $state == hover {
+        background-gradient-direction: vertical;
+        background-gradient-start: $button_hover_bg_a;
+        background-gradient-end: $button_hover_bg_b;
+        border: 1px solid $border_button_hover;
+    } @else if $state == focus {
+        background-gradient-direction: vertical;
+        background-gradient-start: $button_focus_bg_a;
+        background-gradient-end: $button_focus_bg_b;
+        border: 1px solid $selected_bg_color;
+        box-shadow: inset 0 0 0 1px $selected_bg_color;
+    } @else if $state == active {
+        background-gradient-direction: vertical;
+        background-gradient-start: $button_active_bg_a;
+        background-gradient-end: $button_active_bg_b;
+        border: 1px solid $border_button_active;
+    } @else if $state == focus-hover {
+        background-gradient-direction: vertical;
+        background-gradient-start: $button_hover_bg_a;
+        background-gradient-end: $button_hover_bg_b;
+        border: 1px solid $selected_bg_color;
+        box-shadow: inset 0 0 0 1px $selected_bg_color;
+    }
+}
+
+// Name: entry
+// Description: Style for entry elements.
+@mixin entry($state: null, $for_expo: false) {
+    border-radius: 4px;
+    border: 1px solid if($for_expo, darken($border_color, 24%), darken($border_color, 2%));
+    caret-color: if($for_expo, $selected_fg_color, darken($fg_color, 11%));
+    caret-size: 1px;
+    color: if($for_expo, $selected_fg_color, darken($fg_color, 11%));
+    min-height: 16px;
+    min-width: if($for_expo, unset, 250px);
+    padding: if($for_expo, 8px, 4px) 12px;
+    selected-color: $selected_fg_color;
+    selection-background-color: $selected_bg_color;
+    transition-duration: 150;
+
+    @if $for_expo == true {
+        background-color: darken($bg_color, 63%);
+        text-align: center;
+        font-weight: bold;
+    } @else {
+        background-gradient-direction: vertical;
+        background-gradient-start: lighten($bg_color, if($state == focus, 7%, 5%));
+        background-gradient-end: lighten($bg_color, if($state == focus, 9%, 7%));
+    }
+
+    @if $state == focus {
+        box-shadow: inset 0 0 2px $border_color;
+    } @else if $state == hover {
+        box-shadow: 0 0 2px $border_color;
+    }
+}
+
+// Name: background
+// Description: Style for different elements backgrounds.
+@mixin background($type, $placement, $border_radius: null) {
+    // Only type base-frame has border. Everything else has box-shadow.
+    @if $type == app-selected {
+        box-shadow: inset 0 0 2px $border_color;
+    } @else if $type != base-frame {
+        box-shadow: inset 0 0 0 1px $border_color;
+    }
+
+    @if $type == base-frame {
+        background-color: $bg_color;
+        border: 1px solid $border_color;
+        color: $fg_color;
+    } @else if $type == normal {
+        background-color: $bg_color;
+        color: $fg_color;
+    } @else if $type == hover {
+        background-color: lighten($bg_color, 5%);
+        color: $fg_color;
+    } @else if $type == pressed {
+        background-color: $selected_bg_color;
+        color: $selected_fg_color;
+    } @else if $type == attention {
+        background-color: transparentize(red, 0.9);
+    } @else if $type == app-selected {
+        background-gradient-direction: vertical;
+        background-gradient-start: $selected_bg_color;
+        background-gradient-end: darken($selected_bg_color, 10%);
+        color: $selected_fg_color;
+    } @else if $type == highlight {
+        background-gradient-direction: vertical;
+        background-gradient-start: lighten($selected_bg_color, 20%);
+        background-gradient-end: lighten($selected_bg_color, 25%);
+        color: $selected_fg_color;
+    }
+
+    @if $placement == bottom {
+        border-radius: 3px 3px 0 0;
+    } @else if $placement == top {
+        border-radius: 0 0 3px 3px;
+    } @else if $placement == left {
+        border-radius: 0 3px 3px 0;
+    } @else if $placement == right {
+        border-radius: 3px 0 0 3px;
+    } @else if $placement == null and type-of($border_radius) == number {
+        border-radius: $border_radius;
+    }
+}
+
+// Name: scrollbar-handle
+// Description: Style for Cinnamon's scrollbars.
+@mixin scrollbar-handle($type) {
+    border: 1px solid darken($border_color, 7%);
+
+    @if $type == normal {
+        background-color: darken($bg_color, 3%);
+        border-radius: 6px;
+    } @else if $type == hover {
+        background-color: darken($bg_color, 9%);
+    }
+}
+
+// Name: panel-background
+// Description: Style for panels.
+// Note: The original theme used the same background gradients for the top and bottom panels and
+// for the left and right panels). I inverted all gradients so the dark
+// gradient in all panels is always at the edges of the screen. I was forced to do this due to
+// a "snow ball effect".
+// 1. Since I replaced image assets for a combination of background-gradient-*
+//    properties (to imitate the image's gradients) and box-shadow property (to imitate the image's
+//    borders (border property avoided at all cost to avoid the annoyance of changed sizes all over
+//    the place)), I was forced to use a "4 sides border".
+// 2. A "3 sides border" cannot be achived with multiple shadows defined in the box-shadow property
+//    because this property, in Cinnamon, doesn't support multiple shadows definitions like the CSS3
+//    property does.
+// 3. A "3 sides border" can be achived by manipulating the vertical and/or horizontal offsets in the
+//    box-shadow property, but it's rendered horribly.
+// And that's why I inverted the panels gradients. So the fourth border that I was forced to keep
+// (the one at the edges of the screen) is "blended" with the dark gradient of the panels. With the
+// original light gradients position on the panels, the border was too notorius and the change
+// was too radical for the *design concept* of the theme.
+@mixin panel-background($placement, $highlighted: false) {
+    @if $highlighted == true {
+        box-shadow: 0 0 1px 1px transparentize($selected_bg_color, 0.6);
+    } @else {
+        box-shadow: 0 0 1px 1px darken($border_color, 51%);
+    }
+
+    @if $placement == top or $placement == bottom {
+        background-gradient-direction: vertical;
+    } @else {
+        background-gradient-direction: horizontal;
+    }
+
+    $dark_gradient: if($highlighted, lighten($selected_bg_color, 20%), darken($bg_color, 7%));
+    $light_gradient: if($highlighted, lighten($selected_bg_color, 25%), lighten($bg_color, 8%));
+
+    @if $placement == top or $placement == left {
+        background-gradient-start: $dark_gradient;
+        background-gradient-end: $light_gradient;
+    } @else {
+        background-gradient-start: $light_gradient;
+        background-gradient-end: $dark_gradient;
+    }
+}

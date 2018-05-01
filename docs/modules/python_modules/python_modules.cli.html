@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>python_modules.cli module &#8212; Cinnamon Tools  documentation</title>
+    <link rel="stylesheet" href="../../_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/cinnamon-logo.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="python_modules.locale_list module" href="python_modules.locale_list.html" />
+    <link rel="prev" title="python_modules.changelog_sanitizer module" href="python_modules.changelog_sanitizer.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="python_modules.locale_list.html" title="python_modules.locale_list module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="python_modules.changelog_sanitizer.html" title="python_modules.changelog_sanitizer module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Cinnamon Tools  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >python_modules</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python_modules.html" accesskey="U">python_modules package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-python_modules.cli">
+<span id="python-modules-cli-module"></span><h1>python_modules.cli module<a class="headerlink" href="#module-python_modules.cli" title="Permalink to this headline">¶</a></h1>
+<p>Main command line application.</p>
+<dl class="attribute">
+<dt id="python_modules.cli.docopt_doc">
+<code class="descclassname">python_modules.cli.</code><code class="descname">docopt_doc</code><a class="headerlink" href="#python_modules.cli.docopt_doc" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – Used to store/define the docstring that will be passed to docopt as the “doc” argument.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.env">
+<code class="descclassname">python_modules.cli.</code><code class="descname">env</code><a class="headerlink" href="#python_modules.cli.env" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – Copy of the system’s environment to be passed to Popen.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.root_folder">
+<code class="descclassname">python_modules.cli.</code><code class="descname">root_folder</code><a class="headerlink" href="#python_modules.cli.root_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The main folder containing the application. All commands must be executed from this location
+without exceptions.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_modules.cli.CommandLineTool">
+<em class="property">class </em><code class="descclassname">python_modules.cli.</code><code class="descname">CommandLineTool</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Command line tool.</p>
+<p>It handles the arguments parsed by the docopt module.</p>
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.action">
+<code class="descname">action</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.action" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>method</em> – Set the method that will be executed when calling CommandLineTool.run().</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.build_output">
+<code class="descname">build_output</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.build_output" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.dev_args_order">
+<code class="descname">dev_args_order</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.dev_args_order" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – List used as a gude to execute functions in the order they need to.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.do_not_cofirm">
+<code class="descname">do_not_cofirm</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.do_not_cofirm" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.func_names">
+<code class="descname">func_names</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.func_names" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.logger">
+<code class="descname">logger</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.logger" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.LogSystem</span></code></a>&gt;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.xlets">
+<code class="descname">xlets</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.xlets" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.xlets_helper">
+<code class="descname">xlets_helper</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.xlets_helper" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>object</em> – See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.XletsHelperCore" title="python_modules.app_utils.XletsHelperCore"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.XletsHelperCore</span></code></a>.</p>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#dict" title="(in Python v3.5)"><em>dict</em></a>) – The dictionary of arguments as returned by docopt parser.</p>
+</dd>
+</dl>
+<dl class="attribute">
+<dt>
+<code class="descname">dev_args_order</code><em class="property"> = ['generate_meta_file', 'update_pot_files', 'update_spanish_localizations', 'create_localized_help', 'generate_trans_stats', 'create_changelogs']</em></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_modules.cli.CommandLineTool.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the assigned actions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.cli.CommandLineTool.display_main_menu">
+<code class="descname">display_main_menu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.display_main_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.display_main_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_menu.html#python_modules.app_menu.CLIMenu" title="python_modules.app_menu.CLIMenu"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_menu.CLIMenu</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.cli.CommandLineTool.build_xlets">
+<code class="descname">build_xlets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.build_xlets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.build_xlets" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.build_xlets" title="python_modules.app_utils.build_xlets"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.build_xlets</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.cli.CommandLineTool.build_themes">
+<code class="descname">build_themes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.build_themes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.build_themes" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.build_themes" title="python_modules.app_utils.build_themes"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.build_themes</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.cli.CommandLineTool.system_executable_generation">
+<code class="descname">system_executable_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.system_executable_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.system_executable_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.system_executable_generation" title="python_modules.app_utils.system_executable_generation"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.system_executable_generation</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.cli.CommandLineTool.docs_generation">
+<code class="descname">docs_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.docs_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.docs_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.generate_docs" title="python_modules.app_utils.generate_docs"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.generate_docs</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.cli.CommandLineTool.docs_no_api_generation">
+<code class="descname">docs_no_api_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.docs_no_api_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.docs_no_api_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.generate_docs" title="python_modules.app_utils.generate_docs"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.generate_docs</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.cli.CommandLineTool.base_xlet_generation">
+<code class="descname">base_xlet_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.base_xlet_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.base_xlet_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.BaseXletGenerator" title="python_modules.app_utils.BaseXletGenerator"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.BaseXletGenerator</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="python_modules.cli.main">
+<code class="descclassname">python_modules.cli.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize main command line interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">app_utils.BadExecutionLocation</span></code> – Do not allow to run any command if the “flag” file isn’t
+found where it should be. See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.BadExecutionLocation" title="python_modules.app_utils.BadExecutionLocation"><code class="xref any py py-exc docutils literal notranslate"><span class="pre">app_utils.BadExecutionLocation</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/cinnamon-logo.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="python_modules.changelog_sanitizer.html"
+                        title="previous chapter">python_modules.changelog_sanitizer module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="python_modules.locale_list.html"
+                        title="next chapter">python_modules.locale_list module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/modules/python_modules/python_modules.cli.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="python_modules.locale_list.html" title="python_modules.locale_list module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="python_modules.changelog_sanitizer.html" title="python_modules.changelog_sanitizer module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Cinnamon Tools  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >python_modules</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python_modules.html" >python_modules package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2018, Odyseus.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>

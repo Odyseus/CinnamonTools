@@ -1,0 +1,28 @@
+{
+    "name": "Cinnamon Menu (Fork By Odyseus)",
+    "description": "Custom version of the default Cinnamon Menu applet, but infinitely more customizable.",
+    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
+    "website": "https://github.com/Odyseus/CinnamonTools",
+    "contributors": "See this xlet help file.",
+    "max-instances": -1,
+    "uuid": "{{UUID}}",
+    "version": "2.19",
+    "cinnamon-version": [
+        "3.0",
+        "3.2",
+        "3.4",
+        "3.6",
+        "3.8",
+        "4.0",
+        "4.2",
+        "4.4",
+        "4.6",
+        "4.8",
+        "5.0",
+        "5.2",
+        "5.4",
+        "5.6",
+        "5.8",
+        "6.0"
+    ]
+}

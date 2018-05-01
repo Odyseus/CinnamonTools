@@ -1,0 +1,80 @@
+/**
+ * START
+ * Gtk3 switches with the same appearance that the Cinnamon switches.
+ */
+switch,
+switch:disabled {
+    font-size: smaller;
+    min-width: 52px;
+    min-height: 24px;
+    background-size: 52px 24px;
+    background-repeat: no-repeat;
+    background-position: right center;
+    color: transparent;
+    border-color: transparent;
+    border-image: none;
+    border-style: none;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+switch:dir(rtl) {
+    background-position: left center;
+}
+
+switch {
+    background-image: -gtk-scaled(url("extra-assets/switch.svg"), url("extra-assets/switch@2.svg"));
+}
+
+switch:checked {
+    background-image: -gtk-scaled(url("extra-assets/switch-active.svg"), url("extra-assets/switch-active@2.svg"));
+}
+
+switch:disabled {
+    background-image: -gtk-scaled(url("extra-assets/switch-disabled.svg"), url("extra-assets/switch-disabled@2.svg"));
+}
+
+switch:disabled:checked {
+    background-image: -gtk-scaled(url("extra-assets/switch-active-disabled.svg"), url("extra-assets/switch-active-disabled@2.svg"));
+}
+
+/**
+ * END
+ * Gtk3 switches with the same appearance that the Cinnamon switches.
+ */
+
+/**
+ * START
+ * Remove dashed lines feedback from scrolled windows.
+ */
+.overshoot.top,
+.overshoot.right,
+.overshoot.bottom,
+.overshoot.left,
+.undershoot.top,
+.undershoot.right,
+.undershoot.bottom,
+.undershoot.left {
+    background-image: none;
+    padding: 0;
+}
+
+/**
+ * END
+ * Remove dashed lines feedback from scrolled windows.
+ */
+
+/**
+ * START
+ * Display scroll bar arrows in all gtk3 applications.
+ */
+scrollbar {
+    -GtkScrollbar-has-backward-stepper: 1;
+    -GtkScrollbar-has-forward-stepper: 1;
+    /*-GtkRange-slider-width: 11;*/
+}
+
+/**
+ * END
+ * Display scroll bar arrows in all gtk3 applications.
+ */

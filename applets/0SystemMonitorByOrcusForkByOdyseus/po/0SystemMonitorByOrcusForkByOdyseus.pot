@@ -1,0 +1,415 @@
+# This is a template file for translating the 0SystemMonitorByOrcusForkByOdyseus package.
+# Copyright (C) 2016-2018
+# This file is distributed under the same license as the 0SystemMonitorByOrcusForkByOdyseus package.
+# Odyseus <EMAIL@ADDRESS>, 2016-2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 1.16\n"
+"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
+
+#: ../../__app__/python_modules/localized_help_creator.py:237
+msgid "The following two sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:241
+msgid "Do not install on any other version of Cinnamon."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:247
+msgid "Compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:325 applet.js:365
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:327
+msgid "Changelog"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. "Help for <xlet_name>"
+#: ../../__app__/python_modules/localized_help_creator.py:328 ../../__app__/python_modules/localized_help_creator.py:354
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "IMPORTANT!!!"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:357
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:371
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:374
+msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgstr ""
+
+#: z_create_localized_help.py:29
+msgid "Description"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:32
+msgid "This applet is a fork of [System Monitor](https://cinnamon-spices.linuxmint.com/applets/view/88) applet by Josef Michálek (a.k.a. Orcus)."
+msgstr ""
+
+#: z_create_localized_help.py:34
+msgid "Differences with the original applet"
+msgstr ""
+
+#: z_create_localized_help.py:38
+msgid "This applet uses Cinnamon's native settings system instead of an external library (gjs)."
+msgstr ""
+
+#: z_create_localized_help.py:39
+msgid "I added an option to use a custom command on applet click."
+msgstr ""
+
+#: z_create_localized_help.py:40
+msgid "I added an option to set a custom width for each graph individually."
+msgstr ""
+
+#: z_create_localized_help.py:41
+msgid "I added an option to align this applet tooltip text to the left."
+msgstr ""
+
+#: z_create_localized_help.py:42
+msgid "Removed NetworkManager dependency."
+msgstr ""
+
+#: z_create_localized_help.py:44
+msgid "Dependencies"
+msgstr ""
+
+#: z_create_localized_help.py:46
+msgid "The gtop library reads information about processes and the state of the system."
+msgstr ""
+
+#: z_create_localized_help.py:47 z_create_localized_help.py:58
+msgid "Debian based distributions:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:49
+msgid "The package is called **gir1.2-gtop-2.0**."
+msgstr ""
+
+#: z_create_localized_help.py:50 z_create_localized_help.py:61
+msgid "Archlinux based distributions:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:52
+msgid "The package is called **libgtop**."
+msgstr ""
+
+#: z_create_localized_help.py:53 z_create_localized_help.py:64
+msgid "Fedora based distributions:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:55
+msgid "The package is called **libgtop2-devel**."
+msgstr ""
+
+#: z_create_localized_help.py:57
+msgid "NetworkManager is a system network service that manages your network devices and connections, attempting to keep active network connectivity when available."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:60
+msgid "The package is called **gir1.2-networkmanager-1.0**."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:63
+msgid "The package is called **networkmanager**."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:66
+msgid "The package is called **NetworkManager**."
+msgstr ""
+
+#: z_create_localized_help.py:68
+msgid "Important note:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:70
+msgid "NetworkManager is only used if the **GTop** library version installed on a system is < **2.32** and doesn't support certain library calls. So, basically, if the network graph on this applet works without having installed NetworkManager, then you don't need to install it."
+msgstr ""
+
+#: z_create_localized_help.py:72
+msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
+msgstr ""
+
+#: applet.js:197
+msgid "Missing dependency!!!"
+msgstr ""
+
+#: applet.js:198
+msgid "This applet needs the GTop library installed on your system for it  to work."
+msgstr ""
+
+#: applet.js:199
+msgid "Read this applet help for more details (Applet context menu > Help item)."
+msgstr ""
+
+#: utils.js:197
+msgid "CPU:"
+msgstr ""
+
+#: utils.js:230
+msgid "Memory:"
+msgstr ""
+
+#. TO TRANSLATORS: Don't know if this would need translation.
+#. MB = Megabytes.
+#: utils.js:233 utils.js:268
+msgid "MB"
+msgstr ""
+
+#: utils.js:265
+msgid "Swap:"
+msgstr ""
+
+#. TO TRANSLATORS:
+#. D = Download
+#. U = Upload
+#: utils.js:327
+msgid "Network D/U:"
+msgstr ""
+
+#. TO TRANSLATORS: Don't know if this would need translation.
+#. KB/s = Kilobytes per second.
+#: utils.js:330
+msgid "KB/s"
+msgstr ""
+
+#: utils.js:376
+msgid "Load average:"
+msgstr ""
+
+#. metadata.json->name
+msgid "System Monitor (Fork By Odyseus)"
+msgstr ""
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr ""
+
+#. metadata.json->description
+msgid "Displays CPU, memory, swap, network usage and load in graphs."
+msgstr ""
+
+#. settings-schema.json->demo-button1->description
+#. settings-schema.json->demo-button2->description
+msgid "To apply these settings, Cinnamon needs to be restarted. Click me!!!"
+msgstr ""
+
+#. settings-schema.json->demo-button1->tooltip
+#. settings-schema.json->demo-button2->tooltip
+msgid "Restart Cinnamon"
+msgstr ""
+
+#. settings-schema.json->head0->description
+msgid "General settings"
+msgstr ""
+
+#. settings-schema.json->pref_use_smooth_graphs->description
+msgid "Use smooth graphs"
+msgstr ""
+
+#. settings-schema.json->pref_align_tooltip_text_to_the_left->description
+msgid "Align tooltip text to the left"
+msgstr ""
+
+#. settings-schema.json->pref_align_tooltip_text_to_the_left->tooltip
+msgid "For those of us who suffer from the stupidity of using a theme with tooltips aligned to the center. ¬¬"
+msgstr ""
+
+#. settings-schema.json->pref_custom_command->description
+msgid "Custom command on applet click:"
+msgstr ""
+
+#. settings-schema.json->pref_refresh_rate->units
+msgid "milliseconds"
+msgstr ""
+
+#. settings-schema.json->pref_refresh_rate->description
+msgid "Refresh rate:"
+msgstr ""
+
+#. settings-schema.json->pref_draw_background->description
+msgid "Draw graph background"
+msgstr ""
+
+#. settings-schema.json->pref_background_color->description
+msgid "Background color:"
+msgstr ""
+
+#. settings-schema.json->pref_draw_border->description
+msgid "Draw graph border"
+msgstr ""
+
+#. settings-schema.json->pref_border_color->description
+msgid "Border color:"
+msgstr ""
+
+#. settings-schema.json->head1->description
+msgid "CPU graph"
+msgstr ""
+
+#. settings-schema.json->pref_show_cpu_graph->description
+msgid "Show CPU graph:"
+msgstr ""
+
+#. settings-schema.json->pref_cpu_graph_width->units
+#. settings-schema.json->pref_memory_graph_width->units
+#. settings-schema.json->pref_swap_graph_width->units
+#. settings-schema.json->pref_network_graph_width->units
+#. settings-schema.json->pref_load_graph_width->units
+msgid "pixels"
+msgstr ""
+
+#. settings-schema.json->pref_cpu_graph_width->description
+msgid "CPU graph width"
+msgstr ""
+
+#. settings-schema.json->head11->description
+msgid "CPU graph colors"
+msgstr ""
+
+#. settings-schema.json->pref_cpu_graph_color_user->description
+msgid "User:"
+msgstr ""
+
+#. settings-schema.json->pref_cpu_graph_color_nice->description
+msgid "Nice:"
+msgstr ""
+
+#. settings-schema.json->pref_cpu_graph_color_kernel->description
+msgid "Kernel:"
+msgstr ""
+
+#. settings-schema.json->pref_cpu_graph_color_iowait->description
+msgid "IOWait:"
+msgstr ""
+
+#. settings-schema.json->head2->description
+msgid "Memory graph"
+msgstr ""
+
+#. settings-schema.json->pref_show_memmory_graph->description
+msgid "Show Memory graph:"
+msgstr ""
+
+#. settings-schema.json->pref_memory_graph_width->description
+msgid "Memory graph width"
+msgstr ""
+
+#. settings-schema.json->head22->description
+msgid "Memory graph colors"
+msgstr ""
+
+#. settings-schema.json->pref_memory_graph_color_used->description
+#. settings-schema.json->pref_swap_graph_color_used->description
+msgid "Used:"
+msgstr ""
+
+#. settings-schema.json->pref_memory_graph_color_cached->description
+msgid "Cached:"
+msgstr ""
+
+#. settings-schema.json->head3->description
+msgid "Swap graph"
+msgstr ""
+
+#. settings-schema.json->pref_show_swap_graph->description
+msgid "Show Swap graph:"
+msgstr ""
+
+#. settings-schema.json->pref_swap_graph_width->description
+msgid "Swap graph width"
+msgstr ""
+
+#. settings-schema.json->head33->description
+msgid "Swap graph colors"
+msgstr ""
+
+#. settings-schema.json->head4->description
+msgid "Network graph"
+msgstr ""
+
+#. settings-schema.json->pref_show_network_graph->description
+msgid "Show Network graph:"
+msgstr ""
+
+#. settings-schema.json->pref_network_graph_width->description
+msgid "Network graph width"
+msgstr ""
+
+#. settings-schema.json->head44->description
+msgid "Network graph colors"
+msgstr ""
+
+#. settings-schema.json->pref_network_graph_color_download->description
+msgid "Download:"
+msgstr ""
+
+#. settings-schema.json->pref_network_graph_color_upload->description
+msgid "Upload:"
+msgstr ""
+
+#. settings-schema.json->head5->description
+msgid "Load graph"
+msgstr ""
+
+#. settings-schema.json->pref_show_load_graph->description
+msgid "Show Load graph:"
+msgstr ""
+
+#. settings-schema.json->pref_load_graph_width->description
+msgid "Load graph width"
+msgstr ""
+
+#. settings-schema.json->head55->description
+msgid "Load graph colors"
+msgstr ""
+
+#. settings-schema.json->pref_load_graph_color_load->description
+msgid "Load:"
+msgstr ""

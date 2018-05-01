@@ -1,0 +1,2677 @@
+/* ###################################################################
+ * Section common with Gnome Shell
+ * ... contains a few cinnamon specific styles (rare occurences)
+ * ###################################################################*/
+
+stage {
+    font-family: Noto Sans;
+    font-size: 9pt;
+}
+
+.cinnamon-link {
+    color: rgb(57, 142, 231);
+
+    StLabel {
+        text-decoration: underline;
+    }
+
+    &:hover {
+        color: rgba(57, 142, 231, 0.8);
+    }
+}
+
+.label-shadow {
+    color: rgba(0, 0, 0, 0);
+}
+
+StScrollBar {
+    padding: 0px;
+
+    StBin#trough {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    StButton {
+        &#vhandle {
+            background-color: rgb(216, 216, 216);
+            border: 1px solid #949494;
+            border-radius: 6px;
+        }
+
+        &#hhandle {
+            background-color: rgb(216, 216, 216);
+            border: 1px solid #949494;
+            border-radius: 6px;
+
+            &:hover {
+                background-color: rgb(200, 200, 200);
+                border: 1px solid #949494;
+            }
+        }
+
+        &#vhandle:hover {
+            background-color: rgb(200, 200, 200);
+            border: 1px solid #949494;
+        }
+    }
+}
+
+StScrollView {
+    &.vfade {
+        -st-vfade-offset: 68px;
+    }
+
+    StScrollBar {
+        min-width: 8px;
+        min-height: 8px;
+    }
+}
+
+#Tooltip {
+    padding: 3px 6px;
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+    background-color: #fbeaa0;
+    color: #212121;
+    box-shadow: none;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+/* ===================================================================
+ * Switches (to be used in menus)
+ * ===================================================================*/
+
+.toggle-switch {
+    width: 55px;
+    height: 22px;
+}
+
+.toggle-switch-us,
+-toggle-switch-intl {
+    border-image: url("control-assets/switch-off.svg") 4;
+}
+
+.toggle-switch-us:checked,
+-toggle-switch-intl:checked {
+    border-image: url("control-assets/switch-on.svg") 4;
+}
+
+/* ===================================================================
+ * Shared button properties
+ * ===================================================================*/
+
+.notification-button,
+-notification-icon-button,
+-hotplug-notification-item,
+-hotplug-resident-eject-button {
+    color: rgb(70, 70, 70);
+    border-image: url("button-assets/button.png") 4;
+    font-size: 8.5pt;
+    font-weight: normal;
+    text-align: center;
+}
+
+.notification-button:hover,
+-notification-icon-button:hover,
+-hotplug-notification-item:hover,
+-hotplug-resident-eject-button:hover {
+    border-image: url("button-assets/button-hover.png") 4;
+}
+
+.notification-button:focus,
+-notification-icon-button:focus,
+-hotplug-notification-item:focus {
+    border-image: url("button-assets/button-focus.png") 4;
+}
+
+.notification-button:active,
+-notification-icon-button:active,
+-hotplug-notification-item:active,
+-hotplug-resident-eject-button:active {
+    border-image: url("button-assets/button-pressed.png") 4;
+}
+
+.notification-button:focus:hover,
+-notification-icon-button:focus:hover,
+-hotplug-notification-item:focus:hover,
+-modal-dialog-button:focus:hover {
+    border-image: url("button-assets/button-focus-hover.png") 4;
+}
+
+.notification-button:focus {
+    &:checked,
+    &:active {
+        border-image: url("button-assets/button-pressed.png") 4;
+    }
+}
+
+.notification-icon-button:focus {
+    &:checked,
+    &:active {
+        border-image: url("button-assets/button-pressed.png") 4;
+    }
+}
+
+.hotplug-notification-item:focus {
+    &:checked,
+    &:active {
+        border-image: url("button-assets/button-pressed.png") 4;
+    }
+}
+
+/* ===================================================================
+ * PopupMenu (popupMenu.js)
+ * ===================================================================*/
+
+/* Removed in Cinnamon 3.2. Kept for retro-compatibility. */
+
+.popup-menu-boxpointer {
+    -arrow-border-radius: 4px;
+    -arrow-background-color: #ececec;
+    -arrow-border-width: 1px;
+    -arrow-border-color: rgba(40, 40, 40, 0.3);
+    -arrow-base: 18px;
+    -arrow-rise: 10px;
+    -st-shadow: 0px -1px 2px 0px rgba(255, 255, 255, 0.9);
+    -boxpointer-gap: 2px;
+}
+
+/* Removed in Cinnamon 3.2. Kept for retro-compatibility. */
+
+.popup-menu {
+    color: rgb(70, 70, 70);
+    min-width: 100px;
+}
+
+.menu {
+    background-color: #ececec;
+    border-width: 1px;
+    border-color: rgba(40, 40, 40, 0.3);
+    color: rgb(70, 70, 70);
+    min-width: 100px;
+
+    &.top {
+        border-radius: 0 0 4px 4px;
+    }
+
+    &.bottom {
+        border-radius: 4px 4px 0 0;
+    }
+
+    &.left {
+        border-radius: 0 4px 4px 0;
+    }
+
+    &.right {
+        border-radius: 4px 0 0 4px;
+    }
+
+    StEntry {
+        padding: 4px 12px;
+        color: #2b2b2b;
+        border-image: url("misc-assets/entry.png") 6;
+        border-radius: 4px;
+        min-width: 250px;
+        min-height: 16px;
+        selected-color: #fff;
+        caret-color: #2b2b2b;
+        caret-size: 1px;
+        selection-background-color: #398ee7;
+        transition-duration: 150;
+    }
+}
+
+.popup-menu StEntry {
+    padding: 4px 12px;
+    color: #2b2b2b;
+    border-image: url("misc-assets/entry.png") 6;
+    border-radius: 4px;
+    min-width: 250px;
+    min-height: 16px;
+    selected-color: #fff;
+    caret-color: #2b2b2b;
+    caret-size: 1px;
+    selection-background-color: #398ee7;
+    transition-duration: 150;
+}
+
+.menu StEntry:focus,
+-popup-menu StEntry:focus {
+    padding: 4px 12px;
+    color: #2b2b2b;
+    border-image: url("misc-assets/entry-focus.png") 6;
+    border-radius: 4px;
+    min-width: 250px;
+    min-height: 16px;
+    selected-color: #fff;
+    caret-color: #2b2b2b;
+    caret-size: 1px;
+    selection-background-color: #398ee7;
+    transition-duration: 150;
+}
+
+// .popup-submenu-menu-item:open {}
+
+.popup-sub-menu {
+    border-image: url("background-assets/sub-menu.png") 4;
+    padding: 0.5em 0em;
+
+    .popup-menu-item {
+        &:ltr {
+            padding-right: 1.75em;
+        }
+
+        &:rtl {
+            padding-left: 1.75em;
+        }
+    }
+
+    StScrollBar {
+        padding: 4px;
+
+        StBin {
+            &#trough {
+                background-color: rgba(0, 0, 0, 0);
+            }
+
+            &#vhandle {
+                background-color: rgb(216, 216, 216);
+                border: 1px solid #949494;
+                border-radius: 6px;
+            }
+        }
+    }
+}
+
+.popup-combo-menu {
+    background-color: rgb(22, 225, 225);
+    padding: 1em 0.1em;
+    color: rgb(70, 70, 70);
+    border: 1px solid rgba(40, 40, 40, 0.4);
+    border-radius: 4px;
+}
+
+/* The remaining popup-menu sizing is all done in ems, so that if you
+ * override .popup-menu.font-size, everything else will scale with it.
+ */
+
+.popup-menu-content {
+    padding: 1em 0;
+}
+
+.popup-menu-item {
+    padding: .4em 1.75em;
+    spacing: 1em;
+
+    &:active {
+        border-image: url("misc-assets/hover.svg") 6;
+        color: #fff;
+    }
+
+    &:insensitive {
+        color: rgb(140, 140, 140);
+    }
+}
+
+.popup-combobox-item {
+    spacing: 1em;
+}
+
+.popup-separator-menu-item {
+    -gradient-height: 1px;
+    -gradient-start: rgb(210, 210, 210);
+    -gradient-end: rgb(210, 210, 210);
+    -margin-horizontal: 0;
+    height: 1px;
+}
+
+.popup-alternating-menu-item:alternate {
+    font-weight: bold;
+    color: rgb(70, 70, 70);
+}
+
+.popup-slider-menu-item {
+    border-image: url("misc-assets/slider.png") 10 10 9 9 stretch;
+    height: 18px;
+    min-width: 15em;
+    -slider-height: 4px;
+    -slider-background-color: rgba(0, 0, 0, 0);
+    -slider-border-color: rgba(0, 0, 0, 0);
+    -slider-active-background-color: #398ee7;
+    -slider-active-border-color: rgba(0, 0, 0, 0);
+    -slider-border-width: 1px;
+    -slider-handle-radius: 6px;
+}
+
+.popup-device-menu-item {
+    spacing: .5em;
+}
+
+.popup-inactive-menu-item {
+    font-weight: bold;
+    color: #797979;
+}
+
+.popup-subtitle-menu-item {
+    font-weight: bold;
+    color: rgb(70, 70, 70);
+}
+
+.popup-menu-icon {
+    icon-size: 1em;
+}
+
+.nm-menu-item-icons {
+    spacing: .5em;
+}
+
+/* ===================================================================
+ * Panel (panel.js)
+ * ===================================================================*/
+
+#panel {
+    color: #000;
+    font-size: 9pt;
+    height: 26px;
+    width: 32px;
+    padding: 0px;
+
+    &:highlight {
+        background-color: #398ee7;
+    }
+}
+
+.panel-dummy {
+    border: 1px solid rgba(57, 142, 231, 1);
+    background-color: rgba(57, 142, 231, 0.6);
+
+    &:entered {
+        background-color: rgba(57, 142, 231, 0.9);
+    }
+}
+
+#panelLeft,
+#panelCenter {
+    spacing: 4px;
+}
+
+.panel-left {
+    #panelLeft,
+    #panelRight,
+    #panelCenter {
+        spacing: 0;
+    }
+}
+
+.panel-right {
+    #panelLeft,
+    #panelRight,
+    #panelCenter {
+        spacing: 0;
+    }
+}
+
+#panelLeft:dnd {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+#panelCenter:dnd {
+    background-color: rgba(0, 255, 0, 0.1);
+}
+
+#panelRight:dnd {
+    background-color: rgba(0, 0, 255, 0.1);
+}
+
+#panelLeft {
+    &:ltr {
+        padding-right: 4px;
+    }
+
+    &:rtl {
+        padding-left: 4px;
+    }
+}
+
+#panelRight {
+    &:ltr {
+        padding-left: 0px;
+        spacing: 0px;
+    }
+
+    &:rtl {
+        padding-right: 0px;
+        spacing: 0px;
+    }
+}
+
+#panelLeft.vertical {
+    &:ltr {
+        padding-right: 0px;
+    }
+
+    &:rtl {
+        padding-left: 0px;
+    }
+}
+
+.panel-top,
+-panel-bottom {
+    background-gradient-direction: vertical;
+    background-gradient-start: rgb(246, 246, 246);
+    background-gradient-end: rgb(206, 206, 206);
+    box-shadow: 0px 0px 1px 1px rgba(40, 40, 40, 0.4);
+}
+
+.panel-left,
+-panel-right {
+    background-gradient-direction: horizontal;
+    background-gradient-start: rgb(246, 246, 246);
+    background-gradient-end: rgb(206, 206, 206);
+    box-shadow: 0px 0px 1px 1px rgba(40, 40, 40, 0.4);
+}
+
+.panel-status-button {
+    border: 0px solid rgba(0, 0, 0, 0);
+    -natural-hpadding: 3px;
+    -minimum-hpadding: 3px;
+    font-weight: bold;
+    color: #dcdcdc;
+    height: 22px;
+
+    &:hover {
+        color: #dcdcdc;
+        border-radius: 0px;
+        background-color: rgba(80, 80, 80, 1);
+    }
+
+    &:active {
+        color: #dcdcdc;
+        background-color: rgba(45, 45, 45, 1);
+    }
+}
+
+.system-status-icon {
+    padding-left: 0px;
+    padding-right: 0px;
+    spacing: 0px;
+    margin: 0px;
+    icon-size: 1.14em;
+}
+
+#appMenu {
+    spacing: 4px;
+}
+
+.panel-button {
+    -natural-hpadding: 6px;
+    -minimum-hpadding: 2px;
+    font-weight: bold;
+    color: #dcdcdc;
+    transition-duration: 100;
+
+    #appMenuIcon {
+        app-icon-bottom-clip: 1px;
+    }
+
+    &:active #appMenuIcon,
+    &:checked #appMenuIcon,
+    &:focus #appMenuIcon {
+        app-icon-bottom-clip: 2px;
+    }
+
+    &:hover {
+        color: #dcdcdc;
+    }
+
+    &:active,
+    &:overview,
+    &:focus {
+        color: #dcdcdc;
+        background-color: rgba(45, 45, 45, 1);
+    }
+
+    &:active > .system-status-icon,
+    &:checked > .system-status-icon,
+    &:focus > .system-status-icon {
+        icon-shadow: rgba(0, 0, 0, 0) 0px 2px 2px;
+    }
+}
+
+// .panel-menu,
+// -popup-menu-item-dot {}
+
+/* ===================================================================
+ * Overview
+ * ===================================================================*/
+
+#overview {
+    spacing: 12px;
+}
+
+.window-caption {
+    border-image: url("background-assets/bg-1.png") 6;
+    font-weight: bold;
+    color: rgb(70, 70, 70);
+    spacing: 25px;
+    font-size: 9pt;
+    padding: 6px 8px;
+    -cinnamon-caption-spacing: 10px;
+
+    &#selected {
+        border-image: url("background-assets/bg-2.png") 6;
+        font-weight: bold;
+        color: #fff;
+        spacing: 25px;
+    }
+}
+
+.workspace-controls {
+    visible-height: 35px;
+
+    /* Amount visible before hovering */
+}
+
+.workspace-thumbnails-background {
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    border-right: 0px;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 8px;
+
+    &:rtl {
+        border-right: 1px;
+        border-left: 0px;
+        border-radius: 0;
+    }
+}
+
+.workspace-thumbnails {
+    spacing: 26px;
+    padding-left: 0.9em;
+    padding-right: 1em;
+}
+
+.workspace-add-button {
+    background-image: url("misc-assets/plus.png");
+    height: 200px;
+    width: 35px;
+    transition-duration: 100;
+
+    &:hover {
+        background-image: url("misc-assets/plus-hover.png");
+        transition-duration: 100;
+    }
+}
+
+.workspace-close-button {
+    background-image: url("control-assets/close.svg");
+    height: 35px;
+    width: 35px;
+    -cinnamon-close-overlap: 25px;
+    transition-duration: 150;
+
+    &:hover {
+        background-image: url("control-assets/close-hover.svg");
+        transition-duration: 150;
+    }
+}
+
+.workspace-thumbnail-indicator {
+    outline: 2px solid white;
+    border: 1px solid #888;
+}
+
+.window-close {
+    background-image: url("control-assets/close.svg");
+    height: 35px;
+    width: 35px;
+    -cinnamon-close-overlap: 25px;
+    transition-duration: 150;
+
+    &:hover {
+        background-image: url("control-assets/close-hover.svg");
+        transition-duration: 150;
+    }
+
+    &:rtl {
+        -st-background-image-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.window-close-area {
+    background-image: url("misc-assets/trash.png");
+    height: 150px;
+    width: 226px;
+}
+
+.icon-grid {
+    spacing: 36px;
+    -cinnamon-grid-item-size: 118px;
+
+    .overview-icon {
+        icon-size: 96px;
+    }
+}
+
+.overview-icon {
+    border-radius: 0px;
+    padding: 3px;
+    border: 1px rgba(0, 0, 0, 0);
+    font-size: 7.5pt;
+    color: white;
+    transition-duration: 100;
+    text-align: center;
+}
+
+.expo-background {
+    background: url("background-assets/noise-texture-2.png");
+    background-repeat: repeat;
+    background-gradient-direction: radial;
+    background-gradient-start: #4f4f4f;
+    background-gradient-end: #363636;
+}
+
+.workspace-overview-background-shade {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.expo-workspace-thumbnail-frame {
+    border: 11px transparent;
+    border-image: url("misc-assets/workspace-shadow.png") 14;
+
+    &#active {
+        border: 11px transparent;
+        border-image: url("misc-assets/workspace-shadow.png") 14;
+    }
+}
+
+/* ===================================================================
+* Desklets (desklet.js)
+* ===================================================================*/
+
+.desklet {
+    color: rgb(70, 70, 70);
+
+    &:highlight {
+        background-color: #398ee7;
+    }
+}
+
+.desklet-with-borders:highlight,
+-desklet-with-borders-and-header:highlight {
+    background-color: #398ee7;
+}
+
+.desklet-with-borders {
+    border-image: url("background-assets/bg-1.png") 6;
+    color: rgb(70, 70, 70);
+    font-weight: bold;
+    padding: 8px;
+}
+
+.desklet-with-borders-and-header {
+    border-image: url("background-assets/desklet.png") 6;
+    color: rgb(70, 70, 70);
+    padding: 8px;
+}
+
+.desklet-header {
+    border-image: url("background-assets/header.png") 8;
+    font-size: 9pt;
+    font-weight: bold;
+    text-shadow: #eee 0px 0px 0px;
+    color: rgb(70, 70, 70);
+    padding: 8px;
+}
+
+.desklet-drag-placeholder {
+    border: 0px solid #ccc;
+    border-radius: 0px;
+    background: none;
+}
+
+.xkcd-box {
+    padding: 6px;
+    border: 0px solid #141414;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+}
+
+.photoframe-box {
+    padding: 10px;
+    border-image: url("background-assets/bg-1.png") 6;
+}
+
+/* ===================================================================
+ * Clock Desklet (desklet.js)
+ * ===================================================================*/
+
+.clock-desklet-label {
+    color: rgb(70, 70, 70);
+}
+
+/* ===================================================================
+ * Looking Glass
+ * ===================================================================*/
+
+#LookingGlassDialog {
+    border-image: url("background-assets/bg-1.png") 6;
+    transition-duration: 300;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: rgb(70, 70, 70);
+
+    > #Toolbar {
+        background-color: rgb(236, 236, 236);
+        border: 1px solid rgb(192, 192, 192);
+        border-radius: 4px;
+        padding: 0.5em;
+    }
+
+    StScrollBar {
+        padding-left: 4px;
+        padding-top: 2px;
+
+        StButton#vhandle:hover {
+            background-color: rgb(216, 216, 216);
+            border: 1px solid #949494;
+            border-radius: 6px;
+        }
+    }
+
+    .labels {
+        spacing: 4px;
+    }
+
+    .notebook-tab {
+        border: 1px solid rgba(0, 0, 0, 0);
+        padding: 2px;
+
+        &:hover {
+            border-image: url("misc-assets/hover-2.png") 6;
+            color: rgb(70, 70, 70);
+        }
+
+        &:selected {
+            border-image: url("misc-assets/hover-2.png") 6;
+            color: rgb(70, 70, 70);
+            padding: 2px;
+        }
+    }
+
+    .lg-inspector-title {
+        font-weight: bold;
+        padding-bottom: 8px;
+    }
+}
+
+.lg-dialog {
+    StLabel {
+        color: rgb(70, 70, 70);
+        padding-top: 6px;
+    }
+
+    StEntry {
+        padding: 4px 12px;
+        color: #2b2b2b;
+        border-image: url("misc-assets/entry.png") 6;
+        border-radius: 4px;
+        selected-color: #2b2b2b;
+        caret-color: #2b2b2b;
+        caret-size: 1px;
+        width: 250px;
+        height: 16px;
+        transition-duration: 300;
+        selected-color: #fff;
+        selection-background-color: #398ee7;
+
+        &:focus {
+            padding: 4px 12px;
+            color: #2b2b2b;
+            border-image: url("misc-assets/entry-focus.png") 6;
+            border-radius: 4px;
+            width: 250px;
+            height: 16px;
+            selected-color: #fff;
+            caret-color: #2b2b2b;
+            caret-size: 1px;
+            selection-background-color: #398ee7;
+            transition-duration: 150;
+        }
+    }
+}
+
+.lg-obj-inspector-title {
+    spacing: 4px;
+}
+
+.lg-obj-inspector-button {
+    border: 1px solid rgba(40, 40, 40, 0.4);
+    border-radius: 4px;
+    color: rgb(70, 70, 70);
+    padding: 4px;
+
+    &:hover {
+        border: 1px solid rgba(40, 40, 40, 0.4);
+        border-radius: 4px;
+        color: #d64937;
+    }
+}
+
+.lg-dialog .cinnamon-link {
+    color: rgb(0, 0, 0);
+    padding-top: 6px;
+
+    &:hover {
+        color: #50a200;
+    }
+}
+
+#LookingGlassDialog StBoxLayout {
+    &#EvalBox {
+        padding: 4px;
+        spacing: 4px;
+    }
+
+    &#ResultsArea {
+        spacing: 4px;
+    }
+}
+
+#lookingGlassExtensions {
+    padding: 4px;
+}
+
+.lg-extension-list {
+    padding: 4px;
+    spacing: 6px;
+}
+
+.lg-extension {
+    border: 1px solid rgba(40, 40, 40, 0.4);
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.lg-extension-name {
+    font-weight: bold;
+}
+
+.lg-extension-meta {
+    spacing: 6px;
+}
+
+#LookingGlassPropertyInspector {
+    background-color: rgb(225, 225, 225);
+    border-radius: 4px;
+    border: 1px solid rgba(40, 40, 40, 0.4);
+    transition-duration: 300;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: rgb(70, 70, 70);
+}
+
+/* ===================================================================
+ * Date applet
+ * ===================================================================*/
+
+.calendar {
+    padding: .4em 1.75em .8em;
+    spacing-rows: 0;
+    spacing-columns: 0;
+}
+
+.datemenu-date-label {
+    padding: .5em 0em 1em;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(70, 70, 70);
+}
+
+.calendar-month-label {
+    padding-bottom: 3px;
+    padding-top: 3px;
+    font-weight: bold;
+    color: rgb(70, 70, 70);
+}
+
+.calendar-change-month-back,
+-calendar-change-month-forward:rtl {
+    height: 20px;
+    width: 20px;
+    transition-duration: 200;
+    border: 1px rgba(0, 0, 0, 0);
+    background-image: url("control-assets/calendar-arrow-left.svg");
+}
+
+.calendar-change-month-back:hover {
+    transition-duration: 150;
+    background-image: url("control-assets/calendar-arrow-left-hover.svg");
+}
+
+.calendar-change-month-forward,
+-calendar-change-month-back:rtl {
+    height: 20px;
+    width: 20px;
+    transition-duration: 200;
+    border: 1px rgba(0, 0, 0, 0);
+    background-image: url("control-assets/calendar-arrow-right.svg");
+}
+
+.calendar-change-month-forward:hover {
+    transition-duration: 150;
+    background-image: url("control-assets/calendar-arrow-right-hover.svg");
+}
+
+.calendar-day-base {
+    font-size: 9pt;
+    text-align: center;
+    width: 2.4em;
+    height: 2.4em;
+
+    &:active {
+        background: #398ee7;
+        box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+        color: #fff;
+    }
+}
+
+.calendar-day-heading {
+    font-size: 9pt;
+    color: #323232;
+    padding-top: 2em;
+}
+
+.calendar-week-number {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 9pt;
+}
+
+.calendar-day {
+    border: 1px rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.7);
+    border-top-width: 0;
+    border-left-width: 0;
+    padding-left: 1px;
+    padding-top: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.calendar-day-top {
+    border-top-width: 1px;
+}
+
+.calendar-day-left {
+    border-left-width: 1px;
+}
+
+// .calendar-work-day {}
+
+.calendar-nonwork-day {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.calendar-today {
+    color: #54a4e9;
+    font-weight: bold;
+}
+
+.calendar-other-month-day {
+    color: rgba(50, 50, 50, 0.3);
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
+    background-color: rgba(50, 50, 50, 0.1);
+}
+
+/* ===================================================================
+ * Notifications
+ * ===================================================================*/
+
+#notification {
+    font-size: 8.5pt;
+    border-image: url("background-assets/bg-1.png") 6;
+    padding: 8px;
+    spacing-rows: 10px;
+    spacing-columns: 10px;
+    margin-from-right-edge-of-screen: 20px;
+    width: 34em;
+    color: rgb(70, 70, 70);
+
+    /* The px are a temporary fix until get_theme_node() can return raw numbers. */
+    opacity: 255px;
+    mouseover-opacity: 96px;
+
+    &.multi-line-notification {
+        padding-bottom: 8px;
+        color: rgb(70, 70, 70);
+    }
+}
+
+/* We use row-span = 2 for the image cell, which prevents its height preferences to be
+   taken into account during allocation, so its height ends up being limited by the height
+   of the content in the other rows. To avoid showing a stretched image, we set the minimum
+   height of the table to be ICON_SIZE + IMAGE_SIZE + spacing-rows = 24 + 125 + 10 = 159 */
+
+.notification-with-image {
+    min-height: 159px;
+    color: rgb(70, 70, 70);
+}
+
+#notification-scrollview {
+    max-height: 100em;
+
+    > {
+        .top-shadow,
+        -bottom-shadow {
+            height: 10em;
+        }
+    }
+
+    &:ltr > StScrollBar {
+        padding-left: 6px;
+    }
+
+    &:rtl > StScrollBar {
+        padding-right: 6px;
+    }
+}
+
+#notification-body {
+    spacing: 5px;
+}
+
+#notification-actions {
+    spacing: 10px;
+}
+
+.notification-button {
+    border-image: url("button-assets/button.png") 4;
+    border-radius: 18px;
+    font-size: 11pt;
+    padding: 4px 42px 5px;
+
+    &:focus {
+        padding: 3px 41px 4px;
+    }
+}
+
+#notification .cinnamon-link {
+    color: rgb(0, 0, 0);
+    text-decoration: underline;
+}
+
+.notification-icon-button {
+    border-image: url("button-assets/button.png") 4;
+    border-radius: 0px;
+    padding: 5px;
+
+    &:focus {
+        padding: 4px;
+    }
+
+    > StIcon {
+        icon-size: 36px;
+    }
+}
+
+.hotplug-transient-box {
+    spacing: 6px;
+    padding: 2px 72px 2px 12px;
+}
+
+.hotplug-notification-item {
+    padding: 2px 10px;
+    font-size: 10.5pt;
+
+    &:focus {
+        padding: 1px 71px 1px 11px;
+    }
+}
+
+.hotplug-notification-item-icon {
+    icon-size: 24px;
+    padding: 2px 5px;
+}
+
+.hotplug-resident-box {
+    spacing: 8px;
+}
+
+.hotplug-resident-mount {
+    spacing: 8px;
+    border-radius: 0px;
+    color: rgb(70, 70, 70);
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #398ee7;
+    }
+}
+
+.hotplug-resident-mount-label {
+    color: inherit;
+    padding-left: 6px;
+}
+
+.hotplug-resident-mount-icon {
+    icon-size: 24px;
+    padding-left: 6px;
+}
+
+.hotplug-resident-eject-icon {
+    icon-size: 16px;
+}
+
+.hotplug-resident-eject-button {
+    padding: 7px;
+    border-radius: 0px;
+    color: rgb(70, 70, 70);
+}
+
+#notification StEntry {
+    padding: 4px 12px;
+    color: #2b2b2b;
+    border-image: url("misc-assets/entry.png") 6;
+    border-radius: 4px;
+    selected-color: #2b2b2b;
+    caret-color: #2b2b2b;
+    caret-size: 1px;
+    width: 250px;
+    height: 16px;
+    transition-duration: 300;
+    selected-color: #fff;
+    selection-background-color: #398ee7;
+
+    &:focus {
+        padding: 4px 12px;
+        color: #2b2b2b;
+        border-image: url("misc-assets/entry-focus.png") 6;
+        border-radius: 4px;
+        width: 250px;
+        height: 16px;
+        selected-color: #fff;
+        caret-color: #2b2b2b;
+        caret-size: 1px;
+        selection-background-color: #398ee7;
+        transition-duration: 150;
+    }
+}
+
+/* ===================================================================
+ * Alt Tab
+ * ===================================================================*/
+
+#altTabPopup {
+    padding: 8px;
+    spacing: 16px;
+}
+
+.switcher-list {
+    border-image: url("background-assets/bg-1.png") 6;
+    color: rgb(70, 70, 70);
+    padding: 20px;
+    font-size: 9pt;
+    font-weight: bold;
+
+    .item-box {
+        padding: 8px;
+        border: 1px solid rgba(0, 0, 0, 0);
+        border-radius: 0px;
+
+        &:outlined {
+            padding: 6px;
+            border: 2px solid rgba(85, 85, 85, 0);
+        }
+
+        &:selected {
+            border-image: url("misc-assets/hover-2.png") 6;
+            color: #fff;
+        }
+    }
+
+    .thumbnail-box {
+        padding: 2px;
+        spacing: 4px;
+    }
+
+    .thumbnail {
+        width: 256px;
+    }
+
+    .separator {
+        width: 1px;
+        background: rgba(255, 255, 255, 0.33);
+    }
+}
+
+.switcher-list-item-container {
+    spacing: 8px;
+}
+
+.thumbnail-scroll-gradient-left {
+    background-color: rgba(51, 51, 51, 0.5);
+    border-radius: 24px;
+    border-radius-topright: 0px;
+    border-radius-bottomright: 0px;
+    width: 60px;
+}
+
+.thumbnail-scroll-gradient-right {
+    background-color: rgba(51, 51, 51, 0.5);
+    border-radius: 24px;
+    border-radius-topleft: 0px;
+    border-radius-bottomleft: 0px;
+    width: 60px;
+}
+
+.ripple-box {
+    width: 104px;
+    height: 104px;
+    background-image: url("misc-assets/corner-ripple.png");
+
+    &:rtl {
+        background-image: url("misc-assets/corner-ripple.png");
+    }
+}
+
+.switcher-arrow {
+    border-color: rgba(0, 0, 0, 0);
+    color: #dcdcdc;
+
+    &:highlighted {
+        border-color: rgba(0, 0, 0, 0);
+        color: white;
+    }
+}
+
+.switcher-preview-backdrop {
+    background-color: rgba(25, 25, 25, 0.65);
+}
+
+/* ===================================================================
+ * Modal dialogs
+ * ===================================================================*/
+
+.modal-dialog {
+    font-size: 10pt;
+    border-image: url("background-assets/bg-1.png") 6;
+    color: rgb(70, 70, 70);
+    padding-right: 42px;
+    padding-left: 42px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.modal-dialog-button-box {
+    spacing: 110px;
+}
+
+.modal-dialog-button {
+    height: 22px;
+    font-size: 10pt;
+    color: rgb(70, 70, 70);
+    border-image: url("button-assets/button.png") 4;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 3px 31px 4px;
+
+    &:hover {
+        border-image: url("button-assets/button-hover.png") 4;
+    }
+
+    &:focus {
+        border-image: url("button-assets/button-focus.png") 4;
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 3px 31px 4px;
+
+        &:hover {
+            border-image: url("button-assets/button-focus-hover.png") 4;
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 3px 31px 4px;
+        }
+
+        &:checked,
+        &:active {
+            border-image: url("button-assets/button-pressed.png") 4;
+        }
+    }
+
+    &:active,
+    &:checked {
+        border-image: url("button-assets/button-pressed.png") 4;
+    }
+
+    &:disabled {
+        color: #a6a6a6;
+    }
+}
+
+/* ===================================================================
+ * Run dialog
+ * ===================================================================*/
+
+.run-dialog-label {
+    font-size: 0pt;
+    padding-bottom: 0px;
+    color: rgba(0, 0, 0, 0);
+    font-weight: bold;
+}
+
+// .run-dialog-error-label {}
+
+.run-dialog-error-box {
+    padding-top: 15px;
+    spacing: 5px;
+}
+
+.run-dialog-entry {
+    padding: 4px 12px;
+    color: #2b2b2b;
+    border-image: url("misc-assets/entry.png") 6;
+    border-radius: 4px;
+    selected-color: #2b2b2b;
+    caret-color: #2b2b2b;
+    caret-size: 1px;
+    width: 250px;
+    height: 16px;
+    transition-duration: 300;
+    selected-color: #fff;
+    selection-background-color: #398ee7;
+
+    &:focus {
+        padding: 4px 12px;
+        color: #2b2b2b;
+        border-image: url("misc-assets/entry-focus.png") 6;
+        border-radius: 4px;
+        width: 250px;
+        height: 16px;
+        selected-color: #fff;
+        caret-color: #2b2b2b;
+        caret-size: 1px;
+        selection-background-color: #398ee7;
+        transition-duration: 150;
+    }
+}
+
+.run-dialog-completion-box {
+    padding-left: 15px;
+    font-size: 10px;
+}
+
+.run-dialog {
+    padding-right: 12px;
+    padding-left: 12px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.lightbox {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* ===================================================================
+ * End session dialog
+ * ===================================================================*/
+
+.end-session-dialog {
+    spacing: 42px;
+}
+
+.end-session-dialog-subject {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #666666;
+    padding-top: 10px;
+    padding-left: 17px;
+    padding-bottom: 30px;
+
+    &:rtl {
+        padding-left: 0px;
+        padding-right: 17px;
+    }
+}
+
+.end-session-dialog-description {
+    font-size: 10pt;
+    color: white;
+    padding-left: 17px;
+    width: 28em;
+
+    &:rtl {
+        padding-right: 17px;
+    }
+}
+
+.end-session-dialog-logout-icon {
+    border: 2px solid #8b8b8b;
+    border-radius: 0px;
+    width: 32px;
+    height: 32px;
+}
+
+.end-session-dialog-shutdown-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.end-session-dialog-app-list {
+    font-size: 10pt;
+    max-height: 200px;
+    padding-top: 42px;
+    padding-left: 49px;
+    padding-right: 32px;
+
+    &:rtl {
+        padding-right: 49px;
+        padding-left: 32px;
+    }
+}
+
+.end-session-dialog-app-list-item {
+    color: #ccc;
+
+    &:hover {
+        color: white;
+    }
+
+    &:ltr {
+        padding-right: 1em;
+    }
+
+    &:rtl {
+        padding-left: 1em;
+    }
+}
+
+.end-session-dialog-app-list-item-icon {
+    &:ltr {
+        padding-right: 17px;
+    }
+
+    &:rtl {
+        padding-left: 17px;
+    }
+}
+
+.end-session-dialog-app-list-item-name {
+    font-size: 10pt;
+}
+
+.end-session-dialog-app-list-item-description {
+    font-size: 8pt;
+    color: #444444;
+}
+
+/* CinnamonMountOperation Dialogs */
+
+.cinnamon-mount-operation-icon {
+    icon-size: 48px;
+}
+
+.mount-password-reask {
+    color: red;
+}
+
+.show-processes-dialog,
+-mount-question-dialog {
+    spacing: 24px;
+}
+
+.show-processes-dialog-subject,
+-mount-question-dialog-subject {
+    font-size: 12pt;
+    font-weight: bold;
+    color: rgb(70, 70, 70);
+    padding-top: 10px;
+    padding-left: 17px;
+    padding-bottom: 6px;
+}
+
+.show-processes-dialog-subject:rtl,
+-mount-question-dialog-subject:rtl {
+    padding-left: 0px;
+    padding-right: 17px;
+}
+
+.show-processes-dialog-description,
+-mount-question-dialog-description {
+    font-size: 10pt;
+    color: rgb(70, 70, 70);
+    padding-left: 17px;
+    width: 28em;
+}
+
+.show-processes-dialog-description:rtl,
+-mount-question-dialog-description:rtl {
+    padding-right: 17px;
+}
+
+.show-processes-dialog-app-list {
+    font-size: 10pt;
+    max-height: 200px;
+    padding-top: 24px;
+    padding-left: 49px;
+    padding-right: 32px;
+
+    &:rtl {
+        padding-right: 49px;
+        padding-left: 32px;
+    }
+}
+
+.show-processes-dialog-app-list-item {
+    color: rgb(70, 70, 70);
+
+    &:hover {
+        color: rgb(120, 120, 120);
+    }
+
+    &:ltr {
+        padding-right: 1em;
+    }
+
+    &:rtl {
+        padding-left: 1em;
+    }
+}
+
+.show-processes-dialog-app-list-item-icon {
+    &:ltr {
+        padding-right: 17px;
+    }
+
+    &:rtl {
+        padding-left: 17px;
+    }
+}
+
+.show-processes-dialog-app-list-item-name {
+    font-size: 10pt;
+}
+
+/* ===================================================================
+ * Policykit authentication dialog
+ * ===================================================================*/
+
+.polkit-dialog {
+    /* this is the width of the entire modal popup */
+    width: 250px;
+    border-image: url("background-assets/bg-1.png") 6;
+}
+
+.polkit-dialog-main-layout {
+    spacing: 24px;
+    padding: 10px;
+}
+
+.polkit-dialog-message-layout {
+    spacing: 16px;
+}
+
+.polkit-dialog-headline {
+    font-size: 10pt;
+    font-weight: bold;
+    color: rgb(40, 40, 40);
+}
+
+.polkit-dialog-description {
+    font-size: 9pt;
+    color: rgb(70, 70, 70);
+    padding-bottom: 40px;
+}
+
+.polkit-dialog-user-layout {
+    padding-left: 10px;
+    spacing: 10px;
+
+    &:rtl {
+        padding-left: 0px;
+        padding-right: 10px;
+    }
+}
+
+.polkit-dialog-user-root-label {
+    color: #ff0000;
+}
+
+.polkit-dialog-password-label {
+    &:ltr {
+        padding-right: 0.5em;
+    }
+
+    &:rtl {
+        padding-left: 0.5em;
+    }
+}
+
+.polkit-dialog-password-entry {
+    padding: 4px 12px;
+    color: #2b2b2b;
+    border-image: url("misc-assets/entry.png") 6;
+    border-radius: 4px;
+    width: 250px;
+    height: 16px;
+    selected-color: #fff;
+    caret-color: #2b2b2b;
+    caret-size: 1px;
+    selection-background-color: #398ee7;
+    transition-duration: 150;
+
+    &:focus {
+        padding: 4px 12px;
+        color: #2b2b2b;
+        border-image: url("misc-assets/entry-focus.png") 6;
+        border-radius: 4px;
+        width: 250px;
+        height: 16px;
+        selected-color: #fff;
+        caret-color: #2b2b2b;
+        caret-size: 1px;
+        selection-background-color: #398ee7;
+        transition-duration: 150;
+    }
+
+    .capslock-warning {
+        icon-size: 16px;
+        warning-color: #999;
+        padding: 0 4px;
+    }
+}
+
+.polkit-dialog-error-label {
+    font-size: 10pt;
+    color: #ffff00;
+    padding-bottom: 8px;
+}
+
+.polkit-dialog-info-label {
+    font-size: 10pt;
+    padding-bottom: 8px;
+}
+
+/* intentionally left transparent to avoid dialog changing size */
+
+.polkit-dialog-null-label {
+    font-size: 10pt;
+    color: rgba(0, 0, 0, 0);
+    padding-bottom: 8px;
+}
+
+.network-dialog-secret-table {
+    spacing-rows: 15px;
+}
+
+/* ===================================================================
+ * Magnifier
+ * ===================================================================*/
+
+.magnifier-zoom-region {
+    border: 2px solid rgba(128, 0, 0, 1);
+
+    &.full-screen {
+        border-width: 0px;
+    }
+}
+
+/* ===================================================================
+ * On screen keyboard
+ * ===================================================================*/
+
+#keyboard {
+    border-image: url("background-assets/keyboard-bg.png") 4;
+}
+
+.keyboard-layout {
+    spacing: 10px;
+    padding: 10px;
+}
+
+.keyboard-row {
+    spacing: 15px;
+}
+
+.keyboard-key {
+    min-height: 30px;
+    min-width: 30px;
+    border-image: url("button-assets/button.png") 4;
+    font-size: 14pt;
+    font-weight: bold;
+    color: rgb(70, 70, 70);
+
+    &:grayed {
+        color: #888;
+        border-image: url("button-assets/button.png") 4;
+    }
+
+    &:checked,
+    &:hover {
+        border-image: url("button-assets/button-hover.png") 4;
+    }
+
+    &:active {
+        border-image: url("button-assets/button-pressed.png") 4;
+    }
+}
+
+.keyboard-subkeys {
+    color: rgb(70, 70, 70);
+    padding: 5px;
+    -arrow-border-radius: 4px;
+    -arrow-background-color: rgb(225, 225, 225);
+    -arrow-border-width: 1px;
+    -arrow-border-color: rgba(40, 40, 40, 0.4);
+    -arrow-base: 18px;
+    -arrow-rise: 10px;
+    -st-shadow: 0px -1px 2px 0px rgba(255, 255, 255, 0.9);
+    -boxpointer-gap: 2px;
+}
+
+/* ###################################################################
+ * Cinnamon Specific Section
+ * ###################################################################*/
+
+/* ===================================================================
+ * Menu (menu.js)
+ * ===================================================================*/
+
+/* Main menu title */
+
+.menu-favorites-box {
+    background-color: rgb(236, 236, 236);
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 4px;
+    padding: 0.5em;
+}
+
+.menu-favorites-button {
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    border-radius: 2px;
+
+    &:hover {
+        border-image: url("misc-assets/hover-2.png") 6;
+    }
+}
+
+.menu-places-box {
+    padding: 8px;
+    border: 0px solid #666;
+}
+
+.menu-places-button {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.menu-categories-box {
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+}
+
+.menu-applications-box {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0px;
+}
+
+.menu-application-button {
+    padding-top: 7px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 7px;
+    max-width: 10px;
+
+    &:highlighted {
+        /* This style is used in menu application buttons for applications which were newly installed */
+        font-weight: bold;
+    }
+}
+
+.menu-application-button-selected {
+    padding-top: 7px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 7px;
+    color: #fff;
+    border-image: url("misc-assets/hover-2.png") 6;
+
+    &:highlighted {
+        /* This style is used in menu application buttons for applications which were newly installed */
+        font-weight: bold;
+    }
+}
+
+.menu-application-button-label {
+    &:ltr {
+        padding-left: 5px;
+    }
+
+    &:rtl {
+        padding-right: 5px;
+    }
+}
+
+.menu-category-button {
+    padding-top: 7px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 7px;
+}
+
+.menu-category-button-greyed {
+    padding-top: 7px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 7px;
+    color: rgba(100, 100, 100, 1);
+    font-style: italic;
+}
+
+.menu-category-button-selected {
+    padding-top: 7px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 7px;
+    color: #fff;
+    border-image: url("misc-assets/hover-2.png") 6;
+}
+
+.menu-category-button-label {
+    &:ltr {
+        padding-left: 5px;
+    }
+
+    &:rtl {
+        padding-right: 5px;
+    }
+}
+
+.menu-category-button-button:hover {
+    background-color: #3d3d3d;
+    border: 1px solid #535353;
+    border-radius: 2px;
+}
+
+/* Name and description of the currently hovered item in the menu
+ * This appears on the bottom right hand corner of the menu*/
+
+.menu-selected-app-box {
+    padding-right: 30px;
+    padding-left: 28px;
+    text-align: right;
+}
+
+.menu-selected-app-title {
+    font-weight: bold;
+}
+
+.menu-selected-app-description {
+    max-width: 150px;
+}
+
+.menu-search-box {
+    padding-left: 30px;
+}
+
+.menu-search-entry-icon {
+    icon-size: 1em;
+    color: #2b2b2b;
+}
+
+/* Context menu (at the moment only for favorites) */
+
+// .menu-context-menu {}
+
+/* ===================================================================
+ * Window list (windowList.js)
+ * ===================================================================*/
+
+.window-list-box {
+    spacing: 3px;
+    padding-left: 0px;
+
+    &.vertical {
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+.window-list-item-label {
+    width: 15em;
+    min-width: 5px;
+}
+
+.window-list-item-box {
+    font-weight: bold;
+    color: rgb(62, 62, 62);
+    padding-top: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-image: url("panel-assets/hover-3.svg") 6;
+
+    &:active,
+    &:checked,
+    &:focus,
+    &:checked:hover,
+    &:focus:hover,
+    &:active:hover {
+        font-weight: bold;
+        color: #fff;
+        border-image: url("panel-assets/pressed.svg") 6;
+    }
+}
+
+.panel-top .window-list-item-box {
+    border-image: url("panel-assets/hover-3-top.svg") 6;
+
+    &:active,
+    &:checked,
+    &:focus,
+    &:checked:hover,
+    &:focus:hover,
+    &:active:hover {
+        border-image: url("panel-assets/pressed-top.svg") 6;
+    }
+}
+
+.panel-left .window-list-item-box {
+    padding-left: 0px;
+    padding-right: 0px;
+    border-image: url("panel-assets/hover-3-left.svg") 6;
+
+    &:active,
+    &:checked,
+    &:focus,
+    &:checked:hover,
+    &:focus:hover,
+    &:active:hover {
+        border-image: url("panel-assets/pressed-left.svg") 6;
+    }
+}
+
+.panel-right .window-list-item-box {
+    padding-left: 0px;
+    padding-right: 0px;
+    border-image: url("panel-assets/hover-3-right.svg") 6;
+
+    &:active,
+    &:checked,
+    &:focus,
+    &:checked:hover,
+    &:focus:hover,
+    &:active:hover {
+        border-image: url("panel-assets/pressed-right.svg") 6;
+    }
+}
+
+.window-list-item-box:hover {
+    border-image: url("panel-assets/hover-1.svg") 6;
+}
+
+.panel-top .window-list-item-box:hover {
+    border-image: url("panel-assets/hover-1-top.svg") 6;
+}
+
+.panel-left .window-list-item-box:hover {
+    border-image: url("panel-assets/hover-1-left.svg") 6;
+}
+
+.panel-right .window-list-item-box:hover {
+    border-image: url("panel-assets/hover-1-right.svg") 6;
+}
+
+.window-list-item-demands-attention {
+    border-image: url("panel-assets/attention.svg") 6;
+}
+
+.panel-top .window-list-item-demands-attention {
+    border-image: url("panel-assets/attention-top.svg") 6;
+}
+
+.panel-left .window-list-item-demands-attention {
+    border-image: url("panel-assets/attention-left.svg") 6;
+}
+
+.panel-right .window-list-item-demands-attention {
+    border-image: url("panel-assets/attention-right.svg") 6;
+}
+
+/* ===================================================================
+ * Sound Applet (status/volume.js)
+ * ===================================================================*/
+
+.sound-player {
+    StButton {
+        width: 22px;
+        height: 22px;
+        padding: 5px;
+        color: #bbb;
+
+        &:small {
+            border: 1px solid transparent;
+            border-radius: 3px;
+            width: 16px;
+            height: 16px;
+            padding: 1px;
+            color: rgb(90, 90, 90);
+
+            &:hover {
+                color: rgb(70, 70, 70);
+                border-image: url("button-assets/button-hover.png") 4;
+            }
+
+            &:active {
+                color: rgb(70, 70, 70);
+                border-image: url("button-assets/button-pressed.png") 4;
+            }
+        }
+
+        StIcon {
+            icon-size: 1.5em;
+        }
+
+        &:small StIcon {
+            icon-size: 1em;
+        }
+
+        &:hover,
+        &:active {
+            color: #fff;
+        }
+    }
+
+    .slider {
+        height: 0.5em;
+        -slider-height: 0.5em;
+        -slider-background-color: #7a7a7a;
+        -slider-border-color: rgba(0, 0, 0, 0);
+        -slider-active-background-color: #398ee7;
+        -slider-active-border-color: rgba(0, 0, 0, 0);
+        -slider-border-width: 0px;
+        -slider-handle-radius: 0px;
+    }
+
+    StBoxLayout {
+        spacing: 0.5em;
+    }
+
+    > StBoxLayout {
+        padding: 5px;
+    }
+}
+
+.sound-player-overlay {
+    width: 300px;
+    height: 70px;
+    padding: 15px;
+    spacing: 0.5em;
+    background: rgba(0, 0, 0, 0.8);
+    color: #FFF;
+
+    StBoxLayout {
+        padding-top: 2px;
+    }
+}
+
+.sound-player-generic-coverart {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* ===================================================================
+ * Workspace Switcher applet (workspaceSwitcher.js)
+ * ===================================================================*/
+
+#workspaceSwitcher {
+    spacing: 200px;
+}
+
+.workspace-button {
+    width: 20px;
+    height: 6px;
+    color: rgb(70, 70, 70);
+    border: 0px;
+    border-color: rgba(200, 200, 200, 1);
+    padding: 3px;
+    padding-right: 1px;
+    font-weight: bold;
+    padding-top: 5px;
+
+    &.vertical {
+        padding: 0px;
+    }
+
+    &:hover {
+        border-image: url("panel-assets/hover-1.svg") 6;
+        color: rgb(70, 70, 70);
+        border-color: rgba(200, 200, 200, 1);
+    }
+}
+
+.panel-top .workspace-button:hover {
+    border-image: url("panel-assets/hover-1-top.svg") 6;
+}
+
+.panel-left .workspace-button:hover {
+    border-image: url("panel-assets/hover-1-left.svg") 6;
+}
+
+.panel-right .workspace-button:hover {
+    border-image: url("panel-assets/hover-1-right.svg") 6;
+}
+
+.workspace-button:outlined {
+    border-image: url("panel-assets/pressed.svg") 6;
+    background: rgba(200, 200, 200, 1);
+    color: #fff;
+}
+
+.panel-top .workspace-button:outlined {
+    border-image: url("panel-assets/pressed-top.svg") 6;
+}
+
+.panel-left .workspace-button:outlined {
+    border-image: url("panel-assets/pressed-left.svg") 6;
+}
+
+.panel-right .workspace-button:outlined {
+    border-image: url("panel-assets/pressed-right.svg") 6;
+}
+
+/* Controls the style when using the "Visual representation" option */
+
+.workspace-graph {
+    padding: 3px 4px;
+    spacing: 4px;
+
+    .workspace {
+        border: 1px solid #111;
+        background-gradient-direction: vertical;
+        background-gradient-start: #444;
+        background-gradient-end: #5d5d5d;
+
+        &:active {
+            border: 1px solid #ccc;
+            background-gradient-direction: vertical;
+            background-gradient-start: #333;
+            background-gradient-end: #5d5d5d;
+        }
+
+        .windows {
+            -active-window-background: rgba(140, 140, 140, 1);
+            -active-window-border: rgba(0, 0, 0, 0.7);
+            -inactive-window-background: rgba(140, 140, 140, 1);
+            -inactive-window-border: rgba(0, 0, 0, 0.7);
+        }
+
+        &:active .windows {
+            -active-window-background: rgba(170, 205, 138, 1);
+            -active-window-border: rgba(0, 0, 0, 0.9);
+            -inactive-window-background: rgba(170, 170, 170, 1);
+            -inactive-window-border: rgba(0, 0, 0, 0.7);
+        }
+    }
+}
+
+/* ===================================================================
+ * Panel Launchers Applet (panelLaunchers.js)
+ * ===================================================================*/
+
+#panel-launchers-box {
+    padding-left: 0px;
+}
+
+/* START Kept for retro-compatibility */
+
+.panel-launcher {
+    margin: 1px;
+    padding: 2px;
+
+    &:hover {
+        border-image: url("panel-assets/hover-1.svg") 6;
+    }
+}
+
+/* END Kept for retro-compatibility */
+
+.panel-launchers {
+    spacing: 0;
+
+    .launcher {
+        border: 1px solid transparent;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+}
+
+.panel-left .panel-launchers .launcher,
+-panel-right .panel-launchers .launcher {
+    padding: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.panel-launchers .launcher:hover {
+    border-image: url("panel-assets/hover-1.svg") 6;
+}
+
+.panel-top .panel-launchers .launcher:hover {
+    border-image: url("panel-assets/hover-1-top.svg") 6;
+}
+
+.panel-left .panel-launchers .launcher:hover {
+    border-image: url("panel-assets/hover-1-left.svg") 6;
+}
+
+.panel-right .panel-launchers .launcher:hover {
+    border-image: url("panel-assets/hover-1-right.svg") 6;
+}
+
+.panel-launcher-add-dialog-content-box,
+-panel-launcher-add-dialog-content-box-left {
+    padding: 6px;
+    spacing: 20px;
+}
+
+.panel-launcher-add-dialog-content-box-right {
+    padding: 6px;
+    spacing: 10px;
+}
+
+.panel-launcher-add-dialog-entry {
+    padding: 4px 12px;
+    color: #2b2b2b;
+    border-image: url("misc-assets/entry.png") 6;
+    border-radius: 4px;
+    selected-color: #2b2b2b;
+    caret-color: #2b2b2b;
+    caret-size: 1px;
+    width: 250px;
+    height: 16px;
+    transition-duration: 300;
+    selected-color: #fff;
+    selection-background-color: #398ee7;
+
+    &:focus,
+    &:hover {
+        padding: 4px 12px;
+        color: #2b2b2b;
+        border-image: url("misc-assets/entry-focus.png") 6;
+        border-radius: 4px;
+        width: 250px;
+        height: 16px;
+        selected-color: #fff;
+        caret-color: #2b2b2b;
+        caret-size: 1px;
+        selection-background-color: #398ee7;
+        transition-duration: 150;
+    }
+}
+
+/* ===================================================================
+ * Overview corner
+ * ===================================================================*/
+
+#overview-corner {
+    background-image: url("control-assets/overview.png");
+
+    &:hover {
+        background-image: url("control-assets/overview-hover.png");
+    }
+}
+
+/* ===================================================================
+ * Applets (applet.js)
+ * ===================================================================*/
+
+.applet-separator {
+    border-image: url("panel-assets/separator.png") 4 5 0 2 stretch;
+    padding: 5px 4px;
+}
+
+// .applet-separator-line {}
+// .applet-separator-line-vertical {}
+
+.applet-box {
+    font-weight: bold;
+    color: rgb(74, 74, 74);
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+
+    &.vertical {
+        padding: 0;
+        font-weight: bold;
+        color: rgb(74, 74, 74);
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    &:checked,
+    &:hover {
+        border-image: url("panel-assets/hover-1.svg") 6;
+    }
+
+    &:highlight {
+        background-color: #398ee7;
+    }
+}
+
+.panel-top .applet-box {
+    &:checked,
+    &:hover {
+        border-image: url("panel-assets/hover-1-top.svg") 6;
+    }
+}
+
+.panel-left .applet-box {
+    &:checked,
+    &:hover {
+        border-image: url("panel-assets/hover-1-left.svg") 6;
+    }
+}
+
+.panel-right .applet-box {
+    &:checked,
+    &:hover {
+        border-image: url("panel-assets/hover-1-right.svg") 6;
+    }
+}
+
+.applet-label {
+    font-weight: bold;
+    color: rgb(66, 66, 66);
+
+    &:checked,
+    &:hover {
+        font-weight: bold;
+    }
+}
+
+.applet-icon {
+    icon-size: 22px;
+
+    // &:hover,
+    // &:checked {}
+}
+
+/* ===================================================================
+ * Workspace OSD
+ * ===================================================================*/
+
+.workspace-osd {
+    border-image: url("background-assets/bg-1.png") 6;
+    padding: 9px 15px;
+    color: rgb(70, 70, 70);
+    font-weight: bold;
+    font-size: 26pt;
+}
+
+.expo-workspaces-name-entry {
+    border-image: url("misc-assets/expo-name-entry.png") 6;
+    padding: 8px 12px;
+    border-radius: 2px;
+    height: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    font-weight: bold;
+    selected-color: #fff;
+    caret-color: #fff;
+    caret-size: 1px;
+    selection-background-color: #398ee7;
+    transition-duration: 150;
+
+    &#selected {
+        color: rgba(255, 255, 255, 1);
+        transition-duration: 150;
+
+        &:focus {
+            color: rgba(255, 255, 255, 1);
+            transition-duration: 150;
+        }
+    }
+
+    &:focus {
+        color: rgba(255, 255, 255, 1);
+        transition-duration: 150;
+    }
+}
+
+/* ===================================================================
+ * Notification Applet
+ * ===================================================================*/
+
+.notification-applet-padding {
+    padding: .5em 1em;
+}
+
+.notification-applet-container {
+    max-height: 100px;
+}
+
+/* Check Boxes */
+
+.check-box {
+    CinnamonGenericContainer {
+        spacing: .2em;
+        min-height: 18px;
+        padding-top: 2px;
+    }
+
+    StBin,
+    &:focus StBin {
+        width: 16px;
+        height: 16px;
+        background-image: url("control-assets/checkbox-unchecked.svg");
+    }
+
+    &:checked StBin,
+    &:focus:checked StBin {
+        background-image: url("control-assets/checkbox-checked.svg");
+    }
+
+    StLabel {
+        font-weight: normal;
+    }
+}
+
+.radiobutton {
+    CinnamonGenericContainer {
+        spacing: .2em;
+        height: 18px;
+        padding-top: 2px;
+    }
+
+    StBin,
+    &:focus StBin {
+        width: 16px;
+        height: 16px;
+        background-image: url("control-assets/radio-unselected.svg");
+    }
+
+    &:checked StBin,
+    &:focus:checked StBin {
+        background-image: url("control-assets/radio-selected.svg");
+    }
+
+    StLabel {
+        padding-top: 4px;
+        font-size: 0.9em;
+        box-shadow: none;
+    }
+}
+
+.flashspot {
+    background-color: white;
+}
+
+/* ===================================================================
+ * User Applet
+ * ===================================================================*/
+
+.user-icon {
+    background-color: rgb(236, 236, 236);
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 4px;
+    padding: 0.2em;
+}
+
+.user-label {
+    color: rgb(70, 70, 70);
+    font-size: 16px;
+    margin: 6px;
+}
+
+/* ===================================================================
+ * About Dialog (applet.js and desklet.js)
+ * ===================================================================*/
+
+/* Make the about dialog a little bigger */
+
+.about-content {
+    width: 550px;
+    height: 250px;
+    spacing: 8px;
+    padding-bottom: 16px;
+}
+
+.about-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.about-uuid {
+    font-size: .8em;
+}
+
+.about-icon {
+    padding-right: 20px;
+}
+
+/* border-image: Tweak to "cover" the possible excess of the description text */
+.about-scrollBox {
+    border: solid 1px grey;
+    border-radius: 4px;
+    border-image: url("background-assets/bg-1.png") 6;
+}
+
+.about-scrollBox-innerBox {
+    padding: 1.2em;
+    spacing: 1.2em;
+}
+
+/* padding-bottom: Let the description text wrap at least for two lines until it "touches" the about-scrollBox */
+.about-description {
+    padding-top: 4px;
+    padding-bottom: 20px;
+}
+
+.about-version {
+    padding-left: 7px;
+}
+
+/* ===================================================================
+ * OSD Popups
+ * ===================================================================*/
+
+.info-osd {
+    font-size: 18pt;
+    border-image: url("background-assets/bg-1.png") 6;
+    padding: 12px;
+    color: rgb(70, 70, 70);
+    text-align: center;
+}
+
+.osd-window {
+    border-image: url("background-assets/bg-1.png") 6;
+    color: rgb(70, 70, 70);
+    padding: 20px;
+    spacing: 1em;
+
+    .level {
+        height: 0.7em;
+        border-radius: 0.3em;
+        background-color: rgba(70, 70, 70, 0.4);
+    }
+}
+
+/* ===================================================================
+ * Snap/Tile Chrome
+ * ===================================================================*/
+
+.tile-preview,
+-tile-hud {
+    background-color: rgba(57, 142, 231, 0.4);
+    border: 1px solid rgba(57, 142, 231, 0.8);
+}
+
+.tile-preview.snap {
+    background-color: rgba(57, 142, 231, 0.8);
+}
+
+.tile-hud {
+    &.snap {
+        background-color: rgba(57, 142, 231, 0.8);
+    }
+
+    &:top {
+        border-top-width: 0px;
+        border-radius: 0px 0px 8px 8px;
+    }
+
+    &:bottom {
+        border-bottom-width: 0px;
+        border-radius: 8px 8px 0px 0px;
+    }
+
+    &:left {
+        border-left-width: 0px;
+        border-radius: 0px 8px 8px 0px;
+    }
+
+    &:right {
+        border-right-width: 0px;
+        border-radius: 8px 0px 0px 8px;
+    }
+
+    &:top-left {
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-radius: 0px 0px 8px;
+    }
+
+    &:top-right {
+        border-top-width: 0px;
+        border-right-width: 0px;
+        border-radius: 0px 0px 0px 8px;
+    }
+
+    &:bottom-left {
+        border-bottom-width: 0px;
+        border-left-width: 0px;
+        border-radius: 0px 8px 0px 0px;
+    }
+
+    &:bottom-right {
+        border-bottom-width: 0px;
+        border-right-width: 0px;
+        border-radius: 8px 0px 0px;
+    }
+}

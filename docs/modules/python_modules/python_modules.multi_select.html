@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>python_modules.multi_select module &#8212; Cinnamon Tools  documentation</title>
+    <link rel="stylesheet" href="../../_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/cinnamon-logo.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Undocumented C API elements" href="../../coverage/c.html" />
+    <link rel="prev" title="python_modules.menu module" href="python_modules.menu.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../coverage/c.html" title="Undocumented C API elements"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="python_modules.menu.html" title="python_modules.menu module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Cinnamon Tools  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >python_modules</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python_modules.html" accesskey="U">python_modules package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-python_modules.multi_select">
+<span id="python-modules-multi-select-module"></span><h1>python_modules.multi_select module<a class="headerlink" href="#module-python_modules.multi_select" title="Permalink to this headline">¶</a></h1>
+<p>Multi selection menu creator.</p>
+<dl class="class">
+<dt id="python_modules.multi_select.MultiSelect">
+<em class="property">class </em><code class="descclassname">python_modules.multi_select.</code><code class="descname">MultiSelect</code><span class="sig-paren">(</span><em>menu_items=[]</em>, <em>title=''</em>, <em>arrow='==&gt;'</em>, <em>footer='Space = toggle ─ Enter = accept ─ q = cancel'</em>, <em>more='...'</em>, <em>c_selected='[X]'</em>, <em>c_empty='[ ]'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Allows you to select from a list with curses.</p>
+<p>Based on <a class="reference external" href="https://github.com/MSchuwalow/picker">picker Python module</a>.</p>
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.aborted">
+<code class="descname">aborted</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.aborted" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.all_menu_items">
+<code class="descname">all_menu_items</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.all_menu_items" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.arrow">
+<code class="descname">arrow</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.arrow" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.c_empty">
+<code class="descname">c_empty</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.c_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.c_selected">
+<code class="descname">c_selected</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.c_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.cursor">
+<code class="descname">cursor</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.footer">
+<code class="descname">footer</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.footer" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.length">
+<code class="descname">length</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.length" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.more">
+<code class="descname">more</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.more" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.offset">
+<code class="descname">offset</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.selcount">
+<code class="descname">selcount</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.selcount" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.selected">
+<code class="descname">selected</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.selected" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.stdscr">
+<code class="descname">stdscr</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.stdscr" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.title">
+<code class="descname">title</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.title" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.win">
+<code class="descname">win</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.win" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.window_height">
+<code class="descname">window_height</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.window_height" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.multi_select.MultiSelect.window_width">
+<code class="descname">window_width</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.window_width" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>TYPE</em> – Description</p>
+</dd></dl>
+
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">opts</span> <span class="o">=</span> <span class="n">MultiSelect</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Select files to delete&#39;</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;.autofsck &quot;</span><span class="p">,</span> <span class="s2">&quot;.autorelabel&quot;</span><span class="p">,</span> <span class="s2">&quot;bin/&quot;</span><span class="p">,</span> <span class="s2">&quot;boot/&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cgroup/&quot;</span><span class="p">,</span> <span class="s2">&quot;dev/&quot;</span><span class="p">,</span> <span class="s2">&quot;etc/&quot;</span><span class="p">,</span> <span class="s2">&quot;home/&quot;</span><span class="p">,</span> <span class="s2">&quot;installimage.conf&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">getSelected</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">opts</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Aborted!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Summary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>menu_items</strong> (<em>TYPE</em>) – Description</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
+<li><p><strong>arrow</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
+<li><p><strong>footer</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
+<li><p><strong>more</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
+<li><p><strong>c_selected</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
+<li><p><strong>c_empty</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="python_modules.multi_select.MultiSelect.curses_start">
+<code class="descname">curses_start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.curses_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.curses_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.multi_select.MultiSelect.curses_stop">
+<code class="descname">curses_stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.curses_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.curses_stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.multi_select.MultiSelect.getSelected">
+<code class="descname">getSelected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.getSelected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.getSelected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Description</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>TYPE</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.multi_select.MultiSelect.redraw">
+<code class="descname">redraw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.redraw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.redraw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.multi_select.MultiSelect.check_cursor_up">
+<code class="descname">check_cursor_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.check_cursor_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.check_cursor_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.multi_select.MultiSelect.check_cursor_down">
+<code class="descname">check_cursor_down</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.check_cursor_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.check_cursor_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.multi_select.MultiSelect.curses_loop">
+<code class="descname">curses_loop</code><span class="sig-paren">(</span><em>stdscr</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.curses_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.curses_loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stdscr</strong> (<em>TYPE</em>) – Description</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">app_utils.KeyboardInterruption</span></code> – Description</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/cinnamon-logo.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="python_modules.menu.html"
+                        title="previous chapter">python_modules.menu module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../coverage/c.html"
+                        title="next chapter">Undocumented C API elements</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/modules/python_modules/python_modules.multi_select.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../coverage/c.html" title="Undocumented C API elements"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="python_modules.menu.html" title="python_modules.menu module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Cinnamon Tools  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >python_modules</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python_modules.html" >python_modules package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2018, Odyseus.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>

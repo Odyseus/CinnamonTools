@@ -1,0 +1,720 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>python_modules.localized_help_utils &#8212; Cinnamon Tools  documentation</title>
+    <link rel="stylesheet" href="../../_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/cinnamon-logo.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Cinnamon Tools  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for python_modules.localized_help_utils</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Utils for the locallized_help_creator module.</span>
+
+<span class="sd">Attributes</span>
+<span class="sd">----------</span>
+<span class="sd">BASE_CSS : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">BOOTSTRAP_ALERT : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">BOOTSTRAP_PANEL : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">BOXED_CONTAINER : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">HTML_DOC : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">INTRODUCTION : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">LOCALE_SECTION : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">OPTION : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">README_DOC : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">README_POEDITOR_BLOCK : TYPE</span>
+<span class="sd">    Description</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">gettext</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">copy2</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">app_utils</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">polib</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">SystemError</span><span class="p">,</span> <span class="ne">ImportError</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">MissingDependencyModule</span><span class="p">(</span><span class="s2">&quot;polib Python module missing.&quot;</span><span class="p">)</span>
+
+
+<span class="n">HTML_DOC</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;!DOCTYPE html&gt;</span>
+<span class="s2">&lt;html&gt;</span>
+<span class="s2">&lt;head&gt;</span>
+<span class="s2">    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;</span>
+<span class="s2">    &lt;title&gt;</span><span class="si">{title}</span><span class="s2">&lt;/title&gt;</span>
+<span class="s2">    &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;./icon.png&quot;&gt;</span>
+<span class="s2">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span>
+<span class="s2">    &lt;script type=&quot;text/javascript&quot;&gt;</span>
+<span class="s2">    </span><span class="si">{js_localizations_handler}</span><span class="s2"></span>
+<span class="s2">    &lt;/script&gt;</span>
+<span class="s2">    &lt;style type=&quot;text/css&quot;&gt;</span>
+<span class="s2">    </span><span class="si">{css_bootstrap}</span><span class="s2"></span>
+<span class="s2">    </span><span class="si">{css_tweaks}</span><span class="s2"></span>
+<span class="s2">    </span><span class="si">{css_base}</span><span class="s2"></span>
+<span class="s2">    </span><span class="si">{css_custom}</span><span class="s2"></span>
+<span class="s2">    &lt;/style&gt;</span>
+<span class="s2">&lt;/head&gt;</span>
+<span class="s2">&lt;body&gt;</span>
+<span class="s2">&lt;noscript&gt;</span>
+<span class="s2">&lt;div class=&quot;alert alert-warning&quot;&gt;</span>
+<span class="s2">&lt;p&gt;&lt;strong&gt;Oh snap! This page needs JavaScript enabled to display correctly.&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="s2">&lt;p&gt;&lt;strong&gt;This page uses JavaScript only to switch between the available languages and/or display images.&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="s2">&lt;p&gt;&lt;strong&gt;There are no tracking services of any kind and never will be (at least, not from my side).&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="s2">&lt;/div&gt; &lt;!-- .alert.alert-warning --&gt;</span>
+<span class="s2">&lt;/noscript&gt;</span>
+<span class="s2">&lt;div id=&quot;mainarea&quot;&gt;</span>
+<span class="s2">&lt;nav class=&quot;navbar navbar-default navbar-fixed-top&quot; role=&quot;navigation&quot;&gt;</span>
+<span class="s2">    &lt;div class=&quot;container-fluid&quot;&gt;</span>
+<span class="s2">    &lt;div class=&quot;navbar-header&quot;&gt;</span>
+<span class="s2">        &lt;ul class=&quot;nav navbar-nav navbar-left&quot;&gt;</span>
+<span class="s2">            &lt;li&gt;&lt;a id=&quot;nav-xlet-help&quot; class=&quot;js_smoothScroll navbar-brand&quot; href=&quot;#xlet-help&quot;&gt;Help&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">            &lt;li&gt;&lt;a id=&quot;nav-xlet-contributors&quot; class=&quot;js_smoothScroll navbar-brand&quot; href=&quot;#xlet-contributors&quot;&gt;Contributors&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">            &lt;li&gt;&lt;a id=&quot;nav-xlet-changelog&quot; class=&quot;js_smoothScroll navbar-brand&quot; href=&quot;#xlet-changelog&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">        &lt;/ul&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &lt;form class=&quot;navbar-form navbar-right&quot;&gt;</span>
+<span class="s2">        &lt;div class=&quot;form-group&quot;&gt;</span>
+<span class="s2">            &lt;span class=&quot;standalone-glyphicon-globe-wrapper&quot;&gt;&lt;span class=&quot;standalone-glyphicon-globe&quot;&gt;&lt;/span&gt;&lt;/span&gt;</span>
+<span class="s2">&lt;!-- WARNING!!! --&gt;</span>
+<span class="s2">&lt;!-- Using the Bootstrap classes &quot;form-control&quot; or &quot;input-sm&quot; and the like</span>
+<span class="s2">     breaks the styling of the &quot;select&quot; elements!!! ¬¬ --&gt;</span>
+<span class="s2">            &lt;select class=&quot;form-control-static&quot; id=&quot;localization-switch&quot; onchange=&quot;self.toggleLocalizationVisibility(value, this);&quot;&gt;</span>
+<span class="si">{options}</span><span class="s2"></span>
+<span class="s2">            &lt;/select&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">    &lt;/form&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">&lt;/nav&gt;</span>
+<span class="s2">&lt;span id=&quot;xlet-help&quot; style=&quot;padding-top:70px;&quot;&gt;</span>
+<span class="s2">&lt;div class=&quot;container boxed&quot;&gt;</span>
+<span class="si">{sections}</span><span class="s2"></span>
+<span class="s2">&lt;/div&gt; &lt;!-- .container.boxed --&gt;</span>
+<span class="s2">&lt;span id=&quot;xlet-contributors&quot; style=&quot;padding-top:140px;&quot;&gt;</span>
+<span class="si">{contributors}</span><span class="s2"></span>
+<span class="s2">&lt;span id=&quot;xlet-changelog&quot; style=&quot;padding-top:70px;&quot;&gt;</span>
+<span class="si">{changelog}</span><span class="s2"></span>
+<span class="s2">&lt;/div&gt; &lt;!-- #mainarea --&gt;</span>
+<span class="s2">&lt;script type=&quot;text/javascript&quot;&gt;toggleLocalizationVisibility(null);</span>
+<span class="si">{js_custom}</span><span class="s2">&lt;/script&gt;</span>
+<span class="s2">&lt;/body&gt;</span>
+<span class="s2">&lt;/html&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">BOXED_CONTAINER</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;div class=&quot;container boxed&quot;&gt;</span>
+<span class="si">{0}</span><span class="s2"></span>
+<span class="s2">&lt;/div&gt; &lt;!-- .container.boxed --&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># I have to add the custom CSS code separately and not include it directly in the</span>
+<span class="c1"># HTML templates because the .format() function breaks when there is CSS code present</span>
+<span class="c1"># in the string.</span>
+<span class="n">BASE_CSS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">/* For fixed header */</span>
+<span class="s2">body {</span>
+<span class="s2">    padding-top: 70px;</span>
+<span class="s2">}</span>
+<span class="s2">/* For fixed header */</span>
+
+<span class="s2">/* Tweak spacing of the compatibility badges inside a panel */</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-disclaimer,</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-badge {</span>
+<span class="s2">    margin: 5px;</span>
+<span class="s2">    line-height: 2.5em;</span>
+<span class="s2">}</span>
+<span class="s2">/* Tweak spacing of the compatibility badges inside a panel */</span>
+
+<span class="s2">/* Tweak appearance of the compatibility badges inside a panel */</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-disclaimer {</span>
+<span class="s2">    font-weight: bold;</span>
+<span class="s2">}</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-badge &gt; .label-primary {</span>
+<span class="s2">    border-top-right-radius: 0;</span>
+<span class="s2">    border-bottom-right-radius: 0;</span>
+<span class="s2">}</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-badge &gt; .label-warning,</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-badge &gt; .label-success,</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-badge &gt; .label-info {</span>
+<span class="s2">    border-top-left-radius: 0;</span>
+<span class="s2">    border-bottom-left-radius: 0;</span>
+<span class="s2">}</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-badge &gt; .label-warning {</span>
+<span class="s2">    background-color: #dfb317;</span>
+<span class="s2">}</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-badge &gt; .label-success {</span>
+<span class="s2">    background-color: #97CA00;</span>
+<span class="s2">}</span>
+<span class="s2">.panel-body.compatibility &gt; .compatibility-badge &gt; .label-info {</span>
+<span class="s2">    background-color: #439cf7;</span>
+<span class="s2">}</span>
+<span class="s2">/* Tweak appearance of the compatibility badges inside a panel */</span>
+
+<span class="s2">.navbar-form {</span>
+<span class="s2">    margin-top: 8px !important;</span>
+<span class="s2">}</span>
+
+<span class="s2">.navbar-form .form-group {</span>
+<span class="s2">    display: block !important;</span>
+<span class="s2">}</span>
+
+<span class="s2">/* Override %100 width so it doesn&#39;t occupy the entire page width. */</span>
+<span class="s2">#localization-switch {</span>
+<span class="s2">    padding-top: 2px !important;</span>
+<span class="s2">    padding-bottom: 2px !important;</span>
+<span class="s2">    font-weight: bold !important;</span>
+<span class="s2">}</span>
+
+<span class="s2">/* Wrapper class for resizing and centering the language selector image</span>
+<span class="s2">   on the navigation bar of the help files */</span>
+<span class="s2">.standalone-glyphicon-globe-wrapper {</span>
+<span class="s2">    vertical-align: middle;</span>
+<span class="s2">    display: inline-block;</span>
+<span class="s2">    width: 32px;</span>
+<span class="s2">    height: 32px;</span>
+<span class="s2">}</span>
+
+<span class="s2">/* Replaces the glyphicon-globe class */</span>
+<span class="s2">.standalone-glyphicon-globe:before {</span>
+<span class="s2">    content: url(&#39;data:image/svg+xml;utf8,&lt;svg enable-background=&quot;new 0 0 64 64&quot; id=&quot;Layer_1&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 64 64&quot; xml:space=&quot;preserve&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;&lt;path d=&quot;M32,7.173c-13.689,0-24.826,11.137-24.826,24.826c0,5.613,1.828,10.909,5.285,15.314c4.743,6.046,11.866,9.514,19.542,9.514  s14.799-3.468,19.543-9.515c3.456-4.406,5.283-9.702,5.283-15.313C56.826,18.31,45.689,7.173,32,7.173z M41.525,30.543  c-0.109-2.41-0.472-4.68-1.003-6.784c3.066-0.744,5.701-1.81,7.858-2.912c1.914,2.802,3.111,6.12,3.373,9.696H41.525z M31.83,51.822  c-0.07-0.001-0.139-0.005-0.208-0.006c-1.283-1.658-3.306-4.707-4.782-8.936c1.611-0.254,3.33-0.411,5.161-0.411  c1.614,0,3.143,0.121,4.592,0.322C35.089,46.914,33.082,50.079,31.83,51.822z M32,39.469c-2.15,0-4.151,0.204-6.022,0.521  c-0.488-1.96-0.833-4.112-0.94-6.448h13.494c-0.121,2.252-0.498,4.38-1.025,6.349C35.782,39.627,33.946,39.469,32,39.469z   M12.248,30.543c0.262-3.576,1.459-6.894,3.373-9.696c2.034,1.039,4.504,2.048,7.36,2.785c-0.499,2.106-0.834,4.414-0.932,6.912  H12.248z M25.037,30.543c0.099-2.267,0.423-4.363,0.887-6.281c1.89,0.321,3.917,0.511,6.076,0.511c1.97,0,3.826-0.162,5.572-0.433  c0.5,1.928,0.853,4.005,0.964,6.202H25.037z M31.837,12.181c1.277,1.773,3.334,5.021,4.844,9.258  c-1.476,0.209-3.035,0.334-4.682,0.334c-1.853,0-3.597-0.154-5.233-0.414c1.482-4.338,3.552-7.473,4.856-9.167  C31.695,12.191,31.765,12.182,31.837,12.181z M46.442,18.459c-1.896,0.923-4.16,1.796-6.761,2.415  c-1.168-3.427-2.681-6.264-3.985-8.343C39.899,13.328,43.626,15.457,46.442,18.459z M27.597,12.683  c-1.284,2.001-2.711,4.708-3.809,8.06c-2.382-0.609-4.466-1.426-6.23-2.284C20.215,15.627,23.683,13.575,27.597,12.683z   M12.237,33.543h9.814c0.107,2.564,0.465,4.925,0.99,7.073c-2.907,0.746-5.359,1.747-7.289,2.723  C13.71,40.426,12.506,37.086,12.237,33.543z M17.692,45.718c1.685-0.808,3.77-1.608,6.172-2.218c1.091,3.254,2.49,5.883,3.747,7.839  C23.837,50.491,20.401,48.552,17.692,45.718z M35.689,51.48c1.277-2.034,2.756-4.796,3.916-8.129  c2.589,0.61,4.833,1.471,6.702,2.369C43.431,48.726,39.736,50.722,35.689,51.48z M48.252,43.333  c-2.122-1.072-4.733-2.126-7.788-2.862c0.556-2.143,0.939-4.462,1.057-6.928h10.242C51.494,37.083,50.291,40.422,48.252,43.333z&quot; style=&quot;fill:</span><span class="si">%23f</span><span class="s2">fffff;fill-opacity:1;&quot;/&gt;&lt;/svg&gt;&#39;) !important;</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">INTRODUCTION</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="si">{0}</span><span class="s2"></span>
+<span class="s2">&lt;div style=&quot;font-weight:bold;&quot; class=&quot;alert alert-warning&quot;&gt;</span>
+<span class="si">{1}</span><span class="s2"></span>
+<span class="si">{2}</span><span class="s2"></span>
+<span class="si">{3}</span><span class="s2"></span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">LOCALE_SECTION</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;div id=&quot;</span><span class="si">{language_code}</span><span class="s2">&quot; class=&quot;localization-content</span><span class="si">{hidden}</span><span class="s2">&quot;&gt;</span>
+<span class="si">{introduction}</span><span class="s2"></span>
+<span class="si">{compatibility}</span><span class="s2"></span>
+<span class="si">{content_base}</span><span class="s2"></span>
+<span class="si">{content_extra}</span><span class="s2"></span>
+<span class="si">{localize_info}</span><span class="s2"></span>
+<span class="si">{only_english_alert}</span><span class="s2"></span>
+<span class="s2">&lt;/div&gt; &lt;!-- .localization-content --&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># {endonym} inside an HTML comment at the very begening of the string so I can sort all</span>
+<span class="c1"># the &quot;option&quot; elements by endonym.</span>
+<span class="n">OPTION</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;!-- </span><span class="si">{endonym}</span><span class="s2"> --&gt;&lt;option </span><span class="si">{selected}</span><span class="s2">data-title=&quot;</span><span class="si">{title}</span><span class="s2">&quot; data-xlet-help=&quot;</span><span class="si">{xlet_help}</span><span class="s2">&quot; data-xlet-contributors=&quot;</span><span class="si">{xlet_contributors}</span><span class="s2">&quot; data-xlet-changelog=&quot;</span><span class="si">{xlet_changelog}</span><span class="s2">&quot; value=&quot;</span><span class="si">{language_code}</span><span class="s2">&quot;&gt;</span><span class="si">{endonym}</span><span class="s2"> (</span><span class="si">{language_name}</span><span class="s2">)&lt;/option&gt;&quot;&quot;&quot;</span>
+
+
+<span class="n">README_POEDITOR_BLOCK</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;tr&gt;&lt;td&gt;&lt;img src=&quot;https://odyseus.github.io/CinnamonTools/lib/img/translate.svg&quot;&gt;&lt;/td&gt;</span>
+<span class="s2">&lt;td&gt;&lt;a href=&quot;</span><span class="si">{poeditor_url}</span><span class="s2">&quot;&gt;&lt;strong&gt;</span>
+<span class="s2">Help translate </span><span class="si">{xlet_name}</span><span class="s2"></span>
+<span class="s2">&lt;/strong&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">README_DOC</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{readme_compatibility}</span><span class="s2"></span>
+<span class="si">{readme_content}</span><span class="s2"></span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">BOOTSTRAP_PANEL</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;div class=&quot;panel panel-</span><span class="si">{context}</span><span class="s2">&quot;&gt;</span>
+<span class="s2">    &lt;div class=&quot;panel-heading&quot;&gt;</span>
+<span class="s2">        &lt;h3 class=&quot;panel-title&quot;&gt;</span><span class="si">{title}</span><span class="s2">&lt;/h3&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &lt;div class=&quot;panel-body </span><span class="si">{custom_class}</span><span class="s2">&quot;&gt;</span>
+<span class="s2">        </span><span class="si">{content}</span><span class="s2"></span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">BOOTSTRAP_ALERT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;div class=&quot;alert alert-</span><span class="si">{context}</span><span class="s2">&quot;&gt;</span>
+<span class="si">{content}</span><span class="s2"></span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="n">COMPATIBILITY_BADGE</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=&quot;compatibility-badge&quot;&gt;&lt;span class=&quot;label label-primary&quot;&gt;Cinnamon</span><span class="se">\</span>
+<span class="s1">&lt;/span&gt;&lt;span class=&quot;label label-</span><span class="si">{0}</span><span class="s1">&quot;&gt;</span><span class="si">{1}</span><span class="s1">&lt;/span&gt;&lt;/span&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+
+<div class="viewcode-block" id="HTMLTemplates"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.HTMLTemplates">[docs]</a><span class="k">class</span> <span class="nc">HTMLTemplates</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    boxed_container : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    bt_alert : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    bt_panel : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    css_base : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    html_doc : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    introduction_base : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    locale_section_base : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    option_base : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    readme_doc : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    readme_poeditor_block : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Summary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">html_doc</span> <span class="o">=</span> <span class="n">HTML_DOC</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">css_base</span> <span class="o">=</span> <span class="n">BASE_CSS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">introduction_base</span> <span class="o">=</span> <span class="n">INTRODUCTION</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">locale_section_base</span> <span class="o">=</span> <span class="n">LOCALE_SECTION</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">option_base</span> <span class="o">=</span> <span class="n">OPTION</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boxed_container</span> <span class="o">=</span> <span class="n">BOXED_CONTAINER</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readme_doc</span> <span class="o">=</span> <span class="n">README_DOC</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readme_poeditor_block</span> <span class="o">=</span> <span class="n">README_POEDITOR_BLOCK</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bt_panel</span> <span class="o">=</span> <span class="n">BOOTSTRAP_PANEL</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bt_alert</span> <span class="o">=</span> <span class="n">BOOTSTRAP_ALERT</span></div>
+
+
+<div class="viewcode-block" id="XletMetadata"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.XletMetadata">[docs]</a><span class="k">class</span> <span class="nc">XletMetadata</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xlet_meta : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xlet_dir</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        xlet_dir : TYPE</span>
+<span class="sd">            Description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_dir</span><span class="p">,</span> <span class="s2">&quot;metadata.json&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+            <span class="n">raw_meta</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_meta</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">detail</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to get metadata - missing, corrupt, or incomplete metadata.json file&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">detail</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Translations"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.Translations">[docs]</a><span class="k">class</span> <span class="nc">Translations</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Summary</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Summary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_translations</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_null</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">NullTranslations</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Translations.store"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.Translations.store">[docs]</a>    <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">localedir</span><span class="p">,</span> <span class="n">languages</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        domain : TYPE</span>
+<span class="sd">            Description</span>
+<span class="sd">        localedir : TYPE</span>
+<span class="sd">            Description</span>
+<span class="sd">        languages : TYPE</span>
+<span class="sd">            Description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">languages</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">translations</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span>
+                                                   <span class="n">localedir</span><span class="p">,</span>
+                                                   <span class="p">[</span><span class="n">lang</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No translations found for language code &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lang</span><span class="p">))</span>
+                <span class="n">translations</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">if</span> <span class="n">translations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_translations</span><span class="p">[</span><span class="n">lang</span><span class="p">]</span> <span class="o">=</span> <span class="n">translations</span></div>
+
+<div class="viewcode-block" id="Translations.get"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.Translations.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">languages</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        languages : TYPE</span>
+<span class="sd">            Description</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TYPE</span>
+<span class="sd">            Description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">languages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">lang</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translations</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translations</span><span class="p">[</span><span class="n">lang</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_null</span></div></div>
+
+
+<div class="viewcode-block" id="HTMLInlineAssets"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.HTMLInlineAssets">[docs]</a><span class="k">class</span> <span class="nc">HTMLInlineAssets</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    css_bootstrap : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    css_tweaks : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    js_localizations_handler : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    path_css_bootstrap : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    path_css_tweaks : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    path_js_localizations_handler : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_folder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repo_folder : TYPE</span>
+<span class="sd">            Description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HTMLInlineAssets</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">css_bootstrap</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">css_tweaks</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">js_localizations_handler</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">assets_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;html_assets&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_css_bootstrap</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;bootstrap-for-standalone.min.css&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_css_tweaks</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;tweaks.css&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_js_localizations_handler</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;js&quot;</span><span class="p">,</span> <span class="s2">&quot;localizations-handler.js&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Do the &quot;heavy lifting&quot; first.</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_css_bootstrap</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_css_bootstrap</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bootstrap_css</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">css_bootstrap</span> <span class="o">=</span> <span class="n">bootstrap_css</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_css_tweaks</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_css_tweaks</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tweaks_css</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">css_tweaks</span> <span class="o">=</span> <span class="n">tweaks_css</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_js_localizations_handler</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_js_localizations_handler</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">localizations_handler_js</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">js_localizations_handler</span> <span class="o">=</span> <span class="n">localizations_handler_js</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_parent_dir"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.get_parent_dir">[docs]</a><span class="k">def</span> <span class="nf">get_parent_dir</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">go_up</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;get_parent_dir</span>
+
+<span class="sd">    Extract the path of the parent directory of a file path.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fpath : str</span>
+<span class="sd">        The full path to a file.</span>
+<span class="sd">    go_up : int, optional</span>
+<span class="sd">        Description</span>
+
+<span class="sd">    Keyword Arguments</span>
+<span class="sd">    -----------------</span>
+<span class="sd">    go_up : int</span>
+<span class="sd">        How many directories to go up. (default: {0})</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The new path to a directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">go_up</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">go_up</span><span class="p">)):</span>
+            <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">dir_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dir_path</span></div>
+
+
+<div class="viewcode-block" id="get_time_zone"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.get_time_zone">[docs]</a><span class="k">def</span> <span class="nf">get_time_zone</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span><span class="o">.</span><span class="n">tm_isdst</span> <span class="ow">and</span> <span class="n">time</span><span class="o">.</span><span class="n">daylight</span><span class="p">:</span>
+        <span class="n">tzone</span> <span class="o">=</span> <span class="o">-</span><span class="n">time</span><span class="o">.</span><span class="n">altzone</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tzone</span> <span class="o">=</span> <span class="o">-</span><span class="n">time</span><span class="o">.</span><span class="n">timezone</span>
+
+    <span class="c1"># Up to here, tzone is an integer.</span>
+    <span class="n">tzone</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tzone</span> <span class="o">/</span> <span class="mi">60</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span>
+
+    <span class="c1"># And the ugliness begins!!!</span>
+    <span class="p">[</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">tzone</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+    <span class="n">isNegative</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="n">hours</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:03d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="k">if</span> <span class="n">isNegative</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="si">{0:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+    <span class="n">minutes</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">hours</span> <span class="k">if</span> <span class="n">isNegative</span> <span class="k">else</span> <span class="s2">&quot;+&quot;</span> <span class="o">+</span> <span class="n">hours</span><span class="p">)</span> <span class="o">+</span> <span class="n">minutes</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;+0000&quot;</span></div>
+
+
+<div class="viewcode-block" id="get_timestamp"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.get_timestamp">[docs]</a><span class="k">def</span> <span class="nf">get_timestamp</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Returns a time stamp in the same format used by xgettex.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="c1"># Since the &quot;padding&quot; with zeroes of the rest of the values converts</span>
+    <span class="c1"># them into strings, lets convert to string the year too.</span>
+    <span class="n">YEAR</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+    <span class="c1"># &quot;Pad&quot; all the following values with zeroes.</span>
+    <span class="n">MO</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">month</span><span class="p">)</span>
+    <span class="n">DA</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+    <span class="n">HO</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span>
+    <span class="n">MI</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span>
+    <span class="n">ZONE</span> <span class="o">=</span> <span class="n">get_time_zone</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">:</span><span class="si">%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">YEAR</span><span class="p">,</span> <span class="n">MO</span><span class="p">,</span> <span class="n">DA</span><span class="p">,</span> <span class="n">HO</span><span class="p">,</span> <span class="n">MI</span><span class="p">,</span> <span class="n">ZONE</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_po_file"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.validate_po_file">[docs]</a><span class="k">def</span> <span class="nf">validate_po_file</span><span class="p">(</span><span class="n">pofile_path</span><span class="p">,</span> <span class="n">lang_name</span><span class="p">,</span> <span class="n">xlet_meta</span><span class="p">,</span> <span class="n">xlet_slug</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pofile_path : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    lang_name : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    xlet_meta : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    xlet_slug : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">po_file</span> <span class="o">=</span> <span class="n">polib</span><span class="o">.</span><span class="n">pofile</span><span class="p">(</span><span class="n">pofile_path</span><span class="p">,</span> <span class="n">wrapwidth</span><span class="o">=</span><span class="mi">99999999</span><span class="p">)</span>
+    <span class="n">do_save</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Add package information to the .po files headers.</span>
+    <span class="k">if</span> <span class="n">xlet_meta</span><span class="p">:</span>
+        <span class="n">do_save</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span>
+            <span class="s2">&quot;Project-Id-Version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xlet_slug</span><span class="p">,</span> <span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Sanitize language code to be UNIX compliant</span>
+    <span class="k">if</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]:</span>
+        <span class="n">do_save</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Add the Report-Msgid-Bugs- field to the header.</span>
+    <span class="k">if</span> <span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;https://github.com/Odyseus/CinnamonTools&quot;</span><span class="p">:</span>
+        <span class="n">do_save</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/Odyseus/CinnamonTools&quot;</span>
+
+    <span class="c1"># Add the Language-Team field to the header to STFU all msgfmt warnings.</span>
+    <span class="k">if</span> <span class="s2">&quot;Language-Team&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language-Team&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="n">do_save</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language-Team&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lang_name</span>
+
+    <span class="c1"># Add the PO-Revision-Date field to the header to STFU all msgfmt warnings.</span>
+    <span class="k">if</span> <span class="s2">&quot;PO-Revision-Date&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+        <span class="n">do_save</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;PO-Revision-Date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_timestamp</span><span class="p">()</span>
+
+    <span class="c1"># Add the Last-Translator field to the header to STFU all msgfmt warnings.</span>
+    <span class="k">if</span> <span class="s2">&quot;Last-Translator&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+        <span class="n">do_save</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Last-Translator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;X-Generator&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;POEditor.com&quot;</span><span class="p">:</span>
+        <span class="n">do_save</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;X-Generator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># Save only if the PO file metadata/header has been changed.</span>
+    <span class="k">if</span> <span class="n">do_save</span><span class="p">:</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="save_file"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.save_file">[docs]</a><span class="k">def</span> <span class="nf">save_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    data : TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+        <span class="n">quit</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># This copies the HELP.html files just created to</span>
+        <span class="c1"># docs_sources/_static/xlets_help_pages for on-line hosting.</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;HELP.html&quot;</span><span class="p">):</span>
+            <span class="n">repo_folder</span> <span class="o">=</span> <span class="n">get_parent_dir</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">xlet_slug</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">get_parent_dir</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+            <span class="n">destination</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;docs_sources&quot;</span><span class="p">,</span>
+                                       <span class="s2">&quot;_static&quot;</span><span class="p">,</span> <span class="s2">&quot;xlets_help_pages&quot;</span><span class="p">,</span> <span class="n">xlet_slug</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span><span class="p">)</span>
+
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">destination</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">destination</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+
+            <span class="n">copy2</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_compatibility"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.get_compatibility">[docs]</a><span class="k">def</span> <span class="nf">get_compatibility</span><span class="p">(</span><span class="n">xlet_meta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">for_readme</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Summary</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xlet_meta : None, optional</span>
+<span class="sd">        Description</span>
+<span class="sd">    for_readme : bool, optional</span>
+<span class="sd">        Description</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TYPE</span>
+<span class="sd">        Description</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">for_readme</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">+=</span> <span class="s2">&quot;## Compatibility</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+
+    <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;cinnamon-version&quot;</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">for_readme</span><span class="p">:</span>
+            <span class="c1"># The README files uses SVG images hosted on-line for the compatibility badges.</span>
+            <span class="n">data</span> <span class="o">+=</span> <span class="s2">&quot;![Cinnamon </span><span class="si">{0}</span><span class="s2">](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-</span><span class="si">{0}</span><span class="s2">.svg)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># The help files uses a custom Bootstrap label for the compatibility badges.</span>
+            <span class="k">if</span> <span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">]:</span>
+                <span class="n">data</span> <span class="o">+=</span> <span class="n">COMPATIBILITY_BADGE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;warning&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;9&quot;</span><span class="p">]:</span>
+                <span class="n">data</span> <span class="o">+=</span> <span class="n">COMPATIBILITY_BADGE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">]:</span>
+                <span class="n">data</span> <span class="o">+=</span> <span class="n">COMPATIBILITY_BADGE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">+=</span> <span class="n">COMPATIBILITY_BADGE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;warning&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">for_readme</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;span style=</span><span class="se">\&quot;</span><span class="s2">color:red;</span><span class="se">\&quot;</span><span class="s2">&gt;&lt;strong&gt;Do not install on any other version of Cinnamon.&lt;/strong&gt;&lt;/span&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/cinnamon-logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Cinnamon Tools  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2018, Odyseus.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>

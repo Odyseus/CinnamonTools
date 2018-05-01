@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Code styling/guidelines &#8212; Cinnamon Tools  documentation</title>
+    <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/cinnamon-logo.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Help pages for all xlets in this repository" href="cinnamontools-help-pages.html" />
+    <link rel="prev" title="Development notes" href="cinnamontools-dev-notes.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cinnamontools-help-pages.html" title="Help pages for all xlets in this repository"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cinnamontools-dev-notes.html" title="Development notes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Cinnamon Tools  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="code-styling-guidelines">
+<h1>Code styling/guidelines<a class="headerlink" href="#code-styling-guidelines" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="css-sass">
+<h2>CSS/SASS<a class="headerlink" href="#css-sass" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>CSS files that where generated from SASS sources are exempt from any styling rules. Trying to configure the output of SASS generated files is like trying to teach to talk to a rock!!! ¬¬</p></li>
+<li><p>Styling rules for CSS files:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>4 spaces indentation.</p></li>
+<li><p>Open bracket same line as rule.</p></li>
+<li><p>Space before open bracket.</p></li>
+<li><p>Closing bracket on its own line at the start of last line of rule.</p></li>
+<li><p>One selector per line.</p></li>
+<li><p>Use hexadecimal colors unless alpha is needed.</p></li>
+<li><p>Space after <code class="docutils literal notranslate"><span class="pre">:</span></code> of each declaration.</p></li>
+<li><p>Each declaration on its own line.</p></li>
+<li><p>All declarations ending with semi-colon. NO EXCEPTIONS.</p></li>
+<li><p>Comma-separated property values should include a space after each comma.</p></li>
+<li><p>Spaces after commas within rgba(), hsla(), or rect() values. If I couldn’t read a the freaking parenthesis, I would go and program some garbage in C-sharp!!!</p></li>
+<li><p>Prefix property values or color parameters with a leading zero (e.g., 0.5 instead of .5 and -0.5px instead of -.5px).</p></li>
+<li><p>Do not specify units for zero values, e.g., <code class="docutils literal notranslate"><span class="pre">margin:</span> <span class="pre">0;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">margin:</span> <span class="pre">0px;</span></code>.</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+<ol class="arabic" start="2">
+<li><p>Styling rules for SASS files:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Same as CSS files.</p></li>
+<li><p>For the rest, don’t even bother. Follow the rules forced by the <em>code formatter</em> in use…until it breaks due to an update that introduced <em>new features</em>. Then follow the rules forced by default by the following <em>code formatter</em> that works. It is absolutely pointless to rely on anything that it is based on web technologies and designed for and/or by web developers (in the span of just six weeks it will be broken again). ¬¬</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="javascript">
+<h2>JavaScript<a class="headerlink" href="#javascript" title="Permalink to this headline">¶</a></h2>
+<p>This is an abhorrent/always-evolving/never-finished language with an abhorrent release cycle whose only goal seems to be the destruction of software development (cursed the day that web developers started contaminating the software industry!!!). Guidelines will never have a chance to survive the countless stupid implementations by the countless JS engines.</p>
+<ol class="arabic">
+<li><p>Until the <em>geniuses</em> at Mozilla and/or Gnome decide to FINALLY agree in a common AND unique implementation of JS classes, KEEP using <em>prototypes</em>.</p></li>
+<li><p>To avoid strict warnings triggered by SpiderMonkey:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Define all symbols that are meant to be exported with <strong>var</strong>. Use <strong>let</strong> or <strong>const</strong> to define symbols that are going to be used only at a module context.</p></li>
+<li><p>All properties should be defined.</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Code styling:</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p>Imports defined with PascalCase whether they are defined with <strong>let</strong>, <strong>var</strong> or <strong>const</strong>.</p></li>
+<li><p>Constants defined with uppercase and low dashes.</p></li>
+<li><p>Variables/Functions defined with camelCase.</p></li>
+<li><p>Spaces around operators ( = + - * / ), and after commas.</p></li>
+<li><p>4 spaces for indentation of code blocks.</p></li>
+<li><p>End simple statements with a semicolon.</p></li>
+<li><p>Rules for complex (compound) statements:</p>
+<blockquote>
+<div><ol class="arabic simple" start="0">
+<li><p>Put opening bracket at the end of the first line.</p></li>
+<li><p>Use one space before the opening bracket.</p></li>
+<li><p>Put closing bracket on a new line, without leading spaces.</p></li>
+<li><p>Do not end complex statement with a semicolon.</p></li>
+<li><p>Always use brackets, no exceptions.</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>General rules for object definitions:</p>
+<blockquote>
+<div><ol class="arabic simple" start="0">
+<li><p>Place the opening bracket on the same line as the object name.</p></li>
+<li><p>Use colon plus one space between each property and its value.</p></li>
+<li><p>Use quotes around string values, not around numeric values.</p></li>
+<li><p>Do not add a comma after the last property-value pair.</p></li>
+<li><p>Place the closing bracket on a new line, without leading spaces.</p></li>
+<li><p>Always end an object definition with a semicolon.</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>THERE IS ONLY PYTHON 3!!! NOTHING ELSE EXISTS!!!</p></li>
+<li><p>The minimum Python 3 version supported is the one shipped with Ubuntu LTS versions until EOL.</p></li>
+<li><p>The maximum Python 3 version supported is the one considered by Python developers as stable.</p></li>
+<li><p>THERE IS ONLY PYTHON 3!!! NOTHING ELSE EXISTS!!!</p></li>
+<li><p>REPEAT PREVIOUS UNTIL THE END OF TIMES!!!</p></li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/cinnamon-logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Code styling/guidelines</a><ul>
+<li><a class="reference internal" href="#css-sass">CSS/SASS</a></li>
+<li><a class="reference internal" href="#javascript">JavaScript</a></li>
+<li><a class="reference internal" href="#python">Python</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cinnamontools-dev-notes.html"
+                        title="previous chapter">Development notes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cinnamontools-help-pages.html"
+                        title="next chapter">Help pages for all xlets in this repository</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/includes/cinnamontools-code-styling.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cinnamontools-help-pages.html" title="Help pages for all xlets in this repository"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cinnamontools-dev-notes.html" title="Development notes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Cinnamon Tools  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2018, Odyseus.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,600 @@
+# This is a template file for translating the 0WallpaperChangerApplet package.
+# Copyright (C) 2016-2018
+# This file is distributed under the same license as the 0WallpaperChangerApplet package.
+# Odyseus <EMAIL@ADDRESS>, 2016-2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0WallpaperChangerApplet 1.03\n"
+"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
+
+#: ../../__app__/python_modules/localized_help_creator.py:237
+msgid "The following two sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:241
+msgid "Do not install on any other version of Cinnamon."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:247
+msgid "Compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:325 settings.py:1025
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:327
+msgid "Changelog"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. "Help for <xlet_name>"
+#: ../../__app__/python_modules/localized_help_creator.py:328 ../../__app__/python_modules/localized_help_creator.py:354
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "IMPORTANT!!!"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:357
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:371
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:374
+msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgstr ""
+
+#. TO TRANSLATORS: This is the applet name.
+#. metadata.json->name
+#: settings.py:61
+msgid "Wallpaper Changer"
+msgstr ""
+
+#: settings.py:172
+msgid "Choose an Icon"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:175 settings.py:817 settings.py:1102 settings.py:1108
+msgid "_Cancel"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:176 settings.py:1110
+msgid "_Open"
+msgstr ""
+
+#: settings.py:179
+msgid "Image files"
+msgstr ""
+
+#: settings.py:276
+msgid "Warnings related to this specific section"
+msgstr ""
+
+#. Daemon settings
+#: settings.py:364
+msgid "Daemon"
+msgstr ""
+
+#: settings.py:368
+msgid "This is the current profile that the daemon will load."
+msgstr ""
+
+#: settings.py:369
+msgid "Current Profile"
+msgstr ""
+
+#: settings.py:383 utils.js:780
+msgid "Toggle and display the daemon status."
+msgstr ""
+
+#: settings.py:384 utils.js:770
+msgid "Daemon Status"
+msgstr ""
+
+#: settings.py:411
+msgid "Autostart Daemon"
+msgstr ""
+
+#: settings.py:412 applet.js:107
+msgid "When enabled, the daemon will be automatically started when the applet is loaded. If it is already running or this is disabled, no action will be taken."
+msgstr ""
+
+#: settings.py:416
+msgid "Wallpaper Timer Interval (seconds)"
+msgstr ""
+
+#: settings.py:425 settings.py:551
+msgid "Save"
+msgstr ""
+
+#: settings.py:436
+msgid "Manage keyboard shortcuts"
+msgstr ""
+
+#: settings.py:450 utils.js:673
+msgid "Next Wallpaper"
+msgstr ""
+
+#: settings.py:454 utils.js:676
+msgid "Previous Wallpaper"
+msgstr ""
+
+#: settings.py:458
+msgid "Open/Close Menu"
+msgstr ""
+
+#: settings.py:480
+msgid "Shortcut action"
+msgstr ""
+
+#: settings.py:496
+msgid "Shortcut"
+msgstr ""
+
+#: settings.py:507
+msgid "Other"
+msgstr ""
+
+#. Applet settings
+#: settings.py:513 settings.py:583
+msgid "Applet"
+msgstr ""
+
+#: settings.py:518
+msgid "Custom icon"
+msgstr ""
+
+#: settings.py:519
+msgid "Select a custom icon for the applet."
+msgstr ""
+
+#: settings.py:523
+msgid "Enter custom text to show in the panel."
+msgstr ""
+
+#: settings.py:526
+msgid "Custom label"
+msgstr ""
+
+#: settings.py:542
+msgid "Wallpaper Preview Width"
+msgstr ""
+
+#: settings.py:562
+msgid "Invert Menu Items Order"
+msgstr ""
+
+#: settings.py:567
+msgid "Remember Profiles State"
+msgstr ""
+
+#: settings.py:568 applet.js:122
+msgid "When enabled, the daemon will remember its current and next wallpaper for the current profile when the profile is changed. This means returning back to the profile will restore the previous background plus the next in queue."
+msgstr ""
+
+#: settings.py:572
+msgid "Show Notifications"
+msgstr ""
+
+#: settings.py:573 applet.js:117
+msgid "Display a notification each time an event happens with wallpaper changer. This does not stop the applet from reporting errors."
+msgstr ""
+
+#: settings.py:577
+msgid "Enable Logging"
+msgstr ""
+
+#: settings.py:578
+msgid "It enables the ability to log the output of several functions used by the applet."
+msgstr ""
+
+#: settings.py:586
+msgid "Manage profiles"
+msgstr ""
+
+#: settings.py:596
+msgid "Profile"
+msgstr ""
+
+#: settings.py:606 settings.py:807
+msgid "Create a new profile"
+msgstr ""
+
+#: settings.py:614 settings.py:780
+msgid "Remove profile"
+msgstr ""
+
+#: settings.py:654
+msgid "Path"
+msgstr ""
+
+#: settings.py:663
+msgid "Sub Folders"
+msgstr ""
+
+#: settings.py:691 settings.py:717
+msgid "Add Image"
+msgstr ""
+
+#: settings.py:694 settings.py:724
+msgid "Add Folder"
+msgstr ""
+
+#: settings.py:710
+msgid "Remove"
+msgstr ""
+
+#: settings.py:731
+msgid "Profiles"
+msgstr ""
+
+#: settings.py:741
+msgid "Click to set a new hotkey."
+msgstr ""
+
+#: settings.py:750
+msgid "Whether or not to include images from sub-folders."
+msgstr ""
+
+#: settings.py:760 settings.py:770
+msgid "Failed to update keybinding"
+msgstr ""
+
+#: settings.py:783
+#, python-format
+msgid "Are you sure you want to delete the profile »%s«?"
+msgstr ""
+
+#: settings.py:786
+msgid "Yes"
+msgstr ""
+
+#: settings.py:787
+msgid "No"
+msgstr ""
+
+#: settings.py:810
+msgid "Profile Name"
+msgstr ""
+
+#: settings.py:816
+msgid "OK"
+msgstr ""
+
+#: settings.py:929
+msgid "Contributors/Mentions:"
+msgstr ""
+
+#. TO TRANSLATORS:
+#. Here goes the name/s of the author/s of the translations.
+#. Only e-mail addresses and links to GitHub accounts are allowed. NOTHING MORE.
+#: settings.py:937
+msgid "translator-credits"
+msgstr ""
+
+#: settings.py:1007
+msgid "Reset settings to defaults"
+msgstr ""
+
+#: settings.py:1009
+msgid "Import settings from a file"
+msgstr ""
+
+#: settings.py:1011
+msgid "Export settings to a file"
+msgstr ""
+
+#: settings.py:1016
+msgid "Remember window size"
+msgstr ""
+
+#: settings.py:1021
+msgid "Restart Cinnamon"
+msgstr ""
+
+#: settings.py:1027
+msgid "About"
+msgstr ""
+
+#: settings.py:1034
+msgid "Manage settings"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. Warning: Trying to reset all AppletName settings!!!
+#: settings.py:1077
+#, python-format
+msgid "Warning: Trying to reset all %s settings!!!"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. Reset all AppletName settings to default?
+#: settings.py:1081
+#, python-format
+msgid "Reset all %s settings to default?"
+msgstr ""
+
+#: settings.py:1100
+msgid "Select or enter file to export to"
+msgstr ""
+
+#: settings.py:1103
+msgid "_Save"
+msgstr ""
+
+#: settings.py:1106
+msgid "Select a file to import"
+msgstr ""
+
+#: settings.py:1122
+msgid "DCONF files"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. AppletName applet preferences
+#: settings.py:1191
+#, python-format
+msgid "%s applet preferences"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:1245
+#, python-format
+msgid "Please enter your password to install the required settings schema for %s"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:1256
+#, python-format
+msgid "Could not install the settings schema for %s.  You will have to perform this step yourself."
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:1262
+#, python-format
+msgid "Please enter your password to remove the settings schema for %s"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:1273
+#, python-format
+msgid "Could not remove the settings schema for %s.  You will have to perform this step yourself.  This is not a critical error."
+msgstr ""
+
+#: z_create_localized_help.py:29
+msgid "Description"
+msgstr ""
+
+#: z_create_localized_help.py:31
+msgid "Applet based on the gnome-shell extension called [Desk Changer](https://github.com/BigE/desk-changer) by [Eric Gach](https://github.com/BigE). A wallpaper slideshow applet with multiple profiles support."
+msgstr ""
+
+#: z_create_localized_help.py:33
+msgid "Features"
+msgstr ""
+
+#: z_create_localized_help.py:35
+msgid "Possibility to create and switch between several profiles. A profile is simply a list of images and/or folders containing images that this applet will use to switch the wallpaper."
+msgstr ""
+
+#: z_create_localized_help.py:36
+msgid "Possibility to preview the next wallpaper from this applet menu."
+msgstr ""
+
+#: z_create_localized_help.py:37
+msgid "Wallpapers can be switched on demand from the controls found in this applet menu."
+msgstr ""
+
+#: z_create_localized_help.py:38
+msgid "The wallpapers rotation can be alphabetically or random."
+msgstr ""
+
+#: z_create_localized_help.py:39
+msgid "The wallpapers rotation can be defined by an interval in seconds or hourly."
+msgstr ""
+
+#: z_create_localized_help.py:40
+msgid "Possibility to open the next or current wallpapers from this applet menu."
+msgstr ""
+
+#: z_create_localized_help.py:41
+msgid "Possibility to display a notification every time the wallpaper is switched."
+msgstr ""
+
+#: z_create_localized_help.py:42
+msgid "Configurable hotkeys to switch to next/previous wallpaper."
+msgstr ""
+
+#: z_create_localized_help.py:43
+msgid "Read the tooltips of each option on this applet settings window for more details."
+msgstr ""
+
+#: z_create_localized_help.py:48
+msgid "Xlet's settings window"
+msgstr ""
+
+#: z_create_localized_help.py:49
+msgid "From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."
+msgstr ""
+
+#: z_create_localized_help.py:51
+msgid "To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:53
+msgid "Command to install the settings schema:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:56
+msgid "Command to uninstall the settings schema:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:59
+msgid "To import/export settings, the **dconf** command needs to be available on the system."
+msgstr ""
+
+#: applet.js:102
+msgid "Extra Options"
+msgstr ""
+
+#: applet.js:106
+msgid "Auto Start Daemon"
+msgstr ""
+
+#: applet.js:111
+msgid "Change with Profile"
+msgstr ""
+
+#: applet.js:112
+msgid "When enabled, this will cause the daemon to automatically change the wallpaper whenever the current profile is changed."
+msgstr ""
+
+#: applet.js:116
+msgid "Notifications"
+msgstr ""
+
+#: applet.js:121
+msgid "Remember Profile State"
+msgstr ""
+
+#: applet.js:191
+msgid "Wallpaper Changed"
+msgstr ""
+
+#: applet.js:197
+msgid "Daemon Error"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. "Notifications are now enabled/disabled"
+#: applet.js:207
+#, javascript-format
+msgid "Notifications are now %s"
+msgstr ""
+
+#: applet.js:210
+msgid "disabled"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. "Notifications are now enabled/disabled"
+#: applet.js:210
+msgid "enabled"
+msgstr ""
+
+#: applet.js:235
+#, javascript-format
+msgid "Profile changed to %s"
+msgstr ""
+
+#: applet.js:269
+msgid "Configure..."
+msgstr ""
+
+#: utils.js:65
+#, javascript-format
+msgid "Schema %s could not be found for extension %s."
+msgstr ""
+
+#: utils.js:66
+msgid "Please check your installation."
+msgstr ""
+
+#: utils.js:466
+msgid "Wallpapers will be changed in random order"
+msgstr ""
+
+#: utils.js:468
+msgid "Wallpapers will be changed in alphabetical order"
+msgstr ""
+
+#: utils.js:470
+#, javascript-format
+msgid "Wallpaper rotation every %s seconds"
+msgstr ""
+
+#: utils.js:472
+msgid "Automatic rotation disabled"
+msgstr ""
+
+#: utils.js:474
+msgid "Wallpaper rotation at the beginning of every hour"
+msgstr ""
+
+#: utils.js:618
+msgid "You must provide at least two states for the button"
+msgstr ""
+
+#: utils.js:746
+msgid "Unable to go back any further, no history available"
+msgstr ""
+
+#: utils.js:807
+msgid "Open Current Wallpaper"
+msgstr ""
+
+#: utils.js:847
+msgid "Open Next Wallpaper"
+msgstr ""
+
+#: utils.js:884 utils.js:894
+#, javascript-format
+msgid "Profile: %s"
+msgstr ""
+
+#: utils.js:1142
+msgid "Applet activation aborted!!!"
+msgstr ""
+
+#: utils.js:1143
+msgid "Your Cinnamon version may not be compatible!!!"
+msgstr ""
+
+#: utils.js:1144
+msgid "Minimum Cinnamon version allowed: 3.0"
+msgstr ""
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr ""
+
+#. metadata.json->description
+msgid "Cinnamon wallpaper slideshow applet with multiple profiles support."
+msgstr ""

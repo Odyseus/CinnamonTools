@@ -1,0 +1,277 @@
+# This is a template file for translating the 0WindowListForkByOdyseus package.
+# Copyright (C) 2016-2018
+# This file is distributed under the same license as the 0WindowListForkByOdyseus package.
+# Odyseus <EMAIL@ADDRESS>, 2016-2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0WindowListForkByOdyseus 1.12\n"
+"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
+
+#: ../../__app__/python_modules/localized_help_creator.py:237
+msgid "The following two sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:241
+msgid "Do not install on any other version of Cinnamon."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:247
+msgid "Compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:325 utils.js:1018
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:327
+msgid "Changelog"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. "Help for <xlet_name>"
+#: ../../__app__/python_modules/localized_help_creator.py:328 ../../__app__/python_modules/localized_help_creator.py:354
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "IMPORTANT!!!"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:357
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:371
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:374
+msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgstr ""
+
+#: z_create_localized_help.py:28
+msgid "Description"
+msgstr ""
+
+#: z_create_localized_help.py:30
+msgid "This applet is a fork of the default Window list applet shipped with Cinnamon."
+msgstr ""
+
+#: z_create_localized_help.py:32
+msgid "Differences with the original applet"
+msgstr ""
+
+#: z_create_localized_help.py:34
+msgid "Added option to remove the label from the window list buttons."
+msgstr ""
+
+#: z_create_localized_help.py:35
+msgid "Added option to remove the tooltips from the window list buttons."
+msgstr ""
+
+#: z_create_localized_help.py:36
+msgid "Added icons to the window list button's context menu."
+msgstr ""
+
+#: z_create_localized_help.py:37
+msgid "Added option to invert the contex menu items."
+msgstr ""
+
+#: z_create_localized_help.py:38
+msgid "Added option to hide/move the **Preferences** sub menu."
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:684
+msgid "Configure the window list"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:696 __data__/window-list@cinnamon.org-3.2.8-nightly.js:783 __data__/window-list@cinnamon.org-3.6.x-nightly.js:822 utils.js:886
+msgid "Move to the other monitor"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:705 __data__/window-list@cinnamon.org-3.2.8-nightly.js:792 __data__/window-list@cinnamon.org-3.6.x-nightly.js:833 utils.js:897
+#, javascript-format
+msgid "Move to monitor %d"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:716 __data__/window-list@cinnamon.org-3.2.8-nightly.js:803 __data__/window-list@cinnamon.org-3.6.x-nightly.js:844 utils.js:908
+msgid "Only on this workspace"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:722 __data__/window-list@cinnamon.org-3.2.8-nightly.js:809 __data__/window-list@cinnamon.org-3.6.x-nightly.js:850 utils.js:914
+msgid "Visible on all workspaces"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:728 __data__/window-list@cinnamon.org-3.2.8-nightly.js:815 __data__/window-list@cinnamon.org-3.6.x-nightly.js:856 utils.js:920
+msgid "Move to another workspace"
+msgstr ""
+
+#. Close all/others
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:750 __data__/window-list@cinnamon.org-3.2.8-nightly.js:858 __data__/window-list@cinnamon.org-3.6.x-nightly.js:900 utils.js:948
+msgid "Close all"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:759 __data__/window-list@cinnamon.org-3.2.8-nightly.js:867 __data__/window-list@cinnamon.org-3.6.x-nightly.js:910 utils.js:958
+msgid "Close others"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:773 __data__/window-list@cinnamon.org-3.2.8-nightly.js:881 __data__/window-list@cinnamon.org-3.6.x-nightly.js:925 utils.js:973
+msgid "Restore to full opacity"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:781 __data__/window-list@cinnamon.org-3.2.8-nightly.js:889 __data__/window-list@cinnamon.org-3.6.x-nightly.js:933 utils.js:981
+msgid "Restore"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:786 __data__/window-list@cinnamon.org-3.2.8-nightly.js:894 __data__/window-list@cinnamon.org-3.6.x-nightly.js:938 utils.js:986
+msgid "Minimize"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:794 __data__/window-list@cinnamon.org-3.2.8-nightly.js:902 __data__/window-list@cinnamon.org-3.6.x-nightly.js:946 utils.js:994
+msgid "Unmaximize"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:799 __data__/window-list@cinnamon.org-3.2.8-nightly.js:907 __data__/window-list@cinnamon.org-3.6.x-nightly.js:951 utils.js:999
+msgid "Maximize"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-2.8.8-stable.js:806 __data__/window-list@cinnamon.org-3.2.8-nightly.js:914 __data__/window-list@cinnamon.org-3.6.x-nightly.js:958 utils.js:1006
+msgid "Close"
+msgstr ""
+
+#. Preferences
+#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:838 __data__/window-list@cinnamon.org-3.6.x-nightly.js:880 utils.js:872
+msgid "Preferences"
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:841 __data__/window-list@cinnamon.org-3.6.x-nightly.js:883 utils.js:1025
+msgid "About..."
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:845 __data__/window-list@cinnamon.org-3.6.x-nightly.js:887 utils.js:1031
+msgid "Configure..."
+msgstr ""
+
+#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:849 __data__/window-list@cinnamon.org-3.6.x-nightly.js:891
+msgid "Remove 'Window list'"
+msgstr ""
+
+#: utils.js:1047
+#, javascript-format
+msgid "Remove '%s'"
+msgstr ""
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr ""
+
+#. metadata.json->description
+msgid "Fork of the main Cinnamon Window list applet."
+msgstr ""
+
+#. metadata.json->name
+msgid "Window list (Fork By Odyseus)"
+msgstr ""
+
+#. settings-schema.json->pref_show_all_workspaces->description
+msgid "Show windows from all workspaces"
+msgstr ""
+
+#. settings-schema.json->pref_enable_alerts->description
+msgid "Show an alert in the window list when a window from another workspace requires attention"
+msgstr ""
+
+#. settings-schema.json->pref_enable_scrolling->description
+msgid "Enable mouse-wheel scrolling in the window list"
+msgstr ""
+
+#. settings-schema.json->pref_reverse_scrolling->description
+msgid "Reverse the direction of mouse-wheel scrolling in the window list"
+msgstr ""
+
+#. settings-schema.json->pref_middle_click_close->description
+msgid "Middle click to close window"
+msgstr ""
+
+#. settings-schema.json->pref_buttons_use_entire_space->description
+msgid "Window buttons can have different sizes and use the entire space available"
+msgstr ""
+
+#. settings-schema.json->pref_window_preview->description
+msgid "Show window thumbnails on hover"
+msgstr ""
+
+#. settings-schema.json->pref_window_preview_show_label->description
+msgid "Show title above thumbnail"
+msgstr ""
+
+#. settings-schema.json->pref_window_preview_scale->units
+msgid "pixels"
+msgstr ""
+
+#. settings-schema.json->pref_window_preview_scale->description
+msgid "Window preview scale factor."
+msgstr ""
+
+#. settings-schema.json->pref_hide_tooltips->description
+msgid "Do not display tooltips"
+msgstr ""
+
+#. settings-schema.json->pref_hide_labels->description
+msgid "Hide labels in the window list buttons (*)"
+msgstr ""
+
+#. settings-schema.json->pref_hide_labels->tooltip
+msgid "(*) After changing this settings, Cinnamon needs to be restarted (depends on the Cinnamon version) for the window button icon to have the correct final size."
+msgstr ""
+
+#. settings-schema.json->pref_invert_menu_items_order->description
+msgid "Invert context menu items order"
+msgstr ""
+
+#. settings-schema.json->pref_sub_menu_placement->description
+msgid "Where to display the \"Preferences\" sub-menu?"
+msgstr ""
+
+#. settings-schema.json->pref_sub_menu_placement->tooltip
+msgid "If the option \"Invert context menu items order\" is enabled, the \"Top of menu\" will actually be the \"Bottom of menu\" and vice versa."
+msgstr ""
+
+#. settings-schema.json->pref_sub_menu_placement->options
+msgid "Do not display"
+msgstr ""
+
+#. settings-schema.json->pref_sub_menu_placement->options
+msgid "Top of menu"
+msgstr ""
+
+#. settings-schema.json->pref_sub_menu_placement->options
+msgid "Bottom of menu"
+msgstr ""

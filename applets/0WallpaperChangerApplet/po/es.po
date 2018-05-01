@@ -1,0 +1,717 @@
+# This is a template file for translating the Cinnamon applet called Wallpaper Changer.
+# Copyright (C) 2017
+# This file is distributed under the same license as the Wallpaper Changer applet.
+# Odyseus <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0WallpaperChangerApplet 1.03\n"
+"Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
+"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"PO-Revision-Date: 2017-08-08 17:48-0300\n"
+"Last-Translator: Odyseus\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: ../../__app__/python_modules/localized_help_creator.py:237
+msgid "The following two sections are available only in English."
+msgstr "Las siguientes dos secciones están disponibles sólo en Inglés."
+
+#: ../../__app__/python_modules/localized_help_creator.py:241
+msgid "Do not install on any other version of Cinnamon."
+msgstr "No instalar en ninguna otra versión de Cinnamon."
+
+#: ../../__app__/python_modules/localized_help_creator.py:247
+msgid "Compatibility"
+msgstr "Copatibilidad"
+
+#: ../../__app__/python_modules/localized_help_creator.py:325 settings.py:1025
+msgid "Help"
+msgstr "Ayuda"
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Contributors"
+msgstr "Colaboradores"
+
+#: ../../__app__/python_modules/localized_help_creator.py:327
+msgid "Changelog"
+msgstr "Registro de cambios"
+
+#. TO TRANSLATORS: Full sentence:
+#. "Help for <xlet_name>"
+#: ../../__app__/python_modules/localized_help_creator.py:328
+#: ../../__app__/python_modules/localized_help_creator.py:354
+#, python-format
+msgid "Help for %s"
+msgstr "Ayuda para %s"
+
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "IMPORTANT!!!"
+msgstr "¡IMPORTANTE!"
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid ""
+"Never delete any of the files found inside this xlet folder. It might break "
+"this xlet functionality."
+msgstr ""
+"Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de "
+"este xlet. Podría romper la funcionalidad del xlet."
+
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:357
+msgid ""
+"Bug reports, feature requests and contributions should be done on this "
+"xlet's repository linked next."
+msgstr ""
+"Los reportes de fallos, peticiones de características y contribuciones deben "
+"hacerse en el repositorio de este xlet vinculado a continuación."
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr ""
+"Localización de applets/desklets/extensiones (también conocidos como xlets)"
+
+#: ../../__app__/python_modules/localized_help_creator.py:371
+msgid ""
+"If this xlet was installed from Cinnamon Settings, all of this xlet's "
+"localizations were automatically installed."
+msgstr ""
+"Si este xlet se instaló desde Configuración de Cinnamon, todas las "
+"localizaciones de este xlet se instalaron automáticamente."
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid ""
+"If this xlet was installed manually and not trough Cinnamon Settings, "
+"localizations can be installed by executing the script called "
+"**localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:374
+msgid ""
+"If this xlet has no locale available for your language, you could create it "
+"by following the following instructions."
+msgstr ""
+"Si este xlet no está disponible en su idioma, la localización puede ser "
+"creada siguiendo las siguientes instrucciones."
+
+#. TO TRANSLATORS: This is the applet name.
+#. metadata.json->name
+#: settings.py:61
+msgid "Wallpaper Changer"
+msgstr "Cambiador de Fondos de Pantalla"
+
+#: settings.py:172
+msgid "Choose an Icon"
+msgstr "Elegir un ícono"
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:175 settings.py:817 settings.py:1102 settings.py:1108
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:176 settings.py:1110
+msgid "_Open"
+msgstr "_Abrir"
+
+#: settings.py:179
+msgid "Image files"
+msgstr "Archivos de imagen"
+
+#: settings.py:276
+msgid "Warnings related to this specific section"
+msgstr "Advertencias relacionadas con esta sección específica"
+
+#. Daemon settings
+#: settings.py:364
+msgid "Daemon"
+msgstr "Demonio"
+
+#: settings.py:368
+msgid "This is the current profile that the daemon will load."
+msgstr "Este es el perfil actual que el demonio cargará."
+
+#: settings.py:369
+msgid "Current Profile"
+msgstr "Perfil Actual"
+
+#: settings.py:383 utils.js:780
+msgid "Toggle and display the daemon status."
+msgstr "Alternar y mostrar el estado del demonio."
+
+#: settings.py:384 utils.js:770
+msgid "Daemon Status"
+msgstr "Estado del Demonio"
+
+#: settings.py:411
+msgid "Autostart Daemon"
+msgstr "Auto Iniciar Demonio"
+
+#: settings.py:412 applet.js:107
+msgid ""
+"When enabled, the daemon will be automatically started when the applet is "
+"loaded. If it is already running or this is disabled, no action will be "
+"taken."
+msgstr ""
+"Con esta opción activada, el demonio se iniciará automáticamente cuando se "
+"cargue el applet.  Si el demonio ya se está ejecutando o si esta opción está "
+"deshabilitada, no se realizará ninguna acción."
+
+#: settings.py:416
+msgid "Wallpaper Timer Interval (seconds)"
+msgstr "Intervalo del Temporizador (segundos)"
+
+#: settings.py:425 settings.py:551
+msgid "Save"
+msgstr "Guardar"
+
+#: settings.py:436
+msgid "Manage keyboard shortcuts"
+msgstr "Ajustes de atajos de teclado."
+
+#: settings.py:450 utils.js:673
+msgid "Next Wallpaper"
+msgstr "Fondo de Pantalla Siguiente"
+
+#: settings.py:454 utils.js:676
+msgid "Previous Wallpaper"
+msgstr "Fondo de pantalla Previo"
+
+#: settings.py:458
+msgid "Open/Close Menu"
+msgstr "Abrir/Cerrar Menú"
+
+#: settings.py:480
+msgid "Shortcut action"
+msgstr "Acción del acceso directo"
+
+#: settings.py:496
+msgid "Shortcut"
+msgstr "Acceso directo"
+
+#: settings.py:507
+msgid "Other"
+msgstr "Otros"
+
+#. Applet settings
+#: settings.py:513 settings.py:583
+msgid "Applet"
+msgstr "Applet"
+
+#: settings.py:518
+msgid "Custom icon"
+msgstr "Ícono personalizado"
+
+#: settings.py:519
+msgid "Select a custom icon for the applet."
+msgstr "Establecer un ícono personalizado para el applet."
+
+#: settings.py:523
+msgid "Enter custom text to show in the panel."
+msgstr "Introduzca un texto personalizado para mostrar en el panel."
+
+#: settings.py:526
+msgid "Custom label"
+msgstr "Etiqueta personalizada"
+
+#: settings.py:542
+msgid "Wallpaper Preview Width"
+msgstr "Ancho de la Vista Previa del Fondo de Pantalla"
+
+#: settings.py:562
+msgid "Invert Menu Items Order"
+msgstr "Invertir Orden de los Ítems del Menú"
+
+#: settings.py:567
+msgid "Remember Profiles State"
+msgstr "Recordar Estado del Perfil"
+
+#: settings.py:568 applet.js:122
+msgid ""
+"When enabled, the daemon will remember its current and next wallpaper for "
+"the current profile when the profile is changed. This means returning back "
+"to the profile will restore the previous background plus the next in queue."
+msgstr ""
+"Con esta opción activada, el demonio recordará su fondo de pantalla actual y "
+"siguiente para el perfil actual cuando se cambia el perfil.  Esto significa "
+"que volver al perfil restablecerá el fondo anterior más el siguiente en la "
+"cola."
+
+#: settings.py:572
+msgid "Show Notifications"
+msgstr "Mostrar Notificaciones"
+
+#: settings.py:573 applet.js:117
+msgid ""
+"Display a notification each time an event happens with wallpaper changer. "
+"This does not stop the applet from reporting errors."
+msgstr ""
+"Mostrar una notificación cada vez que ocurre un evento con el cambiador de "
+"fondo de pantalla.  Esto no impide que el applet informe sobre errores."
+
+#: settings.py:577
+msgid "Enable Logging"
+msgstr "Habilitar el registro"
+
+#: settings.py:578
+msgid ""
+"It enables the ability to log the output of several functions used by the "
+"applet."
+msgstr ""
+"Permite la capacidad de registrar la salida de varias funciones utilizadas "
+"por el applet."
+
+#: settings.py:586
+msgid "Manage profiles"
+msgstr "Administrar perfiles"
+
+#: settings.py:596
+msgid "Profile"
+msgstr "Perfil"
+
+#: settings.py:606 settings.py:807
+msgid "Create a new profile"
+msgstr "Crear un perfil nuevo"
+
+#: settings.py:614 settings.py:780
+msgid "Remove profile"
+msgstr "Eliminar perfil"
+
+#: settings.py:654
+msgid "Path"
+msgstr "Ruta"
+
+#: settings.py:663
+msgid "Sub Folders"
+msgstr "Subcarpetas"
+
+#: settings.py:691 settings.py:717
+msgid "Add Image"
+msgstr "Agregar Imagen"
+
+#: settings.py:694 settings.py:724
+msgid "Add Folder"
+msgstr "Agregar Carpeta"
+
+#: settings.py:710
+msgid "Remove"
+msgstr "Eliminar"
+
+#: settings.py:731
+msgid "Profiles"
+msgstr "Perfiles"
+
+#: settings.py:741
+msgid "Click to set a new hotkey."
+msgstr "Haga clic para establecer una nueva tecla de acceso directo."
+
+#: settings.py:750
+msgid "Whether or not to include images from sub-folders."
+msgstr "Incluir o no imágenes en subcarpetas."
+
+#: settings.py:760 settings.py:770
+msgid "Failed to update keybinding"
+msgstr "Error al actualizar la vinculación de teclas"
+
+#: settings.py:783
+#, python-format
+msgid "Are you sure you want to delete the profile »%s«?"
+msgstr "¿Está seguro de que quiere eliminar el perfil »%s«?"
+
+#: settings.py:786
+msgid "Yes"
+msgstr "Si"
+
+#: settings.py:787
+msgid "No"
+msgstr "No"
+
+#: settings.py:810
+msgid "Profile Name"
+msgstr "Nombre del Perfil"
+
+#: settings.py:816
+msgid "OK"
+msgstr "Aceptar"
+
+#: settings.py:929
+msgid "Contributors/Mentions:"
+msgstr "Colaboradores/Menciones:"
+
+#. TO TRANSLATORS:
+#. Here goes the name/s of the author/s of the translations.
+#. Only e-mail addresses and links to GitHub accounts are allowed. NOTHING MORE.
+#: settings.py:937
+msgid "translator-credits"
+msgstr "Odyseus https://github.com/Odyseus"
+
+#: settings.py:1007
+msgid "Reset settings to defaults"
+msgstr "Restablecer preferencias a los valores predeterminados"
+
+#: settings.py:1009
+msgid "Import settings from a file"
+msgstr "Importar preferencias desde un archivo"
+
+#: settings.py:1011
+msgid "Export settings to a file"
+msgstr "Exportar preferencias a un archivo"
+
+#: settings.py:1016
+msgid "Remember window size"
+msgstr "Recordar tamaño de ventana"
+
+#: settings.py:1021
+msgid "Restart Cinnamon"
+msgstr "Reiniciar Cinnamon"
+
+#: settings.py:1027
+msgid "About"
+msgstr "Acerca de"
+
+#: settings.py:1034
+msgid "Manage settings"
+msgstr "Administrar preferencias"
+
+#. TO TRANSLATORS: Full sentence:
+#. Warning: Trying to reset all AppletName settings!!!
+#: settings.py:1077
+#, python-format
+msgid "Warning: Trying to reset all %s settings!!!"
+msgstr "Advertencia: ¡Intentando restablecer todos los ajustes de %s!"
+
+#. TO TRANSLATORS: Full sentence:
+#. Reset all AppletName settings to default?
+#: settings.py:1081
+#, python-format
+msgid "Reset all %s settings to default?"
+msgstr "¿Restablecer todas las configuraciones de %s por defecto?"
+
+#: settings.py:1100
+msgid "Select or enter file to export to"
+msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
+
+#: settings.py:1103
+msgid "_Save"
+msgstr "_Guardar"
+
+#: settings.py:1106
+msgid "Select a file to import"
+msgstr "Seleccionar un archivo desde el cual importar"
+
+#: settings.py:1122
+msgid "DCONF files"
+msgstr "Archivos DCONF"
+
+#. TO TRANSLATORS: Full sentence:
+#. AppletName applet preferences
+#: settings.py:1191
+#, python-format
+msgid "%s applet preferences"
+msgstr "Preferencias del applet %s"
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:1245
+#, python-format
+msgid ""
+"Please enter your password to install the required settings schema for %s"
+msgstr ""
+"Por favor, introduzca su contraseña para instalar el esquema de "
+"configuración necesario para %s"
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:1256
+#, python-format
+msgid ""
+"Could not install the settings schema for %s.  You will have to perform this "
+"step yourself."
+msgstr ""
+"No se ha podido instalar el esquema de configuración para %s. Tendrá que "
+"realizar este paso usted mismo."
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:1262
+#, python-format
+msgid "Please enter your password to remove the settings schema for %s"
+msgstr ""
+"Por favor, introduzca su contraseña para eliminar el esquema de "
+"configuración para %s"
+
+#. TO TRANSLATORS: Could be left blank.
+#: settings.py:1273
+#, python-format
+msgid ""
+"Could not remove the settings schema for %s.  You will have to perform this "
+"step yourself.  This is not a critical error."
+msgstr ""
+"No se pudo eliminar el esquema de configuración para %s. Tendrá que realizar "
+"este paso usted mismo. Esto no es un error crítico."
+
+#: z_create_localized_help.py:29
+msgid "Description"
+msgstr "Descripción"
+
+#: z_create_localized_help.py:31
+msgid ""
+"Applet based on the gnome-shell extension called [Desk Changer](https://"
+"github.com/BigE/desk-changer) by [Eric Gach](https://github.com/BigE). A "
+"wallpaper slideshow applet with multiple profiles support."
+msgstr ""
+"Applet basado en la extensión para gnome-shell llamada [Desk Changer]"
+"(https://github.com/BigE/desk-changer) por [Eric Gach](https://github.com/"
+"BigE). Un applet de diapositivas de papel tapiz con soporte para múltiples "
+"perfiles."
+
+#: z_create_localized_help.py:33
+msgid "Features"
+msgstr "Características"
+
+#: z_create_localized_help.py:35
+msgid ""
+"Possibility to create and switch between several profiles. A profile is "
+"simply a list of images and/or folders containing images that this applet "
+"will use to switch the wallpaper."
+msgstr ""
+"Posibilidad de crear y alternar entre varios perfiles.  Un perfil es "
+"simplemente una lista de imágenes y/o carpetas que contienen imágenes que "
+"este applet utilizará para cambiar el fondo de pantalla."
+
+#: z_create_localized_help.py:36
+msgid "Possibility to preview the next wallpaper from this applet menu."
+msgstr ""
+"Posibilidad de previsualizar el siguiente fondo de pantalla desde el menú de "
+"este applet."
+
+#: z_create_localized_help.py:37
+msgid ""
+"Wallpapers can be switched on demand from the controls found in this applet "
+"menu."
+msgstr ""
+"Los fondos de pantalla se pueden cambiar bajo demanda desde los controles "
+"que se encuentran en el menú de este applet."
+
+#: z_create_localized_help.py:38
+msgid "The wallpapers rotation can be alphabetically or random."
+msgstr "La rotación de fondos de pantalla puede ser alfabética o aleatoria."
+
+#: z_create_localized_help.py:39
+msgid ""
+"The wallpapers rotation can be defined by an interval in seconds or hourly."
+msgstr ""
+"La rotación de fondos de pantalla se puede definir por un intervalo en "
+"segundos o por hora."
+
+#: z_create_localized_help.py:40
+msgid ""
+"Possibility to open the next or current wallpapers from this applet menu."
+msgstr ""
+"Posibilidad de abrir los fondos de pantalla siguientes o actuales desde el "
+"menú de este applet."
+
+#: z_create_localized_help.py:41
+msgid ""
+"Possibility to display a notification every time the wallpaper is switched."
+msgstr ""
+"Posibilidad de mostrar una notificación cada vez que se cambia el fondo de "
+"pantalla."
+
+#: z_create_localized_help.py:42
+msgid "Configurable hotkeys to switch to next/previous wallpaper."
+msgstr ""
+"Teclas de acceso rápido configurables para cambiar al fondo de pantalla "
+"siguiente/anterior."
+
+#: z_create_localized_help.py:43
+msgid ""
+"Read the tooltips of each option on this applet settings window for more "
+"details."
+msgstr ""
+"Lea las sugerencias de cada opción en la ventana de configuración de este "
+"applet para obtener más detalles."
+
+#: z_create_localized_help.py:48
+msgid "Xlet's settings window"
+msgstr "Ventana de preferencias del xlet"
+
+#: z_create_localized_help.py:49
+msgid ""
+"From this xlet settings window, all options can be imported, exported and/or "
+"reseted to their defaults."
+msgstr ""
+"Desde la ventana de preferencias de este xlet, todas las opciones pueden ser "
+"importadas, exportadas y/o restablecidas a sus valores por defecto."
+
+#: z_create_localized_help.py:51
+msgid ""
+"To be able to perform any of these actions, the settings schema needs to be "
+"installed in the system. This is done automatically when the xlet is "
+"installed from the Cinnamon xlets manager. But if the xlet was installed "
+"manually, the settings schema also needs to be installed manually. This is "
+"achieved by simply going to the xlet folder and launch the following command:"
+msgstr ""
+"Para poder realizar cualquiera de estas tareas, el esquema de las "
+"preferencias necesita estar instalado en el sistema. Esto es realizado "
+"automáticamente cuando el xlet es instalado desde el administrador de xlets "
+"de Cinnamon. Pero si el xlet fue instalado manualmente, el esquema de las "
+"preferencias necesita ser instalado manualmente. Esto se logra simplemente "
+"con ir a la carpeta del xlet y ejecutar el siguiente comando:"
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:53
+msgid "Command to install the settings schema:"
+msgstr "Comando para instalar el esquema de preferencias:"
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:56
+msgid "Command to uninstall the settings schema:"
+msgstr "Comando para desinstalar el esquema de preferencias:"
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:59
+msgid ""
+"To import/export settings, the **dconf** command needs to be available on "
+"the system."
+msgstr ""
+"Para importar/exportar preferencias, el comando **dconf** necesita estar "
+"disponible en el sistema."
+
+#: applet.js:102
+msgid "Extra Options"
+msgstr "Opciones Extra"
+
+#: applet.js:106
+msgid "Auto Start Daemon"
+msgstr "Auto Iniciar Demonio"
+
+#: applet.js:111
+msgid "Change with Profile"
+msgstr "Cambiar con el Perfil"
+
+#: applet.js:112
+msgid ""
+"When enabled, this will cause the daemon to automatically change the "
+"wallpaper whenever the current profile is changed."
+msgstr ""
+"Con esta opción activada, el demonio cambiará automáticamente el fondo de "
+"pantalla siempre que se cambie el perfil actual."
+
+#: applet.js:116
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: applet.js:121
+msgid "Remember Profile State"
+msgstr "Recordar Estado del Perfil"
+
+#: applet.js:191
+msgid "Wallpaper Changed"
+msgstr "Fondo de Pantalla Cambiado"
+
+#: applet.js:197
+msgid "Daemon Error"
+msgstr "Error de Demonio"
+
+#. TO TRANSLATORS: Full sentence:
+#. "Notifications are now enabled/disabled"
+#: applet.js:207
+#, javascript-format
+msgid "Notifications are now %s"
+msgstr "Notificaciones están ahora %s"
+
+#: applet.js:210
+msgid "disabled"
+msgstr "desactivadas"
+
+#. TO TRANSLATORS: Full sentence:
+#. "Notifications are now enabled/disabled"
+#: applet.js:210
+msgid "enabled"
+msgstr "activadas"
+
+#: applet.js:235
+#, javascript-format
+msgid "Profile changed to %s"
+msgstr "Perfil cambiado a %s"
+
+#: applet.js:269
+msgid "Configure..."
+msgstr "Configurar..."
+
+#: utils.js:65
+#, javascript-format
+msgid "Schema %s could not be found for extension %s."
+msgstr "No se pudo encontrar el esquema %s para la extensión %s."
+
+#: utils.js:66
+msgid "Please check your installation."
+msgstr "Compruebe su instalación."
+
+#: utils.js:466
+msgid "Wallpapers will be changed in random order"
+msgstr "Fondos de pantalla serán cambiados en orden aleatorio"
+
+#: utils.js:468
+msgid "Wallpapers will be changed in alphabetical order"
+msgstr "Fondos de pantalla serán cambiados en orden alfabético"
+
+#: utils.js:470
+#, javascript-format
+msgid "Wallpaper rotation every %s seconds"
+msgstr "Rotación de fondos de pantalla casa %s segundos"
+
+#: utils.js:472
+msgid "Automatic rotation disabled"
+msgstr "Rotación automática deshabilitada"
+
+#: utils.js:474
+msgid "Wallpaper rotation at the beginning of every hour"
+msgstr "Rotación de fondos de pantalla al principio de cada hora"
+
+#: utils.js:618
+msgid "You must provide at least two states for the button"
+msgstr "Al menos dos estados deben ser provistos para el botón"
+
+#: utils.js:746
+msgid "Unable to go back any further, no history available"
+msgstr "No se puede volver más atrás, no hay historial disponible"
+
+#: utils.js:807
+msgid "Open Current Wallpaper"
+msgstr "Abrir Fondo de Pantalla Actual"
+
+#: utils.js:847
+msgid "Open Next Wallpaper"
+msgstr "Abrir el Fondo de Pantalla Siguiente"
+
+#: utils.js:884 utils.js:894
+#, javascript-format
+msgid "Profile: %s"
+msgstr "Perfil: %s"
+
+#: utils.js:1142
+msgid "Applet activation aborted!!!"
+msgstr "¡¡¡Activación del ajuste abortada!!!"
+
+#: utils.js:1143
+msgid "Your Cinnamon version may not be compatible!!!"
+msgstr "¡¡¡Su versión de Cinnamon puede que no sea compatible!!!"
+
+#: utils.js:1144
+msgid "Minimum Cinnamon version allowed: 3.0"
+msgstr "Versión mínima de CInnamon permitida: 3.0"
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr "Ver el archivo de ayuda de este xlet."
+
+#. metadata.json->description
+msgid "Cinnamon wallpaper slideshow applet with multiple profiles support."
+msgstr ""
+"Diapositivas de fondos de pantalla para Cinnamon con soporte para múltiples "
+"perfiles."

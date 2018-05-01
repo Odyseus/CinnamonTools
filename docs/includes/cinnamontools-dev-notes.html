@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Development notes &#8212; Cinnamon Tools  documentation</title>
+    <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/cinnamon-logo.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Code styling/guidelines" href="cinnamontools-code-styling.html" />
+    <link rel="prev" title="Usage" href="cinnamontools-usage.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cinnamontools-code-styling.html" title="Code styling/guidelines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cinnamontools-usage.html" title="Usage"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Cinnamon Tools  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="development-notes">
+<h1>Development notes<a class="headerlink" href="#development-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="z-config-py-file-in-xlets-directories">
+<h2>z_config.py file in xlets directories<a class="headerlink" href="#z-config-py-file-in-xlets-directories" title="Permalink to this headline">¶</a></h2>
+<p>This file contains a single variable called <strong>settings</strong> (a dictionary). These settings are read and applied when an xlet is built.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I was forced to implement this configuration file due to one single reason. If I manually create the symbolic links inside the xlets folders, and since I’m working directly inside a Dropbox folder, the symbolic links are constantly <em>resolving themselves</em> (a Dropbox <em>feature</em>). So I came up with the idea of creating those symbolic links when the xlets are built.</p>
+<p>Right now it only contains a single setting (<code class="docutils literal notranslate"><span class="pre">symlinks</span></code>). But it has the potential of containg more settings in the future.</p>
+</div>
+<p>Example:</p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;symlinks&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;3.8&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;../icons&quot;</span><span class="p">,</span> <span class="s2">&quot;icons&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;../applet.js&quot;</span><span class="p">,</span> <span class="s2">&quot;applet.js&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;../HELP.html&quot;</span><span class="p">,</span> <span class="s2">&quot;HELP.html&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;../icon.png&quot;</span><span class="p">,</span> <span class="s2">&quot;icon.png&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;../utils.js&quot;</span><span class="p">,</span> <span class="s2">&quot;utils.js&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;../settings-schema-for-3.2-plus.json&quot;</span><span class="p">,</span> <span class="s2">&quot;settings-schema.json&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="symlinks-key">
+<h3><code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key<a class="headerlink" href="#symlinks-key" title="Permalink to this headline">¶</a></h3>
+<p>The main use of the <code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key is to generate symbolic links to files in the root folder of an xlet inside a <em>version sub-folder</em> to be used by <strong>multiversion</strong> enabled xlets.</p>
+<p>This key is a dictionary of keys representing a sub-folder name inside an xlet directory. Each key contains a list of tuples representing the symbolic link target as its first index and the symbolic link name as its second index.</p>
+<p>In the example above, the <code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key will generate the symbolic links inside a folder called <strong>3.8</strong> (the folder will be created if it doesn’t exists). The first tuple will be used to create a symbolic link called <strong>icons</strong> whose target will be <strong>../icons</strong>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It’s important to make all symbolic links targets relative.</p>
+</div>
+</div>
+</div>
+<div class="section" id="z-create-localized-help-py-file-in-xlets-directories">
+<h2>z_create_localized_help.py file in xlets directories<a class="headerlink" href="#z-create-localized-help-py-file-in-xlets-directories" title="Permalink to this headline">¶</a></h2>
+<p>This file is used to generate the <strong>HELP.html</strong> page for each xlet.</p>
+</div>
+<div class="section" id="eol-ideas-plans">
+<h2><abbr title="end-of-life">EOL</abbr> ideas/plans<a class="headerlink" href="#eol-ideas-plans" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Linux Mint 18.x/Ubuntu 16.04.x <abbr title="end-of-life">EOL</abbr> is 2021.</p></li>
+<li><p>Remove all retro-compatible code from all xlets. They all are marked with the string <em>Mark for deletion on EOL</em>.</p></li>
+<li><p>Avoid at all cost to make xlets <strong>multiversion</strong>. I already went through that path. It wasn’t pretty all the nonsense that I had to endure.</p></li>
+<li><p>Convert all JavaScript code into ECMAScript 2015 syntax. By 2021, I might get used to that annoyance. LOL</p></li>
+<li><p>Remove all <code class="docutils literal notranslate"><span class="pre">try{}catch{}</span></code> blocks on xlets <code class="docutils literal notranslate"><span class="pre">_init</span></code> methods. Newer versions of Cinnamon already uses these code blocks to wrap xlets initialization. Keep an eye on it in case that they decide to change this yet again.</p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/cinnamon-logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Development notes</a><ul>
+<li><a class="reference internal" href="#z-config-py-file-in-xlets-directories">z_config.py file in xlets directories</a><ul>
+<li><a class="reference internal" href="#symlinks-key"><code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#z-create-localized-help-py-file-in-xlets-directories">z_create_localized_help.py file in xlets directories</a></li>
+<li><a class="reference internal" href="#eol-ideas-plans"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cinnamontools-usage.html"
+                        title="previous chapter">Usage</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cinnamontools-code-styling.html"
+                        title="next chapter">Code styling/guidelines</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/includes/cinnamontools-dev-notes.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cinnamontools-code-styling.html" title="Code styling/guidelines"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cinnamontools-usage.html" title="Usage"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Cinnamon Tools  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016-2018, Odyseus.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>

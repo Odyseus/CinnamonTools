@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="{{UUID}}">
+    <schema path="/org/cinnamon/applets/{{UUID}}/" id="org.cinnamon.applets.{{UUID}}">
+        <key type="as" name="pref-recently-used-applications">
+            <default>[]</default>
+        </key>
+    </schema>
+</schemalist>

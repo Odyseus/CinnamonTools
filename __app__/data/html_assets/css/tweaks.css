@@ -1,0 +1,217 @@
+﻿/* For fixed header */
+body {
+    padding-top: 70px;
+}
+
+/* For fixed header */
+
+/* Footer tweaks */
+#footer {
+    color: #C8C8C8;
+    min-height: 60px !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    margin-bottom: 0 !important;
+}
+
+.footer-inner {
+    margin-top: 20px;
+}
+
+/* Footer tweaks */
+
+/* Various tweaks */
+.container {
+    padding-bottom: 1em !important;
+    margin-bottom: 1em !important;
+}
+
+.container img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Various tweaks */
+
+/* Start box-sizing reset */
+
+/* Option 2A: Reset an entire region via CSS */
+.reset-box-sizing,
+.reset-box-sizing *,
+.reset-box-sizing *:before,
+.reset-box-sizing *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+/* End box-sizing reset */
+
+/* Class for center images */
+.centered_image {
+    text-align: center;
+}
+
+/* Class for center images */
+
+/* Navbar shadow */
+#autohide_navbar {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.175);
+}
+
+/* Navbar shadow */
+
+/* Font preferences */
+html,
+body {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: "DejaVu Sans Mono", "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+}
+
+/* Font preferences */
+
+/* For Back To Top Button */
+#top-link {
+
+    /*min-height: 18px;*/
+    padding: 2px 6px 3px 6px;
+    border-radius: 3px;
+}
+
+#top-link-block.affix-top {
+    position: absolute; /* allows it to "slide" up into view */
+    bottom: -82px;
+    right: 10px;
+}
+
+#top-link-block.affix {
+    position: fixed;    /* keeps it on the bottom once in view */
+    bottom: 18px;
+    right: 10px;
+}
+
+#top-link {
+    color: #555;
+    background-color: rgba(200, 200, 200, 1)outline:none;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+/* For Back To Top Button */
+
+/* General responsiveness tweaks */
+@media all (min-width:480px) and (max-width:768px) {
+
+    /* For Back To Top Button */
+    #top-link-block.affix-top {
+        right: 0;
+    }
+
+    #top-link-block.affix {
+        bottom: 8px;
+        right: 0;
+    }
+
+    /* For Back To Top Button */
+}
+
+@media all (min-width:240px) and (max-width:480px) {
+
+    /* For Back To Top Button */
+    #top-link-block.affix-top {
+        right: 0;
+    }
+
+    #top-link-block.affix {
+        bottom: 8px;
+        right: 0;
+    }
+
+    /* For Back To Top Button */
+}
+
+/* General responsiveness tweaks */
+
+/* Start Carousel tweaks */
+.carousel-control.left {
+    background-image: linear-gradient(to right, rgba(150, 150, 150, 0.3) 0%, rgba(150, 150, 150, 0.0001) 100%);
+}
+
+.carousel-control.right {
+    background-image: linear-gradient(to right, rgba(150, 150, 150, 0.0001) 0%, rgba(150, 150, 150, 0.3) 100%);
+}
+
+.carousel-caption > h2 {
+    border-bottom: none !important;
+}
+
+.carousel-indicators li {
+    background-color: rgba(50, 50, 50, 0.5) !important;
+}
+
+.carousel-indicators .active {
+    background-color: rgba(50, 50, 50, .75) !important;
+}
+
+.carousel {
+    width: 100% !important; /* "Needed" for those aberrations of Palemoon and Cyberfox!!!! */
+}
+
+.carousel-caption {
+    color: #000 !important;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 1) !important;
+}
+
+/* End Carousel tweaks */
+
+/* Start Panel header links "extended clicks" */
+h5.panel-title > a {
+    position: relative !important;
+    display: block !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;    /*outline: none !important;*/
+}
+
+/* End Panel header links "extended clicks" */
+
+/* Various tweaks */
+div.boxed {
+    border: #ecece7 solid 1px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1), 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.container h1,
+.container h2 {
+    border-bottom: 1px solid #e0e0dc;
+}
+
+/* Various tweaks */
+
+/* pre tag tweaks */
+pre {
+    background-color: #f8f8f8 !important; /* Tweak for XCode "Highlight" Theme */
+    padding: 0 !important;
+}
+
+.container pre {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+/* pre tag tweaks */

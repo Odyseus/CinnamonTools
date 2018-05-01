@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="50" height="20" id="svg7539" version="1.1" inkscape:version="0.91 r13725" sodipodi:docname="switch-on.svg">
+    <defs id="defs7541" />
+    <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="2.9166668" inkscape:cx="18.069744" inkscape:cy="-0.29853286" inkscape:current-layer="layer1" showgrid="true" inkscape:grid-bbox="true" inkscape:document-units="px" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0" inkscape:window-width="1024" inkscape:window-height="688" inkscape:window-x="0" inkscape:window-y="28" inkscape:window-maximized="1" inkscape:snap-bbox="true" showguides="true" inkscape:guide-bbox="true" inkscape:snap-bbox-midpoints="false" inkscape:bbox-paths="true" inkscape:bbox-nodes="true" inkscape:snap-bbox-edge-midpoints="true">
+        <inkscape:grid type="xygrid" id="grid3019" empspacing="5" visible="true" enabled="true" snapvisiblegridlinesonly="true" originx="-4" originy="2.6171874e-06" />
+    </sodipodi:namedview>
+    <metadata id="metadata7544">
+        <rdf:RDF>
+            <cc:Work rdf:about="">
+                <dc:format>image/svg+xml</dc:format>
+                <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                <dc:title />
+            </cc:Work>
+        </rdf:RDF>
+    </metadata>
+    <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer" transform="translate(-120,87.999997)">
+        <g transform="translate(-886,-448)" style="display:inline;opacity:1" id="switch-active-2" inkscape:label="#g4829">
+            <g id="layer1-9-0" inkscape:label="Layer 1" transform="translate(885,450)" style="display:inline;opacity:1">
+                <g style="display:inline" transform="translate(120,-116.99998)" inkscape:label="Layer 1" id="switch-active-8">
+                    <g id="g3900-1-87" transform="translate(0,-1004.3622)">
+                        <rect style="display:inline;opacity:0;fill:#434343;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="rect5465-3-3" width="52" height="24" x="0" y="1029.3622" />
+                        <rect style="fill:@gradient_switch_on@;fill-opacity:1;fill-rule:nonzero;stroke:none" id="rect2987-0-8" width="50" height="20" x="1" y="1031.3622" ry="11" rx="11" />
+                        <circle style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none" id="path3759-0" cx="41" cy="1041.3622" r="9" />
+                    </g>
+                </g>
+            </g>
+            <g transform="translate(-1.0003162,0)" id="g4816">
+                <rect transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)" ry="0.66666085" rx="0.66666085" y="-456.09485" x="977.54999" height="1.9999826" width="5" id="rect3977-39-2" style="display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none" />
+                <rect transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)" ry="0" y="-462.09485" x="980.54999" height="7.9999828" width="2" id="rect3979-7-0" style="display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none" />
+            </g>
+        </g>
+    </g>
+</svg>

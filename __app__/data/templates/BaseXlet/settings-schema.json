@@ -1,0 +1,20 @@
+{
+    "head0": {
+        "type": "header",
+        "description": "Applet settings"
+    },
+    "pref_custom_icon_for_applet": {
+        "type": "iconfilechooser",
+        "indent": true,
+        "default": "",
+        "description": "Icon",
+        "tooltip": "Select an icon to show in the panel."
+    },
+    "pref_custom_label_for_applet": {
+        "type": "entry",
+        "indent": true,
+        "default": "",
+        "description": "Custom label",
+        "tooltip": "Enter custom text to show in the panel."
+    }
+}

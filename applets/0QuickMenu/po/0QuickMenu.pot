@@ -1,0 +1,402 @@
+# This is a template file for translating the 0QuickMenu package.
+# Copyright (C) 2016-2018
+# This file is distributed under the same license as the 0QuickMenu package.
+# Odyseus <EMAIL@ADDRESS>, 2016-2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0QuickMenu 1.10\n"
+"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
+
+#: ../../__app__/python_modules/localized_help_creator.py:237
+msgid "The following two sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:241
+msgid "Do not install on any other version of Cinnamon."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:247
+msgid "Compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:325 applet.js:502
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:327
+msgid "Changelog"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. "Help for <xlet_name>"
+#: ../../__app__/python_modules/localized_help_creator.py:328 ../../__app__/python_modules/localized_help_creator.py:354
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "IMPORTANT!!!"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:357
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:371
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:374
+msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgstr ""
+
+#: z_create_localized_help.py:29
+msgid "Description"
+msgstr ""
+
+#: z_create_localized_help.py:31
+msgid "The function of this applet is very simple, create a menu based on the files/folders found inside a main folder (specified on this applet settings window). The files will be used to create menu items and the sub folders will be used to create sub-menus."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:34
+msgid "I mainly created this applet to replicate the functionality of the XFCE plugin called **Directory Menu** and the KDE widget called **Quick access**."
+msgstr ""
+
+#: z_create_localized_help.py:37
+msgid "Warning"
+msgstr ""
+
+#: z_create_localized_help.py:38
+msgid "This applet has to read every single file/folder inside a main folder to create its menu. So, do not try to use this applet to create a menu based on a folder that contains thousands of files!!! Your system may slow down, freeze or even crash!!!"
+msgstr ""
+
+#: z_create_localized_help.py:41
+msgid "Features"
+msgstr ""
+
+#: z_create_localized_help.py:42
+msgid "More than one instance of this applet can be installed at the same time."
+msgstr ""
+
+#: z_create_localized_help.py:43
+msgid "A hotkey can be assigned to open/close the menu."
+msgstr ""
+
+#: z_create_localized_help.py:44 z_create_localized_help.py:63
+msgid "Menu items to .desktop files will be displayed with the icon and name declared inside the .desktop files themselves."
+msgstr ""
+
+#: z_create_localized_help.py:47 z_create_localized_help.py:66
+msgid "The menu can be kept open while activating menu items by pressing [[Ctrl]] + **Left click** or with **Middle click**."
+msgstr ""
+
+#: z_create_localized_help.py:48
+msgid "This applet can create menu and sub-menu items even from symbolic links found inside the main folder."
+msgstr ""
+
+#: z_create_localized_help.py:50
+msgid "Settings window"
+msgstr ""
+
+#: z_create_localized_help.py:55
+msgid "Image featuring different icons for each sub-menu and different icon sizes"
+msgstr ""
+
+#: z_create_localized_help.py:62
+msgid "Applet usage"
+msgstr ""
+
+#: z_create_localized_help.py:68
+msgid "How to set a different icon for each sub-menu"
+msgstr ""
+
+#: z_create_localized_help.py:71
+msgid "Create a file at the same level as the folders that will be used to create the sub-menus."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:73
+msgid "The file name can be customized, doesn't need to have an extension name and can be a hidden file (a dot file). By default is called **0_icons_for_sub_menus.json**."
+msgstr ""
+
+#: z_create_localized_help.py:75
+msgid "Whatever name is chosen for the file, it will be automatically ignored and will never be shown on the menu."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:77
+msgid "The path to the icon has to be a full path. A path starting with **~/** can be used and will be expanded to the user's home folder."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:79
+msgid "If any sub-folder has more folders that need to have custom icons, just create another **0_icons_for_sub_menus.json** file at the same level that those folders."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:81
+msgid "The content of the file is a *JSON object* and has to look as follows:"
+msgstr ""
+
+#: z_create_localized_help.py:89 z_create_localized_help.py:91 z_create_localized_help.py:93 z_create_localized_help.py:95
+msgid "Folder name"
+msgstr ""
+
+#: z_create_localized_help.py:90 z_create_localized_help.py:92 z_create_localized_help.py:94 z_create_localized_help.py:96
+msgid "Icon name or icon path for Folder name"
+msgstr ""
+
+#: z_create_localized_help.py:100
+msgid "Warning!!!"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:102
+msgid "JSON *language* is very strict. Just be sure to ONLY use double quotes. And the last key/value combination DOESN'T have to end with a comma (**Folder name #n** in the previous example)."
+msgstr ""
+
+#. NOTE: This string could be left blank because it's a default string,
+#. so it's already translated by Cinnamon. It's up to the translators.
+#: applet.js:192
+#, javascript-format
+msgid "Remove '%s'"
+msgstr ""
+
+#: applet.js:484
+msgid "Update menu"
+msgstr ""
+
+#: applet.js:489
+msgid "Scan the main folder to re-create the menu."
+msgstr ""
+
+#: applet.js:492
+msgid "Open folder"
+msgstr ""
+
+#: applet.js:498
+msgid "Open the main folder."
+msgstr ""
+
+#: applet.js:508
+msgid "Open the help file."
+msgstr ""
+
+#. metadata.json->description
+msgid "Easily and quickly create a menu based on the files/folders found inside an specific folder."
+msgstr ""
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr ""
+
+#. metadata.json->name
+msgid "Quick Menu"
+msgstr ""
+
+#. settings-schema.json->pref_head_1->description
+msgid "Applet settings"
+msgstr ""
+
+#. settings-schema.json->pref_directory->description
+msgid "Choose main directory"
+msgstr ""
+
+#. settings-schema.json->pref_directory->tooltip
+msgid ""
+"Choose a directory with files and/or folders in it.\n"
+"The files will be used to create the menu items.\n"
+"The folders will be used to create sub-menus."
+msgstr ""
+
+#. settings-schema.json->pref_customtooltip->description
+msgid "Custom Tooltip"
+msgstr ""
+
+#. settings-schema.json->pref_customtooltip->tooltip
+msgid "Set a custom tooltip for the applet."
+msgstr ""
+
+#. settings-schema.json->pref_show_customicon->description
+msgid "Show Applet icon"
+msgstr ""
+
+#. settings-schema.json->pref_show_customicon->tooltip
+msgid "Display this applet icon."
+msgstr ""
+
+#. settings-schema.json->pref_customicon->description
+msgid "Icon for Applet"
+msgstr ""
+
+#. settings-schema.json->pref_customicon->tooltip
+#. settings-schema.json->pref_icon_for_menus->tooltip
+msgid "Set a custom icon for the applet."
+msgstr ""
+
+#. settings-schema.json->pref_show_applet_title->description
+msgid "Show Applet title"
+msgstr ""
+
+#. settings-schema.json->pref_show_applet_title->tooltip
+msgid "Display this applet title."
+msgstr ""
+
+#. settings-schema.json->pref_applet_title->description
+msgid "Title for Applet"
+msgstr ""
+
+#. settings-schema.json->pref_applet_title->tooltip
+msgid "Set a custom title for the applet."
+msgstr ""
+
+#. settings-schema.json->pref_head_2->description
+msgid "Menu settings"
+msgstr ""
+
+#. settings-schema.json->pref_hotkey->description
+msgid "Keyboard shortcut to open and close the menu"
+msgstr ""
+
+#. settings-schema.json->pref_icon_for_menus->description
+msgid "Icon for sub-menus"
+msgstr ""
+
+#. settings-schema.json->pref_style_for_sub_menus->description
+msgid "Style for sub-menus"
+msgstr ""
+
+#. settings-schema.json->pref_style_for_sub_menus->tooltip
+msgid "Set a custom style for the sub-menus."
+msgstr ""
+
+#. settings-schema.json->pref_style_for_menu_items->description
+msgid "Style for menu items"
+msgstr ""
+
+#. settings-schema.json->pref_style_for_menu_items->tooltip
+msgid "Set a custom style for the menu items."
+msgstr ""
+
+#. settings-schema.json->pref_autoupdate->description
+msgid "Auto-update menu"
+msgstr ""
+
+#. settings-schema.json->pref_autoupdate->tooltip
+msgid ""
+"If enabled, the applet will monitor the main folder for added/deleted/renamed files/folders and rebuild the menu.\n"
+"If disabled, the menu will have to be updated manually from its context menu."
+msgstr ""
+
+#. settings-schema.json->pref_show_only_desktop_files->description
+msgid "Show only .desktop files"
+msgstr ""
+
+#. settings-schema.json->pref_show_only_desktop_files->tooltip
+msgid ""
+"If enabled, only .desktop files will be used to create the menu.\n"
+"If disabled, all file types will be used to create the menu."
+msgstr ""
+
+#. settings-schema.json->pref_show_hidden_files->description
+msgid "Show hidden files"
+msgstr ""
+
+#. settings-schema.json->pref_show_hidden_files->tooltip
+msgid "If enabled, hidden files will be used to create menu items."
+msgstr ""
+
+#. settings-schema.json->pref_show_hidden_folders->description
+msgid "Show hidden folders"
+msgstr ""
+
+#. settings-schema.json->pref_show_hidden_folders->tooltip
+msgid "If enabled, hidden sub folders will also be used to create sub-menus."
+msgstr ""
+
+#. settings-schema.json->pref_show_submenu_icons->description
+msgid "Display sub-menu icons"
+msgstr ""
+
+#. settings-schema.json->pref_show_submenu_icons->tooltip
+msgid "If disabled, all sub-menu items will be created without icons."
+msgstr ""
+
+#. settings-schema.json->pref_sub_menu_icon_size->units
+#. settings-schema.json->pref_menu_item_icon_size->units
+msgid "pixels"
+msgstr ""
+
+#. settings-schema.json->pref_sub_menu_icon_size->description
+msgid "Sub-menus icon size"
+msgstr ""
+
+#. settings-schema.json->pref_show_applications_icons->description
+msgid "Display menu items icon"
+msgstr ""
+
+#. settings-schema.json->pref_show_applications_icons->tooltip
+msgid "If disabled, all menu items will be created without icons."
+msgstr ""
+
+#. settings-schema.json->pref_menu_item_icon_size->description
+msgid "Menu items icon size"
+msgstr ""
+
+#. settings-schema.json->pref_use_different_icons_for_sub_menus->description
+msgid "Allow sub-menus to each have their own icon"
+msgstr ""
+
+#. settings-schema.json->pref_use_different_icons_for_sub_menus->tooltip
+#. settings-schema.json->pref_sub_menu_icons_file_name->tooltip
+msgid "Read this applet help for details about this option usage (Applet context menu > Help item)."
+msgstr ""
+
+#. settings-schema.json->pref_sub_menu_icons_file_name->description
+msgid "Name for the file containing the icons for sub-menus"
+msgstr ""
+
+#. settings-schema.json->pref_ignore_sub_folders->description
+msgid "Ignore sub folders"
+msgstr ""
+
+#. settings-schema.json->pref_ignore_sub_folders->tooltip
+msgid "If enabled, the sub folders found inside the main folder will be ignored and sub-menus will not be created."
+msgstr ""
+
+#. settings-schema.json->pref_auto_close_opened_sub_menus->description
+msgid "Auto-hide opened sub-menus (EXPERIMENTAL/BUGGY)"
+msgstr ""
+
+#. settings-schema.json->pref_auto_close_opened_sub_menus->tooltip
+msgid ""
+"If enabled, the previously opened sub-menu will be automatically closed.\n"
+"It will only work with sub-menus created at the first level. Sub-menus inside other sub-menus are not affected."
+msgstr ""
