@@ -1008,14 +1008,16 @@ TranslatorExtension.prototype = {
             let themeContext = St.ThemeContext.get_for_stage(global.stage);
             this.theme = themeContext.get_theme();
         } catch (aErr) {
-            throw this.logError(_("Error trying to get theme"), aErr);
+            global.logError(_("Error trying to get theme"));
+            global.logError(aErr);
         }
 
         try {
             this.theme.load_stylesheet(aThemePath);
             this.stylesheet = aThemePath;
         } catch (aErr) {
-            throw this.logError(_("Stylesheet parse error"), aErr);
+            global.logError(_("Stylesheet parse error"));
+            global.logError(aErr);
         }
     },
 
@@ -1023,8 +1025,9 @@ TranslatorExtension.prototype = {
         if (this.theme && this.stylesheet) {
             try {
                 this.theme.unload_stylesheet(this.stylesheet);
-            } catch (e) {
-                global.logError(_("Error unloading stylesheet"), e);
+            } catch (aErr) {
+                global.logError(_("Error unloading stylesheet"));
+                global.logError(aErr);
             }
         }
     },
