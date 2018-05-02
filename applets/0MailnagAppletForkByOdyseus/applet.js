@@ -178,9 +178,6 @@ AccountMenu.prototype = {
     _init: function(account, orientation) {
         PopupMenu.PopupSubMenuMenuItem.prototype._init.call(this, account, false);
         this._orientation = orientation; // needed for sorting
-        this._onMailsAddedId = 0;
-        this._onMailsRemovedId = 0;
-        this.busWatcherId = 0;
         this.label.style_class = "mailnag-account-label";
         this.menuItems = {};
     },
@@ -228,6 +225,28 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
         this._orientation = orientation;
 
+        try {
+            // init settings
+            this.settings = new Settings.AppletSettings(this, metadata["uuid"], instance_id);
+            this.settings.bindProperty(Settings.BindingDirection.IN,
+                "notifications", "notifications_enabled",
+                function() {});
+            this.settings.bindProperty(Settings.BindingDirection.IN,
+                "launch_client_on_click", "launch_client_on_click",
+                function() {});
+            this.settings.bindProperty(Settings.BindingDirection.IN,
+                "client", "client",
+                function() {});
+            this.settings.bindProperty(Settings.BindingDirection.IN,
+                "middle_click", "middle_click_behavior",
+                function() {});
+
+            this._applet_context_menu.addCommandlineAction(
+                "Configure Mailnag", "mailnag-config");
+        } catch (aErr) {
+            global.logError(aErr);
+        }
+
         Mainloop.idle_add(() => {
             try {
                 this.set_applet_icon_symbolic_name("mail-read");
@@ -236,13 +255,13 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
                 this.menuItems = {};
                 this.accountMenus = {};
+                this._onMailsAddedId = 0;
+                this._onMailsRemovedId = 0;
+                this.busWatcherId = 0;
 
                 this.menuManager = new PopupMenu.PopupMenuManager(this);
                 this.menu = new Applet.AppletPopupMenu(this, orientation);
                 this.menuManager.addMenu(this.menu);
-
-                this._applet_context_menu.addCommandlineAction(
-                    "Configure Mailnag", "mailnag-config");
 
                 this.mailnagWasRunning = false;
 
@@ -250,21 +269,6 @@ MailnagAppletForkByOdyseusApplet.prototype = {
                 if (Main.messageTray) {
                     Main.messageTray.add(this._notificationSource);
                 }
-
-                // init settings
-                this.settings = new Settings.AppletSettings(this, metadata["uuid"], instance_id);
-                this.settings.bindProperty(Settings.BindingDirection.IN,
-                    "notifications", "notifications_enabled",
-                    function() {});
-                this.settings.bindProperty(Settings.BindingDirection.IN,
-                    "launch_client_on_click", "launch_client_on_click",
-                    function() {});
-                this.settings.bindProperty(Settings.BindingDirection.IN,
-                    "client", "client",
-                    function() {});
-                this.settings.bindProperty(Settings.BindingDirection.IN,
-                    "middle_click", "middle_click_behavior",
-                    function() {});
 
                 // watch bus
                 this.busWatcherId = Gio.bus_watch_name(
