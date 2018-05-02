@@ -1,12 +1,10 @@
-const AppletUUID = "{{UUID}}";
-
 let $;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
 } else {
-    $ = imports.ui.appletManager.applets[AppletUUID].utils;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
 
 const _ = $._;
@@ -42,6 +40,7 @@ PanelDrawerForkByOdyseusApplet.prototype = {
 
         try {
             this._bindSettings();
+            this._expandAppletContextMenu();
         } catch (e) {
             global.logError(e);
         }
@@ -49,27 +48,6 @@ PanelDrawerForkByOdyseusApplet.prototype = {
         Mainloop.idle_add(() => {
             try {
                 this.set_applet_icon_symbolic_name("pan-end");
-
-                let editMode = global.settings.get_boolean("panel-edit-mode");
-                this.panelEditMode = new PopupMenu.PopupSwitchMenuItem(_("Panel Edit mode"), editMode);
-                this.panelEditMode.connect("toggled", function(item) {
-                    global.settings.set_boolean("panel-edit-mode", item.state);
-                });
-                this._applet_context_menu.addMenuItem(this.panelEditMode);
-
-                let addapplets = new PopupMenu.PopupMenuItem(_("Add applets to the panel"));
-                let addappletsicon = new St.Icon({
-                    icon_name: "applets",
-                    icon_size: 22,
-                    icon_type: St.IconType.FULLCOLOR
-                });
-                addapplets.connect("activate", function() {
-                    Util.spawnCommandLine("cinnamon-settings applets");
-                });
-                addapplets.addActor(addappletsicon, {
-                    align: St.Align.END
-                });
-                this._applet_context_menu.addMenuItem(addapplets);
 
                 global.settings.connect("changed::panel-edit-mode", Lang.bind(this, this.on_panel_edit_mode_changed));
                 this.actor.connect("enter-event", Lang.bind(this, this._onEntered));
@@ -120,6 +98,29 @@ PanelDrawerForkByOdyseusApplet.prototype = {
                 global.logError(aErr);
             }
         });
+    },
+
+    _expandAppletContextMenu: function() {
+        let editMode = global.settings.get_boolean("panel-edit-mode");
+        this.panelEditMode = new PopupMenu.PopupSwitchMenuItem(_("Panel Edit mode"), editMode);
+        this.panelEditMode.connect("toggled", function(item) {
+            global.settings.set_boolean("panel-edit-mode", item.state);
+        });
+        this._applet_context_menu.addMenuItem(this.panelEditMode);
+
+        let addapplets = new PopupMenu.PopupMenuItem(_("Add applets to the panel"));
+        let addappletsicon = new St.Icon({
+            icon_name: "applets",
+            icon_size: 22,
+            icon_type: St.IconType.FULLCOLOR
+        });
+        addapplets.connect("activate", function() {
+            Util.spawnCommandLine("cinnamon-settings applets");
+        });
+        addapplets.addActor(addappletsicon, {
+            align: St.Align.END
+        });
+        this._applet_context_menu.addMenuItem(addapplets);
     },
 
     _bindSettings: function() {
@@ -216,7 +217,7 @@ PanelDrawerForkByOdyseusApplet.prototype = {
                         this.tray.hide();
                     }));
                     continue;
-                    //this.traysize = 
+                    //this.traysize =
                 }
                 _children[i].hide();
                 //                if(_children[i]._applet._uuid=="systray@cinnamon.org" || _children[i]._applet._uuid=="systray-collapsible@koutch"){
