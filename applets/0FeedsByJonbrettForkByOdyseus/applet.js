@@ -877,7 +877,7 @@ FeedDisplayMenuItem.prototype = {
             this.menuItemCount++;
         }
 
-        let cnt = (this.max_Items > this.unread_count) ? this.max_items : this.unread_count;
+        let cnt = (this.max_items > this.unread_count) ? this.max_items : this.unread_count;
         if (cnt > 0) {
             menu_item = new ApplicationContextMenuItem(this, _("Mark Next " + cnt + " Posts Read"), "mark_next_read");
             this.menu.addMenuItem(menu_item, 0);
