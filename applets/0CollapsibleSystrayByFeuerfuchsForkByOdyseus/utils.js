@@ -190,7 +190,7 @@ function CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet() {
 CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
     __proto__: Applet.Applet.prototype,
 
-    _init: function(orientation, panel_height, instance_id) {
+    _init: function(metadata, orientation, panel_height, instance_id) {
         Applet.Applet.prototype._init.call(this, orientation, panel_height, instance_id);
 
         // Condition needed for retro-compatibility.
@@ -415,7 +415,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
     on_applet_clicked: function(event) {}, // jshint ignore:line
 
     //
-    //override getDisplayLayout to declare that this applet is suitable for both horizontal and
+    // override getDisplayLayout to declare that this applet is suitable for both horizontal and
     // vertical orientations
     //
     getDisplayLayout: function() {
@@ -600,15 +600,15 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             let size = this._getIconSize();
             icon.set_size(size, size);
             // global.log("Resized " + role + " with normalized size (" + icon.get_width() + "x" + icon.get_height() + "px)");
-            //Note: dropbox doesn't scale, even though we resize it...
+            // Note: dropbox doesn't scale, even though we resize it...
         }
     }
 
 };
 
-function main(metadata, orientation, panel_height, instance_id) {
-    return new CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet(orientation, panel_height, instance_id);
-}
+// function main(metadata, orientation, panel_height, instance_id) {
+//     return new CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet(orientation, panel_height, instance_id);
+// }
 
 /**
  * Compares two software version numbers (e.g. "1.7.1" or "1.2b").
