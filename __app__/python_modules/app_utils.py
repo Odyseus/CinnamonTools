@@ -908,19 +908,6 @@ def is_exec(fpath):
     return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
 
-def remove_file(path):
-    """Param <path> could either be relative or absolute.
-
-    Parameters
-    ----------
-    path : TYPE
-        Description
-    """
-    if os.path.isfile(path):
-        os.remove(path)
-    else:
-        print(Ansi.ERROR("File {} is not a file or dir.".format(path)))
-
 
 def get_log_file(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_"):
     """Get log file.
@@ -1647,7 +1634,7 @@ def handle_xlet(xlet_data, do_not_cofirm, logger):
                                        (xlet_data["type"], xlet_data["slug"]))
 
         logger.info("Copying files...")
-        copytree(xlet_data["source"], xlet_data["destination"], symlinks=True,
+        copytree(xlet_data["source"], xlet_data["destination"], symlinks=False,
                  ignore=ignore_patterns(*xlet_dir_ignored_patterns),
                  ignore_dangling_symlinks=True)
     except Exception as err1:

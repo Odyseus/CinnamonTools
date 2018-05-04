@@ -1,30 +1,5 @@
-﻿/* For fixed header */
-body {
-    padding-top: 70px;
-}
-
-/* For fixed header */
-
-/* Footer tweaks */
-#footer {
-    color: #C8C8C8;
-    min-height: 60px !important;
-    bottom: 0 !important;
-    right: 0 !important;
-    left: 0 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    border: none !important;
-    margin-bottom: 0 !important;
-}
-
-.footer-inner {
-    margin-top: 20px;
-}
-
-/* Footer tweaks */
-
-/* Various tweaks */
+﻿/* Various tweaks */
+.container.boxed,
 .container {
     padding-bottom: 1em !important;
     margin-bottom: 1em !important;
@@ -58,13 +33,6 @@ body {
 
 /* Class for center images */
 
-/* Navbar shadow */
-#autohide_navbar {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.175);
-}
-
-/* Navbar shadow */
-
 /* Font preferences */
 html,
 body {
@@ -79,115 +47,6 @@ samp {
 }
 
 /* Font preferences */
-
-/* For Back To Top Button */
-#top-link {
-
-    /*min-height: 18px;*/
-    padding: 2px 6px 3px 6px;
-    border-radius: 3px;
-}
-
-#top-link-block.affix-top {
-    position: absolute; /* allows it to "slide" up into view */
-    bottom: -82px;
-    right: 10px;
-}
-
-#top-link-block.affix {
-    position: fixed;    /* keeps it on the bottom once in view */
-    bottom: 18px;
-    right: 10px;
-}
-
-#top-link {
-    color: #555;
-    background-color: rgba(200, 200, 200, 1)outline:none;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-}
-
-/* For Back To Top Button */
-
-/* General responsiveness tweaks */
-@media all (min-width:480px) and (max-width:768px) {
-
-    /* For Back To Top Button */
-    #top-link-block.affix-top {
-        right: 0;
-    }
-
-    #top-link-block.affix {
-        bottom: 8px;
-        right: 0;
-    }
-
-    /* For Back To Top Button */
-}
-
-@media all (min-width:240px) and (max-width:480px) {
-
-    /* For Back To Top Button */
-    #top-link-block.affix-top {
-        right: 0;
-    }
-
-    #top-link-block.affix {
-        bottom: 8px;
-        right: 0;
-    }
-
-    /* For Back To Top Button */
-}
-
-/* General responsiveness tweaks */
-
-/* Start Carousel tweaks */
-.carousel-control.left {
-    background-image: linear-gradient(to right, rgba(150, 150, 150, 0.3) 0%, rgba(150, 150, 150, 0.0001) 100%);
-}
-
-.carousel-control.right {
-    background-image: linear-gradient(to right, rgba(150, 150, 150, 0.0001) 0%, rgba(150, 150, 150, 0.3) 100%);
-}
-
-.carousel-caption > h2 {
-    border-bottom: none !important;
-}
-
-.carousel-indicators li {
-    background-color: rgba(50, 50, 50, 0.5) !important;
-}
-
-.carousel-indicators .active {
-    background-color: rgba(50, 50, 50, .75) !important;
-}
-
-.carousel {
-    width: 100% !important; /* "Needed" for those aberrations of Palemoon and Cyberfox!!!! */
-}
-
-.carousel-caption {
-    color: #000 !important;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 1) !important;
-}
-
-/* End Carousel tweaks */
-
-/* Start Panel header links "extended clicks" */
-h5.panel-title > a {
-    position: relative !important;
-    display: block !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;    /*outline: none !important;*/
-}
-
-/* End Panel header links "extended clicks" */
 
 /* Various tweaks */
 div.boxed {
@@ -215,3 +74,78 @@ pre {
 }
 
 /* pre tag tweaks */
+
+/* Tweak spacing of the compatibility badges inside a panel */
+.panel-body.compatibility > .compatibility-disclaimer,
+.panel-body.compatibility > .compatibility-badge {
+    margin: 5px;
+    line-height: 2.5em;
+}
+
+/* Tweak spacing of the compatibility badges inside a panel */
+
+/* Tweak appearance of the compatibility badges inside a panel */
+.panel-body.compatibility > .compatibility-disclaimer {
+    font-weight: bold;
+}
+
+.panel-body.compatibility > .compatibility-badge > .label-primary {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.panel-body.compatibility > .compatibility-badge > .label-warning,
+.panel-body.compatibility > .compatibility-badge > .label-success,
+.panel-body.compatibility > .compatibility-badge > .label-info {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.panel-body.compatibility > .compatibility-badge > .label-warning {
+    background-color: #dfb317;
+}
+
+.panel-body.compatibility > .compatibility-badge > .label-success {
+    background-color: #97CA00;
+}
+
+.panel-body.compatibility > .compatibility-badge > .label-info {
+    background-color: #439cf7;
+}
+
+/* Tweak appearance of the compatibility badges inside a panel */
+.navbar-form {
+    margin-top: 8px !important;
+}
+
+.navbar-form .form-group {
+    display: block !important;
+}
+
+/* Override %100 width so it doesn't occupy the entire page width. */
+#localization-switch {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    font-weight: bold !important;
+}
+
+/* Wrapper class for resizing and centering the language selector image
+   on the navigation bar of the help files */
+.standalone-glyphicon-globe-wrapper {
+    vertical-align: middle;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+/* Replaces the glyphicon-globe class */
+.standalone-glyphicon-globe:before {
+    content: url('data:image/svg+xml;utf8,<svg enable-background=!string!id=!string!version=!string!viewBox=!string!xml:space=!string!xmlns=!string!xmlns:xlink=!string!><path d=!string!style=!string!/></svg>') !important;
+}
+
+/* For fixed header */
+body {
+    padding-top: 70px !important;
+}
+
+/* For fixed header */

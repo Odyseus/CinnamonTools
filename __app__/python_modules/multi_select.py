@@ -74,7 +74,7 @@ class MultiSelect():
 
     def __init__(self, menu_items=[], title="", arrow="==>",
                  footer="Space = toggle ─ Enter = accept ─ q = cancel",
-                 more="...", c_selected="[X]", c_empty="[ ]"):
+                 more="...", char_selected="[X]", char_empty="[ ]"):
         """Summary
 
         Parameters
@@ -98,8 +98,8 @@ class MultiSelect():
         self.arrow = arrow
         self.footer = footer
         self.more = more
-        self.c_selected = c_selected
-        self.c_empty = c_empty
+        self.char_selected = char_selected
+        self.char_empty = char_empty
 
         self.all_menu_items = []
         self.win = None
@@ -158,9 +158,9 @@ class MultiSelect():
         if self.aborted:
             return False
 
-        ret_s = [x for x in self.all_menu_items if x["selected"]]
-        ret = [x["label"] for x in ret_s]
-        return ret
+        selected_items = [x for x in self.all_menu_items if x["selected"]]
+        selected_items_labels = [x["label"] for x in selected_items]
+        return selected_items_labels
 
     def redraw(self):
         """Summary
@@ -170,13 +170,13 @@ class MultiSelect():
         self.win.addstr(self.window_height + 4, 5, " " + self.footer + " ", curses.A_BOLD)
 
         position = 0
-        range = self.all_menu_items[self.offset:self.offset + self.window_height + 1]
+        items_range = self.all_menu_items[self.offset:self.offset + self.window_height + 1]
 
-        for option in range:
+        for option in items_range:
             if option["selected"]:
-                line_label = self.c_selected + " "
+                line_label = self.char_selected + " "
             else:
-                line_label = self.c_empty + " "
+                line_label = self.char_empty + " "
 
             self.win.addstr(position + 2, 5, line_label + option["label"])
             position = position + 1

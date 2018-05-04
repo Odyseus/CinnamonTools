@@ -113,7 +113,6 @@ class LocalizedHelpCreator(object):
         self.xlet_meta = localized_help_utils.XletMetadata(
             os.path.join(xlet_dir)).xlet_meta
 
-        self.html_templates = localized_help_utils.HTMLTemplates()
         self.html_assets = localized_help_utils.HTMLInlineAssets(repo_folder=repo_folder)
         self.compatibility_data = localized_help_utils.get_compatibility(
             xlet_meta=self.xlet_meta,
@@ -135,10 +134,10 @@ class LocalizedHelpCreator(object):
                 with open(contributors_path, "r") as contributors_file:
                     contributors_rawdata = contributors_file.read()
 
-                self.contributors += self.html_templates.boxed_container.format(
+                self.contributors += localized_help_utils.BOXED_CONTAINER.format(
                     md(contributors_rawdata))
-            except Exception as detail:
-                print(detail)
+            except Exception as err:
+                print(localized_help_utils.Ansi.ERROR(err))
                 self.contributors += ""
 
         if os.path.exists(changelog_path):
@@ -146,9 +145,9 @@ class LocalizedHelpCreator(object):
                 with open(changelog_path, "r") as changelog_file:
                     changelog_rawdata = changelog_file.read()
 
-                self.changelog += self.html_templates.boxed_container.format(md(changelog_rawdata))
-            except Exception as detail:
-                print(detail)
+                self.changelog += localized_help_utils.BOXED_CONTAINER.format(md(changelog_rawdata))
+            except Exception as err:
+                print(localized_help_utils.Ansi.ERROR(err))
                 self.changelog += ""
 
         if os.path.exists(old_changelog_path):
@@ -156,10 +155,10 @@ class LocalizedHelpCreator(object):
                 with open(old_changelog_path, "r") as old_changelog_file:
                     old_changelog_rawdata = old_changelog_file.read()
 
-                self.changelog += self.html_templates.boxed_container.format(
+                self.changelog += localized_help_utils.BOXED_CONTAINER.format(
                     md(old_changelog_rawdata))
-            except Exception as detail:
-                print(detail)
+            except Exception as err:
+                print(localized_help_utils.Ansi.ERROR(err))
                 self.changelog += ""
 
     def start(self):
@@ -215,7 +214,7 @@ class LocalizedHelpCreator(object):
             self.lang_list.append("en")
             self._create_html_document()
         else:
-            raise SystemExit("Dummy install failed.")
+            print(localized_help_utils.Ansi.ERROR("Dummy install failed."))
 
     def _create_html_document(self):
         """Summary
@@ -241,21 +240,21 @@ class LocalizedHelpCreator(object):
                 _("Do not install on any other version of Cinnamon.")
             )
 
-            compatibility_block = self.html_templates.bt_panel.format(
+            compatibility_block = localized_help_utils.BOOTSTRAP_PANEL.format(
                 context="success",
                 custom_class="compatibility",
                 title=_("Compatibility"),
                 content=self.compatibility_data + "\n<br/>" + compatibility_disclaimer,
             )
 
-            section = self.html_templates.locale_section_base.format(
+            section = localized_help_utils.LOCALE_SECTION.format(
                 language_code=current_language,
                 hidden="" if current_language is "en" else " hidden",
                 introduction=self._get_introduction(),
                 compatibility=compatibility_block,
                 content_base=md(self.get_content_base(for_readme=False)),
                 content_extra=self.get_content_extra(),
-                localize_info=self._get_localized_info(),
+                localization_info=self._get_localization_info(),
                 only_english_alert=only_english_alert,
             )
 
@@ -267,7 +266,7 @@ class LocalizedHelpCreator(object):
                 self.sections.append(section)
                 self.options.append(option)
 
-        html_doc = self.html_templates.html_doc.format(
+        html_doc = localized_help_utils.HTML_DOC.format(
             # This string doesn't need to be translated.
             # It's the initial title of the page that it's always in English.
             title="Help for {xlet_name}".format(xlet_name=self.xlet_meta["name"]),
@@ -277,7 +276,6 @@ class LocalizedHelpCreator(object):
             self.html_assets.js_localizations_handler else "",
             css_bootstrap=self.html_assets.css_bootstrap if self.html_assets.css_bootstrap else "",
             css_tweaks=self.html_assets.css_tweaks if self.html_assets.css_tweaks else "",
-            css_base=self.html_templates.css_base,
             css_custom=self.get_css_custom(),
             options="\n".join(sorted(self.options, key=pyuca_collator.sort_key)),
             sections="\n".join(self.sections),
@@ -319,15 +317,18 @@ class LocalizedHelpCreator(object):
             endonym = None
             language_name = None
 
-        # Define them first before self._get_language_stats() is called so these
+        # Define them before self._get_language_stats() is called so these
         # strings are also counted.
-        if current_language == "en" or (endonym is not None and self._get_language_stats() >= 50):
-            xlet_help = _("Help")
-            xlet_contributors = _("Contributors")
-            xlet_changelog = _("Changelog")
-            title = _("Help for %s") % self.xlet_meta["name"]
+        xlet_help = _("Help")
+        xlet_contributors = _("Contributors")
+        xlet_changelog = _("Changelog")
+        title = _("Help for %s") % _(self.xlet_meta["name"])
 
-            return self.html_templates.option_base.format(
+        if current_language == "en" or endonym is not None:
+            translated_percentage = 100 if current_language == "en" else self._get_language_stats()
+            trans_perc_msg = " (%s%%)" % translated_percentage if translated_percentage < 100 else ""
+
+            return localized_help_utils.OPTION.format(
                 endonym=endonym,
                 language_name=language_name,
                 selected="selected " if current_language is "en" else "",
@@ -335,7 +336,8 @@ class LocalizedHelpCreator(object):
                 xlet_help=xlet_help,
                 xlet_contributors=xlet_contributors,
                 xlet_changelog=xlet_changelog,
-                title=title
+                title=title,
+                translated_percentage=trans_perc_msg
             )
         else:
             return None
@@ -348,7 +350,7 @@ class LocalizedHelpCreator(object):
         TYPE
             Description
         """
-        return self.html_templates.introduction_base.format(
+        return localized_help_utils.INTRODUCTION.format(
             # TO TRANSLATORS: Full sentence:
             # "Help for <xlet_name>"
             md("# %s" % (_("Help for %s") % self.xlet_meta["name"])),

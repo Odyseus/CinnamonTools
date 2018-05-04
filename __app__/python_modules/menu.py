@@ -40,7 +40,7 @@ class Menu(object):
         Description
     """
 
-    def __init__(self, menu_items=[], title="", message="", prompt="❯", refresh=lambda: None):
+    def __init__(self, menu_items=[], title="", message="", prompt="❯ ", refresh=lambda: None):
         """Initialize.
 
         Parameters
@@ -88,15 +88,19 @@ class Menu(object):
         try:
             for item in menu_items:
                 if not isinstance(item, tuple):
-                    raise TypeError(item, "item is not a tuple")
+                    print(item)
+                    print(app_utils.Ansi.ERROR("TypeError: item is not a tuple"))
+                    raise TypeError()
 
                 if len(item) != 2:
-                    raise ValueError(item, "item is not of length 2")
+                    print(item)
+                    print(app_utils.Ansi.ERROR("ValueError: item is not of length 2"))
+                    raise ValueError()
 
                 self.add_menu_item(item[0], item[1])
-        except (TypeError, ValueError) as err:
+        except (TypeError, ValueError):
             self.menu_items = original_menu_items
-            raise err
+            raise SystemExit()
 
     def set_title(self, title):
         """Summary
@@ -162,7 +166,9 @@ class Menu(object):
             Description
         """
         if not callable(refresh):
-            raise TypeError(refresh, "refresh is not callable")
+            print(refresh)
+            print(app_utils.Ansi.ERROR("TypeError: refresh is not callable"))
+            raise TypeError()
 
         self.refresh = refresh
 
@@ -182,7 +188,9 @@ class Menu(object):
             Description
         """
         if not callable(handler):
-            raise TypeError(handler, "handler is not callable")
+            print(handler)
+            print(app_utils.Ansi.ERROR("TypeError: handler is not callable"))
+            raise TypeError()
 
         self.menu_items += [(label, handler)]
 
@@ -250,7 +258,7 @@ class Menu(object):
 
         try:
             self.show()
-            index = int(input(self.prompt + " ")) - 1
+            index = int(input(self.prompt)) - 1
             return self.menu_items[index][1]
         except (ValueError, IndexError):
             print(app_utils.Ansi.WARNING("Invalid item."))

@@ -215,12 +215,13 @@ class CommandLineTool():
             # Sort the arguments so one doesn't have to worry about the order
             # in which they are passed.
             # Source: https://stackoverflow.com/a/12814719.
-            args["<sub_commands>"].sort(key=lambda x: self.dev_args_order.index(x))
+            dev_args = list(set(args["<sub_commands>"]))
+            dev_args.sort(key=lambda x: self.dev_args_order.index(x))
             self.xlets_helper = app_utils.XletsHelperCore(logger=self.logger)
             self.logger.info("Command: dev")
             self.logger.info("Arguments:")
 
-            for func in list(set(args["<sub_commands>"])):
+            for func in dev_args:
                 if getattr(self.xlets_helper, func, False):
                     self.logger.info(func)
                     self.func_names.append(func)
