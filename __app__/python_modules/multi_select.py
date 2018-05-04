@@ -19,39 +19,39 @@ class MultiSelect():
     Attributes
     ----------
     aborted : bool
-        Description
+        Menu selection aborted.
     all_menu_items : list
-        Description
+        The menu items that constitute the multi select menu.
     arrow : str
-        Description
-    c_empty : TYPE
-        Description
-    c_selected : TYPE
-        Description
+        The character/s used to *point* the menu item that can be selected.
+    char_empty : str
+        The character/s used to represent a non selected menu item.
+    char_selected : str
+        The character/s used to represent a selected menu item.
     cursor : int
-        Description
-    footer : TYPE
-        Description
+        The current cursor position.
+    footer : str
+        Informational text placed at the bottom of the menu.
     length : int
-        Description
-    more : TYPE
-        Description
+        The amount of menu items.
+    more : str
+        Character/s representing the availability of more menu items than the screen can display.
     offset : int
-        Description
+        Te amount of menu items off-screen. (?)
     selcount : int
-        Description
+        The amount of selected menu items.
     selected : int
-        Description
-    stdscr : TYPE
-        Description
-    title : TYPE
-        Description
-    win : TYPE
-        Description
-    window_height : TYPE
-        Description
-    window_width : TYPE
-        Description
+        The index of the menu item on the current cursor position.
+    stdscr : object
+        See <class :any:`curses.initscr`>.
+    title : str
+        A title to use on the menu.
+    win : object
+        See <class :any:`curses.newwin`>.
+    window_height : int
+        The height of the terminal window.
+    window_width : int
+        The width of the terminal window.
 
 
     Example
@@ -75,24 +75,24 @@ class MultiSelect():
     def __init__(self, menu_items=[], title="", arrow="==>",
                  footer="Space = toggle ─ Enter = accept ─ q = cancel",
                  more="...", char_selected="[X]", char_empty="[ ]"):
-        """Summary
+        """Initialization.
 
         Parameters
         ----------
-        menu_items : TYPE
-            Description
+        menu_items : list
+            The data that will be used to create the menu items.
         title : str, optional
-            Description
+            A title to use on the menu.
         arrow : str, optional
-            Description
+            The character/s used to *point* the menu item that can be selected.
         footer : str, optional
-            Description
+            Informational text placed at the bottom of the menu.
         more : str, optional
-            Description
-        c_selected : str, optional
-            Description
-        c_empty : str, optional
-            Description
+            Character/s representing the availability of more menu items than the screen can display.
+        char_selected : str, optional
+            The character/s used to represent a selected menu item.
+        char_empty : str, optional
+            The character/s used to represent a non selected menu item.
         """
         self.title = title
         self.arrow = arrow
@@ -148,12 +148,12 @@ class MultiSelect():
         curses.endwin()
 
     def getSelected(self):
-        """Summary
+        """Get selected.
 
         Returns
         -------
-        TYPE
-            Description
+        list
+            The labels of the selected menu items.
         """
         if self.aborted:
             return False
@@ -163,7 +163,7 @@ class MultiSelect():
         return selected_items_labels
 
     def redraw(self):
-        """Summary
+        """Redraw.
         """
         self.win.clear()
         self.win.box(0, 0)
@@ -199,7 +199,7 @@ class MultiSelect():
         self.win.refresh()
 
     def check_cursor_up(self):
-        """Summary
+        """Check cursor up.
         """
         if self.cursor < 0:
             self.cursor = 0
@@ -207,7 +207,7 @@ class MultiSelect():
                 self.offset = self.offset - 1
 
     def check_cursor_down(self):
-        """Summary
+        """Check cursor down.
         """
         if self.cursor >= self.length:
             self.cursor = self.cursor - 1
@@ -220,17 +220,17 @@ class MultiSelect():
                 self.offset = self.offset - 1
 
     def curses_loop(self, stdscr):
-        """Summary
+        """Curses loop.
 
         Parameters
         ----------
-        stdscr : TYPE
-            Description
+        stdscr : object
+            See <class :any:`curses.initscr`>.
 
         Raises
         ------
         app_utils.KeyboardInterruption
-            Description
+            Halt execution on Ctrl + C press.
         """
         try:
             while True:

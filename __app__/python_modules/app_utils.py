@@ -6,33 +6,40 @@ Attributes
 ----------
 Ansi : object
     :any:`ANSIColors` class initialization.
+base_temp_folder : str
+    Path to a temporary folder.
 BASH_COMPLETION_LOADER_CONTENT : str
-    Description
+    Bash completions loader script.
 bash_completions_step1 : str
-    Description
+    Bash completions creation message. Step 1.
 bash_completions_step2 : str
-    Description
+    Bash completions creation message. Step 2.
 domain_storage_file : str
-    Description
+    Path to the file were the domain name for xlets is stored.
 env : dict
     Copy of the system's environment to be passed to Popen.
-existent_xlet_destination_msg : TYPE
-    Description
-extra_common_files : TYPE
-    Description
+existent_xlet_destination_msg : str
+    Message to display when creating a new xlet and that xlet already exists.
+extra_common_files : list
+    List of files common to all xlets.
 git_log_cmd : str
-    Description
-help_pages_index_template : TYPE
-    Description
-HOME : TYPE
-    Description
-missing_domain_msg : TYPE
-    Description
+    The command to use when generating changelogs.
+help_pages_index_template : str
+    The template (in reStructuredText format) used to create the index of xlets help pages in this
+    repository documentation.
+HOME : str
+    Path to the current user home folder.
+missing_domain_msg : str
+    Message to display when the domain name isn't specified at xlet build time.
+missing_theme_name_msg : str
+    Message to display when the theme name isn't specified at theme build time.
 root_folder : str
     The main folder containing the application. All commands must be executed from this location
     without exceptions.
-xlet_dir_ignored_patterns : TYPE
-    Description
+theme_name_storage_file : str
+    Path to the file were the theme name for xlets is stored.
+xlet_dir_ignored_patterns : list
+    List of patterns to ignore while copying files on xlet build time.
 """
 
 import json
@@ -531,15 +538,14 @@ class LogSystem():
 
 
 class XletsHelperCore():
-
-    """Summary
+    """Xlets core functions.
 
     Attributes
     ----------
     logger : object
         See <class :any:`LogSystem`>.
     xlets_meta : dict
-        Description
+        The metadata of all xlets in this repository.
     """
 
     def __init__(self, logger=None):
@@ -554,7 +560,7 @@ class XletsHelperCore():
         self.logger = logger
 
         try:
-            self.xlets_meta = XletsMeta()
+            self.xlets_meta = AllXletsMetadata()
         except Exception:
             self.generate_meta_file()
 
@@ -609,13 +615,8 @@ class XletsHelperCore():
 
         Raises
         ------
-        MissingCommand
-            Description
-
-        No Longer Raises
-        ----------------
         SystemExit
-            Description
+            Halt execution if the make-cinnamon-xlet-pot-app command is not found.
         """
         self.logger.info("Starting POT files update...")
 
@@ -685,8 +686,8 @@ class XletsHelperCore():
 
         Raises
         ------
-        MissingCommand
-            Description
+        SystemExit
+            Halt execution if the msgmerge command is not found.
         """
         self.logger.info("Generating translation statistics...")
 
@@ -762,8 +763,8 @@ class XletsHelperCore():
 
         Raises
         ------
-        MissingCommand
-            Description
+        SystemExit
+            Halt execution if the msgmerge command is not found.
         """
         self.logger.info("Updating Spanish localizations...")
 
@@ -792,22 +793,17 @@ class XletsHelperCore():
                     self.logger.warning("Something might have gone wrong!")
 
 
-class XletsMeta(object):
-    """Summary
+class AllXletsMetadata(object):
+    """All xlets metadata.
 
     Attributes
     ----------
     meta_list : list
-        Description
+        A list of dictionaries containing all xlets metadata.
     """
 
     def __init__(self):
-        """Summary
-
-        Raises
-        ------
-        MissingRequiredFile
-            Description
+        """Initialization.
         """
         meta_path = os.path.join(root_folder, "tmp", "xlets_metadata.json")
 
@@ -822,7 +818,7 @@ class XletsMeta(object):
 
 def generate_meta_file():
     """Generate the file containing all the metadata of all xlets on this repository.
-    This metadata files is used by several functions on the XletsHelperCore class.
+    This metadata file is used by several functions on the XletsHelperCore class.
     """
     print(Ansi.INFO("Generating xlets metadata file..."))
     xlet_meta_files = []
@@ -863,25 +859,19 @@ def generate_meta_file():
 
 
 def get_parent_dir(fpath, go_up=0):
-    """get_parent_dir
-
-    Extract the path of the parent directory of a file path.
+    """Get parent directory.
 
     Parameters
     ----------
-    fpath : TYPE
-        Description
+    fpath : str
+        The full path to a file.
     go_up : int, optional
-        Description
-    fpath {String} -- The full path to a file.
-
-    Keyword Arguments
-    -----------------
-    go_up {Number} -- How many directories to go up. (default: {0})
+        How many directories to go up.
 
     Returns
     -------
-    [string] -- The new path to a directory.
+    str
+        The new path to a directory.
     """
     dir_path = os.path.dirname(fpath)
 
@@ -908,7 +898,6 @@ def is_exec(fpath):
     return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
 
-
 def get_log_file(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_"):
     """Get log file.
 
@@ -920,7 +909,7 @@ def get_log_file(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_"):
     Parameters
     ----------
     storage_dir : str, optional
-        Description
+        Path to the folder to store the log files.
     prefix : str, optional
         String at the beginning of the file name.
     subfix : str, optional
@@ -1040,7 +1029,7 @@ def confirm(prompt=None, response=False):
     Raises
     ------
     KeyboardInterruption
-        Description
+        Halt execution on Ctrl + C press.
     """
 
     if prompt is None:
@@ -1225,7 +1214,7 @@ def do_prompt(d, key, text, default=None, validator=nonempty):
         The prompt text.
     default : None, optional
         Default option if none entered.
-    validator : TYPE, optional
+    validator : function, optional
         A function to validate the input if needed.
 
     Note
@@ -1237,7 +1226,7 @@ def do_prompt(d, key, text, default=None, validator=nonempty):
     Raises
     ------
     KeyboardInterruption
-        Description
+        Halt execution on Ctrl + C press.
     """
     try:
         while True:
@@ -1276,14 +1265,14 @@ def do_template_copy(source, destination, options={}, logger=None):
     destination : str
         Full file path destination.
     options : dict, optional
-        Description
+        A dictionary of options.
     logger : object
         See <class :any:`LogSystem`>.
 
     Raises
     ------
     err
-        Description
+        Halt execution if any error is found.
     """
     with open(source, "r", encoding="UTF-8") as template_file:
         template_data = template_file.read()
@@ -1321,7 +1310,7 @@ def system_executable_generation(exec_name, app_root_folder, do_completions=True
     app_root_folder : str
         The application's root folder.
     do_completions : bool, optional
-        Description
+        Whether to perform bash completions installation or not.
     logger : object
         See <class :any:`LogSystem`>.
     """
@@ -1426,11 +1415,13 @@ def generate_from_template(source, destination, options={}, logger=None):
     Exception
         Something went wrong! ¬¬
     KeyboardInterruption
-        Description
+        Halt execution on Ctrl + C press.
     OperationAborted
-        Description
+        Halt execution.
     RuntimeError
         Raised if the destination isn't a folder.
+    SystemExit
+        Halt execution.
     """
     try:
         if os.path.exists(destination):
@@ -1478,9 +1469,9 @@ def exec_command(cmd, working_directory, do_wait=True, do_log=True, logger=None)
 
     Parameters
     ----------
-    cmd : TYPE
+    cmd : str
         The command to run.
-    working_directory : TYPE
+    working_directory : str
         Working directory used by the command.
     do_wait : bool, optional
         Call or not the Popen wait() method. (default: {True})
@@ -1521,25 +1512,27 @@ def exec_command(cmd, working_directory, do_wait=True, do_log=True, logger=None)
 
 def build_xlets(xlets=[], domain_name=None, build_output="",
                 do_not_cofirm=False, logger=None, from_menu=False):
-    """Summary
+    """Build xlets.
 
     Parameters
     ----------
     xlets : list, optional
-        Description
-    domain : None, optional
-        Description
+        The list of xlets to build.
+    domain_name : None, optional
+        The domain name to use to build the xlets.
     build_output : str, optional
-        Description
+        Path to the folder were the built xlets are stored.
     do_not_cofirm : bool, optional
-        Description
+        Whether to ask for overwrite confirmation when an xlet destination exists or not.
     logger : object
         See <class :any:`LogSystem`>.
+    from_menu : bool, optional
+        Whether this function was called from the CLI menu or not.
 
     Raises
     ------
-    MissingRequiredFile
-        Description
+    SystemExit
+        Halt execution if the domain name cannot be obtained.
     """
     if not domain_name:
         try:
@@ -1597,8 +1590,8 @@ def handle_xlet(xlet_data, do_not_cofirm, logger):
     ----------
     xlet_data : dict
         The xlet data to handle.
-    do_not_cofirm : TYPE
-        Description
+    do_not_cofirm : bool
+        Whether to ask for overwrite confirmation when an xlet destination exists or not.
     logger : object
         See <class :any:`LogSystem`>.
 
@@ -1609,9 +1602,9 @@ def handle_xlet(xlet_data, do_not_cofirm, logger):
     err2
         Something might have gone wrong while doing the "templating".
     InvalidDestination
-        Description
+        Halt execution if the destination is a file.
     OperationAborted
-        Description
+        Halt execution on operation canceled.
     """
     try:
         logger.info(get_cli_separator("#"), date=False)
@@ -1725,6 +1718,23 @@ def get_xlets_dirs():
 
 
 def validate_themes_options(x):
+    """Validate themes options.
+
+    Parameters
+    ----------
+    x : str
+        The entered option to validate.
+
+    Returns
+    -------
+    str
+        The validated option.
+
+    Raises
+    ------
+    ValidationError
+        Halt execution if option is not valid.
+    """
     if not x or x not in ["1", "2"]:
         raise ValidationError('Posible options are "1" or "2".')
 
@@ -1732,6 +1742,26 @@ def validate_themes_options(x):
 
 
 def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=None, from_menu=False):
+    """Build themes.
+
+    Parameters
+    ----------
+    theme_name : str, optional
+        The given name of the theme.
+    build_output : str, optional
+        Path to the destination folder were the built themes will be saved.
+    do_not_cofirm : bool, optional
+        Whether to ask for overwrite confirmation when a theme destination exists or not.
+    logger : object
+        See <class :any:`LogSystem`>.
+    from_menu : bool, optional
+        Whether this function was called from the CLI menu or not.
+
+    Raises
+    ------
+    SystemExit
+        Halt execution if the theme name cannot be obtained.
+    """
     options_map = {
         "cinnamon_version": {
             "1": "3.0",
@@ -1882,6 +1912,8 @@ def do_replacements(data, replacement_data):
     ----------
     data : str
         Data to modify.
+    replacement_data : list
+        List of tuples containing (template, replacement) data.
 
     Returns
     -------
@@ -1896,6 +1928,15 @@ def do_replacements(data, replacement_data):
 
 
 def custom_copytree(src, dst):
+    """Custom copytree.
+
+    Parameters
+    ----------
+    src : str
+        Source path to copy from.
+    dst : str
+        Destination path to copy to.
+    """
     if not os.path.exists(dst):
         os.makedirs(dst)
 
@@ -2031,24 +2072,16 @@ class BaseXletGenerator():
 
     Attributes
     ----------
-    app : dict
-        The dictionary were the app name is stored.
-    app_slug : str
-        The application name without spaces.
-    app_slug_lower_dashed : str
-        The application name lower-cased and separated by dashes.
-    app_slug_lower_lodashed : str
-        The application name lower-cased and separated by low-dashes.
     base_xlet_path : str
         Path to the base application (the template).
-    default_name : str
-        Default name for the base application.
     logger : object
         See <class :any:`LogSystem`>.
     new_xlet_destination : str
         The path to the new generated application.
     replacement_data : list
         List of tuples containing (template, replacement) data.
+    xlet_data : dict
+        Storage for xlet data that will be used to generate a base xlet.
     """
 
     def __init__(self, logger):
@@ -2072,6 +2105,11 @@ class BaseXletGenerator():
 
     def _do_setup(self):
         """Do setup.
+
+        Raises
+        ------
+        SystemExit
+            Halt execution if the destination exists.
         """
         prompt_data = {
             "type": "1",
@@ -2147,11 +2185,6 @@ class BaseXletGenerator():
 
     def _do_copy(self):
         """Do copy.
-
-        Raises
-        ------
-        ExistentLocation
-            See <class :any:`ExistentLocation`>.
         """
         os.makedirs(self.new_xlet_destination, exist_ok=True)
 

@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""A list of locales with their names in English and their
-endonys (the locale name in the locale language).
+"""A list of locales with their names in English and their endonys (the locale name in
+the locale language).
+
+Data extracted from `Translate Shell <https://github.com/soimort/translate-shell>`__.
 
 Attributes
 ----------
 locale_list : dict
     List o locales.
 """
-
-# Data extracted from https://github.com/soimort/translate-shell. <3
 
 locale_list = {
     "af": {

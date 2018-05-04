@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Summary
+"""Localized help creator.
 
 Attributes
 ----------
-md : TYPE
-    Description
-pyuca_collator : TYPE
-    Description
-repo_folder : TYPE
-    Description
-translations : TYPE
-    Description
+md : object
+    The mistune Markdown parser.
+pyuca_collator : object
+    See <class :any:`pyuca.collator.Collator`>.
+repo_folder : str
+    The main repository folder. All commands must be executed from this location without exceptions.
+translations : object
+    See <class :any:`localized_help_utils.Translations`>.
 """
 
 import os
@@ -33,17 +33,17 @@ translations = localized_help_utils.Translations()
 
 
 def _(aStr):
-    """Summary
+    """Gettext translation mechanism.
 
     Parameters
     ----------
-    aStr : TYPE
-        Description
+    aStr : str
+        String to retrieve a translation of.
 
     Returns
     -------
-    TYPE
-        Description
+    str
+        The translated string if any.
     """
     trans = translations.get([current_language]).gettext
 
@@ -73,29 +73,29 @@ class LocalizedHelpCreator(object):
     Attributes
     ----------
     changelog : str
-        Description
-    compatibility_data : TYPE
-        Description
+        Xlet changelog.
+    compatibility_data : str
+        Xlet compatibility data (the Cinnamon version/s with which an xlet is compatible). It
+        could be in HTML or Markdown.
     contributors : str
-        Description
-    help_file_path : TYPE
-        Description
-    html_assets : TYPE
-        Description
-    html_templates : TYPE
-        Description
+        If existent, the content of the CONTRIBUTORS.md (inside the xlet folder) formatted in HTML.
+    help_file_path : str
+        The path of an xlet HELP.html file.
+    html_assets : object
+        See <class :any:`localized_help_utils.HTMLInlineAssets`>.
     lang_list : list
-        Description
+        The list of languages (.po files) that will be used to create the HELP.html file
+        localized content.
     options : list
-        Description
+        The list of options (HTML tags) that will be used to populate the language selector menu.
     sections : list
-        Description
-    xlet_dir : TYPE
-        Description
-    xlet_meta : TYPE
-        Description
-    xlet_slug : TYPE
-        Description
+        The list of sections that contain the localized content.
+    xlet_dir : str
+        Path to the xlet directory.
+    xlet_meta : dict
+        The xlet metadata.
+    xlet_slug : str
+        The name of the folder that contains the source files for an xlet.
     """
 
     def __init__(self, xlet_dir="", xlet_slug=""):
@@ -104,9 +104,9 @@ class LocalizedHelpCreator(object):
         Parameters
         ----------
         xlet_dir : str, optional
-            Description
+            Path to the xlet directory.
         xlet_slug : str, optional
-            Description
+            The name of the folder that contains the source files for an xlet.
         """
         self.xlet_dir = xlet_dir
         self.xlet_slug = xlet_slug
@@ -163,11 +163,6 @@ class LocalizedHelpCreator(object):
 
     def start(self):
         """Start procedure.
-
-        Raises
-        ------
-        SystemExit
-            Description
         """
         podir = os.path.join(self.xlet_dir, "po")
         done_one = False
@@ -210,14 +205,16 @@ class LocalizedHelpCreator(object):
             if len(self.lang_list) > 0:
                 translations.store(self.xlet_slug, dummy_locale_path, self.lang_list)
 
-            # Append english to lang_list AFTER storing the translations.
+            # Append English to lang_list AFTER storing the translations.
             self.lang_list.append("en")
             self._create_html_document()
         else:
             print(localized_help_utils.Ansi.ERROR("Dummy install failed."))
 
     def _create_html_document(self):
-        """Summary
+        """Create HTML document.
+
+        Create the HELP.html file for an xlet directly into the xlet directory.
         """
         print("Creating HTML document...")
         for lang in self.lang_list:
@@ -290,12 +287,12 @@ class LocalizedHelpCreator(object):
                                        data=html_doc)
 
     def _get_language_stats(self):
-        """Summary
+        """Get language stats.
 
         Returns
         -------
-        TYPE
-            Description
+        int
+            The total approximate percentage of translated strings for a HELP.html file an xlet has.
         """
         stats_total = str(current_language_stats["total"])
         stats_translated = str(current_language_stats["translated"])
@@ -303,12 +300,12 @@ class LocalizedHelpCreator(object):
         return int(100 * float(stats_translated) / float(stats_total))
 
     def _get_option(self):
-        """Summary
+        """Get option.
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            An option HTML tag ready to be inserted into a select HTML tag.
         """
         try:
             endonym = locale_list[current_language]["endonym"]
@@ -343,12 +340,12 @@ class LocalizedHelpCreator(object):
             return None
 
     def _get_introduction(self):
-        """Summary
+        """Get introduction.
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            The main title of the page and a generic warning.
         """
         return localized_help_utils.INTRODUCTION.format(
             # TO TRANSLATORS: Full sentence:
@@ -360,13 +357,13 @@ class LocalizedHelpCreator(object):
                " %s" % ("[GitHub](%s)" % self.xlet_meta["website"] if self.xlet_meta["website"] else self.xlet_meta["url"]))
         )
 
-    def _get_localized_info(self):
-        """Summary
+    def _get_localization_info(self):
+        """Get localization info.
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            Information about xlets localization mechanism.
         """
         return md("\n".join([
             "## %s" % _("Applets/Desklets/Extensions (a.k.a. xlets) localization"),
@@ -380,15 +377,19 @@ class LocalizedHelpCreator(object):
     def get_content_base(self, for_readme=False):
         """Get base content.
 
+        The information returned by this method can be used to generate a README.md file.
+
         Parameters
         ----------
         for_readme : bool, optional
-            Description
+            Option used to decide if certain information should be added to the
+            generated README.md file.
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            Basic information about an xlet that can be used as an introduction to the xlet's
+            features inside the content of the HELP.html file or as the content of a README.md file.
         """
         return ""
 
@@ -397,8 +398,9 @@ class LocalizedHelpCreator(object):
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            Detailed information about an xlet (features, dependencies, keyboard
+            shortcuts description, etc.).
         """
         return ""
 
@@ -407,8 +409,8 @@ class LocalizedHelpCreator(object):
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            CSS stylesheet that extends or overrides the global CSS stylesheets.
         """
         return ""
 
@@ -417,8 +419,9 @@ class LocalizedHelpCreator(object):
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            Extra JavaScript functions that can perform any action that it is specific to a
+            HELP.html file for an xlet.
         """
         return ""
 

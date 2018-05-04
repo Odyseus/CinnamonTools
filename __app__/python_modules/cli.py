@@ -131,18 +131,24 @@ class CommandLineTool():
     ----------
     action : method
         Set the method that will be executed when calling CommandLineTool.run().
-    build_output : TYPE
-        Description
+    build_output : str
+        Path to the folder were the built xlets are stored.
     dev_args_order : list
         List used as a gude to execute functions in the order they need to.
-    do_not_cofirm : TYPE
-        Description
+    do_not_cofirm : bool
+        Whether to ask for overwrite confirmation when an xlet destination exists or not.
+    domain_name : str
+        The domain name to use to build the xlets.
     func_names : list
-        Description
+        Function names to be executed.
     logger : object
         See <class :any:`app_utils.LogSystem`>.
+    restart_cinnamon : bool
+        Whether or not to restart Cinnamon after the xlet/theme build process.
+    theme_name : str
+        The given name of the theme.
     xlets : list
-        Description
+        The list of xlets to build.
     xlets_helper : object
         See :any:`app_utils.XletsHelperCore`.
     """
@@ -247,6 +253,11 @@ class CommandLineTool():
 
     def run(self):
         """Execute the assigned actions.
+
+        Raises
+        ------
+        app_utils.KeyboardInterruption
+            Halt execution on Ctrl + C press.
         """
         try:
             threads = []

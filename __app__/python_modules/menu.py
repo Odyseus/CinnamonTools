@@ -11,8 +11,7 @@ class Menu(object):
     """Easily create command-line menus.
 
     .. note::
-        This is a slightly modified version of the Menu module.
-        https://pypi.python.org/pypi/Menu
+        This is a slightly modified version of the `Menu module <https://pypi.python.org/pypi/Menu>`__.
 
         **Modifications**:
 
@@ -23,21 +22,21 @@ class Menu(object):
     Attributes
     ----------
     is_message_enabled : bool
-        Description
+        Used to whether or not to display the menu message.
     is_open : bool
-        Description
+        Whether the menu is open or not.
     is_title_enabled : bool
-        Description
+        Used to whether or not to display the menu title.
     menu_items : list
-        Description
+        The list of menu items to create the menu.
     message : str
-        Description
+        A message/description to use in the menu.
     prompt : str
-        Description
+        The character used as a prompt for the menu.
     refresh : method
-        Description
+        A function to call before displaying the menu.
     title : str
-        Description
+        A title to use on the menu.
     """
 
     def __init__(self, menu_items=[], title="", message="", prompt="❯ ", refresh=lambda: None):
@@ -46,15 +45,15 @@ class Menu(object):
         Parameters
         ----------
         menu_items : list, optional
-            Description
+            The list of menu items to create the menu.
         title : str, optional
-            Description
+            A title to use on the menu.
         message : str, optional
-            Description
+            A message/description to use in the menu.
         prompt : str, optional
-            Description
+            The character used as a prompt for the menu.
         refresh : method, optional
-            Description
+            A function to call before displaying the menu.
         """
         self.menu_items = menu_items
         self.title = title
@@ -66,21 +65,21 @@ class Menu(object):
         self.is_open = False
 
     def set_menu_items(self, menu_items):
-        """Summary
+        """Set menu items.
 
         Parameters
         ----------
         menu_items : list
-            Description
+            List of tuples used to create the menu itmes.
 
         Raises
         ------
-        err
-            Description
+        SystemExit
+            Halt execution.
         TypeError
-            Description
+            If a menu item inside the menu list isn't a tuple.
         ValueError
-            Description
+            If the tuple lenght of the menu item inside the menu list is not equal to two (2).
         """
         original_menu_items = self.menu_items
         self.menu_items = []
@@ -103,67 +102,67 @@ class Menu(object):
             raise SystemExit()
 
     def set_title(self, title):
-        """Summary
+        """Set title.
 
         Parameters
         ----------
         title : str
-            Description
+            The string used as the menu title.
         """
         self.title = title
 
     def set_title_enabled(self, is_enabled):
-        """Summary
+        """Set title enabled.
 
         Parameters
         ----------
         is_enabled : bool
-            Description
+            Whether the menu title will be displayed or not.
         """
         self.is_title_enabled = is_enabled
 
     def set_message(self, message):
-        """Summary
+        """Set message.
 
         Parameters
         ----------
         message : str
-            Description
+            The string used as the menu message.
         """
         self.message = message
 
     def set_message_enabled(self, is_enabled):
-        """Summary
+        """Set message enabled.
 
         Parameters
         ----------
         is_enabled : bool
-            Description
+            Whether the menu message will be displayed or not.
         """
         self.is_message_enabled = is_enabled
 
     def set_prompt(self, prompt):
-        """Summary
+        """Set prompt.
 
         Parameters
         ----------
         prompt : str
-            Description
+            The prompt character to be used by the menu.
         """
         self.prompt = prompt
 
     def set_refresh(self, refresh):
-        """Summary
+        """Set refresh.
 
         Parameters
         ----------
         refresh : method
-            Description
+            A function to call before displaying the menu.
 
         Raises
         ------
         TypeError
-            Description
+            Halt execution if the refresh method isn't a callable.
         """
         if not callable(refresh):
             print(refresh)
@@ -173,19 +172,19 @@ class Menu(object):
         self.refresh = refresh
 
     def add_menu_item(self, label, handler):
-        """Summary
+        """Add menu item.
 
         Parameters
         ----------
         label : str
-            Description
+            The text used by a menu item.
         handler : method
-            Description
+            The function to call when activating a menu item.
 
         Raises
         ------
         TypeError
-            Description
+            Halt execution if the handler method isn't a callable.
         """
         if not callable(handler):
             print(handler)
@@ -195,14 +194,14 @@ class Menu(object):
         self.menu_items += [(label, handler)]
 
     def open(self):
-        """Summary
+        """Open menu.
 
         Raises
         ------
         app_utils.KeyboardInterruption
-            Description
+            Halt execution on Ctrl + C press.
         app_utils.OperationAborted
-            Description
+            Halt execution.
         """
         self.is_open = True
 
@@ -224,12 +223,12 @@ class Menu(object):
             raise app_utils.OperationAborted("")
 
     def close(self):
-        """Summary
+        """Close menu.
         """
         self.is_open = False
 
     def show(self):
-        """Show menu.
+        """Display menu.
         """
         if self.is_title_enabled:
             print(app_utils.Ansi.INFO(self.title))
@@ -246,12 +245,12 @@ class Menu(object):
         print()
 
     def input(self):
-        """Summary
+        """Process input.
 
         Returns
         -------
-        TYPE
-            Description
+        method
+            The method to call when a menu item is activated.
         """
         if len(self.menu_items) == 0:
             return Menu.CLOSE
@@ -265,7 +264,7 @@ class Menu(object):
             return self.input()
 
     def CLOSE(self):
-        """Summary
+        """Close menu.
         """
         pass
 

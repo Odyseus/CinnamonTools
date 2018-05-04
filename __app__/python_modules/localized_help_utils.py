@@ -1,29 +1,29 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Utils for the locallized_help_creator module.
+"""Utils for the localized_help_creator module.
 
 Attributes
 ----------
-BASE_CSS : TYPE
-    Description
-BOOTSTRAP_ALERT : TYPE
-    Description
-BOOTSTRAP_PANEL : TYPE
-    Description
-BOXED_CONTAINER : TYPE
-    Description
-HTML_DOC : TYPE
-    Description
-INTRODUCTION : TYPE
-    Description
-LOCALE_SECTION : TYPE
-    Description
-OPTION : TYPE
-    Description
-README_DOC : TYPE
-    Description
-README_POEDITOR_BLOCK : TYPE
-    Description
+Ansi : object
+    :any:`app_utils.ANSIColors` class initialization.
+BOOTSTRAP_ALERT : str
+    Bootstrap alert template.
+BOOTSTRAP_PANEL : str
+    Bootstrap panel template.
+BOXED_CONTAINER : str
+    Boxed container template.
+COMPATIBILITY_BADGE : str
+    Compatibility badge template.
+HTML_DOC : str
+    HTML document template.
+INTRODUCTION : str
+    Introduction section template.
+LOCALE_SECTION : str
+    Localized section template.
+OPTION : str
+    Option tag template.
+README_DOC : str
+    README file template.
 """
 
 import os
@@ -164,23 +164,22 @@ COMPATIBILITY_BADGE = '<span class="compatibility-badge"><span class="label labe
 </span><span class="label label-{0}">{1}</span></span>\n'
 
 
-
 class XletMetadata():
-    """Summary
+    """Xlet metadata.
 
     Attributes
     ----------
-    xlet_meta : TYPE
-        Description
+    xlet_meta : dict
+        The parsed content of the metadata.json file from an xlet.
     """
 
     def __init__(self, xlet_dir):
-        """Summary
+        """initialization.
 
         Parameters
         ----------
-        xlet_dir : TYPE
-            Description
+        xlet_dir : str
+            Path to an xlet directory.
         """
         try:
             file = open(os.path.join(xlet_dir, "metadata.json"), "r")
@@ -194,27 +193,26 @@ class XletMetadata():
 
 
 class Translations(object):
-
-    """Summary
+    """Translations mechanism.
     """
 
     def __init__(self):
-        """Summary
+        """Initialization.
         """
         self._translations = {}
         self._null = gettext.NullTranslations()
 
     def store(self, domain, localedir, languages):
-        """Summary
+        """Store all translations.
 
         Parameters
         ----------
-        domain : TYPE
-            Description
-        localedir : TYPE
-            Description
-        languages : TYPE
-            Description
+        domain : str
+            The domain to get translations from.
+        localedir : str
+            The directory were the translations are stored.
+        languages : list
+            The list of languages to retrieve.
         """
         for lang in languages:
             try:
@@ -229,17 +227,17 @@ class Translations(object):
                 self._translations[lang] = translations
 
     def get(self, languages):
-        """Summary
+        """Get translations.
 
         Parameters
         ----------
-        languages : TYPE
-            Description
+        languages : list
+            The languages to get the translation for.
 
         Returns
         -------
-        TYPE
-            Description
+        dict
+            The translations object for the requested languages.
         """
         for lang in languages:
             if lang in self._translations:
@@ -248,32 +246,25 @@ class Translations(object):
 
 
 class HTMLInlineAssets(object):
-
-    """Summary
+    """HTML inline assets.
 
     Attributes
     ----------
-    css_bootstrap : TYPE
-        Description
-    css_tweaks : TYPE
-        Description
-    js_localizations_handler : TYPE
-        Description
-    path_css_bootstrap : TYPE
-        Description
-    path_css_tweaks : TYPE
-        Description
-    path_js_localizations_handler : TYPE
-        Description
+    css_bootstrap : str
+        Bootstrap CSS stylesheet.
+    css_tweaks : str
+        CSS stylesheet tweaks.
+    js_localizations_handler : str
+        Localizations handler JavaScript code.
     """
 
     def __init__(self, repo_folder):
-        """Summary
+        """Initialization.
 
         Parameters
         ----------
-        repo_folder : TYPE
-            Description
+        repo_folder : str
+            Path to the repository folder.
         """
         super(HTMLInlineAssets, self).__init__()
         self.css_bootstrap = ""
@@ -302,12 +293,12 @@ class HTMLInlineAssets(object):
 
 
 def get_time_zone():
-    """Summary
+    """Get time zone.
 
     Returns
     -------
-    TYPE
-        Description
+    str
+        String representation of a time zone.
     """
     if time.localtime().tm_isdst and time.daylight:
         tzone = -time.altzone
@@ -331,12 +322,14 @@ def get_time_zone():
 
 
 def get_timestamp():
-    """Returns a time stamp in the same format used by xgettex.
+    """Get time stamp.
+
+    Returns a time stamp in the same format used by xgettex.
 
     Returns
     -------
-    TYPE
-        Description
+    str
+        A time stamp in the same format used in .pot files.
     """
     now = datetime.datetime.now()
     # Since the "padding" with zeroes of the rest of the values converts
@@ -353,18 +346,18 @@ def get_timestamp():
 
 
 def validate_po_file(pofile_path, lang_name, xlet_meta, xlet_slug):
-    """Summary
+    """Validate .po file.
 
     Parameters
     ----------
-    pofile_path : TYPE
-        Description
-    lang_name : TYPE
-        Description
-    xlet_meta : TYPE
-        Description
-    xlet_slug : TYPE
-        Description
+    pofile_path : str
+        Path to a .po file.
+    lang_name : str
+        A language name.
+    xlet_meta : dict
+        An xlet metadata.
+    xlet_slug : str
+        An xlet folder name.
     """
     po_file = polib.pofile(pofile_path, wrapwidth=99999999)
     do_save = False
@@ -410,14 +403,14 @@ def validate_po_file(pofile_path, lang_name, xlet_meta, xlet_slug):
 
 
 def save_file(path, data):
-    """Summary
+    """Save file.
 
     Parameters
     ----------
-    path : TYPE
-        Description
-    data : TYPE
-        Description
+    path : str
+        Path to a file to save data to.
+    data : str
+        The data to save into a file.
     """
     try:
         with open(path, "w") as f:
@@ -443,19 +436,20 @@ def save_file(path, data):
 
 
 def get_compatibility(xlet_meta=None, for_readme=False):
-    """Summary
+    """Get compatibility.
 
     Parameters
     ----------
     xlet_meta : None, optional
-        Description
+        Xlet metadata.
     for_readme : bool, optional
-        Description
+        Option used to decide if certain information should be added to the
+        generated README.md file.
 
     Returns
     -------
-    TYPE
-        Description
+    str
+        A *compatibility block* that can be in HTML or Markdown.
     """
     data = ""
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Summary
+"""Command Line Interface menu.
 """
 
 from . import app_utils, menu, multi_select
@@ -12,16 +12,20 @@ class CLIMenu():
 
     Attributes
     ----------
-    build_output : TYPE
-        Description
+    build_output : str
+        Path to the folder were the built xlets are stored.
     dev_menu : object
         Development menu. See <class :any:`menu.Menu`>.
-    do_not_cofirm : TYPE
-        Description
+    do_not_cofirm : bool
+        Whether to ask for overwrite confirmation when an xlet destination exists or not.
+    domain_name : str
+        The domain name to use to build the xlets.
     logger : object
         See <class :any:`app_utils.LogSystem`>.
     main_menu : object
         Main menu. See <class :any:`menu.Menu`>.
+    theme_name : str
+        The given name of the theme.
     xlets_helper : object
         Helper functions. See <class :any:`app_utils.LogSystem`>.
     """
@@ -32,10 +36,14 @@ class CLIMenu():
 
         Parameters
         ----------
-        build_output : TYPE
-            Description
-        do_not_cofirm : TYPE
-            Description
+        theme_name : str, optional
+            The given name of the theme.
+        domain_name : str, optional
+            The domain name to use to build the xlets.
+        build_output : str
+            Path to the folder were the built xlets are stored.
+        do_not_cofirm : bool
+            Whether to ask for overwrite confirmation when an xlet destination exists or not.
         logger : object
             See <class :any:`app_utils.LogSystem`>.
         """
