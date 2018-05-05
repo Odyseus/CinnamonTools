@@ -16,8 +16,11 @@ Translator.prototype = {
     __proto__: $.TranslateShellBaseTranslator.prototype,
 
     _init: function(aExtension) {
-        this.engine_name = "google";
-        this.provider_name = "Google.TranslateTS";
+        this.engine_name = "deepl";
+        this.provider_name = "DeepL.TranslatorTS";
+        this.provider_limit = 1400;
+        this.provider_max_queries = 3;
+
         $.TranslateShellBaseTranslator.prototype._init.call(this, aExtension);
     }
 };

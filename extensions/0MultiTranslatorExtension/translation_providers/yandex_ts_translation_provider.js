@@ -16,8 +16,8 @@ Translator.prototype = {
     __proto__: $.TranslateShellBaseTranslator.prototype,
 
     _init: function(aExtension) {
-        this.engine_name = "google";
-        this.provider_name = "Google.TranslateTS";
+        this.engine_name = "yandex";
+        this.provider_name = "Yandex.TranslateTS";
         $.TranslateShellBaseTranslator.prototype._init.call(this, aExtension);
     }
 };

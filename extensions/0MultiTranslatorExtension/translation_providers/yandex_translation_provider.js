@@ -8,6 +8,8 @@ if (typeof require === "function") {
 const _ = $._;
 const Main = imports.ui.main;
 
+var NEEDS_EXTENSION_OBJECT = true;
+
 const PROVIDER_NAME = "Yandex.Translate";
 const PROVIDER_LIMIT = 9800;
 const PROVIDER_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=%s&lang=%s&text=%s&format=plain&options=1";
@@ -219,7 +221,7 @@ function Translator() {
 Translator.prototype = {
     __proto__: $.TranslationProviderBase.prototype,
 
-    _init: function(aExtensionObject) {
+    _init: function(aExtension) {
         $.TranslationProviderBase.prototype._init.call(
             this,
             PROVIDER_NAME,
@@ -227,7 +229,7 @@ Translator.prototype = {
             PROVIDER_URL,
             PROVIDER_HEADERS
         );
-        this._extension_object = aExtensionObject;
+        this._extension = aExtension;
     },
 
     get_languages: function() {
@@ -330,7 +332,7 @@ Translator.prototype = {
     },
 
     get YandexAPIKey() {
-        let APIKeys = this._extension_object.settings.get_string($.P.YANDEX_API_KEYS).split("\n")
+        let APIKeys = this._extension.settings.get_string($.P.YANDEX_API_KEYS).split("\n")
             .filter(function(aKey) { // Filter possible empty elements.
                 if (aKey !== "") {
                     return true;
@@ -351,3 +353,6 @@ Translator.prototype = {
         return this._APIKey;
     }
 };
+
+/* exported NEEDS_EXTENSION_OBJECT
+ */

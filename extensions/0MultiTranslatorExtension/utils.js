@@ -86,6 +86,20 @@ const DEFAULT_ENGINES = {
         "last_source": "",
         "last_target": "",
         "remember_last_lang": true
+    },
+    "Yandex.TranslateTS": {
+        "default_source": "auto",
+        "default_target": "en",
+        "last_source": "",
+        "last_target": "",
+        "remember_last_lang": true
+    },
+    "DeepL.TranslatorTS": {
+        "default_source": "auto",
+        "default_target": "en",
+        "last_source": "",
+        "last_target": "",
+        "remember_last_lang": true
     }
 };
 
@@ -116,6 +130,14 @@ Soup.Session.prototype.add_feature.call(
 );
 _httpSession.user_agent = "Mozilla/5.0";
 _httpSession.timeout = 5;
+
+var ProxySettings = new Gio.Settings({
+    schema_id: "org.gnome.system.proxy"
+});
+
+var ProxySettingsHTTP = new Gio.Settings({
+    schema_id: "org.gnome.system.proxy.http"
+});
 
 var CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
 var CINN_2_8 = versionCompare(CINNAMON_VERSION, "2.8.8") <= 0;
@@ -190,28 +212,34 @@ var ICONS = {
 
 var PROVIDERS = {
     website: {
-        "Yandex.Translate": "https://translate.yandex.net",
+        "Apertium.TS": "https://www.apertium.org",
+        "Bing.TranslatorTS": "https://www.bing.com/translator/",
+        "DeepL.TranslatorTS": "https://www.deepl.com/translator",
         "Google.Translate": "https://translate.google.com",
         "Google.TranslateTS": "https://translate.google.com",
-        "Bing.TranslatorTS": "https://www.bing.com/translator/",
-        "Apertium.TS": "https://www.apertium.org",
-        "Transltr": "http://transltr.org"
+        "Transltr": "http://transltr.org",
+        "Yandex.Translate": "https://translate.yandex.net",
+        "Yandex.TranslateTS": "https://translate.yandex.net",
     },
     display_name: {
-        "Yandex.Translate": "Yandex.Translate",
+        "Apertium.TS": "Apertium",
+        "Bing.TranslatorTS": "Bing Translator",
+        "DeepL.TranslatorTS": "DeepL Translator",
         "Google.Translate": "Google Translate",
         "Google.TranslateTS": "Google Translate",
-        "Bing.TranslatorTS": "Bing Translator",
-        "Apertium.TS": "Apertium",
-        "Transltr": "Transltr"
+        "Transltr": "Transltr",
+        "Yandex.Translate": "Yandex.Translate",
+        "Yandex.TranslateTS": "Yandex.Translate",
     },
     icon: {
-        "Yandex.Translate": "multi-translator-yandex-translate",
+        "Apertium.TS": "multi-translator-generic-translator",
+        "Bing.TranslatorTS": "multi-translator-bing-translator",
+        "DeepL.TranslatorTS": "multi-translator-google-translate",
         "Google.Translate": "multi-translator-google-translate",
         "Google.TranslateTS": "multi-translator-google-translate",
-        "Bing.TranslatorTS": "multi-translator-bing-translator",
-        "Apertium.TS": "multi-translator-generic-translator",
-        "Transltr": "multi-translator-generic-translator"
+        "Transltr": "multi-translator-generic-translator",
+        "Yandex.Translate": "multi-translator-yandex-translate",
+        "Yandex.TranslateTS": "multi-translator-yandex-translate",
     }
 };
 
@@ -2056,7 +2084,7 @@ function ProviderBar() {
 ProviderBar.prototype = {
 
     _init: function(aExtension_object) {
-        this._extension_object = aExtension_object;
+        this._extension = aExtension_object;
         this._providerURL = null;
 
         this.actor = new St.BoxLayout({
@@ -2099,7 +2127,7 @@ ProviderBar.prototype = {
     },
 
     _openProviderWebsite: function() {
-        this._extension_object.close();
+        this._extension.close();
         Util.spawn_async(["gvfs-open", this.providerURL], null);
     },
 
@@ -2168,7 +2196,7 @@ TranslationProviderPrefs.prototype = {
         try {
             let temp = {};
 
-            if (current_prefs[this._name] !== "undefined") {
+            if (current_prefs[this._name]) {
                 temp = current_prefs[this._name];
             }
 
@@ -2664,12 +2692,12 @@ function TranslatorDialog() {
 TranslatorDialog.prototype = {
     __proto__: MyModalDialog.prototype,
 
-    _init: function(aExtensionObject) {
+    _init: function(aExtension) {
         MyModalDialog.prototype._init.call(this, {
             cinnamonReactive: false
         });
 
-        this._extension_object = aExtensionObject;
+        this._extension = aExtension;
         this._dialogLayout = typeof this.dialogLayout === "undefined" ?
             this._dialogLayout :
             this.dialogLayout;
@@ -2738,7 +2766,7 @@ TranslatorDialog.prototype = {
             Lang.bind(this, function() {
                 this.google_tts.speak(
                     this._source.text,
-                    this._extension_object.current_source_lang
+                    this._extension.current_source_lang
                 );
             }));
         this._listen_target_button = new ListenButton();
@@ -2755,14 +2783,14 @@ TranslatorDialog.prototype = {
 
                     this.google_tts.speak(
                         translation.slice(0, lines_count).join("\n"),
-                        this._extension_object.current_target_lang
+                        this._extension.current_target_lang
                     );
                 } catch (aErr) {
                     global.logError(aErr);
                 }
             }));
 
-        this._providerbar = new ProviderBar(this._extension_object);
+        this._providerbar = new ProviderBar(this._extension);
         this._providerbar.actor.align_end = true;
 
         this._grid_layout = new Clutter.GridLayout({
@@ -2989,7 +3017,7 @@ TranslatorDialog.prototype = {
 
     close: function() {
         this._statusbar.clear();
-        this._extension_object._close_all_menus();
+        this._extension._close_all_menus();
         MyModalDialog.prototype.close.call(this);
     },
 
@@ -3004,7 +3032,7 @@ TranslatorDialog.prototype = {
             Settings.disconnect(this._connection_ids.show_most_used);
         }
 
-        delete this._extension_object;
+        delete this._extension;
 
         this._source.destroy();
         this._target.destroy();
@@ -3073,8 +3101,8 @@ function TranslatorsManager() {
 }
 
 TranslatorsManager.prototype = {
-    _init: function(aExtensionObject) {
-        this._extension_object = aExtensionObject;
+    _init: function(aExtension) {
+        this._extension = aExtension;
         this._translators = this._load_translators();
         this._default = this.get_by_name(Settings.get_string(P.DEFAULT_TRANSLATOR));
         this._current = this._default;
@@ -3107,7 +3135,8 @@ TranslatorsManager.prototype = {
             }
 
             let translator = new translator_module.Translator(
-                this._extension_object
+                // Do not pass a reference to the "extension object" needlessly.
+                translator_module.NEEDS_EXTENSION_OBJECT ? this._extension : null
             );
 
             translator.file_name = file_name;
@@ -3323,14 +3352,6 @@ function exec(cmd, exec_cb) {
         }
     }
     out_reader.read_line_async(null, null, _SocketRead);
-}
-
-function execSync(cmd) {
-    try {
-        return GLib.spawn_command_line_sync(cmd)[1].toString().trim();
-    } catch (aErr) {
-        return false;
-    }
 }
 
 function getKeyByValue(object, value) {
@@ -3762,16 +3783,182 @@ function customNotify(aTitle, aBody, aIconName, aUrgency, aButtons) {
     }
 }
 
-// This is just a "whitelist" for jshint.
-// It's a list of function/constants that are
-// defined in this file but are used in other file/s.
+function TranslateShellBaseTranslator() {
+    this._init.apply(this, arguments);
+}
+
+TranslateShellBaseTranslator.prototype = {
+    __proto__: TranslationProviderBase.prototype,
+
+    // This properties SHOULD be overridden.
+    engine_name: "",
+    provider_name: "",
+    // This properties CAN be overridden.
+    provider_limit: 1400,
+    provider_max_queries: 3,
+    provider_url: "",
+    provider_headers: null,
+    sentences_regexp: /\n|([^\r\n.!?]+([.!?]+|\n|$))/gim,
+    extra_options: [
+        "--show-original", "n",
+        "--show-prompt-message", "n",
+        "--no-bidi"
+    ],
+
+    _init: function(aExtensionObject) {
+        TranslationProviderBase.prototype._init.call(
+            this,
+            this.provider_name,
+            this.provider_limit * this.provider_max_queries,
+            this.provider_url,
+            this.provider_headers
+        );
+        this._results = [];
+        this._extension_object = aExtensionObject;
+    },
+
+    _split_text: function(text) {
+        let sentences = text.match(this.sentences_regexp);
+
+        if (sentences === null) {
+            return false;
+        }
+
+        let temp = "";
+        let result = [];
+
+        for (let i = 0; i < sentences.length; i++) {
+            let sentence = sentences[i];
+
+            if (is_blank(sentence)) {
+                temp += "\n";
+                continue;
+            }
+
+            if (sentence.length + temp.length > this.provider_limit) {
+                result.push(temp);
+                temp = sentence;
+            } else {
+                temp += sentence;
+                if (i == (sentences.length - 1)) {
+                    result.push(temp);
+                }
+            }
+        }
+
+        return result;
+    },
+
+    get_pairs: function(language) { // jshint ignore:line
+        let temp = {};
+
+        for (let key in LANGUAGES_LIST) {
+            if (key === "auto") {
+                continue;
+            }
+
+            temp[key] = LANGUAGES_LIST[key];
+        }
+
+        return temp;
+    },
+
+    parse_response: function(data) {
+        let stuff = {
+            "\x1B[1m": "<b>",
+            "\x1B[22m": "</b>",
+            "\x1B[4m": "<u>",
+            "\x1B[24m": "</u>"
+        };
+        try {
+            for (let hex in stuff) {
+                data = replaceAll(data, hex, stuff[hex]);
+            }
+            return data;
+        } catch (aErr) {
+            return "%s: ".format(_("Error while parsing data")) + aErr;
+        }
+    },
+
+    do_translation: function(source_lang, target_lang, text, callback) {
+        let proxy = false;
+
+        if (ProxySettings.get_string("mode") == "manual") {
+            proxy = ProxySettingsHTTP.get_string("host").slice(1, -1);
+            proxy += ":";
+            proxy += ProxySettingsHTTP.get_int("port");
+        }
+
+        let command = ["trans"];
+        let options = [
+            "-e", this.engine_name,
+            "--show-languages", (source_lang === "auto" ? "y" : "n")
+        ];
+        options.concat(this.extra_options);
+
+        let subjects = [
+            (source_lang === "auto" ? "" : source_lang) + ":" + target_lang,
+            text
+        ];
+
+        if (proxy) {
+            options.push("-x");
+            options.push(proxy);
+        }
+
+        exec(command.concat(options).concat(subjects), Lang.bind(this, function(data) {
+            if (!data) {
+                data = _("Error while translating, check your internet connection");
+            } else {
+                data = this.parse_response(data);
+            }
+
+            callback({
+                error: false,
+                message: data
+            });
+        }));
+    },
+
+    translate: function(source_lang, target_lang, text, callback) {
+        if (is_blank(text)) {
+            callback(false);
+            return;
+        }
+
+        let splitted = this._split_text(text);
+
+        if (!splitted || splitted.length === 1) {
+            if (splitted) {
+                text = splitted[0];
+            }
+
+            this.do_translation(source_lang, target_lang, text, callback);
+        } else {
+            this._results = [];
+            let _this = this;
+            asyncLoop({
+                length: splitted.length,
+                functionToLoop: Lang.bind(this, function(loop, i) {
+                    let text = splitted[i];
+                    let data = _this.do_translation(source_lang, target_lang, text, function() {
+                        this._results.push(data);
+                        loop();
+                    });
+                }),
+                callback: Lang.bind(this, function() {
+                    callback(this._results.join(" "));
+                })
+            });
+        }
+    }
+};
 
 /*
 exported STATS_TYPE_SOURCE,
          STATS_TYPE_TARGET,
          LANGUAGES_LIST_ENDONYMS,
          getKeyByValue,
-         execSync,
          exec,
          LOAD_THEME_DELAY,
          TIMEOUT_IDS,
@@ -3783,5 +3970,7 @@ exported STATS_TYPE_SOURCE,
          getTimeStamp,
          checkDependencies,
          customNotify,
-         getSettings
+         getSettings,
+         ProxySettings,
+         ProxySettingsHTTP
 */

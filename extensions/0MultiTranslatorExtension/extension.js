@@ -510,7 +510,16 @@ TranslatorExtension.prototype = {
                             button,
                             this._dialog
                         );
-                        let names = this._translators_manager.translators_names;
+
+                        let names = this._translators_manager.translators_names.sort(function(a, b) {
+                            return a.localeCompare(b);
+                        });
+
+                        let setCurrentTrans = (name) => {
+                            return () => {
+                                this._set_current_translator(name);
+                            };
+                        };
 
                         let i = 0,
                             iLen = names.length;
@@ -523,9 +532,7 @@ TranslatorExtension.prototype = {
 
                             this._translators_button_popup.add_item(
                                 name,
-                                Lang.bind(this, function() {
-                                    this._set_current_translator(name);
-                                }),
+                                setCurrentTrans(name),
                                 $.PROVIDERS.icon[name], // Icon name
                                 false, // Icon is symbolic?
                                 true // Is a list of translators providers?
@@ -903,24 +910,28 @@ TranslatorExtension.prototype = {
     },
 
     open: function() {
-        if (Settings.get_boolean($.P.REMEMBER_LAST_TRANSLATOR)) {
-            let translator = this._translators_manager.last_used ?
-                this._translators_manager.last_used.name :
-                this._translators_manager.default.name;
-            this._set_current_translator(translator);
-        } else {
-            this._set_current_translator(this._translators_manager.default.name);
-        }
+        try {
+            if (Settings.get_boolean($.P.REMEMBER_LAST_TRANSLATOR)) {
+                let translator = this._translators_manager.last_used ?
+                    this._translators_manager.last_used.name :
+                    this._translators_manager.default.name;
+                this._set_current_translator(translator);
+            } else {
+                this._set_current_translator(this._translators_manager.default.name);
+            }
 
-        this._dialog.open();
-        this._dialog.source.clutter_text.set_selection(
-            Settings.get_boolean($.P.KEEP_SOURCE_ENTRY_TEXT_SELECTED) ? 0 : -1,
-            this._dialog.source.length
-        );
-        this._dialog.source.clutter_text.grab_key_focus();
-        this._dialog.source.max_length = this._translators_manager.current.limit;
-        this._set_current_languages();
-        this._show_most_used();
+            this._dialog.open();
+            this._dialog.source.clutter_text.set_selection(
+                Settings.get_boolean($.P.KEEP_SOURCE_ENTRY_TEXT_SELECTED) ? 0 : -1,
+                this._dialog.source.length
+            );
+            this._dialog.source.clutter_text.grab_key_focus();
+            this._dialog.source.max_length = this._translators_manager.current.limit;
+            this._set_current_languages();
+            this._show_most_used();
+        } catch (aErr) {
+            global.logError(aErr);
+        }
     },
 
     close: function() {
@@ -1081,29 +1092,27 @@ TranslatorExtension.prototype = {
 
         this.historyFile = configDir.get_child("translation_history.json");
 
-        let data,
-            forceSaving;
-
-        try {
-            if (this.historyFile.query_exists(null)) {
-                forceSaving = false;
-                data = JSON.parse(Cinnamon.get_file_contents_utf8_sync(this.historyFile.get_path()));
-            } else {
-                forceSaving = true;
-                data = {
-                    __version__: 1
-                };
-            }
-        } finally {
-            try {
-                // Implemented __version__ in case that in the future I decide
-                // to change again the history mechanism. Not likely (LOL).
-                this._translation_history = data;
-            } finally {
-                if (forceSaving) {
-                    this.saveHistoryToFile();
+        if (this.historyFile.query_exists(null)) {
+            this.historyFile.load_contents_async(null, Lang.bind(this, function(aFile, aResponce) {
+                let rawData;
+                try {
+                    rawData = aFile.load_contents_finish(aResponce)[1];
+                } catch (aErr) {
+                    global.logError(aErr.message);
+                    return;
                 }
-            }
+
+                try {
+                    this._translation_history = JSON.parse(rawData);
+                } catch (aErr) {
+                    global.logError(aErr.message);
+                }
+            }));
+        } else {
+            this._translation_history = {
+                __version__: 1
+            };
+            this.saveHistoryToFile();
         }
     },
 

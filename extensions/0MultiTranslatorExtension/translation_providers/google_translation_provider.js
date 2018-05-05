@@ -16,6 +16,8 @@ const PROVIDER_HEADERS = {
     "Content-Type": "application/x-www-form-urlencoded"
 };
 
+var NEEDS_EXTENSION_OBJECT = false;
+
 function Translator() {
     this._init.apply(this, arguments);
 }
@@ -23,7 +25,7 @@ function Translator() {
 Translator.prototype = {
     __proto__: $.TranslationProviderBase.prototype,
 
-    _init: function(aExtensionObject) {
+    _init: function(aExtension) {
         $.TranslationProviderBase.prototype._init.call(
             this,
             PROVIDER_NAME,
@@ -31,7 +33,7 @@ Translator.prototype = {
             PROVIDER_URL,
             PROVIDER_HEADERS
         );
-        this._extension_object = aExtensionObject;
+        this._extension = aExtension;
     },
 
     get_pairs: function(language) { // jshint ignore:line
@@ -93,3 +95,6 @@ Translator.prototype = {
         return result;
     }
 };
+
+/* exported NEEDS_EXTENSION_OBJECT
+ */
