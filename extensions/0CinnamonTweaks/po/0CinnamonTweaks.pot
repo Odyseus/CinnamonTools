@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks 1.14\n"
-"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"POT-Creation-Date: 2018-05-04 21:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,63 +15,65 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:237
+#: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:241
+#: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
+#: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:325 settings.py:2335
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 settings.py:2335
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:326
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:327
+#: ../../__app__/python_modules/localized_help_creator.py:321
 msgid "Changelog"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:328 ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "IMPORTANT!!!"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:357
+#: ../../__app__/python_modules/localized_help_creator.py:356
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:369
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:371
+#: ../../__app__/python_modules/localized_help_creator.py:370
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:373
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
@@ -213,7 +215,7 @@ msgstr ""
 msgid "Enable Tooltips tweaks"
 msgstr ""
 
-#: settings.py:289 extension.js:1024
+#: settings.py:289 extension.js:1022
 msgid "Avoid mouse pointer overlapping tooltips"
 msgstr ""
 
@@ -1122,41 +1124,41 @@ msgstr ""
 msgid "Edit applet main file"
 msgstr ""
 
-#: extension.js:343
+#: extension.js:341
 #, javascript-format
 msgid ""
 "Do you want to remove '%s' from your panel?\n"
 "Instance ID: %s"
 msgstr ""
 
-#: extension.js:406
+#: extension.js:404
 msgid "Open desklet folder"
 msgstr ""
 
-#: extension.js:422
+#: extension.js:420
 msgid "Edit desklet main file"
 msgstr ""
 
-#: extension.js:469
+#: extension.js:467
 #, javascript-format
 msgid ""
 "Do you want to remove '%s' from your desktop?\n"
 "Instance ID: %s"
 msgstr ""
 
-#: extension.js:909
+#: extension.js:907
 msgid "Hotcorners tweaks"
 msgstr ""
 
-#: extension.js:1425
+#: extension.js:1423
 msgid "If you updated this extension from an older version, <b>you must check its settings window</b>."
 msgstr ""
 
-#: extension.js:1426
+#: extension.js:1424
 msgid "Some preferences may have been changed to their default values."
 msgstr ""
 
-#: extension.js:1427
+#: extension.js:1425
 msgid "This message will not be displayed again."
 msgstr ""
 

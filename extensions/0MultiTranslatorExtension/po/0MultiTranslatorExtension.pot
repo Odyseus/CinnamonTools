@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MultiTranslatorExtension 1.07\n"
-"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"POT-Creation-Date: 2018-05-04 21:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,64 +15,66 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:237
+#: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:241
+#: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
+#: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:325 settings.py:1395 utils.js:3533
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 settings.py:1395 utils.js:3533
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:326
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:327
+#: ../../__app__/python_modules/localized_help_creator.py:321
 msgid "Changelog"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:328 ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "IMPORTANT!!!"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:357
+#: ../../__app__/python_modules/localized_help_creator.py:356
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:369
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:371
+#: ../../__app__/python_modules/localized_help_creator.py:370
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:373
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
@@ -693,7 +695,7 @@ msgstr ""
 msgid "What percentage of screen height should the translation dialog fill."
 msgstr ""
 
-#: settings.py:343 extension.js:1130 extension.js:1133 utils.js:2752
+#: settings.py:343 extension.js:1133 extension.js:1136 utils.js:2752
 msgid "History"
 msgstr ""
 
@@ -1193,11 +1195,11 @@ msgstr ""
 msgid "Error trying to get theme"
 msgstr ""
 
-#: extension.js:1018
+#: extension.js:1019
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: extension.js:1027
+#: extension.js:1029
 msgid "Error unloading stylesheet"
 msgstr ""
 

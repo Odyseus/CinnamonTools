@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ExtensionsManager 1.10\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-04-24 13:21-0300\n"
-"PO-Revision-Date: 2017-06-19 00:04-0300\n"
+"POT-Creation-Date: 2018-05-03 23:05-0300\n"
+"PO-Revision-Date: 2018-05-04 21:08-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,95 +18,72 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:237
+#: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
 msgstr "Las siguientes dos secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:241
+#: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
 msgstr "No instalar en ninguna otra versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
+#: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
 msgstr "Copatibilidad"
 
-#: ../../__app__/python_modules/localized_help_creator.py:325 applet.js:172
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:177
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:326
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:327
+#: ../../__app__/python_modules/localized_help_creator.py:321
 msgid "Changelog"
 msgstr "Registro de cambios"
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:328
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "IMPORTANT!!!"
 msgstr "¡IMPORTANTE!"
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
-msgid ""
-"Never delete any of the files found inside this xlet folder. It might break "
-"this xlet functionality."
-msgstr ""
-"Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de "
-"este xlet. Podría romper la funcionalidad del xlet."
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:357
-msgid ""
-"Bug reports, feature requests and contributions should be done on this "
-"xlet's repository linked next."
-msgstr ""
-"Los reportes de fallos, peticiones de características y contribuciones deben "
-"hacerse en el repositorio de este xlet vinculado a continuación."
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
+
+#: ../../__app__/python_modules/localized_help_creator.py:369
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
 
 #: ../../__app__/python_modules/localized_help_creator.py:370
-msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-msgstr ""
-"Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#: ../../__app__/python_modules/localized_help_creator.py:371
-msgid ""
-"If this xlet was installed from Cinnamon Settings, all of this xlet's "
-"localizations were automatically installed."
-msgstr ""
-"Si este xlet se instaló desde Configuración de Cinnamon, todas las "
-"localizaciones de este xlet se instalaron automáticamente."
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid ""
-"If this xlet was installed manually and not trough Cinnamon Settings, "
-"localizations can be installed by executing the script called "
-"**localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr ""
+#: ../../__app__/python_modules/localized_help_creator.py:372
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
-msgid ""
-"If this xlet has no locale available for your language, you could create it "
-"by following the following instructions."
-msgstr ""
-"Si este xlet no está disponible en su idioma, la localización puede ser "
-"creada siguiendo las siguientes instrucciones."
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."
 
 #: appletHelper.py:269
-msgid ""
-"This terminal will list the errors of extensions that couldn't be loaded by "
-"Extensions Manager."
-msgstr ""
-"Esta terminal listará los errores de extensiones que no han podido ser "
-"cargadas por Administrador de Extensiones."
+msgid "This terminal will list the errors of extensions that couldn't be loaded by Extensions Manager."
+msgstr "Esta terminal listará los errores de extensiones que no han podido ser cargadas por Administrador de Extensiones."
 
 #: appletHelper.py:290 appletHelper.py:309
 msgid "Extensions Manager debugger"
@@ -114,13 +91,11 @@ msgstr "Depurador de Administrador de Extensiones"
 
 #: appletHelper.py:324
 msgid "Helper script for Extensions Manager applet for Cinnamon."
-msgstr ""
-"Script de ayuda para el applet Administrador de Extensiones de Cinnamon."
+msgstr "Script de ayuda para el applet Administrador de Extensiones de Cinnamon."
 
 #: appletHelper.py:329
 msgid "Returns a JSON string with a list of all installed extensions."
-msgstr ""
-"Devuelve una cadena JSON con una lista de todas las extensiones instaladas."
+msgstr "Devuelve una cadena JSON con una lista de todas las extensiones instaladas."
 
 #: appletHelper.py:333
 msgid "Process all extensions, but it will only display possible errors."
@@ -130,18 +105,13 @@ msgstr "Procesar todas las extensiones, pero sólo mostrará posibles errores."
 msgid "Launch the debug process from a virtual terminal."
 msgstr "Iniciar el proceso de depuración desde un terminal virtual."
 
-#: z_create_localized_help.py:29 utils.js:308 utils.js:315
+#: z_create_localized_help.py:29 utils.js:309 utils.js:317
 msgid "Description"
 msgstr "Descripción"
 
 #: z_create_localized_help.py:31
-msgid ""
-"This applet creates a menu with a list of all installed extensions in "
-"Cinnamon. From each menu item different tasks can be performed:"
-msgstr ""
-"Este applet crea un menú con una lista de todas las extensiones instaladas "
-"en Cinnamon.  Desde cada elemento de menú se pueden realizar diferentes "
-"tareas:"
+msgid "This applet creates a menu with a list of all installed extensions in Cinnamon. From each menu item different tasks can be performed:"
+msgstr "Este applet crea un menú con una lista de todas las extensiones instaladas en Cinnamon.  Desde cada elemento de menú se pueden realizar diferentes tareas:"
 
 #: z_create_localized_help.py:33
 msgid "Enable/Disable the extension"
@@ -163,70 +133,59 @@ msgstr "Abrir la carpeta de la extensión"
 msgid "Open its extension.js file"
 msgstr "Abrir el archivo extension.js"
 
-#: applet.js:116
+#: applet.js:120
 msgid "Open extensions manager"
 msgstr "Abrir el administrador de extensiones"
 
-#: applet.js:129
+#: applet.js:133
 msgid "Disable all extensions"
 msgstr "Deshabilitar todas las extensiones"
 
-#: applet.js:139
-msgid ""
-"This will disable all active extensions. Are you sure you want to do this?"
-msgstr ""
-"Esto va a deshabilitar todas las extensiones. ¿Está seguro/a de que quiere "
-"realizar esta tarea?"
+#: applet.js:143
+msgid "This will disable all active extensions. Are you sure you want to do this?"
+msgstr "Esto va a deshabilitar todas las extensiones. ¿Está seguro/a de que quiere realizar esta tarea?"
 
-#: applet.js:147
+#: applet.js:152
 msgid "Refresh extension list"
 msgstr "Actualizar lista de extensiones"
 
-#: applet.js:154
+#: applet.js:159
 msgid "Restart Cinnamon"
 msgstr "Reiniciar Cinnamon"
 
-#: applet.js:163
+#: applet.js:168
 msgid "Debug"
 msgstr "Depurar"
 
-#: applet.js:263 applet.js:309
+#: applet.js:270 applet.js:316
 #, javascript-format
 msgid "Source of error: %s"
 msgstr "Origen del error: %s"
 
-#: applet.js:403
-msgid ""
-"There aren't any extensions installed on your system. Or you may need to "
-"refresh the list of extensions from this applet context menu."
-msgstr ""
-"No hay ninguna extensión instalada en su sistema. O usted debería actualizar "
-"la lista de extensiones instaladas desde el menú contextual de este applet."
+#: applet.js:410
+msgid "There aren't any extensions installed on your system. Or you may need to refresh the list of extensions from this applet context menu."
+msgstr "No hay ninguna extensión instalada en su sistema. O usted debería actualizar la lista de extensiones instaladas desde el menú contextual de este applet."
 
-#: applet.js:475
+#: applet.js:482
 msgid "Enabled extensions"
 msgstr "Extensiones habilitadas"
 
-#: applet.js:478
+#: applet.js:485
 msgid "No enabled extensions"
 msgstr "No hay extensiones habilitadas"
 
-#: applet.js:482
+#: applet.js:489
 msgid "Disabled extensions"
 msgstr "Extensiones deshabilitadas"
 
-#: applet.js:484
+#: applet.js:491
 msgid "No disabled extensions"
 msgstr "No hay extensiones deshabilitadas"
 
-#: applet.js:521
+#: applet.js:528
 #, javascript-format
-msgid ""
-"Extension %s is not compatible with current version of cinnamon. Using it "
-"may break your system. Load anyway?"
-msgstr ""
-"La extensión %s no es compatible con la versión actual de Cinnamon. Su uso "
-"podría estropear el sistema. ¿Quiere cargarla igualmente?\""
+msgid "Extension %s is not compatible with current version of cinnamon. Using it may break your system. Load anyway?"
+msgstr "La extensión %s no es compatible con la versión actual de Cinnamon. Su uso podría estropear el sistema. ¿Quiere cargarla igualmente?\""
 
 #: utils.js:124
 msgid "Cancel"
@@ -252,18 +211,17 @@ msgstr "Editar el archivo principal"
 msgid "Open extension folder"
 msgstr "Abrir carpeta de la extensión"
 
-#: utils.js:306 utils.js:313
+#: utils.js:306 utils.js:315
 msgid "Name"
 msgstr "Nombre"
 
-#: utils.js:426
+#: utils.js:428
 msgid "Error parsing JSON string."
 msgstr "Error al analizar cadena JSON."
 
-#: utils.js:428
+#: utils.js:430
 msgid "A detailed error has been logged into ~/.cinnamon/glass.log."
-msgstr ""
-"Se ha registrado un error detallado en el archivo ~/.cinnamon/glass.log."
+msgstr "Se ha registrado un error detallado en el archivo ~/.cinnamon/glass.log."
 
 #. metadata.json->name
 msgid "Extensions Manager"
@@ -275,8 +233,7 @@ msgstr "Ver el archivo de ayuda de este xlet."
 
 #. metadata.json->description
 msgid "Allows enabling/disabling extensions (and other tasks) from a menu."
-msgstr ""
-"Permite habilitar/deshabilitar extensiones (y otras tareas) desde un menú."
+msgstr "Permite habilitar/deshabilitar extensiones (y otras tareas) desde un menú."
 
 #. settings-schema.json->head0->description
 msgid "Applet settings"
@@ -309,87 +266,56 @@ msgid "Use extension name as label"
 msgstr "Usar el nombre de la extensión como etiqueta"
 
 #. settings-schema.json->pref_use_extension_names_as_label->tooltip
-msgid ""
-"If disabled, the extension UUID will be used as label for the menu items."
-msgstr ""
-"Con esta opción deshabilitada, la UUID de la extensión será utilizada como "
-"etiqueta para los elementos del menú."
+msgid "If disabled, the extension UUID will be used as label for the menu items."
+msgstr "Con esta opción deshabilitada, la UUID de la extensión será utilizada como etiqueta para los elementos del menú."
 
 #. settings-schema.json->pref_show_config_button->description
 msgid "Show \"Open settings window\" button on extensions menu"
 msgstr "Mostrar el botón \"Abrir ventana de preferencias\" en el menú"
 
 #. settings-schema.json->pref_show_config_button->tooltip
-msgid ""
-"If enabled, it will display a button in each extension menu item that will "
-"open the extension's settings page (if the extension has a configuration "
-"mechanism)."
-msgstr ""
-"Con esta opción habilitada, se mostrará un botón en cada elemento del menú "
-"que permitirá abrir la ventana de configuración de la extensión (si es que "
-"la extensión tiene un mecanismo de configuración)."
+msgid "If enabled, it will display a button in each extension menu item that will open the extension's settings page (if the extension has a configuration mechanism)."
+msgstr "Con esta opción habilitada, se mostrará un botón en cada elemento del menú que permitirá abrir la ventana de configuración de la extensión (si es que la extensión tiene un mecanismo de configuración)."
 
 #. settings-schema.json->pref_show_spices_button->description
 msgid "Show \"Spices page\" button on extensions menu"
 msgstr "Mostrar el botón \"Página de Spices\" en el menú"
 
 #. settings-schema.json->pref_show_spices_button->tooltip
-msgid ""
-"If enabled, it will display a button in each extension menu item that will "
-"open the extension's Spices page (if the extension is published on Spices)."
-msgstr ""
-"Con esta opción habilitada, se mostrará un botón en cada elemento del menú "
-"que permitirá abrir el sitio Spices de la extensión (si es que la extensión "
-"está publicada en Spices)."
+msgid "If enabled, it will display a button in each extension menu item that will open the extension's Spices page (if the extension is published on Spices)."
+msgstr "Con esta opción habilitada, se mostrará un botón en cada elemento del menú que permitirá abrir el sitio Spices de la extensión (si es que la extensión está publicada en Spices)."
 
 #. settings-schema.json->pref_show_open_extension_folder_button->description
 msgid "Show \"Open extension folder\" button on extensions menu"
 msgstr "Mostrar el botón \"Abrir carpeta de la extensión\" en el menú"
 
 #. settings-schema.json->pref_show_open_extension_folder_button->tooltip
-msgid ""
-"If enabled, it will display a button in each extension menu item that will "
-"open the location where the extension is installed."
-msgstr ""
-"Con esta opción habilitada, se mostrará un botón en cada elemento del menú "
-"que permitirá abrir la ubicación donde la extensión está instalada."
+msgid "If enabled, it will display a button in each extension menu item that will open the location where the extension is installed."
+msgstr "Con esta opción habilitada, se mostrará un botón en cada elemento del menú que permitirá abrir la ubicación donde la extensión está instalada."
 
 #. settings-schema.json->pref_show_edit_extension_file_button->description
 msgid "Show \"Edit extension main file\" button on extensions menu"
 msgstr "Mostrar el botón \"Editar archivo principal\" en el menú"
 
 #. settings-schema.json->pref_show_edit_extension_file_button->tooltip
-msgid ""
-"If enabled, it will display a button in each extension menu item that will "
-"open main extension file (extension.js) with a text editor."
-msgstr ""
-"Con esta opción habilitada, se mostrará un botón en cada elemento del menú "
-"que permitirá abrir el archivo extension.js perteneciente a la extensión con "
-"un editor de textos."
+msgid "If enabled, it will display a button in each extension menu item that will open main extension file (extension.js) with a text editor."
+msgstr "Con esta opción habilitada, se mostrará un botón en cada elemento del menú que permitirá abrir el archivo extension.js perteneciente a la extensión con un editor de textos."
 
 #. settings-schema.json->pref_keep_enabled_extension_menu_open->description
 msgid "Keep \"Enabled extensions\" menu open"
 msgstr "Mantener el menú \"Extensiones habilitadas\" abierto"
 
 #. settings-schema.json->pref_keep_enabled_extension_menu_open->tooltip
-msgid ""
-"If enabled, every time that the menu is open, the \"Enabled extensions\" sub "
-"menu will be open too."
-msgstr ""
-"Con esta opción habilitada, cada vez que el menú es abierto, el sub menú "
-"\"Extensiones habilitadas\" también será abierto."
+msgid "If enabled, every time that the menu is open, the \"Enabled extensions\" sub menu will be open too."
+msgstr "Con esta opción habilitada, cada vez que el menú es abierto, el sub menú \"Extensiones habilitadas\" también será abierto."
 
 #. settings-schema.json->pref_keep_disabled_extension_menu_open->description
 msgid "Keep \"Disabled extensions\" menu open"
 msgstr "Mantener el menú \"Extensiones deshabilitadas\" abierto"
 
 #. settings-schema.json->pref_keep_disabled_extension_menu_open->tooltip
-msgid ""
-"If enabled, every time that the menu is open, the \"Disabled extensions\" "
-"sub menu will be open too."
-msgstr ""
-"Con esta opción habilitada, cada vez que el menú es abierto, el sub menú "
-"\"Extensiones deshabilitadas\" también será abierto."
+msgid "If enabled, every time that the menu is open, the \"Disabled extensions\" sub menu will be open too."
+msgstr "Con esta opción habilitada, cada vez que el menú es abierto, el sub menú \"Extensiones deshabilitadas\" también será abierto."
 
 #. settings-schema.json->pref_keep_only_one_menu_open->description
 msgid "Keep only one menu open at all times"

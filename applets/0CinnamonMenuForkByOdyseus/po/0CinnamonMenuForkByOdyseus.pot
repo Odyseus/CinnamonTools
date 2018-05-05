@@ -1,0 +1,1013 @@
+# This is a template file for translating the 0CinnamonMenuForkByOdyseus package.
+# Copyright (C) 2018
+# This file is distributed under the same license as the 0CinnamonMenuForkByOdyseus package.
+# FIRST_AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
+"POT-Creation-Date: 2018-05-04 21:34-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
+
+#: ../../__app__/python_modules/localized_help_creator.py:233
+msgid "The following two sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:237
+msgid "Do not install on any other version of Cinnamon."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:243
+msgid "Compatibility"
+msgstr ""
+
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:278
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:320
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:321
+msgid "Changelog"
+msgstr ""
+
+#. TO TRANSLATORS: Full sentence:
+#. "Help for <xlet_name>"
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:354
+msgid "IMPORTANT!!!"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:369
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: ../../__app__/python_modules/localized_help_creator.py:372
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgstr ""
+
+#: appletHelper.py:59
+msgid "Title"
+msgstr ""
+
+#: appletHelper.py:63
+msgid "Command"
+msgstr ""
+
+#. settings-schema.json->pref_custom_icon_for_applet->description
+#: appletHelper.py:67
+msgid "Icon"
+msgstr ""
+
+#: appletHelper.py:71 z_create_localized_help.py:29
+msgid "Description"
+msgstr ""
+
+#: appletHelper.py:192
+msgid "Choose an Icon"
+msgstr ""
+
+#: appletHelper.py:195 appletHelper.py:467
+msgid "_Cancel"
+msgstr ""
+
+#: appletHelper.py:196
+msgid "_Open"
+msgstr ""
+
+#: appletHelper.py:199
+msgid "Image files"
+msgstr ""
+
+#: appletHelper.py:364
+msgid "Add new launcher"
+msgstr ""
+
+#: appletHelper.py:368
+msgid "Remove selected launcher"
+msgstr ""
+
+#: appletHelper.py:373
+msgid "Edit selected launcher"
+msgstr ""
+
+#: appletHelper.py:378
+msgid "Move selected launcher up"
+msgstr ""
+
+#: appletHelper.py:383
+msgid "Move selected launcher down"
+msgstr ""
+
+#: appletHelper.py:394
+msgid "Apply changes"
+msgstr ""
+
+#: appletHelper.py:460
+msgid "Add new entry"
+msgstr ""
+
+#: appletHelper.py:462
+msgid "Edit entry"
+msgstr ""
+
+#: appletHelper.py:468
+msgid "_Save"
+msgstr ""
+
+#: appletHelper.py:571
+msgid "Contributors/Mentions:"
+msgstr ""
+
+#. TO TRANSLATORS:
+#. Here goes the name/s of the author/s of the translations.
+#. Only e-mail addresses and links to GitHub accounts are allowed. NOTHING MORE.
+#: appletHelper.py:579
+msgid "translator-credits"
+msgstr ""
+
+#: appletHelper.py:759
+msgid "Custom launchers"
+msgstr ""
+
+#: z_create_localized_help.py:31
+msgid "This applet is a custom version of the default Cinnamon Menu applet, but infinitely more customizable."
+msgstr ""
+
+#: z_create_localized_help.py:33
+msgid "Added options/features"
+msgstr ""
+
+#: z_create_localized_help.py:38
+msgid "Removed Favorites box in favor of a Favorites category."
+msgstr ""
+
+#: z_create_localized_help.py:39
+msgid "Removed applications info box in favor of tooltips."
+msgstr ""
+
+#: z_create_localized_help.py:40
+msgid "Removed All Applications category in favor of not having it (LOL)."
+msgstr ""
+
+#: z_create_localized_help.py:41
+msgid "Removed drag&drop capabilities."
+msgstr ""
+
+#: z_create_localized_help.py:42
+msgid "Added a custom launchers box that can run any command/script/file."
+msgstr ""
+
+#: z_create_localized_help.py:43
+msgid "Custom launchers icons can have a custom size and can be symbolic or full color."
+msgstr ""
+
+#: z_create_localized_help.py:44
+msgid "Custom launchers can execute any command (as entered in a terminal) or a path to a file. If the file is an executable script, an attempt to execute it will be made. Otherwise, the file will be opened with the systems handler for that file type."
+msgstr ""
+
+#: z_create_localized_help.py:45
+msgid "The size of the Categories/Applications icons can be customized."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:47
+msgid "The **Recent Files** category can be hidden. This is for people who want the **Recent Files** category hidden without disabling recent files globally."
+msgstr ""
+
+#: z_create_localized_help.py:48
+msgid "The placement of the categories box and the applications box can be swapped."
+msgstr ""
+
+#: z_create_localized_help.py:49
+msgid "The placement of the custom launchers box and the search box can be swapped."
+msgstr ""
+
+#: z_create_localized_help.py:50
+msgid "Scrollbars in the applications box can be hidden."
+msgstr ""
+
+#: z_create_localized_help.py:51
+msgid "Recently installed applications highlighting can be disabled."
+msgstr ""
+
+#: z_create_localized_help.py:52
+msgid "Recently used applications can be remembered and will be displayed on a category called **Recent Applications**. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:54
+msgid "The default **Add to panel**, **Add to desktop** and **Uninstall** context menu items can be hidden."
+msgstr ""
+
+#: z_create_localized_help.py:55
+msgid "The menu editor can be directly opened from this applet context menu without the need to open it from the settings windows of this applet."
+msgstr ""
+
+#: z_create_localized_help.py:56
+msgid "The context menu for applications has 5 new items:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:58
+msgid "**Run as root:** Executes application as root."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:60
+msgid "**Edit .desktop file:** Open the application's .desktop file with a text editor."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:62
+msgid "**Open .desktop file folder:** Open the folder where the application's .desktop file is stored."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:64
+msgid "**Run from terminal:** Open a terminal and run application from there."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:66
+msgid "**Run from terminal as root:** Same as above but the application is executed as root."
+msgstr ""
+
+#: z_create_localized_help.py:77
+msgid "Keyboard navigation"
+msgstr ""
+
+#: z_create_localized_help.py:79
+msgid "Almost all keyboard shortcuts on this menu are the same as the original menu. There are just a couple of differences that I was forced to add to my menu to make some of its features to work."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:79
+msgid "Note:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:82
+msgid "[[Left Arrow]] and [[Right Arrow]] keys:"
+msgstr ""
+
+#: z_create_localized_help.py:84
+msgid "Cycles through the applications box and categories box if the focus is in one of these boxes."
+msgstr ""
+
+#: z_create_localized_help.py:86
+msgid "If the focus is on the custom launchers box, these keys will cycle through this box buttons."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:88
+msgid "[[Tab]] key:"
+msgstr ""
+
+#: z_create_localized_help.py:91
+msgid "If the applications box or categories box are currently focused, the [[Tab]] key will switch the focus to the custom launchers box."
+msgstr ""
+
+#: z_create_localized_help.py:93 z_create_localized_help.py:98
+msgid "If the focus is on the custom launchers box, the focus will go back to the categories box."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:95
+msgid "[[Up Arrow]] and [[Down Arrow]] keys:"
+msgstr ""
+
+#: z_create_localized_help.py:96
+msgid "If the applications box or categories box are currently focused, these keys will cycle through the items in the currently highlighted box."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:100
+msgid "[[Page Up]] and [[Page Down]] keys: Jumps to the first and last item of the currently selected box. This doesn't affect the custom launchers."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:102
+msgid "[[Menu]] or [[Alt]] + [[Enter]] keys: Opens and closes the context menu (if any) of the currently highlighted item."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:104
+msgid "[[Enter]] key: Executes the currently highlighted item."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:106
+msgid "[[Escape]] key: It closes the main menu. If a context menu is open, it will close the context menu instead and a second tap of this key will close the main menu."
+msgstr ""
+
+#: z_create_localized_help.py:109
+msgid "[[Shift]] + [[Enter]]: Executes the application as root. This doesn't affect the custom launchers."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:111
+msgid "[[Ctrl]] + [[Enter]]: Open a terminal and run application from there. This doesn't affect the custom launchers."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:113
+msgid "[[Ctrl]] + [[Shift]] + [[Enter]]: Open a terminal and run application from there, but the application is executed as root. This doesn't affect the custom launchers."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:116
+msgid "Applications left click extra actions"
+msgstr ""
+
+#: z_create_localized_help.py:117
+msgid "When left clicking an application on the menu, certain key modifiers can be pressed to execute an application in a special way."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:119
+msgid "[[Shift]] + **Left click**: Executes application as root."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:121
+msgid "[[Ctrl]] + **Left click**: Open a terminal and run application from there."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:123
+msgid "[[Ctrl]] + [[Shift]] + **Left click**: Open a terminal and run application from there, but the application is executed as root."
+msgstr ""
+
+#: z_create_localized_help.py:125
+msgid "About \"Run from terminal\" options"
+msgstr ""
+
+#: z_create_localized_help.py:126
+msgid "These options are meant for debugging purposes (to see the console output after opening/closing a program to detect possible errors, for example). Instead of opening a terminal to launch a program of which one might not know its command, one can do it directly from the menu and in just one step. Options to run from a terminal an application listed on the menu can be found on the applications context menu and can be hidden/shown from this applet settings window."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:129
+msgid "By default, these options will use the system's default terminal emulator (**x-terminal-emulator** on Debian based distributions). Any other terminal emulator can be specified inside the settings window of this applet, as long as said emulator has support for the **-e** argument. I did my tests with **gnome-terminal**, **xterm** and **terminator**. Additional arguments could be passed to the terminal emulator, but it's not supported by me."
+msgstr ""
+
+#: z_create_localized_help.py:131
+msgid "Favorites handling"
+msgstr ""
+
+#: z_create_localized_help.py:132
+msgid "**Note:** The favorites category will update its content after changing to another category and going back to the favorites category."
+msgstr ""
+
+#: z_create_localized_help.py:134
+msgid "Troubleshooting/extra information"
+msgstr ""
+
+#: z_create_localized_help.py:135
+msgid "Run from terminal."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:137
+msgid "Debian based distributions:"
+msgstr ""
+
+#: z_create_localized_help.py:138
+msgid "If the command **x-terminal-emulator** doesn't run the terminal emulator that one wants to be the default, run the following command to set a different default terminal emulator."
+msgstr ""
+
+#: z_create_localized_help.py:141
+msgid "Type in the number of the selection and hit enter."
+msgstr ""
+
+#: z_create_localized_help.py:143
+msgid "For other distributions:"
+msgstr ""
+
+#: z_create_localized_help.py:144
+msgid "Just set the terminal executable of your choice on this applet settings window."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:146
+msgid "There is a folder named **icons** inside this applet directory. It contains several symbolic icons (most of them are from the Faenza icon theme) and each icon can be used directly by name (on a custom launcher, for example)."
+msgstr ""
+
+#: applet.js:55
+msgid "Menu"
+msgstr ""
+
+#: applet.js:266
+msgid "Open the menu editor"
+msgstr ""
+
+#: applet.js:271
+msgid "Edit custom launchers"
+msgstr ""
+
+#: applet.js:1486 utils.js:1038
+msgid "This file is no longer available"
+msgstr ""
+
+#: applet.js:1557
+msgid "No recent documents"
+msgstr ""
+
+#: applet.js:1723
+msgid "No recent applications"
+msgstr ""
+
+#: applet.js:1787
+msgid "Favorites"
+msgstr ""
+
+#: applet.js:2040
+msgid "Type to search..."
+msgstr ""
+
+#: utils.js:518
+msgid "Add to panel"
+msgstr ""
+
+#: utils.js:522
+msgid "Add this application to the Panel launchers applet."
+msgstr ""
+
+#: utils.js:529
+msgid "Add to desktop"
+msgstr ""
+
+#: utils.js:533
+msgid "Add this application to the Desktop."
+msgstr ""
+
+#: utils.js:541
+msgid "Remove from favorites"
+msgstr ""
+
+#: utils.js:545
+msgid "Remove application from your favorites."
+msgstr ""
+
+#: utils.js:550
+msgid "Add to favorites"
+msgstr ""
+
+#: utils.js:554
+msgid "Add application to your favorites."
+msgstr ""
+
+#: utils.js:562
+msgid "Uninstall"
+msgstr ""
+
+#: utils.js:566
+msgid "Uninstall application from your system."
+msgstr ""
+
+#: utils.js:573
+msgid "Run with NVIDIA GPU"
+msgstr ""
+
+#: utils.js:577
+msgid "Run application through optirun command (Bumblebee)."
+msgstr ""
+
+#: utils.js:584
+msgid "Run as root"
+msgstr ""
+
+#: utils.js:588
+msgid "Run application as root."
+msgstr ""
+
+#: utils.js:595
+msgid "Edit .desktop file"
+msgstr ""
+
+#: utils.js:599
+msgid "Edit this application .desktop file with a text editor."
+msgstr ""
+
+#: utils.js:606
+msgid "Open .desktop file folder"
+msgstr ""
+
+#: utils.js:610
+msgid "Open the folder containg this application .desktop file."
+msgstr ""
+
+#: utils.js:617
+msgid "Run from terminal"
+msgstr ""
+
+#: utils.js:621
+msgid "Run application from a terminal."
+msgstr ""
+
+#: utils.js:628
+msgid "Run from terminal as root"
+msgstr ""
+
+#: utils.js:632
+msgid "Run application from a terminal as root."
+msgstr ""
+
+#: utils.js:1089
+msgid "Open with"
+msgstr ""
+
+#: utils.js:1144
+msgid "Other application..."
+msgstr ""
+
+#: utils.js:1231 utils.js:1559
+msgid "Clear list"
+msgstr ""
+
+#: utils.js:1297
+msgid "All Applications"
+msgstr ""
+
+#: utils.js:1341
+msgid "Places"
+msgstr ""
+
+#: utils.js:1374
+msgid "Recent Files"
+msgstr ""
+
+#. settings-schema.json->recent_apps_header->description
+#: utils.js:1418
+msgid "Recent Applications"
+msgstr ""
+
+#: utils.js:1612
+#, javascript-format
+msgid "Schema %s could not be found for xlet %s."
+msgstr ""
+
+#: utils.js:1613
+msgid "Please check your installation."
+msgstr ""
+
+#. metadata.json->name
+msgid "Cinnamon Menu (Fork By Odyseus)"
+msgstr ""
+
+#. metadata.json->description
+msgid "Custom version of the default Cinnamon Menu applet, but infinitely more customizable."
+msgstr ""
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr ""
+
+#. settings-schema.json->head->description
+msgid ""
+"Most settings are not automatically saved when modified.\n"
+"Press any of the \"Click here to save settings\" buttons for the settings to take effect."
+msgstr ""
+
+#. settings-schema.json->save_settings_first->description
+#. settings-schema.json->save_settings_3->description
+#. settings-schema.json->save_settings_2->description
+#. settings-schema.json->save_settings_last->description
+msgid "Click here to save settings"
+msgstr ""
+
+#. settings-schema.json->applet_settings_header->description
+msgid "Applet settings"
+msgstr ""
+
+#. settings-schema.json->pref_overlay_key->description
+msgid "Keyboard shortcut to open and close the menu"
+msgstr ""
+
+#. settings-schema.json->pref_use_a_custom_icon_for_applet->description
+msgid "Use a custom icon"
+msgstr ""
+
+#. settings-schema.json->pref_use_a_custom_icon_for_applet->tooltip
+msgid "Unchecking this allows the theme to set the icon"
+msgstr ""
+
+#. settings-schema.json->pref_custom_icon_for_applet->tooltip
+msgid "Select an icon to show in the panel."
+msgstr ""
+
+#. settings-schema.json->pref_custom_label_for_applet->description
+msgid "Text"
+msgstr ""
+
+#. settings-schema.json->pref_custom_label_for_applet->tooltip
+msgid "Enter custom text to show in the panel."
+msgstr ""
+
+#. settings-schema.json->menu_settings_header->description
+msgid "Menu settings"
+msgstr ""
+
+#. settings-schema.json->pref_enable_autoscroll->description
+msgid "Enable autoscrolling in application list"
+msgstr ""
+
+#. settings-schema.json->pref_enable_autoscroll->tooltip
+msgid "Choose whether or not to enable smooth autoscrolling in the application list."
+msgstr ""
+
+#. settings-schema.json->pref_search_providers_results_enabled->description
+msgid "Enable search providers results in search box"
+msgstr ""
+
+#. settings-schema.json->pref_search_providers_results_enabled->tooltip
+msgid "Enable/Disable the display of search results coming from search providers (the Cinnamon xlets type)."
+msgstr ""
+
+#. settings-schema.json->pref_search_filesystem->description
+msgid "Enable filesystem path entry in search box"
+msgstr ""
+
+#. settings-schema.json->pref_search_filesystem->tooltip
+msgid "Allows path entry in the menu search box."
+msgstr ""
+
+#. settings-schema.json->pref_animate_menu->description
+msgid "Use menu animations"
+msgstr ""
+
+#. settings-schema.json->pref_animate_menu->tooltip
+msgid "Allow the menu to animate on open and close"
+msgstr ""
+
+#. settings-schema.json->pref_activate_on_hover->description
+msgid "Open the menu when I move my mouse over it"
+msgstr ""
+
+#. settings-schema.json->pref_activate_on_hover->tooltip
+msgid "Enable opening the menu when the mouse enters the applet"
+msgstr ""
+
+#. settings-schema.json->pref_menu_hover_delay->units
+msgid "milliseconds"
+msgstr ""
+
+#. settings-schema.json->pref_menu_hover_delay->description
+msgid "Menu hover delay"
+msgstr ""
+
+#. settings-schema.json->pref_menu_hover_delay->tooltip
+msgid "Delay before the menu opens when hovered"
+msgstr ""
+
+#. settings-schema.json->menu_layout_header->description
+msgid "Menu layout"
+msgstr ""
+
+#. settings-schema.json->pref_show_places->description
+msgid "Show bookmarks and places"
+msgstr ""
+
+#. settings-schema.json->pref_show_places->tooltip
+msgid "Choose whether or not to show bookmarks and places in the menu."
+msgstr ""
+
+#. settings-schema.json->pref_show_recent_files->description
+msgid "Show \"Recent Files\" category"
+msgstr ""
+
+#. settings-schema.json->pref_show_recent_files->tooltip
+msgid "For people who want the \"Recent Files\" category hidden without disabling recent documents globally."
+msgstr ""
+
+#. settings-schema.json->pref_recently_used_apps_enabled->description
+msgid "Show \"Recent Applications\" category"
+msgstr ""
+
+#. settings-schema.json->pref_recently_used_apps_enabled->tooltip
+msgid ""
+"From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recent Applications\" category.\n"
+"Every time this option is disabled, the list of recently used applications will be cleared."
+msgstr ""
+
+#. settings-schema.json->pref_show_category_icons->description
+msgid "Show category icons"
+msgstr ""
+
+#. settings-schema.json->pref_show_category_icons->tooltip
+msgid "Choose whether or not to show icons on categories."
+msgstr ""
+
+#. settings-schema.json->pref_show_application_icons->description
+msgid "Show application icons"
+msgstr ""
+
+#. settings-schema.json->pref_show_application_icons->tooltip
+msgid "Choose whether or not to show icons on applications."
+msgstr ""
+
+#. settings-schema.json->pref_hide_applications_list_scrollbar->description
+msgid "Hide applications list scrollbar"
+msgstr ""
+
+#. settings-schema.json->pref_invert_menu_layout->description
+msgid "Invert menu layout"
+msgstr ""
+
+#. settings-schema.json->pref_swap_categories_box->description
+msgid "Swap categories box"
+msgstr ""
+
+#. settings-schema.json->pref_swap_categories_box->tooltip
+msgid "By default, the categories box is to the left of the applications list. With this option enabled, the categories box will be placed to the right of the applications list."
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_box_invert_buttons_order->description
+msgid "Invert custom launches box buttons order"
+msgstr ""
+
+#. settings-schema.json->pref_disable_new_apps_highlighting->description
+msgid "Disable newly installed applications highlighting"
+msgstr ""
+
+#. settings-schema.json->pref_max_width_for_buttons->units
+msgid "ems"
+msgstr ""
+
+#. settings-schema.json->pref_max_width_for_buttons->description
+msgid "Maximum button width:"
+msgstr ""
+
+#. settings-schema.json->pref_max_width_for_buttons->tooltip
+msgid "Define the maximum width of menu items inside the applications box."
+msgstr ""
+
+#. settings-schema.json->pref_category_icon_size->units
+#. settings-schema.json->pref_application_icon_size->units
+#. settings-schema.json->pref_custom_launchers_icon_size->units
+#. settings-schema.json->pref_custom_launchers_box_padding_top->units
+#. settings-schema.json->pref_custom_launchers_box_padding_right->units
+#. settings-schema.json->pref_custom_launchers_box_padding_bottom->units
+#. settings-schema.json->pref_custom_launchers_box_padding_left->units
+#. settings-schema.json->pref_categories_box_padding_top->units
+#. settings-schema.json->pref_categories_box_padding_right->units
+#. settings-schema.json->pref_categories_box_padding_bottom->units
+#. settings-schema.json->pref_categories_box_padding_left->units
+#. settings-schema.json->pref_applications_box_padding_top->units
+#. settings-schema.json->pref_applications_box_padding_right->units
+#. settings-schema.json->pref_applications_box_padding_bottom->units
+#. settings-schema.json->pref_applications_box_padding_left->units
+#. settings-schema.json->pref_search_entry_padding_top->units
+#. settings-schema.json->pref_search_entry_padding_right->units
+#. settings-schema.json->pref_search_entry_padding_bottom->units
+#. settings-schema.json->pref_search_entry_padding_left->units
+#. settings-schema.json->pref_search_box_padding_top->units
+#. settings-schema.json->pref_search_box_padding_right->units
+#. settings-schema.json->pref_search_box_padding_bottom->units
+#. settings-schema.json->pref_search_box_padding_left->units
+msgid "pixels"
+msgstr ""
+
+#. settings-schema.json->pref_category_icon_size->description
+msgid "Categories icon size:"
+msgstr ""
+
+#. settings-schema.json->pref_application_icon_size->description
+msgid "Applications icon size:"
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_icon_size->description
+msgid "Custom launchers icon size:"
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_box_alignment->description
+msgid "Custom launchers button alignment"
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_box_alignment->options
+msgid "Left"
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_box_alignment->options
+msgid "Middle"
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_box_alignment->options
+msgid "Right"
+msgstr ""
+
+#. settings-schema.json->pref_recently_used_apps_ignore_favorites->description
+msgid "Ignore Favorites"
+msgstr ""
+
+#. settings-schema.json->pref_recently_used_apps_ignore_favorites->tooltip
+msgid "If enabled, applications set as Favorite will not be displayed in the list of \"Recent Applications\"."
+msgstr ""
+
+#. settings-schema.json->pref_recently_used_apps_invert_order->description
+msgid "Invert recently used applications order"
+msgstr ""
+
+#. settings-schema.json->pref_recently_used_apps_invert_order->tooltip
+msgid "By default, the most recently used application is at the top of the list. With this option enabled, the most recently used application will be at the bottom of the list."
+msgstr ""
+
+#. settings-schema.json->pref_recently_used_apps_max_amount->units
+msgid "applications"
+msgstr ""
+
+#. settings-schema.json->pref_recently_used_apps_max_amount->description
+msgid "Maximum recently used applications to display:"
+msgstr ""
+
+#. settings-schema.json->context_menu_header->description
+msgid "Applications context menu extras"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_add_to_panel->description
+msgid "Show \"Add to panel\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_add_to_desktop->description
+msgid "Show \"Add to desktop\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_add_remove_favorite->description
+msgid "Show \"Add/Remove to/from favorites\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_uninstall->description
+msgid "Show \"Uninstall\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_bumblebee->description
+msgid "Show \"Run with NVIDIA GPU\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_run_as_root->description
+msgid "Show \"Run as root\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_run_from_terminal->description
+msgid "Show \"Run from terminal\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_run_from_terminal_as_root->description
+msgid "Show \"Run from terminal as root\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_desktop_file_folder->description
+msgid "Show \"Open .desktop file folder\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_edit_desktop_file->description
+msgid "Show \"Edit .desktop file\" on context"
+msgstr ""
+
+#. settings-schema.json->pref_context_show_edit_desktop_file->tooltip
+msgid "It adds to the applications context menu an entry that will allow you to open the current selected application's .desktop file in a text editor."
+msgstr ""
+
+#. settings-schema.json->pref_context_gain_privileges->description
+msgid "Gain privileges of not owned files"
+msgstr ""
+
+#. settings-schema.json->pref_context_gain_privileges->tooltip
+msgid ""
+"If enabled, this options will open as root .desktop files that aren't owned by the current user.\n"
+"\n"
+"This isn't needed for all text editors. Some text editors will allow you to open and edit not owned files and will ask for the root password at the moment of saving the changes."
+msgstr ""
+
+#. settings-schema.json->pref_context_custom_editor_for_edit_desktop_file->description
+msgid "Custom text editor:"
+msgstr ""
+
+#. settings-schema.json->pref_context_custom_editor_for_edit_desktop_file->tooltip
+msgid ""
+"Set a custom text editor to open .desktop files (just the name of the text editor executable or the path to it).\n"
+"Leave it blank to let the system decide."
+msgstr ""
+
+#. settings-schema.json->pref_privilege_elevator->description
+msgid "Privileges elevator:"
+msgstr ""
+
+#. settings-schema.json->pref_privilege_elevator->options
+msgid "gksu"
+msgstr ""
+
+#. settings-schema.json->pref_privilege_elevator->options
+msgid "gksudo"
+msgstr ""
+
+#. settings-schema.json->pref_privilege_elevator->tooltip
+msgid ""
+"The graphical front-end to use to run applications as root.\n"
+"This is used by the \"Open as Root\" context menu and the option \"Gain privileges of not owned files\"."
+msgstr ""
+
+#. settings-schema.json->pref_terminal_emulator->description
+msgid "Terminal emulator:"
+msgstr ""
+
+#. settings-schema.json->pref_terminal_emulator->tooltip
+msgid ""
+"Choose the terminal emulator used by all launch from terminal options.\n"
+"IMPORTANT!!! The terminal emulator has to support the -e argument (execute the argument to this option inside the terminal)."
+msgstr ""
+
+#. settings-schema.json->pref_default_shell->description
+msgid "Command interpreter (shell):"
+msgstr ""
+
+#. settings-schema.json->pref_default_shell->tooltip
+msgid ""
+"The command interpreter (shell) used when launching programs from a terminal.\n"
+"IMPORTANT!!! The shell has to support the -c argument (take the argument passed by this option as a command to execute.)."
+msgstr ""
+
+#. settings-schema.json->padding_1_header->description
+msgid "Custom launchers box padding"
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_box_padding_top->description
+#. settings-schema.json->pref_categories_box_padding_top->description
+#. settings-schema.json->pref_applications_box_padding_top->description
+#. settings-schema.json->pref_search_entry_padding_top->description
+#. settings-schema.json->pref_search_box_padding_top->description
+msgid "Box top padding:"
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_box_padding_right->description
+#. settings-schema.json->pref_categories_box_padding_right->description
+#. settings-schema.json->pref_applications_box_padding_right->description
+#. settings-schema.json->pref_search_entry_padding_right->description
+#. settings-schema.json->pref_search_box_padding_right->description
+msgid "Box right padding:"
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_box_padding_bottom->description
+#. settings-schema.json->pref_categories_box_padding_bottom->description
+#. settings-schema.json->pref_applications_box_padding_bottom->description
+#. settings-schema.json->pref_search_entry_padding_bottom->description
+#. settings-schema.json->pref_search_box_padding_bottom->description
+msgid "Box bottom padding:"
+msgstr ""
+
+#. settings-schema.json->pref_custom_launchers_box_padding_left->description
+#. settings-schema.json->pref_categories_box_padding_left->description
+#. settings-schema.json->pref_applications_box_padding_left->description
+#. settings-schema.json->pref_search_entry_padding_left->description
+#. settings-schema.json->pref_search_box_padding_left->description
+msgid "Box left padding:"
+msgstr ""
+
+#. settings-schema.json->padding_2_header->description
+msgid "Categories box padding"
+msgstr ""
+
+#. settings-schema.json->padding_3_header->description
+msgid "Applications box padding"
+msgstr ""
+
+#. settings-schema.json->padding_4_header->description
+msgid "Search entry padding"
+msgstr ""
+
+#. settings-schema.json->padding_5_header->description
+msgid "Search box padding"
+msgstr ""

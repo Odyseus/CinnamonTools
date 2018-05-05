@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WallpaperChangerApplet 1.03\n"
-"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"POT-Creation-Date: 2018-05-04 21:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,64 +15,66 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:237
+#: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:241
+#: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
+#: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:325 settings.py:1025
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 settings.py:1025
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:326
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:327
+#: ../../__app__/python_modules/localized_help_creator.py:321
 msgid "Changelog"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:328 ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "IMPORTANT!!!"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:357
+#: ../../__app__/python_modules/localized_help_creator.py:356
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:369
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:371
+#: ../../__app__/python_modules/localized_help_creator.py:370
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:373
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
@@ -129,7 +131,7 @@ msgstr ""
 msgid "Autostart Daemon"
 msgstr ""
 
-#: settings.py:412 applet.js:107
+#: settings.py:412 applet.js:110
 msgid "When enabled, the daemon will be automatically started when the applet is loaded. If it is already running or this is disabled, no action will be taken."
 msgstr ""
 
@@ -202,7 +204,7 @@ msgstr ""
 msgid "Remember Profiles State"
 msgstr ""
 
-#: settings.py:568 applet.js:122
+#: settings.py:568 applet.js:125
 msgid "When enabled, the daemon will remember its current and next wallpaper for the current profile when the profile is changed. This means returning back to the profile will restore the previous background plus the next in queue."
 msgstr ""
 
@@ -210,7 +212,7 @@ msgstr ""
 msgid "Show Notifications"
 msgstr ""
 
-#: settings.py:573 applet.js:117
+#: settings.py:573 applet.js:120
 msgid "Display a notification each time an event happens with wallpaper changer. This does not stop the applet from reporting errors."
 msgstr ""
 
@@ -470,61 +472,61 @@ msgstr ""
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr ""
 
-#: applet.js:102
+#: applet.js:105
 msgid "Extra Options"
 msgstr ""
 
-#: applet.js:106
+#: applet.js:109
 msgid "Auto Start Daemon"
 msgstr ""
 
-#: applet.js:111
+#: applet.js:114
 msgid "Change with Profile"
 msgstr ""
 
-#: applet.js:112
+#: applet.js:115
 msgid "When enabled, this will cause the daemon to automatically change the wallpaper whenever the current profile is changed."
 msgstr ""
 
-#: applet.js:116
+#: applet.js:119
 msgid "Notifications"
 msgstr ""
 
-#: applet.js:121
+#: applet.js:124
 msgid "Remember Profile State"
 msgstr ""
 
-#: applet.js:191
+#: applet.js:194
 msgid "Wallpaper Changed"
 msgstr ""
 
-#: applet.js:197
+#: applet.js:200
 msgid "Daemon Error"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Notifications are now enabled/disabled"
-#: applet.js:207
+#: applet.js:210
 #, javascript-format
 msgid "Notifications are now %s"
 msgstr ""
 
-#: applet.js:210
+#: applet.js:213
 msgid "disabled"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Notifications are now enabled/disabled"
-#: applet.js:210
+#: applet.js:213
 msgid "enabled"
 msgstr ""
 
-#: applet.js:235
+#: applet.js:238
 #, javascript-format
 msgid "Profile changed to %s"
 msgstr ""
 
-#: applet.js:269
+#: applet.js:272
 msgid "Configure..."
 msgstr ""
 

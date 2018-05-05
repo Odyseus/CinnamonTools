@@ -751,7 +751,7 @@ class CustomLaunchersManagerApplication(Gtk.Application):
 
     def _buildUI(self):
         self.window = CustomLaunchersManagerWindow(application=self,
-                                                   title=_("%s") % self.xlet_meta["name"])
+                                                   title=_(self.xlet_meta["name"]))
         self.window.connect("destroy", self.on_quit)
         page = BaseGrid()
         page.set_spacing(15, 15)

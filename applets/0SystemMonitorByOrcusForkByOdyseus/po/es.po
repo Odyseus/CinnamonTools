@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 1.16\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-04-24 13:21-0300\n"
-"PO-Revision-Date: 2017-06-19 00:35-0300\n"
+"POT-Creation-Date: 2018-05-03 23:05-0300\n"
+"PO-Revision-Date: 2018-05-04 21:14-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,87 +18,68 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:237
+#: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
 msgstr "Las siguientes dos secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:241
+#: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
 msgstr "No instalar en ninguna otra versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
+#: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
 msgstr "Copatibilidad"
 
-#: ../../__app__/python_modules/localized_help_creator.py:325 applet.js:365
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:370
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:326
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:327
+#: ../../__app__/python_modules/localized_help_creator.py:321
 msgid "Changelog"
 msgstr "Registro de cambios"
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:328
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "IMPORTANT!!!"
 msgstr "¡IMPORTANTE!"
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
-msgid ""
-"Never delete any of the files found inside this xlet folder. It might break "
-"this xlet functionality."
-msgstr ""
-"Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de "
-"este xlet. Podría romper la funcionalidad del xlet."
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:357
-msgid ""
-"Bug reports, feature requests and contributions should be done on this "
-"xlet's repository linked next."
-msgstr ""
-"Los reportes de fallos, peticiones de características y contribuciones deben "
-"hacerse en el repositorio de este xlet vinculado a continuación."
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
+
+#: ../../__app__/python_modules/localized_help_creator.py:369
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
 
 #: ../../__app__/python_modules/localized_help_creator.py:370
-msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-msgstr ""
-"Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#: ../../__app__/python_modules/localized_help_creator.py:371
-msgid ""
-"If this xlet was installed from Cinnamon Settings, all of this xlet's "
-"localizations were automatically installed."
-msgstr ""
-"Si este xlet se instaló desde Configuración de Cinnamon, todas las "
-"localizaciones de este xlet se instalaron automáticamente."
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid ""
-"If this xlet was installed manually and not trough Cinnamon Settings, "
-"localizations can be installed by executing the script called "
-"**localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr ""
+#: ../../__app__/python_modules/localized_help_creator.py:372
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
-msgid ""
-"If this xlet has no locale available for your language, you could create it "
-"by following the following instructions."
-msgstr ""
-"Si este xlet no está disponible en su idioma, la localización puede ser "
-"creada siguiendo las siguientes instrucciones."
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."
 
 #: z_create_localized_help.py:29
 msgid "Description"
@@ -106,43 +87,28 @@ msgstr "Descripción"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:32
-msgid ""
-"This applet is a fork of [System Monitor](https://cinnamon-spices.linuxmint."
-"com/applets/view/88) applet by Josef Michálek (a.k.a. Orcus)."
-msgstr ""
-"Este applet está basado en el applet [System Monitor](https://cinnamon-"
-"spices.linuxmint.com/applets/view/88) por Josef Michálek (también conocido "
-"como Orcus)."
+msgid "This applet is a fork of [System Monitor](https://cinnamon-spices.linuxmint.com/applets/view/88) applet by Josef Michálek (a.k.a. Orcus)."
+msgstr "Este applet está basado en el applet [System Monitor](https://cinnamon-spices.linuxmint.com/applets/view/88) por Josef Michálek (también conocido como Orcus)."
 
 #: z_create_localized_help.py:34
 msgid "Differences with the original applet"
 msgstr "Diferencias con el original"
 
 #: z_create_localized_help.py:38
-msgid ""
-"This applet uses Cinnamon's native settings system instead of an external "
-"library (gjs)."
-msgstr ""
-"Este applet utiliza el sistema de configuración nativo de Cinnamon en lugar "
-"de una biblioteca externa (gjs)."
+msgid "This applet uses Cinnamon's native settings system instead of an external library (gjs)."
+msgstr "Este applet utiliza el sistema de configuración nativo de Cinnamon en lugar de una biblioteca externa (gjs)."
 
 #: z_create_localized_help.py:39
 msgid "I added an option to use a custom command on applet click."
-msgstr ""
-"He añadido una opción para usar un comando personalizado al hacer clic en el "
-"applet."
+msgstr "He añadido una opción para usar un comando personalizado al hacer clic en el applet."
 
 #: z_create_localized_help.py:40
 msgid "I added an option to set a custom width for each graph individually."
-msgstr ""
-"He añadido una opción para establecer un ancho personalizado para cada "
-"gráfico individualmente."
+msgstr "He añadido una opción para establecer un ancho personalizado para cada gráfico individualmente."
 
 #: z_create_localized_help.py:41
 msgid "I added an option to align this applet tooltip text to the left."
-msgstr ""
-"He añadido una opción para alinear el texto de información de este applet a "
-"la izquierda."
+msgstr "He añadido una opción para alinear el texto de información de este applet a la izquierda."
 
 #: z_create_localized_help.py:42
 msgid "Removed NetworkManager dependency."
@@ -153,12 +119,8 @@ msgid "Dependencies"
 msgstr "Dependencias"
 
 #: z_create_localized_help.py:46
-msgid ""
-"The gtop library reads information about processes and the state of the "
-"system."
-msgstr ""
-"La biblioteca gtop lee información acerca de procesos y el estado del "
-"sistema."
+msgid "The gtop library reads information about processes and the state of the system."
+msgstr "La biblioteca gtop lee información acerca de procesos y el estado del sistema."
 
 #: z_create_localized_help.py:47 z_create_localized_help.py:58
 msgid "Debian based distributions:"
@@ -167,8 +129,7 @@ msgstr "Distribuciones basadas en Debian:"
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:49
 msgid "The package is called **gir1.2-gtop-2.0**."
-msgstr ""
-"Distribuciones basadas en Debian: El paquete es llamado **gir1.2-gtop-2.0**."
+msgstr "Distribuciones basadas en Debian: El paquete es llamado **gir1.2-gtop-2.0**."
 
 #: z_create_localized_help.py:50 z_create_localized_help.py:61
 msgid "Archlinux based distributions:"
@@ -189,14 +150,8 @@ msgid "The package is called **libgtop2-devel**."
 msgstr "El paquete es llamado **libgtop2-devel**."
 
 #: z_create_localized_help.py:57
-msgid ""
-"NetworkManager is a system network service that manages your network devices "
-"and connections, attempting to keep active network connectivity when "
-"available."
-msgstr ""
-"NetworkManager es un servicio de red del sistema que administra los "
-"dispositivos y conexiones de red, intentando mantener una conectividad de "
-"red activa cuando está disponible."
+msgid "NetworkManager is a system network service that manages your network devices and connections, attempting to keep active network connectivity when available."
+msgstr "NetworkManager es un servicio de red del sistema que administra los dispositivos y conexiones de red, intentando mantener una conectividad de red activa cuando está disponible."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:60
@@ -219,42 +174,24 @@ msgstr "Nota importante:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:70
-msgid ""
-"NetworkManager is only used if the **GTop** library version installed on a "
-"system is < **2.32** and doesn't support certain library calls. So, "
-"basically, if the network graph on this applet works without having "
-"installed NetworkManager, then you don't need to install it."
-msgstr ""
-"NetworkManager is usado sólo si la versión de la librería **GTop** instalada "
-"en el sistema es < 2.32 y no soporta ciertas llamadas a la librería. "
-"Básicamente, si el gráfico de red de este applet funciona sin tener "
-"instalado NetworkManager, entonces no es necesario que sea instalado."
+msgid "NetworkManager is only used if the **GTop** library version installed on a system is < **2.32** and doesn't support certain library calls. So, basically, if the network graph on this applet works without having installed NetworkManager, then you don't need to install it."
+msgstr "NetworkManager is usado sólo si la versión de la librería **GTop** instalada en el sistema es < 2.32 y no soporta ciertas llamadas a la librería. Básicamente, si el gráfico de red de este applet funciona sin tener instalado NetworkManager, entonces no es necesario que sea instalado."
 
 #: z_create_localized_help.py:72
-msgid ""
-"Restart Cinnamon after installing the packages for the applet to recognize "
-"them."
-msgstr ""
-"Reiniciar Cinnamon luego de haber instalado los paquetes para que el applet "
-"los reconozca."
+msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
+msgstr "Reiniciar Cinnamon luego de haber instalado los paquetes para que el applet los reconozca."
 
-#: applet.js:197
+#: applet.js:200
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:198
-msgid ""
-"This applet needs the GTop library installed on your system for it  to work."
-msgstr ""
-"Este applet necesita la biblioteca GTop instalada en su sistema para que "
-"funcione."
+#: applet.js:201
+msgid "This applet needs the GTop library installed on your system for it  to work."
+msgstr "Este applet necesita la biblioteca GTop instalada en su sistema para que funcione."
 
-#: applet.js:199
-msgid ""
-"Read this applet help for more details (Applet context menu > Help item)."
-msgstr ""
-"Leer el archivo de ayuda de este applet para más detalles sobre esta opción "
-"(menú contextual del applet > elemento Ayuda)."
+#: applet.js:202
+msgid "Read this applet help for more details (Applet context menu > Help item)."
+msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
 #: utils.js:197
 msgid "CPU:"
@@ -306,9 +243,7 @@ msgstr "Muestra gráficos de uso de CPU. memoria, swap, red y carga."
 #. settings-schema.json->demo-button1->description
 #. settings-schema.json->demo-button2->description
 msgid "To apply these settings, Cinnamon needs to be restarted. Click me!!!"
-msgstr ""
-"Para aplicar estas preferencias, Cinnamon necesita ser reiniciado. "
-"Presióname!!!"
+msgstr "Para aplicar estas preferencias, Cinnamon necesita ser reiniciado. Presióname!!!"
 
 #. settings-schema.json->demo-button1->tooltip
 #. settings-schema.json->demo-button2->tooltip
@@ -328,12 +263,8 @@ msgid "Align tooltip text to the left"
 msgstr "Alinear el texto de las herramientas emergentes a la izquierda"
 
 #. settings-schema.json->pref_align_tooltip_text_to_the_left->tooltip
-msgid ""
-"For those of us who suffer from the stupidity of using a theme with tooltips "
-"aligned to the center. ¬¬"
-msgstr ""
-"Para aquellos de nosotros que sufren de la estupidez de usar un tema con "
-"cajas de herramientas alineadas al centro.  ¬¬"
+msgid "For those of us who suffer from the stupidity of using a theme with tooltips aligned to the center. ¬¬"
+msgstr "Para aquellos de nosotros que sufren de la estupidez de usar un tema con cajas de herramientas alineadas al centro.  ¬¬"
 
 #. settings-schema.json->pref_custom_command->description
 msgid "Custom command on applet click:"

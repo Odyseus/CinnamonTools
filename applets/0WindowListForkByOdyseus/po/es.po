@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus 1.12\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-04-24 13:21-0300\n"
-"PO-Revision-Date: 2017-06-19 00:23-0300\n"
+"POT-Creation-Date: 2018-05-04 21:25-0300\n"
+"PO-Revision-Date: 2018-05-04 21:29-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,99 +18,76 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:237
+#: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
 msgstr "Las siguientes dos secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:241
+#: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
 msgstr "No instalar en ninguna otra versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
+#: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
 msgstr "Copatibilidad"
 
-#: ../../__app__/python_modules/localized_help_creator.py:325 utils.js:1018
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 utils.js:1018
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:326
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:327
+#: ../../__app__/python_modules/localized_help_creator.py:321
 msgid "Changelog"
 msgstr "Registro de cambios"
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:328
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "IMPORTANT!!!"
 msgstr "¡IMPORTANTE!"
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
-msgid ""
-"Never delete any of the files found inside this xlet folder. It might break "
-"this xlet functionality."
-msgstr ""
-"Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de "
-"este xlet. Podría romper la funcionalidad del xlet."
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:357
-msgid ""
-"Bug reports, feature requests and contributions should be done on this "
-"xlet's repository linked next."
-msgstr ""
-"Los reportes de fallos, peticiones de características y contribuciones deben "
-"hacerse en el repositorio de este xlet vinculado a continuación."
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
+
+#: ../../__app__/python_modules/localized_help_creator.py:369
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
 
 #: ../../__app__/python_modules/localized_help_creator.py:370
-msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-msgstr ""
-"Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#: ../../__app__/python_modules/localized_help_creator.py:371
-msgid ""
-"If this xlet was installed from Cinnamon Settings, all of this xlet's "
-"localizations were automatically installed."
-msgstr ""
-"Si este xlet se instaló desde Configuración de Cinnamon, todas las "
-"localizaciones de este xlet se instalaron automáticamente."
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid ""
-"If this xlet was installed manually and not trough Cinnamon Settings, "
-"localizations can be installed by executing the script called "
-"**localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr ""
+#: ../../__app__/python_modules/localized_help_creator.py:372
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
-msgid ""
-"If this xlet has no locale available for your language, you could create it "
-"by following the following instructions."
-msgstr ""
-"Si este xlet no está disponible en su idioma, la localización puede ser "
-"creada siguiendo las siguientes instrucciones."
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."
 
 #: z_create_localized_help.py:28
 msgid "Description"
 msgstr "Descripción"
 
 #: z_create_localized_help.py:30
-msgid ""
-"This applet is a fork of the default Window list applet shipped with "
-"Cinnamon."
-msgstr ""
-"Este applet está basado en el applet Lista de ventanas predeterminado de "
-"Cinnamon."
+msgid "This applet is a fork of the default Window list applet shipped with Cinnamon."
+msgstr "Este applet está basado en el applet Lista de ventanas predeterminado de Cinnamon."
 
 #: z_create_localized_help.py:32
 msgid "Differences with the original applet"
@@ -118,15 +95,11 @@ msgstr "Diferencias con el original"
 
 #: z_create_localized_help.py:34
 msgid "Added option to remove the label from the window list buttons."
-msgstr ""
-"Se agregó la opción para eliminar la etiqueta de los botones de lista de "
-"ventanas."
+msgstr "Se agregó la opción para eliminar la etiqueta de los botones de lista de ventanas."
 
 #: z_create_localized_help.py:35
 msgid "Added option to remove the tooltips from the window list buttons."
-msgstr ""
-"Se agregó la opción para eliminar las sugerencias de los botones de lista de "
-"ventanas."
+msgstr "Se agregó la opción para eliminar las sugerencias de los botones de lista de ventanas."
 
 #: z_create_localized_help.py:36
 msgid "Added icons to the window list button's context menu."
@@ -140,110 +113,71 @@ msgstr "Se agregó la opción para invertir los elementos del menú contextual."
 msgid "Added option to hide/move the **Preferences** sub menu."
 msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:684
-msgid "Configure the window list"
-msgstr "Configurar la lista de ventanas"
+#: utils.js:872
+msgid "Preferences"
+msgstr "Preferencias"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:696
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:783
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:822 utils.js:886
+#: utils.js:886
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:705
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:792
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:833 utils.js:897
+#: utils.js:897
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:716
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:803
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:844 utils.js:908
+#: utils.js:908
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:722
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:809
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:850 utils.js:914
+#: utils.js:914
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:728
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:815
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:856 utils.js:920
+#: utils.js:920
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:750
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:858
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:900 utils.js:948
+#: utils.js:948
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:759
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:867
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:910 utils.js:958
+#: utils.js:958
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:773
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:881
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:925 utils.js:973
+#: utils.js:973
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:781
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:889
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:933 utils.js:981
+#: utils.js:981
 msgid "Restore"
 msgstr "Restaurar"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:786
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:894
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:938 utils.js:986
+#: utils.js:986
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:794
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:902
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:946 utils.js:994
+#: utils.js:994
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:799
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:907
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:951 utils.js:999
+#: utils.js:999
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: __data__/window-list@cinnamon.org-2.8.8-stable.js:806
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:914
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:958 utils.js:1006
+#: utils.js:1006
 msgid "Close"
 msgstr "Cerrar"
 
-#. Preferences
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:838
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:880 utils.js:872
-msgid "Preferences"
-msgstr "Preferencias"
-
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:841
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:883 utils.js:1025
+#: utils.js:1025
 msgid "About..."
 msgstr "Acerca de..."
 
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:845
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:887 utils.js:1031
+#: utils.js:1031
 msgid "Configure..."
 msgstr "Configurar..."
-
-#: __data__/window-list@cinnamon.org-3.2.8-nightly.js:849
-#: __data__/window-list@cinnamon.org-3.6.x-nightly.js:891
-msgid "Remove 'Window list'"
-msgstr ""
 
 #: utils.js:1047
 #, javascript-format
@@ -264,15 +198,11 @@ msgstr "Lista de ventanas (Fork By Odyseus)"
 
 #. settings-schema.json->pref_show_all_workspaces->description
 msgid "Show windows from all workspaces"
-msgstr ""
+msgstr "Mostrar ventanas de todos los espacios de trabajo"
 
 #. settings-schema.json->pref_enable_alerts->description
-msgid ""
-"Show an alert in the window list when a window from another workspace "
-"requires attention"
-msgstr ""
-"Mostrar una alerta en la lista de ventanas cuando una ventana de otra área "
-"de trabajo requiere atención"
+msgid "Show an alert in the window list when a window from another workspace requires attention"
+msgstr "Mostrar una alerta en la lista de ventanas cuando una ventana de otra área de trabajo requiere atención"
 
 #. settings-schema.json->pref_enable_scrolling->description
 msgid "Enable mouse-wheel scrolling in the window list"
@@ -280,19 +210,15 @@ msgstr "Activar el desplazamiento del ratón en la lista de ventanas"
 
 #. settings-schema.json->pref_reverse_scrolling->description
 msgid "Reverse the direction of mouse-wheel scrolling in the window list"
-msgstr ""
-"Invertir la dirección de desplazamiento del ratón en la lista de ventanas"
+msgstr "Invertir la dirección de desplazamiento del ratón en la lista de ventanas"
 
 #. settings-schema.json->pref_middle_click_close->description
 msgid "Middle click to close window"
 msgstr "Cerrar ventana con botón central del ratón"
 
 #. settings-schema.json->pref_buttons_use_entire_space->description
-msgid ""
-"Window buttons can have different sizes and use the entire space available"
-msgstr ""
-"Los botones de las ventanas pueden tener diferentes tamaños y pueden usar "
-"todo el espacio disponible"
+msgid "Window buttons can have different sizes and use the entire space available"
+msgstr "Los botones de las ventanas pueden tener diferentes tamaños y pueden usar todo el espacio disponible"
 
 #. settings-schema.json->pref_window_preview->description
 msgid "Show window thumbnails on hover"
@@ -300,7 +226,7 @@ msgstr "Mostrar imágenes en miniatura de la ventana al pasar el ratón"
 
 #. settings-schema.json->pref_window_preview_show_label->description
 msgid "Show title above thumbnail"
-msgstr ""
+msgstr "Mostrar título arriba de la miniatura"
 
 #. settings-schema.json->pref_window_preview_scale->units
 msgid "pixels"
@@ -308,7 +234,7 @@ msgstr "pixeles"
 
 #. settings-schema.json->pref_window_preview_scale->description
 msgid "Window preview scale factor."
-msgstr ""
+msgstr "Factor de escala de vista previa de la ventana."
 
 #. settings-schema.json->pref_hide_tooltips->description
 msgid "Do not display tooltips"
@@ -316,14 +242,11 @@ msgstr "No mostrar caja de herramientas"
 
 #. settings-schema.json->pref_hide_labels->description
 msgid "Hide labels in the window list buttons (*)"
-msgstr ""
+msgstr "Ocultar etiquetas de los botones de la lista de ventanas (*)"
 
 #. settings-schema.json->pref_hide_labels->tooltip
-msgid ""
-"(*) After changing this settings, Cinnamon needs to be restarted (depends on "
-"the Cinnamon version) for the window button icon to have the correct final "
-"size."
-msgstr ""
+msgid "(*) After changing this settings, Cinnamon needs to be restarted (depends on the Cinnamon version) for the window button icon to have the correct final size."
+msgstr "(*) Luego de cambiar esta opción, Cinnamon debe reiniciarse (depende de la versión de Cinnamon) para que el icono del botón de ventana tenga el tamaño final correcto."
 
 #. settings-schema.json->pref_invert_menu_items_order->description
 msgid "Invert context menu items order"
@@ -334,13 +257,8 @@ msgid "Where to display the \"Preferences\" sub-menu?"
 msgstr "¿Dónde mostrar el submenú \"Preferencias\"?"
 
 #. settings-schema.json->pref_sub_menu_placement->tooltip
-msgid ""
-"If the option \"Invert context menu items order\" is enabled, the \"Top of "
-"menu\" will actually be the \"Bottom of menu\" and vice versa."
-msgstr ""
-"Si la opción \"Invertir el orden de los ítems en el menú contextual\" está "
-"activada, la parte superior del menú será realmente la parte inferior y vice "
-"versa."
+msgid "If the option \"Invert context menu items order\" is enabled, the \"Top of menu\" will actually be the \"Bottom of menu\" and vice versa."
+msgstr "Si la opción \"Invertir el orden de los ítems en el menú contextual\" está activada, la parte superior del menú será realmente la parte inferior y vice versa."
 
 #. settings-schema.json->pref_sub_menu_placement->options
 msgid "Do not display"
@@ -353,6 +271,9 @@ msgstr "En la parte superior del menú"
 #. settings-schema.json->pref_sub_menu_placement->options
 msgid "Bottom of menu"
 msgstr "En la parte inferior del menú"
+
+#~ msgid "Configure the window list"
+#~ msgstr "Configurar la lista de ventanas"
 
 #~ msgid "Hide labels in the window list buttons"
 #~ msgstr "Ocultar etiquetas de los botones de la lista de ventanas"

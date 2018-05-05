@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PopupTranslator 1.08\n"
-"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"POT-Creation-Date: 2018-05-04 21:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,64 +15,66 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:237
+#: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:241
+#: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
+#: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:325 applet.js:375
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:373
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:326
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:327
+#: ../../__app__/python_modules/localized_help_creator.py:321
 msgid "Changelog"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:328 ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "IMPORTANT!!!"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:357
+#: ../../__app__/python_modules/localized_help_creator.py:356
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:369
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:371
+#: ../../__app__/python_modules/localized_help_creator.py:370
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:373
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
@@ -88,7 +90,7 @@ msgstr ""
 msgid "Source text"
 msgstr ""
 
-#: appletHelper.py:348 applet.js:201
+#: appletHelper.py:348 applet.js:199
 msgid "Language pair"
 msgstr ""
 
@@ -307,37 +309,37 @@ msgstr ""
 msgid "With each Yandex translator API key you can translate **UP TO** 1.000.000 (1 million) characters per day **BUT NOT MORE** than 10.000.000 (10 millions) per month."
 msgstr ""
 
-#: applet.js:96
+#: applet.js:94
 msgid "Source language"
 msgstr ""
 
-#: applet.js:97
+#: applet.js:95
 msgid "Target language"
 msgstr ""
 
-#: applet.js:98
+#: applet.js:96
 msgid ""
 "(G) = Language supported only by Google Translate.\n"
 "(Y) = Language supported only by Yandex Translate."
 msgstr ""
 
 #. settings-schema.json->head_1->description
-#: applet.js:176
+#: applet.js:174
 msgid "First translation mechanism (Left click on applet)"
 msgstr ""
 
 #. settings-schema.json->head_2->description
-#: applet.js:180
+#: applet.js:178
 msgid "Second translation mechanism (Middle click on applet)"
 msgstr ""
 
 #. settings-schema.json->head_3->description
-#: applet.js:186
+#: applet.js:184
 msgid "Third translation mechanism (Hotkey #1)"
 msgstr ""
 
 #. settings-schema.json->head_4->description
-#: applet.js:193
+#: applet.js:191
 msgid "Fourth translation mechanism (Hotkey #2)"
 msgstr ""
 
@@ -345,89 +347,89 @@ msgstr ""
 #. settings-schema.json->pref_service_provider_2->description
 #. settings-schema.json->pref_service_provider_3->description
 #. settings-schema.json->pref_service_provider_4->description
-#: applet.js:199
+#: applet.js:197
 msgid "Service provider"
 msgstr ""
 
-#: applet.js:208
+#: applet.js:206
 msgid "Translation hotkey"
 msgstr ""
 
-#: applet.js:216
+#: applet.js:214
 msgid "Force translation hotkey"
 msgstr ""
 
-#: applet.js:224 applet.js:1044 applet.js:1068
+#: applet.js:222 applet.js:1044 applet.js:1068
 msgid "Unmet dependencies found!!!"
 msgstr ""
 
-#: applet.js:225 applet.js:905 applet.js:1045
+#: applet.js:223 applet.js:905 applet.js:1045
 msgid "A detailed error has been logged into ~/.cinnamon/glass.log file."
 msgstr ""
 
-#: applet.js:267
+#: applet.js:265
 msgid "Left click on applet"
 msgstr ""
 
-#: applet.js:270
+#: applet.js:268
 msgid "Middle click on applet"
 msgstr ""
 
-#: applet.js:273
+#: applet.js:271
 msgid "Hotkey #1"
 msgstr ""
 
-#: applet.js:276
+#: applet.js:274
 msgid "Hotkey #2"
 msgstr ""
 
-#: applet.js:289 applet.js:300
+#: applet.js:287 applet.js:298
 #, javascript-format
 msgid "Set %s as default translation engine."
 msgstr ""
 
-#: applet.js:320
+#: applet.js:318
 msgid "Applet extras"
 msgstr ""
 
-#: applet.js:324
+#: applet.js:322
 msgid "Translation history"
 msgstr ""
 
-#: applet.js:330
+#: applet.js:328
 msgid "Open translation history window."
 msgstr ""
 
-#: applet.js:342
+#: applet.js:340
 msgid "History storage"
 msgstr ""
 
-#: applet.js:348
+#: applet.js:346
 msgid "Open the location where the translation history file is stored."
 msgstr ""
 
-#: applet.js:361
+#: applet.js:359
 msgid "Check dependencies"
 msgstr ""
 
-#: applet.js:367
+#: applet.js:365
 msgid "Check whether the dependencies for this applet are met."
 msgstr ""
 
-#: applet.js:381
+#: applet.js:379
 msgid "Open this applet help file."
 msgstr ""
 
-#: applet.js:519
+#: applet.js:517
 msgid "History"
 msgstr ""
 
-#: applet.js:535
+#: applet.js:533
 #, javascript-format
 msgid "Go to %s's website"
 msgstr ""
 
-#: applet.js:537
+#: applet.js:535
 #, javascript-format
 msgid "Powered By %s"
 msgstr ""

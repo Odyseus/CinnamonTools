@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon 2.02\n"
-"POT-Creation-Date: 2018-04-24 13:21-0300\n"
+"POT-Creation-Date: 2018-05-04 21:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,64 +15,66 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:237
+#: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:241
+#: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
+#: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:325 applet.js:743 utils.js:2645
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:747 utils.js:2645
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:326
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:327
+#: ../../__app__/python_modules/localized_help_creator.py:321
 msgid "Changelog"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:328 ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "IMPORTANT!!!"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:357
+#: ../../__app__/python_modules/localized_help_creator.py:356
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:369
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:371
+#: ../../__app__/python_modules/localized_help_creator.py:370
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:373
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
@@ -325,7 +327,7 @@ msgstr ""
 #. TO TRANSLATORS: MARKDOWN string. Respect
 #. formatting.
 #: z_create_localized_help.py:150
-msgid "Sets the dimensions of the image. If only one dimension is specified, the image's original aspect ratio is maintained. **Argos only.**"
+msgid "Sets the dimensions of the image. If only one dimension is specified, the image's original aspect ratio is maintained. **Argos only**."
 msgstr ""
 
 #: z_create_localized_help.py:151
@@ -369,12 +371,12 @@ msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:188
-msgid "If `false`, disable interpretation of Pango markup in the line text. **Argos only.**"
+msgid "If `false`, disable interpretation of Pango markup in the line text. **Argos only**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:194
-msgid "If `false`, disable interpretation of backslash escapes such as `\\n` in the line text. **Argos only.**"
+msgid "If `false`, disable interpretation of backslash escapes such as `\\n` in the line text. **Argos only**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
@@ -451,7 +453,7 @@ msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:236
-msgid "Passes the code to JavaScript's `eval` function. **Argos only.**"
+msgid "Passes the code to JavaScript's `eval` function. **Argos only**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
@@ -516,153 +518,153 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: applet.js:137
+#: applet.js:141
 msgid "Script file is not executable."
 msgstr ""
 
-#: applet.js:139
+#: applet.js:143
 msgid "The script file can be made executable from this applet context menu."
 msgstr ""
 
-#: applet.js:146 applet.js:727
+#: applet.js:150 applet.js:731
 msgid "Script file isn't a file, but a directory."
 msgstr ""
 
-#: applet.js:157 applet.js:734
+#: applet.js:161 applet.js:738
 msgid "Script file doesn't exists."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file 'FileName':"
-#: applet.js:244
+#: applet.js:248
 #, javascript-format
 msgid "Unable to execute file '%s':"
 msgstr ""
 
-#: applet.js:249 applet.js:573 applet.js:600
+#: applet.js:253 applet.js:577 applet.js:604
 msgid "Script file not set, cannot be found or it isn't an executable."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Invalid menu level for line 'LineWithTheError'"
-#: applet.js:351
+#: applet.js:355
 #, javascript-format
 msgid "Invalid menu level for line '%s'"
 msgstr ""
 
-#: applet.js:410 applet.js:412
+#: applet.js:414 applet.js:416
 msgid "Script file name:"
 msgstr ""
 
-#: applet.js:412
+#: applet.js:416
 msgid "No script set"
 msgstr ""
 
-#: applet.js:415 applet.js:501
+#: applet.js:419 applet.js:505
 msgid "Execution interval:"
 msgstr ""
 
-#: applet.js:418 applet.js:624
+#: applet.js:422 applet.js:628
 msgid "Rotation interval:"
 msgstr ""
 
-#: applet.js:425
+#: applet.js:429
 msgid "Script execution time:"
 msgstr ""
 
-#: applet.js:433
+#: applet.js:437
 msgid "Output process time:"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->tooltip
-#: applet.js:509
+#: applet.js:513
 msgid "Choose the time unit for the script execution interval."
 msgstr ""
 
-#: applet.js:522
+#: applet.js:526
 msgid "Set the script execution interval."
 msgstr ""
 
-#: applet.js:532
+#: applet.js:536
 msgid "Choose script"
 msgstr ""
 
-#: applet.js:559
+#: applet.js:563
 msgid "Choose a script file."
 msgstr ""
 
-#: applet.js:565
+#: applet.js:569
 msgid "Edit script"
 msgstr ""
 
-#: applet.js:584
+#: applet.js:588
 msgid "Edit the script file with your prefered text editor."
 msgstr ""
 
-#: applet.js:585
+#: applet.js:589
 msgid "After saving the changes made, the applet will update its data automatically if there is an interval set."
 msgstr ""
 
-#: applet.js:586
+#: applet.js:590
 msgid "Or the update could be done manually with the »Refresh« item on this applet context menu."
 msgstr ""
 
-#: applet.js:592
+#: applet.js:596
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:608
+#: applet.js:612
 msgid "This will re-run on demand the script assigned to this applet for the purpose of updating its output."
 msgstr ""
 
-#: applet.js:609
+#: applet.js:613
 msgid "This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited."
 msgstr ""
 
 #. Extras submenu
-#: applet.js:616
+#: applet.js:620
 msgid "Extras"
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval_units->tooltip
-#: applet.js:630
+#: applet.js:634
 msgid "Choose the time unit for the applet text rotation interval."
 msgstr ""
 
-#: applet.js:643
+#: applet.js:647
 msgid "Set the applet text rotation interval."
 msgstr ""
 
-#: applet.js:652
+#: applet.js:656
 msgid "Clear script"
 msgstr ""
 
-#: applet.js:658 applet.js:676
+#: applet.js:662 applet.js:680
 msgid "This operation will remove the current script from this applet leaving it \"blank\"."
 msgstr ""
 
-#: applet.js:659
+#: applet.js:663
 msgid "The current applet settings will be untouched and the actual script file will not be deleted."
 msgstr ""
 
-#: applet.js:660
+#: applet.js:664
 msgid "Do you want to proceed?"
 msgstr ""
 
-#: applet.js:690
+#: applet.js:694
 msgid "Make script executable"
 msgstr ""
 
-#: applet.js:696
+#: applet.js:700
 msgid "Make the script file executable so it can be used by this applet."
 msgstr ""
 
-#: applet.js:720
+#: applet.js:724
 msgid "Script file is already executable."
 msgstr ""
 
 #. Just in case.
-#: applet.js:747 utils.js:2646
+#: applet.js:751 utils.js:2646
 msgid "Open this applet help file."
 msgstr ""
 

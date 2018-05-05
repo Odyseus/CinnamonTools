@@ -49,7 +49,7 @@ class Main(LocalizedHelpCreator):
             "- %s" % _("The placement of the custom launchers box and the search box can be swapped."),
             "- %s" % _("Scrollbars in the applications box can be hidden."),
             "- %s" % _("Recently installed applications highlighting can be disabled."),
-            "- %s" % _("Recently used applications can be remembered and will be displayed on a category called **Recent Applications**. The applications will be sorted by execution time and the name. The order of these applications can be inverted and there is an option to exclude favorites from being listed."),
+            "- %s" % _("Recently used applications can be remembered and will be displayed on a category called **Recent Applications**. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed."),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _("The default **Add to panel**, **Add to desktop** and **Uninstall** context menu items can be hidden."),
             "- %s" % _("The menu editor can be directly opened from this applet context menu without the need to open it from the settings windows of this applet."),

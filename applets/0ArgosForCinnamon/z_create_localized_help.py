@@ -147,7 +147,7 @@ class Main(LocalizedHelpCreator):
             "| `imageWidth`, `imageHeight` | %s | %s |" % (_("Width/height in pixels"),
                                                            # TO TRANSLATORS: MARKDOWN string. Respect
                                                            # formatting.
-                                                           _("Sets the dimensions of the image. If only one dimension is specified, the image's original aspect ratio is maintained. **Argos only.**")),
+                                                           _("Sets the dimensions of the image. If only one dimension is specified, the image's original aspect ratio is maintained. **Argos only**.")),
             "| `length` | %s | %s |" % (_("Length in characters"), _(
                 "Truncate the line text to the specified number of characters, ellipsizing the truncated part.")),
             "| `trim` | `true` %s `false` | %s |" %
@@ -185,13 +185,13 @@ class Main(LocalizedHelpCreator):
             # "true or false"
             (_("or"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false`, disable interpretation of Pango markup in the line text. **Argos only.**")),
+             _("If `false`, disable interpretation of Pango markup in the line text. **Argos only**.")),
             "| `unescape` | `true` %s `false` | %s |" %
             # TO TRANSLATORS: Conjunction used as follows:
             # "true or false"
             (_("or"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false`, disable interpretation of backslash escapes such as `\\n` in the line text. **Argos only.**")),
+             _("If `false`, disable interpretation of backslash escapes such as `\\n` in the line text. **Argos only**.")),
             "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Attributes available on **Argos for Cinnamon** only."),
@@ -233,7 +233,7 @@ class Main(LocalizedHelpCreator):
             "| `href` | URI | %s |" % _("Opens a URI in the application registered to handle it. URIs starting with `http://` launch the web browser, while `file://` URIs open the file in its associated default application. **Argos for Cinnamon** also supports paths starting with `~/` that will be automatically expanded to the user's home folder."),
             "| `eval` | %s | %s |" % (_("JavaScript code"),
                                       # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                                      _("Passes the code to JavaScript's `eval` function. **Argos only.**")),
+                                      _("Passes the code to JavaScript's `eval` function. **Argos only**.")),
             "| `refresh` | `true` %s `false` | %s |" %
             # TO TRANSLATORS: Conjunction used as follows:
             # "true or false"

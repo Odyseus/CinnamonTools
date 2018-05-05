@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks 1.14\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-04-24 13:21-0300\n"
-"PO-Revision-Date: 2017-08-08 17:48-0300\n"
+"POT-Creation-Date: 2018-05-03 23:05-0300\n"
+"PO-Revision-Date: 2018-05-04 21:33-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,86 +18,67 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:237
+#: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
 msgstr "Las siguientes dos secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:241
+#: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
 msgstr "No instalar en ninguna otra versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
+#: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
 msgstr "Copatibilidad"
 
-#: ../../__app__/python_modules/localized_help_creator.py:325 settings.py:2335
+#. Define them before self._get_language_stats() is called so these
+#. strings are also counted.
+#: ../../__app__/python_modules/localized_help_creator.py:319 settings.py:2335
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:326
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:327
+#: ../../__app__/python_modules/localized_help_creator.py:321
 msgid "Changelog"
 msgstr "Registro de cambios"
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:328
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "IMPORTANT!!!"
 msgstr "¡IMPORTANTE!"
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
-msgid ""
-"Never delete any of the files found inside this xlet folder. It might break "
-"this xlet functionality."
-msgstr ""
-"Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de "
-"este xlet. Podría romper la funcionalidad del xlet."
+#: ../../__app__/python_modules/localized_help_creator.py:355
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
-#: ../../__app__/python_modules/localized_help_creator.py:357
-msgid ""
-"Bug reports, feature requests and contributions should be done on this "
-"xlet's repository linked next."
-msgstr ""
-"Los reportes de fallos, peticiones de características y contribuciones deben "
-"hacerse en el repositorio de este xlet vinculado a continuación."
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
+
+#: ../../__app__/python_modules/localized_help_creator.py:369
+msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
 
 #: ../../__app__/python_modules/localized_help_creator.py:370
-msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-msgstr ""
-"Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#: ../../__app__/python_modules/localized_help_creator.py:371
-msgid ""
-"If this xlet was installed from Cinnamon Settings, all of this xlet's "
-"localizations were automatically installed."
-msgstr ""
-"Si este xlet se instaló desde Configuración de Cinnamon, todas las "
-"localizaciones de este xlet se instalaron automáticamente."
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid ""
-"If this xlet was installed manually and not trough Cinnamon Settings, "
-"localizations can be installed by executing the script called "
-"**localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr ""
+#: ../../__app__/python_modules/localized_help_creator.py:372
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
-msgid ""
-"If this xlet has no locale available for your language, you could create it "
-"by following the following instructions."
-msgstr ""
-"Si este xlet no está disponible en su idioma, la localización puede ser "
-"creada siguiendo las siguientes instrucciones."
+#: ../../__app__/python_modules/localized_help_creator.py:373
+msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."
 
 #: settings.py:69 settings.py:71
 msgid "Applets tweaks"
@@ -121,8 +102,7 @@ msgstr ""
 
 #: settings.py:91
 msgid "Display \"Edit applet main file\" on context menu"
-msgstr ""
-"Mostrar \\\"Editar archivo principal del applet\\\" en el menú contextual"
+msgstr "Mostrar \\\"Editar archivo principal del applet\\\" en el menú contextual"
 
 #: settings.py:98
 msgid "Where to place the \"Edit applet main file\" item?"
@@ -166,8 +146,7 @@ msgstr "Pedir confirmación al eliminar desklets"
 
 #: settings.py:153
 msgid "Display \"Edit desklet main file\" on context menu"
-msgstr ""
-"Mostrar \\\"Editar archivo principal del desklet\\\" en el menú contextual"
+msgstr "Mostrar \\\"Editar archivo principal del desklet\\\" en el menú contextual"
 
 #: settings.py:160
 msgid "Where to place the \"Edit desklet main file\" item?"
@@ -195,11 +174,9 @@ msgstr "Retardo de activación para la esquina superior izquierda"
 
 #: settings.py:210 settings.py:222 settings.py:234 settings.py:246
 msgid "Set a delay in milliseconds to activate this hot corner."
-msgstr ""
-"Establecer un retardo en milisegundos para activar esta esquina activa."
+msgstr "Establecer un retardo en milisegundos para activar esta esquina activa."
 
-#: settings.py:214 settings.py:226 settings.py:238 settings.py:250
-#: settings.py:302
+#: settings.py:214 settings.py:226 settings.py:238 settings.py:250 settings.py:302
 msgid "milliseconds"
 msgstr "milisegundos"
 
@@ -232,12 +209,8 @@ msgid "Enable applications drop to the Desktop"
 msgstr "Habilitar soltar aplicaciones en el escritorio"
 
 #: settings.py:272
-msgid ""
-"With this option enabled, applications can be dragged from the menu applet "
-"and from the panel launchers applet and dropped into the desktop."
-msgstr ""
-"Con esta opción habilitada, las aplicaciones se pueden arrastrar desde el "
-"menú y desde los lanzadores del panel para ser soltarlas en el escritorio."
+msgid "With this option enabled, applications can be dragged from the menu applet and from the panel launchers applet and dropped into the desktop."
+msgstr "Con esta opción habilitada, las aplicaciones se pueden arrastrar desde el menú y desde los lanzadores del panel para ser soltarlas en el escritorio."
 
 #: settings.py:276 z_create_localized_help.py:87
 msgid "Tooltips tweaks"
@@ -247,27 +220,13 @@ msgstr "Ajustes de caja de herramientas"
 msgid "Enable Tooltips tweaks"
 msgstr "Habilitar ajustes de caja de herramientas"
 
-#: settings.py:289 extension.js:1024
+#: settings.py:289 extension.js:1022
 msgid "Avoid mouse pointer overlapping tooltips"
-msgstr ""
-"Evitar la superposición de puntero del ratón sobre las cajas de información "
-"sobre herramientas"
+msgstr "Evitar la superposición de puntero del ratón sobre las cajas de información sobre herramientas"
 
 #: settings.py:290
-msgid ""
-"Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse "
-"pointer. This leads to having tooltips overlapped by the mouse pointer. This "
-"tweak aligns the tooltip to the bottom-right corner of the mouse pointer "
-"(approximately), reducing the possibility of the mouse pointer to overlap "
-"the tooltip."
-msgstr ""
-"Las cajas de información en la interfaz de usuario de Cinnamon están "
-"alineadas con la esquina superior izquierda del puntero del ratón. Esto "
-"lleva a tener esta información superpuesta por el puntero del ratón. Este "
-"ajuste alinea la caja de información sobre herramientas en la esquina "
-"inferior derecha del puntero del ratón (aproximadamente), reduciendo la "
-"posibilidad de que el puntero del ratón se solape con la caja de información "
-"sobre herramientas."
+msgid "Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse pointer. This leads to having tooltips overlapped by the mouse pointer. This tweak aligns the tooltip to the bottom-right corner of the mouse pointer (approximately), reducing the possibility of the mouse pointer to overlap the tooltip."
+msgstr "Las cajas de información en la interfaz de usuario de Cinnamon están alineadas con la esquina superior izquierda del puntero del ratón. Esto lleva a tener esta información superpuesta por el puntero del ratón. Este ajuste alinea la caja de información sobre herramientas en la esquina inferior derecha del puntero del ratón (aproximadamente), reduciendo la posibilidad de que el puntero del ratón se solape con la caja de información sobre herramientas."
 
 #: settings.py:297
 msgid "Tooltips show delay"
@@ -275,9 +234,7 @@ msgstr "Retardo para mostrar información sobre herramientas"
 
 #: settings.py:298
 msgid "Set a delay in milliseconds to display Cinnamon's UI tooltips."
-msgstr ""
-"Establezca un retraso en milisegundos para mostrar información sobre "
-"herramientas de la interfaz de Cinnamon."
+msgstr "Establezca un retraso en milisegundos para mostrar información sobre herramientas de la interfaz de Cinnamon."
 
 #: settings.py:306 z_create_localized_help.py:80
 msgid "Popup menus tweaks"
@@ -293,38 +250,17 @@ msgstr "Comportamiento de los menúes del panel"
 
 #: settings.py:319
 msgid ""
-"This setting affects only the behavior of menus that belongs to applets "
-"placed on any panel.\n"
+"This setting affects only the behavior of menus that belongs to applets placed on any panel.\n"
 "\n"
-"Emulate Gnome Shell behavior: When a menu is open on Genome Shell, and then "
-"the mouse cursor is moved to another button on the top panel, the menu of "
-"the hovered buttons will automatically open without the need to click on "
-"them. With this option enabled, that same behavior can be reproduced on "
-"Cinnamon.\n"
+"Emulate Gnome Shell behavior: When a menu is open on Genome Shell, and then the mouse cursor is moved to another button on the top panel, the menu of the hovered buttons will automatically open without the need to click on them. With this option enabled, that same behavior can be reproduced on Cinnamon.\n"
 "\n"
-"Don't eat clicks: By default, when one opens an applet's menu on Cinnamon "
-"and then click on another applet to open its menu, the first click is used "
-"to close the first opened menu, and then another click has to be performed "
-"to open the menu of the second applet. With this option enabled, one can "
-"directly open the menu of any applet even if another applet has its menu "
-"open."
+"Don't eat clicks: By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open."
 msgstr ""
-"Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los "
-"applets colocados en cualquier panel.\n"
+"Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los applets colocados en cualquier panel.\n"
 "\n"
-"Emular el comportamiento de los menúes de Gnome Shell: Cuando un menú está "
-"abierto en Genome Shell y, a continuación, el cursor del ratón se mueve a "
-"otro botón en el panel superior, el menú de los botones por los cuales el "
-"cursor del ratón está pasando se abrirán automáticamente sin necesidad de "
-"hacer clic en ellos. Con esta opción habilitada, ese mismo comportamiento se "
-"puede reproducir en Cinnamon.\n"
+"Emular el comportamiento de los menúes de Gnome Shell: Cuando un menú está abierto en Genome Shell y, a continuación, el cursor del ratón se mueve a otro botón en el panel superior, el menú de los botones por los cuales el cursor del ratón está pasando se abrirán automáticamente sin necesidad de hacer clic en ellos. Con esta opción habilitada, ese mismo comportamiento se puede reproducir en Cinnamon.\n"
 "\n"
-"No consumir clics: de forma predeterminada, cuando se abre el menú de un "
-"applet en Cinnamon y luego se hace clic en otro applet para abrir su menú, "
-"el primer clic se utiliza para cerrar el primer menú abierto y, a "
-"continuación, se debe realizar otro clic para abrir el menú del segundo "
-"applet. Con esta opción habilitada, se puede abrir directamente el menú de "
-"cualquier applet incluso si otro applet tiene su menú abierto."
+"No consumir clics: de forma predeterminada, cuando se abre el menú de un applet en Cinnamon y luego se hace clic en otro applet para abrir su menú, el primer clic se utiliza para cerrar el primer menú abierto y, a continuación, se debe realizar otro clic para abrir el menú del segundo applet. Con esta opción habilitada, se puede abrir directamente el menú de cualquier applet incluso si otro applet tiene su menú abierto."
 
 #: settings.py:321
 msgid "Default behavior"
@@ -343,24 +279,16 @@ msgid "Notifications tweaks"
 msgstr "Ajustes de notificaciones"
 
 #: settings.py:334
-msgid ""
-"After enabling notifications tweaks, some settings set by this extension "
-"will have priority over Cinnamon's notification settings."
-msgstr ""
+msgid "After enabling notifications tweaks, some settings set by this extension will have priority over Cinnamon's notification settings."
+msgstr "Después de habilitar los ajustes de notificaciones, algunas configuraciones establecidas por esta extensión tendrán prioridad sobre las configuraciones de notificaciones de Cinnamon."
 
 #: settings.py:334
-msgid ""
-"The Cinnamon's setting to display notifications at the bottom of the screen "
-"is ignored. The position set by this extension is the only one that will "
-"take effect."
-msgstr ""
+msgid "The Cinnamon's setting to display notifications at the bottom of the screen is ignored. The position set by this extension is the only one that will take effect."
+msgstr "La opción de Cinnamon para mostrar notificaciones en la parte inferior de la pantalla se ignora. La posición establecida por esta extensión es la única que tendrá efecto."
 
 #: settings.py:334
-msgid ""
-"The notification positioning is calculated in a different way by this "
-"extension compared to the way Cinnamon calculates it. This extension offers "
-"complete control over the distance from all pertinent sides of the popup."
-msgstr ""
+msgid "The notification positioning is calculated in a different way by this extension compared to the way Cinnamon calculates it. This extension offers complete control over the distance from all pertinent sides of the popup."
+msgstr "El posicionamiento de notificaciones es calculado de una manera diferente por esta extensión en comparación con la forma en que Cinnamon lo calcula. Esta extensión ofrece un control completo sobre la distancia desde todos los lados pertinentes de la ventana emergente."
 
 #: settings.py:339
 msgid "Enable notifications tweaks"
@@ -372,7 +300,7 @@ msgstr "Habilitar animación de notificaciones"
 
 #: settings.py:354
 msgid "Add close notification button"
-msgstr ""
+msgstr "Agregar botón de cerrado de notificación"
 
 #: settings.py:361
 msgid "Notifications position"
@@ -392,24 +320,13 @@ msgstr "Distancia desde el panel"
 
 #: settings.py:373
 msgid ""
-"For notifications displayed at the top-right of screen: this is the distance "
-"between the bottom border of the top panel (if no top panel, from the top of "
-"the screen) to the top border of the notification popup.\n"
+"For notifications displayed at the top-right of screen: this is the distance between the bottom border of the top panel (if no top panel, from the top of the screen) to the top border of the notification popup.\n"
 "\n"
-"For notifications displayed at the bottom-right of screen: this is the "
-"distance between the top border of the bottom panel (if no bottom panel, "
-"from the bottom of the screen) to the bottom border of the notification "
-"popup."
+"For notifications displayed at the bottom-right of screen: this is the distance between the top border of the bottom panel (if no bottom panel, from the bottom of the screen) to the bottom border of the notification popup."
 msgstr ""
-"Para las notificaciones que se muestran en la parte superior derecha de la "
-"pantalla: esta la distancia entre el borde inferior del panel superior (si "
-"no hay panel superior, desde la parte superior de la pantalla) hasta el "
-"borde superior de la ventana emergente de notificación.\n"
+"Para las notificaciones que se muestran en la parte superior derecha de la pantalla: esta la distancia entre el borde inferior del panel superior (si no hay panel superior, desde la parte superior de la pantalla) hasta el borde superior de la ventana emergente de notificación.\n"
 "\n"
-"Para las notificaciones que se muestran en la parte inferior derecha de la "
-"pantalla: esta la distancia entre el borde superior del panel inferior (si "
-"no hay panel inferior, desde la parte inferior de la pantalla) hasta el "
-"borde inferior de la ventana emergente de notificación."
+"Para las notificaciones que se muestran en la parte inferior derecha de la pantalla: esta la distancia entre el borde superior del panel inferior (si no hay panel inferior, desde la parte inferior de la pantalla) hasta el borde inferior de la ventana emergente de notificación."
 
 #: settings.py:377 settings.py:389
 msgid "pixels"
@@ -420,12 +337,8 @@ msgid "Notification popup right margin"
 msgstr "Margen derecho del popup de las notificaciones"
 
 #: settings.py:385
-msgid ""
-"By default, Cinnamon sets the right margin of the notification popup if it "
-"is defined by the currently used theme (margin-from-right-edge-of-screen CSS "
-"property). This option allows to set a custom right margin, ignoring the "
-"defined by the theme."
-msgstr ""
+msgid "By default, Cinnamon sets the right margin of the notification popup if it is defined by the currently used theme (margin-from-right-edge-of-screen CSS property). This option allows to set a custom right margin, ignoring the defined by the theme."
+msgstr "De forma predeterminada, Cinnamon establece el margen derecho de la ventana emergente de notificación si está definido por el tema utilizado actualmente (propiedad CSS de margen desde el borde derecho de la pantalla). Esta opción permite establecer un margen derecho personalizado, ignorando lo definido por el tema."
 
 #. TO TRANSLATORS: Could be left blank.
 #: settings.py:396
@@ -466,9 +379,7 @@ msgstr "Ajustes de sombras de ventana"
 
 #: settings.py:427 z_create_localized_help.py:123
 msgid "Client side decorated windows aren't affected by this tweak."
-msgstr ""
-"Las ventanas decoradas del lado del cliente no se ven afectadas por este "
-"ajuste."
+msgstr "Las ventanas decoradas del lado del cliente no se ven afectadas por este ajuste."
 
 #: settings.py:432
 msgid "Enable window shadows tweaks"
@@ -507,27 +418,16 @@ msgid "Auto move windows"
 msgstr "Mover ventanas automáticamente"
 
 #: settings.py:458
-msgid ""
-"Not all applications can be assigned to be moved. Most applications which "
-"can open multiple instances of themselves most likely cannot be configured "
-"to be automatically moved."
-msgstr ""
-"No todas las aplicaciones pueden ser asignadas para que se muevan. La "
-"mayoría de las aplicaciones que pueden abrir múltiples instancias de sí "
-"mismas lo más probable es no se puedan configurar para que se muevan "
-"automáticamente."
+msgid "Not all applications can be assigned to be moved. Most applications which can open multiple instances of themselves most likely cannot be configured to be automatically moved."
+msgstr "No todas las aplicaciones pueden ser asignadas para que se muevan. La mayoría de las aplicaciones que pueden abrir múltiples instancias de sí mismas lo más probable es no se puedan configurar para que se muevan automáticamente."
 
 #: settings.py:463
 msgid "Enable auto move windows tweak"
 msgstr "Habilitar el movimiento automático de ventanas"
 
 #: settings.py:464
-msgid ""
-"This tweak enables the ability to set rules to open determined applications "
-"on specific workspaces."
-msgstr ""
-"Este ajuste permite la capacidad de establecer reglas para abrir "
-"determinadas aplicaciones en espacios de trabajo específicos."
+msgid "This tweak enables the ability to set rules to open determined applications on specific workspaces."
+msgstr "Este ajuste permite la capacidad de establecer reglas para abrir determinadas aplicaciones en espacios de trabajo específicos."
 
 #: settings.py:471
 msgid "Define auto move windows rules"
@@ -538,38 +438,20 @@ msgid "Windows decorations removal"
 msgstr "Eliminación de decoraciones de ventanas"
 
 #: settings.py:476
-msgid ""
-"This tweak settings are purposely NOT applied in real time. Click the »Apply "
-"windows decorations settings« button to save settings."
-msgstr ""
-"Las configuraciones de este ajuste no son aplicadas en tiempo real a "
-"propósito.  Hacer clic en el botón »Aplicar ajustes de decoración de "
-"ventanas« para guardar las configuraciones."
+msgid "This tweak settings are purposely NOT applied in real time. Click the »Apply windows decorations settings« button to save settings."
+msgstr "Las configuraciones de este ajuste no son aplicadas en tiempo real a propósito.  Hacer clic en el botón »Aplicar ajustes de decoración de ventanas« para guardar las configuraciones."
 
 #: settings.py:477 z_create_localized_help.py:162
-msgid ""
-"Client side decorated windows and WINE applications aren't affected by this "
-"tweak."
-msgstr ""
-"Las ventanas decoradas del lado del cliente y las aplicaciones WINE no se "
-"ven afectadas por este ajuste"
+msgid "Client side decorated windows and WINE applications aren't affected by this tweak."
+msgstr "Las ventanas decoradas del lado del cliente y las aplicaciones WINE no se ven afectadas por este ajuste"
 
 #: settings.py:478 z_create_localized_help.py:163
-msgid ""
-"Close all windows that belongs to an application that is going to be added "
-"to the applications list and before applying the settings of this tweak."
-msgstr ""
-"Cerrar todas las ventanas que pertenecen a una aplicación que se va a "
-"agregar a la lista de aplicaciones y antes de aplicar las configuraciones de "
-"este ajuste."
+msgid "Close all windows that belongs to an application that is going to be added to the applications list and before applying the settings of this tweak."
+msgstr "Cerrar todas las ventanas que pertenecen a una aplicación que se va a agregar a la lista de aplicaciones y antes de aplicar las configuraciones de este ajuste."
 
 #: settings.py:480
-msgid ""
-"Read this extension help for more detailed instructions, list of "
-"dependencies and known issues."
-msgstr ""
-"Leer la ayuda de esta extensión para obtener instrucciones más detalladas, "
-"lista de dependencias y problemas conocidos."
+msgid "Read this extension help for more detailed instructions, list of dependencies and known issues."
+msgstr "Leer la ayuda de esta extensión para obtener instrucciones más detalladas, lista de dependencias y problemas conocidos."
 
 #: settings.py:486
 msgid "Apply windows decorations settings"
@@ -593,36 +475,21 @@ msgstr "¿La lista de aplicaciones es una lista negra?"
 
 #: settings.py:514
 msgid ""
-"If enabled, all applications will have their window decorations removed, "
-"except those listed in the list of applications.\n"
+"If enabled, all applications will have their window decorations removed, except those listed in the list of applications.\n"
 "\n"
-"If disabled, only the application from the list of applications will have "
-"their decorations removed."
+"If disabled, only the application from the list of applications will have their decorations removed."
 msgstr ""
-"Con esta opción activada, todas las aplicaciones tendrán sus decoraciones de "
-"ventanas eliminadas, excepto las listadas en la lista de aplicaciones.\n"
+"Con esta opción activada, todas las aplicaciones tendrán sus decoraciones de ventanas eliminadas, excepto las listadas en la lista de aplicaciones.\n"
 "\n"
-"Con esta opción deshabilitada, sólo se eliminarán las decoraciones si la "
-"aplicación se encuentra en la lista de aplicaciones."
+"Con esta opción deshabilitada, sólo se eliminarán las decoraciones si la aplicación se encuentra en la lista de aplicaciones."
 
 #: settings.py:521
 msgid "Enable hack for invisible windows"
 msgstr "Habilitar hack para ventanas invisibles"
 
 #: settings.py:522
-msgid ""
-"On Cinnamon 3.4 or greater, the windows of the applications configured so "
-"that their decorations are removed when maximized, may become invisible. "
-"Enabling this option might prevent that, but it might also add a border of "
-"about 1 pixel in place of the title bar (it might depend on the metacity "
-"theme (Window borders) used)."
-msgstr ""
-"En Cinnamon 3.4 o superior, las ventanas de las aplicaciones configuradas "
-"para que sus decoraciones sean removidas al ser maximizadas, puede que se "
-"vuelvan invisibles. La habilitación de esta opción puede evitarlo, pero "
-"también puede agregar un borde de aproximadamente 1 píxel en lugar de la "
-"barra de título (puede depender del tema de metacity (bordes de ventana) "
-"utilizado)."
+msgid "On Cinnamon 3.4 or greater, the windows of the applications configured so that their decorations are removed when maximized, may become invisible. Enabling this option might prevent that, but it might also add a border of about 1 pixel in place of the title bar (it might depend on the metacity theme (Window borders) used)."
+msgstr "En Cinnamon 3.4 o superior, las ventanas de las aplicaciones configuradas para que sus decoraciones sean removidas al ser maximizadas, puede que se vuelvan invisibles. La habilitación de esta opción puede evitarlo, pero también puede agregar un borde de aproximadamente 1 píxel en lugar de la barra de título (puede depender del tema de metacity (bordes de ventana) utilizado)."
 
 #: settings.py:529
 msgid "Enable logging"
@@ -740,9 +607,7 @@ msgstr "Restablecer valores"
 
 #: settings.py:1218
 msgid "Reset all values on the current view to their defaults."
-msgstr ""
-"Restablecer todos los valores de la vista actual a sus valores "
-"predeterminados."
+msgstr "Restablecer todos los valores de la vista actual a sus valores predeterminados."
 
 #: settings.py:1222
 msgid "Apply custom shadow"
@@ -750,15 +615,11 @@ msgstr "Aplicar sombra personalizada"
 
 #: settings.py:1224
 msgid "Save and apply custom shadow values to see its effects in real time."
-msgstr ""
-"Guardar y aplicar valores de sombra personalizados para ver sus efectos en "
-"tiempo real."
+msgstr "Guardar y aplicar valores de sombra personalizados para ver sus efectos en tiempo real."
 
 #: settings.py:1266 settings.py:1295
 msgid "Remember to set »Shadow presets« option to »Custom shadows«"
-msgstr ""
-"Recordar ajustar la opción »Preajustes de sombra« al valor »Sombras "
-"personalizadas«"
+msgstr "Recordar ajustar la opción »Preajustes de sombra« al valor »Sombras personalizadas«"
 
 #. metadata.json->name
 #: settings.py:1293 settings.py:2459
@@ -767,16 +628,11 @@ msgstr "Ajustes de Cinnamon"
 
 #: settings.py:1306
 msgid "Warning: Trying to reset custom shadows values!!!"
-msgstr ""
-"Advertencia: ¡Intentando restablecer valores de sombras personalizadas!"
+msgstr "Advertencia: ¡Intentando restablecer valores de sombras personalizadas!"
 
 #: settings.py:1309
-msgid ""
-"Are  you sure that you want to reset the shadows values of the current view "
-"to their defaults?"
-msgstr ""
-"¿Está seguro de que desea restablecer los valores de sombras de la vista "
-"actual a sus valores predeterminados?"
+msgid "Are  you sure that you want to reset the shadows values of the current view to their defaults?"
+msgstr "¿Está seguro de que desea restablecer los valores de sombras de la vista actual a sus valores predeterminados?"
 
 #: settings.py:1407
 msgid "Application Chooser"
@@ -840,9 +696,7 @@ msgstr "Odyseus https://github.com/Odyseus"
 
 #: settings.py:2301
 msgid "Settings marked with (*) needs Cinnamon restart to take effect"
-msgstr ""
-"Los ajustes marcados con (*) necesitan que Cinnamon sea reiniciado para "
-"surtir efecto"
+msgstr "Los ajustes marcados con (*) necesitan que Cinnamon sea reiniciado para surtir efecto"
 
 #: settings.py:2310
 msgid "Reset settings to defaults"
@@ -878,8 +732,7 @@ msgstr "Administrar configuración"
 
 #: settings.py:2389
 msgid "Warning: Trying to reset all Cinnamon Tweaks settings!!!"
-msgstr ""
-"Advertencia: ¡Intentando restablecer todos los ajustes de Cinnamon Tweaks!"
+msgstr "Advertencia: ¡Intentando restablecer todos los ajustes de Cinnamon Tweaks!"
 
 #: settings.py:2391
 msgid "Reset all Cinnamon Tweaks settings to default?"
@@ -904,51 +757,34 @@ msgstr "Preferencias de la extensión Cinnamon Tweaks"
 #. TO TRANSLATORS: Could be left blank.
 #: settings.py:2558
 #, python-format
-msgid ""
-"Please enter your password to install the required settings schema for %s"
-msgstr ""
-"Por favor, introduzca su contraseña para instalar el esquema de "
-"configuración necesario para %s"
+msgid "Please enter your password to install the required settings schema for %s"
+msgstr "Por favor, introduzca su contraseña para instalar el esquema de configuración necesario para %s"
 
 #. TO TRANSLATORS: Could be left blank.
 #: settings.py:2569
 #, python-format
-msgid ""
-"Could not install the settings schema for %s.  You will have to perform this "
-"step yourself."
-msgstr ""
-"No se ha podido instalar el esquema de configuración para %s. Tendrá que "
-"realizar este paso usted mismo."
+msgid "Could not install the settings schema for %s.  You will have to perform this step yourself."
+msgstr "No se ha podido instalar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo."
 
 #. TO TRANSLATORS: Could be left blank.
 #: settings.py:2575
 #, python-format
 msgid "Please enter your password to remove the settings schema for %s"
-msgstr ""
-"Por favor, introduzca su contraseña para eliminar el esquema de "
-"configuración para %s"
+msgstr "Por favor, introduzca su contraseña para eliminar el esquema de configuración para %s"
 
 #. TO TRANSLATORS: Could be left blank.
 #: settings.py:2586
 #, python-format
-msgid ""
-"Could not remove the settings schema for %s.  You will have to perform this "
-"step yourself.  This is not a critical error."
-msgstr ""
-"No se pudo eliminar el esquema de configuración para %s. Tendrá que realizar "
-"este paso usted mismo. Esto no es un error crítico."
+msgid "Could not remove the settings schema for %s.  You will have to perform this step yourself.  This is not a critical error."
+msgstr "No se pudo eliminar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo. Esto no es un error crítico."
 
 #: z_create_localized_help.py:29
 msgid "Description"
 msgstr "Descripción"
 
 #: z_create_localized_help.py:31
-msgid ""
-"This extension adds some options to modify the default behaviour of certain "
-"Cinnamon features."
-msgstr ""
-"Esta extensión agrega algunas opciones para modificar el comportamiento "
-"predeterminado de ciertas funciones de Cinnamon."
+msgid "This extension adds some options to modify the default behaviour of certain Cinnamon features."
+msgstr "Esta extensión agrega algunas opciones para modificar el comportamiento predeterminado de ciertas funciones de Cinnamon."
 
 #: z_create_localized_help.py:56
 msgid "Extension options details"
@@ -956,14 +792,8 @@ msgstr "Detalles de las opciones de la extensión"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:59
-msgid ""
-"Some tweaks have warnings, dependencies, limitations and or known issues "
-"that must be read and understood before a tweak is enabled. No worries, "
-"nothing *fatal* could ever happen."
-msgstr ""
-"Algunos ajustes tienen advertencias, dependencias, limitaciones y/o "
-"problemas conocidos que deben ser leídos y entendidos antes de habilitar un "
-"ajuste. No preocuparse, nada *fatal* podría suceder."
+msgid "Some tweaks have warnings, dependencies, limitations and or known issues that must be read and understood before a tweak is enabled. No worries, nothing *fatal* could ever happen."
+msgstr "Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas conocidos que deben ser leídos y entendidos antes de habilitar un ajuste. No preocuparse, nada *fatal* podría suceder."
 
 #: z_create_localized_help.py:62
 msgid "Applets/Desklets tweaks"
@@ -974,57 +804,31 @@ msgid "Ask for confirmation on applet/desklet removal:"
 msgstr "Pedir confirmación al eliminar applet/desklet:"
 
 #: z_create_localized_help.py:64
-msgid ""
-"Instead of directly remove the applet/desklet from the context menus, it "
-"will ask for confirmation. This option doesn't affect the removal of applets/"
-"desklets from the Applets/Desklets manager in Cinnamon settings (there will "
-"be no confirmation)."
-msgstr ""
-"En vez de directamente remover un applet/desklet desde los menúes "
-"contextuales, un diálogo de confirmación será mostrado. Esta opción no "
-"afecta la eliminación de applets/desklets desde el administrador de applet/"
-"desklets dentro de Configuración de Cinnamon (diálogo de confirmación no "
-"será mostrado)."
+msgid "Instead of directly remove the applet/desklet from the context menus, it will ask for confirmation. This option doesn't affect the removal of applets/desklets from the Applets/Desklets manager in Cinnamon settings (there will be no confirmation)."
+msgstr "En vez de directamente remover un applet/desklet desde los menúes contextuales, un diálogo de confirmación será mostrado. Esta opción no afecta la eliminación de applets/desklets desde el administrador de applet/desklets dentro de Configuración de Cinnamon (diálogo de confirmación no será mostrado)."
 
 #: z_create_localized_help.py:65
-msgid ""
-"Display \"Edit applet/desklet main file\" on context menu for applets/"
-"desklet:"
-msgstr ""
-"Mostrar \"Editar archivo principal del applet/desklet\" en el menú contextual"
+msgid "Display \"Edit applet/desklet main file\" on context menu for applets/desklet:"
+msgstr "Mostrar \"Editar archivo principal del applet/desklet\" en el menú contextual"
 
 #: z_create_localized_help.py:65
-msgid ""
-"Display \"Open applet/desklet folder\" on context menu for applets/desklets"
+msgid "Display \"Open applet/desklet folder\" on context menu for applets/desklets"
 msgstr "Mostrar \"Abrir carpeta del applet/desklet\" en el menú contextual"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:67
-msgid ""
-"These options will add new menu items to the applets/desklets context menus. "
-"The place where this items will be located is chosen by the option **Where "
-"to place the menu item?**."
-msgstr ""
-"Estas opciones agregarán nuevos ítems a los menúes contextuales de applets/"
-"desklets. El lugar donde estos ítems serán colocados puede elegirse con la "
-"opción **¿Dónde colocar el elemento...?**."
+msgid "These options will add new menu items to the applets/desklets context menus. The place where this items will be located is chosen by the option **Where to place the menu item?**."
+msgstr "Estas opciones agregarán nuevos ítems a los menúes contextuales de applets/desklets. El lugar donde estos ítems serán colocados puede elegirse con la opción **¿Dónde colocar el elemento...?**."
 
 #: z_create_localized_help.py:69
 msgid "Hot Corners tweaks"
 msgstr "Ajustes de esquinas activas"
 
 #: z_create_localized_help.py:70
-msgid ""
-"This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon "
-"3.2.x already has hot corners delay activation."
-msgstr ""
-"Este ajuste está disponible sólo para versiones de Cinnamon menores a 3.2.x. "
-"Cinnamon 3.2.x ya posee retardo de activación para esquinas activas."
+msgid "This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has hot corners delay activation."
+msgstr "Este ajuste está disponible sólo para versiones de Cinnamon menores a 3.2.x. Cinnamon 3.2.x ya posee retardo de activación para esquinas activas."
 
-#: z_create_localized_help.py:71 z_create_localized_help.py:72
-#: z_create_localized_help.py:73 z_create_localized_help.py:74
-#: z_create_localized_help.py:89 z_create_localized_help.py:92
-#: z_create_localized_help.py:110
+#: z_create_localized_help.py:71 z_create_localized_help.py:72 z_create_localized_help.py:73 z_create_localized_help.py:74 z_create_localized_help.py:89 z_create_localized_help.py:92 z_create_localized_help.py:110
 msgid "Crystal clear."
 msgstr "Claro como el cristal."
 
@@ -1049,40 +853,20 @@ msgid "Enable applications drop to the Desktop:"
 msgstr "Habilitar soltar aplicaciones en el escritorio:"
 
 #: z_create_localized_help.py:78
-msgid ""
-"This tweak enables the ability to drag and drop applications from the menu "
-"applet and from the panel launchers applet into the desktop."
-msgstr ""
-"Este ajuste habilita a las aplicaciones para que se puedan arrastrar desde "
-"el menú y desde los lanzadores del panel y sean soltadas en el escritorio."
+msgid "This tweak enables the ability to drag and drop applications from the menu applet and from the panel launchers applet into the desktop."
+msgstr "Este ajuste habilita a las aplicaciones para que se puedan arrastrar desde el menú y desde los lanzadores del panel y sean soltadas en el escritorio."
 
-#: z_create_localized_help.py:82 z_create_localized_help.py:122
-#: z_create_localized_help.py:135 z_create_localized_help.py:143
+#: z_create_localized_help.py:82 z_create_localized_help.py:122 z_create_localized_help.py:135 z_create_localized_help.py:143
 msgid "Note:"
 msgstr "Nota:"
 
 #: z_create_localized_help.py:83
-msgid ""
-"This setting affects only the behavior of menus that belongs to applets "
-"placed on any panel."
-msgstr ""
-"Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los "
-"applets colocados en cualquier panel."
+msgid "This setting affects only the behavior of menus that belongs to applets placed on any panel."
+msgstr "Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los applets colocados en cualquier panel."
 
 #: z_create_localized_help.py:85
-msgid ""
-"By default, when one opens an applet's menu on Cinnamon and then click on "
-"another applet to open its menu, the first click is used to close the first "
-"opened menu, and then another click has to be performed to open the menu of "
-"the second applet. With this option enabled, one can directly open the menu "
-"of any applet even if another applet has its menu open."
-msgstr ""
-"De forma predeterminada, cuando se abre el menú de un applet en Cinnamon y "
-"luego se hace clic en otro applet para abrir su menú, el primer clic se "
-"utiliza para cerrar el primer menú abierto y, a continuación, se debe "
-"realizar otro clic para abrir el menú del segundo applet. Con esta opción "
-"habilitada, se puede abrir directamente el menú de cualquier applet incluso "
-"si otro applet tiene su menú abierto."
+msgid "By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open."
+msgstr "De forma predeterminada, cuando se abre el menú de un applet en Cinnamon y luego se hace clic en otro applet para abrir su menú, el primer clic se utiliza para cerrar el primer menú abierto y, a continuación, se debe realizar otro clic para abrir el menú del segundo applet. Con esta opción habilitada, se puede abrir directamente el menú de cualquier applet incluso si otro applet tiene su menú abierto."
 
 #: z_create_localized_help.py:85
 msgid "Don't eat clicks:"
@@ -1090,26 +874,11 @@ msgstr "No consumir clics:"
 
 #: z_create_localized_help.py:88
 msgid "Avoid mouse pointer overlapping tooltips:"
-msgstr ""
-"Evitar la superposición de puntero del ratón sobre las cajas de información "
-"sobre herramientas:"
+msgstr "Evitar la superposición de puntero del ratón sobre las cajas de información sobre herramientas:"
 
 #: z_create_localized_help.py:88
-msgid ""
-"Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse "
-"pointer. This leads to having tooltips overlapped by the mouse pointer. This "
-"tweak aligns the tooltip to the bottom-right corner of the mouse pointer "
-"(approximately), reducing the possibility of the mouse pointer to overlap "
-"the tooltip. This tweak is only available for Cinnamon versions lower than "
-"3.2. Cinnamon 3.2.x already has the position of the tooltips changed."
-msgstr ""
-"Las cajas de información en la interfaz de usuario de Cinnamon están "
-"alineadas con la esquina superior izquierda del puntero del ratón. Esto "
-"lleva a tener esta información superpuesta por el puntero del ratón. Este "
-"ajuste alinea la caja de información sobre herramientas en la esquina "
-"inferior derecha del puntero del ratón (aproximadamente), reduciendo la "
-"posibilidad de que el puntero del ratón se solape con la caja de información "
-"sobre herramientas."
+msgid "Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse pointer. This leads to having tooltips overlapped by the mouse pointer. This tweak aligns the tooltip to the bottom-right corner of the mouse pointer (approximately), reducing the possibility of the mouse pointer to overlap the tooltip. This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has the position of the tooltips changed."
+msgstr "Las cajas de información en la interfaz de usuario de Cinnamon están alineadas con la esquina superior izquierda del puntero del ratón. Esto lleva a tener esta información superpuesta por el puntero del ratón. Este ajuste alinea la caja de información sobre herramientas en la esquina inferior derecha del puntero del ratón (aproximadamente), reduciendo la posibilidad de que el puntero del ratón se solape con la caja de información sobre herramientas."
 
 #: z_create_localized_help.py:89
 msgid "Tooltips show delay:"
@@ -1124,13 +893,8 @@ msgid "Notifications position:"
 msgstr "Posición de las notificaciones:"
 
 #: z_create_localized_help.py:94
-msgid ""
-"Notifications can be displayed at the top-right of screen (system default) "
-"or at the bottom-right of screen."
-msgstr ""
-"Notificaciones pueden ser mostradas en la esquina superior derecha de la "
-"pantalla (por defecto del sistema) o en la esquina inferior derecha de la "
-"pantalla."
+msgid "Notifications can be displayed at the top-right of screen (system default) or at the bottom-right of screen."
+msgstr "Notificaciones pueden ser mostradas en la esquina superior derecha de la pantalla (por defecto del sistema) o en la esquina inferior derecha de la pantalla."
 
 #: z_create_localized_help.py:95
 msgid "Distance from panel:"
@@ -1138,76 +902,36 @@ msgstr "Distancia desde el panel:"
 
 #: z_create_localized_help.py:96
 msgid "For notifications displayed at the top-right of screen:"
-msgstr ""
-"Para las notificaciones que se muestran en la parte superior derecha de la "
-"pantalla:"
+msgstr "Para las notificaciones que se muestran en la parte superior derecha de la pantalla:"
 
 #: z_create_localized_help.py:97
-msgid ""
-"This is the distance between the bottom border of the top panel (if no top "
-"panel, from the top of the screen) to the top border of the notification "
-"popup."
-msgstr ""
-"Esta es la distancia entre el borde inferior del panel superior (si no hay "
-"panel superior, desde la parte superior de la pantalla) hasta el borde "
-"superior de la ventana emergente de notificación."
+msgid "This is the distance between the bottom border of the top panel (if no top panel, from the top of the screen) to the top border of the notification popup."
+msgstr "Esta es la distancia entre el borde inferior del panel superior (si no hay panel superior, desde la parte superior de la pantalla) hasta el borde superior de la ventana emergente de notificación."
 
 #: z_create_localized_help.py:98
 msgid "For notifications displayed at the bottom-right of screen:"
-msgstr ""
-"Para las notificaciones que se muestran en la parte inferior derecha de la "
-"pantalla:"
+msgstr "Para las notificaciones que se muestran en la parte inferior derecha de la pantalla:"
 
 #: z_create_localized_help.py:99
-msgid ""
-"This is the distance between the top border of the bottom panel (if no "
-"bottom panel, from the bottom of the screen) to the bottom border of the "
-"notification popup."
-msgstr ""
-"Esta es la distancia entre el borde superior del panel inferior (si no hay "
-"panel inferior, desde la parte inferior de la pantalla) hasta el borde "
-"inferior de la ventana emergente de notificación."
+msgid "This is the distance between the top border of the bottom panel (if no bottom panel, from the bottom of the screen) to the bottom border of the notification popup."
+msgstr "Esta es la distancia entre el borde superior del panel inferior (si no hay panel inferior, desde la parte inferior de la pantalla) hasta el borde inferior de la ventana emergente de notificación."
 
 #: z_create_localized_help.py:100
 msgid "Notification popup right margin:"
 msgstr "Margen derecho del popup de las notificaciones:"
 
 #: z_create_localized_help.py:101
-msgid ""
-"By default, the right margin of the notification popup is defined by the "
-"currently used theme. This option, set to any value other than 0 (zero), "
-"allows to set a custom right margin, ignoring the defined by the theme."
-msgstr ""
-"Por defecto, el margen derecho de la notificación es definido por el tema "
-"que se usa actualmente. Esta opción, con un valor distinto de 0 (cero), "
-"permite establecer un margen derecho personalizado, ignorando el definido "
-"por el tema."
+msgid "By default, the right margin of the notification popup is defined by the currently used theme. This option, set to any value other than 0 (zero), allows to set a custom right margin, ignoring the defined by the theme."
+msgstr "Por defecto, el margen derecho de la notificación es definido por el tema que se usa actualmente. Esta opción, con un valor distinto de 0 (cero), permite establecer un margen derecho personalizado, ignorando el definido por el tema."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:105
-msgid ""
-"Tweak based on the gnome-shell extension called [Steal My Focus](https://"
-"github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) by [Valentin "
-"Dimitrov](https://github.com/v-dimitrov) and another gnome-shell extension "
-"called [Window Demands Attention Shortcut](https://github.com/awamper/window-"
-"demands-attention-shortcut) by [awamper](https://github.com/awamper)."
-msgstr ""
-"Ajuste basado en la extensión para Gnome Shell llamada [Steal My Focus]"
-"(https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) por "
-"[Valentin Dimitrov](https://github.com/v-dimitrov) y otra extensión para "
-"Gnome Shell llamada [Window Demands Attention Shortcut](https://github.com/"
-"awamper/window-demands-attention-shortcut) por [awamper](https://github.com/"
-"awamper)."
+msgid "Tweak based on the gnome-shell extension called [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) by [Valentin Dimitrov](https://github.com/v-dimitrov) and another gnome-shell extension called [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut) by [awamper](https://github.com/awamper)."
+msgstr "Ajuste basado en la extensión para Gnome Shell llamada [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) por [Valentin Dimitrov](https://github.com/v-dimitrov) y otra extensión para Gnome Shell llamada [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut) por [awamper](https://github.com/awamper)."
 
 #: z_create_localized_help.py:107
-msgid ""
-"Some windows that demands attention will not gain focus regardless of the "
-"settings combination on Cinnamon settings. This option will allow you to "
-"correct that."
-msgstr ""
-"Algunas ventanas que requieren atención no ganarán enfoque "
-"independientemente de la combinación de ajustes en la configuración de "
-"Cinnamon. Esta opción nos permitirá corregir esto."
+msgid "Some windows that demands attention will not gain focus regardless of the settings combination on Cinnamon settings. This option will allow you to correct that."
+msgstr "Algunas ventanas que requieren atención no ganarán enfoque independientemente de la combinación de ajustes en la configuración de Cinnamon. Esta opción nos permitirá corregir esto."
 
 #: z_create_localized_help.py:109
 msgid "The activation of windows demanding attention...:"
@@ -1231,21 +955,15 @@ msgstr "...se lleva a cabo con un atajo de teclado:"
 
 #: z_create_localized_help.py:114
 msgid "will focus windows demanding attention with a keyboard shortcut."
-msgstr ""
-"Las ventanas que requieren atención serán enfocadas bajo demanda con un "
-"atajo de teclado."
+msgstr "Las ventanas que requieren atención serán enfocadas bajo demanda con un atajo de teclado."
 
 #: z_create_localized_help.py:115
 msgid "Keyboard shortcut:"
 msgstr "Atajo de teclado:"
 
 #: z_create_localized_help.py:116
-msgid ""
-"Set a keyboard shortcut for the option **...is performed with a keyboard "
-"shortcut**."
-msgstr ""
-"Establecer un atajo de teclado para la opción **...se lleva a cabo con un "
-"atajo de teclado**."
+msgid "Set a keyboard shortcut for the option **...is performed with a keyboard shortcut**."
+msgstr "Establecer un atajo de teclado para la opción **...se lleva a cabo con un atajo de teclado**."
 
 #: z_create_localized_help.py:118
 msgid "Window Shadows tweaks"
@@ -1253,59 +971,23 @@ msgstr "Ajustes de sombras de ventana"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:120
-msgid ""
-"Tweak based on a Cinnamon extension called [Custom Shadows](https://cinnamon-"
-"spices.linuxmint.com/extensions/view/43) created by [mikhail-ekzi](https://"
-"github.com/mikhail-ekzi). It allows to modify the shadows used by Cinnamon's "
-"window manager (Muffin)."
-msgstr ""
-"Ajuste basado en la extensión para Cinnamon llamada [Custom Shadows](https://"
-"cinnamon-spices.linuxmint.com/extensions/view/43) creada por [mikhail-ekzi]"
-"(https://github.com/mikhail-ekzi). Permite modificar las sombras usadas por "
-"el gestor de ventanas de Cinnamon (Muffin)."
+msgid "Tweak based on a Cinnamon extension called [Custom Shadows](https://cinnamon-spices.linuxmint.com/extensions/view/43) created by [mikhail-ekzi](https://github.com/mikhail-ekzi). It allows to modify the shadows used by Cinnamon's window manager (Muffin)."
+msgstr "Ajuste basado en la extensión para Cinnamon llamada [Custom Shadows](https://cinnamon-spices.linuxmint.com/extensions/view/43) creada por [mikhail-ekzi](https://github.com/mikhail-ekzi). Permite modificar las sombras usadas por el gestor de ventanas de Cinnamon (Muffin)."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:133
-msgid ""
-"Tweak based on the gnome-shell extension called [Auto Move Windows](https://"
-"extensions.gnome.org/extension/16/auto-move-windows/) by [Florian Muellner]"
-"(https://github.com/fmuellner). It enables the ability to set rules to open "
-"determined applications on specific workspaces."
-msgstr ""
-"Ajuste basado en la extensión para Gnome Shell llamada [Auto Move Windows]"
-"(https://extensions.gnome.org/extension/16/auto-move-windows/) por [Florian "
-"Muellner](https://github.com/fmuellner). Permite la creación de reglas para "
-"abrir determinadas aplicaciones en áreas de trabajo específicas."
+msgid "Tweak based on the gnome-shell extension called [Auto Move Windows](https://extensions.gnome.org/extension/16/auto-move-windows/) by [Florian Muellner](https://github.com/fmuellner). It enables the ability to set rules to open determined applications on specific workspaces."
+msgstr "Ajuste basado en la extensión para Gnome Shell llamada [Auto Move Windows](https://extensions.gnome.org/extension/16/auto-move-windows/) por [Florian Muellner](https://github.com/fmuellner). Permite la creación de reglas para abrir determinadas aplicaciones en áreas de trabajo específicas."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:137 z_create_localized_help.py:145
-msgid ""
-"If the application that you want to select doesn't show up on the "
-"application chooser dialog, read the section on this help file called "
-"**Applications not showing up on the applications chooser dialogs**."
-msgstr ""
-"i la aplicación que se quiere seleccionar no se muestra en el diálogo "
-"selector de aplicaciones, leer la sección de este archivo de ayuda llamada "
-"**Aplicaciones que no aparecen en los cuadros de diálogo de selección de "
-"aplicaciones**."
+msgid "If the application that you want to select doesn't show up on the application chooser dialog, read the section on this help file called **Applications not showing up on the applications chooser dialogs**."
+msgstr "i la aplicación que se quiere seleccionar no se muestra en el diálogo selector de aplicaciones, leer la sección de este archivo de ayuda llamada **Aplicaciones que no aparecen en los cuadros de diálogo de selección de aplicaciones**."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:141
-msgid ""
-"Tweak based on the extension called [Cinnamon Maximus](https://cinnamon-"
-"spices.linuxmint.com/extensions/view/29) by [Fatih Mete](https://github.com/"
-"fatihmete) with some options from the gnome-shell extension called [Maximus "
-"NG](https://github.com/luispabon/maximus-gnome-shell) by [Luis Pabon]"
-"(https://github.com/luispabon). This tweak allows to remove the windows "
-"decorations from maximized/half-maximized/tiled windows."
-msgstr ""
-"Ajuste basado en la extensión para Cinnamon llamada [Cinnamon Maximus]"
-"(https://cinnamon-spices.linuxmint.com/extensions/view/29) por [Fatih Mete]"
-"(https://github.com/fatihmete) con algunas opciones extraídas de la "
-"extensión para Gnome Shell llamada [Maximus NG](https://github.com/luispabon/"
-"maximus-gnome-shell) por [Luis Pabon](https://github.com/luispabon). Este "
-"ajuste permite remover las decoraciones de ventanas maximizadas/medio-"
-"maximizadas/en mosaico."
+msgid "Tweak based on the extension called [Cinnamon Maximus](https://cinnamon-spices.linuxmint.com/extensions/view/29) by [Fatih Mete](https://github.com/fatihmete) with some options from the gnome-shell extension called [Maximus NG](https://github.com/luispabon/maximus-gnome-shell) by [Luis Pabon](https://github.com/luispabon). This tweak allows to remove the windows decorations from maximized/half-maximized/tiled windows."
+msgstr "Ajuste basado en la extensión para Cinnamon llamada [Cinnamon Maximus](https://cinnamon-spices.linuxmint.com/extensions/view/29) por [Fatih Mete](https://github.com/fatihmete) con algunas opciones extraídas de la extensión para Gnome Shell llamada [Maximus NG](https://github.com/luispabon/maximus-gnome-shell) por [Luis Pabon](https://github.com/luispabon). Este ajuste permite remover las decoraciones de ventanas maximizadas/medio-maximizadas/en mosaico."
 
 #: z_create_localized_help.py:147
 msgid "Dependencies"
@@ -1313,12 +995,8 @@ msgstr "Dependencias"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:149
-msgid ""
-"This tweak requires two commands available on the system (**xprop** and "
-"**xwininfo**) for it to work."
-msgstr ""
-"Este ajuste requiere dos comandos disponibles en el sistema (**xprop** y "
-"**xwininfo**) para que funcione."
+msgid "This tweak requires two commands available on the system (**xprop** and **xwininfo**) for it to work."
+msgstr "Este ajuste requiere dos comandos disponibles en el sistema (**xprop** y **xwininfo**) para que funcione."
 
 #: z_create_localized_help.py:151
 msgid "Debian based distributions:"
@@ -1326,12 +1004,8 @@ msgstr "Distribuciones basadas en Debian:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:153
-msgid ""
-"These commands are provided by the **x11-utils** package. Linux Mint already "
-"has this package installed."
-msgstr ""
-"Estos comandos son proporcionados por el paquete **x11-utils**. Linux Mint "
-"ya tiene este paquete instalado."
+msgid "These commands are provided by the **x11-utils** package. Linux Mint already has this package installed."
+msgstr "Estos comandos son proporcionados por el paquete **x11-utils**. Linux Mint ya tiene este paquete instalado."
 
 #: z_create_localized_help.py:154
 msgid "Archlinux based distributions:"
@@ -1339,12 +1013,8 @@ msgstr "Distribuciones basadas en Archlinux:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:156
-msgid ""
-"These commands are provided by the **xorg-xprop** and **xorg-xwininfo** "
-"packages."
-msgstr ""
-"Estos comandos son proporcionados por los paquetes **xorg-xprop** y **xorg-"
-"xwininfo**."
+msgid "These commands are provided by the **xorg-xprop** and **xorg-xwininfo** packages."
+msgstr "Estos comandos son proporcionados por los paquetes **xorg-xprop** y **xorg-xwininfo**."
 
 #: z_create_localized_help.py:157
 msgid "Fedora based distributions:"
@@ -1360,14 +1030,8 @@ msgid "Warnings"
 msgstr "Advertencias"
 
 #: z_create_localized_help.py:164
-msgid ""
-"As a general rule to avoid issues, before enabling and configuring this "
-"tweak, close all windows currently opened, enable and configure this tweak "
-"and then log out and log back in."
-msgstr ""
-"Como regla general para evitar problemas, antes de activar y configurar este "
-"ajuste, cerrar todas las ventanas actualmente abiertas, activar y configurar "
-"este ajuste y luego cerrar la sesión y volver a entrar."
+msgid "As a general rule to avoid issues, before enabling and configuring this tweak, close all windows currently opened, enable and configure this tweak and then log out and log back in."
+msgstr "Como regla general para evitar problemas, antes de activar y configurar este ajuste, cerrar todas las ventanas actualmente abiertas, activar y configurar este ajuste y luego cerrar la sesión y volver a entrar."
 
 #: z_create_localized_help.py:166
 msgid "Known issues"
@@ -1378,99 +1042,43 @@ msgid "Invisible windows:"
 msgstr "Ventanas invisibles:"
 
 #: z_create_localized_help.py:167
-msgid ""
-"Sometimes, windows of applications that are configured to remove their "
-"decorations can become invisible. The application's icon can still be seen "
-"in the panel (taskbar) and when clicked to focus its respective window, the "
-"invisible window will block the clicks as if it were visible. To fix this, "
-"the window needs to be unmaximized (it will become visible again) and then "
-"closed. When reopened, the window should behave normally."
-msgstr ""
-"A veces, las ventanas de aplicaciones que están configuradas para que sus "
-"decoraciones sean removidas se pueden volver invisibles. El ícono de la "
-"aplicación todavía puede verse en el panel (barra de tareas) y cuando se le "
-"hace clic para enfocar su ventana respectiva, la ventana invisible va a "
-"bloquear los clics como si estuviera normalmente visible. Para arreglar "
-"esto, la ventana necesita ser des-maximizada (se volverá visible) y luego "
-"cerrada. Cuando se reabre la aplicación, su ventana debería comportarse "
-"normalmente."
+msgid "Sometimes, windows of applications that are configured to remove their decorations can become invisible. The application's icon can still be seen in the panel (taskbar) and when clicked to focus its respective window, the invisible window will block the clicks as if it were visible. To fix this, the window needs to be unmaximized (it will become visible again) and then closed. When reopened, the window should behave normally."
+msgstr "A veces, las ventanas de aplicaciones que están configuradas para que sus decoraciones sean removidas se pueden volver invisibles. El ícono de la aplicación todavía puede verse en el panel (barra de tareas) y cuando se le hace clic para enfocar su ventana respectiva, la ventana invisible va a bloquear los clics como si estuviera normalmente visible. Para arreglar esto, la ventana necesita ser des-maximizada (se volverá visible) y luego cerrada. Cuando se reabre la aplicación, su ventana debería comportarse normalmente."
 
 #: z_create_localized_help.py:168
 msgid "Applications stuck undecorated:"
 msgstr "Aplicaciones atascadas sin decoraciones:"
 
 #: z_create_localized_help.py:169
-msgid ""
-"Some times, an application will get stuck undecorated even after "
-"unmaximizing it. Restarting the application will recover its ability to "
-"decorate and undecorate itself."
-msgstr ""
-"A veces, una aplicación queda atascada sin decoraciones incluso después de "
-"volver a maximizarla. Reiniciado la aplicación hará que su capacidad para "
-"cambiar su estado decorada y sin decorar sea recuperada."
+msgid "Some times, an application will get stuck undecorated even after unmaximizing it. Restarting the application will recover its ability to decorate and undecorate itself."
+msgstr "A veces, una aplicación queda atascada sin decoraciones incluso después de volver a maximizarla. Reiniciado la aplicación hará que su capacidad para cambiar su estado decorada y sin decorar sea recuperada."
 
 #: z_create_localized_help.py:171
 msgid "Alternative"
 msgstr "Alternativa"
 
 #: z_create_localized_help.py:172
-msgid ""
-"There is an alternative way of hiding the title bar of absolutely all "
-"maximized windows without exceptions. By editing your Metacity theme (window "
-"decorations theme). It works infinitely better and without any of the issues "
-"this tweak on this extension has."
-msgstr ""
-"Existe una manera alternativa de remover la barra de título de absolutamente "
-"todas las ventanas maximizadas. Editando su tema Metacity (el tema de las "
-"decoraciones de ventana). Funciona infinitamente mejor y sin los problemas "
-"que este ajuste de esta extensión tiene."
+msgid "There is an alternative way of hiding the title bar of absolutely all maximized windows without exceptions. By editing your Metacity theme (window decorations theme). It works infinitely better and without any of the issues this tweak on this extension has."
+msgstr "Existe una manera alternativa de remover la barra de título de absolutamente todas las ventanas maximizadas. Editando su tema Metacity (el tema de las decoraciones de ventana). Funciona infinitamente mejor y sin los problemas que este ajuste de esta extensión tiene."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:174
-msgid ""
-"Simply go to `/Path/To/Your/Theme/metacity-1` folder and edit with any text "
-"editor the file called **metacity-theme-3.xml**. If that file doesn't exists "
-"in your theme, then it should exist one called **metacity-theme-2.xml** or "
-"**metacity-theme-1.xml**. Choose the one with the bigger number."
-msgstr ""
-"Simplemente ir a la carpeta `/Ruta/Hacia/Su/Tema/metacity-1` y editar con "
-"cualquier editor de textos el archivo llamado **metacity-theme-3.xml**. Si "
-"ese archivo no existe en su tema, entonces deberñia existir un archivo "
-"llamado **metacity-theme-2.xml** o **metacity-theme-1.xml**. Elegir el "
-"archivo que contiene el número mayor."
+msgid "Simply go to `/Path/To/Your/Theme/metacity-1` folder and edit with any text editor the file called **metacity-theme-3.xml**. If that file doesn't exists in your theme, then it should exist one called **metacity-theme-2.xml** or **metacity-theme-1.xml**. Choose the one with the bigger number."
+msgstr "Simplemente ir a la carpeta `/Ruta/Hacia/Su/Tema/metacity-1` y editar con cualquier editor de textos el archivo llamado **metacity-theme-3.xml**. Si ese archivo no existe en su tema, entonces deberñia existir un archivo llamado **metacity-theme-2.xml** o **metacity-theme-1.xml**. Elegir el archivo que contiene el número mayor."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:176
-msgid ""
-"Find the **frame_geometry** element named **max** (or **maximized** or "
-"**normal_max** or **normal_maximized**). Its exact name may vary depending "
-"on the theme."
-msgstr ""
-"Encontrar el elemento **frame_geometry** con el nombre (name) **max** (o "
-"**maximized** o **normal_max** o **normal_maximized**). Su nombre exacto "
-"puede variar dependiendo del tema."
+msgid "Find the **frame_geometry** element named **max** (or **maximized** or **normal_max** or **normal_maximized**). Its exact name may vary depending on the theme."
+msgstr "Encontrar el elemento **frame_geometry** con el nombre (name) **max** (o **maximized** o **normal_max** o **normal_maximized**). Su nombre exacto puede variar dependiendo del tema."
 
 #: z_create_localized_help.py:177
-msgid ""
-"Basically, one has to set to that element the attribute **has_title** to "
-"false, and then set all sizes of all its properties to 0 (zero). Some themes "
-"might require to add more properties and set them to 0 (zero) to completely "
-"get rid of the title bar."
-msgstr ""
-"Básicamente, uno tiene que establecer en ese elemento el atributo "
-"**has_title** como falso (false), y luego establecer todas las medidas de "
-"todas las propiedades de ese elemento a 0 (cero). Algunos temas puede que "
-"requieran agregar otras propiedades y establecerlas a 0 (cero) para remover "
-"la barra de título por completo."
+msgid "Basically, one has to set to that element the attribute **has_title** to false, and then set all sizes of all its properties to 0 (zero). Some themes might require to add more properties and set them to 0 (zero) to completely get rid of the title bar."
+msgstr "Básicamente, uno tiene que establecer en ese elemento el atributo **has_title** como falso (false), y luego establecer todas las medidas de todas las propiedades de ese elemento a 0 (cero). Algunos temas puede que requieran agregar otras propiedades y establecerlas a 0 (cero) para remover la barra de título por completo."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:179
-msgid ""
-"Next you will find examples on how to edit the Metacity themes found on the "
-"**Mint-X** and **Mint-Y** themes."
-msgstr ""
-"A continuación hay ejemplos de cómo editar los temas Metacity de los temas "
-"**Mint-X** y **Mint-Y**."
+msgid "Next you will find examples on how to edit the Metacity themes found on the **Mint-X** and **Mint-Y** themes."
+msgstr "A continuación hay ejemplos de cómo editar los temas Metacity de los temas **Mint-X** y **Mint-Y**."
 
 #: z_create_localized_help.py:181
 msgid "For the Metacity theme found on the Mint-X theme"
@@ -1486,64 +1094,28 @@ msgstr "Problemas generales de la extensión"
 
 #: z_create_localized_help.py:212
 msgid "Applications not showing up on the applications chooser dialogs"
-msgstr ""
-"Aplicaciones no aparecen en los cuadros de diálogo de selección de "
-"aplicaciones"
+msgstr "Aplicaciones no aparecen en los cuadros de diálogo de selección de aplicaciones"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:215
-msgid ""
-"The application chooser dialog used by the settings window of this extension "
-"lists only those applications that have available .desktop files. Simply "
-"because these applications are the only ones that any of the tweaks that "
-"require an application ID (**Auto move windows** and **Windows decorations "
-"removal**) will recognize and handle."
-msgstr ""
-"El selector de aplicaciones usado por la ventana de preferencias de esta "
-"extensión lista sólo las aplicaciones que tienen un archivo .desktop "
-"disponible. Simplemente porque estas son las aplicaciones que cualquiera de "
-"los ajustes que requieren una ID de aplicación (**Mover ventanas "
-"automáticamente** y **Eliminación de decoraciones de ventanas**) van a "
-"reconocer."
+msgid "The application chooser dialog used by the settings window of this extension lists only those applications that have available .desktop files. Simply because these applications are the only ones that any of the tweaks that require an application ID (**Auto move windows** and **Windows decorations removal**) will recognize and handle."
+msgstr "El selector de aplicaciones usado por la ventana de preferencias de esta extensión lista sólo las aplicaciones que tienen un archivo .desktop disponible. Simplemente porque estas son las aplicaciones que cualquiera de los ajustes que requieren una ID de aplicación (**Mover ventanas automáticamente** y **Eliminación de decoraciones de ventanas**) van a reconocer."
 
 #: z_create_localized_help.py:217
-msgid ""
-"Following the [Desktop Entry Specification](https://specifications."
-"freedesktop.org/desktop-entry-spec/latest/index.html), one can create a ."
-"desktop file for any application that doesn't appear in the applications "
-"list."
-msgstr ""
-"Siguiendo la [Especificación para Entradas de Escritorio](https://"
-"specifications.freedesktop.org/desktop-entry-spec/latest/index.html), uno "
-"puede crear un archivo .desktop para cualquier aplicación que no aparece en "
-"la lista de aplicaciones."
+msgid "Following the [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html), one can create a .desktop file for any application that doesn't appear in the applications list."
+msgstr "Siguiendo la [Especificación para Entradas de Escritorio](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html), uno puede crear un archivo .desktop para cualquier aplicación que no aparece en la lista de aplicaciones."
 
 #: z_create_localized_help.py:218
 msgid "Xlet's settings window"
 msgstr "Ventana de preferencias del xlet"
 
 #: z_create_localized_help.py:219
-msgid ""
-"From this xlet settings window, all options can be imported, exported and/or "
-"reseted to their defaults."
-msgstr ""
-"Desde la ventana de preferencias de este xlet, todas las opciones pueden ser "
-"importadas, exportadas y/o restablecidas a sus valores por defecto."
+msgid "From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."
+msgstr "Desde la ventana de preferencias de este xlet, todas las opciones pueden ser importadas, exportadas y/o restablecidas a sus valores por defecto."
 
 #: z_create_localized_help.py:221
-msgid ""
-"To be able to perform any of these actions, the settings schema needs to be "
-"installed in the system. This is done automatically when the xlet is "
-"installed from the Cinnamon xlets manager. But if the xlet was installed "
-"manually, the settings schema also needs to be installed manually. This is "
-"achieved by simply going to the xlet folder and launch the following command:"
-msgstr ""
-"Para poder realizar cualquiera de estas tareas, el esquema de las "
-"preferencias necesita estar instalado en el sistema. Esto es realizado "
-"automáticamente cuando el xlet es instalado desde el administrador de xlets "
-"de Cinnamon. Pero si el xlet fue instalado manualmente, el esquema de las "
-"preferencias necesita ser instalado manualmente. Esto se logra simplemente "
-"con ir a la carpeta del xlet y ejecutar el siguiente comando:"
+msgid "To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"
+msgstr "Para poder realizar cualquiera de estas tareas, el esquema de las preferencias necesita estar instalado en el sistema. Esto es realizado automáticamente cuando el xlet es instalado desde el administrador de xlets de Cinnamon. Pero si el xlet fue instalado manualmente, el esquema de las preferencias necesita ser instalado manualmente. Esto se logra simplemente con ir a la carpeta del xlet y ejecutar el siguiente comando:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:223
@@ -1557,12 +1129,8 @@ msgstr "Comando para desinstalar el esquema de preferencias:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:229
-msgid ""
-"To import/export settings, the **dconf** command needs to be available on "
-"the system."
-msgstr ""
-"Para importar/exportar preferencias, el comando **dconf** necesita estar "
-"disponible en el sistema."
+msgid "To import/export settings, the **dconf** command needs to be available on the system."
+msgstr "Para importar/exportar preferencias, el comando **dconf** necesita estar disponible en el sistema."
 
 #: extension.js:259
 msgid "Open applet folder"
@@ -1572,7 +1140,7 @@ msgstr "Abrir carpeta del applet"
 msgid "Edit applet main file"
 msgstr "Editar el archivo principal del applet"
 
-#: extension.js:343
+#: extension.js:341
 #, javascript-format
 msgid ""
 "Do you want to remove '%s' from your panel?\n"
@@ -1581,15 +1149,15 @@ msgstr ""
 "¿Desea eliminar '%s' de su panel?\n"
 "ID de instancia: %s"
 
-#: extension.js:406
+#: extension.js:404
 msgid "Open desklet folder"
 msgstr "Abrir carpeta del desklet"
 
-#: extension.js:422
+#: extension.js:420
 msgid "Edit desklet main file"
 msgstr "Editar archivo principal del desklet"
 
-#: extension.js:469
+#: extension.js:467
 #, javascript-format
 msgid ""
 "Do you want to remove '%s' from your desktop?\n"
@@ -1598,25 +1166,19 @@ msgstr ""
 "¿Desea eliminar '%s' de su escritorio?\n"
 "ID de instancia: %s"
 
-#: extension.js:909
+#: extension.js:907
 msgid "Hotcorners tweaks"
 msgstr "Ajustes de esquinas activas"
 
-#: extension.js:1425
-msgid ""
-"If you updated this extension from an older version, <b>you must check its "
-"settings window</b>."
-msgstr ""
-"Si actualizó esta extensión desde una versión anterior, <b>usted debe "
-"comprobar su ventana de configuración</b>."
+#: extension.js:1423
+msgid "If you updated this extension from an older version, <b>you must check its settings window</b>."
+msgstr "Si actualizó esta extensión desde una versión anterior, <b>usted debe comprobar su ventana de configuración</b>."
 
-#: extension.js:1426
+#: extension.js:1424
 msgid "Some preferences may have been changed to their default values."
-msgstr ""
-"Es posible que algunas preferencias hayan sido cambiadas a sus valores "
-"predeterminados."
+msgstr "Es posible que algunas preferencias hayan sido cambiadas a sus valores predeterminados."
 
-#: extension.js:1427
+#: extension.js:1425
 msgid "This message will not be displayed again."
 msgstr "Este mensaje no se volverá a mostrar."
 
@@ -1672,14 +1234,5 @@ msgstr "Varios ajustes para Cinnamon."
 #~ msgid "Emulate Gnome Shell behavior:"
 #~ msgstr "Emular el comportamiento de los menúes de Gnome Shell:"
 
-#~ msgid ""
-#~ "When a menu is open on Genome Shell, and then the mouse cursor is moved "
-#~ "to another button on the top panel, the menu of the hovered buttons will "
-#~ "automatically open without the need to click on them. With this option "
-#~ "enabled, that same behavior can be reproduced on Cinnamon."
-#~ msgstr ""
-#~ "Cuando un menú está abierto en Gnome Shell y, a continuación, el cursor "
-#~ "del ratón se mueve a otro botón en el panel superior, el menú de los "
-#~ "botones por los cuales el cursor del ratón está pasando se abrirán "
-#~ "automáticamente sin necesidad de hacer clic en ellos. Con esta opción "
-#~ "habilitada, ese mismo comportamiento se puede reproducir en Cinnamon."
+#~ msgid "When a menu is open on Genome Shell, and then the mouse cursor is moved to another button on the top panel, the menu of the hovered buttons will automatically open without the need to click on them. With this option enabled, that same behavior can be reproduced on Cinnamon."
+#~ msgstr "Cuando un menú está abierto en Gnome Shell y, a continuación, el cursor del ratón se mueve a otro botón en el panel superior, el menú de los botones por los cuales el cursor del ratón está pasando se abrirán automáticamente sin necesidad de hacer clic en ellos. Con esta opción habilitada, ese mismo comportamiento se puede reproducir en Cinnamon."
