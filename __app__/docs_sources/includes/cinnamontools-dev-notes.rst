@@ -9,9 +9,10 @@ Xlets development *commandments*
 2. If a Python module is required, make it part of the Python application if possible. Otherwise, create a mechanism to install required modules.
 3. Try to use ``Mainloop.idle_add`` inside the initialization code of an xlet if possible. Take into account the following:
 
-     a) The ``_expandAppletContextMenu`` method call should NOT be inside ``Mainloop.idle_add``.
+     a) The ``_expandAppletContextMenu`` (the function that I use to add/remove/override an applet context menu items) method call should NOT be inside ``Mainloop.idle_add``.
      b) Avoid using ``Mainloop.idle_add`` inside an extension code for obvious reasons.
      c) Be aware of using ``Mainloop.idle_add`` inside a *very advanced* xlet. For example, using ``Mainloop.idle_add`` to delay the initialization of the **Window list applet** or the **System Tray applet** will inevitably break these applets initialization process.
+
 
 z_config.py file inside xlets directories
 -----------------------------------------
@@ -48,7 +49,7 @@ The main use of the ``symlinks`` key is to generate symbolic links to files in t
 
 This key is a dictionary of keys representing a sub-folder name inside an xlet directory. Each key contains a list of tuples representing the symbolic link target as its first index and the symbolic link name as its second index.
 
-In the example above, the ``symlinks`` key will generate the symbolic links inside a folder called **3.8** (the folder will be created if it doesn't exists). The first tuple will be used to create a symbolic link called **icons** whose target will be **../icons**.
+In the example above, the ``symlinks`` key will generate the symbolic links inside a folder called **3.8** (the folder will be created if it doesn't exists). The first tuple will be used to create a symbolic link called **icons** whose target will be **../icons** and so on.
 
 .. warning::
 
@@ -58,8 +59,23 @@ In the example above, the ``symlinks`` key will generate the symbolic links insi
 z_create_localized_help.py file inside xlets directories
 --------------------------------------------------------
 
-This file is used to generate the **HELP.html** page for each xlet.
+This file is used to generate the **HELP.html** page for each xlet. The **HELP.html** file is a standalone HTML page, which means that all resources are in-line (CSS stylesheets, JavaScript code, images, etc.).
 
+
+HTML assets
+^^^^^^^^^^^
+
+- Bootstrap 3 is used as a CSS framework. *Planing on moving to Bootstrap 4 with its default theme.*
+- JavaScript is only used for the page localization mechanism and a smooth scroll effect when clicking in-line links.
+
+
+Main class methods overview (more details in API documentation)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- **get_content_base:** Basic information about the xlet.
+- **get_content_extra:** Detailed information about the xlet.
+- **get_css_custom:** Additional CSS styles.
+- **get_js_custom:** Some custom JS in case that the page needs it. For example: since I use Base64 encoded images, and if an image is used in more than one place in a page, I insert those images with JS.
 
 :abbr:`EOL (end-of-life)` ideas/plans
 -------------------------------------

@@ -51,7 +51,7 @@
 <li><p>Try to use <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside the initialization code of an xlet if possible. Take into account the following:</p>
 <blockquote>
 <div><ol class="loweralpha simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">_expandAppletContextMenu</span></code> method call should NOT be inside <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">_expandAppletContextMenu</span></code> (the function that I use to add/remove/override an applet context menu items) method call should NOT be inside <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code>.</p></li>
 <li><p>Avoid using <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside an extension code for obvious reasons.</p></li>
 <li><p>Be aware of using <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside a <em>very advanced</em> xlet. For example, using <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> to delay the initialization of the <strong>Window list applet</strong> or the <strong>System Tray applet</strong> will inevitably break these applets initialization process.</p></li>
 </ol>
@@ -85,7 +85,7 @@
 <h3><code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key<a class="headerlink" href="#symlinks-key" title="Permalink to this headline">¶</a></h3>
 <p>The main use of the <code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key is to generate symbolic links to files in the root folder of an xlet inside a <em>version sub-folder</em> to be used by <strong>multiversion</strong> enabled xlets.</p>
 <p>This key is a dictionary of keys representing a sub-folder name inside an xlet directory. Each key contains a list of tuples representing the symbolic link target as its first index and the symbolic link name as its second index.</p>
-<p>In the example above, the <code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key will generate the symbolic links inside a folder called <strong>3.8</strong> (the folder will be created if it doesn’t exists). The first tuple will be used to create a symbolic link called <strong>icons</strong> whose target will be <strong>../icons</strong>.</p>
+<p>In the example above, the <code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key will generate the symbolic links inside a folder called <strong>3.8</strong> (the folder will be created if it doesn’t exists). The first tuple will be used to create a symbolic link called <strong>icons</strong> whose target will be <strong>../icons</strong> and so on.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>It’s important to make all symbolic links targets relative, not absolute.</p>
@@ -94,7 +94,23 @@
 </div>
 <div class="section" id="z-create-localized-help-py-file-inside-xlets-directories">
 <h2>z_create_localized_help.py file inside xlets directories<a class="headerlink" href="#z-create-localized-help-py-file-inside-xlets-directories" title="Permalink to this headline">¶</a></h2>
-<p>This file is used to generate the <strong>HELP.html</strong> page for each xlet.</p>
+<p>This file is used to generate the <strong>HELP.html</strong> page for each xlet. The <strong>HELP.html</strong> file is a standalone HTML page, which means that all resources are in-line (CSS stylesheets, JavaScript code, images, etc.).</p>
+<div class="section" id="html-assets">
+<h3>HTML assets<a class="headerlink" href="#html-assets" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Bootstrap 3 is used as a CSS framework. <em>Planing on moving to Bootstrap 4 with its default theme.</em></p></li>
+<li><p>JavaScript is only used for the page localization mechanism and a smooth scroll effect when clicking in-line links.</p></li>
+</ul>
+</div>
+<div class="section" id="main-class-methods-overview-more-details-in-api-documentation">
+<h3>Main class methods overview (more details in API documentation)<a class="headerlink" href="#main-class-methods-overview-more-details-in-api-documentation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>get_content_base:</strong> Basic information about the xlet.</p></li>
+<li><p><strong>get_content_extra:</strong> Detailed information about the xlet.</p></li>
+<li><p><strong>get_css_custom:</strong> Additional CSS styles.</p></li>
+<li><p><strong>get_js_custom:</strong> Some custom JS in case that the page needs it. For example: since I use Base64 encoded images, and if an image is used in more than one place in a page, I insert those images with JS.</p></li>
+</ul>
+</div>
 </div>
 <div class="section" id="eol-ideas-plans">
 <h2><abbr title="end-of-life">EOL</abbr> ideas/plans<a class="headerlink" href="#eol-ideas-plans" title="Permalink to this headline">¶</a></h2>
@@ -125,7 +141,11 @@
 <li><a class="reference internal" href="#symlinks-key"><code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#z-create-localized-help-py-file-inside-xlets-directories">z_create_localized_help.py file inside xlets directories</a></li>
+<li><a class="reference internal" href="#z-create-localized-help-py-file-inside-xlets-directories">z_create_localized_help.py file inside xlets directories</a><ul>
+<li><a class="reference internal" href="#html-assets">HTML assets</a></li>
+<li><a class="reference internal" href="#main-class-methods-overview-more-details-in-api-documentation">Main class methods overview (more details in API documentation)</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#eol-ideas-plans"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
 </ul>
 </li>

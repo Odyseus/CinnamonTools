@@ -80,7 +80,7 @@ without exceptions.</p>
 <dl class="attribute">
 <dt id="python_modules.cli.CommandLineTool.build_output">
 <code class="descname">build_output</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.build_output" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>str</em> – Path to the folder were the built xlets are stored.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -92,13 +92,19 @@ without exceptions.</p>
 <dl class="attribute">
 <dt id="python_modules.cli.CommandLineTool.do_not_cofirm">
 <code class="descname">do_not_cofirm</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.do_not_cofirm" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>bool</em> – Whether to ask for overwrite confirmation when an xlet destination exists or not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.domain_name">
+<code class="descname">domain_name</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.domain_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The domain name to use to build the xlets.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.cli.CommandLineTool.func_names">
 <code class="descname">func_names</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.func_names" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>list</em> – Description</p>
+<dd><p><em>list</em> – Function names to be executed.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -108,9 +114,21 @@ without exceptions.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.restart_cinnamon">
+<code class="descname">restart_cinnamon</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.restart_cinnamon" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Whether or not to restart Cinnamon after the xlet/theme build process.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.theme_name">
+<code class="descname">theme_name</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.theme_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The given name of the theme.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="python_modules.cli.CommandLineTool.xlets">
 <code class="descname">xlets</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.xlets" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>list</em> – Description</p>
+<dd><p><em>list</em> – The list of xlets to build.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -133,6 +151,11 @@ without exceptions.</p>
 <dt id="python_modules.cli.CommandLineTool.run">
 <code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute the assigned actions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">app_utils.KeyboardInterruption</span></code> – Halt execution on Ctrl + C press.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">

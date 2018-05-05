@@ -48,110 +48,110 @@
 <p>Multi selection menu creator.</p>
 <dl class="class">
 <dt id="python_modules.multi_select.MultiSelect">
-<em class="property">class </em><code class="descclassname">python_modules.multi_select.</code><code class="descname">MultiSelect</code><span class="sig-paren">(</span><em>menu_items=[]</em>, <em>title=''</em>, <em>arrow='==&gt;'</em>, <em>footer='Space = toggle ─ Enter = accept ─ q = cancel'</em>, <em>more='...'</em>, <em>c_selected='[X]'</em>, <em>c_empty='[ ]'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">python_modules.multi_select.</code><code class="descname">MultiSelect</code><span class="sig-paren">(</span><em>menu_items=[]</em>, <em>title=''</em>, <em>arrow='==&gt;'</em>, <em>footer='Space = toggle ─ Enter = accept ─ q = cancel'</em>, <em>more='...'</em>, <em>char_selected='[X]'</em>, <em>char_empty='[ ]'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Allows you to select from a list with curses.</p>
 <p>Based on <a class="reference external" href="https://github.com/MSchuwalow/picker">picker Python module</a>.</p>
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.aborted">
 <code class="descname">aborted</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.aborted" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – Description</p>
+<dd><p><em>bool</em> – Menu selection aborted.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.all_menu_items">
 <code class="descname">all_menu_items</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.all_menu_items" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>list</em> – Description</p>
+<dd><p><em>list</em> – The menu items that constitute the multi select menu.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.arrow">
 <code class="descname">arrow</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.arrow" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Description</p>
+<dd><p><em>str</em> – The character/s used to <em>point</em> the menu item that can be selected.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="python_modules.multi_select.MultiSelect.c_empty">
-<code class="descname">c_empty</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.c_empty" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dt id="python_modules.multi_select.MultiSelect.char_empty">
+<code class="descname">char_empty</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.char_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The character/s used to represent a non selected menu item.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="python_modules.multi_select.MultiSelect.c_selected">
-<code class="descname">c_selected</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.c_selected" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dt id="python_modules.multi_select.MultiSelect.char_selected">
+<code class="descname">char_selected</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.char_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The character/s used to represent a selected menu item.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.cursor">
 <code class="descname">cursor</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.cursor" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Description</p>
+<dd><p><em>int</em> – The current cursor position.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.footer">
 <code class="descname">footer</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.footer" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>str</em> – Informational text placed at the bottom of the menu.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.length">
 <code class="descname">length</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.length" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Description</p>
+<dd><p><em>int</em> – The amount of menu items.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.more">
 <code class="descname">more</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.more" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>str</em> – Character/s representing the availability of more menu items than the screen can display.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.offset">
 <code class="descname">offset</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.offset" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Description</p>
+<dd><p><em>int</em> – Te amount of menu items off-screen. (?)</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.selcount">
 <code class="descname">selcount</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.selcount" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Description</p>
+<dd><p><em>int</em> – The amount of selected menu items.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.selected">
 <code class="descname">selected</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.selected" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Description</p>
+<dd><p><em>int</em> – The index of the menu item on the current cursor position.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.stdscr">
 <code class="descname">stdscr</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.stdscr" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>object</em> – See &lt;class <a class="reference external" href="https://docs.python.org/3.5/library/curses.html#curses.initscr" title="(in Python v3.5)"><code class="xref any docutils literal notranslate"><span class="pre">curses.initscr</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.title">
 <code class="descname">title</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.title" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>str</em> – A title to use on the menu.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.win">
 <code class="descname">win</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.win" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>object</em> – See &lt;class <a class="reference external" href="https://docs.python.org/3.5/library/curses.html#curses.newwin" title="(in Python v3.5)"><code class="xref any docutils literal notranslate"><span class="pre">curses.newwin</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.window_height">
 <code class="descname">window_height</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.window_height" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>int</em> – The height of the terminal window.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.multi_select.MultiSelect.window_width">
 <code class="descname">window_width</code><a class="headerlink" href="#python_modules.multi_select.MultiSelect.window_width" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>int</em> – The width of the terminal window.</p>
 </dd></dl>
 
 <div class="admonition-example admonition">
@@ -171,17 +171,17 @@
 </pre></div>
 </div>
 </div>
-<p>Summary</p>
+<p>Initialization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>menu_items</strong> (<em>TYPE</em>) – Description</p></li>
-<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
-<li><p><strong>arrow</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
-<li><p><strong>footer</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
-<li><p><strong>more</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
-<li><p><strong>c_selected</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
-<li><p><strong>c_empty</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
+<li><p><strong>menu_items</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)"><em>list</em></a>) – The data that will be used to create the menu items.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – A title to use on the menu.</p></li>
+<li><p><strong>arrow</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The character/s used to <em>point</em> the menu item that can be selected.</p></li>
+<li><p><strong>footer</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Informational text placed at the bottom of the menu.</p></li>
+<li><p><strong>more</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Character/s representing the availability of more menu items than the screen can display.</p></li>
+<li><p><strong>char_selected</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The character/s used to represent a selected menu item.</p></li>
+<li><p><strong>char_empty</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The character/s used to represent a non selected menu item.</p></li>
 </ul>
 </dd>
 </dl>
@@ -200,13 +200,13 @@
 <dl class="method">
 <dt id="python_modules.multi_select.MultiSelect.getSelected">
 <code class="descname">getSelected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.getSelected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.getSelected" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Get selected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Description</p>
+<dd class="field-odd"><p>The labels of the selected menu items.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>TYPE</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -214,31 +214,31 @@
 <dl class="method">
 <dt id="python_modules.multi_select.MultiSelect.redraw">
 <code class="descname">redraw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.redraw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.redraw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Redraw.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="python_modules.multi_select.MultiSelect.check_cursor_up">
 <code class="descname">check_cursor_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.check_cursor_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.check_cursor_up" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Check cursor up.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="python_modules.multi_select.MultiSelect.check_cursor_down">
 <code class="descname">check_cursor_down</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.check_cursor_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.check_cursor_down" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Check cursor down.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="python_modules.multi_select.MultiSelect.curses_loop">
 <code class="descname">curses_loop</code><span class="sig-paren">(</span><em>stdscr</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/multi_select.html#MultiSelect.curses_loop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.multi_select.MultiSelect.curses_loop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Curses loop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stdscr</strong> (<em>TYPE</em>) – Description</p>
+<dd class="field-odd"><p><strong>stdscr</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference external" href="https://docs.python.org/3.5/library/curses.html#curses.initscr" title="(in Python v3.5)"><code class="xref any docutils literal notranslate"><span class="pre">curses.initscr</span></code></a>&gt;.</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">app_utils.KeyboardInterruption</span></code> – Description</p>
+<dd class="field-even"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">app_utils.KeyboardInterruption</span></code> – Halt execution on Ctrl + C press.</p>
 </dd>
 </dl>
 </dd></dl>

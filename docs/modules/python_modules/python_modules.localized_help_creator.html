@@ -45,44 +45,44 @@
             
   <div class="section" id="module-python_modules.localized_help_creator">
 <span id="python-modules-localized-help-creator-module"></span><h1>python_modules.localized_help_creator module<a class="headerlink" href="#module-python_modules.localized_help_creator" title="Permalink to this headline">¶</a></h1>
-<p>Summary</p>
+<p>Localized help creator.</p>
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.md">
 <code class="descclassname">python_modules.localized_help_creator.</code><code class="descname">md</code><a class="headerlink" href="#python_modules.localized_help_creator.md" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>object</em> – The mistune Markdown parser.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.pyuca_collator">
 <code class="descclassname">python_modules.localized_help_creator.</code><code class="descname">pyuca_collator</code><a class="headerlink" href="#python_modules.localized_help_creator.pyuca_collator" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.pyuca.collator.html#python_modules.pyuca.collator.Collator" title="python_modules.pyuca.collator.Collator"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">pyuca.collator.Collator</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.repo_folder">
 <code class="descclassname">python_modules.localized_help_creator.</code><code class="descname">repo_folder</code><a class="headerlink" href="#python_modules.localized_help_creator.repo_folder" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>str</em> – The main repository folder. All commands must be executed from this location without exceptions.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.translations">
 <code class="descclassname">python_modules.localized_help_creator.</code><code class="descname">translations</code><a class="headerlink" href="#python_modules.localized_help_creator.translations" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.localized_help_utils.html#python_modules.localized_help_utils.Translations" title="python_modules.localized_help_utils.Translations"><code class="xref any py py-class docutils literal notranslate"><span class="pre">localized_help_utils.Translations</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="python_modules.localized_help_creator._">
 <code class="descclassname">python_modules.localized_help_creator.</code><code class="descname">_</code><span class="sig-paren">(</span><em>aStr</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator._" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Gettext translation mechanism.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>aStr</strong> (<em>TYPE</em>) – Description</p>
+<dd class="field-odd"><p><strong>aStr</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – String to retrieve a translation of.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Description</p>
+<dd class="field-even"><p>The translated string if any.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>TYPE</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -94,81 +94,77 @@
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.changelog">
 <code class="descname">changelog</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.changelog" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Description</p>
+<dd><p><em>str</em> – Xlet changelog.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.compatibility_data">
 <code class="descname">compatibility_data</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.compatibility_data" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>str</em> – Xlet compatibility data (the Cinnamon version/s with which an xlet is compatible). It
+could be in HTML or Markdown.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.contributors">
 <code class="descname">contributors</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.contributors" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Description</p>
+<dd><p><em>str</em> – If existent, the content of the CONTRIBUTORS.md (inside the xlet folder) formatted in HTML.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.help_file_path">
 <code class="descname">help_file_path</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.help_file_path" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>str</em> – The path of an xlet HELP.html file.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.html_assets">
 <code class="descname">html_assets</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.html_assets" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="python_modules.localized_help_creator.LocalizedHelpCreator.html_templates">
-<code class="descname">html_templates</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.html_templates" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.localized_help_utils.html#python_modules.localized_help_utils.HTMLInlineAssets" title="python_modules.localized_help_utils.HTMLInlineAssets"><code class="xref any py py-class docutils literal notranslate"><span class="pre">localized_help_utils.HTMLInlineAssets</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.lang_list">
 <code class="descname">lang_list</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.lang_list" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>list</em> – Description</p>
+<dd><p><em>list</em> – The list of languages (.po files) that will be used to create the HELP.html file
+localized content.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.options">
 <code class="descname">options</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.options" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>list</em> – Description</p>
+<dd><p><em>list</em> – The list of options (HTML tags) that will be used to populate the language selector menu.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.sections">
 <code class="descname">sections</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.sections" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>list</em> – Description</p>
+<dd><p><em>list</em> – The list of sections that contain the localized content.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.xlet_dir">
 <code class="descname">xlet_dir</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.xlet_dir" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>str</em> – Path to the xlet directory.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.xlet_meta">
 <code class="descname">xlet_meta</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.xlet_meta" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>dict</em> – The xlet metadata.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.xlet_slug">
 <code class="descname">xlet_slug</code><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.xlet_slug" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>TYPE</em> – Description</p>
+<dd><p><em>str</em> – The name of the folder that contains the source files for an xlet.</p>
 </dd></dl>
 
 <p>Initialize.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>xlet_dir</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
-<li><p><strong>xlet_slug</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Description</p></li>
+<li><p><strong>xlet_dir</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Path to the xlet directory.</p></li>
+<li><p><strong>xlet_slug</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The name of the folder that contains the source files for an xlet.</p></li>
 </ul>
 </dd>
 </dl>
@@ -176,29 +172,25 @@
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.start">
 <code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start procedure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#SystemExit" title="(in Python v3.5)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SystemExit</span></code></a> – Description</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator._create_html_document">
 <code class="descname">_create_html_document</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._create_html_document"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._create_html_document" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Create HTML document.</p>
+<p>Create the HELP.html file for an xlet directly into the xlet directory.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_language_stats">
 <code class="descname">_get_language_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_language_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_language_stats" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Get language stats.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Description</p>
+<dd class="field-odd"><p>The total approximate percentage of translated strings for a HELP.html file an xlet has.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>TYPE</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/functions.html#int" title="(in Python v3.5)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -206,13 +198,13 @@
 <dl class="method">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_option">
 <code class="descname">_get_option</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_option" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Get option.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Description</p>
+<dd class="field-odd"><p>An option HTML tag ready to be inserted into a select HTML tag.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>TYPE</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -220,27 +212,27 @@
 <dl class="method">
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_introduction">
 <code class="descname">_get_introduction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_introduction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_introduction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dd><p>Get introduction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Description</p>
+<dd class="field-odd"><p>The main title of the page and a generic warning.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>TYPE</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
-<dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_localized_info">
-<code class="descname">_get_localized_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_localized_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_localized_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>Summary</p>
+<dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_localization_info">
+<code class="descname">_get_localization_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_localization_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_localization_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get localization info.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Description</p>
+<dd class="field-odd"><p>Information about xlets localization mechanism.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>TYPE</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -249,15 +241,18 @@
 <dt id="python_modules.localized_help_creator.LocalizedHelpCreator.get_content_base">
 <code class="descname">get_content_base</code><span class="sig-paren">(</span><em>for_readme=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator.get_content_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator.get_content_base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get base content.</p>
+<p>The information returned by this method can be used to generate a README.md file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>for_readme</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Description</p>
+<dd class="field-odd"><p><strong>for_readme</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Option used to decide if certain information should be added to the
+generated README.md file.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Description</p>
+<dd class="field-even"><p>Basic information about an xlet that can be used as an introduction to the xlet’s
+features inside the content of the HELP.html file or as the content of a README.md file.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>TYPE</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -268,10 +263,11 @@
 <dd><p>Get extra content.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Description</p>
+<dd class="field-odd"><p>Detailed information about an xlet (features, dependencies, keyboard
+shortcuts description, etc.).</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>TYPE</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -282,10 +278,10 @@
 <dd><p>Get custom CSS code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Description</p>
+<dd class="field-odd"><p>CSS stylesheet that extends or overrides the global CSS stylesheets.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>TYPE</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -296,10 +292,11 @@
 <dd><p>Get custom JS code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Description</p>
+<dd class="field-odd"><p>Extra JavaScript functions that can perform any action that it is specific to a
+HELP.html file for an xlet.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>TYPE</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
 </dd>
 </dl>
 </dd></dl>

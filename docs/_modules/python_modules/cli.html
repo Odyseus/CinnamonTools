@@ -168,18 +168,24 @@
 <span class="sd">    ----------</span>
 <span class="sd">    action : method</span>
 <span class="sd">        Set the method that will be executed when calling CommandLineTool.run().</span>
-<span class="sd">    build_output : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">    build_output : str</span>
+<span class="sd">        Path to the folder were the built xlets are stored.</span>
 <span class="sd">    dev_args_order : list</span>
 <span class="sd">        List used as a gude to execute functions in the order they need to.</span>
-<span class="sd">    do_not_cofirm : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">    do_not_cofirm : bool</span>
+<span class="sd">        Whether to ask for overwrite confirmation when an xlet destination exists or not.</span>
+<span class="sd">    domain_name : str</span>
+<span class="sd">        The domain name to use to build the xlets.</span>
 <span class="sd">    func_names : list</span>
-<span class="sd">        Description</span>
+<span class="sd">        Function names to be executed.</span>
 <span class="sd">    logger : object</span>
 <span class="sd">        See &lt;class :any:`app_utils.LogSystem`&gt;.</span>
+<span class="sd">    restart_cinnamon : bool</span>
+<span class="sd">        Whether or not to restart Cinnamon after the xlet/theme build process.</span>
+<span class="sd">    theme_name : str</span>
+<span class="sd">        The given name of the theme.</span>
 <span class="sd">    xlets : list</span>
-<span class="sd">        Description</span>
+<span class="sd">        The list of xlets to build.</span>
 <span class="sd">    xlets_helper : object</span>
 <span class="sd">        See :any:`app_utils.XletsHelperCore`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -252,12 +258,13 @@
             <span class="c1"># Sort the arguments so one doesn&#39;t have to worry about the order</span>
             <span class="c1"># in which they are passed.</span>
             <span class="c1"># Source: https://stackoverflow.com/a/12814719.</span>
-            <span class="n">args</span><span class="p">[</span><span class="s2">&quot;&lt;sub_commands&gt;&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_args_order</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+            <span class="n">dev_args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;&lt;sub_commands&gt;&quot;</span><span class="p">]))</span>
+            <span class="n">dev_args</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_args_order</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">xlets_helper</span> <span class="o">=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">XletsHelperCore</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Command: dev&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Arguments:&quot;</span><span class="p">)</span>
 
-            <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;&lt;sub_commands&gt;&quot;</span><span class="p">])):</span>
+            <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">dev_args</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlets_helper</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">func_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
@@ -283,6 +290,11 @@
 
 <div class="viewcode-block" id="CommandLineTool.run"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Execute the assigned actions.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        app_utils.KeyboardInterruption</span>
+<span class="sd">            Halt execution on Ctrl + C press.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>

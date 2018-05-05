@@ -43,33 +43,40 @@
 <span class="sd">----------</span>
 <span class="sd">Ansi : object</span>
 <span class="sd">    :any:`ANSIColors` class initialization.</span>
+<span class="sd">base_temp_folder : str</span>
+<span class="sd">    Path to a temporary folder.</span>
 <span class="sd">BASH_COMPLETION_LOADER_CONTENT : str</span>
-<span class="sd">    Description</span>
+<span class="sd">    Bash completions loader script.</span>
 <span class="sd">bash_completions_step1 : str</span>
-<span class="sd">    Description</span>
+<span class="sd">    Bash completions creation message. Step 1.</span>
 <span class="sd">bash_completions_step2 : str</span>
-<span class="sd">    Description</span>
+<span class="sd">    Bash completions creation message. Step 2.</span>
 <span class="sd">domain_storage_file : str</span>
-<span class="sd">    Description</span>
+<span class="sd">    Path to the file were the domain name for xlets is stored.</span>
 <span class="sd">env : dict</span>
 <span class="sd">    Copy of the system&#39;s environment to be passed to Popen.</span>
-<span class="sd">existent_xlet_destination_msg : TYPE</span>
-<span class="sd">    Description</span>
-<span class="sd">extra_common_files : TYPE</span>
-<span class="sd">    Description</span>
+<span class="sd">existent_xlet_destination_msg : str</span>
+<span class="sd">    Message to display when creating a new xlet and that xlet already exists.</span>
+<span class="sd">extra_common_files : list</span>
+<span class="sd">    List of files common to all xlets.</span>
 <span class="sd">git_log_cmd : str</span>
-<span class="sd">    Description</span>
-<span class="sd">help_pages_index_template : TYPE</span>
-<span class="sd">    Description</span>
-<span class="sd">HOME : TYPE</span>
-<span class="sd">    Description</span>
-<span class="sd">missing_domain_msg : TYPE</span>
-<span class="sd">    Description</span>
+<span class="sd">    The command to use when generating changelogs.</span>
+<span class="sd">help_pages_index_template : str</span>
+<span class="sd">    The template (in reStructuredText format) used to create the index of xlets help pages in this</span>
+<span class="sd">    repository documentation.</span>
+<span class="sd">HOME : str</span>
+<span class="sd">    Path to the current user home folder.</span>
+<span class="sd">missing_domain_msg : str</span>
+<span class="sd">    Message to display when the domain name isn&#39;t specified at xlet build time.</span>
+<span class="sd">missing_theme_name_msg : str</span>
+<span class="sd">    Message to display when the theme name isn&#39;t specified at theme build time.</span>
 <span class="sd">root_folder : str</span>
 <span class="sd">    The main folder containing the application. All commands must be executed from this location</span>
 <span class="sd">    without exceptions.</span>
-<span class="sd">xlet_dir_ignored_patterns : TYPE</span>
-<span class="sd">    Description</span>
+<span class="sd">theme_name_storage_file : str</span>
+<span class="sd">    Path to the file were the theme name for xlets is stored.</span>
+<span class="sd">xlet_dir_ignored_patterns : list</span>
+<span class="sd">    List of patterns to ignore while copying files on xlet build time.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
@@ -568,15 +575,14 @@
 
 
 <div class="viewcode-block" id="XletsHelperCore"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletsHelperCore">[docs]</a><span class="k">class</span> <span class="nc">XletsHelperCore</span><span class="p">():</span>
-
-    <span class="sd">&quot;&quot;&quot;Summary</span>
+    <span class="sd">&quot;&quot;&quot;Xlets core functions.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    logger : object</span>
 <span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
 <span class="sd">    xlets_meta : dict</span>
-<span class="sd">        Description</span>
+<span class="sd">        The metadata of all xlets in this repository.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -591,7 +597,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">xlets_meta</span> <span class="o">=</span> <span class="n">XletsMeta</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xlets_meta</span> <span class="o">=</span> <span class="n">AllXletsMetadata</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">generate_meta_file</span><span class="p">()</span>
 
@@ -646,13 +652,8 @@
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
-<span class="sd">        MissingCommand</span>
-<span class="sd">            Description</span>
-
-<span class="sd">        No Longer Raises</span>
-<span class="sd">        ----------------</span>
 <span class="sd">        SystemExit</span>
-<span class="sd">            Description</span>
+<span class="sd">            Halt execution if the make-cinnamon-xlet-pot-app command is not found.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting POT files update...&quot;</span><span class="p">)</span>
 
@@ -722,8 +723,8 @@
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
-<span class="sd">        MissingCommand</span>
-<span class="sd">            Description</span>
+<span class="sd">        SystemExit</span>
+<span class="sd">            Halt execution if the msgmerge command is not found.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating translation statistics...&quot;</span><span class="p">)</span>
 
@@ -799,8 +800,8 @@
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
-<span class="sd">        MissingCommand</span>
-<span class="sd">            Description</span>
+<span class="sd">        SystemExit</span>
+<span class="sd">            Halt execution if the msgmerge command is not found.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating Spanish localizations...&quot;</span><span class="p">)</span>
 
@@ -829,22 +830,17 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Something might have gone wrong!&quot;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="XletsMeta"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletsMeta">[docs]</a><span class="k">class</span> <span class="nc">XletsMeta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Summary</span>
+<div class="viewcode-block" id="AllXletsMetadata"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.AllXletsMetadata">[docs]</a><span class="k">class</span> <span class="nc">AllXletsMetadata</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;All xlets metadata.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    meta_list : list</span>
-<span class="sd">        Description</span>
+<span class="sd">        A list of dictionaries containing all xlets metadata.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Summary</span>
-
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        MissingRequiredFile</span>
-<span class="sd">            Description</span>
+        <span class="sd">&quot;&quot;&quot;Initialization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">meta_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;xlets_metadata.json&quot;</span><span class="p">)</span>
 
@@ -859,7 +855,7 @@
 
 <div class="viewcode-block" id="generate_meta_file"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.generate_meta_file">[docs]</a><span class="k">def</span> <span class="nf">generate_meta_file</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Generate the file containing all the metadata of all xlets on this repository.</span>
-<span class="sd">    This metadata files is used by several functions on the XletsHelperCore class.</span>
+<span class="sd">    This metadata file is used by several functions on the XletsHelperCore class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">INFO</span><span class="p">(</span><span class="s2">&quot;Generating xlets metadata file...&quot;</span><span class="p">))</span>
     <span class="n">xlet_meta_files</span> <span class="o">=</span> <span class="p">[]</span>
@@ -900,25 +896,19 @@
 
 
 <div class="viewcode-block" id="get_parent_dir"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.get_parent_dir">[docs]</a><span class="k">def</span> <span class="nf">get_parent_dir</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">go_up</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;get_parent_dir</span>
-
-<span class="sd">    Extract the path of the parent directory of a file path.</span>
+    <span class="sd">&quot;&quot;&quot;Get parent directory.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    fpath : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">    fpath : str</span>
+<span class="sd">        The full path to a file.</span>
 <span class="sd">    go_up : int, optional</span>
-<span class="sd">        Description</span>
-<span class="sd">    fpath {String} -- The full path to a file.</span>
-
-<span class="sd">    Keyword Arguments</span>
-<span class="sd">    -----------------</span>
-<span class="sd">    go_up {Number} -- How many directories to go up. (default: {0})</span>
+<span class="sd">        How many directories to go up.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    [string] -- The new path to a directory.</span>
+<span class="sd">    str</span>
+<span class="sd">        The new path to a directory.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
 
@@ -945,20 +935,6 @@
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="remove_file"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.remove_file">[docs]</a><span class="k">def</span> <span class="nf">remove_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Param &lt;path&gt; could either be relative or absolute.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    path : TYPE</span>
-<span class="sd">        Description</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="s2">&quot;File </span><span class="si">{}</span><span class="s2"> is not a file or dir.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">)))</span></div>
-
-
 <div class="viewcode-block" id="get_log_file"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.get_log_file">[docs]</a><span class="k">def</span> <span class="nf">get_log_file</span><span class="p">(</span><span class="n">storage_dir</span><span class="o">=</span><span class="s2">&quot;tmp/logs&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">subfix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get log file.</span>
 
@@ -970,7 +946,7 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    storage_dir : str, optional</span>
-<span class="sd">        Description</span>
+<span class="sd">        Path to the folder to store the log files.</span>
 <span class="sd">    prefix : str, optional</span>
 <span class="sd">        String at the beginning of the file name.</span>
 <span class="sd">    subfix : str, optional</span>
@@ -1090,7 +1066,7 @@
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    KeyboardInterruption</span>
-<span class="sd">        Description</span>
+<span class="sd">        Halt execution on Ctrl + C press.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">prompt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1275,7 +1251,7 @@
 <span class="sd">        The prompt text.</span>
 <span class="sd">    default : None, optional</span>
 <span class="sd">        Default option if none entered.</span>
-<span class="sd">    validator : TYPE, optional</span>
+<span class="sd">    validator : function, optional</span>
 <span class="sd">        A function to validate the input if needed.</span>
 
 <span class="sd">    Note</span>
@@ -1287,7 +1263,7 @@
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    KeyboardInterruption</span>
-<span class="sd">        Description</span>
+<span class="sd">        Halt execution on Ctrl + C press.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -1326,14 +1302,14 @@
 <span class="sd">    destination : str</span>
 <span class="sd">        Full file path destination.</span>
 <span class="sd">    options : dict, optional</span>
-<span class="sd">        Description</span>
+<span class="sd">        A dictionary of options.</span>
 <span class="sd">    logger : object</span>
 <span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
 <span class="sd">    err</span>
-<span class="sd">        Description</span>
+<span class="sd">        Halt execution if any error is found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">template_file</span><span class="p">:</span>
         <span class="n">template_data</span> <span class="o">=</span> <span class="n">template_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -1371,7 +1347,7 @@
 <span class="sd">    app_root_folder : str</span>
 <span class="sd">        The application&#39;s root folder.</span>
 <span class="sd">    do_completions : bool, optional</span>
-<span class="sd">        Description</span>
+<span class="sd">        Whether to perform bash completions installation or not.</span>
 <span class="sd">    logger : object</span>
 <span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1476,11 +1452,13 @@
 <span class="sd">    Exception</span>
 <span class="sd">        Something went wrong! ¬¬</span>
 <span class="sd">    KeyboardInterruption</span>
-<span class="sd">        Description</span>
+<span class="sd">        Halt execution on Ctrl + C press.</span>
 <span class="sd">    OperationAborted</span>
-<span class="sd">        Description</span>
+<span class="sd">        Halt execution.</span>
 <span class="sd">    RuntimeError</span>
 <span class="sd">        Raised if the destination isn&#39;t a folder.</span>
+<span class="sd">    SystemExit</span>
+<span class="sd">        Halt execution.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">destination</span><span class="p">):</span>
@@ -1528,9 +1506,9 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    cmd : TYPE</span>
+<span class="sd">    cmd : str</span>
 <span class="sd">        The command to run.</span>
-<span class="sd">    working_directory : TYPE</span>
+<span class="sd">    working_directory : str</span>
 <span class="sd">        Working directory used by the command.</span>
 <span class="sd">    do_wait : bool, optional</span>
 <span class="sd">        Call or not the Popen wait() method. (default: {True})</span>
@@ -1571,25 +1549,27 @@
 
 <div class="viewcode-block" id="build_xlets"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.build_xlets">[docs]</a><span class="k">def</span> <span class="nf">build_xlets</span><span class="p">(</span><span class="n">xlets</span><span class="o">=</span><span class="p">[],</span> <span class="n">domain_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">build_output</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
                 <span class="n">do_not_cofirm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_menu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Summary</span>
+    <span class="sd">&quot;&quot;&quot;Build xlets.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    xlets : list, optional</span>
-<span class="sd">        Description</span>
-<span class="sd">    domain : None, optional</span>
-<span class="sd">        Description</span>
+<span class="sd">        The list of xlets to build.</span>
+<span class="sd">    domain_name : None, optional</span>
+<span class="sd">        The domain name to use to build the xlets.</span>
 <span class="sd">    build_output : str, optional</span>
-<span class="sd">        Description</span>
+<span class="sd">        Path to the folder were the built xlets are stored.</span>
 <span class="sd">    do_not_cofirm : bool, optional</span>
-<span class="sd">        Description</span>
+<span class="sd">        Whether to ask for overwrite confirmation when an xlet destination exists or not.</span>
 <span class="sd">    logger : object</span>
 <span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
+<span class="sd">    from_menu : bool, optional</span>
+<span class="sd">        Whether this function was called from the CLI menu or not.</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
-<span class="sd">    MissingRequiredFile</span>
-<span class="sd">        Description</span>
+<span class="sd">    SystemExit</span>
+<span class="sd">        Halt execution if the domain name cannot be obtained.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">domain_name</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -1647,8 +1627,8 @@
 <span class="sd">    ----------</span>
 <span class="sd">    xlet_data : dict</span>
 <span class="sd">        The xlet data to handle.</span>
-<span class="sd">    do_not_cofirm : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">    do_not_cofirm : bool</span>
+<span class="sd">        Whether to ask for overwrite confirmation when an xlet destination exists or not.</span>
 <span class="sd">    logger : object</span>
 <span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
 
@@ -1659,9 +1639,9 @@
 <span class="sd">    err2</span>
 <span class="sd">        Something might have gone wrong while doing the &quot;templating&quot;.</span>
 <span class="sd">    InvalidDestination</span>
-<span class="sd">        Description</span>
+<span class="sd">        Halt execution if the destination is a file.</span>
 <span class="sd">    OperationAborted</span>
-<span class="sd">        Description</span>
+<span class="sd">        Halt execution on operation canceled.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">get_cli_separator</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">),</span> <span class="n">date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1684,7 +1664,7 @@
                                        <span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]))</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Copying files...&quot;</span><span class="p">)</span>
-        <span class="n">copytree</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">copytree</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">ignore</span><span class="o">=</span><span class="n">ignore_patterns</span><span class="p">(</span><span class="o">*</span><span class="n">xlet_dir_ignored_patterns</span><span class="p">),</span>
                  <span class="n">ignore_dangling_symlinks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err1</span><span class="p">:</span>
@@ -1775,6 +1755,23 @@
 
 
 <div class="viewcode-block" id="validate_themes_options"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.validate_themes_options">[docs]</a><span class="k">def</span> <span class="nf">validate_themes_options</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate themes options.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : str</span>
+<span class="sd">        The entered option to validate.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The validated option.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValidationError</span>
+<span class="sd">        Halt execution if option is not valid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span> <span class="ow">or</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s1">&#39;Posible options are &quot;1&quot; or &quot;2&quot;.&#39;</span><span class="p">)</span>
 
@@ -1782,6 +1779,26 @@
 
 
 <div class="viewcode-block" id="build_themes"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.build_themes">[docs]</a><span class="k">def</span> <span class="nf">build_themes</span><span class="p">(</span><span class="n">theme_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">build_output</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">do_not_cofirm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_menu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Build themes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theme_name : str, optional</span>
+<span class="sd">        The given name of the theme.</span>
+<span class="sd">    build_output : str, optional</span>
+<span class="sd">        Path to the destination folder were the built themes will be saved.</span>
+<span class="sd">    do_not_cofirm : bool, optional</span>
+<span class="sd">        Whether to ask for overwrite confirmation when a theme destination exists or not.</span>
+<span class="sd">    logger : object</span>
+<span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
+<span class="sd">    from_menu : bool, optional</span>
+<span class="sd">        Whether this function was called from the CLI menu or not.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    SystemExit</span>
+<span class="sd">        Halt execution if the theme name cannot be obtained.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">options_map</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;cinnamon_version&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="s2">&quot;3.0&quot;</span><span class="p">,</span>
@@ -1932,6 +1949,8 @@
 <span class="sd">    ----------</span>
 <span class="sd">    data : str</span>
 <span class="sd">        Data to modify.</span>
+<span class="sd">    replacement_data : list</span>
+<span class="sd">        List of tuples containing (template, replacement) data.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -1946,6 +1965,15 @@
 
 
 <div class="viewcode-block" id="custom_copytree"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.custom_copytree">[docs]</a><span class="k">def</span> <span class="nf">custom_copytree</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Custom copytree.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    src : str</span>
+<span class="sd">        Source path to copy from.</span>
+<span class="sd">    dst : str</span>
+<span class="sd">        Destination path to copy to.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
 
@@ -2081,24 +2109,16 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    app : dict</span>
-<span class="sd">        The dictionary were the app name is stored.</span>
-<span class="sd">    app_slug : str</span>
-<span class="sd">        The application name without spaces.</span>
-<span class="sd">    app_slug_lower_dashed : str</span>
-<span class="sd">        The application name lower-cased and separated by dashes.</span>
-<span class="sd">    app_slug_lower_lodashed : str</span>
-<span class="sd">        The application name lower-cased and separated by low-dashes.</span>
 <span class="sd">    base_xlet_path : str</span>
 <span class="sd">        Path to the base application (the template).</span>
-<span class="sd">    default_name : str</span>
-<span class="sd">        Default name for the base application.</span>
 <span class="sd">    logger : object</span>
 <span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
 <span class="sd">    new_xlet_destination : str</span>
 <span class="sd">        The path to the new generated application.</span>
 <span class="sd">    replacement_data : list</span>
 <span class="sd">        List of tuples containing (template, replacement) data.</span>
+<span class="sd">    xlet_data : dict</span>
+<span class="sd">        Storage for xlet data that will be used to generate a base xlet.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
@@ -2122,6 +2142,11 @@
 
 <div class="viewcode-block" id="BaseXletGenerator._do_setup"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.BaseXletGenerator._do_setup">[docs]</a>    <span class="k">def</span> <span class="nf">_do_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Do setup.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        SystemExit</span>
+<span class="sd">            Halt execution if the destination exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">prompt_data</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
@@ -2197,11 +2222,6 @@
 
 <div class="viewcode-block" id="BaseXletGenerator._do_copy"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.BaseXletGenerator._do_copy">[docs]</a>    <span class="k">def</span> <span class="nf">_do_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Do copy.</span>
-
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        ExistentLocation</span>
-<span class="sd">            See &lt;class :any:`ExistentLocation`&gt;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_xlet_destination</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 

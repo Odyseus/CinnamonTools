@@ -56,39 +56,39 @@
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    aborted : bool</span>
-<span class="sd">        Description</span>
+<span class="sd">        Menu selection aborted.</span>
 <span class="sd">    all_menu_items : list</span>
-<span class="sd">        Description</span>
+<span class="sd">        The menu items that constitute the multi select menu.</span>
 <span class="sd">    arrow : str</span>
-<span class="sd">        Description</span>
-<span class="sd">    c_empty : TYPE</span>
-<span class="sd">        Description</span>
-<span class="sd">    c_selected : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">        The character/s used to *point* the menu item that can be selected.</span>
+<span class="sd">    char_empty : str</span>
+<span class="sd">        The character/s used to represent a non selected menu item.</span>
+<span class="sd">    char_selected : str</span>
+<span class="sd">        The character/s used to represent a selected menu item.</span>
 <span class="sd">    cursor : int</span>
-<span class="sd">        Description</span>
-<span class="sd">    footer : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">        The current cursor position.</span>
+<span class="sd">    footer : str</span>
+<span class="sd">        Informational text placed at the bottom of the menu.</span>
 <span class="sd">    length : int</span>
-<span class="sd">        Description</span>
-<span class="sd">    more : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">        The amount of menu items.</span>
+<span class="sd">    more : str</span>
+<span class="sd">        Character/s representing the availability of more menu items than the screen can display.</span>
 <span class="sd">    offset : int</span>
-<span class="sd">        Description</span>
+<span class="sd">        Te amount of menu items off-screen. (?)</span>
 <span class="sd">    selcount : int</span>
-<span class="sd">        Description</span>
+<span class="sd">        The amount of selected menu items.</span>
 <span class="sd">    selected : int</span>
-<span class="sd">        Description</span>
-<span class="sd">    stdscr : TYPE</span>
-<span class="sd">        Description</span>
-<span class="sd">    title : TYPE</span>
-<span class="sd">        Description</span>
-<span class="sd">    win : TYPE</span>
-<span class="sd">        Description</span>
-<span class="sd">    window_height : TYPE</span>
-<span class="sd">        Description</span>
-<span class="sd">    window_width : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">        The index of the menu item on the current cursor position.</span>
+<span class="sd">    stdscr : object</span>
+<span class="sd">        See &lt;class :any:`curses.initscr`&gt;.</span>
+<span class="sd">    title : str</span>
+<span class="sd">        A title to use on the menu.</span>
+<span class="sd">    win : object</span>
+<span class="sd">        See &lt;class :any:`curses.newwin`&gt;.</span>
+<span class="sd">    window_height : int</span>
+<span class="sd">        The height of the terminal window.</span>
+<span class="sd">    window_width : int</span>
+<span class="sd">        The width of the terminal window.</span>
 
 
 <span class="sd">    Example</span>
@@ -111,32 +111,32 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">menu_items</span><span class="o">=</span><span class="p">[],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">arrow</span><span class="o">=</span><span class="s2">&quot;==&gt;&quot;</span><span class="p">,</span>
                  <span class="n">footer</span><span class="o">=</span><span class="s2">&quot;Space = toggle ─ Enter = accept ─ q = cancel&quot;</span><span class="p">,</span>
-                 <span class="n">more</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">c_selected</span><span class="o">=</span><span class="s2">&quot;[X]&quot;</span><span class="p">,</span> <span class="n">c_empty</span><span class="o">=</span><span class="s2">&quot;[ ]&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Summary</span>
+                 <span class="n">more</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">char_selected</span><span class="o">=</span><span class="s2">&quot;[X]&quot;</span><span class="p">,</span> <span class="n">char_empty</span><span class="o">=</span><span class="s2">&quot;[ ]&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialization.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        menu_items : TYPE</span>
-<span class="sd">            Description</span>
+<span class="sd">        menu_items : list</span>
+<span class="sd">            The data that will be used to create the menu items.</span>
 <span class="sd">        title : str, optional</span>
-<span class="sd">            Description</span>
+<span class="sd">            A title to use on the menu.</span>
 <span class="sd">        arrow : str, optional</span>
-<span class="sd">            Description</span>
+<span class="sd">            The character/s used to *point* the menu item that can be selected.</span>
 <span class="sd">        footer : str, optional</span>
-<span class="sd">            Description</span>
+<span class="sd">            Informational text placed at the bottom of the menu.</span>
 <span class="sd">        more : str, optional</span>
-<span class="sd">            Description</span>
-<span class="sd">        c_selected : str, optional</span>
-<span class="sd">            Description</span>
-<span class="sd">        c_empty : str, optional</span>
-<span class="sd">            Description</span>
+<span class="sd">            Character/s representing the availability of more menu items than the screen can display.</span>
+<span class="sd">        char_selected : str, optional</span>
+<span class="sd">            The character/s used to represent a selected menu item.</span>
+<span class="sd">        char_empty : str, optional</span>
+<span class="sd">            The character/s used to represent a non selected menu item.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arrow</span> <span class="o">=</span> <span class="n">arrow</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">footer</span> <span class="o">=</span> <span class="n">footer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">more</span> <span class="o">=</span> <span class="n">more</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">c_selected</span> <span class="o">=</span> <span class="n">c_selected</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">c_empty</span> <span class="o">=</span> <span class="n">c_empty</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char_selected</span> <span class="o">=</span> <span class="n">char_selected</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char_empty</span> <span class="o">=</span> <span class="n">char_empty</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">all_menu_items</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span> <span class="o">=</span> <span class="kc">None</span>
@@ -185,35 +185,35 @@
         <span class="n">curses</span><span class="o">.</span><span class="n">endwin</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="MultiSelect.getSelected"><a class="viewcode-back" href="../../modules/python_modules/python_modules.multi_select.html#python_modules.multi_select.MultiSelect.getSelected">[docs]</a>    <span class="k">def</span> <span class="nf">getSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Summary</span>
+        <span class="sd">&quot;&quot;&quot;Get selected.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        TYPE</span>
-<span class="sd">            Description</span>
+<span class="sd">        list</span>
+<span class="sd">            The labels of the selected menu items.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aborted</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="n">ret_s</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_menu_items</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;selected&quot;</span><span class="p">]]</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ret_s</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">ret</span></div>
+        <span class="n">selected_items</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_menu_items</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;selected&quot;</span><span class="p">]]</span>
+        <span class="n">selected_items_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">selected_items</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">selected_items_labels</span></div>
 
 <div class="viewcode-block" id="MultiSelect.redraw"><a class="viewcode-back" href="../../modules/python_modules/python_modules.multi_select.html#python_modules.multi_select.MultiSelect.redraw">[docs]</a>    <span class="k">def</span> <span class="nf">redraw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Summary</span>
+        <span class="sd">&quot;&quot;&quot;Redraw.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">footer</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">A_BOLD</span><span class="p">)</span>
 
         <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="nb">range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_menu_items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">items_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_menu_items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
 
-        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">items_range</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">option</span><span class="p">[</span><span class="s2">&quot;selected&quot;</span><span class="p">]:</span>
-                <span class="n">line_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_selected</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+                <span class="n">line_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_selected</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">line_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_empty</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+                <span class="n">line_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_empty</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">position</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">line_label</span> <span class="o">+</span> <span class="n">option</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
             <span class="n">position</span> <span class="o">=</span> <span class="n">position</span> <span class="o">+</span> <span class="mi">1</span>
@@ -236,7 +236,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="MultiSelect.check_cursor_up"><a class="viewcode-back" href="../../modules/python_modules/python_modules.multi_select.html#python_modules.multi_select.MultiSelect.check_cursor_up">[docs]</a>    <span class="k">def</span> <span class="nf">check_cursor_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Summary</span>
+        <span class="sd">&quot;&quot;&quot;Check cursor up.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="mi">0</span>
@@ -244,7 +244,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="MultiSelect.check_cursor_down"><a class="viewcode-back" href="../../modules/python_modules/python_modules.multi_select.html#python_modules.multi_select.MultiSelect.check_cursor_down">[docs]</a>    <span class="k">def</span> <span class="nf">check_cursor_down</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Summary</span>
+        <span class="sd">&quot;&quot;&quot;Check cursor down.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">-</span> <span class="mi">1</span>
@@ -257,17 +257,17 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="MultiSelect.curses_loop"><a class="viewcode-back" href="../../modules/python_modules/python_modules.multi_select.html#python_modules.multi_select.MultiSelect.curses_loop">[docs]</a>    <span class="k">def</span> <span class="nf">curses_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stdscr</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Summary</span>
+        <span class="sd">&quot;&quot;&quot;Curses loop.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        stdscr : TYPE</span>
-<span class="sd">            Description</span>
+<span class="sd">        stdscr : object</span>
+<span class="sd">            See &lt;class :any:`curses.initscr`&gt;.</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
 <span class="sd">        app_utils.KeyboardInterruption</span>
-<span class="sd">            Description</span>
+<span class="sd">            Halt execution on Ctrl + C press.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>

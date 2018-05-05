@@ -37,7 +37,7 @@
   <h1>Source code for python_modules.app_menu</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python3</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Summary</span>
+<span class="sd">&quot;&quot;&quot;Command Line Interface menu.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">app_utils</span><span class="p">,</span> <span class="n">menu</span><span class="p">,</span> <span class="n">multi_select</span>
@@ -49,16 +49,20 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    build_output : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">    build_output : str</span>
+<span class="sd">        Path to the folder were the built xlets are stored.</span>
 <span class="sd">    dev_menu : object</span>
 <span class="sd">        Development menu. See &lt;class :any:`menu.Menu`&gt;.</span>
-<span class="sd">    do_not_cofirm : TYPE</span>
-<span class="sd">        Description</span>
+<span class="sd">    do_not_cofirm : bool</span>
+<span class="sd">        Whether to ask for overwrite confirmation when an xlet destination exists or not.</span>
+<span class="sd">    domain_name : str</span>
+<span class="sd">        The domain name to use to build the xlets.</span>
 <span class="sd">    logger : object</span>
 <span class="sd">        See &lt;class :any:`app_utils.LogSystem`&gt;.</span>
 <span class="sd">    main_menu : object</span>
 <span class="sd">        Main menu. See &lt;class :any:`menu.Menu`&gt;.</span>
+<span class="sd">    theme_name : str</span>
+<span class="sd">        The given name of the theme.</span>
 <span class="sd">    xlets_helper : object</span>
 <span class="sd">        Helper functions. See &lt;class :any:`app_utils.LogSystem`&gt;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -69,10 +73,14 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        build_output : TYPE</span>
-<span class="sd">            Description</span>
-<span class="sd">        do_not_cofirm : TYPE</span>
-<span class="sd">            Description</span>
+<span class="sd">        theme_name : str, optional</span>
+<span class="sd">            The given name of the theme.</span>
+<span class="sd">        domain_name : str, optional</span>
+<span class="sd">            The domain name to use to build the xlets.</span>
+<span class="sd">        build_output : str</span>
+<span class="sd">            Path to the folder were the built xlets are stored.</span>
+<span class="sd">        do_not_cofirm : bool</span>
+<span class="sd">            Whether to ask for overwrite confirmation when an xlet destination exists or not.</span>
 <span class="sd">        logger : object</span>
 <span class="sd">            See &lt;class :any:`app_utils.LogSystem`&gt;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
