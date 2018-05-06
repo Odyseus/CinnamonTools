@@ -38,7 +38,7 @@ function _(aStr) {
     return Gettext.gettext(aStr);
 }
 
-var Settings = getSettings();
+var CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
 
 var CTX_ITM_POS = {
     last: 0,
@@ -46,57 +46,6 @@ var CTX_ITM_POS = {
     bfr_conf: 2,
     bfr_rem: 1
 
-};
-
-// Preferences keys
-var P = {
-    DESKTOP_TWEAKS_ENABLED: "desktop-tweaks-enabled",
-    DESKTOP_TWEAKS_ALLOW_DROP_TO_DESKTOP: "desktop-tweaks-allow-drop-to-desktop",
-    POPUP_MENU_MANAGER_TWEAKS_ENABLED: "popup-menu-manager-tweaks-enabled",
-    POPUP_MENU_MANAGER_APPLETS_MENUS_BEHAVIOR: "popup-menu-manager-applets-menus-behavior",
-    APPLETS_TWEAKS_ENABLED: "applets-tweaks-enabled",
-    APPLETS_ASK_CONFIRMATION_APPLET_REMOVAL: "applets-ask-confirmation-applet-removal",
-    APPLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT: "applets-add-open-folder-item-to-context",
-    APPLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT: "applets-add-edit-file-item-to-context",
-    APPLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT_PLACEMENT: "applets-add-open-folder-item-to-context-placement",
-    APPLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT_PLACEMENT: "applets-add-edit-file-item-to-context-placement",
-    DESKLETS_TWEAKS_ENABLED: "desklets-tweaks-enabled",
-    DESKLETS_ASK_CONFIRMATION_DESKLET_REMOVAL: "desklets-ask-confirmation-desklet-removal",
-    DESKLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT: "desklets-add-open-folder-item-to-context",
-    DESKLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT: "desklets-add-edit-file-item-to-context",
-    DESKLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT_PLACEMENT: "desklets-add-open-folder-item-to-context-placement",
-    DESKLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT_PLACEMENT: "desklets-add-edit-file-item-to-context-placement",
-    NOTIFICATIONS_ENABLE_TWEAKS: "notifications-enable-tweaks",
-    NOTIFICATIONS_ENABLE_ANIMATION: "notifications-enable-animation",
-    NOTIFICATIONS_ENABLE_CLOSE_BUTTON: "notifications-enable-close-button",
-    NOTIFICATIONS_POSITION: "notifications-position",
-    NOTIFICATIONS_DISTANCE_FROM_PANEL: "notifications-distance-from-panel",
-    NOTIFICATIONS_RIGHT_MARGIN: "notifications-right-margin",
-    WIN_DEMANDS_ATTENTION_ACTIVATION_MODE: "win-demands-attention-activation-mode",
-    WIN_DEMANDS_ATTENTION_KEYBOARD_SHORTCUT: "win-demands-attention-keyboard-shortcut",
-    HOTCORNERS_TWEAKS_ENABLED: "hotcorners-tweaks-enabled",
-    HOTCORNERS_DELAY_TOP_LEFT: "hotcorners-delay-top-left",
-    HOTCORNERS_DELAY_TOP_RIGHT: "hotcorners-delay-top-right",
-    HOTCORNERS_DELAY_BOTTOM_LEFT: "hotcorners-delay-bottom-left",
-    HOTCORNERS_DELAY_BOTTOM_RIGHT: "hotcorners-delay-bottom-right",
-    TOOLTIPS_TWEAKS_ENABLED: "tooltips-tweaks-enabled",
-    TOOLTIPS_ALIGNMENT: "tooltips-alignment",
-    TOOLTIPS_DELAY: "tooltips-delay",
-    INITIAL_LOAD: "initial-load",
-    WINDOW_SHADOWS_TWEAKS_ENABLED: "window-shadows-tweaks-enabled",
-    WINDOW_SHADOWS_PRESET: "window-shadows-preset",
-    WINDOW_SHADOWS_CUSTOM_PRESET: "window-shadows-custom-preset",
-    WINDOW_AUTO_MOVE_TWEAKS_ENABLED: "window-auto-move-tweaks-enabled",
-    WINDOW_AUTO_MOVE_APPLICATION_LIST: "window-auto-move-application-list",
-    MAXIMUS_ENABLE_TWEAK: "maximus-enable-tweak",
-    MAXIMUS_UNDECORATE_HALF_MAXIMIZED: "maximus-undecorate-half-maximized",
-    MAXIMUS_UNDECORATE_TILED: "maximus-undecorate-tiled",
-    MAXIMUS_IS_BLACKLIST: "maximus-is-blacklist",
-    MAXIMUS_APP_LIST: "maximus-app-list",
-    MAXIMUS_ENABLE_LOGGING: "maximus-enable-logging",
-    MAXIMUS_APPLY_SETTINGS: "maximus-apply-settings",
-    MAXIMUS_INVISIBLE_WIN_HACK: "maximus-invisible-windows-hack",
-    TEST_NOTIFICATIONS: "test-notifications"
 };
 
 var SHADOW_VALUES = {
@@ -174,30 +123,100 @@ var SHADOW_VALUES = {
     }
 };
 
-function getSettings(aSchema) {
-    let schema = aSchema || SETTINGS_SCHEMA;
-    let schemaDir = Gio.file_new_for_path(ExtensionMeta.path + "/schemas");
-    let schemaSource;
+const CinnamonTweaksSettings = new Lang.Class({
+    Name: "CinnamonTweaksSettings",
 
-    if (schemaDir.query_exists(null)) {
-        schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
-            GioSSS.get_default(),
-            false);
-    } else {
-        schemaSource = GioSSS.get_default();
+    _init: function() {
+        let schemaSource = GioSSS.get_default();
+        let schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
+
+        if (!schemaObj) {
+            let schemaDir = Gio.file_new_for_path(ExtensionMeta.path + "/schemas");
+
+            if (schemaDir.query_exists(null)) {
+                schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
+                    GioSSS.get_default(),
+                    false);
+                schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
+            }
+        }
+
+        if (!schemaObj) {
+            throw new Error(_("Schema %s could not be found for extension %s.")
+                .format(SETTINGS_SCHEMA, ExtensionMeta.uuid) + _("Please check your installation."));
+        }
+
+        this.schema = new Gio.Settings({
+            settings_schema: schemaObj
+        });
+
+        this._handlers = [];
+
+        this._extendProperties();
+    },
+
+    /**
+     * Create a getter and a setter for each key in the schema.
+     */
+    _extendProperties: function() {
+        let prefKeys = this.schema.list_keys();
+        // Based on Cinnamon's xlets settings code. A life saver!
+        for (let i = prefKeys.length - 1; i >= 0; i--) {
+            Object.defineProperty(this, (prefKeys[i].split("-")).join("_"), {
+                get: Lang.bind(this, this._getValue, prefKeys[i]),
+                set: Lang.bind(this, this._setValue, prefKeys[i]),
+                enumerable: true,
+                configurable: true
+            });
+        }
+    },
+
+    _getValue: function(aPrefKey) {
+        return this.schema.get_value(aPrefKey).deep_unpack();
+    },
+
+    _setValue: function(aPrefVal, aPrefKey) {
+        let oldValue = this._getValue(aPrefKey);
+        if (oldValue !== aPrefVal) {
+            // FOR FRAKS SAKE!!! set_value throws a value error when used instead of set_strv!!! WTH!
+            // FIXME:
+            // Triple check settings variants. Using the generic check "object" for now
+            // because I'm only usig the standard "as" type. Might have to "fine tune" the check
+            // in the future if I start using a more complex setting variant.
+            // IDEA: Check variant and use a switch to set the value using the proper "setter"
+            // (set_boolean, set_string, etc.).
+            if (typeof oldValue === "object") {
+                this.schema.set_strv(aPrefKey, aPrefVal);
+            } else {
+                this.schema.set_value(aPrefKey, aPrefVal);
+            }
+        }
+    },
+
+    connect: function(signal, callback) {
+        let handler_id = this.schema.connect(signal, callback);
+        this._handlers.push(handler_id);
+        return handler_id;
+    },
+
+    destroy: function() {
+        // Remove the remaining signals...
+        while (this._handlers.length) {
+            this.disconnect(this._handlers[0]);
+        }
+    },
+
+    disconnect: function(handler_id) {
+        let index = this._handlers.indexOf(handler_id);
+        this.schema.disconnect(handler_id);
+
+        if (index > -1) {
+            this._handlers.splice(index, 1);
+        }
     }
+});
 
-    let schemaObj = schemaSource.lookup(schema, true);
-
-    if (!schemaObj) {
-        throw new Error(_("Schema %s could not be found for extension %s.")
-            .format(schema, ExtensionMeta.uuid) + _("Please check your installation."));
-    }
-
-    return new Gio.Settings({
-        settings_schema: schemaObj
-    });
-}
+var Settings = new CinnamonTweaksSettings();
 
 function dealWithRejection(aTweakDescription) {
     Main.warningNotify(_(ExtensionMeta.name), _(aTweakDescription) + "\n" +
@@ -433,7 +452,7 @@ var CT_WindowMoverClass = new Lang.Class({
             return;
         }
 
-        let spaces = Settings.get_strv(P.WINDOW_AUTO_MOVE_APPLICATION_LIST);
+        let spaces = Settings.window_auto_move_application_list;
 
         let app = this._windowTracker.get_window_app(window);
         if (!app) {
@@ -637,7 +656,7 @@ var CT_MaximusNGClass = new Lang.Class({
     },
 
     log: function(message) {
-        if (Settings.get_boolean(P.MAXIMUS_ENABLE_LOGGING)) {
+        if (Settings.maximus_enable_logging) {
             global.log("[" + _(ExtensionMeta.name) + "][Maximus] " + message);
         }
     },
@@ -742,7 +761,7 @@ var CT_MaximusNGClass = new Lang.Class({
             "-f", "_MOTIF_WM_HINTS", "32c",
             "-set", "_MOTIF_WM_HINTS",
             "0x2, 0x0, %s, 0x0, 0x0"
-            .format(Settings.get_boolean(P.MAXIMUS_INVISIBLE_WIN_HACK) ? "0x2" : "0x0")
+            .format(Settings.maximus_invisible_win_hack ? "0x2" : "0x0")
         ];
 
         /* _MOTIF_WM_HINTS: see MwmUtil.h from OpenMotif source (cvs.openmotif.org),
@@ -908,7 +927,7 @@ var CT_MaximusNGClass = new Lang.Class({
     shouldBeUndecorated: function(win) {
         let max = win.get_maximized();
         return (max === Meta.MaximizeFlags.BOTH ||
-            (Settings.get_boolean(P.MAXIMUS_UNDECORATE_HALF_MAXIMIZED) && max > 0));
+            (Settings.maximus_undecorate_half_maximized && max > 0));
     },
 
     /**
@@ -975,8 +994,8 @@ var CT_MaximusNGClass = new Lang.Class({
          * half-maximized or tiled windows, make sure the window is decorated.
          */
         if (max !== Meta.MaximizeFlags.BOTH &&
-            ((!Settings.get_boolean(P.MAXIMUS_UNDECORATE_HALF_MAXIMIZED) && win.tile_type === 0) ||
-                (!Settings.get_boolean(P.MAXIMUS_UNDECORATE_TILED) && win.tile_type > 0))) {
+            ((!Settings.maximus_undecorate_half_maximized && win.tile_type === 0) ||
+                (!Settings.maximus_undecorate_tiled && win.tile_type > 0))) {
             this.decorate(win);
             return;
         }
@@ -1110,7 +1129,7 @@ var CT_MaximusNGClass = new Lang.Class({
                 });
             }
 
-            if (!Settings.get_boolean(P.MAXIMUS_UNDECORATE_HALF_MAXIMIZED)) {
+            if (!Settings.maximus_undecorate_half_maximized) {
                 win._maxHStateId = win.connect("notify::maximized-horizontally",
                     Lang.bind(this, this.onWindowChangesMaximiseState));
                 win._maxVStateId = win.connect("notify::maximized-vertically",
@@ -1168,8 +1187,8 @@ var CT_MaximusNGClass = new Lang.Class({
 
     // Start listening to events and undecorate already-existing windows.
     startUndecorating: function() {
-        this.is_blacklist = Settings.get_boolean(P.MAXIMUS_IS_BLACKLIST);
-        this.app_list = Settings.get_strv(P.MAXIMUS_APP_LIST);
+        this.is_blacklist = Settings.maximus_is_blacklist;
+        this.app_list = Settings.maximus_app_list;
 
         // Connect events
         this.changeWorkspaceID = global.screen.connect("notify::n-workspaces",
@@ -1182,7 +1201,7 @@ var CT_MaximusNGClass = new Lang.Class({
             this.minID = global.window_manager.connect("unmaximize",
                 Lang.bind(this, this.onUnmaximise));
 
-            if (Settings.get_boolean(P.MAXIMUS_UNDECORATE_TILED)) {
+            if (Settings.maximus_undecorate_tiled) {
                 this.tileID = global.window_manager.connect("tile",
                     Lang.bind(this, this.onMaximise));
             }
@@ -1358,8 +1377,8 @@ function queryCollection(collection, query, indexOnly = false) {
 exported SHADOW_VALUES,
          dealWithRejection,
          informAndDisable,
+         CINNAMON_VERSION,
          CTX_ITM_POS,
-         Settings,
          injectToFunction,
          removeInjection,
          versionCompare,

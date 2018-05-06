@@ -15,7 +15,6 @@ const Cinnamon = imports.gi.Cinnamon;
 const Clutter = imports.gi.Clutter;
 const Desklet = imports.ui.desklet;
 const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
 const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
@@ -25,8 +24,6 @@ const St = imports.gi.St;
 const Tooltips = imports.ui.tooltips;
 const Util = imports.misc.util;
 const Tweener = imports.ui.tweener;
-
-const CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
 
 // Imported only when needed in an attempt to gain performance.
 // Not that it's needed, but, the more tweaks I add, the more crap will I need to import.
@@ -40,7 +37,7 @@ let allowEnabling = false;
 let extensionMeta = null;
 
 let CONNECTION_IDS = {
-    settings_bindings: 0,
+    settings_bindings: {},
     DTD: 0, // CT_DropToDesktopPatch toggle ID.
     PPMM: 0, // CT_PopupMenuManagerPatch toggle ID.
     TTP: 0, // CT_TooltipsPatch toggle ID.
@@ -69,131 +66,155 @@ let STG = {
     MAXNG: {}
 };
 
-function bindSettings() {
-    CONNECTION_IDS.settings_bindings = Settings.connect(
-        "changed",
-        function(aObj, aPref) {
-            switch (aPref) {
-                case $.P.DESKTOP_TWEAKS_ENABLED:
-                case $.P.DESKTOP_TWEAKS_ALLOW_DROP_TO_DESKTOP:
-                    CT_DropToDesktopPatch.toggle();
-                    break;
-                case $.P.POPUP_MENU_MANAGER_TWEAKS_ENABLED:
-                case $.P.POPUP_MENU_MANAGER_APPLETS_MENUS_BEHAVIOR:
-                    CT_PopupMenuManagerPatch.toggle();
-                    break;
-                case $.P.APPLETS_TWEAKS_ENABLED:
-                case $.P.APPLETS_ASK_CONFIRMATION_APPLET_REMOVAL:
-                case $.P.APPLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT:
-                case $.P.APPLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT:
-                case $.P.APPLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT_PLACEMENT:
-                case $.P.APPLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT_PLACEMENT:
-                    try {
-                        if (!AppletManager) {
-                            AppletManager = imports.ui.appletManager;
-                        }
-                    } finally {
-                        CT_AppletManagerPatch.toggle();
-                    }
-                    break;
-                case $.P.DESKLETS_TWEAKS_ENABLED:
-                case $.P.DESKLETS_ASK_CONFIRMATION_DESKLET_REMOVAL:
-                case $.P.DESKLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT:
-                case $.P.DESKLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT:
-                case $.P.DESKLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT_PLACEMENT:
-                case $.P.DESKLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT_PLACEMENT:
-                    try {
-                        if (!DeskletManager) {
-                            DeskletManager = imports.ui.deskletManager;
-                        }
-                    } finally {
-                        CT_DeskletManagerPatch.toggle();
-                    }
-                    break;
-                case $.P.NOTIFICATIONS_ENABLE_TWEAKS:
-                case $.P.NOTIFICATIONS_ENABLE_ANIMATION:
-                case $.P.NOTIFICATIONS_ENABLE_CLOSE_BUTTON:
-                case $.P.NOTIFICATIONS_POSITION:
-                case $.P.NOTIFICATIONS_DISTANCE_FROM_PANEL:
-                case $.P.NOTIFICATIONS_RIGHT_MARGIN:
-                    CT_MessageTrayPatch.toggle();
-                    break;
-                case $.P.WIN_DEMANDS_ATTENTION_ACTIVATION_MODE:
-                case $.P.WIN_DEMANDS_ATTENTION_KEYBOARD_SHORTCUT:
-                    CT_WindowDemandsAttentionBehavior.toggle();
-                    break;
-                case $.P.HOTCORNERS_TWEAKS_ENABLED:
-                case $.P.HOTCORNERS_DELAY_TOP_LEFT:
-                case $.P.HOTCORNERS_DELAY_TOP_RIGHT:
-                case $.P.HOTCORNERS_DELAY_BOTTOM_LEFT:
-                case $.P.HOTCORNERS_DELAY_BOTTOM_RIGHT:
-                    try {
-                        if (!HotCornerPatched) {
-                            // Mark for deletion on EOL. Cinnamon 3.6.x+
-                            if (typeof require === "function") {
-                                HotCornerPatched = require("./extra_modules/hotCornerPatched.js");
-                            } else {
-                                HotCornerPatched = imports.ui.extensionSystem.extensions["{{UUID}}"].extra_modules.hotCornerPatched;
-                            }
-                        }
-                    } finally {
-                        CT_HotCornersPatch.toggle(); // Mark for deletion on EOL. Cinnamon 3.2.x+
-                    }
-                    break;
-                case $.P.TOOLTIPS_TWEAKS_ENABLED:
-                case $.P.TOOLTIPS_ALIGNMENT: // Mark for deletion on EOL. Cinnamon 3.2.x+
-                case $.P.TOOLTIPS_DELAY:
-                    CT_TooltipsPatch.toggle();
-                    break;
-                case $.P.WINDOW_SHADOWS_TWEAKS_ENABLED:
-                case $.P.WINDOW_SHADOWS_PRESET:
-                case $.P.WINDOW_SHADOWS_CUSTOM_PRESET:
-                    try {
-                        if (!ShadowFactory) {
-                            ShadowFactory = Meta.ShadowFactory.get_default();
-                        }
-                    } finally {
-                        CT_CustomWindowShadows.toggle();
-                    }
-                    break;
-                case $.P.WINDOW_AUTO_MOVE_TWEAKS_ENABLED:
-                    try {
-                        if (!WorkspaceTracker) {
-                            // Mark for deletion on EOL. Cinnamon 3.6.x+
-                            if (typeof require === "function") {
-                                WorkspaceTracker = require("./extra_modules/WorkspaceTracker.js");
-                            } else {
-                                WorkspaceTracker = imports.ui.extensionSystem.extensions["{{UUID}}"].extra_modules.WorkspaceTracker;
-                            }
-                        }
-                    } finally {
-                        CT_AutoMoveWindows.toggle();
-                    }
-                    break;
-                    // Instead of automatically triggering the callback every
-                    // time one of the settings changes, trigger it on demand.
-                    // This is done because this tweak is buggy as heck.
-                    // case $.P.MAXIMUS_ENABLE_TWEAK:
-                    // case $.P.MAXIMUS_UNDECORATE_HALF_MAXIMIZED:
-                    // case $.P.MAXIMUS_UNDECORATE_TILED:
-                    // case $.P.MAXIMUS_IS_BLACKLIST:
-                    // case $.P.MAXIMUS_APP_LIST:
-                    // case $.P.MAXIMUS_ENABLE_LOGGING:
-                    // The following is more of a dummy setting.
-                    // I'm using it so I can trigger a JavaScript function from
-                    // the Python code on the settings window.
-                case $.P.MAXIMUS_APPLY_SETTINGS:
-                    CT_MaximusNG.toggle();
-                    break;
-                case $.P.TEST_NOTIFICATIONS:
-                    $.testNotifications();
-                    break;
-                default:
-                    return false;
+function disconnectAllSettings() {
+    for (let id in CONNECTION_IDS.settings_bindings) {
+        Settings.disconnect(id);
+    }
+}
+
+function connectSettings(aPrefKeys, aCallback) {
+    let settingsCallback = () => {
+        aCallback();
+    };
+
+    for (let i = aPrefKeys.length - 1; i >= 0; i--) {
+        let prop = (aPrefKeys[i].split("-")).join("_");
+        CONNECTION_IDS.settings_bindings[prop] = Settings.connect(
+            "changed::" + aPrefKeys[i], settingsCallback
+        );
+    }
+}
+
+function _bindSettings() {
+    connectSettings([
+        "desktop-tweaks-enabled",
+        "desktop-tweaks-allow-drop-to-desktop"
+    ], CT_DropToDesktopPatch.toggle);
+
+    connectSettings([
+        "popup-menu-manager-tweaks-enabled",
+        "popup-menu-manager-applets-menus-behavior"
+    ], CT_PopupMenuManagerPatch.toggle);
+
+    connectSettings([
+        "applets-tweaks-enabled",
+        "applets-ask-confirmation-applet-removal",
+        "applets-add-open-folder-item-to-context",
+        "applets-add-edit-file-item-to-context",
+        "applets-add-open-folder-item-to-context-placement",
+        "applets-add-edit-file-item-to-context-placement"
+    ], () => {
+        try {
+            if (!AppletManager) {
+                AppletManager = imports.ui.appletManager;
             }
-            return false;
+        } finally {
+            CT_AppletManagerPatch.toggle();
         }
-    );
+    });
+
+    connectSettings([
+        "desklets-tweaks-enabled",
+        "desklets-ask-confirmation-applet-removal",
+        "desklets-add-open-folder-item-to-context",
+        "desklets-add-edit-file-item-to-context",
+        "desklets-add-open-folder-item-to-context-placement",
+        "desklets-add-edit-file-item-to-context-placement"
+    ], () => {
+        try {
+            if (!DeskletManager) {
+                DeskletManager = imports.ui.deskletManager;
+            }
+        } finally {
+            CT_DeskletManagerPatch.toggle();
+        }
+    });
+
+    connectSettings([
+        "notifications-enable-tweaks",
+        "notifications-enable-animation",
+        "notifications-enable-close-button",
+        "notifications-position",
+        "notifications-distance-from-panel",
+        "notifications-right-margin"
+    ], CT_MessageTrayPatch.toggle);
+
+    connectSettings([
+        "win-demands-attention-activation-mode",
+        "win-demands-attention-keyboard-shortcut"
+    ], CT_WindowDemandsAttentionBehavior.toggle);
+
+    connectSettings([
+        "hotcorners-tweaks-enabled",
+        "hotcorners-delay-top-left",
+        "hotcorners-delay-top-right",
+        "hotcorners-delay-bottom-left",
+        "hotcorners-delay-bottom-right"
+    ], () => {
+        try {
+            if (!HotCornerPatched) {
+                // Mark for deletion on EOL. Cinnamon 3.6.x+
+                if (typeof require === "function") {
+                    HotCornerPatched = require("./extra_modules/hotCornerPatched.js");
+                } else {
+                    HotCornerPatched = imports.ui.extensionSystem.extensions["{{UUID}}"].extra_modules.hotCornerPatched;
+                }
+            }
+        } finally {
+            CT_HotCornersPatch.toggle(); // Mark for deletion on EOL. Cinnamon 3.2.x+
+        }
+    });
+
+    connectSettings([
+        "tooltips-tweaks-enabled",
+        "tooltips-alignment",
+        "tooltips-delay"
+    ], CT_TooltipsPatch.toggle);
+
+    connectSettings([
+        "window-shadows-tweaks-enabled",
+        "window-shadows-preset",
+        "window-shadows-custom-preset"
+    ], () => {
+        try {
+            if (!ShadowFactory) {
+                ShadowFactory = Meta.ShadowFactory.get_default();
+            }
+        } finally {
+            CT_CustomWindowShadows.toggle();
+        }
+    });
+
+    connectSettings([
+        "window-auto-move-tweaks-enabled"
+    ], () => {
+        try {
+            if (!WorkspaceTracker) {
+                // Mark for deletion on EOL. Cinnamon 3.6.x+
+                if (typeof require === "function") {
+                    WorkspaceTracker = require("./extra_modules/WorkspaceTracker.js");
+                } else {
+                    WorkspaceTracker = imports.ui.extensionSystem.extensions["{{UUID}}"].extra_modules.WorkspaceTracker;
+                }
+            }
+        } finally {
+            CT_AutoMoveWindows.toggle();
+        }
+    });
+
+    // Instead of automatically triggering the callback every
+    // time one of the maximus related settings changes, trigger it on demand.
+    // This is done because this tweak is buggy as heck.
+    // The following is more of a dummy setting.
+    // I'm using it so I can trigger a JavaScript function from
+    // the Python code from the settings window.
+    connectSettings([
+        "maximus-apply-settings"
+    ], CT_MaximusNG.toggle);
+
+    connectSettings([
+        "test-notifications"
+    ], $.testNotifications);
 }
 
 function togglePatch(aPatch, aID, aEnabledPref) {
@@ -220,8 +241,8 @@ function togglePatch(aPatch, aID, aEnabledPref) {
 
 const CT_AppletManagerPatch = {
     enable: function() {
-        if (Settings.get_boolean($.P.APPLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT) ||
-            Settings.get_boolean($.P.APPLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT)) {
+        if (Settings.applets_add_open_folder_item_to_context ||
+            Settings.applets_add_edit_file_item_to_context) {
             STG.AMP.finalizeContextMenu = $.injectToFunction(Applet.Applet.prototype, "finalizeContextMenu", function() {
                 let menuItems = this._applet_context_menu._getMenuItems();
                 let itemsLength = menuItems.length;
@@ -252,9 +273,9 @@ const CT_AppletManagerPatch = {
                         return pos;
                     });
 
-                    if (Settings.get_boolean($.P.APPLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT) &&
+                    if (Settings.applets_add_open_folder_item_to_context &&
                         !this.context_menu_item_custom_open_folder) {
-                        let position = getPosition(Settings.get_string($.P.APPLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT_PLACEMENT));
+                        let position = getPosition(Settings.applets_add_open_folder_item_to_context_placement);
                         this.context_menu_item_custom_open_folder = new PopupMenu.PopupIconMenuItem(
                             _("Open applet folder"),
                             "folder",
@@ -269,9 +290,9 @@ const CT_AppletManagerPatch = {
                         );
                     }
 
-                    if (Settings.get_boolean($.P.APPLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT) &&
+                    if (Settings.applets_add_edit_file_item_to_context &&
                         !this.context_menu_item_custom_edit_file) {
-                        let position = getPosition(Settings.get_string($.P.APPLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT_PLACEMENT));
+                        let position = getPosition(Settings.applets_add_edit_file_item_to_context_placement);
                         this.context_menu_item_custom_edit_file = new PopupMenu.PopupIconMenuItem(
                             _("Edit applet main file"),
                             "text-editor",
@@ -289,7 +310,7 @@ const CT_AppletManagerPatch = {
             });
         }
 
-        if (Settings.get_boolean($.P.APPLETS_ASK_CONFIRMATION_APPLET_REMOVAL)) {
+        if (Settings.applets_ask_confirmation_applet_removal) {
             let am = AppletManager;
             // Extracted from /usr/share/cinnamon/js/ui/appletManager.js
             // Patch Appletmanager._removeAppletFromPanel to ask for confirmation on applet removal.
@@ -298,7 +319,7 @@ const CT_AppletManagerPatch = {
                 let removeApplet = function() {
                     // TODO: Check the exact Cinnamon version in which this function was changed. ¬¬
                     // Mark for deletion on EOL. Cinnamon 3.6.x+
-                    if ($.versionCompare(CINNAMON_VERSION, "3.6.4") >= 0) {
+                    if ($.versionCompare($.CINNAMON_VERSION, "3.6.4") >= 0) {
                         // WARNING!!!
                         // This is an object: {key:value}
                         // This isn't a ¬@#½~¬ object!!!: {key}
@@ -359,14 +380,14 @@ const CT_AppletManagerPatch = {
     },
 
     toggle: function() {
-        togglePatch(CT_AppletManagerPatch, "AMP", Settings.get_boolean($.P.APPLETS_TWEAKS_ENABLED));
+        togglePatch(CT_AppletManagerPatch, "AMP", Settings.applets_tweaks_enabled);
     }
 };
 
 const CT_DeskletManagerPatch = {
     enable: function() {
-        if (Settings.get_boolean($.P.DESKLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT) ||
-            Settings.get_boolean($.P.DESKLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT)) {
+        if (Settings.desklets_add_open_folder_item_to_context ||
+            Settings.desklets_add_edit_file_item_to_context) {
             STG.DMP.finalizeContextMenu = $.injectToFunction(Desklet.Desklet.prototype, "finalizeContextMenu", function() {
                 let menuItems = this._menu._getMenuItems();
                 let itemsLength = menuItems.length;
@@ -397,9 +418,9 @@ const CT_DeskletManagerPatch = {
                         return pos;
                     });
 
-                    if (Settings.get_boolean($.P.DESKLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT) &&
+                    if (Settings.desklets_add_open_folder_item_to_context &&
                         !this.context_menu_item_custom_open_folder) {
-                        let position = getPosition(Settings.get_string($.P.DESKLETS_ADD_OPEN_FOLDER_ITEM_TO_CONTEXT_PLACEMENT));
+                        let position = getPosition(Settings.desklets_add_open_folder_item_to_context_placement);
                         this.context_menu_item_custom_open_folder = new PopupMenu.PopupIconMenuItem(
                             _("Open desklet folder"),
                             "folder",
@@ -413,9 +434,9 @@ const CT_DeskletManagerPatch = {
                         );
                     }
 
-                    if (Settings.get_boolean($.P.DESKLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT) &&
+                    if (Settings.desklets_add_edit_file_item_to_context &&
                         !this.context_menu_item_custom_edit_file) {
-                        let position = getPosition(Settings.get_string($.P.DESKLETS_ADD_EDIT_FILE_ITEM_TO_CONTEXT_PLACEMENT));
+                        let position = getPosition(Settings.desklets_add_edit_file_item_to_context_placement);
                         this.context_menu_item_custom_edit_file = new PopupMenu.PopupIconMenuItem(
                             _("Edit desklet main file"),
                             "text-editor",
@@ -432,7 +453,7 @@ const CT_DeskletManagerPatch = {
             });
         }
 
-        if (Settings.get_boolean($.P.DESKLETS_ASK_CONFIRMATION_DESKLET_REMOVAL)) {
+        if (Settings.desklets_ask_confirmation_desklet_removal) {
             let dm = DeskletManager;
 
             // Extracted from /usr/share/cinnamon/js/ui/deskletManager.js
@@ -485,18 +506,18 @@ const CT_DeskletManagerPatch = {
     },
 
     toggle: function() {
-        togglePatch(CT_DeskletManagerPatch, "DMP", Settings.get_boolean($.P.DESKLETS_TWEAKS_ENABLED));
+        togglePatch(CT_DeskletManagerPatch, "DMP", Settings.desklets_tweaks_enabled);
     }
 };
 
 const CT_MessageTrayPatch = {
     enable: function() {
         let mt = Main.messageTray;
-        let bottomPosition = Settings.get_string($.P.NOTIFICATIONS_POSITION) === "bottom";
-        let ANIMATION_TIME = Settings.get_boolean($.P.NOTIFICATIONS_ENABLE_ANIMATION) ? 0.2 : 0.001;
+        let bottomPosition = Settings.notifications_position === "bottom";
+        let ANIMATION_TIME = Settings.notifications_enable_animation ? 0.2 : 0.001;
         // Cinnamon versions prior to 3.2.x uses true/flase to get top/bottom panel.
         // Newer versions use numbers to identify all four possible panels.
-        let boolPanel = $.versionCompare(CINNAMON_VERSION, "3.2.0") <= 0;
+        let boolPanel = $.versionCompare($.CINNAMON_VERSION, "3.2.0") <= 0;
         let bottomPanel = Main.panelManager.getPanel(0, (boolPanel ? true : 1));
         let topPanel = Main.panelManager.getPanel(0, (boolPanel ? false : 0));
         let rightPanel = boolPanel ? null : Main.panelManager.getPanel(0, 3);
@@ -514,13 +535,13 @@ const CT_MessageTrayPatch = {
         };
 
         let getDistanceFromAnchorPanel = () => {
-            return Number(Settings.get_int($.P.NOTIFICATIONS_DISTANCE_FROM_PANEL));
+            return Number(Settings.notifications_distance_from_panel);
         };
 
         // Notifications on Cinnamon 3.6.x already have close buttons.
         // Mark for deletion on EOL. Cinnamon 3.6.x+
-        if ($.versionCompare(CINNAMON_VERSION, "3.6.4") <= 0 &&
-            Settings.get_boolean($.P.NOTIFICATIONS_ENABLE_CLOSE_BUTTON)) {
+        if ($.versionCompare($.CINNAMON_VERSION, "3.6.4") <= 0 &&
+            Settings.notifications_enable_close_button) {
             // Needed to "accommodate" the close button.
             // The only difference is in the col_span property when setting a child.
             // Up until now, it's retro-compatible enough.
@@ -596,7 +617,7 @@ const CT_MessageTrayPatch = {
             this._notificationBin.opacity = 0;
 
             let monitor = Main.layoutManager.primaryMonitor;
-            let rightGap = Number(Settings.get_int($.P.NOTIFICATIONS_RIGHT_MARGIN));
+            let rightGap = Number(Settings.notifications_right_margin);
             let distanceFromAnchorPanel = getDistanceFromAnchorPanel();
 
             if (rightPanel) {
@@ -658,8 +679,8 @@ const CT_MessageTrayPatch = {
             // I can neither override not inject code into the Notification.prototype._init method.
             // So, I have to insert the close button "on-the-fly".
             // Mark for deletion on EOL. Cinnamon 3.6.x+
-            if ($.versionCompare(CINNAMON_VERSION, "3.6.4") <= 0 &&
-                Settings.get_boolean($.P.NOTIFICATIONS_ENABLE_CLOSE_BUTTON)) {
+            if ($.versionCompare($.CINNAMON_VERSION, "3.6.4") <= 0 &&
+                Settings.notifications_enable_close_button) {
                 try {
                     let icon = new St.Icon({
                         icon_name: "window-close",
@@ -787,7 +808,7 @@ const CT_MessageTrayPatch = {
     },
 
     toggle: function() {
-        togglePatch(CT_MessageTrayPatch, "MTP", Settings.get_boolean($.P.NOTIFICATIONS_ENABLE_TWEAKS));
+        togglePatch(CT_MessageTrayPatch, "MTP", Settings.notifications_enable_tweaks);
     }
 };
 
@@ -796,13 +817,13 @@ const WindowDemandsAttentionClass = new Lang.Class({
     wdae_shortcut_id: "cinnamon-tweaks-window-demands-attention-shortcut",
 
     _init: function() {
-        if (Settings.get_string($.P.WIN_DEMANDS_ATTENTION_ACTIVATION_MODE) === "hotkey") {
+        if (Settings.win_demands_attention_activation_mode === "hotkey") {
             this._windows = [];
             CONNECTION_IDS.WDAE_CONNECTION = global.display.connect(
                 "window-demands-attention",
                 Lang.bind(this, this._on_window_demands_attention)
             );
-        } else if (Settings.get_string($.P.WIN_DEMANDS_ATTENTION_ACTIVATION_MODE) === "force") {
+        } else if (Settings.win_demands_attention_activation_mode === "force") {
             this._tracker = Cinnamon.WindowTracker.get_default();
             this._handlerid = global.display.connect("window-demands-attention",
                 Lang.bind(this, this._on_window_demands_attention));
@@ -810,7 +831,7 @@ const WindowDemandsAttentionClass = new Lang.Class({
     },
 
     _on_window_demands_attention: function(aDisplay, aWin) {
-        switch (Settings.get_string($.P.WIN_DEMANDS_ATTENTION_ACTIVATION_MODE)) {
+        switch (Settings.win_demands_attention_activation_mode) {
             case "hotkey":
                 this._windows.push(aWin);
                 break;
@@ -833,7 +854,7 @@ const WindowDemandsAttentionClass = new Lang.Class({
     _add_keybindings: function() {
         Main.keybindingManager.addHotKey(
             this.wdae_shortcut_id,
-            Settings.get_strv($.P.WIN_DEMANDS_ATTENTION_KEYBOARD_SHORTCUT) + "::",
+            Settings.win_demands_attention_keyboard_shortcut + "::",
             Lang.bind(this, this._activate_last_window));
     },
 
@@ -842,7 +863,7 @@ const WindowDemandsAttentionClass = new Lang.Class({
     },
 
     enable: function() {
-        if (Settings.get_string($.P.WIN_DEMANDS_ATTENTION_ACTIVATION_MODE) === "hotkey") {
+        if (Settings.win_demands_attention_activation_mode === "hotkey") {
             this._add_keybindings();
         }
     },
@@ -884,7 +905,7 @@ const CT_WindowDemandsAttentionBehavior = {
     toggle: function() {
         togglePatch(CT_WindowDemandsAttentionBehavior,
             "WDAE",
-            Settings.get_string($.P.WIN_DEMANDS_ATTENTION_ACTIVATION_MODE) !== "none");
+            Settings.win_demands_attention_activation_mode !== "none");
     }
 };
 
@@ -896,10 +917,10 @@ const CT_HotCornersPatch = {
             STG.HCP = Main.layoutManager.hotCornerManager;
             delete Main.layoutManager.hotCornerManager;
             Main.layoutManager.hotCornerManager = new HotCornerPatched.HotCornerManager({
-                0: Settings.get_int($.P.HOTCORNERS_DELAY_TOP_LEFT),
-                1: Settings.get_int($.P.HOTCORNERS_DELAY_TOP_RIGHT),
-                2: Settings.get_int($.P.HOTCORNERS_DELAY_BOTTOM_LEFT),
-                3: Settings.get_int($.P.HOTCORNERS_DELAY_BOTTOM_RIGHT)
+                0: Settings.hotcorners_delay_top_left,
+                1: Settings.hotcorners_delay_top_right,
+                2: Settings.hotcorners_delay_bottom_left,
+                3: Settings.hotcorners_delay_bottom_right
             });
             Main.layoutManager._updateHotCorners();
             global.settings.connect("changed::overview-corner", Lang.bind(this, this.toggle));
@@ -916,19 +937,19 @@ const CT_HotCornersPatch = {
     },
 
     toggle: function() {
-        togglePatch(CT_HotCornersPatch, "HCP", Settings.get_boolean($.P.HOTCORNERS_TWEAKS_ENABLED));
+        togglePatch(CT_HotCornersPatch, "HCP", Settings.hotcorners_tweaks_enabled);
     },
 
     shouldEnable: function() {
-        return $.versionCompare(CINNAMON_VERSION, "3.0.7") <= 0;
+        return $.versionCompare($.CINNAMON_VERSION, "3.0.7") <= 0;
     }
 };
 
 const CT_TooltipsPatch = {
     enable: function() {
         if (this.shouldEnable("delay")) {
-            if (Settings.get_int($.P.TOOLTIPS_DELAY) !== 300) {
-                if ($.versionCompare(CINNAMON_VERSION, "3.0.7") <= 0) {
+            if (Settings.tooltips_delay !== 300) {
+                if ($.versionCompare($.CINNAMON_VERSION, "3.0.7") <= 0) {
                     STG.TTP._onMotionEvent = Tooltips.TooltipBase._onMotionEvent;
                     Tooltips.TooltipBase.prototype["_onMotionEvent"] = function(actor, event) {
                         if (this._showTimer) {
@@ -937,7 +958,7 @@ const CT_TooltipsPatch = {
                         }
 
                         if (!this.visible) {
-                            this._showTimer = Mainloop.timeout_add(Settings.get_int($.P.TOOLTIPS_DELAY),
+                            this._showTimer = Mainloop.timeout_add(Settings.tooltips_delay,
                                 Lang.bind(this, this._onTimerComplete));
                             this.mousePosition = event.get_coords();
                         }
@@ -946,12 +967,12 @@ const CT_TooltipsPatch = {
                     STG.TTP._onEnterEvent = Tooltips.TooltipBase._onEnterEvent;
                     Tooltips.TooltipBase.prototype["_onEnterEvent"] = function(actor, event) {
                         if (!this._showTimer) {
-                            this._showTimer = Mainloop.timeout_add(Settings.get_int($.P.TOOLTIPS_DELAY),
+                            this._showTimer = Mainloop.timeout_add(Settings.tooltips_delay,
                                 Lang.bind(this, this._onTimerComplete));
                             this.mousePosition = event.get_coords();
                         }
                     };
-                } else if ($.versionCompare(CINNAMON_VERSION, "3.2.0") >= 0) {
+                } else if ($.versionCompare($.CINNAMON_VERSION, "3.2.0") >= 0) {
                     STG.TTP._onMotionEvent = Tooltips.TooltipBase._onMotionEvent;
                     Tooltips.TooltipBase.prototype["_onMotionEvent"] = function(actor, event) {
                         if (this._showTimer) {
@@ -965,7 +986,7 @@ const CT_TooltipsPatch = {
                         }
 
                         if (!this.visible) {
-                            this._showTimer = Mainloop.timeout_add(Settings.get_int($.P.TOOLTIPS_DELAY),
+                            this._showTimer = Mainloop.timeout_add(Settings.tooltips_delay,
                                 Lang.bind(this, this._onShowTimerComplete));
                             this.mousePosition = event.get_coords();
                         } else {
@@ -977,7 +998,7 @@ const CT_TooltipsPatch = {
                     STG.TTP._onEnterEvent = Tooltips.TooltipBase._onEnterEvent;
                     Tooltips.TooltipBase.prototype["_onEnterEvent"] = function(actor, event) {
                         if (!this._showTimer) {
-                            this._showTimer = Mainloop.timeout_add(Settings.get_int($.P.TOOLTIPS_DELAY),
+                            this._showTimer = Mainloop.timeout_add(Settings.tooltips_delay,
                                 Lang.bind(this, this._onShowTimerComplete));
                             this.mousePosition = event.get_coords();
                         }
@@ -987,7 +1008,7 @@ const CT_TooltipsPatch = {
         }
 
         // Mark for deletion on EOL. Cinnamon 3.2.x+
-        if (Settings.get_boolean($.P.TOOLTIPS_ALIGNMENT)) {
+        if (Settings.tooltips_alignment) {
             if (this.shouldEnable("positioning")) {
                 this.desktop_settings = new Gio.Settings({
                     schema_id: "org.cinnamon.desktop.interface"
@@ -1018,7 +1039,7 @@ const CT_TooltipsPatch = {
                     this.visible = true;
                 };
             } else {
-                Settings.set_boolean($.P.TOOLTIPS_ALIGNMENT, false);
+                Settings.tooltips_alignment = false;
                 $.dealWithRejection(_("Avoid mouse pointer overlapping tooltips"));
             }
         }
@@ -1043,7 +1064,7 @@ const CT_TooltipsPatch = {
     },
 
     toggle: function() {
-        togglePatch(CT_TooltipsPatch, "TTP", Settings.get_boolean($.P.TOOLTIPS_TWEAKS_ENABLED));
+        togglePatch(CT_TooltipsPatch, "TTP", Settings.tooltips_tweaks_enabled);
     },
 
     shouldEnable: function(aTweak) {
@@ -1051,7 +1072,7 @@ const CT_TooltipsPatch = {
             case "delay":
                 return true;
             case "positioning":
-                return $.versionCompare(CINNAMON_VERSION, "3.0.7") <= 0;
+                return $.versionCompare($.CINNAMON_VERSION, "3.0.7") <= 0;
         }
         return false;
     }
@@ -1060,7 +1081,7 @@ const CT_TooltipsPatch = {
 const CT_PopupMenuManagerPatch = {
     enable: function() {
 
-        if (Settings.get_string($.P.POPUP_MENU_MANAGER_APPLETS_MENUS_BEHAVIOR) !== "default") {
+        if (Settings.popup_menu_manager_applets_menus_behavior !== "default") {
             STG.PPMM._onEventCapture = PopupMenu.PopupMenuManager.prototype["_onEventCapture"];
             PopupMenu.PopupMenuManager.prototype["_onEventCapture"] = function(actor, event) {
                 if (!this.grabbed) {
@@ -1115,14 +1136,14 @@ const CT_PopupMenuManagerPatch = {
     },
 
     toggle: function() {
-        togglePatch(CT_PopupMenuManagerPatch, "PPMM", Settings.get_boolean($.P.POPUP_MENU_MANAGER_TWEAKS_ENABLED));
+        togglePatch(CT_PopupMenuManagerPatch, "PPMM", Settings.popup_menu_manager_tweaks_enabled);
     }
 };
 
 const CT_DropToDesktopPatch = {
     enable: function() {
         if (!Main.layoutManager.CT_DropToDesktopPatch_desktop &&
-            Settings.get_boolean($.P.DESKTOP_TWEAKS_ALLOW_DROP_TO_DESKTOP)) {
+            Settings.desktop_tweaks_allow_drop_to_desktop) {
             Main.layoutManager.CT_DropToDesktopPatch_desktop = new $.CT_NemoDesktopAreaClass();
         }
     },
@@ -1134,13 +1155,13 @@ const CT_DropToDesktopPatch = {
     },
 
     toggle: function() {
-        togglePatch(CT_DropToDesktopPatch, "DTD", Settings.get_boolean($.P.DESKTOP_TWEAKS_ENABLED));
+        togglePatch(CT_DropToDesktopPatch, "DTD", Settings.desktop_tweaks_enabled);
     }
 };
 
 const CT_CustomWindowShadows = {
     enable: function() {
-        this.activate_preset(Settings.get_string($.P.WINDOW_SHADOWS_PRESET));
+        this.activate_preset(Settings.window_shadows_preset);
     },
 
     disable: function() {
@@ -1148,7 +1169,7 @@ const CT_CustomWindowShadows = {
     },
 
     toggle: function() {
-        togglePatch(CT_CustomWindowShadows, "CWS", Settings.get_boolean($.P.WINDOW_SHADOWS_TWEAKS_ENABLED));
+        togglePatch(CT_CustomWindowShadows, "CWS", Settings.window_shadows_tweaks_enabled);
     },
 
     create_params: function(r) {
@@ -1166,10 +1187,10 @@ const CT_CustomWindowShadows = {
 
         try {
             if (aPreset === "custom") {
-                let customPreset = Settings.get_string($.P.WINDOW_SHADOWS_CUSTOM_PRESET);
+                let customPreset = Settings.window_shadows_custom_preset;
 
                 if (customPreset === "") {
-                    Settings.set_string($.P.WINDOW_SHADOWS_CUSTOM_PRESET, JSON.stringify(presets.default));
+                    Settings.window_shadows_custom_preset = JSON.stringify(presets.default);
                     customPreset = presets.default;
                 }
 
@@ -1233,7 +1254,7 @@ const CT_AutoMoveWindows = {
     },
 
     toggle: function() {
-        togglePatch(CT_AutoMoveWindows, "AMW", Settings.get_boolean($.P.WINDOW_AUTO_MOVE_TWEAKS_ENABLED));
+        togglePatch(CT_AutoMoveWindows, "AMW", Settings.window_auto_move_tweaks_enabled);
     }
 };
 
@@ -1253,7 +1274,7 @@ const CT_MaximusNG = {
     },
 
     toggle: function() {
-        togglePatch(CT_MaximusNG, "MAXNG", Settings.get_boolean($.P.MAXIMUS_ENABLE_TWEAK));
+        togglePatch(CT_MaximusNG, "MAXNG", Settings.maximus_enable_tweak);
     }
 };
 
@@ -1270,7 +1291,7 @@ const CT_Patch = {
     },
 
     toggle: function() {
-        togglePatch(CT_Patch, "Key from CONNECTION_IDS object", Settings.get_boolean($.P.PREF_THAT_ENABLES_TWEAK));
+        togglePatch(CT_Patch, "Key from CONNECTION_IDS object", Settings.pref_that_enables_tweak);
     }
 };
  */
@@ -1280,14 +1301,14 @@ function init(aExtensionMeta) {
     extensionMeta = aExtensionMeta;
 
     try {
-        allowEnabling = $.versionCompare(CINNAMON_VERSION, "2.8.6") >= 0;
+        allowEnabling = $.versionCompare($.CINNAMON_VERSION, "2.8.6") >= 0;
     } catch (aErr) {
         global.logError(aErr.message);
         allowEnabling = false;
     }
 
     if (allowEnabling) {
-        bindSettings();
+        _bindSettings();
     }
 }
 
@@ -1296,7 +1317,7 @@ function enable() {
     // DO NOT allow to enable extension if it isn't installed on a proper Cinnamon version.
     if (allowEnabling) {
         try {
-            if (Settings.get_boolean($.P.APPLETS_TWEAKS_ENABLED)) {
+            if (Settings.applets_tweaks_enabled) {
                 try {
                     if (!AppletManager) {
                         AppletManager = imports.ui.appletManager;
@@ -1310,7 +1331,7 @@ function enable() {
         }
 
         try {
-            if (Settings.get_boolean($.P.DESKLETS_TWEAKS_ENABLED)) {
+            if (Settings.desklets_tweaks_enabled) {
                 try {
                     if (!DeskletManager) {
                         DeskletManager = imports.ui.deskletManager;
@@ -1324,7 +1345,7 @@ function enable() {
         }
 
         try {
-            if (Settings.get_boolean($.P.NOTIFICATIONS_ENABLE_TWEAKS)) {
+            if (Settings.notifications_enable_tweaks) {
                 CT_MessageTrayPatch.enable();
             }
         } catch (aErr) {
@@ -1332,7 +1353,7 @@ function enable() {
         }
 
         try {
-            if (Settings.get_string($.P.WIN_DEMANDS_ATTENTION_ACTIVATION_MODE) !== "none") {
+            if (Settings.win_demands_attention_activation_mode !== "none") {
                 CT_WindowDemandsAttentionBehavior.enable();
             }
         } catch (aErr) {
@@ -1341,7 +1362,7 @@ function enable() {
 
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         try {
-            if (Settings.get_boolean($.P.HOTCORNERS_TWEAKS_ENABLED)) {
+            if (Settings.hotcorners_tweaks_enabled) {
                 try {
                     // Mark for deletion on EOL. Cinnamon 3.6.x+
                     try {
@@ -1358,7 +1379,7 @@ function enable() {
         }
 
         try {
-            if (Settings.get_boolean($.P.TOOLTIPS_TWEAKS_ENABLED)) {
+            if (Settings.tooltips_tweaks_enabled) {
                 CT_TooltipsPatch.enable();
             }
         } catch (aErr) {
@@ -1366,7 +1387,7 @@ function enable() {
         }
 
         try {
-            if (Settings.get_boolean($.P.POPUP_MENU_MANAGER_TWEAKS_ENABLED)) {
+            if (Settings.popup_menu_manager_tweaks_enabled) {
                 CT_PopupMenuManagerPatch.enable();
             }
         } catch (aErr) {
@@ -1374,7 +1395,7 @@ function enable() {
         }
 
         try {
-            if (Settings.get_boolean($.P.DESKTOP_TWEAKS_ENABLED)) {
+            if (Settings.desktop_tweaks_enabled) {
                 CT_DropToDesktopPatch.enable();
             }
         } catch (aErr) {
@@ -1382,7 +1403,7 @@ function enable() {
         }
 
         try {
-            if (Settings.get_boolean($.P.WINDOW_SHADOWS_TWEAKS_ENABLED)) {
+            if (Settings.window_shadows_tweaks_enabled) {
                 try {
                     ShadowFactory = Meta.ShadowFactory.get_default();
                 } finally {
@@ -1394,7 +1415,7 @@ function enable() {
         }
 
         try {
-            if (Settings.get_boolean($.P.WINDOW_AUTO_MOVE_TWEAKS_ENABLED)) {
+            if (Settings.window_auto_move_tweaks_enabled) {
                 try {
                     // Mark for deletion on EOL. Cinnamon 3.6.x+
                     try {
@@ -1411,14 +1432,14 @@ function enable() {
         }
 
         try {
-            if (Settings.get_boolean($.P.MAXIMUS_ENABLE_TWEAK)) {
+            if (Settings.maximus_enable_tweak) {
                 CT_MaximusNG.enable();
             }
         } catch (aErr) {
             global.logError(aErr.message);
         }
 
-        if (!Settings.get_boolean($.P.INITIAL_LOAD)) {
+        if (!Settings.initial_load) {
             let msg = [
                 _("If you updated this extension from an older version, <b>you must check its settings window</b>."),
                 _("Some preferences may have been changed to their default values."),
@@ -1435,13 +1456,12 @@ function enable() {
                     msg.join(" "),
                     icon
                 );
-                Settings.set_boolean($.P.INITIAL_LOAD, true);
+                Settings.initial_load = true;
             });
         }
     } else {
-        if (CONNECTION_IDS.settings_bindings > 0) {
-            Settings.disconnect(CONNECTION_IDS.settings_bindings);
-        }
+        disconnectAllSettings();
+        Settings.destroy();
 
         $.informAndDisable();
     }
@@ -1449,9 +1469,8 @@ function enable() {
 
 // Called when extension gets disabled
 function disable() {
-    if (CONNECTION_IDS.settings_bindings > 0) {
-        Settings.disconnect(CONNECTION_IDS.settings_bindings);
-    }
+    disconnectAllSettings();
+    Settings.destroy();
 
     let patches = [
         CT_AppletManagerPatch,
