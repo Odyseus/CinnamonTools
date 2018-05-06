@@ -1,10 +1,10 @@
-let AppletMeta;
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
-    AppletMeta = __meta;
+    XletMeta = __meta;
 } else {
-    AppletMeta = imports.ui.appletManager.appletMeta["0WallpaperChangerApplet@odyseus.ong"];
+    XletMeta = imports.ui.appletManager.appletMeta["0WallpaperChangerApplet@odyseus.ong"];
 }
 
 const AppletManager = imports.ui.appletManager;
@@ -48,7 +48,7 @@ const WallChangerSettings = new Lang.Class({
     _init: function() {
         let schema = SETTINGS_SCHEMA;
 
-        let schemaDir = Gio.file_new_for_path(AppletMeta.path + "/schemas");
+        let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
         let schemaSource;
 
         if (schemaDir.query_exists(null)) {
@@ -373,7 +373,7 @@ WallChangerDaemon.prototype = {
     start: function() {
         debug("Starting daemon");
         GLib.spawn_async(
-            AppletMeta.path, [AppletMeta.path + "/wall-changer-daemon.py"],
+            XletMeta.path, [XletMeta.path + "/wall-changer-daemon.py"],
             null,
             GLib.SpawnFlags.DO_NOT_REAP_CHILD,
             null
@@ -743,7 +743,7 @@ WallChangerControls.prototype = {
         debug("Prev");
         this._dbus.PrevRemote(function(result) {
             if (result[0].length === 0) {
-                Main.notifyError(_(AppletMeta.name), _("Unable to go back any further, no history available"));
+                Main.notifyError(_(XletMeta.name), _("Unable to go back any further, no history available"));
             }
         });
     },
@@ -1143,8 +1143,8 @@ function informAndDisable(aInstance_id) {
             _("Your Cinnamon version may not be compatible!!!"),
             _("Minimum Cinnamon version allowed: 3.0")
         ];
-        global.logError(_(AppletMeta.name) + "\n" + msg.join("\n"));
-        Main.criticalNotify(_(AppletMeta.name), msg.join("\n"));
+        global.logError(_(XletMeta.name) + "\n" + msg.join("\n"));
+        Main.criticalNotify(_(XletMeta.name), msg.join("\n"));
     } finally {
         let removal = Mainloop.timeout_add(
             3000,

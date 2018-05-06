@@ -1,10 +1,10 @@
-let AppletMeta;
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
-    AppletMeta = __meta;
+    XletMeta = __meta;
 } else {
-    AppletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
+    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
 const Clutter = imports.gi.Clutter;
@@ -30,10 +30,10 @@ const NotificationUrgency = {
 
 const SPICES_URL = "http://cinnamon-spices.linuxmint.com";
 
-Gettext.bindtextdomain(AppletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
+Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
 function _(aStr) {
-    let customTrans = Gettext.dgettext(AppletMeta.uuid, aStr);
+    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
 
     if (customTrans !== aStr && aStr !== "") {
         return customTrans;
@@ -424,7 +424,7 @@ CustomSwitchMenuItem.prototype = {
 
 function informJSONError(aMsg) {
     customNotify(
-        _(AppletMeta.name),
+        _(XletMeta.name),
         _("Error parsing JSON string.") + "\n" +
         aMsg + "\n" +
         _("A detailed error has been logged into ~/.cinnamon/glass.log."),

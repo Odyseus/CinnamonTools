@@ -1,10 +1,10 @@
-let ExtensionMeta;
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
-    ExtensionMeta = __meta;
+    XletMeta = __meta;
 } else {
-    ExtensionMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
+    XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
 const Cinnamon = imports.gi.Cinnamon;
@@ -24,12 +24,12 @@ const ModalDialog = imports.ui.modalDialog;
 const St = imports.gi.St;
 const Util = imports.misc.util;
 
-const SETTINGS_SCHEMA = "org.cinnamon.extensions." + ExtensionMeta.uuid;
+const SETTINGS_SCHEMA = "org.cinnamon.extensions." + XletMeta.uuid;
 
-Gettext.bindtextdomain(ExtensionMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
+Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
 function _(aStr) {
-    let customTrans = Gettext.dgettext(ExtensionMeta.uuid, aStr);
+    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
 
     if (customTrans !== aStr && aStr !== "") {
         return customTrans;
@@ -131,7 +131,7 @@ const CinnamonTweaksSettings = new Lang.Class({
         let schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
 
         if (!schemaObj) {
-            let schemaDir = Gio.file_new_for_path(ExtensionMeta.path + "/schemas");
+            let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
 
             if (schemaDir.query_exists(null)) {
                 schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
@@ -143,7 +143,7 @@ const CinnamonTweaksSettings = new Lang.Class({
 
         if (!schemaObj) {
             throw new Error(_("Schema %s could not be found for extension %s.")
-                .format(SETTINGS_SCHEMA, ExtensionMeta.uuid) + _("Please check your installation."));
+                .format(SETTINGS_SCHEMA, XletMeta.uuid) + _("Please check your installation."));
         }
 
         this.schema = new Gio.Settings({
@@ -219,7 +219,7 @@ const CinnamonTweaksSettings = new Lang.Class({
 var Settings = new CinnamonTweaksSettings();
 
 function dealWithRejection(aTweakDescription) {
-    Main.warningNotify(_(ExtensionMeta.name), _(aTweakDescription) + "\n" +
+    Main.warningNotify(_(XletMeta.name), _(aTweakDescription) + "\n" +
         _("Tweak activation aborted!!!") + "\n" +
         _("Your Cinnamon version may not be compatible!!!"));
 }
@@ -250,11 +250,11 @@ function informAndDisable() {
             _("Minimum Cinnamon version allowed: 2.8.6")
         ];
         global.logError(msg);
-        Main.criticalNotify(_(ExtensionMeta.name), msg.join("\n"));
+        Main.criticalNotify(_(XletMeta.name), msg.join("\n"));
     } finally {
         let enabledExtensions = global.settings.get_strv("enabled-extensions");
-        Extension.unloadExtension(ExtensionMeta.uuid, Extension.Type.EXTENSION);
-        enabledExtensions.splice(enabledExtensions.indexOf(ExtensionMeta.uuid), 1);
+        Extension.unloadExtension(XletMeta.uuid, Extension.Type.EXTENSION);
+        enabledExtensions.splice(enabledExtensions.indexOf(XletMeta.uuid), 1);
         global.settings.set_strv("enabled-extensions", enabledExtensions);
     }
 }
@@ -657,7 +657,7 @@ var CT_MaximusNGClass = new Lang.Class({
 
     log: function(message) {
         if (Settings.maximus_enable_logging) {
-            global.log("[" + _(ExtensionMeta.name) + "][Maximus] " + message);
+            global.log("[" + _(XletMeta.name) + "][Maximus] " + message);
         }
     },
 

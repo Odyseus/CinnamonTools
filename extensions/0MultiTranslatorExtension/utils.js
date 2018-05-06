@@ -1,10 +1,10 @@
-let ExtensionMeta;
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
-    ExtensionMeta = __meta;
+    XletMeta = __meta;
 } else {
-    ExtensionMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
+    XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
 const Atk = imports.gi.Atk;
@@ -36,7 +36,7 @@ const TTS_TEXT_MAX_LEN = 100;
 const LNG_CHOOSER_COLUMNS = 4;
 const ANIMATED_ICON_UPDATE_TIMEOUT = 16;
 const STATUS_BAR_MAX_MESSAGE_LENGTH = 60;
-const SETTINGS_SCHEMA = "org.cinnamon.extensions." + ExtensionMeta.uuid;
+const SETTINGS_SCHEMA = "org.cinnamon.extensions." + XletMeta.uuid;
 
 /**
  * Implemented to avoid having to reset settings to
@@ -112,10 +112,10 @@ try {
     global.logError(aErr);
 }
 
-Gettext.bindtextdomain(ExtensionMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
+Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
 function _(aStr) {
-    let customTrans = Gettext.dgettext(ExtensionMeta.uuid, aStr);
+    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
 
     if (customTrans !== aStr && aStr !== "") {
         return customTrans;
@@ -466,7 +466,7 @@ var Settings = getSettings();
 function getSettings(aSchema) {
     let schema = aSchema || SETTINGS_SCHEMA;
 
-    let schemaDir = Gio.file_new_for_path(ExtensionMeta.path + "/schemas");
+    let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
     let schemaSource;
 
     if (schemaDir.query_exists(null)) {
@@ -481,7 +481,7 @@ function getSettings(aSchema) {
 
     if (!schemaObj) {
         throw new Error(_("Schema %s could not be found for extension %s.")
-            .format(schema, ExtensionMeta.uuid) + _("Please check your installation."));
+            .format(schema, XletMeta.uuid) + _("Please check your installation."));
     }
 
     return new Gio.Settings({
@@ -1944,7 +1944,7 @@ StatusBar.prototype = {
         this._message_label = new St.Label();
         this._message_label.get_clutter_text().use_markup = true;
 
-        let spinner_icon = ExtensionMeta.path + "/icons/multi-translator-process-working.svg";
+        let spinner_icon = XletMeta.path + "/icons/multi-translator-process-working.svg";
         this._spinner = new AnimatedIcon(
             spinner_icon,
             16
@@ -3111,11 +3111,11 @@ TranslatorsManager.prototype = {
     _load_translators: function() {
         let translator_module;
         let translators = [];
-        let files_list = get_files_in_dir(ExtensionMeta.path + "/translation_providers");
+        let files_list = get_files_in_dir(XletMeta.path + "/translation_providers");
         let translators_imports;
 
         if (typeof require !== "function") {
-            translators_imports = imports.ui.extensionSystem.extensions[ExtensionMeta.uuid].translation_providers;
+            translators_imports = imports.ui.extensionSystem.extensions[XletMeta.uuid].translation_providers;
         }
 
         let i = 0,
@@ -3510,7 +3510,7 @@ function getTimeStamp(aDate) {
 
 function checkDependencies() {
     Util.spawn_async([
-            ExtensionMeta.path + "/extensionHelper.py",
+            XletMeta.path + "/extensionHelper.py",
             "check-dependencies"
         ],
         function(aResponse) {
@@ -3527,7 +3527,7 @@ function checkDependencies() {
 
             if (res.length > 1) {
                 global.logError(
-                    "\n# [" + _(ExtensionMeta.name) + "]" + "\n" +
+                    "\n# [" + _(XletMeta.name) + "]" + "\n" +
                     "# " + _("Unmet dependencies found!!!") + "\n" +
                     res + "\n" +
                     "# " + _("Check this extension help file for instructions.") + "\n" +
@@ -3536,7 +3536,7 @@ function checkDependencies() {
                 informAboutMissingDependencies(res);
                 Settings.set_boolean(P.ALL_DEPENDENCIES_MET, false);
             } else {
-                Main.notify(_(ExtensionMeta.name), _("All dependencies seem to be met."));
+                Main.notify(_(XletMeta.name), _("All dependencies seem to be met."));
                 Settings.set_boolean(P.ALL_DEPENDENCIES_MET, true);
             }
         });
@@ -3544,7 +3544,7 @@ function checkDependencies() {
 
 function informAboutMissingDependencies(aRes) {
     customNotify(
-        _(ExtensionMeta.name),
+        _(XletMeta.name),
         _("Unmet dependencies found!!!") + "\n" +
         "<b>" + aRes + "</b>" + "\n\n" +
         _("Check this extension help file for instructions.") + "\n" +
@@ -3557,7 +3557,7 @@ function informAboutMissingDependencies(aRes) {
             callback: function() {
                 Util.spawn_async([
                     "xdg-open",
-                    ExtensionMeta.path + "/HELP.html"
+                    XletMeta.path + "/HELP.html"
                 ], null);
             }
         }, {

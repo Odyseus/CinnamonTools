@@ -34,7 +34,7 @@ let ShadowFactory = null;
 let WorkspaceTracker = null;
 
 let allowEnabling = false;
-let extensionMeta = null;
+let xletMeta = null;
 
 let CONNECTION_IDS = {
     settings_bindings: {},
@@ -1297,8 +1297,8 @@ const CT_Patch = {
  */
 
 // Called when extension is loaded
-function init(aExtensionMeta) {
-    extensionMeta = aExtensionMeta;
+function init(aXletMeta) {
+    xletMeta = aXletMeta;
 
     try {
         allowEnabling = $.versionCompare($.CINNAMON_VERSION, "2.8.6") >= 0;

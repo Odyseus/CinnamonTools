@@ -25,7 +25,7 @@ const MIN_MENU_WIDTH = 400;
 
 let FeedReader;
 let Logger;
-let AppletMeta;
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
@@ -724,7 +724,7 @@ FeedDisplayMenuItem.prototype = {
         this.reader = new FeedReader.FeedReader(
             this.logger,
             url,
-            "~/.cinnamon/" + AppletMeta.uuid, {
+            "~/.cinnamon/" + XletMeta.uuid, {
                 "onUpdate": Lang.bind(this, this.update),
                 "onError": Lang.bind(this, this.error),
                 "onNewItem": Lang.bind(this.owner, this.owner.new_item_notification),
@@ -1188,6 +1188,6 @@ ApplicationContextMenuItem.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    AppletMeta = aMetadata;
+    XletMeta = aMetadata;
     return new FeedsByJonbrettForkByOdyseus(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

@@ -9,11 +9,11 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-let extensionMeta = null;
+let xletMeta = null;
 
 // Called when extension is loaded
-function init(aExtensionMeta) {
-    extensionMeta = aExtensionMeta;
+function init(aXletMeta) {
+    xletMeta = aXletMeta;
 }
 
 // Called when extension is loaded

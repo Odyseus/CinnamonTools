@@ -20,7 +20,7 @@ const Mainloop = imports.mainloop;
 const St = imports.gi.St;
 const Util = imports.misc.util;
 
-let ExtensionMeta;
+let XletMeta;
 
 function TranslatorExtension() {
     this._init.apply(this, arguments);
@@ -363,7 +363,7 @@ TranslatorExtension.prototype = {
     _openTranslationHistory: function() {
         this.close();
         Util.spawn_async([
-            ExtensionMeta.path + "/extensionHelper.py",
+            XletMeta.path + "/extensionHelper.py",
             "history",
             Settings.get_int($.P.HISTORY_INITIAL_WINDOW_WIDTH) + "," +
             Settings.get_int($.P.HISTORY_INITIAL_WINDOW_HEIGHT) + "," +
@@ -589,7 +589,7 @@ TranslatorExtension.prototype = {
                             _("Preferences"),
                             Lang.bind(this, function() {
                                 this.close();
-                                Util.spawn_async([ExtensionMeta.path + "/settings.py"], null);
+                                Util.spawn_async([XletMeta.path + "/settings.py"], null);
                             }),
                             $.ICONS.preferences
                         ],
@@ -615,7 +615,7 @@ TranslatorExtension.prototype = {
                                 this.close();
                                 Util.spawn_async([
                                     "xdg-open",
-                                    ExtensionMeta.path + "/HELP.html"
+                                    XletMeta.path + "/HELP.html"
                                 ], null);
                             }),
                             $.ICONS.help
@@ -1045,13 +1045,13 @@ TranslatorExtension.prototype = {
 
     _getCssPath: function(theme) {
         // Get CSS of new theme, and check it exists, falling back to "default"
-        let cssPath = ExtensionMeta.path + "/themes/" + theme + ".css";
+        let cssPath = XletMeta.path + "/themes/" + theme + ".css";
 
         try {
             let cssFile = Gio.file_new_for_path(cssPath);
 
             if (!cssFile.query_exists(null)) {
-                cssPath = ExtensionMeta.path + "/themes/default.css";
+                cssPath = XletMeta.path + "/themes/default.css";
                 Settings.set_string($.P.DIALOG_THEME, "default");
             }
         } catch (aErr) {
@@ -1072,7 +1072,7 @@ TranslatorExtension.prototype = {
             let cssFile = Gio.file_new_for_path(cssPath);
 
             if (!cssFile.query_exists(null)) {
-                cssPath = ExtensionMeta.path + "/themes/default.css";
+                cssPath = XletMeta.path + "/themes/default.css";
                 Settings.set_string($.P.DIALOG_THEME, "default");
             }
         } catch (aErr) {
@@ -1167,8 +1167,8 @@ TranslatorExtension.prototype = {
 
 let translator = null;
 
-function init(aExtensionMeta) {
-    ExtensionMeta = aExtensionMeta;
+function init(aXletMeta) {
+    XletMeta = aXletMeta;
 }
 
 function enable() {

@@ -1,10 +1,10 @@
-let AppletMeta;
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
-    AppletMeta = __meta;
+    XletMeta = __meta;
 } else {
-    AppletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
+    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
 const Clutter = imports.gi.Clutter;
@@ -39,10 +39,10 @@ const NotificationUrgency = {
     CRITICAL: 3
 };
 
-Gettext.bindtextdomain(AppletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
+Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
 function _(aStr) {
-    let customTrans = Gettext.dgettext(AppletMeta.uuid, aStr);
+    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
 
     if (customTrans !== aStr && aStr !== "") {
         return customTrans;
@@ -52,7 +52,7 @@ function _(aStr) {
 }
 
 function ngettext(aSingular, aPlural, aN) {
-    let customTrans = Gettext.dngettext(AppletMeta.uuid, aSingular, aPlural, aN);
+    let customTrans = Gettext.dngettext(XletMeta.uuid, aSingular, aPlural, aN);
 
     if (aN === 1) {
         if (customTrans !== aSingular) {
@@ -2637,7 +2637,7 @@ function versionCompare(v1, v2, options) {
 
 function informAboutMissingDependencies(aMsg, aRes) {
     customNotify(
-        _(AppletMeta.name),
+        _(XletMeta.name),
         aMsg + "\n" + "<b>" + aRes + "</b>" + "\n\n" +
         _("Check this applet help file for instructions."),
         "dialog-warning",
@@ -2649,7 +2649,7 @@ function informAboutMissingDependencies(aMsg, aRes) {
                 // asynchronously because most likely this is informing
                 // of a failed command that could be "xdg-open".
                 Gio.AppInfo.launch_default_for_uri(
-                    "file://" + AppletMeta.path + "/HELP.html",
+                    "file://" + XletMeta.path + "/HELP.html",
                     null
                 );
             }
