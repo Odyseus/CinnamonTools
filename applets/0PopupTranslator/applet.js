@@ -45,6 +45,7 @@ PopupTranslatorApplet.prototype = {
         this.metadata = aMetadata;
         this.instance_id = aInstance_id;
         this.orientation = aOrientation;
+        this.keybindings_base_name = this.metadata.uuid + "-" + this.instance_id;
 
         try {
             this._bindSettings();
@@ -868,7 +869,7 @@ PopupTranslatorApplet.prototype = {
                 prefForcedId = "pref_translate_key_forced_" + aID;
 
             if (this[prefId]) {
-                this[id] = "popup_translator_key_" + aID + "-" + this._instance_id;
+                this[id] = this.keybindings_base_name + "-" + aID;
 
                 Main.keybindingManager.addHotKey(
                     this[id],
@@ -880,7 +881,7 @@ PopupTranslatorApplet.prototype = {
             }
 
             if (this[prefForcedId]) {
-                this[forcedId] = "popup_translator_key_forced_" + aID + "-" + this._instance_id;
+                this[forcedId] = this.keybindings_base_name + "-forced-" + aID;
 
                 Main.keybindingManager.addHotKey(
                     this[forcedId],
