@@ -41,6 +41,7 @@ QuickMenuApplet.prototype = {
         this.metadata = aMetadata;
         this.orientation = aOrientation;
         this.instance_id = aInstance_id;
+        this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         try {
             this._bindSettings();
@@ -518,7 +519,11 @@ QuickMenuApplet.prototype = {
     },
 
     _updateKeybinding: function() {
-        Main.keybindingManager.addHotKey("quick_menu_hotkey_" + this.instance_id, this.pref_hotkey,
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
+
+        Main.keybindingManager.addHotKey(
+            this.menu_keybinding_name,
+            this.pref_hotkey,
             Lang.bind(this, function() {
                 if (!Main.overview.visible && !Main.expo.visible) {
                     this.menu.toggle();
@@ -529,7 +534,7 @@ QuickMenuApplet.prototype = {
     on_applet_removed_from_panel: function() {
         this.dealWithFolderMonitor(true);
         this.settings.finalize();
-        Main.keybindingManager.removeHotKey("quick_menu_hotkey_" + this.instance_id);
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
     },
 
     on_applet_clicked: function(event) { // jshint ignore:line
