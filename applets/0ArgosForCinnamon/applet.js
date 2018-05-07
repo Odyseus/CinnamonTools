@@ -45,6 +45,7 @@ ArgosForCinnamonApplet.prototype = {
         this.metadata = aMetadata;
         this.instance_id = aInstance_id;
         this.orientation = aOrientation;
+        this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         try {
             this._bindSettings();
@@ -939,17 +940,17 @@ ArgosForCinnamonApplet.prototype = {
             Mainloop.source_remove(this._cycleTimeout);
         }
 
-        Main.keybindingManager.removeHotKey("odyseus-argos-overlay-key-" + this.instance_id);
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
         this.menu.removeAll();
     },
 
     _updateKeybindings: function() {
-        Main.keybindingManager.removeHotKey("odyseus-argos-overlay-key-" + this.instance_id);
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
         if (this.pref_overlay_key !== "") {
             Main.keybindingManager.addHotKey(
-                "odyseus-argos-overlay-key-" + this.instance_id,
+                this.menu_keybinding_name,
                 this.pref_overlay_key,
                 Lang.bind(this, function() {
                     if (!Main.overview.visible && !Main.expo.visible) {
