@@ -1,22 +1,22 @@
 {
-    "keybinding": {
+    "pref_overlay_key": {
         "type": "keybinding",
-        "description": "Set the keybinding to call the menu",
-        "default": "<Super><Shift>w"
+        "description": "Keyboard shortcut to open and close the menu",
+        "default": ""
     },
-    "woeidLookup": {
+    "pref_woeid_lookup": {
         "type": "button",
-        "description": "Get WOEID",
+        "description": "Get WOEID (Where On Earth IDentification)",
         "callback": "woeidLookup",
         "tooltip": "http://woeid.rosselliot.co.nz/"
     },
-    "woeid": {
+    "pref_woeid": {
         "type": "entry",
         "default": "",
         "description": "WOEID",
-        "tooltip": "Where On Earth ID"
+        "tooltip": "Where On Earth IDentification"
     },
-    "temperatureUnit": {
+    "pref_temperature_unit": {
         "type": "radiogroup",
         "default": "celsius",
         "description": "Temperature unit",
@@ -25,12 +25,12 @@
             "fahrenheit": "fahrenheit"
         }
     },
-    "temperatureHighFirst": {
+    "pref_temperature_high_first": {
         "type": "checkbox",
         "default": false,
         "description": "Show high temperature first in forecast"
     },
-    "windSpeedUnit": {
+    "pref_wind_speed_unit": {
         "type": "combobox",
         "default": "kph",
         "description": "Wind speed unit",
@@ -41,9 +41,9 @@
             "knots": "knots"
         }
     },
-    "pressureUnit": {
+    "pref_pressure_unit": {
         "type": "combobox",
-        "default": "mbar",
+        "default": "kPa",
         "description": "Atmospheric pressure unit",
         "options": {
             "mbar": "mbar",
@@ -56,62 +56,70 @@
             "kPa": "kPa"
         }
     },
-    "verticalOrientation": {
+    "pref_vertical_orientation": {
         "type": "checkbox",
         "default": false,
         "description": "Vertical orientation"
     },
-    "showSunrise": {
+    "pref_show_sunrise": {
         "type": "checkbox",
         "default": true,
         "description": "Show sunrise / sunset times"
     },
-    "show24Hours": {
+    "pref_show_common_sense_hours": {
         "type": "checkbox",
-        "default": false,
+        "default": true,
         "description": "Display time in 24 hour format"
     },
-    "forecastDays": {
+    "pref_forecast_days": {
         "type": "spinbutton",
-        "default": 2,
+        "default": 5,
         "min": 2,
         "max": 7,
         "units": "days",
         "step": 1,
         "description": "Forecast length"
     },
-    "translateCondition": {
-        "type": "checkbox",
-        "default": true,
-        "description": "Translate condition"
-    },
-    "useSymbolicIcons": {
+    "pref_translate_condition": {
         "type": "checkbox",
         "default": false,
+        "description": "Translate condition"
+    },
+    "pref_use_symbolic_icons": {
+        "type": "checkbox",
+        "default": true,
         "description": "Symbolic icons"
     },
-    "showTextInPanel": {
+    "pref_show_text_in_panel": {
         "type": "checkbox",
         "default": true,
         "description": "Display current temperature in panel"
     },
-    "showCommentInPanel": {
+    "pref_show_comment_in_panel": {
         "type": "checkbox",
-        "default": true,
+        "default": false,
         "description": "Show the weather condition (e.g., \"Windy\", \"Clear\") in the panel"
     },
-    "locationLabelOverride": {
+    "pref_location_label_override": {
         "type": "entry",
         "default": "",
         "description": "Override location label"
     },
-    "refreshInterval": {
+    "pref_refresh_interval": {
         "type": "spinbutton",
-        "default": 15,
+        "default": 30,
         "min": 1,
-        "max": 360,
+        "max": 1440,
         "units": "minutes",
         "step": 5,
         "description": "Update interval"
+    },
+    "pref_last_check": {
+        "type": "generic",
+        "default": 0
+    },
+    "pref_weather_data": {
+        "type": "generic",
+        "default": {}
     }
 }
