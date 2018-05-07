@@ -65,8 +65,7 @@ CinnamonMenuSecondGeneration.prototype = {
                 this.menuManager = new PopupMenu.PopupMenuManager(this);
                 this.menu = new Applet.AppletPopupMenu(this, aOrientation);
                 this.menuManager.addMenu(this.menu);
-                this.keybinding_name = "cinnamon-menu-fork-by-odyseus-" +
-                    this.metadata.uuid.split("@")[1] + this.instance_id;
+                this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
                 this._appletEnterEventId = 0;
                 this._appletLeaveEventId = 0;
@@ -389,8 +388,8 @@ CinnamonMenuSecondGeneration.prototype = {
     },
 
     _updateKeybinding: function() {
-        Main.keybindingManager.removeHotKey(this.keybinding_name);
-        Main.keybindingManager.addHotKey(this.keybinding_name, this.pref_overlay_key, Lang.bind(this, function() {
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
+        Main.keybindingManager.addHotKey(this.menu_keybinding_name, this.pref_overlay_key, Lang.bind(this, function() {
             if (!Main.overview.visible && !Main.expo.visible) {
                 this.menu.toggle_with_options(this.pref_animate_menu);
             }
@@ -508,7 +507,7 @@ CinnamonMenuSecondGeneration.prototype = {
     },
 
     on_applet_removed_from_panel: function() {
-        Main.keybindingManager.removeHotKey(this.keybinding_name);
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
         if (this.recentFilesManager && this._recentFilesManagerId > 0) {
             this.recentFilesManager.disconnect(this._recentFilesManagerId);
