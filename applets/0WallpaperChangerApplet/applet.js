@@ -50,25 +50,24 @@ WallpaperChangerApplet.prototype = {
         this.orientation = aOrientation;
         this.metadata = aMetadata;
         this.instance_id = aInstance_id;
+        let baseKeybindingName = this.metadata.uuid + "-" + this.instance_id;
+        this.next_wall_keybinding_name = baseKeybindingName + "-next-wallpaper";
+        this.prev_wall_keybinding_name = baseKeybindingName + "-prev-wallpaper";
+        this.menu_keybinding_name = baseKeybindingName + "-menu";
+
+        try {
+            this._daemon = new $.WallChangerDaemon();
+            this._bindSettings();
+            this._expandAppletContextMenu();
+        } catch (aErr) {
+            global.logError(aErr);
+        }
 
         Mainloop.idle_add(() => {
             try {
-                this._daemon = new $.WallChangerDaemon();
                 this._add_context_menu_id = 0;
-                this._notifications_id = 0;
-                this._toggle_daemon_id = 0;
-                this._custom_applet_label_id = 0;
-                this._custom_applet_icon_id = 0;
-                this._current_profile_id = 0;
-                this._next_wallpaper_shortcut_id = 0;
-                this._prev_wallpaper_shortcut_id = 0;
-                this._toggle_menu_shortcut_id = 0;
-                this._preview_width_id = 0;
-                this._invert_menu_items_id = 0;
                 this._daemon_changed_id = 0;
                 this._daemon_error_id = 0;
-                this._bindSettings();
-                this._expandAppletContextMenu();
 
                 this.set_applet_tooltip(aMetadata.name);
                 this._updateIconAndLabel();
@@ -158,13 +157,13 @@ WallpaperChangerApplet.prototype = {
     },
 
     _updateKeybindings: function() {
-        Main.keybindingManager.removeHotKey("odyseus-wallpaper-changer-next-wallpaper-shortcut");
-        Main.keybindingManager.removeHotKey("odyseus-wallpaper-changer-prev-wallpaper-shortcut");
-        Main.keybindingManager.removeHotKey("odyseus-wallpaper-changer-toggle-menu-shortcut");
+        Main.keybindingManager.removeHotKey(this.next_wall_keybinding_name);
+        Main.keybindingManager.removeHotKey(this.prev_wall_keybinding_name);
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
         if (Boolean(Settings.next_wallpaper_shortcut) && this.wallChangerControls) {
             Main.keybindingManager.addHotKey(
-                "odyseus-wallpaper-changer-next-wallpaper-shortcut",
+                this.next_wall_keybinding_name,
                 Settings.next_wallpaper_shortcut + "::",
                 Lang.bind(this.wallChangerControls, this.wallChangerControls.next)
             );
@@ -172,7 +171,7 @@ WallpaperChangerApplet.prototype = {
 
         if (Boolean(Settings.prev_wallpaper_shortcut) && this.wallChangerControls) {
             Main.keybindingManager.addHotKey(
-                "odyseus-wallpaper-changer-prev-wallpaper-shortcut",
+                this.prev_wall_keybinding_name,
                 Settings.prev_wallpaper_shortcut + "::",
                 Lang.bind(this.wallChangerControls, this.wallChangerControls.prev)
             );
@@ -180,7 +179,7 @@ WallpaperChangerApplet.prototype = {
 
         if (Boolean(Settings.toggle_menu_shortcut) && this.wallChangerControls) {
             Main.keybindingManager.addHotKey(
-                "odyseus-wallpaper-changer-toggle-menu-shortcut",
+                this.menu_keybinding_name,
                 Settings.toggle_menu_shortcut + "::",
                 Lang.bind(this, this._toggleMenu)
             );
@@ -202,58 +201,45 @@ WallpaperChangerApplet.prototype = {
     },
 
     _bindSettings: function() {
-        this._notifications_id = Settings.connect(
-            "changed::notifications",
-            Lang.bind(this, function() {
+        $.connectSettings([
+            "notifications"
+        ], () => {
+            // TO TRANSLATORS: Full sentence:
+            // "Notifications are now enabled/disabled"
+            Main.notify(_(this.metadata.name), _("Notifications are now %s")
                 // TO TRANSLATORS: Full sentence:
                 // "Notifications are now enabled/disabled"
-                Main.notify(_(this.metadata.name), _("Notifications are now %s")
-                    // TO TRANSLATORS: Full sentence:
-                    // "Notifications are now enabled/disabled"
-                    .format((Settings.notifications) ? _("enabled") : _("disabled")));
-            })
-        );
+                .format((Settings.notifications) ? _("enabled") : _("disabled")));
+        });
 
-        // "Dummy" preference. So I can toggle the daemon from Python code.
-        this._toggle_daemon_id = Settings.connect(
-            "changed::toggle-daemon",
-            Lang.bind(this, function() {
-                this._daemon.toggle();
-            })
-        );
+        $.connectSettings([
+            "toggle-daemon"
+        ], this._daemon.toggle);
 
-        this._custom_applet_label_id = Settings.connect("changed::custom-applet-label",
-            Lang.bind(this, function() {
-                this._updateIconAndLabel();
-            }));
+        $.connectSettings([
+            "custom-applet-label",
+            "custom-applet-icon"
+        ], this._updateIconAndLabel);
 
-        this._custom_applet_icon_id = Settings.connect("changed::custom-applet-icon",
-            Lang.bind(this, function() {
-                this._updateIconAndLabel();
-            }));
+        $.connectSettings([
+            "current-profile"
+        ], () => {
+            if (Settings.notifications) {
+                Main.notify(_(this.metadata.name), _("Profile changed to %s")
+                    .format(Settings.current_profile));
+            }
+        });
 
-        this._current_profile_id = Settings.connect("changed::current-profile",
-            Lang.bind(this, function() {
-                if (Settings.notifications) {
-                    Main.notify(_(this.metadata.name), _("Profile changed to %s")
-                        .format(Settings.current_profile));
-                }
-            }));
+        $.connectSettings([
+            "next-wallpaper-shortcut",
+            "prev-wallpaper-shortcut",
+            "toggle-menu-shortcut"
+        ], this._updateKeybindings);
 
-        this._next_wallpaper_shortcut_id = Settings.connect("changed::next-wallpaper-shortcut",
-            Lang.bind(this, this._updateKeybindings));
-
-        this._prev_wallpaper_shortcut_id = Settings.connect("changed::prev-wallpaper-shortcut",
-            Lang.bind(this, this._updateKeybindings));
-
-        this._toggle_menu_shortcut_id = Settings.connect("changed::toggle-menu-shortcut",
-            Lang.bind(this, this._updateKeybindings));
-
-        this._preview_width_id = Settings.connect("changed::wallpaper-preview-width",
-            Lang.bind(this, this._buildMenu));
-
-        this._invert_menu_items_id = Settings.connect("changed::invert-menu-items-order",
-            Lang.bind(this, this._buildMenu));
+        $.connectSettings([
+            "wallpaper-preview-width",
+            "invert-menu-items-order"
+        ], this._buildMenu);
     },
 
     _expandAppletContextMenu: function() {
@@ -373,48 +359,11 @@ WallpaperChangerApplet.prototype = {
 
         $.debug("Disabling applet");
 
+        $.disconnectAllSettings();
+        Settings.destroy();
+
         if (this._add_context_menu_id > 0) {
             Mainloop.source_remove(this._add_context_menu_id);
-        }
-
-        if (this._notifications_id > 0) {
-            Settings.schema.disconnect(this._notifications_id);
-        }
-
-        if (this._toggle_daemon_id > 0) {
-            Settings.schema.disconnect(this._toggle_daemon_id);
-        }
-
-        if (this._custom_applet_label_id > 0) {
-            Settings.schema.disconnect(this._custom_applet_label_id);
-        }
-
-        if (this._custom_applet_icon_id > 0) {
-            Settings.schema.disconnect(this._custom_applet_icon_id);
-        }
-
-        if (this._current_profile_id > 0) {
-            Settings.schema.disconnect(this._current_profile_id);
-        }
-
-        if (this._next_wallpaper_shortcut_id > 0) {
-            Settings.schema.disconnect(this._next_wallpaper_shortcut_id);
-        }
-
-        if (this._prev_wallpaper_shortcut_id > 0) {
-            Settings.schema.disconnect(this._prev_wallpaper_shortcut_id);
-        }
-
-        if (this._toggle_menu_shortcut_id > 0) {
-            Settings.schema.disconnect(this._toggle_menu_shortcut_id);
-        }
-
-        if (this._preview_width_id > 0) {
-            Settings.schema.disconnect(this._preview_width_id);
-        }
-
-        if (this._invert_menu_items_id > 0) {
-            Settings.schema.disconnect(this._invert_menu_items_id);
         }
 
         if (this._daemon_changed_id > 0) {
@@ -426,16 +375,6 @@ WallpaperChangerApplet.prototype = {
         }
 
         this._add_context_menu_id = 0;
-        this._notifications_id = 0;
-        this._toggle_daemon_id = 0;
-        this._custom_applet_label_id = 0;
-        this._custom_applet_icon_id = 0;
-        this._current_profile_id = 0;
-        this._next_wallpaper_shortcut_id = 0;
-        this._prev_wallpaper_shortcut_id = 0;
-        this._toggle_menu_shortcut_id = 0;
-        this._preview_width_id = 0;
-        this._invert_menu_items_id = 0;
         this._daemon_changed_id = 0;
         this._daemon_error_id = 0;
 
@@ -444,9 +383,9 @@ WallpaperChangerApplet.prototype = {
             this._daemon.stop();
         }
 
-        Main.keybindingManager.removeHotKey("odyseus-wallpaper-changer-next-wallpaper-shortcut");
-        Main.keybindingManager.removeHotKey("odyseus-wallpaper-changer-prev-wallpaper-shortcut");
-        Main.keybindingManager.removeHotKey("odyseus-wallpaper-changer-toggle-menu-shortcut");
+        Main.keybindingManager.removeHotKey(this.next_wall_keybinding_name);
+        Main.keybindingManager.removeHotKey(this.prev_wall_keybinding_name);
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
     },
 
     _toggleMenu: function() {

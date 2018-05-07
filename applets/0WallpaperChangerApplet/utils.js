@@ -28,6 +28,10 @@ const Util = imports.misc.util;
 
 const SETTINGS_SCHEMA = "org.cinnamon.applets.{{UUID}}";
 
+let CONNECTION_IDS = {
+    settings_bindings: {}
+};
+
 var CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
 
 Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
@@ -46,179 +50,72 @@ const WallChangerSettings = new Lang.Class({
     Name: "WallChangerSettings",
 
     _init: function() {
-        let schema = SETTINGS_SCHEMA;
+        let schemaSource = GioSSS.get_default();
+        let schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
 
-        let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
-        let schemaSource;
+        if (!schemaObj) {
+            let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
 
-        if (schemaDir.query_exists(null)) {
-            schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
-                GioSSS.get_default(),
-                false);
-        } else {
-            schemaSource = GioSSS.get_default();
+            if (schemaDir.query_exists(null)) {
+                schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
+                    GioSSS.get_default(),
+                    false);
+                schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
+            }
         }
 
-        this.schemaObj = schemaSource.lookup(schema, false);
-
-        if (!this.schemaObj) {
+        if (!schemaObj) {
             throw new Error(_("Schema %s could not be found for extension %s.")
-                .format(schema, AppletUUID) + _("Please check your installation."));
+                .format(SETTINGS_SCHEMA, XletMeta.uuid) + _("Please check your installation."));
         }
 
         this.schema = new Gio.Settings({
-            settings_schema: this.schemaObj
+            settings_schema: schemaObj
         });
 
         this._handlers = [];
+
+        this._extendProperties();
     },
 
-    get daemon_is_running() {
-        return this.schema.get_boolean("daemon-is-running");
+    /**
+     * Create a getter and a setter for each key in the schema.
+     */
+    _extendProperties: function() {
+        let prefKeys = this.schema.list_keys();
+        // Based on Cinnamon's xlets settings code. A life saver!
+        for (let i = prefKeys.length - 1; i >= 0; i--) {
+            Object.defineProperty(this, (prefKeys[i].split("-")).join("_"), {
+                get: Lang.bind(this, this._getValue, prefKeys[i]),
+                set: Lang.bind(this, this._setValue, prefKeys[i]),
+                enumerable: true,
+                configurable: true
+            });
+        }
     },
 
-    set daemon_is_running(value) {
-        this.schema.set_boolean("daemon-is-running", Boolean(value));
+    _getValue: function(aPrefKey) {
+        // Check if this works for all variant types. ¬¬
+        return this.schema.get_value(aPrefKey).deep_unpack();
     },
 
-    get toggle_daemon() {
-        return this.schema.get_boolean("toggle-daemon");
-    },
-
-    set toggle_daemon(value) {
-        this.schema.set_boolean("toggle-daemon", Boolean(value));
-    },
-
-    get logging_enabled() {
-        return this.schema.get_boolean("logging-enabled");
-    },
-
-    set logging_enabled(value) {
-        this.schema.set_boolean("logging-enabled", Boolean(value));
-    },
-
-    get auto_rotate() {
-        return this.schema.get_boolean("auto-rotate");
-    },
-
-    set auto_rotate(value) {
-        this.schema.set_boolean("auto-rotate", Boolean(value));
-    },
-
-    get auto_start() {
-        return this.schema.get_boolean("auto-start");
-    },
-
-    set auto_start(value) {
-        this.schema.set_boolean("auto-start", Boolean(value));
-    },
-
-    get current_profile() {
-        return this.schema.get_string("current-profile");
-    },
-
-    set current_profile(value) {
-        this.schema.set_string("current-profile", value);
-    },
-
-    get custom_applet_label() {
-        return this.schema.get_string("custom-applet-label");
-    },
-
-    set custom_applet_label(value) {
-        this.schema.set_string("custom-applet-label", value);
-    },
-
-    get custom_applet_icon() {
-        return this.schema.get_string("custom-applet-icon");
-    },
-
-    set custom_applet_icon(value) {
-        this.schema.set_string("custom-applet-icon", value);
-    },
-
-    get icon_preview() {
-        return this.schema.get_boolean("icon-preview");
-    },
-
-    set icon_preview(value) {
-        this.schema.set_boolean("icon-preview", Boolean(value));
-    },
-
-    get interval() {
-        return this.schema.get_int("interval");
-    },
-
-    set interval(value) {
-        this.schema.set_int("interval", parseInt(value));
-    },
-
-    get notifications() {
-        return this.schema.get_boolean("notifications");
-    },
-
-    set notifications(value) {
-        this.schema.set_boolean("notifications", Boolean(value));
-    },
-
-    get wallpaper_preview_width() {
-        return this.schema.get_int("wallpaper-preview-width");
-    },
-
-    set wallpaper_preview_width(value) {
-        this.schema.set_int("wallpaper-preview-width", parseInt(value));
-    },
-
-    get invert_menu_items_order() {
-        return this.schema.get_boolean("invert-menu-items-order");
-    },
-
-    set invert_menu_items_order(value) {
-        this.schema.set_boolean("invert-menu-items-order", Boolean(value));
-    },
-
-    get profiles() {
-        return this.schema.get_value("profiles").deep_unpack();
-    },
-
-    set profiles(value) {
-        this.schema.set_value("profiles", new GLib.Variant("a{sa(sb)}", value));
-    },
-
-    get random() {
-        return this.schema.get_boolean("random");
-    },
-
-    set random(value) {
-        this.schema.set_boolean("random", Boolean(value));
-    },
-
-    get rotation() {
-        return this.schema.get_string("rotation");
-    },
-
-    set rotation(value) {
-        this.schema.set_string("rotation", value);
-    },
-
-    get next_wallpaper_shortcut() {
-        return this.schema.get_strv("next-wallpaper-shortcut");
-    },
-
-    get prev_wallpaper_shortcut() {
-        return this.schema.get_strv("prev-wallpaper-shortcut");
-    },
-
-    get toggle_menu_shortcut() {
-        return this.schema.get_strv("toggle-menu-shortcut");
-    },
-
-    get remember_profile_state() {
-        return this.schema.get_boolean("remember-profile-state");
-    },
-
-    set remember_profile_state(value) {
-        this.schema.set_boolean("remember-profile-state", Boolean(value));
+    _setValue: function(aPrefVal, aPrefKey) {
+        let oldValue = this._getValue(aPrefKey);
+        if (oldValue !== aPrefVal) {
+            // FOR FRAKS SAKE!!! set_value throws a value error when used instead of set_strv!!! WTH!
+            // FIXME:
+            // Come up with a better way to handle this nonsense!!! I want transparency!!!
+            // For what I could gather, there is no transparent way of doing this. So, moving on. ¬¬
+            if (typeof oldValue === "object") {
+                if (aPrefKey === "profiles") {
+                    this.schema.set_value("profiles", new GLib.Variant("a{sa(sb)}", aPrefVal));
+                } else {
+                    this.schema.set_strv(aPrefKey, aPrefVal);
+                }
+            } else {
+                this.schema.set_value(aPrefKey, aPrefVal);
+            }
+        }
     },
 
     connect: function(signal, callback) {
@@ -1159,6 +1056,27 @@ function informAndDisable(aInstance_id) {
     }
 }
 
+function disconnectAllSettings() {
+    for (let id in CONNECTION_IDS.settings_bindings) {
+        if (CONNECTION_IDS.settings_bindings.hasOwnProperty(id)) {
+            Settings.disconnect(id);
+        }
+    }
+}
+
+function connectSettings(aPrefKeys, aCallback) {
+    let settingsCallback = () => {
+        aCallback();
+    };
+
+    for (let i = aPrefKeys.length - 1; i >= 0; i--) {
+        let prop = (aPrefKeys[i].split("-")).join("_");
+        CONNECTION_IDS.settings_bindings[prop] = Settings.connect(
+            "changed::" + aPrefKeys[i], settingsCallback
+        );
+    }
+}
+
 /*
 exported CINNAMON_VERSION,
          WallChangerStateButton,
@@ -1169,5 +1087,7 @@ exported CINNAMON_VERSION,
          WallChangerPreviewMenuItem,
          WallChangerSwitch,
          versionCompare,
-         informAndDisable
+         informAndDisable,
+         disconnectAllSettings,
+         connectSettings
  */
