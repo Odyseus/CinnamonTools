@@ -42,6 +42,7 @@ SimpleToDoListApplet.prototype = {
         this.metadata = aMetadata;
         this.instance_id = aInstance_id;
         this.orientation = aOrientation;
+        this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         try {
             this._bindSettings();
@@ -504,11 +505,11 @@ SimpleToDoListApplet.prototype = {
     },
 
     _updateKeybindings: function() {
-        Main.keybindingManager.removeHotKey("odyseus-simple-todo-list-overlay-key-" + this.instance_id);
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
         if (this.pref_overlay_key !== "") {
             Main.keybindingManager.addHotKey(
-                "odyseus-simple-todo-list-overlay-key-" + this.instance_id,
+                this.menu_keybinding_name,
                 this.pref_overlay_key,
                 Lang.bind(this, function() {
                     if (!Main.overview.visible && !Main.expo.visible) {
@@ -907,7 +908,7 @@ SimpleToDoListApplet.prototype = {
 
         this._clear();
         this.settings.finalize();
-        Main.keybindingManager.removeHotKey("odyseus-simple-todo-list-overlay-key-" + this.instance_id);
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
     },
 
     get request_rebuild() {
