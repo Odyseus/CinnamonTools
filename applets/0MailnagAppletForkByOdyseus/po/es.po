@@ -6,14 +6,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2018-05-08 04:24-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-08 03:54-0300\n"
+"PO-Revision-Date: 2018-05-08 02:42-0300\n"
+"Last-Translator: Odyseus\n"
+"Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."
@@ -43,7 +47,8 @@ msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
+#: ../../__app__/python_modules/localized_help_creator.py:322
+#: ../../__app__/python_modules/localized_help_creator.py:353
 #, python-format
 msgid "Help for %s"
 msgstr ""
@@ -53,11 +58,15 @@ msgid "IMPORTANT!!!"
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:355
-msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgid ""
+"Never delete any of the files found inside this xlet folder. It might break "
+"this xlet functionality."
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:356
-msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgid ""
+"Bug reports, feature requests and contributions should be done on this "
+"xlet's repository linked next."
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:369
@@ -65,117 +74,137 @@ msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:370
-msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgid ""
+"If this xlet was installed from Cinnamon Settings, all of this xlet's "
+"localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgid ""
+"If this xlet was installed manually and not trough Cinnamon Settings, "
+"localizations can be installed by executing the script called "
+"**localizations.bash** from a terminal opened inside the xlet's folder."
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
-msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+msgid ""
+"If this xlet has no locale available for your language, you could create it "
+"by following the following instructions."
 msgstr ""
 
 #: applet.js:399
 #, javascript-format
 msgid "You have %d new mails!"
-msgstr ""
+msgstr "¡Tienes %d correos nuevos!"
 
 #: applet.js:400 applet.js:437
 msgid "Mark All Read"
-msgstr ""
+msgstr "Marcar todo como leído"
 
 #: applet.js:409
 msgid "You have new mail!"
-msgstr ""
+msgstr "¡Tienes nuevo correo!"
 
 #: applet.js:411
 msgid "Mark Read"
-msgstr ""
+msgstr "Marcar como leído"
 
 #: applet.js:473 applet.js:520
 msgid "No unread mails."
-msgstr ""
+msgstr "Sin mensajes no leídos."
 
 #: applet.js:501
 msgid "Mailnag daemon is not running!"
-msgstr ""
+msgstr "El demonio Mailnag no se está ejecutando!"
 
 #: applet.js:511
 #, javascript-format
 msgid "You have a mail from %s!"
-msgstr ""
+msgstr "¡Tienes un correo de %s!"
 
 #: applet.js:517
 #, javascript-format
 msgid "You have %d unread mails!"
-msgstr ""
+msgstr "¡Tienes %d correos sin leer!"
 
 #: applet.js:530
 msgid "Click to see error!"
-msgstr ""
+msgstr "Hacer clic para ver el error!"
 
 #: applet.js:531
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #. metadata.json->description
 msgid "Mailnag mail notifier applet"
-msgstr ""
+msgstr "Applet notificador de correo basado en Mailnag."
 
 #. metadata.json->name
 msgid "Mailnag (Fork By Odyseus)"
-msgstr ""
+msgstr "Mailnag (Modificado por Odyseus)"
 
 #. settings-schema.json->pref_notifications_enabled->description
 msgid "Show notifications"
-msgstr ""
+msgstr "Mostrar Notificaciones"
 
 #. settings-schema.json->pref_notifications_enabled->tooltip
-msgid "Enables display of mail arrived notifications by applet. Make sure you disable mailnag notification plugin, otherwise you will have duplicates."
+msgid ""
+"Enables display of mail arrived notifications by applet. Make sure you "
+"disable mailnag notification plugin, otherwise you will have duplicates."
 msgstr ""
+"Permite la visualización de notificaciones al recibir correo. Asegúrese de "
+"desactivar el complemento de notificación mailnag; de lo contrario, tendrá "
+"duplicados."
 
 #. settings-schema.json->pref_launch_client_on_click->description
 msgid "Launch mail client on click"
-msgstr ""
+msgstr "Iniciar el cliente de correo al hacer clic"
 
 #. settings-schema.json->pref_launch_client_on_click->tooltip
 msgid "Mail client is launched when clicked on a menu item."
 msgstr ""
+"El cliente de correo se iniciará cuando se hace clic en un elemento del menú."
 
 #. settings-schema.json->pref_keep_one_menu_open->description
 msgid "Keep just one sub menu open"
-msgstr ""
+msgstr "Mantener un solo menú abierto en todo momento"
 
 #. settings-schema.json->pref_keep_one_menu_open->tooltip
-msgid "When enabled, the previously opened sub menu will be automatically closed."
+msgid ""
+"When enabled, the previously opened sub menu will be automatically closed."
 msgstr ""
+"Con esta opción habilitada, un submenú previamente abierto será "
+"automáticamente cerrado."
 
 #. settings-schema.json->pref_middle_click_behavior->description
 msgid "On middle click:"
-msgstr ""
+msgstr "Al hacer clic medio:"
 
 #. settings-schema.json->pref_middle_click_behavior->tooltip
 msgid "What to do when middle clicked on applet icon"
-msgstr ""
+msgstr "Qué hacer cuando se hace clic en el applet"
 
 #. settings-schema.json->pref_middle_click_behavior->options
 msgid "Mark all read"
-msgstr ""
+msgstr "Marcar todo como leído"
 
 #. settings-schema.json->pref_middle_click_behavior->options
 msgid "Launch mail client"
-msgstr ""
+msgstr "Iniciar el cliente de correo"
 
 #. settings-schema.json->pref_middle_click_behavior->options
 msgid "Do nothing"
-msgstr ""
+msgstr "No hacer nada"
 
 #. settings-schema.json->pref_client->description
 msgid "Mail client to launch (or webpage)"
-msgstr ""
+msgstr "Cliente de correo para iniciar (o página web)"
 
 #. settings-schema.json->pref_client->tooltip
-msgid "Enter the command to launch your mail client here. You can also enter a web address that starts with 'http'."
+msgid ""
+"Enter the command to launch your mail client here. You can also enter a web "
+"address that starts with 'http'."
 msgstr ""
+"Ingresar el comando para iniciar su cliente de correo aquí. También puede "
+"ingresar una dirección web que comienza con 'http'."

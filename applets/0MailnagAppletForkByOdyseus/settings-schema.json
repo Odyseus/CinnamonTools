@@ -1,19 +1,24 @@
 {
-    "notifications": {
+    "pref_notifications_enabled": {
         "type": "checkbox",
-        "default": true,
+        "default": false,
         "description": "Show notifications",
         "tooltip": "Enables display of mail arrived notifications by applet. Make sure you disable mailnag notification plugin, otherwise you will have duplicates."
     },
 
-    "launch_client_on_click": {
+    "pref_launch_client_on_click": {
         "type": "checkbox",
         "default": false,
         "description": "Launch mail client on click",
         "tooltip": "Mail client is launched when clicked on a menu item."
     },
-
-    "middle_click": {
+    "pref_keep_one_menu_open": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Keep just one sub menu open",
+        "tooltip": "When enabled, the previously opened sub menu will be automatically closed."
+    },
+    "pref_middle_click_behavior": {
         "type": "combobox",
         "default": "mark_read",
         "description": "On middle click:",
@@ -25,11 +30,10 @@
         }
     },
 
-    "client": {
+    "pref_client": {
         "type": "entry",
         "default": "thunderbird",
         "description": "Mail client to launch (or webpage)",
-        "tooltip": "Enter the command to launch your mail client here. You can also enter a web address that starts with 'http'.",
-        "indent": true
+        "tooltip": "Enter the command to launch your mail client here. You can also enter a web address that starts with 'http'."
     }
 }
