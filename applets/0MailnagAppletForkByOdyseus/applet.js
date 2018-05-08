@@ -226,7 +226,6 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         let mails = dbusList[0];
         let r = [];
 
-        global.logError(mails.toString());
         let i = 0,
             iLen = mails.length;
 
