@@ -49,7 +49,7 @@ _cinnamon_tools_script(){
     # Completion of commands.
     if [[ $COMP_CWORD == 1 ]]; then
         COMPREPLY=( $(compgen -W \
-            "menu build generate dev -h --help --version -r --restart-cinnamon" -- "${cur}") )
+            "menu build build_themes generate dev -h --help --version -r --restart-cinnamon" -- "${cur}") )
         return 0
     fi
 

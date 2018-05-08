@@ -634,7 +634,8 @@ class XletsHelperCore():
                 cmd = [
                     "make-cinnamon-xlet-pot-app",
                     "--custom-header",
-                    "--scan-additional-file=../../__app__/python_modules/localized_help_creator.py"
+                    "--scan-additional-file=../../__app__/python_modules/localized_help_creator.py",
+                    "--ignored-pattern=__data__/*"
                 ]
                 call(cmd, cwd=xlet_root_folder)
             except Exception:
