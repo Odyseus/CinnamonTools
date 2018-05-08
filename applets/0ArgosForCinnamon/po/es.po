@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon 2.02\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-03 23:05-0300\n"
+"POT-Creation-Date: 2018-05-08 03:54-0300\n"
 "PO-Revision-Date: 2018-05-03 15:45-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -32,7 +32,7 @@ msgstr "Copatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:747 utils.js:2645
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:748 utils.js:2645
 msgid "Help"
 msgstr "Ayuda"
 
@@ -521,153 +521,153 @@ msgstr "BitBar en macOS"
 msgid "Plugin"
 msgstr "Complemento"
 
-#: applet.js:141
+#: applet.js:142
 msgid "Script file is not executable."
 msgstr "El archivo de comandos no es ejecutable."
 
-#: applet.js:143
+#: applet.js:144
 msgid "The script file can be made executable from this applet context menu."
 msgstr "El archivo de comandos puede hacerse ejecutable desde el menú contextual de este applet."
 
-#: applet.js:150 applet.js:731
+#: applet.js:151 applet.js:732
 msgid "Script file isn't a file, but a directory."
 msgstr "El archivo de comandos no es una archivo, es un directorio."
 
-#: applet.js:161 applet.js:738
+#: applet.js:162 applet.js:739
 msgid "Script file doesn't exists."
 msgstr "El archivo de comandos no existe."
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file 'FileName':"
-#: applet.js:248
+#: applet.js:249
 #, javascript-format
 msgid "Unable to execute file '%s':"
 msgstr "Imposible ejecutar el archivo '%s':"
 
-#: applet.js:253 applet.js:577 applet.js:604
+#: applet.js:254 applet.js:578 applet.js:605
 msgid "Script file not set, cannot be found or it isn't an executable."
 msgstr "Archivo de comandos no establecido, no puede ser encontrado o no es ejecutable."
 
 #. TO TRANSLATORS: Full sentence:
 #. "Invalid menu level for line 'LineWithTheError'"
-#: applet.js:355
+#: applet.js:356
 #, javascript-format
 msgid "Invalid menu level for line '%s'"
 msgstr "Nivel de menú inválido para la línea '%s'"
 
-#: applet.js:414 applet.js:416
+#: applet.js:415 applet.js:417
 msgid "Script file name:"
 msgstr "Nombre del archivo de secuencia de comandos:"
 
-#: applet.js:416
+#: applet.js:417
 msgid "No script set"
 msgstr "Archivo de comandos no establecido"
 
-#: applet.js:419 applet.js:505
+#: applet.js:420 applet.js:506
 msgid "Execution interval:"
 msgstr "Intervalo de ejecución:"
 
-#: applet.js:422 applet.js:628
+#: applet.js:423 applet.js:629
 msgid "Rotation interval:"
 msgstr "Intervalo de rotación:"
 
-#: applet.js:429
+#: applet.js:430
 msgid "Script execution time:"
 msgstr "Tiempo de ejecución de secuencias de comandos:"
 
-#: applet.js:437
+#: applet.js:438
 msgid "Output process time:"
 msgstr "Tiempo de procesado de salida:"
 
 #. settings-schema.json->pref_update_interval_units->tooltip
-#: applet.js:513
+#: applet.js:514
 msgid "Choose the time unit for the script execution interval."
 msgstr "Elegir la unidad de tiempo para el intervalo de ejecución del archivo de comandos."
 
-#: applet.js:526
+#: applet.js:527
 msgid "Set the script execution interval."
 msgstr "Elegir el intervalo de ejecución del archivo de comandos."
 
-#: applet.js:536
+#: applet.js:537
 msgid "Choose script"
 msgstr "Elegir archivo de comandos"
 
-#: applet.js:563
+#: applet.js:564
 msgid "Choose a script file."
 msgstr "Elegir un archivo de comandos."
 
-#: applet.js:569
+#: applet.js:570
 msgid "Edit script"
 msgstr "Editar archivo de comandos"
 
-#: applet.js:588
+#: applet.js:589
 msgid "Edit the script file with your prefered text editor."
 msgstr "Editar el archivo de comandos con su editor de textos preferido."
 
-#: applet.js:589
+#: applet.js:590
 msgid "After saving the changes made, the applet will update its data automatically if there is an interval set."
 msgstr "Luego de guardar los cambios realizados, el applet actualizará sus datos automáticamente si hay un intervalo de ejecución establecido."
 
-#: applet.js:590
+#: applet.js:591
 msgid "Or the update could be done manually with the »Refresh« item on this applet context menu."
 msgstr "O la actualización puede realizarse manualmente con el ítem »Refrescar« en el menú contextual de este applet."
 
-#: applet.js:596
+#: applet.js:597
 msgid "Refresh"
 msgstr "Refrescar"
 
-#: applet.js:612
+#: applet.js:613
 msgid "This will re-run on demand the script assigned to this applet for the purpose of updating its output."
 msgstr "Esto volverá a ejecutar a petición el archivo de comandos asignado a este applet con el propósito de actualizar su salida."
 
-#: applet.js:613
+#: applet.js:614
 msgid "This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited."
 msgstr "Esto es sólo necesario si no hay un intervalo de actualización establecido (o si el intervalo es muy largo), así que la actualización necesita realizarse manualmente en caso de que el archivo de comandos haya sido editado."
 
 #. Extras submenu
-#: applet.js:620
+#: applet.js:621
 msgid "Extras"
 msgstr "Extras"
 
 #. settings-schema.json->pref_rotation_interval_units->tooltip
-#: applet.js:634
+#: applet.js:635
 msgid "Choose the time unit for the applet text rotation interval."
 msgstr "Elegir la unidad de tiempo para el intervalo de rotación del texto del applet."
 
-#: applet.js:647
+#: applet.js:648
 msgid "Set the applet text rotation interval."
 msgstr "Establecer el intervalo de rotación del texto del applet."
 
-#: applet.js:656
+#: applet.js:657
 msgid "Clear script"
 msgstr "Vaciar archivo de comandos"
 
-#: applet.js:662 applet.js:680
+#: applet.js:663 applet.js:681
 msgid "This operation will remove the current script from this applet leaving it \"blank\"."
 msgstr "Esta operación eliminará el archivo de comandos de este applet dejándolo \"en blanco\"."
 
-#: applet.js:663
+#: applet.js:664
 msgid "The current applet settings will be untouched and the actual script file will not be deleted."
 msgstr "Las preferencias actuales del applet no serán modificadas y el archivo de comando en sí no será borrado."
 
-#: applet.js:664
+#: applet.js:665
 msgid "Do you want to proceed?"
 msgstr "¿Desea proceder?"
 
-#: applet.js:694
+#: applet.js:695
 msgid "Make script executable"
 msgstr "Hacer archivo de comandos ejecutable"
 
-#: applet.js:700
+#: applet.js:701
 msgid "Make the script file executable so it can be used by this applet."
 msgstr "Hacer el archivo de comandos ejecutable para que pueda ser utilizado por este applet."
 
-#: applet.js:724
+#: applet.js:725
 msgid "Script file is already executable."
 msgstr "El archivo de comandos ya es ejecutable."
 
 #. Just in case.
-#: applet.js:751 utils.js:2646
+#: applet.js:752 utils.js:2646
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 

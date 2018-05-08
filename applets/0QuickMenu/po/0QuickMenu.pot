@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0QuickMenu 1.10\n"
-"POT-Creation-Date: 2018-05-04 21:34-0300\n"
+"POT-Creation-Date: 2018-05-08 05:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:510
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:511
 msgid "Help"
 msgstr ""
 
@@ -186,28 +186,28 @@ msgstr ""
 
 #. NOTE: This string could be left blank because it's a default string,
 #. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:200
+#: applet.js:201
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""
 
-#: applet.js:492
+#: applet.js:493
 msgid "Update menu"
 msgstr ""
 
-#: applet.js:497
+#: applet.js:498
 msgid "Scan the main folder to re-create the menu."
 msgstr ""
 
-#: applet.js:500
+#: applet.js:501
 msgid "Open folder"
 msgstr ""
 
-#: applet.js:506
+#: applet.js:507
 msgid "Open the main folder."
 msgstr ""
 
-#: applet.js:516
+#: applet.js:517
 msgid "Open the help file."
 msgstr ""
 

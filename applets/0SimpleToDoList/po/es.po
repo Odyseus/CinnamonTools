@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.03\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-03 23:05-0300\n"
+"POT-Creation-Date: 2018-05-08 03:53-0300\n"
 "PO-Revision-Date: 2018-05-04 21:20-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -32,7 +32,7 @@ msgstr "Copatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:852
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:853
 msgid "Help"
 msgstr "Ayuda"
 
@@ -280,67 +280,67 @@ msgstr "Estilo incorrecto de las entradas"
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr "La única manera de arreglar esto (que yo he podido encontrar) es editando el tema de Cinnamon que uno está usando y remover esas medidas fijas. Los selectores CSS que necesitan ser editados son **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** y **.popup-menu StEntry:focus**. Dependiendo para qué versión de Cinnamon el tema fue creado, uno puede encontrar sólo los primeros dos selectores, los últimos dos o todos ellos. Las propiedades CSS que necesitan ser editadas son **width** y **height**. Ellas podrían ser eliminadas, pero lo más sensible de hacer es renombrarlas a **min-width** y **min-height** respectivamente. Luego de editar el archivo del tema y reiniciar Cinnamon, las entradas de texto de este applet deberían lucir y funcionar correctamente."
 
-#: applet.js:108 applet.js:166
+#: applet.js:109 applet.js:167
 msgid "New tasks list..."
 msgstr "Nueva lista de tareas..."
 
-#: applet.js:752
+#: applet.js:753
 msgid "Save as TODO"
 msgstr "Guardar como TODO"
 
-#: applet.js:761
+#: applet.js:762
 msgid "Save all current tasks lists as a TODO file."
 msgstr "Guardar todas las listas de tareas actuales a un archivo TODO."
 
-#: applet.js:767
+#: applet.js:768
 msgid "Export tasks"
 msgstr "Exportar tareas"
 
-#: applet.js:776
+#: applet.js:777
 msgid "Export all current tasks lists into a JSON file."
 msgstr "Exportar todas las listas de tareas actuales a un archivo JSON."
 
-#: applet.js:777 applet.js:793
+#: applet.js:778 applet.js:794
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr "Archivos en formato JSON exportados por este applet pueden ser importados al applet y las listas de tareas encontradas dentro de dicho archivo serán agregadas a las listas de tareas actualmente cargadas en el applet."
 
-#: applet.js:783
+#: applet.js:784
 msgid "Import tasks"
 msgstr "Importar tareas"
 
-#: applet.js:792
+#: applet.js:793
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr "Importar listas de tareas hacia este applet desde un archivo JSON previamente exportado."
 
-#: applet.js:802
+#: applet.js:803
 msgid "Restore example tasks"
 msgstr "Restaurar tareas de ejemplo"
 
-#: applet.js:816
+#: applet.js:817
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr "Restaurar la lista de tareas de ejemplo que estaban presentes cuando se cargó por primera vez el applet."
 
-#: applet.js:822
+#: applet.js:823
 msgid "Reset tasks"
 msgstr "Restablecer tareas"
 
-#: applet.js:828 applet.js:843
+#: applet.js:829 applet.js:844
 msgid "WARNING!!!"
 msgstr "¡ADVERTENCIA!"
 
-#: applet.js:829
+#: applet.js:830
 msgid "Do you really want to remove all your current tasks?"
 msgstr "¿Realmente desea eliminar todas sus tareas actuales?"
 
-#: applet.js:830 applet.js:843
+#: applet.js:831 applet.js:844
 msgid "This operation cannot be reverted!!!"
 msgstr "¡Esta operación no puede ser revertida!"
 
-#: applet.js:842
+#: applet.js:843
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr "Eliminar todas las listas de tareas actualmente cargadas en este applet."
 
-#: applet.js:856
+#: applet.js:857
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 

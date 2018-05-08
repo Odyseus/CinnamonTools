@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks 1.14\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-03 23:05-0300\n"
+"POT-Creation-Date: 2018-05-08 03:55-0300\n"
 "PO-Revision-Date: 2018-05-04 21:33-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -220,7 +220,7 @@ msgstr "Ajustes de caja de herramientas"
 msgid "Enable Tooltips tweaks"
 msgstr "Habilitar ajustes de caja de herramientas"
 
-#: settings.py:289 extension.js:1022
+#: settings.py:289 extension.js:1043
 msgid "Avoid mouse pointer overlapping tooltips"
 msgstr "Evitar la superposición de puntero del ratón sobre las cajas de información sobre herramientas"
 
@@ -1132,15 +1132,15 @@ msgstr "Comando para desinstalar el esquema de preferencias:"
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr "Para importar/exportar preferencias, el comando **dconf** necesita estar disponible en el sistema."
 
-#: extension.js:259
+#: extension.js:280
 msgid "Open applet folder"
 msgstr "Abrir carpeta del applet"
 
-#: extension.js:276
+#: extension.js:297
 msgid "Edit applet main file"
 msgstr "Editar el archivo principal del applet"
 
-#: extension.js:341
+#: extension.js:362
 #, javascript-format
 msgid ""
 "Do you want to remove '%s' from your panel?\n"
@@ -1149,15 +1149,15 @@ msgstr ""
 "¿Desea eliminar '%s' de su panel?\n"
 "ID de instancia: %s"
 
-#: extension.js:404
+#: extension.js:425
 msgid "Open desklet folder"
 msgstr "Abrir carpeta del desklet"
 
-#: extension.js:420
+#: extension.js:441
 msgid "Edit desklet main file"
 msgstr "Editar archivo principal del desklet"
 
-#: extension.js:467
+#: extension.js:488
 #, javascript-format
 msgid ""
 "Do you want to remove '%s' from your desktop?\n"
@@ -1166,19 +1166,19 @@ msgstr ""
 "¿Desea eliminar '%s' de su escritorio?\n"
 "ID de instancia: %s"
 
-#: extension.js:907
+#: extension.js:928
 msgid "Hotcorners tweaks"
 msgstr "Ajustes de esquinas activas"
 
-#: extension.js:1423
+#: extension.js:1444
 msgid "If you updated this extension from an older version, <b>you must check its settings window</b>."
 msgstr "Si actualizó esta extensión desde una versión anterior, <b>usted debe comprobar su ventana de configuración</b>."
 
-#: extension.js:1424
+#: extension.js:1445
 msgid "Some preferences may have been changed to their default values."
 msgstr "Es posible que algunas preferencias hayan sido cambiadas a sus valores predeterminados."
 
-#: extension.js:1425
+#: extension.js:1446
 msgid "This message will not be displayed again."
 msgstr "Este mensaje no se volverá a mostrar."
 
@@ -1186,40 +1186,40 @@ msgstr "Este mensaje no se volverá a mostrar."
 msgid "Invalid overview options: Incorrect number of corners"
 msgstr "Opciones de resumen no válidas: número incorrecto de esquinas"
 
-#: utils.js:193
+#: utils.js:145
 #, javascript-format
 msgid "Schema %s could not be found for extension %s."
 msgstr "No se pudo encontrar el esquema %s para la extensión %s."
 
-#: utils.js:194
+#: utils.js:146
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 
-#: utils.js:204
+#: utils.js:223
 msgid "Tweak activation aborted!!!"
 msgstr "¡¡¡Activación del ajuste abortada!!!"
 
-#: utils.js:205 utils.js:230
+#: utils.js:224 utils.js:249
 msgid "Your Cinnamon version may not be compatible!!!"
 msgstr "¡¡¡Su versión de Cinnamon puede que no sea compatible!!!"
 
-#: utils.js:210
+#: utils.js:229
 msgid "This is a test notification"
 msgstr "Esta es una notificación de prueba"
 
-#: utils.js:229
+#: utils.js:248
 msgid "Extension activation aborted!!!"
 msgstr "¡¡¡Activación de la extensión abortada!!!"
 
-#: utils.js:231
+#: utils.js:250
 msgid "Minimum Cinnamon version allowed: 2.8.6"
 msgstr "Versión mínima de CInnamon permitida: 2.8.6"
 
-#: utils.js:522
+#: utils.js:541
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: utils.js:528
+#: utils.js:547
 msgid "OK"
 msgstr "Aceptar"
 

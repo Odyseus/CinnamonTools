@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-06 21:49-0300\n"
+"POT-Creation-Date: 2018-05-08 03:53-0300\n"
 "PO-Revision-Date: 2018-05-06 21:51-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Español; Castellano <zodiac_es@yahoo.es>\n"
@@ -69,8 +69,8 @@ msgid ""
 "Bug reports, feature requests and contributions should be done on this "
 "xlet's repository linked next."
 msgstr ""
-"Los reportes de fallos, peticiones de características y contribuciones "
-"deben hacerse en el repositorio de este xlet vinculado a continuación."
+"Los reportes de fallos, peticiones de características y contribuciones deben "
+"hacerse en el repositorio de este xlet vinculado a continuación."
 
 #: ../../__app__/python_modules/localized_help_creator.py:369
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
@@ -105,330 +105,326 @@ msgstr ""
 "Si este xlet no está disponible en su idioma, la localización puede ser "
 "creada siguiendo las siguientes instrucciones."
 
-#: applet.js:180
+#: applet.js:139
 msgid "..."
 msgstr "..."
 
-#: applet.js:181
+#: applet.js:140
 msgid "Click to open"
 msgstr "Click para abrir"
 
-#: applet.js:230
-msgid "Settings"
-msgstr "Ajustes"
-
 #. gettext can't see these inline
-#: applet.js:541
+#: applet.js:544
 msgid "Sunrise"
 msgstr "Amanecer"
 
-#: applet.js:542
+#: applet.js:545
 msgid "Sunset"
 msgstr "Puesta del sol"
 
-#: applet.js:643
+#: applet.js:654
 msgid "Loading current weather ..."
 msgstr "Cargando el tiempo actual..."
 
-#: applet.js:646
+#: applet.js:657
 msgid "Loading future weather ..."
 msgstr "Cargando pronóstico del tiempo..."
 
-#: applet.js:669
+#: applet.js:680
 msgid "Loading ..."
 msgstr "Cargando..."
 
-#: applet.js:675
+#: applet.js:686
 msgid "Refresh"
 msgstr "Recargar"
 
-#: applet.js:744
+#: applet.js:754
 msgid "Temperature:"
 msgstr "Temperatura:"
 
-#: applet.js:748
+#: applet.js:758
 msgid "Humidity:"
 msgstr "Humedad:"
 
-#: applet.js:752
+#: applet.js:762
 msgid "Pressure:"
 msgstr "Presión:"
 
-#: applet.js:756
+#: applet.js:766
 msgid "Wind:"
 msgstr "Viento:"
 
-#: applet.js:760
+#: applet.js:770
 msgid "Wind Chill:"
 msgstr "Temperatura percibida:"
 
 #. tornado
-#: applet.js:1013
+#: applet.js:1022
 msgid "Tornado"
 msgstr "Tornado"
 
 #. tropical storm
-#: applet.js:1016
+#: applet.js:1025
 msgid "Tropical storm"
 msgstr "Tormenta tropical"
 
 #. hurricane
-#: applet.js:1019
+#: applet.js:1028
 msgid "Hurricane"
 msgstr "Huracán"
 
 #. severe thunderstorms
-#: applet.js:1022
+#: applet.js:1031
 msgid "Severe thunderstorms"
 msgstr "Tormentas severas"
 
 #. thunderstorms
-#: applet.js:1025
+#: applet.js:1034
 msgid "Thunderstorms"
 msgstr "Tormentas"
 
 #. mixed rain and snow
-#: applet.js:1028
+#: applet.js:1037
 msgid "Mixed rain and snow"
 msgstr "Lluvia y nieve"
 
 #. mixed rain and sleet
-#: applet.js:1031
+#: applet.js:1040
 msgid "Mixed rain and sleet"
 msgstr "Granizo y lluvia"
 
 #. mixed snow and sleet
-#: applet.js:1034
+#: applet.js:1043
 msgid "Mixed snow and sleet"
 msgstr "Granizo y nieve"
 
 #. freezing drizzle
-#: applet.js:1037
+#: applet.js:1046
 msgid "Freezing drizzle"
 msgstr "Llovizna con heladas"
 
 #. drizzle
-#: applet.js:1040
+#: applet.js:1049
 msgid "Drizzle"
 msgstr "Llovizna"
 
 #. freezing rain
-#: applet.js:1043
+#: applet.js:1052
 msgid "Freezing rain"
 msgstr "Lluvia con heladas"
 
 #. showers
-#: applet.js:1046 applet.js:1049
+#: applet.js:1055 applet.js:1058
 msgid "Showers"
 msgstr "Lluvias"
 
 #. snow flurries
-#: applet.js:1052
+#: applet.js:1061
 msgid "Snow flurries"
 msgstr "Nieve"
 
 #. light snow showers
-#: applet.js:1055
+#: applet.js:1064
 msgid "Light snow showers"
 msgstr "Nieve ligera"
 
 #. blowing snow
-#: applet.js:1058
+#: applet.js:1067
 msgid "Blowing snow"
 msgstr "Viento nevado"
 
 #. snow
-#: applet.js:1061
+#: applet.js:1070
 msgid "Snow"
 msgstr "Nieve"
 
 #. hail
-#: applet.js:1064
+#: applet.js:1073
 msgid "Hail"
 msgstr "Granizo"
 
 #. sleet
-#: applet.js:1067
+#: applet.js:1076
 msgid "Sleet"
 msgstr "Aguanieve"
 
 #. dust
-#: applet.js:1070
+#: applet.js:1079
 msgid "Dust"
 msgstr "Polvo"
 
 #. foggy
-#: applet.js:1073
+#: applet.js:1082
 msgid "Foggy"
 msgstr "Niebla"
 
 #. haze
-#: applet.js:1076
+#: applet.js:1085
 msgid "Haze"
 msgstr "Neblina"
 
 #. smoky
-#: applet.js:1079
+#: applet.js:1088
 msgid "Smoky"
 msgstr "Ahumado"
 
 #. blustery
-#: applet.js:1082
+#: applet.js:1091
 msgid "Blustery"
 msgstr "Ráfagas de viento"
 
 #. windy
-#: applet.js:1085
+#: applet.js:1094
 msgid "Windy"
 msgstr "Ventoso"
 
 #. cold
-#: applet.js:1088
+#: applet.js:1097
 msgid "Cold"
 msgstr "Frío"
 
 #. cloudy
-#: applet.js:1091
+#: applet.js:1100
 msgid "Cloudy"
 msgstr "Nublado"
 
 #. mostly cloudy (day)
-#: applet.js:1096
+#: applet.js:1105
 msgid "Mostly cloudy"
 msgstr "Muy nublado"
 
 #. partly cloudy (day)
 #. partly cloudy
-#: applet.js:1101 applet.js:1141
+#: applet.js:1110 applet.js:1150
 msgid "Partly cloudy"
 msgstr "Parcialmente nublado"
 
 #. clear (night)
-#: applet.js:1104
+#: applet.js:1113
 msgid "Clear"
 msgstr "Despejado"
 
 #. sunny
-#: applet.js:1107
+#: applet.js:1116
 msgid "Sunny"
 msgstr "Soleado"
 
 #. fair (day)
-#: applet.js:1112
+#: applet.js:1121
 msgid "Fair"
 msgstr "Despejado"
 
 #. mixed rain and hail
-#: applet.js:1115
+#: applet.js:1124
 msgid "Mixed rain and hail"
 msgstr "Lluvia y granizo"
 
 #. hot
-#: applet.js:1118
+#: applet.js:1127
 msgid "Hot"
 msgstr "Caluroso"
 
 #. isolated thunderstorms
-#: applet.js:1121
+#: applet.js:1130
 msgid "Isolated thunderstorms"
 msgstr "Tormentas locales"
 
 #. scattered thunderstorms
-#: applet.js:1124
+#: applet.js:1133
 msgid "Scattered thunderstorms"
 msgstr "Tormentas aisladas"
 
 #. scattered showers
-#: applet.js:1129
+#: applet.js:1138
 msgid "Scattered showers"
 msgstr "Lluvias aisladas"
 
 #. heavy snow
-#: applet.js:1132 applet.js:1138
+#: applet.js:1141 applet.js:1147
 msgid "Heavy snow"
 msgstr "Fuerte nevada"
 
 #. scattered snow showers
-#: applet.js:1135
+#: applet.js:1144
 msgid "Scattered snow showers"
 msgstr "Nevadas aisladas"
 
 #. thundershowers
-#: applet.js:1144
+#: applet.js:1153
 msgid "Thundershowers"
 msgstr "Tormentas"
 
 #. snow showers
-#: applet.js:1147
+#: applet.js:1156
 msgid "Snow showers"
 msgstr "Nevadas"
 
 #. isolated thundershowers
-#: applet.js:1150
+#: applet.js:1159
 msgid "Isolated thundershowers"
 msgstr "Tormentas aisladas"
 
-#: applet.js:1154
+#: applet.js:1163
 msgid "Not available"
 msgstr "No disponible"
 
-#: applet.js:1159
+#: applet.js:1168
 msgid "Friday"
 msgstr "Viernes"
 
-#: applet.js:1159
+#: applet.js:1168
 msgid "Monday"
 msgstr "Lunes"
 
-#: applet.js:1159
+#: applet.js:1168
 msgid "Saturday"
 msgstr "Sábado"
 
-#: applet.js:1159
+#: applet.js:1168
 msgid "Sunday"
 msgstr "Domingo"
 
-#: applet.js:1159
+#: applet.js:1168
 msgid "Thursday"
 msgstr "Jueves"
 
-#: applet.js:1159
+#: applet.js:1168
 msgid "Tuesday"
 msgstr "Martes"
 
-#: applet.js:1159
+#: applet.js:1168
 msgid "Wednesday"
 msgstr "Miércoles"
 
-#: applet.js:1164
+#: applet.js:1173
 msgid "E"
 msgstr "E"
 
-#: applet.js:1164
+#: applet.js:1173
 msgid "N"
 msgstr "N"
 
-#: applet.js:1164
+#: applet.js:1173
 msgid "NE"
 msgstr "NE"
 
-#: applet.js:1164
+#: applet.js:1173
 msgid "NW"
 msgstr "NO"
 
-#: applet.js:1164
+#: applet.js:1173
 msgid "S"
 msgstr "S"
 
-#: applet.js:1164
+#: applet.js:1173
 msgid "SE"
 msgstr "SE"
 
-#: applet.js:1164
+#: applet.js:1173
 msgid "SW"
 msgstr "SO"
 
-#: applet.js:1164
+#: applet.js:1173
 msgid "W"
 msgstr "O"
 
@@ -440,147 +436,159 @@ msgstr "Ver el pronóstico del tiempo local"
 msgid "Weather (Fork By Odyseus)"
 msgstr "Clima (Modificado por Odyseus)"
 
-#. settings-schema.json->keybinding->description
-msgid "Set the keybinding to call the menu"
-msgstr "Elige una atajo de teclado para abrir el menú"
+#. settings-schema.json->pref_overlay_key->description
+msgid "Keyboard shortcut to open and close the menu"
+msgstr ""
 
-#. settings-schema.json->woeidLookup->description
-msgid "Get WOEID"
-msgstr "Obtener WOEID"
+#. settings-schema.json->pref_woeid_lookup->description
+msgid "Get WOEID (Where On Earth IDentification)"
+msgstr ""
 
-#. settings-schema.json->woeidLookup->tooltip
+#. settings-schema.json->pref_woeid_lookup->tooltip
 msgid "http://woeid.rosselliot.co.nz/"
 msgstr "http://woeid.rosselliot.co.nz/"
 
-#. settings-schema.json->woeid->description
+#. settings-schema.json->pref_woeid->description
 msgid "WOEID"
 msgstr "WOEID"
 
-#. settings-schema.json->woeid->tooltip
-msgid "Where On Earth ID"
-msgstr "Identificador de lugares en La Tierra (Where On Earth ID)"
+#. settings-schema.json->pref_woeid->tooltip
+msgid "Where On Earth IDentification"
+msgstr ""
 
-#. settings-schema.json->temperatureUnit->description
+#. settings-schema.json->pref_temperature_unit->description
 msgid "Temperature unit"
 msgstr "Unidad de temperatura"
 
-#. settings-schema.json->temperatureUnit->options
+#. settings-schema.json->pref_temperature_unit->options
 msgid "celsius"
 msgstr "Celsius"
 
-#. settings-schema.json->temperatureUnit->options
+#. settings-schema.json->pref_temperature_unit->options
 msgid "fahrenheit"
 msgstr "Fahrenheit"
 
-#. settings-schema.json->temperatureHighFirst->description
+#. settings-schema.json->pref_temperature_high_first->description
 msgid "Show high temperature first in forecast"
 msgstr "Mostrar primero la temperatura máxima"
 
-#. settings-schema.json->windSpeedUnit->description
+#. settings-schema.json->pref_wind_speed_unit->description
 msgid "Wind speed unit"
 msgstr "Unidad de velocidad del viento"
 
-#. settings-schema.json->windSpeedUnit->options
+#. settings-schema.json->pref_wind_speed_unit->options
 msgid "kph"
 msgstr "Km/h"
 
-#. settings-schema.json->windSpeedUnit->options
+#. settings-schema.json->pref_wind_speed_unit->options
 msgid "mph"
 msgstr "mph"
 
-#. settings-schema.json->windSpeedUnit->options
+#. settings-schema.json->pref_wind_speed_unit->options
 msgid "m/s"
 msgstr "m/s"
 
-#. settings-schema.json->windSpeedUnit->options
+#. settings-schema.json->pref_wind_speed_unit->options
 msgid "knots"
 msgstr "nudos"
 
-#. settings-schema.json->pressureUnit->description
+#. settings-schema.json->pref_pressure_unit->description
 msgid "Atmospheric pressure unit"
 msgstr "Unidad de presión atmosférica"
 
-#. settings-schema.json->pressureUnit->options
+#. settings-schema.json->pref_pressure_unit->options
 msgid "mbar"
 msgstr "mbar"
 
-#. settings-schema.json->pressureUnit->options
+#. settings-schema.json->pref_pressure_unit->options
 msgid "in Hg"
 msgstr "inHg"
 
-#. settings-schema.json->pressureUnit->options
+#. settings-schema.json->pref_pressure_unit->options
 msgid "mm Hg"
 msgstr "mmHg"
 
-#. settings-schema.json->pressureUnit->options
+#. settings-schema.json->pref_pressure_unit->options
 msgid "psi"
 msgstr "psi"
 
-#. settings-schema.json->pressureUnit->options
+#. settings-schema.json->pref_pressure_unit->options
 msgid "at"
 msgstr "at"
 
-#. settings-schema.json->pressureUnit->options
+#. settings-schema.json->pref_pressure_unit->options
 msgid "atm"
 msgstr "atm"
 
-#. settings-schema.json->pressureUnit->options
+#. settings-schema.json->pref_pressure_unit->options
 msgid "Pa"
 msgstr "Pa"
 
-#. settings-schema.json->pressureUnit->options
+#. settings-schema.json->pref_pressure_unit->options
 msgid "kPa"
 msgstr "kPa"
 
-#. settings-schema.json->verticalOrientation->description
+#. settings-schema.json->pref_vertical_orientation->description
 msgid "Vertical orientation"
 msgstr "Orientación vertical"
 
-#. settings-schema.json->showSunrise->description
+#. settings-schema.json->pref_show_sunrise->description
 msgid "Show sunrise / sunset times"
 msgstr "Mostrar horas amanecer/puesta del sol"
 
-#. settings-schema.json->show24Hours->description
+#. settings-schema.json->pref_show_common_sense_hours->description
 msgid "Display time in 24 hour format"
 msgstr "Visualizar hora en formato de 24 horas"
 
-#. settings-schema.json->forecastDays->units
+#. settings-schema.json->pref_forecast_days->units
 msgid "days"
 msgstr "días"
 
-#. settings-schema.json->forecastDays->description
+#. settings-schema.json->pref_forecast_days->description
 msgid "Forecast length"
 msgstr "Cobertura del pronóstico"
 
-#. settings-schema.json->translateCondition->description
+#. settings-schema.json->pref_translate_condition->description
 msgid "Translate condition"
 msgstr "Traducir condición climática"
 
-#. settings-schema.json->useSymbolicIcons->description
+#. settings-schema.json->pref_use_symbolic_icons->description
 msgid "Symbolic icons"
 msgstr "Iconos simbólicos"
 
-#. settings-schema.json->showTextInPanel->description
+#. settings-schema.json->pref_show_text_in_panel->description
 msgid "Display current temperature in panel"
 msgstr "Mostrar temperatura actual en el panel"
 
-#. settings-schema.json->showCommentInPanel->description
+#. settings-schema.json->pref_show_comment_in_panel->description
 msgid "Show the weather condition (e.g., \"Windy\", \"Clear\") in the panel"
 msgstr ""
 "Mostrar condición climática (por ejemplo \"ventoso\", \"despejado\") en el "
 "panel"
 
-#. settings-schema.json->locationLabelOverride->description
+#. settings-schema.json->pref_location_label_override->description
 msgid "Override location label"
 msgstr "Sobreescribir nombre de ubicación"
 
-#. settings-schema.json->refreshInterval->units
+#. settings-schema.json->pref_refresh_interval->units
 msgid "minutes"
 msgstr "minutos"
 
-#. settings-schema.json->refreshInterval->description
+#. settings-schema.json->pref_refresh_interval->description
 msgid "Update interval"
 msgstr "Intervalo de actualización"
+
+#~ msgid "Settings"
+#~ msgstr "Ajustes"
+
+#~ msgid "Set the keybinding to call the menu"
+#~ msgstr "Elige una atajo de teclado para abrir el menú"
+
+#~ msgid "Get WOEID"
+#~ msgstr "Obtener WOEID"
+
+#~ msgid "Where On Earth ID"
+#~ msgstr "Identificador de lugares en La Tierra (Where On Earth ID)"
 
 #~ msgid "Settings for weather@mockturtl"
 #~ msgstr "Ajustes de weather@mockturtl"

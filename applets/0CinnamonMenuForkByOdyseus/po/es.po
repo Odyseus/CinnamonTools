@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-04 21:25-0300\n"
+"POT-Creation-Date: 2018-05-08 04:24-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -28,7 +28,7 @@ msgstr "Copatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:278
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:277
 msgid "Help"
 msgstr "Ayuda"
 
@@ -429,31 +429,31 @@ msgstr "Existe una carpeta llamada **icons** dentro dentro del directorio de est
 msgid "Menu"
 msgstr "Menú"
 
-#: applet.js:266
+#: applet.js:265
 msgid "Open the menu editor"
 msgstr "Abrir el editor de menús"
 
-#: applet.js:271
+#: applet.js:270
 msgid "Edit custom launchers"
 msgstr "Editar lanzadores personalizados"
 
-#: applet.js:1486 utils.js:1038
+#: applet.js:1485 utils.js:1038
 msgid "This file is no longer available"
 msgstr "Este archivo ya no está disponible"
 
-#: applet.js:1557
+#: applet.js:1556
 msgid "No recent documents"
 msgstr "Sin documentos recientes"
 
-#: applet.js:1723
+#: applet.js:1722
 msgid "No recent applications"
 msgstr "Sin aplicaciones recientes"
 
-#: applet.js:1787
+#: applet.js:1786
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: applet.js:2040
+#: applet.js:2039
 msgid "Type to search..."
 msgstr "Escriba para buscar..."
 

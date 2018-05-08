@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowDemandsAttentionBehavior 1.05\n"
-"POT-Creation-Date: 2018-05-04 21:34-0300\n"
+"POT-Creation-Date: 2018-05-08 05:31-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

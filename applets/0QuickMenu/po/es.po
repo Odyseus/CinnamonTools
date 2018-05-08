@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0QuickMenu 1.10\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-03 23:05-0300\n"
+"POT-Creation-Date: 2018-05-08 03:54-0300\n"
 "PO-Revision-Date: 2018-05-04 21:20-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -32,7 +32,7 @@ msgstr "Copatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:510
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:511
 msgid "Help"
 msgstr "Ayuda"
 
@@ -189,28 +189,28 @@ msgstr "El *lenguaje* JSON es muy estricto. Asegurarse de utilizar SOLAMENTE com
 
 #. NOTE: This string could be left blank because it's a default string,
 #. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:200
+#: applet.js:201
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
 
-#: applet.js:492
+#: applet.js:493
 msgid "Update menu"
 msgstr "Actualizar menú"
 
-#: applet.js:497
+#: applet.js:498
 msgid "Scan the main folder to re-create the menu."
 msgstr "Escanear la carpeta principal para re-crear el menú."
 
-#: applet.js:500
+#: applet.js:501
 msgid "Open folder"
 msgstr "Abrir carpeta"
 
-#: applet.js:506
+#: applet.js:507
 msgid "Open the main folder."
 msgstr "Abrir la carpeta principal."
 
-#: applet.js:516
+#: applet.js:517
 msgid "Open the help file."
 msgstr "Abrir el archivo de ayuda."
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WallpaperChangerApplet 1.03\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-03 23:05-0300\n"
+"POT-Creation-Date: 2018-05-08 03:54-0300\n"
 "PO-Revision-Date: 2018-05-04 21:20-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -122,11 +122,11 @@ msgstr "Este es el perfil actual que el demonio cargará."
 msgid "Current Profile"
 msgstr "Perfil Actual"
 
-#: settings.py:383 utils.js:780
+#: settings.py:383 utils.js:677
 msgid "Toggle and display the daemon status."
 msgstr "Alternar y mostrar el estado del demonio."
 
-#: settings.py:384 utils.js:770
+#: settings.py:384 utils.js:667
 msgid "Daemon Status"
 msgstr "Estado del Demonio"
 
@@ -134,7 +134,7 @@ msgstr "Estado del Demonio"
 msgid "Autostart Daemon"
 msgstr "Auto Iniciar Demonio"
 
-#: settings.py:412 applet.js:110
+#: settings.py:412 applet.js:109
 msgid "When enabled, the daemon will be automatically started when the applet is loaded. If it is already running or this is disabled, no action will be taken."
 msgstr "Con esta opción activada, el demonio se iniciará automáticamente cuando se cargue el applet.  Si el demonio ya se está ejecutando o si esta opción está deshabilitada, no se realizará ninguna acción."
 
@@ -150,11 +150,11 @@ msgstr "Guardar"
 msgid "Manage keyboard shortcuts"
 msgstr "Ajustes de atajos de teclado."
 
-#: settings.py:450 utils.js:673
+#: settings.py:450 utils.js:570
 msgid "Next Wallpaper"
 msgstr "Fondo de Pantalla Siguiente"
 
-#: settings.py:454 utils.js:676
+#: settings.py:454 utils.js:573
 msgid "Previous Wallpaper"
 msgstr "Fondo de pantalla Previo"
 
@@ -207,7 +207,7 @@ msgstr "Invertir Orden de los Ítems del Menú"
 msgid "Remember Profiles State"
 msgstr "Recordar Estado del Perfil"
 
-#: settings.py:568 applet.js:125
+#: settings.py:568 applet.js:124
 msgid "When enabled, the daemon will remember its current and next wallpaper for the current profile when the profile is changed. This means returning back to the profile will restore the previous background plus the next in queue."
 msgstr "Con esta opción activada, el demonio recordará su fondo de pantalla actual y siguiente para el perfil actual cuando se cambia el perfil.  Esto significa que volver al perfil restablecerá el fondo anterior más el siguiente en la cola."
 
@@ -215,7 +215,7 @@ msgstr "Con esta opción activada, el demonio recordará su fondo de pantalla ac
 msgid "Show Notifications"
 msgstr "Mostrar Notificaciones"
 
-#: settings.py:573 applet.js:120
+#: settings.py:573 applet.js:119
 msgid "Display a notification each time an event happens with wallpaper changer. This does not stop the applet from reporting errors."
 msgstr "Mostrar una notificación cada vez que ocurre un evento con el cambiador de fondo de pantalla.  Esto no impide que el applet informe sobre errores."
 
@@ -475,124 +475,124 @@ msgstr "Comando para desinstalar el esquema de preferencias:"
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr "Para importar/exportar preferencias, el comando **dconf** necesita estar disponible en el sistema."
 
-#: applet.js:105
+#: applet.js:104
 msgid "Extra Options"
 msgstr "Opciones Extra"
 
-#: applet.js:109
+#: applet.js:108
 msgid "Auto Start Daemon"
 msgstr "Auto Iniciar Demonio"
 
-#: applet.js:114
+#: applet.js:113
 msgid "Change with Profile"
 msgstr "Cambiar con el Perfil"
 
-#: applet.js:115
+#: applet.js:114
 msgid "When enabled, this will cause the daemon to automatically change the wallpaper whenever the current profile is changed."
 msgstr "Con esta opción activada, el demonio cambiará automáticamente el fondo de pantalla siempre que se cambie el perfil actual."
 
-#: applet.js:119
+#: applet.js:118
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: applet.js:124
+#: applet.js:123
 msgid "Remember Profile State"
 msgstr "Recordar Estado del Perfil"
 
-#: applet.js:194
+#: applet.js:193
 msgid "Wallpaper Changed"
 msgstr "Fondo de Pantalla Cambiado"
 
-#: applet.js:200
+#: applet.js:199
 msgid "Daemon Error"
 msgstr "Error de Demonio"
 
 #. TO TRANSLATORS: Full sentence:
 #. "Notifications are now enabled/disabled"
-#: applet.js:210
+#: applet.js:209
 #, javascript-format
 msgid "Notifications are now %s"
 msgstr "Notificaciones están ahora %s"
 
-#: applet.js:213
+#: applet.js:212
 msgid "disabled"
 msgstr "desactivadas"
 
 #. TO TRANSLATORS: Full sentence:
 #. "Notifications are now enabled/disabled"
-#: applet.js:213
+#: applet.js:212
 msgid "enabled"
 msgstr "activadas"
 
-#: applet.js:238
+#: applet.js:228
 #, javascript-format
 msgid "Profile changed to %s"
 msgstr "Perfil cambiado a %s"
 
-#: applet.js:272
+#: applet.js:258
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: utils.js:65
+#: utils.js:68
 #, javascript-format
 msgid "Schema %s could not be found for extension %s."
 msgstr "No se pudo encontrar el esquema %s para la extensión %s."
 
-#: utils.js:66
+#: utils.js:69
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 
-#: utils.js:466
+#: utils.js:363
 msgid "Wallpapers will be changed in random order"
 msgstr "Fondos de pantalla serán cambiados en orden aleatorio"
 
-#: utils.js:468
+#: utils.js:365
 msgid "Wallpapers will be changed in alphabetical order"
 msgstr "Fondos de pantalla serán cambiados en orden alfabético"
 
-#: utils.js:470
+#: utils.js:367
 #, javascript-format
 msgid "Wallpaper rotation every %s seconds"
 msgstr "Rotación de fondos de pantalla casa %s segundos"
 
-#: utils.js:472
+#: utils.js:369
 msgid "Automatic rotation disabled"
 msgstr "Rotación automática deshabilitada"
 
-#: utils.js:474
+#: utils.js:371
 msgid "Wallpaper rotation at the beginning of every hour"
 msgstr "Rotación de fondos de pantalla al principio de cada hora"
 
-#: utils.js:618
+#: utils.js:515
 msgid "You must provide at least two states for the button"
 msgstr "Al menos dos estados deben ser provistos para el botón"
 
-#: utils.js:746
+#: utils.js:643
 msgid "Unable to go back any further, no history available"
 msgstr "No se puede volver más atrás, no hay historial disponible"
 
-#: utils.js:807
+#: utils.js:704
 msgid "Open Current Wallpaper"
 msgstr "Abrir Fondo de Pantalla Actual"
 
-#: utils.js:847
+#: utils.js:744
 msgid "Open Next Wallpaper"
 msgstr "Abrir el Fondo de Pantalla Siguiente"
 
-#: utils.js:884 utils.js:894
+#: utils.js:781 utils.js:791
 #, javascript-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
 
-#: utils.js:1142
+#: utils.js:1039
 msgid "Applet activation aborted!!!"
 msgstr "¡¡¡Activación del ajuste abortada!!!"
 
-#: utils.js:1143
+#: utils.js:1040
 msgid "Your Cinnamon version may not be compatible!!!"
 msgstr "¡¡¡Su versión de Cinnamon puede que no sea compatible!!!"
 
-#: utils.js:1144
+#: utils.js:1041
 msgid "Minimum Cinnamon version allowed: 3.0"
 msgstr "Versión mínima de CInnamon permitida: 3.0"
 
