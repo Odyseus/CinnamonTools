@@ -1,39 +1,10 @@
-/**
- * This applet is a fork of Sysmonitor applet by Josef Michálek (Aka Orcus).
- *
- * [Differences with the original applet]
- * - I enabled the use of alpha to all the color pickers in the settings window.
- * - I added a notification in case the User doesn't have installed the gjs package to make this
- *   applet settings window to work.
- */
-
-/**
- * Copyright 2012 Josef Michálek (Aka Orcus) <0rcus.cz@gmail.com>
- *
- * This file is part of Sysmonitor
- *
- * Sysmonitor is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later
- * version.
- *
- * Sysmonitor is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along
- * with Sysmonitor. If not, see http://www.gnu.org/licenses/.
- */
-const AppletUUID = "{{UUID}}";
-
 let $;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
 } else {
-    $ = imports.ui.appletManager.applets[AppletUUID].utils;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
 
 const _ = $._;
@@ -46,7 +17,6 @@ const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
 const Settings = imports.ui.settings;
 const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
 const Util = imports.misc.util;
 
 function SystemMonitorByOrcusForkByOdyseusApplet() {
@@ -66,133 +36,131 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
         }
 
         this.update_id = 0;
+        this.orientation = aOrientation;
         this.metadata = aMetadata;
         this.instance_id = aInstance_id;
+        this.command_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
+
+        try {
+            this.tooltip = new $.CustomTooltip(this, "", this.orientation);
+        } catch (aErr) {
+            global.logError("Error while initializing tooltip: " + aErr.message);
+        }
+
+        if (!$.GTop) {
+            this._informDependency();
+            this._applet_icon_box.show();
+            return;
+        }
 
         try {
             this._bindSettings();
             this._expandAppletContextMenu();
-        } catch (e) {
-            global.logError(e);
+        } catch (aErr) {
+            global.logError(aErr);
         }
 
         Mainloop.idle_add(() => {
             try {
-                this.areas = [];
-                this.graphs = [];
-
-                try {
-                    this.tooltip = new Tooltips.PanelItemTooltip(this, "", aOrientation);
-
-                    this.tooltip._tooltip.get_clutter_text().set_line_alignment(0);
-                    this.tooltip._tooltip.get_clutter_text().set_line_wrap(true);
-
-                    if (this.pref_align_tooltip_text_to_the_left) {
-                        this.tooltip._tooltip.set_style("text-align:left;");
-                    }
-                } catch (aErr) {
-                    this.tooltip = false;
-                }
-
-                if (!$.GTop) {
-                    this._informDependency();
-                    this._applet_icon_box.show();
-                    return;
-                }
-
                 this._applet_icon_box.hide();
 
-                let ncpu = $.GTop.glibtop_get_sysinfo().ncpu;
-                let provider = null;
+                this.vertical = this.orientation == St.Side.LEFT || this.orientation == St.Side.RIGHT;
+                this.graph_ids = ["cpu", "mem", "swap", "net", "load"];
+                this.bg_color = $.colorToArray(this.pref_bg_color);
+                this.border_color = $.colorToArray(this.pref_border_color);
+                this.areas = new Array(this.graph_ids.length);
+                this.graphs = new Array(this.graph_ids.length);
+                this.graph_indices = new Array(this.graph_ids.length);
 
-                if (this.pref_show_cpu_graph) {
-                    try {
-                        provider = new $.CpuDataProvider();
-
-                        if (provider && !provider.hasError) {
-                            let color_user = this._parseColor(this.pref_cpu_graph_color_user);
-                            let color_nice = this._parseColor(this.pref_cpu_graph_color_nice);
-                            let color_kernel = this._parseColor(this.pref_cpu_graph_color_kernel);
-                            let color_iowait = this._parseColor(this.pref_cpu_graph_color_iowait);
-                            this.addGraph(provider, [
-                                color_user,
-                                color_nice,
-                                color_kernel,
-                                color_iowait
-                            ], this.pref_cpu_graph_width);
-                        }
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    }
+                for (let i = 0; i < this.graph_ids.length; i++) {
+                    this.areas[i] = null;
+                    this.graphs[i] = null;
+                    this.graph_indices[i] = null;
                 }
 
-                if (this.pref_show_memmory_graph) {
-                    try {
-                        provider = new $.MemDataProvider();
+                this.graph_order = [0, 1, 2, 3, 4];
 
-                        if (provider && !provider.hasError) {
-                            let color_used = this._parseColor(this.pref_memory_graph_color_used);
-                            let color_cached = this._parseColor(this.pref_memory_graph_color_cached);
-                            this.addGraph(provider, [
-                                color_used,
-                                color_cached
-                            ], this.pref_memory_graph_width);
-                        }
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    }
-                }
-
-                if (this.pref_show_swap_graph) {
-                    try {
-                        provider = new $.SwapDataProvider();
-
-                        if (provider && !provider.hasError) {
-                            let color_used = this._parseColor(this.pref_swap_graph_color_used);
-                            this.addGraph(provider, [color_used],
-                                this.pref_swap_graph_width);
-                        }
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    }
-                }
-
-                if (this.pref_show_network_graph) {
-                    try {
-                        provider = new $.NetDataProvider();
-
-                        if (provider && !provider.hasError) {
-                            let color_download = this._parseColor(this.pref_network_graph_color_download);
-                            let color_upload = this._parseColor(this.pref_network_graph_color_upload);
-                            this.addGraph(provider, [
-                                color_download,
-                                color_upload
-                            ], this.pref_network_graph_width).setAutoScale(1024);
-                        }
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    }
-                }
-
-                if (this.pref_show_load_graph) {
-                    try {
-                        provider = new $.LoadAvgDataProvider();
-
-                        if (provider && !provider.hasError) {
-                            let color_load = this._parseColor(this.pref_load_graph_color_load);
-                            this.addGraph(provider, [color_load],
-                                this.pref_load_graph_width).setAutoScale(2 * ncpu);
-                        }
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    }
-                }
-
+                this._onPrefChangedPadding();
+                this._onPrefChangedGraphEnabled();
+                this._updateKeybindings();
                 this.update();
             } catch (aErr) {
                 global.logError(aErr);
             }
         });
+    },
+
+    _bindSettings: function() {
+        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 3.2.x+
+        let bD = {
+            IN: 1,
+            OUT: 2,
+            BIDIRECTIONAL: 3
+        };
+        let settingsArray = [
+            [bD.IN, "pref_overlay_key", this._updateKeybindings],
+            [bD.IN, "pref_onkeybinding_command", null],
+            [bD.IN, "pref_onclick_command", null],
+            [bD.IN, "pref_smooth", this._onPrefChangedSmooth],
+            [bD.IN, "pref_refresh_rate", this._onPrefChangedRefreshRate],
+            [bD.IN, "pref_draw_background", this._onPrefChangedDrawBackground],
+            [bD.IN, "pref_draw_border", this._onPrefChangedDrawBorder],
+            [bD.IN, "pref_use_padding", this._onPrefChangedPadding],
+            [bD.IN, "pref_padding_lr", this._onPrefChangedPadding],
+            [bD.IN, "pref_padding_tb", this._onPrefChangedPadding],
+            [bD.IN, "pref_bg_color", this._onPrefChangedBGBorderColor],
+            [bD.IN, "pref_border_color", this._onPrefChangedBGBorderColor],
+            [bD.IN, "pref_graph_width", this._onPrefChangedGraphWidth],
+            [bD.IN, "pref_cpu_enabled", this._onPrefChangedGraphEnabled, 0],
+            [bD.IN, "pref_cpu_override_graph_width", this._onPrefChangedGraphWidth, 0],
+            [bD.IN, "pref_cpu_graph_width", this._onPrefChangedGraphWidth, 0],
+            [bD.IN, "pref_cpu_color_0", this._onPrefChangedColor, 0],
+            [bD.IN, "pref_cpu_color_1", this._onPrefChangedColor, 0],
+            [bD.IN, "pref_cpu_color_2", this._onPrefChangedColor, 0],
+            [bD.IN, "pref_cpu_color_3", this._onPrefChangedColor, 0],
+            [bD.IN, "pref_mem_enabled", this._onPrefChangedGraphEnabled, 1],
+            [bD.IN, "pref_mem_override_graph_width", this._onPrefChangedGraphWidth, 1],
+            [bD.IN, "pref_mem_graph_width", this._onPrefChangedGraphWidth, 1],
+            [bD.IN, "pref_mem_color_0", this._onPrefChangedColor, 1],
+            [bD.IN, "pref_mem_color_1", this._onPrefChangedColor, 1],
+            [bD.IN, "pref_swap_enabled", this._onPrefChangedGraphEnabled, 2],
+            [bD.IN, "pref_swap_override_graph_width", this._onPrefChangedGraphWidth, 2],
+            [bD.IN, "pref_swap_graph_width", this._onPrefChangedGraphWidth, 2],
+            [bD.IN, "pref_swap_color_0", this._onPrefChangedColor, 2],
+            [bD.IN, "pref_net_enabled", this._onPrefChangedGraphEnabled, 3],
+            [bD.IN, "pref_net_override_graph_width", this._onPrefChangedGraphWidth, 3],
+            [bD.IN, "pref_net_graph_width", this._onPrefChangedGraphWidth, 3],
+            [bD.IN, "pref_net_color_0", this._onPrefChangedColor, 3],
+            [bD.IN, "pref_net_color_1", this._onPrefChangedColor, 3],
+            [bD.IN, "pref_load_enabled", this._onPrefChangedGraphEnabled, 4],
+            [bD.IN, "pref_load_override_graph_width", this._onPrefChangedGraphWidth, 4],
+            [bD.IN, "pref_load_graph_width", this._onPrefChangedGraphWidth, 4],
+            [bD.IN, "pref_load_color_0", this._onPrefChangedColor, 4]
+        ];
+        let newBinding = typeof this.settings.bind === "function";
+        for (let [binding, property_name, callback] of settingsArray) {
+            // Condition needed for retro-compatibility.
+            // Mark for deletion on EOL. Cinnamon 3.2.x+
+            if (newBinding) {
+                this.settings.bind(property_name, property_name, callback);
+            } else {
+                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+            }
+        }
+    },
+
+    _expandAppletContextMenu: function() {
+        let menuItem = new PopupMenu.PopupIconMenuItem(
+            _("Help"),
+            "dialog-information",
+            St.IconType.SYMBOLIC);
+        menuItem.connect("activate", Lang.bind(this, function() {
+            Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
+        }));
+        this._applet_context_menu.addMenuItem(menuItem);
     },
 
     _informDependency: function() {
@@ -202,13 +170,13 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
             _("Read this applet help for more details (Applet context menu > Help item).")
         ];
 
-        let tt = $.escapeHTML(_(this.metadata.name) + "\n\n" + msg.join("\n"));
+        let tt = _(this.metadata.name) + "\n\n" + msg.join("\n");
 
         if (this.tooltip) {
             try {
-                this.tooltip._tooltip.get_clutter_text().set_markup(
-                    "<span color=\"red\"><b>" + tt + "</b></span>");
+                this.tooltip.set_text('<span color="red"><b>' + $.escapeHTML(tt) + "</b></span>");
             } catch (aErr) {
+                global.logError(aErr);
                 global.logError(_(this.metadata.name) + ": " + aErr.message);
             }
         } else {
@@ -224,165 +192,273 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
         Main.criticalNotify(_(this.metadata.name), msg.join("\n"), icon);
     },
 
-    _restart_cinnamon: function() {
-        global.reexec_self();
-    },
-
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        let bD = {
-            IN: 1,
-            OUT: 2,
-            BIDIRECTIONAL: 3
-        };
-        let settingsArray = [
-            [bD.IN, "pref_align_tooltip_text_to_the_left", null],
-            [bD.IN, "pref_custom_command", null],
-            [bD.IN, "pref_use_smooth_graphs", null],
-            [bD.IN, "pref_refresh_rate", null],
-            [bD.IN, "pref_background_color", null],
-            [bD.IN, "pref_draw_background", null],
-            [bD.IN, "pref_draw_border", null],
-            [bD.IN, "pref_border_color", null],
-            [bD.IN, "pref_show_cpu_graph", null],
-            [bD.IN, "pref_cpu_graph_width", null],
-            [bD.IN, "pref_cpu_graph_color_user", null],
-            [bD.IN, "pref_cpu_graph_color_nice", null],
-            [bD.IN, "pref_cpu_graph_color_kernel", null],
-            [bD.IN, "pref_cpu_graph_color_iowait", null],
-            [bD.IN, "pref_show_memmory_graph", null],
-            [bD.IN, "pref_memory_graph_width", null],
-            [bD.IN, "pref_memory_graph_color_used", null],
-            [bD.IN, "pref_memory_graph_color_cached", null],
-            [bD.IN, "pref_show_swap_graph", null],
-            [bD.IN, "pref_swap_graph_width", null],
-            [bD.IN, "pref_swap_graph_color_used", null],
-            [bD.IN, "pref_show_network_graph", null],
-            [bD.IN, "pref_network_graph_width", null],
-            [bD.IN, "pref_network_graph_color_download", null],
-            [bD.IN, "pref_network_graph_color_upload", null],
-            [bD.IN, "pref_show_load_graph", null],
-            [bD.IN, "pref_load_graph_width", null],
-            [bD.IN, "pref_load_graph_color_load", null]
-        ];
-        let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
-            // Condition needed for retro-compatibility.
-            // Mark for deletion on EOL. Cinnamon 3.2.x+
-            if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
-            } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
-            }
-        }
-    },
-
-    on_applet_clicked: function(aE) { // jshint ignore:line
-        GLib.spawn_command_line_async(this.pref_custom_command);
-    },
-
-    addGraph: function(aProvider, aColors, aGraphWidth) {
-        let index = this.areas.length;
+    addGraph: function(provider, graph_idx) {
         let area = new St.DrawingArea();
-        area.set_width(aGraphWidth);
-        area.connect("repaint", Lang.bind(this, function() {
-            this.graphs[index].paint();
-        }));
-        this.actor.add(area, {
-            y_fill: true
-        });
+        this.actor.insert_child_at_index(area, this.graph_indices[graph_idx]);
+        let graph = new $.Graph(area, provider);
+        this.areas[graph_idx] = area;
+        this.graphs[graph_idx] = graph;
 
-        let graph = new $.Graph(area, aProvider, aColors,
-            this.pref_draw_background ? this._parseColor(this.pref_background_color) : null,
-            this.pref_draw_border ? this._parseColor(this.pref_border_color) : null);
-        aProvider.refreshRate = this.pref_refresh_rate;
-        graph.smooth = this.pref_use_smooth_graphs;
-
-        this.areas.push(area);
-        this.graphs.push(graph);
+        provider.refresh_rate = this.pref_refresh_rate;
+        graph.smooth = this.pref_smooth;
+        graph.setWidth(this.getGraphWidth(graph_idx), this.vertical);
+        graph.setColors(this.getGraphColors(graph_idx));
+        graph.setDrawBackground(this.pref_draw_background);
+        graph.setDrawBorder(this.pref_draw_border);
+        graph.bg_color = this.bg_color;
+        graph.border_color = this.border_color;
 
         return graph;
     },
 
     update: function() {
-        if (this.update_id > 0) {
-            Mainloop.source_remove(this.update_id);
-            this.update_id = 0;
-        }
+        let tooltip = "";
 
-        let tt = "";
-
-        let i = 0,
-            iLen = this.graphs.length;
-
-        if (iLen > 0) {
-            for (; i < iLen; ++i) {
+        for (let i = 0; i < this.graphs.length; ++i) {
+            if (this.graphs[i]) {
                 this.graphs[i].refresh();
-                let txt = this.graphs[i].provider.getText(false);
                 if (i > 0) {
-                    tt = tt + "\n";
+                    tooltip = tooltip + "\n";
                 }
+                let text = this.graphs[i].provider.getText();
                 if (this.tooltip) {
-                    tt = tt + "<b>" + $.escapeHTML(txt[0]) + "</b>" + $.escapeHTML(txt[1]);
+                    tooltip = tooltip + "<b>" + $.escapeHTML(text[0]) + ":</b> " +
+                        $.escapeHTML(text[1]);
                 } else {
-                    tt = tt + txt[0] + txt[1];
+                    tooltip = tooltip + text[0] + " " + text[1];
                 }
             }
         }
 
         if (this.tooltip) {
-            try {
-                this.tooltip._tooltip.get_clutter_text().set_markup(tt);
-            } catch (aErr) {
-                global.logError(_(this.metadata.name) + ": " + aErr.message);
-            }
+            this.tooltip.set_text(tooltip);
         } else {
-            this.set_applet_tooltip(tt);
+            this.set_applet_tooltip(tooltip);
         }
 
-        this.update_id = Mainloop.timeout_add(this.pref_refresh_rate, Lang.bind(this, this.update));
+        this.update_timeout_id = Mainloop.timeout_add(Math.max(100, this.pref_refresh_rate),
+            Lang.bind(this, this.update));
     },
 
-    _parseColor: function(aColor) {
-        let rgba;
-
-        try {
-            rgba = aColor.match(/rgba?\((.*)\)/)[1].split(",").map(Number);
-        } finally {
-            if (!rgba) {
-                return "";
+    recalcGraphIndices: function() {
+        let idx = 0;
+        for (let i = 0; i < this.graph_ids.length; i++) {
+            let graph_id = this.graph_ids[i];
+            let enabled = this["pref_" + graph_id + "_enabled"];
+            if (!enabled) {
+                continue;
             }
-
-            return [
-                rgba[0] / 255,
-                rgba[1] / 255,
-                rgba[2] / 255,
-                "3" in rgba ? rgba[3] : 1
-            ];
+            this.graph_indices[i] = idx++;
         }
     },
 
-    _expandAppletContextMenu: function() {
-        let menuItem = new PopupMenu.PopupIconMenuItem(
-            _("Help"),
-            "dialog-information",
-            St.IconType.SYMBOLIC);
-        menuItem.connect("activate", Lang.bind(this, function() {
-            Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
-        }));
-        this._applet_context_menu.addMenuItem(menuItem);
+    getGraphWidth: function(graph_idx) {
+        let graph_id = this.graph_ids[graph_idx];
+        return this["pref_" + graph_id + "_override_graph_width"] ?
+            this["pref_" + graph_id + "_graph_width"] :
+            this.pref_graph_width;
+    },
+
+    getGraphColors: function(graph_idx) {
+        let graph_id = this.graph_ids[graph_idx];
+        let c = [];
+        for (let j = 0; j < this.graphs[graph_idx].dim; j++) {
+            let prop = "pref_" + graph_id + "_color_" + j;
+            if (this.hasOwnProperty(prop)) {
+                c.push($.colorToArray(this[prop]));
+            } else {
+                break;
+            }
+        }
+        return c;
+    },
+
+    on_applet_clicked: function() {
+        if (this.pref_onclick_command) {
+            GLib.spawn_command_line_async(this.pref_onclick_command);
+        }
     },
 
     on_applet_removed_from_panel: function() {
-        if (this.update_id > 0) {
-            Mainloop.source_remove(this.update_id);
-            this.update_id = 0;
+        Main.keybindingManager.removeHotKey(this.command_keybinding_name);
+
+        if (this.update_timeout_id > 0) {
+            Mainloop.source_remove(this.update_timeout_id);
+            this.update_timeout_id = 0;
+        }
+        if (this.settings) {
+            this.settings.finalize();
+        }
+    },
+
+    on_orientation_changed: function(orientation) {
+        this.vertical = orientation == St.Side.LEFT || orientation == St.Side.RIGHT;
+        this._onPrefChangedGraphWidth();
+    },
+
+    // Configuration change callbacks
+    _onPrefChangedGraphEnabled: function(enabled, graph_idx) {
+        this.recalcGraphIndices();
+        let enable = (i) => {
+            let graph_id = this.graph_ids[i];
+            if (this["pref_" + graph_id + "_enabled"]) {
+                if (this.graphs[i]) {
+                    return;
+                }
+
+                if (i == 0) {
+                    this.addGraph(new $.CpuData(), i);
+                } else if (i == 1) {
+                    this.addGraph(new $.MemData(), i);
+                } else if (i == 2) {
+                    this.addGraph(new $.SwapData(), i);
+                } else if (i == 3) {
+                    this.addGraph(new $.NetData(), i).setAutoScale(1024);
+                } else if (i == 4) {
+                    let ncpu = $.GTop.glibtop_get_sysinfo().ncpu;
+                    this.addGraph(new $.LoadAvgData(), i).setAutoScale(2 * ncpu);
+                }
+            } else {
+                if (!this.graphs[i]) {
+                    return;
+                }
+
+                this.actor.remove_child(this.areas[i]);
+                this.graphs[i] = null;
+                this.areas[i] = null;
+            }
+        };
+
+        if (graph_idx) {
+            enable(graph_idx);
+        } else {
+            for (let i = 0; i < this.graphs.length; i++) {
+                enable(i);
+            }
+        }
+    },
+
+    _onPrefChangedSmooth: function() {
+        for (let g of this.graphs) {
+            if (g) {
+                g.smooth = this.pref_smooth;
+                g.repaint();
+            }
+        }
+    },
+
+    _onPrefChangedRefreshRate: function() {
+        if (this.update_timeout_id > 0) {
+            Mainloop.source_remove(this.update_timeout_id);
+            this.update_timeout_id = 0;
         }
 
-        this.settings.finalize();
+        for (let g of this.graphs) {
+            if (g) {
+                g.provider.refresh_rate = this.pref_refresh_rate;
+            }
+        }
+
+        this.update();
+    },
+
+    _onPrefChangedDrawBackground: function() {
+        for (let g of this.graphs) {
+            if (g) {
+                g.setDrawBackground(this.pref_draw_background);
+            }
+        }
+    },
+
+    _onPrefChangedDrawBorder: function() {
+        for (let g of this.graphs) {
+            if (g) {
+                g.setDrawBorder(this.pref_draw_border);
+                g.repaint();
+            }
+        }
+    },
+
+    _onPrefChangedPadding: function() {
+        if (this.pref_use_padding) {
+            let style = "padding:" + this.pref_padding_tb + "px " + this.pref_padding_lr + "px;";
+            this.actor.set_style(style);
+        } else {
+            this.actor.set_style("");
+        }
+
+        for (let g of this.graphs) {
+            if (g) {
+                g.updateSize();
+            }
+        }
+    },
+
+    _onPrefChangedBGBorderColor: function() {
+        this.bg_color = $.colorToArray(this.pref_bg_color);
+        this.border_color = $.colorToArray(this.pref_border_color);
+        for (let g of this.graphs) {
+            if (g) {
+                g.bg_color = this.bg_color;
+                g.border_color = this.border_color;
+                g.repaint();
+            }
+        }
+    },
+
+    _onPrefChangedGraphWidth: function(width, graph_idx) {
+        if (graph_idx) {
+            if (this.graphs[graph_idx]) {
+                this.graphs[graph_idx].setWidth(this.getGraphWidth(graph_idx), this.vertical);
+            }
+        } else {
+            for (let i = 0; i < this.graphs.length; i++) {
+                if (this.graphs[i]) {
+                    this.graphs[i].setWidth(this.getGraphWidth(i), this.vertical);
+                }
+            }
+        }
+    },
+
+    _onPrefChangedColor: function(width, graph_idx) {
+        if (graph_idx) {
+            if (this.graphs[graph_idx]) {
+                this.graphs[graph_idx].setColors(this.getGraphColors(graph_idx));
+            }
+        } else {
+            for (let i = 0; i < this.graphs.length; i++) {
+                if (this.graphs[i]) {
+                    this.graphs[i].setColors(this.getGraphColors(i));
+                }
+            }
+        }
+    },
+
+    _updateKeybindings: function() {
+        Main.keybindingManager.removeHotKey(this.command_keybinding_name);
+
+        if (this.pref_overlay_key !== "") {
+            Main.keybindingManager.addHotKey(
+                this.command_keybinding_name,
+                this.pref_overlay_key,
+                Lang.bind(this, function() {
+                    if (this.pref_onkeybinding_command) {
+                        GLib.spawn_command_line_async(this.pref_onkeybinding_command);
+                    } else {
+                        let msg = [_("Command not set!"),
+                            _("Set a custom command from this applet settings window.")
+                        ];
+                        let icon = new St.Icon({
+                            icon_name: "dialog-warning",
+                            icon_type: St.IconType.SYMBOLIC,
+                            icon_size: 24
+                        });
+
+                        Main.warningNotify(_(this.metadata.name), msg.join("\n"), icon);
+                    }
+                })
+            );
+        }
     }
 };
 

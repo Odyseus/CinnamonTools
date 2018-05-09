@@ -1,21 +1,9 @@
 const AppletUUID = "{{UUID}}";
 const Gettext = imports.gettext;
+const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-
-var GTop,
-    NMClient;
-
-try {
-    GTop = imports.gi.GTop;
-} catch (aErr) {
-    GTop = null;
-}
-
-try {
-    NMClient = imports.gi.NMClient;
-} catch (aErr) {
-    NMClient = null;
-}
+const Lang = imports.lang;
+const Tooltips = imports.ui.tooltips;
 
 Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
 
@@ -29,148 +17,30 @@ function _(aStr) {
     return Gettext.gettext(aStr);
 }
 
-function Graph() {
-    this._init.apply(this, arguments);
+var GTop;
+
+try {
+    GTop = imports.gi.GTop;
+} catch (aErr) {
+    GTop = null;
 }
 
-Graph.prototype = {
-    _init: function(aArea, aProvider, aColors, aBackground, aBorder) {
-        this.area = aArea;
-        this.provider = aProvider;
-        this.colors = aColors;
-        this.background = aBackground;
-        this.border = aBorder;
-        this.smooth = false;
-        let datasize = this.area.get_width() - 2;
-        this.data = new Array(datasize);
-        this.dim = this.provider.getDim();
-        this.autoScale = false;
-        this.scale = 1;
-
-        let i = 0,
-            iLen = this.data.length;
-        for (; i < iLen; ++i) {
-            this.data[i] = new Array(this.dim);
-            for (let j = 0; j < this.data[i].length; ++j) {
-                this.data[i][j] = 0;
-            }
-        }
-    },
-
-    refresh: function() {
-        let d = this.provider.getData();
-        this.data.push(d);
-        this.data.shift();
-        this.area.queue_repaint();
-
-        if (this.autoScale) {
-            let maxVal = this.minScale;
-            let i = 0,
-                iLen = this.data.length;
-            for (; i < iLen; ++i) {
-                let sum = this.dataSum(i, this.dim - 1);
-                if (sum > maxVal) {
-                    maxVal = sum;
-                }
-            }
-            this.scale = 1.0 / maxVal;
-        }
-    },
-
-    dataSum: function(aIndex, aDepth) {
-        let sum = 0;
-        for (let j = 0; j <= aDepth; ++j) {
-            sum += this.data[aIndex][j];
-        }
-        return sum;
-    },
-
-    paint: function() {
-        let cr = this.area.get_context();
-        let [width, height] = this.area.get_size();
-        //background
-        if (this.background !== null) {
-            cr.setSourceRGBA(this.background[0], this.background[1], this.background[2],
-                this.background[3]);
-            cr.setLineWidth(1);
-            cr.rectangle(0.5, 0.5, width - 1, height - 1);
-            cr.fill();
-        }
-        //data
-        if (this.smooth) {
-            for (let j = this.dim - 1; j >= 0; --j) {
-                cr.translate(0, 0);
-                cr.moveTo(1.5, height);
-                this.setColor(cr, j);
-                let i = 0,
-                    iLen = this.data.length;
-                for (; i < iLen; ++i) {
-                    cr.lineTo(i + 1.5, height - Math.round((height - 1) *
-                        this.scale * this.dataSum(i, j)));
-                }
-                cr.lineTo(width - 1.5, height);
-                cr.lineTo(1.5, height);
-                cr.fillPreserve();
-                cr.stroke();
-            }
-        } else {
-            let i = 0,
-                iLen = this.data.length;
-            for (; i < iLen; ++i) {
-                for (let j = this.dim - 1; j >= 0; --j) {
-                    this.setColor(cr, j);
-                    cr.moveTo(i + 1.5, height - 1);
-                    cr.relLineTo(0, -Math.round((height - 2) * this.scale * this.dataSum(i, j)));
-                    cr.stroke();
-                }
-            }
-        }
-        //border
-        if (this.border !== null) {
-            cr.setSourceRGBA(this.border[0], this.border[1], this.border[2], this.border[3]);
-            cr.rectangle(0.5, 0.5, width - 1, height - 1);
-            cr.stroke();
-        }
-    },
-
-    setColor: function(aCtx, aIndex) {
-        let c = this.colors[aIndex % this.colors.length];
-        aCtx.setSourceRGBA(c[0], c[1], c[2], c[3]);
-    },
-
-    setAutoScale: function(aMinScale) {
-        if (aMinScale > 0) {
-            this.autoScale = true;
-            this.minScale = aMinScale;
-        } else {
-            this.autoScale = false;
-        }
-    }
-};
-
-function CpuDataProvider() {
-    this._init.apply(this, arguments);
+function CpuData() {
+    this._init();
 }
 
-CpuDataProvider.prototype = {
-    hasError: false,
-
+CpuData.prototype = {
     _init: function() {
-        try {
-            this.gtop = new GTop.glibtop_cpu();
-            this.idle_last = 0;
-            this.nice_last = 0;
-            this.sys_last = 0;
-            this.iowait_last = 0;
-            this.total_last = 0;
-        } catch (aErr) {
-            this.hasError = true;
-            global.logError(aErr);
-        }
+        this.gtop = new GTop.glibtop_cpu();
+        this.idle_last = 0;
+        this.nice_last = 0;
+        this.sys_last = 0;
+        this.iowait_last = 0;
+        this.total_last = 0;
     },
 
     getDim: function() {
-        return 3;
+        return 4;
     },
 
     getData: function() {
@@ -194,29 +64,22 @@ CpuDataProvider.prototype = {
         this.iowait_last = this.gtop.iowait;
         this.total_last = this.gtop.total;
         let used = 1 - idle - nice - sys - iowait;
-        this.text = [_("CPU:") + " ", Math.round(100 * used) + " %"];
+        this.text = Math.round(100 * used) + " %";
         return [used, nice, sys, iowait];
     },
 
     getText: function() {
-        return this.text;
+        return [_("CPU"), this.text];
     }
 };
 
-function MemDataProvider() {
-    this._init.apply(this, arguments);
+function MemData() {
+    this._init();
 }
 
-MemDataProvider.prototype = {
-    hasError: false,
-
+MemData.prototype = {
     _init: function() {
-        try {
-            this.gtop = new GTop.glibtop_mem();
-        } catch (aErr) {
-            this.hasError = true;
-            global.logError(aErr);
-        }
+        this.gtop = new GTop.glibtop_mem();
     },
 
     getDim: function() {
@@ -227,32 +90,23 @@ MemDataProvider.prototype = {
         GTop.glibtop_get_mem(this.gtop);
         let used = this.gtop.used / this.gtop.total;
         let cached = (this.gtop.buffer + this.gtop.cached) / this.gtop.total;
-        this.text = [_("Memory:") + " ", Math.round((this.gtop.used - this.gtop.cached - this.gtop.buffer) /
-            // TO TRANSLATORS: Don't know if this would need translation.
-            // MB = Megabytes.
-            (1024 * 1024)) + " / " + Math.round(this.gtop.total / (1024 * 1024)) + " " + _("MB")];
+        this.text = Math.round((this.gtop.used - this.gtop.cached - this.gtop.buffer) / (1024 * 1024)) +
+            " / " + Math.round(this.gtop.total / (1024 * 1024)) + " " + _("MB");
         return [used - cached, cached];
     },
 
     getText: function() {
-        return this.text;
+        return [_("Memory"), this.text];
     }
 };
 
-function SwapDataProvider() {
-    this._init.apply(this, arguments);
+function SwapData() {
+    this._init();
 }
 
-SwapDataProvider.prototype = {
-    hasError: false,
-
+SwapData.prototype = {
     _init: function() {
-        try {
-            this.gtop = new GTop.glibtop_swap();
-        } catch (aErr) {
-            this.hasError = true;
-            global.logError(aErr);
-        }
+        this.gtop = new GTop.glibtop_swap();
     },
 
     getDim: function() {
@@ -262,53 +116,44 @@ SwapDataProvider.prototype = {
     getData: function() {
         GTop.glibtop_get_swap(this.gtop);
         let used = this.gtop.used / this.gtop.total;
-        this.text = [_("Swap:") + " ", Math.round(this.gtop.used / (1024 * 1024)) + " / " +
-            // TO TRANSLATORS: Don't know if this would need translation.
-            // MB = Megabytes.
-            Math.round(this.gtop.total / (1024 * 1024)) + " " + _("MB")
-        ];
+        this.text = Math.round(this.gtop.used / (1024 * 1024)) +
+            " / " + Math.round(this.gtop.total / (1024 * 1024)) + " " + _("MB");
         return [used];
     },
 
     getText: function() {
-        return this.text;
+        return [_("Swap"), this.text];
     }
 };
 
-function NetDataProvider() {
-    this._init.apply(this, arguments);
+function NetData() {
+    this._init();
 }
 
-NetDataProvider.prototype = {
-    hasError: false,
-
+NetData.prototype = {
     _init: function() {
-        this.devices = [];
-
+        this.gtop = new GTop.glibtop_netload();
         try {
-            this.gtop = new GTop.glibtop_netload();
-
-            try {
-                this.devices = GTop.glibtop.get_netlist(new GTop.glibtop_netlist());
-            } catch (aErr) {
-                if (!NMClient) {
-                    this.hasError = true;
-                    return;
-                }
-
-                let dev = NMClient.Client.new().get_devices();
-                for (let i = 0; i < dev.length; ++i) {
-                    this.devices.push(dev[i].get_iface());
-                }
-            } finally {
-                if (this.devices && this.devices.length > 1) {
-                    [this.down_last, this.up_last] = this.getNetLoad();
-                }
+            let nl = new GTop.glibtop_netlist();
+            this.devices = GTop.glibtop.get_netlist(nl);
+        } catch (e) {
+            this.devices = [];
+            let d = Gio.File.new_for_path("/sys/class/net");
+            let en = d.enumerate_children("standard::name", Gio.FileQueryInfoFlags.NONE, null);
+            let info;
+            while ((info = en.next_file(null))) {
+                this.devices.push(info.get_name());
             }
-        } catch (aErr) {
-            this.hasError = true;
-            global.logError(aErr);
         }
+        this.devices = this.devices.filter(v => v !== "lo"); // don't measure loopback interface
+        try {
+            // Workaround, because string match() function throws an error for some reason if called after GTop.glibtop.get_netlist(). After the error is thrown, everything works fine.
+            // If the match() would not be called here, the error would be thrown somewhere in Cinnamon applet init code and applet init would fail.
+            // Error message: Could not locate glibtop_init_s: ‘glibtop_init_s’: /usr/lib64/libgtop-2.0.so.10: undefined symbol: glibtop_init_s
+            // No idea why this error happens, but this workaround works.
+            "".match(/./);
+        } catch (e) {}
+        [this.down_last, this.up_last] = this.getNetLoad();
     },
 
     getDim: function() {
@@ -317,31 +162,23 @@ NetDataProvider.prototype = {
 
     getData: function() {
         let [down, up] = this.getNetLoad();
-        let down_delta = (down - this.down_last) * 1000 / this.refreshRate;
-        let up_delta = (up - this.up_last) * 1000 / this.refreshRate;
+        let down_delta = (down - this.down_last) * 1000 / this.refresh_rate;
+        let up_delta = (up - this.up_last) * 1000 / this.refresh_rate;
         this.down_last = down;
         this.up_last = up;
-        // TO TRANSLATORS:
-        // D = Download
-        // U = Upload
-        this.text = [_("Network D/U:") + " ", Math.round(down_delta / 1024) + " / " +
-            // TO TRANSLATORS: Don't know if this would need translation.
-            // KB/s = Kilobytes per second.
-            Math.round(up_delta / 1024) + " " + _("KB/s")
-        ];
+        this.text = Math.round(down_delta / 1024) + " / " + Math.round(up_delta / 1024) +
+            " " + _("KB/s");
         return [down_delta, up_delta];
     },
 
     getText: function() {
-        return this.text;
+        return [_("Network D/U"), this.text];
     },
 
     getNetLoad: function() {
         let down = 0;
         let up = 0;
-        let i = 0,
-            iLen = this.devices.length;
-        for (; i < iLen; ++i) {
+        for (let i = 0; i < this.devices.length; ++i) {
             GTop.glibtop.get_netload(this.gtop, this.devices[i]);
             down += this.gtop.bytes_in;
             up += this.gtop.bytes_out;
@@ -350,20 +187,13 @@ NetDataProvider.prototype = {
     }
 };
 
-function LoadAvgDataProvider() {
-    this._init.apply(this, arguments);
+function LoadAvgData() {
+    return this._init();
 }
 
-LoadAvgDataProvider.prototype = {
-    hasError: false,
-
+LoadAvgData.prototype = {
     _init: function() {
-        try {
-            this.gtop = new GTop.glibtop_loadavg();
-        } catch (aErr) {
-            this.hasError = true;
-            global.logError(aErr);
-        }
+        this.gtop = new GTop.glibtop_loadavg();
     },
 
     getDim: function() {
@@ -373,16 +203,215 @@ LoadAvgDataProvider.prototype = {
     getData: function() {
         GTop.glibtop_get_loadavg(this.gtop);
         let load = this.gtop.loadavg[0];
-        this.text = [_("Load average:") + " ", this.gtop.loadavg[0] + ", " + this.gtop.loadavg[1] +
-            ", " + this.gtop.loadavg[2]
-        ];
+        this.text = this.gtop.loadavg[0] +
+            ", " + this.gtop.loadavg[1] +
+            ", " + this.gtop.loadavg[2];
         return [load];
     },
 
     getText: function() {
-        return this.text;
+        return [_("Load average"), this.text];
     }
 };
+
+function Graph() {
+    this._init.apply(this, arguments);
+}
+
+Graph.prototype = {
+    _init: function(area, provider) {
+        this.area = area;
+        this.provider = provider;
+        this.colors = [
+            [1, 1, 1, 1]
+        ];
+        this.bg_color = [0, 0, 0, 1];
+        this.border_color = [1, 1, 1, 1];
+        this.smooth = false;
+        this.data = [];
+        this.dim = this.provider.getDim();
+        this.autoScale = false;
+        this.scale = 1;
+        this.width = 1;
+        this.draw_background = true;
+        this.draw_border = true;
+        this.paint_queued = false;
+        this.area.connect("repaint", Lang.bind(this, function() {
+            this.paint();
+        }));
+    },
+
+    _setColor: function(cr, i) {
+        let c = this.colors[i % this.colors.length];
+        cr.setSourceRGBA(c[0], c[1], c[2], c[3]);
+    },
+
+    _resizeData: function() {
+        let datasize = this.width - (this.draw_border ? 2 : 0);
+        if (datasize > this.data.length) {
+            let d = Array(datasize - this.data.length);
+            for (let i = 0; i < d.length; i++) {
+                d[i] = Array(this.dim);
+                for (let j = 0; j < this.dim; j++) {
+                    d[i][j] = 0;
+                }
+            }
+            this.data = d.concat(this.data);
+        } else if (datasize < this.data.length) {
+            this.data = this.data.slice(this.data.length - datasize);
+        }
+    },
+
+    updateSize: function() {
+        this.width = null;
+        this.repaint();
+    },
+
+    setWidth: function(width, vertical) {
+        if (vertical) {
+            this.area.set_width(-1);
+            this.area.set_height(width);
+        } else {
+            this.area.set_width(width);
+            this.area.set_height(-1);
+        }
+        this.updateSize();
+    },
+
+    setDrawBackground: function(draw_background) {
+        this.draw_background = draw_background;
+        this.repaint();
+    },
+
+    setDrawBorder: function(draw_border) {
+        this.draw_border = draw_border;
+        this.updateSize();
+    },
+
+    setColors: function(c) {
+        this.colors = c;
+        this.repaint();
+    },
+
+    refresh: function() {
+        let d = this.provider.getData();
+        this.data.push(d);
+        this.data.shift();
+
+        if (this.autoScale) {
+            let maxVal = this.minScale;
+            for (let i = 0; i < this.data.length; ++i) {
+                let sum = this.dataSum(i, this.dim - 1);
+                if (sum > maxVal) {
+                    maxVal = sum;
+                }
+            }
+            this.scale = 1.0 / maxVal;
+        }
+        this.repaint();
+    },
+
+    dataSum: function(i, depth) {
+        let sum = 0;
+        for (let j = 0; j <= depth; ++j) {
+            sum += this.data[i][j];
+        }
+        return sum;
+    },
+
+    repaint: function() {
+        if (!this.paint_queued) {
+            this.paint_queued = true;
+            this.area.queue_repaint();
+        }
+    },
+
+    paint: function() {
+        this.paint_queued = false;
+        let cr = this.area.get_context();
+        let [width, height] = this.area.get_size();
+
+        if (!this.width) {
+            this.width = width;
+            this._resizeData();
+        }
+
+        let border_width = this.draw_border ? 1 : 0;
+        let graph_width = width - 2 * border_width;
+        let graph_height = height - 2 * border_width;
+
+        // background
+        if (this.draw_background) {
+            cr.setSourceRGBA(this.bg_color[0], this.bg_color[1], this.bg_color[2], this.bg_color[3]);
+            cr.rectangle(border_width, border_width, graph_width, graph_height);
+            cr.fill();
+        }
+
+        // data
+        if (this.smooth) {
+            for (let j = this.dim - 1; j >= 0; --j) {
+                cr.moveTo(border_width, graph_height + border_width);
+                this._setColor(cr, j);
+                for (let i = 0; i < this.data.length; ++i) {
+                    let v = Math.round(graph_height * Math.min(1, this.scale * this.dataSum(i, j)));
+                    cr.lineTo(i + border_width, graph_height + border_width - v);
+                }
+                cr.lineTo(graph_width + border_width, graph_height + border_width);
+                cr.lineTo(border_width, graph_height + border_width);
+                cr.fill();
+            }
+        } else {
+            for (let i = 0; i < this.data.length; ++i) {
+                for (let j = this.dim - 1; j >= 0; --j) {
+                    this._setColor(cr, j);
+                    cr.moveTo(i + border_width, graph_height + border_width);
+                    let v = Math.round(graph_height * Math.min(1, this.scale * this.dataSum(i, j)));
+                    cr.relLineTo(0, -v);
+                    cr.stroke();
+                }
+            }
+        }
+
+        // border
+        if (this.draw_border) {
+            cr.setSourceRGBA(this.border_color[0], this.border_color[1], this.border_color[2], this.border_color[3]);
+            cr.rectangle(0, 0, width, height);
+            cr.stroke();
+        }
+    },
+
+    setAutoScale: function(minScale) {
+        if (minScale > 0) {
+            this.autoScale = true;
+            this.minScale = minScale;
+        } else {
+            this.autoScale = false;
+        }
+    }
+};
+
+function CustomTooltip() {
+    this._init.apply(this, arguments);
+}
+
+CustomTooltip.prototype = {
+    __proto__: Tooltips.PanelItemTooltip.prototype,
+
+    _init: function(panelItem, initTitle, orientation) {
+        Tooltips.PanelItemTooltip.prototype._init.call(this, panelItem, initTitle, orientation);
+        this._tooltip.set_style("text-align:left;");
+    },
+
+    set_text: function(text) {
+        this._tooltip.get_clutter_text().set_markup(text);
+    }
+};
+
+function colorToArray(c) {
+    c = c.match(/\((.*)\)/)[1].split(",").map(Number);
+    c = [c[0] / 255, c[1] / 255, c[2] / 255, 3 in c ? c[3] : 1];
+    return c;
+}
 
 function escapeHTML(aStr) {
     aStr = String(aStr)
@@ -394,5 +423,6 @@ function escapeHTML(aStr) {
     return aStr;
 }
 
-/* exported escapeHTML
+/* exported escapeHTML,
+            colorToArray
  */

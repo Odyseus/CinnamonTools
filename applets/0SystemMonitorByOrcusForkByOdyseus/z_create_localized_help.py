@@ -33,13 +33,8 @@ class Main(LocalizedHelpCreator):
             "",
             "## %s" % _("Differences with the original applet"),
             "",
-            "**%s**" % ("This applet is not compatible with vertical panels!"),
-            "",
-            "- %s" % _("This applet uses Cinnamon's native settings system instead of an external library (gjs)."),
-            "- %s" % _("I added an option to use a custom command on applet click."),
-            "- %s" % _("I added an option to set a custom width for each graph individually."),
-            "- %s" % _("I added an option to align this applet tooltip text to the left."),
-            "- %s" % _("Removed NetworkManager dependency."),
+            "- %s" % _("Added keyboard shortcut to be able to launch a custom command."),
+            "- %s" % _("Added option to hide the graphs background, not just set it transparent."),
             "",
             "## " + _("Dependencies"),
             "- **GTop:** " +
@@ -52,22 +47,7 @@ class Main(LocalizedHelpCreator):
                                  _("The package is called **libgtop**.")),
             "    - **%s** %s" % (_("Fedora based distributions:"),
                                  # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                                 _("The package is called **libgtop2-devel**.")),
-            "- **NetworkManager:** " +
-            _("NetworkManager is a system network service that manages your network devices and connections, attempting to keep active network connectivity when available."),
-            "    - **%s** %s" % (_("Debian based distributions:"),
-                                 # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                                 _("The package is called **gir1.2-networkmanager-1.0**.")),
-            "    - **%s** %s" % (_("Archlinux based distributions:"),
-                                 # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                                 _("The package is called **networkmanager**.")),
-            "    - **%s** %s" % (_("Fedora based distributions:"),
-                                 # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                                 _("The package is called **NetworkManager**.")),
-            "",
-            "**%s** %s" % (_("Important note:"),
-                           # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                           _("NetworkManager is only used if the **GTop** library version installed on a system is < **2.32** and doesn't support certain library calls. So, basically, if the network graph on this applet works without having installed NetworkManager, then you don't need to install it.")),
+                                 _("The package is called **libgtop2**.")),
             "",
             "**%s**" % _("Restart Cinnamon after installing the packages for the applet to recognize them."),
         ])

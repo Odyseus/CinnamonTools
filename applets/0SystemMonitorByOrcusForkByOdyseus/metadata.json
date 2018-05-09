@@ -18,10 +18,11 @@
         "5.8",
         "6.0"
     ],
+    "max-instances": -1,
     "name": "System Monitor (Fork By Odyseus)",
     "contributors": "See this xlet help file.",
     "uuid": "{{UUID}}",
+    "version": "2.5",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "version": "1.16",
     "description": "Displays CPU, memory, swap, network usage and load in graphs."
 }

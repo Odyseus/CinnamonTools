@@ -1,257 +1,275 @@
 {
-    "demo-button1": {
-        "type": "button",
-        "description": "To apply these settings, Cinnamon needs to be restarted. Click me!!!",
-        "callback": "_restart_cinnamon",
-        "tooltip": "Restart Cinnamon"
+    "pref_overlay_key": {
+        "type": "keybinding",
+        "default": "",
+        "description": "Keyboard shortcut to launch a custom command."
     },
-    "head0": {
-        "type": "header",
-        "description": "General settings"
-    },
-    "pref_use_smooth_graphs": {
-        "type": "checkbox",
-        "default": true,
-        "description": "Use smooth graphs"
-    },
-    "pref_align_tooltip_text_to_the_left": {
-        "type": "checkbox",
-        "default": true,
-        "description": "Align tooltip text to the left",
-        "tooltip": "For those of us who suffer from the stupidity of using a theme with tooltips aligned to the center. ¬¬"
-    },
-    "pref_custom_command": {
+    "pref_onkeybinding_command": {
         "type": "entry",
         "default": "gnome-system-monitor",
-        "description": "Custom command on applet click:"
+        "description": "Command to launch on keyboard shortcut",
+        "tooltip": "Command to launch when the keyboard shortcut specified above is pressed."
+    },
+    "pref_onclick_command": {
+        "type": "entry",
+        "default": "gnome-system-monitor",
+        "description": "Command to launch on click",
+        "tooltip": "Command to launch when the applet is clicked."
+    },
+    "pref_smooth": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Smooth graphs"
+    },
+    "pref_graph_width": {
+        "type": "spinbutton",
+        "default": 40,
+        "min": 10,
+        "max": 1000,
+        "step": 1,
+        "description": "Common graph width",
+        "units": "pixels",
+        "tooltip": "If the applet is in a vertical panel, this sets the graph height. The graph width is then the panel width minus padding"
     },
     "pref_refresh_rate": {
         "type": "spinbutton",
         "default": 1000,
         "min": 100,
-        "max": 5000,
-        "step": 100,
-        "units": "milliseconds",
-        "description": "Refresh rate:"
+        "max": 10000,
+        "step": 50,
+        "description": "Refresh rate",
+        "units": "ms"
+    },
+    "pref_use_padding": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Use custom applet padding"
+    },
+    "pref_padding_lr": {
+        "type": "spinbutton",
+        "default": 1,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "description": "Left/right padding",
+        "units": "pixels",
+        "dependency": "pref_use_padding"
+    },
+    "pref_padding_tb": {
+        "type": "spinbutton",
+        "default": 1,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "description": "Top/bottom padding",
+        "units": "pixels",
+        "dependency": "pref_use_padding"
     },
     "pref_draw_background": {
         "type": "checkbox",
         "default": false,
-        "description": "Draw graph background"
+        "description": "Draw background"
     },
-    "pref_background_color": {
+    "pref_bg_color": {
         "type": "colorchooser",
-        "default": "rgba(0,0,0,0)",
         "dependency": "pref_draw_background",
-        "indent": true,
-        "description": "Background color:"
+        "default": "rgba(0,0,0,0)",
+        "description": "Background color"
     },
     "pref_draw_border": {
         "type": "checkbox",
         "default": false,
-        "description": "Draw graph border"
+        "description": "Draw border"
     },
     "pref_border_color": {
         "type": "colorchooser",
-        "default": "rgba(0,0,0,0)",
         "dependency": "pref_draw_border",
-        "indent": true,
-        "description": "Border color:"
+        "default": "rgb(128,128,128)",
+        "description": "Border color"
     },
-
-    "sep1": {
+    "cpu_separator": {
         "type": "separator"
     },
-    "head1": {
+    "cpu_head": {
         "type": "header",
         "description": "CPU graph"
     },
-    "pref_show_cpu_graph": {
+    "pref_cpu_enabled": {
         "type": "checkbox",
         "default": true,
-        "description": "Show CPU graph:"
+        "description": "Enable"
+    },
+    "pref_cpu_override_graph_width": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Override graph width"
     },
     "pref_cpu_graph_width": {
         "type": "spinbutton",
-        "default": 50,
-        "min": 5,
-        "max": 400,
-        "step": 5,
+        "default": 40,
+        "min": 10,
+        "max": 1000,
+        "step": 1,
+        "description": "Graph width",
         "units": "pixels",
-        "description": "CPU graph width"
+        "dependency": "pref_cpu_override_graph_width"
     },
-    "head11": {
-        "type": "header",
-        "description": "CPU graph colors"
-    },
-    "pref_cpu_graph_color_user": {
+    "pref_cpu_color_0": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(252,232,79,1)",
-        "description": "User:"
+        "default": "rgb(252,233,79)",
+        "description": "User color"
     },
-    "pref_cpu_graph_color_nice": {
+    "pref_cpu_color_1": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(252,175,61,1)",
-        "description": "Nice:"
+        "default": "rgb(252,175,62)",
+        "description": "Nice color"
     },
-    "pref_cpu_graph_color_kernel": {
+    "pref_cpu_color_2": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(238,41,41,1)",
-        "description": "Kernel:"
+        "default": "rgb(239,41,41)",
+        "description": "Kernel color"
     },
-    "pref_cpu_graph_color_iowait": {
+    "pref_cpu_color_3": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(93,0,0,1)",
-        "description": "IOWait:"
+        "default": "rgb(94,0,0)",
+        "description": "IOWait color"
     },
-
-    "sep2": {
+    "mem_separator": {
         "type": "separator"
     },
-    "head2": {
+    "mem_head": {
         "type": "header",
         "description": "Memory graph"
     },
-    "pref_show_memmory_graph": {
+    "pref_mem_enabled": {
         "type": "checkbox",
         "default": true,
-        "description": "Show Memory graph:"
+        "description": "Enable"
     },
-    "pref_memory_graph_width": {
+    "pref_mem_override_graph_width": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Override graph width"
+    },
+    "pref_mem_graph_width": {
         "type": "spinbutton",
-        "default": 50,
-        "min": 5,
-        "max": 400,
-        "step": 5,
+        "default": 40,
+        "min": 10,
+        "max": 1000,
+        "step": 1,
+        "description": "Graph width",
         "units": "pixels",
-        "description": "Memory graph width"
+        "dependency": "pref_mem_override_graph_width"
     },
-    "head22": {
-        "type": "header",
-        "description": "Memory graph colors"
-    },
-    "pref_memory_graph_color_used": {
+    "pref_mem_color_0": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(118,210,255,1)",
-        "description": "Used:"
+        "default": "rgb(118,210,255)",
+        "description": "Used color"
     },
-    "pref_memory_graph_color_cached": {
+    "pref_mem_color_1": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(51,100,164,1)",
-        "description": "Cached:"
+        "default": "rgb(52,101,164)",
+        "description": "Cached color"
     },
-
-    "sep3": {
+    "swap_separator": {
         "type": "separator"
     },
-    "head3": {
+    "swap_head": {
         "type": "header",
         "description": "Swap graph"
     },
-    "pref_show_swap_graph": {
+    "pref_swap_enabled": {
         "type": "checkbox",
         "default": true,
-        "description": "Show Swap graph:"
+        "description": "Enable"
+    },
+    "pref_swap_override_graph_width": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Override graph width"
     },
     "pref_swap_graph_width": {
         "type": "spinbutton",
-        "default": 50,
-        "min": 5,
-        "max": 400,
-        "step": 5,
+        "default": 40,
+        "min": 10,
+        "max": 1000,
+        "step": 1,
+        "description": "Graph width",
         "units": "pixels",
-        "description": "Swap graph width"
+        "dependency": "pref_swap_override_graph_width"
     },
-    "head33": {
-        "type": "header",
-        "description": "Swap graph colors"
-    },
-    "pref_swap_graph_color_used": {
+    "pref_swap_color_0": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(114,159,206,1)",
-        "description": "Used:"
+        "default": "rgb(114,159,207)",
+        "description": "Used color"
     },
-
-    "sep4": {
+    "net_separator": {
         "type": "separator"
     },
-    "head4": {
+    "net_head": {
         "type": "header",
         "description": "Network graph"
     },
-    "pref_show_network_graph": {
+    "pref_net_enabled": {
         "type": "checkbox",
         "default": true,
-        "description": "Show Network graph:"
+        "description": "Enable"
     },
-    "pref_network_graph_width": {
+    "pref_net_override_graph_width": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Override graph width"
+    },
+    "pref_net_graph_width": {
         "type": "spinbutton",
-        "default": 50,
-        "min": 5,
-        "max": 400,
-        "step": 5,
+        "default": 40,
+        "min": 10,
+        "max": 1000,
+        "step": 1,
+        "description": "Graph width",
         "units": "pixels",
-        "description": "Network graph width"
+        "dependency": "pref_net_override_graph_width"
     },
-    "head44": {
-        "type": "header",
-        "description": "Network graph colors"
-    },
-    "pref_network_graph_color_download": {
+    "pref_net_color_0": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(138,225,51,1)",
-        "description": "Download:"
+        "default": "rgb(138,226,52)",
+        "description": "Download color"
     },
-    "pref_network_graph_color_upload": {
+    "pref_net_color_1": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(238,41,41,1)",
-        "description": "Upload:"
+        "default": "rgb(239,41,41)",
+        "description": "Upload color"
     },
-
-    "sep5": {
+    "load_separator": {
         "type": "separator"
     },
-    "head5": {
+    "load_head": {
         "type": "header",
         "description": "Load graph"
     },
-    "pref_show_load_graph": {
+    "pref_load_enabled": {
         "type": "checkbox",
         "default": true,
-        "description": "Show Load graph:"
+        "description": "Enable"
+    },
+    "pref_load_override_graph_width": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Override graph width"
     },
     "pref_load_graph_width": {
         "type": "spinbutton",
-        "default": 50,
-        "min": 5,
-        "max": 400,
-        "step": 5,
+        "default": 40,
+        "min": 10,
+        "max": 1000,
+        "step": 1,
+        "description": "Graph width",
         "units": "pixels",
-        "description": "Load graph width"
+        "dependency": "pref_load_override_graph_width"
     },
-    "head55": {
-        "type": "header",
-        "description": "Load graph colors"
-    },
-    "pref_load_graph_color_load": {
+    "pref_load_color_0": {
         "type": "colorchooser",
-        "indent": "true",
-        "default": "rgba(204,0,0,1)",
-        "description": "Load:"
-    },
-    "demo-button2": {
-        "type": "button",
-        "description": "To apply these settings, Cinnamon needs to be restarted. Click me!!!",
-        "callback": "_restart_cinnamon",
-        "tooltip": "Restart Cinnamon"
+        "default": "rgb(204,0,0)",
+        "description": "Color"
     }
 }

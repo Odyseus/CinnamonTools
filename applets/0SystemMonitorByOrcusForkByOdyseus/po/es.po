@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 1.16\n"
+"Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 2.5\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-03 23:05-0300\n"
-"PO-Revision-Date: 2018-05-04 21:14-0300\n"
+"POT-Creation-Date: 2018-05-09 01:11-0300\n"
+"PO-Revision-Date: 2018-05-08 11:16-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -32,7 +32,7 @@ msgstr "Copatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:370
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:157
 msgid "Help"
 msgstr "Ayuda"
 
@@ -94,139 +94,100 @@ msgstr "Este applet está basado en el applet [System Monitor](https://cinnamon-
 msgid "Differences with the original applet"
 msgstr "Diferencias con el original"
 
-#: z_create_localized_help.py:38
-msgid "This applet uses Cinnamon's native settings system instead of an external library (gjs)."
-msgstr "Este applet utiliza el sistema de configuración nativo de Cinnamon en lugar de una biblioteca externa (gjs)."
+#: z_create_localized_help.py:36
+msgid "Added keyboard shortcut to be able to launch a custom command."
+msgstr ""
+
+#: z_create_localized_help.py:37
+msgid "Added option to hide the graphs background, not just set it transparent."
+msgstr ""
 
 #: z_create_localized_help.py:39
-msgid "I added an option to use a custom command on applet click."
-msgstr "He añadido una opción para usar un comando personalizado al hacer clic en el applet."
-
-#: z_create_localized_help.py:40
-msgid "I added an option to set a custom width for each graph individually."
-msgstr "He añadido una opción para establecer un ancho personalizado para cada gráfico individualmente."
-
-#: z_create_localized_help.py:41
-msgid "I added an option to align this applet tooltip text to the left."
-msgstr "He añadido una opción para alinear el texto de información de este applet a la izquierda."
-
-#: z_create_localized_help.py:42
-msgid "Removed NetworkManager dependency."
-msgstr "Se eliminó la dependencia de NetworkManager."
-
-#: z_create_localized_help.py:44
 msgid "Dependencies"
 msgstr "Dependencias"
 
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:41
 msgid "The gtop library reads information about processes and the state of the system."
 msgstr "La biblioteca gtop lee información acerca de procesos y el estado del sistema."
 
-#: z_create_localized_help.py:47 z_create_localized_help.py:58
+#: z_create_localized_help.py:42
 msgid "Debian based distributions:"
 msgstr "Distribuciones basadas en Debian:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:49
+#: z_create_localized_help.py:44
 msgid "The package is called **gir1.2-gtop-2.0**."
 msgstr "Distribuciones basadas en Debian: El paquete es llamado **gir1.2-gtop-2.0**."
 
-#: z_create_localized_help.py:50 z_create_localized_help.py:61
+#: z_create_localized_help.py:45
 msgid "Archlinux based distributions:"
 msgstr "Distribuciones basadas en Archlinux:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:52
+#: z_create_localized_help.py:47
 msgid "The package is called **libgtop**."
 msgstr "Distribuciones basadas en Archlinux: El paquete es **libgtop**."
 
-#: z_create_localized_help.py:53 z_create_localized_help.py:64
+#: z_create_localized_help.py:48
 msgid "Fedora based distributions:"
 msgstr "Distribuciones basadas en Fedora:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:55
-msgid "The package is called **libgtop2-devel**."
-msgstr "El paquete es llamado **libgtop2-devel**."
+#: z_create_localized_help.py:50
+msgid "The package is called **libgtop2**."
+msgstr ""
 
-#: z_create_localized_help.py:57
-msgid "NetworkManager is a system network service that manages your network devices and connections, attempting to keep active network connectivity when available."
-msgstr "NetworkManager es un servicio de red del sistema que administra los dispositivos y conexiones de red, intentando mantener una conectividad de red activa cuando está disponible."
-
-#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:60
-msgid "The package is called **gir1.2-networkmanager-1.0**."
-msgstr "El paquete es llamado **gir1.2-networkmanager-1.0**."
-
-#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:63
-msgid "The package is called **networkmanager**."
-msgstr "El paquete es llamado **NetworkManager**."
-
-#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:66
-msgid "The package is called **NetworkManager**."
-msgstr "El paquete es llamado **NetworkManager**."
-
-#: z_create_localized_help.py:68
-msgid "Important note:"
-msgstr "Nota importante:"
-
-#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:70
-msgid "NetworkManager is only used if the **GTop** library version installed on a system is < **2.32** and doesn't support certain library calls. So, basically, if the network graph on this applet works without having installed NetworkManager, then you don't need to install it."
-msgstr "NetworkManager is usado sólo si la versión de la librería **GTop** instalada en el sistema es < 2.32 y no soporta ciertas llamadas a la librería. Básicamente, si el gráfico de red de este applet funciona sin tener instalado NetworkManager, entonces no es necesario que sea instalado."
-
-#: z_create_localized_help.py:72
+#: z_create_localized_help.py:52
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr "Reiniciar Cinnamon luego de haber instalado los paquetes para que el applet los reconozca."
 
-#: applet.js:200
+#: applet.js:168
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:201
+#: applet.js:169
 msgid "This applet needs the GTop library installed on your system for it  to work."
 msgstr "Este applet necesita la biblioteca GTop instalada en su sistema para que funcione."
 
-#: applet.js:202
+#: applet.js:170
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
-#: utils.js:197
-msgid "CPU:"
-msgstr "CPU:"
+#: applet.js:448
+msgid "Command not set!"
+msgstr ""
 
-#: utils.js:230
-msgid "Memory:"
-msgstr "Memoria:"
+#: applet.js:449
+msgid "Set a custom command from this applet settings window."
+msgstr ""
 
-#. TO TRANSLATORS: Don't know if this would need translation.
-#. MB = Megabytes.
-#: utils.js:233 utils.js:268
+#: utils.js:72
+msgid "CPU"
+msgstr "CPU"
+
+#: utils.js:94 utils.js:120
 msgid "MB"
 msgstr "MB"
 
-#: utils.js:265
-msgid "Swap:"
-msgstr "Swap:"
+#: utils.js:99
+msgid "Memory"
+msgstr "Memoria"
 
-#. TO TRANSLATORS:
-#. D = Download
-#. U = Upload
-#: utils.js:327
-msgid "Network D/U:"
-msgstr "Red D/S:"
+#: utils.js:125
+msgid "Swap"
+msgstr "Swap"
 
-#. TO TRANSLATORS: Don't know if this would need translation.
-#. KB/s = Kilobytes per second.
-#: utils.js:330
+#: utils.js:170
 msgid "KB/s"
 msgstr "KB/s"
 
-#: utils.js:376
-msgid "Load average:"
-msgstr "Promedio de carga:"
+#: utils.js:175
+msgid "Network D/U"
+msgstr "Red D/S"
+
+#: utils.js:213
+msgid "Load average"
+msgstr "Promedio de carga"
 
 #. metadata.json->name
 msgid "System Monitor (Fork By Odyseus)"
@@ -240,181 +201,201 @@ msgstr "Ver el archivo de ayuda de este xlet."
 msgid "Displays CPU, memory, swap, network usage and load in graphs."
 msgstr "Muestra gráficos de uso de CPU. memoria, swap, red y carga."
 
-#. settings-schema.json->demo-button1->description
-#. settings-schema.json->demo-button2->description
-msgid "To apply these settings, Cinnamon needs to be restarted. Click me!!!"
-msgstr "Para aplicar estas preferencias, Cinnamon necesita ser reiniciado. Presióname!!!"
+#. settings-schema.json->pref_overlay_key->description
+msgid "Keyboard shortcut to launch a custom command."
+msgstr ""
 
-#. settings-schema.json->demo-button1->tooltip
-#. settings-schema.json->demo-button2->tooltip
-msgid "Restart Cinnamon"
-msgstr "Reiniciar Cinnamon"
+#. settings-schema.json->pref_onkeybinding_command->description
+msgid "Command to launch on keyboard shortcut"
+msgstr ""
 
-#. settings-schema.json->head0->description
-msgid "General settings"
-msgstr "Preferencias generales"
+#. settings-schema.json->pref_onkeybinding_command->tooltip
+msgid "Command to launch when the keyboard shortcut specified above is pressed."
+msgstr ""
 
-#. settings-schema.json->pref_use_smooth_graphs->description
-msgid "Use smooth graphs"
+#. settings-schema.json->pref_onclick_command->description
+msgid "Command to launch on click"
+msgstr ""
+
+#. settings-schema.json->pref_onclick_command->tooltip
+msgid "Command to launch when the applet is clicked."
+msgstr ""
+
+#. settings-schema.json->pref_smooth->description
+msgid "Smooth graphs"
 msgstr "Usar suavizado de gráficos"
 
-#. settings-schema.json->pref_align_tooltip_text_to_the_left->description
-msgid "Align tooltip text to the left"
-msgstr "Alinear el texto de las herramientas emergentes a la izquierda"
+#. settings-schema.json->pref_graph_width->description
+msgid "Common graph width"
+msgstr "Ancho de gráficos común"
 
-#. settings-schema.json->pref_align_tooltip_text_to_the_left->tooltip
-msgid "For those of us who suffer from the stupidity of using a theme with tooltips aligned to the center. ¬¬"
-msgstr "Para aquellos de nosotros que sufren de la estupidez de usar un tema con cajas de herramientas alineadas al centro.  ¬¬"
-
-#. settings-schema.json->pref_custom_command->description
-msgid "Custom command on applet click:"
-msgstr "Comando personalizado al cliquear en el applet:"
-
-#. settings-schema.json->pref_refresh_rate->units
-msgid "milliseconds"
-msgstr "milisegundos"
-
-#. settings-schema.json->pref_refresh_rate->description
-msgid "Refresh rate:"
-msgstr "Frecuencia de refresco:"
-
-#. settings-schema.json->pref_draw_background->description
-msgid "Draw graph background"
-msgstr "Dibujar fondo de gráfico"
-
-#. settings-schema.json->pref_background_color->description
-msgid "Background color:"
-msgstr "Color de fondo:"
-
-#. settings-schema.json->pref_draw_border->description
-msgid "Draw graph border"
-msgstr "Dibujar borde de gráfico"
-
-#. settings-schema.json->pref_border_color->description
-msgid "Border color:"
-msgstr "Color del borde:"
-
-#. settings-schema.json->head1->description
-msgid "CPU graph"
-msgstr "Gráfico de CPU"
-
-#. settings-schema.json->pref_show_cpu_graph->description
-msgid "Show CPU graph:"
-msgstr "Mostrar gráfico de CPU:"
-
+#. settings-schema.json->pref_graph_width->units
+#. settings-schema.json->pref_padding_lr->units
+#. settings-schema.json->pref_padding_tb->units
 #. settings-schema.json->pref_cpu_graph_width->units
-#. settings-schema.json->pref_memory_graph_width->units
+#. settings-schema.json->pref_mem_graph_width->units
 #. settings-schema.json->pref_swap_graph_width->units
-#. settings-schema.json->pref_network_graph_width->units
+#. settings-schema.json->pref_net_graph_width->units
 #. settings-schema.json->pref_load_graph_width->units
 msgid "pixels"
 msgstr "pixeles"
 
+#. settings-schema.json->pref_graph_width->tooltip
+msgid "If the applet is in a vertical panel, this sets the graph height. The graph width is then the panel width minus padding"
+msgstr "Si el applet está en un panel vertical, esta opción establece la altura del gráfico. El ancho del gráfico es entonces el ancho del panel menos el relleno."
+
+#. settings-schema.json->pref_refresh_rate->description
+msgid "Refresh rate"
+msgstr "Frecuencia de refresco"
+
+#. settings-schema.json->pref_refresh_rate->units
+msgid "ms"
+msgstr "ms"
+
+#. settings-schema.json->pref_use_padding->description
+msgid "Use custom applet padding"
+msgstr "Usar espaciado personalizado"
+
+#. settings-schema.json->pref_padding_lr->description
+msgid "Left/right padding"
+msgstr "Espaciado derecho/izquierdo"
+
+#. settings-schema.json->pref_padding_tb->description
+msgid "Top/bottom padding"
+msgstr "Espaciado arriba/abajo"
+
+#. settings-schema.json->pref_draw_background->description
+msgid "Draw background"
+msgstr ""
+
+#. settings-schema.json->pref_bg_color->description
+msgid "Background color"
+msgstr "Color de fondo"
+
+#. settings-schema.json->pref_draw_border->description
+msgid "Draw border"
+msgstr "Dibujar borde de gráfico"
+
+#. settings-schema.json->pref_border_color->description
+msgid "Border color"
+msgstr "Color del borde"
+
+#. settings-schema.json->cpu_head->description
+msgid "CPU graph"
+msgstr "Gráfico de CPU"
+
+#. settings-schema.json->pref_cpu_enabled->description
+#. settings-schema.json->pref_mem_enabled->description
+#. settings-schema.json->pref_swap_enabled->description
+#. settings-schema.json->pref_net_enabled->description
+#. settings-schema.json->pref_load_enabled->description
+msgid "Enable"
+msgstr "Habilitar"
+
+#. settings-schema.json->pref_cpu_override_graph_width->description
+#. settings-schema.json->pref_mem_override_graph_width->description
+#. settings-schema.json->pref_swap_override_graph_width->description
+#. settings-schema.json->pref_net_override_graph_width->description
+#. settings-schema.json->pref_load_override_graph_width->description
+msgid "Override graph width"
+msgstr "Anular el ancho del gráfico"
+
 #. settings-schema.json->pref_cpu_graph_width->description
-msgid "CPU graph width"
-msgstr "Anchura del gráfico de CPU"
+#. settings-schema.json->pref_mem_graph_width->description
+#. settings-schema.json->pref_swap_graph_width->description
+#. settings-schema.json->pref_net_graph_width->description
+#. settings-schema.json->pref_load_graph_width->description
+msgid "Graph width"
+msgstr "Anchura del gráfico"
 
-#. settings-schema.json->head11->description
-msgid "CPU graph colors"
-msgstr "Colores del gráfico de CPU"
+#. settings-schema.json->pref_cpu_color_0->description
+msgid "User color"
+msgstr "Usuario"
 
-#. settings-schema.json->pref_cpu_graph_color_user->description
-msgid "User:"
-msgstr "Usuario:"
+#. settings-schema.json->pref_cpu_color_1->description
+msgid "Nice color"
+msgstr "Nice"
 
-#. settings-schema.json->pref_cpu_graph_color_nice->description
-msgid "Nice:"
-msgstr "Nice:"
+#. settings-schema.json->pref_cpu_color_2->description
+msgid "Kernel color"
+msgstr "Kernel"
 
-#. settings-schema.json->pref_cpu_graph_color_kernel->description
-msgid "Kernel:"
-msgstr "Kernel:"
+#. settings-schema.json->pref_cpu_color_3->description
+msgid "IOWait color"
+msgstr "IOWait"
 
-#. settings-schema.json->pref_cpu_graph_color_iowait->description
-msgid "IOWait:"
-msgstr "IOWait:"
-
-#. settings-schema.json->head2->description
+#. settings-schema.json->mem_head->description
 msgid "Memory graph"
 msgstr "Gráfico de memoria"
 
-#. settings-schema.json->pref_show_memmory_graph->description
-msgid "Show Memory graph:"
-msgstr "Mostrar gráfico de memoria:"
+#. settings-schema.json->pref_mem_color_0->description
+#. settings-schema.json->pref_swap_color_0->description
+msgid "Used color"
+msgstr "Usado"
 
-#. settings-schema.json->pref_memory_graph_width->description
-msgid "Memory graph width"
-msgstr "Anchura del gráfico de memoria"
+#. settings-schema.json->pref_mem_color_1->description
+msgid "Cached color"
+msgstr "Almacenado en caché"
 
-#. settings-schema.json->head22->description
-msgid "Memory graph colors"
-msgstr "Colores del gráfico de memoria"
-
-#. settings-schema.json->pref_memory_graph_color_used->description
-#. settings-schema.json->pref_swap_graph_color_used->description
-msgid "Used:"
-msgstr "Usado:"
-
-#. settings-schema.json->pref_memory_graph_color_cached->description
-msgid "Cached:"
-msgstr "Almacenado en caché:"
-
-#. settings-schema.json->head3->description
+#. settings-schema.json->swap_head->description
 msgid "Swap graph"
 msgstr "Gráfico de swap"
 
-#. settings-schema.json->pref_show_swap_graph->description
-msgid "Show Swap graph:"
-msgstr "Mostrar gráfico de swap:"
-
-#. settings-schema.json->pref_swap_graph_width->description
-msgid "Swap graph width"
-msgstr "Anchura de gráfico swap"
-
-#. settings-schema.json->head33->description
-msgid "Swap graph colors"
-msgstr "Colores de gráfico swap"
-
-#. settings-schema.json->head4->description
+#. settings-schema.json->net_head->description
 msgid "Network graph"
 msgstr "Gráfico de red"
 
-#. settings-schema.json->pref_show_network_graph->description
-msgid "Show Network graph:"
-msgstr "Mostrar gráfico de red:"
+#. settings-schema.json->pref_net_color_0->description
+msgid "Download color"
+msgstr "Descarga"
 
-#. settings-schema.json->pref_network_graph_width->description
-msgid "Network graph width"
-msgstr "Anchura del gráfico de red"
+#. settings-schema.json->pref_net_color_1->description
+msgid "Upload color"
+msgstr "Subida"
 
-#. settings-schema.json->head44->description
-msgid "Network graph colors"
-msgstr "Colores del gráfico de red"
-
-#. settings-schema.json->pref_network_graph_color_download->description
-msgid "Download:"
-msgstr "Descarga:"
-
-#. settings-schema.json->pref_network_graph_color_upload->description
-msgid "Upload:"
-msgstr "Subida:"
-
-#. settings-schema.json->head5->description
+#. settings-schema.json->load_head->description
 msgid "Load graph"
 msgstr "Gráfico de carga"
 
-#. settings-schema.json->pref_show_load_graph->description
-msgid "Show Load graph:"
-msgstr "Mostrar gráfico de carga:"
+#. settings-schema.json->pref_load_color_0->description
+msgid "Color"
+msgstr "Color"
 
-#. settings-schema.json->pref_load_graph_width->description
-msgid "Load graph width"
-msgstr "Anchura del gráfico de carga"
+#~ msgid "This applet uses Cinnamon's native settings system instead of an external library (gjs)."
+#~ msgstr "Este applet utiliza el sistema de configuración nativo de Cinnamon en lugar de una biblioteca externa (gjs)."
 
-#. settings-schema.json->head55->description
-msgid "Load graph colors"
-msgstr "Colores del gráfico de carga"
+#~ msgid "I added an option to use a custom command on applet click."
+#~ msgstr "He añadido una opción para usar un comando personalizado al hacer clic en el applet."
 
-#. settings-schema.json->pref_load_graph_color_load->description
-msgid "Load:"
-msgstr "Carga:"
+#~ msgid "I added an option to set a custom width for each graph individually."
+#~ msgstr "He añadido una opción para establecer un ancho personalizado para cada gráfico individualmente."
+
+#~ msgid "I added an option to align this applet tooltip text to the left."
+#~ msgstr "He añadido una opción para alinear el texto de información de este applet a la izquierda."
+
+#~ msgid "Removed NetworkManager dependency."
+#~ msgstr "Se eliminó la dependencia de NetworkManager."
+
+#~ msgid "The package is called **libgtop2-devel**."
+#~ msgstr "El paquete es llamado **libgtop2-devel**."
+
+#~ msgid "NetworkManager is a system network service that manages your network devices and connections, attempting to keep active network connectivity when available."
+#~ msgstr "NetworkManager es un servicio de red del sistema que administra los dispositivos y conexiones de red, intentando mantener una conectividad de red activa cuando está disponible."
+
+#~ msgid "The package is called **gir1.2-networkmanager-1.0**."
+#~ msgstr "El paquete es llamado **gir1.2-networkmanager-1.0**."
+
+#~ msgid "The package is called **networkmanager**."
+#~ msgstr "El paquete es llamado **NetworkManager**."
+
+#~ msgid "The package is called **NetworkManager**."
+#~ msgstr "El paquete es llamado **NetworkManager**."
+
+#~ msgid "Important note:"
+#~ msgstr "Nota importante:"
+
+#~ msgid "NetworkManager is only used if the **GTop** library version installed on a system is < **2.32** and doesn't support certain library calls. So, basically, if the network graph on this applet works without having installed NetworkManager, then you don't need to install it."
+#~ msgstr "NetworkManager is usado sólo si la versión de la librería **GTop** instalada en el sistema es < 2.32 y no soporta ciertas llamadas a la librería. Básicamente, si el gráfico de red de este applet funciona sin tener instalado NetworkManager, entonces no es necesario que sea instalado."
+
+#~ msgid "Program to launch on click"
+#~ msgstr "Comando a ejecutar al cliquear en el applet"
