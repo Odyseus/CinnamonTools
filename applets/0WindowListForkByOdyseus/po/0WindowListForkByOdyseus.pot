@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus 1.12\n"
-"POT-Creation-Date: 2018-05-08 05:30-0300\n"
+"POT-Creation-Date: 2018-05-09 01:11-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following two sections are available only in English."

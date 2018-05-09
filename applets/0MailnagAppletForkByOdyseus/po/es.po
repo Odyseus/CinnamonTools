@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-08 03:54-0300\n"
+"POT-Creation-Date: 2018-05-09 01:11-0300\n"
 "PO-Revision-Date: 2018-05-08 02:42-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: \n"
@@ -93,46 +93,46 @@ msgid ""
 "by following the following instructions."
 msgstr ""
 
-#: applet.js:399
+#: applet.js:398
 #, javascript-format
 msgid "You have %d new mails!"
 msgstr "¡Tienes %d correos nuevos!"
 
-#: applet.js:400 applet.js:437
+#: applet.js:399 applet.js:436
 msgid "Mark All Read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:409
+#: applet.js:408
 msgid "You have new mail!"
 msgstr "¡Tienes nuevo correo!"
 
-#: applet.js:411
+#: applet.js:410
 msgid "Mark Read"
 msgstr "Marcar como leído"
 
-#: applet.js:473 applet.js:520
+#: applet.js:472 applet.js:519
 msgid "No unread mails."
 msgstr "Sin mensajes no leídos."
 
-#: applet.js:501
+#: applet.js:500
 msgid "Mailnag daemon is not running!"
 msgstr "El demonio Mailnag no se está ejecutando!"
 
-#: applet.js:511
+#: applet.js:510
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr "¡Tienes un correo de %s!"
 
-#: applet.js:517
+#: applet.js:516
 #, javascript-format
 msgid "You have %d unread mails!"
 msgstr "¡Tienes %d correos sin leer!"
 
-#: applet.js:530
+#: applet.js:529
 msgid "Click to see error!"
 msgstr "Hacer clic para ver el error!"
 
-#: applet.js:531
+#: applet.js:530
 msgid "Error"
 msgstr "Error"
 

@@ -482,7 +482,7 @@ body {
      breaks the styling of the "select" elements!!! ¬¬ -->
             <select class="form-control-static" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
 <!-- English --><option selected data-title="Help for System Monitor (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Monitor de Sistema (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
+<!-- Español --><option data-title="Ayuda para Monitor de Sistema (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish) (90%)</option>
             </select>
         </div>
     </form>
@@ -534,30 +534,19 @@ body {
 <h2>Descripción</h2>
 <p>Este applet está basado en el applet <a href="https://cinnamon-spices.linuxmint.com/applets/view/88">System Monitor</a> por Josef Michálek (también conocido como Orcus).</p>
 <h2>Diferencias con el original</h2>
-<p><strong>This applet is not compatible with vertical panels!</strong></p>
 <ul>
-<li>Este applet utiliza el sistema de configuración nativo de Cinnamon en lugar de una biblioteca externa (gjs).</li>
-<li>He añadido una opción para usar un comando personalizado al hacer clic en el applet.</li>
-<li>He añadido una opción para establecer un ancho personalizado para cada gráfico individualmente.</li>
-<li>He añadido una opción para alinear el texto de información de este applet a la izquierda.</li>
-<li>Se eliminó la dependencia de NetworkManager.</li>
+<li>Added keyboard shortcut to be able to launch a custom command.</li>
+<li>Added option to hide the graphs background, not just set it transparent.</li>
 </ul>
 <h2>Dependencias</h2>
 <ul>
 <li><strong>GTop:</strong> La biblioteca gtop lee información acerca de procesos y el estado del sistema.<ul>
 <li><strong>Distribuciones basadas en Debian:</strong> Distribuciones basadas en Debian: El paquete es llamado <strong>gir1.2-gtop-2.0</strong>.</li>
 <li><strong>Distribuciones basadas en Archlinux:</strong> Distribuciones basadas en Archlinux: El paquete es <strong>libgtop</strong>.</li>
-<li><strong>Distribuciones basadas en Fedora:</strong> El paquete es llamado <strong>libgtop2-devel</strong>.</li>
-</ul>
-</li>
-<li><strong>NetworkManager:</strong> NetworkManager es un servicio de red del sistema que administra los dispositivos y conexiones de red, intentando mantener una conectividad de red activa cuando está disponible.<ul>
-<li><strong>Distribuciones basadas en Debian:</strong> El paquete es llamado <strong>gir1.2-networkmanager-1.0</strong>.</li>
-<li><strong>Distribuciones basadas en Archlinux:</strong> El paquete es llamado <strong>NetworkManager</strong>.</li>
-<li><strong>Distribuciones basadas en Fedora:</strong> El paquete es llamado <strong>NetworkManager</strong>.</li>
+<li><strong>Distribuciones basadas en Fedora:</strong> The package is called <strong>libgtop2</strong>.</li>
 </ul>
 </li>
 </ul>
-<p><strong>Nota importante:</strong> NetworkManager is usado sólo si la versión de la librería <strong>GTop</strong> instalada en el sistema es &lt; 2.32 y no soporta ciertas llamadas a la librería. Básicamente, si el gráfico de red de este applet funciona sin tener instalado NetworkManager, entonces no es necesario que sea instalado.</p>
 <p><strong>Reiniciar Cinnamon luego de haber instalado los paquetes para que el applet los reconozca.</strong></p>
 
 
@@ -615,30 +604,19 @@ body {
 <h2>Description</h2>
 <p>This applet is a fork of <a href="https://cinnamon-spices.linuxmint.com/applets/view/88">System Monitor</a> applet by Josef Michálek (a.k.a. Orcus).</p>
 <h2>Differences with the original applet</h2>
-<p><strong>This applet is not compatible with vertical panels!</strong></p>
 <ul>
-<li>This applet uses Cinnamon's native settings system instead of an external library (gjs).</li>
-<li>I added an option to use a custom command on applet click.</li>
-<li>I added an option to set a custom width for each graph individually.</li>
-<li>I added an option to align this applet tooltip text to the left.</li>
-<li>Removed NetworkManager dependency.</li>
+<li>Added keyboard shortcut to be able to launch a custom command.</li>
+<li>Added option to hide the graphs background, not just set it transparent.</li>
 </ul>
 <h2>Dependencies</h2>
 <ul>
 <li><strong>GTop:</strong> The gtop library reads information about processes and the state of the system.<ul>
 <li><strong>Debian based distributions:</strong> The package is called <strong>gir1.2-gtop-2.0</strong>.</li>
 <li><strong>Archlinux based distributions:</strong> The package is called <strong>libgtop</strong>.</li>
-<li><strong>Fedora based distributions:</strong> The package is called <strong>libgtop2-devel</strong>.</li>
-</ul>
-</li>
-<li><strong>NetworkManager:</strong> NetworkManager is a system network service that manages your network devices and connections, attempting to keep active network connectivity when available.<ul>
-<li><strong>Debian based distributions:</strong> The package is called <strong>gir1.2-networkmanager-1.0</strong>.</li>
-<li><strong>Archlinux based distributions:</strong> The package is called <strong>networkmanager</strong>.</li>
-<li><strong>Fedora based distributions:</strong> The package is called <strong>NetworkManager</strong>.</li>
+<li><strong>Fedora based distributions:</strong> The package is called <strong>libgtop2</strong>.</li>
 </ul>
 </li>
 </ul>
-<p><strong>Important note:</strong> NetworkManager is only used if the <strong>GTop</strong> library version installed on a system is &lt; <strong>2.32</strong> and doesn't support certain library calls. So, basically, if the network graph on this applet works without having installed NetworkManager, then you don't need to install it.</p>
 <p><strong>Restart Cinnamon after installing the packages for the applet to recognize them.</strong></p>
 
 
