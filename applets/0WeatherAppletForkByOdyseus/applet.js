@@ -206,35 +206,35 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "pref_overlay_key", this._updateKeybindings],
-            [bD.IN, "pref_location_label_override", this.refreshAndRebuild],
-            [bD.IN, "pref_refresh_interval", this.refreshAndRebuild],
-            [bD.IN, "pref_show_comment_in_panel", this.refreshAndRebuild],
-            [bD.IN, "pref_vertical_orientation", this.refreshAndRebuild],
-            [bD.IN, "pref_show_sunrise", this.refreshAndRebuild],
-            [bD.IN, "pref_show_common_sense_hours", this.refreshAndRebuild],
-            [bD.IN, "pref_forecast_days", this.refreshAndRebuild],
-            [bD.IN, "pref_show_text_in_panel", this.refreshAndRebuild],
-            [bD.IN, "pref_translate_condition", this.refreshAndRebuild],
-            [bD.IN, "pref_temperature_unit", this.refreshAndRebuild],
-            [bD.IN, "pref_temperature_high_first", this.refreshAndRebuild],
-            [bD.IN, "pref_pressure_unit", this.refreshAndRebuild],
-            [bD.IN, "pref_use_symbolic_icons", this.refreshIcons],
-            [bD.IN, "pref_wind_speed_unit", this.refreshAndRebuild],
-            [bD.IN, "pref_woeid", this.refreshAndRebuild],
-            [bD.BIDIRECTIONAL, "pref_last_check", null],
-            [bD.BIDIRECTIONAL, "pref_weather_data", null]
-
+        let prefKeysArray = [
+            "pref_overlay_key",
+            "pref_location_label_override",
+            "pref_refresh_interval",
+            "pref_show_comment_in_panel",
+            "pref_vertical_orientation",
+            "pref_show_sunrise",
+            "pref_show_common_sense_hours",
+            "pref_forecast_days",
+            "pref_show_text_in_panel",
+            "pref_translate_condition",
+            "pref_temperature_unit",
+            "pref_temperature_high_first",
+            "pref_pressure_unit",
+            "pref_use_symbolic_icons",
+            "pref_wind_speed_unit",
+            "pref_woeid",
+            "pref_last_check",
+            "pref_weather_data"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -1178,8 +1178,32 @@ WeatherAppletForkByOdyseusApplet.prototype = {
         let val = astronomyJson[key];
         let pad = this.normalizeMinutes(val);
         return this.pref_show_common_sense_hours ? (this.convertTo24(pad)) : pad;
-    }
+    },
 
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_overlay_key":
+                this._updateKeybindings();
+                break;
+            case "pref_location_label_override":
+            case "pref_refresh_interval":
+            case "pref_show_comment_in_panel":
+            case "pref_vertical_orientation":
+            case "pref_show_sunrise":
+            case "pref_show_common_sense_hours":
+            case "pref_forecast_days":
+            case "pref_show_text_in_panel":
+            case "pref_translate_condition":
+            case "pref_temperature_unit":
+            case "pref_temperature_high_first":
+            case "pref_pressure_unit":
+            case "pref_use_symbolic_icons":
+            case "pref_wind_speed_unit":
+            case "pref_woeid":
+                this.refreshAndRebuild();
+                break;
+        }
+    }
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {

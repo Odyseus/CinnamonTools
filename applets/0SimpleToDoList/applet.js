@@ -449,57 +449,58 @@ SimpleToDoListApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "pref_custom_icon_for_applet", this._updateIconAndLabel],
-            [bD.IN, "pref_custom_label_for_applet", this._updateIconAndLabel],
-            [bD.IN, "pref_show_tasks_counter_on_applet", this._updateLabel],
-            [bD.IN, "pref_overlay_key", this._updateKeybindings],
-            [bD.IN, "pref_use_fail_safe", this._buildUI],
-            [bD.IN, "pref_animate_menu", null],
-            [bD.IN, "pref_keep_one_menu_open", null],
-            [bD.IN, "pref_section_font_size", this._buildUI],
-            [bD.IN, "pref_section_set_min_width", this._buildUI],
-            [bD.IN, "pref_section_set_max_width", this._buildUI],
-            [bD.IN, "pref_section_set_bold", this._buildUI],
-            [bD.IN, "pref_section_remove_native_entry_theming", this._buildUI],
-            [bD.IN, "pref_section_remove_native_entry_theming_sizing", this._buildUI],
-            [bD.IN, "pref_task_font_size", this._buildUI],
-            [bD.IN, "pref_task_set_min_width", this._buildUI],
-            [bD.IN, "pref_task_set_max_width", this._buildUI],
-            [bD.IN, "pref_task_set_custom_spacing", this._buildUI],
-            [bD.IN, "pref_task_set_bold", this._buildUI],
-            [bD.IN, "pref_task_remove_native_entry_theming", this._buildUI],
-            [bD.IN, "pref_task_remove_native_entry_theming_sizing", this._buildUI],
-            [bD.IN, "pref_task_completed_character", null],
-            [bD.IN, "pref_task_notcompleted_character", null],
-            [bD.IN, "pref_tasks_priorities_colors_enabled", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_highlight_entire_row", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_critical_background", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_critical_foreground", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_high_background", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_high_foreground", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_medium_background", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_medium_foreground", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_today_background", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_today_foreground", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_low_background", this._buildUI],
-            [bD.IN, "pref_tasks_priorities_low_foreground", this._buildUI],
-            [bD.IN, "pref_logging_enabled", null],
-            [bD.IN, "pref_autobackups_enabled", this._load],
-            [bD.IN, "pref_autobackups_max_files_to_keep", null],
-            [bD.BIDIRECTIONAL, "pref_last_backup_cleanup", null],
-            [bD.BIDIRECTIONAL, "pref_initial_load", null],
-            [bD.BIDIRECTIONAL, "pref_imp_exp_last_selected_directory", null],
-            [bD.BIDIRECTIONAL, "pref_save_last_selected_directory", null]
+        let prefKeysArray = [
+            "pref_custom_icon_for_applet",
+            "pref_custom_label_for_applet",
+            "pref_show_tasks_counter_on_applet",
+            "pref_overlay_key",
+            "pref_use_fail_safe",
+            "pref_animate_menu",
+            "pref_keep_one_menu_open",
+            "pref_section_font_size",
+            "pref_section_set_min_width",
+            "pref_section_set_max_width",
+            "pref_section_set_bold",
+            "pref_section_remove_native_entry_theming",
+            "pref_section_remove_native_entry_theming_sizing",
+            "pref_task_font_size",
+            "pref_task_set_min_width",
+            "pref_task_set_max_width",
+            "pref_task_set_custom_spacing",
+            "pref_task_set_bold",
+            "pref_task_remove_native_entry_theming",
+            "pref_task_remove_native_entry_theming_sizing",
+            "pref_task_completed_character",
+            "pref_task_notcompleted_character",
+            "pref_tasks_priorities_colors_enabled",
+            "pref_tasks_priorities_highlight_entire_row",
+            "pref_tasks_priorities_critical_background",
+            "pref_tasks_priorities_critical_foreground",
+            "pref_tasks_priorities_high_background",
+            "pref_tasks_priorities_high_foreground",
+            "pref_tasks_priorities_medium_background",
+            "pref_tasks_priorities_medium_foreground",
+            "pref_tasks_priorities_today_background",
+            "pref_tasks_priorities_today_foreground",
+            "pref_tasks_priorities_low_background",
+            "pref_tasks_priorities_low_foreground",
+            "pref_logging_enabled",
+            "pref_autobackups_enabled",
+            "pref_autobackups_max_files_to_keep",
+            "pref_last_backup_cleanup",
+            "pref_initial_load",
+            "pref_imp_exp_last_selected_directory",
+            "pref_save_last_selected_directory"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -909,6 +910,50 @@ SimpleToDoListApplet.prototype = {
         this._clear();
         this.settings.finalize();
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_custom_icon_for_applet":
+            case "pref_custom_label_for_applet":
+                this._updateIconAndLabel();
+                break;
+            case "pref_show_tasks_counter_on_applet":
+                this._updateLabel();
+                break;
+            case "pref_overlay_key":
+                this._updateKeybindings();
+                break;
+            case "pref_use_fail_safe":
+            case "pref_section_font_size":
+            case "pref_section_set_min_width":
+            case "pref_section_set_max_width":
+            case "pref_section_set_bold":
+            case "pref_section_remove_native_entry_theming":
+            case "pref_section_remove_native_entry_theming_sizing":
+            case "pref_task_font_size":
+            case "pref_task_set_min_width":
+            case "pref_task_set_max_width":
+            case "pref_task_set_custom_spacing":
+            case "pref_task_set_bold":
+            case "pref_task_remove_native_entry_theming":
+            case "pref_task_remove_native_entry_theming_sizing":
+            case "pref_tasks_priorities_colors_enabled":
+            case "pref_tasks_priorities_highlight_entire_row":
+            case "pref_tasks_priorities_critical_background":
+            case "pref_tasks_priorities_critical_foreground":
+            case "pref_tasks_priorities_high_background":
+            case "pref_tasks_priorities_high_foreground":
+            case "pref_tasks_priorities_medium_background":
+            case "pref_tasks_priorities_medium_foreground":
+            case "pref_tasks_priorities_today_background":
+            case "pref_tasks_priorities_today_foreground":
+            case "pref_tasks_priorities_low_background":
+            case "pref_tasks_priorities_low_foreground":
+            case "pref_autobackups_enabled":
+                this._buildUI();
+                break;
+        }
     },
 
     get request_rebuild() {

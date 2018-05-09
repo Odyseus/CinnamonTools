@@ -553,50 +553,51 @@ PopupTranslatorApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "pref_custom_icon_for_applet", this._updateIconAndLabel],
-            [bD.IN, "pref_custom_label_for_applet", this._updateIconAndLabel],
-            [bD.BIDIRECTIONAL, "pref_service_provider_1", this._setAppletTooltip],
-            [bD.IN, "pref_source_lang_1", this._setAppletTooltip],
-            [bD.IN, "pref_target_lang_1", this._setAppletTooltip],
-            [bD.IN, "pref_translate_key_1", this._updateKeybindings],
-            [bD.IN, "pref_translate_key_forced_1", this._updateKeybindings],
-            [bD.BIDIRECTIONAL, "pref_service_provider_2", this._setAppletTooltip],
-            [bD.IN, "pref_source_lang_2", this._setAppletTooltip],
-            [bD.IN, "pref_target_lang_2", this._setAppletTooltip],
-            [bD.IN, "pref_translate_key_2", this._updateKeybindings],
-            [bD.IN, "pref_translate_key_forced_2", this._updateKeybindings],
-            [bD.BIDIRECTIONAL, "pref_service_provider_3", this._setAppletTooltip],
-            [bD.IN, "pref_source_lang_3", this._setAppletTooltip],
-            [bD.IN, "pref_target_lang_3", this._setAppletTooltip],
-            [bD.IN, "pref_translate_key_3", this._updateKeybindings],
-            [bD.IN, "pref_translate_key_forced_3", this._updateKeybindings],
-            [bD.BIDIRECTIONAL, "pref_service_provider_4", this._setAppletTooltip],
-            [bD.IN, "pref_source_lang_4", this._setAppletTooltip],
-            [bD.IN, "pref_target_lang_4", this._setAppletTooltip],
-            [bD.IN, "pref_translate_key_4", this._updateKeybindings],
-            [bD.IN, "pref_translate_key_forced_4", this._updateKeybindings],
-            [bD.IN, "pref_style_for_language_pair", this._buildMenu],
-            [bD.IN, "pref_style_for_translated_text", this._buildMenu],
-            [bD.IN, "pref_style_for_footer", this._buildMenu],
-            [bD.IN, "pref_history_timestamp", null],
-            [bD.IN, "pref_history_timestamp_custom", null],
-            [bD.IN, "pref_history_initial_window_width", null],
-            [bD.IN, "pref_history_initial_window_height", null],
-            [bD.IN, "pref_history_width_to_trigger_word_wrap", null],
-            [bD.IN, "pref_yandex_api_keys", null],
-            [bD.BIDIRECTIONAL, "pref_all_dependencies_met", null],
-            [bD.IN, "pref_loggin_enabled", null],
-            [bD.IN, "pref_loggin_save_history_indented", null]
+        let prefKeysArray = [
+            "pref_custom_icon_for_applet",
+            "pref_custom_label_for_applet",
+            "pref_service_provider_1",
+            "pref_source_lang_1",
+            "pref_target_lang_1",
+            "pref_translate_key_1",
+            "pref_translate_key_forced_1",
+            "pref_service_provider_2",
+            "pref_source_lang_2",
+            "pref_target_lang_2",
+            "pref_translate_key_2",
+            "pref_translate_key_forced_2",
+            "pref_service_provider_3",
+            "pref_source_lang_3",
+            "pref_target_lang_3",
+            "pref_translate_key_3",
+            "pref_translate_key_forced_3",
+            "pref_service_provider_4",
+            "pref_source_lang_4",
+            "pref_target_lang_4",
+            "pref_translate_key_4",
+            "pref_translate_key_forced_4",
+            "pref_style_for_language_pair",
+            "pref_style_for_translated_text",
+            "pref_style_for_footer",
+            "pref_history_timestamp",
+            "pref_history_timestamp_custom",
+            "pref_history_initial_window_width",
+            "pref_history_initial_window_height",
+            "pref_history_width_to_trigger_word_wrap",
+            "pref_yandex_api_keys",
+            "pref_all_dependencies_met",
+            "pref_loggin_enabled",
+            "pref_loggin_save_history_indented"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -1156,6 +1157,44 @@ PopupTranslatorApplet.prototype = {
         if (this.menu) {
             this.menuManager.removeMenu(this.menu);
             this.menu.destroy();
+        }
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_custom_icon_for_applet":
+            case "pref_custom_label_for_applet":
+                this._updateIconAndLabel();
+                break;
+            case "pref_service_provider_1":
+            case "pref_source_lang_1":
+            case "pref_target_lang_1":
+            case "pref_service_provider_2":
+            case "pref_source_lang_2":
+            case "pref_target_lang_2":
+            case "pref_service_provider_3":
+            case "pref_source_lang_3":
+            case "pref_target_lang_3":
+            case "pref_service_provider_4":
+            case "pref_source_lang_4":
+            case "pref_target_lang_4":
+                this._setAppletTooltip();
+                break;
+            case "pref_translate_key_1":
+            case "pref_translate_key_forced_1":
+            case "pref_translate_key_2":
+            case "pref_translate_key_forced_2":
+            case "pref_translate_key_3":
+            case "pref_translate_key_forced_3":
+            case "pref_translate_key_4":
+            case "pref_translate_key_forced_4":
+                this._updateKeybindings();
+                break;
+            case "pref_style_for_language_pair":
+            case "pref_style_for_translated_text":
+            case "pref_style_for_footer":
+                this._buildMenu();
+                break;
         }
     }
 };

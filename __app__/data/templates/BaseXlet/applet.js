@@ -72,18 +72,19 @@ MyApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "pref_custom_icon_for_applet", this._updateIconAndLabel],
-            [bD.IN, "pref_custom_label_for_applet", this._updateIconAndLabel],
+        let prefKeysArray = [
+            "pref_custom_icon_for_applet",
+            "pref_custom_label_for_applet"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -169,6 +170,15 @@ MyApplet.prototype = {
             }
         }
     },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_custom_icon_for_applet":
+            case "pref_custom_label_for_applet":
+                this._updateIconAndLabel();
+                break;
+        }
+    }
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {

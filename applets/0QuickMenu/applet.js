@@ -132,38 +132,39 @@ QuickMenuApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.BIDIRECTIONAL, "pref_directory", this._onSettingsDirectory],
-            [bD.BIDIRECTIONAL, "pref_sub_menu_icons_file_name", null],
-            [bD.IN, "pref_auto_close_opened_sub_menus", this._updateMenu],
-            [bD.IN, "pref_ignore_sub_folders", this._updateMenu],
-            [bD.IN, "pref_show_only_desktop_files", this._updateMenu],
-            [bD.IN, "pref_show_submenu_icons", this._updateMenu],
-            [bD.IN, "pref_show_applications_icons", this._updateMenu],
-            [bD.IN, "pref_show_applet_title", this._updateIconAndLabel],
-            [bD.IN, "pref_applet_title", this._updateIconAndLabel],
-            [bD.IN, "pref_show_hidden_files", this._updateMenu],
-            [bD.IN, "pref_show_hidden_folders", this._updateMenu],
-            [bD.IN, "pref_autoupdate", this._onSettingsAutoupdate],
-            [bD.IN, "pref_customtooltip", this._onSettingsCustomTooltip],
-            [bD.IN, "pref_show_customicon", this._updateIconAndLabel],
-            [bD.IN, "pref_customicon", this._updateIconAndLabel],
-            [bD.IN, "pref_icon_for_menus", this._updateMenu],
-            [bD.IN, "pref_hotkey", this._updateKeybinding],
-            [bD.IN, "pref_use_different_icons_for_sub_menus", this._updateMenu],
-            [bD.IN, "pref_style_for_sub_menus", this._updateMenu],
-            [bD.IN, "pref_style_for_menu_items", this._updateMenu],
-            [bD.IN, "pref_sub_menu_icon_size", this._updateMenu],
-            [bD.IN, "pref_menu_item_icon_size", this._updateMenu]
+        let prefKeysArray = [
+            "pref_directory",
+            "pref_sub_menu_icons_file_name",
+            "pref_auto_close_opened_sub_menus",
+            "pref_ignore_sub_folders",
+            "pref_show_only_desktop_files",
+            "pref_show_submenu_icons",
+            "pref_show_applications_icons",
+            "pref_show_applet_title",
+            "pref_applet_title",
+            "pref_show_hidden_files",
+            "pref_show_hidden_folders",
+            "pref_autoupdate",
+            "pref_customtooltip",
+            "pref_show_customicon",
+            "pref_customicon",
+            "pref_icon_for_menus",
+            "pref_hotkey",
+            "pref_use_different_icons_for_sub_menus",
+            "pref_style_for_sub_menus",
+            "pref_style_for_menu_items",
+            "pref_sub_menu_icon_size",
+            "pref_menu_item_icon_size"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -461,8 +462,8 @@ QuickMenuApplet.prototype = {
                 this.hide_applet_icon();
             }
         } catch (aErr) {
-            global.logWarning("Could not load icon file \"" + this.pref_customicon +
-                "\" for menu button.");
+            global.logWarning('Could not load icon file "' + this.pref_customicon +
+                '" for menu button.');
         }
 
         if (this.pref_customicon === "") {
@@ -539,6 +540,44 @@ QuickMenuApplet.prototype = {
 
     on_applet_clicked: function(event) { // jshint ignore:line
         this.menu.toggle();
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_directory":
+                this._onSettingsDirectory();
+                break;
+            case "pref_auto_close_opened_sub_menus":
+            case "pref_ignore_sub_folders":
+            case "pref_show_only_desktop_files":
+            case "pref_show_submenu_icons":
+            case "pref_show_applications_icons":
+            case "pref_show_hidden_files":
+            case "pref_show_hidden_folders":
+            case "pref_icon_for_menus":
+            case "pref_use_different_icons_for_sub_menus":
+            case "pref_style_for_sub_menus":
+            case "pref_style_for_menu_items":
+            case "pref_sub_menu_icon_size":
+            case "pref_menu_item_icon_size":
+                this._updateMenu();
+                break;
+            case "pref_show_applet_title":
+            case "pref_applet_title":
+            case "pref_show_customicon":
+            case "pref_customicon":
+                this._updateIconAndLabel();
+                break;
+            case "pref_autoupdate":
+                this._onSettingsAutoupdate();
+                break;
+            case "pref_customtooltip":
+                this._onSettingsCustomTooltip();
+                break;
+            case "pref_hotkey":
+                this._updateKeybinding();
+                break;
+        }
     }
 };
 

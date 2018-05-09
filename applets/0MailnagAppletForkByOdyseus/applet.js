@@ -121,21 +121,22 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "pref_notifications_enabled", null],
-            [bD.IN, "pref_launch_client_on_click", null],
-            [bD.IN, "pref_client", null],
-            [bD.IN, "pref_middle_click_behavior", null],
-            [bD.IN, "pref_keep_one_menu_open", null]
+        let prefKeysArray = [
+            "pref_notifications_enabled",
+            "pref_launch_client_on_click",
+            "pref_client",
+            "pref_middle_click_behavior",
+            "pref_keep_one_menu_open"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -659,6 +660,10 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             Gio.bus_unwatch_name(this.busWatcherId);
             this.busWatcherId = 0;
         }
+    },
+
+    _onSettingsChanged: function(aPrefKey) { // jshint ignore:line
+        //
     }
 };
 

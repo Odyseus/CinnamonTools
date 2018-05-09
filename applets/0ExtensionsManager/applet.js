@@ -201,37 +201,37 @@ ExtensionsManagerApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.BIDIRECTIONAL, "pref_initial_load_done", null],
-            [bD.BIDIRECTIONAL, "pref_max_width_for_menu_items_label", this._build_menu],
-            [bD.BIDIRECTIONAL, "pref_set_max_menu_height", null],
-            [bD.BIDIRECTIONAL, "pref_max_menu_height", null],
-            [bD.BIDIRECTIONAL, "pref_enabled_extensions_style", this._update_menu_items_style],
-            [bD.BIDIRECTIONAL, "pref_disabled_extensions_style", this._update_menu_items_style],
-            [bD.BIDIRECTIONAL, "pref_keep_enabled_extension_menu_open", null],
-            [bD.BIDIRECTIONAL, "pref_keep_disabled_extension_menu_open", null],
-            [bD.BIDIRECTIONAL, "pref_show_config_button", this._build_menu],
-            [bD.BIDIRECTIONAL, "pref_show_spices_button", this._build_menu],
-            [bD.BIDIRECTIONAL, "pref_show_open_extension_folder_button", this._build_menu],
-            [bD.BIDIRECTIONAL, "pref_show_edit_extension_file_button", this._build_menu],
-            [bD.BIDIRECTIONAL, "pref_use_extension_names_as_label", this._build_menu],
-            [bD.BIDIRECTIONAL, "pref_keep_only_one_menu_open", null],
-            [bD.BIDIRECTIONAL, "pref_extension_icon_size", this._build_menu],
-            [bD.BIDIRECTIONAL, "pref_extension_options_icon_size", this._build_menu],
-            [bD.BIDIRECTIONAL, "pref_icons_on_menu", this._build_menu],
-            [bD.BIDIRECTIONAL, "pref_all_extensions_list", null],
-            [bD.BIDIRECTIONAL, "pref_custom_icon_for_applet", this._updateIconAndLabel],
-            [bD.BIDIRECTIONAL, "pref_custom_label_for_applet", this._updateIconAndLabel]
+        let prefKeysArray = [
+            "pref_initial_load_done",
+            "pref_max_width_for_menu_items_label",
+            "pref_set_max_menu_height",
+            "pref_max_menu_height",
+            "pref_enabled_extensions_style",
+            "pref_disabled_extensions_style",
+            "pref_keep_enabled_extension_menu_open",
+            "pref_keep_disabled_extension_menu_open",
+            "pref_show_config_button",
+            "pref_show_spices_button",
+            "pref_show_open_extension_folder_button",
+            "pref_show_edit_extension_file_button",
+            "pref_use_extension_names_as_label",
+            "pref_keep_only_one_menu_open",
+            "pref_extension_icon_size",
+            "pref_extension_options_icon_size",
+            "pref_icons_on_menu",
+            "pref_all_extensions_list",
+            "pref_custom_icon_for_applet",
+            "pref_custom_label_for_applet"
         ];
-
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -633,6 +633,30 @@ ExtensionsManagerApplet.prototype = {
 
     on_applet_removed_from_panel: function() {
         this.settings.finalize();
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_max_width_for_menu_items_label":
+            case "pref_show_config_button":
+            case "pref_show_spices_button":
+            case "pref_show_open_extension_folder_button":
+            case "pref_show_edit_extension_file_button":
+            case "pref_use_extension_names_as_label":
+            case "pref_extension_icon_size":
+            case "pref_extension_options_icon_size":
+            case "pref_icons_on_menu":
+                this._build_menu();
+                break;
+            case "pref_enabled_extensions_style":
+            case "pref_disabled_extensions_style":
+                this._update_menu_items_style();
+                break;
+            case "pref_custom_icon_for_applet":
+            case "pref_custom_label_for_applet":
+                this._updateIconAndLabel();
+                break;
+        }
     }
 };
 

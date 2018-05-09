@@ -106,30 +106,30 @@ WindowListForkByOdyseusApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "pref_show_all_workspaces", null],
-            [bD.IN, "pref_enable_alerts", this._updateAttentionGrabber],
-            [bD.IN, "pref_enable_scrolling", this._onEnableScrollChanged],
-            [bD.IN, "pref_reverse_scrolling", null],
-            [bD.IN, "pref_middle_click_close", null],
-            [bD.IN, "pref_buttons_use_entire_space", this._refreshAllItems],
-            [bD.IN, "pref_window_preview", this._onPreviewChanged],
-            [bD.IN, "pref_window_preview_show_label", this._onPreviewChanged],
-            [bD.IN, "pref_window_preview_scale", this._onPreviewChanged],
-            [bD.IN, "pref_hide_tooltips", this._onPreviewChanged],
-            [bD.IN, "pref_hide_labels", this._onLabelsHidden],
-            [bD.IN, "pref_invert_menu_items_order", null],
-            [bD.IN, "pref_sub_menu_placement", null]
+        let prefKeysArray = [
+            "pref_show_all_workspaces",
+            "pref_enable_alerts",
+            "pref_enable_scrolling",
+            "pref_reverse_scrolling",
+            "pref_middle_click_close",
+            "pref_buttons_use_entire_space",
+            "pref_window_preview",
+            "pref_window_preview_show_label",
+            "pref_window_preview_scale",
+            "pref_hide_tooltips",
+            "pref_hide_labels",
+            "pref_invert_menu_items_order",
+            "pref_sub_menu_placement"
         ];
-
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -504,6 +504,29 @@ WindowListForkByOdyseusApplet.prototype = {
         if (this._tooltipErodeTimer) {
             Mainloop.source_remove(this._tooltipErodeTimer);
             this._tooltipErodeTimer = null;
+        }
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_enable_alerts":
+                this._updateAttentionGrabber();
+                break;
+            case "pref_enable_scrolling":
+                this._onEnableScrollChanged();
+                break;
+            case "pref_buttons_use_entire_space":
+                this._refreshAllItems();
+                break;
+            case "pref_window_preview":
+            case "pref_window_preview_show_label":
+            case "pref_window_preview_scale":
+            case "pref_hide_tooltips":
+                this._onPreviewChanged();
+                break;
+            case "pref_hide_labels":
+                this._onLabelsHidden();
+                break;
         }
     }
 };

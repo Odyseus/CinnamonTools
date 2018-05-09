@@ -82,9 +82,9 @@ FeedsByJonbrettForkByOdyseus.prototype = {
         this.orientation = orientation;
 
         try {
-            this._init_settings();
+            this._bindSettings();
 
-            this.debug_logging = this.settings.getValue("enable-verbose-logging");
+            this.debug_logging = this.settings.getValue("pref_enable_verbose_logging");
 
             // Initialize a debug logger
             this.logger = new Logger.Logger({
@@ -120,9 +120,9 @@ FeedsByJonbrettForkByOdyseus.prototype = {
                 this._load_feeds();
 
                 // update is too soon
-                //this.update();
+                // this.update();
 
-                this.timeout = this.refresh_interval_mins * 60 * 1000;
+                this.timeout = this.pref_refresh_interval_mins * 60 * 1000;
                 this.logger.debug("Initial timeout set in: " + this.timeout + " ms");
                 /* Set the next timeout */
                 this.timer_id = Mainloop.timeout_add(this.timeout,
@@ -136,50 +136,36 @@ FeedsByJonbrettForkByOdyseus.prototype = {
     },
 
     /* private function that connects to the settings-schema and initializes the variables */
-    _init_settings: function() {
+    _bindSettings: function() {
         this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
 
-        this.settings.bindProperty(Settings.BindingDirection.IN,
-            "refresh_interval",
-            "refresh_interval_mins",
-            this._on_settings_changed,
-            null);
-
-        this.settings.bindProperty(Settings.BindingDirection.IN,
-            "show_read_items",
-            "show_read_items",
-            this._on_settings_changed,
-            null);
-
-        this.settings.bindProperty(Settings.BindingDirection.IN,
-            "max_items",
-            "max_items",
-            this._on_settings_changed,
-            null);
-
-        this.settings.bindProperty(Settings.BindingDirection.IN,
-            "show_feed_image",
-            "show_feed_image",
-            this._on_settings_changed,
-            null);
-
-        this.settings.bindProperty(Settings.BindingDirection.IN,
-            "notifications_enabled",
-            "notifications_enabled",
-            this._on_settings_changed,
-            null);
-
-        this.settings.bindProperty(Settings.BindingDirection.IN,
-            "enable-verbose-logging",
-            "enable_verbose_logging",
-            this._on_settings_changed,
-            null);
-
-        this.settings.bindProperty(Settings.BindingDirection.BIDIRECTIONAL,
-            "url",
-            "url_list_str",
-            this._load_feeds,
-            null);
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 3.2.x+
+        let bD = {
+            IN: 1,
+            OUT: 2,
+            BIDIRECTIONAL: 3
+        };
+        let prefKeysArray = [
+            "pref_refresh_interval_mins",
+            "pref_show_read_items",
+            "pref_max_items",
+            "pref_show_feed_image",
+            "pref_notifications_enabled",
+            "pref_enable_verbose_logging",
+            "pref_url_list_str"
+        ];
+        let newBinding = typeof this.settings.bind === "function";
+        for (let pref_key of prefKeysArray) {
+            // Condition needed for retro-compatibility.
+            // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
+            if (newBinding) {
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
+            } else {
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
+            }
+        }
     },
 
     /* Public method for adding a feed to be processed (downloaded) */
@@ -292,7 +278,7 @@ FeedsByJonbrettForkByOdyseus.prototype = {
     _load_feeds: function() {
         this.logger.debug("FeedsByJonbrettForkByOdyseus._load_feeds");
         this.feeds = [];
-        let url_list = this._parse_feed_urls(this.url_list_str);
+        let url_list = this._parse_feed_urls(this.pref_url_list_str);
         this.menu.removeAll();
 
         // Feed Level Menu Items Added Here (each Feed includes posts).
@@ -300,9 +286,9 @@ FeedsByJonbrettForkByOdyseus.prototype = {
             this.feeds[i] = new FeedDisplayMenuItem(url_list[i].url, this, {
                 feed_id: i,
                 logger: this.logger,
-                max_items: this.max_items,
-                show_read_items: this.show_read_items,
-                show_feed_image: this.show_feed_image,
+                max_items: this.pref_max_items,
+                show_read_items: this.pref_show_read_items,
+                show_feed_image: this.pref_show_feed_image,
                 custom_title: url_list[i].title
             });
 
@@ -343,25 +329,38 @@ FeedsByJonbrettForkByOdyseus.prototype = {
         }
     },
 
-    /* Private method used to handle updating feeds when a change has been made in the settings menu */
-    _on_settings_changed: function() {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._on_settings_changed");
-        for (let i = 0; i < this.feeds.length; i++) {
-            this.feeds[i].on_settings_changed({
-                max_items: this.max_items,
-                show_read_items: this.show_read_items,
-                show_feed_image: this.show_feed_image
-            });
-        }
+    _onSettingsChanged: function(aPrefKey) {
+        this.logger.debug("FeedsByJonbrettForkByOdyseus._onSettingsChanged");
 
-        let logging_level = this.settings.getValue("enable-verbose-logging");
-        // notify only when the logging level has changed.
-        if (this.logger.verbose != logging_level) {
-            this.logger.info("Logging changed to " + ((this.logger.verbose) ? "debug" : "info"));
-            this.logger.verbose = logging_level;
-        }
+        switch (aPrefKey) {
+            case "pref_refresh_interval_mins":
+            case "pref_show_read_items":
+            case "pref_max_items":
+            case "pref_show_feed_image":
+            case "pref_notifications_enabled":
+            case "pref_enable_verbose_logging":
+                for (let i = 0; i < this.feeds.length; i++) {
+                    this.feeds[i].on_settings_changed({
+                        max_items: this.pref_max_items,
+                        show_read_items: this.pref_show_read_items,
+                        show_feed_image: this.pref_show_feed_image
+                    });
+                }
 
-        this._process_feeds();
+                let logging_level = this.settings.getValue("pref_enable_verbose_logging");
+                // notify only when the logging level has changed.
+                if (this.logger.verbose != logging_level) {
+                    this.logger.info("Logging changed to " + ((this.logger.verbose) ? "debug" : "info"));
+                    this.logger.verbose = logging_level;
+                }
+
+                this._process_feeds();
+
+                break;
+            case "pref_url_list_str":
+                this._load_feeds();
+                break;
+        }
     },
 
     /* Private method to initiate the downloading and refreshing of all feeds. */
@@ -382,7 +381,7 @@ FeedsByJonbrettForkByOdyseus.prototype = {
         this.process_next_feed();
 
         /* Convert refresh interval from mins -> ms */
-        this.timeout = this.refresh_interval_mins * 60 * 1000;
+        this.timeout = this.pref_refresh_interval_mins * 60 * 1000;
 
         this.logger.debug("Setting next timeout to: " + this.timeout + " ms");
         /* Set the next timeout */
@@ -403,7 +402,7 @@ FeedsByJonbrettForkByOdyseus.prototype = {
         /* Displays a popup notification using notify-send */
 
         // if notifications are disabled don't do anything
-        if (!this.notifications_enabled) {
+        if (!this.pref_notifications_enabled) {
             this.logger.debug("Notifications Disabled");
             return;
         }
@@ -413,7 +412,7 @@ FeedsByJonbrettForkByOdyseus.prototype = {
 
     item_read_notification: function(feed) {
         this.logger.debug("FeedsByJonbrettForkByOdyseus.item_read_notification");
-        if (this.notifications_enabled) {
+        if (this.pref_notifications_enabled) {
             this._destroyMessage(feed);
         }
     },
@@ -467,7 +466,7 @@ FeedsByJonbrettForkByOdyseus.prototype = {
                 try {
                     let read = stream.peek_buffer().toString();
                     if (read.length > 0) {
-                        this.url_list_str = read;
+                        this.pref_url_list_str = read;
                         this._load_feeds();
                     }
                 } catch (e) {
@@ -511,8 +510,8 @@ FeedsByJonbrettForkByOdyseus.prototype = {
         this.logger.debug("FeedsByJonbrettForkByOdyseus.manage_feeds");
         try {
             try {
-                Util.spawnCommandLine("chmod +x \"" + this.path + "/manage_feeds.py\"");
-                Util.spawnCommandLine("chown $USER \"" + this.path + "/manage_feeds.py\"");
+                Util.spawnCommandLine('chmod +x "' + this.path + '/manage_feeds.py"');
+                Util.spawnCommandLine('chown $USER "' + this.path + '/manage_feeds.py"');
             } catch (e) {
                 if (this.logger != undefined) {
                     this.logger.error(e);
@@ -553,13 +552,13 @@ FeedsByJonbrettForkByOdyseus.prototype = {
             this._manage_stderr = new Gio.UnixInputStream({
                 fd: stderr,
                 close_fd: true
-            }); //.close(null);
+            }); // .close(null);
             this._manage_data_stderr = new Gio.DataInputStream({
                 base_stream: this._manage_stderr
             });
 
             /* Write current feeds list to management app stdin */
-            this._manage_data_stdin.put_string(this.url_list_str, null);
+            this._manage_data_stdin.put_string(this.pref_url_list_str, null);
             this._manage_stdin.close(null);
         } catch (e) {
             if (this.logger != undefined) {
@@ -668,10 +667,10 @@ FeedDisplayMenuItem.prototype = {
             hover: false
         });
 
-        //Used to keep track of unique feeds.
+        // Used to keep track of unique feeds.
         this.feed_id = params.feed_id;
 
-        //TODO: Add Box layout type to facilitate adding an icon?
+        // TODO: Add Box layout type to facilitate adding an icon?
         this.menuItemCount = 0;
         this.show_action_items = false;
         this._title = new St.Label({
@@ -971,7 +970,7 @@ FeedMenuItem.prototype = {
             this.tooltip._tooltip.get_clutter_text().set_line_alignment(0);
             this.tooltip._tooltip.get_clutter_text().set_line_wrap(true);
             this.tooltip._tooltip.get_clutter_text().set_markup(
-                "<span weight=\"bold\">" +
+                '<span weight="bold">' +
                 escapeHTML(item.title) +
                 "</span>\n" +
                 "Published: " + escapeHTML(item.published) + "\n\n" +
@@ -1002,7 +1001,7 @@ FeedMenuItem.prototype = {
         if (event.get_button() == 3) {
             this.logger.debug("Show Submenu");
             this.toggleMenu();
-            //this.open_menu();
+            // this.open_menu();
             return true;
         }
         return false;
@@ -1028,7 +1027,7 @@ FeedMenuItem.prototype = {
         this.emit("item-read");
 
         // Check and toggle feeds if this is the last item.
-        //if(this.parent.get_unread_count() == 0)
+        // if(this.parent.get_unread_count() == 0)
         this.parent.owner.toggle_feeds(this.parent, true);
     },
 
@@ -1119,7 +1118,7 @@ ApplicationContextMenuItem.prototype = {
             case "mark_all_read":
                 global.log("Marking all items read");
                 try {
-                    //this._appButton.menu.close();
+                    // this._appButton.menu.close();
                     this._fdmi.reader.mark_all_items_read();
                     this._fdmi.update();
                     // All items have been marked so we know we are opening a new feed menu.
@@ -1132,7 +1131,7 @@ ApplicationContextMenuItem.prototype = {
             case "mark_next_read":
                 global.log("Marking next " + this._fdmi.max_items + " items read");
                 try {
-                    //this._appButton.close_menu();
+                    // this._appButton.close_menu();
                     this._fdmi.reader.mark_next_items_read(this._fdmi.max_items);
                     this._fdmi.update();
                     this._fdmi.owner.toggle_feeds(this._fdmi, true);

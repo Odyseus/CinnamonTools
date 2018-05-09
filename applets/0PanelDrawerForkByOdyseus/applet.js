@@ -133,37 +133,25 @@ PanelDrawerForkByOdyseusApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "auto_hide", Lang.bind(this, function() {
-                if (this._hideTimeoutId & !this.auto_hide) {
-                    Mainloop.source_remove(this._hideTimeoutId);
-                    this._hideTimeoutId = 0;
-                } else if (this.auto_hide & this.h) {
-                    this.autodo(true);
-                }
-            })],
-            [bD.IN, "disable_starttime_autohide", null],
-            [bD.IN, "hover_activates", null],
-            [bD.IN, "hover_activates_hide", null],
-            [bD.IN, "hide_time", null],
-            [bD.IN, "hover_time", null],
-            [bD.IN, "autohide_rs", Lang.bind(this, function() {
-                if (!this.h) {
-                    //this.h=true;
-                    this.doAction(true);
-                    this.autodo(true);
-                }
-            })],
-            [bD.IN, "autohide_rs_time", null]
+        let prefKeysArray = [
+            "auto_hide",
+            "disable_starttime_autohide",
+            "hover_activates",
+            "hover_activates_hide",
+            "hide_time",
+            "hover_time",
+            "autohide_rs",
+            "autohide_rs_time"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -305,6 +293,26 @@ PanelDrawerForkByOdyseusApplet.prototype = {
     on_applet_removed_from_panel: function() {
         if (!this.h) {
             this.doAction(true);
+        }
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "auto_hide":
+                if (this._hideTimeoutId & !this.auto_hide) {
+                    Mainloop.source_remove(this._hideTimeoutId);
+                    this._hideTimeoutId = 0;
+                } else if (this.auto_hide & this.h) {
+                    this.autodo(true);
+                }
+                break;
+            case "autohide_rs":
+                if (!this.h) {
+                    // this.h=true;
+                    this.doAction(true);
+                    this.autodo(true);
+                }
+                break;
         }
     }
 };

@@ -96,57 +96,52 @@ DesktopHandlerApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.BIDIRECTIONAL, "pref_applet_background_color", this._setAppletStyle],
-            [bD.BIDIRECTIONAL, "pref_applet_with", this._setAppletStyle],
-            [bD.BIDIRECTIONAL, "pref_custom_icon", this._setAppletStyle],
-            [bD.BIDIRECTIONAL, "pref_scroll_action", this._onScrollActionChanged],
-            [bD.BIDIRECTIONAL, "pref_separated_scroll_action", this._onScrollSettingsChanged],
-            [bD.BIDIRECTIONAL, "pref_left_click_action", this._setAppletTooltip],
-            [bD.BIDIRECTIONAL, "pref_middle_click_action", this._setAppletTooltip],
-            [bD.BIDIRECTIONAL, "pref_windows_list_menu_enabled", function() {
-                this._handleWindowList();
-                this._setAppletTooltip();
-            }],
-            [bD.BIDIRECTIONAL, "pref_button_to_open_menu", function() {
-                this._handleWindowList();
-                this._setAppletTooltip();
-            }],
-            [bD.IN, "pref_scroll_up_action", this._onScrollSettingsChanged],
-            [bD.IN, "pref_scroll_down_action", this._onScrollSettingsChanged],
-            [bD.IN, "pref_custom_cmd1_action", null],
-            [bD.IN, "pref_custom_cmd2_action", null],
-            [bD.IN, "pref_custom_cmd3_action", null],
-            [bD.IN, "pref_custom_cmd4_action", null],
-            [bD.IN, "pref_prevent_fast_scroll", null],
-            [bD.IN, "pref_scroll_delay", null],
-            [bD.IN, "pref_switcher_style", null],
-            [bD.IN, "pref_switcher_scope", null],
-            [bD.IN, "pref_switcher_modified", null],
-            [bD.IN, "pref_switcher_modifier", null],
-            [bD.IN, "pref_show_context_menu_default_items", null],
-            [bD.IN, "pref_show_context_menu_help", null],
-            [bD.IN, "pref_show_context_menu_about", null],
-            [bD.IN, "pref_show_context_menu_configure", null],
-            [bD.IN, "pref_show_context_menu_remove", null],
-            [bD.IN, "pref_keep_menu_open", this.updateMenu],
-            [bD.IN, "pref_show_close_buttons", null],
-            [bD.IN, "pref_show_close_all_buttons", null],
-            [bD.IN, "pref_peek_desktop_enabled", this._handleDesktopPeek],
-            [bD.IN, "pref_peek_desktop_delay", null],
-            [bD.IN, "pref_peek_opacity", null],
-            [bD.IN, "pref_opacify_desktop_icons", null],
-            [bD.IN, "pref_opacify_desklets", null],
-            [bD.IN, "pref_blur_effect_enabled", null]
+        let prefKeysArray = [
+            "pref_applet_background_color",
+            "pref_applet_with",
+            "pref_custom_icon",
+            "pref_scroll_action",
+            "pref_separated_scroll_action",
+            "pref_left_click_action",
+            "pref_middle_click_action",
+            "pref_windows_list_menu_enabled",
+            "pref_button_to_open_menu",
+            "pref_scroll_up_action",
+            "pref_scroll_down_action",
+            "pref_custom_cmd1_action",
+            "pref_custom_cmd2_action",
+            "pref_custom_cmd3_action",
+            "pref_custom_cmd4_action",
+            "pref_prevent_fast_scroll",
+            "pref_scroll_delay",
+            "pref_switcher_style",
+            "pref_switcher_scope",
+            "pref_switcher_modified",
+            "pref_switcher_modifier",
+            "pref_show_context_menu_default_items",
+            "pref_show_context_menu_help",
+            "pref_show_context_menu_about",
+            "pref_show_context_menu_configure",
+            "pref_show_context_menu_remove",
+            "pref_keep_menu_open",
+            "pref_show_close_buttons",
+            "pref_show_close_all_buttons",
+            "pref_peek_desktop_enabled",
+            "pref_peek_desktop_delay",
+            "pref_peek_opacity",
+            "pref_opacify_desktop_icons",
+            "pref_opacify_desklets",
+            "pref_blur_effect_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -1190,6 +1185,39 @@ DesktopHandlerApplet.prototype = {
 
     on_applet_removed_from_panel: function() {
         this.settings.finalize();
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_applet_background_color":
+            case "pref_applet_with":
+            case "pref_custom_icon":
+                this._setAppletStyle();
+                break;
+            case "pref_scroll_action":
+                this._onScrollActionChanged();
+                break;
+            case "pref_separated_scroll_action":
+            case "pref_scroll_up_action":
+            case "pref_scroll_down_action":
+                this._onScrollSettingsChanged();
+                break;
+            case "pref_left_click_action":
+            case "pref_middle_click_action":
+                this._setAppletTooltip();
+                break;
+            case "pref_windows_list_menu_enabled":
+            case "pref_button_to_open_menu":
+                this._handleWindowList();
+                this._setAppletTooltip();
+                break;
+            case "pref_keep_menu_open":
+                this.updateMenu();
+                break;
+            case "pref_peek_desktop_enabled":
+                this._handleDesktopPeek();
+                break;
+        }
     }
 };
 

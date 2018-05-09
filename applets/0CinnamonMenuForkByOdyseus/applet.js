@@ -178,85 +178,83 @@ CinnamonMenuSecondGeneration.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "pref_activate_on_hover", this._updateActivateOnHover],
-            [bD.IN, "pref_use_a_custom_icon_for_applet", this._updateIconAndLabel],
-            [bD.IN, "pref_custom_icon_for_applet", this._updateIconAndLabel],
-            [bD.IN, "pref_custom_label_for_applet", this._updateIconAndLabel],
-            [bD.IN, "pref_overlay_key", this._updateKeybinding],
-            [bD.IN, "pref_show_category_icons", this._refreshAll],
-            [bD.IN, "pref_show_application_icons", this._refreshAll],
-            [bD.IN, "pref_animate_menu", null],
-            [bD.IN, "pref_search_filesystem", this._setupFilesystemSearch],
-            [bD.IN, "pref_show_places", this._refreshBelowApps],
-            [bD.IN, "pref_enable_autoscroll", this._update_autoscroll],
-            [bD.IN, "pref_menu_hover_delay", this._updateActivateOnHover],
+        let prefKeysArray = [
+            "pref_activate_on_hover",
+            "pref_use_a_custom_icon_for_applet",
+            "pref_custom_icon_for_applet",
+            "pref_custom_label_for_applet",
+            "pref_overlay_key",
+            "pref_show_category_icons",
+            "pref_show_application_icons",
+            "pref_animate_menu",
+            "pref_search_filesystem",
+            "pref_show_places",
+            "pref_enable_autoscroll",
+            "pref_menu_hover_delay",
             // Extras
-            [bD.IN, "pref_swap_categories_box", null],
-            [bD.IN, "pref_hide_applications_list_scrollbar", null],
-            [bD.IN, "pref_category_icon_size", null],
-            [bD.IN, "pref_application_icon_size", null],
-            [bD.IN, "pref_terminal_emulator", null],
-            [bD.IN, "pref_default_shell", null],
-            [bD.IN, "pref_privilege_elevator", null],
-            [bD.IN, "pref_context_custom_editor_for_edit_desktop_file", null],
-            [bD.IN, "pref_context_gain_privileges", null],
-            [bD.IN, "pref_custom_launchers", null],
-            [bD.IN, "pref_custom_launchers_icon_size", null],
-            [bD.IN, "pref_custom_launchers_box_alignment", null],
-            [bD.IN, "pref_max_width_for_buttons", this._updateGlobalPreferences],
-            [bD.IN, "pref_custom_launchers_box_padding_top", null],
-            [bD.IN, "pref_custom_launchers_box_padding_right", null],
-            [bD.IN, "pref_custom_launchers_box_padding_bottom", null],
-            [bD.IN, "pref_custom_launchers_box_padding_left", null],
-            [bD.IN, "pref_categories_box_padding_top", null],
-            [bD.IN, "pref_categories_box_padding_right", null],
-            [bD.IN, "pref_categories_box_padding_bottom", null],
-            [bD.IN, "pref_categories_box_padding_left", null],
-            [bD.IN, "pref_applications_box_padding_top", null],
-            [bD.IN, "pref_applications_box_padding_right", null],
-            [bD.IN, "pref_applications_box_padding_bottom", null],
-            [bD.IN, "pref_applications_box_padding_left", null],
-            [bD.IN, "pref_search_entry_padding_top", null],
-            [bD.IN, "pref_search_entry_padding_right", null],
-            [bD.IN, "pref_search_entry_padding_bottom", null],
-            [bD.IN, "pref_search_entry_padding_left", null],
-            [bD.IN, "pref_search_box_padding_top", null],
-            [bD.IN, "pref_search_box_padding_right", null],
-            [bD.IN, "pref_search_box_padding_bottom", null],
-            [bD.IN, "pref_search_box_padding_left", null],
-            [bD.IN, "pref_custom_launchers_box_invert_buttons_order", null],
-            [bD.IN, "pref_invert_menu_layout", null],
-            [bD.IN, "pref_disable_new_apps_highlighting", null],
-            [bD.IN, "pref_show_recent_files", this._setupRecentFilesManager],
-            [bD.IN, "pref_context_show_add_to_panel", null],
-            [bD.IN, "pref_context_show_add_to_desktop", null],
-            [bD.IN, "pref_context_show_add_remove_favorite", null],
-            [bD.IN, "pref_context_show_uninstall", this._updateGlobalPreferences],
-            [bD.IN, "pref_context_show_bumblebee", this._updateGlobalPreferences],
-            [bD.IN, "pref_context_show_run_as_root", null],
-            [bD.IN, "pref_context_show_edit_desktop_file", null],
-            [bD.IN, "pref_context_show_desktop_file_folder", null],
-            [bD.IN, "pref_context_show_run_from_terminal", null],
-            [bD.IN, "pref_context_show_run_from_terminal_as_root", null],
-
-            [bD.IN, "pref_recently_used_apps_enabled", this._setupRecentAppsManager],
-            [bD.IN, "pref_recently_used_apps_ignore_favorites", null],
-            [bD.IN, "pref_recently_used_apps_invert_order", null],
-            [bD.IN, "pref_recently_used_apps_max_amount", null],
-            [bD.IN, "pref_search_providers_results_enabled", this._performConditionalImports],
-            [bD.IN, "pref_hard_refresh_menu", this._hardRefreshAll],
-
+            "pref_swap_categories_box",
+            "pref_hide_applications_list_scrollbar",
+            "pref_category_icon_size",
+            "pref_application_icon_size",
+            "pref_terminal_emulator",
+            "pref_default_shell",
+            "pref_privilege_elevator",
+            "pref_context_custom_editor_for_edit_desktop_file",
+            "pref_context_gain_privileges",
+            "pref_custom_launchers",
+            "pref_custom_launchers_icon_size",
+            "pref_custom_launchers_box_alignment",
+            "pref_max_width_for_buttons",
+            "pref_custom_launchers_box_padding_top",
+            "pref_custom_launchers_box_padding_right",
+            "pref_custom_launchers_box_padding_bottom",
+            "pref_custom_launchers_box_padding_left",
+            "pref_categories_box_padding_top",
+            "pref_categories_box_padding_right",
+            "pref_categories_box_padding_bottom",
+            "pref_categories_box_padding_left",
+            "pref_applications_box_padding_top",
+            "pref_applications_box_padding_right",
+            "pref_applications_box_padding_bottom",
+            "pref_applications_box_padding_left",
+            "pref_search_entry_padding_top",
+            "pref_search_entry_padding_right",
+            "pref_search_entry_padding_bottom",
+            "pref_search_entry_padding_left",
+            "pref_search_box_padding_top",
+            "pref_search_box_padding_right",
+            "pref_search_box_padding_bottom",
+            "pref_search_box_padding_left",
+            "pref_custom_launchers_box_invert_buttons_order",
+            "pref_invert_menu_layout",
+            "pref_disable_new_apps_highlighting",
+            "pref_show_recent_files",
+            "pref_context_show_add_to_panel",
+            "pref_context_show_add_to_desktop",
+            "pref_context_show_add_remove_favorite",
+            "pref_context_show_uninstall",
+            "pref_context_show_bumblebee",
+            "pref_context_show_run_as_root",
+            "pref_context_show_edit_desktop_file",
+            "pref_context_show_desktop_file_folder",
+            "pref_context_show_run_from_terminal",
+            "pref_context_show_run_from_terminal_as_root",
+            "pref_recently_used_apps_enabled",
+            "pref_recently_used_apps_ignore_favorites",
+            "pref_recently_used_apps_invert_order",
+            "pref_recently_used_apps_max_amount",
+            "pref_search_providers_results_enabled",
+            "pref_hard_refresh_menu"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
-            // Use this.settings.bind only.
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -2791,6 +2789,53 @@ CinnamonMenuSecondGeneration.prototype = {
             this.on_orientation_changed(this.orientation);
             this._hardRefreshTimeout = 0;
         }));
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_activate_on_hover":
+            case "pref_menu_hover_delay":
+                this._updateActivateOnHover();
+                break;
+            case "pref_use_a_custom_icon_for_applet":
+            case "pref_custom_icon_for_applet":
+            case "pref_custom_label_for_applet":
+                this._updateIconAndLabel();
+                break;
+            case "pref_overlay_key":
+                this._updateKeybinding();
+                break;
+            case "pref_show_category_icons":
+            case "pref_show_application_icons":
+                this._refreshAll();
+                break;
+            case "pref_search_filesystem":
+                this._setupFilesystemSearch();
+                break;
+            case "pref_show_places":
+                this._refreshBelowApps();
+                break;
+            case "pref_enable_autoscroll":
+                this._update_autoscroll();
+                break;
+            case "pref_max_width_for_buttons":
+            case "pref_context_show_uninstall":
+            case "pref_context_show_bumblebee":
+                this._updateGlobalPreferences();
+                break;
+            case "pref_show_recent_files":
+                this._setupRecentFilesManager();
+                break;
+            case "pref_recently_used_apps_enabled":
+                this._setupRecentAppsManager();
+                break;
+            case "pref_search_providers_results_enabled":
+                this._performConditionalImports();
+                break;
+            case "pref_hard_refresh_menu":
+                this._hardRefreshAll();
+                break;
+        }
     }
 };
 

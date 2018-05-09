@@ -767,34 +767,35 @@ ArgosForCinnamonApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "pref_custom_icon_for_applet", this._updateIconAndLabel],
-            [bD.IN, "pref_custom_label_for_applet", this._updateIconAndLabel],
-            [bD.IN, "pref_show_script_name", this.update],
-            [bD.IN, "pref_overlay_key", this._updateKeybindings],
-            [bD.IN, "pref_animate_menu", null],
-            [bD.IN, "pref_keep_one_menu_open", null],
-            [bD.BIDIRECTIONAL, "pref_file_path", this._processFile],
-            [bD.IN, "pref_default_icon_size", this.update],
-            [bD.IN, "pref_menu_spacing", this.update],
-            [bD.IN, "pref_applet_spacing", this.update],
-            [bD.IN, "pref_update_on_menu_open", null],
-            [bD.BIDIRECTIONAL, "pref_update_interval", this._setUpdateInterval],
-            [bD.BIDIRECTIONAL, "pref_update_interval_units", this._setUpdateInterval],
-            [bD.BIDIRECTIONAL, "pref_rotation_interval", this._setRotationInterval],
-            [bD.BIDIRECTIONAL, "pref_rotation_interval_units", this._setRotationInterval],
-            [bD.IN, "pref_terminal_emulator", null],
-            [bD.BIDIRECTIONAL, "pref_last_selected_directory", null],
-            [bD.BIDIRECTIONAL, "pref_initial_load_done", null]
+        let prefKeysArray = [
+            "pref_custom_icon_for_applet",
+            "pref_custom_label_for_applet",
+            "pref_show_script_name",
+            "pref_overlay_key",
+            "pref_animate_menu",
+            "pref_keep_one_menu_open",
+            "pref_file_path",
+            "pref_default_icon_size",
+            "pref_menu_spacing",
+            "pref_applet_spacing",
+            "pref_update_on_menu_open",
+            "pref_update_interval",
+            "pref_update_interval_units",
+            "pref_rotation_interval",
+            "pref_rotation_interval_units",
+            "pref_terminal_emulator",
+            "pref_last_selected_directory",
+            "pref_initial_load_done"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -958,6 +959,35 @@ ArgosForCinnamonApplet.prototype = {
                     }
                 })
             );
+        }
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_custom_icon_for_applet":
+            case "pref_custom_label_for_applet":
+                this._updateIconAndLabel();
+                break;
+            case "pref_show_script_name":
+            case "pref_default_icon_size":
+            case "pref_menu_spacing":
+            case "pref_applet_spacing":
+                this.update();
+                break;
+            case "pref_overlay_key":
+                this._updateKeybindings();
+                break;
+            case "pref_file_path":
+                this._processFile();
+                break;
+            case "pref_update_interval":
+            case "pref_update_interval_units":
+                this._setUpdateInterval();
+                break;
+            case "pref_rotation_interval":
+            case "pref_rotation_interval_units":
+                this._setRotationInterval();
+                break;
         }
     }
 };

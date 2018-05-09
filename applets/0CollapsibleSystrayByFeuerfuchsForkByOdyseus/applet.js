@@ -153,19 +153,39 @@ CollapsibleSystrayApplet.prototype = {
 
     _bindSettings: function() {
         this._settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
-        this._settings.bindProperty(Settings.BindingDirection.BIDIRECTIONAL, "icon-visibility-list", "savedIconVisibilityList", this._loadAppIconVisibilityList, null);
-        this._settings.bindProperty(Settings.BindingDirection.IN, "init-delay", "initDelay", this._onSettingsUpdated, "initDelay");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "animation-duration", "animationDuration", this._onSettingsUpdated, "animationDuration");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "horizontal-expand-icon-name", "horizontalExpandIconName", this._onSettingsUpdated, "horizontalExpandIconName");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "horizontal-collapse-icon-name", "horizontalCollapseIconName", this._onSettingsUpdated, "horizontalCollapseIconName");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "tray-icon-padding", "trayIconPadding", this._onSettingsUpdated, "trayIconPadding");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "expand-on-hover", "expandOnHover", this._onSettingsUpdated, "expandOnHover");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "expand-on-hover-delay", "expandOnHoverDelay", this._onSettingsUpdated, "expandOnHoverDelay");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "collapse-on-leave", "collapseOnLeave", this._onSettingsUpdated, "collapseOnLeave");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "collapse-on-leave-delay", "collapseOnLeaveDelay", this._onSettingsUpdated, "collapseOnLeaveDelay");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "no-hover-for-tray-icons", "noHoverForTrayIcons", this._onSettingsUpdated, "noHoverForTrayIcons");
-        this._settings.bindProperty(Settings.BindingDirection.IN, "sort-icons", "sortIcons", this._onSettingsUpdated, "sortIcons");
 
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 3.2.x+
+        let bD = {
+            IN: 1,
+            OUT: 2,
+            BIDIRECTIONAL: 3
+        };
+        let prefKeysArray = [
+            "pref_icon_visibility_list",
+            "pref_init_delay",
+            "pref_animation_duration",
+            "pref_horizontal_expand_icon_name",
+            "pref_horizontal_collapse_icon_name",
+            "pref_tray_icon_padding",
+            "pref_expand_on_hover",
+            "pref_expand_on_hover_delay",
+            "pref_collapse_on_leave",
+            "pref_collapse_on_leave_delay",
+            "pref_no_hover_for_tray_icons",
+            "pref_sort_icons"
+        ];
+        let newBinding = typeof this.settings.bind === "function";
+        for (let pref_key of prefKeysArray) {
+            // Condition needed for retro-compatibility.
+            // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
+            if (newBinding) {
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
+            } else {
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
+            }
+        }
     },
 
     /*
@@ -173,7 +193,7 @@ CollapsibleSystrayApplet.prototype = {
      */
     get collapseIcon() {
         if (this._direction == APPLET_DIRECTION.HORIZONTAL) {
-            return this.horizontalCollapseIconName;
+            return this.pref_horizontal_collapse_icon_name;
         } else {
             return this.verticalCollapseIconName;
         }
@@ -184,7 +204,7 @@ CollapsibleSystrayApplet.prototype = {
      */
     get expandIcon() {
         if (this._direction == APPLET_DIRECTION.HORIZONTAL) {
-            return this.horizontalExpandIconName;
+            return this.pref_horizontal_expand_icon_name;
         } else {
             return this.verticalExpandIconName;
         }
@@ -223,7 +243,7 @@ CollapsibleSystrayApplet.prototype = {
 
         let container = this.iconVisibilityList[id] ? this.shownIconsContainer : this.hiddenIconsContainer;
         let index = 0;
-        if (this.sortIcons) {
+        if (this.pref_sort_icons) {
             let icons = container.get_children();
             for (let len = icons.length; index < len; ++index) {
                 if (icons[index].appID.localeCompare(id) >= 1) {
@@ -354,7 +374,7 @@ CollapsibleSystrayApplet.prototype = {
         if (animate) {
             this._animating = true;
             this.hiddenIconsContainer.tweenParams = {
-                time: this.animationDuration / 1000,
+                time: this.pref_animation_duration / 1000,
                 transition: "easeInOutQuart",
                 onComplete: onFinished
             };
@@ -412,7 +432,7 @@ CollapsibleSystrayApplet.prototype = {
             this._animating = true;
 
             this.hiddenIconsContainer.tweenParams = {
-                time: this.animationDuration / 1000,
+                time: this.pref_animation_duration / 1000,
                 transition: "easeInOutQuart",
                 onComplete: onFinished
             };
@@ -462,7 +482,7 @@ CollapsibleSystrayApplet.prototype = {
             let container = state ? this.shownIconsContainer : this.hiddenIconsContainer;
             let index = 0;
 
-            if (this.sortIcons) {
+            if (this.pref_sort_icons) {
                 let icons = container.get_children();
                 for (let len = icons.length; index < len; ++index) {
                     if (icons[index].appID.localeCompare(id) >= 1) {
@@ -500,9 +520,9 @@ CollapsibleSystrayApplet.prototype = {
             })
             .forEach(Lang.bind(this, function(iconWrapper, index) { // jshint ignore:line
                 if (this._direction == APPLET_DIRECTION.HORIZONTAL) {
-                    iconWrapper.set_style("padding-left: " + this.trayIconPadding + "px; padding-right: " + this.trayIconPadding + "px;");
+                    iconWrapper.set_style("padding-left: " + this.pref_tray_icon_padding + "px; padding-right: " + this.pref_tray_icon_padding + "px;");
                 } else {
-                    iconWrapper.set_style("padding-top: " + this.trayIconPadding + "px; padding-bottom: " + this.trayIconPadding + "px;");
+                    iconWrapper.set_style("padding-top: " + this.pref_tray_icon_padding + "px; padding-bottom: " + this.pref_tray_icon_padding + "px;");
                 }
             }));
     },
@@ -512,7 +532,7 @@ CollapsibleSystrayApplet.prototype = {
      */
     _loadAppIconVisibilityList: function() {
         try {
-            this.iconVisibilityList = JSON.parse(this.savedIconVisibilityList);
+            this.iconVisibilityList = JSON.parse(this.pref_icon_visibility_list);
 
             for (let id in this.iconVisibilityList) {
                 if (this.iconVisibilityList.hasOwnProperty(id) && !this._registeredAppIcons.hasOwnProperty(id)) {
@@ -528,21 +548,15 @@ CollapsibleSystrayApplet.prototype = {
      * Save the list of hidden icons
      */
     _saveAppIconVisibilityList: function() {
-        this.savedIconVisibilityList = JSON.stringify(this.iconVisibilityList);
+        this.pref_icon_visibility_list = JSON.stringify(this.iconVisibilityList);
     },
 
-    /*
-     * An applet setting with visual impact has been changed; reload
-     * collapse/expand button's icons and reload all tray icons
-     */
-    _onSettingsUpdated: function(setting) {
-        switch (setting) {
-            case "expandIconName":
-            case "collapseIconName":
-                this.collapseBtn.setIsExpanded(!this._iconsAreHidden);
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_icon_visibility_list":
+                this._loadAppIconVisibilityList();
                 break;
-
-            case "trayIconPadding":
+            case "pref_tray_icon_padding":
                 this._updateTrayIconPadding();
                 break;
         }
@@ -560,7 +574,7 @@ CollapsibleSystrayApplet.prototype = {
             this._hoverTimerID = null;
         }
 
-        if (!this.expandOnHover) {
+        if (!this.pref_expand_on_hover) {
             return;
         }
         if (!this._draggable.inhibit) {
@@ -572,7 +586,7 @@ CollapsibleSystrayApplet.prototype = {
             this._initialCollapseTimerID = null;
         }
 
-        this._hoverTimerID = Mainloop.timeout_add(this.expandOnHoverDelay, Lang.bind(this, function() {
+        this._hoverTimerID = Mainloop.timeout_add(this.pref_expand_on_hover_delay, Lang.bind(this, function() {
             this._hoverTimerID = null;
 
             if (this._iconsAreHidden) {
@@ -589,7 +603,7 @@ CollapsibleSystrayApplet.prototype = {
             this._hoverTimerID = null;
         }
 
-        if (!this.collapseOnLeave) {
+        if (!this.pref_collapse_on_leave) {
             return;
         }
         if (!this._draggable.inhibit) {
@@ -601,7 +615,7 @@ CollapsibleSystrayApplet.prototype = {
             this._initialCollapseTimerID = null;
         }
 
-        this._hoverTimerID = Mainloop.timeout_add(this.collapseOnLeaveDelay, Lang.bind(this, function() {
+        this._hoverTimerID = Mainloop.timeout_add(this.pref_collapse_on_leave_delay, Lang.bind(this, function() {
             this._hoverTimerID = null;
 
             if (!this._iconsAreHidden) {
@@ -654,7 +668,7 @@ CollapsibleSystrayApplet.prototype = {
             this._initialCollapseTimerID = null;
         }
 
-        this._initialCollapseTimerID = Mainloop.timeout_add(this.initDelay * 1000, Lang.bind(this, function() {
+        this._initialCollapseTimerID = Mainloop.timeout_add(this.pref_init_delay * 1000, Lang.bind(this, function() {
             this._initialCollapseTimerID = null;
 
             if (this._draggable.inhibit) {
@@ -679,16 +693,16 @@ CollapsibleSystrayApplet.prototype = {
         let iconWrap = new St.BoxLayout({
             style_class: "applet-box",
             reactive: true,
-            track_hover: !this.noHoverForTrayIcons
+            track_hover: !this.pref_no_hover_for_tray_icons
         });
         let iconWrapContent = new St.Bin({
             child: icon
         });
         iconWrap.add_style_class_name("ff-collapsible-systray__status-icon");
         if (this._direction == APPLET_DIRECTION.HORIZONTAL) {
-            iconWrap.set_style("padding-left: " + this.trayIconPadding + "px; padding-right: " + this.trayIconPadding + "px;");
+            iconWrap.set_style("padding-left: " + this.pref_tray_icon_padding + "px; padding-right: " + this.pref_tray_icon_padding + "px;");
         } else {
-            iconWrap.set_style("padding-top: " + this.trayIconPadding + "px; padding-bottom: " + this.trayIconPadding + "px;");
+            iconWrap.set_style("padding-top: " + this.pref_tray_icon_padding + "px; padding-bottom: " + this.pref_tray_icon_padding + "px;");
         }
         iconWrap.add(iconWrapContent, {
             a_align: St.Align.MIDDLE,
@@ -786,7 +800,7 @@ CollapsibleSystrayApplet.prototype = {
         $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype.on_applet_added_to_panel.call(this);
 
         // Automatically collapse after X seconds
-        this._initialCollapseTimerID = Mainloop.timeout_add(this.initDelay * 1000, Lang.bind(this, function() {
+        this._initialCollapseTimerID = Mainloop.timeout_add(this.pref_init_delay * 1000, Lang.bind(this, function() {
             this._initialCollapseTimerID = null;
 
             if (this._draggable.inhibit) {
