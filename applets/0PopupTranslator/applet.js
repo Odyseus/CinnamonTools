@@ -158,7 +158,7 @@ PopupTranslatorApplet.prototype = {
         }
 
         let bD = function(aStr) {
-            return "<span weight=\"bold\">" + aStr + "</span>";
+            return '<span weight="bold">' + aStr + "</span>";
         };
 
         let tt = bD(_(this.metadata.name));
@@ -220,7 +220,7 @@ PopupTranslatorApplet.prototype = {
         }));
 
         if (!this.pref_all_dependencies_met) {
-            tt += "\n<span color=\"red\">" + bD(_("Unmet dependencies found!!!") + "\n" +
+            tt += '\n<span color="red">' + bD(_("Unmet dependencies found!!!") + "\n" +
                 _("A detailed error has been logged into ~/.cinnamon/glass.log file.")) + "</span>";
         }
 
@@ -433,7 +433,7 @@ PopupTranslatorApplet.prototype = {
                 }
             }
         } catch (aErr) {
-            global.logWarning("Could not load icon file \"" + this.pref_custom_icon_for_applet + "\" for menu button");
+            global.logWarning('Could not load icon file "' + this.pref_custom_icon_for_applet + '" for menu button');
         }
 
         if (this.pref_custom_icon_for_applet === "") {

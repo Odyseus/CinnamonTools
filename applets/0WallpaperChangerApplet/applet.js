@@ -311,7 +311,7 @@ WallpaperChangerApplet.prototype = {
                 }
             }
         } catch (aErr) {
-            global.logWarning("Could not load icon file \"" + Settings.custom_applet_icon + "\" for menu button");
+            global.logWarning('Could not load icon file "' + Settings.custom_applet_icon + '" for menu button');
         }
 
         if (Settings.custom_applet_icon === "") {

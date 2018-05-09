@@ -312,7 +312,7 @@ var CT_NemoDesktopAreaClass = new Lang.Class({
             if (FileUtils.hasOwnProperty("changeModeGFile")) {
                 FileUtils.changeModeGFile(destFile, 755);
             } else {
-                Util.spawnCommandLine("chmod +x \"" + fPath + "\"");
+                Util.spawnCommandLine('chmod +x "' + fPath + '"');
             }
         } catch (aErr) {
             global.log(aErr);
@@ -707,7 +707,7 @@ var CT_MaximusNGClass = new Lang.Class({
                  * This is to handle cases where the window has no frame and so
                  * act['x-window'] is actually the X ID we want, not the child.
                  */
-                let regexp = new RegExp("(0x[0-9a-f]+) +\"%s\"".format(win.title));
+                let regexp = new RegExp('(0x[0-9a-f]+) +"%s"'.format(win.title));
                 id = str.match(regexp);
 
                 if (id) {

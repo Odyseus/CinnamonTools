@@ -233,7 +233,7 @@ FileMenuItem.prototype = {
                 try {
                     Gio.app_info_launch_default_for_uri(this.uri, global.create_app_launch_context());
                 } catch (aErr) {
-                    Util.spawnCommandLine("nemo-open-with \"" + this.uri + "\"");
+                    Util.spawnCommandLine('nemo-open-with "' + this.uri + '"');
                 }
             }
 

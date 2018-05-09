@@ -40,7 +40,7 @@ var DefaultExampleTasks = {
     "display-remove-task-buttons": true,
     "keep-completed-tasks-hidden": false,
     "tasks": [{
-        "name": _("Tasks can be \"tagged\" by simply writing \"@tagname\" as part of the task text. For now, there are 5 priority tags available."),
+        "name": _('Tasks can be "tagged" by simply writing "@tagname" as part of the task text. For now, there are 5 priority tags available.'),
         "completed": false
     }, {
         "name": _("This is a @critical priority task"),

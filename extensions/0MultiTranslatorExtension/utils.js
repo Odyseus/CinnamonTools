@@ -219,7 +219,7 @@ var PROVIDERS = {
         "Google.TranslateTS": "https://translate.google.com",
         "Transltr": "http://transltr.org",
         "Yandex.Translate": "https://translate.yandex.net",
-        "Yandex.TranslateTS": "https://translate.yandex.net",
+        "Yandex.TranslateTS": "https://translate.yandex.net"
     },
     display_name: {
         "Apertium.TS": "Apertium",
@@ -229,7 +229,7 @@ var PROVIDERS = {
         "Google.TranslateTS": "Google Translate",
         "Transltr": "Transltr",
         "Yandex.Translate": "Yandex.Translate",
-        "Yandex.TranslateTS": "Yandex.Translate",
+        "Yandex.TranslateTS": "Yandex.Translate"
     },
     icon: {
         "Apertium.TS": "multi-translator-generic-translator",
@@ -239,7 +239,7 @@ var PROVIDERS = {
         "Google.TranslateTS": "multi-translator-google-translate",
         "Transltr": "multi-translator-generic-translator",
         "Yandex.Translate": "multi-translator-yandex-translate",
-        "Yandex.TranslateTS": "multi-translator-yandex-translate",
+        "Yandex.TranslateTS": "multi-translator-yandex-translate"
     }
 };
 
@@ -1159,7 +1159,7 @@ CharsCounter.prototype = {
         let markup;
 
         if (this._current_length >= this._max_length) {
-            markup = "<span color=\"red\"><b>%s</b></span>".format(
+            markup = '<span color="red"><b>%s</b></span>'.format(
                 this._current_length.toString()
             );
         } else {
@@ -1890,7 +1890,7 @@ StatusBarMessage.prototype = {
         message = message.slice(0, STATUS_BAR_MAX_MESSAGE_LENGTH);
         message = escape_html(message);
 
-        let message_markup = "<span color=\"%s\"><b>%s</b></span>";
+        let message_markup = '<span color="%s"><b>%s</b></span>';
 
         switch (type) {
             case STATUS_BAR_MESSAGE_TYPES.error:
@@ -3313,7 +3313,7 @@ var asyncLoop = function(o) { // jshint ignore:line
         o.functionToLoop(loop, i);
     };
 
-    loop(); //init
+    loop(); // init
 };
 
 function replaceAll(str, find, replace) { // jshint ignore:line

@@ -735,7 +735,7 @@ DesktopHandlerApplet.prototype = {
                 }
             }
         } catch (e) {
-            global.logWarning("Could not load icon file \"" + this.pref_custom_icon + "\" for applet.");
+            global.logWarning('Could not load icon file "' + this.pref_custom_icon + '" for applet.');
         }
 
         this._setAppletTooltip();
@@ -775,7 +775,7 @@ DesktopHandlerApplet.prototype = {
         }
 
         let boldSpan = function(aStr) {
-            return "<span weight=\"bold\">" + aStr + "</span>";
+            return '<span weight="bold">' + aStr + "</span>";
         };
 
         let tt = boldSpan(_("Desktop Handler")) + "\n\n";

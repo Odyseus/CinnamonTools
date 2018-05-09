@@ -110,7 +110,7 @@ WindowPreview.prototype = {
         let tracker = Cinnamon.WindowTracker.get_default();
         let app = tracker.get_window_app(this.metaWindow);
         let icon = app ? app.create_icon_texture(16) : new St.Icon({
-            icon_name: 'application-default-icon',
+            icon_name: "application-default-icon",
             icon_type: St.IconType.FULLCOLOR,
             icon_size: 16
         });
@@ -130,10 +130,11 @@ WindowPreview.prototype = {
     },
 
     _onEnterEvent: function(actor, event) {
-        if (this._applet._tooltipShowing)
+        if (this._applet._tooltipShowing) {
             this.show();
-        else if (!this._showTimer)
+        } else if (!this._showTimer) {
             this._showTimer = Mainloop.timeout_add(300, Lang.bind(this, this._onShowTimerComplete));
+        }
 
         this.mousePosition = event.get_coords();
     },
@@ -144,8 +145,9 @@ WindowPreview.prototype = {
     },
 
     show: function() {
-        if (!this.actor || this._applet._menuOpen)
-            return
+        if (!this.actor || this._applet._menuOpen) {
+            return;
+        }
 
         this.muffinWindow = this.metaWindow.get_compositor_private();
         let windowTexture = this.muffinWindow.get_texture();
@@ -168,7 +170,7 @@ WindowPreview.prototype = {
             scale = Math.min(1.0, WINDOW_PREVIEW_WIDTH / width, WINDOW_PREVIEW_HEIGHT / height);
             this.thumbnail.set_size(width * scale * this.scaleFactor, height * scale * this.scaleFactor);
         };
-        this._sizeChangedId = this.muffinWindow.connect('size-changed',
+        this._sizeChangedId = this.muffinWindow.connect("size-changed",
             Lang.bind(this, this._setSize));
 
         this.thumbnailBin.set_child(this.thumbnail);
@@ -245,7 +247,7 @@ WindowPreview.prototype = {
         }
         this.actor = null;
     }
-}
+};
 
 function AppMenuButton(applet, metaWindow, alert) {
     this._init(applet, metaWindow, alert);
@@ -255,8 +257,8 @@ AppMenuButton.prototype = {
     _init: function(applet, metaWindow, alert) {
 
         this.actor = new Cinnamon.GenericContainer({
-            name: 'appMenu',
-            style_class: 'window-list-item-box',
+            name: "appMenu",
+            style_class: "window-list-item-box",
             reactive: true,
             can_focus: true,
             track_hover: true
@@ -267,31 +269,32 @@ AppMenuButton.prototype = {
         this.alert = alert;
         this.labelVisible = false;
 
-        if (this._applet.orientation == St.Side.TOP)
-            this.actor.add_style_class_name('top');
-        else if (this._applet.orientation == St.Side.BOTTOM)
-            this.actor.add_style_class_name('bottom');
-        else if (this._applet.orientation == St.Side.LEFT)
-            this.actor.add_style_class_name('left');
-        else if (this._applet.orientation == St.Side.RIGHT)
-            this.actor.add_style_class_name('right');
+        if (this._applet.orientation == St.Side.TOP) {
+            this.actor.add_style_class_name("top");
+        } else if (this._applet.orientation == St.Side.BOTTOM) {
+            this.actor.add_style_class_name("bottom");
+        } else if (this._applet.orientation == St.Side.LEFT) {
+            this.actor.add_style_class_name("left");
+        } else if (this._applet.orientation == St.Side.RIGHT) {
+            this.actor.add_style_class_name("right");
+        }
 
         this.actor._delegate = this;
-        this.actor.connect('button-release-event', Lang.bind(this, this._onButtonRelease));
-        this.actor.connect('button-press-event', Lang.bind(this, this._onButtonPress));
+        this.actor.connect("button-release-event", Lang.bind(this, this._onButtonRelease));
+        this.actor.connect("button-press-event", Lang.bind(this, this._onButtonPress));
 
-        this.actor.connect('get-preferred-width',
+        this.actor.connect("get-preferred-width",
             Lang.bind(this, this._getPreferredWidth));
-        this.actor.connect('get-preferred-height',
+        this.actor.connect("get-preferred-height",
             Lang.bind(this, this._getPreferredHeight));
-        this.actor.connect('allocate', Lang.bind(this, this._allocate));
+        this.actor.connect("allocate", Lang.bind(this, this._allocate));
 
         this._iconBox = new Cinnamon.Slicer({
-            name: 'appMenuIcon'
+            name: "appMenuIcon"
         });
-        this._iconBox.connect('style-changed',
+        this._iconBox.connect("style-changed",
             Lang.bind(this, this._onIconBoxStyleChanged));
-        this._iconBox.connect('notify::allocation',
+        this._iconBox.connect("notify::allocation",
             Lang.bind(this, this._updateIconBoxClipAndGeometry));
         this.actor.add_actor(this._iconBox);
 
@@ -303,9 +306,9 @@ AppMenuButton.prototype = {
         this._iconBottomClip = 0;
         this._visible = true;
 
-        this._updateCaptionId = this.metaWindow.connect('notify::title',
+        this._updateCaptionId = this.metaWindow.connect("notify::title",
             Lang.bind(this, this.setDisplayTitle));
-        this._updateTileTypeId = this.metaWindow.connect('notify::tile-type',
+        this._updateTileTypeId = this.metaWindow.connect("notify::tile-type",
             Lang.bind(this, this.setDisplayTitle));
 
         this.onPreviewChanged();
@@ -316,13 +319,13 @@ AppMenuButton.prototype = {
             this._menuManager.addMenu(this.rightClickMenu);
 
             this._draggable = DND.makeDraggable(this.actor, null, this._applet.actor);
-            this._draggable.connect('drag-begin', Lang.bind(this, this._onDragBegin));
-            this._draggable.connect('drag-cancelled', Lang.bind(this, this._onDragCancelled));
-            this._draggable.connect('drag-end', Lang.bind(this, this._onDragEnd));
+            this._draggable.connect("drag-begin", Lang.bind(this, this._onDragBegin));
+            this._draggable.connect("drag-cancelled", Lang.bind(this, this._onDragCancelled));
+            this._draggable.connect("drag-end", Lang.bind(this, this._onDragEnd));
         }
 
         this.onPanelEditModeChanged();
-        global.settings.connect('changed::panel-edit-mode', Lang.bind(this, this.onPanelEditModeChanged));
+        global.settings.connect("changed::panel-edit-mode", Lang.bind(this, this.onPanelEditModeChanged));
 
         this._windows = this._applet._windows;
         this.scrollConnector = null;
@@ -330,32 +333,36 @@ AppMenuButton.prototype = {
         this._needsAttention = false;
 
         this.setDisplayTitle();
-        this.onFocus()
+        this.onFocus();
 
-        if (this.alert)
+        if (this.alert) {
             this.getAttention();
+        }
     },
 
     onPreviewChanged: function() {
-        if (this._tooltip)
+        if (this._tooltip) {
             this._tooltip.destroy();
+        }
 
-        if (this._applet.usePreview)
+        if (this._applet.usePreview) {
             this._tooltip = new WindowPreview(this, this.metaWindow, this._applet.orientation);
-        else
+        } else {
             this._tooltip = new Tooltips.PanelItemTooltip(this, "", this._applet.orientation);
+        }
 
         this.setDisplayTitle();
     },
 
     onPanelEditModeChanged: function() {
-        if (this._draggable)
+        if (this._draggable) {
             this._draggable.inhibit = global.settings.get_boolean("panel-edit-mode");
+        }
     },
 
     onScrollModeChanged: function() {
         if (this._applet.scrollable) {
-            this.scrollConnector = this.actor.connect('scroll-event', Lang.bind(this, this._onScrollEvent));
+            this.scrollConnector = this.actor.connect("scroll-event", Lang.bind(this, this._onScrollEvent));
         } else {
             if (this.scrollConnector) {
                 this.actor.disconnect(this.scrollConnector);
@@ -378,21 +385,26 @@ AppMenuButton.prototype = {
         windows = windows.reverse();
 
         let i = windows.length;
-        while (i-- && !windows[i].metaWindow.has_focus());
+        while (i-- && !windows[i].metaWindow.has_focus()) {
 
-        if (i == -1)
+        }
+
+        if (i == -1) {
             return;
+        }
 
         //                   v   home-made xor
-        if ((direction == 0) != this._applet.reverseScroll)
+        if ((direction == 0) != this._applet.reverseScroll) {
             i++;
-        else
+        } else {
             i--;
+        }
 
-        if (i == windows.length)
+        if (i == windows.length) {
             i = 0;
-        else if (i == -1)
+        } else if (i == -1) {
             i = windows.length - 1;
+        }
 
         Main.activateWindow(windows[i].metaWindow, global.get_current_time());
     },
@@ -436,11 +448,13 @@ AppMenuButton.prototype = {
     },
 
     handleDragOver: function(source, actor, x, y, time) {
-        if (this._draggable && this._draggable.inhibit)
+        if (this._draggable && this._draggable.inhibit) {
             return DND.DragMotionResult.MOVE_DROP;
+        }
 
-        if (source instanceof AppMenuButton)
+        if (source instanceof AppMenuButton) {
             return DND.DragMotionResult.CONTINUE;
+        }
 
         /* Users can drag things from one window to another window (eg drag an
          * image from Firefox to LibreOffice). However, if the target window is
@@ -459,7 +473,9 @@ AppMenuButton.prototype = {
         let tracker = Cinnamon.WindowTracker.get_default();
         let app = tracker.get_window_app(this.metaWindow);
 
-        if (!title) title = app ? app.get_name() : '?';
+        if (!title) {
+            title = app ? app.get_name() : "?";
+        }
 
         /* Sanitize the window title to prevent dodgy window titles such as
          * "); DROP TABLE windows; --. Turn all whitespaces into " " because
@@ -467,11 +483,13 @@ AppMenuButton.prototype = {
          * title when necessary or else cogl might get unhappy and crash
          * Cinnamon. */
         title = title.replace(/\s/g, " ");
-        if (title.length > MAX_TEXT_LENGTH)
+        if (title.length > MAX_TEXT_LENGTH) {
             title = title.substr(0, MAX_TEXT_LENGTH);
+        }
 
-        if (this._tooltip && this._tooltip.set_text)
+        if (this._tooltip && this._tooltip.set_text) {
             this._tooltip.set_text(title);
+        }
 
         if (this.metaWindow.minimized) {
             title = "[" + title + "]";
@@ -495,11 +513,13 @@ AppMenuButton.prototype = {
     },
 
     _hasFocus: function() {
-        if (this.metaWindow.minimized)
+        if (this.metaWindow.minimized) {
             return false;
+        }
 
-        if (this.metaWindow.has_focus())
+        if (this.metaWindow.has_focus()) {
             return true;
+        }
 
         let transientHasFocus = false;
         this.metaWindow.foreach_transient(function(transient) {
@@ -514,7 +534,7 @@ AppMenuButton.prototype = {
 
     onFocus: function() {
         if (this._hasFocus()) {
-            this.actor.add_style_pseudo_class('focus');
+            this.actor.add_style_pseudo_class("focus");
             this.actor.remove_style_class_name("window-list-item-demands-attention");
             this.actor.remove_style_class_name("window-list-item-demands-attention-top");
             this._needsAttention = false;
@@ -524,7 +544,7 @@ AppMenuButton.prototype = {
                 this._windows.splice(this._windows.indexOf(this), 1);
             }
         } else {
-            this.actor.remove_style_pseudo_class('focus');
+            this.actor.remove_style_pseudo_class("focus");
         }
         this.setIcon();
     },
@@ -532,14 +552,16 @@ AppMenuButton.prototype = {
     _onButtonRelease: function(actor, event) {
         this._tooltip.hide();
         if (this.alert) {
-            if (event.get_button() == 1)
+            if (event.get_button() == 1) {
                 this._toggleWindow(false);
+            }
             return false;
         }
 
         if (event.get_button() == 1) {
-            if (this.rightClickMenu.isOpen)
+            if (this.rightClickMenu.isOpen) {
                 this.rightClickMenu.toggle();
+            }
 
             this._toggleWindow(false);
         } else if (event.get_button() == 2 && this._applet.middleClickClose) {
@@ -559,27 +581,28 @@ AppMenuButton.prototype = {
     _toggleWindow: function(fromDrag) {
         if (!this._hasFocus()) {
             Main.activateWindow(this.metaWindow, global.get_current_time());
-            this.actor.add_style_pseudo_class('focus');
+            this.actor.add_style_pseudo_class("focus");
         } else if (!fromDrag) {
             this.metaWindow.minimize(global.get_current_time());
-            this.actor.remove_style_pseudo_class('focus');
+            this.actor.remove_style_pseudo_class("focus");
         }
     },
 
     _onIconBoxStyleChanged: function() {
         let node = this._iconBox.get_theme_node();
-        this._iconBottomClip = node.get_length('app-icon-bottom-clip');
+        this._iconBottomClip = node.get_length("app-icon-bottom-clip");
         this._updateIconBoxClipAndGeometry();
     },
 
     _updateIconBoxClipAndGeometry: function() {
         let allocation = this._iconBox.allocation;
-        if (this._iconBottomClip > 0)
+        if (this._iconBottomClip > 0) {
             this._iconBox.set_clip(0, 0,
                 allocation.x2 - allocation.x1,
                 allocation.y2 - allocation.y1 - this._iconBottomClip);
-        else
+        } else {
             this._iconBox.remove_clip();
+        }
 
         let rect = new Meta.Rectangle();
         [rect.x, rect.y] = this.actor.get_transformed_position();
@@ -648,23 +671,26 @@ AppMenuButton.prototype = {
 
         if (this.labelVisible) {
             if (direction == Clutter.TextDirection.LTR) {
-                if (allocWidth < naturalWidth + xPadding * 2)
+                if (allocWidth < naturalWidth + xPadding * 2) {
                     childBox.x1 = Math.max(0, (allocWidth - naturalWidth) / 2);
-                else
+                } else {
                     childBox.x1 = Math.min(allocWidth, xPadding);
+                }
                 childBox.x2 = Math.min(childBox.x1 + naturalWidth, allocWidth);
             } else {
-                if (allocWidth < naturalWidth + xPadding * 2)
+                if (allocWidth < naturalWidth + xPadding * 2) {
                     childBox.x1 = Math.max(0, (allocWidth - naturalWidth) / 2);
-                else
+                } else {
                     childBox.x1 = allocWidth - naturalWidth - xPadding;
+                }
                 childBox.x2 = Math.min(childBox.x1 + naturalWidth, allocWidth);
             }
         } else {
-            if (allocWidth < naturalWidth)
+            if (allocWidth < naturalWidth) {
                 childBox.x1 = Math.max(0, (allocWidth - naturalWidth) / 2);
-            else
+            } else {
                 childBox.x1 = (allocWidth - naturalWidth) / 2;
+            }
             childBox.x2 = Math.min(childBox.x1 + naturalWidth, allocWidth);
         }
 
@@ -703,17 +729,18 @@ AppMenuButton.prototype = {
         let tracker = Cinnamon.WindowTracker.get_default();
         let app = tracker.get_window_app(this.metaWindow);
 
-        if (this._applet._scaleMode && this.labelVisible)
+        if (this._applet._scaleMode && this.labelVisible) {
             this.iconSize = Math.round(this._applet._panelHeight * ICON_HEIGHT_FACTOR / global.ui_scale);
-        else if (!this.labelVisible)
+        } else if (!this.labelVisible) {
             this.iconSize = Math.round(this._applet._panelHeight * VERTICAL_ICON_HEIGHT_FACTOR / global.ui_scale);
-        else
+        } else {
             this.iconSize = HORIZONTAL_ICON_SIZE;
+        }
 
         let icon = app ?
             app.create_icon_texture(this.iconSize) :
             new St.Icon({
-                icon_name: 'application-default-icon',
+                icon_name: "application-default-icon",
                 icon_type: St.IconType.FULLCOLOR,
                 icon_size: this.iconSize
             });
@@ -721,13 +748,15 @@ AppMenuButton.prototype = {
         let old_child = this._iconBox.get_child();
         this._iconBox.set_child(icon);
 
-        if (old_child)
+        if (old_child) {
             old_child.destroy();
+        }
     },
 
     getAttention: function() {
-        if (this._needsAttention)
+        if (this._needsAttention) {
             return false;
+        }
 
         this._needsAttention = true;
         let counter = 0;
@@ -736,8 +765,9 @@ AppMenuButton.prototype = {
     },
 
     _flashButton: function(counter) {
-        if (!this._needsAttention)
+        if (!this._needsAttention) {
             return;
+        }
 
         this.actor.add_style_class_name("window-list-item-demands-attention");
         if (counter < 4) {
@@ -765,7 +795,7 @@ AppMenuButtonRightClickMenu.prototype = {
 
         this._launcher = launcher;
         this._windows = launcher._applet._windows;
-        this.connect('open-state-changed', Lang.bind(this, this._onToggled));
+        this.connect("open-state-changed", Lang.bind(this, this._onToggled));
 
         this.orientation = orientation;
         this.metaWindow = metaWindow;
@@ -779,18 +809,22 @@ AppMenuButtonRightClickMenu.prototype = {
         // Move to monitor
         if ((length = Main.layoutManager.monitors.length) == 2) {
             Main.layoutManager.monitors.forEach(function(monitor, index) {
-                if (index === mw.get_monitor()) return;
+                if (index === mw.get_monitor()) {
+                    return;
+                }
                 item = new PopupMenu.PopupMenuItem(_("Move to the other monitor"));
-                item.connect('activate', function() {
+                item.connect("activate", function() {
                     mw.move_to_monitor(index);
                 });
                 this.addMenuItem(item);
             }, this);
         } else if ((length = Main.layoutManager.monitors.length) > 2) {
             Main.layoutManager.monitors.forEach(function(monitor, index) {
-                if (index === mw.get_monitor()) return;
+                if (index === mw.get_monitor()) {
+                    return;
+                }
                 item = new PopupMenu.PopupMenuItem(_("Move to monitor %d").format(index + 1));
-                item.connect('activate', function() {
+                item.connect("activate", function() {
                     mw.move_to_monitor(index);
                 });
                 this.addMenuItem(item);
@@ -801,13 +835,13 @@ AppMenuButtonRightClickMenu.prototype = {
         if ((length = global.screen.n_workspaces) > 1) {
             if (mw.is_on_all_workspaces()) {
                 item = new PopupMenu.PopupMenuItem(_("Only on this workspace"));
-                item.connect('activate', function() {
+                item.connect("activate", function() {
                     mw.unstick();
                 });
                 this.addMenuItem(item);
             } else {
                 item = new PopupMenu.PopupMenuItem(_("Visible on all workspaces"));
-                item.connect('activate', function() {
+                item.connect("activate", function() {
                     mw.stick();
                 });
                 this.addMenuItem(item);
@@ -822,10 +856,11 @@ AppMenuButtonRightClickMenu.prototype = {
                     let name = Main.workspace_names[i] ? Main.workspace_names[i] : Main._makeDefaultWorkspaceName(i);
                     let ws = new PopupMenu.PopupMenuItem(name);
 
-                    if (i == curr_index)
+                    if (i == curr_index) {
                         ws.setSensitive(false);
+                    }
 
-                    ws.connect('activate', function() {
+                    ws.connect("activate", function() {
                         mw.change_workspace(global.screen.get_workspace_by_index(j));
                     });
                     item.menu.addMenuItem(ws);
@@ -839,15 +874,15 @@ AppMenuButtonRightClickMenu.prototype = {
         this.addMenuItem(subMenu);
 
         item = new PopupMenu.PopupIconMenuItem(_("About..."), "dialog-question", St.IconType.SYMBOLIC);
-        item.connect('activate', Lang.bind(this._launcher._applet, this._launcher._applet.openAbout));
+        item.connect("activate", Lang.bind(this._launcher._applet, this._launcher._applet.openAbout));
         subMenu.menu.addMenuItem(item);
 
         item = new PopupMenu.PopupIconMenuItem(_("Configure..."), "system-run", St.IconType.SYMBOLIC);
-        item.connect('activate', Lang.bind(this._launcher._applet, this._launcher._applet.configureApplet));
+        item.connect("activate", Lang.bind(this._launcher._applet, this._launcher._applet.configureApplet));
         subMenu.menu.addMenuItem(item);
 
         item = new PopupMenu.PopupIconMenuItem(_("Remove 'Window list'"), "edit-delete", St.IconType.SYMBOLIC);
-        item.connect('activate', Lang.bind(this, function() {
+        item.connect("activate", Lang.bind(this, function() {
             AppletManager._removeAppletFromPanel(this._launcher._applet._uuid, this._launcher._applet.instance_id);
         }));
         subMenu.menu.addMenuItem(item);
@@ -856,21 +891,23 @@ AppMenuButtonRightClickMenu.prototype = {
 
         // Close all/others
         item = new PopupMenu.PopupIconMenuItem(_("Close all"), "application-exit", St.IconType.SYMBOLIC);
-        item.connect('activate', Lang.bind(this, function() {
+        item.connect("activate", Lang.bind(this, function() {
             for (let window of this._windows)
                 if (window.actor.visible &&
-                    !window._needsAttention)
+                    !window._needsAttention) {
                     window.metaWindow.delete(global.get_current_time());
+                }
         }));
         this.addMenuItem(item);
 
         item = new PopupMenu.PopupIconMenuItem(_("Close others"), "window-close", St.IconType.SYMBOLIC);
-        item.connect('activate', Lang.bind(this, function() {
+        item.connect("activate", Lang.bind(this, function() {
             for (let window of this._windows)
                 if (window.actor.visible &&
                     window.metaWindow != this.metaWindow &&
-                    !window._needsAttention)
+                    !window._needsAttention) {
                     window.metaWindow.delete(global.get_current_time());
+                }
         }));
         this.addMenuItem(item);
 
@@ -879,7 +916,7 @@ AppMenuButtonRightClickMenu.prototype = {
         // Miscellaneous
         if (mw.get_compositor_private().opacity != 255) {
             item = new PopupMenu.PopupMenuItem(_("Restore to full opacity"));
-            item.connect('activate', function() {
+            item.connect("activate", function() {
                 mw.get_compositor_private().set_opacity(255);
             });
             this.addMenuItem(item);
@@ -887,12 +924,12 @@ AppMenuButtonRightClickMenu.prototype = {
 
         if (mw.minimized) {
             item = new PopupMenu.PopupIconMenuItem(_("Restore"), "view-sort-descending", St.IconType.SYMBOLIC);
-            item.connect('activate', function() {
+            item.connect("activate", function() {
                 Main.activateWindow(mw, global.get_current_time());
             });
         } else {
             item = new PopupMenu.PopupIconMenuItem(_("Minimize"), "view-sort-ascending", St.IconType.SYMBOLIC);
-            item.connect('activate', function() {
+            item.connect("activate", function() {
                 mw.minimize(global.get_current_time());
             });
         }
@@ -900,36 +937,37 @@ AppMenuButtonRightClickMenu.prototype = {
 
         if (mw.get_maximized()) {
             item = new PopupMenu.PopupIconMenuItem(_("Unmaximize"), "view-restore", St.IconType.SYMBOLIC);
-            item.connect('activate', function() {
+            item.connect("activate", function() {
                 mw.unmaximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
             });
         } else {
             item = new PopupMenu.PopupIconMenuItem(_("Maximize"), "view-fullscreen", St.IconType.SYMBOLIC);
-            item.connect('activate', function() {
+            item.connect("activate", function() {
                 mw.maximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
             });
         }
         this.addMenuItem(item);
 
         item = new PopupMenu.PopupIconMenuItem(_("Close"), "edit-delete", St.IconType.SYMBOLIC);
-        item.connect('activate', function() {
+        item.connect("activate", function() {
             mw.delete(global.get_current_time());
         });
         this.addMenuItem(item);
     },
 
     _onToggled: function(actor, isOpening) {
-        if (this.isOpen)
+        if (this.isOpen) {
             this._launcher._applet._menuOpen = true;
-        else
+        } else {
             this._launcher._applet._menuOpen = false;
+        }
 
         if (!isOpening) {
             return;
         }
         this.removeAll();
         this._populateMenu();
-    },
+    }
 };
 
 function MyApplet(orientation, panel_height, instance_id) {
@@ -990,21 +1028,21 @@ MyApplet.prototype = {
 
         let tracker = Cinnamon.WindowTracker.get_default();
         this.signals.connect(tracker, "notify::focus-app", this._onFocus);
-        this.signals.connect(global.screen, 'window-added', this._onWindowAdded);
-        this.signals.connect(global.screen, 'window-removed', this._onWindowRemoved);
-        this.signals.connect(global.screen, 'window-monitor-changed', this._onWindowMonitorChanged);
-        this.signals.connect(global.screen, 'window-workspace-changed', this._onWindowWorkspaceChanged);
-        this.signals.connect(global.screen, 'window-skip-taskbar-changed', this._onWindowSkipTaskbarChanged);
-        this.signals.connect(global.screen, 'monitors-changed', this._updateWatchedMonitors);
-        this.signals.connect(global.window_manager, 'switch-workspace', this._refreshAllItems);
+        this.signals.connect(global.screen, "window-added", this._onWindowAdded);
+        this.signals.connect(global.screen, "window-removed", this._onWindowRemoved);
+        this.signals.connect(global.screen, "window-monitor-changed", this._onWindowMonitorChanged);
+        this.signals.connect(global.screen, "window-workspace-changed", this._onWindowWorkspaceChanged);
+        this.signals.connect(global.screen, "window-skip-taskbar-changed", this._onWindowSkipTaskbarChanged);
+        this.signals.connect(global.screen, "monitors-changed", this._updateWatchedMonitors);
+        this.signals.connect(global.window_manager, "switch-workspace", this._refreshAllItems);
 
-        this.signals.connect(global.window_manager, 'minimize', this._onWindowStateChange);
-        this.signals.connect(global.window_manager, 'maximize', this._onWindowStateChange);
-        this.signals.connect(global.window_manager, 'unmaximize', this._onWindowStateChange);
-        this.signals.connect(global.window_manager, 'map', this._onWindowStateChange);
-        this.signals.connect(global.window_manager, 'tile', this._onWindowStateChange);
+        this.signals.connect(global.window_manager, "minimize", this._onWindowStateChange);
+        this.signals.connect(global.window_manager, "maximize", this._onWindowStateChange);
+        this.signals.connect(global.window_manager, "unmaximize", this._onWindowStateChange);
+        this.signals.connect(global.window_manager, "map", this._onWindowStateChange);
+        this.signals.connect(global.window_manager, "tile", this._onWindowStateChange);
 
-        this.actor.connect('style-changed', Lang.bind(this, this._updateSpacing));
+        this.actor.connect("style-changed", Lang.bind(this, this._updateSpacing));
 
         global.settings.bind("panel-edit-mode", this.actor, "reactive", Gio.SettingsBindFlags.DEFAULT);
 
@@ -1051,30 +1089,30 @@ MyApplet.prototype = {
 
         if (orientation == St.Side.TOP) {
             for (let child of this.manager_container.get_children()) {
-                child.set_style_class_name('window-list-item-box top');
-                child.set_style('margin-top: 0px; padding-top: 0px;');
+                child.set_style_class_name("window-list-item-box top");
+                child.set_style("margin-top: 0px; padding-top: 0px;");
             }
-            this.actor.set_style('margin-top: 0px; padding-top: 0px;');
+            this.actor.set_style("margin-top: 0px; padding-top: 0px;");
         } else if (orientation == St.Side.BOTTOM) {
             for (let child of this.manager_container.get_children()) {
-                child.set_style_class_name('window-list-item-box bottom');
-                child.set_style('margin-bottom: 0px; padding-bottom: 0px;');
+                child.set_style_class_name("window-list-item-box bottom");
+                child.set_style("margin-bottom: 0px; padding-bottom: 0px;");
             }
-            this.actor.set_style('margin-bottom: 0px; padding-bottom: 0px;');
+            this.actor.set_style("margin-bottom: 0px; padding-bottom: 0px;");
         } else if (orientation == St.Side.LEFT) {
             for (let child of this.manager_container.get_children()) {
-                child.set_style_class_name('window-list-item-box left');
-                child.set_style('margin-left 0px; padding-left: 0px; padding-right: 0px; margin-right: 0px;');
+                child.set_style_class_name("window-list-item-box left");
+                child.set_style("margin-left 0px; padding-left: 0px; padding-right: 0px; margin-right: 0px;");
                 child.set_x_align(Clutter.ActorAlign.CENTER);
             }
-            this.actor.set_style('margin-left: 0px; padding-left: 0px; padding-right: 0px; margin-right: 0px;');
+            this.actor.set_style("margin-left: 0px; padding-left: 0px; padding-right: 0px; margin-right: 0px;");
         } else if (orientation == St.Side.RIGHT) {
             for (let child of this.manager_container.get_children()) {
-                child.set_style_class_name('window-list-item-box right');
-                child.set_style('margin-left: 0px; padding-left: 0px; padding-right: 0px; margin-right: 0px;');
+                child.set_style_class_name("window-list-item-box right");
+                child.set_style("margin-left: 0px; padding-left: 0px; padding-right: 0px; margin-right: 0px;");
                 child.set_x_align(Clutter.ActorAlign.CENTER);
             }
-            this.actor.set_style('margin-right: 0px; padding-right: 0px; padding-left: 0px; margin-left: 0px;');
+            this.actor.set_style("margin-right: 0px; padding-right: 0px; padding-left: 0px; margin-left: 0px;");
         }
 
         if (this.appletEnabled) {
@@ -1084,13 +1122,14 @@ MyApplet.prototype = {
 
     _updateSpacing: function() {
         let themeNode = this.actor.get_theme_node();
-        let spacing = themeNode.get_length('spacing');
+        let spacing = themeNode.get_length("spacing");
         this.manager.set_spacing(spacing * global.ui_scale);
     },
 
     _onWindowAdded: function(screen, metaWindow, monitor) {
-        if (this._shouldAdd(metaWindow))
+        if (this._shouldAdd(metaWindow)) {
             this._addWindow(metaWindow);
+        }
     },
 
     _onWindowRemoved: function(screen, metaWindow) {
@@ -1098,17 +1137,19 @@ MyApplet.prototype = {
     },
 
     _onWindowMonitorChanged: function(screen, metaWindow, monitor) {
-        if (this._shouldAdd(metaWindow))
+        if (this._shouldAdd(metaWindow)) {
             this._addWindow(metaWindow);
-        else
+        } else {
             this._removeWindow(metaWindow);
+        }
     },
 
     _onWindowWorkspaceChanged: function(screen, metaWindow, metaWorkspace) {
         let window = this._windows.find(win => (win.metaWindow == metaWindow));
 
-        if (window)
+        if (window) {
             this._refreshItem(window);
+        }
     },
 
     _onWindowSkipTaskbarChanged: function(screen, metaWindow) {
@@ -1145,18 +1186,23 @@ MyApplet.prototype = {
     _onWindowDemandsAttention: function(display, window) {
         // Magic to look for AppMenuButton owning window
         let i = this._windows.length;
-        while (i-- && this._windows[i].metaWindow != window);
+        while (i-- && this._windows[i].metaWindow != window) {
+
+        }
 
         // Window is not in our list
-        if (i == -1)
+        if (i == -1) {
             return;
+        }
 
         // Asks AppMenuButton to flash. Returns false if already flashing
-        if (!this._windows[i].getAttention())
+        if (!this._windows[i].getAttention()) {
             return;
+        }
 
-        if (window.get_workspace() != global.screen.get_active_workspace())
+        if (window.get_workspace() != global.screen.get_active_workspace()) {
             this._addWindow(window, true);
+        }
     },
 
     _onFocus: function() {
@@ -1165,16 +1211,16 @@ MyApplet.prototype = {
     },
 
     _refreshItem: function(window) {
-        window.actor.visible =
-            (window.metaWindow.get_workspace() == global.screen.get_active_workspace()) ||
+        window.actor.visible = (window.metaWindow.get_workspace() == global.screen.get_active_workspace()) ||
             window.metaWindow.is_on_all_workspaces();
 
         /* The above calculates the visibility if it were the normal
          * AppMenuButton. If this is actually a temporary AppMenuButton for
          * urgent windows on other workspaces, it is shown iff the normal
          * one isn't shown! */
-        if (window.alert)
+        if (window.alert) {
             window.actor.visible = !window.actor.visible;
+        }
     },
 
     _refreshAllItems: function() {
@@ -1192,15 +1238,17 @@ MyApplet.prototype = {
 
     _onWindowStateChange: function(cinnamonwm, actor) {
         for (let window of this._windows)
-            if (window.metaWindow == actor.metaWindow)
+            if (window.metaWindow == actor.metaWindow) {
                 window.setDisplayTitle();
+            }
     },
 
     // Used by windowManager for traditional minimize and map effect
     getOriginFromWindow: function(metaWindow) {
         for (let window of this._windows)
-            if (window.metaWindow == metaWindow)
+            if (window.metaWindow == metaWindow) {
                 return window.actor;
+            }
 
         return false;
     },
@@ -1227,27 +1275,31 @@ MyApplet.prototype = {
                 return x.panel.monitorIndex;
             });
 
-            for (let i = 0; i < n_mons; i++)
-                if (instances.indexOf(i) == -1)
+            for (let i = 0; i < n_mons; i++) {
+                if (instances.indexOf(i) == -1) {
                     this._monitorWatchList.push(i);
+                }
+            }
         }
 
         // Now track the windows in our favorite monitors
         let windows = global.display.list_windows(0);
 
         for (let window of windows) {
-            if (this._shouldAdd(window))
+            if (this._shouldAdd(window)) {
                 this._addWindow(window);
-            else
+            } else {
                 this._removeWindow(window);
+            }
         }
     },
 
     _addWindow: function(metaWindow, alert) {
         for (let window of this._windows)
             if (window.metaWindow == metaWindow &&
-                window.temp == alert)
+                window.temp == alert) {
                 return;
+            }
 
         let appButton = new AppMenuButton(this, metaWindow, alert);
         this.manager_container.add_actor(appButton.actor);
@@ -1258,11 +1310,13 @@ MyApplet.prototype = {
          * workspace, put it in the right position. It is at the end by
          * default, so move it to the start if needed */
         if (alert) {
-            if (metaWindow.get_workspace().index() < global.screen.get_active_workspace_index())
+            if (metaWindow.get_workspace().index() < global.screen.get_active_workspace_index()) {
                 this.manager_container.set_child_at_index(appButton.actor, 0);
+            }
         } else {
-            if (metaWindow.get_workspace() != global.screen.get_active_workspace())
+            if (metaWindow.get_workspace() != global.screen.get_active_workspace()) {
                 appButton.actor.hide();
+            }
         }
     },
 
@@ -1283,10 +1337,12 @@ MyApplet.prototype = {
     },
 
     handleDragOver: function(source, actor, x, y, time) {
-        if (this._inEditMode)
+        if (this._inEditMode) {
             return DND.DragMotionResult.MOVE_DROP;
-        if (!(source instanceof AppMenuButton))
+        }
+        if (!(source instanceof AppMenuButton)) {
             return DND.DragMotionResult.NO_DROP;
+        }
 
         source.actor.hide();
         let children = this.manager_container.get_children();
@@ -1294,9 +1350,15 @@ MyApplet.prototype = {
         let pos = children.length;
 
         if (this.manager_container.height > this.manager_container.width) // assume oriented vertically
-            while (--pos && y < children[pos].get_allocation_box().y1);
-        else
-            while (--pos && x < children[pos].get_allocation_box().x1);
+        {
+            while (--pos && y < children[pos].get_allocation_box().y1) {
+
+            }
+        } else {
+            while (--pos && x < children[pos].get_allocation_box().x1) {
+
+            }
+        }
 
         this._dragPlaceholderPos = pos;
 
@@ -1316,8 +1378,12 @@ MyApplet.prototype = {
     },
 
     acceptDrop: function(source, actor, x, y, time) {
-        if (!(source instanceof AppMenuButton)) return false;
-        if (this._dragPlaceholderPos == undefined) return false;
+        if (!(source instanceof AppMenuButton)) {
+            return false;
+        }
+        if (this._dragPlaceholderPos == undefined) {
+            return false;
+        }
 
         this.manager_container.set_child_at_index(source.actor, this._dragPlaceholderPos);
 

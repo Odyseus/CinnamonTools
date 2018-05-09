@@ -107,7 +107,7 @@ FeedReader.prototype = {
         // Let the python script grab the items and load them using an async method
         Util.spawn_async(["python", APPLET_PATH + "/loadItems.py", script_path], Lang.bind(this, this.load_items));
         /* Load items */
-        //this.load_items();
+        // this.load_items();
     },
 
     get_url: function() {
@@ -219,16 +219,16 @@ FeedReader.prototype = {
         // Make items available even on the first load.
         if (this.items.length == 0 && new_items.length > 0) {
             this.items = new_items;
-            //TODO: Switch to be an event
+            // TODO: Switch to be an event
             this.callbacks.onUpdate();
-            //this.emit('')
+            // this.emit('')
         }
 
         let time = new Date().getTime() - start;
 
         // Notify to start the next item downloading.
         try {
-            //TODO: Switch to be an event
+            // TODO: Switch to be an event
             this.callbacks.onDownloaded();
         } catch (e) {
             this.logger.debug(e);
@@ -245,7 +245,7 @@ FeedReader.prototype = {
             this.items[i].mark_read(false);
         }
 
-        //TODO: Switch to be an event
+        // TODO: Switch to be an event
         this.callbacks.onItemRead(this);
         this.save_items();
     },
@@ -265,14 +265,14 @@ FeedReader.prototype = {
                 break;
             }
         }
-        //TODO: Switch to be an event
+        // TODO: Switch to be an event
         this.callbacks.onItemRead(this);
         this.save_items();
     },
 
     on_item_read: function() {
         this.logger.debug("FeedReader.on_item_read");
-        //TODO: Switch to be an event
+        // TODO: Switch to be an event
         this.callbacks.onItemRead(this);
         this.save_items();
     },
@@ -346,7 +346,7 @@ FeedReader.prototype = {
             return;
         }
         try {
-            //this.logger.debug("Loading already fetched feed items");
+            // this.logger.debug("Loading already fetched feed items");
             let data = JSON.parse(unescape(content));
 
             if (typeof data == "object") {
@@ -410,7 +410,7 @@ FeedReader.prototype = {
         this.error = true;
         this.error_messsage = msg;
         this.error_details = details;
-        //TODO: Switch to be an event
+        // TODO: Switch to be an event
         if (this.callbacks.onError) {
             this.callbacks.onError(this, msg, details);
         }
@@ -425,11 +425,11 @@ FeedReader.prototype = {
         ret = ret.replace(/<\/h[0-9]>/g, "\n\n");
         ret = ret.replace(/<.*?>/g, "");
         ret = ret.replace("&nbsp;", " ");
-        ret = ret.replace("&quot;", "\"");
-        ret = ret.replace("&rdquo;", "\"");
-        ret = ret.replace("&ldquo;", "\"");
-        ret = ret.replace("&#8220;", "\"");
-        ret = ret.replace("&#8221;", "\"");
+        ret = ret.replace("&quot;", '"');
+        ret = ret.replace("&rdquo;", '"');
+        ret = ret.replace("&ldquo;", '"');
+        ret = ret.replace("&#8220;", '"');
+        ret = ret.replace("&#8221;", '"');
         ret = ret.replace("&rsquo;", "'");
         ret = ret.replace("&lsquo;", "'");
         ret = ret.replace("&#8216;", "'");
@@ -450,7 +450,7 @@ FeedReader.prototype = {
         ret = ret.replace(/&nbsp;/g, " ");
 
         /* Headings --> <b> + 2*newline */
-        ret = ret.replace(/<h[0-9]>/g, esc_open + "span weight=\"bold\"" + esc_close);
+        ret = ret.replace(/<h[0-9]>/g, esc_open + 'span weight="bold"' + esc_close);
         ret = ret.replace(/<\/h[0-9]>\s*/g, esc_open + "/span" + esc_close + "\n\n");
 
         /* <strong> -> <b> */

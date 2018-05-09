@@ -303,10 +303,10 @@ CustomSwitchMenuItem.prototype = {
     _setTooltip: function(aButton, aText, aCallback) { // jshint ignore:line
         try {
             this.tooltip._tooltip.get_clutter_text().set_markup(
-                "<span weight=\"bold\">" + escapeHTML(_("Name")) + ": </span>" +
+                '<span weight="bold">' + escapeHTML(_("Name")) + ": </span>" +
                 escapeHTML(this.extension.name) + "\n" +
-                "<span weight=\"bold\">UUID: </span>" + escapeHTML(this.extension.uuid) + "\n" +
-                "<span weight=\"bold\">" + escapeHTML(_("Description")) + ": </span>" +
+                '<span weight="bold">UUID: </span>' + escapeHTML(this.extension.uuid) + "\n" +
+                '<span weight="bold">' + escapeHTML(_("Description")) + ": </span>" +
                 escapeHTML(this.extension.description)
             );
         } catch (aErr) {

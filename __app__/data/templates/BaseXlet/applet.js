@@ -133,7 +133,7 @@ MyApplet.prototype = {
                 }
             }
         } catch (aErr) {
-            global.logWarning("Could not load icon file \"" + this.pref_custom_icon_for_applet + "\" for menu button");
+            global.logWarning('Could not load icon file "' + this.pref_custom_icon_for_applet + '" for menu button');
         }
 
         if (this.pref_custom_icon_for_applet === "") {

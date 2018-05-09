@@ -152,7 +152,7 @@ CollapsibleSystrayApplet.prototype = {
     },
 
     _bindSettings: function() {
-        this._settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
 
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -816,7 +816,7 @@ CollapsibleSystrayApplet.prototype = {
 
         $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype.on_applet_removed_from_panel.call(this);
 
-        this._settings.finalize();
+        this.settings.finalize();
     }
 };
 

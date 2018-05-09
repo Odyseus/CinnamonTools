@@ -9,15 +9,15 @@
  * - Added option to restart Cinnamon from the settings window.
  */
 
-//Cinnamon Extension: Cinnamon-Maximus v0.3.1
-//Release Date: 22 Nov 2014
+// Cinnamon Extension: Cinnamon-Maximus v0.3.1
+// Release Date: 22 Nov 2014
 //
-//Author: Fatih Mete
+// Author: Fatih Mete
 //
 //          Email: fatihmete@live.com
 
-//This extension adopted for cinnamon, maximus-gnome-shell-extension
-//https://bitbucket.org/mathematicalcoffee/maximus-gnome-shell-extension/overview
+// This extension adopted for cinnamon, maximus-gnome-shell-extension
+// https://bitbucket.org/mathematicalcoffee/maximus-gnome-shell-extension/overview
 /*
  * Maximus v2.1
  * Amy Chan <mathematical.coffee@gmail.com>
@@ -159,7 +159,7 @@ function guessWindowXID(win) {
              * This is to handle cases where the window has no frame and so
              * act['x-window'] is actually the X ID we want, not the child.
              */
-            let regexp = new RegExp("(0x[0-9a-f]+) +\"%s\"".format(win.title));
+            let regexp = new RegExp('(0x[0-9a-f]+) +"%s"'.format(win.title));
             id = str.match(regexp);
             if (id) {
                 return id[1];
@@ -355,7 +355,7 @@ function shouldAffect(win) {
             let activeApp = appid.split(".");
             let appsInList = APP_LIST.split(",");
             LOG("appid=" + activeApp[0]);
-            //APP_LIST=APP_LIST.split(',');
+            // APP_LIST=APP_LIST.split(',');
             let inList = appsInList.length > 0 && appsInList.indexOf(activeApp[0]) >= 0;
             LOG(inList);
             return ((IS_WHITELIST && inList) || (IS_WHITELIST && inList));
@@ -593,7 +593,7 @@ function onChangeNWorkspaces() {
         workspaces.push(ws);
         // we need to add a Mainloop.idle_add, or else in onWindowAdded the
         // window's maximized state is not correct yet.
-        //ws._MaximusWindowAddedId = ws.connect('window-added', onWindowAdded);
+        // ws._MaximusWindowAddedId = ws.connect('window-added', onWindowAdded);
         ws._MaximusWindowAddedId = ws.connect("window-added", function(ws, win) {
             Mainloop.idle_add(function() {
                 onWindowAdded(ws, win);

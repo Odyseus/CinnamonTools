@@ -1157,4 +1157,3 @@ exported _,
          versionCompare,
          CINNAMON_VERSION
  */
-

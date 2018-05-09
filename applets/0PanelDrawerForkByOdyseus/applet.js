@@ -87,7 +87,7 @@ PanelDrawerForkByOdyseusApplet.prototype = {
                         }
                         this._rshideTimeoutId = Mainloop.timeout_add_seconds(this.autohide_rs_time, Lang.bind(this, function() {
                             if (!this.h) {
-                                //this.h=true;
+                                // this.h=true;
                                 this.doAction(true);
                                 this.autodo(true);
                             }
@@ -205,7 +205,7 @@ PanelDrawerForkByOdyseusApplet.prototype = {
                         this.tray.hide();
                     }));
                     continue;
-                    //this.traysize =
+                    // this.traysize =
                 }
                 _children[i].hide();
                 //                if(_children[i]._applet._uuid=="systray@cinnamon.org" || _children[i]._applet._uuid=="systray-collapsible@koutch"){

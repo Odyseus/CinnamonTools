@@ -661,7 +661,7 @@ CinnamonMenuSecondGeneration.prototype = {
                 this._set_default_menu_icon();
             }
         } catch (aErr) {
-            global.logWarning("Could not load icon file \"" + this.pref_custom_icon_for_applet + "\" for menu button");
+            global.logWarning('Could not load icon file "' + this.pref_custom_icon_for_applet + '" for menu button');
         }
 
         if (this.pref_use_a_custom_icon_for_applet && this.pref_custom_icon_for_applet === "") {
@@ -2763,7 +2763,7 @@ CinnamonMenuSecondGeneration.prototype = {
                 // an ampersand character without intending to start an entity - escape ampersand
                 // as &amp;
                 aEl.tooltip._tooltip.get_clutter_text().set_markup(
-                    (aTitle ? "<span weight=\"bold\">" + $.escapeHTML(aTitle) + "</span>" : "") +
+                    (aTitle ? '<span weight="bold">' + $.escapeHTML(aTitle) + "</span>" : "") +
                     (aTitle && aDescription ? "\n" : "") +
                     (aDescription ? $.escapeHTML(aDescription) : "")
                 );

@@ -406,7 +406,7 @@ ArgosForCinnamonApplet.prototype = {
 
     _setAppletTooltip: function() {
         let boldSpan = function(aStr) {
-            return "<span weight=\"bold\">" + $.escapeHTML(aStr) + "</span>";
+            return '<span weight="bold">' + $.escapeHTML(aStr) + "</span>";
         };
 
         let tt = boldSpan(_(this.metadata.name)) + "\n\n";
@@ -660,7 +660,7 @@ ArgosForCinnamonApplet.prototype = {
         );
         menuItem.connect("activate", Lang.bind(this, function() {
             new ModalDialog.ConfirmDialog(
-                _("This operation will remove the current script from this applet leaving it \"blank\".") + "\n" +
+                _('This operation will remove the current script from this applet leaving it "blank".') + "\n" +
                 _("The current applet settings will be untouched and the actual script file will not be deleted.") + "\n" +
                 _("Do you want to proceed?") + "\n",
                 Lang.bind(this, function() {
@@ -678,7 +678,7 @@ ArgosForCinnamonApplet.prototype = {
         }));
         menuItem.tooltip = new $.CustomTooltip(
             menuItem.actor,
-            _("This operation will remove the current script from this applet leaving it \"blank\".")
+            _('This operation will remove the current script from this applet leaving it "blank".')
         );
         subMenu.menu.addMenuItem(menuItem);
 
@@ -710,7 +710,7 @@ ArgosForCinnamonApplet.prototype = {
                                 let file = Gio.file_new_for_path(this._script_path);
                                 FileUtils.changeModeGFile(file, 755);
                             } else {
-                                Util.spawnCommandLine("chmod +x \"" + this._script_path + "\"");
+                                Util.spawnCommandLine('chmod +x "' + this._script_path + '"');
                             }
                         } finally {
                             this._setFileModeTimeout = Mainloop.timeout_add_seconds(1,
@@ -874,7 +874,7 @@ ArgosForCinnamonApplet.prototype = {
                 }
             }
         } catch (aErr) {
-            global.logWarning("Could not load icon file \"" + this.pref_custom_icon_for_applet + "\" for menu button");
+            global.logWarning('Could not load icon file "' + this.pref_custom_icon_for_applet + '" for menu button');
         }
 
         if (this.pref_custom_icon_for_applet === "") {

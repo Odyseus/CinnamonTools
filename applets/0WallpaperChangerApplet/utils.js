@@ -146,46 +146,46 @@ var Settings = new WallChangerSettings();
 const DAEMON_NAME = "org.cinnamon.Applets.WallpaperChangerApplet.Daemon";
 const DAEMON_PATH = "/org/cinnamon/Applets/WallpaperChangerApplet/Daemon";
 
-const WallChangerDaemonInterface = "<node>\
-    <interface name=\"%s\">\
-        <method name=\"LoadProfile\">\
-            <arg direction=\"in\" name=\"profile\" type=\"s\" />\
+const WallChangerDaemonInterface = '<node>\
+    <interface name="%s">\
+        <method name="LoadProfile">\
+            <arg direction="in" name="profile" type="s" />\
         </method>\
-        <method name=\"Next\">\
-            <arg direction=\"out\" name=\"uri\" type=\"s\" />\
+        <method name="Next">\
+            <arg direction="out" name="uri" type="s" />\
         </method>\
-        <method name=\"Prev\">\
-            <arg direction=\"out\" name=\"uri\" type=\"s\" />\
+        <method name="Prev">\
+            <arg direction="out" name="uri" type="s" />\
         </method>\
-        <method name=\"Quit\"></method>\
-        <signal name=\"changed\">\
-            <arg direction=\"out\" name=\"uri\" type=\"s\" />\
+        <method name="Quit"></method>\
+        <signal name="changed">\
+            <arg direction="out" name="uri" type="s" />\
         </signal>\
-        <signal name=\"error\">\
-            <arg direction=\"out\" name=\"message\" type=\"s\" />\
+        <signal name="error">\
+            <arg direction="out" name="message" type="s" />\
         </signal>\
-        <signal name=\"preview\">\
-            <arg direction=\"out\" name=\"uri\" type=\"s\" />\
+        <signal name="preview">\
+            <arg direction="out" name="uri" type="s" />\
         </signal>\
-        <property type=\"as\" name=\"history\" access=\"read\" />\
-        <property type=\"as\" name=\"queue\" access=\"read\" />\
+        <property type="as" name="history" access="read" />\
+        <property type="as" name="queue" access="read" />\
     </interface>\
-</node>".format(DAEMON_NAME);
+</node>'.format(DAEMON_NAME);
 
 const WallChangerDaemonProxy = Gio.DBusProxy.makeProxyWrapper(WallChangerDaemonInterface);
 
-const DBusInterface = "<node>\
-  <interface name=\"org.freedesktop.DBus\">\
-    <method name=\"ListNames\">\
-      <arg direction=\"out\" type=\"as\"/>\
+const DBusInterface = '<node>\
+  <interface name="org.freedesktop.DBus">\
+    <method name="ListNames">\
+      <arg direction="out" type="as"/>\
     </method>\
-    <signal name=\"NameOwnerChanged\">\
-      <arg type=\"s\"/>\
-      <arg type=\"s\"/>\
-      <arg type=\"s\"/>\
+    <signal name="NameOwnerChanged">\
+      <arg type="s"/>\
+      <arg type="s"/>\
+      <arg type="s"/>\
     </signal>\
   </interface>\
-</node>";
+</node>';
 
 const DBusProxy = Gio.DBusProxy.makeProxyWrapper(DBusInterface);
 
@@ -279,14 +279,14 @@ WallChangerDaemon.prototype = {
 
     _off: function() {
         this._settings.daemon_is_running = false;
-        debug("emit(\"toggled\", false)");
+        debug('emit("toggled", false)');
         this.emit("toggled", false);
     },
 
     _on: function() {
         debug("The wall-changer daemon is running");
         this._settings.daemon_is_running = true;
-        debug("emit(\"toggled\", true)");
+        debug('emit("toggled", true)');
         this.emit("toggled", true);
     },
 

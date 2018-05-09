@@ -6,14 +6,14 @@ exported toggleLocalizationVisibility
 
 // Source: https://github.com/julienetie/smooth-scroll
 (function(window, document) {
-    var prefixes = ['moz', 'webkit', 'o'],
+    var prefixes = ["moz", "webkit", "o"],
         animationFrame;
 
     // Modern rAF prefixing without setTimeout
     function requestAnimationFrameNative() {
         prefixes.map(function(prefix) {
             if (!window.requestAnimationFrame) {
-                animationFrame = window[prefix + 'RequestAnimationFrame'];
+                animationFrame = window[prefix + "RequestAnimationFrame"];
             } else {
                 animationFrame = requestAnimationFrame;
             }
@@ -43,7 +43,7 @@ exported toggleLocalizationVisibility
             diffY = coords.y - currentY,
             startTimestamp = null;
 
-        if (coords.y === currentY || typeof scrollable.scrollTo !== 'function') {
+        if (coords.y === currentY || typeof scrollable.scrollTo !== "function") {
             return;
         }
 
@@ -72,7 +72,7 @@ exported toggleLocalizationVisibility
     var speed = window.smoothScrollSpeed || 750;
 
     function smoothScroll(e) { // no smooth scroll class to ignore links
-        if (e.target.className === 'no-ss') {
+        if (e.target.className === "no-ss") {
             return;
         }
 
@@ -97,7 +97,7 @@ exported toggleLocalizationVisibility
     }
 
     // Uses target's hash for scroll
-    document.addEventListener('click', smoothScroll, false);
+    document.addEventListener("click", smoothScroll, false);
 }(window, document));
 
 if (!window.localStorage) {
@@ -219,8 +219,9 @@ function toggleLocalizationVisibility(aValue) {
     var validLanguage = optionExists(language, selector);
 
     // If there is no selector, the page build must have gone very wrong.
-    if (!selector)
+    if (!selector) {
         return;
+    }
 
     // aValue is null on page load.
     if (aValue === null) {
@@ -253,14 +254,17 @@ function toggleLocalizationVisibility(aValue) {
 
         if (option) {
             // Set localized navigation bar labels.
-            if (navXletHelp)
+            if (navXletHelp) {
                 navXletHelp.innerText = option.getAttribute("data-xlet-help");
+            }
 
-            if (navXletContributors)
+            if (navXletContributors) {
                 navXletContributors.innerText = option.getAttribute("data-xlet-contributors");
+            }
 
-            if (navXletChangelog)
+            if (navXletChangelog) {
                 navXletChangelog.innerText = option.getAttribute("data-xlet-changelog");
+            }
 
             // Set localized page title.
             document.title = option.getAttribute("data-title");

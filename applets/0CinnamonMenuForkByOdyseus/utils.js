@@ -210,7 +210,7 @@ ApplicationContextMenuItem.prototype = {
                     if (FileUtils.hasOwnProperty("changeModeGFile")) {
                         FileUtils.changeModeGFile(destFile, 755);
                     } else {
-                        Util.spawnCommandLine("chmod +x \"" + USER_DESKTOP_PATH + "/" + this._appButton.app.get_id() + "\"");
+                        Util.spawnCommandLine('chmod +x "' + USER_DESKTOP_PATH + "/" + this._appButton.app.get_id() + '"');
                     }
                 } catch (e) {
                     global.log(e);
@@ -312,7 +312,7 @@ ApplicationContextMenuItem.prototype = {
             case "open_with_text_editor":
                 if (this._appButton._applet.pref_context_gain_privileges) {
                     try {
-                        Util.spawn_async(["stat", "-c", "\"%U\"", pathToDesktopFile],
+                        Util.spawn_async(["stat", "-c", '"%U"', pathToDesktopFile],
                             Lang.bind(this, function(aOutput) {
                                 let fileOwner = aOutput.replace(/\s+/g, "")
                                     // Mark for deletion on EOL. Cinnamon 3.8.x+
@@ -345,7 +345,7 @@ ApplicationContextMenuItem.prototype = {
 
         try {
             if (aDirPath !== "") {
-                GLib.spawn_command_line_async("xdg-open " + "\"" + aDirPath + "\"");
+                GLib.spawn_command_line_async("xdg-open " + '"' + aDirPath + '"');
             }
         } catch (aErr) {
             Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
@@ -365,9 +365,9 @@ ApplicationContextMenuItem.prototype = {
 
         let editor = this._appButton._applet.pref_context_custom_editor_for_edit_desktop_file;
         if (editor !== "") {
-            cmd += " " + editor + " " + "\"" + this._appButton.app.get_app_info().get_filename() + "\"";
+            cmd += " " + editor + " " + '"' + this._appButton.app.get_app_info().get_filename() + '"';
         } else {
-            cmd += " xdg-open " + "\"" + this._appButton.app.get_app_info().get_filename() + "\"";
+            cmd += " xdg-open " + '"' + this._appButton.app.get_app_info().get_filename() + '"';
         }
 
         this._appButton._applet.closeMainMenu();
@@ -1508,7 +1508,7 @@ CustomCommandButton.prototype = {
                 // Maybe I should remove it.
                 try {
                     if (cmd.indexOf("/") !== -1) { // Try to open file if cmd is a path
-                        Main.Util.spawnCommandLine("xdg-open " + "\"" + cmd + "\"");
+                        Main.Util.spawnCommandLine("xdg-open " + '"' + cmd + '"');
                     }
                 } catch (aErr2) {
                     Main.notify(_(this._applet.metadata.name), aErr2.message);

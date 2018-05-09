@@ -558,7 +558,7 @@ SimpleToDoListApplet.prototype = {
                 }
             }
         } catch (aErr) {
-            global.logWarning("Could not load icon file \"%s\" for menu button")
+            global.logWarning('Could not load icon file "%s" for menu button')
                 .format(this.pref_custom_icon_for_applet);
         }
 

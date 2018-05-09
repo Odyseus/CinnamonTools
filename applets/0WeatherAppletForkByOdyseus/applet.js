@@ -839,7 +839,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
     },
 
     weatherUrl: function() {
-        let output = QUERY_URL + " where woeid=\"" + this.pref_woeid + "\" and u=\"" + this.unitToUrl() + "\"";
+        let output = QUERY_URL + ' where woeid="' + this.pref_woeid + '" and u="' + this.unitToUrl() + '"';
         return output;
     },
 
