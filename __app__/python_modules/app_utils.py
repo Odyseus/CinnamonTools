@@ -603,7 +603,7 @@ class XletsHelperCore():
                 sanitizer = changelog_sanitizer.ChangelogSanitizer(
                     xlet_name=xlet["name"],
                     source_path=tmp_log_path,
-                    target_path=xlet_root_folder + "/CHANGELOG.md"
+                    target_path=os.path.join(xlet_root_folder, "__data__", "CHANGELOG.md")
                 )
 
                 sanitizer.sanitize()

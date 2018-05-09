@@ -125,9 +125,9 @@ class LocalizedHelpCreator(object):
         self.changelog = ""
         self.help_file_path = os.path.join(self.xlet_dir, "HELP.html")
 
-        contributors_path = os.path.join(self.xlet_dir, "CONTRIBUTORS.md")
-        changelog_path = os.path.join(self.xlet_dir, "CHANGELOG.md")
-        old_changelog_path = os.path.join(self.xlet_dir, "CHANGELOG-OLD.md")
+        contributors_path = os.path.join(self.xlet_dir, "__data__", "CONTRIBUTORS.md")
+        changelog_path = os.path.join(self.xlet_dir, "__data__", "CHANGELOG.md")
+        old_changelog_path = os.path.join(self.xlet_dir, "__data__", "CHANGELOG-OLD.md")
 
         if os.path.exists(contributors_path):
             try:
