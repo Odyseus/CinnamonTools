@@ -329,12 +329,12 @@
         "type": "header",
         "description": "Debugging"
     },
-    "pref_logging_enabled": {
+    "pref_enable_verbose_logging": {
         "type": "checkbox",
         "indent": true,
         "default": false,
-        "description": "Enable logging",
-        "tooltip": "It enables the ability to log the output of several functions used by the applet."
+        "description": "Verbose logging",
+        "tooltip": "Checking this will enable debug level logging."
     },
     "pref_initial_load": {
         "type": "generic",
