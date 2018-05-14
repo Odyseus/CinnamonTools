@@ -351,7 +351,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             try {
                 let shouldUpdate = this._shouldUpdate();
 
-                if (!aJson.query.results && shouldUpdate) {
+                if ((aJson && !aJson.query.results && shouldUpdate) || !aJson) {
                     if (this._refresh_weather_id > 0) {
                         Mainloop.source_remove(this._refresh_weather_id);
                         this._refresh_weather_id = 0;
@@ -359,9 +359,10 @@ WeatherAppletForkByOdyseusApplet.prototype = {
 
                     // Polling for likely API throttling
                     this._refresh_weather_id = Mainloop.timeout_add_seconds(5, Lang.bind(this, function() {
-                        this.refreshWeather(false);
+                        this.refreshWeather(true);
                         this._refresh_weather_id = 0;
                     }));
+                    return false;
                 }
 
                 let weather = aJson.query.results.channel;
