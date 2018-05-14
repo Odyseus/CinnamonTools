@@ -76,7 +76,6 @@ CinnamonMenuSecondGeneration.prototype = {
                 this._privacySettingsId = 0;
 
                 this._recentAppsButtons = [];
-                this._recentAppsApps = [];
 
                 // Condition needed for retro-compatibility.
                 // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -407,11 +406,12 @@ CinnamonMenuSecondGeneration.prototype = {
             this._refreshPlaces();
             this._refreshRecent();
             this._refreshRecentApps();
-            this._resizeApplicationsBox();
         } catch (aErr) {
             global.logError(aErr);
+        } finally {
+            this._resizeApplicationsBox();
+            this.refreshing = false;
         }
-        this.refreshing = false;
     },
 
     _refreshBelowApps: function() {
@@ -1653,7 +1653,7 @@ CinnamonMenuSecondGeneration.prototype = {
         }
 
         this._recentAppsButtons = [];
-        this._recentAppsApps = [];
+        let recentApplications = [];
 
         if (!this.pref_recently_used_apps_enabled) {
             for (let c = this._categoryButtons.length - 1; c >= 0; c--) {
@@ -1666,14 +1666,14 @@ CinnamonMenuSecondGeneration.prototype = {
 
         if (this.recentAppsManager.recentApps.length > 0) {
             // It doesn't matter the "direction" of either of these loops.
-            // this._recentAppsApps will be sorted anyways.
+            // recentApplications will be sorted anyways.
             for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
                 for (let c = this.recentAppsManager.recentApps.length - 1; c >= 0; c--) {
                     let [recAppID, recLastAccess] = this.recentAppsManager.recentApps[c].split(":");
 
                     if (recAppID === this._applicationsButtons[i].get_app_id()) {
                         this._applicationsButtons[i].app.lastAccess = recLastAccess;
-                        this._recentAppsApps.push(this._applicationsButtons[i].app);
+                        recentApplications.push(this._applicationsButtons[i].app);
                         continue;
                     }
                 }
@@ -1694,7 +1694,7 @@ CinnamonMenuSecondGeneration.prototype = {
                 this.applicationsBox.add_actor(clearBtn.actor);
             }
 
-            this._recentAppsApps = this._recentAppsApps.sort(Lang.bind(this, function(a, b) {
+            recentApplications = recentApplications.sort(Lang.bind(this, function(a, b) {
                 if (this.pref_recently_used_apps_invert_order) {
                     return a["lastAccess"] > b["lastAccess"];
                 }
@@ -1702,9 +1702,9 @@ CinnamonMenuSecondGeneration.prototype = {
             }));
 
             let id = 0,
-                idLen = this._recentAppsApps.length;
+                idLen = recentApplications.length;
             for (; id < this.pref_recently_used_apps_max_amount && id < idLen; id++) {
-                let button = new $.ApplicationButton(this, this._recentAppsApps[id]);
+                let button = new $.ApplicationButton(this, recentApplications[id]);
                 button.actor.connect("leave-event", Lang.bind(this, this._appLeaveEvent, button));
                 this._addEnterEvent(button, Lang.bind(this, this._appEnterEvent, button));
                 this._recentAppsButtons.push(button);
@@ -1755,7 +1755,8 @@ CinnamonMenuSecondGeneration.prototype = {
         // Iterate in reverse, so multiple splices will not upset
         // the remaining elements
         for (let i = this._categoryButtons.length - 1; i > -1; i--) {
-            if (this._categoryButtons[i] instanceof $.CategoryButton) {
+            if (this._categoryButtons[i] instanceof $.CategoryButton ||
+                this._categoryButtons[i] instanceof $.RecentAppsCategoryButton) {
                 this._categoryButtons[i].destroy();
                 this._categoryButtons.splice(i, 1);
             }
