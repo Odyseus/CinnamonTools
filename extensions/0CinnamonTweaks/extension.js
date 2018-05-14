@@ -70,6 +70,8 @@ function disconnectAllSettings() {
     for (let id in CONNECTION_IDS.settings_bindings) {
         Settings.disconnect(id);
     }
+
+    Settings.destroy();
 }
 
 function connectSettings(aPrefKeys, aCallback) {
@@ -1452,7 +1454,7 @@ function enable() {
             });
             Mainloop.timeout_add(5000, function() {
                 Main.criticalNotify(
-                    _(extensionMeta.name),
+                    _(xletMeta.name),
                     msg.join(" "),
                     icon
                 );
@@ -1461,7 +1463,6 @@ function enable() {
         }
     } else {
         disconnectAllSettings();
-        Settings.destroy();
 
         $.informAndDisable();
     }
@@ -1470,7 +1471,6 @@ function enable() {
 // Called when extension gets disabled
 function disable() {
     disconnectAllSettings();
-    Settings.destroy();
 
     let patches = [
         CT_AppletManagerPatch,
