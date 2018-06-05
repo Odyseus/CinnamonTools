@@ -622,9 +622,10 @@ frame > border,
     border-radius: 0;
 }
 
-/*viewport.frame {
-border-width: 0;
-}*/
+viewport.frame {
+    border-width: 0;
+}
+
 .frame.flat,
 frame.flat > border,
 frame > border.flat,
@@ -898,8 +899,13 @@ levelbar.vertical.discrete block {
 }
 
 levelbar block {
-    border: 1px solid alpha(@theme_fg_color, 0.1);
+    border: 1px solid alpha(@theme_fg_color, 0.2);
     border-radius: 2px;
+}
+
+levelbar block:not(.empty) {
+    border-color: @theme_selected_bg_color;
+    background-color: @theme_selected_bg_color;
 }
 
 levelbar block.low {
@@ -918,7 +924,7 @@ levelbar block.full {
 }
 
 levelbar block.empty {
-    border-color: alpha(@theme_fg_color, 0.1);
+    border-color: alpha(@theme_fg_color, 0.2);
     background-color: transparent;
 }
 
@@ -965,9 +971,11 @@ row:selected label:disabled {
 }
 
 rubberband,
+flowbox rubberband,
+treeview.view rubberband,
+.content-view rubberband,
 .view.rubberband,
-.rubberband
-.content-view rubberband {
+.rubberband {
     border: 1px solid @theme_selected_bg_color;
     border-radius: 0;
     background-color: alpha(@theme_selected_bg_color, 0.3);
@@ -1224,6 +1232,10 @@ notebook.frame > header {
     margin: -1px;
 }
 
+/*notebook.frame > header > tabs {
+margin: 0px;
+margin-right: -2px;
+}*/
 notebook.frame > header.top {
     margin-bottom: 0;
     padding-left: 0;
@@ -1255,7 +1267,7 @@ notebook > stack:not(:only-child) {
 }
 
 notebook > header {
-    padding: 2px;
+    padding: 0px;
     background-color: @theme_bg_color;
 }
 
@@ -1283,7 +1295,7 @@ notebook > header.top > tabs > tab {
     padding: 2px 10px;
     min-width: 20px;
     min-height: 20px;
-    margin-left: 3px;
+    margin-right: 2px;
     border: 1px solid @border;
     border-radius: 4px 4px 0 0;
     color: @theme_fg_color;
@@ -1295,7 +1307,7 @@ notebook > header.bottom > tabs > tab {
     padding: 2px 10px;
     min-width: 20px;
     min-height: 20px;
-    margin-left: 3px;
+    margin-right: 2px;
     border: 1px solid @border;
     border-radius: 0 0 4px 4px;
     color: @theme_fg_color;
@@ -1303,11 +1315,17 @@ notebook > header.bottom > tabs > tab {
     background-image: linear-gradient(to top, @notebook_tab_bg_a, @notebook_tab_bg_b);
 }
 
+notebook > header.top > tabs > tab:dir(rtl),
+notebook > header.bottom > tabs > tab:dir(rtl) {
+    margin-right: 0;
+    margin-left: 2px;
+}
+
 notebook > header.left > tabs > tab {
     padding: 2px 10px;
     min-width: 20px;
     min-height: 20px;
-    margin-top: 3px;
+    margin-bottom: 2px;
     border: 1px solid @border;
     border-radius: 4px 0 0 4px;
     color: @theme_fg_color;
@@ -1319,7 +1337,7 @@ notebook > header.right > tabs > tab {
     padding: 2px 10px;
     min-width: 20px;
     min-height: 20px;
-    margin-top: 3px;
+    margin-bottom: 2px;
     border: 1px solid @border;
     border-radius: 0 4px 4px 0;
     color: @theme_fg_color;
@@ -1841,14 +1859,98 @@ scrollbar.horizontal button.up {
 }
 
 scrollbar.overlay-indicator:not(.dragging):not(.hovering) button {
-    background-color: transparent;
     color: transparent;
     border-color: transparent;
     border-image: none;
+    background-color: transparent;
     background-image: none;
     -gtk-icon-source: none;
 }
 
+/*******************
+* scrolled windows *
+********************/
+/*
+overshoot.top {
+    background-image: -gtk-gradient(radial, center top, 0, center top, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
+    background-size: 100% 60%;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+overshoot.bottom {
+    background-image: -gtk-gradient(radial, center bottom, 0, center bottom, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
+    background-size: 100% 60%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+overshoot.left {
+    background-image: -gtk-gradient(radial, left center, 0, left center, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
+    background-size: 60% 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+overshoot.right {
+    background-image: -gtk-gradient(radial, right center, 0, right center, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
+    background-size: 60% 100%;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+undershoot.top {
+    background-color: transparent;
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
+    padding-top: 1px;
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+    background-origin: content-box;
+    background-position: center top;
+}
+
+undershoot.bottom {
+    background-color: transparent;
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
+    padding-bottom: 1px;
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+    background-origin: content-box;
+    background-position: center bottom;
+}
+
+undershoot.left {
+    background-color: transparent;
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
+    padding-left: 1px;
+    background-size: 1px 10px;
+    background-repeat: repeat-y;
+    background-origin: content-box;
+    background-position: left center;
+}
+
+undershoot.right {
+    background-color: transparent;
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
+    padding-right: 1px;
+    background-size: 1px 10px;
+    background-repeat: repeat-y;
+    background-origin: content-box;
+    background-position: right center;
+}
+*/
 /*************
 * separators *
 **************/
@@ -2118,6 +2220,33 @@ statusbar {
     color: @theme_fg_color;
 }
 
+/**********
+ * switch *
+ **********/
+/*
+switch {
+    font-weight: bold;
+    font-size: smaller;
+    min-width: 52px;
+    min-height: 24px;
+}
+
+switch {
+    color: @button_fg;
+    text-shadow: 0 1px @button_text_shadow;
+}
+
+switch:checked {
+    color: @theme_selected_fg_color;
+    text-shadow: 1px 1px alpha(black, 0.2);
+}
+
+switch:disabled,
+switch:disabled:checked {
+    color: @insensitive_fg_color;
+    text-shadow: none;
+}
+*/
 /*******************
  * symbolic images *
  *******************/
@@ -2188,12 +2317,14 @@ toolbar.vertical.inline-toolbar:last-child {
 /***********
  * tooltip *
  ***********/
+.tooltip.background,
 tooltip.background {
     border: 1px solid @border;
     background-color: @theme_tooltip_bg_color;
     background-clip: padding-box;
 }
 
+.tooltip,
 tooltip {
     padding: 3px;
     border-radius: 4px;
@@ -2232,6 +2363,7 @@ treeview.view:selected {
 }
 
 treeview.view.separator {
+    min-height: 2px;
     color: @border;
 }
 
