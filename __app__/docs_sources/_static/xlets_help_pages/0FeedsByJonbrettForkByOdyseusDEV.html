@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    <title>Help for Multi Translator</title>
+    <title>Help for Feeds Reader (Fork By Odyseus)</title>
     <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript">
@@ -485,8 +485,8 @@ body {
 <!-- Using the Bootstrap classes "form-control" or "input-sm" and the like
      breaks the styling of the "select" elements!!! ¬¬ -->
             <select class="form-control-static" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
-<!-- English --><option selected data-title="Help for Multi Translator" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Multi Traductor" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
+<!-- English --><option selected data-title="Help for Feeds Reader (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
+<!-- Español --><option data-title="Help for Feeds Reader (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="es">Español (Spanish) (0%)</option>
             </select>
         </div>
     </form>
@@ -497,116 +497,7 @@ body {
 
 <div id="es" class="localization-content hidden">
 
-<h1>Ayuda para Multi Translator</h1>
-
-<div style="font-weight:bold;" class="alert alert-warning">
-<h2>¡IMPORTANTE!</h2>
-
-<p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
-
-<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
-
-</div>
-
-
-<div class="panel panel-success">
-    <div class="panel-heading">
-        <h3 class="panel-title">Compatibilidad</h3>
-    </div>
-    <div class="panel-body compatibility">
-        <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">2.8</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.0</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.2</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.4</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.6</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.8</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.0</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.2</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.4</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.6</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.8</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.0</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.2</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.4</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.6</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.8</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">6.0</span></span>
-
-<br/><p class="text-danger compatibility-disclaimer">No instalar en ninguna otra versión de Cinnamon.</p>
-    </div>
-</div>
-
-<h2>Descripción</h2>
-<p>La extensión Multi Traductor está basada en una extensión para gnome-shell llamada <a href="https://github.com/gufoe/text-translator">Text Translator</a> por <a href="https://github.com/gufoe">gufoe</a>. Proporciona traducción de texto por diferentes proveedores de traducción (actualmente <a href="https://translate.google.com">Google</a>, <a href="https://translate.yandex.net">Yandex</a>, <a href="https://www.bing.com/translator">Bing</a>, <a href="https://www.apertium.org">Apertium</a> and <a href="http://transltr.org">Transltr</a>).</p>
-<h2>Dependencias</h2>
-<p><strong>Si una o más de estas dependencias faltan en su sistema, no podrá utilizar esta extensión.</strong></p>
-<ul>
-<li>Comando xsel XSel es un programa de la consola para obtener y asignar los contenidos de una selección en X.</li>
-<li>Comando trans: Comando proporcionado por <strong>translate-shell</strong>. Es una simple interfaz de línea de comandos para varios proveedores de traducción (Google Translate, Yandex Translate, Bing Translate and Apertium) que permite traducir cadenas de texto desde la terminal.<ul>
-<li>Comprobar <a href="https://github.com/soimort/translate-shell#dependencies">dependencias</a> y <a href="https://github.com/soimort/translate-shell#recommended-dependencies">dependencias recomendadas</a> de translate-shell.</li>
-</ul>
-</li>
-</ul>
-<p><strong>Nota:</strong> El paquete <strong>translate-shell</strong> disponible en los repositorios de Ubuntu 16.04.x/Linux Mint 18.x es anticuado y roto. Puede ser instalado de todas maneras así también se instalan sus dependencias. Pero actualizar el script a su última versión debe hacerse como se describe a continuación.</p>
-
-<h2>Cómo instalar la última versión de translate-shell</h2>
-<h3>Opción 1. Descarga directa</h3>
-<p>Este método sólo instalará el script <strong>trans</strong> en la ubicación especificada.</p>
-<p>Sólo para el usuario actual. <strong>~/.local/bin</strong> necesita estar en su PATH.</p>
-<pre><code class="lang-shell">    $ wget -O ~/.local/bin/trans git.io/trans &amp;&amp; chmod ugo+rx ~/.local/bin/trans
-</code></pre>
-<p>Para todos los usuarios sin sobre-escribir la versión instalada.</p>
-<pre><code class="lang-shell">    $ sudo wget -O /usr/local/bin/trans git.io/trans &amp;&amp; sudo chmod ugo+rx /usr/local/bin/trans
-</code></pre>
-<h3>Opción 2. Desde Git - <a href="https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers">Más detalles</a></h3>
-<p>Este método no sólo instalará el script <strong>trans</strong>, sino también sus páginas man. Consultar el enlace anterior para obtener más detalles sobre la instalación.</p>
-<pre><code class="lang-shell">    $ git clone https://github.com/soimort/translate-shell
-    $ cd translate-shell
-    $ make
-    $ sudo make install
-</code></pre>
-<h2>Uso de la extensión</h2>
-<p>Una vez instalada y activada, los siguientes atajos de teclado estarán disponibles.</p>
-<h3>Atajos globales (Configurable desde las preferencias de la extensión)</h3>
-<ul>
-<li><strong><kbd>Súper</kbd> + <kbd>T</kbd>:</strong> Abre el diálogo de traducción.</li>
-<li><strong><kbd>Súper</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd>:</strong> Abre el diálogo de traducción y traduce el texto desde el porta papeles.</li>
-<li><strong><kbd>Súper</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>:</strong> Abre el diálogo de traducción y traduce el texto desde la selección primaria.</li>
-</ul>
-<h3>Atajos disponibles en el diálogo de traducción</h3>
-<ul>
-<li><strong><kbd>Ctrl</kbd> + <kbd>Enter</kbd>:</strong> Traduce el texto.</li>
-<li><strong><kbd>Shift</kbd> + <kbd>Enter</kbd>:</strong> Fuerza la traducción de texto. Ignora el historial de traducción.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>:</strong> Copia el texto traducido al porta papeles.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>S</kbd>:</strong> Cambia idiomas.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>D</kbd>:</strong> Restablece los idiomas predeterminados.</li>
-<li><strong><kbd>Escape</kbd>:</strong> Cierra el diálogo.</li>
-</ul>
-<h2>Ventana de preferencias del xlet</h2>
-<p>Desde la ventana de preferencias de este xlet, todas las opciones pueden ser importadas, exportadas y/o restablecidas a sus valores por defecto.</p>
-<ul>
-<li>Para poder realizar cualquiera de estas tareas, el esquema de las preferencias necesita estar instalado en el sistema. Esto es realizado automáticamente cuando el xlet es instalado desde el administrador de xlets de Cinnamon. Pero si el xlet fue instalado manualmente, el esquema de las preferencias necesita ser instalado manualmente. Esto se logra simplemente con ir a la carpeta del xlet y ejecutar el siguiente comando:<ul>
-<li>Comando para instalar el esquema de preferencias: <code>./settings.py install-schema</code></li>
-<li>Comando para desinstalar el esquema de preferencias: <code>./settings.py remove-schema</code></li>
-</ul>
-</li>
-<li>Para importar/exportar preferencias, el comando <strong>dconf</strong> necesita estar disponible en el sistema.</li>
-</ul>
-
-<h2>Localización de applets/desklets/extensiones (también conocidos como xlets)</h2>
-<ul>
-<li>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</li>
-<li>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado <strong>localizations.bash</strong> desde una terminal abierta dentro de la carpeta del xlet.</li>
-<li>Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
-</ul>
-
-<div style="font-weight:bold;" class="alert alert-info">Las siguientes secciones están disponibles sólo en Inglés.</div>
-</div> <!-- .localization-content -->
-
-
-<div id="en" class="localization-content">
-
-<h1>Help for Multi Translator</h1>
+<h1>Help for Feeds Reader (Fork By Odyseus)</h1>
 
 <div style="font-weight:bold;" class="alert alert-warning">
 <h2>IMPORTANT!!!</h2>
@@ -623,8 +514,7 @@ body {
         <h3 class="panel-title">Compatibility</h3>
     </div>
     <div class="panel-body compatibility">
-        <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">2.8</span></span>
-<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.0</span></span>
+        <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.0</span></span>
 <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.2</span></span>
 <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.4</span></span>
 <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.6</span></span>
@@ -646,61 +536,20 @@ body {
 </div>
 
 <h2>Description</h2>
-<p>The Multi Translator extension is an extension ported from a gnome-shell extension called <a href="https://github.com/gufoe/text-translator">Text Translator</a> by <a href="https://github.com/gufoe">gufoe</a>. It provides translation of text by different translation providers (currently <a href="https://translate.google.com">Google</a>, <a href="https://translate.yandex.net">Yandex</a>, <a href="https://www.bing.com/translator">Bing</a>, <a href="https://www.apertium.org">Apertium</a> and <a href="http://transltr.org">Transltr</a>).</p>
+<p>This applet is a fork of <a href="https://cinnamon-spices.linuxmint.com/applets/view/149">Feeds Reader</a> applet by Jason Jackson (a.k.a. jake1164).</p>
+<h2>Differences with the original applet</h2>
+<ul>
+<li>Added keyboard shortcut to be able to open/clese the menu.</li>
+<li>Added option to hide the graphs background, not just set it transparent.</li>
+</ul>
 <h2>Dependencies</h2>
-<p><strong>If one or more of these dependencies are missing in your system, you will not be able to use this extension.</strong></p>
 <ul>
-<li>xsel command: XSel is a command-line program for getting and setting the contents of the X selection.</li>
-<li>trans command: Command provided by the package translate-shell. Is a simple command line interface for several translation providers (Google Translate, Yandex Translate, Bing Translate and Apertium) which allows you to translate strings in your terminal.<ul>
-<li>Check translate-shell <a href="https://github.com/soimort/translate-shell#dependencies">dependencies</a> and <a href="https://github.com/soimort/translate-shell#recommended-dependencies">recommended dependencies</a>.</li>
+<li><strong>feedparser:</strong> Universal feed parser that handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds.
+Install with <code>pip</code></li>
 </ul>
-</li>
-</ul>
-<p><strong>Note:</strong> The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x repositories is outdated and broken. It can be installed anyway so it will also install its dependencies. But updating to the latest version should be done as described bellow.</p>
+<pre><code>sudo pip3 install feedparser
+</code></pre>
 
-<h2>How to install latest version of translate-shell</h2>
-<h3>Option 1. Direct Download</h3>
-<p>This method will only install the trans script into the specified locations.</p>
-<p>For the current user only. <strong>~/.local/bin</strong> needs to be in your PATH.</p>
-<pre><code class="lang-shell">    $ wget -O ~/.local/bin/trans git.io/trans &amp;&amp; chmod ugo+rx ~/.local/bin/trans
-</code></pre>
-<p>For all users without overwriting the installed version.</p>
-<pre><code class="lang-shell">    $ sudo wget -O /usr/local/bin/trans git.io/trans &amp;&amp; sudo chmod ugo+rx /usr/local/bin/trans
-</code></pre>
-<h3>Option 2. From Git - <a href="https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers">More details</a></h3>
-<p>This method will not just install the trans script but also its man pages. Refer to the link above for more installation details.</p>
-<pre><code class="lang-shell">    $ git clone https://github.com/soimort/translate-shell
-    $ cd translate-shell
-    $ make
-    $ sudo make install
-</code></pre>
-<h2>Extension usage</h2>
-<p>Once installed and enabled, the following shortcuts will be available.</p>
-<h3>Global shortcuts (configurable from the extension settings)</h3>
-<ul>
-<li><strong><kbd>Super</kbd> + <kbd>T</kbd>:</strong> Open translator dialog.</li>
-<li><strong><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd>:</strong> Open translator dialog and translate text from clipboard.</li>
-<li><strong><kbd>Super</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>:</strong> Open translator dialog and translate from primary selection.</li>
-</ul>
-<h3>Shortcuts available on the translation dialog</h3>
-<ul>
-<li><strong><kbd>Ctrl</kbd> + <kbd>Enter</kbd>:</strong> Translate text.</li>
-<li><strong><kbd>Shift</kbd> + <kbd>Enter</kbd>:</strong> Force text translation. Ignores translation history.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>:</strong> Copy translated text to clipboard.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>S</kbd>:</strong> Swap languages.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>D</kbd>:</strong> Reset languages to default.</li>
-<li><strong><kbd>Escape</kbd>:</strong> Close dialog.</li>
-</ul>
-<h2>Xlet's settings window</h2>
-<p>From this xlet settings window, all options can be imported, exported and/or reseted to their defaults.</p>
-<ul>
-<li>To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:<ul>
-<li>Command to install the settings schema: <code>./settings.py install-schema</code></li>
-<li>Command to uninstall the settings schema: <code>./settings.py remove-schema</code></li>
-</ul>
-</li>
-<li>To import/export settings, the <strong>dconf</strong> command needs to be available on the system.</li>
-</ul>
 
 <h2>Applets/Desklets/Extensions (a.k.a. xlets) localization</h2>
 <ul>
@@ -709,586 +558,80 @@ body {
 <li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
-<div style="font-weight:bold;" class="alert alert-info">The following sections are available only in English.</div>
+<div style="font-weight:bold;" class="alert alert-info">The following two sections are available only in English.</div>
+</div> <!-- .localization-content -->
+
+
+<div id="en" class="localization-content">
+
+<h1>Help for Feeds Reader (Fork By Odyseus)</h1>
+
+<div style="font-weight:bold;" class="alert alert-warning">
+<h2>IMPORTANT!!!</h2>
+
+<p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
+
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+
+</div>
+
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">Compatibility</h3>
+    </div>
+    <div class="panel-body compatibility">
+        <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.0</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.2</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.4</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.6</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.8</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.0</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.2</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.4</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.6</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-info">4.8</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.0</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.2</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.4</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.6</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.8</span></span>
+<span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">6.0</span></span>
+
+<br/><p class="text-danger compatibility-disclaimer">Do not install on any other version of Cinnamon.</p>
+    </div>
+</div>
+
+<h2>Description</h2>
+<p>This applet is a fork of <a href="https://cinnamon-spices.linuxmint.com/applets/view/149">Feeds Reader</a> applet by Jason Jackson (a.k.a. jake1164).</p>
+<h2>Differences with the original applet</h2>
+<ul>
+<li>Added keyboard shortcut to be able to open/clese the menu.</li>
+<li>Added option to hide the graphs background, not just set it transparent.</li>
+</ul>
+<h2>Dependencies</h2>
+<ul>
+<li><strong>feedparser:</strong> Universal feed parser that handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds.
+Install with <code>pip</code></li>
+</ul>
+<pre><code>sudo pip3 install feedparser
+</code></pre>
+
+
+<h2>Applets/Desklets/Extensions (a.k.a. xlets) localization</h2>
+<ul>
+<li>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</li>
+<li>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called <strong>localizations.bash</strong> from a terminal opened inside the xlet's folder.</li>
+<li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
+</ul>
+
+<div style="font-weight:bold;" class="alert alert-info">The following two sections are available only in English.</div>
 </div> <!-- .localization-content -->
 
 </div> <!-- .container.boxed -->
 <span id="xlet-contributors" style="padding-top:140px;">
-<div class="container boxed">
-<h2>Contributors/Mentions</h2>
-<ul>
-<li><strong><a href="https://github.com/awamper">awamper</a>:</strong> Original author of the gnome-shell extension called <a href="https://github.com/awamper/text-translator">Text Translator</a>.</li>
-<li><strong><a href="https://github.com/gufoe">gufoe</a>:</strong> Author of the newer version of <a href="https://github.com/gufoe/text-translator">Text Translator</a> gnome-shell extension.</li>
-<li><strong><a href="https://github.com/soimort">soimort</a>:</strong> Author of the <a href="https://github.com/soimort/translate-shell">translate-shell script</a>.</li>
-</ul>
-
-</div> <!-- .container.boxed -->
 
 <span id="xlet-changelog" style="padding-top:70px;">
-<div class="container boxed">
-<h2>Multi Translator changelog</h2>
-<h4>This change log is only valid for the version of the xlet hosted on <a href="https://github.com/Odyseus/CinnamonTools">its original repository</a></h4>
-<hr>
-<ul>
-<li><strong>Date:</strong> Tue, 15 Aug 2017 05:36:14 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Updated Czech localization. Thanks to [Radek71](https://github.com/Radek71).
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 29 Jul 2017 22:16:50 +0800</li>
-<li><strong>Author:</strong> giwhub</li>
-</ul>
-<pre><code>Update zh_CN.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Tue, 4 Jul 2017 19:19:29 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Updated Czech localization. Thanks to [Radek71](https://github.com/Radek71).
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 24 Jun 2017 09:56:15 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Update da.po (POEditor.com)
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 24 Jun 2017 09:47:22 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Update fr.po (POEditor.com)
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Fri, 23 Jun 2017 14:06:33 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Update sv.po (POEditor.com)
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Fri, 23 Jun 2017 12:51:30 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Update fr.po (POEditor.com)
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Fri, 16 Jun 2017 20:19:37 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Fixed French localization *endonym*.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Fri, 16 Jun 2017 13:39:10 +0200</li>
-<li><strong>Author:</strong> Mickael Albertus</li>
-</ul>
-<pre><code>Add french translation
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Thu, 8 Jun 2017 18:56:10 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Added Danish localization.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Thu, 8 Jun 2017 19:08:01 +0200</li>
-<li><strong>Author:</strong> Alan01</li>
-</ul>
-<pre><code>Create da.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Thu, 8 Jun 2017 02:02:08 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Updated Czech localization.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sun, 4 Jun 2017 19:49:32 +0800</li>
-<li><strong>Author:</strong> giwhub</li>
-</ul>
-<pre><code>Update zh_CN.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 3 Jun 2017 08:44:45 +0200</li>
-<li><strong>Author:</strong> Åke Engelbrektson</li>
-</ul>
-<pre><code>MultiTranslatorExtension: Update sv.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 29 May 2017 17:14:08 +0800</li>
-<li><strong>Author:</strong> giwhub</li>
-</ul>
-<pre><code>Update zh_CN.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 27 May 2017 22:38:19 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Updated help file due to updated localization.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 27 May 2017 22:01:07 +0800</li>
-<li><strong>Author:</strong> giwhub</li>
-</ul>
-<pre><code>Update zh_CN.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 27 May 2017 19:57:00 +0800</li>
-<li><strong>Author:</strong> giwhub</li>
-</ul>
-<pre><code>Update zh_CN.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 27 May 2017 01:12:55 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Updated help file due to new localization.
-- Updated localization template.
-- Updated Spanish localization.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 27 May 2017 04:47:20 +0200</li>
-<li><strong>Author:</strong> Åke Engelbrektson</li>
-</ul>
-<pre><code>MultiTranslatorExtension: add sv.po
-Add Swedish translation
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 15 May 2017 22:54:17 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Removed CJS 3.4 warnings.
-
-LANGUAGE  UNTRANSLATED
-zh_CN.po  0
-de.po     48
-es.po     0
-cs.po     166
-hr.po     46
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 15 May 2017 00:44:33 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Re-generated help file based on new localizations.
-
-LANGUAGE  UNTRANSLATED
-zh_CN.po  0
-de.po     48
-es.po     0
-cs.po     166
-hr.po     46
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 15 May 2017 00:19:05 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Merge pull request #81 from giwhub/giwhub-patch-2
-Update Chinese translations for xlets
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 15 May 2017 01:02:29 +0800</li>
-<li><strong>Author:</strong> giwhub</li>
-</ul>
-<pre><code>Update zh_CN.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 13 May 2017 20:59:26 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Redesigned help file generation. Now the help file is created from a python script
-(create_localized_help.py) from which strings can be extracted by xgettext to be added to the xlet
-localization template to be able to localize the content of the help file.
-
-LANGUAGE  UNTRANSLATED
-zh_CN.po  56
-de.po     48
-es.po     0
-cs.po     166
-hr.po     46
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 8 May 2017 13:34:24 +0200</li>
-<li><strong>Author:</strong> muzena</li>
-</ul>
-<pre><code>0MultiTranslatorExtension@odyseus.ong.hr: update hr.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Fri, 5 May 2017 13:31:02 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Minor code tweaks.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Thu, 4 May 2017 15:43:35 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Implemented a better notification that informs how to deal with missing dependencies. Closes #53
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Tue, 2 May 2017 10:59:00 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Added German localization.
-- Updated README and changelog.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sun, 30 Apr 2017 18:45:42 +0200</li>
-<li><strong>Author:</strong> muzena</li>
-</ul>
-<pre><code>Add hr.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Tue, 2 May 2017 07:34:00 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Added some missing translatable strings.
-- Added German localization for the help file.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 29 Apr 2017 15:27:09 +0800</li>
-<li><strong>Author:</strong> giwhub</li>
-</ul>
-<pre><code>Update zh_CN.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Wed, 19 Apr 2017 11:08:26 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Added Czech localization and Thunderbolt theme. Thanks to
-[Radek71](https://github.com/Radek71).
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Tue, 18 Apr 2017 10:02:47 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Corrected wrong unit usage
-- Added some missing translatable strings.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 17 Apr 2017 13:28:07 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Added some missing translatable strings
-- Updated changelog.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Thu, 13 Apr 2017 17:40:29 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Added localized help.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sun, 9 Apr 2017 08:16:30 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Updated README due to localizations updates
-- Changed the contributors key on the metadata.json file for easier reviewing and better legibility
-- Some code clean up on the settings.py file
-- Added About dialog and direct link to the help file to the main menu on the settings window.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Thu, 6 Apr 2017 00:12:12 +0200</li>
-<li><strong>Author:</strong> muzena</li>
-</ul>
-<pre><code>0MultiTranslatorExtension@odyseus.ong: add hr.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 1 Apr 2017 15:19:32 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Merge pull request #36 from giwhub/giwhub-patch-7
-Add Chinese translation for Multi Translator
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sun, 26 Mar 2017 17:11:55 +0800</li>
-<li><strong>Author:</strong> giwhub</li>
-</ul>
-<pre><code>Create zh_CN.po
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Tue, 21 Mar 2017 06:23:31 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Updated localization files
-- Updated an image.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 20 Mar 2017 13:24:41 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Fixed selection of text when the translation dialog is opened and there
-is text in the source text entry. And since I was here, I added an option to choose to select all
-text or not on the source entry on translation dialog open
-- Fixed transparent background on language chooser dialogs using the default theme (extension dialog
-theme)
-- Uglified/un-minified/expanded some of the SVG files for easier review
-- Removed *pref-* prefixes from all preference names. This made sense when the extension used
-Cinnamon's native system
-- Renamed schema file to use the extension UUID
-- Some other minor corrections
-- Added option to remove the settings schema to the settings.py file
-- Expanded the help file with information about the settings window.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 18 Mar 2017 05:33:03 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-- Added image to the README file and fixed some links.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 18 Mar 2017 05:07:45 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - First stable release.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Tue, 14 Mar 2017 23:06:00 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Thirteenth (probably last) prototype
-- Redesigned custom setting window to have an appearance similar to the Cinnamon 3.2.x native
-settings system
-- Added some missing strings that need to be translated.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 13 Mar 2017 21:38:02 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-**Completely remove any previous version of this extension before installing the new version.**
-
-- Twelfth and last prototype.
-- Changed the function to get selection from synchronous to asynchronous.
-- Enable the use of markup on the history window so the styling tags, if any, aren't displayed.
-- Changed the use of **set_width/set_height** method to the use of **set_size** method. Curiously,
-this fixes some issues on Cinnamon 2.8.x.
-- Some code clean up.
-- Tested compatibility with several Cinnamon themes. See **Known issues**.
-- Further tests on all supported Cinnamon versions (2.8, 3.0.x and 3.2.x).
--
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Thu, 9 Mar 2017 21:53:00 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-**Completely remove any previous version of this extension before installing the new version.**
-
-- Eleventh prototype.
-- Changed from individual buttons to a menu button on the preferences window to manage settings.
-- Some grammatical corrections.
-- Preliminary tests on Cinnamon 2.8. Everything seemed OK at first, but the elements inside the
-translation dialog were invisible. After a couple of tweaks to add retro-compatibility, everything
-seems to work as it should.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Wed, 8 Mar 2017 18:40:45 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension
-**Completely remove any previous version of this extension before installing the new version.**
-
-- Tenth prototype changelog
-- Finally fixed text alignment on the translation dialog top bar.
-- Removed some leftovers from the past usage of Cinnamon's native settings system.
-- Removed some more leftovers from the past usage of Gnome-shell's APIs.
-- Finally managed to align the Quit/Help/Main menu buttons to the top-right corner of the
-translation dialog.
-- Changed the way all internal imports are made.
-- Now both popups inside the translation dialog (from the provider selector and the main menu)
-behave as they should.
-    - Both popups will close when their respective buttons are pressed for a second time.
-- When the language choosers dialogs or the quick help dialog are opened, any opened popup will
-close automatically.
-    - When the translation dialog is closed, no popup will stay open on screen.
-- Now keybindings are updated correctly after changing any of them.
-- Some tweaks and fixes to the theme's style sheets.
-- Added icons to the translation providers popup.
-- Added a missing translatable string.
-- Preliminary tests on Cinnamon 3.2. All seems OK so far.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 6 Mar 2017 17:38:12 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Updated ISSUE.md file.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 6 Mar 2017 06:15:48 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator
-**Completely remove any previous version of this extension before installing the new version.**
-
-- Nineth prototype.
-- Switched back to a custom settings window. Now it is possible to change every single extension
-setting.
-    - Opted for a Python script instead of a JavaScript one.
-- Python script based on a settings script by [jferrao](https://github.com/jferrao) for his
-[All-in-one Places applet](https://github.com/jferrao/gtk) plus some JavaScript functions from the
-original extension Multi Translator is based on that were *translated* into Python.
-- Updated help file with instruction to update to the latest translate-shell version.
-- Fixed a resizing issue on the language chooser dialogs.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Fri, 3 Mar 2017 20:47:30 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Eighth prototype
-- Added custom theme selection
-- Some minor tweaks to all themes
-- Fixed a resizing issue on the language chooser dialogs.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Thu, 2 Mar 2017 15:12:19 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Fixed broken translation triggers. Now it will normally trigger a
-translation when swapping languages, when trying to translate from clipboard/selection and when
-changing source/target languages
-- Changed all translation provider names that require translate-shell. They are now identified with
-a **TS** at the end
-- Fixed target text text-to-speech when attempting to *speak* an entry from the translation history
-- Fixed keybindings removal
-- Implemented check for dependencies mechanism
-- Added **Service provided by..** notice
-- Added **Transltr** service provider
-- Added an alternate Google Translate method that doesn't require translate-shell
-- Updated localization template
-- More code cleaning.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Tue, 28 Feb 2017 22:21:12 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Sixth prototype
-- Fixed style sheet unloading after switching a desktop theme
-- Translation history fully implemented
-- Added Yandex API key configuration and randomization of its usage
-- Better error reporting of Yandex usage
-- Added Bing and Apertium providers (dependent on translate-shell)
-- Created localization template (**Do not start translations just yet**). I created it mainly to
-test the sorting of translated language names (BTW, the list of languages can be translated and
-sorted alphabetically and it works beautifully)
-- Cleaned some unused code.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sun, 26 Feb 2017 12:34:36 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Fifth prototype
-- Some minor fixes on the themes' style sheets
-- Fixed a bug introduced by the implementation of "Detect language" as source language.     - With
-Yandex as service provider, the target language chooser was empty.     - With Google as service
-provider, the argument "auto" was passed to the **trans** script and interpreted as a text to be
-translated. That's why all translations showed the word *auto* (car) in the translation result. LOL
-- First step on implementing translation history. It can be opened but the extension still doesn't
-save the translation results to it
-- Implemented a menu on the translator dialog that will allow me to add more direct access to
-certain settings without adding to much clutter
-- Updated the list of supported languages.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 25 Feb 2017 14:53:14 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Fourth prototype
-- Fixed a screw up.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Sat, 25 Feb 2017 13:42:45 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Third prototype
-- Code clean up.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Fri, 24 Feb 2017 18:23:33 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - Second prototype.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Fri, 24 Feb 2017 00:18:36 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Multi Translator extension - First prototype.
-</code></pre>
-<hr>
-
-</div> <!-- .container.boxed -->
 
 </div> <!-- #mainarea -->
 <script type="text/javascript">toggleLocalizationVisibility(null);

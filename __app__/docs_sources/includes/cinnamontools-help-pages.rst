@@ -9,6 +9,7 @@ Applets
 - `Cinnamon Menu (Fork By Odyseus) <../_static/xlets_help_pages/0CinnamonMenuForkByOdyseus.html>`__
 - `Desktop Handler <../_static/xlets_help_pages/0DesktopHandler.html>`__
 - `Extensions Manager <../_static/xlets_help_pages/0ExtensionsManager.html>`__
+- `Feeds Reader (Fork By Odyseus) <../_static/xlets_help_pages/0FeedsByJonbrettForkByOdyseus.html>`__
 - `Popup Translator <../_static/xlets_help_pages/0PopupTranslator.html>`__
 - `Quick Menu <../_static/xlets_help_pages/0QuickMenu.html>`__
 - `Simple ToDo List <../_static/xlets_help_pages/0SimpleToDoList.html>`__

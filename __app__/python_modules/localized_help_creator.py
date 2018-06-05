@@ -230,7 +230,7 @@ class LocalizedHelpCreator(object):
             }
 
             only_english_alert = md("<div style=\"font-weight:bold;\" class=\"alert alert-info\">{0}</div>".format(
-                _("The following two sections are available only in English."))
+                _("The following sections are available only in English."))
             )
 
             compatibility_disclaimer = "<p class=\"text-danger compatibility-disclaimer\">{}</p>".format(
