@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CollapsibleSystrayByFeuerfuchsForkByOdyseus 1.6\n"
-"POT-Creation-Date: 2018-05-09 01:11-0300\n"
+"POT-Creation-Date: 2018-06-05 15:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following two sections are available only in English."
+msgid "The following sections are available only in English."
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:237
@@ -98,41 +98,41 @@ msgstr ""
 msgid "Behavior"
 msgstr ""
 
-#. settings-schema.json->animation-duration->units
-#. settings-schema.json->expand-on-hover-delay->units
-#. settings-schema.json->collapse-on-leave-delay->units
+#. settings-schema.json->pref_animation_duration->units
+#. settings-schema.json->pref_expand_on_hover_delay->units
+#. settings-schema.json->pref_collapse_on_leave_delay->units
 msgid "milliseconds"
 msgstr ""
 
-#. settings-schema.json->animation-duration->description
+#. settings-schema.json->pref_animation_duration->description
 msgid "Animation duration: "
 msgstr ""
 
-#. settings-schema.json->expand-on-hover->description
+#. settings-schema.json->pref_expand_on_hover->description
 msgid "Expand on hover"
 msgstr ""
 
-#. settings-schema.json->expand-on-hover-delay->description
+#. settings-schema.json->pref_expand_on_hover_delay->description
 msgid "Expand on hover delay: "
 msgstr ""
 
-#. settings-schema.json->collapse-on-leave->description
+#. settings-schema.json->pref_collapse_on_leave->description
 msgid "Collapse on un-hover"
 msgstr ""
 
-#. settings-schema.json->collapse-on-leave-delay->description
+#. settings-schema.json->pref_collapse_on_leave_delay->description
 msgid "Collapse on un-hover delay: "
 msgstr ""
 
-#. settings-schema.json->init-delay->units
+#. settings-schema.json->pref_init_delay->units
 msgid "seconds"
 msgstr ""
 
-#. settings-schema.json->init-delay->description
+#. settings-schema.json->pref_init_delay->description
 msgid "Startup collapse delay: "
 msgstr ""
 
-#. settings-schema.json->init-delay->tooltip
+#. settings-schema.json->pref_init_delay->tooltip
 msgid "The delay until the applet automatically collapses upon startup"
 msgstr ""
 
@@ -140,43 +140,43 @@ msgstr ""
 msgid "Appearance"
 msgstr ""
 
-#. settings-schema.json->sort-icons->description
+#. settings-schema.json->pref_sort_icons->description
 msgid "Sort icons by name"
 msgstr ""
 
-#. settings-schema.json->sort-icons->tooltip
+#. settings-schema.json->pref_sort_icons->tooltip
 msgid "If unchecked, the order of the icons will be pretty much random"
 msgstr ""
 
-#. settings-schema.json->no-hover-for-tray-icons->description
+#. settings-schema.json->pref_no_hover_for_tray_icons->description
 msgid "Disable hover effect for tray icons"
 msgstr ""
 
-#. settings-schema.json->no-hover-for-tray-icons->tooltip
+#. settings-schema.json->pref_no_hover_for_tray_icons->tooltip
 msgid "If you have problems with the hover effect or it simply doesn't look good, you should enable this setting"
 msgstr ""
 
-#. settings-schema.json->horizontal-expand-icon-name->description
+#. settings-schema.json->pref_horizontal_expand_icon_name->description
 msgid "Horizontal expand icon: "
 msgstr ""
 
-#. settings-schema.json->horizontal-expand-icon-name->tooltip
-#. settings-schema.json->horizontal-collapse-icon-name->tooltip
+#. settings-schema.json->pref_horizontal_expand_icon_name->tooltip
+#. settings-schema.json->pref_horizontal_collapse_icon_name->tooltip
 msgid "Enter either the icon's qualified name or it's full path"
 msgstr ""
 
-#. settings-schema.json->horizontal-collapse-icon-name->description
+#. settings-schema.json->pref_horizontal_collapse_icon_name->description
 msgid "Horizontal collapse icon: "
 msgstr ""
 
-#. settings-schema.json->tray-icon-padding->units
+#. settings-schema.json->pref_tray_icon_padding->units
 msgid "px"
 msgstr ""
 
-#. settings-schema.json->tray-icon-padding->description
+#. settings-schema.json->pref_tray_icon_padding->description
 msgid "Padding of tray icons: "
 msgstr ""
 
-#. settings-schema.json->icon-visibility-list->description
+#. settings-schema.json->pref_icon_visibility_list->description
 msgid "Internal use"
 msgstr ""

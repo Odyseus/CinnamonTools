@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
-"POT-Creation-Date: 2018-05-09 01:11-0300\n"
+"POT-Creation-Date: 2018-06-05 15:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following two sections are available only in English."
+msgid "The following sections are available only in English."
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:237
@@ -29,7 +29,7 @@ msgstr ""
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:277
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:274
 msgid "Help"
 msgstr ""
 
@@ -430,31 +430,31 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: applet.js:265
+#: applet.js:262
 msgid "Open the menu editor"
 msgstr ""
 
-#: applet.js:270
+#: applet.js:267
 msgid "Edit custom launchers"
 msgstr ""
 
-#: applet.js:1485 utils.js:1038
+#: applet.js:1483 utils.js:1038
 msgid "This file is no longer available"
 msgstr ""
 
-#: applet.js:1556
+#: applet.js:1554
 msgid "No recent documents"
 msgstr ""
 
-#: applet.js:1722
+#: applet.js:1720
 msgid "No recent applications"
 msgstr ""
 
-#: applet.js:1786
+#: applet.js:1785
 msgid "Favorites"
 msgstr ""
 
-#: applet.js:2039
+#: applet.js:2038
 msgid "Type to search..."
 msgstr ""
 

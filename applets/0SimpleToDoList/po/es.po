@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.03\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-08 03:53-0300\n"
-"PO-Revision-Date: 2018-05-04 21:20-0300\n"
+"POT-Creation-Date: 2018-05-14 16:54-0300\n"
+"PO-Revision-Date: 2018-05-14 16:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -19,8 +19,8 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following two sections are available only in English."
-msgstr "Las siguientes dos secciones están disponibles sólo en Inglés."
+msgid "The following sections are available only in English."
+msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
 #: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
@@ -28,11 +28,11 @@ msgstr "No instalar en ninguna otra versión de Cinnamon."
 
 #: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
-msgstr "Copatibilidad"
+msgstr "Compatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:853
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:885
 msgid "Help"
 msgstr "Ayuda"
 
@@ -280,67 +280,67 @@ msgstr "Estilo incorrecto de las entradas"
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr "La única manera de arreglar esto (que yo he podido encontrar) es editando el tema de Cinnamon que uno está usando y remover esas medidas fijas. Los selectores CSS que necesitan ser editados son **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** y **.popup-menu StEntry:focus**. Dependiendo para qué versión de Cinnamon el tema fue creado, uno puede encontrar sólo los primeros dos selectores, los últimos dos o todos ellos. Las propiedades CSS que necesitan ser editadas son **width** y **height**. Ellas podrían ser eliminadas, pero lo más sensible de hacer es renombrarlas a **min-width** y **min-height** respectivamente. Luego de editar el archivo del tema y reiniciar Cinnamon, las entradas de texto de este applet deberían lucir y funcionar correctamente."
 
-#: applet.js:109 applet.js:167
+#: applet.js:113 applet.js:171
 msgid "New tasks list..."
 msgstr "Nueva lista de tareas..."
 
-#: applet.js:753
+#: applet.js:785
 msgid "Save as TODO"
 msgstr "Guardar como TODO"
 
-#: applet.js:762
+#: applet.js:794
 msgid "Save all current tasks lists as a TODO file."
 msgstr "Guardar todas las listas de tareas actuales a un archivo TODO."
 
-#: applet.js:768
+#: applet.js:800
 msgid "Export tasks"
 msgstr "Exportar tareas"
 
-#: applet.js:777
+#: applet.js:809
 msgid "Export all current tasks lists into a JSON file."
 msgstr "Exportar todas las listas de tareas actuales a un archivo JSON."
 
-#: applet.js:778 applet.js:794
+#: applet.js:810 applet.js:826
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr "Archivos en formato JSON exportados por este applet pueden ser importados al applet y las listas de tareas encontradas dentro de dicho archivo serán agregadas a las listas de tareas actualmente cargadas en el applet."
 
-#: applet.js:784
+#: applet.js:816
 msgid "Import tasks"
 msgstr "Importar tareas"
 
-#: applet.js:793
+#: applet.js:825
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr "Importar listas de tareas hacia este applet desde un archivo JSON previamente exportado."
 
-#: applet.js:803
+#: applet.js:835
 msgid "Restore example tasks"
 msgstr "Restaurar tareas de ejemplo"
 
-#: applet.js:817
+#: applet.js:849
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr "Restaurar la lista de tareas de ejemplo que estaban presentes cuando se cargó por primera vez el applet."
 
-#: applet.js:823
+#: applet.js:855
 msgid "Reset tasks"
 msgstr "Restablecer tareas"
 
-#: applet.js:829 applet.js:844
+#: applet.js:861 applet.js:876
 msgid "WARNING!!!"
 msgstr "¡ADVERTENCIA!"
 
-#: applet.js:830
+#: applet.js:862
 msgid "Do you really want to remove all your current tasks?"
 msgstr "¿Realmente desea eliminar todas sus tareas actuales?"
 
-#: applet.js:831 applet.js:844
+#: applet.js:863 applet.js:876
 msgid "This operation cannot be reverted!!!"
 msgstr "¡Esta operación no puede ser revertida!"
 
-#: applet.js:843
+#: applet.js:875
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr "Eliminar todas las listas de tareas actualmente cargadas en este applet."
 
-#: applet.js:857
+#: applet.js:889
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 
@@ -373,78 +373,78 @@ msgid "This is a @low priority task"
 msgstr "Esta es una tarea de prioridad @baja"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:192
+#: utils.js:194
 msgid "low"
 msgstr "baja"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:194
+#: utils.js:196
 msgid "today"
 msgstr "hoy"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:196
+#: utils.js:198
 msgid "medium"
 msgstr "media"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:198
+#: utils.js:200
 msgid "high"
 msgstr "alta"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:200
+#: utils.js:202
 msgid "critical"
 msgstr "crítica"
 
-#: utils.js:573
+#: utils.js:590
 msgid "New task..."
 msgstr "Nueva tarea..."
 
-#: utils.js:592
+#: utils.js:609
 msgid "Tasks list options"
 msgstr "Opciones de lista de tareas"
 
-#: utils.js:645
+#: utils.js:666
 msgid "Export this tasks list"
 msgstr "Exportar esta lista de tareas"
 
-#: utils.js:650
+#: utils.js:671
 msgid "Save this tasks list as TODO"
 msgstr "Guardar esta lista de tareas como archivo TODO"
 
-#: utils.js:655
+#: utils.js:676
 msgid "Sort tasks alphabetically"
 msgstr "Ordenar tareas alfabéticamente"
 
-#: utils.js:660 utils.js:670
+#: utils.js:681 utils.js:691
 msgid "Takes effect after closing and re-opening the main menu."
 msgstr "Toma efecto después de cerrar y volver a abrir el menú principal."
 
-#: utils.js:665
+#: utils.js:686
 msgid "Sort tasks by completed state"
 msgstr "Ordenar tareas por estado completado"
 
-#: utils.js:675
+#: utils.js:696
 msgid "Display remove tasks buttons"
 msgstr "Mostrar botones para borrar tareas"
 
-#: utils.js:680 utils.js:690
+#: utils.js:701 utils.js:711
 msgid "Takes effect immediately."
 msgstr "Toma efecto inmediatamente."
 
-#: utils.js:685
+#: utils.js:706
 msgid "Keep completed tasks hidden"
 msgstr "Mantener escondidas las tareas completadas"
 
 #. TO TRANSLATORS: Full sentence.
 #. "Remove this section/task"
-#: utils.js:1557
+#: utils.js:1620
 #, javascript-format
 msgid "Remove this %s"
 msgstr "Remover esta %s"
 
-#: utils.js:1560
+#: utils.js:1623
 msgid "(Hold Ctrl key)"
 msgstr "(Mantener presionada la tecla Control)"
 
@@ -696,10 +696,16 @@ msgstr ""
 msgid "Debugging"
 msgstr "Configuración de depuración"
 
-#. settings-schema.json->pref_logging_enabled->description
-msgid "Enable logging"
-msgstr "Habilitar el registro"
+#. settings-schema.json->pref_enable_verbose_logging->description
+msgid "Verbose logging"
+msgstr "Registro detallado"
 
-#. settings-schema.json->pref_logging_enabled->tooltip
-msgid "It enables the ability to log the output of several functions used by the applet."
-msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por el applet."
+#. settings-schema.json->pref_enable_verbose_logging->tooltip
+msgid "Checking this will enable debug level logging."
+msgstr "Habilitar el registro de nivel de depuración."
+
+#~ msgid "Enable logging"
+#~ msgstr "Habilitar el registro"
+
+#~ msgid "It enables the ability to log the output of several functions used by the applet."
+#~ msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por el applet."

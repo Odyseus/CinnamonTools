@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2018-05-09 01:11-0300\n"
+"POT-Creation-Date: 2018-06-05 15:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following two sections are available only in English."
+msgid "The following sections are available only in English."
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:237
@@ -77,46 +77,46 @@ msgstr ""
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
-#: applet.js:398
+#: applet.js:399
 #, javascript-format
 msgid "You have %d new mails!"
 msgstr ""
 
-#: applet.js:399 applet.js:436
+#: applet.js:400 applet.js:437
 msgid "Mark All Read"
 msgstr ""
 
-#: applet.js:408
+#: applet.js:409
 msgid "You have new mail!"
 msgstr ""
 
-#: applet.js:410
+#: applet.js:411
 msgid "Mark Read"
 msgstr ""
 
-#: applet.js:472 applet.js:519
+#: applet.js:473 applet.js:520
 msgid "No unread mails."
 msgstr ""
 
-#: applet.js:500
+#: applet.js:501
 msgid "Mailnag daemon is not running!"
 msgstr ""
 
-#: applet.js:510
+#: applet.js:511
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr ""
 
-#: applet.js:516
+#: applet.js:517
 #, javascript-format
 msgid "You have %d unread mails!"
 msgstr ""
 
-#: applet.js:529
+#: applet.js:530
 msgid "Click to see error!"
 msgstr ""
 
-#: applet.js:530
+#: applet.js:531
 msgid "Error"
 msgstr ""
 

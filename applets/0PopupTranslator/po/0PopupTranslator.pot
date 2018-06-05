@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PopupTranslator 1.08\n"
-"POT-Creation-Date: 2018-05-09 01:11-0300\n"
+"POT-Creation-Date: 2018-06-05 15:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following two sections are available only in English."
+msgid "The following sections are available only in English."
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:237
@@ -359,11 +359,11 @@ msgstr ""
 msgid "Force translation hotkey"
 msgstr ""
 
-#: applet.js:223 applet.js:1045 applet.js:1069
+#: applet.js:223 applet.js:1046 applet.js:1070
 msgid "Unmet dependencies found!!!"
 msgstr ""
 
-#: applet.js:224 applet.js:906 applet.js:1046
+#: applet.js:224 applet.js:907 applet.js:1047
 msgid "A detailed error has been logged into ~/.cinnamon/glass.log file."
 msgstr ""
 
@@ -434,54 +434,54 @@ msgstr ""
 msgid "Powered By %s"
 msgstr ""
 
-#: applet.js:658
+#: applet.js:659
 msgid "No Yandex API keys were found!!!"
 msgstr ""
 
-#: applet.js:659 applet.js:1071
+#: applet.js:660 applet.js:1072
 msgid "Check this applet help file for instructions."
 msgstr ""
 
-#: applet.js:660 applet.js:1072
+#: applet.js:661 applet.js:1073
 msgid "It can be accessed from this applet context menu."
 msgstr ""
 
-#: applet.js:727
+#: applet.js:728
 msgid "API key is invalid"
 msgstr ""
 
-#: applet.js:730
+#: applet.js:731
 msgid "Blocked API key"
 msgstr ""
 
-#: applet.js:733
+#: applet.js:734
 msgid "Exceeded the daily limit on the amount of translated text"
 msgstr ""
 
-#: applet.js:736
+#: applet.js:737
 msgid "Exceeded the maximum text size"
 msgstr ""
 
-#: applet.js:739
+#: applet.js:740
 msgid "The text cannot be translated"
 msgstr ""
 
-#: applet.js:742
+#: applet.js:743
 msgid "The specified translation direction is not supported"
 msgstr ""
 
-#: applet.js:905
+#: applet.js:906
 #, javascript-format
 msgid "Error parsing %s's request."
 msgstr ""
 
-#: applet.js:1078
+#: applet.js:1079
 msgid "All dependencies seem to be met."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file/command 'FileName or Command':"
-#: applet.js:1132
+#: applet.js:1133
 #, javascript-format
 msgid "Unable to execute file/command '%s':"
 msgstr ""

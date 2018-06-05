@@ -14,14 +14,14 @@ exported toggleLocalizationVisibility
 
 // Source: https://github.com/julienetie/smooth-scroll
 (function(window, document) {
-    var prefixes = ['moz', 'webkit', 'o'],
+    var prefixes = ["moz", "webkit", "o"],
         animationFrame;
 
     // Modern rAF prefixing without setTimeout
     function requestAnimationFrameNative() {
         prefixes.map(function(prefix) {
             if (!window.requestAnimationFrame) {
-                animationFrame = window[prefix + 'RequestAnimationFrame'];
+                animationFrame = window[prefix + "RequestAnimationFrame"];
             } else {
                 animationFrame = requestAnimationFrame;
             }
@@ -51,7 +51,7 @@ exported toggleLocalizationVisibility
             diffY = coords.y - currentY,
             startTimestamp = null;
 
-        if (coords.y === currentY || typeof scrollable.scrollTo !== 'function') {
+        if (coords.y === currentY || typeof scrollable.scrollTo !== "function") {
             return;
         }
 
@@ -80,7 +80,7 @@ exported toggleLocalizationVisibility
     var speed = window.smoothScrollSpeed || 750;
 
     function smoothScroll(e) { // no smooth scroll class to ignore links
-        if (e.target.className === 'no-ss') {
+        if (e.target.className === "no-ss") {
             return;
         }
 
@@ -105,7 +105,7 @@ exported toggleLocalizationVisibility
     }
 
     // Uses target's hash for scroll
-    document.addEventListener('click', smoothScroll, false);
+    document.addEventListener("click", smoothScroll, false);
 }(window, document));
 
 if (!window.localStorage) {
@@ -227,8 +227,9 @@ function toggleLocalizationVisibility(aValue) {
     var validLanguage = optionExists(language, selector);
 
     // If there is no selector, the page build must have gone very wrong.
-    if (!selector)
+    if (!selector) {
         return;
+    }
 
     // aValue is null on page load.
     if (aValue === null) {
@@ -261,14 +262,17 @@ function toggleLocalizationVisibility(aValue) {
 
         if (option) {
             // Set localized navigation bar labels.
-            if (navXletHelp)
+            if (navXletHelp) {
                 navXletHelp.innerText = option.getAttribute("data-xlet-help");
+            }
 
-            if (navXletContributors)
+            if (navXletContributors) {
                 navXletContributors.innerText = option.getAttribute("data-xlet-contributors");
+            }
 
-            if (navXletChangelog)
+            if (navXletChangelog) {
                 navXletChangelog.innerText = option.getAttribute("data-xlet-changelog");
+            }
 
             // Set localized page title.
             document.title = option.getAttribute("data-title");
@@ -507,7 +511,7 @@ body {
 
 <div class="panel panel-success">
     <div class="panel-heading">
-        <h3 class="panel-title">Copatibilidad</h3>
+        <h3 class="panel-title">Compatibilidad</h3>
     </div>
     <div class="panel-body compatibility">
         <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">2.8</span></span>
@@ -543,7 +547,7 @@ body {
 <li>Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
-<div style="font-weight:bold;" class="alert alert-info">Las siguientes dos secciones están disponibles sólo en Inglés.</div>
+<div style="font-weight:bold;" class="alert alert-info">Las siguientes secciones están disponibles sólo en Inglés.</div>
 </div> <!-- .localization-content -->
 
 
@@ -599,7 +603,7 @@ body {
 <li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
-<div style="font-weight:bold;" class="alert alert-info">The following two sections are available only in English.</div>
+<div style="font-weight:bold;" class="alert alert-info">The following sections are available only in English.</div>
 </div> <!-- .localization-content -->
 
 </div> <!-- .container.boxed -->

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 2.5\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
 "POT-Creation-Date: 2018-05-09 01:11-0300\n"
-"PO-Revision-Date: 2018-05-08 11:16-0300\n"
+"PO-Revision-Date: 2018-05-14 17:03-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -19,8 +19,8 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following two sections are available only in English."
-msgstr "Las siguientes dos secciones están disponibles sólo en Inglés."
+msgid "The following sections are available only in English."
+msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
 #: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
@@ -28,7 +28,7 @@ msgstr "No instalar en ninguna otra versión de Cinnamon."
 
 #: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
-msgstr "Copatibilidad"
+msgstr "Compatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
@@ -96,11 +96,11 @@ msgstr "Diferencias con el original"
 
 #: z_create_localized_help.py:36
 msgid "Added keyboard shortcut to be able to launch a custom command."
-msgstr ""
+msgstr "Se agregó un atajo de teclado para poder lanzar un comando personalizado."
 
 #: z_create_localized_help.py:37
 msgid "Added option to hide the graphs background, not just set it transparent."
-msgstr ""
+msgstr "Se agregó una opción para ocultar el fondo de los gráficos, no solo configurarlo de forma transparente."
 
 #: z_create_localized_help.py:39
 msgid "Dependencies"
@@ -135,7 +135,7 @@ msgstr "Distribuciones basadas en Fedora:"
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: z_create_localized_help.py:50
 msgid "The package is called **libgtop2**."
-msgstr ""
+msgstr "El paquete es llamado **libgtop2**."
 
 #: z_create_localized_help.py:52
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
@@ -155,11 +155,11 @@ msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta op
 
 #: applet.js:448
 msgid "Command not set!"
-msgstr ""
+msgstr "¡Comando no establecido!"
 
 #: applet.js:449
 msgid "Set a custom command from this applet settings window."
-msgstr ""
+msgstr "Establecer un comando personalizado desde la ventana de configuración de este applet."
 
 #: utils.js:72
 msgid "CPU"
@@ -203,23 +203,23 @@ msgstr "Muestra gráficos de uso de CPU. memoria, swap, red y carga."
 
 #. settings-schema.json->pref_overlay_key->description
 msgid "Keyboard shortcut to launch a custom command."
-msgstr ""
+msgstr "Atajo de teclado para ejecutar un comando personalizado."
 
 #. settings-schema.json->pref_onkeybinding_command->description
 msgid "Command to launch on keyboard shortcut"
-msgstr ""
+msgstr "Comando a ejecutar con atajo de teclado"
 
 #. settings-schema.json->pref_onkeybinding_command->tooltip
 msgid "Command to launch when the keyboard shortcut specified above is pressed."
-msgstr ""
+msgstr "Comando a ejecutar cuando el atajo de teclado especificado arriba es presionado."
 
 #. settings-schema.json->pref_onclick_command->description
 msgid "Command to launch on click"
-msgstr ""
+msgstr "Comando a ejecutar al hacer clic"
 
 #. settings-schema.json->pref_onclick_command->tooltip
 msgid "Command to launch when the applet is clicked."
-msgstr ""
+msgstr "Comando a ejecutar al hacer clic en el applet."
 
 #. settings-schema.json->pref_smooth->description
 msgid "Smooth graphs"
@@ -266,7 +266,7 @@ msgstr "Espaciado arriba/abajo"
 
 #. settings-schema.json->pref_draw_background->description
 msgid "Draw background"
-msgstr ""
+msgstr "Dibujar fondo de gráfico"
 
 #. settings-schema.json->pref_bg_color->description
 msgid "Background color"

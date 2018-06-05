@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 21:07-0300\n"
+"POT-Creation-Date: 2018-05-14 16:55-0300\n"
 "PO-Revision-Date: 2018-05-04 21:07-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: \n"
@@ -19,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following two sections are available only in English."
-msgstr "Las siguientes dos secciones están disponibles sólo en Inglés."
+msgid "The following sections are available only in English."
+msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
 #: ../../__app__/python_modules/localized_help_creator.py:237
 msgid "Do not install on any other version of Cinnamon."
@@ -28,7 +28,7 @@ msgstr "No instalar en ninguna otra versión de Cinnamon."
 
 #: ../../__app__/python_modules/localized_help_creator.py:243
 msgid "Compatibility"
-msgstr "Copatibilidad"
+msgstr "Compatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
@@ -128,41 +128,41 @@ msgstr "Bandeja de Sistema Colapsable (Modificado por Odyseus)"
 msgid "Behavior"
 msgstr "Comportamiento"
 
-#. settings-schema.json->animation-duration->units
-#. settings-schema.json->expand-on-hover-delay->units
-#. settings-schema.json->collapse-on-leave-delay->units
+#. settings-schema.json->pref_animation_duration->units
+#. settings-schema.json->pref_expand_on_hover_delay->units
+#. settings-schema.json->pref_collapse_on_leave_delay->units
 msgid "milliseconds"
 msgstr "milisegundos"
 
-#. settings-schema.json->animation-duration->description
+#. settings-schema.json->pref_animation_duration->description
 msgid "Animation duration: "
 msgstr "Duración de animación:"
 
-#. settings-schema.json->expand-on-hover->description
+#. settings-schema.json->pref_expand_on_hover->description
 msgid "Expand on hover"
 msgstr "Expandir al desplazarse"
 
-#. settings-schema.json->expand-on-hover-delay->description
+#. settings-schema.json->pref_expand_on_hover_delay->description
 msgid "Expand on hover delay: "
 msgstr "Retraso al expandir al desplazarse:"
 
-#. settings-schema.json->collapse-on-leave->description
+#. settings-schema.json->pref_collapse_on_leave->description
 msgid "Collapse on un-hover"
 msgstr "Contraer en desalojar"
 
-#. settings-schema.json->collapse-on-leave-delay->description
+#. settings-schema.json->pref_collapse_on_leave_delay->description
 msgid "Collapse on un-hover delay: "
 msgstr "Retraso al contraer al desalojar:"
 
-#. settings-schema.json->init-delay->units
+#. settings-schema.json->pref_init_delay->units
 msgid "seconds"
 msgstr "segundos"
 
-#. settings-schema.json->init-delay->description
+#. settings-schema.json->pref_init_delay->description
 msgid "Startup collapse delay: "
 msgstr "Retraso inicial al colapsar:"
 
-#. settings-schema.json->init-delay->tooltip
+#. settings-schema.json->pref_init_delay->tooltip
 msgid "The delay until the applet automatically collapses upon startup"
 msgstr "El retraso hasta que el applet inicia se colapsa automáticamente."
 
@@ -170,19 +170,19 @@ msgstr "El retraso hasta que el applet inicia se colapsa automáticamente."
 msgid "Appearance"
 msgstr "Apariencia"
 
-#. settings-schema.json->sort-icons->description
+#. settings-schema.json->pref_sort_icons->description
 msgid "Sort icons by name"
 msgstr "Ordenar íconos alfabéticamente"
 
-#. settings-schema.json->sort-icons->tooltip
+#. settings-schema.json->pref_sort_icons->tooltip
 msgid "If unchecked, the order of the icons will be pretty much random"
 msgstr "Si no se selecciona, el orden de los iconos será aleatorio."
 
-#. settings-schema.json->no-hover-for-tray-icons->description
+#. settings-schema.json->pref_no_hover_for_tray_icons->description
 msgid "Disable hover effect for tray icons"
 msgstr "Deshabilitar efecto al desplazarse sobre los íconos de la bandeja"
 
-#. settings-schema.json->no-hover-for-tray-icons->tooltip
+#. settings-schema.json->pref_no_hover_for_tray_icons->tooltip
 msgid ""
 "If you have problems with the hover effect or it simply doesn't look good, "
 "you should enable this setting"
@@ -190,27 +190,27 @@ msgstr ""
 "Si se tiene problemas con el efecto al desplazarse o si simplemente no luce "
 "bien, se debería habilitar esta opción."
 
-#. settings-schema.json->horizontal-expand-icon-name->description
+#. settings-schema.json->pref_horizontal_expand_icon_name->description
 msgid "Horizontal expand icon: "
 msgstr "Ícono de expansión horizontal:"
 
-#. settings-schema.json->horizontal-expand-icon-name->tooltip
-#. settings-schema.json->horizontal-collapse-icon-name->tooltip
+#. settings-schema.json->pref_horizontal_expand_icon_name->tooltip
+#. settings-schema.json->pref_horizontal_collapse_icon_name->tooltip
 msgid "Enter either the icon's qualified name or it's full path"
 msgstr "Ingresar el nombre calificado del ícono o su ruta completa."
 
-#. settings-schema.json->horizontal-collapse-icon-name->description
+#. settings-schema.json->pref_horizontal_collapse_icon_name->description
 msgid "Horizontal collapse icon: "
 msgstr "Ícono de colapsamiento horizontal:"
 
-#. settings-schema.json->tray-icon-padding->units
+#. settings-schema.json->pref_tray_icon_padding->units
 msgid "px"
 msgstr "px"
 
-#. settings-schema.json->tray-icon-padding->description
+#. settings-schema.json->pref_tray_icon_padding->description
 msgid "Padding of tray icons: "
 msgstr "Espaciado de los íconos de la bandeja:"
 
-#. settings-schema.json->icon-visibility-list->description
+#. settings-schema.json->pref_icon_visibility_list->description
 msgid "Internal use"
 msgstr "Uso interno"
