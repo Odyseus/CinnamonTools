@@ -1,6 +1,6 @@
 {
-    "description": "Displays RSS news feeds",
-    "url": "jonbrettdev.wordpress.com",
+    "description": "Displays RSS news feeds.",
+    "website": "https://github.com/Odyseus/CinnamonTools",
     "cinnamon-version": [
         "3.0",
         "3.2",
@@ -19,16 +19,10 @@
         "5.8",
         "6.0"
     ],
-    "name": "Feeds Reader (For By Odyseus)",
+    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
+    "contributors": "See this xlet help file.",
+    "name": "Feeds Reader (Fork By Odyseus)",
     "max-instances": "-1",
-    "original-authors": [
-        "Jonathan Brett <jonbrett.dev@gmail.com>",
-        "Niklas Meinzer <lamouletrescool@gmail.com>",
-        "Stephen Collins <scrivera64@gmail.com>",
-        "Kausheel Kumar <kausheelkumar@gmail.com>",
-        "mockturtl <mockturtl@users.noreply.github.com>",
-        "Jason Jackson <jake1164@hotmail.com>"
-    ],
-    "version": 0.25,
+    "version": 0.54,
     "uuid": "{{UUID}}"
 }

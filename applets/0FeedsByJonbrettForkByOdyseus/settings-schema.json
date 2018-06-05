@@ -7,55 +7,71 @@
         "type": "button",
         "description": "Manage Feeds...",
         "callback": "manage_feeds",
-        "tooltip": "Launch the feed management app to add/remove/edit feeds"
+        "tooltip": "Launch the feeds manager application to add/remove/edit feeds."
     },
-    "pref_url_list_str": {
-        "type" : "generic",
-        "default" : "https://www.linuxmint.com/planet/rss20.xml\nhttps://www.ghacks.net/feed/\nhttps://distrowatch.com/news/dwd.xml \nhttps://www.cheatography.com/explore/new/rss/ \n",
-        "description" : "Feed URL(s)",
-        "tooltip" : "Enter the URLs of a valid RSS/Atom feed, one feed per line"
+    "pref_overlay_key": {
+        "type": "keybinding",
+        "default": "",
+        "description": "Keyboard shortcut to open and close the menu."
     },
     "pref_max_items": {
-            "type" : "scale",
-            "default" : 10,
-            "min" : 1,
-            "max" : 50,
-            "step" : 1,
-            "description" : "Maximum number of items",
-            "tooltip" : "Maximum number of items to display for this feed"
+        "type": "spinbutton",
+        "default": 10,
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "units": "feeds",
+        "description": "Maximum number of items",
+        "tooltip": "Maximum number of items to display for each feed."
     },
     "pref_refresh_interval_mins": {
-        "type" : "spinbutton",
-        "default" : 15,
-        "min" : 1,
-        "max" : 60,
-        "step" : 1,
-        "units" : "minutes",
-        "description" : "Update interval",
-        "tooltip" : "Interval between checking for new items"
+        "type": "spinbutton",
+        "default": 30,
+        "min": 1,
+        "max": 1440,
+        "step": 1,
+        "units": "minutes",
+        "description": "Update interval",
+        "tooltip": "Interval between checking for new items."
     },
-    "pref_show_read_items": {
-        "type" : "checkbox",
-        "default" : false,
-        "description" : "Show read items",
-        "tooltip" : "Controls whether previously read items are displayed in the feed menu"
+    "pref_description_max_length": {
+        "type": "spinbutton",
+        "default": 2000,
+        "min": 1000,
+        "max": 10000,
+        "step": 500,
+        "units": "characters",
+        "description": "Description maximum length"
     },
-    "pref_show_feed_image": {
-        "type" : "checkbox",
-        "default" : true,
-        "description" : "Show feed image(s)",
-        "tooltip" : "Controls whether a display the feed image (where available) in the feed menu"
+    "pref_tooltip_max_width": {
+        "type": "spinbutton",
+        "default": 500,
+        "min": 100,
+        "max": 2000,
+        "step": 10,
+        "units": "pixels",
+        "description": "Tooltip maximum width"
     },
     "pref_notifications_enabled": {
-        "type" : "checkbox",
-        "default" : true,
-        "description" : "Show notifications for new items",
-        "tooltip" : "If checked a popup notification will be displayed for new items"
+        "type": "checkbox",
+        "default": true,
+        "description": "Show notifications for new items",
+        "tooltip": "If checked a popup notification will be displayed for new items"
     },
-    "pref_enable_verbose_logging" : {
-        "type" : "checkbox",
-        "default" : false,
-        "description" : "Check this to enable debug logging in Looking Glass",
-        "tooltip" : "Checking this will enable debug level logging"
+    "pref_enable_verbose_logging": {
+        "type": "checkbox",
+        "default": false,
+        "description": "Verbose logging",
+        "tooltip": "Checking this will enable debug level logging."
+    },
+    "pref_profile_name": {
+        "type": "generic",
+        "default": "Default",
+        "description": "Feed Profile Name."
+    },
+    "pref_last_checked_storage": {
+        "type": "generic",
+        "default": {},
+        "description": "Storage for last feeds checked values."
     }
 }

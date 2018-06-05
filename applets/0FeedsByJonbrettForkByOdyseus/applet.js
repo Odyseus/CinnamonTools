@@ -1,47 +1,16 @@
-/*
- * Cinnamon RSS feed reader applet
- *
- * Author: jonbrett.dev@gmail.com
- * Date: 2013 - 2017
- *
- * Cinnamon RSS feed reader applet is free software: you can redistribute it
- * and/or modify it under the terms of the GNU General Public License as published
- * by the Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
- *
- * Cinnamon RSS feed reader applet is distributed in the hope that it will be
- * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
- * Public License for more details.
- * You should have received a copy of the GNU General Public License along
- * with Cinnamon RSS feed reader applet.  If not, see
- * <http://www.gnu.org/licenses/>.
- */
-
-const AppletUUID = "{{UUID}}";
-
-const TOOLTIP_WIDTH = 500.0;
-const MIN_MENU_WIDTH = 400;
-
-let FeedReader;
-let Logger;
-let XletMeta;
+let $;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
-    FeedReader = require("./feedreader.js");
-    Logger = require("./log_util.js");
+    $ = require("./utils.js");
 } else {
-    FeedReader = imports.ui.appletManager.applets[AppletUUID].feedreader;
-    Logger = imports.ui.appletManager.applets[AppletUUID].log_util;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
 
+const _ = $._;
+
 const Applet = imports.ui.applet;
-const CinnamonVersion = imports.misc.config.PACKAGE_VERSION;
-const Clutter = imports.gi.Clutter;
-const Gettext = imports.gettext.domain("cinnamon-applets");
 const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
 const Lang = imports.lang;
 const Main = imports.ui.main;
@@ -49,78 +18,65 @@ const Mainloop = imports.mainloop;
 const MessageTray = imports.ui.messageTray;
 const PopupMenu = imports.ui.popupMenu;
 const Settings = imports.ui.settings;
-const Signals = imports.signals;
 const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
 const Util = imports.misc.util;
 
-const _ = Gettext.gettext;
+const FEED_CONFIG_FILE = $.DataStorage + "/feeds.json";
 
-function escapeHTML(aStr) {
-    aStr = String(aStr)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
-    return aStr;
-}
-
-function FeedsByJonbrettForkByOdyseus() {
+function FeedsReaderForkByOdyseus() {
     this._init.apply(this, arguments);
 }
 
-FeedsByJonbrettForkByOdyseus.prototype = {
+FeedsReaderForkByOdyseus.prototype = {
     __proto__: Applet.IconApplet.prototype,
 
-    _init: function(metadata, orientation, panel_height, instance_id) {
-        Applet.IconApplet.prototype._init.call(this, orientation, panel_height, instance_id);
-        // Queue used to hold feeds that need to be processed
+    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
+        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
 
-        this.metadata = metadata;
-        this.instance_id = instance_id;
-        this.orientation = orientation;
+        // Condition needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 3.2.x+
+        if (Applet.hasOwnProperty("AllowedLayout")) {
+            this.setAllowedLayout(Applet.AllowedLayout.BOTH);
+        }
+
+        this.metadata = aMetadata;
+        this.instance_id = aInstance_id;
+        this.orientation = aOrientation;
+        this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         try {
             this._bindSettings();
 
-            this.debug_logging = this.settings.getValue("pref_enable_verbose_logging");
+            this.logger = new $.Logger("FeedsReader", this.pref_enable_verbose_logging);
 
-            // Initialize a debug logger
-            this.logger = new Logger.Logger({
-                uuid: this.metadata.uuid,
-                verbose: this.debug_logging
-            });
-
-            this._build_context_menu();
+            this._expandAppletContextMenu();
+            Gtk.IconTheme.get_default().append_search_path(this.metadata.path + "/icons/");
         } catch (aErr) {
-            global.logError(aErr);
+            this.logger.error(aErr);
         }
 
         Mainloop.idle_add(() => {
             try {
-                this.feed_queue = [];
                 this.open_menu = null;
+                this.feed_queue = [];
+                this.force_download = false;
 
-                this.logger.info("Logging set at " + ((this.debug_logging) ? "debug" : "info"));
+                this.logger.debug("Applet Instance ID: " + this.instance_id);
+                this.logger.debug("Selected Instance Name: " + this.pref_profile_name);
 
                 this.feeds = [];
-                this.path = metadata.path;
-                this.icon_path = metadata.path + "/icons/";
-                Gtk.IconTheme.get_default().append_search_path(this.icon_path);
+
                 this.set_applet_icon_symbolic_name("rss");
                 this.set_applet_tooltip(_("Feed reader"));
 
                 this.logger.debug("Creating menus");
                 this.menuManager = new PopupMenu.PopupMenuManager(this);
-                this.menu = new Applet.AppletPopupMenu(this, orientation);
+                this.menu = new Applet.AppletPopupMenu(this, this.orientation);
                 this.menuManager.addMenu(this.menu);
 
                 this.feed_file_error = false;
-                this._load_feeds();
-
-                // update is too soon
-                // this.update();
+                this._read_json_config();
+                this._updateKeybindings();
 
                 this.timeout = this.pref_refresh_interval_mins * 60 * 1000;
                 this.logger.debug("Initial timeout set in: " + this.timeout + " ms");
@@ -130,7 +86,7 @@ FeedsByJonbrettForkByOdyseus.prototype = {
 
                 this.logger.debug("timer_id: " + this.timer_id);
             } catch (aErr) {
-                global.logError(aErr);
+                this.logger.error(aErr);
             }
         });
     },
@@ -147,13 +103,15 @@ FeedsByJonbrettForkByOdyseus.prototype = {
             BIDIRECTIONAL: 3
         };
         let prefKeysArray = [
+            "pref_last_checked_storage",
+            "pref_description_max_length",
+            "pref_tooltip_max_width",
             "pref_refresh_interval_mins",
-            "pref_show_read_items",
             "pref_max_items",
-            "pref_show_feed_image",
             "pref_notifications_enabled",
             "pref_enable_verbose_logging",
-            "pref_url_list_str"
+            "pref_profile_name",
+            "pref_overlay_key"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -168,9 +126,39 @@ FeedsByJonbrettForkByOdyseus.prototype = {
         }
     },
 
+    _informMissingDependency: function() {
+        this.set_applet_icon_symbolic_name("dialog-error");
+        let msg = [_("Missing dependency!!!"),
+            _("This applet needs the feedparser Python 3 module installed on your system for it to work."),
+            _("Read this applet help for more details (Applet context menu > Help item).")
+        ];
+
+        let tt = _(this.metadata.name) + "\n\n" + msg.join("\n");
+
+        if (this._applet_tooltip) {
+            try {
+                this._applet_tooltip._tooltip.get_clutter_text().set_markup(
+                    '<span color="red"><b>' + $.escapeHTML(tt) + "</b></span>");
+            } catch (aErr) {
+                this.set_applet_tooltip(tt);
+                this.logger.error(aErr);
+            }
+        } else {
+            this.set_applet_tooltip(tt);
+        }
+
+        let icon = new St.Icon({
+            icon_name: "dialog-error",
+            icon_type: St.IconType.SYMBOLIC,
+            icon_size: 24
+        });
+
+        Main.criticalNotify(_(this.metadata.name), msg.join("\n"), icon);
+    },
+
     /* Public method for adding a feed to be processed (downloaded) */
     enqueue_feed: function(item) {
-        this.logger.debug("checking to add feed_id " + item.feed_id + " to the process queue.");
+        this.logger.debug("Checking to add feed_id " + item.feed_id + " to the process queue.");
         // Only add items once to the queue.
 
         let found = this.feed_queue.find(feed => (feed.feed_id == item.feed_id));
@@ -187,112 +175,116 @@ FeedsByJonbrettForkByOdyseus.prototype = {
         // Need to limit this to a single execution
         this.logger.debug("Processing the process queue, length: " + this.feed_queue.length);
         if (this.feed_queue.length > 0) {
-            this.is_feed_downloading = true;
             let item = this.feed_queue.shift();
+            this.is_feed_downloading = true;
             // start the download of the feed
             item.reader.download_feed();
+        } else {
+            this.force_download = false;
         }
     },
 
     /* Private method to create the sub menu items for a feed. */
-    _build_context_menu: function() {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._build_context_menu");
+    _expandAppletContextMenu: function() {
+        this.logger.debug("");
 
-        let s = new Applet.MenuItem(
+        let menuItem = new Applet.MenuItem(
             _("Mark all read"),
             "object-select-symbolic",
             Lang.bind(this, function() {
-                for (let i = 0; i < this.feeds.length; i++) {
+                for (let i = this.feeds.length - 1; i >= 0; i--) {
                     this.feeds[i].reader.mark_all_items_read();
                     this.feeds[i].update();
                 }
-            }));
-        this._applet_context_menu.addMenuItem(s);
+            })
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
 
-        s = new Applet.MenuItem(
+        menuItem = new Applet.MenuItem(
             _("Reload"),
             "view-refresh-symbolic",
             Lang.bind(this, function() {
-                this.logger.debug("view-refresh-symbolic calling refresh");
+                this.logger.debug("Calling reload from context menu.");
+                this.force_download = true;
                 this._process_feeds();
-            }));
-        this._applet_context_menu.addMenuItem(s);
+            })
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
 
-        s = new Applet.MenuItem(
+        menuItem = new Applet.MenuItem(
             _("Manage feeds"),
             "document-properties-symbolic",
             Lang.bind(this, function() {
                 this.manage_feeds();
-            }));
-        this._applet_context_menu.addMenuItem(s);
+            })
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
 
-        /* Include setting menu item in Cinnamon < 2.0.0 */
-        this.logger.info("Cinnamon Version: " + CinnamonVersion);
-        if (parseInt(CinnamonVersion) == 1) {
-            s = new Applet.MenuItem(
-                _("Settings"),
-                "emblem-system-symbolic",
-                Lang.bind(this, function() {
-                    Util.spawnCommandLine("cinnamon-settings applets " + this.metadata.uuid);
-                }));
-            this._applet_context_menu.addMenuItem(s);
-        }
+        menuItem = new Applet.MenuItem(
+            _("Help"),
+            "dialog-information",
+            Lang.bind(this, function() {
+                Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
+            })
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
     },
 
-    /* Private method to Convert the settings string into an array of objects, each containing a
-     * url and title property */
-    _parse_feed_urls: function(str) {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._parse_feed_urls");
-        let lines = str.split("\n");
-        let url_list = [];
-
-        for (let i in lines) {
-            try {
-                /* Strip redundant (leading,trailing,multiple) whitespace */
-                lines[i] = lines[i].trim().replace(/\s+/g, " ");
-
-                /* Skip empty lines and lines starting with '#' */
-                if (lines[i].length == 0 || lines[i].substring(0, 1) == "#") {
-                    continue;
-                }
-
-                this.logger.debug("Adding feed: " + lines[i]);
-                /* URL is the first word on the line, the rest of the line is an
-                 * optional title */
-                url_list.push({
-                    url: lines[i].split(" ")[0],
-                    title: lines[i].split(" ").slice(1).join(" ")
-                });
-            } catch (e) {
-                if (this.logger != undefined) {
-                    this.logger.error(e);
-                }
-                global.log(e.toString());
-            }
+    _read_json_config: function(profile_name = null) {
+        if (profile_name != null && profile_name.trim() != "") {
+            this.pref_profile_name = profile_name.trim();
         }
-
-        return url_list;
+        // Read the json config file.
+        let argv = [this.metadata.path + "/python/config_file_manager.py", FEED_CONFIG_FILE];
+        Util.spawn_async(argv, Lang.bind(this, this._load_feeds));
     },
 
     /* Private method used to load / reload all the feeds. */
-    _load_feeds: function() {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._load_feeds");
+    _load_feeds: function(aFeedsConfigFileData) {
+        this.logger.debug("");
         this.feeds = [];
-        let url_list = this._parse_feed_urls(this.pref_url_list_str);
         this.menu.removeAll();
+        let data = JSON.parse(aFeedsConfigFileData);
 
-        // Feed Level Menu Items Added Here (each Feed includes posts).
-        for (let i = 0; i < url_list.length; i++) {
-            this.feeds[i] = new FeedDisplayMenuItem(url_list[i].url, this, {
-                feed_id: i,
-                logger: this.logger,
-                max_items: this.pref_max_items,
-                show_read_items: this.pref_show_read_items,
-                show_feed_image: this.pref_show_feed_image,
-                custom_title: url_list[i].title
-            });
+        // Find the feeds for the selected profile_name and populate those feeds.
+        let i = 0,
+            iLen = data["profiles"].length;
+        for (; i < iLen; i++) {
+            let profiles = data["profiles"];
 
-            this.menu.addMenuItem(this.feeds[i]);
+            if (profiles[i]["name"].trim() === this.pref_profile_name) {
+                try {
+                    let f = 0,
+                        fLen = profiles[i]["feeds"].length;
+                    for (; f < fLen; f++) {
+                        let feed = profiles[i]["feeds"][f];
+
+                        try {
+                            if (feed["enabled"]) {
+                                this.feeds[f] = new $.FeedSubMenuItem(
+                                    feed["url"],
+                                    this, {
+                                        feed_id: feed["id"],
+                                        logger: this.logger,
+                                        max_items: this.pref_max_items,
+                                        description_max_length: this.pref_description_max_length,
+                                        tooltip_max_width: this.pref_tooltip_max_width,
+                                        show_read_items: feed["showreaditems"],
+                                        show_feed_image: feed["showimage"], // Not implemented.
+                                        custom_title: feed["title"],
+                                        notify: feed["notify"],
+                                        interval: feed["interval"] // Not implemented.
+                                    });
+                                this.menu.addMenuItem(this.feeds[f]);
+                            }
+                        } catch (aErr) {
+                            this.logger.error("Error Parsing feeds.json file: " + aErr);
+                        }
+                    }
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            }
         }
     },
 
@@ -300,13 +292,13 @@ FeedsByJonbrettForkByOdyseus.prototype = {
      * feed info (e.g. unread count, title).  Updates the
      * applet icon and tooltip */
     update_title: function() {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus.update_title");
+        this.logger.debug("");
         let unread_count = 0;
         let tooltip = "";
         let first = true;
 
         // Application tooltip will only list unread feeds.
-        for (let i = 0; i < this.feeds.length; i++) {
+        for (let i = this.feeds.length - 1; i >= 0; i--) {
             let count = this.feeds[i].get_unread_count();
 
             if (count > 0) {
@@ -325,55 +317,21 @@ FeedsByJonbrettForkByOdyseus.prototype = {
             this.set_applet_tooltip(tooltip);
         } else {
             this.set_applet_icon_symbolic_name("feed");
-            this.set_applet_tooltip("No unread feeds");
-        }
-    },
-
-    _onSettingsChanged: function(aPrefKey) {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._onSettingsChanged");
-
-        switch (aPrefKey) {
-            case "pref_refresh_interval_mins":
-            case "pref_show_read_items":
-            case "pref_max_items":
-            case "pref_show_feed_image":
-            case "pref_notifications_enabled":
-            case "pref_enable_verbose_logging":
-                for (let i = 0; i < this.feeds.length; i++) {
-                    this.feeds[i].on_settings_changed({
-                        max_items: this.pref_max_items,
-                        show_read_items: this.pref_show_read_items,
-                        show_feed_image: this.pref_show_feed_image
-                    });
-                }
-
-                let logging_level = this.settings.getValue("pref_enable_verbose_logging");
-                // notify only when the logging level has changed.
-                if (this.logger.verbose != logging_level) {
-                    this.logger.info("Logging changed to " + ((this.logger.verbose) ? "debug" : "info"));
-                    this.logger.verbose = logging_level;
-                }
-
-                this._process_feeds();
-
-                break;
-            case "pref_url_list_str":
-                this._load_feeds();
-                break;
+            this.set_applet_tooltip(_("No unread feeds"));
         }
     },
 
     /* Private method to initiate the downloading and refreshing of all feeds. */
     _process_feeds: function() {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._process_feeds: Removing previous timer: " + this.timer_id);
+        this.logger.debug("Removing previous timer: " + this.timer_id);
 
         /* Remove any previous timeout */
         if (this.timer_id) {
             Mainloop.source_remove(this.timer_id);
             this.timer_id = 0;
         }
-
-        for (let i = 0; i < this.feeds.length; i++) {
+        this.logger.debug("Number of feeds to queue: " + this.feeds.length);
+        for (let i = this.feeds.length - 1; i >= 0; i--) {
             this.enqueue_feed(this.feeds[i]);
         }
 
@@ -391,14 +349,14 @@ FeedsByJonbrettForkByOdyseus.prototype = {
         this.logger.debug("timer_id: " + this.timer_id);
     },
 
-    on_applet_clicked: function() {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus.on_applet_clicked");
+    on_applet_clicked: function(event) { // jshint ignore:line
+        this.logger.debug("");
         this.menu.toggle();
         this.toggle_feeds(null);
     },
 
     new_item_notification: function(feed, feedtitle, itemtitle) {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus.new_item_notification");
+        this.logger.debug("");
         /* Displays a popup notification using notify-send */
 
         // if notifications are disabled don't do anything
@@ -411,19 +369,19 @@ FeedsByJonbrettForkByOdyseus.prototype = {
     },
 
     item_read_notification: function(feed) {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus.item_read_notification");
+        this.logger.debug("");
         if (this.pref_notifications_enabled) {
             this._destroyMessage(feed);
         }
     },
 
     toggle_feeds: function(feed_to_show, auto_next = false) {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus.toggle_feeds auto:" + auto_next);
+        this.logger.debug("auto_next = " + auto_next);
 
         // Check if a menu is already open
-        if (this.open_menu != null) {
+        if (this.open_menu) {
             // if matches requested feed and is not empty then exit, otherwise close the feed
-            if (feed_to_show != null && this.open_menu.feed_id == feed_to_show.feed_id && this.open_menu.unread_count > 0) {
+            if (feed_to_show && this.open_menu.feed_id == feed_to_show.feed_id && this.open_menu.unread_count > 0) {
                 return;
             }
 
@@ -432,16 +390,16 @@ FeedsByJonbrettForkByOdyseus.prototype = {
             this.open_menu = null;
         }
 
-        if (auto_next && feed_to_show != null && feed_to_show.unread_count == 0) {
+        if (auto_next && feed_to_show && feed_to_show.unread_count == 0) {
             feed_to_show = null;
         }
 
-        if (feed_to_show != null) {
+        if (feed_to_show) {
             // We know the feed to show, just open it.
             this.feed_to_show = feed_to_show;
             this.feed_to_show.open_menu();
         } else {
-            for (let i in this.feeds) {
+            for (let i = this.feeds.length - 1; i >= 0; i--) {
                 if (this.feeds[i].unread_count > 0) {
                     this.logger.debug("Opening Menu: " + this.feeds[i]);
                     this.feeds[i].open_menu();
@@ -450,130 +408,44 @@ FeedsByJonbrettForkByOdyseus.prototype = {
             }
             // If we get here then no feeds are available, if this was the result of opening or marking the
             // last feed read then close the menu.
-            if (auto_next)
-            // Close the menu since this is the last feed
-            {
-                this.menu.close(true);
+            if (auto_next) { // Close the menu since this is the last feed
+                this.menu.close(false);
             }
         }
-    },
-
-    _read_manage_app_stdout: function() {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._read_manage_app_stdout");
-        /* Asynchronously wait for stdout of management app */
-        this._manage_data_stdout.fill_async(-1, GLib.PRIORITY_DEFAULT, null, Lang.bind(this, function(stream, result) {
-            if (stream.fill_finish(result) == 0) {
-                try {
-                    let read = stream.peek_buffer().toString();
-                    if (read.length > 0) {
-                        this.pref_url_list_str = read;
-                        this._load_feeds();
-                    }
-                } catch (e) {
-                    this.logger.error(e);
-                    global.log(e.toString());
-                    this._read_manage_stderr();
-                }
-                this._manage_stdout.close(null);
-            } else {
-                /* Not enough space in stream buffer for all the output#
-                 * Double it and retry */
-                stream.set_buffer_size(2 * stream.get_buffer_size());
-                this._read_manage_app_stdout();
-            }
-        }));
-    },
-
-    _read_manage_stderr: function() {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._read_manage_stderr");
-        this._manage_data_stderr.fill_async(-1, GLib.PRIORITY_DEFAULT, null, Lang.bind(this, function(stream, result) {
-            if (stream.fill_finish(result) == 0) {
-                try {
-                    let read = stream.peek_buffer().toString();
-                    if (read.length > 0) {
-                        this.logger.error(read);
-                    }
-                } catch (e) {
-                    this.logger.error(e);
-                    global.log(e.toString());
-                }
-                this._manage_stderr.close(null);
-            } else {
-                stream.set_buffer_size(2 * stream.get_buffer_size());
-                this._read_manage_stderr();
-            }
-        }));
     },
 
     /* Feed manager functions */
-    manage_feeds: function(current_url = null, redirected_url = null) {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus.manage_feeds");
+    manage_feeds: function() {
+        this.logger.debug("");
         try {
-            try {
-                Util.spawnCommandLine('chmod +x "' + this.path + '/manage_feeds.py"');
-                Util.spawnCommandLine('chown $USER "' + this.path + '/manage_feeds.py"');
-            } catch (e) {
-                if (this.logger != undefined) {
-                    this.logger.error(e);
-                }
-                global.logError(e);
-            }
-
-            // if redirected_url != null pass parameters
-
-            let argv = [this.path + "/manage_feeds.py"];
-            if (redirected_url != null) {
-                argv.push(current_url, redirected_url);
-            }
-            let [exit, pid, stdin, stdout, stderr] = GLib.spawn_async_with_pipes( // jshint ignore:line
-                null,
-                argv,
-                null,
-                GLib.SpawnFlags.DO_NOT_REAP_CHILD,
-                null);
-
-            /* Store stdin, stdout but close stderr */
-            this._manage_stdout = new Gio.UnixInputStream({
-                fd: stdout,
-                close_fd: true
-            });
-            this._manage_data_stdout = new Gio.DataInputStream({
-                base_stream: this._manage_stdout
-            });
-
-            this._manage_stdin = new Gio.UnixOutputStream({
-                fd: stdin,
-                close_fd: true
-            });
-            this._manage_data_stdin = new Gio.DataOutputStream({
-                base_stream: this._manage_stdin
-            });
-
-            this._manage_stderr = new Gio.UnixInputStream({
-                fd: stderr,
-                close_fd: true
-            }); // .close(null);
-            this._manage_data_stderr = new Gio.DataInputStream({
-                base_stream: this._manage_stderr
-            });
-
-            /* Write current feeds list to management app stdin */
-            this._manage_data_stdin.put_string(this.pref_url_list_str, null);
-            this._manage_stdin.close(null);
-        } catch (e) {
-            if (this.logger != undefined) {
-                this.logger.error(e);
-            }
-            global.logError(e);
+            let argv = [
+                this.metadata.path + "/python/manage_feeds.py",
+                FEED_CONFIG_FILE,
+                this.pref_profile_name
+            ];
+            Util.spawn_async(argv, Lang.bind(this, this._read_json_config));
+        } catch (aErr) {
+            this.logger.error(aErr);
         }
-        /* Get output from management app */
-        this._read_manage_app_stdout();
-        this._read_manage_stderr();
+    },
+
+    redirect_feed: function(current_url, redirected_url) {
+        this.logger.debug("");
+
+        try {
+            let argv = [this.metadata.path + "/python/config_file_manager.py", FEED_CONFIG_FILE];
+            argv.push("--profile", this.pref_profile_name);
+            argv.push("--oldurl", current_url);
+            argv.push("--newurl", redirected_url);
+            Util.spawn_async(argv, Lang.bind(this, this._read_json_config));
+        } catch (aErr) {
+            this.logger.error(aErr);
+        }
     },
 
     on_applet_removed_from_panel: function() {
         /* Clean up the timer so if the feed applet is removed it stops firing requests.  */
-        this.logger.debug("FeedsByJonbrettForkByOdyseus.on_applet_removed_from_panel");
+        this.logger.debug("");
         if (this.timer_id) {
             this.logger.debug("Removing Timer with ID: " + this.timer_id);
             Mainloop.source_remove(this.timer_id);
@@ -581,20 +453,22 @@ FeedsByJonbrettForkByOdyseus.prototype = {
         }
 
         // Remove all notifications since they no longer apply
-        for (let i in this.feeds) {
+        for (let i = this.feeds.length - 1; i >= 0; i--) {
             this._destroyMessage(this.feeds[i].reader);
         }
+
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
     },
 
     _ensureSource: function() {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._ensureSource");
+        this.logger.debug("");
         if (!this._source) {
-            let gicon = Gio.icon_new_for_string(this.path + "/icon.png");
+            let gicon = Gio.icon_new_for_string(this.metadata.path + "/icon.png");
             let icon = new St.Icon({
                 gicon: gicon
             });
 
-            this._source = new FeedMessageTraySource("RSS Feed Notification", icon);
+            this._source = new $.FeedMessageTraySource("RSS Feed Notification", icon);
             this._source.connect("destroy", Lang.bind(this, function() {
                 this._source = null;
             }));
@@ -605,14 +479,14 @@ FeedsByJonbrettForkByOdyseus.prototype = {
     },
 
     _notifyMessage: function(reader, title, text) {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._notifyMessage");
+        this.logger.debug("");
         if (reader._notification) {
             reader._notification.destroy();
         }
 
         this._ensureSource();
 
-        let gicon = Gio.icon_new_for_string(this.path + "/icon.png");
+        let gicon = Gio.icon_new_for_string(this.metadata.path + "/icon.png");
         let icon = new St.Icon({
             gicon: gicon
         });
@@ -628,565 +502,61 @@ FeedsByJonbrettForkByOdyseus.prototype = {
     },
 
     _destroyMessage: function(reader) {
-        this.logger.debug("FeedsByJonbrettForkByOdyseus._destroyMessage");
+        this.logger.debug("");
         if (reader._notification) {
             reader._notification.destroy();
         }
-    }
-};
-
-function FeedMessageTraySource() {
-    this._init.apply(this, arguments);
-}
-
-FeedMessageTraySource.prototype = {
-    __proto__: MessageTray.Source.prototype,
-
-    _init: function() {
-        MessageTray.Source.prototype._init.call(this, _("Feeds"));
-
-        let gicon = Gio.icon_new_for_string(this.path + "/icon.png");
-        let icon = new St.Icon({
-            gicon: gicon
-        });
-
-        this._setSummaryIcon(icon);
-    }
-};
-
-/* Menu item for displaying the feed title*/
-function FeedDisplayMenuItem() {
-    this._init.apply(this, arguments);
-}
-
-FeedDisplayMenuItem.prototype = {
-    __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
-
-    _init: function(url, owner, params) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
-        });
-
-        // Used to keep track of unique feeds.
-        this.feed_id = params.feed_id;
-
-        // TODO: Add Box layout type to facilitate adding an icon?
-        this.menuItemCount = 0;
-        this.show_action_items = false;
-        this._title = new St.Label({
-            text: "loading",
-            style_class: "feedreader-title-label"
-        });
-
-        this.addActor(this._title, {
-            expand: true,
-            align: St.Align.START
-        });
-
-        this._triangleBin = new St.Bin({
-            x_align: St.Align.END
-        });
-        this.addActor(this._triangleBin, {
-            expand: true,
-            span: -1,
-            align: St.Align.END
-        });
-
-        this._triangle = new St.Icon({
-            style_class: "popup-menu-arrow",
-            icon_name: "pan-end",
-            icon_type: St.IconType.SYMBOLIC,
-            y_expand: true,
-            y_align: Clutter.ActorAlign.CENTER,
-            important: true
-        });
-
-        this._triangle.pivot_point = new Clutter.Point({
-            x: 0.5,
-            y: 0.6
-        });
-        this._triangleBin.child = this._triangle;
-
-        this.menu = new PopupMenu.PopupSubMenu(this.actor, this._triangle);
-        this.menu.actor.set_style_class_name("menu_context_menu");
-
-        this.logger = params.logger;
-        this.owner = owner;
-        this.max_items = params.max_items;
-        this.show_feed_image = params.show_feed_image;
-        this.show_read_items = params.show_read_items;
-        this.unread_count = 0;
-        this.logger.debug("Loading FeedReader url: " + url);
-        this.custom_title = params.custom_title;
-
-        /* Create reader */
-        this.reader = new FeedReader.FeedReader(
-            this.logger,
-            url,
-            "~/.cinnamon/" + XletMeta.uuid, {
-                "onUpdate": Lang.bind(this, this.update),
-                "onError": Lang.bind(this, this.error),
-                "onNewItem": Lang.bind(this.owner, this.owner.new_item_notification),
-                "onItemRead": Lang.bind(this.owner, this.owner.item_read_notification),
-                "onDownloaded": Lang.bind(this.owner, this.owner.process_next_feed)
-            }
-        );
-
-        this.reader.connect("items-loaded", Lang.bind(this, function() {
-            this.logger.debug("items-loaded Event Fired for reader");
-            // Title needs to be set on items-loaded event
-            if (!this.custom_title) {
-                this.rssTitle = this.reader.title;
-            } else {
-                this.rssTitle = this.custom_title;
-            }
-
-            this._title.set_text(this.rssTitle);
-
-            this.title_length = (this._title.length > MIN_MENU_WIDTH) ? this._title.length : MIN_MENU_WIDTH;
-            this.owner.enqueue_feed(this);
-            this.update();
-            this.owner.process_next_feed();
-        }));
-
-        this.actor.connect("enter-event", Lang.bind(this, this._buttonEnterEvent));
-        this.actor.connect("leave-event", Lang.bind(this, this._buttonLeaveEvent));
     },
 
-    get_title: function() {
+    _updateKeybindings: function() {
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
-        let title = this.custom_title || this.reader.title;
-        if (this.reader.is_redirected) {
-            title += " (Redirected to: " + this.reader.redirected_url + ")";
-        }
-        title += " [" + this.reader.get_unread_count() + " / " + this.reader.items.length + "]";
-        return title;
-    },
-
-    get_unread_count: function() {
-        return this.unread_count;
-    },
-
-    error: function(reader, message, full_message) { // jshint ignore:line
-        this.menu.removeAll();
-
-        // this.menu.addMenuItem(new LabelMenuItem(
-        //     message, full_message));
-    },
-
-    update: function() {
-        this.logger.debug("FeedDisplayMenuItem.update");
-        this.menu.removeAll();
-        this.menuItemCount = 0;
-        let msg = "Finding first " +
-            this.max_items +
-            " unread items out of: " +
-            this.reader.items.length +
-            " total items";
-
-        this.logger.debug(msg);
-        let menu_items = 0;
-        this.unread_count = 0;
-
-        for (let i = 0; i < this.reader.items.length && menu_items < this.max_items; i++) {
-            if (this.reader.items[i].read && !this.show_read_items) {
-                continue;
-            }
-
-            if (!this.reader.items[i].read) {
-                this.unread_count++;
-            }
-
-            let item = new FeedMenuItem(this, this.reader.items[i], this.title_length, this.logger);
-            item.connect("item-read", Lang.bind(this, function() {
-                this.update();
-            }));
-            this.menu.addMenuItem(item);
-
-            menu_items++;
-        }
-
-        // Add the menu items and close the menu?
-        this._add_submenu();
-
-        this.logger.debug("Items Loaded: " + menu_items);
-        this.logger.debug("Link: " + this.reader.url);
-
-        let tooltipText = "Right Click to open feed: \n" + this.reader.url;
-        this.tooltip = new Tooltips.Tooltip(this.actor, tooltipText);
-
-        /* Append unread_count to title */
-        this._title.set_text(this.get_title());
-
-        if (this.unread_count > 0) {
-            this.actor.add_style_class_name("feedreader-feed-new");
-        } else {
-            this.actor.remove_style_class_name("feedreader-feed-new");
-        }
-
-        this.owner.update_title();
-    },
-
-    on_settings_changed: function(params) {
-        this.max_items = params.max_items;
-        this.show_feed_image = params.show_feed_image;
-        this.show_read_items = params.show_read_items;
-
-        this.update();
-    },
-
-    _onButtonReleaseEvent: function(actor, event) {
-        this.logger.debug("FeedDisplayMenuItem Button Pressed Event: " + event.get_button());
-
-        if (event.get_button() == 3) {
-            // Right click, open feed url
-            try {
-                Util.spawnCommandLine("xdg-open " + this.reader.get_url());
-            } catch (e) {
-                global.logError(e);
-            }
-        } else {
-            // Left click, show menu
-            this.owner.toggle_feeds(this);
+        if (this.pref_overlay_key !== "") {
+            Main.keybindingManager.addHotKey(
+                this.menu_keybinding_name,
+                this.pref_overlay_key,
+                Lang.bind(this, function() {
+                    if (!Main.overview.visible && !Main.expo.visible) {
+                        this.on_applet_clicked();
+                    }
+                })
+            );
         }
     },
 
-    open_menu: function() {
-        this.logger.debug("FeedDisplayMenuItem.open_menu id:" + this.feed_id);
+    _onSettingsChanged: function(aPrefKey) {
+        this.logger.debug("");
 
-        this.actor.add_style_class_name("feedreader-feed-selected");
-        this.menu.open(true);
-        this.owner.open_menu = this;
-    },
-
-    close_menu: function() {
-        this.logger.debug("FeedDisplayMenuItem.close_menu id:" + this.feed_id);
-        this.actor.remove_style_class_name("feedreader-feed-selected");
-        this.menu.close(true);
-    },
-
-    _add_submenu: function() {
-        // Add a new item to the top of the list.
-        let menu_item;
-
-        if (this.reader.get_unread_count() > this.max_items) {
-            // Only one page of items to read, no need to display mark all posts option.
-            menu_item = new ApplicationContextMenuItem(this, _("Mark All Posts Read"), "mark_all_read");
-            this.menu.addMenuItem(menu_item, 0);
-            this.menuItemCount++;
-        }
-
-        let cnt = (this.max_items > this.unread_count) ? this.max_items : this.unread_count;
-        if (cnt > 0) {
-            menu_item = new ApplicationContextMenuItem(this, _("Mark Next " + cnt + " Posts Read"), "mark_next_read");
-            this.menu.addMenuItem(menu_item, 0);
-            this.menuItemCount++;
-        }
-
-        if (this.reader.is_redirected) {
-            menu_item = new ApplicationContextMenuItem(this, _("Update feed URL"), "update_feed_url");
-            this.menu.addMenuItem(menu_item, 0);
-            this.menuItemCount++;
-        }
-    },
-
-    _buttonEnterEvent: function() {
-        this.actor.add_style_class_name("feedreader-feed-hover");
-    },
-
-    _buttonLeaveEvent: function() {
-        this.actor.remove_style_class_name("feedreader-feed-hover");
-    }
-};
-Signals.addSignalMethods(FeedDisplayMenuItem.prototype);
-/* Menu item for displaying an feed item */
-function FeedMenuItem() {
-    this._init.apply(this, arguments);
-}
-
-FeedMenuItem.prototype = {
-    __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
-
-    _init: function(parent, item, width, logger, params) { // jshint ignore:line
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
-        });
-        this._item_menu_count = 0;
-        this.parent = parent;
-        this.logger = logger;
-        this.show_action_items = false;
-
-        this.menu = new PopupMenu.PopupSubMenu(this.actor);
-        this.item = item;
-        if (this.item.read) {
-            this._icon_name = "feed-symbolic";
-            this.icon_type = St.IconType.SYMBOLIC;
-        } else {
-            this._icon_name = "feed-new-symbolic";
-            this.icon_type = St.IconType.FULLCOLOR;
-        }
-
-        this.icon = new St.Icon({
-            icon_name: this._icon_name,
-            icon_type: this.icon_type,
-            style_class: "popup-menu-icon"
-        });
-
-        // Calculate the age of the post, hours or days only
-        let age = this.calculate_age(item.published);
-
-        this.label = new St.Label({
-            text: age + item.title
-        });
-
-        let box = new St.BoxLayout({
-            style_class: "popup-combobox-item"
-        });
-        box.set_width(width);
-
-        box.add(this.icon, {
-            span: 0
-        });
-        box.add(this.label, {
-            expand: true,
-            span: 1,
-            align: St.Align.START
-        });
-        this.addActor(box, {
-            expand: true
-        });
-
-        let description = item.title + "\n" +
-            "Published: " + item.published + "\n\n" +
-            item.description_text;
-
-        this.tooltip = new Tooltips.Tooltip(this.actor, description);
-
-        /* Some hacking of the underlying tooltip ClutterText to set wrapping,
-         * format, etc */
-        try {
-            this.tooltip._tooltip.style_class = "feedreader-item-tooltip";
-            this.tooltip._tooltip.get_clutter_text().set_width(TOOLTIP_WIDTH);
-            this.tooltip._tooltip.get_clutter_text().set_line_alignment(0);
-            this.tooltip._tooltip.get_clutter_text().set_line_wrap(true);
-            this.tooltip._tooltip.get_clutter_text().set_markup(
-                '<span weight="bold">' +
-                escapeHTML(item.title) +
-                "</span>\n" +
-                "Published: " + escapeHTML(item.published) + "\n\n" +
-                escapeHTML(item.description));
-        } catch (e) {
-            this.logger.debug("Error Tweaking Tooltip: " + e);
-            /* If we couldn't tweak the tooltip format this is likely because
-             * the underlying implementation has changed. Don't issue any
-             * failure here */
-        }
-
-        /* Ensure tooltip is destroyed when this menu item is destroyed */
-        this.connect("destroy", Lang.bind(this, function() {
-            this.tooltip.destroy();
-        }));
-        this.actor.connect("enter-event", Lang.bind(this, this._buttonEnterEvent));
-        this.actor.connect("leave-event", Lang.bind(this, this._buttonLeaveEvent));
-    },
-
-    _onButtonReleaseEvent: function(actor, event) {
-        this.logger.debug("FeedMenuItem Button Pressed Event: " + event.get_button());
-        if (event.get_button() == 1) {
-            this.activate(event);
-            return true;
-        }
-
-        // Is this feed expanded?
-        if (event.get_button() == 3) {
-            this.logger.debug("Show Submenu");
-            this.toggleMenu();
-            // this.open_menu();
-            return true;
-        }
-        return false;
-    },
-
-    activate: function() {
-        /* Opens item then marks it read */
-        this.item.open();
-        this.mark_read();
-    },
-
-    mark_read: function() {
-        /* Marks the item read without opening it. */
-        this.logger.debug("mark_read");
-        this.item.mark_read();
-        this._icon_name = "feed-symbolic";
-        this.icon.set_icon_name(this._icon_name);
-        // Close sub menus if action has been taken.
-        if (this.show_action_items) {
-            this.toggleMenu();
-        }
-
-        this.emit("item-read");
-
-        // Check and toggle feeds if this is the last item.
-        // if(this.parent.get_unread_count() == 0)
-        this.parent.owner.toggle_feeds(this.parent, true);
-    },
-
-    _open_menu: function() {
-        this.logger.debug("FeedItem.open_menu");
-
-        if (this._item_menu_count == 0) {
-            // No submenu item(s), add the item(s)
-            let menu_item;
-            menu_item = new ApplicationContextMenuItem(this, _("Mark Post Read"), "mark_post_read");
-            this.menu.addMenuItem(menu_item);
-            this._item_menu_count++;
-        }
-
-        this.menu.open();
-    },
-
-    _close_menu: function() {
-        this.logger.debug("FeedItem.close_menu");
-        // no need to remove, just close the menu.
-
-        this.menu.close();
-    },
-
-    toggleMenu: function() {
-        this.logger.debug("toggleMenu");
-
-        if (!this.menu.isOpen) {
-            this._open_menu();
-        } else {
-            this._close_menu();
-        }
-    },
-
-    calculate_age: function(published) {
-        try {
-            let age = new Date().getTime() - published;
-            let h = Math.floor(age / (60 * 60 * 1000));
-            let d = Math.floor(age / (24 * 60 * 60 * 1000));
-
-            if (d > 0) {
-                return "(" + d + "d) ";
-            } else if (h > 0) {
-                return "(" + h + "h) ";
-            } else {
-                return "(<1h) ";
-            }
-        } catch (e) {
-            this.logger.error(e);
-            return "";
-        }
-    },
-
-    _buttonEnterEvent: function() {
-        this.actor.add_style_class_name("feedreader-feed-hover");
-    },
-
-    _buttonLeaveEvent: function() {
-        this.actor.remove_style_class_name("feedreader-feed-hover");
-    }
-};
-
-function ApplicationContextMenuItem() {
-    this._init.apply(this, arguments);
-}
-
-ApplicationContextMenuItem.prototype = {
-    __proto__: PopupMenu.PopupBaseMenuItem.prototype,
-
-    _init: function(feed_display_menu_item, label, action) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
-        });
-
-        this._fdmi = feed_display_menu_item;
-        this._action = action;
-        this.label = new St.Label({
-            text: label
-        });
-        this.addActor(this.label);
-        this.actor.connect("enter-event", Lang.bind(this, this._buttonEnterEvent));
-        this.actor.connect("leave-event", Lang.bind(this, this._buttonLeaveEvent));
-    },
-
-    activate: function(event) { // jshint ignore:line
-        global.log(this._action);
-        switch (this._action) {
-            case "mark_all_read":
-                global.log("Marking all items read");
-                try {
-                    // this._appButton.menu.close();
-                    this._fdmi.reader.mark_all_items_read();
-                    this._fdmi.update();
-                    // All items have been marked so we know we are opening a new feed menu.
-                    this._fdmi.owner.toggle_feeds(null);
-                } catch (e) {
-                    global.log("error: " + e);
+        switch (aPrefKey) {
+            case "pref_refresh_interval_mins":
+            case "pref_description_max_length":
+            case "pref_tooltip_max_width":
+            case "pref_notifications_enabled":
+            case "pref_max_items":
+                for (let i = this.feeds.length - 1; i >= 0; i--) {
+                    this.feeds[i].on_settings_changed({
+                        max_items: this.pref_max_items,
+                        description_max_length: this.pref_description_max_length,
+                        tooltip_max_width: this.pref_tooltip_max_width
+                    });
                 }
 
+                this._process_feeds();
                 break;
-            case "mark_next_read":
-                global.log("Marking next " + this._fdmi.max_items + " items read");
-                try {
-                    // this._appButton.close_menu();
-                    this._fdmi.reader.mark_next_items_read(this._fdmi.max_items);
-                    this._fdmi.update();
-                    this._fdmi.owner.toggle_feeds(this._fdmi, true);
-
-                } catch (e) {
-                    global.log("error: " + e);
-                }
-
+            case "pref_profile_name":
+                this._read_json_config();
                 break;
-
-            case "update_feed_url":
-                let redirected_url = this._fdmi.reader.redirected_url;
-                let current_url = this._fdmi.reader.url;
-
-                global.log("Updating feed to point to: " + redirected_url);
-
-                // Update the feed, no GUI is shown
-                this._fdmi.owner.manage_feeds(current_url, redirected_url);
-
-                // Reload the regular title and remove the is_redirected flag
-                this._fdmi.owner.toggle_feeds(this._fdmi, true);
+            case "pref_enable_verbose_logging":
+                global.log("Logging changed to " + (this.pref_enable_verbose_logging ? "debug" : "info"));
+                this.logger.verbose = this.pref_enable_verbose_logging;
                 break;
-
-            case "delete_all_items":
-                global.log("Marking all items 'deleted'");
-                break;
-
-            case "mark_post_read":
-                global.log("Marking item 'read'");
-                this._fdmi.mark_read();
-                break;
-
-            case "delete_post":
-                global.log("deleting item");
+            case "pref_overlay_key":
+                this._updateKeybindings();
                 break;
         }
-    },
-
-    _onButtonReleaseEvent: function(actor, event) {
-        if (event.get_button() == 1) {
-            this.activate(event);
-        }
-        return true;
-    },
-
-    _buttonEnterEvent: function() {
-        this.actor.add_style_class_name("feedreader-feed-hover");
-    },
-
-    _buttonLeaveEvent: function() {
-        this.actor.remove_style_class_name("feedreader-feed-hover");
     }
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    XletMeta = aMetadata;
-    return new FeedsByJonbrettForkByOdyseus(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new FeedsReaderForkByOdyseus(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }
