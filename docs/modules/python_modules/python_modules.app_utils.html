@@ -401,7 +401,6 @@ the point, and highlighted in red.</p>
 <dt id="python_modules.app_utils.Error">
 <em class="property">exception </em><code class="descclassname">python_modules.app_utils.</code><code class="descname">Error</code><a class="reference internal" href="../../_modules/python_modules/app_utils.html#Error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.Error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#OSError" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OSError</span></code></a></p>
-<p>Summary</p>
 </dd></dl>
 
 <dl class="exception">
@@ -1052,10 +1051,48 @@ For example: ask user for multiple options in one go.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="python_modules.app_utils.handle_xlet">
-<code class="descclassname">python_modules.app_utils.</code><code class="descname">handle_xlet</code><span class="sig-paren">(</span><em>xlet_data</em>, <em>do_not_cofirm</em>, <em>logger</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#handle_xlet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.handle_xlet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handle xlet.</p>
+<dl class="class">
+<dt id="python_modules.app_utils.XletBuilder">
+<em class="property">class </em><code class="descclassname">python_modules.app_utils.</code><code class="descname">XletBuilder</code><span class="sig-paren">(</span><em>xlet_data</em>, <em>do_not_cofirm</em>, <em>logger</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#XletBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.XletBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>docstring for XletBuilder</p>
+<dl class="attribute">
+<dt id="python_modules.app_utils.XletBuilder.config_file">
+<code class="descname">config_file</code><a class="headerlink" href="#python_modules.app_utils.XletBuilder.config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – Path to the file z_config.py inside an xlet folder.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.app_utils.XletBuilder.do_not_cofirm">
+<code class="descname">do_not_cofirm</code><a class="headerlink" href="#python_modules.app_utils.XletBuilder.do_not_cofirm" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Whether to ask for overwrite confirmation when an xlet destination exists or not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.app_utils.XletBuilder.logger">
+<code class="descname">logger</code><a class="headerlink" href="#python_modules.app_utils.XletBuilder.logger" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.app_utils.XletBuilder.replacement_data">
+<code class="descname">replacement_data</code><a class="headerlink" href="#python_modules.app_utils.XletBuilder.replacement_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – Data used to perform string substitutions. It is a list of tuples with two items.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.app_utils.XletBuilder.schemas_dir">
+<code class="descname">schemas_dir</code><a class="headerlink" href="#python_modules.app_utils.XletBuilder.schemas_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – Path to the folder schemas inside an xlet folder.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.app_utils.XletBuilder.xlet_data">
+<code class="descname">xlet_data</code><a class="headerlink" href="#python_modules.app_utils.XletBuilder.xlet_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – The xlet data to handle.</p>
+</dd></dl>
+
+<p>Initialize.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1064,15 +1101,39 @@ For example: ask user for multiple options in one go.</p>
 <li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">err1</span></code> – Something might have gone wrong while copying the xlet directory.</p></li>
-<li><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">err2</span></code> – Something might have gone wrong while doing the “templating”.</p></li>
-<li><p><a class="reference internal" href="#python_modules.app_utils.InvalidDestination" title="python_modules.app_utils.InvalidDestination"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidDestination</span></code></a> – Halt execution if the destination is a file.</p></li>
-<li><p><a class="reference internal" href="#python_modules.app_utils.OperationAborted" title="python_modules.app_utils.OperationAborted"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OperationAborted</span></code></a> – Halt execution on operation canceled.</p></li>
+</dl>
+<dl class="method">
+<dt id="python_modules.app_utils.XletBuilder.build">
+<code class="descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#XletBuilder.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.XletBuilder.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build xlet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.app_utils.XletBuilder._do_copy">
+<code class="descname">_do_copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#XletBuilder._do_copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.XletBuilder._do_copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy xlet files into its final destination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#python_modules.app_utils.InvalidDestination" title="python_modules.app_utils.InvalidDestination"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidDestination</span></code></a> – Invalid xlet destination.</p></li>
+<li><p><a class="reference internal" href="#python_modules.app_utils.OperationAborted" title="python_modules.app_utils.OperationAborted"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OperationAborted</span></code></a> – Halt build operation.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.app_utils.XletBuilder._compile_schemas">
+<code class="descname">_compile_schemas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#XletBuilder._compile_schemas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.XletBuilder._compile_schemas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile schemas file if any.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.app_utils.XletBuilder._handle_config_file">
+<code class="descname">_handle_config_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#XletBuilder._handle_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.XletBuilder._handle_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle xlet configuration file if any.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="function">
@@ -1145,6 +1206,22 @@ For example: ask user for multiple options in one go.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="python_modules.app_utils.do_string_substitutions">
+<code class="descclassname">python_modules.app_utils.</code><code class="descname">do_string_substitutions</code><span class="sig-paren">(</span><em>dir_path</em>, <em>replacement_data</em>, <em>allowed_extensions=('.py'</em>, <em>'.bash'</em>, <em>'.js'</em>, <em>'.json'</em>, <em>'.xml')</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#do_string_substitutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.do_string_substitutions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do substitutions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Path to a directory where to perform string substitutions on.</p></li>
+<li><p><strong>replacement_data</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)"><em>list</em></a>) – Data used to perform string substitutions.</p></li>
+<li><p><strong>allowed_extensions</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#tuple" title="(in Python v3.5)"><em>tuple</em></a><em>, </em><em>optional</em>) – A tuple of file extensions that are allowed to be modified.</p></li>
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -1301,29 +1378,6 @@ spot build errors this way.</p>
 <dt id="python_modules.app_utils.BaseXletGenerator._do_copy">
 <code class="descname">_do_copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#BaseXletGenerator._do_copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.BaseXletGenerator._do_copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do copy.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="python_modules.app_utils.BaseXletGenerator._do_substitutions">
-<code class="descname">_do_substitutions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#BaseXletGenerator._do_substitutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.BaseXletGenerator._do_substitutions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Do substitutions.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="python_modules.app_utils.BaseXletGenerator._do_replacements">
-<code class="descname">_do_replacements</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#BaseXletGenerator._do_replacements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.BaseXletGenerator._do_replacements" title="Permalink to this definition">¶</a></dt>
-<dd><p>Do replacements.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Data to modify.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Modified data.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>

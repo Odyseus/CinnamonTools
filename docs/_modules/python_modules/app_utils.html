@@ -313,7 +313,7 @@
 
 
 <div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="ne">OSError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Summary</span>
+    <span class="sd">&quot;&quot;&quot;Error</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 
@@ -396,8 +396,8 @@
     <span class="s2">&quot;source_path&quot;</span><span class="p">:</span> <span class="n">root_folder</span><span class="p">,</span>
     <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;LICENSE.md&quot;</span><span class="p">,</span>
 <span class="p">},</span> <span class="p">{</span>
-    <span class="s2">&quot;source_path&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;bash_scripts&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;localizations.bash&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_path&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;python_scripts&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;helper.py&quot;</span><span class="p">,</span>
 <span class="p">}]</span>
 
 <span class="n">help_pages_index_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -1615,128 +1615,130 @@
 
     <span class="k">if</span> <span class="n">xlets_data</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">xlets_data</span><span class="p">:</span>
-            <span class="n">handle_xlet</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">do_not_cofirm</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span>
+            <span class="n">builder</span> <span class="o">=</span> <span class="n">XletBuilder</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">do_not_cofirm</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span>
+            <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Built xlets saved in </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">base_output_path</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="handle_xlet"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.handle_xlet">[docs]</a><span class="k">def</span> <span class="nf">handle_xlet</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">,</span> <span class="n">do_not_cofirm</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Handle xlet.</span>
+<div class="viewcode-block" id="XletBuilder"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletBuilder">[docs]</a><span class="k">class</span> <span class="nc">XletBuilder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;docstring for XletBuilder</span>
 
-<span class="sd">    Parameters</span>
+<span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    xlet_data : dict</span>
-<span class="sd">        The xlet data to handle.</span>
+<span class="sd">    config_file : str</span>
+<span class="sd">        Path to the file z_config.py inside an xlet folder.</span>
 <span class="sd">    do_not_cofirm : bool</span>
 <span class="sd">        Whether to ask for overwrite confirmation when an xlet destination exists or not.</span>
 <span class="sd">    logger : object</span>
 <span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
-
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">    err1</span>
-<span class="sd">        Something might have gone wrong while copying the xlet directory.</span>
-<span class="sd">    err2</span>
-<span class="sd">        Something might have gone wrong while doing the &quot;templating&quot;.</span>
-<span class="sd">    InvalidDestination</span>
-<span class="sd">        Halt execution if the destination is a file.</span>
-<span class="sd">    OperationAborted</span>
-<span class="sd">        Halt execution on operation canceled.</span>
+<span class="sd">    replacement_data : list</span>
+<span class="sd">        Data used to perform string substitutions. It is a list of tuples with two items.</span>
+<span class="sd">    schemas_dir : str</span>
+<span class="sd">        Path to the folder schemas inside an xlet folder.</span>
+<span class="sd">    xlet_data : dict</span>
+<span class="sd">        The xlet data to handle.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">get_cli_separator</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">),</span> <span class="n">date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Building the </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
-                    <span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]))</span>
 
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xlet_data</span><span class="p">,</span> <span class="n">do_not_cofirm</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        xlet_data : dict</span>
+<span class="sd">            The xlet data to handle.</span>
+<span class="sd">        do_not_cofirm : bool</span>
+<span class="sd">            Whether to ask for overwrite confirmation when an xlet destination exists or not.</span>
+<span class="sd">        logger : object</span>
+<span class="sd">            See &lt;class :any:`LogSystem`&gt;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">XletBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span> <span class="o">=</span> <span class="n">xlet_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">do_not_cofirm</span> <span class="o">=</span> <span class="n">do_not_cofirm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schemas_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="s2">&quot;schemas&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="s2">&quot;z_config.py&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replacement_data</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;{{UUID}}&quot;</span><span class="p">,</span> <span class="n">xlet_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span>
+            <span class="p">(</span><span class="s2">&quot;{{XLET_TYPE}}&quot;</span><span class="p">,</span> <span class="n">xlet_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span>
+        <span class="p">]</span>
+
+<div class="viewcode-block" id="XletBuilder.build"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletBuilder.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build xlet.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">get_cli_separator</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">),</span> <span class="n">date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Building the </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                         <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_do_copy</span><span class="p">()</span>
+        <span class="n">do_string_substitutions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">replacement_data</span><span class="p">,</span>
+                                <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compile_schemas</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle_config_file</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="XletBuilder._do_copy"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletBuilder._do_copy">[docs]</a>    <span class="k">def</span> <span class="nf">_do_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Copy xlet files into its final destination.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        InvalidDestination</span>
+<span class="sd">            Invalid xlet destination.</span>
+<span class="sd">        OperationAborted</span>
+<span class="sd">            Halt build operation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">]):</span>
             <span class="k">raise</span> <span class="n">InvalidDestination</span><span class="p">(</span>
                 <span class="s2">&quot;Destination exists and is a file!!! Aborted!!!&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">]):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">do_not_cofirm</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_not_cofirm</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">WARNING</span><span class="p">(</span><span class="n">existent_xlet_destination_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">path</span><span class="o">=</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">])))</span>
+                    <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">])))</span>
 
-            <span class="k">if</span> <span class="n">do_not_cofirm</span> <span class="ow">or</span> <span class="n">confirm</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Proceed?&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-                <span class="n">rmtree</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_not_cofirm</span> <span class="ow">or</span> <span class="n">confirm</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Proceed?&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">OperationAborted</span><span class="p">(</span><span class="s2">&quot;Building the </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> was canceled.&quot;</span> <span class="o">%</span>
-                                       <span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]))</span>
+                                       <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]))</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Copying files...&quot;</span><span class="p">)</span>
-        <span class="n">copytree</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Copying main xlet files...&quot;</span><span class="p">)</span>
+        <span class="n">copytree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">ignore</span><span class="o">=</span><span class="n">ignore_patterns</span><span class="p">(</span><span class="o">*</span><span class="n">xlet_dir_ignored_patterns</span><span class="p">),</span>
                  <span class="n">ignore_dangling_symlinks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">err1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Performing string substitutions...&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-                <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
-                <span class="c1"># Only deal with regular files.</span>
-                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-                    <span class="k">continue</span>
-
-                <span class="c1"># Only deal with a limited set of file extensions.</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.bash&quot;</span><span class="p">,</span> <span class="s2">&quot;.js&quot;</span><span class="p">,</span> <span class="s2">&quot;.json&quot;</span><span class="p">,</span> <span class="s2">&quot;.xml&quot;</span><span class="p">)):</span>
-                    <span class="k">continue</span>
-
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-                        <span class="n">file_data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-                    <span class="c1"># Replace the UUID placeholder from the file content for the actual xlet UUID.</span>
-                    <span class="k">if</span> <span class="s2">&quot;{{UUID}}&quot;</span> <span class="ow">in</span> <span class="n">file_data</span><span class="p">:</span>
-                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-                            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
-                                <span class="s2">&quot;{{UUID}}&quot;</span><span class="p">,</span> <span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;uuid&quot;</span><span class="p">]))</span>
-
-                    <span class="c1"># Check and set execution permissions for Bash and Python scripts.</span>
-                    <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.bash&quot;</span><span class="p">)):</span>
-                        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_exec</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-                            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="mo">0o755</span><span class="p">)</span>
-
-                    <span class="c1"># Replace the UUID placeholder from the file name for the actual xlet UUID.</span>
-                    <span class="k">if</span> <span class="s2">&quot;{{UUID}}&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
-                        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
-                            <span class="s2">&quot;{{UUID}}&quot;</span><span class="p">,</span> <span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;uuid&quot;</span><span class="p">]))</span>
-                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err2</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">err2</span>
-
-        <span class="n">schemas_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="s2">&quot;schemas&quot;</span><span class="p">)</span>
-
-        <span class="c1"># If the schemas directory exists, compile the gsettings file inside it.</span>
-        <span class="c1"># Doing it last, after strings substitutions.</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">schemas_dir</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Compiling gsettings schema...&quot;</span><span class="p">)</span>
-            <span class="n">call</span><span class="p">([</span><span class="s2">&quot;glib-compile-schemas&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;--targetdir=.&quot;</span><span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="n">schemas_dir</span><span class="p">)</span>
-
-        <span class="c1"># Copy extra files.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Copying common xlet files...&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">extra</span> <span class="ow">in</span> <span class="n">extra_common_files</span><span class="p">:</span>
             <span class="n">copy2</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extra</span><span class="p">[</span><span class="s2">&quot;source_path&quot;</span><span class="p">],</span> <span class="n">extra</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]),</span>
-                  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="n">extra</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]))</span>
+                  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="n">extra</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]))</span></div>
 
-        <span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="s2">&quot;z_config.py&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="XletBuilder._compile_schemas"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletBuilder._compile_schemas">[docs]</a>    <span class="k">def</span> <span class="nf">_compile_schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compile schemas file if any.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schemas_dir</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Compiling gsettings schema...&quot;</span><span class="p">)</span>
+            <span class="n">call</span><span class="p">([</span><span class="s2">&quot;glib-compile-schemas&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;--targetdir=.&quot;</span><span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schemas_dir</span><span class="p">)</span></div>
 
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
+<div class="viewcode-block" id="XletBuilder._handle_config_file"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletBuilder._handle_config_file">[docs]</a>    <span class="k">def</span> <span class="nf">_handle_config_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Handle xlet configuration file if any.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">):</span>
             <span class="kn">from</span> <span class="nn">runpy</span> <span class="k">import</span> <span class="n">run_path</span>
-            <span class="n">extra_settings</span> <span class="o">=</span> <span class="n">run_path</span><span class="p">(</span><span class="n">config_file</span><span class="p">)[</span><span class="s2">&quot;settings&quot;</span><span class="p">]</span>
+            <span class="n">extra_settings</span> <span class="o">=</span> <span class="n">run_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">)[</span><span class="s2">&quot;settings&quot;</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="n">extra_settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;symlinks&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating symbolic links...&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating symbolic links...&quot;</span><span class="p">)</span>
 
-                <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">])</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">])</span>
 
                 <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">extra_settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;symlinks&quot;</span><span class="p">):</span>
-                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="nb">dir</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;destination&quot;</span><span class="p">],</span> <span class="nb">dir</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
                     <span class="k">for</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span> <span class="ow">in</span> <span class="n">extra_settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;symlinks&quot;</span><span class="p">)[</span><span class="nb">dir</span><span class="p">]:</span>
                         <span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">dst</span><span class="p">))</span>
 
-                <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">root_folder</span><span class="p">)</span></div>
+                <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">root_folder</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="get_xlets_dirs"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.get_xlets_dirs">[docs]</a><span class="k">def</span> <span class="nf">get_xlets_dirs</span><span class="p">():</span>
@@ -1844,8 +1846,8 @@
             <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">theme_name</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">WARNING</span><span class="p">(</span><span class="n">missing_theme_name_msg</span><span class="p">))</span>
-            <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">WARNING</span><span class="p">(</span><span class="n">missing_theme_name_msg</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">build_output</span><span class="p">:</span>
         <span class="n">base_output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_temp_folder</span><span class="p">,</span> <span class="n">micro_to_milli</span><span class="p">(</span><span class="n">get_date_time</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">)))</span>
@@ -1963,6 +1965,64 @@
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">replacement</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="do_string_substitutions"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.do_string_substitutions">[docs]</a><span class="k">def</span> <span class="nf">do_string_substitutions</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">replacement_data</span><span class="p">,</span>
+                            <span class="n">allowed_extensions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.bash&quot;</span><span class="p">,</span> <span class="s2">&quot;.js&quot;</span><span class="p">,</span> <span class="s2">&quot;.json&quot;</span><span class="p">,</span> <span class="s2">&quot;.xml&quot;</span><span class="p">),</span>
+                            <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Do substitutions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dir_path : str</span>
+<span class="sd">        Path to a directory where to perform string substitutions on.</span>
+<span class="sd">    replacement_data : list</span>
+<span class="sd">        Data used to perform string substitutions.</span>
+<span class="sd">    allowed_extensions : tuple, optional</span>
+<span class="sd">        A tuple of file extensions that are allowed to be modified.</span>
+<span class="sd">    logger : object</span>
+<span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Performing string substitutions...&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="c1"># Only deal with a limited set of file extensions.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">allowed_extensions</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">file_data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">file_data</span> <span class="o">=</span> <span class="n">do_replacements</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">replacement_data</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>
+
+            <span class="c1"># Check and set execution permissions for Bash and Python scripts.</span>
+            <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.bash&quot;</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_exec</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="mo">0o755</span><span class="p">)</span>
+
+            <span class="n">fname_renamed</span> <span class="o">=</span> <span class="n">do_replacements</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">replacement_data</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">fname</span> <span class="o">!=</span> <span class="n">fname_renamed</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">),</span> <span class="n">fname_renamed</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">dname</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+            <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dname</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">dir_path</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">dname_renamed</span> <span class="o">=</span> <span class="n">do_replacements</span><span class="p">(</span><span class="n">dname</span><span class="p">,</span> <span class="n">replacement_data</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">dname</span> <span class="o">!=</span> <span class="n">dname_renamed</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">dir_path</span><span class="p">),</span> <span class="n">dname_renamed</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="custom_copytree"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.custom_copytree">[docs]</a><span class="k">def</span> <span class="nf">custom_copytree</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
@@ -2139,7 +2199,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_do_setup</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_do_copy</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_do_substitutions</span><span class="p">()</span></div>
+        <span class="n">do_string_substitutions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_xlet_destination</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">replacement_data</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BaseXletGenerator._do_setup"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.BaseXletGenerator._do_setup">[docs]</a>    <span class="k">def</span> <span class="nf">_do_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Do setup.</span>
@@ -2206,7 +2267,8 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;extension&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Enter max instances for the xlet:&quot;</span><span class="p">))</span>
-            <span class="n">do_prompt</span><span class="p">(</span><span class="n">prompt_data</span><span class="p">,</span> <span class="s2">&quot;max_instances&quot;</span><span class="p">,</span> <span class="s2">&quot;Enter description&quot;</span><span class="p">,</span> <span class="n">prompt_data</span><span class="p">[</span><span class="s2">&quot;max_instances&quot;</span><span class="p">])</span>
+            <span class="n">do_prompt</span><span class="p">(</span><span class="n">prompt_data</span><span class="p">,</span> <span class="s2">&quot;max_instances&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;Enter description&quot;</span><span class="p">,</span> <span class="n">prompt_data</span><span class="p">[</span><span class="s2">&quot;max_instances&quot;</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;max_instances&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prompt_data</span><span class="p">[</span><span class="s2">&quot;max_instances&quot;</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;manager&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prompt_data_map</span><span class="p">[</span><span class="n">prompt_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]][</span><span class="s2">&quot;manager&quot;</span><span class="p">]</span>
@@ -2230,54 +2292,7 @@
 
         <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]:</span>
             <span class="n">copy2</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_xlet_path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span>
-                  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_xlet_destination</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="BaseXletGenerator._do_substitutions"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.BaseXletGenerator._do_substitutions">[docs]</a>    <span class="k">def</span> <span class="nf">_do_substitutions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do substitutions.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Performing string substitutions...&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_xlet_destination</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-                <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
-
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r+&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-                    <span class="n">file_data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-                    <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                    <span class="n">file_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_do_replacements</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
-                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
-                    <span class="n">file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>
-
-                <span class="n">fname_renamed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_do_replacements</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">fname</span> <span class="o">!=</span> <span class="n">fname_renamed</span><span class="p">:</span>
-                    <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">),</span> <span class="n">fname_renamed</span><span class="p">))</span>
-
-            <span class="k">for</span> <span class="n">dname</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
-                <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dname</span><span class="p">)</span>
-
-                <span class="n">dname_renamed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_do_replacements</span><span class="p">(</span><span class="n">dname</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">dname</span> <span class="o">!=</span> <span class="n">dname_renamed</span><span class="p">:</span>
-                    <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">dir_path</span><span class="p">),</span> <span class="n">dname_renamed</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="BaseXletGenerator._do_replacements"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.BaseXletGenerator._do_replacements">[docs]</a>    <span class="k">def</span> <span class="nf">_do_replacements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Do replacements.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        data : str</span>
-<span class="sd">            Data to modify.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        str</span>
-<span class="sd">            Modified data.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">template</span><span class="p">,</span> <span class="n">replacement</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">replacement_data</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">template</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">replacement</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">data</span></div></div>
+                  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_xlet_destination</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span></div></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
