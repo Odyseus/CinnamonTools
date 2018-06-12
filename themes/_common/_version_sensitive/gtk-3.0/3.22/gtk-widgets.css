@@ -1043,6 +1043,7 @@ menubar,
 .menubar {
     -GtkWidget-window-dragging: true;
     border: none;
+    background-color: @theme_bg_color;
 }
 
 /***************
@@ -1232,14 +1233,21 @@ notebook.frame > header {
     margin: -1px;
 }
 
-/*notebook.frame > header > tabs {
-margin: 0px;
-margin-right: -2px;
-}*/
+notebook.frame > header.top > tabs {
+    margin: 0px;
+    margin-right: -2px;
+}
+
 notebook.frame > header.top {
     margin-bottom: 0;
     padding-left: 0;
     padding-right: 0;
+}
+
+notebook.frame > header.top:dir(rtl) {
+    margin-bottom: 0;
+    padding-left: 0px;
+    padding-right: 2px;
 }
 
 notebook.frame > header.bottom {
@@ -1436,6 +1444,16 @@ notebook > header > tabs > tab button.sidebar-button:active:hover {
     box-shadow: none;
 }
 
+/* closable page */
+paned.horizontal > notebook > header > tabs {
+    margin-right: -2px;
+}
+
+paned.horizontal > notebook > header > tabs:dir(rtl) {
+    margin-left: -2px;
+    padding-right: 2px;
+}
+
 /******
 * osd *
 *******/
@@ -1448,11 +1466,13 @@ GtkOverlay.osd {
     background-color: transparent;
 }
 
-.osd.trough {
+.osd.trough,
+.osd .trough {
     background-color: alpha(@osd_bg, 0.6);
 }
 
-.osd.progressbar {
+.osd.progressbar,
+.osd .progressbar {
     background-color: @osd_fg;
 }
 
@@ -2431,6 +2451,7 @@ textview text selection,
 entry selection:focus,
 entry selection {
     color: @theme_selected_fg_color;
+    background-color: @theme_selected_bg_color;
 }
 
 label:disabled:selected,

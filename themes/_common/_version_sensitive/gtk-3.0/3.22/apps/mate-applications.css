@@ -41,7 +41,7 @@ CajaWindow CajaEmblemSidebar GtkViewport {
 .caja-side-pane notebook textview.view text,
 .caja-side-pane notebook viewport.frame,
 .caja-side-pane notebook widget .vertical {
-    background-color: shade (@caja_sidebar_bg, 1.0);
+    background-color: shade(@caja_sidebar_bg, 1.0);
     color: @caja_sidebar_fg;
 }
 
