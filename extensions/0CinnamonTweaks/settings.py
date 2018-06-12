@@ -5,7 +5,6 @@ import math
 import os
 import subprocess
 import gettext
-import sys
 import json
 import cgi
 import gi
@@ -2534,73 +2533,9 @@ def display_warning_message(widget, title, message):
     dialog.destroy()
 
 
-def ui_error_message(msg, detail=None):
-    dialog = Gtk.MessageDialog(transient_for=None,
-                               modal=True,
-                               message_type=Gtk.MessageType.ERROR,
-                               buttons=Gtk.ButtonsType.OK)
-
-    try:
-        esc = cgi.escape(msg)
-    except Exception:
-        esc = msg
-
-    dialog.set_markup(esc)
-    dialog.show_all()
-    dialog.run()
-    dialog.destroy()
-
-
-def install_schema():
-    file_path = os.path.join(EXTENSION_DIR, "schemas", SCHEMA_NAME + ".gschema.xml")
-    if os.path.exists(file_path):
-        # TO TRANSLATORS: Could be left blank.
-        sentence = _("Please enter your password to install the required settings schema for %s") % (
-            EXTENSION_UUID)
-
-        if os.path.exists("/usr/bin/gksu") and os.path.exists("/usr/share/cinnamon/cinnamon-settings/bin/installSchema.py"):
-            launcher = "gksu  --message \"<b>%s</b>\"" % sentence
-            tool = "/usr/share/cinnamon/cinnamon-settings/bin/installSchema.py %s" % file_path
-            command = "%s %s" % (launcher, tool)
-            os.system(command)
-        else:
-            ui_error_message(
-                # TO TRANSLATORS: Could be left blank.
-                msg=_("Could not install the settings schema for %s.  You will have to perform this step yourself.") % (EXTENSION_UUID))
-
-
-def remove_schema():
-    file_name = SCHEMA_NAME + ".gschema.xml"
-    # TO TRANSLATORS: Could be left blank.
-    sentence = _("Please enter your password to remove the settings schema for %s") % (
-        EXTENSION_UUID)
-
-    if os.path.exists("/usr/bin/gksu") and os.path.exists("/usr/share/cinnamon/cinnamon-settings/bin/removeSchema.py"):
-        launcher = "gksu  --message \"<b>%s</b>\"" % sentence
-        tool = "/usr/share/cinnamon/cinnamon-settings/bin/removeSchema.py %s" % (file_name)
-        command = "%s %s" % (launcher, tool)
-        os.system(command)
-    else:
-        ui_error_message(
-            # TO TRANSLATORS: Could be left blank.
-            msg=_("Could not remove the settings schema for %s.  You will have to perform this step yourself.  This is not a critical error.") % (EXTENSION_UUID))
-
-
 if __name__ == "__main__":
-    try:
-        arg = sys.argv[1]
-    except Exception:
-        arg = None
+    # Initialize and load gsettings values
+    Settings().set_settings(SCHEMA_NAME)
 
-    # I don't think that this is needed.
-    # Leaving it because it just don't hurt.
-    if arg == "install-schema":
-        install_schema()
-    elif arg == "remove-schema":
-        remove_schema()
-    else:
-        # Initialize and load gsettings values
-        Settings().set_settings(SCHEMA_NAME)
-
-        app = ExtensionPrefsApplication()
-        app.run()
+    app = ExtensionPrefsApplication()
+    app.run()
