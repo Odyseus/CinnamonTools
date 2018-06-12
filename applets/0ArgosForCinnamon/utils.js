@@ -41,6 +41,16 @@ const NotificationUrgency = {
 
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
+/**
+ * Return the localized translation of a string, based on the xlet domain or
+ * the current global domain (Cinnamon's).
+ *
+ * This function "overrides" the _() function globally defined by Cinnamon.
+ *
+ * @param {String} aStr - The string being translated.
+ *
+ * @return {String} The translated string.
+ */
 function _(aStr) {
     let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
 
@@ -51,6 +61,22 @@ function _(aStr) {
     return Gettext.gettext(aStr);
 }
 
+/**
+ * Return the localized translation of a string, based on the xlet domain or the
+ * current global domain (Cinnamon's), but consider plural forms. If a translation
+ * is found, apply the plural formula to aN, and return the resulting message
+ * (some languages have more than two plural forms). If no translation is found,
+ * return singular if aN is 1; return plural otherwise.
+ *
+ * This function "overrides" the ngettext() function globally defined by Cinnamon.
+ *
+ * @param {String}  aSingular - The singular string being translated.
+ * @param {String}  aPlural   - The plural string being translated.
+ * @param {Integer} aN        - The number (e.g. item count) to determine the translation for
+ * the respective grammatical number.
+ *
+ * @return {String} The translated string.
+ */
 function ngettext(aSingular, aPlural, aN) {
     let customTrans = Gettext.dngettext(XletMeta.uuid, aSingular, aPlural, aN);
 

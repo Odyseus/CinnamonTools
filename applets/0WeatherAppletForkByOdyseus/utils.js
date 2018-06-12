@@ -13,9 +13,14 @@ const GLib = imports.gi.GLib;
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
 /**
- * [_ description]
- * @param  {String} aStr [description]
- * @return {String}      [description]
+ * Return the localized translation of a string, based on the xlet domain or
+ * the current global domain (Cinnamon's).
+ *
+ * This function "overrides" the _() function globally defined by Cinnamon.
+ *
+ * @param {String} aStr - The string being translated.
+ *
+ * @return {String} The translated string.
  */
 function _(aStr) {
     let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
