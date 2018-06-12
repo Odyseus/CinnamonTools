@@ -1,0 +1,11 @@
+pages:
+  stage: deploy
+  script:
+  - echo 'Why, OH, WHY?!?!...'
+  - mv docs public
+  artifacts:
+    paths:
+    - public
+  only:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /.*\[build pages\].*/
