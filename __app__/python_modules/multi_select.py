@@ -125,7 +125,7 @@ class MultiSelect():
         self.curses_stop()
 
     def curses_start(self):
-        """Summary
+        """curses start.
         """
         self.stdscr = curses.initscr()
 
@@ -140,7 +140,7 @@ class MultiSelect():
         )
 
     def curses_stop(self):
-        """Summary
+        """curses stop.
         """
         curses.nocbreak()
         self.stdscr.keypad(0)

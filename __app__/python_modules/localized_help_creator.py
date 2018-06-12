@@ -369,7 +369,7 @@ class LocalizedHelpCreator(object):
             "## %s" % _("Applets/Desklets/Extensions (a.k.a. xlets) localization"),
             "- %s" % _("If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "- %s" % _("If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."),
+            "- %s" % _("If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."),
             "- %s" % _("If this xlet has no locale available for your language, you could create it by following the following instructions.") +
             " %s" % "[Wiki](https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization)"
         ]))

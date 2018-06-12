@@ -276,7 +276,7 @@ class OperationAborted(ExceptionWhitoutTraceBackWarning):
 
 
 class Error(OSError):
-    """Summary
+    """Error
     """
     pass
 
@@ -359,8 +359,8 @@ extra_common_files = [{
     "source_path": root_folder,
     "file_name": "LICENSE.md",
 }, {
-    "source_path": os.path.join(root_folder, "__app__", "data", "bash_scripts"),
-    "file_name": "localizations.bash",
+    "source_path": os.path.join(root_folder, "__app__", "data", "python_scripts"),
+    "file_name": "helper.py",
 }]
 
 help_pages_index_template = """
@@ -1578,123 +1578,125 @@ def build_xlets(xlets=[], domain_name=None, build_output="",
 
     if xlets_data:
         for data in xlets_data:
-            handle_xlet(data, do_not_cofirm, logger)
+            builder = XletBuilder(data, do_not_cofirm, logger)
+            builder.build()
 
     print("")
     logger.info("Built xlets saved in %s" % base_output_path)
 
 
-def handle_xlet(xlet_data, do_not_cofirm, logger):
-    """Handle xlet.
+class XletBuilder(object):
+    """docstring for XletBuilder
 
-    Parameters
+    Attributes
     ----------
-    xlet_data : dict
-        The xlet data to handle.
+    config_file : str
+        Path to the file z_config.py inside an xlet folder.
     do_not_cofirm : bool
         Whether to ask for overwrite confirmation when an xlet destination exists or not.
     logger : object
         See <class :any:`LogSystem`>.
-
-    Raises
-    ------
-    err1
-        Something might have gone wrong while copying the xlet directory.
-    err2
-        Something might have gone wrong while doing the "templating".
-    InvalidDestination
-        Halt execution if the destination is a file.
-    OperationAborted
-        Halt execution on operation canceled.
+    replacement_data : list
+        Data used to perform string substitutions. It is a list of tuples with two items.
+    schemas_dir : str
+        Path to the folder schemas inside an xlet folder.
+    xlet_data : dict
+        The xlet data to handle.
     """
-    try:
-        logger.info(get_cli_separator("#"), date=False)
-        logger.info("Building the %s %s" %
-                    (xlet_data["type"], xlet_data["slug"]))
 
-        if os.path.isfile(xlet_data["destination"]):
+    def __init__(self, xlet_data, do_not_cofirm, logger):
+        """Initialize.
+
+        Parameters
+        ----------
+        xlet_data : dict
+            The xlet data to handle.
+        do_not_cofirm : bool
+            Whether to ask for overwrite confirmation when an xlet destination exists or not.
+        logger : object
+            See <class :any:`LogSystem`>.
+        """
+        super(XletBuilder, self).__init__()
+        self.xlet_data = xlet_data
+        self.do_not_cofirm = do_not_cofirm
+        self.logger = logger
+        self.schemas_dir = os.path.join(xlet_data["destination"], "schemas")
+        self.config_file = os.path.join(xlet_data["source"], "z_config.py")
+        self.replacement_data = [
+            ("{{UUID}}", xlet_data.get("uuid", "")),
+            ("{{XLET_TYPE}}", xlet_data.get("type", "")),
+        ]
+
+    def build(self):
+        """Build xlet.
+        """
+        self.logger.info(get_cli_separator("#"), date=False)
+        self.logger.info("Building the %s %s" %
+                         (self.xlet_data["type"], self.xlet_data["slug"]))
+
+        self._do_copy()
+        do_string_substitutions(self.xlet_data["destination"],
+                                self.replacement_data,
+                                logger=self.logger)
+        self._compile_schemas()
+        self._handle_config_file()
+
+    def _do_copy(self):
+        """Copy xlet files into its final destination.
+
+        Raises
+        ------
+        InvalidDestination
+            Invalid xlet destination.
+        OperationAborted
+            Halt build operation.
+        """
+        if os.path.isfile(self.xlet_data["destination"]):
             raise InvalidDestination(
                 "Destination exists and is a file!!! Aborted!!!")
 
-        if os.path.isdir(xlet_data["destination"]):
-            if not do_not_cofirm:
+        if os.path.isdir(self.xlet_data["destination"]):
+            if not self.do_not_cofirm:
                 print(Ansi.WARNING(existent_xlet_destination_msg.format(
-                    path=xlet_data["destination"])))
+                    path=self.xlet_data["destination"])))
 
-            if do_not_cofirm or confirm(prompt="Proceed?", response=False):
-                rmtree(xlet_data["destination"], ignore_errors=True)
+            if self.do_not_cofirm or confirm(prompt="Proceed?", response=False):
+                rmtree(self.xlet_data["destination"], ignore_errors=True)
             else:
                 raise OperationAborted("Building the %s %s was canceled." %
-                                       (xlet_data["type"], xlet_data["slug"]))
+                                       (self.xlet_data["type"], self.xlet_data["slug"]))
 
-        logger.info("Copying files...")
-        copytree(xlet_data["source"], xlet_data["destination"], symlinks=False,
+        self.logger.info("Copying main xlet files...")
+        copytree(self.xlet_data["source"], self.xlet_data["destination"], symlinks=False,
                  ignore=ignore_patterns(*xlet_dir_ignored_patterns),
                  ignore_dangling_symlinks=True)
-    except Exception as err1:
-        raise err1
-    else:
-        logger.info("Performing string substitutions...")
-        for root, dirs, files in os.walk(xlet_data["destination"], topdown=False):
-            for name in files:
-                file_path = os.path.join(root, name)
 
-                # Only deal with regular files.
-                if os.path.islink(file_path):
-                    continue
-
-                # Only deal with a limited set of file extensions.
-                if not name.endswith((".py", ".bash", ".js", ".json", ".xml")):
-                    continue
-
-                try:
-                    with open(file_path, "r", encoding="UTF-8") as file:
-                        file_data = file.read()
-
-                    # Replace the UUID placeholder from the file content for the actual xlet UUID.
-                    if "{{UUID}}" in file_data:
-                        with open(file_path, "w", encoding="UTF-8") as file:
-                            file.write(file_data.replace(
-                                "{{UUID}}", xlet_data["uuid"]))
-
-                    # Check and set execution permissions for Bash and Python scripts.
-                    if name.endswith((".py", ".bash")):
-                        if not is_exec(file_path):
-                            os.chmod(file_path, 0o755)
-
-                    # Replace the UUID placeholder from the file name for the actual xlet UUID.
-                    if "{{UUID}}" in name:
-                        os.rename(file_path, file_path.replace(
-                            "{{UUID}}", xlet_data["uuid"]))
-                except Exception as err2:
-                    raise err2
-
-        schemas_dir = os.path.join(xlet_data["destination"], "schemas")
-
-        # If the schemas directory exists, compile the gsettings file inside it.
-        # Doing it last, after strings substitutions.
-        if os.path.isdir(schemas_dir):
-            logger.info("Compiling gsettings schema...")
-            call(["glib-compile-schemas", ".", "--targetdir=."], cwd=schemas_dir)
-
-        # Copy extra files.
+        self.logger.info("Copying common xlet files...")
         for extra in extra_common_files:
             copy2(os.path.join(extra["source_path"], extra["file_name"]),
-                  os.path.join(xlet_data["destination"], extra["file_name"]))
+                  os.path.join(self.xlet_data["destination"], extra["file_name"]))
 
-        config_file = os.path.join(xlet_data["source"], "z_config.py")
+    def _compile_schemas(self):
+        """Compile schemas file if any.
+        """
+        if os.path.isdir(self.schemas_dir):
+            self.logger.info("Compiling gsettings schema...")
+            call(["glib-compile-schemas", ".", "--targetdir=."], cwd=self.schemas_dir)
 
-        if os.path.exists(config_file):
+    def _handle_config_file(self):
+        """Handle xlet configuration file if any.
+        """
+        if os.path.exists(self.config_file):
             from runpy import run_path
-            extra_settings = run_path(config_file)["settings"]
+            extra_settings = run_path(self.config_file)["settings"]
 
             if extra_settings.get("symlinks", False):
-                logger.info("Generating symbolic links...")
+                self.logger.info("Generating symbolic links...")
 
-                os.chdir(xlet_data["destination"])
+                os.chdir(self.xlet_data["destination"])
 
                 for dir in extra_settings.get("symlinks"):
-                    os.makedirs(os.path.join(xlet_data["destination"], dir), exist_ok=True)
+                    os.makedirs(os.path.join(self.xlet_data["destination"], dir), exist_ok=True)
 
                     for src, dst in extra_settings.get("symlinks")[dir]:
                         os.symlink(src, os.path.join(dir, dst))
@@ -1807,8 +1809,8 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
             raise SystemExit()
 
     if not theme_name:
-            print(Ansi.WARNING(missing_theme_name_msg))
-            raise SystemExit()
+        print(Ansi.WARNING(missing_theme_name_msg))
+        raise SystemExit()
 
     if not build_output:
         base_output_path = os.path.join(base_temp_folder, micro_to_milli(get_date_time("filename")))
@@ -1926,6 +1928,64 @@ def do_replacements(data, replacement_data):
             data = data.replace(template, replacement)
 
     return data
+
+
+def do_string_substitutions(dir_path, replacement_data,
+                            allowed_extensions=(".py", ".bash", ".js", ".json", ".xml"),
+                            logger=None):
+    """Do substitutions.
+
+    Parameters
+    ----------
+    dir_path : str
+        Path to a directory where to perform string substitutions on.
+    replacement_data : list
+        Data used to perform string substitutions.
+    allowed_extensions : tuple, optional
+        A tuple of file extensions that are allowed to be modified.
+    logger : object
+        See <class :any:`LogSystem`>.
+    """
+    logger.info("Performing string substitutions...")
+
+    for root, dirs, files in os.walk(dir_path, topdown=False):
+        for fname in files:
+            # Only deal with a limited set of file extensions.
+            if not fname.endswith(allowed_extensions):
+                continue
+
+            file_path = os.path.join(root, fname)
+
+            if os.path.islink(file_path):
+                continue
+
+            with open(file_path, "r+", encoding="UTF-8") as file:
+                file_data = file.read()
+                file.seek(0)
+                file_data = do_replacements(file_data, replacement_data)
+                file.write(file_data)
+                file.truncate()
+
+            # Check and set execution permissions for Bash and Python scripts.
+            if fname.endswith((".py", ".bash")):
+                if not is_exec(file_path):
+                    os.chmod(file_path, 0o755)
+
+            fname_renamed = do_replacements(fname, replacement_data)
+
+            if fname != fname_renamed:
+                os.rename(file_path, os.path.join(os.path.dirname(file_path), fname_renamed))
+
+        for dname in dirs:
+            dir_path = os.path.join(root, dname)
+
+            if os.path.islink(dir_path):
+                continue
+
+            dname_renamed = do_replacements(dname, replacement_data)
+
+            if dname != dname_renamed:
+                os.rename(dir_path, os.path.join(os.path.dirname(dir_path), dname_renamed))
 
 
 def custom_copytree(src, dst):
@@ -2102,7 +2162,8 @@ class BaseXletGenerator():
         """
         self._do_setup()
         self._do_copy()
-        self._do_substitutions()
+        do_string_substitutions(self.new_xlet_destination,
+                                self.replacement_data, logger=self.logger)
 
     def _do_setup(self):
         """Do setup.
@@ -2169,7 +2230,8 @@ class BaseXletGenerator():
 
         if self.xlet_data["type"] != "extension":
             print(Ansi.PURPLE("\nEnter max instances for the xlet:"))
-            do_prompt(prompt_data, "max_instances", "Enter description", prompt_data["max_instances"])
+            do_prompt(prompt_data, "max_instances",
+                      "Enter description", prompt_data["max_instances"])
             self.xlet_data["max_instances"] = prompt_data["max_instances"]
 
         self.xlet_data["manager"] = prompt_data_map[prompt_data["type"]]["manager"]
@@ -2194,53 +2256,6 @@ class BaseXletGenerator():
         for file_name in self.xlet_data["files"]:
             copy2(os.path.join(self.base_xlet_path, file_name),
                   os.path.join(self.new_xlet_destination, file_name))
-
-    def _do_substitutions(self):
-        """Do substitutions.
-        """
-        self.logger.info("Performing string substitutions...")
-        for root, dirs, files in os.walk(self.new_xlet_destination, topdown=False):
-            for fname in files:
-                file_path = os.path.join(root, fname)
-
-                with open(file_path, "r+", encoding="UTF-8") as file:
-                    file_data = file.read()
-                    file.seek(0)
-                    file_data = self._do_replacements(file_data)
-                    file.write(file_data)
-                    file.truncate()
-
-                fname_renamed = self._do_replacements(fname)
-
-                if fname != fname_renamed:
-                    os.rename(file_path, os.path.join(os.path.dirname(file_path), fname_renamed))
-
-            for dname in dirs:
-                dir_path = os.path.join(root, dname)
-
-                dname_renamed = self._do_replacements(dname)
-
-                if dname != dname_renamed:
-                    os.rename(dir_path, os.path.join(os.path.dirname(dir_path), dname_renamed))
-
-    def _do_replacements(self, data):
-        """Do replacements.
-
-        Parameters
-        ----------
-        data : str
-            Data to modify.
-
-        Returns
-        -------
-        str
-            Modified data.
-        """
-        for template, replacement in self.replacement_data:
-            if template in data:
-                data = data.replace(template, replacement)
-
-        return data
 
 
 if __name__ == "__main__":
