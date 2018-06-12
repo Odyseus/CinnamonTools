@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus 0.54\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-06-05 15:40-0300\n"
+"POT-Creation-Date: 2018-06-10 21:35-0300\n"
 "PO-Revision-Date: 2018-06-05 15:52-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -75,8 +75,8 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
@@ -314,60 +314,60 @@ msgstr "No se puede exportar archivo"
 msgid "Feeds Reader (Fork By Odyseus)"
 msgstr "Lector de Feeds (Modificado por Odyseus)"
 
-#: utils.js:80
+#: utils.js:90
 msgid "Feeds"
 msgstr "Feeds"
 
-#: utils.js:254
+#: utils.js:264
 msgid "Right Click to open feed"
 msgstr "Clic derecho para abrir el feed"
 
 #. Only one page of items to read, no need to display mark all posts option.
-#: utils.js:325
+#: utils.js:335
 msgid "Mark All Posts Read"
 msgstr "Marcar todo como leído"
 
-#: utils.js:333
+#: utils.js:343
 #, javascript-format
 msgid "Mark Next %d Posts Read"
 msgstr "Marcar las siguientes %d publicaciones como leídas"
 
-#: utils.js:339
+#: utils.js:349
 msgid "Update feed URL"
 msgstr "Actualizar URL del feed"
 
-#: utils.js:424 utils.js:430
+#: utils.js:434 utils.js:440
 msgid "Published"
 msgstr "Publicado"
 
-#: utils.js:491
+#: utils.js:501
 msgid "Mark Post Read"
 msgstr "Marcar como leído"
 
-#: utils.js:529
+#: utils.js:539
 msgid "d"
 msgstr "d"
 
-#: utils.js:531 utils.js:533
+#: utils.js:541 utils.js:543
 msgid "h"
 msgstr "h"
 
-#: utils.js:533
+#: utils.js:543
 #, javascript-format
 msgid "(<1%s) "
 msgstr "(<1%s) "
 
 #. Invalid feed detected, throw and log error.
-#: utils.js:806
+#: utils.js:816
 msgid "Invalid feed url"
 msgstr "URL del feed inválida"
 
-#: utils.js:886
+#: utils.js:896
 #, javascript-format
 msgid "%d unread items!"
 msgstr "¡%d ítems sin leer!"
 
-#: utils.js:1025 utils.js:1038
+#: utils.js:1035 utils.js:1048
 msgid "Loading feed"
 msgstr "Cargando feed"
 

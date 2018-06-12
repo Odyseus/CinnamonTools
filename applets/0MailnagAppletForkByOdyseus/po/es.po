@@ -91,11 +91,11 @@ msgstr ""
 msgid ""
 "If this xlet was installed manually and not trough Cinnamon Settings, "
 "localizations can be installed by executing the script called "
-"**localizations.bash** from a terminal opened inside the xlet's folder."
+"**helper.py** from a terminal opened inside the xlet's folder."
 msgstr ""
 "Si este xlet se instaló manualmente y no a través de Configuración de "
 "Cinnamon, las localizaciones se pueden instalar ejecutando el archivo "
-"llamado **localizations.bash** desde una terminal abierta dentro de la "
+"llamado **helper.py** desde una terminal abierta dentro de la "
 "carpeta del xlet."
 
 #: ../../__app__/python_modules/localized_help_creator.py:373

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.03\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-14 16:54-0300\n"
+"POT-Creation-Date: 2018-06-10 21:35-0300\n"
 "PO-Revision-Date: 2018-05-14 16:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -74,8 +74,8 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
@@ -344,107 +344,107 @@ msgstr "Eliminar todas las listas de tareas actualmente cargadas en este applet.
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 
-#: utils.js:37
+#: utils.js:47
 msgid "Tasks list - Some examples"
 msgstr "Lista de tareas - Algunos ejemplos"
 
-#: utils.js:43
+#: utils.js:53
 msgid "Tasks can be \"tagged\" by simply writing \"@tagname\" as part of the task text. For now, there are 5 priority tags available."
 msgstr "Tareas pueden ser \"etiquetadas\" simplemente escribiendo \"@etiqueta\" como parte del texto de la tarea. Por ahora, hay 5 etiquetas de prioridad disponibles."
 
-#: utils.js:46
+#: utils.js:56
 msgid "This is a @critical priority task"
 msgstr "Esta es una tarea de prioridad @crítica"
 
-#: utils.js:49
+#: utils.js:59
 msgid "This is a @high priority task"
 msgstr "Esta es una tarea de prioridad @alta"
 
-#: utils.js:52
+#: utils.js:62
 msgid "This is a @medium priority task"
 msgstr "Esta es una tarea de prioridad @media"
 
-#: utils.js:55
+#: utils.js:65
 msgid "This is a @today priority task"
 msgstr "Esta es una tarea de prioridad @hoy"
 
-#: utils.js:58
+#: utils.js:68
 msgid "This is a @low priority task"
 msgstr "Esta es una tarea de prioridad @baja"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:194
+#: utils.js:204
 msgid "low"
 msgstr "baja"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:196
+#: utils.js:206
 msgid "today"
 msgstr "hoy"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:198
+#: utils.js:208
 msgid "medium"
 msgstr "media"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:200
+#: utils.js:210
 msgid "high"
 msgstr "alta"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:202
+#: utils.js:212
 msgid "critical"
 msgstr "crítica"
 
-#: utils.js:590
+#: utils.js:600
 msgid "New task..."
 msgstr "Nueva tarea..."
 
-#: utils.js:609
+#: utils.js:619
 msgid "Tasks list options"
 msgstr "Opciones de lista de tareas"
 
-#: utils.js:666
+#: utils.js:676
 msgid "Export this tasks list"
 msgstr "Exportar esta lista de tareas"
 
-#: utils.js:671
+#: utils.js:681
 msgid "Save this tasks list as TODO"
 msgstr "Guardar esta lista de tareas como archivo TODO"
 
-#: utils.js:676
+#: utils.js:686
 msgid "Sort tasks alphabetically"
 msgstr "Ordenar tareas alfabéticamente"
 
-#: utils.js:681 utils.js:691
+#: utils.js:691 utils.js:701
 msgid "Takes effect after closing and re-opening the main menu."
 msgstr "Toma efecto después de cerrar y volver a abrir el menú principal."
 
-#: utils.js:686
+#: utils.js:696
 msgid "Sort tasks by completed state"
 msgstr "Ordenar tareas por estado completado"
 
-#: utils.js:696
+#: utils.js:706
 msgid "Display remove tasks buttons"
 msgstr "Mostrar botones para borrar tareas"
 
-#: utils.js:701 utils.js:711
+#: utils.js:711 utils.js:721
 msgid "Takes effect immediately."
 msgstr "Toma efecto inmediatamente."
 
-#: utils.js:706
+#: utils.js:716
 msgid "Keep completed tasks hidden"
 msgstr "Mantener escondidas las tareas completadas"
 
 #. TO TRANSLATORS: Full sentence.
 #. "Remove this section/task"
-#: utils.js:1620
+#: utils.js:1630
 #, javascript-format
 msgid "Remove this %s"
 msgstr "Remover esta %s"
 
-#: utils.js:1623
+#: utils.js:1633
 msgid "(Hold Ctrl key)"
 msgstr "(Mantener presionada la tecla Control)"
 

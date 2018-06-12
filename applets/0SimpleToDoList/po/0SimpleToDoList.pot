@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.03\n"
-"POT-Creation-Date: 2018-06-05 15:52-0300\n"
+"POT-Creation-Date: 2018-06-12 00:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
@@ -341,107 +341,107 @@ msgstr ""
 msgid "Open this applet help file."
 msgstr ""
 
-#: utils.js:37
+#: utils.js:47
 msgid "Tasks list - Some examples"
 msgstr ""
 
-#: utils.js:43
+#: utils.js:53
 msgid "Tasks can be \"tagged\" by simply writing \"@tagname\" as part of the task text. For now, there are 5 priority tags available."
 msgstr ""
 
-#: utils.js:46
+#: utils.js:56
 msgid "This is a @critical priority task"
 msgstr ""
 
-#: utils.js:49
+#: utils.js:59
 msgid "This is a @high priority task"
 msgstr ""
 
-#: utils.js:52
+#: utils.js:62
 msgid "This is a @medium priority task"
 msgstr ""
 
-#: utils.js:55
+#: utils.js:65
 msgid "This is a @today priority task"
 msgstr ""
 
-#: utils.js:58
+#: utils.js:68
 msgid "This is a @low priority task"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:194
+#: utils.js:204
 msgid "low"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:196
+#: utils.js:206
 msgid "today"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:198
+#: utils.js:208
 msgid "medium"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:200
+#: utils.js:210
 msgid "high"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:202
+#: utils.js:212
 msgid "critical"
 msgstr ""
 
-#: utils.js:590
+#: utils.js:600
 msgid "New task..."
 msgstr ""
 
-#: utils.js:609
+#: utils.js:619
 msgid "Tasks list options"
 msgstr ""
 
-#: utils.js:666
+#: utils.js:676
 msgid "Export this tasks list"
 msgstr ""
 
-#: utils.js:671
+#: utils.js:681
 msgid "Save this tasks list as TODO"
 msgstr ""
 
-#: utils.js:676
+#: utils.js:686
 msgid "Sort tasks alphabetically"
 msgstr ""
 
-#: utils.js:681 utils.js:691
+#: utils.js:691 utils.js:701
 msgid "Takes effect after closing and re-opening the main menu."
 msgstr ""
 
-#: utils.js:686
+#: utils.js:696
 msgid "Sort tasks by completed state"
 msgstr ""
 
-#: utils.js:696
+#: utils.js:706
 msgid "Display remove tasks buttons"
 msgstr ""
 
-#: utils.js:701 utils.js:711
+#: utils.js:711 utils.js:721
 msgid "Takes effect immediately."
 msgstr ""
 
-#: utils.js:706
+#: utils.js:716
 msgid "Keep completed tasks hidden"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence.
 #. "Remove this section/task"
-#: utils.js:1620
+#: utils.js:1630
 #, javascript-format
 msgid "Remove this %s"
 msgstr ""
 
-#: utils.js:1623
+#: utils.js:1633
 msgid "(Hold Ctrl key)"
 msgstr ""
 

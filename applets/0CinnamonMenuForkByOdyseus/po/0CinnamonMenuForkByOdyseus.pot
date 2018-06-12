@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
-"POT-Creation-Date: 2018-06-05 15:52-0300\n"
+"POT-Creation-Date: 2018-06-12 00:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
@@ -438,7 +438,7 @@ msgstr ""
 msgid "Edit custom launchers"
 msgstr ""
 
-#: applet.js:1483 utils.js:1038
+#: applet.js:1483 utils.js:1040
 msgid "This file is no longer available"
 msgstr ""
 
@@ -458,129 +458,129 @@ msgstr ""
 msgid "Type to search..."
 msgstr ""
 
-#: utils.js:518
+#: utils.js:520
 msgid "Add to panel"
 msgstr ""
 
-#: utils.js:522
+#: utils.js:524
 msgid "Add this application to the Panel launchers applet."
 msgstr ""
 
-#: utils.js:529
+#: utils.js:531
 msgid "Add to desktop"
 msgstr ""
 
-#: utils.js:533
+#: utils.js:535
 msgid "Add this application to the Desktop."
 msgstr ""
 
-#: utils.js:541
+#: utils.js:543
 msgid "Remove from favorites"
 msgstr ""
 
-#: utils.js:545
+#: utils.js:547
 msgid "Remove application from your favorites."
 msgstr ""
 
-#: utils.js:550
+#: utils.js:552
 msgid "Add to favorites"
 msgstr ""
 
-#: utils.js:554
+#: utils.js:556
 msgid "Add application to your favorites."
 msgstr ""
 
-#: utils.js:562
+#: utils.js:564
 msgid "Uninstall"
 msgstr ""
 
-#: utils.js:566
+#: utils.js:568
 msgid "Uninstall application from your system."
 msgstr ""
 
-#: utils.js:573
+#: utils.js:575
 msgid "Run with NVIDIA GPU"
 msgstr ""
 
-#: utils.js:577
+#: utils.js:579
 msgid "Run application through optirun command (Bumblebee)."
 msgstr ""
 
-#: utils.js:584
+#: utils.js:586
 msgid "Run as root"
 msgstr ""
 
-#: utils.js:588
+#: utils.js:590
 msgid "Run application as root."
 msgstr ""
 
-#: utils.js:595
+#: utils.js:597
 msgid "Edit .desktop file"
 msgstr ""
 
-#: utils.js:599
+#: utils.js:601
 msgid "Edit this application .desktop file with a text editor."
 msgstr ""
 
-#: utils.js:606
+#: utils.js:608
 msgid "Open .desktop file folder"
 msgstr ""
 
-#: utils.js:610
+#: utils.js:612
 msgid "Open the folder containg this application .desktop file."
 msgstr ""
 
-#: utils.js:617
+#: utils.js:619
 msgid "Run from terminal"
 msgstr ""
 
-#: utils.js:621
+#: utils.js:623
 msgid "Run application from a terminal."
 msgstr ""
 
-#: utils.js:628
+#: utils.js:630
 msgid "Run from terminal as root"
 msgstr ""
 
-#: utils.js:632
+#: utils.js:634
 msgid "Run application from a terminal as root."
 msgstr ""
 
-#: utils.js:1089
+#: utils.js:1091
 msgid "Open with"
 msgstr ""
 
-#: utils.js:1144
+#: utils.js:1146
 msgid "Other application..."
 msgstr ""
 
-#: utils.js:1231 utils.js:1559
+#: utils.js:1233 utils.js:1561
 msgid "Clear list"
 msgstr ""
 
-#: utils.js:1297
+#: utils.js:1299
 msgid "All Applications"
 msgstr ""
 
-#: utils.js:1341
+#: utils.js:1343
 msgid "Places"
 msgstr ""
 
-#: utils.js:1374
+#: utils.js:1376
 msgid "Recent Files"
 msgstr ""
 
 #. settings-schema.json->recent_apps_header->description
-#: utils.js:1418
+#: utils.js:1420
 msgid "Recent Applications"
 msgstr ""
 
-#: utils.js:1612
+#: utils.js:1614
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr ""
 
-#: utils.js:1613
+#: utils.js:1615
 msgid "Please check your installation."
 msgstr ""
 
@@ -924,14 +924,6 @@ msgstr ""
 
 #. settings-schema.json->pref_privilege_elevator->description
 msgid "Privileges elevator:"
-msgstr ""
-
-#. settings-schema.json->pref_privilege_elevator->options
-msgid "gksu"
-msgstr ""
-
-#. settings-schema.json->pref_privilege_elevator->options
-msgid "gksudo"
 msgstr ""
 
 #. settings-schema.json->pref_privilege_elevator->tooltip

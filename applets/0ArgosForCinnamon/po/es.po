@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon 2.02\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-08 03:54-0300\n"
+"POT-Creation-Date: 2018-06-10 21:35-0300\n"
 "PO-Revision-Date: 2018-05-03 15:45-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -32,7 +32,7 @@ msgstr "Compatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:748 utils.js:2645
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:748 utils.js:2671
 msgid "Help"
 msgstr "Ayuda"
 
@@ -74,8 +74,8 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
@@ -667,7 +667,7 @@ msgid "Script file is already executable."
 msgstr "El archivo de comandos ya es ejecutable."
 
 #. Just in case.
-#: applet.js:752 utils.js:2646
+#: applet.js:752 utils.js:2672
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 
@@ -876,31 +876,31 @@ msgstr "Subrayado bajo"
 msgid "Error underline"
 msgstr "Subrayado de error"
 
-#: utils.js:73
+#: utils.js:99
 msgid "millisecond"
 msgid_plural "milliseconds"
 msgstr[0] "milisegundo"
 msgstr[1] "milisegundos"
 
-#: utils.js:75
+#: utils.js:101
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "segundo"
 msgstr[1] "segundos"
 
-#: utils.js:77
+#: utils.js:103
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuto"
 msgstr[1] "minutos"
 
-#: utils.js:79
+#: utils.js:105
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hora"
 msgstr[1] "horas"
 
-#: utils.js:81
+#: utils.js:107
 msgid "day"
 msgid_plural "days"
 msgstr[0] "día"
@@ -908,36 +908,36 @@ msgstr[1] "días"
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:91
+#: utils.js:117
 msgid "Seconds"
 msgstr "Segundos"
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:94
+#: utils.js:120
 msgid "Minutes"
 msgstr "Minutos"
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:97
+#: utils.js:123
 msgid "Hours"
 msgstr "Hours"
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:100
+#: utils.js:126
 msgid "Days"
 msgstr "Días"
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to load image from Base64 representation: ErrorMessage"
-#: utils.js:1898
+#: utils.js:1924
 #, javascript-format
 msgid "Unable to load image from Base64 representation: %s"
 msgstr "No se puede cargar la imagen desde la representación de Base64: %s"
 
-#: utils.js:2642
+#: utils.js:2668
 msgid "Check this applet help file for instructions."
 msgstr "Comprobar el archivo de ayuda de este applet para obtener instrucciones."
 

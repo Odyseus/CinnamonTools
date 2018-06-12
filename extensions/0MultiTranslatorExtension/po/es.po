@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MultiTranslatorExtension 1.07\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-08 03:55-0300\n"
+"POT-Creation-Date: 2018-06-10 21:35-0300\n"
 "PO-Revision-Date: 2018-05-04 21:30-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -32,7 +32,7 @@ msgstr "Compatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 settings.py:1395 utils.js:3554
+#: ../../__app__/python_modules/localized_help_creator.py:319 settings.py:1394 utils.js:3564
 msgid "Help"
 msgstr "Ayuda"
 
@@ -74,8 +74,8 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
@@ -118,599 +118,599 @@ msgid "trans command not found or it isn't in your PATH!!!"
 msgstr "¡Comando trans no encontrado o no se encuentra en su PATH!"
 
 #. metadata.json->name
-#: settings.py:67 translation_providers/yandex_translation_provider.js:344
+#: settings.py:66 translation_providers/yandex_translation_provider.js:344
 msgid "Multi Translator"
 msgstr "Multi Traductor"
 
-#: settings.py:70 utils.js:247
+#: settings.py:69 utils.js:257
 msgid "Detect language"
 msgstr "Detectar idioma"
 
-#: settings.py:71 utils.js:248
+#: settings.py:70 utils.js:258
 msgid "Afrikaans"
 msgstr "Afrikaans"
 
-#: settings.py:72 utils.js:249
+#: settings.py:71 utils.js:259
 msgid "Amharic"
 msgstr "Amárico"
 
-#: settings.py:73 utils.js:250
+#: settings.py:72 utils.js:260
 msgid "Arabic"
 msgstr "Árabe"
 
-#: settings.py:74 utils.js:251
+#: settings.py:73 utils.js:261
 msgid "Azerbaijani"
 msgstr "Azerbaiyano"
 
-#: settings.py:75 utils.js:252
+#: settings.py:74 utils.js:262
 msgid "Belarusian"
 msgstr "Bielorruso"
 
-#: settings.py:76 utils.js:253
+#: settings.py:75 utils.js:263
 msgid "Bulgarian"
 msgstr "Búlgaro"
 
-#: settings.py:77 utils.js:254
+#: settings.py:76 utils.js:264
 msgid "Bengali"
 msgstr "Bengalí"
 
-#: settings.py:78 utils.js:255
+#: settings.py:77 utils.js:265
 msgid "Bosnian (Y)"
 msgstr "Bosnio (Y)"
 
-#: settings.py:79 utils.js:256
+#: settings.py:78 utils.js:266
 msgid "Catalan"
 msgstr "Catalán"
 
-#: settings.py:80 utils.js:257
+#: settings.py:79 utils.js:267
 msgid "Chichewa"
 msgstr "Chichewa"
 
-#: settings.py:81 utils.js:258
+#: settings.py:80 utils.js:268
 msgid "Corsican"
 msgstr "Corso"
 
-#: settings.py:82 utils.js:259
+#: settings.py:81 utils.js:269
 msgid "Czech"
 msgstr "Checo"
 
-#: settings.py:83 utils.js:260
+#: settings.py:82 utils.js:270
 msgid "Welsh"
 msgstr "Galés"
 
-#: settings.py:84 utils.js:261
+#: settings.py:83 utils.js:271
 msgid "Danish"
 msgstr "Danés"
 
-#: settings.py:85 utils.js:262
+#: settings.py:84 utils.js:272
 msgid "German"
 msgstr "Alemán"
 
-#: settings.py:86 utils.js:263
+#: settings.py:85 utils.js:273
 msgid "Greek"
 msgstr "Griego"
 
-#: settings.py:87 utils.js:264
+#: settings.py:86 utils.js:274
 msgid "English"
 msgstr "Inglés"
 
-#: settings.py:88 utils.js:265
+#: settings.py:87 utils.js:275
 msgid "Esperanto"
 msgstr "Esperanto"
 
-#: settings.py:89 utils.js:266
+#: settings.py:88 utils.js:276
 msgid "Spanish"
 msgstr "Español"
 
-#: settings.py:90 utils.js:267
+#: settings.py:89 utils.js:277
 msgid "Estonian"
 msgstr "Estonio"
 
-#: settings.py:91 utils.js:268
+#: settings.py:90 utils.js:278
 msgid "Basque"
 msgstr "Vasco"
 
-#: settings.py:92 utils.js:269
+#: settings.py:91 utils.js:279
 msgid "Persian"
 msgstr "Persa"
 
-#: settings.py:93 utils.js:270
+#: settings.py:92 utils.js:280
 msgid "Finnish"
 msgstr "Finlandés"
 
-#: settings.py:94 utils.js:271
+#: settings.py:93 utils.js:281
 msgid "French"
 msgstr "Francés"
 
-#: settings.py:95 utils.js:272
+#: settings.py:94 utils.js:282
 msgid "Frisian"
 msgstr "Frisón"
 
-#: settings.py:96 utils.js:273
+#: settings.py:95 utils.js:283
 msgid "Irish"
 msgstr "Irlandés"
 
-#: settings.py:97 utils.js:274
+#: settings.py:96 utils.js:284
 msgid "Scots Gaelic"
 msgstr "Gaélico escocés"
 
-#: settings.py:98 utils.js:275
+#: settings.py:97 utils.js:285
 msgid "Galician"
 msgstr "Gallego"
 
-#: settings.py:99 utils.js:276
+#: settings.py:98 utils.js:286
 msgid "Gujarati"
 msgstr "Gujarati"
 
-#: settings.py:100 utils.js:277
+#: settings.py:99 utils.js:287
 msgid "Hausa"
 msgstr "Hausa"
 
-#: settings.py:101 utils.js:278
+#: settings.py:100 utils.js:288
 msgid "Hawaiian"
 msgstr "Hawaiano"
 
-#: settings.py:102 utils.js:279
+#: settings.py:101 utils.js:289
 msgid "Hebrew (Y)"
 msgstr "Hebreo (Y)"
 
-#: settings.py:103 utils.js:280
+#: settings.py:102 utils.js:290
 msgid "Hindi"
 msgstr "Hindú"
 
-#: settings.py:104 utils.js:281
+#: settings.py:103 utils.js:291
 msgid "Hmong"
 msgstr "Hmong"
 
-#: settings.py:105 utils.js:282
+#: settings.py:104 utils.js:292
 msgid "Croatian"
 msgstr "Croata"
 
-#: settings.py:106 utils.js:283
+#: settings.py:105 utils.js:293
 msgid "Haitian Creole"
 msgstr "Creole haitiano"
 
-#: settings.py:107 utils.js:284
+#: settings.py:106 utils.js:294
 msgid "Hungarian"
 msgstr "Húngaro"
 
-#: settings.py:108 utils.js:285
+#: settings.py:107 utils.js:295
 msgid "Armenian"
 msgstr "Armenio"
 
-#: settings.py:109 utils.js:286
+#: settings.py:108 utils.js:296
 msgid "Indonesian"
 msgstr "Indonesio"
 
-#: settings.py:110 utils.js:287
+#: settings.py:109 utils.js:297
 msgid "Igbo"
 msgstr "Igbo"
 
-#: settings.py:111 utils.js:288
+#: settings.py:110 utils.js:298
 msgid "Icelandic"
 msgstr "Islandés"
 
-#: settings.py:112 utils.js:289
+#: settings.py:111 utils.js:299
 msgid "Italian"
 msgstr "Italiano"
 
-#: settings.py:113 utils.js:290
+#: settings.py:112 utils.js:300
 msgid "Hebrew"
 msgstr "Hebreo"
 
-#: settings.py:114 utils.js:291
+#: settings.py:113 utils.js:301
 msgid "Japanese"
 msgstr "Japonés"
 
-#: settings.py:115 utils.js:292
+#: settings.py:114 utils.js:302
 msgid "Javanese"
 msgstr "Javanés"
 
-#: settings.py:116 utils.js:293
+#: settings.py:115 utils.js:303
 msgid "Georgian"
 msgstr "Georgiano"
 
-#: settings.py:117 utils.js:294
+#: settings.py:116 utils.js:304
 msgid "Kazakh"
 msgstr "Kazakh"
 
-#: settings.py:118 utils.js:295
+#: settings.py:117 utils.js:305
 msgid "Khmer"
 msgstr "Jemer"
 
-#: settings.py:119 utils.js:296
+#: settings.py:118 utils.js:306
 msgid "Kannada"
 msgstr "Kannada"
 
-#: settings.py:120 utils.js:297
+#: settings.py:119 utils.js:307
 msgid "Korean"
 msgstr "Koreano"
 
-#: settings.py:121 utils.js:298
+#: settings.py:120 utils.js:308
 msgid "Kurdish (Kurmanji)"
 msgstr "Kurdo (Kurmanji)"
 
-#: settings.py:122 utils.js:299
+#: settings.py:121 utils.js:309
 msgid "Kyrgyz"
 msgstr "Kirguís"
 
-#: settings.py:123 utils.js:300
+#: settings.py:122 utils.js:310
 msgid "Latin"
 msgstr "Latín"
 
-#: settings.py:124 utils.js:301
+#: settings.py:123 utils.js:311
 msgid "Luxembourgish"
 msgstr "Luxemburgués"
 
-#: settings.py:125 utils.js:302
+#: settings.py:124 utils.js:312
 msgid "Lao"
 msgstr "Lao"
 
-#: settings.py:126 utils.js:303
+#: settings.py:125 utils.js:313
 msgid "Lithuanian"
 msgstr "Lituano"
 
-#: settings.py:127 utils.js:304
+#: settings.py:126 utils.js:314
 msgid "Latvian"
 msgstr "Letón"
 
-#: settings.py:128 utils.js:305
+#: settings.py:127 utils.js:315
 msgid "Malagasy"
 msgstr "Madagascarí"
 
-#: settings.py:129 utils.js:306
+#: settings.py:128 utils.js:316
 msgid "Maori"
 msgstr "Maorí"
 
-#: settings.py:130 utils.js:307
+#: settings.py:129 utils.js:317
 msgid "Macedonian"
 msgstr "Macedonio"
 
-#: settings.py:131 utils.js:308
+#: settings.py:130 utils.js:318
 msgid "Malayalam"
 msgstr "Malayalam"
 
-#: settings.py:132 utils.js:309
+#: settings.py:131 utils.js:319
 msgid "Mongolian"
 msgstr "Mongol"
 
-#: settings.py:133 utils.js:310
+#: settings.py:132 utils.js:320
 msgid "Marathi"
 msgstr "Maratí"
 
-#: settings.py:134 utils.js:311
+#: settings.py:133 utils.js:321
 msgid "Malay"
 msgstr "Malayo"
 
-#: settings.py:135 utils.js:312
+#: settings.py:134 utils.js:322
 msgid "Maltese"
 msgstr "Maltés"
 
-#: settings.py:136 utils.js:313
+#: settings.py:135 utils.js:323
 msgid "Myanmar (Burmese)"
 msgstr "Myanmar (Birmano)"
 
-#: settings.py:137 utils.js:314
+#: settings.py:136 utils.js:324
 msgid "Nepali"
 msgstr "Nepalí"
 
-#: settings.py:138 utils.js:315
+#: settings.py:137 utils.js:325
 msgid "Dutch"
 msgstr "Holandés"
 
-#: settings.py:139 utils.js:316
+#: settings.py:138 utils.js:326
 msgid "Norwegian"
 msgstr "Noruego"
 
-#: settings.py:140 utils.js:317
+#: settings.py:139 utils.js:327
 msgid "Cebuano"
 msgstr "Cebuano"
 
-#: settings.py:141 utils.js:318
+#: settings.py:140 utils.js:328
 msgid "Punjabi"
 msgstr "Punjabí"
 
-#: settings.py:142 utils.js:319
+#: settings.py:141 utils.js:329
 msgid "Polish"
 msgstr "Polaco"
 
-#: settings.py:143 utils.js:320
+#: settings.py:142 utils.js:330
 msgid "Pashto"
 msgstr "Pashto"
 
-#: settings.py:144 utils.js:321
+#: settings.py:143 utils.js:331
 msgid "Portuguese"
 msgstr "Portugués"
 
-#: settings.py:145 utils.js:322
+#: settings.py:144 utils.js:332
 msgid "Romanian"
 msgstr "Rumano"
 
-#: settings.py:146 utils.js:323
+#: settings.py:145 utils.js:333
 msgid "Russian"
 msgstr "Ruso"
 
-#: settings.py:147 utils.js:324
+#: settings.py:146 utils.js:334
 msgid "Sindhi"
 msgstr "Sindhi"
 
-#: settings.py:148 utils.js:325
+#: settings.py:147 utils.js:335
 msgid "Sinhala"
 msgstr "Sinhala"
 
-#: settings.py:149 utils.js:326
+#: settings.py:148 utils.js:336
 msgid "Slovak"
 msgstr "Eslovaco"
 
-#: settings.py:150 utils.js:327
+#: settings.py:149 utils.js:337
 msgid "Slovenian"
 msgstr "Esloveno"
 
-#: settings.py:151 utils.js:328
+#: settings.py:150 utils.js:338
 msgid "Samoan"
 msgstr "Samoano"
 
-#: settings.py:152 utils.js:329
+#: settings.py:151 utils.js:339
 msgid "Shona"
 msgstr "Shona"
 
-#: settings.py:153 utils.js:330
+#: settings.py:152 utils.js:340
 msgid "Somali"
 msgstr "Somalí"
 
-#: settings.py:154 utils.js:331
+#: settings.py:153 utils.js:341
 msgid "Albanian"
 msgstr "Albano"
 
-#: settings.py:155 utils.js:332
+#: settings.py:154 utils.js:342
 msgid "Serbian"
 msgstr "Serbio"
 
-#: settings.py:156 utils.js:333
+#: settings.py:155 utils.js:343
 msgid "Sesotho"
 msgstr "Sesotho"
 
-#: settings.py:157 utils.js:334
+#: settings.py:156 utils.js:344
 msgid "Sundanese"
 msgstr "Sundanese"
 
-#: settings.py:158 utils.js:335
+#: settings.py:157 utils.js:345
 msgid "Swedish"
 msgstr "Sueco"
 
-#: settings.py:159 utils.js:336
+#: settings.py:158 utils.js:346
 msgid "Swahili"
 msgstr "Swahili"
 
-#: settings.py:160 utils.js:337
+#: settings.py:159 utils.js:347
 msgid "Tamil"
 msgstr "Tamil"
 
-#: settings.py:161 utils.js:338
+#: settings.py:160 utils.js:348
 msgid "Telugu"
 msgstr "Telugu"
 
-#: settings.py:162 utils.js:339
+#: settings.py:161 utils.js:349
 msgid "Tajik"
 msgstr "Tajik"
 
-#: settings.py:163 utils.js:340
+#: settings.py:162 utils.js:350
 msgid "Thai"
 msgstr "Tailandés"
 
-#: settings.py:164 utils.js:341
+#: settings.py:163 utils.js:351
 msgid "Filipino"
 msgstr "Filipino"
 
-#: settings.py:165 utils.js:342
+#: settings.py:164 utils.js:352
 msgid "Turkish"
 msgstr "Turco"
 
-#: settings.py:166 utils.js:343
+#: settings.py:165 utils.js:353
 msgid "Ukrainian"
 msgstr "Ukraniano"
 
-#: settings.py:167 utils.js:344
+#: settings.py:166 utils.js:354
 msgid "Urdu"
 msgstr "Urdu"
 
-#: settings.py:168 utils.js:345
+#: settings.py:167 utils.js:355
 msgid "Uzbek"
 msgstr "Uzbeko"
 
-#: settings.py:169 utils.js:346
+#: settings.py:168 utils.js:356
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
-#: settings.py:170 utils.js:347
+#: settings.py:169 utils.js:357
 msgid "Xhosa"
 msgstr "Xhosa"
 
-#: settings.py:171 utils.js:348
+#: settings.py:170 utils.js:358
 msgid "Yiddish"
 msgstr "Yídish"
 
-#: settings.py:172 utils.js:349
+#: settings.py:171 utils.js:359
 msgid "Yoruba"
 msgstr "Yoruba"
 
-#: settings.py:173 utils.js:350
+#: settings.py:172 utils.js:360
 msgid "Chinese (Y)"
 msgstr "Chino (Y)"
 
-#: settings.py:174 utils.js:351
+#: settings.py:173 utils.js:361
 msgid "Chinese Simplified"
 msgstr "Chino Simplificado"
 
-#: settings.py:175 utils.js:352
+#: settings.py:174 utils.js:362
 msgid "Chinese Traditional"
 msgstr "Chino Tradicional"
 
-#: settings.py:176 utils.js:353
+#: settings.py:175 utils.js:363
 msgid "Zulu"
 msgstr "Zulú"
 
-#: settings.py:186
+#: settings.py:185
 msgid "Global"
 msgstr "Global"
 
-#: settings.py:188
+#: settings.py:187
 msgid "Global extension options"
 msgstr "Opciones globales de la extensión"
 
-#: settings.py:193
+#: settings.py:192
 msgid "Default translation provider"
 msgstr "Proveedor de traducción predeterminado"
 
-#: settings.py:194
+#: settings.py:193
 msgid "Select the default translation provider."
 msgstr "Seleccionar el proveedor de traducción predeterminado."
 
-#: settings.py:195
+#: settings.py:194
 msgid "Providers marked with (*) require translate-shell package to work."
 msgstr "Los proveedores marcados con (*) requieren el paquete de translate-shell para trabajar."
 
-#: settings.py:196 utils.js:3654
+#: settings.py:195 utils.js:3664
 msgid "See the extended help of this extension for more information."
 msgstr "Consulte la ayuda extendida de esta extensión para más información."
 
-#: settings.py:210
+#: settings.py:209
 msgid "Remember last translator"
 msgstr "Recordar el último traductor"
 
-#: settings.py:211
+#: settings.py:210
 msgid "Remember last used translation provider."
 msgstr "Recordar el último proveedor de traducción utilizado."
 
-#: settings.py:217
+#: settings.py:216
 msgid "Keep source entry text selected"
 msgstr "Mantener el texto de entrada de origen seleccionado"
 
-#: settings.py:218
+#: settings.py:217
 msgid "Keep source entry text selected whenever the translation dialog is opened and the source entry box contains text."
 msgstr "Mantener el texto del cuadro de entrada de origen seleccionado siempre que se abra el cuadro de diálogo de traducción y el cuadro de entrada de origen contenga texto."
 
-#: settings.py:225
+#: settings.py:224
 msgid "Show most used languages"
 msgstr "Mostrar los idiomas más utilizados"
 
-#: settings.py:226
+#: settings.py:225
 msgid "Display a list of most used languages."
 msgstr "Mostrar una lista de los idiomas más utilizados."
 
-#: settings.py:232
+#: settings.py:231
 msgid "Synchronize scroll entries"
 msgstr "Sincronizar las entradas de desplazamiento"
 
-#: settings.py:233
+#: settings.py:232
 msgid "Make the source and target entries scroll synchronously."
 msgstr "Hacer que las entradas de origen y destino se desplacen de forma síncrona."
 
-#: settings.py:239
+#: settings.py:238
 msgid "Enable shortcuts"
 msgstr "Habilitar accesos directos"
 
-#: settings.py:240
+#: settings.py:239
 msgid "Enable/Disable the use of keyboard shortcuts."
 msgstr "Habilitar/Deshabilitar el uso de atajos de teclado."
 
-#: settings.py:247
+#: settings.py:246
 msgid "Open translator dialog"
 msgstr "Abrir diálogo del traductor"
 
-#: settings.py:248
+#: settings.py:247
 msgid "Translate text from clipboard"
 msgstr "Traducir desde el portapapeles"
 
-#: settings.py:249
+#: settings.py:248
 msgid "Translate from primary selection"
 msgstr "Traducir desde la selección principal."
 
-#: settings.py:257
+#: settings.py:256
 msgid "Translators"
 msgstr "Traductores"
 
-#: settings.py:259
+#: settings.py:258
 msgid "Set default settings for each available translation service"
 msgstr "Establecer la configuración predeterminada para cada servicio de traducción disponible"
 
-#: settings.py:270
+#: settings.py:269
 msgid "Appearance"
 msgstr "Apariencia"
 
-#: settings.py:272
+#: settings.py:271
 msgid "Translation dialog appearance"
 msgstr "Apariencia del diálogo de traducción"
 
-#: settings.py:277
+#: settings.py:276
 msgid "Dialog theme"
 msgstr "Tema de diálogo"
 
-#: settings.py:278
+#: settings.py:277
 msgid "Select a theme for the translation dialog."
 msgstr "Seleccionar un tema para el diálogo de traducción."
 
-#: settings.py:280 settings.py:355
+#: settings.py:279 settings.py:354
 msgid "Custom"
 msgstr "Personalizado"
 
-#: settings.py:281
+#: settings.py:280
 msgid "Default"
 msgstr "Por defecto"
 
-#: settings.py:302
+#: settings.py:301
 msgid "Custom theme"
 msgstr "Tema personalizado"
 
-#: settings.py:303
+#: settings.py:302
 msgid "Select a custom theme for the translation dialog."
 msgstr "Seleccionar un tema personalizado para el diálogo de traducción."
 
-#: settings.py:309
+#: settings.py:308
 msgid "Font size"
 msgstr "Tamaño de fuente"
 
-#: settings.py:310
+#: settings.py:309
 msgid "Select a font size for the source text and target text entries."
 msgstr "Seleccionar tamaño de fuente para las entradas de texto de origen y de texto de destino."
 
-#: settings.py:314 settings.py:378 settings.py:388 settings.py:400
+#: settings.py:313 settings.py:377 settings.py:387 settings.py:399
 msgid "pixels"
 msgstr "píxeles"
 
-#: settings.py:320
+#: settings.py:319
 msgid "Percentage of screen width"
 msgstr "Porcentaje de ancho de pantalla"
 
-#: settings.py:321
+#: settings.py:320
 msgid "What percentage of screen width should the translation dialog fill."
 msgstr "¿Qué porcentaje de ancho de pantalla debe llenar el cuadro de diálogo de traducción?"
 
-#: settings.py:325 settings.py:336
+#: settings.py:324 settings.py:335
 msgid "percentage"
 msgstr "porcentaje"
 
-#: settings.py:331
+#: settings.py:330
 msgid "Percentage of screen height"
 msgstr "Porcentaje de altura de la pantalla"
 
-#: settings.py:332
+#: settings.py:331
 msgid "What percentage of screen height should the translation dialog fill."
 msgstr "¿Qué porcentaje de altura de pantalla debe llenar el cuadro de diálogo de traducción?"
 
-#: settings.py:343 extension.js:1142 extension.js:1145 utils.js:2780
+#: settings.py:342 extension.js:1142 extension.js:1145 utils.js:2790
 msgid "History"
 msgstr "Historial"
 
-#: settings.py:345
+#: settings.py:344
 msgid "Translation history settings"
 msgstr "Configuración del historial de traducción"
 
-#: settings.py:350
+#: settings.py:349
 msgid "Timestamp for history entries"
 msgstr "Marca de tiempo para las entradas del historial"
 
-#: settings.py:351
+#: settings.py:350
 msgid ""
 "Timestamp format for the translation history entries.\n"
 "Note: After changing this setting, only new entries in the translation history will be saved with the new timestamp format. Old entries will still have the previous timestamp format."
@@ -718,17 +718,17 @@ msgstr ""
 "Formato de fecha y hora para las entradas del historial de traducción.\n"
 "Nota: Después de cambiar este ajuste, sólo las nuevas entradas en el historial de traducción se guardarán con el nuevo formato. Las entradas antiguas seguirán teniendo el formato de marca de hora anterior."
 
-#: settings.py:357
+#: settings.py:356
 msgid "European"
 msgstr "Europeo"
 
-#: settings.py:364
+#: settings.py:363
 msgid "Custom timestamp"
 msgstr "Marca de tiempo personalizada"
 
 #. TO TRANSLATORS: The following strings shouldn't be translated:
 #. YYYY, MM, DD, hh, mm and ss.
-#: settings.py:367
+#: settings.py:366
 msgid ""
 "Choose a custom timestamp for the translation history entries.\n"
 "YYYY: year\n"
@@ -746,35 +746,35 @@ msgstr ""
 "mm: minutos\n"
 "ss: segundos"
 
-#: settings.py:374
+#: settings.py:373
 msgid "History window initial width"
 msgstr "Ancho inicial de la ventana de historial"
 
-#: settings.py:384
+#: settings.py:383
 msgid "History window initial height"
 msgstr "Altura inicial de la ventana del historial"
 
-#: settings.py:394
+#: settings.py:393
 msgid "Width to trigger word wrap"
 msgstr "Ancho para activar el ajuste de palabras"
 
-#: settings.py:395
+#: settings.py:394
 msgid "The \"Source text\" and \"Target text\" columns on the history window will wrap its text at the width defined by this setting."
 msgstr "Las columnas \"Texto de origen\" y \"Texto de destino\" de la ventana del historial contendrán el texto con el ancho definido por esta configuración."
 
-#: settings.py:407
+#: settings.py:406
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: settings.py:409
+#: settings.py:408
 msgid "Various advanced options"
 msgstr "Varias opciones avanzadas"
 
-#: settings.py:415
+#: settings.py:414
 msgid "Yandex API keys"
 msgstr "Claves de la API de Yandex"
 
-#: settings.py:416
+#: settings.py:415
 msgid ""
 "Enter one API key per line.\n"
 "Read the help file found inside this extension folder to know how to get free Yandex API keys."
@@ -782,167 +782,143 @@ msgstr ""
 "Introduzca una clave de API por línea.\n"
 "Lea el archivo de ayuda (elemento Ayuda en el menú contextual de esta extensión) que se encuentra dentro de la carpeta de este applet para saber cómo obtener las claves de API gratuitas de Yandex."
 
-#: settings.py:422
+#: settings.py:421
 msgid "This options are only useful for the extension developer."
 msgstr "Estas opciones sólo son útiles para el desarrollador de la extensión"
 
-#: settings.py:430
+#: settings.py:429
 msgid "Enable logging"
 msgstr "Habilitar el registro"
 
-#: settings.py:431
+#: settings.py:430
 msgid "It enables the ability to log the output of several functions used by the extension."
 msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por el applet."
 
-#: settings.py:438
+#: settings.py:437
 msgid "Indent translation history data"
 msgstr "Indentar los datos del historial de traducciones"
 
-#: settings.py:439
+#: settings.py:438
 msgid "It allows to save the translation history data with indentation."
 msgstr "Permite guardar los datos del historial de traducción con sangría."
 
-#: settings.py:884
+#: settings.py:883
 msgid "Select a directory to use"
 msgstr "Seleccionar un directorio para usarlo"
 
-#: settings.py:887
+#: settings.py:886
 msgid "Select a file"
 msgstr "Seleccionar un archivo"
 
 #. TO TRANSLATORS: Could be left blank.
-#: settings.py:892 settings.py:1476 settings.py:1482
+#: settings.py:891 settings.py:1475 settings.py:1481
 msgid "_Cancel"
 msgstr "_Cancelar"
 
 #. TO TRANSLATORS: Could be left blank.
-#: settings.py:894 settings.py:1484
+#: settings.py:893 settings.py:1483
 msgid "_Open"
 msgstr "_Abrir"
 
-#: settings.py:897
+#: settings.py:896
 msgid "Directories"
 msgstr "Directorios"
 
-#: settings.py:957
+#: settings.py:956
 msgid "Shortcut action"
 msgstr "Acción del acceso directo"
 
-#: settings.py:971
+#: settings.py:970
 msgid "Shortcut"
 msgstr "Atajo"
 
-#: settings.py:987
+#: settings.py:986
 msgid "Click to set a new hotkey."
 msgstr "Haga clic para establecer una nueva tecla de acceso directo."
 
-#: settings.py:1048
+#: settings.py:1047
 msgid "Default source language:"
 msgstr "Idioma de origen predeterminado:"
 
-#: settings.py:1060
+#: settings.py:1059
 msgid "Default target language:"
 msgstr "Idioma de destino predeterminado:"
 
-#: settings.py:1071
+#: settings.py:1070
 msgid "Remember the last used languages:"
 msgstr "Recordar los últimos idiomas usados:"
 
-#: settings.py:1256
+#: settings.py:1255
 msgid "Contributors/Mentions:"
 msgstr "Colaboradores/Menciones:"
 
 #. TO TRANSLATORS:
 #. Here goes the name/s of the author/s of the translations.
 #. Only e-mail addresses and links to GitHub accounts are allowed. NOTHING MORE.
-#: settings.py:1264
+#: settings.py:1263
 msgid "translator-credits"
 msgstr "Odyseus https://github.com/Odyseus"
 
 #. TO TRANSLATORS: Full sentence:
 #. ExtensionName extension preferences
-#: settings.py:1334
+#: settings.py:1333
 #, python-format
 msgid "%s extension preferences"
 msgstr "Preferencias de la extensión %s"
 
-#: settings.py:1380
+#: settings.py:1379
 msgid "Reset settings to defaults"
 msgstr "Restablecer preferencias a los valores predeterminados"
 
-#: settings.py:1382
+#: settings.py:1381
 msgid "Import settings from a file"
 msgstr "Importar preferencias desde un archivo"
 
-#: settings.py:1384
+#: settings.py:1383
 msgid "Export settings to a file"
 msgstr "Exportar preferencias a un archivo"
 
-#: settings.py:1389
+#: settings.py:1388
 msgid "Remember window size"
 msgstr "Recordar tamaño de ventana"
 
-#: settings.py:1397
+#: settings.py:1396
 msgid "About"
 msgstr "Acerca de"
 
-#: settings.py:1405
+#: settings.py:1404
 msgid "Manage settings"
 msgstr "Administrar preferencias"
 
 #. TO TRANSLATORS: Full sentence:
 #. Warning: Trying to reset all ExtensionName settings!!!
-#: settings.py:1457
+#: settings.py:1456
 #, python-format
 msgid "Warning: Trying to reset all %s settings!!!"
 msgstr "Advertencia: ¡Intentando restablecer todos los ajustes de %s!"
 
 #. TO TRANSLATORS: Full sentence:
 #. Reset all ExtensionName settings to default?
-#: settings.py:1461
+#: settings.py:1460
 #, python-format
 msgid "Reset all %s settings to default?"
 msgstr "¿Restablecer todas las configuraciones de %s por defecto?"
 
-#: settings.py:1474
+#: settings.py:1473
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: settings.py:1477
+#: settings.py:1476
 msgid "_Save"
 msgstr "_Guardar"
 
-#: settings.py:1480
+#: settings.py:1479
 msgid "Select a file to import"
 msgstr "Seleccionar un archivo desde el cual importar"
 
-#: settings.py:1496
+#: settings.py:1495
 msgid "DCONF files"
 msgstr "Archivos DCONF"
-
-#. TO TRANSLATORS: Could be left blank.
-#: settings.py:1544
-#, python-format
-msgid "Please enter your password to install the required settings schema for %s"
-msgstr "Por favor, introduzca su contraseña para instalar el esquema de configuración necesario para %s"
-
-#. TO TRANSLATORS: Could be left blank.
-#: settings.py:1555
-#, python-format
-msgid "Could not install the settings schema for %s.  You will have to perform this step yourself."
-msgstr "No se ha podido instalar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo."
-
-#. TO TRANSLATORS: Could be left blank.
-#: settings.py:1561
-#, python-format
-msgid "Please enter your password to remove the settings schema for %s"
-msgstr "Por favor, introduzca su contraseña para eliminar el esquema de configuración para %s"
-
-#. TO TRANSLATORS: Could be left blank.
-#: settings.py:1572
-#, python-format
-msgid "Could not remove the settings schema for %s. You will have to perform this step yourself.  This is not a critical error."
-msgstr "No se pudo eliminar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo. Esto no es un error crítico."
 
 #: z_create_localized_help.py:28
 msgid "Description"
@@ -1179,7 +1155,7 @@ msgid "Check dependencies"
 msgstr "Comprobar dependencias"
 
 #. Just in case.
-#: extension.js:613 utils.js:3555
+#: extension.js:613 utils.js:3565
 msgid "Extended help"
 msgstr "Ayuda extendida"
 
@@ -1217,7 +1193,7 @@ msgstr "Error de análisis de hoja de estilo"
 msgid "Error unloading stylesheet"
 msgstr "Error al descargar la hoja de estilos"
 
-#: translation_providers/google_translation_provider.js:86 translation_providers/transltr_translation_provider.js:76 translation_providers/yandex_translation_provider.js:282 utils.js:2306
+#: translation_providers/google_translation_provider.js:86 translation_providers/transltr_translation_provider.js:76 translation_providers/yandex_translation_provider.js:282 utils.js:2316
 msgid "Error"
 msgstr "Error"
 
@@ -1253,118 +1229,118 @@ msgstr "No se admite la dirección de traducción especificada"
 msgid "No Yandex API keys were found!!!"
 msgstr "¡No se encontraron claves de API de Yandex!"
 
-#: translation_providers/yandex_translation_provider.js:346 utils.js:3533 utils.js:3550
+#: translation_providers/yandex_translation_provider.js:346 utils.js:3543 utils.js:3560
 msgid "Check this extension help file for instructions."
 msgstr "Comprobar el archivo de ayuda de esta extensión para obtener instrucciones."
 
-#: utils.js:483
+#: utils.js:493
 #, javascript-format
 msgid "Schema %s could not be found for extension %s."
 msgstr "No se pudo encontrar el esquema %s para la extensión %s."
 
-#: utils.js:484
+#: utils.js:494
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 
-#: utils.js:902
+#: utils.js:912
 msgid "Icon and label are both false."
 msgstr "El ícono y la etiqueta son ambos falsos."
 
-#: utils.js:1310
+#: utils.js:1320
 msgid "Shortcuts"
 msgstr "Accesos directos"
 
-#: utils.js:1312
+#: utils.js:1322
 msgid "Open translator dialog."
 msgstr "Abrir diálogo del traductor."
 
-#: utils.js:1314
+#: utils.js:1324
 msgid "Open translator dialog and translate text from clipboard."
 msgstr "Abra el diálogo del traductor y traducir el texto desde el portapapeles."
 
-#: utils.js:1316
+#: utils.js:1326
 msgid "Open translator dialog and translate from primary selection."
 msgstr "Abrir diálogo de traductor y traducir la selección primaria."
 
-#: utils.js:1318
+#: utils.js:1328
 msgid "Translate text."
 msgstr "Traducir texto."
 
-#: utils.js:1320
+#: utils.js:1330
 msgid "Force text translation. Ignores translation history."
 msgstr "Forzar la traducción del texto. Ignora el historial de traducción."
 
-#: utils.js:1322
+#: utils.js:1332
 msgid "Copy translated text to clipboard."
 msgstr "Copiar el texto traducido al portapapeles."
 
-#: utils.js:1324
+#: utils.js:1334
 msgid "Swap languages."
 msgstr "Cambiar idiomas."
 
-#: utils.js:1326
+#: utils.js:1336
 msgid "Reset languages to default."
 msgstr "Restablecer los idiomas predeterminados."
 
-#: utils.js:1328
+#: utils.js:1338
 msgid "Close dialog."
 msgstr "Cerrar diálogo."
 
-#: utils.js:1476
+#: utils.js:1486
 msgid "Type to search..."
 msgstr "Escribir para buscar..."
 
-#: utils.js:1693
+#: utils.js:1703
 msgid "Most used languages​​."
 msgstr "Idiomas más utilizados."
 
-#: utils.js:2181
+#: utils.js:2191
 #, javascript-format
 msgid "Can't load preferences for %s"
 msgstr "No se pueden cargar las preferencias de %s"
 
 #. jshint ignore:line
-#: utils.js:2364 utils.js:2368
+#: utils.js:2374 utils.js:2378
 msgid "Not implemented"
 msgstr "No implementado"
 
-#: utils.js:3338
+#: utils.js:3348
 msgid "Error executing translate-shell"
 msgstr "Error al ejecutar translate-shell"
 
-#: utils.js:3531 utils.js:3548
+#: utils.js:3541 utils.js:3558
 msgid "Unmet dependencies found!!!"
 msgstr "¡Dependencias no satisfechas encontradas!"
 
-#: utils.js:3534
+#: utils.js:3544
 msgid "It can be accessed from the translation dialog main menu."
 msgstr "Se puede acceder desde el menú principal del diálogo de traducción."
 
-#: utils.js:3539
+#: utils.js:3549
 msgid "All dependencies seem to be met."
 msgstr "Todas las dependencias parecen ser cumplidas."
 
-#: utils.js:3551
+#: utils.js:3561
 msgid "This information has also been logged into the ~/.cinnamon/glass.log file."
 msgstr "Esta información también ha sido registrada en el archivo ~/.cinnamon/glass.log."
 
-#: utils.js:3595
+#: utils.js:3605
 msgid "Press <Esc> to close"
 msgstr "Presione <Esc> para cerrar"
 
-#: utils.js:3650
+#: utils.js:3660
 msgid "This translation provider doesn't require translate-shell to work."
 msgstr "Este proveedor de traducción no requiere translate-shell para trabajar."
 
-#: utils.js:3653
+#: utils.js:3663
 msgid "This translation provider requires translate-shell to work."
 msgstr "Este proveedor de traducción requiere translate-shell para trabajar."
 
-#: utils.js:3879
+#: utils.js:3889
 msgid "Error while parsing data"
 msgstr "Error al analizar datos"
 
-#: utils.js:3911
+#: utils.js:3921
 msgid "Error while translating, check your internet connection"
 msgstr "Error al traducir, comprobar conexión a Internet"
 
@@ -1375,3 +1351,15 @@ msgstr "Ver el archivo de ayuda de este xlet."
 #. metadata.json->description
 msgid "Translation of text by different translation providers (currently Google, Yandex, Bing and Apertium)."
 msgstr "Traducción de texto proporcionado por diferentes proveedores de traducción (actualmente Google, Yandex, Bing, Translatr and Apertium)."
+
+#~ msgid "Please enter your password to install the required settings schema for %s"
+#~ msgstr "Por favor, introduzca su contraseña para instalar el esquema de configuración necesario para %s"
+
+#~ msgid "Could not install the settings schema for %s.  You will have to perform this step yourself."
+#~ msgstr "No se ha podido instalar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo."
+
+#~ msgid "Please enter your password to remove the settings schema for %s"
+#~ msgstr "Por favor, introduzca su contraseña para eliminar el esquema de configuración para %s"
+
+#~ msgid "Could not remove the settings schema for %s. You will have to perform this step yourself.  This is not a critical error."
+#~ msgstr "No se pudo eliminar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo. Esto no es un error crítico."

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-14 16:55-0300\n"
+"POT-Creation-Date: 2018-06-10 21:35-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -70,8 +70,8 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
@@ -437,7 +437,7 @@ msgstr "Abrir el editor de menús"
 msgid "Edit custom launchers"
 msgstr "Editar lanzadores personalizados"
 
-#: applet.js:1483 utils.js:1038
+#: applet.js:1483 utils.js:1040
 msgid "This file is no longer available"
 msgstr "Este archivo ya no está disponible"
 
@@ -457,129 +457,129 @@ msgstr "Favoritos"
 msgid "Type to search..."
 msgstr "Escriba para buscar..."
 
-#: utils.js:518
+#: utils.js:520
 msgid "Add to panel"
 msgstr "Añadir al panel"
 
-#: utils.js:522
+#: utils.js:524
 msgid "Add this application to the Panel launchers applet."
 msgstr "Agregar esta aplicación a los Lanzadores del panel."
 
-#: utils.js:529
+#: utils.js:531
 msgid "Add to desktop"
 msgstr "Añadir al escritorio"
 
-#: utils.js:533
+#: utils.js:535
 msgid "Add this application to the Desktop."
 msgstr "Agregar un acceso directo a esta aplicación en el Escritorio."
 
-#: utils.js:541
+#: utils.js:543
 msgid "Remove from favorites"
 msgstr "Quitar de favoritos"
 
-#: utils.js:545
+#: utils.js:547
 msgid "Remove application from your favorites."
 msgstr "Quitar aplicación de favoritos."
 
-#: utils.js:550
+#: utils.js:552
 msgid "Add to favorites"
 msgstr "Añadir a favoritos"
 
-#: utils.js:554
+#: utils.js:556
 msgid "Add application to your favorites."
 msgstr "Añadir esta aplicación a los favoritos."
 
-#: utils.js:562
+#: utils.js:564
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: utils.js:566
+#: utils.js:568
 msgid "Uninstall application from your system."
 msgstr "Desinstalar aplicación de su sistema."
 
-#: utils.js:573
+#: utils.js:575
 msgid "Run with NVIDIA GPU"
 msgstr "Ejecutar con GPU NVIDIA"
 
-#: utils.js:577
+#: utils.js:579
 msgid "Run application through optirun command (Bumblebee)."
 msgstr "Ejecutar aplicación a través del comando optirun (Bumblebee)."
 
-#: utils.js:584
+#: utils.js:586
 msgid "Run as root"
 msgstr "Ejecutar como root"
 
-#: utils.js:588
+#: utils.js:590
 msgid "Run application as root."
 msgstr "Ejecutar esta aplicación como root."
 
-#: utils.js:595
+#: utils.js:597
 msgid "Edit .desktop file"
 msgstr "Editar archivo .desktop"
 
-#: utils.js:599
+#: utils.js:601
 msgid "Edit this application .desktop file with a text editor."
 msgstr "Editar el archivo .desktop de esta aplicación con un editor de textos."
 
-#: utils.js:606
+#: utils.js:608
 msgid "Open .desktop file folder"
 msgstr "Abrir carpeta del archivo .desktop"
 
-#: utils.js:610
+#: utils.js:612
 msgid "Open the folder containg this application .desktop file."
 msgstr "Abrir la carpeta que contiene el archivo .desktop de esta aplicación."
 
-#: utils.js:617
+#: utils.js:619
 msgid "Run from terminal"
 msgstr "Ejecutar desde terminal"
 
-#: utils.js:621
+#: utils.js:623
 msgid "Run application from a terminal."
 msgstr "Ejecutar aplicación desde una terminal."
 
-#: utils.js:628
+#: utils.js:630
 msgid "Run from terminal as root"
 msgstr "Ejecutar desde terminal como root"
 
-#: utils.js:632
+#: utils.js:634
 msgid "Run application from a terminal as root."
 msgstr "Ejecutar aplicación desde una terminal como root."
 
-#: utils.js:1089
+#: utils.js:1091
 msgid "Open with"
 msgstr "Abrir con"
 
-#: utils.js:1144
+#: utils.js:1146
 msgid "Other application..."
 msgstr "Otra aplicación..."
 
-#: utils.js:1231 utils.js:1559
+#: utils.js:1233 utils.js:1561
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: utils.js:1297
+#: utils.js:1299
 msgid "All Applications"
 msgstr "Todas las aplicaciones"
 
-#: utils.js:1341
+#: utils.js:1343
 msgid "Places"
 msgstr "Lugares"
 
-#: utils.js:1374
+#: utils.js:1376
 msgid "Recent Files"
 msgstr "Archivos recientes"
 
 #. settings-schema.json->recent_apps_header->description
-#: utils.js:1418
+#: utils.js:1420
 msgid "Recent Applications"
 msgstr "Aplicaciones recientes"
 
-#: utils.js:1612
+#: utils.js:1614
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr "No se pudo encontrar el esquema %s para el xlet %s."
 
-#: utils.js:1613
+#: utils.js:1615
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 
@@ -934,14 +934,6 @@ msgstr ""
 msgid "Privileges elevator:"
 msgstr "Elevador de privilegios"
 
-#. settings-schema.json->pref_privilege_elevator->options
-msgid "gksu"
-msgstr "gksu"
-
-#. settings-schema.json->pref_privilege_elevator->options
-msgid "gksudo"
-msgstr "gksudo"
-
 #. settings-schema.json->pref_privilege_elevator->tooltip
 msgid ""
 "The graphical front-end to use to run applications as root.\n"
@@ -1025,465 +1017,3 @@ msgstr "Espaciado personalizado para la caja de entrada de búsqueda"
 #. settings-schema.json->padding_5_header->description
 msgid "Search box padding"
 msgstr "Espaciado personalizado para la caja de búsqueda"
-
-#~ msgid "Lock screen"
-#~ msgstr "Bloquear pantalla"
-
-#~ msgid "Lock the screen"
-#~ msgstr "Bloquear la pantalla"
-
-#~ msgid "Logout"
-#~ msgstr "Cerrar sesión"
-
-#~ msgid "Leave the session"
-#~ msgstr "Cerrar la sesión"
-
-#~ msgid "Quit"
-#~ msgstr "Salir"
-
-#~ msgid "Shutdown the computer"
-#~ msgstr "Apagar el equipo"
-
-#~ msgid "All mayor elements of the menu can be hidden or placed anywhere on the menu."
-#~ msgstr "Todos los elementos principales del menú se pueden ocultar o colocar en cualquier parte del menú."
-
-#~ msgid "Added Fuzzy search. Based on [Sane Menu](https://cinnamon-spices.linuxmint.com/applets/view/258s) applet by **nooulaif**."
-#~ msgstr "Agregada búsqueda Fuzzy. Basada en el applet [Sane Menu](https://cinnamon-spices.linuxmint.com/applets/view/258) por **nooulaif**."
-
-#~ msgid "Added a custom launchers box that can run any command/script/file and can be placed at the top/bottom of the menu or to the left/right of the searchbox."
-#~ msgstr "Se ha añadido un cuadro de lanzadores personalizados que puede ejecutar cualquier comando/script/archivo y se puede colocar en la parte superior/inferior del menú o a la izquierda/derecha de la caja de búsqueda."
-
-#~ msgid "The **Quit buttons** can now be moved next the the custom launchers box and can have custom icons (ONLY when they are placed next to the custom launchers box). They also can be hidden all at once or individually."
-#~ msgstr "Los **Botones de salida** ahora se pueden mover al lado del cuadro de lanzadores personalizados y pueden tener iconos personalizados (SOLAMENTE cuando se colocan junto al cuadro de lanzadores personalizados).  También se pueden ocultar de una vez o individualmente."
-
-#~ msgid "The searchbox can have a fixed width or an automatic width to fit the menu width."
-#~ msgstr "El cuadro de búsqueda puede tener un ancho fijo o un ancho automático para ajustarse al ancho del menú."
-
-#~ msgid "The applications info box can be hidden or replaced by traditional tooltips. Its text can also be aligned to the left."
-#~ msgstr "El cuadro de información de aplicaciones se puede ocultar o sustituir por las herramientas tradicionales.  Su texto también se puede alinear a la izquierda."
-
-#~ msgid "The size of the Favorites/Categories/Applications icons can be customized."
-#~ msgstr "El tamaño de los iconos de Favoritos/Categorías/Aplicaciones pueden ser personalizados."
-
-#~ msgid "The amount of recent files can be customized."
-#~ msgstr "La cantidad de archivos recientes se puede personalizar."
-
-#~ msgid "The **All Applications** category can be removed from the menu."
-#~ msgstr "La categoría **Todas las aplicaciones** se puede eliminar del menú."
-
-#~ msgid "The **Favorites** can now be displayed as one more category. The **All Applications** category has to be hidden."
-#~ msgstr "Los **Favoritos** ahora se pueden mostrar como una categoría más.  La categoría **Todas las aplicaciones** debe estar oculta."
-
-#~ msgid "The padding of certain menu elements can be customized to override the current theme stylesheets."
-#~ msgstr "El espaciado de ciertos elementos del menú puede personalizarse para sustituir las hojas de estilo del tema actual."
-
-#~ msgid "Recently used applications can be remembered and will be displayed on a category called **Recent Apps**. The applications will be sorted by execution time and the name and icon of the category can be customized."
-#~ msgstr "Las aplicaciones utilizadas recientemente se pueden recordar y se mostrarán en una categoría denominada **Aplicaciones recientes**.  Las aplicaciones se ordenarán por tiempo de ejecución y el nombre y el icono de la categoría se pueden personalizar."
-
-#~ msgid "Categories can be selected on hover (system default) or by clicking on them."
-#~ msgstr "Las categorías se pueden seleccionar al pasar el ratón por encima (predeterminado del sistema) o haciendo clic en ellas."
-
-#~ msgid "Cycles through the favorites box, applications box and categories box if the focus is in one of these boxes."
-#~ msgstr "Ciclan a través de la caja de favoritos, la caja de aplicaciones y la caja de categorías si alguna de estas cajas están enfocadas."
-
-#~ msgid "If the favorites box, applications box or categories box are currently focused, the [[Tab]] key will switch the focus to the custom launchers box."
-#~ msgstr "Si la caja de favoritos, la caja de aplicaciones o la caja de categorías están actualmente enfocadas, la tecla [[Tabuladora]] va a cambiar el foco hacia la caja de lanzadores personalizados."
-
-#~ msgid "If the custom launchers box isn't part of the menu, the [[Tab]] key alone or [[Ctrl]]/[[Shift]] + [[Tab]] key are pressed, it will cycle through the favorites box, applications box and categories box."
-#~ msgstr "Si la caja de lanzadores personalizados no es parte del menú y la tecla [[Tabuladora]] o la combinación [[Ctrl]]/[[Shit]] + [[Tabuladora]] son presionadas, se ciclará a través de la caja de favoritos, la caja de aplicaciones y la caja de categorías."
-
-#~ msgid "If the favorites box, applications box or categories box are currently focused, these keys will cycle through the items in the currently highlighted box."
-#~ msgstr "Si la caja de favoritos, la caja de aplicaciones o la caja de categorías tienen actualmente el foco, estas teclas van a ciclar a través de los ítems de la caja actualmente enfocada."
-
-#~ msgid "If the favorites box is **displayed**, favorites can be added/removed from the context menu for applications and by dragging and dropping applications to/from the favorites box."
-#~ msgstr "Si la caja de favoritos esta **a la vista**, favoritos pueden ser agregados/removidos desde el menú contextual de las aplicaciones y arrastrando y soltando desde/hacia la caja de favoritos."
-
-#~ msgid "**Note:** To remove a favorite, drag a favorite outside the favorites box into any part of the menu."
-#~ msgstr "**Nota:** Para remover un favorito, arrastrar un favorito fuera de la caja de favoritos hacia cualquier parte del menú."
-
-#~ msgid "If the favorites box is **hidden** and the favorites category is enabled, favorites can be added/removed from the context menu for applications and by dragging and dropping applications to the favorites category. Its simple, if a favorite is dragged into the favorites category, the favorite will be removed. If what you drag into the favorites category is a non bookmarked application, then that application will be added to the favorites."
-#~ msgstr "Si la caja de favoritos **está oculta** y la categoría de favoritos está habilitada, favoritos pueden ser agregados/removidos desde el menú contextual de las aplicaciones y arrastrando y soltando desde/hacia la categoría de favoritos. Es sencillo, si un favorito es arrastrado y soltado en la categoría de favoritos, el favorito será eliminado. Si lo que es arrastrado hacia la categoría de favoritos es una aplicación que no está en favoritos, entonces dicha aplicación será agregada a favoritos."
-
-#~ msgid "There is a file inside this applet directory called **run_from_terminal.sh**. ***Do not remove, rename or edit this file***. Otherwise, all of the *Run from terminal* options will break."
-#~ msgstr "Existe un archivo dentro del directorio de este applet llamado **run_from_terminal.sh**. **No borrar, renombrar o editar este archivo**. De otra manera, todas las opciones *Ejecutar desde terminal* se romperán."
-
-#~ msgid "Remove '%s'"
-#~ msgstr "Remover '%s'"
-
-#~ msgid "Please provide your password to uninstall this application"
-#~ msgstr "Por favor, proporcione su contraseña para desinstalar esta aplicación."
-
-#~ msgid "Account details"
-#~ msgstr "Detalles de cuenta"
-
-#~ msgid "Custom label"
-#~ msgstr "Etiqueta personalizada"
-
-#~ msgid "Open the menu on mouse over"
-#~ msgstr "Abrir el menú al pasar el ratón"
-
-#~ msgid "Enable opening the menu when the mouse enters the applet."
-#~ msgstr "Activar abrir el menú cuando el ratón entra en el applet."
-
-#~ msgid "Menu hover delay:"
-#~ msgstr "Tiempo de espera para abrir el menú:"
-
-#~ msgid "Delay before the menu is opened on entering the applet."
-#~ msgstr "Tiempo de espera para abrir el menú al ingresar al applet."
-
-#~ msgid "Enable auto-scrolling in application list"
-#~ msgstr "Habilitar desplazamiento automático en la lista de aplicaciones"
-
-#~ msgid "Choose whether or not to enable smooth auto-scrolling in the application list."
-#~ msgstr "Elegir si desea o no habilitar desplazamiento automático en la lista de aplicaciones."
-
-#~ msgid "Animate open/close menu"
-#~ msgstr "Animar apertura/cerrado del menú"
-
-#~ msgid "Use alternate category selection method (EXPERIMENTAL)"
-#~ msgstr "Usar método alternativo para seleccionar categorías (EXPERIMENTAL)"
-
-#~ msgid "With this option enabled, an alternate method to select categories will be used. This method can improve the performance of the menu and is extracted from the applet called Configurable Menu by lestcape."
-#~ msgstr "Con esta opción activada, se utilizará un método alternativo para seleccionar categorías. Este método puede mejorar el rendimiento del menú y ha sido extraído del applet llamado Configurable Menu, creado por lestcape."
-
-#~ msgid "Use hover feedback"
-#~ msgstr "Mostrar feedback al pasar el ratón por encima"
-
-#~ msgid "If enabled, and the user picture is shown, every time an application/favorite/place/recent file is hovered or selected with keyboard navigation, its icon will be displayed where the user picture is located."
-#~ msgstr "Si esta opción está activada, y la opción de mostrar la imagen del usuario también activada, cada vez que se coloque el ratón sobre ítem de aplicación/favorito/lugar/archivo reciente o se seleccione uno de estos ítems con la navegación por teclado, aparecerá el icono de tal ítem donde se encuentra la imagen de usuario."
-
-#~ msgid "Select categories on hover (EXPERIMENTAL)"
-#~ msgstr "Seleccionar categorías al pasar el ratón (EXPERIMENTAL)"
-
-#~ msgid "If disabled, categories can be selected by clicking on them instead of just hovering."
-#~ msgstr "Con esta opción deshabilitada, las categorías se pueden seleccionar haciendo clic en ellas en lugar de simplemente al pasar el ratón."
-
-#~ msgid "Category selection delay:"
-#~ msgstr "Demora para seleccionar categorías."
-
-#~ msgid "Delay between switching categories."
-#~ msgstr "Demora para el cambio entre categorías."
-
-#~ msgid "documents"
-#~ msgstr "archivos"
-
-#~ msgid "Max recent documents:"
-#~ msgstr "Máximo número de archivos recientes:"
-
-#~ msgid "Display method for information about applications:"
-#~ msgstr "Método de visualización para mostrar información sobre las aplicaciones:"
-
-#~ msgid "None"
-#~ msgstr "Ninguna"
-
-#~ msgid "Tooltips"
-#~ msgstr "Caja de herramientas"
-
-#~ msgid "Info box"
-#~ msgstr "Cuadro de información"
-
-#~ msgid "Show favorites and quit options"
-#~ msgstr "Mostrar Favoritos y opciones de salida"
-
-#~ msgid "Choose whether or not to show the left pane of the menu."
-#~ msgstr "Elegir si desea o no mostrar el panel izquierdo del menú."
-
-#~ msgid "Show \"Recent documents\" category"
-#~ msgstr "Mostrar categoría \"Documentos recientes\""
-
-#~ msgid "For people who want the \"Recent documents\" category hidden without disabling recent documents globally."
-#~ msgstr "Para la gente que quiere ocultar la categoría \"Documentos recientes\" si deshabilitar los documentos recientes globalmente."
-
-#~ msgid "Hide \"All Applications\" category"
-#~ msgstr "Esconder la categoría \"Todas las aplicaciones\""
-
-#~ msgid "Display \"Favorites\" as a category menu"
-#~ msgstr "Mostrar \"Favoritos\" como una categoría"
-
-#~ msgid "Align application info box text to the left"
-#~ msgstr "Alinear el texto del cuadro de información sobre las aplicaciones a la izquierda"
-
-#~ msgid "User picture placement"
-#~ msgstr "Ubicación de la imagen del usuario"
-
-#~ msgid "Do not show"
-#~ msgstr "No mostrar"
-
-#~ msgid "Left of applications info box"
-#~ msgstr "A la izquierda de la caja de información sobre aplicaciones"
-
-#~ msgid "Right of applications info box"
-#~ msgstr "A la derecha de la caja de información sobre aplicaciones"
-
-#~ msgid "This option allows to display the user picture on the menu. Clicking on the picture will open \"Account details\". For the image to be shown, the applications info box also has to be displayed."
-#~ msgstr "Esta opción permite visualizar la imagen del usuario en el menú. Al hacer clic en la imagen se abrirá \"Detalles de la cuenta\". Para que se muestre la imagen, también se debe mostrar el cuadro de información de aplicaciones."
-
-#~ msgid "Custom launchers box placement"
-#~ msgstr "Posición de los lanzadores personalizados"
-
-#~ msgid "On its own"
-#~ msgstr "Por sí mismo"
-
-#~ msgid "Left of search box"
-#~ msgstr "A la izquierda del campo de búsqueda"
-
-#~ msgid "Right of search box"
-#~ msgstr "A la derecha del campo de búsqueda"
-
-#~ msgid "Custom launchers buttons alignment"
-#~ msgstr "Alineamiento de los botones en lanzadores personalizados"
-
-#~ msgid "Quit buttons placement"
-#~ msgstr "Ubicación de los botones de salida"
-
-#~ msgid "Hide all"
-#~ msgstr "Ocultar todos"
-
-#~ msgid "Inside \"Favorites\" box"
-#~ msgstr "Dentro de la sección \"Favoritos\""
-
-#~ msgid "Next to \"Custom launchers\" box"
-#~ msgstr "Al lado de los lanzadores personalizados"
-
-#~ msgid "Placement of main elements on menu"
-#~ msgstr "Colocación de elementos principales en el menú"
-
-#~ msgid "First place element"
-#~ msgstr "Elemento en primer lugar"
-
-#~ msgid "Applications/Categories boxes"
-#~ msgstr "Caja de aplicaciones/categorías"
-
-#~ msgid "Applications info box"
-#~ msgstr "Caja de información sobre aplicaciones"
-
-#~ msgid "Custom Launchers box"
-#~ msgstr "Caja de lanzadores personalizados"
-
-#~ msgid "Search box"
-#~ msgstr "Campo de búsqueda"
-
-#~ msgid "Second place element"
-#~ msgstr "Elemento en segundo lugar"
-
-#~ msgid "Third place element"
-#~ msgstr "Elemento en tercer lugar"
-
-#~ msgid "Fourth place element"
-#~ msgstr "Elemento en cuarto lugar"
-
-#~ msgid "Quit buttons"
-#~ msgstr "Botones de sistema"
-
-#~ msgid "Show \"Lock screen\" button"
-#~ msgstr "Mostrar botón \"Bloquear pantalla\""
-
-#~ msgid "Custom icon for \"Lock screen\" button:"
-#~ msgstr "Ícono personalizado para el botón \"Bloquear pantalla\":"
-
-#~ msgid ""
-#~ "Only valid if the System buttons box is placed next to the Custom launchers box.\n"
-#~ "Leave blank to use default."
-#~ msgstr ""
-#~ "Válido únicamente si los botones de sistema están ubicados al lado de los lanzadores personalizados.\n"
-#~ "Dejar en blanco para usar ícono predeterminado."
-
-#~ msgid "Show \"Logout\" button"
-#~ msgstr "Mostrar botón \"Cerrar sesión\""
-
-#~ msgid "Custom icon for \"Logout\" button:"
-#~ msgstr "Ícono personalizado para el botón \"Cerrar sesión\":"
-
-#~ msgid "Show \"Shutdown\" button"
-#~ msgstr "Mostrar botón \"Apagar\""
-
-#~ msgid "Custom icon for \"Shutdown\" button:"
-#~ msgstr "Ícono personalizado para el botón \"Apagar\":"
-
-#~ msgid "Search type:"
-#~ msgstr "Tipo de búsqueda:"
-
-#~ msgid "Default"
-#~ msgstr "Por defecto"
-
-#~ msgid "Fuzzy (EXPERIMENTAL)"
-#~ msgstr "Difusa (EXPERIMENTAL)"
-
-#~ msgid "App name only"
-#~ msgstr "Sólo por nombre de aplicación"
-
-#~ msgid ""
-#~ "Choose the type of search you want the menu to perform.\n"
-#~ "\n"
-#~ "Default: This is the same search used by the default Cinnamon menu applet. It searches for the application name, keywords, description and id. In 99% of cases, this type of search gives totally annoying, useless and unproductive results.\n"
-#~ "\n"
-#~ "Fuzzy: This option enables an infinitely better sorting of search results. It's marked as experimental because it has a huge impact on performance every time the search box is cleared.\n"
-#~ "\n"
-#~ "App name only: This type of search is similar to the default one, but it will only display results that matches the application name and nothing else."
-#~ msgstr ""
-#~ "Elijir el tipo de búsqueda que desea que el menú realice.\n"
-#~ "\n"
-#~ "Por defecto: Esta es la misma búsqueda utilizada por el menú predeterminado Cinnamon.  Busca el nombre de la aplicación, palabras clave, descripción e id.  En el 99% de los casos, este tipo de búsqueda da resultados totalmente molestos, inútiles e improductivos.\n"
-#~ "\n"
-#~ "Difusa: Esta opción permite una clasificación infinitamente mejor de los resultados de búsqueda. Está marcada como experimental porque tiene un enorme impacto en el rendimiento.\n"
-#~ "Sólo por nombre de aplicación: Este tipo de búsqueda es similar al predeterminado, pero sólo mostrará resultados que coincidan con el nombre de la aplicación y nada más."
-
-#~ msgid "Enable file system path entry in search box"
-#~ msgstr "Habilitar buscar en sistema de archivos en el cuadro de búsqueda"
-
-#~ msgid "Recently used applications"
-#~ msgstr "Aplicaciones usadas recientemente"
-
-#~ msgid "If enabled, applications set as Favorite will not be stored in the \"Recent Applications\" category."
-#~ msgstr "Con esta opción habilitada, las aplicaciones guardadas en Favoritos no serán almacenadas en la categoría \"Aplicaciones Recientes\"."
-
-#~ msgid "Display separator after \"Recent Applications\" category (WARNING)"
-#~ msgstr "Mostrar separador debajo de la categoría \"Aplicaciones recientes\" (ADVERTENCIA)"
-
-#~ msgid ""
-#~ "This option, when enabled, will break the menu keyboard navigation. Only enable this option if you will never use the keyboard to navigate the menu.\n"
-#~ "This message is only temporary until I figure out how to fix this."
-#~ msgstr "Esta opción, cuando está habilitada, romperá la navegación del teclado del menú. Sólo active esta opción si nunca utilizará el teclado para navegar por el menú."
-
-#~ msgid "Custom icon for category"
-#~ msgstr "Ícono personalizado para la categoría"
-
-#~ msgid ""
-#~ "Enter custom icon for the \"Recent Applications\" category.\n"
-#~ "Only icon names are allowed."
-#~ msgstr ""
-#~ "Ingresar un ícono personalizado para la categoría \"Aplicaciones recientes\".\n"
-#~ "Sólo nombres de íconos están permitidos."
-
-#~ msgid "Max recently used apps:"
-#~ msgstr "Máximo número de aplicaciones recientemente usadas:"
-
-#~ msgid ""
-#~ "Custom launchers notes\n"
-#~ "Fields marked with asterisks (*) are mandatory. Otherwise, the button will not appear on the menu.\n"
-#~ "Icons can be any icon name or path to an icon file (symbolic or full color).\n"
-#~ "Commands can be any command (as entered in a terminal) or a path to a file.\n"
-#~ "If the file is an executable script, an attempt to execute it will be made.\n"
-#~ "Otherwise, the file will be opened with the systems handler for that file type."
-#~ msgstr ""
-#~ "Notas sobre lanzadores personalizados\n"
-#~ "Los campos marcados con asteriscos (*) son obligatorios. De lo contrario, el botón no aparecerá en el menú.\n"
-#~ "Íconos pueden ser cualquier nombre de ícono o una ruta de acceso a un archivo de icono (color o simbólico).\n"
-#~ "Comandos pueden ser cualquier comando o una ruta de acceso a un archivo.\n"
-#~ "Si el archivo es un script ejecutable, un intento de ejecución se llevará a cabo.\n"
-#~ "Si el archivo no es un ejecutable, el sistema decidirá con qué programa abrirlo."
-
-#~ msgid "Custom launcher 1"
-#~ msgstr "Lanzador personalizado 1"
-
-#~ msgid "Label:"
-#~ msgstr "Etiqueta:"
-
-#~ msgid "*Command or path to file:"
-#~ msgstr "*Comando o ruta de archivo:"
-
-#~ msgid "*Icon:"
-#~ msgstr "*Ícono:"
-
-#~ msgid "Description:"
-#~ msgstr "Descripción:"
-
-#~ msgid "Custom launcher 2"
-#~ msgstr "Lanzador personalizado 2"
-
-#~ msgid "Custom launcher 3"
-#~ msgstr "Lanzador personalizado 3"
-
-#~ msgid "Custom launcher 4"
-#~ msgstr "Lanzador personalizado 4"
-
-#~ msgid "Custom launcher 5"
-#~ msgstr "Lanzador personalizado 5"
-
-#~ msgid "Custom launcher 6"
-#~ msgstr "Lanzador personalizado 6"
-
-#~ msgid "Custom launcher 7"
-#~ msgstr "Lanzador personalizado 7"
-
-#~ msgid "Custom launcher 8"
-#~ msgstr "Lanzador personalizado 8"
-
-#~ msgid "Custom launcher 9"
-#~ msgstr "Lanzador personalizado 9"
-
-#~ msgid "Custom launcher 10"
-#~ msgstr "Lanzador personalizado 10"
-
-#~ msgid "Appearance"
-#~ msgstr "Apariencia"
-
-#~ msgid "Show icons on context menu"
-#~ msgstr "Mostrar íconos en el menú contextual"
-
-#~ msgid "Icon sizes"
-#~ msgstr "Tamaño de los íconos"
-
-#~ msgid "Favorites icon size:"
-#~ msgstr "Tamaño de ícono para Favoritos:"
-
-#~ msgid "User picture size:"
-#~ msgstr "Tamaño de la imagen del usuario:"
-
-#~ msgid "Applications info box title font size:"
-#~ msgstr "Tamaño de fuente para el título de la caja de información sobre aplicaciones:"
-
-#~ msgid "Applications info box description font size:"
-#~ msgstr "Tamaño de fuente para la descripción de la caja de información sobre aplicaciones:"
-
-#~ msgid "Stylize the user image"
-#~ msgstr "Estilizar la imagen del usuario"
-
-#~ msgid "With this option enabled, the box containing the user picture will have the same style as the Favorites box."
-#~ msgstr "Con esta opción habilitada, el cuadro que contiene la imagen del usuario tendrá el mismo estilo que la caja de Favoritos."
-
-#~ msgid "Auto-fit the width of the search box with the menu width"
-#~ msgstr "Auto-ajustar el ancho del cuadro de búsqueda con el ancho del menú"
-
-#~ msgid "If enabled, Custom width for search box will be ignored. Also, this option is ignored if the custom launchers box is placed at either side of the searchbox."
-#~ msgstr "Con esta opción habilitada, la opción \"Anchura personalizada para la caja de búsqueda\" será ignorada. Además, esta opción será ignora si la sección de lanzadores personalizados se coloca a cualquier lado de la caja de búsqueda."
-
-#~ msgid "Custom width for search box:"
-#~ msgstr "Anchura personalizada para la caja de búsqueda:"
-
-#~ msgid "Set to 0 (zero) for not setting a width."
-#~ msgstr "Establece en 0 (cero) para no fijar una anchura."
-
-#~ msgid "Favorites box"
-#~ msgstr "Sección Favoritos"
-
-#~ msgid "Favorites box separator height:"
-#~ msgstr "Altura del separador en la caja de Favoritos:"
-
-#~ msgid "Size of separator between \"Favorites\" box and \"Quit\" box."
-#~ msgstr "Altura del separador entre los \"Favoritos\" y los botones de salida."
-
-#~ msgid "Applications box"
-#~ msgstr "Caja de aplicaciones"
-
-#~ msgid ""
-#~ "Note: Most themes stylesheets come with hardcoded sizes for certain elemets.\n"
-#~ "This section is for overriding those stylesheets."
-#~ msgstr ""
-#~ "Nota: La mayoría de los temas del sistema vienen con las medidas predefinidas para ciertos elementos del menú.\n"
-#~ "Esta sección es sobrescribir esos valores predefinidos."
-
-#~ msgid "Set a custom padding for the Categories box"
-#~ msgstr "Establecer un espacio personalizado para la lista de Categorías"
-
-#~ msgid "Set a custom padding for the search entry box"
-#~ msgstr "Establecer un espacio a medida para el campo de búsqueda"
-
-#~ msgid "Set a custom padding for the search box"
-#~ msgstr "Establecer un espacio personalizado para el cuadro de búsqueda"
-
-#~ msgid "Set a custom padding for the Custom launchers box"
-#~ msgstr "Establecer un espacio personalizado para los lanzadores personalizados"
-
-#~ msgid "Set a custom padding for the Applications info box"
-#~ msgstr "Establecer un espacio personalizado para la caja de información sobre aplicaciones"

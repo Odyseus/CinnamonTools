@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 2.5\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-09 01:11-0300\n"
+"POT-Creation-Date: 2018-06-10 21:35-0300\n"
 "PO-Revision-Date: 2018-05-14 17:03-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -74,8 +74,8 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
@@ -161,31 +161,31 @@ msgstr "¡Comando no establecido!"
 msgid "Set a custom command from this applet settings window."
 msgstr "Establecer un comando personalizado desde la ventana de configuración de este applet."
 
-#: utils.js:72
+#: utils.js:82
 msgid "CPU"
 msgstr "CPU"
 
-#: utils.js:94 utils.js:120
+#: utils.js:104 utils.js:130
 msgid "MB"
 msgstr "MB"
 
-#: utils.js:99
+#: utils.js:109
 msgid "Memory"
 msgstr "Memoria"
 
-#: utils.js:125
+#: utils.js:135
 msgid "Swap"
 msgstr "Swap"
 
-#: utils.js:170
+#: utils.js:180
 msgid "KB/s"
 msgstr "KB/s"
 
-#: utils.js:175
+#: utils.js:185
 msgid "Network D/U"
 msgstr "Red D/S"
 
-#: utils.js:213
+#: utils.js:223
 msgid "Load average"
 msgstr "Promedio de carga"
 

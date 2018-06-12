@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0PopupTranslator 1.08\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-05-14 16:55-0300\n"
+"POT-Creation-Date: 2018-06-10 21:35-0300\n"
 "PO-Revision-Date: 2018-05-04 21:10-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -74,8 +74,8 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **localizations.bash** from a terminal opened inside the xlet's folder."
-msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **localizations.bash** desde una terminal abierta dentro de la carpeta del xlet."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
@@ -491,15 +491,15 @@ msgstr "Todas las dependencias parecen ser cumplidas."
 msgid "Unable to execute file/command '%s':"
 msgstr "Imposible ejecutar el archivo/comando '%s':"
 
-#: utils.js:253
+#: utils.js:263
 msgid "Copy translated text to clipboard"
 msgstr "Copiar texto traducido al portapapeles"
 
-#: utils.js:259
+#: utils.js:269
 msgid "Translate text on provider's website"
 msgstr "Traducir texto en el sitio web del proveedor"
 
-#: utils.js:265
+#: utils.js:275
 msgid "Open translation history"
 msgstr "Abrir historial de traducción"
 
