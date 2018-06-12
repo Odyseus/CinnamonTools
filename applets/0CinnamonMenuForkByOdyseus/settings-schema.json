@@ -361,14 +361,10 @@
         "tooltip": "Set a custom text editor to open .desktop files (just the name of the text editor executable or the path to it).\nLeave it blank to let the system decide."
     },
     "pref_privilege_elevator": {
-        "type": "combobox",
+        "type": "entry",
         "indent": true,
-        "default": "gksu",
+        "default": "/usr/bin/pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY",
         "description": "Privileges elevator:",
-        "options": {
-            "gksu": "gksu",
-            "gksudo": "gksudo"
-        },
         "tooltip": "The graphical front-end to use to run applications as root.\nThis is used by the \"Open as Root\" context menu and the option \"Gain privileges of not owned files\"."
     },
     "pref_terminal_emulator": {

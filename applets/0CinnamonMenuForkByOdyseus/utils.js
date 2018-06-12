@@ -36,9 +36,14 @@ var SETTINGS_SCHEMA = "org.cinnamon.applets." + XletUUID;
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
 /**
- * [_ description]
- * @param  {String} aStr [description]
- * @return {String}      [description]
+ * Return the localized translation of a string, based on the xlet domain or
+ * the current global domain (Cinnamon's).
+ *
+ * This function "overrides" the _() function globally defined by Cinnamon.
+ *
+ * @param {String} aStr - The string being translated.
+ *
+ * @return {String} The translated string.
  */
 function _(aStr) {
     let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
@@ -230,6 +235,8 @@ ApplicationContextMenuItem.prototype = {
                 Util.spawnCommandLine("/usr/bin/cinnamon-remove-application '" + this._appButton.app.get_app_info().get_filename() + "'");
                 break;
             case "run_with_nvidia_gpu":
+                this._appButton._applet.closeMainMenu();
+
                 try {
                     Util.spawnCommandLine("optirun gtk-launch " + this._appButton.app.get_id());
                     likelyHasSucceeded = true;
@@ -237,8 +244,6 @@ ApplicationContextMenuItem.prototype = {
                     global.logError(aErr.message);
                     likelyHasSucceeded = false;
                 } finally {
-                    this._appButton._applet.closeMainMenu();
-
                     if (this._appButton._applet.pref_recently_used_apps_enabled &&
                         this._appButton instanceof ApplicationButton &&
                         likelyHasSucceeded) {
@@ -246,9 +251,10 @@ ApplicationContextMenuItem.prototype = {
                     }
                 }
                 break;
-
             case "launch_from_terminal":
             case "launch_from_terminal_as_root":
+                this._appButton._applet.closeMainMenu();
+
                 let elevated = this._action === "launch_from_terminal_as_root" ?
                     this._appButton._applet.pref_privilege_elevator + " " :
                     "";
@@ -267,8 +273,6 @@ ApplicationContextMenuItem.prototype = {
                     global.logError(aErr.message);
                     likelyHasSucceeded = false;
                 } finally {
-                    this._appButton._applet.closeMainMenu();
-
                     if (this._appButton._applet.pref_recently_used_apps_enabled &&
                         this._appButton instanceof ApplicationButton &&
                         likelyHasSucceeded) {
@@ -278,12 +282,7 @@ ApplicationContextMenuItem.prototype = {
                 break;
             case "open_desktop_file_folder":
                 try {
-                    Util.spawn_async(["dirname", pathToDesktopFile],
-                        Lang.bind(this, function(aOutput) {
-                            let dirPath = aOutput.trim();
-                            this._openDesktopFileFolder(dirPath);
-                        })
-                    );
+                    this._openDesktopFileFolder(GLib.path_get_dirname(pathToDesktopFile));
                 } catch (aErr) {
                     Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
                     global.logError(aErr.message);
@@ -291,17 +290,25 @@ ApplicationContextMenuItem.prototype = {
                 }
                 break;
             case "run_as_root":
+                this._appButton._applet.closeMainMenu();
+
                 try {
-                    Util.spawnCommandLine(this._appButton._applet.pref_privilege_elevator +
-                        " gtk-launch " + this._appButton.app.get_id());
+                    // The garbage of pkexec will not work with any spawn* function!!!
+                    // Tried with Util.spawn_async, GLib.spawn_async, GLib.spawn_command_line_async and
+                    // GLib.spawn_async. NOTHING F*CKING WORKS!!!!
+                    // So, let's leave a REAL programing language (Python) do the F*CKING job!!!
+                    Util.spawn_async([
+                        this._appButton._applet.metadata.path + "/launcher.py",
+                        this._appButton._applet.pref_privilege_elevator,
+                        "gtk-launch",
+                        this._appButton.app.get_id()
+                    ], null);
                     likelyHasSucceeded = true;
                 } catch (aErr) {
                     Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
                     global.logError(aErr.message);
                     likelyHasSucceeded = false;
                 } finally {
-                    this._appButton._applet.closeMainMenu();
-
                     if (this._appButton._applet.pref_recently_used_apps_enabled &&
                         this._appButton instanceof ApplicationButton &&
                         likelyHasSucceeded) {
@@ -351,12 +358,11 @@ ApplicationContextMenuItem.prototype = {
             Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
             global.logError(aErr.message);
         }
-        /*finally {
-                   this._appButton._applet.closeMainMenu();
-               }*/
     },
 
     _launchDesktopFile: function(aFileOwner) {
+        this._appButton._applet.closeMainMenu();
+
         let cmd = "";
         if (this._appButton._applet.pref_context_gain_privileges &&
             GLib.get_user_name().toString() !== aFileOwner) {
@@ -370,16 +376,12 @@ ApplicationContextMenuItem.prototype = {
             cmd += " xdg-open " + '"' + this._appButton.app.get_app_info().get_filename() + '"';
         }
 
-        this._appButton._applet.closeMainMenu();
         try {
             GLib.spawn_command_line_async(cmd);
         } catch (aErr) {
             Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
             global.logError(aErr.message);
         }
-        /* finally {
-                    this._appButton._applet.closeMainMenu();
-                }*/
     }
 };
 

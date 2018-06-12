@@ -29,11 +29,11 @@ const Util = imports.misc.util;
 
 let appsys = Cinnamon.AppSystem.get_default();
 
-function CinnamonMenuSecondGeneration() {
+function CinnamonMenuForkByOdyseus() {
     this._init.apply(this, arguments);
 }
 
-CinnamonMenuSecondGeneration.prototype = {
+CinnamonMenuForkByOdyseus.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceID) {
@@ -2841,5 +2841,5 @@ CinnamonMenuSecondGeneration.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceID) {
-    return new CinnamonMenuSecondGeneration(aMetadata, aOrientation, aPanelHeight, aInstanceID);
+    return new CinnamonMenuForkByOdyseus(aMetadata, aOrientation, aPanelHeight, aInstanceID);
 }
