@@ -53,6 +53,7 @@ PanelDrawerForkByOdyseusApplet.prototype = {
                 this.actor.connect("enter-event", Lang.bind(this, this._onEntered));
 
                 this._hideTimeoutId = 0;
+                this._rshideTimeoutId = 0;
                 this.h = true;
                 this.alreadyH = [];
 
@@ -81,9 +82,9 @@ PanelDrawerForkByOdyseusApplet.prototype = {
 
                 this.cbox.connect("queue-relayout", Lang.bind(this, Lang.bind(this, function(actor, m) { // jshint ignore:line
                     if (this.autohide_rs && !this.h) {
-                        if (this._rshideTimeoutId) {
+                        if (this._rshideTimeoutId > 0) {
                             Mainloop.source_remove(this._rshideTimeoutId);
-                            this._rshideTimeoutId = null;
+                            this._rshideTimeoutId = 0;
                         }
                         this._rshideTimeoutId = Mainloop.timeout_add_seconds(this.autohide_rs_time, Lang.bind(this, function() {
                             if (!this.h) {
@@ -171,14 +172,14 @@ PanelDrawerForkByOdyseusApplet.prototype = {
     },
 
     doAction: function(updalreadyH) {
-        if (this._hideTimeoutId) {
+        if (this._hideTimeoutId > 0) {
             Mainloop.source_remove(this._hideTimeoutId);
             this._hideTimeoutId = 0;
         }
 
-        if (this._rshideTimeoutId) {
+        if (this._rshideTimeoutId > 0) {
             Mainloop.source_remove(this._rshideTimeoutId);
-            this._rshideTimeoutId = null;
+            this._rshideTimeoutId = 0;
         }
 
         let _children = this.cbox.get_children();
@@ -296,10 +297,18 @@ PanelDrawerForkByOdyseusApplet.prototype = {
         }
     },
 
-    _onSettingsChanged: function(aPrefKey) {
-        switch (aPrefKey) {
+    _onSettingsChanged: function(aPrefValue, aPrefKey) {
+        // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
+        // settings callback instead of just one as in older versions. The first one is the
+        // setting value and the second one is the user data. To workaround this nonsense,
+        // check if the second argument is undefined to decide which
+        // argument to use as the pref key depending on the Cinnamon version.
+        // Mark for deletion on EOL. Cinnamon 3.2.x+
+        // Remove the following variable and directly use the second argument.
+        let pref_key = aPrefKey || aPrefValue;
+        switch (pref_key) {
             case "auto_hide":
-                if (this._hideTimeoutId & !this.auto_hide) {
+                if (this._hideTimeoutId > 0 & !this.auto_hide) {
                     Mainloop.source_remove(this._hideTimeoutId);
                     this._hideTimeoutId = 0;
                 } else if (this.auto_hide & this.h) {
