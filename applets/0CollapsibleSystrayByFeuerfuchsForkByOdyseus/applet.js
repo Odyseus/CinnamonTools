@@ -551,8 +551,16 @@ CollapsibleSystrayApplet.prototype = {
         this.pref_icon_visibility_list = JSON.stringify(this.iconVisibilityList);
     },
 
-    _onSettingsChanged: function(aPrefKey) {
-        switch (aPrefKey) {
+    _onSettingsChanged: function(aPrefValue, aPrefKey) {
+        // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
+        // settings callback instead of just one as in older versions. The first one is the
+        // setting value and the second one is the user data. To workaround this nonsense,
+        // check if the second argument is undefined to decide which
+        // argument to use as the pref key depending on the Cinnamon version.
+        // Mark for deletion on EOL. Cinnamon 3.2.x+
+        // Remove the following variable and directly use the second argument.
+        let pref_key = aPrefKey || aPrefValue;
+        switch (pref_key) {
             case "pref_icon_visibility_list":
                 this._loadAppIconVisibilityList();
                 break;
