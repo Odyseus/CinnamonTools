@@ -945,8 +945,16 @@ SimpleToDoListApplet.prototype = {
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
     },
 
-    _onSettingsChanged: function(aPrefKey) {
-        switch (aPrefKey) {
+    _onSettingsChanged: function(aPrefValue, aPrefKey) {
+        // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
+        // settings callback instead of just one as in older versions. The first one is the
+        // setting value and the second one is the user data. To workaround this nonsense,
+        // check if the second argument is undefined to decide which
+        // argument to use as the pref key depending on the Cinnamon version.
+        // Mark for deletion on EOL. Cinnamon 3.2.x+
+        // Remove the following variable and directly use the second argument.
+        let pref_key = aPrefKey || aPrefValue;
+        switch (pref_key) {
             case "pref_enable_verbose_logging":
                 global.log("Logging changed to " + (this.pref_enable_verbose_logging ? "debug" : "info"));
                 this.logger.verbose = this.pref_enable_verbose_logging;
