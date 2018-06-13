@@ -114,6 +114,15 @@
         "units": "pixels",
         "dependency": "pref_cpu_override_graph_width"
     },
+    "pref_cpu_tooltip_decimals": {
+        "type": "spinbutton",
+        "default": 0,
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "description": "Show this many decimals in the tooltip",
+        "units": "decimals"
+    },
     "pref_cpu_color_0": {
         "type": "colorchooser",
         "default": "rgb(252,233,79)",

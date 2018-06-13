@@ -22,7 +22,7 @@
     "name": "System Monitor (Fork By Odyseus)",
     "contributors": "See this xlet help file.",
     "uuid": "{{UUID}}",
-    "version": "2.5",
+    "version": "2.6",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
     "description": "Displays CPU, memory, swap, network usage and load in graphs."
 }

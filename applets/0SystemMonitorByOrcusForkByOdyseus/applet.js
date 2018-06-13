@@ -80,8 +80,8 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
 
                 this.graph_order = [0, 1, 2, 3, 4];
 
-                this._onPrefChangedPadding();
-                this._onPrefChangedGraphEnabled();
+                this._changePadding();
+                this._changeGraphEnabled();
                 this._updateKeybindings();
                 this.update();
             } catch (aErr) {
@@ -92,7 +92,6 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
 
     _bindSettings: function() {
         this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
-
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
@@ -100,54 +99,56 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
             OUT: 2,
             BIDIRECTIONAL: 3
         };
-        let settingsArray = [
-            [bD.IN, "pref_overlay_key", this._updateKeybindings],
-            [bD.IN, "pref_onkeybinding_command", null],
-            [bD.IN, "pref_onclick_command", null],
-            [bD.IN, "pref_smooth", this._onPrefChangedSmooth],
-            [bD.IN, "pref_refresh_rate", this._onPrefChangedRefreshRate],
-            [bD.IN, "pref_draw_background", this._onPrefChangedDrawBackground],
-            [bD.IN, "pref_draw_border", this._onPrefChangedDrawBorder],
-            [bD.IN, "pref_use_padding", this._onPrefChangedPadding],
-            [bD.IN, "pref_padding_lr", this._onPrefChangedPadding],
-            [bD.IN, "pref_padding_tb", this._onPrefChangedPadding],
-            [bD.IN, "pref_bg_color", this._onPrefChangedBGBorderColor],
-            [bD.IN, "pref_border_color", this._onPrefChangedBGBorderColor],
-            [bD.IN, "pref_graph_width", this._onPrefChangedGraphWidth],
-            [bD.IN, "pref_cpu_enabled", this._onPrefChangedGraphEnabled, 0],
-            [bD.IN, "pref_cpu_override_graph_width", this._onPrefChangedGraphWidth, 0],
-            [bD.IN, "pref_cpu_graph_width", this._onPrefChangedGraphWidth, 0],
-            [bD.IN, "pref_cpu_color_0", this._onPrefChangedColor, 0],
-            [bD.IN, "pref_cpu_color_1", this._onPrefChangedColor, 0],
-            [bD.IN, "pref_cpu_color_2", this._onPrefChangedColor, 0],
-            [bD.IN, "pref_cpu_color_3", this._onPrefChangedColor, 0],
-            [bD.IN, "pref_mem_enabled", this._onPrefChangedGraphEnabled, 1],
-            [bD.IN, "pref_mem_override_graph_width", this._onPrefChangedGraphWidth, 1],
-            [bD.IN, "pref_mem_graph_width", this._onPrefChangedGraphWidth, 1],
-            [bD.IN, "pref_mem_color_0", this._onPrefChangedColor, 1],
-            [bD.IN, "pref_mem_color_1", this._onPrefChangedColor, 1],
-            [bD.IN, "pref_swap_enabled", this._onPrefChangedGraphEnabled, 2],
-            [bD.IN, "pref_swap_override_graph_width", this._onPrefChangedGraphWidth, 2],
-            [bD.IN, "pref_swap_graph_width", this._onPrefChangedGraphWidth, 2],
-            [bD.IN, "pref_swap_color_0", this._onPrefChangedColor, 2],
-            [bD.IN, "pref_net_enabled", this._onPrefChangedGraphEnabled, 3],
-            [bD.IN, "pref_net_override_graph_width", this._onPrefChangedGraphWidth, 3],
-            [bD.IN, "pref_net_graph_width", this._onPrefChangedGraphWidth, 3],
-            [bD.IN, "pref_net_color_0", this._onPrefChangedColor, 3],
-            [bD.IN, "pref_net_color_1", this._onPrefChangedColor, 3],
-            [bD.IN, "pref_load_enabled", this._onPrefChangedGraphEnabled, 4],
-            [bD.IN, "pref_load_override_graph_width", this._onPrefChangedGraphWidth, 4],
-            [bD.IN, "pref_load_graph_width", this._onPrefChangedGraphWidth, 4],
-            [bD.IN, "pref_load_color_0", this._onPrefChangedColor, 4]
+        let prefKeysArray = [
+            "pref_overlay_key",
+            "pref_onkeybinding_command",
+            "pref_onclick_command",
+            "pref_smooth",
+            "pref_refresh_rate",
+            "pref_draw_background",
+            "pref_draw_border",
+            "pref_use_padding",
+            "pref_padding_lr",
+            "pref_padding_tb",
+            "pref_bg_color",
+            "pref_border_color",
+            "pref_graph_width",
+            "pref_cpu_enabled",
+            "pref_cpu_override_graph_width",
+            "pref_cpu_graph_width",
+            "pref_cpu_tooltip_decimals",
+            "pref_cpu_color_0",
+            "pref_cpu_color_1",
+            "pref_cpu_color_2",
+            "pref_cpu_color_3",
+            "pref_mem_enabled",
+            "pref_mem_override_graph_width",
+            "pref_mem_graph_width",
+            "pref_mem_color_0",
+            "pref_mem_color_1",
+            "pref_swap_enabled",
+            "pref_swap_override_graph_width",
+            "pref_swap_graph_width",
+            "pref_swap_color_0",
+            "pref_net_enabled",
+            "pref_net_override_graph_width",
+            "pref_net_graph_width",
+            "pref_net_color_0",
+            "pref_net_color_1",
+            "pref_load_enabled",
+            "pref_load_override_graph_width",
+            "pref_load_graph_width",
+            "pref_load_color_0"
         ];
         let newBinding = typeof this.settings.bind === "function";
-        for (let [binding, property_name, callback] of settingsArray) {
+        for (let pref_key of prefKeysArray) {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
+            // Abandon this.settings.bindProperty and keep this.settings.bind.
             if (newBinding) {
-                this.settings.bind(property_name, property_name, callback);
+                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
             } else {
-                this.settings.bindProperty(binding, property_name, property_name, callback, null);
+                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
         }
     },
@@ -207,6 +208,11 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
         graph.setDrawBorder(this.pref_draw_border);
         graph.bg_color = this.bg_color;
         graph.border_color = this.border_color;
+        let tooltip_decimals = this.getGraphTooltipDecimals(graph_idx);
+
+        if (tooltip_decimals) {
+            provider.setTextDecimals(tooltip_decimals);
+        }
 
         return graph;
     },
@@ -245,9 +251,11 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
         for (let i = 0; i < this.graph_ids.length; i++) {
             let graph_id = this.graph_ids[i];
             let enabled = this["pref_" + graph_id + "_enabled"];
+
             if (!enabled) {
                 continue;
             }
+
             this.graph_indices[i] = idx++;
         }
     },
@@ -273,6 +281,15 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
         return c;
     },
 
+    getGraphTooltipDecimals: function(graph_idx) {
+        let graph_id = this.graph_ids[graph_idx];
+        let prop = "pref_" + graph_id + "_tooltip_decimals";
+
+        if (this.hasOwnProperty(prop)) {
+            return this[prop];
+        }
+    },
+
     on_applet_clicked: function() {
         if (this.pref_onclick_command) {
             GLib.spawn_command_line_async(this.pref_onclick_command);
@@ -293,11 +310,10 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
 
     on_orientation_changed: function(orientation) {
         this.vertical = orientation == St.Side.LEFT || orientation == St.Side.RIGHT;
-        this._onPrefChangedGraphWidth();
+        this._changeGraphWidth();
     },
 
-    // Configuration change callbacks
-    _onPrefChangedGraphEnabled: function(enabled, graph_idx) {
+    _changeGraphEnabled: function() {
         this.recalcGraphIndices();
         let enable = (i) => {
             let graph_id = this.graph_ids[i];
@@ -329,57 +345,12 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
             }
         };
 
-        if (graph_idx) {
-            enable(graph_idx);
-        } else {
-            for (let i = 0; i < this.graphs.length; i++) {
-                enable(i);
-            }
+        for (let i = 0; i < this.graphs.length; i++) {
+            enable(i);
         }
     },
 
-    _onPrefChangedSmooth: function() {
-        for (let g of this.graphs) {
-            if (g) {
-                g.smooth = this.pref_smooth;
-                g.repaint();
-            }
-        }
-    },
-
-    _onPrefChangedRefreshRate: function() {
-        if (this.update_timeout_id > 0) {
-            Mainloop.source_remove(this.update_timeout_id);
-            this.update_timeout_id = 0;
-        }
-
-        for (let g of this.graphs) {
-            if (g) {
-                g.provider.refresh_rate = this.pref_refresh_rate;
-            }
-        }
-
-        this.update();
-    },
-
-    _onPrefChangedDrawBackground: function() {
-        for (let g of this.graphs) {
-            if (g) {
-                g.setDrawBackground(this.pref_draw_background);
-            }
-        }
-    },
-
-    _onPrefChangedDrawBorder: function() {
-        for (let g of this.graphs) {
-            if (g) {
-                g.setDrawBorder(this.pref_draw_border);
-                g.repaint();
-            }
-        }
-    },
-
-    _onPrefChangedPadding: function() {
+    _changePadding: function() {
         if (this.pref_use_padding) {
             let style = "padding:" + this.pref_padding_tb + "px " + this.pref_padding_lr + "px;";
             this.actor.set_style(style);
@@ -388,49 +359,13 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
         }
 
         for (let g of this.graphs) {
-            if (g) {
-                g.updateSize();
-            }
+            g && g.updateSize();
         }
     },
 
-    _onPrefChangedBGBorderColor: function() {
-        this.bg_color = $.colorToArray(this.pref_bg_color);
-        this.border_color = $.colorToArray(this.pref_border_color);
-        for (let g of this.graphs) {
-            if (g) {
-                g.bg_color = this.bg_color;
-                g.border_color = this.border_color;
-                g.repaint();
-            }
-        }
-    },
-
-    _onPrefChangedGraphWidth: function(width, graph_idx) {
-        if (graph_idx) {
-            if (this.graphs[graph_idx]) {
-                this.graphs[graph_idx].setWidth(this.getGraphWidth(graph_idx), this.vertical);
-            }
-        } else {
-            for (let i = 0; i < this.graphs.length; i++) {
-                if (this.graphs[i]) {
-                    this.graphs[i].setWidth(this.getGraphWidth(i), this.vertical);
-                }
-            }
-        }
-    },
-
-    _onPrefChangedColor: function(width, graph_idx) {
-        if (graph_idx) {
-            if (this.graphs[graph_idx]) {
-                this.graphs[graph_idx].setColors(this.getGraphColors(graph_idx));
-            }
-        } else {
-            for (let i = 0; i < this.graphs.length; i++) {
-                if (this.graphs[i]) {
-                    this.graphs[i].setColors(this.getGraphColors(i));
-                }
-            }
+    _changeGraphWidth: function() {
+        for (let g in this.graphs) {
+            g && g.setWidth(this.getGraphWidth(this.graphs.indexOf(g)), this.vertical);
         }
     },
 
@@ -458,6 +393,115 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
                     }
                 })
             );
+        }
+    },
+
+    _onSettingsChanged: function(aPrefValue, aPrefKey) {
+        // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
+        // settings callback instead of just one as in older versions. The first one is the
+        // setting value and the second one is the user data. To workaround this nonsense,
+        // check if the second argument is undefined to decide which
+        // argument to use as the pref key depending on the Cinnamon version.
+        // Mark for deletion on EOL. Cinnamon 3.2.x+
+        // Remove the following variable and directly use the second argument.
+        let pref_key = aPrefKey || aPrefValue;
+        switch (pref_key) {
+            case "pref_cpu_color_0":
+            case "pref_cpu_color_1":
+            case "pref_cpu_color_2":
+            case "pref_cpu_color_3":
+            case "pref_mem_color_0":
+            case "pref_mem_color_1":
+            case "pref_swap_color_0":
+            case "pref_net_color_0":
+            case "pref_net_color_1":
+            case "pref_load_color_0":
+                for (let g of this.graphs) {
+                    g && g.setColors(this.getGraphColors(this.graphs.indexOf(g)));
+                }
+                break;
+            case "pref_cpu_tooltip_decimals":
+                for (let g of this.graphs) {
+                    if (g && "setTextDecimals" in g.provider) {
+                        g.provider.setTextDecimals(this.getGraphTooltipDecimals(this.graphs.indexOf(g)));
+                    }
+                }
+                break;
+            case "pref_cpu_enabled":
+            case "pref_mem_enabled":
+            case "pref_swap_enabled":
+            case "pref_net_enabled":
+            case "pref_load_enabled":
+                this._changeGraphEnabled();
+                break;
+            case "pref_graph_width":
+            case "pref_cpu_override_graph_width":
+            case "pref_cpu_graph_width":
+            case "pref_mem_override_graph_width":
+            case "pref_mem_graph_width":
+            case "pref_swap_override_graph_width":
+            case "pref_swap_graph_width":
+            case "pref_net_override_graph_width":
+            case "pref_net_graph_width":
+            case "pref_load_override_graph_width":
+            case "pref_load_graph_width":
+                this._changeGraphWidth();
+                break;
+            case "pref_bg_color":
+            case "pref_border_color":
+                this.bg_color = $.colorToArray(this.pref_bg_color);
+                this.border_color = $.colorToArray(this.pref_border_color);
+                for (let g of this.graphs) {
+                    if (g) {
+                        g.bg_color = this.bg_color;
+                        g.border_color = this.border_color;
+                        g.repaint();
+                    }
+                }
+                break;
+            case "pref_use_padding":
+            case "pref_padding_lr":
+            case "pref_padding_tb":
+                this._changePadding();
+                break;
+            case "pref_draw_border":
+                for (let g of this.graphs) {
+                    if (g) {
+                        g.setDrawBorder(this.pref_draw_border);
+                        g.repaint();
+                    }
+                }
+                break;
+            case "pref_draw_background":
+                for (let g of this.graphs) {
+                    g && g.setDrawBackground(this.pref_draw_background);
+                }
+                break;
+            case "pref_refresh_rate":
+                if (this.update_timeout_id > 0) {
+                    Mainloop.source_remove(this.update_timeout_id);
+                    this.update_timeout_id = 0;
+                }
+
+                for (let g of this.graphs) {
+                    if (g) {
+                        g.provider.refresh_rate = this.pref_refresh_rate;
+                    }
+                }
+
+                this.update();
+                break;
+            case "pref_smooth":
+                for (let g of this.graphs) {
+                    if (g) {
+                        g.smooth = this.pref_smooth;
+                        g.repaint();
+                    }
+                }
+                break;
+            case "pref_overlay_key":
+                this._updateKeybindings();
+                break;
         }
     }
 };
