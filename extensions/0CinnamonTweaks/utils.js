@@ -182,23 +182,30 @@ const CinnamonTweaksSettings = new Lang.Class({
     },
 
     _getValue: function(aPrefKey) {
+        // Keep checking if this works for all variant types.
         return this.schema.get_value(aPrefKey).deep_unpack();
     },
 
     _setValue: function(aPrefVal, aPrefKey) {
-        let oldValue = this._getValue(aPrefKey);
-        if (oldValue !== aPrefVal) {
-            // FOR FRAKS SAKE!!! set_value throws a value error when used instead of set_strv!!! WTH!
-            // FIXME:
-            // Triple check settings variants. Using the generic check "object" for now
-            // because I'm only usig the standard "as" type. Might have to "fine tune" the check
-            // in the future if I start using a more complex setting variant.
-            // IDEA: Check variant and use a switch to set the value using the proper "setter"
-            // (set_boolean, set_string, etc.).
-            if (typeof oldValue === "object") {
-                this.schema.set_strv(aPrefKey, aPrefVal);
-            } else {
-                this.schema.set_value(aPrefKey, aPrefVal);
+        let prefVal = this.schema.get_value(aPrefKey);
+
+        if (prefVal.deep_unpack() !== aPrefVal) {
+            // NOT TO SELF: DO NOT EVER CONSIDER USING THIS REPUGNANT SETTING SYSTEM EVER AGAIN!!!!!
+            switch (prefVal.get_type_string()) {
+                case "b":
+                    this.schema.set_boolean(aPrefKey, aPrefVal);
+                    break;
+                case "i":
+                    this.schema.set_int(aPrefKey, aPrefVal);
+                    break;
+                case "s":
+                    this.schema.set_string(aPrefKey, aPrefVal);
+                    break;
+                case "as":
+                    this.schema.set_strv(aPrefKey, aPrefVal);
+                    break;
+                default:
+                    this.schema.set_value(aPrefKey, aPrefVal);
             }
         }
     },
