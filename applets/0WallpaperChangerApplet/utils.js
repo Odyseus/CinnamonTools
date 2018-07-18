@@ -105,25 +105,33 @@ const WallChangerSettings = new Lang.Class({
     },
 
     _getValue: function(aPrefKey) {
-        // Check if this works for all variant types. ¬¬
+        // Keep checking if this works for all variant types.
         return this.schema.get_value(aPrefKey).deep_unpack();
     },
 
     _setValue: function(aPrefVal, aPrefKey) {
-        let oldValue = this._getValue(aPrefKey);
-        if (oldValue !== aPrefVal) {
-            // FOR FRAKS SAKE!!! set_value throws a value error when used instead of set_strv!!! WTH!
-            // FIXME:
-            // Come up with a better way to handle this nonsense!!! I want transparency!!!
-            // For what I could gather, there is no transparent way of doing this. So, moving on. ¬¬
-            if (typeof oldValue === "object") {
-                if (aPrefKey === "profiles") {
-                    this.schema.set_value("profiles", new GLib.Variant("a{sa(sb)}", aPrefVal));
-                } else {
+        let prefVal = this.schema.get_value(aPrefKey);
+
+        if (prefVal.deep_unpack() !== aPrefVal) {
+            // NOT TO SELF: DO NOT EVER CONSIDER USING THIS REPUGNANT SETTING SYSTEM EVER AGAIN!!!!!
+            switch (prefVal.get_type_string()) {
+                case "b":
+                    this.schema.set_boolean(aPrefKey, aPrefVal);
+                    break;
+                case "i":
+                    this.schema.set_int(aPrefKey, aPrefVal);
+                    break;
+                case "s":
+                    this.schema.set_string(aPrefKey, aPrefVal);
+                    break;
+                case "as":
                     this.schema.set_strv(aPrefKey, aPrefVal);
-                }
-            } else {
-                this.schema.set_value(aPrefKey, aPrefVal);
+                    break;
+                case "a{sa(sb)}":
+                    this.schema.set_strv(aPrefKey, new GLib.Variant("a{sa(sb)}", aPrefVal));
+                    break;
+                default:
+                    this.schema.set_value(aPrefKey, aPrefVal);
             }
         }
     },
