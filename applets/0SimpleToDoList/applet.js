@@ -57,8 +57,9 @@ SimpleToDoListApplet.prototype = {
             try {
                 this.mainBox = null;
                 this.next_id = 0;
-                this.sections = {};
+                this.sections = [];
                 this._request_rebuild = false;
+                this._force_storage_dirs_creation = false;
                 this._update_label_id = 0;
                 this._build_ui_id = 0;
                 this._save_tasks_id = 0;
@@ -150,12 +151,14 @@ SimpleToDoListApplet.prototype = {
             this.n_total_tasks = 0;
             this.n_total_completed_tasks = 0;
 
-            for (let id in this.sections) {
-                if (typeof this.sections[id] === "function") {
+            let i = 0,
+                iLen = this.sections.length;
+            for (; i < iLen; i++) {
+                if (typeof this.sections[i] === "function") {
                     continue;
                 }
 
-                this._add_section(this.sections[id]);
+                this._add_section(this.sections[i]);
             }
         } finally {
             if (!this.pref_initial_load) {
@@ -216,12 +219,11 @@ SimpleToDoListApplet.prototype = {
         if (aSection) {
             section = aSection;
             section["id"] = id;
-        } else { // Don't add empty task
-            if (aText === "" || aText == "\n") {
+        } else { // Don't add empty section.
+            if (!aText.trim()) {
                 return;
             }
 
-            // Add the new section to the sections dictionary
             section = {
                 "id": id,
                 "name": aText,
@@ -233,7 +235,8 @@ SimpleToDoListApplet.prototype = {
             };
         }
 
-        this.sections[id] = section;
+        // Add the new section to the sections array.
+        this.sections.push(section);
         this.next_id += 1;
         this._saveTasks();
 
@@ -245,7 +248,9 @@ SimpleToDoListApplet.prototype = {
         this.logger.debug("");
 
         // Remove the section from the internal database and synchronize it with the setting.
-        delete this.sections[aSection.id];
+        this.sections = this.sections.filter(function(aSec) {
+            return aSec["id"] !== aSection.id;
+        });
 
         // Clean-up the section
         aSection.destroy();
@@ -255,6 +260,12 @@ SimpleToDoListApplet.prototype = {
 
     _saveTasks: function(aCallback) {
         this.logger.debug("");
+
+        if (this.pref_section_keep_alphabetic_order) {
+            this.sections = this.sections.sort(Lang.bind(this, function(a, b) {
+                return a["name"].localeCompare(b["name"]);
+            }));
+        }
 
         let sections = JSON.stringify(this.sections, null, 4);
 
@@ -306,6 +317,10 @@ SimpleToDoListApplet.prototype = {
                 }));
             } catch (aErr) {
                 global.logError(aErr);
+            } finally {
+                if (this.pref_section_keep_alphabetic_order) {
+                    this.request_rebuild = true;
+                }
             }
         }));
     },
@@ -320,11 +335,17 @@ SimpleToDoListApplet.prototype = {
             let settingsFile = this.settings.settings_file || this.settings.file;
             let settingsStoragePath = settingsFile.get_parent().get_path();
             this._tasks_storage_path = settingsStoragePath + "-TasksStorage" + "/" + this.instance_id;
-            GLib.mkdir_with_parents(this._tasks_storage_path, parseInt("0755", 8));
+            this._backups_storage_path = this._tasks_storage_path + "/backups";
 
-            if (this.pref_autobackups_enabled) {
-                this._backups_storage_path = this._tasks_storage_path + "/backups";
-                GLib.mkdir_with_parents(this._backups_storage_path, parseInt("0755", 8));
+            if (!this.pref_storage_dirs_created || this._force_storage_dirs_creation) {
+                GLib.mkdir_with_parents(this._tasks_storage_path, parseInt("0755", 8));
+
+                if (this.pref_autobackups_enabled) {
+                    GLib.mkdir_with_parents(this._backups_storage_path, parseInt("0755", 8));
+                }
+
+                this.pref_storage_dirs_created = true;
+                this._force_storage_dirs_creation = false;
             }
         } catch (aErr) {
             global.logError(aErr);
@@ -345,37 +366,58 @@ SimpleToDoListApplet.prototype = {
                         }
 
                         if (!rawData) {
-                            rawData = {};
+                            rawData = "[]";
                         }
 
                         try {
                             this.sections = JSON.parse(rawData);
 
+                            // For compatibility with older versions of this applet where an object
+                            // was used instead of an array.
+                            if (!Array.isArray(this.sections)) {
+                                this.sections = Object.keys(this.sections).map(Lang.bind(this, function(aKey, aIndex) {
+                                    // Override id.
+                                    this.sections[aKey]["id"] = aIndex;
+                                    return this.sections[aKey];
+                                }));
+                                this.request_rebuild = true;
+                            }
+
+                            if (this.pref_section_keep_alphabetic_order) {
+                                this.sections = this.sections.sort(Lang.bind(this, function(a, b) {
+                                    return a["name"].localeCompare(b["name"]);
+                                }));
+                            }
+
                             // Compute the next id to avoid collapse of the the ToDo list
                             this.next_id = 0;
 
-                            for (let id in this.sections) {
-                                if (typeof this.sections[id] !== "object") {
+                            let i = 0,
+                                iLen = this.sections.length;
+                            for (; i < iLen; i++) {
+                                if (typeof this.sections[i] !== "object") {
                                     continue;
                                 }
 
-                                if (this.sections[id]["tasks"].length > 0) {
-                                    if (this.sections[id]["sort-tasks-by-completed"]) {
+                                this.sections[i]["id"] = i;
+
+                                if (this.sections[i]["tasks"].length > 0) {
+                                    if (this.sections[i]["sort-tasks-by-completed"]) {
                                         let completed = [];
                                         let not_completed = [];
-                                        let tasks = this.sections[id]["tasks"];
-                                        let i = 0,
-                                            iLen = tasks.length;
+                                        let tasks = this.sections[i]["tasks"];
+                                        let t = 0,
+                                            tLen = tasks.length;
 
-                                        for (; i < iLen; i++) {
-                                            if (tasks[i]["completed"]) {
-                                                completed.push(tasks[i]);
+                                        for (; t < tLen; t++) {
+                                            if (tasks[t]["completed"]) {
+                                                completed.push(tasks[t]);
                                             } else {
-                                                not_completed.push(tasks[i]);
+                                                not_completed.push(tasks[t]);
                                             }
                                         }
 
-                                        if (this.sections[id]["sort-tasks-alphabetically"]) {
+                                        if (this.sections[i]["sort-tasks-alphabetically"]) {
                                             completed = completed.sort(function(a, b) {
                                                 return a["name"].localeCompare(b["name"], undefined, {
                                                     numeric: true,
@@ -390,10 +432,10 @@ SimpleToDoListApplet.prototype = {
                                             });
                                         }
 
-                                        this.sections[id]["tasks"] = not_completed.concat(completed);
-                                    } else if (!this.sections[id]["sort-tasks-by-completed"] &&
-                                        this.sections[id]["sort-tasks-alphabetically"]) {
-                                        this.sections[id]["tasks"] = this.sections[id]["tasks"].sort(function(a, b) {
+                                        this.sections[i]["tasks"] = not_completed.concat(completed);
+                                    } else if (!this.sections[i]["sort-tasks-by-completed"] &&
+                                        this.sections[i]["sort-tasks-alphabetically"]) {
+                                        this.sections[i]["tasks"] = this.sections[i]["tasks"].sort(function(a, b) {
                                             return a["name"].localeCompare(b["name"], undefined, {
                                                 numeric: true,
                                                 sensitivity: "base"
@@ -402,9 +444,10 @@ SimpleToDoListApplet.prototype = {
                                     }
                                 }
 
-                                this.next_id = Math.max(this.next_id, id);
+                                this.next_id = i + 1;
                             }
-                            this.next_id++;
+                        } catch (aErr) {
+                            global.logError(aErr);
                         } finally {
                             this._buildUI();
                         }
@@ -481,6 +524,7 @@ SimpleToDoListApplet.prototype = {
             "pref_section_font_size",
             "pref_section_set_min_width",
             "pref_section_set_max_width",
+            "pref_section_keep_alphabetic_order",
             "pref_section_set_bold",
             "pref_section_remove_native_entry_theming",
             "pref_section_remove_native_entry_theming_sizing",
@@ -511,7 +555,8 @@ SimpleToDoListApplet.prototype = {
             "pref_last_backup_cleanup",
             "pref_initial_load",
             "pref_imp_exp_last_selected_directory",
-            "pref_save_last_selected_directory"
+            "pref_save_last_selected_directory",
+            "pref_storage_dirs_created"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -527,6 +572,8 @@ SimpleToDoListApplet.prototype = {
     },
 
     _updateKeybindings: function() {
+        this.logger.debug("");
+
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
         if (this.pref_overlay_key !== "") {
@@ -543,6 +590,8 @@ SimpleToDoListApplet.prototype = {
     },
 
     _updateIconAndLabel: function() {
+        this.logger.debug("");
+
         try {
             if (this.pref_custom_icon_for_applet === "") {
                 this.set_applet_icon_name("");
@@ -678,8 +727,20 @@ SimpleToDoListApplet.prototype = {
                     try {
                         let sections = JSON.parse(rawData);
 
-                        for (let i in sections) {
-                            if (sections.hasOwnProperty(i)) {
+                        // For compatibility with older versions of this applet where an object
+                        // was used instead of an array.
+                        if (!Array.isArray(sections)) {
+                            sections = Object.keys(sections).map(Lang.bind(this, function(aKey) {
+                                sections[aKey]["id"] = this.next_id;
+                                this.next_id++;
+                                return sections[aKey];
+                            }));
+                        }
+
+                        let i = 0,
+                            iLen = sections.length;
+                        for (; i < iLen; i++) {
+                            if (typeof sections[i] === "object") {
                                 this._create_section("", sections[i]);
                             }
                         }
@@ -706,10 +767,11 @@ SimpleToDoListApplet.prototype = {
 
                 let sectionsContainer;
 
+                // Export an specific section...
                 if (aSection) {
-                    sectionsContainer = {};
-                    sectionsContainer["0"] = aSection;
-                } else {
+                    sectionsContainer = [];
+                    sectionsContainer[0] = aSection;
+                } else { // ...or all sections.
                     sectionsContainer = this.sections;
                 }
 
@@ -739,23 +801,25 @@ SimpleToDoListApplet.prototype = {
                 this.pref_save_last_selected_directory = path;
                 let sectionsContainer;
 
+                // Save an specific section...
                 if (aSection) {
-                    sectionsContainer = {};
-                    sectionsContainer["0"] = aSection;
-                } else {
+                    sectionsContainer = [];
+                    sectionsContainer[0] = aSection;
+                } else { // ...or all sections.
                     sectionsContainer = this.sections;
                 }
 
                 try {
-                    for (let id in sectionsContainer) {
-                        if (sectionsContainer.hasOwnProperty(id) &&
-                            typeof sectionsContainer[id] === "object") {
-                            rawData += sectionsContainer[id]["name"] + ":";
+                    let i = 0,
+                        iLen = sectionsContainer.length;
+                    for (; i < iLen; i++) {
+                        if (typeof sectionsContainer[i] === "object") {
+                            rawData += sectionsContainer[i]["name"] + ":";
                             rawData += "\n";
-                            let i = 0,
-                                iLen = sectionsContainer[id]["tasks"].length;
-                            for (; i < iLen; i++) {
-                                let task = sectionsContainer[id]["tasks"][i];
+                            let t = 0,
+                                tLen = sectionsContainer[i]["tasks"].length;
+                            for (; t < tLen; t++) {
+                                let task = sectionsContainer[i]["tasks"][t];
                                 rawData += (task["completed"] ?
                                         this.pref_task_completed_character :
                                         this.pref_task_notcompleted_character) +
@@ -763,7 +827,7 @@ SimpleToDoListApplet.prototype = {
                                 rawData += task["name"];
                                 rawData += "\n";
 
-                                if (i === iLen - 1) {
+                                if (t === iLen - 1) {
                                     rawData += "\n";
                                 }
                             }
@@ -862,8 +926,8 @@ SimpleToDoListApplet.prototype = {
                 _("Do you really want to remove all your current tasks?") + "\n" +
                 _("This operation cannot be reverted!!!") + "\n",
                 Lang.bind(this, function() {
-                    this.sections = {};
-                    $.saveToFileAsync("{}", this._tasks_list_file, Lang.bind(this, function() {
+                    this.sections = [];
+                    $.saveToFileAsync("[]", this._tasks_list_file, Lang.bind(this, function() {
                         this._load();
                     }));
                 })
@@ -916,10 +980,14 @@ SimpleToDoListApplet.prototype = {
     },
 
     on_applet_clicked: function() {
+        this.logger.debug("");
+
         this._toggleMenu();
     },
 
     on_applet_removed_from_panel: function() {
+        this.logger.debug("");
+
         if (this._build_ui_id > 0) {
             Mainloop.source_remove(this._build_ui_id);
             this._build_ui_id = 0;
@@ -946,6 +1014,8 @@ SimpleToDoListApplet.prototype = {
     },
 
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
+        this.logger.debug("");
+
         // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
         // settings callback instead of just one as in older versions. The first one is the
         // setting value and the second one is the user data. To workaround this nonsense,
@@ -956,7 +1026,7 @@ SimpleToDoListApplet.prototype = {
         let pref_key = aPrefKey || aPrefValue;
         switch (pref_key) {
             case "pref_enable_verbose_logging":
-                global.log("Logging changed to " + (this.pref_enable_verbose_logging ? "debug" : "info"));
+                this.logger.info("Logging changed to " + (this.pref_enable_verbose_logging ? "debug" : "info"));
                 this.logger.verbose = this.pref_enable_verbose_logging;
                 break;
             case "pref_custom_icon_for_applet":
@@ -973,6 +1043,7 @@ SimpleToDoListApplet.prototype = {
             case "pref_section_font_size":
             case "pref_section_set_min_width":
             case "pref_section_set_max_width":
+            case "pref_section_keep_alphabetic_order":
             case "pref_section_set_bold":
             case "pref_section_remove_native_entry_theming":
             case "pref_section_remove_native_entry_theming_sizing":
@@ -995,8 +1066,11 @@ SimpleToDoListApplet.prototype = {
             case "pref_tasks_priorities_today_foreground":
             case "pref_tasks_priorities_low_background":
             case "pref_tasks_priorities_low_foreground":
-            case "pref_autobackups_enabled":
                 this._buildUI();
+                break;
+            case "pref_autobackups_enabled":
+                this._force_storage_dirs_creation = true;
+                this._load();
                 break;
         }
     },

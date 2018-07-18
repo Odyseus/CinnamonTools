@@ -24,6 +24,6 @@
     "max-instances": -1,
     "description": "Simple applet to create ToDo lists.",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "version": "1.03",
+    "version": "1.05",
     "uuid": "{{UUID}}"
 }

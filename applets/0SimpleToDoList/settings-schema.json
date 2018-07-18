@@ -37,7 +37,7 @@
         "type": "checkbox",
         "indent": true,
         "default": true,
-        "description": "Avoid accidental deletions",
+        "description": "Avoid accidental sections/tasks deletions",
         "tooltip": "When enabled, to remove a task or a section of the menu, the Control key needs to be pressed."
     },
     "pref_animate_menu": {
@@ -89,6 +89,13 @@
         "units": "pixels",
         "description": "Set maximum entry width",
         "tooltip": "Cinnamon menus automatically change their size to accommodate the elements that they contain. Setting a fixed size for those elements will avoid the constant resizing of the menu when opening/closing sub menus."
+    },
+    "pref_section_keep_alphabetic_order": {
+        "type": "checkbox",
+        "indent": true,
+        "default": true,
+        "description": "Keep sections sorted alphabetically",
+        "tooltip": "When enabled, the sections will be displayed/created in alphabetic order."
     },
     "pref_section_set_bold": {
         "type": "checkbox",
@@ -351,5 +358,9 @@
     "pref_last_backup_cleanup": {
         "type": "generic",
         "default": 0
+    },
+    "pref_storage_dirs_created": {
+        "type": "generic",
+        "default": false
     }
 }
