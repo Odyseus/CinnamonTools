@@ -1778,25 +1778,38 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
 
     options_map_defaults = {
         "cinnamon_version": "1",
+        "cinnamon_font_size": "9pt",
+        "cinnamon_font_family": '"Noto Sans", sans, Sans-Serif',
         "gtk3_version": "1"
     }
 
-    print(Ansi.PURPLE("Choose in which Cinnamon version the theme will be used.\n"
-                      "1. 3.0.x to 3.2.x (Default)\n"
-                      "2. 3.4.x to 3.8.x"))
+    print(Ansi.PURPLE("Choose in which Cinnamon version the theme will be used."))
+    print(Ansi.PURPLE("1. 3.0.x to 3.2.x (Default)"))
+    print(Ansi.PURPLE("2. 3.4.x to 3.8.x"))
 
     do_prompt(options_map_defaults, "cinnamon_version", "Enter an option", "1",
               validator=validate_themes_options)
 
-    print(Ansi.PURPLE("Choose in which Gtk+ version the theme will be used.\n"
-                      "1. 3.18.x (Default)\n"
-                      "2. 3.22.x"))
+    print(Ansi.PURPLE("Set the Cinnamon theme font size."))
+
+    do_prompt(options_map_defaults, "cinnamon_font_size", "Enter a value", "9pt")
+
+    print(Ansi.PURPLE("Set the Cinnamon theme font family."))
+
+    do_prompt(options_map_defaults, "cinnamon_font_family",
+              "Enter a value", '"Noto Sans", sans, Sans-Serif')
+
+    print(Ansi.PURPLE("Choose in which Gtk+ version the theme will be used.\n"))
+    print(Ansi.PURPLE("1. 3.18.x (Default)"))
+    print(Ansi.PURPLE("2. 3.22.x"))
 
     do_prompt(options_map_defaults, "gtk3_version", "Enter an option", "1",
               validator=validate_themes_options)
 
     theme_data = {
         "cinnamon_version": options_map["cinnamon_version"][options_map_defaults["cinnamon_version"]],
+        "cinnamon_font_size": options_map_defaults["cinnamon_font_size"],
+        "cinnamon_font_family": options_map_defaults["cinnamon_font_family"],
         "gtk3_version": options_map["gtk3_version"][options_map_defaults["gtk3_version"]]
     }
 
@@ -1854,6 +1867,10 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
         variant_config = run_path(os.path.join(variant_folder, "config.py"))["settings"]
         variant_config["replacement_data"].append(("@theme_name@", theme_name))
         variant_config["replacement_data"].append(("@theme_variant@", variant))
+        variant_config["replacement_data"].append(
+            ('"@font_size@"', theme_data["cinnamon_font_size"]))
+        variant_config["replacement_data"].append(
+            ('"@font_family@"', theme_data["cinnamon_font_family"]))
         variant_version_insensitive_files = os.path.join(variant_folder, "_version_insensitive")
         variant_version_sensitive = os.path.join(variant_folder, "_version_sensitive")
         variant_version_sensitive_cinnamon_files = os.path.join(

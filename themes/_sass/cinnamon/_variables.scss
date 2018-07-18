@@ -1,6 +1,6 @@
 // Fonts
-$font_size: 9pt;
-$font_family: "Noto Sans", sans, Sans-Serif;
+$font_size: "@font_size@"; // Set at build time.
+$font_family: "@font_family@"; // Set at build time.
 
 // Colors
 $selected_fg_color: #ffffff;

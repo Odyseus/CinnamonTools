@@ -1,6 +1,6 @@
 stage {
-  font-family: "Noto Sans", sans, Sans-Serif;
-  font-size: 9pt; }
+  font-family: "@font_family@";
+  font-size: "@font_size@"; }
 
 .cinnamon-link {
   color: #0000ee;
