@@ -382,10 +382,10 @@ FeedMenuItem.prototype = {
         this.menu = new PopupMenu.PopupSubMenu(this.actor);
         this.item = item;
         if (this.item.read) {
-            this._icon_name = "feed-symbolic";
+            this._icon_name = this.parent._applet.pref_feed_icon;
             this.icon_type = St.IconType.SYMBOLIC;
         } else {
-            this._icon_name = "feed-new-symbolic";
+            this._icon_name = this.parent._applet.pref_new_feed_icon;
             this.icon_type = St.IconType.FULLCOLOR;
         }
 
@@ -478,7 +478,7 @@ FeedMenuItem.prototype = {
         /* Marks the item read without opening it. */
         this.logger.debug("mark_read");
         this.item.mark_read();
-        this._icon_name = "feed-symbolic";
+        this._icon_name = this.parent._applet.pref_feed_icon;
         this.icon.set_icon_name(this._icon_name);
         // Close sub menus if action has been taken.
         if (this.show_action_items) {

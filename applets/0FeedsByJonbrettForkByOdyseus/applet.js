@@ -11,6 +11,7 @@ const _ = $._;
 
 const Applet = imports.ui.applet;
 const Gio = imports.gi.Gio;
+const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
 const Lang = imports.lang;
 const Main = imports.ui.main;
@@ -66,7 +67,7 @@ FeedsReaderForkByOdyseus.prototype = {
 
                 this.feeds = [];
 
-                this.set_applet_icon_symbolic_name("rss");
+                this._setAppletIcon(false);
                 this.set_applet_tooltip(_("Feed reader"));
 
                 this.logger.debug("Creating menus");
@@ -111,7 +112,9 @@ FeedsReaderForkByOdyseus.prototype = {
             "pref_notifications_enabled",
             "pref_enable_verbose_logging",
             "pref_profile_name",
-            "pref_overlay_key"
+            "pref_overlay_key",
+            "pref_new_feed_icon",
+            "pref_feed_icon",
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -123,6 +126,45 @@ FeedsReaderForkByOdyseus.prototype = {
             } else {
                 this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
             }
+        }
+    },
+
+    _setAppletIcon: function(aNewFeed) {
+        let icon = (aNewFeed ? this.pref_new_feed_icon : this.pref_feed_icon) ||
+            "feeds-reader-rss-feed-symbolic";
+        let setIcon = (aIcon) => {
+            if (aIcon.search("-symbolic") !== -1) {
+                this.set_applet_icon_symbolic_name(aIcon);
+            } else {
+                this.set_applet_icon_name(aIcon);
+            }
+        };
+
+        try {
+            if (this.pref_custom_icon_for_applet === "") {
+                this.set_applet_icon_name("");
+            } else if (GLib.path_is_absolute(icon) &&
+                GLib.file_test(icon, GLib.FileTest.EXISTS)) {
+                setIcon(icon);
+            } else if (Gtk.IconTheme.get_default().has_icon(icon)) {
+                setIcon(icon);
+                /**
+                 * START mark Odyseus
+                 * I added the last condition without checking Gtk.IconTheme.get_default.
+                 * Otherwise, if there is a valid icon name added by
+                 *  Gtk.IconTheme.get_default().append_search_path, it will not be recognized.
+                 * With the following extra condition, the worst that can happen is that
+                 *  the applet icon will not change/be set.
+                 */
+            } else {
+                try {
+                    setIcon(icon);
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            }
+        } catch (aErr) {
+            global.logWarning('Could not load icon file "' + this.pref_custom_icon_for_applet + '" for menu button');
         }
     },
 
@@ -242,6 +284,7 @@ FeedsReaderForkByOdyseus.prototype = {
     /* Private method used to load / reload all the feeds. */
     _load_feeds: function(aFeedsConfigFileData) {
         this.logger.debug("");
+
         this.feeds = [];
         this.menu.removeAll();
         let data = JSON.parse(aFeedsConfigFileData);
@@ -253,36 +296,32 @@ FeedsReaderForkByOdyseus.prototype = {
             let profiles = data["profiles"];
 
             if (profiles[i]["name"].trim() === this.pref_profile_name) {
-                try {
-                    let f = 0,
-                        fLen = profiles[i]["feeds"].length;
-                    for (; f < fLen; f++) {
-                        let feed = profiles[i]["feeds"][f];
+                let f = 0,
+                    fLen = profiles[i]["feeds"].length;
+                for (; f < fLen; f++) {
+                    let feed = profiles[i]["feeds"][f];
 
-                        try {
-                            if (feed["enabled"]) {
-                                this.feeds[f] = new $.FeedSubMenuItem(
-                                    feed["url"],
-                                    this, {
-                                        feed_id: feed["id"],
-                                        logger: this.logger,
-                                        max_items: this.pref_max_items,
-                                        description_max_length: this.pref_description_max_length,
-                                        tooltip_max_width: this.pref_tooltip_max_width,
-                                        show_read_items: feed["showreaditems"],
-                                        show_feed_image: feed["showimage"], // Not implemented.
-                                        custom_title: feed["title"],
-                                        notify: feed["notify"],
-                                        interval: feed["interval"] // Not implemented.
-                                    });
-                                this.menu.addMenuItem(this.feeds[f]);
-                            }
-                        } catch (aErr) {
-                            this.logger.error("Error Parsing feeds.json file: " + aErr);
+                    try {
+                        if (feed["enabled"]) {
+                            this.feeds[f] = new $.FeedSubMenuItem(
+                                feed["url"],
+                                this, {
+                                    feed_id: feed["id"],
+                                    logger: this.logger,
+                                    max_items: this.pref_max_items,
+                                    description_max_length: this.pref_description_max_length,
+                                    tooltip_max_width: this.pref_tooltip_max_width,
+                                    show_read_items: feed["showreaditems"],
+                                    show_feed_image: feed["showimage"], // Not implemented.
+                                    custom_title: feed["title"],
+                                    notify: feed["notify"],
+                                    interval: feed["interval"] // Not implemented.
+                                });
+                            this.menu.addMenuItem(this.feeds[f]);
                         }
+                    } catch (aErr) {
+                        this.logger.error("Error Parsing feeds.json file: " + aErr);
                     }
-                } catch (aErr) {
-                    global.logError(aErr);
                 }
             }
         }
@@ -313,10 +352,10 @@ FeedsReaderForkByOdyseus.prototype = {
         }
 
         if (unread_count > 0) {
-            this.set_applet_icon_symbolic_name("feed-new");
+            this._setAppletIcon(true);
             this.set_applet_tooltip(tooltip);
         } else {
-            this.set_applet_icon_symbolic_name("feed");
+            this._setAppletIcon(false);
             this.set_applet_tooltip(_("No unread feeds"));
         }
     },
@@ -417,30 +456,23 @@ FeedsReaderForkByOdyseus.prototype = {
     /* Feed manager functions */
     manage_feeds: function() {
         this.logger.debug("");
-        try {
-            let argv = [
-                this.metadata.path + "/python/manage_feeds.py",
-                FEED_CONFIG_FILE,
-                this.pref_profile_name
-            ];
-            Util.spawn_async(argv, Lang.bind(this, this._read_json_config));
-        } catch (aErr) {
-            this.logger.error(aErr);
-        }
+
+        let argv = [
+            this.metadata.path + "/python/manage_feeds.py",
+            FEED_CONFIG_FILE,
+            this.pref_profile_name
+        ];
+        Util.spawn_async(argv, Lang.bind(this, this._read_json_config));
     },
 
     redirect_feed: function(current_url, redirected_url) {
         this.logger.debug("");
 
-        try {
-            let argv = [this.metadata.path + "/python/config_file_manager.py", FEED_CONFIG_FILE];
-            argv.push("--profile", this.pref_profile_name);
-            argv.push("--oldurl", current_url);
-            argv.push("--newurl", redirected_url);
-            Util.spawn_async(argv, Lang.bind(this, this._read_json_config));
-        } catch (aErr) {
-            this.logger.error(aErr);
-        }
+        let argv = [this.metadata.path + "/python/config_file_manager.py", FEED_CONFIG_FILE];
+        argv.push("--profile", this.pref_profile_name);
+        argv.push("--oldurl", current_url);
+        argv.push("--newurl", redirected_url);
+        Util.spawn_async(argv, Lang.bind(this, this._read_json_config));
     },
 
     on_applet_removed_from_panel: function() {
@@ -560,6 +592,10 @@ FeedsReaderForkByOdyseus.prototype = {
                 break;
             case "pref_overlay_key":
                 this._updateKeybindings();
+                break;
+            case "pref_feed_icon":
+            case "pref_new_feed_icon":
+                this.update_title();
                 break;
         }
     }

@@ -14,6 +14,18 @@
         "default": "",
         "description": "Keyboard shortcut to open and close the menu."
     },
+    "pref_new_feed_icon": {
+        "type": "iconfilechooser",
+        "default": "feeds-reader-rss-new-feed-symbolic",
+        "description": "Icon used when there are new feeds",
+        "tooltip": "Select an icon to show in the panel."
+    },
+    "pref_feed_icon": {
+        "type": "iconfilechooser",
+        "default": "feeds-reader-rss-feed-symbolic",
+        "description": "Icon used when there are not new feeds",
+        "tooltip": "Select an icon to show in the panel."
+    },
     "pref_max_items": {
         "type": "spinbutton",
         "default": 10,

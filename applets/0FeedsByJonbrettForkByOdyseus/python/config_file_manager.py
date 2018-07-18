@@ -266,7 +266,7 @@ class ConfigFileManager:
             json_obj = DEFAULT_FEEDS
             # Populate the UUIDs
             for profile in json_obj["profiles"]:
-                if profile["name"] == "default":
+                if profile["name"].lower() == "default":
                     for feed in profile["feeds"]:
                         # This unique ID is the identifier for this feed for life
                         feed["id"] = ConfigFileManager.get_new_id()
