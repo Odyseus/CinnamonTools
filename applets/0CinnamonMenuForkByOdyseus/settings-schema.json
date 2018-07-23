@@ -57,20 +57,6 @@
         "description": "Enable autoscrolling in application list",
         "tooltip": "Choose whether or not to enable smooth autoscrolling in the application list."
     },
-    "pref_search_providers_results_enabled": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Enable search providers results in search box",
-        "tooltip": "Enable/Disable the display of search results coming from search providers (the Cinnamon xlets type)."
-    },
-    "pref_search_filesystem": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Enable filesystem path entry in search box",
-        "tooltip": "Allows path entry in the menu search box."
-    },
     "pref_animate_menu": {
         "type": "checkbox",
         "indent": true,
@@ -104,20 +90,6 @@
     "menu_layout_header": {
         "type": "header",
         "description": "Menu layout"
-    },
-    "pref_show_places": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show bookmarks and places",
-        "tooltip": "Choose whether or not to show bookmarks and places in the menu."
-    },
-    "pref_show_recent_files": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show \"Recent Files\" category",
-        "tooltip": "For people who want the \"Recent Files\" category hidden without disabling recent documents globally."
     },
     "pref_recently_used_apps_enabled": {
         "type": "checkbox",

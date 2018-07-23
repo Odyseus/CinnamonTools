@@ -56,19 +56,19 @@ def _(string):
 
 COLUMNS = [{
     "id": "title",
-    "title": "%s (Mandatory)" % _("Title"),
+    "title": "%s (%s)" % (_("Title"), _("Mandatory")),
     "type": "string"
 }, {
     "id": "command",
-    "title": "%s (Mandatory)" % _("Command"),
+    "title": "%s (%s)" % (_("Command"), _("Mandatory")),
     "type": "string"
 }, {
     "id": "icon",
-    "title": "%s (Mandatory)" % _("Icon"),
+    "title": "%s (%s)" % (_("Icon"), _("Mandatory")),
     "type": "icon"
 }, {
     "id": "description",
-    "title": "%s (Optional)" % _("Description"),
+    "title": "%s (%s)" % (_("Description"), _("Optional")),
     "type": "string"
 }]
 
@@ -297,7 +297,7 @@ def list_edit_factory(options):
             if self.bind_dir is None:
                 try:
                     return self.widget_value
-                except Exception as e:
+                except Exception:
                     return None
             else:
                 if hasattr(self, "bind_object"):
