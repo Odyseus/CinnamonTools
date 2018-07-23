@@ -1,10 +1,11 @@
 # My ignores #
+/.sublime
 /__app__/python_modules/__pycache__
+/themes/_sass/cinnamon/.sass-cache
 /tmp
 __000__
 domain_name
 theme_name
-/themes/_sass/cinnamon/.sass-cache
 
 # Compiled source #
 ###################
