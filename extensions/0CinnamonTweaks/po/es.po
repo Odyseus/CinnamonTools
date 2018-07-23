@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks 1.14\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-06-10 21:35-0300\n"
+"POT-Creation-Date: 2018-07-23 15:55-0300\n"
 "PO-Revision-Date: 2018-05-04 21:33-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -1171,31 +1171,31 @@ msgstr "No se pudo encontrar el esquema %s para la extensión %s."
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 
-#: utils.js:233
+#: utils.js:240
 msgid "Tweak activation aborted!!!"
 msgstr "¡¡¡Activación del ajuste abortada!!!"
 
-#: utils.js:234 utils.js:259
+#: utils.js:241 utils.js:266
 msgid "Your Cinnamon version may not be compatible!!!"
 msgstr "¡¡¡Su versión de Cinnamon puede que no sea compatible!!!"
 
-#: utils.js:239
+#: utils.js:246
 msgid "This is a test notification"
 msgstr "Esta es una notificación de prueba"
 
-#: utils.js:258
+#: utils.js:265
 msgid "Extension activation aborted!!!"
 msgstr "¡¡¡Activación de la extensión abortada!!!"
 
-#: utils.js:260
+#: utils.js:267
 msgid "Minimum Cinnamon version allowed: 2.8.6"
 msgstr "Versión mínima de CInnamon permitida: 2.8.6"
 
-#: utils.js:551
+#: utils.js:558
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: utils.js:557
+#: utils.js:564
 msgid "OK"
 msgstr "Aceptar"
 

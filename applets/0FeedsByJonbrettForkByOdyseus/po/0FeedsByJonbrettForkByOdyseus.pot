@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus 0.54\n"
-"POT-Creation-Date: 2018-06-12 00:26-0300\n"
+"POT-Creation-Date: 2018-07-23 16:07-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-06-12 02:20:15.236\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following sections are available only in English."
@@ -29,7 +29,7 @@ msgstr ""
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:224 python/manage_feeds.py:175
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:266 python/manage_feeds.py:175
 msgid "Help"
 msgstr ""
 
@@ -123,35 +123,35 @@ msgstr ""
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr ""
 
-#: applet.js:70
+#: applet.js:71
 msgid "Feed reader"
 msgstr ""
 
-#: applet.js:131
+#: applet.js:173
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:132
+#: applet.js:174
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr ""
 
-#: applet.js:133
+#: applet.js:175
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:192
+#: applet.js:234
 msgid "Mark all read"
 msgstr ""
 
-#: applet.js:204
+#: applet.js:246
 msgid "Reload"
 msgstr ""
 
-#: applet.js:215
+#: applet.js:257
 msgid "Manage feeds"
 msgstr ""
 
-#: applet.js:320
+#: applet.js:359
 msgid "No unread feeds"
 msgstr ""
 
@@ -389,6 +389,19 @@ msgstr ""
 
 #. settings-schema.json->pref_overlay_key->description
 msgid "Keyboard shortcut to open and close the menu."
+msgstr ""
+
+#. settings-schema.json->pref_new_feed_icon->description
+msgid "Icon used when there are new feeds"
+msgstr ""
+
+#. settings-schema.json->pref_new_feed_icon->tooltip
+#. settings-schema.json->pref_feed_icon->tooltip
+msgid "Select an icon to show in the panel."
+msgstr ""
+
+#. settings-schema.json->pref_feed_icon->description
+msgid "Icon used when there are not new feeds"
 msgstr ""
 
 #. settings-schema.json->pref_max_items->units

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WallpaperChangerApplet 1.03\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-06-10 21:35-0300\n"
+"POT-Creation-Date: 2018-07-23 15:55-0300\n"
 "PO-Revision-Date: 2018-05-04 21:20-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -122,11 +122,11 @@ msgstr "Este es el perfil actual que el demonio cargará."
 msgid "Current Profile"
 msgstr "Perfil Actual"
 
-#: settings.py:382 utils.js:687
+#: settings.py:382 utils.js:695
 msgid "Toggle and display the daemon status."
 msgstr "Alternar y mostrar el estado del demonio."
 
-#: settings.py:383 utils.js:677
+#: settings.py:383 utils.js:685
 msgid "Daemon Status"
 msgstr "Estado del Demonio"
 
@@ -150,11 +150,11 @@ msgstr "Guardar"
 msgid "Manage keyboard shortcuts"
 msgstr "Ajustes de atajos de teclado."
 
-#: settings.py:449 utils.js:580
+#: settings.py:449 utils.js:588
 msgid "Next Wallpaper"
 msgstr "Fondo de Pantalla Siguiente"
 
-#: settings.py:453 utils.js:583
+#: settings.py:453 utils.js:591
 msgid "Previous Wallpaper"
 msgstr "Fondo de pantalla Previo"
 
@@ -518,57 +518,57 @@ msgstr "No se pudo encontrar el esquema %s para la extensión %s."
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 
-#: utils.js:373
+#: utils.js:381
 msgid "Wallpapers will be changed in random order"
 msgstr "Fondos de pantalla serán cambiados en orden aleatorio"
 
-#: utils.js:375
+#: utils.js:383
 msgid "Wallpapers will be changed in alphabetical order"
 msgstr "Fondos de pantalla serán cambiados en orden alfabético"
 
-#: utils.js:377
+#: utils.js:385
 #, javascript-format
 msgid "Wallpaper rotation every %s seconds"
 msgstr "Rotación de fondos de pantalla casa %s segundos"
 
-#: utils.js:379
+#: utils.js:387
 msgid "Automatic rotation disabled"
 msgstr "Rotación automática deshabilitada"
 
-#: utils.js:381
+#: utils.js:389
 msgid "Wallpaper rotation at the beginning of every hour"
 msgstr "Rotación de fondos de pantalla al principio de cada hora"
 
-#: utils.js:525
+#: utils.js:533
 msgid "You must provide at least two states for the button"
 msgstr "Al menos dos estados deben ser provistos para el botón"
 
-#: utils.js:653
+#: utils.js:661
 msgid "Unable to go back any further, no history available"
 msgstr "No se puede volver más atrás, no hay historial disponible"
 
-#: utils.js:714
+#: utils.js:722
 msgid "Open Current Wallpaper"
 msgstr "Abrir Fondo de Pantalla Actual"
 
-#: utils.js:754
+#: utils.js:762
 msgid "Open Next Wallpaper"
 msgstr "Abrir el Fondo de Pantalla Siguiente"
 
-#: utils.js:791 utils.js:801
+#: utils.js:799 utils.js:809
 #, javascript-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
 
-#: utils.js:1049
+#: utils.js:1057
 msgid "Applet activation aborted!!!"
 msgstr "¡¡¡Activación del ajuste abortada!!!"
 
-#: utils.js:1050
+#: utils.js:1058
 msgid "Your Cinnamon version may not be compatible!!!"
 msgstr "¡¡¡Su versión de Cinnamon puede que no sea compatible!!!"
 
-#: utils.js:1051
+#: utils.js:1059
 msgid "Minimum Cinnamon version allowed: 3.0"
 msgstr "Versión mínima de CInnamon permitida: 3.0"
 

@@ -5,15 +5,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 2.5\n"
-"POT-Creation-Date: 2018-06-12 00:26-0300\n"
+"Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 2.6\n"
+"POT-Creation-Date: 2018-07-23 16:07-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-06-12 02:20:15.236\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following sections are available only in English."
@@ -29,7 +29,7 @@ msgstr ""
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:157
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:158
 msgid "Help"
 msgstr ""
 
@@ -138,51 +138,51 @@ msgstr ""
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr ""
 
-#: applet.js:168
+#: applet.js:169
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:169
+#: applet.js:170
 msgid "This applet needs the GTop library installed on your system for it  to work."
 msgstr ""
 
-#: applet.js:170
+#: applet.js:171
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:448
+#: applet.js:383
 msgid "Command not set!"
 msgstr ""
 
-#: applet.js:449
+#: applet.js:384
 msgid "Set a custom command from this applet settings window."
 msgstr ""
 
-#: utils.js:82
+#: utils.js:83
 msgid "CPU"
 msgstr ""
 
-#: utils.js:104 utils.js:130
+#: utils.js:109 utils.js:135
 msgid "MB"
 msgstr ""
 
-#: utils.js:109
+#: utils.js:114
 msgid "Memory"
 msgstr ""
 
-#: utils.js:135
+#: utils.js:140
 msgid "Swap"
 msgstr ""
 
-#: utils.js:180
+#: utils.js:185
 msgid "KB/s"
 msgstr ""
 
-#: utils.js:185
+#: utils.js:190
 msgid "Network D/U"
 msgstr ""
 
-#: utils.js:223
+#: utils.js:228
 msgid "Load average"
 msgstr ""
 
@@ -303,6 +303,14 @@ msgstr ""
 #. settings-schema.json->pref_net_graph_width->description
 #. settings-schema.json->pref_load_graph_width->description
 msgid "Graph width"
+msgstr ""
+
+#. settings-schema.json->pref_cpu_tooltip_decimals->description
+msgid "Show this many decimals in the tooltip"
+msgstr ""
+
+#. settings-schema.json->pref_cpu_tooltip_decimals->units
+msgid "decimals"
 msgstr ""
 
 #. settings-schema.json->pref_cpu_color_0->description

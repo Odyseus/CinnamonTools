@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks 1.14\n"
-"POT-Creation-Date: 2018-06-12 00:26-0300\n"
+"POT-Creation-Date: 2018-07-23 16:07-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-06-12 02:20:15.236\n"
 
 #: ../../__app__/python_modules/localized_help_creator.py:233
 msgid "The following sections are available only in English."
@@ -1151,31 +1151,31 @@ msgstr ""
 msgid "Please check your installation."
 msgstr ""
 
-#: utils.js:233
+#: utils.js:240
 msgid "Tweak activation aborted!!!"
 msgstr ""
 
-#: utils.js:234 utils.js:259
+#: utils.js:241 utils.js:266
 msgid "Your Cinnamon version may not be compatible!!!"
 msgstr ""
 
-#: utils.js:239
+#: utils.js:246
 msgid "This is a test notification"
 msgstr ""
 
-#: utils.js:258
+#: utils.js:265
 msgid "Extension activation aborted!!!"
 msgstr ""
 
-#: utils.js:260
+#: utils.js:267
 msgid "Minimum Cinnamon version allowed: 2.8.6"
 msgstr ""
 
-#: utils.js:551
+#: utils.js:558
 msgid "Cancel"
 msgstr ""
 
-#: utils.js:557
+#: utils.js:564
 msgid "OK"
 msgstr ""
 
