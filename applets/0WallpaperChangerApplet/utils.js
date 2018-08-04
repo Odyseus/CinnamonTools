@@ -16,7 +16,6 @@ const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GioSSS = Gio.SettingsSchemaSource;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const Pango = imports.gi.Pango;
@@ -56,9 +55,11 @@ function _(aStr) {
     return Gettext.gettext(aStr);
 }
 
-const WallChangerSettings = new Lang.Class({
-    Name: "WallChangerSettings",
+function WallChangerSettings() {
+    this._init.apply(this, arguments);
+}
 
+WallChangerSettings.prototype = {
     _init: function() {
         let schemaSource = GioSSS.get_default();
         let schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
@@ -88,6 +89,33 @@ const WallChangerSettings = new Lang.Class({
         this._extendProperties();
     },
 
+    _getDescriptor: function(aKey) {
+        return Object.create({
+            get: () => {
+                return this._getValue(aKey);
+            },
+            set: (aVal) => {
+                this._setValue(aKey, aVal);
+            },
+            enumerable: true,
+            configurable: true,
+        });
+    },
+
+    // Keep this in case the above one misbehaves.
+    // _getDescriptor: function(aKey) {
+    //     return Object.create({
+    //         get: function(aK) {
+    //             return this._getValue(aK);
+    //         }.bind(this, aKey),
+    //         set: function(aK, aVal) {
+    //             this._setValue(aK, aVal);
+    //         }.bind(this, aKey),
+    //         enumerable: true,
+    //         configurable: true,
+    //     });
+    // },
+
     /**
      * Create a getter and a setter for each key in the schema.
      */
@@ -95,12 +123,11 @@ const WallChangerSettings = new Lang.Class({
         let prefKeys = this.schema.list_keys();
         // Based on Cinnamon's xlets settings code. A life saver!
         for (let i = prefKeys.length - 1; i >= 0; i--) {
-            Object.defineProperty(this, (prefKeys[i].split("-")).join("_"), {
-                get: Lang.bind(this, this._getValue, prefKeys[i]),
-                set: Lang.bind(this, this._setValue, prefKeys[i]),
-                enumerable: true,
-                configurable: true
-            });
+            Object.defineProperty(
+                this,
+                (prefKeys[i].split("-")).join("_"),
+                this._getDescriptor(prefKeys[i])
+            );
         }
     },
 
@@ -109,7 +136,7 @@ const WallChangerSettings = new Lang.Class({
         return this.schema.get_value(aPrefKey).deep_unpack();
     },
 
-    _setValue: function(aPrefVal, aPrefKey) {
+    _setValue: function(aPrefKey, aPrefVal) {
         let prefVal = this.schema.get_value(aPrefKey);
 
         if (prefVal.deep_unpack() !== aPrefVal) {
@@ -157,7 +184,7 @@ const WallChangerSettings = new Lang.Class({
             this._handlers.splice(index, 1);
         }
     }
-});
+};
 
 var Settings = new WallChangerSettings();
 
@@ -222,7 +249,7 @@ WallChangerDaemon.prototype = {
             "org.freedesktop.DBus",
             "/org/freedesktop/DBus");
         this._owner_changed_id = this._bus.connectSignal("NameOwnerChanged",
-            Lang.bind(this, function(emitter, signalName, params) {
+            (emitter, signalName, params) => {
                 if (params[0] == DAEMON_NAME) {
                     if (params[1] !== "" && params[2] === "") {
                         this._off();
@@ -231,7 +258,7 @@ WallChangerDaemon.prototype = {
                         this._on();
                     }
                 }
-            }));
+            });
 
         let result = this._bus.ListNamesSync();
         result = String(result).split(",");
@@ -334,13 +361,15 @@ WallChangerButton.prototype = {
         });
         this.addActor(this.icon);
 
-        let conn = this.actor.connect("leave-event", Lang.bind(this, this._leaveEvent));
+        let conn = this.actor.connect("leave-event",
+            () => this._leaveEvent());
         this.connections.push([this.actor, conn]);
 
-        conn = this.actor.connect("enter-event", Lang.bind(this, this._enterEvent));
+        conn = this.actor.connect("enter-event",
+            () => this._enterEvent());
         this.connections.push([this.actor, conn]);
 
-        conn = this.connect("activate", Lang.bind(this, aCallback));
+        conn = this.connect("activate", () => aCallback());
         this.connections.push([this, conn]);
 
         this.tooltip = new MyTooltip(this.actor, "");
@@ -414,10 +443,10 @@ WallChangerPreview.prototype = {
         this.daemon = daemon;
         this._width = width;
         this._next_file_id = this.daemon.connectSignal("preview",
-            Lang.bind(this, function(proxy, signalName, parameters) {
+            (proxy, signalName, parameters) => {
                 let path = parameters[0];
                 this.set_wallpaper(path);
-            }));
+            });
 
         if (this.daemon.bus.queue && this.daemon.bus.queue.length > 0) {
             this.set_wallpaper(this.daemon.bus.queue[0], false);
@@ -435,20 +464,19 @@ WallChangerPreview.prototype = {
 
     _createImageTexture: function(aPath) {
         Gio.file_new_for_path(aPath).read_async(GLib.PRIORITY_DEFAULT, null,
-            Lang.bind(this,
-                function(obj, res) {
-                    try {
-                        let stream = obj.read_finish(res);
-                        this._textureFromStream(stream, aPath);
-                    } catch (aErr) {
-                        global.logError(aPath + "\n" + aErr);
-                    }
-                }));
+            (obj, res) => {
+                try {
+                    let stream = obj.read_finish(res);
+                    this._textureFromStream(stream, aPath);
+                } catch (aErr) {
+                    global.logError(aPath + "\n" + aErr);
+                }
+            });
     },
 
     _textureFromStream: function(aStream, aPath) {
         GdkPixbuf.Pixbuf.new_from_stream_at_scale_async(aStream, this._width, -1, true, null,
-            Lang.bind(this, function(obj, res) {
+            (obj, res) => {
                 try {
                     let pixBuf = GdkPixbuf.Pixbuf.new_from_stream_finish(res);
                     let image = new Clutter.Image();
@@ -490,7 +518,7 @@ WallChangerPreview.prototype = {
                 } catch (aErr) {
                     global.logError(aPath + "\n" + aErr);
                 }
-            }));
+            });
     },
 
     set_wallpaper: function(aPath) {
@@ -537,7 +565,7 @@ WallChangerStateButton.prototype = {
         this._states = aStates;
         this._state = 0;
         WallChangerButton.prototype._init.call(this, this._states[0].icon,
-            Lang.bind(this, this._clicked));
+            () => this._clicked());
     },
 
     set_state: function(state) {
@@ -584,10 +612,12 @@ WallChangerControls.prototype = {
             reactive: false
         });
 
-        this._next = new WallChangerButton("media-skip-forward", Lang.bind(this, this.next));
+        this._next = new WallChangerButton("media-skip-forward",
+            () => this.next());
         this._next.set_tooltip(_("Next Wallpaper"));
 
-        this._prev = new WallChangerButton("media-skip-backward", Lang.bind(this, this.prev));
+        this._prev = new WallChangerButton("media-skip-backward",
+            () => this.prev());
         this._prev.set_tooltip(_("Previous Wallpaper"));
 
         this._random = new WallChangerStateButton([{
@@ -596,7 +626,7 @@ WallChangerControls.prototype = {
         }, {
             icon: "media-playlist-repeat",
             name: "ordered"
-        }], Lang.bind(this, this._toggle_random));
+        }], (aState) => this._toggle_random(aState));
         this._random.set_state((this._settings.random) ? "random" : "ordered");
 
         this._rotation = new WallChangerStateButton([{
@@ -608,7 +638,7 @@ WallChangerControls.prototype = {
         }, {
             icon: "appointment-new",
             name: "hourly"
-        }], Lang.bind(this, this._toggle_rotation));
+        }], (aState) => this._toggle_rotation(aState));
         this._rotation.set_state(this._settings.rotation);
 
         this.controlsBox = new Clutter.Box();
@@ -685,12 +715,10 @@ WallChangerDaemonControl.prototype = {
         PopupMenu.PopupSwitchMenuItem.prototype._init.call(this, _("Daemon Status"));
         this.daemon = daemon;
         this.setToggleState(this.daemon.is_running);
-        this._handler = this.connect("toggled", Lang.bind(this, function() {
-            this.daemon.toggle();
-        }));
-        this._daemon_handler = this.daemon.connect("toggled", Lang.bind(this, function(obj, state) {
+        this._handler = this.connect("toggled", () => this.daemon.toggle());
+        this._daemon_handler = this.daemon.connect("toggled", (obj, state) => {
             this.setToggleState(state);
-        }));
+        });
 
         this.tooltip = new MyTooltip(this.actor, _("Toggle and display the daemon status."));
     },
@@ -720,7 +748,7 @@ WallChangerOpenCurrent.prototype = {
             "schema": "org.cinnamon.desktop.background"
         });
         PopupMenu.PopupMenuItem.prototype._init.call(this, _("Open Current Wallpaper"));
-        this._activate_id = this.connect("activate", Lang.bind(this, this._activate));
+        this._activate_id = this.connect("activate", () => this._activate());
     },
 
     destroy: function() {
@@ -764,7 +792,7 @@ WallChangerPreviewMenuItem.prototype = {
         this._preview = new WallChangerPreview(this._settings.wallpaper_preview_width, daemon);
         this._box.add(this._preview.actor);
 
-        this._activate_id = this.connect("activate", Lang.bind(this, this._clicked));
+        this._activate_id = this.connect("activate", () => this._clicked());
     },
 
     destroy: function() {
@@ -799,9 +827,10 @@ WallChangerProfile.prototype = {
             _("Profile: %s").format(this._settings.current_profile));
 
         this._populate_profiles();
-        this._settings.connect("changed::current-profile", Lang.bind(this, this.setLabel));
-        this._settings.connect("changed::profiles", Lang.bind(this, this._populate_profiles));
-        this.menu.connect("open-state-changed", Lang.bind(this, this._subMenuOpenStateChanged));
+        this._settings.connect("changed::current-profile", () => this.setLabel());
+        this._settings.connect("changed::profiles", () => this._populate_profiles());
+        this.menu.connect("open-state-changed",
+            (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
         this.setSensitive(aSensitive);
     },
 
@@ -811,14 +840,17 @@ WallChangerProfile.prototype = {
 
     _populate_profiles: function() {
         this.menu.removeAll();
-        for (let index in this._settings.profiles) {
-            debug("Adding menu: %s".format(index));
-            let item = new PopupMenu.PopupMenuItem(index);
-            item.connect("activate", Lang.bind(item, function() { // jshint ignore:line
+        let itemFn = () => {
+            return () => {
                 let settings = new WallChangerSettings();
                 settings.current_profile = this.label.text;
                 settings.destroy();
-            }));
+            };
+        };
+        for (let index in this._settings.profiles) {
+            debug("Adding menu: %s".format(index));
+            let item = new PopupMenu.PopupMenuItem(index);
+            item.connect("activate", itemFn());
             this.menu.addMenuItem(item);
         }
     },
@@ -856,8 +888,9 @@ WallChangerSwitch.prototype = {
 
         this.setToggleState(this._settings.schema.get_boolean(this._key));
         this._handler_changed = this._settings.connect("changed::" + this._key,
-            Lang.bind(this, this._changed));
-        this._handler_toggled = this.connect("toggled", Lang.bind(this, this._toggled));
+            () => this._changed());
+        this._handler_toggled = this.connect("toggled",
+            () => this._toggled());
 
         this.tooltip = new MyTooltip(this.actor, tooltip);
     },
@@ -897,9 +930,7 @@ MyTooltip.prototype = {
         this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
         this._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
 
-        aActor.connect("destroy", Lang.bind(this, function() {
-            this.destroy();
-        }));
+        aActor.connect("destroy", () => this.destroy());
     },
 
     destroy: function() {

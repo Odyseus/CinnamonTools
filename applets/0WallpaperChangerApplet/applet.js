@@ -15,7 +15,6 @@ const Settings = $.Settings;
 const Applet = imports.ui.applet;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
@@ -69,7 +68,7 @@ WallpaperChangerApplet.prototype = {
                 this._daemon_changed_id = 0;
                 this._daemon_error_id = 0;
 
-                this.set_applet_tooltip(aMetadata.name);
+                this.set_applet_tooltip(_(this.metadata.name));
                 this._updateIconAndLabel();
                 this._startConnections();
 
@@ -102,7 +101,8 @@ WallpaperChangerApplet.prototype = {
         this.wallChangerControls = new $.WallChangerControls(this._daemon.bus);
 
         let subMenu = new PopupMenu.PopupSubMenuMenuItem(_("Extra Options"));
-        subMenu.menu.connect("open-state-changed", Lang.bind(this, this._subMenuOpenStateChanged));
+        subMenu.menu.connect("open-state-changed",
+            (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
         subMenu.menu.addMenuItem(new $.WallChangerDaemonControl(this._daemon));
         subMenu.menu.addMenuItem(new $.WallChangerSwitch(
             _("Auto Start Daemon"),
@@ -165,7 +165,9 @@ WallpaperChangerApplet.prototype = {
             Main.keybindingManager.addHotKey(
                 this.next_wall_keybinding_name,
                 Settings.next_wallpaper_shortcut + "::",
-                Lang.bind(this.wallChangerControls, this.wallChangerControls.next)
+                function() {
+                    this.wallChangerControls.next();
+                }.bind(this.wallChangerControls)
             );
         }
 
@@ -173,7 +175,9 @@ WallpaperChangerApplet.prototype = {
             Main.keybindingManager.addHotKey(
                 this.prev_wall_keybinding_name,
                 Settings.prev_wallpaper_shortcut + "::",
-                Lang.bind(this.wallChangerControls, this.wallChangerControls.prev)
+                function() {
+                    this.wallChangerControls.prev();
+                }.bind(this.wallChangerControls)
             );
         }
 
@@ -181,23 +185,25 @@ WallpaperChangerApplet.prototype = {
             Main.keybindingManager.addHotKey(
                 this.menu_keybinding_name,
                 Settings.toggle_menu_shortcut + "::",
-                Lang.bind(this, this._toggleMenu)
+                () => this._toggleMenu()
             );
         }
     },
 
     _startConnections: function() {
         this._daemon_changed_id = this._daemon.connectSignal("changed",
-            Lang.bind(this, function(emitter, signalName, parameters) {
+            (emitter, signalName, parameters) => {
                 if (Settings.notifications) {
-                    Main.notify(_(this.metadata.name), _("Wallpaper Changed") + ": " + parameters[0]);
+                    Main.notify(_(this.metadata.name), _("Wallpaper Changed") +
+                        ": " + parameters[0]);
                 }
-            }));
+            });
 
         this._daemon_error_id = this._daemon.connectSignal("error",
-            Lang.bind(this, function(emitter, signalName, parameters) {
-                Main.notifyError(_(this.metadata.name), _("Daemon Error") + ": " + parameters[0]);
-            }));
+            (emitter, signalName, parameters) => {
+                Main.notifyError(_(this.metadata.name), _("Daemon Error") +
+                    ": " + parameters[0]);
+            });
     },
 
     _bindSettings: function() {
@@ -250,7 +256,7 @@ WallpaperChangerApplet.prototype = {
 
         this._add_context_menu_id = Mainloop.timeout_add(
             5000,
-            Lang.bind(this, function() {
+            () => {
                 if (!this.context_menu_item_configure) {
                     let items = this._applet_context_menu._getMenuItems();
 
@@ -261,57 +267,42 @@ WallpaperChangerApplet.prototype = {
                     );
 
                     this.context_menu_item_configure.connect("activate",
-                        Lang.bind(this, function() {
+                        () => {
                             Util.spawn_async([this.metadata.path + "/settings.py"], null);
-                        }));
+                        });
 
                     this._applet_context_menu.addMenuItem(this.context_menu_item_configure,
                         items.indexOf(this.context_menu_item_remove));
                 }
 
                 this._add_context_menu_id = 0;
-            })
+            }
         );
     },
 
     _updateIconAndLabel: function() {
-        try {
-            if (Settings.custom_applet_icon === "") {
-                this.set_applet_icon_name("");
-            } else if (GLib.path_is_absolute(Settings.custom_applet_icon) &&
-                GLib.file_test(Settings.custom_applet_icon, GLib.FileTest.EXISTS)) {
-                if (Settings.custom_applet_icon.search("-symbolic") != -1) {
-                    this.set_applet_icon_symbolic_path(Settings.custom_applet_icon);
-                } else {
-                    this.set_applet_icon_path(Settings.custom_applet_icon);
-                }
-            } else if (Gtk.IconTheme.get_default().has_icon(Settings.custom_applet_icon)) {
-                if (Settings.custom_applet_icon.search("-symbolic") != -1) {
-                    this.set_applet_icon_symbolic_name(Settings.custom_applet_icon);
-                } else {
-                    this.set_applet_icon_name(Settings.custom_applet_icon);
-                }
-                /**
-                 * START mark Odyseus
-                 * I added the last condition without checking Gtk.IconTheme.get_default.
-                 * Otherwise, if there is a valid icon name added by
-                 *  Gtk.IconTheme.get_default().append_search_path, it will not be recognized.
-                 * With the following extra condition, the worst that can happen is that
-                 *  the applet icon will not change/be set.
-                 */
+        let icon = Settings.custom_applet_icon;
+        let setIcon = (aIcon, aIsPath) => {
+            if (aIcon.search("-symbolic") !== -1) {
+                this[aIsPath ?
+                    "set_applet_icon_symbolic_path" :
+                    "set_applet_icon_symbolic_name"](aIcon);
             } else {
-                try {
-                    if (Settings.custom_applet_icon.search("-symbolic") != -1) {
-                        this.set_applet_icon_symbolic_name(Settings.custom_applet_icon);
-                    } else {
-                        this.set_applet_icon_name(Settings.custom_applet_icon);
-                    }
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+                this[aIsPath ?
+                    "set_applet_icon_path" :
+                    "set_applet_icon_name"](aIcon);
             }
-        } catch (aErr) {
-            global.logWarning('Could not load icon file "' + Settings.custom_applet_icon + '" for menu button');
+        };
+
+        if (GLib.path_is_absolute(icon) &&
+            GLib.file_test(icon, GLib.FileTest.EXISTS)) {
+            setIcon(icon, true);
+        } else {
+            try {
+                setIcon(icon);
+            } catch (aErr) {
+                global.logWarning('Could not load icon "' + icon + '" for applet.');
+            }
         }
 
         if (Settings.custom_applet_icon === "") {
