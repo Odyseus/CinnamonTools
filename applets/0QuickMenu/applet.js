@@ -13,7 +13,6 @@ const Applet = imports.ui.applet;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
@@ -86,7 +85,9 @@ QuickMenuApplet.prototype = {
             this.main_folder_monitor = Gio.file_new_for_path(this.directory_last)
                 .monitor_directory(Gio.FileMonitorFlags.NONE, null);
             this.monitor_id = this.main_folder_monitor.connect("changed",
-                Lang.bind(this, this._onMainFolderChanged));
+                (aMonitor, aFileObj, aN, aEventType) => {
+                    this._onMainFolderChanged(aMonitor, aFileObj, aN, aEventType)
+                });
         }
     },
 
@@ -102,7 +103,8 @@ QuickMenuApplet.prototype = {
                 aEventType === Gio.FileMonitorEvent.CREATED ||
                 aEventType === Gio.FileMonitorEvent.MOVED)) {
 
-            this.folder_changed_id = Mainloop.timeout_add(1000, Lang.bind(this, this._updateMenu));
+            this.folder_changed_id = Mainloop.timeout_add(1000,
+                () => this._updateMenu());
         }
     },
 
@@ -195,14 +197,14 @@ QuickMenuApplet.prototype = {
         this._updateMenu();
 
         // Temporarily added to fix an upstream bug.
-        Mainloop.timeout_add_seconds(5, Lang.bind(this, function() {
+        Mainloop.timeout_add_seconds(5, () => {
             if (this.context_menu_item_remove) {
                 // NOTE: This string could be left blank because it's a default string,
                 // so it's already translated by Cinnamon. It's up to the translators.
                 this.context_menu_item_remove.label.set_text(_("Remove '%s'")
                     .format(_(this.metadata.name)));
             }
-        }));
+        });
     },
 
     _createMenu: function() {
@@ -224,10 +226,10 @@ QuickMenuApplet.prototype = {
         }
 
         this.update_menu_id = Mainloop.timeout_add((aRightNow ? 10 : 1000),
-            Lang.bind(this, function() {
+            () => {
                 this._createMenu();
                 this._loadDir(this.pref_directory, this.menu);
-            }));
+            });
     },
 
     _loadDir: function(aDir, aMenu) {
@@ -256,7 +258,7 @@ QuickMenuApplet.prototype = {
 
                 if (iconsForSubMenusFile.query_exists(null)) {
                     iconsForSubMenusFile.load_contents_async(null,
-                        Lang.bind(this, function(aFile, aResponce) {
+                        (aFile, aResponce) => {
                             let rawData;
                             try {
                                 rawData = aFile.load_contents_finish(aResponce)[1];
@@ -267,7 +269,7 @@ QuickMenuApplet.prototype = {
                                 return;
                             }
                             this._handleDir(aDir, currentDir, aMenu, iconsForFolders);
-                        }));
+                        });
                 }
             } else {
                 this._handleDir(aDir, currentDir, aMenu, iconsForFolders);
@@ -394,7 +396,7 @@ QuickMenuApplet.prototype = {
 
                     if (aDir === this.pref_directory && this.pref_auto_close_opened_sub_menus) {
                         submenu.menu.connect("open-state-changed",
-                            Lang.bind(this, this._subMenuOpenStateChanged));
+                            (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
                     }
 
                     aMenu.addMenuItem(submenu);
@@ -439,40 +441,32 @@ QuickMenuApplet.prototype = {
     },
 
     _updateIconAndLabel: function() {
-        try {
-            if (this.pref_show_customicon ||
-                !(this.orientation === St.Side.TOP || this.orientation === St.Side.BOTTOM)) {
-                if (this.pref_customicon === "") {
-                    this.set_applet_icon_name("");
-                } else if (GLib.path_is_absolute(this.pref_customicon) &&
-                    GLib.file_test(this.pref_customicon, GLib.FileTest.EXISTS)) {
-                    if (this.pref_customicon.search("-symbolic") != -1) {
-                        this.set_applet_icon_symbolic_path(this.pref_customicon);
-                    } else {
-                        this.set_applet_icon_path(this.pref_customicon);
-                    }
-                } else if (Gtk.IconTheme.get_default().has_icon(this.pref_customicon)) {
-                    if (this.pref_customicon.search("-symbolic") != -1) {
-                        this.set_applet_icon_symbolic_name(this.pref_customicon);
-                    } else {
-                        this.set_applet_icon_name(this.pref_customicon);
-                    }
-                }
+        let icon = this.pref_customicon;
+        let setIcon = (aIcon, aIsPath) => {
+            if (aIcon.search("-symbolic") !== -1) {
+                this[aIsPath ?
+                    "set_applet_icon_symbolic_path" :
+                    "set_applet_icon_symbolic_name"](aIcon);
             } else {
-                this.hide_applet_icon();
+                this[aIsPath ?
+                    "set_applet_icon_path" :
+                    "set_applet_icon_name"](aIcon);
             }
-        } catch (aErr) {
-            global.logWarning('Could not load icon file "' + this.pref_customicon +
-                '" for menu button.');
+        };
+
+        if (GLib.path_is_absolute(icon) &&
+            GLib.file_test(icon, GLib.FileTest.EXISTS)) {
+            setIcon(icon, true);
+        } else {
+            try {
+                setIcon(icon);
+            } catch (aErr) {
+                global.logWarning('Could not load icon "' + icon + '" for applet.');
+            }
         }
 
         if (this.pref_customicon === "") {
-            if (this.orientation === St.Side.TOP || this.orientation === St.Side.BOTTOM) {
-                this._applet_icon_box.hide();
-            } else // Display icon box anyways in vertical panels.
-            {
-                this._applet_icon_box.show();
-            }
+            this._applet_icon_box.hide();
         } else {
             this._applet_icon_box.show();
         }
@@ -494,7 +488,7 @@ QuickMenuApplet.prototype = {
         this.update_menu_item = new PopupMenu.PopupIconMenuItem(_("Update menu"),
             "edit-redo",
             St.IconType.SYMBOLIC);
-        this.update_menu_item.connect("activate", Lang.bind(this, this._updateMenu, true));
+        this.update_menu_item.connect("activate", () => this._updateMenu(true));
         new Tooltips.Tooltip(this.update_menu_item.actor,
             _("Scan the main folder to re-create the menu."), this.orientation);
         this._applet_context_menu.addMenuItem(this.update_menu_item);
@@ -502,9 +496,9 @@ QuickMenuApplet.prototype = {
         this.open_dir_menu_item = new PopupMenu.PopupIconMenuItem(_("Open folder"),
             "folder",
             St.IconType.SYMBOLIC);
-        this.open_dir_menu_item.connect("activate", Lang.bind(this, function() {
+        this.open_dir_menu_item.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.pref_directory]);
-        }));
+        });
         new Tooltips.Tooltip(this.open_dir_menu_item.actor, _("Open the main folder."),
             this.orientation);
         this._applet_context_menu.addMenuItem(this.open_dir_menu_item);
@@ -512,9 +506,9 @@ QuickMenuApplet.prototype = {
         this.help_menu_item = new PopupMenu.PopupIconMenuItem(_("Help"),
             "dialog-information",
             St.IconType.SYMBOLIC);
-        this.help_menu_item.connect("activate", Lang.bind(this, function() {
+        this.help_menu_item.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"]);
-        }));
+        });
         new Tooltips.Tooltip(this.help_menu_item.actor, _("Open the help file."), this.orientation);
         this._applet_context_menu.addMenuItem(this.help_menu_item);
     },
@@ -525,11 +519,11 @@ QuickMenuApplet.prototype = {
         Main.keybindingManager.addHotKey(
             this.menu_keybinding_name,
             this.pref_hotkey,
-            Lang.bind(this, function() {
+            () => {
                 if (!Main.overview.visible && !Main.expo.visible) {
                     this.menu.toggle();
                 }
-            }));
+            });
     },
 
     on_applet_removed_from_panel: function() {
