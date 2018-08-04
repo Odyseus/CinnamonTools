@@ -13,7 +13,6 @@ const Applet = imports.ui.applet;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const MessageTray = imports.ui.messageTray;
@@ -83,7 +82,7 @@ FeedsReaderForkByOdyseus.prototype = {
                 this.logger.debug("Initial timeout set in: " + this.timeout + " ms");
                 /* Set the next timeout */
                 this.timer_id = Mainloop.timeout_add(this.timeout,
-                    Lang.bind(this, this._process_feeds));
+                    () => this._process_feeds());
 
                 this.logger.debug("timer_id: " + this.timer_id);
             } catch (aErr) {
@@ -141,9 +140,7 @@ FeedsReaderForkByOdyseus.prototype = {
         };
 
         try {
-            if (this.pref_custom_icon_for_applet === "") {
-                this.set_applet_icon_name("");
-            } else if (GLib.path_is_absolute(icon) &&
+            if (GLib.path_is_absolute(icon) &&
                 GLib.file_test(icon, GLib.FileTest.EXISTS)) {
                 setIcon(icon);
             } else if (Gtk.IconTheme.get_default().has_icon(icon)) {
@@ -164,7 +161,7 @@ FeedsReaderForkByOdyseus.prototype = {
                 }
             }
         } catch (aErr) {
-            global.logWarning('Could not load icon file "' + this.pref_custom_icon_for_applet + '" for menu button');
+            global.logWarning('Could not load icon file "' + icon + '" for menu button');
         }
     },
 
@@ -233,41 +230,41 @@ FeedsReaderForkByOdyseus.prototype = {
         let menuItem = new Applet.MenuItem(
             _("Mark all read"),
             "object-select-symbolic",
-            Lang.bind(this, function() {
+            () => {
                 for (let i = this.feeds.length - 1; i >= 0; i--) {
                     this.feeds[i].reader.mark_all_items_read();
                     this.feeds[i].update();
                 }
-            })
+            }
         );
         this._applet_context_menu.addMenuItem(menuItem);
 
         menuItem = new Applet.MenuItem(
             _("Reload"),
             "view-refresh-symbolic",
-            Lang.bind(this, function() {
+            () => {
                 this.logger.debug("Calling reload from context menu.");
                 this.force_download = true;
                 this._process_feeds();
-            })
+            }
         );
         this._applet_context_menu.addMenuItem(menuItem);
 
         menuItem = new Applet.MenuItem(
             _("Manage feeds"),
             "document-properties-symbolic",
-            Lang.bind(this, function() {
+            () => {
                 this.manage_feeds();
-            })
+            }
         );
         this._applet_context_menu.addMenuItem(menuItem);
 
         menuItem = new Applet.MenuItem(
             _("Help"),
             "dialog-information",
-            Lang.bind(this, function() {
+            () => {
                 Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
-            })
+            }
         );
         this._applet_context_menu.addMenuItem(menuItem);
     },
@@ -278,7 +275,8 @@ FeedsReaderForkByOdyseus.prototype = {
         }
         // Read the json config file.
         let argv = [this.metadata.path + "/python/config_file_manager.py", FEED_CONFIG_FILE];
-        Util.spawn_async(argv, Lang.bind(this, this._load_feeds));
+        Util.spawn_async(argv,
+            (aFeedsConfigFileData) => this._load_feeds(aFeedsConfigFileData));
     },
 
     /* Private method used to load / reload all the feeds. */
@@ -383,7 +381,7 @@ FeedsReaderForkByOdyseus.prototype = {
         this.logger.debug("Setting next timeout to: " + this.timeout + " ms");
         /* Set the next timeout */
         this.timer_id = Mainloop.timeout_add(this.timeout,
-            Lang.bind(this, this._process_feeds));
+            () => this._process_feeds());
 
         this.logger.debug("timer_id: " + this.timer_id);
     },
@@ -462,7 +460,8 @@ FeedsReaderForkByOdyseus.prototype = {
             FEED_CONFIG_FILE,
             this.pref_profile_name
         ];
-        Util.spawn_async(argv, Lang.bind(this, this._read_json_config));
+        Util.spawn_async(argv,
+            (aProfileName) => this._read_json_config(aProfileName));
     },
 
     redirect_feed: function(current_url, redirected_url) {
@@ -472,7 +471,8 @@ FeedsReaderForkByOdyseus.prototype = {
         argv.push("--profile", this.pref_profile_name);
         argv.push("--oldurl", current_url);
         argv.push("--newurl", redirected_url);
-        Util.spawn_async(argv, Lang.bind(this, this._read_json_config));
+        Util.spawn_async(argv,
+            (aProfileName) => this._read_json_config(aProfileName));
     },
 
     on_applet_removed_from_panel: function() {
@@ -501,9 +501,9 @@ FeedsReaderForkByOdyseus.prototype = {
             });
 
             this._source = new $.FeedMessageTraySource("RSS Feed Notification", icon);
-            this._source.connect("destroy", Lang.bind(this, function() {
+            this._source.connect("destroy", () => {
                 this._source = null;
-            }));
+            });
             if (Main.messageTray) {
                 Main.messageTray.add(this._source);
             }
@@ -547,11 +547,11 @@ FeedsReaderForkByOdyseus.prototype = {
             Main.keybindingManager.addHotKey(
                 this.menu_keybinding_name,
                 this.pref_overlay_key,
-                Lang.bind(this, function() {
+                () => {
                     if (!Main.overview.visible && !Main.expo.visible) {
                         this.on_applet_clicked();
                     }
-                })
+                }
             );
         }
     },

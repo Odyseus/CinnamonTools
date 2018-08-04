@@ -11,7 +11,6 @@ const Clutter = imports.gi.Clutter;
 const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const MessageTray = imports.ui.messageTray;
 const Pango = imports.gi.Pango;
 const PopupMenu = imports.ui.popupMenu;
@@ -172,15 +171,21 @@ FeedSubMenuItem.prototype = {
             this.feed_id,
             aURL,
             this.notify, {
-                "onUpdate": Lang.bind(this, this.update),
-                "onError": Lang.bind(this, this.error),
-                "onNewItem": Lang.bind(this._applet, this._applet.new_item_notification),
-                "onItemRead": Lang.bind(this._applet, this._applet.item_read_notification),
-                "onDownloaded": Lang.bind(this._applet, this._applet.process_next_feed)
+                onUpdate: () => this.update(),
+                onError: () => this.error(),
+                onNewItem: function(feed, feedtitle, itemtitle) {
+                    this.new_item_notification(feed, feedtitle, itemtitle);
+                }.bind(this._applet),
+                onItemRead: function(feed) {
+                    this.item_read_notification(feed);
+                }.bind(this._applet),
+                onDownloaded: function() {
+                    this.process_next_feed();
+                }.bind(this._applet)
             }
         );
 
-        this.reader.connect("items-loaded", Lang.bind(this, function() {
+        this.reader.connect("items-loaded", () => {
             this.logger.debug("items-loaded Event Fired for reader");
             // Title needs to be set on items-loaded event
             if (!this.custom_title) {
@@ -197,10 +202,12 @@ FeedSubMenuItem.prototype = {
             this._applet.enqueue_feed(this);
             this.update();
             this._applet.process_next_feed();
-        }));
+        });
 
-        this.actor.connect("enter-event", Lang.bind(this, this._buttonEnterEvent));
-        this.actor.connect("leave-event", Lang.bind(this, this._buttonLeaveEvent));
+        this.actor.connect("enter-event",
+            () => this._buttonEnterEvent());
+        this.actor.connect("leave-event",
+            () => this._buttonLeaveEvent());
     },
 
     get_title: function() {
@@ -247,9 +254,9 @@ FeedSubMenuItem.prototype = {
             }
 
             let item = new FeedMenuItem(this, this.reader.items[i], this.title_length, this.logger);
-            item.connect("item-read", Lang.bind(this, function() {
+            item.connect("item-read", () => {
                 this.update();
-            }));
+            });
             this.menu.addMenuItem(item);
 
             menu_items++;
@@ -443,11 +450,13 @@ FeedMenuItem.prototype = {
         }
 
         /* Ensure tooltip is destroyed when this menu item is destroyed */
-        this.connect("destroy", Lang.bind(this, function() {
+        this.connect("destroy", () => {
             this.tooltip.destroy();
-        }));
-        this.actor.connect("enter-event", Lang.bind(this, this._buttonEnterEvent));
-        this.actor.connect("leave-event", Lang.bind(this, this._buttonLeaveEvent));
+        });
+        this.actor.connect("enter-event",
+            () => this._buttonEnterEvent());
+        this.actor.connect("leave-event",
+            () => this._buttonLeaveEvent());
     },
 
     _onButtonReleaseEvent: function(actor, event) {
@@ -576,8 +585,10 @@ FeedContextMenuItem.prototype = {
             text: label
         });
         this.addActor(this.label);
-        this.actor.connect("enter-event", Lang.bind(this, this._buttonEnterEvent));
-        this.actor.connect("leave-event", Lang.bind(this, this._buttonLeaveEvent));
+        this.actor.connect("enter-event",
+            () => this._buttonEnterEvent());
+        this.actor.connect("leave-event",
+            () => this._buttonLeaveEvent());
     },
 
     activate: function(event) { // jshint ignore:line
@@ -762,7 +773,7 @@ FeedReader.prototype = {
         if (this._shouldUpdate() || this.parent._applet.force_download) {
             this.logger.debug("Processing newly downloaded feed.");
             Util.spawn_async([XletMeta.path + "/python/get_feed.py", this.url],
-                Lang.bind(this, this.process_feed));
+                (response, aLocal) => this.process_feed(response, aLocal));
         } else {
             this.logger.debug("Processing locally stored feed.");
             this.process_feed_locally();
@@ -771,7 +782,7 @@ FeedReader.prototype = {
 
     process_feed_locally: function() {
         this.logger.debug("");
-        this.entries_file.load_contents_async(null, Lang.bind(this, function(aFile, aResponce) {
+        this.entries_file.load_contents_async(null, (aFile, aResponce) => {
             let rawData = "";
             try {
                 rawData = aFile.load_contents_finish(aResponce)[1];
@@ -785,7 +796,7 @@ FeedReader.prototype = {
                 /* Invalid file contents */
                 this.logger.error("Failed to read feed data file for " + this.url + ":" + aErr);
             }
-        }));
+        });
     },
 
     process_feed: function(response, aLocal) {
@@ -855,12 +866,12 @@ FeedReader.prototype = {
                     );
 
                     // Connect the events
-                    item.connect("item-read", Lang.bind(this, function() {
+                    item.connect("item-read", () => {
                         this.on_item_read();
-                    }));
-                    item.connect("item-deleted", Lang.bind(this, function() {
+                    });
+                    item.connect("item-deleted", () => {
                         this.on_item_deleted();
-                    }));
+                    });
 
                     // check if already read
                     if (this._is_item_read(item.id)) {
@@ -1020,7 +1031,7 @@ FeedReader.prototype = {
 
         let file = Gio.file_new_for_path(DataStorage + "/" + this.id);
 
-        file.load_contents_async(null, Lang.bind(this, function(aFile, aResponce) {
+        file.load_contents_async(null, (aFile, aResponce) => {
             let rawData = "";
             try {
                 rawData = aFile.load_contents_finish(aResponce)[1];
@@ -1063,7 +1074,7 @@ FeedReader.prototype = {
                 /* Invalid file contents */
                 this.logger.error("Failed to read feed data file for " + this.url + ":" + aErr);
             }
-        }));
+        });
     },
 
     get_unread_count: function() {
