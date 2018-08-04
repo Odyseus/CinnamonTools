@@ -13,7 +13,6 @@ const Applet = imports.ui.applet;
 const Cairo = imports.cairo;
 const Gio = imports.gi.Gio;
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
@@ -175,7 +174,8 @@ WeatherAppletForkByOdyseusApplet.prototype = {
                     style_class: STYLE.POPUP_SEPARATOR_MENU_ITEM
                 });
                 this._separatorArea.width = 200;
-                this._separatorArea.connect("repaint", Lang.bind(this, this._onSeparatorAreaRepaint));
+                this._separatorArea.connect("repaint",
+                    (aArea) => this._onSeparatorAreaRepaint(aArea));
                 mainBox.add_actor(this._separatorArea);
 
                 //  tomorrow's forecast
@@ -186,10 +186,11 @@ WeatherAppletForkByOdyseusApplet.prototype = {
 
                 this.rebuild();
 
-                this._refresh_weather_id = Mainloop.timeout_add_seconds(3, Lang.bind(this, function() {
-                    this.refreshWeather(true);
-                    this._refresh_weather_id = 0;
-                }));
+                this._refresh_weather_id = Mainloop.timeout_add_seconds(3,
+                    () => {
+                        this.refreshWeather(true);
+                        this._refresh_weather_id = 0;
+                    });
             } catch (aErr) {
                 global.logError(aErr);
             }
@@ -265,11 +266,11 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             Main.keybindingManager.addHotKey(
                 this.menu_keybinding_name,
                 this.pref_overlay_key,
-                Lang.bind(this, function() {
+                () => {
                     if (!Main.overview.visible && !Main.expo.visible) {
                         this.menu.toggle();
                     }
-                })
+                }
             );
         }
     },
@@ -358,10 +359,10 @@ WeatherAppletForkByOdyseusApplet.prototype = {
                     }
 
                     // Polling for likely API throttling
-                    this._refresh_weather_id = Mainloop.timeout_add_seconds(5, Lang.bind(this, function() {
+                    this._refresh_weather_id = Mainloop.timeout_add_seconds(5, () => {
                         this.refreshWeather(true);
                         this._refresh_weather_id = 0;
-                    }));
+                    });
                     return false;
                 }
 
@@ -586,10 +587,12 @@ WeatherAppletForkByOdyseusApplet.prototype = {
                 this._refresh_weather_id = 0;
             }
 
-            this._refresh_weather_id = Mainloop.timeout_add_seconds(this.pref_refresh_interval * 60, Lang.bind(this, function() {
-                this.refreshWeather(true);
-                this._refresh_weather_id = 0;
-            }));
+            this._refresh_weather_id = Mainloop.timeout_add_seconds(this.pref_refresh_interval * 60,
+                () => {
+                    this.refreshWeather(true);
+                    this._refresh_weather_id = 0;
+                }
+            );
         }
     },
 
@@ -689,7 +692,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
         });
 
         // link to the details page
-        this._currentWeatherLocation.connect("clicked", Lang.bind(this, function() {
+        this._currentWeatherLocation.connect("clicked", () => {
             if (this._currentWeatherLocation.url === null) {
                 this.refreshWeather(false);
             } else {
@@ -698,7 +701,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
                     global.create_app_launch_context()
                 );
             }
-        }));
+        });
 
         let bb = new St.BoxLayout({
             vertical: true,
