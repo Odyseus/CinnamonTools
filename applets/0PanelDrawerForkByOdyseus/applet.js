@@ -10,7 +10,6 @@ if (typeof require === "function") {
 const _ = $._;
 
 const Applet = imports.ui.applet;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Settings = imports.ui.settings;
 const PopupMenu = imports.ui.popupMenu;
@@ -49,8 +48,10 @@ PanelDrawerForkByOdyseusApplet.prototype = {
             try {
                 this.set_applet_icon_symbolic_name("pan-end");
 
-                global.settings.connect("changed::panel-edit-mode", Lang.bind(this, this.on_panel_edit_mode_changed));
-                this.actor.connect("enter-event", Lang.bind(this, this._onEntered));
+                global.settings.connect("changed::panel-edit-mode",
+                    () => this.on_panel_edit_mode_changed());
+                this.actor.connect("enter-event",
+                    (aEvent) => this._onEntered(aEvent));
 
                 this._hideTimeoutId = 0;
                 this._rshideTimeoutId = 0;
@@ -58,18 +59,21 @@ PanelDrawerForkByOdyseusApplet.prototype = {
                 this.alreadyH = [];
 
                 if ((!this.disable_starttime_autohide) || this.auto_hide) {
-                    this._hideTimeoutId = Mainloop.timeout_add_seconds(2, Lang.bind(this, function() {
-                        if (this.h) {
-                            this.autodo(true);
+                    this._hideTimeoutId = Mainloop.timeout_add_seconds(2,
+                        () => {
+                            if (this.h) {
+                                this.autodo(true);
+                            }
+                            return false;
                         }
-                    }));
+                    );
                 }
 
                 /*if more than one instance
-                this.actor.connect('hide', Lang.bind(this, function(){
+                this.actor.connect('hide', ()=>{
                     if (this.h)
                         this.doAction(true);
-                }));*/
+                });*/
 
                 this.cbox = Main.panel._rightBox;
 
@@ -80,21 +84,18 @@ PanelDrawerForkByOdyseusApplet.prototype = {
                         this.cbox = Main.panel2._rightBox;
                 }*/
 
-                this.cbox.connect("queue-relayout", Lang.bind(this, Lang.bind(this, function(actor, m) { // jshint ignore:line
+                this.cbox.connect("queue-relayout", () => {
                     if (this.autohide_rs && !this.h) {
-                        if (this._rshideTimeoutId > 0) {
-                            Mainloop.source_remove(this._rshideTimeoutId);
-                            this._rshideTimeoutId = 0;
-                        }
-                        this._rshideTimeoutId = Mainloop.timeout_add_seconds(this.autohide_rs_time, Lang.bind(this, function() {
+                        this._rshideTimeoutId = Mainloop.timeout_add_seconds(this.autohide_rs_time, () => {
                             if (!this.h) {
                                 // this.h=true;
                                 this.doAction(true);
                                 this.autodo(true);
                             }
-                        }));
+                            return false;
+                        });
                     }
-                })));
+                });
             } catch (aErr) {
                 global.logError(aErr);
             }
@@ -163,25 +164,15 @@ PanelDrawerForkByOdyseusApplet.prototype = {
 
     _onEntered: function(event) { // jshint ignore:line
         if (!this.actor.hover && this.hover_activates && !global.settings.get_boolean("panel-edit-mode")) {
-            this._showTimeoutId = Mainloop.timeout_add(this.hover_time, Lang.bind(this, function() {
+            this._showTimeoutId = Mainloop.timeout_add(this.hover_time, () => {
                 if (this.actor.hover && (this.hover_activates_hide || !this.h)) {
                     this.doAction(true);
                 }
-            }));
+            });
         }
     },
 
     doAction: function(updalreadyH) {
-        if (this._hideTimeoutId > 0) {
-            Mainloop.source_remove(this._hideTimeoutId);
-            this._hideTimeoutId = 0;
-        }
-
-        if (this._rshideTimeoutId > 0) {
-            Mainloop.source_remove(this._rshideTimeoutId);
-            this._rshideTimeoutId = 0;
-        }
-
         let _children = this.cbox.get_children();
         let p = _children.indexOf(this.actor);
 
@@ -202,9 +193,9 @@ PanelDrawerForkByOdyseusApplet.prototype = {
                     for (let j in tis) {
                         tis[j].set_size(0, 0);
                     }
-                    Mainloop.timeout_add(10, Lang.bind(this, function() {
+                    Mainloop.timeout_add(10, () => {
                         this.tray.hide();
-                    }));
+                    });
                     continue;
                     // this.traysize =
                 }
@@ -243,9 +234,10 @@ PanelDrawerForkByOdyseusApplet.prototype = {
             }
 
             if (this.auto_hide & !global.settings.get_boolean("panel-edit-mode")) {
-                this._hideTimeoutId = Mainloop.timeout_add_seconds(this.hide_time, Lang.bind(this, function() {
+                this._hideTimeoutId = Mainloop.timeout_add_seconds(this.hide_time, () => {
                     this.autodo(updalreadyH);
-                }));
+                    return false;
+                });
             }
         }
         this.h = !this.h;
@@ -263,7 +255,6 @@ PanelDrawerForkByOdyseusApplet.prototype = {
     },
 
     autodo: function(updalreadyH) {
-        this._hideTimeoutId = 0;
         let postpone = this.actor.hover;
         let _children = this.cbox.get_children();
         let p = _children.indexOf(this.actor);
@@ -282,9 +273,10 @@ PanelDrawerForkByOdyseusApplet.prototype = {
 
         if (postpone) {
             this._hideTimeoutId = Mainloop.timeout_add_seconds(this.hide_time,
-                Lang.bind(this, function() {
+                () => {
                     this.autodo(updalreadyH);
-                }));
+                    return false;
+                });
         } else if (this.h && !global.settings.get_boolean("panel-edit-mode")) {
             this.doAction(updalreadyH);
         }
@@ -308,10 +300,7 @@ PanelDrawerForkByOdyseusApplet.prototype = {
         let pref_key = aPrefKey || aPrefValue;
         switch (pref_key) {
             case "auto_hide":
-                if (this._hideTimeoutId > 0 & !this.auto_hide) {
-                    Mainloop.source_remove(this._hideTimeoutId);
-                    this._hideTimeoutId = 0;
-                } else if (this.auto_hide & this.h) {
+                if (this.auto_hide & this.h) {
                     this.autodo(true);
                 }
                 break;
