@@ -1,5 +1,4 @@
 const Cinnamon = imports.gi.Cinnamon;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const Settings = imports.ui.settings;
@@ -12,9 +11,11 @@ const SHORTCUT_ID = "window-demands-attention-extension";
 
 let changeSettingsTimeout;
 
-const WindowDemandsAttentionExtension = new Lang.Class({
-    Name: "WindowDemandsAttentionExtension",
+function WindowDemandsAttentionExtension() {
+    this._init.apply(this, arguments);
+}
 
+WindowDemandsAttentionExtension.prototype = {
     _init: function() {
         this.settings = new Settings.ExtensionSettings(this, "{{UUID}}");
         this._bindSettings();
@@ -24,12 +25,13 @@ const WindowDemandsAttentionExtension = new Lang.Class({
 
             CONNECTION_IDS.WDAE = global.display.connect(
                 "window-demands-attention",
-                Lang.bind(this, this._on_window_demands_attention)
+                (aDisplay, aWin) => this._on_window_demands_attention(aDisplay, aWin)
             );
         } else if (this.pref_activation_mode === "force") {
             this._tracker = Cinnamon.WindowTracker.get_default();
             this._handlerid = global.display.connect("window-demands-attention",
-                Lang.bind(this, this._on_window_demands_attention));
+                (aDisplay, aWin) => this._on_window_demands_attention(aDisplay, aWin)
+            );
         }
     },
 
@@ -59,13 +61,14 @@ const WindowDemandsAttentionExtension = new Lang.Class({
             }
         }
     },
+
     _toggleEnabled: function() {
         disable();
         if (changeSettingsTimeout !== null) {
             Mainloop.source_remove(changeSettingsTimeout);
         }
 
-        changeSettingsTimeout = Mainloop.timeout_add(500, Lang.bind(this, enable));
+        changeSettingsTimeout = Mainloop.timeout_add(500, () => enable());
     },
 
     _on_window_demands_attention: function(aDisplay, aWin) {
@@ -91,7 +94,7 @@ const WindowDemandsAttentionExtension = new Lang.Class({
         Main.keybindingManager.addHotKey(
             SHORTCUT_ID,
             this.pref_keyboard_shortcut,
-            Lang.bind(this, this._activate_last_window));
+            () => this._activate_last_window());
     },
 
     _remove_keybindings: function() {
@@ -117,7 +120,7 @@ const WindowDemandsAttentionExtension = new Lang.Class({
         this._windows = null;
         this._remove_keybindings();
     }
-});
+};
 
 let wdae = null;
 
