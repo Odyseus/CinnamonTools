@@ -6,7 +6,6 @@ const Clutter = imports.gi.Clutter;
 const DND = imports.ui.dnd;
 const Gettext = imports.gettext;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const Meta = imports.gi.Meta;
@@ -105,9 +104,12 @@ WindowPreview.prototype = {
             this._showTimer = Mainloop.timeout_add(300,
                 // Condition needed for retro-compatibility.
                 // Mark for deletion on EOL. Cinnamon 3.2.x+
-                Lang.bind(this, (typeof this._onShowTimerComplete === "function" ?
-                    this._onShowTimerComplete :
-                    this._onTimerComplete)));
+                () => {
+                    (typeof this._onShowTimerComplete === "function" ?
+                        this._onShowTimerComplete() :
+                        this._onTimerComplete());
+                }
+            );
         }
 
         this.mousePosition = event.get_coords();
@@ -148,10 +150,10 @@ WindowPreview.prototype = {
         });
 
         this._sizeChangedId = this.muffinWindow.connect("size-changed",
-            Lang.bind(this, function() {
+            () => {
                 let [width, height] = this._getScaledTextureSize(windowTexture);
                 this.thumbnail.set_size(width, height);
-            }));
+            });
 
         this.thumbnailBin.set_child(this.thumbnail);
 
@@ -265,14 +267,21 @@ AppMenuButton.prototype = {
         }
 
         this.actor._delegate = this;
-        this.actor.connect("button-release-event", Lang.bind(this, this._onButtonRelease));
-        this.actor.connect("button-press-event", Lang.bind(this, this._onButtonPress));
+        this.actor.connect("button-release-event",
+            (aActor, aEvent) => this._onButtonRelease(aActor, aEvent));
+        this.actor.connect("button-press-event",
+            (aActor, aEvent) => this._onButtonPress(aActor, aEvent));
 
         this.actor.connect("get-preferred-width",
-            Lang.bind(this, this._getPreferredWidth));
+            (actor, forHeight, alloc) => {
+                this._getPreferredWidth(actor, forHeight, alloc);
+            });
         this.actor.connect("get-preferred-height",
-            Lang.bind(this, this._getPreferredHeight));
-        this.actor.connect("allocate", Lang.bind(this, this._allocate));
+            (actor, forWidth, alloc) => {
+                this._getPreferredHeight(actor, forWidth, alloc);
+            });
+        this.actor.connect("allocate",
+            (actor, box, flags) => this._allocate(actor, box, flags));
 
         this.progressOverlay = new St.Widget({
             style_class: "progress",
@@ -286,9 +295,9 @@ AppMenuButton.prototype = {
             name: "appMenuIcon"
         });
         this._iconBox.connect("style-changed",
-            Lang.bind(this, this._onIconBoxStyleChanged));
+            () => this._onIconBoxStyleChanged());
         this._iconBox.connect("notify::allocation",
-            Lang.bind(this, this._updateIconBoxClipAndGeometry));
+            () => this._updateIconBoxClipAndGeometry());
         this.actor.add_actor(this._iconBox);
 
         this._label = new St.Label();
@@ -335,13 +344,17 @@ AppMenuButton.prototype = {
             this._menuManager.addMenu(this.rightClickMenu);
 
             this._draggable = DND.makeDraggable(this.actor, null, this._applet.actor);
-            this._draggable.connect("drag-begin", Lang.bind(this, this._onDragBegin));
-            this._draggable.connect("drag-cancelled", Lang.bind(this, this._onDragCancelled));
-            this._draggable.connect("drag-end", Lang.bind(this, this._onDragEnd));
+            this._draggable.connect("drag-begin",
+                () => this._onDragBegin());
+            this._draggable.connect("drag-cancelled",
+                () => this._onDragCancelled());
+            this._draggable.connect("drag-end",
+                () => this._onDragEnd());
         }
 
         this.onPanelEditModeChanged();
-        global.settings.connect("changed::panel-edit-mode", Lang.bind(this, this.onPanelEditModeChanged));
+        global.settings.connect("changed::panel-edit-mode",
+            () => this.onPanelEditModeChanged());
 
         this._windows = this._applet._windows;
 
@@ -394,7 +407,8 @@ AppMenuButton.prototype = {
 
     onScrollModeChanged: function() {
         if (this._applet.pref_enable_scrolling) {
-            this.scrollConnector = this.actor.connect("scroll-event", Lang.bind(this, this._onScrollEvent));
+            this.scrollConnector = this.actor.connect("scroll-event",
+                (aActor, aEvent) => this._onScrollEvent(aActor, aEvent));
         } else {
             if (this.scrollConnector) {
                 this.actor.disconnect(this.scrollConnector);
@@ -839,14 +853,14 @@ AppMenuButton.prototype = {
 
         this.actor.add_style_class_name("window-list-item-demands-attention");
         if (counter < 4) {
-            Mainloop.timeout_add(FLASH_INTERVAL, Lang.bind(this, function() {
+            Mainloop.timeout_add(FLASH_INTERVAL, () => {
                 if (this.actor.has_style_class_name("window-list-item-demands-attention")) {
                     this.actor.remove_style_class_name("window-list-item-demands-attention");
                 }
-                Mainloop.timeout_add(FLASH_INTERVAL, Lang.bind(this, function() {
+                Mainloop.timeout_add(FLASH_INTERVAL, () => {
                     this._flashButton(++counter);
-                }));
-            }));
+                });
+            });
         }
     }
 };
@@ -863,7 +877,8 @@ AppMenuButtonRightClickMenu.prototype = {
 
         this._launcher = launcher;
         this._windows = launcher._applet._windows;
-        this.connect("open-state-changed", Lang.bind(this, this._onToggled));
+        this.connect("open-state-changed",
+            (aMenu, aOpen) => this._onToggled(aMenu, aOpen));
 
         this.orientation = orientation;
         this.metaWindow = metaWindow;
@@ -930,8 +945,10 @@ AppMenuButtonRightClickMenu.prototype = {
                 item = new PopupMenu.PopupSubMenuMenuItem(_("Move to another workspace"));
                 this.addMenuItem(item);
 
-                let activateEmitted = function(aActor, aEvent, aWhoKnowsWhat, aWorkspaceIndex) {
-                    this.change_workspace(global.screen.get_workspace_by_index(aWorkspaceIndex));
+                let activateEmittedFn = (aMetaWindow, aWorkspaceIndex) => {
+                    return () => {
+                        aMetaWindow.change_workspace(global.screen.get_workspace_by_index(aWorkspaceIndex));
+                    };
                 };
 
                 let curr_index = mw.get_workspace().index();
@@ -941,11 +958,11 @@ AppMenuButtonRightClickMenu.prototype = {
                     let name = Main.workspace_names[i] ? Main.workspace_names[i] : Main._makeDefaultWorkspaceName(i);
                     let ws = new PopupMenu.PopupMenuItem(name);
 
-                    if (i == curr_index) {
+                    if (i === curr_index) {
                         ws.setSensitive(false);
                     }
 
-                    ws.connect("activate", Lang.bind(mw, activateEmitted, j));
+                    ws.connect("activate", activateEmittedFn(mw, j));
                     item.menu.addMenuItem(ws);
                 }
 
@@ -956,24 +973,24 @@ AppMenuButtonRightClickMenu.prototype = {
 
         // Close all/others
         item = new PopupMenu.PopupIconMenuItem(_("Close all"), "application-exit", St.IconType.SYMBOLIC);
-        item.connect("activate", Lang.bind(this, function() {
+        item.connect("activate", () => {
             for (let window of this._windows)
                 if (window.actor.visible &&
                     !window._needsAttention) {
                     window.metaWindow.delete(global.get_current_time());
                 }
-        }));
+        });
         this.addMenuItem(item);
 
         item = new PopupMenu.PopupIconMenuItem(_("Close others"), "window-close", St.IconType.SYMBOLIC);
-        item.connect("activate", Lang.bind(this, function() {
+        item.connect("activate", () => {
             for (let window of this._windows)
                 if (window.actor.visible &&
                     window.metaWindow != this.metaWindow &&
                     !window._needsAttention) {
                     window.metaWindow.delete(global.get_current_time());
                 }
-        }));
+        });
         this.addMenuItem(item);
 
         this.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
@@ -1027,20 +1044,19 @@ AppMenuButtonRightClickMenu.prototype = {
         if (this._launcher._applet.pref_sub_menu_placement !== 0) {
             item = new PopupMenu.PopupIconMenuItem(_("Help"), "dialog-information",
                 St.IconType.SYMBOLIC);
-            item.connect("activate", Lang.bind(this, function() {
+            item.connect("activate", () => {
                 Util.spawn_async(["xdg-open", this._launcher._applet.metadata.path + "/HELP.html"], null);
-            }));
+            });
             subMenu.menu.addMenuItem(item);
 
             item = new PopupMenu.PopupIconMenuItem(_("About..."), "dialog-question",
                 St.IconType.SYMBOLIC);
-            item.connect("activate", Lang.bind(this._launcher._applet,
-                this._launcher._applet.openAbout));
+            item.connect("activate", () => this._launcher._applet.openAbout());
             subMenu.menu.addMenuItem(item);
 
             item = new PopupMenu.PopupIconMenuItem(_("Configure..."), "system-run",
                 St.IconType.SYMBOLIC);
-            item.connect("activate", Lang.bind(this._launcher._applet, Lang.bind(this, function() {
+            item.connect("activate", () => {
                 // Condition needed for retro-compatibility.
                 // Mark for deletion on EOL. Cinnamon 3.4.x+
                 if (typeof this._launcher._applet.configureApplet === "function") {
@@ -1050,17 +1066,17 @@ AppMenuButtonRightClickMenu.prototype = {
                         this._launcher._applet._uuid, this._launcher._applet.instance_id
                     ], null);
                 }
-            })));
+            });
             subMenu.menu.addMenuItem(item);
 
             item = new PopupMenu.PopupIconMenuItem(
-                _("Remove '%s'").format(this._launcher._applet.metadata.name),
+                _("Remove '%s'").format(_(this._launcher._applet.metadata.name)),
                 "edit-delete",
                 St.IconType.SYMBOLIC);
-            item.connect("activate", Lang.bind(this, function() {
+            item.connect("activate", () => {
                 AppletManager._removeAppletFromPanel(this._launcher._applet._uuid,
                     this._launcher._applet.instance_id);
-            }));
+            });
             subMenu.menu.addMenuItem(item);
         }
     },

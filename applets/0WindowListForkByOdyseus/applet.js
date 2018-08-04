@@ -14,7 +14,6 @@ const Clutter = imports.gi.Clutter;
 const DND = imports.ui.dnd;
 const Gdk = imports.gi.Gdk;
 const Gio = imports.gi.Gio;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const Settings = imports.ui.settings;
@@ -90,7 +89,7 @@ WindowListForkByOdyseusApplet.prototype = {
         this.signals.connect(global.screen, "monitors-changed", this._updateWatchedMonitors, this);
         this.signals.connect(global.window_manager, "switch-workspace", this._refreshAllItems, this);
 
-        this.actor.connect("style-changed", Lang.bind(this, this._updateSpacing));
+        this.actor.connect("style-changed", () => this._updateSpacing());
 
         global.settings.bind("panel-edit-mode", this.actor, "reactive", Gio.SettingsBindFlags.DEFAULT);
 
@@ -223,7 +222,10 @@ WindowListForkByOdyseusApplet.prototype = {
     },
 
     _onWindowAddedAsync: function(screen, metaWindow, monitor) {
-        Mainloop.timeout_add(20, Lang.bind(this, this._onWindowAdded, screen, metaWindow, monitor));
+        Mainloop.timeout_add(20,
+            () => {
+                this._onWindowAdded(screen, metaWindow, monitor);
+            });
     },
 
     _onWindowAdded: function(screen, metaWindow, monitor) { // jshint ignore:line
@@ -493,11 +495,11 @@ WindowListForkByOdyseusApplet.prototype = {
             this._tooltipErodeTimer = null;
         }
 
-        this._tooltipErodeTimer = Mainloop.timeout_add(300, Lang.bind(this, function() {
+        this._tooltipErodeTimer = Mainloop.timeout_add(300, () => {
             this._tooltipShowing = false;
             this._tooltipErodeTimer = null;
             return false;
-        }));
+        });
     },
 
     cancelErodeTooltip: function() {
