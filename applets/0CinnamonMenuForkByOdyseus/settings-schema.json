@@ -325,9 +325,8 @@
         "tooltip": "If enabled, this options will open as root .desktop files that aren't owned by the current user.\n\nThis isn't needed for all text editors. Some text editors will allow you to open and edit not owned files and will ask for the root password at the moment of saving the changes."
     },
     "pref_context_custom_editor_for_edit_desktop_file": {
-        "type": "filechooser",
+        "type": "entry",
         "indent": true,
-        "select-dir": false,
         "default": "",
         "description": "Custom text editor:",
         "tooltip": "Set a custom text editor to open .desktop files (just the name of the text editor executable or the path to it).\nLeave it blank to let the system decide."

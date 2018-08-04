@@ -364,6 +364,7 @@ ApplicationContextMenuItem.prototype = {
         }
 
         let editor = this._appButton._applet.pref_context_custom_editor_for_edit_desktop_file;
+
         if (editor !== "") {
             cmd += " " + editor + " " + '"' + this._appButton.app.get_app_info().get_filename() + '"';
         } else {
