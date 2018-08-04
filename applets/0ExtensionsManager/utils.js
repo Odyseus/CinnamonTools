@@ -11,7 +11,6 @@ const Clutter = imports.gi.Clutter;
 const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
 const ModalDialog = imports.ui.modalDialog;
@@ -132,16 +131,16 @@ ConfirmationDialog.prototype = {
 
         this.setButtons([{
             label: _("Cancel"),
-            action: Lang.bind(this, function() {
+            action: () => {
                 this.close();
-            }),
+            },
             key: Clutter.Escape
         }, {
             label: _("OK"),
-            action: Lang.bind(this, function() {
+            action: () => {
                 this.close();
                 aCallback();
-            })
+            }
         }]);
     }
 };
@@ -293,21 +292,21 @@ CustomSwitchMenuItem.prototype = {
         this.tooltip._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
         this.tooltip._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
         // Ensure tooltip is destroyed when this button is destroyed
-        this.connect("destroy", Lang.bind(this, function() {
+        this.connect("destroy", () => {
             this.tooltip.destroy();
-        }));
+        });
         this._setTooltip();
     },
 
     _addConnectionsAndTooltipToButton: function(aButton, aText, aCallback) {
-        this[aButton].connect("clicked", Lang.bind(this, this[aCallback]));
-        this[aButton].connect("enter-event", Lang.bind(this, this._onButtonEnterEvent));
-        this[aButton].connect("leave-event", Lang.bind(this, this._onButtonLeaveEvent));
+        this[aButton].connect("clicked", () => this[aCallback]());
+        this[aButton].connect("enter-event",
+            () => this._onButtonEnterEvent());
+        this[aButton].connect("leave-event",
+            () => this._onButtonLeaveEvent());
         this[aButton].tooltip = new Tooltips.Tooltip(this[aButton], aText);
         // Ensure tooltip is destroyed when this button is destroyed
-        this[aButton].connect("destroy", Lang.bind(this, function() {
-            this[aButton].tooltip.destroy();
-        }));
+        this[aButton].connect("destroy", () => this[aButton].tooltip.destroy());
     },
 
     _setTooltip: function(aButton, aText, aCallback) { // jshint ignore:line

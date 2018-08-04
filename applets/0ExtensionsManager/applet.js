@@ -16,7 +16,6 @@ const Extension = imports.ui.extension;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 const Mainloop = imports.mainloop;
 const Pango = imports.gi.Pango;
 const PopupMenu = imports.ui.popupMenu;
@@ -64,15 +63,19 @@ ExtensionsManagerApplet.prototype = {
                 this._forceMenuRebuildDelay = 200;
 
                 global.settings.connect("changed::enabled-extensions",
-                    Lang.bind(this, function() {
+                    () => {
                         this._forceMenuRebuild = this.menu && !this.menu.isOpen;
                         this._forceMenuRebuildDelay = 1000;
                         this._populateSubMenus();
-                    }));
+                    });
 
                 let extSpicesCache = Gio.file_new_for_path(this.spices_file_path);
                 this._monitor = extSpicesCache.monitor(Gio.FileMonitorFlags.NONE, null);
-                this._monitor.connect("changed", Lang.bind(this, this._spices_cache_updated));
+                this._monitor.connect("changed",
+                    (aMonitor, aFileObj, aN, aEventType) => {
+                        this._spices_cache_updated(aMonitor, aFileObj, aN, aEventType);
+                    }
+                );
 
                 this._updateIconAndLabel();
 
@@ -111,7 +114,8 @@ ExtensionsManagerApplet.prototype = {
         this.menu.destroy();
         this.menu = new Applet.AppletPopupMenu(this, orientation);
         this.menuManager.addMenu(this.menu);
-        this.menu.connect("open-state-changed", Lang.bind(this, this._onOpenStateChanged));
+        this.menu.connect("open-state-changed",
+            (aMenu, aOpen) => this._onOpenStateChanged(aMenu, aOpen));
         this._updateIconAndLabel();
     },
 
@@ -120,57 +124,55 @@ ExtensionsManagerApplet.prototype = {
             _("Open extensions manager"),
             "extensions-manager-cs-extensions",
             St.IconType.SYMBOLIC);
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             try {
                 Util.spawn_async(["cinnamon-settings", "extensions"]);
             } catch (aErr) {
                 global.logError(aErr);
             }
-        }));
+        });
         this._applet_context_menu.addMenuItem(menuItem);
 
         menuItem = new PopupMenu.PopupIconMenuItem(
             _("Disable all extensions"),
             "edit-delete",
             St.IconType.SYMBOLIC);
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             try {
-                let dialog = new $.ConfirmationDialog(Lang.bind(this, function() {
+                let dialog = new $.ConfirmationDialog(() => {
                         Util.spawn_async(["gsettings", "reset", "org.cinnamon", "enabled-extensions"],
-                            Lang.bind(this, this._build_menu));
-                    }),
+                            () => this._build_menu());
+                    },
                     "Extensions",
                     _("This will disable all active extensions. Are you sure you want to do this?"));
                 dialog.open();
             } catch (aErr) {
                 global.logError(aErr);
             }
-        }));
+        });
         this._applet_context_menu.addMenuItem(menuItem);
 
         menuItem = new PopupMenu.PopupIconMenuItem(
             _("Refresh extension list"),
             "extensions-manager-refresh-icon",
             St.IconType.SYMBOLIC);
-        menuItem.connect("activate", Lang.bind(this, this.store_extension_data));
+        menuItem.connect("activate", () => this.store_extension_data());
         this._applet_context_menu.addMenuItem(menuItem);
 
         menuItem = new PopupMenu.PopupIconMenuItem(
             _("Restart Cinnamon"),
             "extensions-manager-view-refresh",
             St.IconType.SYMBOLIC);
-        menuItem.connect("activate", Lang.bind(this, function() {
-            global.reexec_self();
-        }));
+        menuItem.connect("activate", () => global.reexec_self());
         this._applet_context_menu.addMenuItem(menuItem);
 
         menuItem = new PopupMenu.PopupIconMenuItem(
             _("Debug"),
             "extensions-manager-debugging",
             St.IconType.SYMBOLIC);
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             Util.spawn_async([this.metadata.path + "/appletHelper.py", "--debug-window"], null);
-        }));
+        });
         this._applet_context_menu.addMenuItem(menuItem);
 
         menuItem = new PopupMenu.PopupIconMenuItem(
@@ -178,9 +180,9 @@ ExtensionsManagerApplet.prototype = {
             "dialog-information",
             St.IconType.SYMBOLIC
         );
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
-        }));
+        });
         this._applet_context_menu.addMenuItem(menuItem);
     },
 
@@ -251,7 +253,7 @@ ExtensionsManagerApplet.prototype = {
             }
 
             this._spicesCacheUpdatedId = Mainloop.timeout_add(3000,
-                Lang.bind(this, this.store_extension_data));
+                () => this.store_extension_data());
         }
     },
 
@@ -262,14 +264,14 @@ ExtensionsManagerApplet.prototype = {
     store_extension_data: function() {
         try {
             Util.spawn_async([this.metadata.path + "/appletHelper.py", "--list"],
-                Lang.bind(this, function(aResponse) {
+                (aResponse) => {
                     let extensionData;
                     try {
                         extensionData = JSON.parse(aResponse);
                     } catch (aErr) {
                         let msg = _("Source of error: %s").format("appletHelper.py --list");
                         $.informJSONError(msg);
-                        global.logError(this.metadata.name + ":\n" + msg + "\n" + aErr);
+                        global.logError(_(this.metadata.name) + ":\n" + msg + "\n" + aErr);
                         extensionData = {};
                     }
 
@@ -277,7 +279,7 @@ ExtensionsManagerApplet.prototype = {
                         let spicesCacheFile = Gio.file_new_for_path(this.spices_file_path);
                         if (spicesCacheFile.query_exists(null)) {
                             spicesCacheFile.load_contents_async(null,
-                                Lang.bind(this, function(aFile, aResponce) {
+                                (aFile, aResponce) => {
                                     let rawData;
                                     try {
                                         rawData = aFile.load_contents_finish(aResponce)[1];
@@ -288,14 +290,14 @@ ExtensionsManagerApplet.prototype = {
                                     }
 
                                     this.store_spices_data(rawData, extensionData);
-                                }));
+                                });
                         } else {
                             this.store_spices_data(null, extensionData);
                         }
                     } catch (aErr) {
                         global.logError(aErr);
                     }
-                }));
+                });
             this._spicesCacheUpdatedId = null;
         } catch (aErr) {
             global.logError(aErr);
@@ -315,7 +317,7 @@ ExtensionsManagerApplet.prototype = {
         } catch (aErr) {
             let msg = _("Source of error: %s").format("Spices cache file");
             $.informJSONError(msg);
-            global.logError(this.metadata.name + ":\n" + msg + "\n" + aErr);
+            global.logError(_(this.metadata.name) + ":\n" + msg + "\n" + aErr);
             spicesData = null;
         }
 
@@ -336,12 +338,12 @@ ExtensionsManagerApplet.prototype = {
         } finally {
             try {
                 if (finalExtensionData.length > 1) {
-                    finalExtensionData = finalExtensionData.sort(Lang.bind(this, function(a, b) {
+                    finalExtensionData = finalExtensionData.sort((a, b) => {
                         if (this.pref_use_extension_names_as_label) {
                             return a.name.localeCompare(b.name);
                         }
                         return a.uuid.localeCompare(b.uuid);
-                    }));
+                    });
                 }
             } finally {
                 this.pref_all_extensions_list = finalExtensionData;
@@ -379,20 +381,21 @@ ExtensionsManagerApplet.prototype = {
             this._buildMenuId = null;
         }
 
-        this._buildMenuId = Mainloop.timeout_add(500, Lang.bind(this, function() {
+        this._buildMenuId = Mainloop.timeout_add(500, () => {
             if (this.menu) {
                 this.menuManager.removeMenu(this.menu);
                 this.menu.destroy();
             }
 
             this.menu = new Applet.AppletPopupMenu(this, this.orientation);
-            this.menu.connect("open-state-changed", Lang.bind(this, this._onOpenStateChanged));
+            this.menu.connect("open-state-changed",
+                (aMenu, aOpen) => this._onOpenStateChanged(aMenu, aOpen));
             this.menuManager.addMenu(this.menu);
 
             this._forceMenuRebuild = true;
             this._populateSubMenus();
             this._buildMenuId = null;
-        }));
+        });
     },
 
     _populateSubMenus: function() {
@@ -404,7 +407,7 @@ ExtensionsManagerApplet.prototype = {
         }
 
         this._populateSubMenusId = Mainloop.timeout_add(this._forceMenuRebuildDelay,
-            Lang.bind(this, function() {
+            () => {
                 if (this.pref_all_extensions_list.length === 0) {
                     this.menu.removeAll();
                     let label = new $.GenericButton(_("There aren't any extensions installed on your system. Or you may need to refresh the list of extensions from this applet context menu."));
@@ -430,12 +433,12 @@ ExtensionsManagerApplet.prototype = {
 
                 this.enabledExtSubmenu = new PopupMenu.PopupSubMenuMenuItem("");
                 this.enabledExtSubmenu.menu.connect("open-state-changed",
-                    Lang.bind(this, this._subMenuOpenStateChanged));
+                    (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
                 this.menu.addMenuItem(this.enabledExtSubmenu);
 
                 this.disabledExtSubmenu = new PopupMenu.PopupSubMenuMenuItem("");
                 this.disabledExtSubmenu.menu.connect("open-state-changed",
-                    Lang.bind(this, this._subMenuOpenStateChanged));
+                    (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
                 this.menu.addMenuItem(this.disabledExtSubmenu);
 
                 this.enabledExtSubmenu.menu.removeAll();
@@ -464,7 +467,8 @@ ExtensionsManagerApplet.prototype = {
                             continue;
                         }
 
-                        item.connect("toggled", Lang.bind(this, this._toggleExtensionState));
+                        item.connect("toggled",
+                            (aSwitch) => this._toggleExtensionState(aSwitch));
 
                         if (extObj.is_enabled) {
                             eCount++;
@@ -499,7 +503,7 @@ ExtensionsManagerApplet.prototype = {
                 this._forceMenuRebuild = false;
                 this._forceMenuRebuildDelay = 200;
                 this._populateSubMenusId = 0;
-            }));
+            });
     },
 
     _toggleExtensionState: function(aSwitch) {
@@ -516,14 +520,14 @@ ExtensionsManagerApplet.prototype = {
                     this.setEnabledExtensionsUUIDs(enabledExtensions);
                     aSwitch.extension.is_enabled = true;
                 } else {
-                    let dialog = new $.ConfirmationDialog(Lang.bind(this, function() {
+                    let dialog = new $.ConfirmationDialog(() => {
                             aSwitch.extension.is_enabled = true;
                             Extension.loadExtension("!" + uuid, Extension.Type.EXTENSION);
                             enabledExtensions.push("!" + uuid);
                             this.setEnabledExtensionsUUIDs(enabledExtensions);
                             this._forceMenuRebuild = true;
                             this._populateSubMenus();
-                        }),
+                        },
                         "Extensions",
                         _("Extension %s is not compatible with current version of cinnamon. Using it may break your system. Load anyway?")
                         .format(aSwitch.extension.name));
@@ -571,44 +575,28 @@ ExtensionsManagerApplet.prototype = {
     },
 
     _updateIconAndLabel: function() {
-        try {
-            if (this.pref_custom_icon_for_applet === "") {
-                this.set_applet_icon_name("");
-            } else if (GLib.path_is_absolute(this.pref_custom_icon_for_applet) &&
-                GLib.file_test(this.pref_custom_icon_for_applet, GLib.FileTest.EXISTS)) {
-                if (this.pref_custom_icon_for_applet.search("-symbolic") !== -1) {
-                    this.set_applet_icon_symbolic_path(this.pref_custom_icon_for_applet);
-                } else {
-                    this.set_applet_icon_path(this.pref_custom_icon_for_applet);
-                }
-            } else if (Gtk.IconTheme.get_default().has_icon(this.pref_custom_icon_for_applet)) {
-                if (this.pref_custom_icon_for_applet.search("-symbolic") !== -1) {
-                    this.set_applet_icon_symbolic_name(this.pref_custom_icon_for_applet);
-                } else {
-                    this.set_applet_icon_name(this.pref_custom_icon_for_applet);
-                }
-                /**
-                 * START mark Odyseus
-                 * I added the last condition without checking Gtk.IconTheme.get_default.
-                 * Otherwise, if there is a valid icon name added by
-                 *  Gtk.IconTheme.get_default().append_search_path, it will not be recognized.
-                 * With the following extra condition, the worst that can happen is that
-                 *  the applet icon will not change/be set.
-                 */
+        let icon = this.pref_custom_icon_for_applet;
+        let setIcon = (aIcon, aIsPath) => {
+            if (aIcon.search("-symbolic") !== -1) {
+                this[aIsPath ?
+                    "set_applet_icon_symbolic_path" :
+                    "set_applet_icon_symbolic_name"](aIcon);
             } else {
-                try {
-                    if (this.pref_custom_icon_for_applet.search("-symbolic") != -1) {
-                        this.set_applet_icon_symbolic_name(this.pref_custom_icon_for_applet);
-                    } else {
-                        this.set_applet_icon_name(this.pref_custom_icon_for_applet);
-                    }
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+                this[aIsPath ?
+                    "set_applet_icon_path" :
+                    "set_applet_icon_name"](aIcon);
             }
-        } catch (aErr) {
-            global.logWarning('Could not load icon file "' + this.pref_custom_icon_for_applet +
-                '" for menu button');
+        };
+
+        if (GLib.path_is_absolute(icon) &&
+            GLib.file_test(icon, GLib.FileTest.EXISTS)) {
+            setIcon(icon, true);
+        } else {
+            try {
+                setIcon(icon);
+            } catch (aErr) {
+                global.logWarning('Could not load icon "' + icon + '" for applet.');
+            }
         }
 
         if (this.pref_custom_icon_for_applet === "") {
