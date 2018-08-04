@@ -1,6 +1,5 @@
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
-const Lang = imports.lang;
 const Mainloop = imports.mainloop;
 const Meta = imports.gi.Meta;
 const Cinnamon = imports.gi.Cinnamon;
@@ -8,9 +7,11 @@ const Main = imports.ui.main;
 
 const LAST_WINDOW_GRACE_TIME = 1000;
 
-const WorkspaceTracker = new Lang.Class({
-    Name: "WorkspaceTracker",
+function WorkspaceTracker() {
+    this._init.apply(this, arguments);
+}
 
+WorkspaceTracker.prototype = {
     _init: function(wm) {
         this._wm = wm;
 
@@ -20,17 +21,29 @@ const WorkspaceTracker = new Lang.Class({
         this._pauseWorkspaceCheck = false;
 
         let tracker = Cinnamon.WindowTracker.get_default();
-        tracker.connect("startup-sequence-changed", Lang.bind(this, this._queueCheckWorkspaces));
+        tracker.connect("startup-sequence-changed",
+            () => this._queueCheckWorkspaces());
 
-        global.screen.connect("notify::n-workspaces", Lang.bind(this, this._nWorkspacesChanged));
-        global.window_manager.connect("switch-workspace", Lang.bind(this, this._queueCheckWorkspaces));
+        global.screen.connect("notify::n-workspaces",
+            () => this._nWorkspacesChanged());
+        global.window_manager.connect("switch-workspace",
+            () => this._queueCheckWorkspaces());
 
-        global.screen.connect("window-entered-monitor", Lang.bind(this, this._windowEnteredMonitor));
-        global.screen.connect("window-left-monitor", Lang.bind(this, this._windowLeftMonitor));
-        global.screen.connect("restacked", Lang.bind(this, this._windowsRestacked));
+        global.screen.connect("window-entered-monitor",
+            (metaScreen, monitorIndex, metaWin) => {
+                this._windowEnteredMonitor(metaScreen, monitorIndex, metaWin);
+            }
+        );
+        global.screen.connect("window-left-monitor",
+            (metaScreen, monitorIndex, metaWin) => {
+                this._windowLeftMonitor(metaScreen, monitorIndex, metaWin);
+            }
+        );
+        global.screen.connect("restacked", () => this._windowsRestacked());
 
         this._workspaceSettings = this._getWorkspaceSettings();
-        this._workspaceSettings.connect("changed::dynamic-workspaces", Lang.bind(this, this._queueCheckWorkspaces));
+        this._workspaceSettings.connect("changed::dynamic-workspaces",
+            () => this._queueCheckWorkspaces());
 
         this._nWorkspacesChanged();
     },
@@ -126,24 +139,24 @@ const WorkspaceTracker = new Lang.Class({
             Mainloop.source_remove(workspace._keepAliveId);
         }
 
-        workspace._keepAliveId = Mainloop.timeout_add(duration, Lang.bind(this, function() {
+        workspace._keepAliveId = Mainloop.timeout_add(duration, () => {
             workspace._keepAliveId = 0;
             this._queueCheckWorkspaces();
             return GLib.SOURCE_REMOVE;
-        }));
+        });
         GLib.Source.set_name_by_id(workspace._keepAliveId, "[Cinnamon Tweaks] this._queueCheckWorkspaces");
     },
 
     _windowRemoved: function(workspace, window) {
         workspace._lastRemovedWindow = window;
         this._queueCheckWorkspaces();
-        let id = Mainloop.timeout_add(LAST_WINDOW_GRACE_TIME, Lang.bind(this, function() {
+        let id = Mainloop.timeout_add(LAST_WINDOW_GRACE_TIME, () => {
             if (workspace._lastRemovedWindow == window) {
                 workspace._lastRemovedWindow = null;
                 this._queueCheckWorkspaces();
             }
             return GLib.SOURCE_REMOVE;
-        }));
+        });
         GLib.Source.set_name_by_id(id, "[Cinnamon Tweaks] this._queueCheckWorkspaces");
     },
 
@@ -172,7 +185,8 @@ const WorkspaceTracker = new Lang.Class({
 
     _queueCheckWorkspaces: function() {
         if (this._checkWorkspacesId === 0) {
-            this._checkWorkspacesId = Meta.later_add(Meta.LaterType.BEFORE_REDRAW, Lang.bind(this, this._checkWorkspaces));
+            this._checkWorkspacesId = Meta.later_add(Meta.LaterType.BEFORE_REDRAW,
+                () => this._checkWorkspaces());
         }
     },
 
@@ -195,8 +209,10 @@ const WorkspaceTracker = new Lang.Class({
 
             for (w = oldNumWorkspaces; w < newNumWorkspaces; w++) {
                 let workspace = this._workspaces[w];
-                workspace._windowAddedId = workspace.connect("window-added", Lang.bind(this, this._queueCheckWorkspaces));
-                workspace._windowRemovedId = workspace.connect("window-removed", Lang.bind(this, this._windowRemoved));
+                workspace._windowAddedId = workspace.connect("window-added",
+                    () => this._queueCheckWorkspaces());
+                workspace._windowRemovedId = workspace.connect("window-removed",
+                    (aWorkspace, aWindow) => this._windowRemoved(aWorkspace, aWindow));
             }
 
         } else {
@@ -223,7 +239,7 @@ const WorkspaceTracker = new Lang.Class({
 
         return false;
     }
-});
+};
 
 /*
 exported WorkspaceTracker

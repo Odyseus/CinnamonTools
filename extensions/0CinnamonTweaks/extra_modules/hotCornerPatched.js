@@ -1,5 +1,4 @@
 const Clutter = imports.gi.Clutter;
-const Lang = imports.lang;
 const St = imports.gi.St;
 
 const Util = imports.misc.util;
@@ -29,7 +28,8 @@ HotCornerManager.prototype = {
             });
         }
         this.parseGSettings();
-        global.settings.connect("changed::" + OVERVIEW_CORNERS_KEY, Lang.bind(this, this.parseGSettings));
+        global.settings.connect("changed::" + OVERVIEW_CORNERS_KEY,
+            () => this.parseGSettings());
 
         this.updatePosition(Main.layoutManager.primaryMonitor, Main.layoutManager.bottomMonitor);
     },
@@ -124,26 +124,29 @@ HotCorner.prototype = {
         this._activationTime = 0;
 
         this.actor.connect("leave-event",
-            Lang.bind(this, this._onEnvironsLeft));
+            (aActor, aEvent) => this._onEnvironsLeft(aActor, aEvent));
 
         // Clicking on the hot corner environs should result in the
         // same behavior as clicking on the hot corner.
         this.actor.connect("button-release-event",
-            Lang.bind(this, this._onCornerClicked));
+            () => this._onCornerClicked());
 
         // In addition to being triggered by the mouse enter event,
         // the hot corner can be triggered by clicking on it. This is
         // useful if the user wants to undo the effect of triggering
         // the hot corner once in the hot corner.
         this._corner.connect("enter-event",
-            Lang.bind(this, this._onCornerEntered));
+            () => this._onCornerEntered());
         this._corner.connect("button-release-event",
-            Lang.bind(this, this._onCornerClicked));
+            () => this._onCornerClicked());
         this._corner.connect("leave-event",
-            Lang.bind(this, this._onCornerLeft));
+            (aActor, aEvent) => this._onCornerLeft(aActor, aEvent));
 
         this.tile_delay = false;
-        global.window_manager.connect("tile", Lang.bind(this, this._tilePerformed));
+        global.window_manager.connect("tile",
+            (cinnamonwm, actor, targetX, targetY, targetWidth, targetHeight) => {
+                this._tilePerformed(cinnamonwm, actor, targetX, targetY, targetWidth, targetHeight);
+            });
 
         // Cache the three ripples instead of dynamically creating and destroying them.
         this._ripple1 = new St.BoxLayout({
@@ -173,7 +176,8 @@ HotCorner.prototype = {
             reactive: true,
             track_hover: true
         });
-        this.iconActor.connect("button-release-event", Lang.bind(this, this.runAction));
+        this.iconActor.connect("button-release-event",
+            () => this.runAction());
 
         this.iconActor.set_size(32, 32);
     },
@@ -189,7 +193,7 @@ HotCorner.prototype = {
 
     _tilePerformed: function(cinnamonwm, actor, targetX, targetY, targetWidth, targetHeight) {
         this.tile_delay = true;
-        Mainloop.timeout_add(250, Lang.bind(this, this._tile_delay_cb));
+        Mainloop.timeout_add(250, () => this._tile_delay_cb());
     },
 
     _animRipple: function(ripple, delay, time, startScale, startOpacity, finalScale) {
@@ -288,7 +292,7 @@ HotCorner.prototype = {
             this.hover_delay_id = 0;
         }
 
-        this.hover_delay_id = Mainloop.timeout_add(this.hover_delay, Lang.bind(this, function() {
+        this.hover_delay_id = Mainloop.timeout_add(this.hover_delay, () => {
             if (!this._entered && !this.tile_delay) {
                 this._entered = true;
                 let run = false;
@@ -304,7 +308,7 @@ HotCorner.prototype = {
                     this.runAction();
                 }
             }
-        }));
+        });
         return false;
     },
 

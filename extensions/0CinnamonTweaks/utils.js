@@ -16,7 +16,6 @@ const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GioSSS = Gio.SettingsSchemaSource;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const Meta = imports.gi.Meta;
@@ -133,9 +132,11 @@ var SHADOW_VALUES = {
     }
 };
 
-const CinnamonTweaksSettings = new Lang.Class({
-    Name: "CinnamonTweaksSettings",
+function CinnamonTweaksSettings() {
+    this._init.apply(this, arguments);
+}
 
+CinnamonTweaksSettings.prototype = {
     _init: function() {
         let schemaSource = GioSSS.get_default();
         let schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
@@ -165,6 +166,33 @@ const CinnamonTweaksSettings = new Lang.Class({
         this._extendProperties();
     },
 
+    _getDescriptor: function(aKey) {
+        return Object.create({
+            get: () => {
+                return this._getValue(aKey);
+            },
+            set: (aVal) => {
+                this._setValue(aKey, aVal);
+            },
+            enumerable: true,
+            configurable: true,
+        });
+    },
+
+    // Keep this in case the above one misbehaves.
+    // _getDescriptor: function(aKey) {
+    //     return Object.create({
+    //         get: function(aK) {
+    //             return this._getValue(aK);
+    //         }.bind(this, aKey),
+    //         set: function(aK, aVal) {
+    //             this._setValue(aK, aVal);
+    //         }.bind(this, aKey),
+    //         enumerable: true,
+    //         configurable: true,
+    //     });
+    // },
+
     /**
      * Create a getter and a setter for each key in the schema.
      */
@@ -172,12 +200,11 @@ const CinnamonTweaksSettings = new Lang.Class({
         let prefKeys = this.schema.list_keys();
         // Based on Cinnamon's xlets settings code. A life saver!
         for (let i = prefKeys.length - 1; i >= 0; i--) {
-            Object.defineProperty(this, (prefKeys[i].split("-")).join("_"), {
-                get: Lang.bind(this, this._getValue, prefKeys[i]),
-                set: Lang.bind(this, this._setValue, prefKeys[i]),
-                enumerable: true,
-                configurable: true
-            });
+            Object.defineProperty(
+                this,
+                (prefKeys[i].split("-")).join("_"),
+                this._getDescriptor(prefKeys[i])
+            );
         }
     },
 
@@ -186,7 +213,7 @@ const CinnamonTweaksSettings = new Lang.Class({
         return this.schema.get_value(aPrefKey).deep_unpack();
     },
 
-    _setValue: function(aPrefVal, aPrefKey) {
+    _setValue: function(aPrefKey, aPrefVal) {
         let prefVal = this.schema.get_value(aPrefKey);
 
         if (prefVal.deep_unpack() !== aPrefVal) {
@@ -231,7 +258,7 @@ const CinnamonTweaksSettings = new Lang.Class({
             this._handlers.splice(index, 1);
         }
     }
-});
+};
 
 var Settings = new CinnamonTweaksSettings();
 
@@ -297,9 +324,11 @@ function removeInjection(aStorage, aInjection, aName) {
     }
 }
 
-var CT_NemoDesktopAreaClass = new Lang.Class({
-    Name: "CT_NemoDesktopAreaClass",
+function CT_NemoDesktopArea() {
+    this._init.apply(this, arguments);
+}
 
+CT_NemoDesktopArea.prototype = {
     _init: function() {
         this.actor = global.stage;
         if (!this.actor.hasOwnProperty("_delegate")) {
@@ -354,7 +383,7 @@ var CT_NemoDesktopAreaClass = new Lang.Class({
 
         return DND.DragMotionResult.COPY_DROP;
     }
-});
+};
 
 function CT_MyCheckWorkspaces() {
     if (!this.dynamicWorkspaces) {
@@ -438,8 +467,11 @@ function CT_MyCheckWorkspaces() {
     return false;
 }
 
-var CT_WindowMoverClass = new Lang.Class({
-    Name: "CT_WindowMoverClass",
+function CT_WindowMover() {
+    this._init.apply(this, arguments);
+}
+
+CT_WindowMover.prototype = {
 
     _init: function() {
         this._windowTracker = Cinnamon.WindowTracker.get_default();
@@ -447,7 +479,10 @@ var CT_WindowMoverClass = new Lang.Class({
         let display = global.screen.get_display();
         // Connect after so the handler from CinnamonWindowTracker has already run
         this._windowCreatedId = display.connect_after("window-created",
-            Lang.bind(this, this._findAndMove));
+            (aDisplay, aWindow) => {
+                this._findAndMove(aDisplay, aWindow);
+            }
+        );
     },
 
     destroy: function() {
@@ -475,10 +510,10 @@ var CT_WindowMoverClass = new Lang.Class({
         if (!app) {
             if (!noRecurse) {
                 // window is not tracked yet
-                Mainloop.idle_add(Lang.bind(this, function() {
+                Mainloop.idle_add(() => {
                     this._findAndMove(display, window, true);
                     return false;
-                }));
+                });
             } else {
                 // It's just freaking annoying!!!
                 // global.logWarning(_("Cannot find application for window"));
@@ -503,7 +538,7 @@ var CT_WindowMoverClass = new Lang.Class({
             }
         }
     }
-});
+};
 
 function ConfirmationDialog() {
     this._init.apply(this, arguments);
@@ -556,16 +591,16 @@ ConfirmationDialog.prototype = {
 
         this.setButtons([{
             label: _("Cancel"),
-            action: Lang.bind(this, function() {
+            action: () => {
                 this.close();
-            }),
+            },
             key: Clutter.Escape
         }, {
             label: _("OK"),
-            action: Lang.bind(this, function() {
+            action: () => {
                 this.close();
                 aCallback();
-            })
+            }
         }]);
     }
 };
@@ -649,9 +684,11 @@ function versionCompare(v1, v2, options) {
     return 0;
 }
 
-var CT_MaximusNGClass = new Lang.Class({
-    Name: "CT_MaximusNGClass",
+function CT_MaximusNG() {
+    this._init.apply(this, arguments);
+}
 
+CT_MaximusNG.prototype = {
     maxID: 0,
     minID: 0,
     tileID: 0,
@@ -1055,11 +1092,11 @@ var CT_MaximusNGClass = new Lang.Class({
                 this.grabID = 0;
             }
 
-            this.grabID = global.display.connect("grab-op-end", Lang.bind(this, function() {
+            this.grabID = global.display.connect("grab-op-end", () => {
                 this.possiblyRedecorate(win);
                 global.display.disconnect(this.grabID);
                 this.grabID = 0;
-            }));
+            });
         } else {
             this.decorate(win);
         }
@@ -1148,9 +1185,9 @@ var CT_MaximusNGClass = new Lang.Class({
 
             if (!Settings.maximus_undecorate_half_maximized) {
                 win._maxHStateId = win.connect("notify::maximized-horizontally",
-                    Lang.bind(this, this.onWindowChangesMaximiseState));
+                    (aWin) => this.onWindowChangesMaximiseState(aWin));
                 win._maxVStateId = win.connect("notify::maximized-vertically",
-                    Lang.bind(this, this.onWindowChangesMaximiseState));
+                    (aWin) => this.onWindowChangesMaximiseState(aWin));
 
                 if (win.get_maximized()) {
                     this.onWindowChangesMaximiseState(win);
@@ -1185,20 +1222,24 @@ var CT_MaximusNGClass = new Lang.Class({
         this.workspaces = [];
         i = global.screen.n_workspaces;
 
+        let maxWinAddedFn = () => {
+            return (aWorkspace, aWindow) => {
+                Mainloop.idle_add(() => {
+                    this.onWindowAdded(aWorkspace, aWindow);
+                    this.changeWorkspaceID = 0;
+                    return false;
+                });
+            };
+        };
+
         while (i--) {
             ws = global.screen.get_workspace_by_index(i);
             this.workspaces.push(ws);
             /* we need to add a Mainloop.idle_add, or else in onWindowAdded the
              * window's maximized state is not correct yet.
              */
-            ws._MaximusWindowAddedId = ws.connect("window-added", Lang.bind(this, function(ws, win) { // jshint ignore:line
-                let self = this;
-                Mainloop.idle_add(function() {
-                    self.onWindowAdded(ws, win);
-                    self.changeWorkspaceID = 0;
-                    return false;
-                });
-            }));
+            ws._MaximusWindowAddedId = ws.connect("window-added",
+                maxWinAddedFn());
         }
     },
 
@@ -1209,18 +1250,18 @@ var CT_MaximusNGClass = new Lang.Class({
 
         // Connect events
         this.changeWorkspaceID = global.screen.connect("notify::n-workspaces",
-            Lang.bind(this, this.onChangeNWorkspaces));
+            () => this.onChangeNWorkspaces());
 
         // If we are not using the set_hide_titlebar hint, we must listen to maximize and unmaximize events.
         if (!this.use_set_hide_titlebar) {
             this.maxID = global.window_manager.connect("maximize",
-                Lang.bind(this, this.onMaximise));
+                (shellwm, actor) => this.onMaximise(shellwm, actor));
             this.minID = global.window_manager.connect("unmaximize",
-                Lang.bind(this, this.onUnmaximise));
+                (shellwm, actor) => this.onUnmaximise(shellwm, actor));
 
             if (Settings.maximus_undecorate_tiled) {
                 this.tileID = global.window_manager.connect("tile",
-                    Lang.bind(this, this.onMaximise));
+                    (shellwm, actor) => this.onMaximise(shellwm, actor));
             }
 
             /* This is needed to prevent Metacity from interpreting an attempted drag
@@ -1237,12 +1278,6 @@ var CT_MaximusNGClass = new Lang.Class({
             Meta.prefs_set_force_fullscreen(false);
         }
 
-        /* Odyseus note.
-         *
-         * Use of self = this instead of Lang.bind(this, function) on functions
-         * that have a return value.
-         */
-        let self = this;
         /* Go through already-maximised windows & undecorate.
          * This needs a delay as the window list is not yet loaded
          *  when the extension is loaded.
@@ -1252,8 +1287,8 @@ var CT_MaximusNGClass = new Lang.Class({
          *  fired for every currently-existing window, and then
          *  these windows will have onMaximise called twice on them.
          */
-        this.onetime = Mainloop.idle_add(function() {
-            let winList = global.get_window_actors().map(function(w) {
+        this.onetime = Mainloop.idle_add(() => {
+            let winList = global.get_window_actors().map((w) => {
                 return w.meta_window;
             });
             let i = winList.length;
@@ -1263,13 +1298,13 @@ var CT_MaximusNGClass = new Lang.Class({
                 if (win.window_type === Meta.WindowType.DESKTOP) {
                     continue;
                 }
-                self.onWindowAdded(null, win);
+                this.onWindowAdded(null, win);
             }
 
-            self.onChangeNWorkspaces();
+            this.onChangeNWorkspaces();
             // Attempt to remove the following warning:
             // Invalid or null source id used when attempting to run Mainloop.source_remove()
-            self.onetime = 0;
+            this.onetime = 0;
             return false;
         });
     },
@@ -1359,7 +1394,7 @@ var CT_MaximusNGClass = new Lang.Class({
             this.oldFullscreenPref = null;
         }
     }
-});
+};
 
 /**
  * queryCollection:
@@ -1399,10 +1434,10 @@ exported SHADOW_VALUES,
          injectToFunction,
          removeInjection,
          versionCompare,
-         CT_NemoDesktopAreaClass,
+         CT_NemoDesktopArea,
          CT_MyCheckWorkspaces,
-         CT_WindowMoverClass,
-         CT_MaximusNGClass,
+         CT_WindowMover,
+         CT_MaximusNG,
          testNotifications,
          queryCollection
 */

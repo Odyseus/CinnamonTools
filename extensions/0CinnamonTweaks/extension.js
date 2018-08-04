@@ -15,7 +15,6 @@ const Cinnamon = imports.gi.Cinnamon;
 const Clutter = imports.gi.Clutter;
 const Desklet = imports.ui.desklet;
 const Gio = imports.gi.Gio;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const Meta = imports.gi.Meta;
@@ -231,11 +230,11 @@ function togglePatch(aPatch, aID, aEnabledPref) {
             return;
         }
 
-        CONNECTION_IDS[aID] = Mainloop.timeout_add(1000, Lang.bind(aPatch, function() {
+        CONNECTION_IDS[aID] = Mainloop.timeout_add(1000, () => {
             aPatch.enable();
             CONNECTION_IDS[aID] = 0;
             return false;
-        }));
+        });
     } catch (aErr) {
         global.logError(aErr);
     }
@@ -249,7 +248,7 @@ const CT_AppletManagerPatch = {
                 let menuItems = this._applet_context_menu._getMenuItems();
                 let itemsLength = menuItems.length;
                 if (itemsLength > 0) {
-                    let getPosition = Lang.bind(this, function(aPos) {
+                    let getPosition = (aPos) => {
                         let pos;
                         switch (Number($.CTX_ITM_POS[aPos])) {
                             case 0: // Last place
@@ -273,7 +272,7 @@ const CT_AppletManagerPatch = {
                             ++pos;
                         }
                         return pos;
-                    });
+                    };
 
                     if (Settings.applets_add_open_folder_item_to_context &&
                         !this.context_menu_item_custom_open_folder) {
@@ -283,9 +282,9 @@ const CT_AppletManagerPatch = {
                             "folder",
                             St.IconType.SYMBOLIC);
                         this.context_menu_item_custom_open_folder.connect("activate",
-                            Lang.bind(this, function() {
+                            () => {
                                 Util.spawn_async(["xdg-open", this._meta["path"]], null);
-                            }));
+                            });
                         this._applet_context_menu.addMenuItem(
                             this.context_menu_item_custom_open_folder,
                             position
@@ -300,9 +299,9 @@ const CT_AppletManagerPatch = {
                             "text-editor",
                             St.IconType.SYMBOLIC);
                         this.context_menu_item_custom_edit_file.connect("activate",
-                            Lang.bind(this, function() {
+                            () => {
                                 Util.spawn_async(["xdg-open", this._meta["path"] + "/applet.js"], null);
-                            }));
+                            });
                         this._applet_context_menu.addMenuItem(
                             this.context_menu_item_custom_edit_file,
                             position
@@ -394,7 +393,7 @@ const CT_DeskletManagerPatch = {
                 let menuItems = this._menu._getMenuItems();
                 let itemsLength = menuItems.length;
                 if (itemsLength > 0) {
-                    let getPosition = Lang.bind(this, function(aPos) {
+                    let getPosition = (aPos) => {
                         let pos;
                         switch (Number($.CTX_ITM_POS[aPos])) {
                             case 0: // Last place
@@ -418,7 +417,7 @@ const CT_DeskletManagerPatch = {
                             ++pos;
                         }
                         return pos;
-                    });
+                    };
 
                     if (Settings.desklets_add_open_folder_item_to_context &&
                         !this.context_menu_item_custom_open_folder) {
@@ -427,9 +426,9 @@ const CT_DeskletManagerPatch = {
                             _("Open desklet folder"),
                             "folder",
                             St.IconType.SYMBOLIC);
-                        this.context_menu_item_custom_open_folder.connect("activate", Lang.bind(this, function() {
+                        this.context_menu_item_custom_open_folder.connect("activate", () => {
                             Util.spawn_async(["xdg-open", this._meta["path"]], null);
-                        }));
+                        });
                         this._menu.addMenuItem(
                             this.context_menu_item_custom_open_folder,
                             position
@@ -443,9 +442,9 @@ const CT_DeskletManagerPatch = {
                             _("Edit desklet main file"),
                             "text-editor",
                             St.IconType.SYMBOLIC);
-                        this.context_menu_item_custom_edit_file.connect("activate", Lang.bind(this, function() {
+                        this.context_menu_item_custom_edit_file.connect("activate", () => {
                             Util.spawn_async(["xdg-open", this._meta["path"] + "/desklet.js"], null);
-                        }));
+                        });
                         this._menu.addMenuItem(
                             this.context_menu_item_custom_edit_file,
                             position
@@ -614,7 +613,7 @@ const CT_MessageTrayPatch = {
             }
 
             this._notificationClickedId = this._notification.connect("done-displaying",
-                Lang.bind(this, this._escapeTray));
+                () => this._escapeTray());
             this._notificationBin.child = this._notification.actor;
             this._notificationBin.opacity = 0;
 
@@ -693,10 +692,12 @@ const CT_MessageTrayPatch = {
                         child: icon,
                         opacity: 128
                     });
-                    closeButton.connect("clicked", Lang.bind(this._notification, this._notification.destroy));
-                    closeButton.connect("notify::hover", function() {
-                        closeButton.opacity = closeButton.hover ? 255 : 128;
-                    });
+                    closeButton.connect("clicked",
+                        () => this._notification.destroy());
+                    closeButton.connect("notify::hover",
+                        () => {
+                            closeButton.opacity = closeButton.hover ? 255 : 128;
+                        });
                     this._notification._table.add(closeButton, {
                         row: 0,
                         col: 3,
@@ -814,8 +815,11 @@ const CT_MessageTrayPatch = {
     }
 };
 
-const WindowDemandsAttentionClass = new Lang.Class({
-    Name: "WindowDemandsAttention",
+function WindowDemandsAttention() {
+    this._init.apply(this, arguments);
+}
+
+WindowDemandsAttention.prototype = {
     wdae_shortcut_id: "cinnamon-tweaks-window-demands-attention-shortcut",
 
     _init: function() {
@@ -823,12 +827,17 @@ const WindowDemandsAttentionClass = new Lang.Class({
             this._windows = [];
             CONNECTION_IDS.WDAE_CONNECTION = global.display.connect(
                 "window-demands-attention",
-                Lang.bind(this, this._on_window_demands_attention)
+                (aDisplay, aWin) => {
+                    this._on_window_demands_attention(aDisplay, aWin);
+                }
             );
         } else if (Settings.win_demands_attention_activation_mode === "force") {
             this._tracker = Cinnamon.WindowTracker.get_default();
             this._handlerid = global.display.connect("window-demands-attention",
-                Lang.bind(this, this._on_window_demands_attention));
+                (aDisplay, aWin) => {
+                    this._on_window_demands_attention(aDisplay, aWin);
+                }
+            );
         }
     },
 
@@ -857,7 +866,7 @@ const WindowDemandsAttentionClass = new Lang.Class({
         Main.keybindingManager.addHotKey(
             this.wdae_shortcut_id,
             Settings.win_demands_attention_keyboard_shortcut + "::",
-            Lang.bind(this, this._activate_last_window));
+            () => this._activate_last_window());
     },
 
     _remove_keybindings: function() {
@@ -883,7 +892,7 @@ const WindowDemandsAttentionClass = new Lang.Class({
         this._windows = null;
         this._remove_keybindings();
     }
-});
+};
 
 const CT_WindowDemandsAttentionBehavior = {
     enable: function() {
@@ -892,7 +901,7 @@ const CT_WindowDemandsAttentionBehavior = {
                 this.disable();
             }
         } finally {
-            CONNECTION_IDS.WDAE_EXEC = new WindowDemandsAttentionClass();
+            CONNECTION_IDS.WDAE_EXEC = new WindowDemandsAttention();
             CONNECTION_IDS.WDAE_EXEC.enable();
         }
     },
@@ -925,7 +934,7 @@ const CT_HotCornersPatch = {
                 3: Settings.hotcorners_delay_bottom_right
             });
             Main.layoutManager._updateHotCorners();
-            global.settings.connect("changed::overview-corner", Lang.bind(this, this.toggle));
+            global.settings.connect("changed::overview-corner", () => this.toggle());
         } else {
             $.dealWithRejection(_("Hotcorners tweaks"));
         }
@@ -961,7 +970,7 @@ const CT_TooltipsPatch = {
 
                         if (!this.visible) {
                             this._showTimer = Mainloop.timeout_add(Settings.tooltips_delay,
-                                Lang.bind(this, this._onTimerComplete));
+                                () => this._onTimerComplete());
                             this.mousePosition = event.get_coords();
                         }
                     };
@@ -970,7 +979,7 @@ const CT_TooltipsPatch = {
                     Tooltips.TooltipBase.prototype["_onEnterEvent"] = function(actor, event) {
                         if (!this._showTimer) {
                             this._showTimer = Mainloop.timeout_add(Settings.tooltips_delay,
-                                Lang.bind(this, this._onTimerComplete));
+                                () => this._onTimerComplete());
                             this.mousePosition = event.get_coords();
                         }
                     };
@@ -989,11 +998,11 @@ const CT_TooltipsPatch = {
 
                         if (!this.visible) {
                             this._showTimer = Mainloop.timeout_add(Settings.tooltips_delay,
-                                Lang.bind(this, this._onShowTimerComplete));
+                                () => this._onShowTimerComplete());
                             this.mousePosition = event.get_coords();
                         } else {
                             this._hideTimer = Mainloop.timeout_add(500,
-                                Lang.bind(this, this._onHideTimerComplete));
+                                () => this._onHideTimerComplete());
                         }
                     };
 
@@ -1001,7 +1010,7 @@ const CT_TooltipsPatch = {
                     Tooltips.TooltipBase.prototype["_onEnterEvent"] = function(actor, event) {
                         if (!this._showTimer) {
                             this._showTimer = Mainloop.timeout_add(Settings.tooltips_delay,
-                                Lang.bind(this, this._onShowTimerComplete));
+                                () => this._onShowTimerComplete());
                             this.mousePosition = event.get_coords();
                         }
                     };
@@ -1146,7 +1155,7 @@ const CT_DropToDesktopPatch = {
     enable: function() {
         if (!Main.layoutManager.CT_DropToDesktopPatch_desktop &&
             Settings.desktop_tweaks_allow_drop_to_desktop) {
-            Main.layoutManager.CT_DropToDesktopPatch_desktop = new $.CT_NemoDesktopAreaClass();
+            Main.layoutManager.CT_DropToDesktopPatch_desktop = new $.CT_NemoDesktopArea();
         }
     },
 
@@ -1233,7 +1242,7 @@ const CT_AutoMoveWindows = {
                 STG.AMW._checkWorkspaces = Main.wm._workspaceTracker._checkWorkspaces;
                 Main.wm._workspaceTracker._checkWorkspaces = $.CT_MyCheckWorkspaces;
 
-                this._winMover = new $.CT_WindowMoverClass(Settings);
+                this._winMover = new $.CT_WindowMover(Settings);
             } catch (aErr) {
                 global.logError(aErr);
             }
@@ -1264,7 +1273,7 @@ const CT_MaximusNG = {
     maximus: null,
 
     enable: function() {
-        this.maximus = new $.CT_MaximusNGClass();
+        this.maximus = new $.CT_MaximusNG();
         this.maximus.startUndecorating();
     },
 
