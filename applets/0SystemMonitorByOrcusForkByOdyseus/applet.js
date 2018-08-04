@@ -11,7 +11,6 @@ const _ = $._;
 
 const Applet = imports.ui.applet;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
@@ -158,9 +157,9 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
             _("Help"),
             "dialog-information",
             St.IconType.SYMBOLIC);
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
-        }));
+        });
         this._applet_context_menu.addMenuItem(menuItem);
     },
 
@@ -243,7 +242,7 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
         }
 
         this.update_timeout_id = Mainloop.timeout_add(Math.max(100, this.pref_refresh_rate),
-            Lang.bind(this, this.update));
+            () => this.update());
     },
 
     recalcGraphIndices: function() {
@@ -376,7 +375,7 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
             Main.keybindingManager.addHotKey(
                 this.command_keybinding_name,
                 this.pref_overlay_key,
-                Lang.bind(this, function() {
+                () => {
                     if (this.pref_onkeybinding_command) {
                         GLib.spawn_command_line_async(this.pref_onkeybinding_command);
                     } else {
@@ -391,7 +390,7 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
 
                         Main.warningNotify(_(this.metadata.name), msg.join("\n"), icon);
                     }
-                })
+                }
             );
         }
     },

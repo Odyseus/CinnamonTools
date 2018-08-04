@@ -2,7 +2,6 @@ const AppletUUID = "{{UUID}}";
 const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Tooltips = imports.ui.tooltips;
 
 Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
@@ -251,9 +250,7 @@ Graph.prototype = {
         this.draw_background = true;
         this.draw_border = true;
         this.paint_queued = false;
-        this.area.connect("repaint", Lang.bind(this, function() {
-            this.paint();
-        }));
+        this.area.connect("repaint", () => this.paint());
     },
 
     _setColor: function(cr, i) {
