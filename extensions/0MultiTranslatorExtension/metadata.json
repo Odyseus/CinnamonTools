@@ -8,7 +8,6 @@
     "description": "Translation of text by different translation providers (currently Google, Yandex, Bing and Apertium).",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
     "cinnamon-version": [
-        "2.8",
         "3.0",
         "3.2",
         "3.4",

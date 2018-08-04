@@ -15,7 +15,6 @@ const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GioSSS = Gio.SettingsSchemaSource;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Lightbox = imports.ui.lightbox;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
@@ -178,34 +177,6 @@ var State = {
     OPENING: 2,
     CLOSING: 3,
     FADED_OUT: 4
-};
-var P = {
-    ALL_DEPENDENCIES_MET: "all-dependencies-met",
-    DEFAULT_TRANSLATOR: "default-translator",
-    DIALOG_THEME: "dialog-theme",
-    DIALOG_THEME_CUSTOM: "dialog-theme-custom",
-    ENABLE_SHORTCUTS: "enable-shortcuts",
-    FONT_SIZE: "font-size",
-    HEIGHT_PERCENTS: "height-percents",
-    HISTORY_INITIAL_WINDOW_HEIGHT: "history-initial-window-height",
-    HISTORY_INITIAL_WINDOW_WIDTH: "history-initial-window-width",
-    HISTORY_TIMESTAMP: "history-timestamp",
-    HISTORY_TIMESTAMP_CUSTOM: "history-timestamp-custom",
-    HISTORY_WIDTH_TO_TRIGGER_WORD_WRAP: "history-width-to-trigger-word-wrap",
-    LANGUAGES_STATS: "languages-stats",
-    LAST_TRANSLATOR: "last-translator",
-    LOGGIN_ENABLED: "loggin-enabled",
-    LOGGIN_SAVE_HISTORY_INDENTED: "loggin-save-history-indented",
-    OPEN_TRANSLATOR_DIALOG_KEYBINDING: "open-translator-dialog-keybinding",
-    REMEMBER_LAST_TRANSLATOR: "remember-last-translator",
-    SHOW_MOST_USED: "show-most-used",
-    SYNC_ENTRIES_SCROLLING: "sync-entries-scrolling",
-    TRANSLATE_FROM_CLIPBOARD_KEYBINDING: "translate-from-clipboard-keybinding",
-    TRANSLATE_FROM_SELECTION_KEYBINDING: "translate-from-selection-keybinding",
-    TRANSLATORS_PREFS: "translators-prefs",
-    WIDTH_PERCENTS: "width-percents",
-    YANDEX_API_KEYS: "yandex-api-keys",
-    KEEP_SOURCE_ENTRY_TEXT_SELECTED: "keep-source-entry-text-selected"
 };
 
 var ICONS = {
@@ -471,33 +442,135 @@ var LANGUAGES_LIST_ENDONYMS = {
     "isiZulu": "Zulu"
 };
 
-var Settings = getSettings();
-
-function getSettings(aSchema) {
-    let schema = aSchema || SETTINGS_SCHEMA;
-
-    let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
-    let schemaSource;
-
-    if (schemaDir.query_exists(null)) {
-        schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
-            GioSSS.get_default(),
-            false);
-    } else {
-        schemaSource = GioSSS.get_default();
-    }
-
-    let schemaObj = schemaSource.lookup(schema, true);
-
-    if (!schemaObj) {
-        throw new Error(_("Schema %s could not be found for extension %s.")
-            .format(schema, XletMeta.uuid) + _("Please check your installation."));
-    }
-
-    return new Gio.Settings({
-        settings_schema: schemaObj
-    });
+function MultiTranslatorSettings() {
+    this._init.apply(this, arguments);
 }
+
+MultiTranslatorSettings.prototype = {
+    _init: function() {
+        let schemaSource = GioSSS.get_default();
+        let schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
+
+        if (!schemaObj) {
+            let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
+
+            if (schemaDir.query_exists(null)) {
+                schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
+                    GioSSS.get_default(),
+                    false);
+                schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
+            }
+        }
+
+        if (!schemaObj) {
+            throw new Error(_("Schema %s could not be found for extension %s.")
+                .format(SETTINGS_SCHEMA, XletMeta.uuid) + _("Please check your installation."));
+        }
+
+        this.schema = new Gio.Settings({
+            settings_schema: schemaObj
+        });
+
+        this._handlers = [];
+
+        this._extendProperties();
+    },
+
+    _getDescriptor: function(aKey) {
+        return Object.create({
+            get: () => {
+                return this._getValue(aKey);
+            },
+            set: (aVal) => {
+                this._setValue(aKey, aVal);
+            },
+            enumerable: true,
+            configurable: true,
+        });
+    },
+
+    // Keep this in case the above one misbehaves.
+    // _getDescriptor: function(aKey) {
+    //     return Object.create({
+    //         get: function(aK) {
+    //             return this._getValue(aK);
+    //         }.bind(this, aKey),
+    //         set: function(aK, aVal) {
+    //             this._setValue(aK, aVal);
+    //         }.bind(this, aKey),
+    //         enumerable: true,
+    //         configurable: true,
+    //     });
+    // },
+
+    /**
+     * Create a getter and a setter for each key in the schema.
+     */
+    _extendProperties: function() {
+        let prefKeys = this.schema.list_keys();
+        // Based on Cinnamon's xlets settings code. A life saver!
+        for (let i = prefKeys.length - 1; i >= 0; i--) {
+            Object.defineProperty(
+                this,
+                (prefKeys[i].split("-")).join("_"),
+                this._getDescriptor(prefKeys[i])
+            );
+        }
+    },
+
+    _getValue: function(aPrefKey) {
+        // Keep checking if this works for all variant types.
+        return this.schema.get_value(aPrefKey).deep_unpack();
+    },
+
+    _setValue: function(aPrefKey, aPrefVal) {
+        let prefVal = this.schema.get_value(aPrefKey);
+
+        if (prefVal.deep_unpack() !== aPrefVal) {
+            // NOT TO SELF: DO NOT EVER CONSIDER USING THIS REPUGNANT SETTING SYSTEM EVER AGAIN!!!!!
+            switch (prefVal.get_type_string()) {
+                case "b":
+                    this.schema.set_boolean(aPrefKey, aPrefVal);
+                    break;
+                case "i":
+                    this.schema.set_int(aPrefKey, aPrefVal);
+                    break;
+                case "s":
+                    this.schema.set_string(aPrefKey, aPrefVal);
+                    break;
+                case "as":
+                    this.schema.set_strv(aPrefKey, aPrefVal);
+                    break;
+                default:
+                    this.schema.set_value(aPrefKey, aPrefVal);
+            }
+        }
+    },
+
+    connect: function(signal, callback) {
+        let handler_id = this.schema.connect(signal, callback);
+        this._handlers.push(handler_id);
+        return handler_id;
+    },
+
+    destroy: function() {
+        // Remove the remaining signals...
+        while (this._handlers.length) {
+            this.disconnect(this._handlers[0]);
+        }
+    },
+
+    disconnect: function(handler_id) {
+        let index = this._handlers.indexOf(handler_id);
+        this.schema.disconnect(handler_id);
+
+        if (index > -1) {
+            this._handlers.splice(index, 1);
+        }
+    }
+};
+
+var Settings = new MultiTranslatorSettings();
 
 /*
 I created my own ModalDialog with the hope that I could discover a way to make the interface
@@ -537,10 +610,11 @@ MyModalDialog.prototype = {
         });
         this._group.add_constraint(constraint);
 
-        this._group.connect("destroy", Lang.bind(this, this._onGroupDestroy));
+        this._group.connect("destroy", () => this._onGroupDestroy());
 
         this._actionKeys = {};
-        this._group.connect("key-press-event", Lang.bind(this, this._onKeyPressEvent));
+        this._group.connect("key-press-event",
+            (aActor, aEvent) => this._onKeyPressEvent(aActor, aEvent));
 
         this._backgroundBin = new St.Bin();
         this._group.add_actor(this._backgroundBin);
@@ -591,10 +665,10 @@ MyModalDialog.prototype = {
         this._group.destroy();
     },
 
-    _onKeyPressEvent: function(object, keyPressEvent) {
-        let modifiers = Cinnamon.get_event_state(keyPressEvent);
+    _onKeyPressEvent: function(aActor, aEvent) {
+        let modifiers = Cinnamon.get_event_state(aEvent);
         let ctrlAltMask = Clutter.ModifierType.CONTROL_MASK | Clutter.ModifierType.MOD1_MASK;
-        let symbol = keyPressEvent.get_key_symbol();
+        let symbol = aEvent.get_key_symbol();
         if (symbol === Clutter.Escape && !(modifiers & ctrlAltMask)) {
             this.close();
             return;
@@ -629,11 +703,10 @@ MyModalDialog.prototype = {
             opacity: 255,
             time: 0.1,
             transition: "easeOutQuad",
-            onComplete: Lang.bind(this,
-                function() {
-                    this.state = State.OPENED;
-                    this.emit("opened");
-                })
+            onComplete: () => {
+                this.state = State.OPENED;
+                this.emit("opened");
+            }
         });
     },
 
@@ -667,11 +740,10 @@ MyModalDialog.prototype = {
             opacity: 0,
             time: 0.1,
             transition: "easeOutQuad",
-            onComplete: Lang.bind(this,
-                function() {
-                    this.state = State.CLOSED;
-                    this._group.hide();
-                })
+            onComplete: () => {
+                this.state = State.CLOSED;
+                this._group.hide();
+            }
         });
     },
 
@@ -733,7 +805,7 @@ function Animation() {
 Animation.prototype = {
     _init: function(aFile, aWidth, aHeight, aSpeed) {
         this.actor = new St.Bin();
-        this.actor.connect("destroy", Lang.bind(this, this._onDestroy));
+        this.actor.connect("destroy", () => this._onDestroy());
         this._speed = aSpeed;
 
         this._isLoaded = false;
@@ -742,7 +814,7 @@ Animation.prototype = {
         this._frame = 0;
 
         this._animations = St.TextureCache.get_default().load_sliced_image(aFile, aWidth, aHeight,
-            Lang.bind(this, this._animationsLoaded));
+            () => this._animationsLoaded());
         this.actor.set_child(this._animations);
     },
 
@@ -752,7 +824,11 @@ Animation.prototype = {
                 this._showFrame(0);
             }
 
-            this._timeoutId = GLib.timeout_add(GLib.PRIORITY_LOW, this._speed, Lang.bind(this, this._update));
+            this._timeoutId = GLib.timeout_add(
+                GLib.PRIORITY_LOW,
+                this._speed,
+                () => this._update()
+            );
             GLib.Source.set_name_by_id(this._timeoutId, "[cinnamon] this._update");
         }
 
@@ -854,9 +930,9 @@ ButtonsBarButton.prototype = {
         this._button_box.add_actor(this._button);
 
         if (typeof aAction === "function") {
-            this._button.connect("button-press-event", Lang.bind(this, function(actor, event) {
+            this._button.connect("button-press-event", (aActor, aEvent) => {
                 if (this._sensitive) {
-                    aAction(actor, event);
+                    aAction(aActor, aEvent);
                 }
 
                 // Since I changed the event from "clicked" to "button-press-event"
@@ -865,7 +941,7 @@ ButtonsBarButton.prototype = {
                 // the Cinnamon UI kind of "gets stuck". The following return fixes that.
                 // Keep an eye on this in case it has negative repercussions.
                 return true;
-            }));
+            });
         }
 
         this._icon = false;
@@ -899,21 +975,22 @@ ButtonsBarButton.prototype = {
             }
         }
 
-        this._button.connect("enter-event", Lang.bind(this, this._on_enter_event));
-        this._button.connect("leave-event", Lang.bind(this, this._on_leave_event));
+        this._button.connect("enter-event",
+            (aActor, aEvent) => this._on_enter_event(aActor, aEvent));
+        this._button.connect("leave-event",
+            (aActor, aEvent) => this._on_leave_event(aActor, aEvent));
 
         this._button.tooltip = new Tooltips.Tooltip(this._button, this._tip_text);
 
-        this._button.connect("destroy", Lang.bind(this, function() {
-            this._button.tooltip.destroy();
-        }));
+        this._button.connect("destroy",
+            () => this._button.tooltip.destroy());
 
         if (!this._icon && !this._label) {
             throw new Error(_("Icon and label are both false."));
         }
     },
 
-    _on_enter_event: function(object, event) { // jshint ignore:line
+    _on_enter_event: function() {
         if (this._icon && this._label) {
             this._label.opacity = 0;
             this._label.show();
@@ -926,15 +1003,13 @@ ButtonsBarButton.prototype = {
         }
     },
 
-    _on_leave_event: function(object, event) { // jshint ignore:line
+    _on_leave_event: function() {
         if (this._icon && this._label) {
             Tweener.addTween(this._label, {
                 time: 0.2,
                 opacity: 0,
                 transition: "easeOutQuad",
-                onComplete: Lang.bind(this, function() {
-                    this._label.hide();
-                })
+                onComplete: () => this._label.hide()
             });
         }
     },
@@ -1143,10 +1218,10 @@ CharsCounter.prototype = {
             time: 0.2,
             transition: "easeOutQuad",
             opacity: 0,
-            onComplete: Lang.bind(this, function() {
+            onComplete: () => {
                 this.actor.hide();
                 this.actor.opacity = 255;
-            })
+            }
         });
     },
 
@@ -1182,7 +1257,7 @@ CharsCounter.prototype = {
             time: 0.2,
             transition: "easeOutQuad",
             opacity: 100,
-            onComplete: Lang.bind(this, function() {
+            onComplete: () => {
                 clutter_text.set_markup(markup);
 
                 Tweener.addTween(this._current_length_label, {
@@ -1190,7 +1265,7 @@ CharsCounter.prototype = {
                     transition: "easeOutQuad",
                     opacity: 255
                 });
-            })
+            }
         });
 
         clutter_text.set_markup(markup);
@@ -1205,7 +1280,7 @@ CharsCounter.prototype = {
             time: 0.2,
             transition: "easeOutQuad",
             opacity: 100,
-            onComplete: Lang.bind(this, function() {
+            onComplete: () => {
                 clutter_text.set_markup(markup);
 
                 Tweener.addTween(this._max_length_label, {
@@ -1213,7 +1288,7 @@ CharsCounter.prototype = {
                     transition: "easeOutQuad",
                     opacity: 255
                 });
-            })
+            }
         });
 
         clutter_text.set_markup(markup);
@@ -1263,8 +1338,8 @@ GoogleTTS.prototype = {
         this._bus = this._player.get_bus();
         this._bus.add_signal_watch();
 
-        this._bus.connect("message::error", Lang.bind(this, this._kill_stream));
-        this._bus.connect("message::eos", Lang.bind(this, this._kill_stream));
+        this._bus.connect("message::error", () => this._kill_stream());
+        this._bus.connect("message::eos", () => this._kill_stream());
     },
 
     _kill_stream: function() {
@@ -1306,9 +1381,8 @@ HelpDialog.prototype = {
         this._dialogLayout = typeof this.dialogLayout === "undefined" ?
             this._dialogLayout :
             this.dialogLayout;
-        this._dialogLayout.connect("key-press-event", Lang.bind(this,
-            this._on_key_press_event
-        ));
+        this._dialogLayout.connect("key-press-event",
+            (aActor, aEvent) => this._on_key_press_event(aActor, aEvent));
         this._dialogLayout.set_style_class_name("translator-help-box");
 
         this._label = new St.Label({
@@ -1318,11 +1392,11 @@ HelpDialog.prototype = {
 
         let base = "<b>%s:</b> %s\n";
         let markup = "<span size='x-large'><b>%s:</b></span>\n".format(_("Shortcuts")) +
-            base.format(escape_html(Settings.get_strv(P.OPEN_TRANSLATOR_DIALOG_KEYBINDING)),
+            base.format(escape_html(Settings.open_translator_dialog_keybinding),
                 _("Open translator dialog.")) +
-            base.format(escape_html(Settings.get_strv(P.TRANSLATE_FROM_CLIPBOARD_KEYBINDING)),
+            base.format(escape_html(Settings.translate_from_clipboard_keybinding),
                 _("Open translator dialog and translate text from clipboard.")) +
-            base.format(escape_html(Settings.get_strv(P.TRANSLATE_FROM_SELECTION_KEYBINDING)),
+            base.format(escape_html(Settings.translate_from_selection_keybinding),
                 _("Open translator dialog and translate from primary selection.")) +
             base.format(escape_html("<Ctrl><Enter>"),
                 _("Translate text.")) +
@@ -1354,8 +1428,8 @@ HelpDialog.prototype = {
         });
     },
 
-    _on_key_press_event: function(object, event) {
-        let symbol = event.get_key_symbol();
+    _on_key_press_event: function(aActor, aEvent) {
+        let symbol = aEvent.get_key_symbol();
 
         if (symbol == Clutter.Escape) {
             this.close();
@@ -1372,17 +1446,15 @@ HelpDialog.prototype = {
         let button = new St.Button({
             reactive: true
         });
-        button.connect("clicked", Lang.bind(this, function() {
-            this.close();
-        }));
+        button.connect("clicked", () => this.close());
         button.add_actor(icon);
 
         return button;
     },
 
     _resize: function() {
-        let width_percents = Settings.get_int(P.WIDTH_PERCENTS);
-        let height_percents = Settings.get_int(P.HEIGHT_PERCENTS);
+        let width_percents = Settings.width_percents;
+        let height_percents = Settings.height_percents;
         let primary = Main.layoutManager.primaryMonitor;
 
         let translator_width = Math.round(primary.width / 100 * width_percents);
@@ -1425,9 +1497,8 @@ LanguageChooser.prototype = {
         this._dialogLayout = typeof this.dialogLayout === "undefined" ?
             this._dialogLayout :
             this.dialogLayout;
-        this._dialogLayout.connect("key-press-event", Lang.bind(this,
-            this._on_key_press_event
-        ));
+        this._dialogLayout.connect("key-press-event",
+            (aActor, aEvent) => this._on_key_press_event(aActor, aEvent));
         this._dialogLayout.set_style_class_name("translator-language-chooser");
 
         this._languages_grid_layout = new Clutter.GridLayout({
@@ -1464,7 +1535,7 @@ LanguageChooser.prototype = {
             x_expand: false,
             y_expand: false
         });
-        this._search_entry.connect("key-press-event", Lang.bind(this, function(o, e) {
+        this._search_entry.connect("key-press-event", (o, e) => {
             let symbol = e.get_key_symbol();
 
             if (symbol == Clutter.Escape) {
@@ -1476,10 +1547,10 @@ LanguageChooser.prototype = {
             } else {
                 return false;
             }
-        }));
+        });
         this._search_entry.clutter_text.connect(
             "text-changed",
-            Lang.bind(this, this._update_list)
+            () => this._update_list()
         );
 
         this._info_label = new St.Label({
@@ -1565,9 +1636,7 @@ LanguageChooser.prototype = {
             x_align: St.Align.END,
             y_align: St.Align.MIDDLE
         });
-        button.connect("clicked", Lang.bind(this, function() {
-            this.close();
-        }));
+        button.connect("clicked", () => this.close());
         button.add_actor(icon);
 
         return button;
@@ -1584,12 +1653,12 @@ LanguageChooser.prototype = {
             x_expand: true,
             y_expand: false
         });
-        button.connect("clicked", Lang.bind(this, function() {
+        button.connect("clicked", () => {
             this.emit("language-chose", {
                 code: lang_code,
                 name: lang_name
             });
-        }));
+        });
         button.lang_code = lang_code;
         button.lang_name = lang_name;
 
@@ -1597,8 +1666,8 @@ LanguageChooser.prototype = {
     },
 
     _resize: function() {
-        let width_percents = Settings.get_int(P.WIDTH_PERCENTS);
-        let height_percents = Settings.get_int(P.HEIGHT_PERCENTS);
+        let width_percents = Settings.width_percents;
+        let height_percents = Settings.height_percents;
         let primary = Main.layoutManager.primaryMonitor;
 
         let translator_width = Math.round(primary.width / 100 * width_percents);
@@ -1626,7 +1695,7 @@ LanguageChooser.prototype = {
         }
 
         let keys = Object.keys(languages);
-        keys.sort(Lang.bind(this, function(a, b) {
+        keys.sort((a, b) => {
             if (a === "auto") {
                 return false;
             }
@@ -1634,7 +1703,7 @@ LanguageChooser.prototype = {
             a = languages[a];
             b = languages[b];
             return a.localeCompare(b);
-        }));
+        });
 
         for (let code of keys) {
             let button = this._get_button(code, languages[code]);
@@ -1718,8 +1787,8 @@ LanguagesButtons.prototype = {
             this._label.hide();
             this.buttons.actor.show();
 
-            let clickEmitted = function(aActor, aEvent, aLangData) {
-                this.emit("clicked", aLangData);
+            let btnClickedFn = (aLangData) => {
+                return () => this.emit("clicked", aLangData);
             };
 
             let i = 0,
@@ -1737,7 +1806,7 @@ LanguagesButtons.prototype = {
                     button_params
                 );
                 this._langs[i].button = button;
-                button.connect("clicked", Lang.bind(this, clickEmitted, this._langs[i]));
+                button.connect("clicked", btnClickedFn(this._langs[i]));
                 this.buttons.add_button(button);
             }
         } else {
@@ -1808,7 +1877,7 @@ LanguagesStats.prototype = {
     },
 
     _reload: function() {
-        this._json_data = Settings.get_string(P.LANGUAGES_STATS);
+        this._json_data = Settings.languages_stats;
         this._storage = JSON.parse(this._json_data);
 
         if (this._storage instanceof Array) {
@@ -1842,15 +1911,15 @@ LanguagesStats.prototype = {
         let key_string = "%s-%s".format(translator_name, type);
         let keys = Object.keys(this._storage);
 
-        let filtered = keys.filter(Lang.bind(this, function(key) {
+        let filtered = keys.filter((key) => {
             if (this._storage[key].count <= 3) {
                 return false;
             }
             return starts_with(key, key_string);
-        }));
-        filtered.sort(Lang.bind(this, function(a, b) {
+        });
+        filtered.sort((a, b) => {
             return this._storage[b].count > this._storage[a].count;
-        }));
+        });
 
         let result = [];
         let i = 0,
@@ -1868,7 +1937,7 @@ LanguagesStats.prototype = {
     },
 
     save: function() {
-        Settings.set_string(P.LANGUAGES_STATS, JSON.stringify(this._storage));
+        Settings.languages_stats = JSON.stringify(this._storage);
         this.emit("stats-changed");
     }
 };
@@ -2001,17 +2070,15 @@ StatusBar.prototype = {
             time: 0.2,
             opacity: 255,
             transition: "easeOutQuad",
-            onComplete: Lang.bind(this, function() {
+            onComplete: () => {
                 let timeout = parseInt(message.timeout, 10);
 
                 if (timeout > 0) {
                     Mainloop.timeout_add(message.timeout,
-                        Lang.bind(this, function() {
-                            this.remove_message(id);
-                        })
+                        () => this.remove_message(id)
                     );
                 }
-            })
+            }
         });
     },
 
@@ -2030,9 +2097,7 @@ StatusBar.prototype = {
             time: 0.2,
             opacity: 0,
             transition: "easeOutQuad",
-            onComplete: Lang.bind(this, function() {
-                this.actor.hide();
-            })
+            onComplete: () => this.actor.hide()
         });
     },
 
@@ -2108,16 +2173,14 @@ ProviderBar.prototype = {
             child: this._label
         });
 
-        this._button.connect("clicked", Lang.bind(this, this._openProviderWebsite));
-        this._button.connect("enter-event", Lang.bind(this, this._onButtonEnterEvent, this._button));
-        this._button.connect("leave-event", Lang.bind(this, this._onButtonLeaveEvent, this._button));
+        this._button.connect("clicked", () => this._openProviderWebsite());
+        this._button.connect("enter-event", () => this._onButtonEnterEvent());
+        this._button.connect("leave-event", () => this._onButtonLeaveEvent());
         this._button.tooltip = new Tooltips.Tooltip(
             this._button,
             ""
         );
-        this._button.connect("destroy", Lang.bind(this, function() {
-            this._button.tooltip.destroy();
-        }));
+        this._button.connect("destroy", () => this._button.tooltip.destroy());
 
         this.actor.add(this._button, {
             x_align: St.Align.START,
@@ -2141,12 +2204,12 @@ ProviderBar.prototype = {
         Util.spawn_async(["gvfs-open", this.providerURL], null);
     },
 
-    _onButtonEnterEvent: function(aE, aButton) { // jshint ignore:line
+    _onButtonEnterEvent: function() {
         global.set_cursor(Cinnamon.Cursor.POINTING_HAND);
         return false;
     },
 
-    _onButtonLeaveEvent: function(aE, aButton) { // jshint ignore:line
+    _onButtonLeaveEvent: function() {
         global.unset_cursor();
     },
 
@@ -2172,15 +2235,15 @@ TranslationProviderPrefs.prototype = {
         this._name = aProviderName;
 
         this._settings_connect_id = Settings.connect(
-            "changed::" + P.TRANSLATORS_PREFS,
-            Lang.bind(this, this._load_prefs)
+            "changed::translators-prefs",
+            () => this._load_prefs()
         );
 
         this._load_prefs();
     },
 
     _load_prefs: function() {
-        let json_string = Settings.get_string(P.TRANSLATORS_PREFS);
+        let json_string = Settings.translators_prefs;
         let prefs = JSON.parse(json_string);
 
         if (!prefs[this._name]) {
@@ -2200,7 +2263,7 @@ TranslationProviderPrefs.prototype = {
     },
 
     save_prefs: function(new_prefs) {
-        let json_string = Settings.get_string(P.TRANSLATORS_PREFS);
+        let json_string = Settings.translators_prefs;
         let current_prefs = JSON.parse(json_string);
 
         try {
@@ -2217,7 +2280,7 @@ TranslationProviderPrefs.prototype = {
             current_prefs[this._name] = temp;
 
         } finally {
-            Settings.set_string(P.TRANSLATORS_PREFS, JSON.stringify(current_prefs));
+            Settings.translators_prefs = JSON.stringify(current_prefs);
         }
     },
 
@@ -2307,8 +2370,8 @@ TranslationProviderBase.prototype = {
             }
         }
 
-        _httpSession.queue_message(request, Lang.bind(this,
-            function(_httpSession, message) {
+        _httpSession.queue_message(request,
+            (_httpSession, message) => {
                 if (message.status_code === 200) {
                     try {
                         callback(request.response_body.data);
@@ -2320,7 +2383,7 @@ TranslationProviderBase.prototype = {
                     callback("");
                 }
             }
-        ));
+        );
     },
 
     make_url: function(source_lang, target_lang, text) {
@@ -2385,10 +2448,10 @@ TranslationProviderBase.prototype = {
         }
 
         let url = this.make_url(source_lang, target_lang, text);
-        this._get_data_async(url, Lang.bind(this, function(result) {
+        this._get_data_async(url, (result) => {
             let data = this.parse_response(result);
             callback(data);
-        }));
+        });
     },
 
     get name() {
@@ -2435,9 +2498,9 @@ EntryBase.prototype = {
             y_align: St.Align.MIDDLE
         });
         this.actor.connect("button-press-event",
-            Lang.bind(this, function() {
+            () => {
                 this._clutter_text.grab_key_focus();
-            })
+            }
         );
         this.actor.add(this.scroll, {
             x_fill: true,
@@ -2456,14 +2519,15 @@ EntryBase.prototype = {
         this._clutter_text.set_line_wrap(true);
         this._clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
         this._clutter_text.set_max_length(0);
-        this._clutter_text.connect("key-press-event", Lang.bind(this, this._on_key_press_event));
-        this.set_font_size(Settings.get_int(P.FONT_SIZE));
+        this._clutter_text.connect("key-press-event",
+            (aActor, aEvent) => this._on_key_press_event(aActor, aEvent));
+        this.set_font_size(Settings.font_size);
 
         this._font_connection_id = Settings.connect(
-            "changed::" + P.FONT_SIZE,
-            Lang.bind(this, function() {
-                this.set_font_size(Settings.get_int(P.FONT_SIZE));
-            })
+            "changed::font-size",
+            () => {
+                this.set_font_size(Settings.font_size);
+            }
         );
 
         this._box = new St.BoxLayout({
@@ -2518,7 +2582,7 @@ EntryBase.prototype = {
             return true;
         } else if (control_mask && code == 55) { // cyrillic Ctrl + V
             let clipboard = St.Clipboard.get_default();
-            clipboard.get_text(Lang.bind(this, function(clipboard, text) {
+            clipboard.get_text((clipboard, text) => {
                 if (!is_blank(text)) {
                     this._clutter_text.delete_selection();
                     this._clutter_text.set_text(
@@ -2528,12 +2592,12 @@ EntryBase.prototype = {
                 }
 
                 return false;
-            }));
+            });
         } else if ((shift_mask || control_mask) && (symbol == Clutter.Return || symbol == Clutter.KP_Enter)) {
             this.emit("activate", event);
             return Clutter.EVENT_STOP;
         } else {
-            if (Settings.get_boolean(P.LOGGIN_ENABLED)) {
+            if (Settings.loggin_enabled) {
                 global.logError(JSON.stringify({
                     state: state,
                     symbol: symbol,
@@ -2624,9 +2688,9 @@ SourceEntry.prototype = {
         });
 
         let v_adjust = this.scroll.vscroll.adjustment;
-        v_adjust.connect("changed", Lang.bind(this, function() {
+        v_adjust.connect("changed", () => {
             v_adjust.value = v_adjust.upper - v_adjust.page_size;
-        }));
+        });
     }
 };
 
@@ -2644,18 +2708,18 @@ TargetEntry.prototype = {
         });
 
         this._clutter_text.set_editable(false);
-        this.actor.connect("button-press-event", Lang.bind(this, function() {
+        this.actor.connect("button-press-event", () => {
             this._clutter_text.set_editable(true);
-        }));
+        });
         this._clutter_text.connect("button-press-event",
-            Lang.bind(this, function() {
+            () => {
                 this._clutter_text.set_editable(true);
                 this._clutter_text.grab_key_focus();
-            })
+            }
         );
-        this._clutter_text.connect("key-focus-out", Lang.bind(this, function() {
+        this._clutter_text.connect("key-focus-out", () => {
             this._clutter_text.set_editable(false);
-        }));
+        });
     }
 };
 
@@ -2720,12 +2784,12 @@ TranslatorDialog.prototype = {
         this._source.actor.y_expand = false;
         this._source.clutter_text.connect(
             "text-changed",
-            Lang.bind(this, this._on_source_changed)
+            () => this._on_source_changed()
         );
         this._source.connect("max-length-changed",
-            Lang.bind(this, function() {
+            () => {
                 this._chars_counter.max_length = this._source.max_length;
-            })
+            }
         );
 
         this._target = new TargetEntry();
@@ -2735,7 +2799,7 @@ TranslatorDialog.prototype = {
         this._target.actor.y_expand = false;
         this._target.clutter_text.connect(
             "text-changed",
-            Lang.bind(this, this._on_target_changed)
+            () => this._on_target_changed()
         );
 
         this._connection_ids = {
@@ -2773,16 +2837,16 @@ TranslatorDialog.prototype = {
         this._listen_source_button = new ListenButton();
         this._listen_source_button.hide();
         this._listen_source_button.actor.connect("clicked",
-            Lang.bind(this, function() {
+            () => {
                 this.google_tts.speak(
                     this._source.text,
                     this._extension.current_source_lang
                 );
-            }));
+            });
         this._listen_target_button = new ListenButton();
         this._listen_target_button.hide();
         this._listen_target_button.actor.connect("clicked",
-            Lang.bind(this, function() {
+            () => {
                 try {
                     let lines_count = this._source.text.split("\n").length;
                     let translation = this._target.text.split("\n");
@@ -2798,7 +2862,7 @@ TranslatorDialog.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
-            }));
+            });
 
         this._providerbar = new ProviderBar(this._extension);
         this._providerbar.actor.align_end = true;
@@ -2837,10 +2901,10 @@ TranslatorDialog.prototype = {
         this._init_scroll_sync();
     },
 
-    _onKeyPressEvent: function(object, keyPressEvent) {
-        let modifiers = Cinnamon.get_event_state(keyPressEvent);
+    _onKeyPressEvent: function(aActor, aEvent) {
+        let modifiers = Cinnamon.get_event_state(aEvent);
         let ctrlAltMask = Clutter.ModifierType.CONTROL_MASK | Clutter.ModifierType.MOD1_MASK;
-        let symbol = keyPressEvent.get_key_symbol();
+        let symbol = aEvent.get_key_symbol();
 
         if (symbol === Clutter.Escape && !(modifiers & ctrlAltMask)) {
             this.close();
@@ -2873,38 +2937,38 @@ TranslatorDialog.prototype = {
     },
 
     _init_scroll_sync: function() {
-        if (Settings.get_boolean(P.SYNC_ENTRIES_SCROLLING)) {
+        if (Settings.sync_entries_scrolling) {
             this.sync_entries_scroll();
         }
 
         this._connection_ids.sync_scroll_settings = Settings.connect(
-            "changed::" + P.SYNC_ENTRIES_SCROLLING,
-            Lang.bind(this, function() {
-                let sync = Settings.get_boolean(P.SYNC_ENTRIES_SCROLLING);
+            "changed::sync-entries-scrolling",
+            () => {
+                let sync = Settings.sync_entries_scrolling;
 
                 if (sync) {
                     this.sync_entries_scroll();
                 } else {
                     this.unsync_entries_scroll();
                 }
-            })
+            }
         );
     },
 
     _init_most_used_bar: function() {
-        if (Settings.get_boolean(P.SHOW_MOST_USED)) {
+        if (Settings.show_most_used) {
             this._show_most_used_bar();
         }
 
         this._connection_ids.show_most_used = Settings.connect(
-            "changed::" + P.SHOW_MOST_USED,
-            Lang.bind(this, function() {
-                if (Settings.get_boolean(P.SHOW_MOST_USED)) {
+            "changed::show-most-used",
+            () => {
+                if (Settings.show_most_used) {
                     this._show_most_used_bar();
                 } else {
                     this._hide_most_used_bar();
                 }
-            })
+            }
         );
     },
 
@@ -2937,8 +3001,8 @@ TranslatorDialog.prototype = {
     },
 
     _resize: function() {
-        let width_percents = Settings.get_int(P.WIDTH_PERCENTS);
-        let height_percents = Settings.get_int(P.HEIGHT_PERCENTS);
+        let width_percents = Settings.width_percents;
+        let height_percents = Settings.height_percents;
         let primary = Main.layoutManager.primaryMonitor;
 
         let box_width = Math.round(primary.width / 100 * width_percents);
@@ -2974,7 +3038,7 @@ TranslatorDialog.prototype = {
             let source_v_adjust = this._source.scroll.vscroll.adjustment;
             this._connection_ids.source_scroll = source_v_adjust.connect(
                 "notify::value",
-                Lang.bind(this, function(adjustment) {
+                (adjustment) => {
                     let target_adjustment = this._target.scroll.vscroll.adjustment;
 
                     if (target_adjustment.value === adjustment.value) {
@@ -2983,7 +3047,7 @@ TranslatorDialog.prototype = {
 
                     target_adjustment.value = adjustment.value;
                     adjustment.upper = adjustment.upper > target_adjustment.upper ? adjustment.upper : target_adjustment.upper;
-                })
+                }
             );
         }
 
@@ -2991,7 +3055,7 @@ TranslatorDialog.prototype = {
             let target_v_adjust = this._target.scroll.vscroll.adjustment;
             this._connection_ids.target_scroll = target_v_adjust.connect(
                 "notify::value",
-                Lang.bind(this, function(adjustment) {
+                (adjustment) => {
                     let source_adjustment = this._source.scroll.vscroll.adjustment;
 
                     if (source_adjustment.value === adjustment.value) {
@@ -3001,7 +3065,7 @@ TranslatorDialog.prototype = {
                     source_adjustment.value = adjustment.value;
 
                     adjustment.upper = adjustment.upper > source_adjustment.upper ? adjustment.upper : source_adjustment.upper;
-                })
+                }
             );
         }
     },
@@ -3114,7 +3178,7 @@ TranslatorsManager.prototype = {
     _init: function(aExtension) {
         this._extension = aExtension;
         this._translators = this._load_translators();
-        this._default = this.get_by_name(Settings.get_string(P.DEFAULT_TRANSLATOR));
+        this._default = this.get_by_name(Settings.default_translator);
         this._current = this._default;
     },
 
@@ -3190,11 +3254,11 @@ TranslatorsManager.prototype = {
 
         this._current = translator;
 
-        Settings.set_string(P.LAST_TRANSLATOR, name);
+        Settings.last_translator = name;
     },
 
     get last_used() {
-        let name = Settings.get_string(P.LAST_TRANSLATOR);
+        let name = Settings.last_translator;
         let translator = this.get_by_name(name);
 
         if (!translator) {
@@ -3311,7 +3375,7 @@ function get_unichar(keyval) {
 }
 
 // http://stackoverflow.com/a/7654602
-var asyncLoop = function(o) { // jshint ignore:line
+var asyncLoop = function(o) {
     let i = -1;
 
     let loop = function() {
@@ -3326,7 +3390,7 @@ var asyncLoop = function(o) { // jshint ignore:line
     loop(); // init
 };
 
-function replaceAll(str, find, replace) { // jshint ignore:line
+function replaceAll(str, find, replace) {
     return str.replace(new RegExp(escapeRegExp(find), "g"), replace);
 }
 
@@ -3463,7 +3527,7 @@ function getSelection(aCallback) {
 
         aCallback(str);
 
-        if (Settings.get_boolean(P.LOGGIN_ENABLED)) {
+        if (Settings.loggin_enabled) {
             global.logError("\ngetSelection()>str:\n" + str);
         }
     });
@@ -3471,9 +3535,9 @@ function getSelection(aCallback) {
 
 function getTimeStamp(aDate) {
     let ts;
-    switch (Settings.get_string(P.HISTORY_TIMESTAMP)) {
+    switch (Settings.history_timestamp) {
         case "custom":
-            ts = Settings.get_string(P.HISTORY_TIMESTAMP_CUSTOM); // Custom
+            ts = Settings.history_timestamp_custom; // Custom
             break;
         case "iso":
             ts = "YYYY MM-DD hh.mm.ss"; // ISO8601
@@ -3524,7 +3588,7 @@ function checkDependencies() {
             "check-dependencies"
         ],
         function(aResponse) {
-            if (Settings.get_boolean(P.LOGGIN_ENABLED)) {
+            if (Settings.loggin_enabled) {
                 global.logError("\ncheckDependencies()>aResponse:\n" + aResponse);
             }
 
@@ -3544,10 +3608,10 @@ function checkDependencies() {
                     "# " + _("It can be accessed from the translation dialog main menu.")
                 );
                 informAboutMissingDependencies(res);
-                Settings.set_boolean(P.ALL_DEPENDENCIES_MET, false);
+                Settings.all_dependencies_met = false;
             } else {
                 Main.notify(_(XletMeta.name), _("All dependencies seem to be met."));
-                Settings.set_boolean(P.ALL_DEPENDENCIES_MET, true);
+                Settings.all_dependencies_met = true;
             }
         });
 }
@@ -3610,18 +3674,18 @@ DialogPopup.prototype = {
         Main.uiGroup.add_actor(this.actor);
 
         this._dialog.source.actor.connect("button-press-event",
-            Lang.bind(this, function() {
+            () => {
                 if (this.isOpen) {
                     this.close(true);
                 }
-            })
+            }
         );
         this._dialog.target.actor.connect("button-press-event",
-            Lang.bind(this, function() {
+            () => {
                 if (this.isOpen) {
                     this.close(true);
                 }
-            })
+            }
         );
     },
 
@@ -3650,10 +3714,10 @@ DialogPopup.prototype = {
                 item = new PopupMenu.PopupMenuItem(display_name);
             }
 
-            item.connect("activate", Lang.bind(this, function() {
+            item.connect("activate", () => {
                 action();
                 this.close();
-            }));
+            });
         }
 
         if (is_translators_popup) {
@@ -3666,9 +3730,7 @@ DialogPopup.prototype = {
 
             item.tooltip = new Tooltips.Tooltip(item.actor, tt_text);
             item.tooltip._tooltip.set_style("text-align: left;width:auto;");
-            item.connect("destroy", Lang.bind(this, function() {
-                item.tooltip.destroy();
-            }));
+            item.connect("destroy", () => item.tooltip.destroy());
         }
 
         this.addMenuItem(item);
@@ -3718,8 +3780,8 @@ function customNotify(aTitle, aBody, aIconName, aUrgency, aButtons) {
 
     try {
         if (aButtons && typeof aButtons === "object") {
-            let destroyEmitted = function() {
-                this.tooltip.destroy();
+            let destroyEmitted = (aButton) => {
+                return () => aButton.tooltip.destroy();
             };
 
             let i = 0,
@@ -3766,7 +3828,7 @@ function customNotify(aTitle, aBody, aIconName, aUrgency, aButtons) {
                             button,
                             btnObj.tooltip
                         );
-                        button.connect("destroy", Lang.bind(button, destroyEmitted));
+                        button.connect("destroy", destroyEmitted(button));
                     }
 
                     if (notification._buttonBox.get_n_children() > 0) {
@@ -3916,7 +3978,7 @@ TranslateShellBaseTranslator.prototype = {
             options.push(proxy);
         }
 
-        exec(command.concat(options).concat(subjects), Lang.bind(this, function(data) {
+        exec(command.concat(options).concat(subjects), (data) => {
             if (!data) {
                 data = _("Error while translating, check your internet connection");
             } else {
@@ -3927,7 +3989,7 @@ TranslateShellBaseTranslator.prototype = {
                 error: false,
                 message: data
             });
-        }));
+        });
     },
 
     translate: function(source_lang, target_lang, text, callback) {
@@ -3946,19 +4008,19 @@ TranslateShellBaseTranslator.prototype = {
             this.do_translation(source_lang, target_lang, text, callback);
         } else {
             this._results = [];
-            let _this = this;
+
             asyncLoop({
                 length: splitted.length,
-                functionToLoop: Lang.bind(this, function(loop, i) {
+                functionToLoop: (loop, i) => {
                     let text = splitted[i];
-                    let data = _this.do_translation(source_lang, target_lang, text, function() {
+                    let data = this.do_translation(source_lang, target_lang, text, () => {
                         this._results.push(data);
                         loop();
                     });
-                }),
-                callback: Lang.bind(this, function() {
+                },
+                callback: () => {
                     callback(this._results.join(" "));
-                })
+                }
             });
         }
     }
@@ -3980,7 +4042,6 @@ exported STATS_TYPE_SOURCE,
          getTimeStamp,
          checkDependencies,
          customNotify,
-         getSettings,
          ProxySettings,
          ProxySettingsHTTP
 */

@@ -14,7 +14,6 @@ const Cinnamon = imports.gi.Cinnamon;
 const Clutter = imports.gi.Clutter;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const St = imports.gi.St;
@@ -30,13 +29,13 @@ TranslatorExtension.prototype = {
     _init: function() {
         try {
             this._dialog = new $.TranslatorDialog(this);
-            this._dialog.dialog_layout.connect("key-press-event", Lang.bind(this,
-                this._on_key_press_event
-            ));
+            this._dialog.dialog_layout.connect("key-press-event",
+                (aActor, aEvent) => this._on_key_press_event(aActor, aEvent));
             this._translators_manager = new $.TranslatorsManager(this);
 
             this._dialog.source.max_length = this._translators_manager.current.limit;
-            this._dialog.source.connect("activate", Lang.bind(this, this._translate));
+            this._dialog.source.connect("activate",
+                (aActor, aEvent) => this._translate(aActor, aEvent));
 
             this._languages_stats = new $.LanguagesStats();
             this._add_topbar_buttons();
@@ -47,13 +46,13 @@ TranslatorExtension.prototype = {
             this._init_most_used();
             this._bind_settings();
 
-            Main.themeManager.connect("theme-set", Lang.bind(this, function() {
+            Main.themeManager.connect("theme-set", () => {
                 try {
                     this.unloadStylesheet();
                 } finally {
                     this.loadStylesheet(this.stylesheet);
                 }
-            }));
+            });
 
             this._current_source_lang = null;
             this._current_target_lang = null;
@@ -68,7 +67,7 @@ TranslatorExtension.prototype = {
             this.ensureHistoryFileExists();
             this._loadTheme();
 
-            if (!Settings.get_boolean($.P.ALL_DEPENDENCIES_MET)) {
+            if (!Settings.all_dependencies_met) {
                 $.checkDependencies();
             }
         } catch (aErr) {
@@ -79,54 +78,53 @@ TranslatorExtension.prototype = {
     _bind_settings: function() {
         $.CONNECTION_IDS.settings_bindings = Settings.connect(
             "changed",
-            Lang.bind(this, function(aObj, aPref) {
+            (aObj, aPref) => {
                 switch (aPref) {
-                    case $.P.SHOW_MOST_USED:
+                    case "show-most-used":
                         this._init_most_used();
                         break;
-                    case $.P.DIALOG_THEME:
-                    case $.P.DIALOG_THEME_CUSTOM:
+                    case "dialog-theme":
+                    case "dialog-theme-custom":
                         this._loadTheme(true);
                         break;
-                    case $.P.OPEN_TRANSLATOR_DIALOG_KEYBINDING:
-                    case $.P.TRANSLATE_FROM_CLIPBOARD_KEYBINDING:
-                    case $.P.TRANSLATE_FROM_SELECTION_KEYBINDING:
+                    case "open-translator-dialog-keybinding":
+                    case "translate-from-clipboard-keybinding":
+                    case "translate-from-selection-keybinding":
                         this._remove_keybindings(true);
                         break;
                 }
-            })
+            }
         );
     },
 
     _init_most_used: function() {
-        if (!Settings.get_boolean($.P.SHOW_MOST_USED)) {
+        if (!Settings.show_most_used) {
             return;
         }
 
         this._languages_stats.connect(
-            "stats-changed",
-            Lang.bind(this, this._show_most_used)
+            "stats-changed", () => this._show_most_used()
         );
         this._dialog.most_used.sources.connect(
             "clicked",
-            Lang.bind(this, function(object, data) {
-                this._dialog.most_used.sources.select(data.lang_code);
-                this._set_current_source(data.lang_code);
+            (aActor, aData) => {
+                this._dialog.most_used.sources.select(aData.lang_code);
+                this._set_current_source(aData.lang_code);
                 this._current_langs_changed();
-            })
+            }
         );
         this._dialog.most_used.targets.connect(
             "clicked",
-            Lang.bind(this, function(object, data) {
-                this._dialog.most_used.targets.select(data.lang_code);
-                this._set_current_target(data.lang_code);
+            (aActor, aData) => {
+                this._dialog.most_used.targets.select(aData.lang_code);
+                this._set_current_target(aData.lang_code);
                 this._current_langs_changed();
-            })
+            }
         );
     },
 
     _show_most_used: function() {
-        if (!Settings.get_boolean($.P.SHOW_MOST_USED)) {
+        if (!Settings.show_most_used) {
             return;
         }
 
@@ -148,7 +146,7 @@ TranslatorExtension.prototype = {
     },
 
     _most_used_bar_select_current: function() {
-        if (!Settings.get_boolean($.P.SHOW_MOST_USED)) {
+        if (!Settings.show_most_used) {
             return;
         }
 
@@ -161,17 +159,17 @@ TranslatorExtension.prototype = {
             _("Choose source language") + ":",
             null
         );
-        this._source_language_chooser.connect("language-chose", Lang.bind(this,
-            this._on_source_language_chose
-        ));
+        this._source_language_chooser.connect("language-chose",
+            (aActor, aLang) => this._on_source_language_chose(aActor, aLang)
+        );
 
         this._target_language_chooser = new $.LanguageChooser(
             _("Choose target language") + ":",
             null
         );
-        this._target_language_chooser.connect("language-chose", Lang.bind(this,
-            this._on_target_language_chose
-        ));
+        this._target_language_chooser.connect("language-chose",
+            (aActor, aLang) => this._on_target_language_chose(aActor, aLang)
+        );
     },
 
     /**
@@ -244,7 +242,7 @@ TranslatorExtension.prototype = {
         } else if (symbol == Clutter.KEY_Super_L || symbol == Clutter.KEY_Super_R) { // Super - close
             this.close();
         } else {
-            if (Settings.get_boolean($.P.LOGGIN_ENABLED)) {
+            if (Settings.loggin_enabled) {
                 global.logError(JSON.stringify({
                     state: state,
                     symbol: symbol,
@@ -365,23 +363,23 @@ TranslatorExtension.prototype = {
         Util.spawn_async([
             XletMeta.path + "/extensionHelper.py",
             "history",
-            Settings.get_int($.P.HISTORY_INITIAL_WINDOW_WIDTH) + "," +
-            Settings.get_int($.P.HISTORY_INITIAL_WINDOW_HEIGHT) + "," +
-            Settings.get_int($.P.HISTORY_WIDTH_TO_TRIGGER_WORD_WRAP)
+            Settings.history_initial_window_width + "," +
+            Settings.history_initial_window_height + "," +
+            Settings.history_width_to_trigger_word_wrap
         ], null);
     },
 
-    _on_source_language_chose: function(object, language) {
+    _on_source_language_chose: function(aActor, aLang) {
         this._most_used_bar_select_current();
-        this._set_current_source(language.code);
+        this._set_current_source(aLang.code);
         this._current_langs_changed();
         this._source_language_chooser.close();
         this._translate();
     },
 
-    _on_target_language_chose: function(object, language) {
+    _on_target_language_chose: function(aActor, aLang) {
         this._most_used_bar_select_current();
-        this._set_current_target(language.code);
+        this._set_current_target(aLang.code);
         this._current_langs_changed();
         this._target_language_chooser.close();
         this._translate();
@@ -421,7 +419,7 @@ TranslatorExtension.prototype = {
             ),
             _("Choose source language"),
             button_params,
-            Lang.bind(this, function() {
+            () => {
                 this._close_all_menus();
                 this._source_language_chooser.open();
                 this._source_language_chooser.set_languages(
@@ -430,7 +428,7 @@ TranslatorExtension.prototype = {
                 this._source_language_chooser.show_languages(
                     this._current_source_lang
                 );
-            })
+            }
         );
 
         return button;
@@ -451,7 +449,7 @@ TranslatorExtension.prototype = {
             ),
             _("Choose target language"),
             button_params,
-            Lang.bind(this, function() {
+            () => {
                 this._close_all_menus();
                 this._target_language_chooser.open();
                 this._target_language_chooser.set_languages(
@@ -460,7 +458,7 @@ TranslatorExtension.prototype = {
                 this._target_language_chooser.show_languages(
                     this._current_target_lang
                 );
-            })
+            }
         );
 
         return button;
@@ -476,7 +474,7 @@ TranslatorExtension.prototype = {
             " \u21C4 ",
             _("Swap languages"),
             button_params,
-            Lang.bind(this, this._swap_languages)
+            () => this._swap_languages()
         );
 
         return button;
@@ -500,7 +498,7 @@ TranslatorExtension.prototype = {
                 "<i>%s</i>".format(this._translators_manager.current.name),
                 _("Choose translation provider"),
                 button_params,
-                Lang.bind(this, function() {
+                () => {
                     this._close_all_menus("translators");
 
                     if (this._translators_button_popup && this._translators_button_popup.isOpen) {
@@ -540,7 +538,7 @@ TranslatorExtension.prototype = {
                         }
                         this._translators_button_popup.open();
                     }
-                })
+                }
             );
         }
 
@@ -557,7 +555,7 @@ TranslatorExtension.prototype = {
             _("Go!"),
             _("Translate text (<Ctrl> + <Enter>)"),
             button_params,
-            Lang.bind(this, this._translate)
+            (aActor, aEvent) => this._translate(aActor, aEvent)
         );
 
         return button;
@@ -574,7 +572,7 @@ TranslatorExtension.prototype = {
             "",
             _("Main menu"),
             button_params,
-            Lang.bind(this, function() {
+            () => {
                 this._close_all_menus("main");
 
                 if (this._main_menu_button_popup && this._main_menu_button_popup.isOpen) {
@@ -587,15 +585,15 @@ TranslatorExtension.prototype = {
                     let items = [
                         [
                             _("Preferences"),
-                            Lang.bind(this, function() {
+                            () => {
                                 this.close();
                                 Util.spawn_async([XletMeta.path + "/settings.py"], null);
-                            }),
+                            },
                             $.ICONS.preferences
                         ],
                         [
                             _("Translation history"),
-                            Lang.bind(this, this._openTranslationHistory),
+                            () => this._openTranslationHistory(),
                             $.ICONS.history
                         ],
                         [
@@ -603,21 +601,21 @@ TranslatorExtension.prototype = {
                         ],
                         [
                             _("Check dependencies"),
-                            Lang.bind(this, function() {
+                            () => {
                                 this.close();
                                 $.checkDependencies();
-                            }),
+                            },
                             $.ICONS.find
                         ],
                         [
                             _("Extended help"),
-                            Lang.bind(this, function() {
+                            () => {
                                 this.close();
                                 Util.spawn_async([
                                     "xdg-open",
                                     XletMeta.path + "/HELP.html"
                                 ], null);
-                            }),
+                            },
                             $.ICONS.help
                         ]
                     ];
@@ -631,7 +629,7 @@ TranslatorExtension.prototype = {
 
                     this._main_menu_button_popup.open();
                 }
-            })
+            }
         );
 
         return button;
@@ -648,7 +646,7 @@ TranslatorExtension.prototype = {
             "",
             _("Quick help"),
             button_params,
-            Lang.bind(this, this._show_help));
+            () => this._show_help());
 
         return button;
     },
@@ -663,9 +661,7 @@ TranslatorExtension.prototype = {
             "",
             _("Quit"),
             button_params,
-            Lang.bind(this, function() {
-                this.close();
-            })
+            () => this.close()
         );
 
         return button;
@@ -736,7 +732,7 @@ TranslatorExtension.prototype = {
 
             this.forceTranslation = shift_mask;
         } catch (aErr) {
-            if (Settings.get_boolean($.P.LOGGIN_ENABLED)) {
+            if (Settings.loggin_enabled) {
                 global.logError(aErr);
             }
 
@@ -769,7 +765,7 @@ TranslatorExtension.prototype = {
             this._current_source_lang,
             this._current_target_lang,
             this._dialog.source.text,
-            Lang.bind(this, function(result) {
+            (result) => {
                 this._dialog.statusbar.remove_message(message_id);
 
                 // Leave this try{}catch{} block
@@ -801,20 +797,20 @@ TranslatorExtension.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
-            })
+            }
         );
     },
 
     _translate_from_clipboard: function(aTranslateSelection) {
         if (aTranslateSelection) {
-            $.getSelection(Lang.bind(this, function(aSelection) {
+            $.getSelection((aSelection) => {
                 this._dialog.source.text = aSelection;
                 this.open();
                 this._translate();
-            }));
+            });
         } else {
             let clipboard = St.Clipboard.get_default();
-            clipboard.get_text(Lang.bind(this, function(clipboard, text) {
+            clipboard.get_text((clipboard, text) => {
                 if ($.is_blank(text)) {
                     this._dialog.statusbar.add_message(
                         _("Clipboard is empty."),
@@ -828,7 +824,7 @@ TranslatorExtension.prototype = {
                 this._dialog.source.text = text;
                 this.open();
                 this._translate();
-            }));
+            });
         }
     },
 
@@ -872,30 +868,26 @@ TranslatorExtension.prototype = {
     _add_keybindings: function() {
         Main.keybindingManager.addHotKey(
             "multi_translator_open_translator_dialog_keybinding",
-            Settings.get_strv($.P.OPEN_TRANSLATOR_DIALOG_KEYBINDING) + "::",
-            Lang.bind(this, function() {
+            Settings.open_translator_dialog_keybinding + "::",
+            () => {
                 if (this._dialog.state === $.State.OPENED || this._dialog.state === $.State.OPENING) {
                     this.close();
                 } else {
                     this.open();
                 }
-            })
+            }
         );
 
         Main.keybindingManager.addHotKey(
             "multi_translator_translate_from_clipboard_keybinding",
-            Settings.get_strv($.P.TRANSLATE_FROM_CLIPBOARD_KEYBINDING) + "::",
-            Lang.bind(this, function() {
-                this._translate_from_clipboard(false);
-            })
+            Settings.translate_from_clipboard_keybinding + "::",
+            () => this._translate_from_clipboard(false)
         );
 
         Main.keybindingManager.addHotKey(
             "multi_translator_translate_from_selection_keybinding",
-            Settings.get_strv($.P.TRANSLATE_FROM_SELECTION_KEYBINDING) + "::",
-            Lang.bind(this, function() {
-                this._translate_from_clipboard(true);
-            })
+            Settings.translate_from_selection_keybinding + "::",
+            () => this._translate_from_clipboard(true)
         );
     },
 
@@ -904,14 +896,14 @@ TranslatorExtension.prototype = {
         Main.keybindingManager.removeHotKey("multi_translator_translate_from_clipboard_keybinding");
         Main.keybindingManager.removeHotKey("multi_translator_translate_from_selection_keybinding");
 
-        if (aReEnable && Settings.get_boolean($.P.ENABLE_SHORTCUTS)) {
+        if (aReEnable && Settings.enable_shortcuts) {
             this._add_keybindings();
         }
     },
 
     open: function() {
         try {
-            if (Settings.get_boolean($.P.REMEMBER_LAST_TRANSLATOR)) {
+            if (Settings.remember_last_translator) {
                 let translator = this._translators_manager.last_used ?
                     this._translators_manager.last_used.name :
                     this._translators_manager.default.name;
@@ -922,7 +914,7 @@ TranslatorExtension.prototype = {
 
             this._dialog.open();
             this._dialog.source.clutter_text.set_selection(
-                Settings.get_boolean($.P.KEEP_SOURCE_ENTRY_TEXT_SELECTED) ? 0 : -1,
+                Settings.keep_source_entry_text_selected ? 0 : -1,
                 this._dialog.source.length
             );
             this._dialog.source.clutter_text.grab_key_focus();
@@ -939,20 +931,20 @@ TranslatorExtension.prototype = {
     },
 
     enable: function() {
-        if (Settings.get_boolean($.P.ENABLE_SHORTCUTS)) {
+        if (Settings.enable_shortcuts) {
             this._add_keybindings();
         }
 
-        $.CONNECTION_IDS.enable_shortcuts = Settings.connect("changed::" + $.P.ENABLE_SHORTCUTS,
-            Lang.bind(this, function() {
-                let enable = Settings.get_boolean($.P.ENABLE_SHORTCUTS);
+        $.CONNECTION_IDS.enable_shortcuts = Settings.connect("changed::enable-shortcuts",
+            () => {
+                let enable = Settings.enable_shortcuts;
 
                 if (enable) {
                     this._add_keybindings();
                 } else {
                     this._remove_keybindings();
                 }
-            })
+            }
         );
     },
 
@@ -978,10 +970,10 @@ TranslatorExtension.prototype = {
         this._remove_timeouts("load_theme_id");
         let newTheme;
 
-        if (Settings.get_string($.P.DIALOG_THEME) !== "custom") {
-            newTheme = this._getCssPath(Settings.get_string($.P.DIALOG_THEME));
+        if (Settings.dialog_theme !== "custom") {
+            newTheme = this._getCssPath(Settings.dialog_theme);
         } else {
-            newTheme = this._getCustomCssPath(Settings.get_string($.P.DIALOG_THEME_CUSTOM));
+            newTheme = this._getCustomCssPath(Settings.dialog_theme_custom);
         }
 
         if (!newTheme) {
@@ -995,7 +987,7 @@ TranslatorExtension.prototype = {
         } finally {
             $.TIMEOUT_IDS.load_theme_id = Mainloop.timeout_add(
                 $.LOAD_THEME_DELAY,
-                Lang.bind(this, function() {
+                () => {
                     // This block doesn't make any sense, but it's what it works.
                     // So I will leave it as is or else. ¬¬
                     try {
@@ -1009,7 +1001,7 @@ TranslatorExtension.prototype = {
                     }
 
                     $.TIMEOUT_IDS.load_theme_id = 0;
-                })
+                }
             );
         }
     },
@@ -1052,7 +1044,7 @@ TranslatorExtension.prototype = {
 
             if (!cssFile.query_exists(null)) {
                 cssPath = XletMeta.path + "/themes/default.css";
-                Settings.set_string($.P.DIALOG_THEME, "default");
+                Settings.dialog_theme = "default";
             }
         } catch (aErr) {
             global.logError(aErr);
@@ -1073,7 +1065,7 @@ TranslatorExtension.prototype = {
 
             if (!cssFile.query_exists(null)) {
                 cssPath = XletMeta.path + "/themes/default.css";
-                Settings.set_string($.P.DIALOG_THEME, "default");
+                Settings.dialog_theme = "default";
             }
         } catch (aErr) {
             global.logError(aErr);
@@ -1093,7 +1085,7 @@ TranslatorExtension.prototype = {
         this.historyFile = configDir.get_child("translation_history.json");
 
         if (this.historyFile.query_exists(null)) {
-            this.historyFile.load_contents_async(null, Lang.bind(this, function(aFile, aResponce) {
+            this.historyFile.load_contents_async(null, (aFile, aResponce) => {
                 let rawData;
                 try {
                     rawData = aFile.load_contents_finish(aResponce)[1];
@@ -1107,7 +1099,7 @@ TranslatorExtension.prototype = {
                 } catch (aErr) {
                     global.logError(aErr.message);
                 }
-            }));
+            });
         } else {
             this._translation_history = {
                 __version__: 1
@@ -1119,7 +1111,7 @@ TranslatorExtension.prototype = {
     saveHistoryToFile: function() {
         let rawData;
 
-        if (Settings.get_boolean($.P.LOGGIN_SAVE_HISTORY_INDENTED)) {
+        if (Settings.loggin_save_history_indented) {
             rawData = JSON.stringify(this._translation_history, null, "    ");
         } else {
             rawData = JSON.stringify(this._translation_history);
@@ -1134,7 +1126,7 @@ TranslatorExtension.prototype = {
     _displayHistory: function(aSourceText) {
         let historyEntry = this.transHistory[this._current_target_lang][aSourceText];
 
-        if (Settings.get_boolean($.P.LOGGIN_ENABLED)) {
+        if (Settings.loggin_enabled) {
             global.logError("\n_displayHistory()>historyEntry:\n" + JSON.stringify(historyEntry));
         }
 
