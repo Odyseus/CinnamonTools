@@ -6,7 +6,6 @@ const Clutter = imports.gi.Clutter;
 const CoverflowSwitcher = imports.ui.appSwitcher.coverflowSwitcher;
 const Gettext = imports.gettext;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const ModalDialog = imports.ui.modalDialog;
@@ -158,9 +157,12 @@ MyClassicSwitcher.prototype = {
 
         this._updateList(0);
 
-        this.actor.connect("get-preferred-width", Lang.bind(this, this._getPreferredWidth));
-        this.actor.connect("get-preferred-height", Lang.bind(this, this._getPreferredHeight));
-        this.actor.connect("allocate", Lang.bind(this, this._allocate));
+        this.actor.connect("get-preferred-width",
+            (aActor, aForWidth, aAlloc) => this._getPreferredWidth(aActor, aForWidth, aAlloc));
+        this.actor.connect("get-preferred-height",
+            (aActor, aForWidth, aAlloc) => this._getPreferredHeight(aActor, aForWidth, aAlloc));
+        this.actor.connect("allocate",
+            (aActor, aBox, aFlags) => this._allocate(aActor, aBox, aFlags));
 
         // Need to force an allocation so we can figure out whether we
         // need to scroll when selecting
@@ -177,12 +179,17 @@ MyClassicSwitcher.prototype = {
             this._activateSelected();
         } else {
             this._disableHover();
-            this.actor.connect("key-press-event", Lang.bind(this, this._keyPressEvent));
-            this.actor.connect("key-release-event", Lang.bind(this, this._keyReleaseEvent));
-            this.actor.connect("scroll-event", Lang.bind(this, this._scrollEvent));
-            this.actor.connect("button-press-event", Lang.bind(this, this.owndestroy));
+            this.actor.connect("key-press-event",
+                (aActor, aEvent) => this._keyPressEvent(aActor, aEvent));
+            this.actor.connect("key-release-event",
+                (aActor, aEvent) => this._keyReleaseEvent(aActor, aEvent));
+            this.actor.connect("scroll-event",
+                (aActor, aEvent) => this._scrollEvent(aActor, aEvent));
+            this.actor.connect("button-press-event",
+                () => this.owndestroy());
             let delay = global.settings.get_int("alttab-switcher-delay");
-            this._initialDelayTimeoutId = Mainloop.timeout_add(delay, Lang.bind(this, this._show));
+            this._initialDelayTimeoutId = Mainloop.timeout_add(delay,
+                () => this._show());
             this._currentIndex--;
         }
         return this._haveModal;
@@ -223,12 +230,17 @@ MyTimelineSwitcher.prototype = {
         } else {
             this._disableHover();
 
-            this.actor.connect("key-press-event", Lang.bind(this, this._keyPressEvent));
-            this.actor.connect("key-release-event", Lang.bind(this, this._keyReleaseEvent));
-            this.actor.connect("scroll-event", Lang.bind(this, this._scrollEvent));
-            this.actor.connect("button-press-event", Lang.bind(this, this.owndestroy));
+            this.actor.connect("key-press-event",
+                (aActor, aEvent) => this._keyPressEvent(aActor, aEvent));
+            this.actor.connect("key-release-event",
+                (aActor, aEvent) => this._keyReleaseEvent(aActor, aEvent));
+            this.actor.connect("scroll-event",
+                (aActor, aEvent) => this._scrollEvent(aActor, aEvent));
+            this.actor.connect("button-press-event",
+                () => this.owndestroy());
             let delay = global.settings.get_int("alttab-switcher-delay");
-            this._initialDelayTimeoutId = Mainloop.timeout_add(delay, Lang.bind(this, this._show));
+            this._initialDelayTimeoutId = Mainloop.timeout_add(delay,
+                () => this._show());
             this._currentIndex--;
         }
         return this._haveModal;
@@ -269,12 +281,17 @@ MyCoverflowSwitcher.prototype = {
         } else {
             this._disableHover();
 
-            this.actor.connect("key-press-event", Lang.bind(this, this._keyPressEvent));
-            this.actor.connect("key-release-event", Lang.bind(this, this._keyReleaseEvent));
-            this.actor.connect("scroll-event", Lang.bind(this, this._scrollEvent));
-            this.actor.connect("button-press-event", Lang.bind(this, this.owndestroy));
+            this.actor.connect("key-press-event",
+                (aActor, aEvent) => this._keyPressEvent(aActor, aEvent));
+            this.actor.connect("key-release-event",
+                (aActor, aEvent) => this._keyReleaseEvent(aActor, aEvent));
+            this.actor.connect("scroll-event",
+                (aActor, aEvent) => this._scrollEvent(aActor, aEvent));
+            this.actor.connect("button-press-event",
+                () => this.owndestroy());
             let delay = global.settings.get_int("alttab-switcher-delay");
-            this._initialDelayTimeoutId = Mainloop.timeout_add(delay, Lang.bind(this, this._show));
+            this._initialDelayTimeoutId = Mainloop.timeout_add(delay,
+                () => this._show());
             this._currentIndex--;
         }
         return this._haveModal;
@@ -349,16 +366,16 @@ ConfirmationDialog.prototype = {
 
         this.setButtons([{
             label: aCancelButtonLabel,
-            action: Lang.bind(this, function() {
+            action: () => {
                 this.close();
-            }),
+            },
             key: Clutter.Escape
         }, {
             label: aDoButtonLabel,
-            action: Lang.bind(this, function() {
+            action: () => {
                 this.close();
                 aCallback();
-            })
+            }
         }]);
     }
 };

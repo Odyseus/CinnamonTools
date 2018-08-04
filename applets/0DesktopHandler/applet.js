@@ -18,7 +18,6 @@ const ExtensionSystem = imports.ui.extensionSystem;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const Meta = imports.gi.Meta;
@@ -69,7 +68,8 @@ DesktopHandlerApplet.prototype = {
                 this.didpeek = false;
                 this.uptgg = true;
 
-                this.actor.connect("scroll-event", Lang.bind(this, this._onScroll));
+                this.actor.connect("scroll-event",
+                    (aActor, aEvent) => this._onScroll(aActor, aEvent));
 
                 this._handleDesktopPeek();
                 this._handleWindowList();
@@ -77,9 +77,7 @@ DesktopHandlerApplet.prototype = {
 
                 // Workaround to apply background color on applet load.
                 // Without the timeout, the style is not applied. ¬¬
-                Mainloop.timeout_add(3000, Lang.bind(this, function() {
-                    this._setAppletStyle(true);
-                }));
+                Mainloop.timeout_add(3000, () => this._setAppletStyle(true));
             } catch (aErr) {
                 global.logError(aErr);
             }
@@ -160,8 +158,10 @@ DesktopHandlerApplet.prototype = {
             return;
         }
 
-        this.enterAct = this.actor.connect("enter-event", Lang.bind(this, this._onEntered));
-        this.leaveAct = this.actor.connect("leave-event", Lang.bind(this, this._onLEntered));
+        this.enterAct = this.actor.connect("enter-event",
+            () => this._onEnter());
+        this.leaveAct = this.actor.connect("leave-event",
+            () => this._onLeave());
     },
 
     _handleWindowList: function() {
@@ -202,7 +202,8 @@ DesktopHandlerApplet.prototype = {
         }
 
         try {
-            this.openAct = this._winMenu.connect("open-state-changed", Lang.bind(this, this._onToggled));
+            this.openAct = this._winMenu.connect("open-state-changed",
+                (actor, isOpening) => this._onToggled(actor, isOpening));
         } catch (aErr) {}
     },
 
@@ -229,6 +230,76 @@ DesktopHandlerApplet.prototype = {
         let empty_menu = true;
 
         try {
+            let menuItemFn = (aMetaWorkspace, aMetaWindow) => {
+                return () => this.activateWindow(aMetaWorkspace, aMetaWindow);
+            };
+
+            let closeButtonFn = (aItem, aMetaWindow, aSticky, aWindows) => {
+                return () => {
+                    let fallback = false;
+                    let items = this._winMenu._getMenuItems();
+                    let ii = items.indexOf(aItem);
+
+                    if (!aSticky) {
+                        if (items[ii + 1] instanceof PopupMenu.PopupSeparatorMenuItem &&
+                            (ii < 2 || items[ii - 2] instanceof PopupMenu.PopupSeparatorMenuItem)) {
+                            items[ii - 1].destroy();
+                        }
+                    }
+
+                    if (this.pref_keep_menu_open) {
+                        if (items[ii + 1] && items[ii + 1].actor) {
+                            items[ii + 1].actor.grab_key_focus();
+                        } else {
+                            fallback = true;
+                        }
+                    }
+
+                    aItem.destroy();
+                    delete allwins[allwins.indexOf(aMetaWindow)];
+                    aSticky || delete aWindows[aWindows.indexOf(aMetaWindow)];
+                    aMetaWindow.delete(global.get_current_time());
+
+                    // Fallback in case there wasn't an item to focus on.
+                    if (this.pref_keep_menu_open && fallback) {
+                        this.uptgg = false;
+                        this._winMenu.toggle();
+                    }
+                };
+            };
+
+            let closeAllButtonFn = (aWindows) => {
+                return () => () => {
+                    let items = this._winMenu._getMenuItems();
+                    for (let ii = items.indexOf(item); ii < items.length; ii++) {
+                        if (items[ii] instanceof PopupMenu.PopupSeparatorMenuItem) {
+                            break;
+                        }
+                        items[ii].destroy();
+                    }
+                    let wi = 0,
+                        wiLen = aWindows.length;
+                    for (; wi < wiLen; wi++) {
+                        if (aWindows[wi]) {
+                            aWindows[wi].delete(global.get_current_time());
+                            delete allwins[allwins.indexOf(aWindows[wi])];
+                        }
+                    }
+
+                    if (this._winMenu.isOpen) {
+                        this._winMenu.toggle();
+                    }
+
+                    // Keep this method to keep the menu open.
+                    // Implementing the same that I did in the other cases
+                    // would be a nightmare.
+                    if (this.pref_keep_menu_open) {
+                        this.uptgg = false;
+                        this._winMenu.toggle();
+                    }
+                };
+            };
+
             let tracker = Cinnamon.WindowTracker.get_default();
             for (let wks = 0; wks < global.screen.n_workspaces; ++wks) {
                 // construct a list with all windows
@@ -236,11 +307,11 @@ DesktopHandlerApplet.prototype = {
                 let metaWorkspace = global.screen.get_workspace_by_index(wks);
                 let windows = metaWorkspace.list_windows();
                 let sticky_windows = windows.filter(
-                    function(w) {
+                    (w) => {
                         return !w.is_skip_taskbar() && w.is_on_all_workspaces();
                     });
                 windows = windows.filter(
-                    function(w) {
+                    (w) => {
                         return !w.is_skip_taskbar() && !w.is_on_all_workspaces();
                     });
 
@@ -260,38 +331,15 @@ DesktopHandlerApplet.prototype = {
                         let item = new $.MenuItem(
                             metaWindow.get_title().substring(0, 68) + TL_Dot,
                             icon,
-                            Lang.bind(this, function() {
-                                this.activateWindow(metaWorkspace, metaWindow);
-                            })
+                            menuItemFn(metaWorkspace, metaWindow)
                         );
 
                         if (this.pref_show_close_buttons) {
                             let close_button = this._createCloseIcon(true);
                             close_button.tooltip = new Tooltips.Tooltip(close_button,
                                 _("Close window"));
-                            close_button.connect("clicked", Lang.bind(this, function() {
-                                let fallback = false;
-                                let items = this._winMenu._getMenuItems();
-                                let ii = items.indexOf(item);
-
-                                if (this.pref_keep_menu_open) {
-                                    if (items[ii + 1] && items[ii + 1].actor) {
-                                        items[ii + 1].actor.grab_key_focus();
-                                    } else {
-                                        fallback = true;
-                                    }
-                                }
-
-                                item.destroy();
-                                delete allwins[allwins.indexOf(metaWindow)];
-                                metaWindow.delete(global.get_current_time());
-
-                                // Fallback in case there wasn't an item to focus on.
-                                if (this.pref_keep_menu_open && fallback) {
-                                    this.uptgg = false;
-                                    this._winMenu.toggle();
-                                }
-                            }));
+                            close_button.connect("clicked",
+                                closeButtonFn(item, metaWindow, true));
                             item.addActor(close_button, {
                                 align: St.Align.END
                             });
@@ -322,39 +370,12 @@ DesktopHandlerApplet.prototype = {
                         }
 
                         if (this.pref_show_close_buttons && this.pref_show_close_all_buttons) {
-                            let close_button = this._createCloseIcon(false);
-                            close_button.tooltip = new Tooltips.Tooltip(close_button,
+                            let close_all_button = this._createCloseIcon(false);
+                            close_all_button.tooltip = new Tooltips.Tooltip(close_all_button,
                                 _("Close all windows from this wrokspace"));
-                            close_button.connect("clicked", Lang.bind(this, function() {
-                                let items = this._winMenu._getMenuItems();
-                                for (let ii = items.indexOf(item); ii < items.length; ii++) {
-                                    if (items[ii] instanceof PopupMenu.PopupSeparatorMenuItem) {
-                                        break;
-                                    }
-                                    items[ii].destroy();
-                                }
-                                let wi = 0,
-                                    wiLen = windows.length;
-                                for (; wi < wiLen; wi++) {
-                                    if (windows[wi]) {
-                                        windows[wi].delete(global.get_current_time());
-                                        delete allwins[allwins.indexOf(windows[wi])];
-                                    }
-                                }
-
-                                if (this._winMenu.isOpen) {
-                                    this._winMenu.toggle();
-                                }
-
-                                // Keep this method to keep the menu open.
-                                // Implementing the same that I did in the other cases
-                                // would be a nightmare.
-                                if (this.pref_keep_menu_open) {
-                                    this.uptgg = false;
-                                    this._winMenu.toggle();
-                                }
-                            }));
-                            item.addActor(close_button, {
+                            close_all_button.connect("clicked",
+                                closeAllButtonFn(windows));
+                            item.addActor(close_all_button, {
                                 align: St.Align.MIDDLE
                             });
                         }
@@ -376,45 +397,15 @@ DesktopHandlerApplet.prototype = {
                         let item = new $.MenuItem(
                             metaWindow.get_title().substring(0, 68) + TL_Dot,
                             icon,
-                            Lang.bind(this, function() {
-                                this.activateWindow(metaWorkspace, metaWindow);
-                            })
+                            menuItemFn(metaWorkspace, metaWindow)
                         );
 
                         if (this.pref_show_close_buttons) {
                             let close_button = this._createCloseIcon(true);
                             close_button.tooltip = new Tooltips.Tooltip(close_button,
                                 _("Close window"));
-                            close_button.connect("clicked", Lang.bind(this, function() {
-                                let fallback = false;
-
-                                let items = this._winMenu._getMenuItems();
-                                let ii = items.indexOf(item);
-
-                                if (items[ii + 1] instanceof PopupMenu.PopupSeparatorMenuItem &&
-                                    (ii < 2 || items[ii - 2] instanceof PopupMenu.PopupSeparatorMenuItem)) {
-                                    items[ii - 1].destroy();
-                                }
-
-                                if (this.pref_keep_menu_open) {
-                                    if (items[ii + 1] && items[ii + 1].actor) {
-                                        items[ii + 1].actor.grab_key_focus();
-                                    } else {
-                                        fallback = true;
-                                    }
-                                }
-
-                                item.destroy();
-                                delete allwins[allwins.indexOf(metaWindow)];
-                                delete windows[windows.indexOf(metaWindow)];
-                                metaWindow.delete(global.get_current_time());
-
-                                // Fallback in case there wasn't an item to focus on.
-                                if (this.pref_keep_menu_open && fallback) {
-                                    this.uptgg = false;
-                                    this._winMenu.toggle();
-                                }
-                            }));
+                            close_button.connect("clicked",
+                                closeButtonFn(item, metaWindow, false, windows));
                             item.addActor(close_button, {
                                 align: St.Align.END
                             });
@@ -444,17 +435,17 @@ DesktopHandlerApplet.prototype = {
             icon_type: St.IconType.SYMBOLIC,
             icon_size: 18
         });
-        let item = new $.MenuItem(_("Expo"), icon, Lang.bind(this, function() {
+        let item = new $.MenuItem(_("Expo"), icon, () => {
             if (!Main.expo.animationInProgress) {
                 Main.expo.toggle();
             }
-        }));
+        });
 
         if (allwins.length > 0 && this.pref_show_close_buttons && this.pref_show_close_all_buttons) {
             let close_button = this._createCloseIcon(false);
             close_button.tooltip = new Tooltips.Tooltip(close_button,
                 _("Close all windows from all workspaces"));
-            close_button.connect("clicked", Lang.bind(this, function() {
+            close_button.connect("clicked", () => {
                 let wi = 0,
                     wiLen = allwins.length;
                 for (; wi < wiLen; wi++) {
@@ -463,15 +454,7 @@ DesktopHandlerApplet.prototype = {
                     }
                 }
                 this._winMenu.toggle();
-            }));
-            close_button.connect("enter-event", Lang.bind(this, Lang.bind(this, function() {
-                let _children = item.actor.get_children();
-                _children[_children.length - 1].get_children()[0].style = "icon-size: 1em;";
-            })));
-            close_button.connect("leave-event", Lang.bind(this, Lang.bind(this, function() {
-                let _children = item.actor.get_children();
-                _children[_children.length - 1].get_children()[0].style = "icon-size: 0.8em;";
-            })));
+            });
             item.addActor(close_button, {
                 align: St.Align.MIDDLE
             });
@@ -517,9 +500,9 @@ DesktopHandlerApplet.prototype = {
         if (this.pref_show_context_menu_help || aRestore) {
             let menuItem = new PopupMenu.PopupIconMenuItem(_("Help"),
                 "dialog-information", St.IconType.SYMBOLIC);
-            menuItem.connect("activate", Lang.bind(this, function() {
+            menuItem.connect("activate", () => {
                 Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
-            }));
+            });
             this._applet_context_menu.addMenuItem(menuItem);
         }
 
@@ -529,7 +512,7 @@ DesktopHandlerApplet.prototype = {
             this.context_menu_item_about = new PopupMenu.PopupIconMenuItem(_("About..."),
                 "dialog-question",
                 St.IconType.SYMBOLIC);
-            this.context_menu_item_about.connect("activate", Lang.bind(this, this.openAbout));
+            this.context_menu_item_about.connect("activate", () => this.openAbout());
             this._applet_context_menu.addMenuItem(this.context_menu_item_about);
         }
 
@@ -539,11 +522,11 @@ DesktopHandlerApplet.prototype = {
             this.context_menu_item_configure = new PopupMenu.PopupIconMenuItem(_("Configure..."),
                 "system-run",
                 St.IconType.SYMBOLIC);
-            this.context_menu_item_configure.connect("activate", Lang.bind(this, function() {
+            this.context_menu_item_configure.connect("activate", () => {
                 Util.spawn_async(["cinnamon-settings", "applets", this.metadata.uuid,
                     this.instance_id
                 ], null);
-            }));
+            });
             this._applet_context_menu.addMenuItem(this.context_menu_item_configure);
         }
 
@@ -551,18 +534,18 @@ DesktopHandlerApplet.prototype = {
             // NOTE: This string could be left blank because it's a default string,
             // so it's already translated by Cinnamon. It's up to the translators.
             this.context_menu_item_remove = new PopupMenu.PopupIconMenuItem(_("Remove '%s'")
-                .format(this.metadata.name),
+                .format(_(this.metadata.name)),
                 "edit-delete",
                 St.IconType.SYMBOLIC);
-            this.context_menu_item_remove.connect("activate", Lang.bind(this, function() {
-                new $.ConfirmationDialog(Lang.bind(this, function() {
+            this.context_menu_item_remove.connect("activate", () => {
+                new $.ConfirmationDialog(() => {
                         Main.AppletManager._removeAppletFromPanel(this.metadata.uuid, this.instance_id);
-                    }),
-                    this.metadata.name,
+                    },
+                    _(this.metadata.name),
                     _("Are you sure that you want to remove '%s' from your panel?")
-                    .format(this.metadata.name),
+                    .format(_(this.metadata.name)),
                     _("Cancel"), _("OK")).open();
-            }));
+            });
             this._applet_context_menu.addMenuItem(this.context_menu_item_remove);
         }
     },
@@ -626,62 +609,64 @@ DesktopHandlerApplet.prototype = {
         });
     },
 
-    _onEntered: function(event) { // jshint ignore:line
+    _onEnter: function() {
         if (this.pref_peek_desktop_enabled) {
             if (this._peektimeoutid) {
                 Mainloop.source_remove(this._peektimeoutid);
             }
 
-            this._peektimeoutid = Mainloop.timeout_add(this.pref_peek_desktop_delay, Lang.bind(this, function() {
-                if (this.actor.hover && !this._applet_context_menu.isOpen && !global.settings.get_boolean("panel-edit-mode")) {
+            this._peektimeoutid = Mainloop.timeout_add(this.pref_peek_desktop_delay,
+                () => {
+                    if (this.actor.hover && !this._applet_context_menu.isOpen && !global.settings.get_boolean("panel-edit-mode")) {
 
-                    Tweener.addTween(global.window_group, {
-                        opacity: this.pref_peek_opacity,
-                        time: 0.275,
-                        transition: "easeInSine"
-                    });
-
-                    let windows = global.get_window_actors();
-                    let i = 0,
-                        iLen = windows.length;
-                    for (; i < iLen; i++) {
-                        let window = windows[i].meta_window;
-                        let compositor = windows[i];
-                        if (window.get_title() == "Desktop") {
-                            if (this.pref_opacify_desktop_icons) {
-                                Tweener.addTween(compositor, {
-                                    opacity: this.pref_peek_opacity,
-                                    time: 0.275,
-                                    transition: "easeInSine"
-                                });
-                            } else {
-                                continue;
-                            }
-                        }
-
-                        if (this.pref_blur_effect_enabled) {
-                            if (!compositor.eff) {
-                                compositor.eff = new Clutter.BlurEffect();
-                            }
-                            compositor.add_effect_with_name("blur", compositor.eff);
-                        }
-                    }
-
-                    if (this.pref_opacify_desklets) {
-                        Tweener.addTween(Main.deskletContainer.actor, {
+                        Tweener.addTween(global.window_group, {
                             opacity: this.pref_peek_opacity,
                             time: 0.275,
                             transition: "easeInSine"
                         });
-                    }
-                    this.didpeek = true;
-                }
 
-            }));
+                        let windows = global.get_window_actors();
+                        let i = 0,
+                            iLen = windows.length;
+                        for (; i < iLen; i++) {
+                            let window = windows[i].meta_window;
+                            let compositor = windows[i];
+                            if (window.get_title() == "Desktop") {
+                                if (this.pref_opacify_desktop_icons) {
+                                    Tweener.addTween(compositor, {
+                                        opacity: this.pref_peek_opacity,
+                                        time: 0.275,
+                                        transition: "easeInSine"
+                                    });
+                                } else {
+                                    continue;
+                                }
+                            }
+
+                            if (this.pref_blur_effect_enabled) {
+                                if (!compositor.eff) {
+                                    compositor.eff = new Clutter.BlurEffect();
+                                }
+                                compositor.add_effect_with_name("blur", compositor.eff);
+                            }
+                        }
+
+                        if (this.pref_opacify_desklets) {
+                            Tweener.addTween(Main.deskletContainer.actor, {
+                                opacity: this.pref_peek_opacity,
+                                time: 0.275,
+                                transition: "easeInSine"
+                            });
+                        }
+                        this.didpeek = true;
+                    }
+
+                }
+            );
         }
     },
 
-    _onLEntered: function(event) { // jshint ignore:line
+    _onLeave: function() {
         if (this.didpeek) {
             this.show_all(0.2);
             this.didpeek = false;
@@ -778,7 +763,7 @@ DesktopHandlerApplet.prototype = {
             return '<span weight="bold">' + aStr + "</span>";
         };
 
-        let tt = boldSpan(_("Desktop Handler")) + "\n\n";
+        let tt = boldSpan(_(this.metadata.name)) + "\n\n";
 
         if (this.pref_separated_scroll_action) {
             tt += boldSpan(_("Scroll Up") + ": ") + this._strMap(this.pref_scroll_up_action) + "\n";
@@ -1051,13 +1036,13 @@ DesktopHandlerApplet.prototype = {
                 reqWs = global.screen.get_workspace_by_index(n);
                 break;
             case "appswitcher":
-                this.get_name = Lang.bind(this, function() {
+                this.get_name = () => {
                     if (eval(this.pref_switcher_modifier) & global.get_pointer()[2]) {
                         return this.pref_switcher_modified;
                     } else {
                         return this.pref_switcher_scope;
                     }
-                });
+                };
                 this.get_mask = function() {
                     return 0xFFFF;
                 };
@@ -1075,9 +1060,9 @@ DesktopHandlerApplet.prototype = {
                         }
 
                         this._switcherIsRuning = true;
-                        Mainloop.timeout_add(delay, Lang.bind(this, function() {
+                        Mainloop.timeout_add(delay, () => {
                             this._switcherIsRuning = false;
-                        }));
+                        });
                         break;
                     case "timeline":
                         if (!this._switcherIsRuning) {
@@ -1085,9 +1070,9 @@ DesktopHandlerApplet.prototype = {
                         }
 
                         this._switcherIsRuning = true;
-                        Mainloop.timeout_add(delay, Lang.bind(this, function() {
+                        Mainloop.timeout_add(delay, () => {
                             this._switcherIsRuning = false;
-                        }));
+                        });
                         break;
                     default:
                         new $.MyClassicSwitcher(this);

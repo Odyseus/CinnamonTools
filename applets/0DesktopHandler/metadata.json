@@ -2,7 +2,6 @@
     "website": "https://github.com/Odyseus/CinnamonTools",
     "name": "Desktop Handler",
     "cinnamon-version": [
-        "2.8",
         "3.0",
         "3.2",
         "3.4",
