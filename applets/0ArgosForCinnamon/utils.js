@@ -12,7 +12,6 @@ const GdkPixbuf = imports.gi.GdkPixbuf;
 const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
 const Pango = imports.gi.Pango;
@@ -1649,12 +1648,12 @@ UnitSelectorMenuItem.prototype = {
         this._unitsKey = aUnitsKey;
         this.setOrnament(OrnamentType.DOT);
 
-        this._handler_id = this.connect("activate", Lang.bind(this, function() {
+        this._handler_id = this.connect("activate", () => {
             this._applet[this._unitsKey] = this._value;
             this._subMenu._setCheckedState();
             this._applet.update();
             return true; // Avoids the closing of the sub menu.
-        }));
+        });
 
         this._ornament.child._delegate.setToggleState(this._applet[this._unitsKey] === this._value);
     },
@@ -1683,7 +1682,7 @@ UnitSelectorSubMenuMenuItem.prototype = {
         this.setLabel();
         this._populateMenu();
         this._applet.settings.connect("changed::" + this._valueKey,
-            Lang.bind(this, this.setLabel));
+            () => this.setLabel());
     },
 
     setLabel: function() {
@@ -1736,7 +1735,8 @@ CustomPopupSliderMenuItem.prototype = {
             activate: false
         });
 
-        this.actor.connect("key-press-event", Lang.bind(this, this._onKeyPressEvent));
+        this.actor.connect("key-press-event",
+            (aActor, aEvent) => this._onKeyPressEvent(aActor, aEvent));
 
         // Avoid spreading NaNs around
         if (isNaN(aValue)) {
@@ -1753,9 +1753,12 @@ CustomPopupSliderMenuItem.prototype = {
             span: -1,
             expand: true
         });
-        this._slider.connect("repaint", Lang.bind(this, this._sliderRepaint));
-        this.actor.connect("button-press-event", Lang.bind(this, this._startDragging));
-        this.actor.connect("scroll-event", Lang.bind(this, this._onScrollEvent));
+        this._slider.connect("repaint",
+            (aArea) => this._sliderRepaint(aArea));
+        this.actor.connect("button-press-event",
+            (aActor, aEvent) => this._startDragging(aActor, aEvent));
+        this.actor.connect("scroll-event",
+            (aActor, aEvent) => this._onScrollEvent(aActor, aEvent));
 
         this._releaseId = this._motionId = 0;
         this._dragging = false;
@@ -1972,25 +1975,26 @@ function AltSwitcher() {
 AltSwitcher.prototype = {
     _init: function(aStandard, aAlternate) {
         this._standard = aStandard;
-        this._standard.connect("notify::visible", Lang.bind(this, this._sync));
+        this._standard.connect("notify::visible", () => this._sync());
 
         this._alternate = aAlternate;
-        this._alternate.connect("notify::visible", Lang.bind(this, this._sync));
+        this._alternate.connect("notify::visible", () => this._sync());
 
         this._capturedEventId = global.stage.connect("captured-event",
-            Lang.bind(this, this._onCapturedEvent));
+            (aActor, aEvent) => this._onCapturedEvent(aActor, aEvent));
 
         this._flipped = false;
 
         this._clickAction = new Clutter.ClickAction();
-        this._clickAction.connect("long-press", Lang.bind(this, this._onLongPress));
+        this._clickAction.connect("long-press",
+            (aAction, aActor, aState) => this._onLongPress(aAction, aActor, aState));
 
         this.actor = new St.Bin();
         this.actor.add_style_class_name("popup-alternating-menu-item");
-        this.actor.connect("destroy", Lang.bind(this, this._onDestroy));
-        this.actor.connect("notify::mapped", Lang.bind(this, function() {
+        this.actor.connect("destroy", () => this._onDestroy());
+        this.actor.connect("notify::mapped", () => {
             this._flipped = false;
-        }));
+        });
     },
 
     _sync: function() {
@@ -2129,7 +2133,7 @@ ArgosMenuItem.prototype = {
         }
 
         if (hasAction) {
-            this.connect("activate", Lang.bind(this, function() {
+            this.connect("activate", () => {
                 let activeLine = (altSwitcher === null) ?
                     aLine :
                     altSwitcher.actor.get_child()._delegate.line;
@@ -2184,7 +2188,7 @@ ArgosMenuItem.prototype = {
                 }
 
                 this._applet.menu.close();
-            }));
+            });
         }
     }
 };
@@ -2218,7 +2222,8 @@ CustomSubMenuItem.prototype = {
         this.menu = new PopupMenu.PopupSubMenu(this.actor, this._triangle);
 
         if (Number(aMenuLevel) === 0) {
-            this.menu.connect("open-state-changed", Lang.bind(this, this._subMenuOpenStateChanged));
+            this.menu.connect("open-state-changed",
+                (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
         }
 
         this.menu.box.set_y_expand = true;
@@ -2286,9 +2291,7 @@ CustomTooltip.prototype = {
         this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
         this._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
 
-        aActor.connect("destroy", Lang.bind(this, function() {
-            this.destroy();
-        }));
+        aActor.connect("destroy", () => this.destroy());
     },
 
     destroy: function() {
@@ -2704,8 +2707,8 @@ function customNotify(aTitle, aBody, aIconName, aUrgency, aButtons) {
 
     try {
         if (aButtons && typeof aButtons === "object") {
-            let destroyEmitted = function() {
-                this.tooltip.destroy();
+            let destroyEmitted = (aButton) => {
+                return () => aButton.tooltip.destroy();
             };
 
             let i = 0,
@@ -2752,7 +2755,7 @@ function customNotify(aTitle, aBody, aIconName, aUrgency, aButtons) {
                             button,
                             btnObj.tooltip
                         );
-                        button.connect("destroy", Lang.bind(button, destroyEmitted));
+                        button.connect("destroy", destroyEmitted(button));
                     }
 
                     if (notification._buttonBox.get_n_children() > 0) {
