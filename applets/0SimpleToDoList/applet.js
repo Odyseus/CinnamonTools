@@ -14,7 +14,6 @@ const Clutter = imports.gi.Clutter;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const ModalDialog = imports.ui.modalDialog;
@@ -68,7 +67,8 @@ SimpleToDoListApplet.prototype = {
                 this.logger.debug("Creating menus");
                 this.menuManager = new PopupMenu.PopupMenuManager(this);
                 this.menu = new Applet.AppletPopupMenu(this, aOrientation);
-                this.menu.connect("open-state-changed", Lang.bind(this, this._onOpenStateChanged));
+                this.menu.connect("open-state-changed",
+                    (aMenu, aOpen) => this._onOpenStateChanged(aMenu, aOpen));
                 this.menuManager.addMenu(this.menu);
 
                 this.set_applet_tooltip(_(this.metadata.name));
@@ -90,7 +90,7 @@ SimpleToDoListApplet.prototype = {
         }
 
         this._build_ui_id = Mainloop.timeout_add(500,
-            Lang.bind(this, function() {
+            () => {
                 // Destroy previous box
                 if (this.mainBox !== null) {
                     this.mainBox.destroy();
@@ -120,13 +120,13 @@ SimpleToDoListApplet.prototype = {
                 let entryNewTask = this.newTaskList.get_clutter_text();
 
                 // Callback to add section when Enter is pressed
-                entryNewTask.connect("key-press-event", Lang.bind(this, function(aActor, aEvent) {
+                entryNewTask.connect("key-press-event", (aActor, aEvent) => {
                     let symbol = aEvent.get_key_symbol();
                     if (symbol == Clutter.KEY_Return || symbol == Clutter.KEY_KP_Enter) {
                         this._create_section(aActor.get_text());
                         entryNewTask.set_text("");
                     }
-                }));
+                });
 
                 // Bottom section
                 let bottomSection = new PopupMenu.PopupMenuSection();
@@ -139,7 +139,7 @@ SimpleToDoListApplet.prototype = {
                 this._populate_ui();
 
                 this._build_ui_id = 0;
-            }));
+            });
     },
 
     // Populate UI with the section items
@@ -185,9 +185,12 @@ SimpleToDoListApplet.prototype = {
 
         this.n_total_tasks += item.n_tasks;
 
-        item.connect("save_signal", Lang.bind(this, this._saveTasks));
-        item.connect("remove_section_signal", Lang.bind(this, this._remove_section));
-        item.connect("task_count_changed", Lang.bind(this, this._update_counter));
+        item.connect("save_signal",
+            (aCallback) => this._saveTasks(aCallback));
+        item.connect("remove_section_signal",
+            (aActor, aSection) => this._remove_section(aActor, aSection));
+        item.connect("task_count_changed",
+            (aItem, aDiff) => this._update_counter(aItem, aDiff));
     },
 
     _update_counter: function(aItem, aDiff) {
@@ -262,9 +265,9 @@ SimpleToDoListApplet.prototype = {
         this.logger.debug("");
 
         if (this.pref_section_keep_alphabetic_order) {
-            this.sections = this.sections.sort(Lang.bind(this, function(a, b) {
+            this.sections = this.sections.sort((a, b) => {
                 return a["name"].localeCompare(b["name"]);
-            }));
+            });
         }
 
         let sections = JSON.stringify(this.sections, null, 4);
@@ -282,15 +285,15 @@ SimpleToDoListApplet.prototype = {
         }
 
         if (this.pref_autobackups_enabled && this._backups_storage_path) {
-            this._auto_backup_id = Mainloop.timeout_add(500, Lang.bind(this, function() {
+            this._auto_backup_id = Mainloop.timeout_add(500, () => {
                 this.logger.debug("Generating backup...");
 
                 let backupFile = Gio.File.new_for_path(this._backups_storage_path + "/" +
                     new Date().toCustomISOString() + ".json");
 
-                $.saveToFileAsync(sections, backupFile, Lang.bind(this, function() {
+                $.saveToFileAsync(sections, backupFile, () => {
                     this._auto_backup_id = 0;
-                }));
+                });
 
                 let now = new Date().getTime();
 
@@ -301,20 +304,20 @@ SimpleToDoListApplet.prototype = {
                 }
 
                 this._auto_backup_id = 0;
-            }));
+            });
         }
 
-        this._save_tasks_id = Mainloop.timeout_add(500, Lang.bind(this, function() {
+        this._save_tasks_id = Mainloop.timeout_add(500, () => {
             this.logger.debug("Saving tasks...");
 
             try {
-                $.saveToFileAsync(sections, this._tasks_list_file, Lang.bind(this, function() {
+                $.saveToFileAsync(sections, this._tasks_list_file, () => {
                     if (aCallback && typeof aCallback === "function") {
                         aCallback();
                     }
 
                     this._save_tasks_id = 0;
-                }));
+                });
             } catch (aErr) {
                 global.logError(aErr);
             } finally {
@@ -322,7 +325,7 @@ SimpleToDoListApplet.prototype = {
                     this.request_rebuild = true;
                 }
             }
-        }));
+        });
     },
 
     _load: function() {
@@ -356,7 +359,7 @@ SimpleToDoListApplet.prototype = {
 
             if (this._tasks_list_file.query_exists(null)) {
                 this._tasks_list_file.load_contents_async(null,
-                    Lang.bind(this, function(aFile, aResponce) {
+                    (aFile, aResponce) => {
                         let rawData;
                         try {
                             rawData = aFile.load_contents_finish(aResponce)[1];
@@ -375,18 +378,18 @@ SimpleToDoListApplet.prototype = {
                             // For compatibility with older versions of this applet where an object
                             // was used instead of an array.
                             if (!Array.isArray(this.sections)) {
-                                this.sections = Object.keys(this.sections).map(Lang.bind(this, function(aKey, aIndex) {
+                                this.sections = Object.keys(this.sections).map((aKey, aIndex) => {
                                     // Override id.
                                     this.sections[aKey]["id"] = aIndex;
                                     return this.sections[aKey];
-                                }));
+                                });
                                 this.request_rebuild = true;
                             }
 
                             if (this.pref_section_keep_alphabetic_order) {
-                                this.sections = this.sections.sort(Lang.bind(this, function(a, b) {
+                                this.sections = this.sections.sort((a, b) => {
                                     return a["name"].localeCompare(b["name"]);
-                                }));
+                                });
                             }
 
                             // Compute the next id to avoid collapse of the the ToDo list
@@ -451,7 +454,7 @@ SimpleToDoListApplet.prototype = {
                         } finally {
                             this._buildUI();
                         }
-                    })
+                    }
                 );
             } else {
                 this._buildUI();
@@ -474,7 +477,7 @@ SimpleToDoListApplet.prototype = {
         }
     },
 
-    _onOpenStateChanged: function(aActor, aOpen) {
+    _onOpenStateChanged: function(aMenu, aOpen) {
         this.logger.debug("");
 
         if (aOpen) {
@@ -497,10 +500,10 @@ SimpleToDoListApplet.prototype = {
         this.logger.debug("");
 
         // Async needed. Otherwise, the UI is built before the tasks are saved.
-        this._saveTasks(Lang.bind(this, function() {
+        this._saveTasks(() => {
             this._load();
             this.request_rebuild = false;
-        }));
+        });
     },
 
     _bindSettings: function() {
@@ -580,11 +583,11 @@ SimpleToDoListApplet.prototype = {
             Main.keybindingManager.addHotKey(
                 this.menu_keybinding_name,
                 this.pref_overlay_key,
-                Lang.bind(this, function() {
+                () => {
                     if (!Main.overview.visible && !Main.expo.visible) {
                         this._toggleMenu();
                     }
-                })
+                }
             );
         }
     },
@@ -592,44 +595,28 @@ SimpleToDoListApplet.prototype = {
     _updateIconAndLabel: function() {
         this.logger.debug("");
 
-        try {
-            if (this.pref_custom_icon_for_applet === "") {
-                this.set_applet_icon_name("");
-            } else if (GLib.path_is_absolute(this.pref_custom_icon_for_applet) &&
-                GLib.file_test(this.pref_custom_icon_for_applet, GLib.FileTest.EXISTS)) {
-                if (this.pref_custom_icon_for_applet.search("-symbolic") != -1) {
-                    this.set_applet_icon_symbolic_path(this.pref_custom_icon_for_applet);
-                } else {
-                    this.set_applet_icon_path(this.pref_custom_icon_for_applet);
-                }
-            } else if (Gtk.IconTheme.get_default().has_icon(this.pref_custom_icon_for_applet)) {
-                if (this.pref_custom_icon_for_applet.search("-symbolic") != -1) {
-                    this.set_applet_icon_symbolic_name(this.pref_custom_icon_for_applet);
-                } else {
-                    this.set_applet_icon_name(this.pref_custom_icon_for_applet);
-                }
-                /**
-                 * START mark Odyseus
-                 * I added the last condition without checking Gtk.IconTheme.get_default.
-                 * Otherwise, if there is a valid icon name added by
-                 *  Gtk.IconTheme.get_default().append_search_path, it will not be recognized.
-                 * With the following extra condition, the worst that can happen is that
-                 *  the applet icon will not change/be set.
-                 */
+        let icon = this.pref_custom_icon_for_applet;
+        let setIcon = (aIcon, aIsPath) => {
+            if (aIcon.search("-symbolic") !== -1) {
+                this[aIsPath ?
+                    "set_applet_icon_symbolic_path" :
+                    "set_applet_icon_symbolic_name"](aIcon);
             } else {
-                try {
-                    if (this.pref_custom_icon_for_applet.search("-symbolic") != -1) {
-                        this.set_applet_icon_symbolic_name(this.pref_custom_icon_for_applet);
-                    } else {
-                        this.set_applet_icon_name(this.pref_custom_icon_for_applet);
-                    }
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+                this[aIsPath ?
+                    "set_applet_icon_path" :
+                    "set_applet_icon_name"](aIcon);
             }
-        } catch (aErr) {
-            global.logWarning('Could not load icon file "%s" for menu button')
-                .format(this.pref_custom_icon_for_applet);
+        };
+
+        if (GLib.path_is_absolute(icon) &&
+            GLib.file_test(icon, GLib.FileTest.EXISTS)) {
+            setIcon(icon, true);
+        } else {
+            try {
+                setIcon(icon);
+            } catch (aErr) {
+                global.logWarning('Could not load icon "' + icon + '" for applet.');
+            }
         }
 
         if (this.pref_custom_icon_for_applet === "") {
@@ -651,7 +638,7 @@ SimpleToDoListApplet.prototype = {
 
         // this._buildUI is triggered after a delay. If I call _updateLabel without a delay,
         // this.n_total_tasks will be undefined.
-        this._update_label_id = Mainloop.timeout_add(500, Lang.bind(this, function() {
+        this._update_label_id = Mainloop.timeout_add(500, () => {
             if (this.orientation == St.Side.LEFT || this.orientation == St.Side.RIGHT) { // no menu label if in a vertical panel
                 this.set_applet_label("");
             } else {
@@ -694,7 +681,7 @@ SimpleToDoListApplet.prototype = {
 
             this.updateLabelVisibility();
             this._update_label_id = 0;
-        }));
+        });
     },
 
     _importTasks: function() {
@@ -704,7 +691,7 @@ SimpleToDoListApplet.prototype = {
                 "import",
                 this.pref_imp_exp_last_selected_directory
             ],
-            Lang.bind(this, function(aOutput) {
+            (aOutput) => {
                 let path = aOutput.trim();
 
                 if (!Boolean(path)) {
@@ -715,7 +702,7 @@ SimpleToDoListApplet.prototype = {
                 // Cinnamon.get_file_contents*utf8_sync.
                 let file = Gio.file_new_for_path(path);
                 this.pref_imp_exp_last_selected_directory = path;
-                file.load_contents_async(null, Lang.bind(this, function(aFile, aResponce) {
+                file.load_contents_async(null, (aFile, aResponce) => {
                     let rawData;
                     try {
                         rawData = aFile.load_contents_finish(aResponce)[1];
@@ -730,11 +717,11 @@ SimpleToDoListApplet.prototype = {
                         // For compatibility with older versions of this applet where an object
                         // was used instead of an array.
                         if (!Array.isArray(sections)) {
-                            sections = Object.keys(sections).map(Lang.bind(this, function(aKey) {
+                            sections = Object.keys(sections).map((aKey) => {
                                 sections[aKey]["id"] = this.next_id;
                                 this.next_id++;
                                 return sections[aKey];
-                            }));
+                            });
                         }
 
                         let i = 0,
@@ -747,18 +734,18 @@ SimpleToDoListApplet.prototype = {
                     } finally {
                         this._buildUI();
                     }
-                }));
-            }));
+                });
+            });
     },
 
-    _exportTasks: function(aActor, aEvent, aUnknown, aSection) {
+    _exportTasks: function(aActor, aEvent, aSection) {
         this.logger.debug("");
 
         Util.spawn_async([this.metadata.path + "/appletHelper.py",
                 "export",
                 this.pref_imp_exp_last_selected_directory
             ],
-            Lang.bind(this, function(aOutput) {
+            (aOutput) => {
                 let path = aOutput.trim();
 
                 if (!Boolean(path)) {
@@ -779,17 +766,17 @@ SimpleToDoListApplet.prototype = {
                 let file = Gio.file_new_for_path(path);
                 this.pref_imp_exp_last_selected_directory = path;
                 $.saveToFileAsync(rawData, file);
-            }));
+            });
     },
 
-    _saveAsTODOFile: function(aActor, aEvent, aUnknown, aSection) {
+    _saveAsTODOFile: function(aActor, aEvent, aSection) {
         this.logger.debug("");
 
         Util.spawn_async([this.metadata.path + "/appletHelper.py",
                 "save",
                 this.pref_save_last_selected_directory
             ],
-            Lang.bind(this, function(aOutput) {
+            (aOutput) => {
                 let path = aOutput.trim();
 
                 if (!Boolean(path)) {
@@ -836,7 +823,7 @@ SimpleToDoListApplet.prototype = {
                 } finally {
                     $.saveToFileAsync(rawData, file);
                 }
-            }));
+            });
     },
 
     _expandAppletContextMenu: function() {
@@ -850,9 +837,8 @@ SimpleToDoListApplet.prototype = {
             "document-save-as",
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
-        menuItem.connect("activate", Lang.bind(this, function() {
-            this._saveAsTODOFile();
-        }));
+        menuItem.connect("activate",
+            (aActor, aEvent) => this._saveAsTODOFile(aActor, aEvent));
         menuItem.tooltip = new $.CustomTooltip(
             menuItem.actor,
             _("Save all current tasks lists as a TODO file.")
@@ -865,9 +851,8 @@ SimpleToDoListApplet.prototype = {
             "simple-todo-list-export-tasks",
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
-        menuItem.connect("activate", Lang.bind(this, function() {
-            this._exportTasks();
-        }));
+        menuItem.connect("activate",
+            (aActor, aEvent) => this._exportTasks(aActor, aEvent));
         menuItem.tooltip = new $.CustomTooltip(
             menuItem.actor,
             _("Export all current tasks lists into a JSON file.") + "\n\n" +
@@ -881,9 +866,7 @@ SimpleToDoListApplet.prototype = {
             "simple-todo-list-import-tasks",
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
-        menuItem.connect("activate", Lang.bind(this, function() {
-            this._importTasks();
-        }));
+        menuItem.connect("activate", () => this._importTasks());
         menuItem.tooltip = new $.CustomTooltip(
             menuItem.actor,
             _("Import tasks lists from a previously exported JSON file into this applet.") + "\n\n" +
@@ -900,14 +883,14 @@ SimpleToDoListApplet.prototype = {
             "edit-redo",
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             try {
                 // This bit me hard. Luckily, I found the solution very quickly.
                 this._create_section("", JSON.parse(JSON.stringify($.DefaultExampleTasks)));
             } finally {
                 this._buildUI();
             }
-        }));
+        });
         menuItem.tooltip = new $.CustomTooltip(
             menuItem.actor,
             _("Restore the example tasks list that were present when the applet was first loaded.")
@@ -920,20 +903,18 @@ SimpleToDoListApplet.prototype = {
             "dialog-warning",
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             let confirmDialog = new ModalDialog.ConfirmDialog(
                 _("WARNING!!!") + "\n" +
                 _("Do you really want to remove all your current tasks?") + "\n" +
                 _("This operation cannot be reverted!!!") + "\n",
-                Lang.bind(this, function() {
+                () => {
                     this.sections = [];
-                    $.saveToFileAsync("[]", this._tasks_list_file, Lang.bind(this, function() {
-                        this._load();
-                    }));
-                })
+                    $.saveToFileAsync("[]", this._tasks_list_file, () => this._load());
+                }
             );
             confirmDialog.open(global.get_current_time());
-        }));
+        });
         menuItem.tooltip = new $.CustomTooltip(
             menuItem.actor,
             _("Remove all currently loaded tasks lists from this applet.") + "\n\n" +
@@ -951,9 +932,9 @@ SimpleToDoListApplet.prototype = {
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
         menuItem.tooltip = new $.CustomTooltip(menuItem.actor, _("Open this applet help file."));
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
-        }));
+        });
         this._applet_context_menu.addMenuItem(menuItem);
     },
 

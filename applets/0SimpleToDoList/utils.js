@@ -5,7 +5,6 @@ const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 const Meta = imports.gi.Meta;
 const Pango = imports.gi.Pango;
 const PopupMenu = imports.ui.popupMenu;
@@ -159,22 +158,28 @@ TaskItem.prototype = {
         let _ct = this._label.get_clutter_text();
         _ct.set_line_wrap(true);
 
-        let conn = _ct.connect("key_focus_in", Lang.bind(this, this._onKeyFocusIn));
+        let conn = _ct.connect("key_focus_in",
+            (aActor) => this._onKeyFocusIn(aActor));
         this.connections.push([_ct, conn]);
 
-        conn = _ct.connect("key_focus_out", Lang.bind(this, this._rename));
+        conn = _ct.connect("key_focus_out",
+            (aActor) => this._rename(aActor));
         this.connections.push([_ct, conn]);
 
-        conn = _ct.connect("key-press-event", Lang.bind(this, this._onKeyPressEvent));
+        conn = _ct.connect("key-press-event",
+            (aActor, aEvent) => this._onKeyPressEvent(aActor, aEvent));
         this.connections.push([_ct, conn]);
 
-        conn = this._ornament.child.connect("clicked", Lang.bind(this, this._setCheckedState));
+        conn = this._ornament.child.connect("clicked",
+            () => this._setCheckedState());
         this.connections.push([this._ornament.child, conn]);
 
-        conn = this._del_btn.connect("clicked", Lang.bind(this, this._emit_delete));
+        conn = this._del_btn.connect("clicked",
+            () => this._emit_delete());
         this.connections.push([this._del_btn, conn]);
 
-        conn = this.actor.connect("button-release-event", Lang.bind(this, this._onButtonReleaseEvent));
+        conn = this.actor.connect("button-release-event",
+            (aActor, aEvent) => this._onButtonReleaseEvent(aActor, aEvent));
         this.connections.push([this.actor, conn]);
     },
 
@@ -632,19 +637,20 @@ NewTaskEntry.prototype = {
         let _ct = this.newTask.get_clutter_text();
 
         // Callback to add section when ENTER is press
-        let conn = _ct.connect("key-press-event", Lang.bind(this, this._onKeyPressEvent));
+        let conn = _ct.connect("key-press-event",
+            (aEntry, aEvent) => this._onKeyPressEvent(aEntry, aEvent));
         this.connections.push([_ct, conn]);
 
-        conn = _ct.connect("key_focus_in", Lang.bind(this, this._onKeyFocusIn));
+        conn = _ct.connect("key_focus_in", (aActor) => this._onKeyFocusIn(aActor));
         this.connections.push([_ct, conn]);
 
-        conn = this.opt_btn.connect("clicked", Lang.bind(this, this.toggleMenu));
+        conn = this.opt_btn.connect("clicked", () => this.toggleMenu());
         this.connections.push([this.opt_btn, conn]);
     },
 
     // This function was the only thing that I could come up with to overcome the absolutely
     // retarded behavior of a sub-menu item inside another sub-menu item.
-    toggleMenu: function(aActor, aEvent) { // jshint ignore:line
+    toggleMenu: function() { // jshint ignore:line
         this.logger.debug("");
 
         this.newTask.grab_key_focus();
@@ -724,29 +730,41 @@ NewTaskEntry.prototype = {
 
         // Pay attention to the binding context!!!
         exportSection.connect("activate",
-            Lang.bind(this._applet,
-                this._applet._exportTasks,
-                this._delegated_section.section)
+            (aActor, aEvent) => {
+                this._applet._exportTasks(aActor, aEvent, this._delegated_section.section);
+            }
         );
 
         // Pay attention to the binding context!!!
         this.saveSectionAsToDo.connect("activate",
-            Lang.bind(this._applet,
-                this._applet._saveAsTODOFile,
-                this._delegated_section.section)
+            (aActor, aEvent) => {
+                this._applet._saveAsTODOFile(aActor, aEvent, this._delegated_section.section);
+            }
         );
 
         sortAlphaSwitch.connect("toggled",
-            Lang.bind(this, this._toggleSwitch, "sort-tasks-alphabetically"));
+            (aActor, aEvent) => {
+                this._toggleSwitch(aActor, aEvent, "sort-tasks-alphabetically");
+            }
+        );
 
         sortCompletedSwitch.connect("toggled",
-            Lang.bind(this, this._toggleSwitch, "sort-tasks-by-completed"));
+            (aActor, aEvent) => {
+                this._toggleSwitch(aActor, aEvent, "sort-tasks-by-completed");
+            }
+        );
 
         showRemoveTaskSwitch.connect("toggled",
-            Lang.bind(this, this._toggleSwitch, "display-remove-task-buttons"));
+            (aActor, aEvent) => {
+                this._toggleSwitch(aActor, aEvent, "display-remove-task-buttons");
+            }
+        );
 
         keepCompletedHiddenSwitch.connect("toggled",
-            Lang.bind(this, this._toggleSwitch, "keep-completed-tasks-hidden"));
+            (aActor, aEvent) => {
+                this._toggleSwitch(aActor, aEvent, "keep-completed-tasks-hidden");
+            }
+        );
 
         this._delegated_section._scrollToItem(this);
     },
@@ -954,7 +972,7 @@ TasksContainer.prototype = {
             let taskNewPos = this._dragPlaceholderPos;
 
             Meta.later_add(Meta.LaterType.BEFORE_REDRAW,
-                Lang.bind(this, function() {
+                () => {
                     try {
                         if (taskNewPos !== taskCurPos) {
                             this.box.remove_actor(aSource.actor);
@@ -970,7 +988,7 @@ TasksContainer.prototype = {
                         global.logError((aErr));
                     }
                     return false;
-                }));
+                });
         } catch (aErr) {
             global.logError(aErr);
         }
@@ -1023,7 +1041,8 @@ TasksListItem.prototype = {
         });
         this._triangleBin.child = this._triangle;
         this.menu = new PopupMenu.PopupSubMenu(this.actor, this._triangle);
-        this.menu.connect("open-state-changed", Lang.bind(this, this._subMenuOpenStateChanged));
+        this.menu.connect("open-state-changed",
+            (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
         this.menu.box.set_y_expand = true;
         this.menu.box.set_x_expand = true;
 
@@ -1084,14 +1103,16 @@ TasksListItem.prototype = {
 
         // Create connection for rename and clicks
         let _ct = this._label.get_clutter_text();
-        let conn = _ct.connect("key_focus_out", Lang.bind(this, this._rename));
+        let conn = _ct.connect("key_focus_out",
+            (aActor) => this._rename(aActor));
         this.connections.push([_ct, conn]);
 
-        conn = _ct.connect("key-press-event", Lang.bind(this, this._onKeyPressEvent));
+        conn = _ct.connect("key-press-event",
+            (aActor, aEvent) => this._onKeyPressEvent(aActor, aEvent));
         this.connections.push([_ct, conn]);
 
         // Create connection for delete button
-        conn = this.delete_btn.connect("clicked", Lang.bind(this, this._supr_call));
+        conn = this.delete_btn.connect("clicked", () => this._supr_call());
         this.connections.push([this.delete_btn, conn]);
 
         // Draw the section
@@ -1337,7 +1358,8 @@ TasksListItem.prototype = {
         this.newTaskEntry._delegated_section = this;
         this.newTaskEntry.menu = this.tasksContainer;
 
-        let conn = this.newTaskEntry.connect("new_task", Lang.bind(this, this._create_task));
+        let conn = this.newTaskEntry.connect("new_task",
+            (aItem, aText) => this._create_task(aItem, aText));
         this.connections.push([this.newTaskEntry, conn]);
 
         this.menu.addMenuItem(this.newTaskEntry);
@@ -1388,13 +1410,15 @@ TasksListItem.prototype = {
         taskItem._delegated_section = this;
 
         // Connect the signals to taskItem
-        let conn = taskItem.connect("name_changed", Lang.bind(this, this._saveTasks));
+        let conn = taskItem.connect("name_changed", () => this._saveTasks());
         this.connections.push([taskItem, conn]);
 
-        conn = taskItem.connect("completed_state_changed", Lang.bind(this, this._rename));
+        conn = taskItem.connect("completed_state_changed",
+            (aActor) => this._rename(aActor));
         this.connections.push([taskItem, conn]);
 
-        conn = taskItem.connect("remove_task_signal", Lang.bind(this, this._remove_task));
+        conn = taskItem.connect("remove_task_signal",
+            (aActor, aTask) => this._remove_task(aActor, aTask));
         this.connections.push([taskItem, conn]);
 
         // Add the task to the section
@@ -1607,9 +1631,7 @@ CustomTooltip.prototype = {
         this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
         this._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
 
-        aActor.connect("destroy", Lang.bind(this, function() {
-            this.destroy();
-        }));
+        aActor.connect("destroy", () => this.destroy());
     },
 
     destroy: function() {
@@ -1834,7 +1856,7 @@ function Logger() {
 
 Logger.prototype = {
     _init: function(aDisplayName, aVerbose) {
-        this.verbose = aVerbose;
+        this._verbose = aVerbose;
         this.base_message = "[" + aDisplayName + "::%s]%s";
     },
 
@@ -1935,6 +1957,14 @@ Logger.prototype = {
         stack.shift(); // getStack --> Error
 
         return stack;
+    },
+
+    get verbose() {
+        return this._verbose;
+    },
+
+    set verbose(aVal) {
+        this._verbose = aVal;
     }
 };
 /*
