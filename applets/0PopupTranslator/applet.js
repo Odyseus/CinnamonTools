@@ -17,7 +17,6 @@ const Clutter = imports.gi.Clutter;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
@@ -163,7 +162,7 @@ PopupTranslatorApplet.prototype = {
 
         let tt = bD(_(this.metadata.name));
 
-        [1, 2, 3, 4].forEach(Lang.bind(this, function(aID) {
+        [1, 2, 3, 4].forEach((aID) => {
             let forceHeaderCreation;
 
             let hK = this["pref_translate_key_" + aID],
@@ -217,7 +216,7 @@ PopupTranslatorApplet.prototype = {
                     ((leftKB && rightKB) ? " :: " : "") +
                     (rightKB ? this.getLegibleKeybinding(rightKB) : "");
             }
-        }));
+        });
 
         if (!this.pref_all_dependencies_met) {
             tt += '\n<span color="red">' + bD(_("Unmet dependencies found!!!") + "\n" +
@@ -230,9 +229,9 @@ PopupTranslatorApplet.prototype = {
         this.tooltip._tooltip.get_clutter_text().set_line_wrap(true);
         this.tooltip._tooltip.get_clutter_text().set_markup(tt);
 
-        this.connect("destroy", Lang.bind(this, function() {
+        this.connect("destroy", () => {
             this.tooltip.destroy();
-        }));
+        });
     },
 
     _setProviderVisibility: function(aID) {
@@ -247,7 +246,7 @@ PopupTranslatorApplet.prototype = {
 
     _expandAppletContextMenu: function() {
         try {
-            [1, 2, 3, 4].forEach(Lang.bind(this, function(aID) {
+            [1, 2, 3, 4].forEach((aID) => {
                 let header = "ctx_header_" + aID,
                     separator = "ctx_separator_" + aID;
 
@@ -288,9 +287,8 @@ PopupTranslatorApplet.prototype = {
                     _("Set %s as default translation engine.").format(this.providerData.google.name)
                 );
                 this[gCheck].setOrnament($.OrnamentType.DOT, provider === "google");
-                this[gCheck].connect("activate", Lang.bind(this, function() {
-                    this._setContextCheckboxes("google", aID);
-                }));
+                this[gCheck].connect("activate",
+                    () => this._setContextCheckboxes("google", aID));
                 this._applet_context_menu.addMenuItem(this[gCheck]);
 
                 this[yCheck] = new PopupMenu.PopupIndicatorMenuItem(this.providerData.yandex.name);
@@ -299,9 +297,8 @@ PopupTranslatorApplet.prototype = {
                     _("Set %s as default translation engine.").format(this.providerData.yandex.name)
                 );
                 this[yCheck].setOrnament($.OrnamentType.DOT, provider === "yandex");
-                this[yCheck].connect("activate", Lang.bind(this, function() {
-                    this._setContextCheckboxes("yandex", aID);
-                }));
+                this[yCheck].connect("activate",
+                    () => this._setContextCheckboxes("yandex", aID));
                 this._applet_context_menu.addMenuItem(this[yCheck]);
 
                 this[separator] = new PopupMenu.PopupSeparatorMenuItem();
@@ -311,7 +308,7 @@ PopupTranslatorApplet.prototype = {
                 if (aID > 2) {
                     this._setProviderVisibility(aID);
                 }
-            }));
+            });
         } catch (aErr) {
             global.logError(aErr);
         }
@@ -328,13 +325,13 @@ PopupTranslatorApplet.prototype = {
             menuItem.actor,
             _("Open translation history window.")
         );
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             try {
                 this.openTranslationHistory();
             } catch (aErr) {
                 global.logError(aErr);
             }
-        }));
+        });
         subMenu.menu.addMenuItem(menuItem);
 
         menuItem = new PopupMenu.PopupIconMenuItem(
@@ -346,14 +343,14 @@ PopupTranslatorApplet.prototype = {
             menuItem.actor,
             _("Open the location where the translation history file is stored.")
         );
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             Util.spawn_async(["xdg-open", [
                 GLib.get_home_dir(),
                 ".cinnamon",
                 "configs",
                 this.metadata.uuid + "History"
             ].join("/")], null);
-        }));
+        });
         subMenu.menu.addMenuItem(menuItem);
 
         menuItem = new PopupMenu.PopupIconMenuItem(
@@ -365,9 +362,9 @@ PopupTranslatorApplet.prototype = {
             menuItem.actor,
             _("Check whether the dependencies for this applet are met.")
         );
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             this.checkDependencies();
-        }));
+        });
         subMenu.menu.addMenuItem(menuItem);
 
         menuItem = new PopupMenu.PopupIconMenuItem(
@@ -379,9 +376,9 @@ PopupTranslatorApplet.prototype = {
             menuItem.actor,
             _("Open this applet help file.")
         );
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
-        }));
+        });
         subMenu.menu.addMenuItem(menuItem);
     },
 
@@ -397,43 +394,28 @@ PopupTranslatorApplet.prototype = {
     },
 
     _updateIconAndLabel: function() {
-        try {
-            if (this.pref_custom_icon_for_applet === "") {
-                this.set_applet_icon_name("");
-            } else if (GLib.path_is_absolute(this.pref_custom_icon_for_applet) &&
-                GLib.file_test(this.pref_custom_icon_for_applet, GLib.FileTest.EXISTS)) {
-                if (this.pref_custom_icon_for_applet.search("-symbolic") != -1) {
-                    this.set_applet_icon_symbolic_path(this.pref_custom_icon_for_applet);
-                } else {
-                    this.set_applet_icon_path(this.pref_custom_icon_for_applet);
-                }
-            } else if (Gtk.IconTheme.get_default().has_icon(this.pref_custom_icon_for_applet)) {
-                if (this.pref_custom_icon_for_applet.search("-symbolic") != -1) {
-                    this.set_applet_icon_symbolic_name(this.pref_custom_icon_for_applet);
-                } else {
-                    this.set_applet_icon_name(this.pref_custom_icon_for_applet);
-                }
-                /**
-                 * START mark Odyseus
-                 * I added the last condition without checking Gtk.IconTheme.get_default.
-                 * Otherwise, if there is a valid icon name added by
-                 *  Gtk.IconTheme.get_default().append_search_path, it will not be recognized.
-                 * With the following extra condition, the worst that can happen is that
-                 *  the applet icon will not change/be set.
-                 */
+        let icon = this.pref_custom_icon_for_applet;
+        let setIcon = (aIcon, aIsPath) => {
+            if (aIcon.search("-symbolic") !== -1) {
+                this[aIsPath ?
+                    "set_applet_icon_symbolic_path" :
+                    "set_applet_icon_symbolic_name"](aIcon);
             } else {
-                try {
-                    if (this.pref_custom_icon_for_applet.search("-symbolic") != -1) {
-                        this.set_applet_icon_symbolic_name(this.pref_custom_icon_for_applet);
-                    } else {
-                        this.set_applet_icon_name(this.pref_custom_icon_for_applet);
-                    }
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+                this[aIsPath ?
+                    "set_applet_icon_path" :
+                    "set_applet_icon_name"](aIcon);
             }
-        } catch (aErr) {
-            global.logWarning('Could not load icon file "' + this.pref_custom_icon_for_applet + '" for menu button');
+        };
+
+        if (GLib.path_is_absolute(icon) &&
+            GLib.file_test(icon, GLib.FileTest.EXISTS)) {
+            setIcon(icon, true);
+        } else {
+            try {
+                setIcon(icon);
+            } catch (aErr) {
+                global.logWarning('Could not load icon "' + icon + '" for applet.');
+            }
         }
 
         if (this.pref_custom_icon_for_applet === "") {
@@ -487,7 +469,7 @@ PopupTranslatorApplet.prototype = {
             }
 
             this._buildMenuId = Mainloop.timeout_add(500,
-                Lang.bind(this, function() {
+                () => {
                     if (this.menu) {
                         this.menuManager.removeMenu(this.menu);
                         this.menu.destroy();
@@ -497,7 +479,7 @@ PopupTranslatorApplet.prototype = {
                     this.menu._transTable = new $.TranslationMenuItem(this);
                     this.menu.addMenuItem(this.menu._transTable);
                     this.menuManager.addMenu(this.menu);
-                })
+                }
             );
         } catch (aErr) {
             global.logError(aErr);
@@ -605,7 +587,7 @@ PopupTranslatorApplet.prototype = {
     translate: function(aForce, aMechId) {
         this.forceTranslation = aForce;
 
-        this.getSelection(Lang.bind(this, function function_name(aStr) {
+        this.getSelection((aStr) => {
             let selection = aStr,
                 targetLang = this["pref_target_lang_" + aMechId];
 
@@ -638,7 +620,7 @@ PopupTranslatorApplet.prototype = {
                     this.Yandex_provider(selection, aMechId);
                     break;
             }
-        }));
+        });
     },
 
     Yandex_provider: function(aSourceText, aMechId) {
@@ -681,7 +663,7 @@ PopupTranslatorApplet.prototype = {
                     langPair,
                     aSourceText
                 ],
-                Lang.bind(this, function(aResponse) {
+                (aResponse) => {
                     if (this.pref_loggin_enabled) {
                         global.logError("\nYandex_provider()>aResponse:\n" + aResponse);
                     }
@@ -756,7 +738,7 @@ PopupTranslatorApplet.prototype = {
                         this._notifyParseError("Yandex Translator");
                         global.logError(aErr);
                     }
-                }));
+                });
         } catch (aErr) {
             global.logError(aErr);
         }
@@ -778,7 +760,7 @@ PopupTranslatorApplet.prototype = {
                     GoogleURL,
                     encodeURIComponent(aSourceText)
                 ],
-                Lang.bind(this, function(aResponse) {
+                (aResponse) => {
                     if (this.pref_loggin_enabled) {
                         global.logError("\nGoogle_provider()>aResponse:\n" + aResponse);
                     }
@@ -830,7 +812,7 @@ PopupTranslatorApplet.prototype = {
                         this._notifyParseError("Google Translator");
                         global.logError(aErr);
                     }
-                }));
+                });
         } catch (aErr) {
             global.logError(aErr);
         }
@@ -852,7 +834,7 @@ PopupTranslatorApplet.prototype = {
     },
 
     _updateKeybindings: function() {
-        [1, 2, 3, 4].forEach(Lang.bind(this, function(aID) {
+        [1, 2, 3, 4].forEach((aID) => {
             let id = "key_" + aID + "_id",
                 forcedId = "key_forced_" + aID + "_id";
 
@@ -875,9 +857,7 @@ PopupTranslatorApplet.prototype = {
                 Main.keybindingManager.addHotKey(
                     this[id],
                     this[prefId],
-                    Lang.bind(this, function() {
-                        this.translate(false, aID);
-                    })
+                    () => this.translate(false, aID)
                 );
             }
 
@@ -887,16 +867,14 @@ PopupTranslatorApplet.prototype = {
                 Main.keybindingManager.addHotKey(
                     this[forcedId],
                     this[prefForcedId],
-                    Lang.bind(this, function() {
-                        this.translate(true, aID);
-                    })
+                    () => this.translate(true, aID)
                 );
             }
 
             if (aID > 2) {
                 this._setProviderVisibility(aID);
             }
-        }));
+        });
 
         this._setAppletTooltip();
     },
@@ -984,7 +962,7 @@ PopupTranslatorApplet.prototype = {
         if (this.historyFile.query_exists(null)) {
             // Trying the following asynchronous function in replacement of
             // Cinnamon.get_file_contents*utf8_sync.
-            this.historyFile.load_contents_async(null, Lang.bind(this, function(aFile, aResponce) {
+            this.historyFile.load_contents_async(null, (aFile, aResponce) => {
                 let rawData;
                 try {
                     rawData = aFile.load_contents_finish(aResponce)[1];
@@ -998,7 +976,7 @@ PopupTranslatorApplet.prototype = {
                 } finally {
                     this.dealWithHistoryData(data, false);
                 }
-            }));
+            });
         } else {
             data = {
                 __version__: 1
@@ -1052,7 +1030,7 @@ PopupTranslatorApplet.prototype = {
                 this.metadata.path + "/appletHelper.py",
                 "check-dependencies"
             ],
-            Lang.bind(this, function(aResponse) {
+            (aResponse) => {
                 if (this.pref_loggin_enabled) {
                     global.logError("\ncheckDependencies()>aResponse:\n" + aResponse);
                 }
@@ -1080,7 +1058,7 @@ PopupTranslatorApplet.prototype = {
                     this.pref_all_dependencies_met = true;
                 }
                 this._setAppletTooltip();
-            }));
+            });
     },
 
     openTranslationHistory: function() {
@@ -1112,7 +1090,7 @@ PopupTranslatorApplet.prototype = {
         let cmd = ["xsel", "-o"];
 
         try {
-            Util.spawn_async(cmd, Lang.bind(this, function(aStandardOutput) {
+            Util.spawn_async(cmd, (aStandardOutput) => {
                 if (this._isDestroyed) {
                     return;
                 }
@@ -1126,7 +1104,7 @@ PopupTranslatorApplet.prototype = {
                 if (this.pref_loggin_enabled) {
                     global.logError("\nselection()>str:\n" + str);
                 }
-            }));
+            });
         } catch (aErr) {
             // TO TRANSLATORS: Full sentence:
             // "Unable to execute file/command 'FileName or Command':"
@@ -1139,7 +1117,7 @@ PopupTranslatorApplet.prototype = {
     on_applet_removed_from_panel: function() {
         this._isDestroyed = true;
 
-        [1, 2, 3, 4].forEach(Lang.bind(this, function(aID) {
+        [1, 2, 3, 4].forEach((aID) => {
             let id = "key_" + aID + "_id",
                 forcedId = "key_forced_" + aID + "_id";
 
@@ -1152,7 +1130,7 @@ PopupTranslatorApplet.prototype = {
                 Main.keybindingManager.removeHotKey(this[forcedId]);
                 this[forcedId] = null;
             }
-        }));
+        });
 
         if (this.menu) {
             this.menuManager.removeMenu(this.menu);

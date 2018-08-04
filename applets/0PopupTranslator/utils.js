@@ -2,7 +2,6 @@ const AppletUUID = "{{UUID}}";
 const Cinnamon = imports.gi.Cinnamon;
 const Gettext = imports.gettext;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Pango = imports.gi.Pango;
 const PopupMenu = imports.ui.popupMenu;
 const St = imports.gi.St;
@@ -344,14 +343,14 @@ TranslationMenuItem.prototype = {
     },
 
     _addConnectionsAndTooltipToButton: function(aButton, aSourceText, aCallback) {
-        this[aButton].connect("clicked", Lang.bind(this, this[aCallback]));
-        this[aButton].connect("enter-event", Lang.bind(this, this._onButtonEnterEvent, aButton));
-        this[aButton].connect("leave-event", Lang.bind(this, this._onButtonLeaveEvent, aButton));
+        this[aButton].connect("clicked", () => this[aCallback]());
+        this[aButton].connect("enter-event",
+            (aEvent) => this._onButtonEnterEvent(aEvent, aButton));
+        this[aButton].connect("leave-event",
+            (aEvent) => this._onButtonLeaveEvent(aEvent, aButton));
         this[aButton].tooltip = new Tooltips.Tooltip(this[aButton], aSourceText);
         // Ensure tooltip is destroyed when this button is destroyed
-        this[aButton].connect("destroy", Lang.bind(this, function() {
-            this[aButton].tooltip.destroy();
-        }));
+        this[aButton].connect("destroy", () => this[aButton].tooltip.destroy());
     },
 
     _onButtonEnterEvent: function(aE, aButton) { // jshint ignore:line
