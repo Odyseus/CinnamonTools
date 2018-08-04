@@ -11,7 +11,6 @@ const _ = $._;
 
 const Applet = imports.ui.applet;
 const Gio = imports.gi.Gio;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const MessageTray = imports.ui.messageTray;
@@ -104,7 +103,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
                 // watch bus
                 this.busWatcherId = Gio.bus_watch_name(
                     Gio.BusType.SESSION, dbus_name, Gio.BusNameOwnerFlags.NONE,
-                    Lang.bind(this, this.onBusAppeared), Lang.bind(this, this.onBusVanished));
+                    () => this.onBusAppeared(), () => this.onBusVanished());
             } catch (aErr) {
                 global.logError(aErr);
             }
@@ -147,10 +146,10 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         this.mailnag = new MailnagProxy(bus, dbus_name, dbus_path);
 
         // connect mailnag signals
-        this._onMailsAddedId = this.mailnag.connectSignal(
-            "MailsAdded", Lang.bind(this, this.onMailsAdded));
-        this._onMailsRemovedId = this.mailnag.connectSignal(
-            "MailsRemoved", Lang.bind(this, this.onMailsRemoved));
+        this._onMailsAddedId = this.mailnag.connectSignal("MailsAdded",
+            (source, t, newMails) => this.onMailsAdded(source, t, newMails));
+        this._onMailsRemovedId = this.mailnag.connectSignal("MailsRemoved",
+            (source, t, remainingMails) => this.onMailsRemoved(source, t, remainingMails));
 
         this.loadMails();
 
@@ -322,12 +321,9 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
     makeMenuItem: function(mail) {
         let mi = new $.MailItem(mail.id, mail.sender, mail.sender_address, mail.subject, mail.datetime, mail.account);
-        mi.markReadButton.connect(
-            "clicked",
-            Lang.bind(this, function() {
-                this.markMailRead(mail.id);
-            }));
-        mi.connect("activate", Lang.bind(this, this.launchClient));
+        mi.markReadButton.connect("clicked",
+            () => this.markMailRead(mail.id));
+        mi.connect("activate", () => this.launchClient());
         this.menuItems[mail.id] = mi;
         return mi;
     },
@@ -335,7 +331,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
     makeAccountMenu: function(account) {
         let accmenu = new $.AccountMenu(account, this.orientation);
         accmenu.menu.connect("open-state-changed",
-            Lang.bind(this, this._subMenuOpenStateChanged));
+            (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
 
         this.accountMenus[account] = accmenu;
 
@@ -419,12 +415,12 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         );
         notification.setTransient(true);
         notification.addButton("mark-read", markButtonLabel);
-        notification.connect("action-invoked", Lang.bind(this, function(source, action) {
+        notification.connect("action-invoked", (source, action) => {
             if (action == "mark-read") {
                 this.markMailsRead(mails);
                 source.destroy();
             }
-        }));
+        });
         this._notificationSource.notify(notification);
     },
 
@@ -437,7 +433,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             this._markAllRead = new PopupMenu.PopupMenuItem(_("Mark All Read"));
             this._separator = new PopupMenu.PopupSeparatorMenuItem();
 
-            this._markAllRead.connect("activate", Lang.bind(this, this.markAllRead));
+            this._markAllRead.connect("activate", () => this.markAllRead());
 
             if (this.orientation == St.Side.TOP) {
                 this.menu.addMenuItem(this._separator);
