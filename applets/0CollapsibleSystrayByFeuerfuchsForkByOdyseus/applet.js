@@ -9,7 +9,6 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Lang = imports.lang;
 const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
 const Settings = imports.ui.settings;
@@ -44,7 +43,7 @@ CollapsibleSystrayApplet.prototype = {
         //
         // Expand/collapse button
         this.collapseBtn = new $.CSCollapseBtn(this);
-        this.collapseBtn.actor.connect("clicked", Lang.bind(this, function(o, event) { // jshint ignore:line
+        this.collapseBtn.actor.connect("clicked", (o, event) => { // jshint ignore:line
             if (this._hoverTimerID) {
                 Mainloop.source_remove(this._hoverTimerID);
                 this._hoverTimerID = null;
@@ -59,7 +58,7 @@ CollapsibleSystrayApplet.prototype = {
             } else {
                 this._hideAppIcons(true);
             }
-        }));
+        });
 
         //
         // Initialize Cinnamon applet
@@ -105,9 +104,9 @@ CollapsibleSystrayApplet.prototype = {
         // Add horizontal scrolling and scroll to the end on each redraw so that it looks like the
         // collapse button "eats" the icons on collapse
         this.hiddenIconsContainer.hadjustment = new St.Adjustment();
-        this.hiddenIconsContainer.connect("queue-redraw", Lang.bind(this.hiddenIconsContainer, function() {
-            this.hadjustment.set_value(this.hadjustment.upper);
-        }));
+        this.hiddenIconsContainer.connect("queue-redraw", () => {
+            this.hiddenIconsContainer.hadjustment.set_value(this.hiddenIconsContainer.hadjustment.upper);
+        });
 
         //
         // Container for shown icons
@@ -147,8 +146,10 @@ CollapsibleSystrayApplet.prototype = {
         //
         // Hover events
 
-        this._signalManager.connect(this.actor, "enter-event", Lang.bind(this, this._onEnter));
-        this._signalManager.connect(this.actor, "leave-event", Lang.bind(this, this._onLeave));
+        this._signalManager.connect(this.actor, "enter-event",
+            () => this._onEnter());
+        this._signalManager.connect(this.actor, "leave-event",
+            () => this._onLeave());
     },
 
     _bindSettings: function() {
@@ -310,24 +311,22 @@ CollapsibleSystrayApplet.prototype = {
             case MENU.ACTIVE_APPLICATIONS:
                 menuItem = new PopupMenu.PopupSwitchMenuItem(id, this.iconVisibilityList[id]);
                 menuItem.appID = id;
-                menuItem.connect("toggled", Lang.bind(this, function(o, state) {
-                    this._updateAppIconVisibility(id, state);
-                }));
+                menuItem.connect("toggled",
+                    (o, state) => this._updateAppIconVisibility(id, state));
                 break;
 
             default:
             case MENU.INACTIVE_APPLICATIONS:
                 menuItem = new $.CSRemovableSwitchMenuItem(id, this.iconVisibilityList[id]);
                 menuItem.appID = id;
-                menuItem.connect("toggled", Lang.bind(this, function(o, state) {
-                    this._updateAppIconVisibility(id, state);
-                }));
-                menuItem.connect("remove", Lang.bind(this, function(o, state) { // jshint ignore:line
+                menuItem.connect("toggled",
+                    (o, state) => this._updateAppIconVisibility(id, state));
+                menuItem.connect("remove", (o, state) => { // jshint ignore:line
                     delete this.iconVisibilityList[id];
                     this._saveAppIconVisibilityList();
 
                     delete this._inactiveMenuItems[id];
-                }));
+                });
                 break;
         }
 
@@ -359,7 +358,7 @@ CollapsibleSystrayApplet.prototype = {
 
         this._iconsAreHidden = true;
 
-        let onFinished = Lang.bind(this, function() {
+        let onFinished = () => {
             delete this.hiddenIconsContainer.tweenParams;
 
             let icons = this.hiddenIconsContainer.get_children();
@@ -369,7 +368,7 @@ CollapsibleSystrayApplet.prototype = {
 
             this._animating = false;
             this.collapseBtn.setIsExpanded(false);
-        });
+        };
 
         if (animate) {
             this._animating = true;
@@ -411,7 +410,7 @@ CollapsibleSystrayApplet.prototype = {
 
         this._iconsAreHidden = false;
 
-        let onFinished = Lang.bind(this, function() {
+        let onFinished = () => {
             delete this.hiddenIconsContainer.tweenParams;
 
             this.hiddenIconsContainer.get_children().forEach(function(icon, index) { // jshint ignore:line
@@ -422,7 +421,7 @@ CollapsibleSystrayApplet.prototype = {
 
             this._animating = false;
             this.collapseBtn.setIsExpanded(true);
-        });
+        };
 
         this.hiddenIconsContainer.get_children().forEach(function(icon, index) { // jshint ignore:line
             icon.csEnable();
@@ -491,7 +490,7 @@ CollapsibleSystrayApplet.prototype = {
                 }
             }
 
-            instances.forEach(Lang.bind(this, function(actor, index) {
+            instances.forEach((actor, index) => {
                 actor.reparent(container);
                 container.set_child_at_index(actor, index);
 
@@ -503,7 +502,7 @@ CollapsibleSystrayApplet.prototype = {
                         actor.csDisable();
                     }
                 }
-            }));
+            });
         }
 
         this._saveAppIconVisibilityList();
@@ -518,13 +517,13 @@ CollapsibleSystrayApplet.prototype = {
             .filter(function(iconWrapper) {
                 return iconWrapper.isIndicator !== true;
             })
-            .forEach(Lang.bind(this, function(iconWrapper, index) { // jshint ignore:line
+            .forEach((iconWrapper, index) => { // jshint ignore:line
                 if (this._direction == APPLET_DIRECTION.HORIZONTAL) {
                     iconWrapper.set_style("padding-left: " + this.pref_tray_icon_padding + "px; padding-right: " + this.pref_tray_icon_padding + "px;");
                 } else {
                     iconWrapper.set_style("padding-top: " + this.pref_tray_icon_padding + "px; padding-bottom: " + this.pref_tray_icon_padding + "px;");
                 }
-            }));
+            });
     },
 
     /*
@@ -594,13 +593,15 @@ CollapsibleSystrayApplet.prototype = {
             this._initialCollapseTimerID = null;
         }
 
-        this._hoverTimerID = Mainloop.timeout_add(this.pref_expand_on_hover_delay, Lang.bind(this, function() {
-            this._hoverTimerID = null;
+        this._hoverTimerID = Mainloop.timeout_add(this.pref_expand_on_hover_delay,
+            () => {
+                this._hoverTimerID = null;
 
-            if (this._iconsAreHidden) {
-                this._showAppIcons(true);
+                if (this._iconsAreHidden) {
+                    this._showAppIcons(true);
+                }
             }
-        }));
+        );
     },
 
     _onLeave: function() {
@@ -623,13 +624,15 @@ CollapsibleSystrayApplet.prototype = {
             this._initialCollapseTimerID = null;
         }
 
-        this._hoverTimerID = Mainloop.timeout_add(this.pref_collapse_on_leave_delay, Lang.bind(this, function() {
-            this._hoverTimerID = null;
+        this._hoverTimerID = Mainloop.timeout_add(this.pref_collapse_on_leave_delay,
+            () => {
+                this._hoverTimerID = null;
 
-            if (!this._iconsAreHidden) {
-                this._hideAppIcons(true);
+                if (!this._iconsAreHidden) {
+                    this._hideAppIcons(true);
+                }
             }
-        }));
+        );
     },
 
     //
@@ -667,22 +670,24 @@ CollapsibleSystrayApplet.prototype = {
             .filter(function(iconWrapper) {
                 return iconWrapper.isIndicator !== true;
             })
-            .forEach(Lang.bind(this, function(iconWrapper, index) { // jshint ignore:line
+            .forEach((iconWrapper, index) => { // jshint ignore:line
                 iconWrapper.icon.destroy();
-            }));
+            });
 
         if (this._initialCollapseTimerID) {
             Mainloop.source_remove(this._initialCollapseTimerID);
             this._initialCollapseTimerID = null;
         }
 
-        this._initialCollapseTimerID = Mainloop.timeout_add(this.pref_init_delay * 1000, Lang.bind(this, function() {
-            this._initialCollapseTimerID = null;
+        this._initialCollapseTimerID = Mainloop.timeout_add(this.pref_init_delay * 1000,
+            () => {
+                this._initialCollapseTimerID = null;
 
-            if (this._draggable.inhibit) {
-                this._hideAppIcons(true);
+                if (this._draggable.inhibit) {
+                    this._hideAppIcons(true);
+                }
             }
-        }));
+        );
     },
 
     /*
@@ -745,16 +750,18 @@ CollapsibleSystrayApplet.prototype = {
             iconWrap.csEnableAfter = function() {};
         }
 
-        iconWrap.connect("button-press-event", Lang.bind(this, function(actor, event) { // jshint ignore:line
-            return true;
-        }));
-        iconWrap.connect("button-release-event", Lang.bind(this, function(actor, event) {
-            icon.click(event);
-        }));
+        iconWrap.connect("button-press-event",
+            (actor, event) => { // jshint ignore:line
+                return true;
+            }
+        );
+        iconWrap.connect("button-release-event",
+            (actor, event) => {
+                icon.click(event);
+            }
+        );
 
-        icon.connect("destroy", Lang.bind(this, function() {
-            this._unregisterAppIcon(role, iconWrap);
-        }));
+        icon.connect("destroy", () => this._unregisterAppIcon(role, iconWrap));
 
         this._registerAppIcon(role, iconWrap);
     },
@@ -778,9 +785,9 @@ CollapsibleSystrayApplet.prototype = {
             iconActor.actor.csEnable = function() {
                 iconActor.actor.set_reactive(true);
             };
-            iconActor.actor.connect("destroy", Lang.bind(this, function() {
-                this._unregisterAppIcon(appIndicator.id, iconActor.actor);
-            }));
+            iconActor.actor.connect("destroy",
+                () => this._unregisterAppIcon(appIndicator.id, iconActor.actor)
+            );
 
             this._registerAppIcon(appIndicator.id, iconActor.actor);
         }
@@ -815,13 +822,15 @@ CollapsibleSystrayApplet.prototype = {
         $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype.on_applet_added_to_panel.call(this);
 
         // Automatically collapse after X seconds
-        this._initialCollapseTimerID = Mainloop.timeout_add(this.pref_init_delay * 1000, Lang.bind(this, function() {
-            this._initialCollapseTimerID = null;
+        this._initialCollapseTimerID = Mainloop.timeout_add(this.pref_init_delay * 1000,
+            () => {
+                this._initialCollapseTimerID = null;
 
-            if (this._draggable.inhibit) {
-                this._hideAppIcons(true);
+                if (this._draggable.inhibit) {
+                    this._hideAppIcons(true);
+                }
             }
-        }));
+        );
     },
 
     /*

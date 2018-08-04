@@ -5,7 +5,6 @@ const Clutter = imports.gi.Clutter;
 const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
@@ -133,7 +132,7 @@ CSRemovableSwitchMenuItem.prototype = {
         this.deleteButton = new St.Button({
             child: iconDelete
         });
-        this.deleteButton.connect("clicked", Lang.bind(this, this.remove));
+        this.deleteButton.connect("clicked", () => this.remove());
 
         this.removeActor(this._statusBin);
         this._statusBin.destroy();
@@ -281,11 +280,17 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             this._signalAdded = manager.connect("indicator-added",
                 // Condition needed for retro-compatibility.
                 // Mark for deletion on EOL. Cinnamon 3.2.x+
-                Lang.bind(this, CINN_3_2_PLUS ? this._onIndicatorAddedNew : this._onIndicatorAddedOld));
+                (manager, appIndicator) => {
+                    CINN_3_2_PLUS ?
+                        this._onIndicatorAddedNew(manager, appIndicator) :
+                        this._onIndicatorAddedOld(manager, appIndicator);
+                }
+            );
         }
         if (this._signalRemoved === 0) {
             this._signalRemoved = manager.connect("indicator-removed",
-                Lang.bind(this, this._onIndicatorRemoved));
+                (manager, appIndicator) => this._onIndicatorRemoved(manager, appIndicator)
+            );
         }
     },
 
@@ -306,7 +311,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
 
             this.manager_container.add_actor(indicatorActor.actor);
 
-            appIndicator.createMenuClientAsync(Lang.bind(this, function(client) {
+            appIndicator.createMenuClientAsync((client) => {
                 if (client !== null) {
                     let newMenu = client.getShellMenu();
                     if (!newMenu) {
@@ -315,7 +320,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
                     }
                     indicatorActor.setMenu(newMenu);
                 }
-            }));
+            });
         }
     },
 
@@ -362,7 +367,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             this._shellIndicators[appIndicator.id] = iconActor;
 
             this.manager_container.add_actor(iconActor.actor);
-            appIndicator.createMenuClientAsync(Lang.bind(this, function(client) {
+            appIndicator.createMenuClientAsync((client) => {
                 if (client !== null) {
                     let newMenu = client.getShellMenu();
                     if (!newMenu) {
@@ -371,7 +376,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
                     }
                     iconActor.setMenu(newMenu);
                 }
-            }));
+            });
         }
     },
 
@@ -547,10 +552,10 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
     _insertStatusItemLater: function(role, icon, position, delay) {
         // Inserts an icon in the systray after a delay (useful for buggy icons)
         // Delaying the insertion of pidgin by 10 seconds for instance is known to fix it on empty disk cache
-        let timerId = Mainloop.timeout_add(delay, Lang.bind(this, function() {
+        let timerId = Mainloop.timeout_add(delay, () => {
             this._insertStatusItem(role, icon, position);
             Mainloop.source_remove(timerId);
-        }));
+        });
     },
 
     _onTrayIconRemoved: function(o, icon) {
@@ -588,10 +593,10 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         icon._rolePosition = position;
 
         if (this._scaleMode) {
-            let timerId = Mainloop.timeout_add(500, Lang.bind(this, function() {
+            let timerId = Mainloop.timeout_add(500, () => {
                 this._resizeStatusItem(role, icon);
                 Mainloop.source_remove(timerId);
-            }));
+            });
         } else {
             icon.set_pivot_point(0.5, 0.5);
             icon.set_scale((DEFAULT_ICON_SIZE * global.ui_scale) / icon.width,
