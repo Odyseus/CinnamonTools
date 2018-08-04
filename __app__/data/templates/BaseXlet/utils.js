@@ -11,13 +11,11 @@ const Clutter = imports.gi.Clutter;
 const Gettext = imports.gettext;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const Lang = imports.lang;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
 const ModalDialog = imports.ui.modalDialog;
 const St = imports.gi.St;
 const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
 
 var NotificationUrgency = {
     LOW: 0,
@@ -183,8 +181,8 @@ function customNotify(aTitle, aBody, aIconName, aUrgency, aButtons) {
 
     try {
         if (aButtons && typeof aButtons === "object") {
-            let destroyEmitted = function() {
-                this.tooltip.destroy();
+            let destroyEmitted = (aButton) => {
+                return () => aButton.tooltip.destroy();
             };
 
             let i = 0,
@@ -231,7 +229,7 @@ function customNotify(aTitle, aBody, aIconName, aUrgency, aButtons) {
                             button,
                             btnObj.tooltip
                         );
-                        button.connect("destroy", Lang.bind(button, destroyEmitted));
+                        button.connect("destroy", destroyEmitted(button));
                     }
 
                     if (notification._buttonBox.get_n_children() > 0) {
@@ -313,16 +311,16 @@ ConfirmationDialog.prototype = {
 
         this.setButtons([{
             label: aCancelButtonLabel,
-            action: Lang.bind(this, function() {
+            action: () => {
                 this.close();
-            }),
+            },
             key: Clutter.Escape
         }, {
             label: aDoButtonLabel,
-            action: Lang.bind(this, function() {
+            action: () => {
                 this.close();
                 aCallback();
-            })
+            }
         }]);
     }
 };

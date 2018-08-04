@@ -92,48 +92,35 @@ MyApplet.prototype = {
     _expandAppletContextMenu: function() {
         let menuItem = new PopupMenu.PopupIconMenuItem(_("Help"),
             "dialog-information", St.IconType.SYMBOLIC);
-        menuItem.connect("activate", Lang.bind(this, function() {
+        menuItem.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
-        }));
+        });
         this._applet_context_menu.addMenuItem(menuItem);
     },
 
     _updateIconAndLabel: function() {
-        try {
-            if (this.pref_custom_icon_for_applet === "") {
-                this.set_applet_icon_name("");
-            } else if (GLib.path_is_absolute(this.pref_custom_icon_for_applet) &&
-                GLib.file_test(this.pref_custom_icon_for_applet, GLib.FileTest.EXISTS)) {
-                if (this.pref_custom_icon_for_applet.search("-symbolic") !== -1) {
-                    this.set_applet_icon_symbolic_path(this.pref_custom_icon_for_applet);
-                } else {
-                    this.set_applet_icon_path(this.pref_custom_icon_for_applet);
-                }
-            } else if (Gtk.IconTheme.get_default().has_icon(this.pref_custom_icon_for_applet)) {
-                if (this.pref_custom_icon_for_applet.search("-symbolic") !== -1) {
-                    this.set_applet_icon_symbolic_name(this.pref_custom_icon_for_applet);
-                } else {
-                    this.set_applet_icon_name(this.pref_custom_icon_for_applet);
-                }
-                // START mark Odyseus
-                // I added the last condition without checking Gtk.IconTheme.get_default.
-                // Otherwise, if there is a valid icon name added by
-                //  Gtk.IconTheme.get_default().append_search_path, it will not be recognized.
-                // With the following extra condition, the worst that can happen is that
-                //  the applet icon will not change/be set.
+        let icon = this.pref_custom_icon_for_applet;
+        let setIcon = (aIcon, aIsPath) => {
+            if (aIcon.search("-symbolic") !== -1) {
+                this[aIsPath ?
+                    "set_applet_icon_symbolic_path" :
+                    "set_applet_icon_symbolic_name"](aIcon);
             } else {
-                try {
-                    if (this.pref_custom_icon_for_applet.search("-symbolic") !== -1) {
-                        this.set_applet_icon_symbolic_name(this.pref_custom_icon_for_applet);
-                    } else {
-                        this.set_applet_icon_name(this.pref_custom_icon_for_applet);
-                    }
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+                this[aIsPath ?
+                    "set_applet_icon_path" :
+                    "set_applet_icon_name"](aIcon);
             }
-        } catch (aErr) {
-            global.logWarning('Could not load icon file "' + this.pref_custom_icon_for_applet + '" for menu button');
+        };
+
+        if (GLib.path_is_absolute(icon) &&
+            GLib.file_test(icon, GLib.FileTest.EXISTS)) {
+            setIcon(icon, true);
+        } else {
+            try {
+                setIcon(icon);
+            } catch (aErr) {
+                global.logWarning('Could not load icon "' + icon + '" for applet.');
+            }
         }
 
         if (this.pref_custom_icon_for_applet === "") {
