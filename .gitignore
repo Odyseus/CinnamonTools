@@ -1,4 +1,7 @@
 # My ignores #
+# Ignore xlets whose directory name starts with 0z. These are non-functional.
+/*/0z*/
+# The .sublime directory contains the Sublime Text project files.
 /.sublime
 /__app__/python_modules/__pycache__
 /themes/_sass/cinnamon/.sass-cache

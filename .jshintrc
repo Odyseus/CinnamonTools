@@ -1,4 +1,6 @@
 {
+    "maxerr": "1000",
+    "-W100": true,
     "strict": "implied",
     "varstmt": false,
     "multistr": true,
@@ -28,6 +30,7 @@
         "enable": true
     },
     "globals": {
+        "ChromeUtils": true,
         "require": true,
         "__meta": true,
         "__dirname": true,
