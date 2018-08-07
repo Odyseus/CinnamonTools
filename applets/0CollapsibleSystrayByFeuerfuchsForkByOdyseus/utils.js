@@ -348,10 +348,10 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         if (!(appIndicator.id in this._shellIndicators)) {
             let hiddenIcons = Main.systrayManager.getRoles();
 
-            if (hiddenIcons.indexOf(appIndicator.id) != -1) {
+            if (hiddenIcons.indexOf(appIndicator.id) !== -1) {
                 // We've got an applet for that
                 return;
-            } else if (["quassel"].indexOf(appIndicator.id) != -1) {
+            } else if (["quassel"].indexOf(appIndicator.id) !== -1) {
                 // Blacklist some of the icons
                 // quassel: The proper icon in Quassel is "QuasselIRC", this is a fallback icon which Quassel launches when it fails to detect
                 // our indicator support (i.e. when Cinnamon is restarted for instance)
@@ -496,10 +496,10 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         }
         this._statusItems = [];
 
-        let children = this.manager_container.get_children().filter(function(child) {
+        let children = this.manager_container.get_children().filter((child) => {
             // We are only interested in the status icons and apparently we can not ask for
             // child instanceof CinnamonTrayIcon.
-            return (child.toString().indexOf("CinnamonTrayIcon") != -1);
+            return (child.toString().indexOf("CinnamonTrayIcon") !== -1);
         });
         for (let i = 0; i < children.length; i++) {
             children[i].destroy();
@@ -510,7 +510,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         try {
             let hiddenIcons = Main.systrayManager.getRoles();
 
-            if (hiddenIcons.indexOf(role) != -1) {
+            if (hiddenIcons.indexOf(role) !== -1) {
                 // We've got an applet for that
                 return;
             }
@@ -522,7 +522,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             icon.obsolete = false;
             this._statusItems.push(icon);
 
-            if (["pidgin"].indexOf(role) != -1) {
+            if (["pidgin"].indexOf(role) !== -1) {
                 // Delay pidgin insertion by 10 seconds
                 // Pidgin is very weird.. it starts with a small icon
                 // Then replaces that icon with a bigger one when the connection is established
@@ -530,7 +530,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
                 // The delay is big because resizing/inserting too early
                 // makes pidgin invisible (in absence of disk cache).. even if we resize/insert again later
                 this._insertStatusItemLater(role, icon, -1, 10000);
-            } else if (["shutter", "filezilla", "dropbox", "thunderbird", "unknown", "blueberry-tray.py", "mintupdate.py"].indexOf(role) != -1) {
+            } else if (["shutter", "filezilla", "dropbox", "thunderbird", "unknown", "blueberry-tray.py", "mintupdate.py"].indexOf(role) !== -1) {
                 // Delay insertion by 1 second
                 // This fixes an invisible icon in the absence of disk cache for : shutter
                 // filezilla, dropbox, thunderbird, blueberry, mintupdate are known to show up in the wrong size or position, this should fix them as well
@@ -573,10 +573,10 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         if (icon.obsolete === true) {
             return;
         }
-        let children = this.manager_container.get_children().filter(function(child) {
+        let children = this.manager_container.get_children().filter((child) => {
             // We are only interested in the status icons and apparently we can not ask for
             // child instanceof CinnamonTrayIcon.
-            return (child.toString().indexOf("CinnamonTrayIcon") != -1);
+            return (child.toString().indexOf("CinnamonTrayIcon") !== -1);
         });
         let i;
         for (i = children.length - 1; i >= 0; i--) {
@@ -609,7 +609,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             return;
         }
 
-        if (["shutter", "filezilla"].indexOf(role) != -1) {
+        if (["shutter", "filezilla"].indexOf(role) !== -1) {
             // global.log("Not resizing " + role + " as it's known to be buggy (" + icon.get_width() + "x" + icon.get_height() + "px)");
         } else {
             let size = this._getIconSize();
@@ -620,10 +620,6 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
     }
 
 };
-
-// function main(metadata, orientation, panel_height, instance_id) {
-//     return new CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet(orientation, panel_height, instance_id);
-// }
 
 /**
  * Compares two software version numbers (e.g. "1.7.1" or "1.2b").
