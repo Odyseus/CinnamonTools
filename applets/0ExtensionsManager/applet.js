@@ -323,7 +323,7 @@ ExtensionsManagerApplet.prototype = {
 
         let finalExtensionData;
         try {
-            finalExtensionData = Object.keys(aExtensionData).map(function(aKey) {
+            finalExtensionData = Object.keys(aExtensionData).map((aKey) => {
                 let extObj = aExtensionData[aKey];
                 extObj["spices_id"] = spicesData ?
                     (spicesData[extObj.uuid] ?

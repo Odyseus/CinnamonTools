@@ -442,7 +442,7 @@ function informJSONError(aMsg) {
             label: "~/.cinnamon/glass.log", // Just in case.
             tooltip: "~/.cinnamon/glass.log",
             iconName: "extensions-manager-edit-find",
-            callback: function() {
+            callback: () => {
                 Gio.AppInfo.launch_default_for_uri(
                     "file://" + GLib.get_home_dir() + "/.cinnamon/glass.log",
                     null
@@ -517,7 +517,7 @@ function customNotify(aTitle, aBody, aIconName, aUrgency, aButtons) {
                             button,
                             btnObj.tooltip
                         );
-                        button.connect("destroy", function() { // jshint ignore:line
+                        button.connect("destroy", () => { // jshint ignore:line
                             button.tooltip.destroy();
                         });
                     }
