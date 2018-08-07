@@ -8,6 +8,8 @@ Ansi : object
     :any:`ANSIColors` class initialization.
 menu_actions : dict
     Storage for menu actions.
+schema : str
+    The gsettings schema.
 schema_filename : str
     The name of the gsettings schema file.
 xlet_has_schema : bool
@@ -20,7 +22,10 @@ from subprocess import run
 from shutil import which
 
 menu_actions = {}
-schema_filename = "org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml"
+schema = "org.cinnamon.{{XLET_TYPE}}s.{{UUID}}"
+schema_path = "/org/cinnamon/{{XLET_TYPE}}s/{{UUID}}/"
+schema_filename = "%s.gschema.xml" % schema
+schema_storage = "/usr/share/glib-2.0/schemas/"
 xlet_has_schema = os.path.isdir(os.path.join(os.path.abspath(os.path.dirname(__file__)), "schemas"))
 
 
@@ -131,8 +136,9 @@ def main_menu():
     if xlet_has_schema:
         print(Ansi.INFO("3. Install settings schema"))
         print(Ansi.INFO("4. Remove settings schema"))
+        print(Ansi.INFO("5. Clean settings leftovers"))
 
-    print(Ansi.INFO("%s. Restart Cinnamon" % ("5" if xlet_has_schema else "3")))
+    print(Ansi.INFO("%s. Restart Cinnamon" % ("6" if xlet_has_schema else "3")))
     print()
     print(Ansi.INFO("0. Quit (or Ctrl + C)"))
 
@@ -211,18 +217,17 @@ def compile_schemas():
     """Compile gsettings schemas.
     """
     print(Ansi.INFO("Compiling schema files..."))
-    run("sudo glib-compile-schemas /usr/share/glib-2.0/schemas/", shell=True)
+    run("sudo glib-compile-schemas %s" % schema_storage, shell=True)
 
 
 def install_gsettings():
     """Install a gsetting schema.
     """
     inform_root_required()
-    schema_path = "./schemas/%s" % schema_filename
-    schema_destination = "/usr/share/glib-2.0/schemas/"
-    print(Ansi.INFO("Copying file: %s" % schema_path))
-    print(Ansi.INFO("Destination: %s" % schema_destination))
-    run("sudo cp %s %s" % (schema_path, schema_destination), shell=True)
+    schema_file_path = "./schemas/%s" % schema_filename
+    print(Ansi.INFO("Copying file: %s" % schema_file_path))
+    print(Ansi.INFO("Destination: %s" % schema_storage))
+    run("sudo cp %s %s" % (schema_file_path, schema_storage), shell=True)
     compile_schemas()
 
 
@@ -230,10 +235,17 @@ def uninstall_gsettings():
     """Uninstall a gsetting schema.
     """
     inform_root_required()
-    schema_path = "/usr/share/glib-2.0/schemas/%s" % schema_filename
-    print(Ansi.INFO("Removing file: %s" % schema_path))
-    run("sudo rm %s" % schema_path, shell=True)
+    schema_file_path = "%s%s" % (schema_storage, schema_filename)
+    print(Ansi.INFO("Removing file: %s" % schema_file_path))
+    run("sudo rm %s" % schema_file_path, shell=True)
     compile_schemas()
+
+
+def clean_leftovers_gsettings():
+    """Clean the user's dconf database of gsettings leftovers.
+    """
+    print(Ansi.INFO("Attempting to cleanup leftovers from the dconf database."))
+    run("dconf reset -f %s" % schema_path, shell=True)
 
 
 def restart_cinnamon():
@@ -258,6 +270,10 @@ xlet is installed."))
 schema where already installed automatically by Cinnamon."))
     print(Ansi.PURPLE("If you installed this xlet manually, you need to install the translations \
 and the settings schema."))
+
+    if xlet_has_schema:
+        print(Ansi.PURPLE("The dconf command is requiored to perform settings cleanup operations."))
+
     print()
 
     menu_actions["main_menu"] = main_menu
@@ -267,8 +283,9 @@ and the settings schema."))
     if xlet_has_schema:
         menu_actions["3"] = install_gsettings
         menu_actions["4"] = uninstall_gsettings
+        menu_actions["5"] = clean_leftovers_gsettings
 
-    menu_actions["5" if xlet_has_schema else "3"] = restart_cinnamon
+    menu_actions["6" if xlet_has_schema else "3"] = restart_cinnamon
     menu_actions["0"] = exit
 
     main_menu()
