@@ -407,7 +407,7 @@ ArgosForCinnamonApplet.prototype = {
     },
 
     _setAppletTooltip: function() {
-        let boldSpan = function(aStr) {
+        let boldSpan = (aStr) => {
             return '<span weight="bold">' + $.escapeHTML(aStr) + "</span>";
         };
 
