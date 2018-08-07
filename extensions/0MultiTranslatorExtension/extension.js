@@ -509,7 +509,7 @@ TranslatorExtension.prototype = {
                             this._dialog
                         );
 
-                        let names = this._translators_manager.translators_names.sort(function(a, b) {
+                        let names = this._translators_manager.translators_names.sort((a, b) => {
                             return a.localeCompare(b);
                         });
 

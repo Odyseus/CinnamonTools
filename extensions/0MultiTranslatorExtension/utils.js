@@ -3519,7 +3519,7 @@ function versionCompare(v1, v2, options) {
 }
 
 function getSelection(aCallback) {
-    Util.spawn_async(["xsel", "-o"], function(aResutl) {
+    Util.spawn_async(["xsel", "-o"], (aResutl) => {
         // Remove possible "illegal" characters.
         let str = escape_html(aResutl);
         // Replace line breaks and duplicated white spaces with a single space.
@@ -3587,7 +3587,7 @@ function checkDependencies() {
             XletMeta.path + "/extensionHelper.py",
             "check-dependencies"
         ],
-        function(aResponse) {
+        (aResponse) => {
             if (Settings.loggin_enabled) {
                 global.logError("\ncheckDependencies()>aResponse:\n" + aResponse);
             }
@@ -3628,7 +3628,7 @@ function informAboutMissingDependencies(aRes) {
             label: _("Help"), // Just in case.
             tooltip: _("Extended help"),
             iconName: ICONS.help,
-            callback: function() {
+            callback: () => {
                 Util.spawn_async([
                     "xdg-open",
                     XletMeta.path + "/HELP.html"
@@ -3638,7 +3638,7 @@ function informAboutMissingDependencies(aRes) {
             label: "~/.cinnamon/glass.log", // Just in case.
             tooltip: "~/.cinnamon/glass.log",
             iconName: ICONS.find,
-            callback: function() {
+            callback: () => {
                 Util.spawn_async([
                     "xdg-open",
                     GLib.get_home_dir() + "/.cinnamon/glass.log"
