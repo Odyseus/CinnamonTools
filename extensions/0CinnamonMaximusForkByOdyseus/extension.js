@@ -234,7 +234,7 @@ function undecorate(win) {
     // #25: when undecorating a Qt app (texmaker, keepassx) somehow focus is lost.
     // However, is there a use case where this would happen legitimately?
     // For some reaons the Qt apps seem to take a while to be refocused.
-    Meta.later_add(Meta.LaterType.IDLE, function() {
+    Meta.later_add(Meta.LaterType.IDLE, () => {
         if (win.focus) {
             win.focus(global.get_current_time());
         } else {
@@ -266,7 +266,7 @@ function decorate(win) {
     // #25: when undecorating a Qt app (texmaker, keepassx) somehow focus is lost.
     // However, is there a use case where this would happen legitimately?
     // For some reaons the Qt apps seem to take a while to be refocused.
-    Meta.later_add(Meta.LaterType.IDLE, function() {
+    Meta.later_add(Meta.LaterType.IDLE, () => {
         if (win.focus) {
             win.focus(global.get_current_time());
         } else {
@@ -304,7 +304,7 @@ function setHideTitlebar(win, hide, stopAdding) {
      * (see workspace.js _doAddWindow)
      */
     if (!id && !win.get_compositor_private() && !stopAdding) {
-        Mainloop.idle_add(function() {
+        Mainloop.idle_add(() => {
             setHideTitlebar(null, win, true); // only try once more.
             return false; // define as one-time event
         });
@@ -385,7 +385,7 @@ function shouldBeUndecorated(win) {
 function possiblyUndecorate(win) {
     if (shouldBeUndecorated(win)) {
         if (!win.get_compositor_private()) {
-            Mainloop.idle_add(function() {
+            Mainloop.idle_add(() => {
                 undecorate(win);
                 return false; // define as one-time event
             });
@@ -400,7 +400,7 @@ function possiblyUndecorate(win) {
 function possiblyRedecorate(win) {
     if (!shouldBeUndecorated(win)) {
         if (!win.get_compositor_private()) {
-            Mainloop.idle_add(function() {
+            Mainloop.idle_add(() => {
                 decorate(win);
                 return false; // define as one-time event
             });
@@ -470,7 +470,7 @@ function onUnmaximise(shellwm, actor) {
             global.display.disconnect(grabID);
             grabID = 0;
         }
-        grabID = global.display.connect("grab-op-end", function() {
+        grabID = global.display.connect("grab-op-end", () => {
             if (settings.pref_undecorate_when_tiled && (win.tile_type == Meta.WindowTileType.TILED || win.tile_type == Meta.WindowTileType.SNAPPED)) {
                 return;
             } else {
@@ -594,8 +594,8 @@ function onChangeNWorkspaces() {
         // we need to add a Mainloop.idle_add, or else in onWindowAdded the
         // window's maximized state is not correct yet.
         // ws._MaximusWindowAddedId = ws.connect('window-added', onWindowAdded);
-        ws._MaximusWindowAddedId = ws.connect("window-added", function(ws, win) {
-            Mainloop.idle_add(function() {
+        ws._MaximusWindowAddedId = ws.connect("window-added", (ws, win) => {
+            Mainloop.idle_add(() => {
                 onWindowAdded(ws, win);
                 return false;
             });
@@ -647,8 +647,8 @@ function startUndecorating() {
      *  fired for every currently-existing window, and then
      *  these windows will have onMaximise called twice on them.
      */
-    onetime = Mainloop.idle_add(function() {
-        let winList = global.get_window_actors().map(function(w) {
+    onetime = Mainloop.idle_add(() => {
+        let winList = global.get_window_actors().map((w) => {
                 return w.meta_window;
             }),
             i = winList.length;
@@ -701,7 +701,7 @@ function stopUndecorating() {
         Mainloop.source_remove(onetime);
         onetime = 0;
     }
-    let winList = global.get_window_actors().map(function(w) {
+    let winList = global.get_window_actors().map((w) => {
         return w.meta_window;
     });
     i = winList.length;
@@ -782,7 +782,7 @@ SettingsHandler.prototype = {
 
 function toggle_decorations() {
     stopUndecorating();
-    Mainloop.timeout_add(2000, function() {
+    Mainloop.timeout_add(2000, () => {
         startUndecorating();
     });
 }
