@@ -15,8 +15,6 @@ puts "--Default item - eval example | iconName=folder tooltip='Default item tool
 puts "--Alternate item - eval example | iconName=folder iconIsSymbolic=true tooltip='Alternate item tooltip' eval='imports.ui.main.notify(\"Alternate item\", \"Notification activated by alternate item.\");' alternate=true"
 puts "--Default - PyGObject API Reference - URL example | iconName=folder href='https://lazka.github.io/pgi-docs/'"
 puts "--Alternate - DistroWatch - URL example | iconName=folder iconIsSymbolic=true href='http://distrowatch.com/' alternate=true"
-puts "--Default - Looking Glass log - URI to file example | iconName=folder href='~/.cinnamon/glass.log'"
-puts "--Alternate - xsession-errors log - URI to file example | iconName=folder iconIsSymbolic=true href='~/.xsession-errors' alternate=true"
 
 # Separator
 puts "---"

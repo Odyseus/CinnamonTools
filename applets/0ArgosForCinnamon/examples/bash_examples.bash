@@ -15,8 +15,6 @@ echo "--Default item - eval example | iconName=folder tooltip='Default item tool
 echo "--Alternate item - eval example | iconName=folder iconIsSymbolic=true tooltip='Alternate item tooltip' eval='imports.ui.main.notify(\"Alternate item\", \"Notification activated by alternate item.\");' alternate=true"
 echo "--Default - PyGObject API Reference - URL example | iconName=folder href='https://lazka.github.io/pgi-docs/'"
 echo "--Alternate - DistroWatch - URL example | iconName=folder iconIsSymbolic=true href='http://distrowatch.com/' alternate=true"
-echo "--Default - Looking Glass log - URI to file example | iconName=folder href='~/.cinnamon/glass.log'"
-echo "--Alternate - xsession-errors log - URI to file example | iconName=folder iconIsSymbolic=true href='~/.xsession-errors' alternate=true"
 
 # Separator
 echo "---"

@@ -50,8 +50,6 @@ print("""
 --{e_3_5} | iconName=folder iconIsSymbolic=true tooltip='{e_3_6}' eval='imports.ui.main.notify("{e_3_7}", "{e_3_8}");' alternate=true
 --{e_3_9} | iconName=folder href='https://lazka.github.io/pgi-docs/'
 --{e_3_10} | iconName=folder iconIsSymbolic=true href='http://distrowatch.com/' alternate=true
---{e_3_11} | iconName=folder href='~/.cinnamon/glass.log'
---{e_3_12} | iconName=folder iconIsSymbolic=true href='~/.xsession-errors' alternate=true
 ---
 <b>{e_4}</b> | iconName=folder iconSize=24 size=12
 --{e_4_1}
@@ -105,8 +103,6 @@ print("""
     e_3_8=_("Notification activated by alternate item."),
     e_3_9=_("Default - PyGObject API Reference - URL example"),
     e_3_10=_("Alternate - DistroWatch - URL example"),
-    e_3_11=_("Default - Looking Glass log - URI to file example"),
-    e_3_12=_("Alternate - xsession-errors log - URI to file example"),
     e_4=_("Menu and submenu examples"),
     e_4_1=_("Sub menu level 2"),
     e_4_2=_("Sub menu item level 2"),
