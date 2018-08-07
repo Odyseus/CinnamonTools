@@ -347,7 +347,7 @@ WindowListForkByOdyseusApplet.prototype = {
              * */
             this._monitorWatchList = [this.panel.monitorIndex];
 
-            instances = instances.map(function(x) {
+            instances = instances.map((x) => {
                 return x.panel.monitorIndex;
             });
 

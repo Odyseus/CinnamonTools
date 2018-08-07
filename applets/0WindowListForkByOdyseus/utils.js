@@ -422,9 +422,9 @@ AppMenuButton.prototype = {
 
         // Find the current focused window
         let windows = this.actor.get_parent().get_children()
-            .filter(function(item) {
+            .filter((item) => {
                 return item.visible;
-            }).map(function(item) {
+            }).map((item) => {
                 return item._delegate;
             });
 
@@ -574,7 +574,7 @@ AppMenuButton.prototype = {
         }
 
         let transientHasFocus = false;
-        this.metaWindow.foreach_transient(function(transient) {
+        this.metaWindow.foreach_transient((transient) => {
             if (transient.has_focus()) {
                 transientHasFocus = true;
                 return false;
@@ -904,23 +904,23 @@ AppMenuButtonRightClickMenu.prototype = {
 
         // Move to monitor
         if ((amount = Main.layoutManager.monitors.length) == 2) {
-            Main.layoutManager.monitors.forEach(function(monitor, index) {
+            Main.layoutManager.monitors.forEach((monitor, index) => {
                 if (index === mw.get_monitor()) {
                     return;
                 }
                 item = new PopupMenu.PopupMenuItem(_("Move to the other monitor"));
-                item.connect("activate", function() {
+                item.connect("activate", () => {
                     mw.move_to_monitor(index);
                 });
                 this.addMenuItem(item);
             }, this);
         } else if ((amount = Main.layoutManager.monitors.length) > 2) {
-            Main.layoutManager.monitors.forEach(function(monitor, index) {
+            Main.layoutManager.monitors.forEach((monitor, index) => {
                 if (index === mw.get_monitor()) {
                     return;
                 }
                 item = new PopupMenu.PopupMenuItem(_("Move to monitor %d").format(index + 1));
-                item.connect("activate", function() {
+                item.connect("activate", () => {
                     mw.move_to_monitor(index);
                 });
                 this.addMenuItem(item);
@@ -931,13 +931,13 @@ AppMenuButtonRightClickMenu.prototype = {
         if ((amount = global.screen.n_workspaces) > 1) {
             if (mw.is_on_all_workspaces()) {
                 item = new PopupMenu.PopupMenuItem(_("Only on this workspace"));
-                item.connect("activate", function() {
+                item.connect("activate", () => {
                     mw.unstick();
                 });
                 this.addMenuItem(item);
             } else {
                 item = new PopupMenu.PopupMenuItem(_("Visible on all workspaces"));
-                item.connect("activate", function() {
+                item.connect("activate", () => {
                     mw.stick();
                 });
                 this.addMenuItem(item);
@@ -998,7 +998,7 @@ AppMenuButtonRightClickMenu.prototype = {
         // Miscellaneous
         if (mw.get_compositor_private().opacity != 255) {
             item = new PopupMenu.PopupMenuItem(_("Restore to full opacity"));
-            item.connect("activate", function() {
+            item.connect("activate", () => {
                 mw.get_compositor_private().set_opacity(255);
             });
             this.addMenuItem(item);
@@ -1006,12 +1006,12 @@ AppMenuButtonRightClickMenu.prototype = {
 
         if (mw.minimized) {
             item = new PopupMenu.PopupIconMenuItem(_("Restore"), "view-sort-descending", St.IconType.SYMBOLIC);
-            item.connect("activate", function() {
+            item.connect("activate", () => {
                 Main.activateWindow(mw, global.get_current_time());
             });
         } else {
             item = new PopupMenu.PopupIconMenuItem(_("Minimize"), "view-sort-ascending", St.IconType.SYMBOLIC);
-            item.connect("activate", function() {
+            item.connect("activate", () => {
                 mw.minimize();
             });
         }
@@ -1019,19 +1019,19 @@ AppMenuButtonRightClickMenu.prototype = {
 
         if (mw.get_maximized()) {
             item = new PopupMenu.PopupIconMenuItem(_("Unmaximize"), "view-restore", St.IconType.SYMBOLIC);
-            item.connect("activate", function() {
+            item.connect("activate", () => {
                 mw.unmaximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
             });
         } else {
             item = new PopupMenu.PopupIconMenuItem(_("Maximize"), "view-fullscreen", St.IconType.SYMBOLIC);
-            item.connect("activate", function() {
+            item.connect("activate", () => {
                 mw.maximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
             });
         }
         this.addMenuItem(item);
 
         item = new PopupMenu.PopupIconMenuItem(_("Close"), "edit-delete", St.IconType.SYMBOLIC);
-        item.connect("activate", function() {
+        item.connect("activate", () => {
             mw.delete(global.get_current_time());
         });
         this.addMenuItem(item);
