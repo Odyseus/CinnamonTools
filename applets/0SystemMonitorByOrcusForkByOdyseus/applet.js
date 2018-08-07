@@ -363,7 +363,7 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
     },
 
     _changeGraphWidth: function() {
-        for (let g in this.graphs) {
+        for (let g of this.graphs) {
             g && g.setWidth(this.getGraphWidth(this.graphs.indexOf(g)), this.vertical);
         }
     },
