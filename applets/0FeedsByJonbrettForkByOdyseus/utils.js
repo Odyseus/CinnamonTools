@@ -49,7 +49,7 @@ function _(aStr) {
 
 var escapeUnescapeReplacer = {
     escapeHash: {
-        _: function(input) {
+        _: (input) => {
             let ret = escapeUnescapeReplacer.escapeHash[input];
             if (!ret) {
                 if (input.length - 1) {
@@ -65,14 +65,14 @@ var escapeUnescapeReplacer = {
         }
     },
 
-    escape: function(aStr) {
-        return aStr.toString().replace(/[^\w @\*\-\+\.\/]/g, function(aChar) {
+    escape: (aStr) => {
+        return aStr.toString().replace(/[^\w @\*\-\+\.\/]/g, (aChar) => {
             return escapeUnescapeReplacer.escapeHash._(aChar);
         });
     },
 
-    unescape: function(aStr) {
-        return aStr.toString().replace(/%(u[\da-f]{4}|[\da-f]{2})/gi, function(aSeq) {
+    unescape: (aStr) => {
+        return aStr.toString().replace(/%(u[\da-f]{4}|[\da-f]{2})/gi, (aSeq) => {
             return escapeUnescapeReplacer.escapeHash._(aSeq);
         });
     }
@@ -173,15 +173,24 @@ FeedSubMenuItem.prototype = {
             this.notify, {
                 onUpdate: () => this.update(),
                 onError: () => this.error(),
-                onNewItem: function(feed, feedtitle, itemtitle) {
-                    this.new_item_notification(feed, feedtitle, itemtitle);
-                }.bind(this._applet),
-                onItemRead: function(feed) {
-                    this.item_read_notification(feed);
-                }.bind(this._applet),
-                onDownloaded: function() {
-                    this.process_next_feed();
-                }.bind(this._applet)
+                onNewItem: (feed, feedtitle, itemtitle) => {
+                    this._applet.new_item_notification(feed, feedtitle, itemtitle);
+                },
+                onItemRead: (feed) => {
+                    this._applet.item_read_notification(feed);
+                },
+                onDownloaded: () => {
+                    this._applet.process_next_feed();
+                }
+                // onNewItem: function(feed, feedtitle, itemtitle) {
+                //     this.new_item_notification(feed, feedtitle, itemtitle);
+                // }.bind(this._applet),
+                // onItemRead: function(feed) {
+                //     this.item_read_notification(feed);
+                // }.bind(this._applet),
+                // onDownloaded: function() {
+                //     this.process_next_feed();
+                // }.bind(this._applet)
             }
         );
 
@@ -1272,7 +1281,7 @@ Logger.prototype = {
         let origPrepareStackTrace = Error.prepareStackTrace;
 
         // Override with function that just returns `stack`
-        Error.prepareStackTrace = function(_, stack) {
+        Error.prepareStackTrace = (_, stack) => {
             return stack;
         };
 
@@ -1307,12 +1316,12 @@ function saveToFileAsync(aData, aFile, aCallback) {
 
     aFile.replace_async(null, false, Gio.FileCreateFlags.REPLACE_DESTINATION,
         GLib.PRIORITY_DEFAULT, null,
-        function(aObj, aResponse) {
+        (aObj, aResponse) => {
             let stream = aObj.replace_finish(aResponse);
 
             stream.write_bytes_async(data, GLib.PRIORITY_DEFAULT,
                 null,
-                function(aW_obj, aW_res) {
+                (aW_obj, aW_res) => {
 
                     aW_obj.write_bytes_finish(aW_res);
                     stream.close(null);
