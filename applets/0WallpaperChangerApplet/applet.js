@@ -14,7 +14,6 @@ const Settings = $.Settings;
 
 const Applet = imports.ui.applet;
 const GLib = imports.gi.GLib;
-const Gtk = imports.gi.Gtk;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
@@ -165,9 +164,7 @@ WallpaperChangerApplet.prototype = {
             Main.keybindingManager.addHotKey(
                 this.next_wall_keybinding_name,
                 Settings.next_wallpaper_shortcut + "::",
-                function() {
-                    this.wallChangerControls.next();
-                }.bind(this.wallChangerControls)
+                () => this.wallChangerControls.next()
             );
         }
 
@@ -175,9 +172,7 @@ WallpaperChangerApplet.prototype = {
             Main.keybindingManager.addHotKey(
                 this.prev_wall_keybinding_name,
                 Settings.prev_wallpaper_shortcut + "::",
-                function() {
-                    this.wallChangerControls.prev();
-                }.bind(this.wallChangerControls)
+                () => this.wallChangerControls.prev()
             );
         }
 

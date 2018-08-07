@@ -508,7 +508,7 @@ WallChangerPreview.prototype = {
 
                     aStream.close_async(GLib.PRIORITY_DEFAULT,
                         null,
-                        function(object, res) {
+                        (object, res) => {
                             try {
                                 object.close_finish(res);
                             } catch (e) {
@@ -686,7 +686,7 @@ WallChangerControls.prototype = {
 
     prev: function() {
         debug("Prev");
-        this._dbus.PrevRemote(function(result) {
+        this._dbus.PrevRemote((result) => {
             if (result[0].length === 0) {
                 Main.notifyError(_(XletMeta.name), _("Unable to go back any further, no history available"));
             }
@@ -966,7 +966,7 @@ function getStack() {
     let origPrepareStackTrace = Error.prepareStackTrace;
 
     // Override with function that just returns `stack`
-    Error.prepareStackTrace = function(_, stack) {
+    Error.prepareStackTrace = (_, stack) => {
         return stack;
     };
 
@@ -1094,7 +1094,7 @@ function informAndDisable(aInstance_id) {
     } finally {
         let removal = Mainloop.timeout_add(
             3000,
-            function() {
+            () => {
                 try {
                     _removeAppletFromPanel(AppletUUID, aInstance_id);
                 } finally {
