@@ -46,7 +46,7 @@ SimpleToDoListApplet.prototype = {
         try {
             this._bindSettings();
             this.logger = new $.Logger("SimpleToDoList", this.pref_enable_verbose_logging);
-
+            Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
             this._expandAppletContextMenu();
         } catch (aErr) {
             global.logError(aErr);
@@ -206,7 +206,7 @@ SimpleToDoListApplet.prototype = {
     _clear: function() {
         this.logger.debug("");
 
-        Array.prototype.slice.call(this.todosSec._getMenuItems()).forEach(function(aSection) {
+        Array.prototype.slice.call(this.todosSec._getMenuItems()).forEach((aSection) => {
             aSection._clear();
         });
 
@@ -251,7 +251,7 @@ SimpleToDoListApplet.prototype = {
         this.logger.debug("");
 
         // Remove the section from the internal database and synchronize it with the setting.
-        this.sections = this.sections.filter(function(aSec) {
+        this.sections = this.sections.filter((aSec) => {
             return aSec["id"] !== aSection.id;
         });
 
@@ -421,13 +421,13 @@ SimpleToDoListApplet.prototype = {
                                         }
 
                                         if (this.sections[i]["sort-tasks-alphabetically"]) {
-                                            completed = completed.sort(function(a, b) {
+                                            completed = completed.sort((a, b) => {
                                                 return a["name"].localeCompare(b["name"], undefined, {
                                                     numeric: true,
                                                     sensitivity: "base"
                                                 });
                                             });
-                                            not_completed = not_completed.sort(function(a, b) {
+                                            not_completed = not_completed.sort((a, b) => {
                                                 return a["name"].localeCompare(b["name"], undefined, {
                                                     numeric: true,
                                                     sensitivity: "base"
@@ -438,7 +438,7 @@ SimpleToDoListApplet.prototype = {
                                         this.sections[i]["tasks"] = not_completed.concat(completed);
                                     } else if (!this.sections[i]["sort-tasks-by-completed"] &&
                                         this.sections[i]["sort-tasks-alphabetically"]) {
-                                        this.sections[i]["tasks"] = this.sections[i]["tasks"].sort(function(a, b) {
+                                        this.sections[i]["tasks"] = this.sections[i]["tasks"].sort((a, b) => {
                                             return a["name"].localeCompare(b["name"], undefined, {
                                                 numeric: true,
                                                 sensitivity: "base"

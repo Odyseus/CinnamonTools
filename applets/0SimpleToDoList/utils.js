@@ -1768,12 +1768,12 @@ function saveToFileAsync(aData, aFile, aCallback) {
 
     aFile.replace_async(null, false, Gio.FileCreateFlags.REPLACE_DESTINATION,
         GLib.PRIORITY_DEFAULT, null,
-        function(aObj, aResponse) {
+        (aObj, aResponse) => {
             let stream = aObj.replace_finish(aResponse);
 
             stream.write_bytes_async(data, GLib.PRIORITY_DEFAULT,
                 null,
-                function(aW_obj, aW_res) {
+                (aW_obj, aW_res) => {
 
                     aW_obj.write_bytes_finish(aW_res);
                     stream.close(null);
@@ -1790,7 +1790,7 @@ function listDirAsync(aFileObj, aCallback) {
     aFileObj.enumerate_children_async(Gio.FILE_ATTRIBUTE_STANDARD_NAME,
         Gio.FileQueryInfoFlags.NONE,
         GLib.PRIORITY_LOW, null,
-        function(aFileObj_a, aResponse_a) {
+        (aFileObj_a, aResponse_a) => {
             let enumerator = aFileObj_a.enumerate_children_finish(aResponse_a);
 
             function onNextFileComplete(aFileObj_b, aResponse_b) {
@@ -1813,14 +1813,14 @@ function listDirAsync(aFileObj, aCallback) {
 
 function removeSurplusFilesFromDirectory(aDirPath, aMaxFilesToKeep) {
     try {
-        listDirAsync(Gio.file_new_for_path(aDirPath), function(aAllFiles) {
+        listDirAsync(Gio.file_new_for_path(aDirPath), (aAllFiles) => {
             // Generate file paths from Gio.FileInfo objects.
-            let allFilesPaths = aAllFiles.map(function(aFile) {
+            let allFilesPaths = aAllFiles.map((aFile) => {
                 return aDirPath + "/" + aFile.get_name();
             });
 
             // Sort paths in ascending order.
-            allFilesPaths.sort(function(a, b) {
+            allFilesPaths.sort((a, b) => {
                 return a - b;
             });
 
@@ -1940,7 +1940,7 @@ Logger.prototype = {
         let origPrepareStackTrace = Error.prepareStackTrace;
 
         // Override with function that just returns `stack`
-        Error.prepareStackTrace = function(_, stack) {
+        Error.prepareStackTrace = (_, stack) => {
             return stack;
         };
 
