@@ -320,7 +320,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
         } else {
             let context = this;
             let message = Soup.Message.new("GET", aUrl);
-            _httpSession.queue_message(message, function(session, aMessage) {
+            _httpSession.queue_message(message, (session, aMessage) => {
                 aCallback.call(context, JSON.parse(aMessage.response_body.data));
             });
 
@@ -348,7 +348,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
     },
 
     refreshWeather: function(recurse) {
-        this.loadJsonAsync(this.weatherUrl(), function(aJson) {
+        this.loadJsonAsync(this.weatherUrl(), (aJson) => {
             try {
                 let shouldUpdate = this._shouldUpdate();
 
