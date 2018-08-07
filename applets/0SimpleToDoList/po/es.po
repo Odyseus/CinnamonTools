@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.05\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-07-23 15:55-0300\n"
+"POT-Creation-Date: 2018-08-07 03:37-0300\n"
 "PO-Revision-Date: 2018-07-23 15:57-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -32,7 +32,7 @@ msgstr "Compatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:949
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:930
 msgid "Help"
 msgstr "Ayuda"
 
@@ -284,167 +284,167 @@ msgstr "La única manera de arreglar esto (que yo he podido encontrar) es editan
 msgid "New tasks list..."
 msgstr "Nueva lista de tareas..."
 
-#: applet.js:849
+#: applet.js:836
 msgid "Save as TODO"
 msgstr "Guardar como TODO"
 
-#: applet.js:858
+#: applet.js:844
 msgid "Save all current tasks lists as a TODO file."
 msgstr "Guardar todas las listas de tareas actuales a un archivo TODO."
 
-#: applet.js:864
+#: applet.js:850
 msgid "Export tasks"
 msgstr "Exportar tareas"
 
-#: applet.js:873
+#: applet.js:858
 msgid "Export all current tasks lists into a JSON file."
 msgstr "Exportar todas las listas de tareas actuales a un archivo JSON."
 
-#: applet.js:874 applet.js:890
+#: applet.js:859 applet.js:873
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr "Archivos en formato JSON exportados por este applet pueden ser importados al applet y las listas de tareas encontradas dentro de dicho archivo serán agregadas a las listas de tareas actualmente cargadas en el applet."
 
-#: applet.js:880
+#: applet.js:865
 msgid "Import tasks"
 msgstr "Importar tareas"
 
-#: applet.js:889
+#: applet.js:872
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr "Importar listas de tareas hacia este applet desde un archivo JSON previamente exportado."
 
-#: applet.js:899
+#: applet.js:882
 msgid "Restore example tasks"
 msgstr "Restaurar tareas de ejemplo"
 
-#: applet.js:913
+#: applet.js:896
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr "Restaurar la lista de tareas de ejemplo que estaban presentes cuando se cargó por primera vez el applet."
 
-#: applet.js:919
+#: applet.js:902
 msgid "Reset tasks"
 msgstr "Restablecer tareas"
 
-#: applet.js:925 applet.js:940
+#: applet.js:908 applet.js:921
 msgid "WARNING!!!"
 msgstr "¡ADVERTENCIA!"
 
-#: applet.js:926
+#: applet.js:909
 msgid "Do you really want to remove all your current tasks?"
 msgstr "¿Realmente desea eliminar todas sus tareas actuales?"
 
-#: applet.js:927 applet.js:940
+#: applet.js:910 applet.js:921
 msgid "This operation cannot be reverted!!!"
 msgstr "¡Esta operación no puede ser revertida!"
 
-#: applet.js:939
+#: applet.js:920
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr "Eliminar todas las listas de tareas actualmente cargadas en este applet."
 
-#: applet.js:953
+#: applet.js:934
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 
-#: utils.js:47
+#: utils.js:46
 msgid "Tasks list - Some examples"
 msgstr "Lista de tareas - Algunos ejemplos"
 
-#: utils.js:53
+#: utils.js:52
 msgid "Tasks can be \"tagged\" by simply writing \"@tagname\" as part of the task text. For now, there are 5 priority tags available."
 msgstr "Tareas pueden ser \"etiquetadas\" simplemente escribiendo \"@etiqueta\" como parte del texto de la tarea. Por ahora, hay 5 etiquetas de prioridad disponibles."
 
-#: utils.js:56
+#: utils.js:55
 msgid "This is a @critical priority task"
 msgstr "Esta es una tarea de prioridad @crítica"
 
-#: utils.js:59
+#: utils.js:58
 msgid "This is a @high priority task"
 msgstr "Esta es una tarea de prioridad @alta"
 
-#: utils.js:62
+#: utils.js:61
 msgid "This is a @medium priority task"
 msgstr "Esta es una tarea de prioridad @media"
 
-#: utils.js:65
+#: utils.js:64
 msgid "This is a @today priority task"
 msgstr "Esta es una tarea de prioridad @hoy"
 
-#: utils.js:68
+#: utils.js:67
 msgid "This is a @low priority task"
 msgstr "Esta es una tarea de prioridad @baja"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:204
+#: utils.js:209
 msgid "low"
 msgstr "baja"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:206
+#: utils.js:211
 msgid "today"
 msgstr "hoy"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:208
+#: utils.js:213
 msgid "medium"
 msgstr "media"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:210
+#: utils.js:215
 msgid "high"
 msgstr "alta"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:212
+#: utils.js:217
 msgid "critical"
 msgstr "crítica"
 
-#: utils.js:600
+#: utils.js:605
 msgid "New task..."
 msgstr "Nueva tarea..."
 
-#: utils.js:619
+#: utils.js:624
 msgid "Tasks list options"
 msgstr "Opciones de lista de tareas"
 
-#: utils.js:676
+#: utils.js:682
 msgid "Export this tasks list"
 msgstr "Exportar esta lista de tareas"
 
-#: utils.js:681
+#: utils.js:687
 msgid "Save this tasks list as TODO"
 msgstr "Guardar esta lista de tareas como archivo TODO"
 
-#: utils.js:686
+#: utils.js:692
 msgid "Sort tasks alphabetically"
 msgstr "Ordenar tareas alfabéticamente"
 
-#: utils.js:691 utils.js:701
+#: utils.js:697 utils.js:707
 msgid "Takes effect after closing and re-opening the main menu."
 msgstr "Toma efecto después de cerrar y volver a abrir el menú principal."
 
-#: utils.js:696
+#: utils.js:702
 msgid "Sort tasks by completed state"
 msgstr "Ordenar tareas por estado completado"
 
-#: utils.js:706
+#: utils.js:712
 msgid "Display remove tasks buttons"
 msgstr "Mostrar botones para borrar tareas"
 
-#: utils.js:711 utils.js:721
+#: utils.js:717 utils.js:727
 msgid "Takes effect immediately."
 msgstr "Toma efecto inmediatamente."
 
-#: utils.js:716
+#: utils.js:722
 msgid "Keep completed tasks hidden"
 msgstr "Mantener escondidas las tareas completadas"
 
 #. TO TRANSLATORS: Full sentence.
 #. "Remove this section/task"
-#: utils.js:1630
+#: utils.js:1652
 #, javascript-format
 msgid "Remove this %s"
 msgstr "Remover esta %s"
 
-#: utils.js:1633
+#: utils.js:1655
 msgid "(Hold Ctrl key)"
 msgstr "(Mantener presionada la tecla Control)"
 

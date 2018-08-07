@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 2.6\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-07-23 15:55-0300\n"
+"POT-Creation-Date: 2018-08-07 03:37-0300\n"
 "PO-Revision-Date: 2018-07-23 16:00-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -32,7 +32,7 @@ msgstr "Compatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:158
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:157
 msgid "Help"
 msgstr "Ayuda"
 
@@ -141,51 +141,51 @@ msgstr "El paquete es llamado **libgtop2**."
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr "Reiniciar Cinnamon luego de haber instalado los paquetes para que el applet los reconozca."
 
-#: applet.js:169
+#: applet.js:168
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:170
+#: applet.js:169
 msgid "This applet needs the GTop library installed on your system for it  to work."
 msgstr "Este applet necesita la biblioteca GTop instalada en su sistema para que funcione."
 
-#: applet.js:171
+#: applet.js:170
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
-#: applet.js:383
+#: applet.js:382
 msgid "Command not set!"
 msgstr "¡Comando no establecido!"
 
-#: applet.js:384
+#: applet.js:383
 msgid "Set a custom command from this applet settings window."
 msgstr "Establecer un comando personalizado desde la ventana de configuración de este applet."
 
-#: utils.js:83
+#: utils.js:82
 msgid "CPU"
 msgstr "CPU"
 
-#: utils.js:109 utils.js:135
+#: utils.js:108 utils.js:134
 msgid "MB"
 msgstr "MB"
 
-#: utils.js:114
+#: utils.js:113
 msgid "Memory"
 msgstr "Memoria"
 
-#: utils.js:140
+#: utils.js:139
 msgid "Swap"
 msgstr "Swap"
 
-#: utils.js:185
+#: utils.js:184
 msgid "KB/s"
 msgstr "KB/s"
 
-#: utils.js:190
+#: utils.js:189
 msgid "Network D/U"
 msgstr "Red D/S"
 
-#: utils.js:228
+#: utils.js:227
 msgid "Load average"
 msgstr "Promedio de carga"
 

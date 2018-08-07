@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus 0.54\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-07-23 15:55-0300\n"
+"POT-Creation-Date: 2018-08-07 03:37-0300\n"
 "PO-Revision-Date: 2018-07-23 15:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -33,7 +33,7 @@ msgstr "Compatibilidad"
 
 #. Define them before self._get_language_stats() is called so these
 #. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:266 python/manage_feeds.py:175
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:263 python/manage_feeds.py:175
 msgid "Help"
 msgstr "Ayuda"
 
@@ -127,35 +127,35 @@ msgstr "El módulo feedparser para Python 3 es un analizador de fuentes universa
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr "Instalar con `pip` (Cinnamon necesita ser reiniciado luego de instalar feedparser si el applet ya fue colocado en un panel):"
 
-#: applet.js:71
+#: applet.js:70
 msgid "Feed reader"
 msgstr "Lector de Feeds"
 
-#: applet.js:173
+#: applet.js:170
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:174
+#: applet.js:171
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr "Este applet necesita que el módulo feedparser para Python 3 esté instalado en su sistema para que funcione."
 
-#: applet.js:175
+#: applet.js:172
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
-#: applet.js:234
+#: applet.js:231
 msgid "Mark all read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:246
+#: applet.js:243
 msgid "Reload"
 msgstr "Recargar"
 
-#: applet.js:257
+#: applet.js:254
 msgid "Manage feeds"
 msgstr "Administrar feeds"
 
-#: applet.js:359
+#: applet.js:357
 msgid "No unread feeds"
 msgstr "Sin feeds no leídos."
 
@@ -314,60 +314,60 @@ msgstr "No se puede exportar archivo"
 msgid "Feeds Reader (Fork By Odyseus)"
 msgstr "Lector de Feeds (Modificado por Odyseus)"
 
-#: utils.js:90
+#: utils.js:89
 msgid "Feeds"
 msgstr "Feeds"
 
-#: utils.js:264
+#: utils.js:280
 msgid "Right Click to open feed"
 msgstr "Clic derecho para abrir el feed"
 
 #. Only one page of items to read, no need to display mark all posts option.
-#: utils.js:335
+#: utils.js:351
 msgid "Mark All Posts Read"
 msgstr "Marcar todo como leído"
 
-#: utils.js:343
+#: utils.js:359
 #, javascript-format
 msgid "Mark Next %d Posts Read"
 msgstr "Marcar las siguientes %d publicaciones como leídas"
 
-#: utils.js:349
+#: utils.js:365
 msgid "Update feed URL"
 msgstr "Actualizar URL del feed"
 
-#: utils.js:434 utils.js:440
+#: utils.js:450 utils.js:456
 msgid "Published"
 msgstr "Publicado"
 
-#: utils.js:501
+#: utils.js:519
 msgid "Mark Post Read"
 msgstr "Marcar como leído"
 
-#: utils.js:539
+#: utils.js:557
 msgid "d"
 msgstr "d"
 
-#: utils.js:541 utils.js:543
+#: utils.js:559 utils.js:561
 msgid "h"
 msgstr "h"
 
-#: utils.js:543
+#: utils.js:561
 #, javascript-format
 msgid "(<1%s) "
 msgstr "(<1%s) "
 
 #. Invalid feed detected, throw and log error.
-#: utils.js:816
+#: utils.js:836
 msgid "Invalid feed url"
 msgstr "URL del feed inválida"
 
-#: utils.js:896
+#: utils.js:916
 #, javascript-format
 msgid "%d unread items!"
 msgstr "¡%d ítems sin leer!"
 
-#: utils.js:1035 utils.js:1048
+#: utils.js:1055 utils.js:1068
 msgid "Loading feed"
 msgstr "Cargando feed"
 

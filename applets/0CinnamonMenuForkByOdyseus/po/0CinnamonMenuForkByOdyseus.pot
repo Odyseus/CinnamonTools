@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
-"POT-Creation-Date: 2018-07-23 16:07-0300\n"
+"POT-Creation-Date: 2018-08-07 03:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -462,125 +462,125 @@ msgstr ""
 msgid "Edit custom launchers"
 msgstr ""
 
-#: applet.js:1201
+#: applet.js:1186
 msgid "No recent applications"
 msgstr ""
 
-#: applet.js:1266
+#: applet.js:1251
 msgid "Favorites"
 msgstr ""
 
-#: applet.js:1531
+#: applet.js:1516
 msgid "Type to search..."
 msgstr ""
 
-#: utils.js:515
+#: utils.js:482
 msgid "Add to panel"
 msgstr ""
 
-#: utils.js:519
+#: utils.js:486
 msgid "Add this application to the Panel launchers applet."
 msgstr ""
 
-#: utils.js:526
+#: utils.js:493
 msgid "Add to desktop"
 msgstr ""
 
-#: utils.js:530
+#: utils.js:497
 msgid "Add this application to the Desktop."
 msgstr ""
 
-#: utils.js:538
+#: utils.js:505
 msgid "Remove from favorites"
 msgstr ""
 
-#: utils.js:542
+#: utils.js:509
 msgid "Remove application from your favorites."
 msgstr ""
 
-#: utils.js:547
+#: utils.js:514
 msgid "Add to favorites"
 msgstr ""
 
-#: utils.js:551
+#: utils.js:518
 msgid "Add application to your favorites."
 msgstr ""
 
-#: utils.js:559
+#: utils.js:526
 msgid "Uninstall"
 msgstr ""
 
-#: utils.js:563
+#: utils.js:530
 msgid "Uninstall application from your system."
 msgstr ""
 
-#: utils.js:570
+#: utils.js:537
 msgid "Run with NVIDIA GPU"
 msgstr ""
 
-#: utils.js:574
+#: utils.js:541
 msgid "Run application through optirun command (Bumblebee)."
 msgstr ""
 
-#: utils.js:581
+#: utils.js:548
 msgid "Run as root"
 msgstr ""
 
-#: utils.js:585
+#: utils.js:552
 msgid "Run application as root."
 msgstr ""
 
-#: utils.js:592
+#: utils.js:559
 msgid "Edit .desktop file"
 msgstr ""
 
-#: utils.js:596
+#: utils.js:563
 msgid "Edit this application .desktop file with a text editor."
 msgstr ""
 
-#: utils.js:603
+#: utils.js:570
 msgid "Open .desktop file folder"
 msgstr ""
 
-#: utils.js:607
+#: utils.js:574
 msgid "Open the folder containg this application .desktop file."
 msgstr ""
 
-#: utils.js:614
+#: utils.js:581
 msgid "Run from terminal"
 msgstr ""
 
-#: utils.js:618
+#: utils.js:585
 msgid "Run application from a terminal."
 msgstr ""
 
-#: utils.js:625
+#: utils.js:592
 msgid "Run from terminal as root"
 msgstr ""
 
-#: utils.js:629
+#: utils.js:596
 msgid "Run application from a terminal as root."
 msgstr ""
 
-#: utils.js:893
+#: utils.js:860
 msgid "All Applications"
 msgstr ""
 
 #. settings-schema.json->recent_apps_header->description
-#: utils.js:948
+#: utils.js:915
 msgid "Recent Applications"
 msgstr ""
 
-#: utils.js:1087
+#: utils.js:1054
 msgid "Clear list"
 msgstr ""
 
-#: utils.js:1140
+#: utils.js:1107
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr ""
 
-#: utils.js:1141
+#: utils.js:1108
 msgid "Please check your installation."
 msgstr ""
 

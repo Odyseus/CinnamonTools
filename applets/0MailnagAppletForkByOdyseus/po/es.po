@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 16:55-0300\n"
+"POT-Creation-Date: 2018-08-07 03:37-0300\n"
 "PO-Revision-Date: 2018-05-14 17:05-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: \n"
@@ -90,13 +90,13 @@ msgstr ""
 #: ../../__app__/python_modules/localized_help_creator.py:372
 msgid ""
 "If this xlet was installed manually and not trough Cinnamon Settings, "
-"localizations can be installed by executing the script called "
-"**helper.py** from a terminal opened inside the xlet's folder."
+"localizations can be installed by executing the script called **helper.py** "
+"from a terminal opened inside the xlet's folder."
 msgstr ""
 "Si este xlet se instaló manualmente y no a través de Configuración de "
 "Cinnamon, las localizaciones se pueden instalar ejecutando el archivo "
-"llamado **helper.py** desde una terminal abierta dentro de la "
-"carpeta del xlet."
+"llamado **helper.py** desde una terminal abierta dentro de la carpeta del "
+"xlet."
 
 #: ../../__app__/python_modules/localized_help_creator.py:373
 msgid ""
@@ -106,46 +106,46 @@ msgstr ""
 "Si este xlet no está disponible en su idioma, la localización puede ser "
 "creada siguiendo las siguientes instrucciones."
 
-#: applet.js:399
+#: applet.js:395
 #, javascript-format
 msgid "You have %d new mails!"
 msgstr "¡Tienes %d correos nuevos!"
 
-#: applet.js:400 applet.js:437
+#: applet.js:396 applet.js:433
 msgid "Mark All Read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:409
+#: applet.js:405
 msgid "You have new mail!"
 msgstr "¡Tienes nuevo correo!"
 
-#: applet.js:411
+#: applet.js:407
 msgid "Mark Read"
 msgstr "Marcar como leído"
 
-#: applet.js:473 applet.js:520
+#: applet.js:469 applet.js:516
 msgid "No unread mails."
 msgstr "Sin mensajes no leídos."
 
-#: applet.js:501
+#: applet.js:497
 msgid "Mailnag daemon is not running!"
 msgstr "El demonio Mailnag no se está ejecutando!"
 
-#: applet.js:511
+#: applet.js:507
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr "¡Tienes un correo de %s!"
 
-#: applet.js:517
+#: applet.js:513
 #, javascript-format
 msgid "You have %d unread mails!"
 msgstr "¡Tienes %d correos sin leer!"
 
-#: applet.js:530
+#: applet.js:526
 msgid "Click to see error!"
 msgstr "Hacer clic para ver el error!"
 
-#: applet.js:531
+#: applet.js:527
 msgid "Error"
 msgstr "Error"
 

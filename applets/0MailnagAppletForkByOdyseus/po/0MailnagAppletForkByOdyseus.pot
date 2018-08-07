@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2018-07-23 16:07-0300\n"
+"POT-Creation-Date: 2018-08-07 03:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,46 +77,46 @@ msgstr ""
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
-#: applet.js:399
+#: applet.js:395
 #, javascript-format
 msgid "You have %d new mails!"
 msgstr ""
 
-#: applet.js:400 applet.js:437
+#: applet.js:396 applet.js:433
 msgid "Mark All Read"
 msgstr ""
 
-#: applet.js:409
+#: applet.js:405
 msgid "You have new mail!"
 msgstr ""
 
-#: applet.js:411
+#: applet.js:407
 msgid "Mark Read"
 msgstr ""
 
-#: applet.js:473 applet.js:520
+#: applet.js:469 applet.js:516
 msgid "No unread mails."
 msgstr ""
 
-#: applet.js:501
+#: applet.js:497
 msgid "Mailnag daemon is not running!"
 msgstr ""
 
-#: applet.js:511
+#: applet.js:507
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr ""
 
-#: applet.js:517
+#: applet.js:513
 #, javascript-format
 msgid "You have %d unread mails!"
 msgstr ""
 
-#: applet.js:530
+#: applet.js:526
 msgid "Click to see error!"
 msgstr ""
 
-#: applet.js:531
+#: applet.js:527
 msgid "Error"
 msgstr ""
 

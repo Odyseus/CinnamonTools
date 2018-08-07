@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CollapsibleSystrayByFeuerfuchsForkByOdyseus 1.6\n"
-"POT-Creation-Date: 2018-07-23 16:07-0300\n"
+"POT-Creation-Date: 2018-08-07 03:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,11 +78,11 @@ msgid "If this xlet has no locale available for your language, you could create 
 msgstr ""
 
 #. Context menu items
-#: applet.js:131
+#: applet.js:130
 msgid "Active applications"
 msgstr ""
 
-#: applet.js:132
+#: applet.js:131
 msgid "Inactive applications"
 msgstr ""
 

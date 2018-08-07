@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PanelDrawerForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2018-07-23 16:07-0300\n"
+"POT-Creation-Date: 2018-08-07 03:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,11 +77,11 @@ msgstr ""
 msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
-#: applet.js:106
+#: applet.js:107
 msgid "Panel Edit mode"
 msgstr ""
 
-#: applet.js:112
+#: applet.js:113
 msgid "Add applets to the panel"
 msgstr ""
 

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
 "Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-07-23 16:04-0300\n"
+"POT-Creation-Date: 2018-08-07 03:37-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -461,125 +461,125 @@ msgstr "Abrir el editor de menús"
 msgid "Edit custom launchers"
 msgstr "Editar lanzadores personalizados"
 
-#: applet.js:1201
+#: applet.js:1186
 msgid "No recent applications"
 msgstr "Sin aplicaciones recientes"
 
-#: applet.js:1266
+#: applet.js:1251
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: applet.js:1531
+#: applet.js:1516
 msgid "Type to search..."
 msgstr "Escriba para buscar..."
 
-#: utils.js:515
+#: utils.js:482
 msgid "Add to panel"
 msgstr "Añadir al panel"
 
-#: utils.js:519
+#: utils.js:486
 msgid "Add this application to the Panel launchers applet."
 msgstr "Agregar esta aplicación a los Lanzadores del panel."
 
-#: utils.js:526
+#: utils.js:493
 msgid "Add to desktop"
 msgstr "Añadir al escritorio"
 
-#: utils.js:530
+#: utils.js:497
 msgid "Add this application to the Desktop."
 msgstr "Agregar un acceso directo a esta aplicación en el Escritorio."
 
-#: utils.js:538
+#: utils.js:505
 msgid "Remove from favorites"
 msgstr "Quitar de favoritos"
 
-#: utils.js:542
+#: utils.js:509
 msgid "Remove application from your favorites."
 msgstr "Quitar aplicación de favoritos."
 
-#: utils.js:547
+#: utils.js:514
 msgid "Add to favorites"
 msgstr "Añadir a favoritos"
 
-#: utils.js:551
+#: utils.js:518
 msgid "Add application to your favorites."
 msgstr "Añadir esta aplicación a los favoritos."
 
-#: utils.js:559
+#: utils.js:526
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: utils.js:563
+#: utils.js:530
 msgid "Uninstall application from your system."
 msgstr "Desinstalar aplicación de su sistema."
 
-#: utils.js:570
+#: utils.js:537
 msgid "Run with NVIDIA GPU"
 msgstr "Ejecutar con GPU NVIDIA"
 
-#: utils.js:574
+#: utils.js:541
 msgid "Run application through optirun command (Bumblebee)."
 msgstr "Ejecutar aplicación a través del comando optirun (Bumblebee)."
 
-#: utils.js:581
+#: utils.js:548
 msgid "Run as root"
 msgstr "Ejecutar como root"
 
-#: utils.js:585
+#: utils.js:552
 msgid "Run application as root."
 msgstr "Ejecutar esta aplicación como root."
 
-#: utils.js:592
+#: utils.js:559
 msgid "Edit .desktop file"
 msgstr "Editar archivo .desktop"
 
-#: utils.js:596
+#: utils.js:563
 msgid "Edit this application .desktop file with a text editor."
 msgstr "Editar el archivo .desktop de esta aplicación con un editor de textos."
 
-#: utils.js:603
+#: utils.js:570
 msgid "Open .desktop file folder"
 msgstr "Abrir carpeta del archivo .desktop"
 
-#: utils.js:607
+#: utils.js:574
 msgid "Open the folder containg this application .desktop file."
 msgstr "Abrir la carpeta que contiene el archivo .desktop de esta aplicación."
 
-#: utils.js:614
+#: utils.js:581
 msgid "Run from terminal"
 msgstr "Ejecutar desde terminal"
 
-#: utils.js:618
+#: utils.js:585
 msgid "Run application from a terminal."
 msgstr "Ejecutar aplicación desde una terminal."
 
-#: utils.js:625
+#: utils.js:592
 msgid "Run from terminal as root"
 msgstr "Ejecutar desde terminal como root"
 
-#: utils.js:629
+#: utils.js:596
 msgid "Run application from a terminal as root."
 msgstr "Ejecutar aplicación desde una terminal como root."
 
-#: utils.js:893
+#: utils.js:860
 msgid "All Applications"
 msgstr "Todas las aplicaciones"
 
 #. settings-schema.json->recent_apps_header->description
-#: utils.js:948
+#: utils.js:915
 msgid "Recent Applications"
 msgstr "Aplicaciones recientes"
 
-#: utils.js:1087
+#: utils.js:1054
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: utils.js:1140
+#: utils.js:1107
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr "No se pudo encontrar el esquema %s para el xlet %s."
 
-#: utils.js:1141
+#: utils.js:1108
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 
