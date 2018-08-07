@@ -759,7 +759,7 @@ DesktopHandlerApplet.prototype = {
             this.tooltip.destroy();
         }
 
-        let boldSpan = function(aStr) {
+        let boldSpan = (aStr) => {
             return '<span weight="bold">' + aStr + "</span>";
         };
 
@@ -902,16 +902,16 @@ DesktopHandlerApplet.prototype = {
                         }
 
                         let binding = [];
-                        binding.get_mask = function() {
+                        binding.get_mask = () => {
                             return 0x0;
                         };
 
                         if (scrollDirection === 1) {
-                            binding.get_name = function() {
+                            binding.get_name = () => {
                                 return "switch-to-workspace-left";
                             };
                         } else if (scrollDirection == -1) {
-                            binding.get_name = function() {
+                            binding.get_name = () => {
                                 return "switch-to-workspace-right";
                             };
                         }
@@ -1043,7 +1043,7 @@ DesktopHandlerApplet.prototype = {
                         return this.pref_switcher_scope;
                     }
                 };
-                this.get_mask = function() {
+                this.get_mask = () => {
                     return 0xFFFF;
                 };
                 let style = this.pref_switcher_style;
