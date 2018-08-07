@@ -625,7 +625,7 @@ PopupTranslatorApplet.prototype = {
 
     Yandex_provider: function(aSourceText, aMechId) {
         try {
-            let APIKeys = this.pref_yandex_api_keys.split("\n").filter(function(aKey) { // Filter possible empty elements.
+            let APIKeys = this.pref_yandex_api_keys.split("\n").filter((aKey) => { // Filter possible empty elements.
                 if (aKey !== "") {
                     return true;
                 }
