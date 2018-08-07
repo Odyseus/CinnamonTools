@@ -12,7 +12,6 @@ const _ = $._;
 const Applet = imports.ui.applet;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
-const Gtk = imports.gi.Gtk;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
@@ -380,7 +379,7 @@ QuickMenuApplet.prototype = {
         } finally {
             // Populate dirs first
             if (dirs.length > 0 && !this.pref_ignore_sub_folders) {
-                dirs = dirs.sort(function(a, b) {
+                dirs = dirs.sort((a, b) => {
                     return a.folderName.localeCompare(b.folderName);
                 });
                 let d = 0,
@@ -405,7 +404,7 @@ QuickMenuApplet.prototype = {
 
             // Populate files
             if (files.length > 0) {
-                files = files.sort(function(a, b) {
+                files = files.sort((a, b) => {
                     return a.name.localeCompare(b.name);
                 });
                 let f = 0,
