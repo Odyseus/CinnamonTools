@@ -263,7 +263,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
     sortMails: function(mails) {
         // ascending order
-        mails.sort(function(m1, m2) {
+        mails.sort((m1, m2) => {
             return m1.datetime - m2.datetime;
         });
         return mails;
