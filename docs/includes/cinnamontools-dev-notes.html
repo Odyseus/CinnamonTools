@@ -114,11 +114,18 @@
 </div>
 <div class="section" id="eol-ideas-plans">
 <h2><abbr title="end-of-life">EOL</abbr> ideas/plans<a class="headerlink" href="#eol-ideas-plans" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
+<ul>
 <li><p>Linux Mint 18.x/Ubuntu 16.04.x <abbr title="end-of-life">EOL</abbr> is 2021.</p></li>
 <li><p>Remove all retro-compatible code from all xlets. They all are marked with the string <em>Mark for deletion on EOL</em>.</p></li>
 <li><p>Avoid at all cost to make xlets <strong>multiversion</strong>. I already went through that path. It wasn’t pretty all the nonsense that I had to endure.</p></li>
-<li><p>Convert all JavaScript code into ECMAScript 2015 syntax. By 2021, I might get used to that annoyance. LOL</p></li>
+<li><p>Convert all JavaScript code into ECMAScript 2015 syntax. By 2021, I might get used to that annoyance. LOL</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Step 1 (Done):</strong> Eradicate the use of the <strong>Lang</strong> Cjs module in favor of arrow/standard functions.</p></li>
+<li><p><strong>Step 2 (Done):</strong> Convert all functions (that can be converted) to arrow functions.</p></li>
+</ul>
+</div></blockquote>
+</li>
 <li><p>Remove all <code class="docutils literal notranslate"><span class="pre">try{}catch{}</span></code> blocks on xlets <code class="docutils literal notranslate"><span class="pre">_init</span></code> methods. Newer versions of Cinnamon already uses these code blocks to wrap xlets initialization. Keep an eye on it in case that they decide to change this yet again.</p></li>
 </ul>
 </div>
