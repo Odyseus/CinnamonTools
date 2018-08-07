@@ -105,7 +105,7 @@ PanelDrawerForkByOdyseusApplet.prototype = {
     _expandAppletContextMenu: function() {
         let editMode = global.settings.get_boolean("panel-edit-mode");
         this.panelEditMode = new PopupMenu.PopupSwitchMenuItem(_("Panel Edit mode"), editMode);
-        this.panelEditMode.connect("toggled", function(item) {
+        this.panelEditMode.connect("toggled", (item) => {
             global.settings.set_boolean("panel-edit-mode", item.state);
         });
         this._applet_context_menu.addMenuItem(this.panelEditMode);
@@ -116,7 +116,7 @@ PanelDrawerForkByOdyseusApplet.prototype = {
             icon_size: 22,
             icon_type: St.IconType.FULLCOLOR
         });
-        addapplets.connect("activate", function() {
+        addapplets.connect("activate", () => {
             Util.spawnCommandLine("cinnamon-settings applets");
         });
         addapplets.addActor(addappletsicon, {
