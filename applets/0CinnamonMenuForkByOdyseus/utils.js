@@ -50,40 +50,6 @@ function _(aStr) {
     return Gettext.gettext(aStr);
 }
 
-/**
- * Use this function instead of decodeURIComponent
- */
-var escapeUnescapeReplacer = {
-    escapeHash: {
-        _: function(input) {
-            let ret = escapeUnescapeReplacer.escapeHash[input];
-            if (!ret) {
-                if (input.length - 1) {
-                    ret = String.fromCharCode(parseInt(input.substring(input.length - 3 ? 2 : 1), 16));
-                } else {
-                    let code = input.charCodeAt(0);
-                    ret = code < 256 ? "%" + (0 + code.toString(16)).slice(-2).toUpperCase() : "%u" + ("000" + code.toString(16)).slice(-4).toUpperCase();
-                }
-                escapeUnescapeReplacer.escapeHash[ret] = input;
-                escapeUnescapeReplacer.escapeHash[input] = ret;
-            }
-            return ret;
-        }
-    },
-
-    escape: function(aStr) {
-        return aStr.toString().replace(/[^\w @\*\-\+\.\/]/g, function(aChar) {
-            return escapeUnescapeReplacer.escapeHash._(aChar);
-        });
-    },
-
-    unescape: function(aStr) {
-        return aStr.toString().replace(/%(u[\da-f]{4}|[\da-f]{2})/gi, function(aSeq) {
-            return escapeUnescapeReplacer.escapeHash._(aSeq);
-        });
-    }
-};
-
 /* VisibleChildIterator takes a container (boxlayout, etc.)
  * and creates an array of its visible children and their index
  * positions.  We can then work through that list without
@@ -205,7 +171,7 @@ ApplicationContextMenuItem.prototype = {
                 let file = Gio.file_new_for_path(this._appButton.app.get_app_info().get_filename());
                 let destFile = Gio.file_new_for_path(USER_DESKTOP_PATH + "/" + this._appButton.app.get_id());
                 try {
-                    file.copy(destFile, 0, null, function() {});
+                    file.copy(destFile, 0, null, () => {});
 
                     if (FileUtils.hasOwnProperty("changeModeGFile")) {
                         FileUtils.changeModeGFile(destFile, 755);
@@ -698,17 +664,17 @@ TransientButton.prototype = {
         // work with our search result.
         this.app = {
             get_app_info: {
-                get_filename: function() {
+                get_filename: () => {
                     return aPathOrCommand;
                 }
             },
-            get_id: function() {
+            get_id: () => {
                 return -1;
             },
-            get_description: function() {
+            get_description: () => {
                 return this.pathOrCommand;
             },
-            get_name: function() {
+            get_name: () => {
                 return "";
             }
         };
@@ -1179,7 +1145,7 @@ RecentAppsManager.prototype = {
             // http://stackoverflow.com/questions/31014324/remove-duplicated-object-in-array
             let temp = [];
 
-            this.recentApps = recApps.filter(function(aVal) {
+            this.recentApps = recApps.filter((aVal) => {
                 let appID = aVal.split(":")[0];
                 return temp.indexOf(appID) === -1 ? temp.push(appID) : false;
             });

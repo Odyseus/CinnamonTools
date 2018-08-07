@@ -1238,22 +1238,22 @@ CinnamonMenuForkByOdyseus.prototype = {
         this._applicationsBoxWidth = 0;
 
         let favCat = {
-            get_menu_id: function() {
+            get_menu_id: () => {
                 return "favorites";
             },
-            get_id: function() {
+            get_id: () => {
                 return -1;
             },
-            get_description: function() {
+            get_description: () => {
                 return this.get_name();
             },
-            get_name: function() {
+            get_name: () => {
                 return _("Favorites");
             },
-            get_is_nodisplay: function() {
+            get_is_nodisplay: () => {
                 return false;
             },
-            get_icon: function() {
+            get_icon: () => {
                 return "user-bookmarks";
             }
         };
@@ -1366,7 +1366,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             }
         }
         // Sort apps and add to applicationsBox
-        this._applicationsButtons.sort(function(a, b) {
+        this._applicationsButtons.sort((a, b) => {
             a = Util.latinise(a.app.get_name().toLowerCase());
             b = Util.latinise(b.app.get_name().toLowerCase());
             return a > b;
