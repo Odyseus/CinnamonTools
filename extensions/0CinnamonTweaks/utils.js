@@ -291,7 +291,7 @@ function informAndDisable() {
         let msg = [
             _("Extension activation aborted!!!"),
             _("Your Cinnamon version may not be compatible!!!"),
-            _("Minimum Cinnamon version allowed: 2.8.6")
+            _("Minimum Cinnamon version allowed: 3.0.x")
         ];
         global.logError(msg);
         Main.criticalNotify(_(XletMeta.name), msg.join("\n"));
@@ -354,7 +354,7 @@ CT_NemoDesktopArea.prototype = {
         let destFile = Gio.file_new_for_path(fPath);
 
         try {
-            file.copy(destFile, 0, null, function() {});
+            file.copy(destFile, 0, null, () => {});
             if (FileUtils.hasOwnProperty("changeModeGFile")) {
                 FileUtils.changeModeGFile(destFile, 755);
             } else {
@@ -842,7 +842,7 @@ CT_MaximusNG.prototype = {
          * However, is there a use case where this would happen legitimately?
          * For some reaons the Qt apps seem to take a while to be refocused.
          */
-        Meta.later_add(Meta.LaterType.IDLE, function() {
+        Meta.later_add(Meta.LaterType.IDLE, () => {
             if (win.focus) {
                 win.focus(global.get_current_time());
             } else {
@@ -879,7 +879,7 @@ CT_MaximusNG.prototype = {
          * However, is there a use case where this would happen legitimately?
          * For some reaons the Qt apps seem to take a while to be refocused.
          */
-        Meta.later_add(Meta.LaterType.IDLE, function() {
+        Meta.later_add(Meta.LaterType.IDLE, () => {
             if (win.focus) {
                 win.focus(global.get_current_time());
             } else {
@@ -917,10 +917,9 @@ CT_MaximusNG.prototype = {
          * Additionally things like .get_maximized() aren't properly done yet.
          * (see workspace.js _doAddWindow)
          */
-        let self = this;
         if (!id && !win.get_compositor_private() && !stopAdding) {
-            Mainloop.idle_add(function() {
-                self.setHideTitlebar(null, win, true);
+            Mainloop.idle_add(() => {
+                this.setHideTitlebar(null, win, true);
                 return false;
             });
             return;
@@ -991,9 +990,8 @@ CT_MaximusNG.prototype = {
     possiblyUndecorate: function(win) {
         if (this.shouldBeUndecorated(win)) {
             if (!win.get_compositor_private()) {
-                let self = this;
-                Mainloop.idle_add(function() {
-                    self.undecorate(win);
+                Mainloop.idle_add(() => {
+                    this.undecorate(win);
                     return false;
                 });
             } else {
@@ -1009,9 +1007,8 @@ CT_MaximusNG.prototype = {
     possiblyRedecorate: function(win) {
         if (!this.shouldBeUndecorated(win)) {
             if (!win.get_compositor_private()) {
-                let self = this;
-                Mainloop.idle_add(function() {
-                    self.decorate(win);
+                Mainloop.idle_add(() => {
+                    this.decorate(win);
                     return false;
                 });
             } else {
@@ -1177,7 +1174,7 @@ CT_MaximusNG.prototype = {
             this.setHideTitlebar(win, true);
             if (this.shouldBeUndecorated(win)) {
                 win.unmaximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
-                Mainloop.idle_add(function() {
+                Mainloop.idle_add(() => {
                     win.maximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
                     return false;
                 });
@@ -1353,7 +1350,7 @@ CT_MaximusNG.prototype = {
             this.onetime = 0;
         }
 
-        let winList = global.get_window_actors().map(function(w) {
+        let winList = global.get_window_actors().map((w) => {
             return w.meta_window;
         });
         let b = winList.length;

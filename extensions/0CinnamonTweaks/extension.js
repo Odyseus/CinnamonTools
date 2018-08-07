@@ -317,7 +317,7 @@ const CT_AppletManagerPatch = {
             // Patch Appletmanager._removeAppletFromPanel to ask for confirmation on applet removal.
             STG.AMP._removeAppletFromPanel = am._removeAppletFromPanel;
             am._removeAppletFromPanel = function(uuid, applet_id) {
-                let removeApplet = function() {
+                let removeApplet = () => {
                     // TODO: Check the exact Cinnamon version in which this function was changed. ¬¬
                     // Mark for deletion on EOL. Cinnamon 3.6.x+
                     if ($.versionCompare($.CINNAMON_VERSION, "3.6.4") >= 0) {
@@ -356,7 +356,7 @@ const CT_AppletManagerPatch = {
                 if (ctrlKey) {
                     removeApplet();
                 } else {
-                    let dialog = new $.ConfirmationDialog(function() {
+                    let dialog = new $.ConfirmationDialog(() => {
                             removeApplet();
                         },
                         "Applet removal",
@@ -462,7 +462,7 @@ const CT_DeskletManagerPatch = {
             STG.DMP.removeDesklet = dm.removeDesklet;
             dm.removeDesklet = function(uuid, desklet_id) {
                 let ENABLED_DESKLETS_KEY = "enabled-desklets";
-                let removeDesklet = function() {
+                let removeDesklet = () => {
                     try {
                         let list = global.settings.get_strv(ENABLED_DESKLETS_KEY);
                         for (let i = 0; i < list.length; i++) {
@@ -482,7 +482,7 @@ const CT_DeskletManagerPatch = {
                 if (ctrlKey) {
                     removeDesklet();
                 } else {
-                    let dialog = new $.ConfirmationDialog(function() {
+                    let dialog = new $.ConfirmationDialog(() => {
                             removeDesklet();
                         },
                         "Desklet removal",
@@ -693,7 +693,9 @@ const CT_MessageTrayPatch = {
                         opacity: 128
                     });
                     closeButton.connect("clicked",
-                        () => this._notification.destroy());
+                        function() {
+                            this.destroy();
+                        }.bind(this._notification));
                     closeButton.connect("notify::hover",
                         () => {
                             closeButton.opacity = closeButton.hover ? 255 : 128;
@@ -1461,7 +1463,7 @@ function enable() {
                 icon_type: St.IconType.FULLCOLOR,
                 icon_size: 48
             });
-            Mainloop.timeout_add(5000, function() {
+            Mainloop.timeout_add(5000, () => {
                 Main.criticalNotify(
                     _(xletMeta.name),
                     msg.join(" "),
