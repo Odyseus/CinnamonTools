@@ -211,7 +211,8 @@ TranslationMenuItem.prototype = {
         });
 
         let toolbar = new St.BoxLayout({
-            vertical: false
+            vertical: false,
+            style: "spacing:4px;"
         });
 
         let icon1 = new St.Icon({
@@ -222,7 +223,8 @@ TranslationMenuItem.prototype = {
         });
         this.button1 = new St.Button({
             child: icon1,
-            style: "padding-right: 5px;"
+            style_class: "notification-button",
+            style: "padding: 2px 5px;"
         });
 
         let icon2 = new St.Icon({
@@ -234,7 +236,8 @@ TranslationMenuItem.prototype = {
 
         this.button2 = new St.Button({
             child: icon2,
-            style: "padding-right: 5px;"
+            style_class: "notification-button",
+            style: "padding: 2px 5px;"
         });
 
         let icon3 = new St.Icon({
@@ -246,7 +249,8 @@ TranslationMenuItem.prototype = {
 
         this.button3 = new St.Button({
             child: icon3,
-            style: "padding-right: 5px;"
+            style_class: "notification-button",
+            style: "padding: 2px 5px;"
         });
 
         this.footerLabel = new St.Label({

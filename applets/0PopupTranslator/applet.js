@@ -963,16 +963,22 @@ PopupTranslatorApplet.prototype = {
             // Trying the following asynchronous function in replacement of
             // Cinnamon.get_file_contents*utf8_sync.
             this.historyFile.load_contents_async(null, (aFile, aResponce) => {
-                let rawData;
+                let success, contents, tag;
+
                 try {
-                    rawData = aFile.load_contents_finish(aResponce)[1];
+                    [success, contents, tag] = aFile.load_contents_finish(aResponce);
                 } catch (aErr) {
                     global.logError("ERROR: " + aErr.message);
                     return;
                 }
 
+                if (!success) {
+                    global.logError("Error parsing %s".format(this.historyFile.get_path()));
+                    return;
+                }
+
                 try {
-                    data = JSON.parse(rawData);
+                    data = JSON.parse(contents);
                 } finally {
                     this.dealWithHistoryData(data, false);
                 }
