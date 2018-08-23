@@ -107,16 +107,8 @@ TaskItem.prototype = {
         // Set custom styles to the entry.
         this._setTaskStyle();
 
-        let del_icon = new St.Icon({
-            icon_name: "edit-delete",
-            icon_size: 16,
-            icon_type: St.IconType.SYMBOLIC,
-            style_class: "popup-menu-icon"
-        });
-        this._del_btn = new St.Button({
-            child: del_icon
-        });
-        this._del_btn.tooltip = new RemoveTaskButtonTooltip(this._del_btn, {
+        this._del_btn = new ReactiveButton("edit-delete");
+        this._del_btn.actor.tooltip = new RemoveTaskButtonTooltip(this._del_btn.actor, {
             applet: this._applet,
             is_section: false
         });
@@ -125,7 +117,7 @@ TaskItem.prototype = {
             span: 0
         });
 
-        this.addActor(this._del_btn, {
+        this.addActor(this._del_btn.actor, {
             align: St.Align.START
         });
 
@@ -144,8 +136,8 @@ TaskItem.prototype = {
 
         // Set initial visibility of the remove task buttons.
         if (!aInitialOptions.display_remove_task_buttons) {
-            this._del_btn.set_width(0);
-            this._del_btn.hide();
+            this._del_btn.actor.set_width(0);
+            this._del_btn.actor.hide();
         }
 
         // Set initial visibility of the task.
@@ -174,9 +166,9 @@ TaskItem.prototype = {
             () => this._setCheckedState());
         this.connections.push([this._ornament.child, conn]);
 
-        conn = this._del_btn.connect("clicked",
+        conn = this._del_btn.actor.connect("clicked",
             () => this._emit_delete());
-        this.connections.push([this._del_btn, conn]);
+        this.connections.push([this._del_btn.actor, conn]);
 
         conn = this.actor.connect("button-release-event",
             (aActor, aEvent) => this._onButtonReleaseEvent(aActor, aEvent));
@@ -612,18 +604,10 @@ NewTaskEntry.prototype = {
         this.newTask.clutter_text.set_line_wrap(true);
         this.newTask.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
 
-        let icon = new St.Icon({
-            icon_name: "system-run",
-            icon_size: 16,
-            icon_type: St.IconType.SYMBOLIC,
-            style_class: "popup-menu-icon"
-        });
-        this.opt_btn = new St.Button({
-            child: icon
-        });
-        this.opt_btn.tooltip = new CustomTooltip(this.opt_btn, _("Tasks list options"));
+        this.opt_btn = new ReactiveButton("system-run");
+        this.opt_btn.actor.tooltip = new CustomTooltip(this.opt_btn.actor, _("Tasks list options"));
 
-        this.addActor(this.opt_btn, {
+        this.addActor(this.opt_btn.actor, {
             align: St.Align.START,
             expand: false,
             span: 0
@@ -644,8 +628,8 @@ NewTaskEntry.prototype = {
         conn = _ct.connect("key_focus_in", (aActor) => this._onKeyFocusIn(aActor));
         this.connections.push([_ct, conn]);
 
-        conn = this.opt_btn.connect("clicked", () => this.toggleMenu());
-        this.connections.push([this.opt_btn, conn]);
+        conn = this.opt_btn.actor.connect("clicked", () => this.toggleMenu());
+        this.connections.push([this.opt_btn.actor, conn]);
     },
 
     // This function was the only thing that I could come up with to overcome the absolutely
@@ -1063,22 +1047,14 @@ TasksListItem.prototype = {
         // Set custom styles to the entry.
         this._setSectionStyle();
 
-        let icon = new St.Icon({
-            icon_name: "edit-delete",
-            icon_size: 16,
-            icon_type: St.IconType.SYMBOLIC,
-            style_class: "popup-menu-icon"
-        });
-        this.delete_btn = new St.Button({
-            child: icon
-        });
-        this.delete_btn.tooltip = new RemoveTaskButtonTooltip(this.delete_btn, {
+        this.delete_btn = new ReactiveButton("edit-delete");
+        this.delete_btn.actor.tooltip = new RemoveTaskButtonTooltip(this.delete_btn.actor, {
             applet: this._applet,
             is_section: true
         });
 
         // Add a delete button that will be showed if there is no more task in the section.
-        this.addActor(this.delete_btn);
+        this.addActor(this.delete_btn.actor);
 
         // Add our label by replacing the default label in PopupSubMenuMenuItem
         this.addActor(this._label, {
@@ -1112,8 +1088,8 @@ TasksListItem.prototype = {
         this.connections.push([_ct, conn]);
 
         // Create connection for delete button
-        conn = this.delete_btn.connect("clicked", () => this._supr_call());
-        this.connections.push([this.delete_btn, conn]);
+        conn = this.delete_btn.actor.connect("clicked", () => this._supr_call());
+        this.connections.push([this.delete_btn.actor, conn]);
 
         // Draw the section
         this._draw_section();
@@ -1207,7 +1183,7 @@ TasksListItem.prototype = {
             let taskItem = children[i]._delegate;
 
             if (taskItem instanceof TaskItem) { // Just to be sure.
-                let del_btn = taskItem._del_btn;
+                let del_btn = taskItem._del_btn.actor;
 
                 if (del_btn) {
                     if (this.section["display-remove-task-buttons"]) {
@@ -1297,7 +1273,7 @@ TasksListItem.prototype = {
         // Shift/Alt + Delete: Removes a section but only if it's empty.
         if (!this.ctrlKey && (this.altKey || this.shiftKey) &&
             symbol === Clutter.Delete &&
-            this.delete_btn.get_paint_visibility()) {
+            this.delete_btn.actor.get_paint_visibility()) {
             try {
                 this._applet.menu.actor.navigate_focus(this.actor, Gtk.DirectionType.UP, false);
                 this.menu.close(this._applet.pref_animate_menu);
@@ -1349,8 +1325,8 @@ TasksListItem.prototype = {
 
         // If there is no task in the section,show the delete button.
         if (this.n_tasks === 0) {
-            this.delete_btn.set_width(-1);
-            this.delete_btn.show();
+            this.delete_btn.actor.set_width(-1);
+            this.delete_btn.actor.show();
         }
 
         // Add the NewTaskEntry to allow adding new tasks in this section.
@@ -1432,8 +1408,8 @@ TasksListItem.prototype = {
 
         // If it is the first task added, hide the delete button for the section.
         if (this.n_tasks > 0) {
-            this.delete_btn.set_width(0);
-            this.delete_btn.hide();
+            this.delete_btn.actor.set_width(0);
+            this.delete_btn.actor.hide();
         }
     },
 
@@ -1477,8 +1453,8 @@ TasksListItem.prototype = {
 
         // If there is no more tasks, show the delete button
         if (this.n_tasks === 0) {
-            this.delete_btn.set_width(-1);
-            this.delete_btn.show();
+            this.delete_btn.actor.set_width(-1);
+            this.delete_btn.actor.show();
         }
 
         // Set section title
@@ -1656,6 +1632,30 @@ RemoveTaskButtonTooltip.prototype = {
         }
 
         CustomTooltip.prototype._init.call(this, aActor, tt);
+    }
+};
+
+function ReactiveButton() {
+    this._init.apply(this, arguments);
+}
+
+ReactiveButton.prototype = {
+    _init: function(aIconName) {
+        let icon = new St.Icon({
+            icon_name: aIconName,
+            icon_size: 16,
+            icon_type: St.IconType.SYMBOLIC,
+            style_class: "popup-menu-icon"
+        });
+
+        this.actor = new St.Button({
+            child: icon
+        });
+        this.actor.connect("notify::hover", () => this._onHover());
+    },
+
+    _onHover: function() {
+        this.actor.opacity = this.actor.hover ? 128 : 255;
     }
 };
 

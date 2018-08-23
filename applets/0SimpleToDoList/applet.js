@@ -360,20 +360,24 @@ SimpleToDoListApplet.prototype = {
             if (this._tasks_list_file.query_exists(null)) {
                 this._tasks_list_file.load_contents_async(null,
                     (aFile, aResponce) => {
-                        let rawData;
+                        let success, contents = "[]",
+                            tag;
+
                         try {
-                            rawData = aFile.load_contents_finish(aResponce)[1];
+                            [success, contents, tag] = aFile.load_contents_finish(aResponce);
                         } catch (aErr) {
                             global.logError(aErr.message);
                             return;
                         }
 
-                        if (!rawData) {
-                            rawData = "[]";
+                        if (!success) {
+                            global.logError("Error parsing %s".format(
+                                this._tasks_list_file.get_path()));
+                            return;
                         }
 
                         try {
-                            this.sections = JSON.parse(rawData);
+                            this.sections = JSON.parse(contents);
 
                             // For compatibility with older versions of this applet where an object
                             // was used instead of an array.
@@ -703,16 +707,22 @@ SimpleToDoListApplet.prototype = {
                 let file = Gio.file_new_for_path(path);
                 this.pref_imp_exp_last_selected_directory = path;
                 file.load_contents_async(null, (aFile, aResponce) => {
-                    let rawData;
+                    let success, contents, tag;
+
                     try {
-                        rawData = aFile.load_contents_finish(aResponce)[1];
+                        [success, contents, tag] = aFile.load_contents_finish(aResponce);
                     } catch (aErr) {
                         global.logError(aErr.message);
                         return;
                     }
 
+                    if (!success) {
+                        global.logError("Error parsing %s".format(file.get_path()));
+                        return;
+                    }
+
                     try {
-                        let sections = JSON.parse(rawData);
+                        let sections = JSON.parse(contents);
 
                         // For compatibility with older versions of this applet where an object
                         // was used instead of an array.
