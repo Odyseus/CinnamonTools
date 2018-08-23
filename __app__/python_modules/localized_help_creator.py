@@ -255,6 +255,8 @@ class LocalizedHelpCreator(object):
                 only_english_alert=only_english_alert,
             )
 
+            section = section.replace("{{lhc_lang_id}}", current_language)
+
             option = self._get_option()
 
             # option could be None if the the language has no endonym or if the amount
@@ -314,12 +316,13 @@ class LocalizedHelpCreator(object):
             endonym = None
             language_name = None
 
-        # Define them before self._get_language_stats() is called so these
-        # strings are also counted.
         xlet_help = _("Help")
         xlet_contributors = _("Contributors")
         xlet_changelog = _("Changelog")
         title = _("Help for %s") % _(self.xlet_meta["name"])
+        # Define them before self._get_language_stats() is called so these
+        # strings are also counted.
+        # Comment put bellow so gettext doesn't catch them.
 
         if current_language == "en" or endonym is not None:
             translated_percentage = 100 if current_language == "en" else self._get_language_stats()
@@ -354,7 +357,7 @@ class LocalizedHelpCreator(object):
             md("## %s" % _("IMPORTANT!!!")),
             md(_("Never delete any of the files found inside this xlet folder. It might break this xlet functionality.")),
             md(_("Bug reports, feature requests and contributions should be done on this xlet's repository linked next.") +
-               " %s" % ("[GitHub](%s)" % self.xlet_meta["website"] if self.xlet_meta["website"] else self.xlet_meta["url"]))
+               " %s" % ("[GitLab](%s)" % self.xlet_meta["website"] if self.xlet_meta["website"] else self.xlet_meta["url"]))
         )
 
     def _get_localization_info(self):
@@ -369,9 +372,7 @@ class LocalizedHelpCreator(object):
             "## %s" % _("Applets/Desklets/Extensions (a.k.a. xlets) localization"),
             "- %s" % _("If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "- %s" % _("If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."),
-            "- %s" % _("If this xlet has no locale available for your language, you could create it by following the following instructions.") +
-            " %s" % "[Wiki](https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization)"
+            "- %s" % _("If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder.")
         ]))
 
     def get_content_base(self, for_readme=False):

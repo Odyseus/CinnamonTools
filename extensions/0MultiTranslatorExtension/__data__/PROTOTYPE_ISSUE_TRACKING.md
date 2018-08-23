@@ -70,9 +70,9 @@ Once installed and enabled, the following shortcuts will be available.
 
 ## Tested environments
 
-* [x] ![Cinnamon 2.8](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-2.8.svg) ![Linux Mint 17.3](https://odyseus.github.io/CinnamonTools/lib/badges/lm-17.3.svg)
-* [x] ![Cinnamon 3.0](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.0.svg) ![Linux Mint 18](https://odyseus.github.io/CinnamonTools/lib/badges/lm-18.svg)
-* [x] ![Cinnamon 3.2](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.2.svg) ![Linux Mint 18.1](https://odyseus.github.io/CinnamonTools/lib/badges/lm-18.1.svg)
+* [x] ![Cinnamon 2.8](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-2.8.svg) ![Linux Mint 17.3](https://odyseus.gitlab.io/CinnamonTools/lib/badges/lm-17.3.svg)
+* [x] ![Cinnamon 3.0](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.0.svg) ![Linux Mint 18](https://odyseus.gitlab.io/CinnamonTools/lib/badges/lm-18.svg)
+* [x] ![Cinnamon 3.2](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.2.svg) ![Linux Mint 18.1](https://odyseus.gitlab.io/CinnamonTools/lib/badges/lm-18.1.svg)
 
 **Note on Cinnamon 2.8.x:** All issues on this version of Cinnamon are as fixed as they going to get. It's a complete nightmare working on this version of Cinnamon, so I simply gave up trying to fix the unfixable. My guess is that Cinnamon 2.8.x uses an *ultra-antique* version of GTK3 (3.10), and all APIs available on this version of GTK3 behave totally different than the APIs found on current versions of GTK3. Throughout the extension code it can be seen how I'm forced to use totally different Clutter elements depending on the version of Cinnamon that is used.
 
@@ -113,13 +113,13 @@ Once installed and enabled, the following shortcuts will be available.
 
 ##### Dialog translation images
 
-![Translation dialog](https://odyseus.github.io/CinnamonTools/lib/img/MultiTranslatorExtension-001-trans-dialog.png)
+![Translation dialog](https://odyseus.gitlab.io/CinnamonTools/lib/img/MultiTranslatorExtension-001-trans-dialog.png)
 
-[Source language selection](https://odyseus.github.io/CinnamonTools/lib/img/MultiTranslatorExtension-002-souce-lang-selection.png) - [Target language selection](https://odyseus.github.io/CinnamonTools/lib/img/MultiTranslatorExtension-003-target-lang-selection.png) - [Translation provider selection](https://odyseus.github.io/CinnamonTools/lib/img/MultiTranslatorExtension-004-trans-provider-selection.png) - [Main menu](https://odyseus.github.io/CinnamonTools/lib/img/MultiTranslatorExtension-005-main-menu.png) - [Quick help](https://odyseus.github.io/CinnamonTools/lib/img/MultiTranslatorExtension-006-quick-help.png)
+[Source language selection](https://odyseus.gitlab.io/CinnamonTools/lib/img/MultiTranslatorExtension-002-souce-lang-selection.png) - [Target language selection](https://odyseus.gitlab.io/CinnamonTools/lib/img/MultiTranslatorExtension-003-target-lang-selection.png) - [Translation provider selection](https://odyseus.gitlab.io/CinnamonTools/lib/img/MultiTranslatorExtension-004-trans-provider-selection.png) - [Main menu](https://odyseus.gitlab.io/CinnamonTools/lib/img/MultiTranslatorExtension-005-main-menu.png) - [Quick help](https://odyseus.gitlab.io/CinnamonTools/lib/img/MultiTranslatorExtension-006-quick-help.png)
 
 ##### Settings window image
 
-![MultiTranslatorExtension-options](https://odyseus.github.io/CinnamonTools/lib/img/MultiTranslatorExtension-options.png)
+![MultiTranslatorExtension-options](https://odyseus.gitlab.io/CinnamonTools/lib/img/MultiTranslatorExtension-options.png)
 
 ## Issue reports
 

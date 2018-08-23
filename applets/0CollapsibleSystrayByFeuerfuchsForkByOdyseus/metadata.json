@@ -1,5 +1,5 @@
 {
-    "website": "https://github.com/Feuerfuchs/Collapsible-Systray-Cinnamon-Applet",
+    "website": "https://gitlab.com/Odyseus/CinnamonTools",
     "description": "A replacement for the abandoned System Tray Collapsible Cinnamon applet",
     "max-instances": 1,
     "cinnamon-version": [

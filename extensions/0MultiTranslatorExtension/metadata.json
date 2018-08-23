@@ -1,10 +1,10 @@
 {
     "external-configuration-app": "settings.py",
-    "website": "https://github.com/Odyseus/CinnamonTools",
+    "website": "https://gitlab.com/Odyseus/CinnamonTools",
     "poeditor-url": "https://poeditor.com/join/project/GkOE0exZCp",
     "uuid": "{{UUID}}",
     "contributors": "See this xlet help file.",
-    "url": "https://github.com/Odyseus/CinnamonTools",
+    "url": "https://gitlab.com/Odyseus/CinnamonTools",
     "description": "Translation of text by different translation providers (currently Google, Yandex, Bing and Apertium).",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
     "cinnamon-version": [

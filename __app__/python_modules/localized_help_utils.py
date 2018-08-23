@@ -35,11 +35,7 @@ import time
 from shutil import copy2
 
 from . import app_utils
-
-try:
-    import polib
-except (SystemError, ImportError):
-    raise app_utils.MissingDependencyModule("polib Python module missing.")
+from . import polib
 
 
 Ansi = app_utils.Ansi
@@ -374,9 +370,9 @@ def validate_po_file(pofile_path, lang_name, xlet_meta, xlet_slug):
         po_file.metadata["Language"] = po_file.metadata["Language"].replace("-", "_")
 
     # Add the Report-Msgid-Bugs- field to the header.
-    if "Report-Msgid-Bugs-To" not in po_file.metadata or po_file.metadata["Report-Msgid-Bugs-To"] != "https://github.com/Odyseus/CinnamonTools":
+    if "Report-Msgid-Bugs-To" not in po_file.metadata or po_file.metadata["Report-Msgid-Bugs-To"] != "https://gitlab.com/Odyseus/CinnamonTools":
         do_save = True
-        po_file.metadata["Report-Msgid-Bugs-To"] = "https://github.com/Odyseus/CinnamonTools"
+        po_file.metadata["Report-Msgid-Bugs-To"] = "https://gitlab.com/Odyseus/CinnamonTools"
 
     # Add the Language-Team field to the header to STFU all msgfmt warnings.
     if "Language-Team" not in po_file.metadata or po_file.metadata["Language-Team"] == "":
@@ -459,7 +455,7 @@ def get_compatibility(xlet_meta=None, for_readme=False):
     for version in sorted(xlet_meta["cinnamon-version"]):
         if for_readme:
             # The README files uses SVG images hosted on-line for the compatibility badges.
-            data += "![Cinnamon {0}](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-{0}.svg)\n".format(version)
+            data += "![Cinnamon {0}](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-{0}.svg)\n".format(version)
         else:
             # The help files uses a custom Bootstrap label for the compatibility badges.
             if version[0] in ["2", "5", "8"]:

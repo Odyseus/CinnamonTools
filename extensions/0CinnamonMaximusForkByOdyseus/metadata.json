@@ -1,5 +1,5 @@
 {
-    "website": "https://github.com/Odyseus/CinnamonTools",
+    "website": "https://gitlab.com/Odyseus/CinnamonTools",
     "description": "Remove windows decorations from maximized windows.",
     "cinnamon-version": [
         "3.0",
@@ -19,7 +19,7 @@
         "5.8",
         "6.0"
     ],
-    "url": "https://github.com/Odyseus/CinnamonTools",
+    "url": "https://gitlab.com/Odyseus/CinnamonTools",
     "uuid": "{{UUID}}",
     "version": "0.3.9",
     "contributors": "See this xlet help file.",

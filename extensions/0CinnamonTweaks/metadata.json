@@ -1,9 +1,9 @@
 {
     "external-configuration-app": "settings.py",
-    "website": "https://github.com/Odyseus/CinnamonTools",
+    "website": "https://gitlab.com/Odyseus/CinnamonTools",
     "name": "Cinnamon Tweaks",
     "contributors": "See this xlet help file.",
-    "url": "https://github.com/Odyseus/CinnamonTools",
+    "url": "https://gitlab.com/Odyseus/CinnamonTools",
     "description": "Several tweaks for Cinnamon.",
     "schema-file": "schemas/org.cinnamon.extensions.{{UUID}}.gschema.xml",
     "version": "1.14",

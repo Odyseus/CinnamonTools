@@ -9,9 +9,9 @@ Wallpaper Changer is an applet based on the gnome-shell extension called [Desk C
 
 ## Tested environments
 
-* [x] ![Cinnamon 3.0](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.0.svg)
-* [x] ![Cinnamon 3.2](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.2.svg)
-* [x] ![Cinnamon 3.4](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.4.svg)
+* [x] ![Cinnamon 3.0](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.0.svg)
+* [x] ![Cinnamon 3.2](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.2.svg)
+* [x] ![Cinnamon 3.4](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.4.svg)
 
 <span style="color:red;font-size:large;">
 **Important note:** Do not try to install and force compatibility for any other version of Cinnamon older than 3.0.x. As a protection mechanism, the applet will auto-remove itself from the panel.
@@ -48,7 +48,7 @@ No known issues for the moment.
 `pastebin ~/.cinnamon/glass.log`
 `pastebin ~/.xsession-errors`
 
-## [Download Wallpaper Changer applet](https://odyseus.github.io/CinnamonTools/pkg/0WallpaperChangerApplet@odyseus.ong.tar.gz)
+## [Download Wallpaper Changer applet](https://odyseus.gitlab.io/CinnamonTools/pkg/0WallpaperChangerApplet@odyseus.ong.tar.gz)
 
 ## References to anyone that could be interested in testing the applet
 

@@ -2170,7 +2170,7 @@ class AboutDialog(Gtk.AboutDialog):
         self.set_comments(_(data["description"]))
         self.set_website(data["website"])
         self.set_website_label(_(data["name"]))
-        self.set_authors(["Odyseus https://github.com/Odyseus"])
+        self.set_authors(["Odyseus https://gitlab.com/Odyseus"])
         self.set_logo(logo)
         self.connect("response", self.on_response)
 

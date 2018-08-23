@@ -1,6 +1,4 @@
-## Cinnamon Maximus (Fork by Odyseus) changelog
-
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://github.com/Odyseus/CinnamonTools)
+## Old repository history
 
 ***
 

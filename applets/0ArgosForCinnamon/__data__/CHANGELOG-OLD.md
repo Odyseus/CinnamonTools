@@ -1,6 +1,4 @@
-## Argos for Cinnamon changelog
-
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://github.com/Odyseus/CinnamonTools)
+## Old repository history
 
 ***
 
@@ -10,9 +8,8 @@
 ```
 Argos for Cinnamon applet
 - Added possibility to log **stderr** output when an instance of Argos for Cinnamon applet executes
-its assigned script. Code based on [a
-suggestion](https://github.com/Odyseus/CinnamonTools/issues/128#issuecomment-317284215) by
-[edaubert](https://github.com/edaubert).
+its assigned script. Code based on a
+suggestion by [edaubert](https://github.com/edaubert).
 
 ```
 

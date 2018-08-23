@@ -11,10 +11,10 @@ More precisely, Argos for Cinnamon is an applet that turns executables' standard
 
 ## Tested environments
 
-* [x] ![Cinnamon 2.8](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-2.8.svg)
-* [x] ![Cinnamon 3.0](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.0.svg)
-* [x] ![Cinnamon 3.2](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.2.svg)
-* [x] ![Cinnamon 3.4](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.4.svg)
+* [x] ![Cinnamon 2.8](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-2.8.svg)
+* [x] ![Cinnamon 3.0](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.0.svg)
+* [x] ![Cinnamon 3.2](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.2.svg)
+* [x] ![Cinnamon 3.4](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.4.svg)
 
 ## Key features
 
@@ -60,7 +60,7 @@ No known issues for the moment.
 `pastebin ~/.cinnamon/glass.log`
 `pastebin ~/.xsession-errors`
 
-## [Download Argos for Cinnamon applet](https://odyseus.github.io/CinnamonTools/pkg/0ArgosForCinnamon@odyseus.ong.tar.gz)
+## [Download Argos for Cinnamon applet](https://odyseus.gitlab.io/CinnamonTools/pkg/0ArgosForCinnamon@odyseus.ong.tar.gz)
 
 ## References to anyone that could be interested in testing the applet
 

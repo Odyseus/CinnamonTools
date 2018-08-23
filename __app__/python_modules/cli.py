@@ -156,9 +156,9 @@ class CommandLineTool():
         "generate_meta_file",
         "update_pot_files",
         "update_spanish_localizations",
+        "create_changelogs",
         "create_localized_help",
         "generate_trans_stats",
-        "create_changelogs",
     ]
 
     def __init__(self, args):

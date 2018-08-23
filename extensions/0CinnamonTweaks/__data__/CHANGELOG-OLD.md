@@ -1,6 +1,4 @@
-## Cinnamon Tweaks changelog
-
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://github.com/Odyseus/CinnamonTools)
+## Old repository history
 
 ***
 
@@ -71,16 +69,6 @@ avoid having a border at the top of a maximized window with its title bar remove
 perfectly fine until Cinnamon 3.4. On Cinnamon 3.4, setting that flag to 0x0 would result on windows
 that started maximized and with their title bars removed to become invisible. I simply added an
 option for people using Cinnamon 3.4 or greater to change that flag.
-
-```
-
-***
-
-- **Date:** Mon, 5 Jun 2017 16:45:00 -0300
-- **Author:** Odyseus
-
-```
-Merge branch 'master' of git+ssh://github.com/Odyseus/CinnamonTools
 
 ```
 

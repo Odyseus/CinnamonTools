@@ -22,8 +22,6 @@ existent_xlet_destination_msg : str
     Message to display when creating a new xlet and that xlet already exists.
 extra_common_files : list
     List of files common to all xlets.
-git_log_cmd : str
-    The command to use when generating changelogs.
 help_pages_index_template : str
     The template (in reStructuredText format) used to create the index of xlets help pages in this
     repository documentation.
@@ -288,13 +286,6 @@ class ValidationError(Exception):
 
 
 HOME = os.path.expanduser("~")
-
-# Keeping this variables here so I don't have to use ugly indentation inside functions.
-git_log_cmd = 'git log --grep=General --invert-grep --pretty=format:"\
-- **Date:** %aD%n\
-- **Commit:** [%h](https://github.com/Odyseus/CinnamonTools/commit/%h)%n\
-- **Author:** %aN%n%n\`\`\`%n%s%n%b%n\`\`\`%n%n***%n" \
--- {relative_xlet_path} {append_or_override} "{tmp_log_path}"'
 
 
 bash_completions_step1 = """Bash completions creation. Step 1.
@@ -574,7 +565,7 @@ class XletsHelperCore():
 
         Generate the CHANGELOG.md files for all xlets.
         """
-        from . import changelog_sanitizer
+        from . import changelog_handler
 
         self.logger.info("Generating change logs...")
 
@@ -591,16 +582,19 @@ class XletsHelperCore():
 
                 # Generate change log from current repository paths.
                 relative_xlet_path1 = "./" + xlet["type"] + "s/" + xlet["slug"]
-                cmd1 = git_log_cmd.format(relative_xlet_path=relative_xlet_path1,
-                                          append_or_override=">",
-                                          tmp_log_path=tmp_log_path)
+                cmd1 = changelog_handler.git_log_cmd.format(
+                    xlet_slug=xlet["slug"],
+                    relative_xlet_path=relative_xlet_path1,
+                    append_or_override=">",
+                    tmp_log_path=tmp_log_path
+                )
                 exec_command(cmd=cmd1,
                              working_directory=root_folder,
                              logger=self.logger)
             finally:
                 # Sanitize and clean up formatting of the change logs and
                 # copy them to their final destinations.
-                sanitizer = changelog_sanitizer.ChangelogSanitizer(
+                sanitizer = changelog_handler.ChangelogSanitizer(
                     xlet_name=xlet["name"],
                     source_path=tmp_log_path,
                     target_path=os.path.join(xlet_root_folder, "__data__", "CHANGELOG.md")

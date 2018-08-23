@@ -5,8 +5,8 @@
     "description": "$$XLET_DESCRIPTION$$",
     "contributors": "See this xlet help file.",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "website": "https://github.com/Odyseus/CinnamonTools",
-    "url": "https://github.com/Odyseus/CinnamonTools",
+    "website": "https://gitlab.com/Odyseus/CinnamonTools",
+    "url": "https://gitlab.com/Odyseus/CinnamonTools",
     "cinnamon-version": [
         "3.0",
         "3.2",

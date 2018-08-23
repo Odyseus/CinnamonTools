@@ -9,10 +9,10 @@ Simple ToDo List is an applet based on two gnome-shell extensions ([Todo list](h
 
 ## Tested environments
 
-* [x] ![Cinnamon 2.8](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-2.8.svg)
-* [x] ![Cinnamon 3.0](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.0.svg)
-* [x] ![Cinnamon 3.2](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.2.svg)
-* [x] ![Cinnamon 3.4](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-3.4.svg)
+* [x] ![Cinnamon 2.8](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-2.8.svg)
+* [x] ![Cinnamon 3.0](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.0.svg)
+* [x] ![Cinnamon 3.2](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.2.svg)
+* [x] ![Cinnamon 3.4](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-3.4.svg)
 
 ### Applet usage and features
 
@@ -69,7 +69,7 @@ The keyboard navigation inside this applet menu is very similar to the keyboard 
 `pastebin ~/.cinnamon/glass.log`
 `pastebin ~/.xsession-errors`
 
-## [Download Simple ToDo List applet](https://odyseus.github.io/CinnamonTools/pkg/0SimpleToDoList@odyseus.ong.tar.gz)
+## [Download Simple ToDo List applet](https://odyseus.gitlab.io/CinnamonTools/pkg/0SimpleToDoList@odyseus.ong.tar.gz)
 
 ## References to anyone that could be interested in testing the applet
 
