@@ -792,15 +792,18 @@ FeedReader.prototype = {
     process_feed_locally: function() {
         this.logger.debug("");
         this.entries_file.load_contents_async(null, (aFile, aResponce) => {
-            let rawData = "";
+            let success,
+                contents = "",
+                tag;
+
             try {
-                rawData = aFile.load_contents_finish(aResponce)[1];
+                [success, contents, tag] = aFile.load_contents_finish(aResponce);
             } catch (aErr) {
                 this.logger.warning(aErr);
             }
 
             try {
-                this.process_feed(escapeUnescapeReplacer.unescape(rawData), true);
+                this.process_feed(escapeUnescapeReplacer.unescape(contents), true);
             } catch (aErr) {
                 /* Invalid file contents */
                 this.logger.error("Failed to read feed data file for " + this.url + ":" + aErr);
@@ -1041,15 +1044,17 @@ FeedReader.prototype = {
         let file = Gio.file_new_for_path(DataStorage + "/" + this.id);
 
         file.load_contents_async(null, (aFile, aResponce) => {
-            let rawData = "";
+            let success,
+                contents = "",
+                tag;
+
             try {
-                rawData = aFile.load_contents_finish(aResponce)[1];
+                [success, contents, tag] = aFile.load_contents_finish(aResponce);
             } catch (aErr) {
-                this.logger.warning("FeedReader.load_items/load_contents_finish");
                 this.logger.warning(aErr);
             }
 
-            if (!rawData) {
+            if (!contents) {
                 this.item_status = [];
                 this.logger.debug("Number Loaded: 0");
                 this.title = _("Loading feed");
@@ -1058,7 +1063,7 @@ FeedReader.prototype = {
             }
 
             try {
-                let data = JSON.parse(escapeUnescapeReplacer.unescape(rawData));
+                let data = JSON.parse(escapeUnescapeReplacer.unescape(contents));
 
                 if (typeof data == "object") {
                     /* Load feedreader data */
