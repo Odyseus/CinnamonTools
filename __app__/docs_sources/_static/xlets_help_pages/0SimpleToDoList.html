@@ -504,7 +504,7 @@ body {
 
 <p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 
-<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -587,7 +587,6 @@ body {
 <ul>
 <li>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</li>
 <li>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado <strong>helper.py</strong> desde una terminal abierta dentro de la carpeta del xlet.</li>
-<li>Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">Las siguientes secciones están disponibles sólo en Inglés.</div>
@@ -603,7 +602,7 @@ body {
 
 <p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 
-<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -686,7 +685,6 @@ body {
 <ul>
 <li>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</li>
 <li>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called <strong>helper.py</strong> from a terminal opened inside the xlet's folder.</li>
-<li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">The following sections are available only in English.</div>
@@ -706,7 +704,67 @@ body {
 <span id="xlet-changelog" style="padding-top:70px;">
 <div class="container boxed">
 <h2>Simple ToDo List changelog</h2>
-<h4>This change log is only valid for the version of the xlet hosted on <a href="https://github.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 7 Aug 2018 03:11:18 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/02d99a8">02d99a8</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
+converted) to arrow functions.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 4 Aug 2018 05:14:16 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/fe56992">fe56992</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
+moving all JavaScript code to ES6.
+- Simplification of the procedure to set the applet icon.
+- Removed support for Cinnamon versions older than 3.0.x.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 18 Jul 2018 00:54:18 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/d29db40">d29db40</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Switched from using a JavaScript object to store/handle sections to an array. The change is
+"transparent" (stored tasks from older versions of this applet will be automatically converted).
+- Added option to keep the sections inside the menu sorted alphabetically.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 13 Jun 2018 01:04:46 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/f3b918e">f3b918e</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Corrected settings changed callback function due to different amount of arguments passed by
+different Cinnamon versions.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 14 May 2018 07:17:55 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3f24413">3f24413</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Implemented a logger *prototype* instead of using a logger function.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 7 May 2018 04:53:16 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/30d3f17">30d3f17</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Implemented key bindings common naming.
+</code></pre>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed">
+<h2>Old repository history</h2>
 <hr>
 <ul>
 <li><strong>Date:</strong> Mon, 19 Jun 2017 06:42:36 -0300</li>

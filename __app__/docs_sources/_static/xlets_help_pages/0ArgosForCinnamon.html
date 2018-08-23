@@ -556,7 +556,7 @@ body {
      breaks the styling of the "select" elements!!! ¬¬ -->
             <select class="form-control-static" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
 <!-- English --><option selected data-title="Help for Argos for Cinnamon" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Argos para Cinnamon" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
+<!-- Español --><option data-title="Ayuda para Argos para Cinnamon" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish) (98%)</option>
             </select>
         </div>
     </form>
@@ -574,7 +574,7 @@ body {
 
 <p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 
-<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -609,12 +609,12 @@ body {
 <p>Argos para Cinnamon es un applet que convierte la salida estándar de archivos de comando en menúes desplegables del panel. Está inspirado y es totalmente compatible con la extensión para Gnome Shell llamada <a href="https://github.com/pew/argos">Argos</a> por <a href="https://github.com/pew">Philipp Emanuel Weidmann</a>, que a su vez está inspirada y es totalmente compatible con la aplicación <a href="https://github.com/matryer/bitbar">BitBar</a> para macOS. Argos para Cinnamon soporta muchos <a href="https://github.com/matryer/bitbar-plugins">complementos de BitBar</a> sin modificaciones, lo que le da acceso a una gran biblioteca de archivos de comandos bien probados, además de ser capaz de escribir el suyo propio.</p>
 <h2>Características principales</h2>
 <ul>
-<li><strong>100% API compatible con BitBar 1.9.2:</strong> Todos los complementos para BitBar que corren en Linux (por ejemplo, que no contienen código específico de macOS) van a funcionar con Argos (si no funcionan, es un error en Argos). Ver <strong>Complementos de BitBar con Argos para Cinnamon</strong>.</li>
+<li><strong>100% API compatible con BitBar 1.9.2:</strong> Todos los complementos para BitBar que corren en Linux (por ejemplo, que no contienen código específico de macOS) van a funcionar con Argos (si no funcionan, es un error en Argos). See <a href="#bitbar-plugins-with-argos-for-cinnamon-es"><strong>BitBar plugins with Argos for Cinnamon</strong></a>.</li>
 <li><strong>Más allá de BitBar:</strong> Argos puede hacer todo lo que BitBar puede hacer, pero también algunas cosas que BitBar no puede hacer (todavía). Continuar leyendo esta documentación para más detalles.</li>
 <li><strong>Motor de ejecución asincrónica sofisticado:</strong> No importa cuánto tiempo tomen sus archivos de comandos en ejecutarse, Argos las programará inteligentemente y evitará el bloqueo.</li>
 <li><strong>Soporte Unicode:</strong> Sólo imprima su texto en stdout. Se traducirá de la manera que usted espera.</li>
 <li><strong>Optimizado para el consumo mínimo de recursos:</strong> Incluso con varios complementos actualizando cada segundo, Argos normalmente usa menos del 1 por ciento de la CPU.</li>
-<li><strong>Totalmente documentado:</strong> Ver <strong>Uso del applet</strong>.</li>
+<li><strong>Totalmente documentado:</strong> <p>See <a href="#usage-es"><strong>Usage</strong></a>.</p></li>
 </ul>
 <h2>Dependencias</h2>
 <ul>
@@ -624,6 +624,7 @@ body {
 </li>
 </ul>
 
+<p><span id="usage-es"></span></p>
 <h2>Uso del applet</h2>
 <div class="alert alert-info">
 <p>Voy a usar las palabras <em>complemento</em> o <em>archivo de comandos</em> cuando me refiera a un archivo de comandos asociado a una instancia del applet <strong>Argos para Cinnamon</strong>.</p>
@@ -826,6 +827,7 @@ body {
 </tr>
 </tbody>
 </table>
+<p><span id="bitbar-plugins-with-argos-for-cinnamon-es"></span></p>
 <h2>Complementos de BitBar con Argos para Cinnamon</h2>
 <div class="alert alert-warning">
 <strong>
@@ -878,7 +880,6 @@ body {
 <ul>
 <li>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</li>
 <li>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado <strong>helper.py</strong> desde una terminal abierta dentro de la carpeta del xlet.</li>
-<li>Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">Las siguientes secciones están disponibles sólo en Inglés.</div>
@@ -894,7 +895,7 @@ body {
 
 <p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 
-<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -929,12 +930,12 @@ body {
 <p>Argos for Cinnamon is an applet that turns executables' standard output into panel dropdown menus. It is inspired by, and fully compatible with, the Gnome Shell extension called <a href="https://github.com/p-e-w/argos">Argos</a> by <a href="https://github.com/p-e-w">Philipp Emanuel Weidmann</a>, which in turn is inspired by, and fully compatible with, the <a href="https://github.com/matryer/bitbar">BitBar</a> application for macOS. Argos for Cinnamon supports many <a href="https://github.com/matryer/bitbar-plugins">BitBar plugins</a> without modifications, giving you access to a large library of well-tested scripts in addition to being able to write your own.</p>
 <h2>Key features</h2>
 <ul>
-<li><strong>100% API compatible with BitBar 1.9.2:</strong> All BitBar plugins that run on Linux (i.e. do not contain macOS-specific code) will work with Argos (else it's a bug). See <strong>BitBar plugins with Argos for Cinnamon</strong>.</li>
+<li><strong>100% API compatible with BitBar 1.9.2:</strong> All BitBar plugins that run on Linux (i.e. do not contain macOS-specific code) will work with Argos (else it's a bug). See <a href="#bitbar-plugins-with-argos-for-cinnamon-en"><strong>BitBar plugins with Argos for Cinnamon</strong></a>.</li>
 <li><strong>Beyond BitBar:</strong> Argos can do everything that BitBar can do, but also some things that BitBar can't do (yet). See the documentation for details.</li>
 <li><strong>Sophisticated asynchronous execution engine:</strong> No matter how long your scripts take to run, Argos will schedule them intelligently and prevent blocking.</li>
 <li><strong>Unicode support:</strong> Just print your text to stdout. It will be rendered the way you expect.</li>
 <li><strong>Optimized for minimum resource consumption:</strong> Even with multiple plugins refreshing every second, Argos typically uses less than 1 percent of the CPU.</li>
-<li><strong>Fully documented:</strong> See <strong>Usage</strong>.</li>
+<li><strong>Fully documented:</strong> <p>See <a href="#usage-en"><strong>Usage</strong></a>.</p></li>
 </ul>
 <h2>Dependencies</h2>
 <ul>
@@ -944,6 +945,7 @@ body {
 </li>
 </ul>
 
+<p><span id="usage-en"></span></p>
 <h2>Usage</h2>
 <div class="alert alert-info">
 <p>I will use the words <em>plugin</em> or <em>script</em> when referring to a script file associated with an instance of <strong>Argos for Cinnamon</strong> applet.</p>
@@ -1146,6 +1148,7 @@ body {
 </tr>
 </tbody>
 </table>
+<p><span id="bitbar-plugins-with-argos-for-cinnamon-en"></span></p>
 <h2>BitBar plugins with Argos for Cinnamon</h2>
 <div class="alert alert-warning">
 <strong>
@@ -1198,7 +1201,6 @@ WARNING!!! DO NOT RANDOMLY TEST SCRIPTS!!!
 <ul>
 <li>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</li>
 <li>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called <strong>helper.py</strong> from a terminal opened inside the xlet's folder.</li>
-<li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">The following sections are available only in English.</div>
@@ -1217,7 +1219,59 @@ WARNING!!! DO NOT RANDOMLY TEST SCRIPTS!!!
 <span id="xlet-changelog" style="padding-top:70px;">
 <div class="container boxed">
 <h2>Argos for Cinnamon changelog</h2>
-<h4>This change log is only valid for the version of the xlet hosted on <a href="https://github.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 7 Aug 2018 03:36:48 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c114f50">c114f50</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Removed from the example files references to the ~/.cinnamon/glass.log file. This file doesn't
+exist anymore since Cinnamon version 3.6.x.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 7 Aug 2018 03:03:20 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8a25f65">8a25f65</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
+converted) to arrow functions.
+- Moved the **Emojis** variable into its own JavaScript module.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 4 Aug 2018 05:16:23 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/cb6dd7e">cb6dd7e</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
+moving all JavaScript code to ES6.
+- Simplification of the procedure to set the applet icon.
+- Removed support for Cinnamon versions older than 3.0.x.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 13 Jun 2018 00:59:17 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5618e00">5618e00</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Corrected settings changed callback function due to different amount of arguments passed by
+different Cinnamon versions.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 7 May 2018 04:54:07 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4d36d68">4d36d68</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Implemented key bindings common naming.
+</code></pre>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed">
+<h2>Old repository history</h2>
 <hr>
 <ul>
 <li><strong>Date:</strong> Mon, 24 Jul 2017 01:17:56 -0300</li>
@@ -1225,9 +1279,8 @@ WARNING!!! DO NOT RANDOMLY TEST SCRIPTS!!!
 </ul>
 <pre><code>Argos for Cinnamon applet
 - Added possibility to log **stderr** output when an instance of Argos for Cinnamon applet executes
-its assigned script. Code based on [a
-suggestion](https://github.com/Odyseus/CinnamonTools/issues/128#issuecomment-317284215) by
-[edaubert](https://github.com/edaubert).
+its assigned script. Code based on a
+suggestion by [edaubert](https://github.com/edaubert).
 </code></pre>
 <hr>
 <ul>

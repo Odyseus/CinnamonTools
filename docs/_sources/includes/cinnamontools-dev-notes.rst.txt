@@ -5,11 +5,11 @@ Development notes
 Xlets development *commandments*
 --------------------------------
 
-1. Eradicate from your thoughts the existence of Node.js.
+1. Eradicate from your thoughts the existence of Node.js. I can do infinitely more with just ten lines of Python code than with a hundred lines of JavaScript code that depend on 10 Node.js modules with a thousand lines of code each.
 2. If a Python module is required, make it part of the Python application if possible. Otherwise, create a mechanism to install required modules.
 3. Try to use ``Mainloop.idle_add`` inside the initialization code of an xlet if possible. Take into account the following:
 
-     a) The ``_expandAppletContextMenu`` (the function that I use to add/remove/override an applet context menu items) method call should NOT be inside ``Mainloop.idle_add``.
+     a) The ``_expandAppletContextMenu`` and the ``_bindSettings`` method calls should NOT be inside ``Mainloop.idle_add``.
      b) Avoid using ``Mainloop.idle_add`` inside an extension code for obvious reasons.
      c) Be aware of using ``Mainloop.idle_add`` inside a *very advanced* xlet. For example, using ``Mainloop.idle_add`` to delay the initialization of the **Window list applet** or the **System Tray applet** will inevitably break these applets initialization process.
 
@@ -60,6 +60,30 @@ z_create_localized_help.py file inside xlets directories
 --------------------------------------------------------
 
 This file is used to generate the **HELP.html** page for each xlet. The **HELP.html** file is a standalone HTML page, which means that all resources are in-line (CSS stylesheets, JavaScript code, images, etc.).
+
+
+.. note::
+
+    I explored several ways of creating a help file with translated content. This one is the most optimal and less dependent of external tools.
+
+    - I have the power as to what should be considered a string that needs to be translated or not.
+    - I can write in basic markdown or pure HTML indistinctly. So I can write simple things as paragraphs or complex things as HTML tables without making the source code visible in the translation templates.
+    - The Python modules that this method depends on are very simple, one-file-only, and non dependent of third-party Python modules. So I have them integrated in the repository and I can even expand their capabilities (as I did with the **mistune** module).
+
+
+.. warning::
+
+    What I have considered and discarded:
+
+    - Sphinx
+
+        - By itself, Sphinx has hundreds of moving parts (Python modules and/or external tools).
+        - It internationalization capabilities are too complex.
+        - Generating one single HELP.html file that is at the same time self contained is practically impossible.
+
+    - Translate Toolkit
+
+        - None of its converters, tools, and scripts gave me the power that I get with the method that I ended up using.
 
 
 HTML assets

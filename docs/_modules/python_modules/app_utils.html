@@ -59,8 +59,6 @@
 <span class="sd">    Message to display when creating a new xlet and that xlet already exists.</span>
 <span class="sd">extra_common_files : list</span>
 <span class="sd">    List of files common to all xlets.</span>
-<span class="sd">git_log_cmd : str</span>
-<span class="sd">    The command to use when generating changelogs.</span>
 <span class="sd">help_pages_index_template : str</span>
 <span class="sd">    The template (in reStructuredText format) used to create the index of xlets help pages in this</span>
 <span class="sd">    repository documentation.</span>
@@ -325,13 +323,6 @@
 
 
 <span class="n">HOME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
-
-<span class="c1"># Keeping this variables here so I don&#39;t have to use ugly indentation inside functions.</span>
-<span class="n">git_log_cmd</span> <span class="o">=</span> <span class="s1">&#39;git log --grep=General --invert-grep --pretty=format:&quot;</span><span class="se">\</span>
-<span class="s1">- **Date:** %aD%n</span><span class="se">\</span>
-<span class="s1">- **Commit:** [%h](https://github.com/Odyseus/CinnamonTools/commit/%h)%n</span><span class="se">\</span>
-<span class="s1">- **Author:** %aN%n%n\`\`\`%n</span><span class="si">%s</span><span class="s1">%n%b%n\`\`\`%n%n***%n&quot; </span><span class="se">\</span>
-<span class="s1">-- </span><span class="si">{relative_xlet_path}</span><span class="s1"> </span><span class="si">{append_or_override}</span><span class="s1"> &quot;</span><span class="si">{tmp_log_path}</span><span class="s1">&quot;&#39;</span>
 
 
 <span class="n">bash_completions_step1</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Bash completions creation. Step 1.</span>
@@ -611,7 +602,7 @@
 
 <span class="sd">        Generate the CHANGELOG.md files for all xlets.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">changelog_sanitizer</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">changelog_handler</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating change logs...&quot;</span><span class="p">)</span>
 
@@ -628,16 +619,19 @@
 
                 <span class="c1"># Generate change log from current repository paths.</span>
                 <span class="n">relative_xlet_path1</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;s/&quot;</span> <span class="o">+</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]</span>
-                <span class="n">cmd1</span> <span class="o">=</span> <span class="n">git_log_cmd</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">relative_xlet_path</span><span class="o">=</span><span class="n">relative_xlet_path1</span><span class="p">,</span>
-                                          <span class="n">append_or_override</span><span class="o">=</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span>
-                                          <span class="n">tmp_log_path</span><span class="o">=</span><span class="n">tmp_log_path</span><span class="p">)</span>
+                <span class="n">cmd1</span> <span class="o">=</span> <span class="n">changelog_handler</span><span class="o">.</span><span class="n">git_log_cmd</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">xlet_slug</span><span class="o">=</span><span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">],</span>
+                    <span class="n">relative_xlet_path</span><span class="o">=</span><span class="n">relative_xlet_path1</span><span class="p">,</span>
+                    <span class="n">append_or_override</span><span class="o">=</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span>
+                    <span class="n">tmp_log_path</span><span class="o">=</span><span class="n">tmp_log_path</span>
+                <span class="p">)</span>
                 <span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="n">cmd1</span><span class="p">,</span>
                              <span class="n">working_directory</span><span class="o">=</span><span class="n">root_folder</span><span class="p">,</span>
                              <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
             <span class="k">finally</span><span class="p">:</span>
                 <span class="c1"># Sanitize and clean up formatting of the change logs and</span>
                 <span class="c1"># copy them to their final destinations.</span>
-                <span class="n">sanitizer</span> <span class="o">=</span> <span class="n">changelog_sanitizer</span><span class="o">.</span><span class="n">ChangelogSanitizer</span><span class="p">(</span>
+                <span class="n">sanitizer</span> <span class="o">=</span> <span class="n">changelog_handler</span><span class="o">.</span><span class="n">ChangelogSanitizer</span><span class="p">(</span>
                     <span class="n">xlet_name</span><span class="o">=</span><span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
                     <span class="n">source_path</span><span class="o">=</span><span class="n">tmp_log_path</span><span class="p">,</span>
                     <span class="n">target_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_root_folder</span><span class="p">,</span> <span class="s2">&quot;__data__&quot;</span><span class="p">,</span> <span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">)</span>

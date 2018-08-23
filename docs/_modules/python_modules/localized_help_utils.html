@@ -72,11 +72,7 @@
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">copy2</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">app_utils</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">polib</span>
-<span class="k">except</span> <span class="p">(</span><span class="ne">SystemError</span><span class="p">,</span> <span class="ne">ImportError</span><span class="p">):</span>
-    <span class="k">raise</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">MissingDependencyModule</span><span class="p">(</span><span class="s2">&quot;polib Python module missing.&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">polib</span>
 
 
 <span class="n">Ansi</span> <span class="o">=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">Ansi</span>
@@ -411,9 +407,9 @@
         <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
 
     <span class="c1"># Add the Report-Msgid-Bugs- field to the header.</span>
-    <span class="k">if</span> <span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;https://github.com/Odyseus/CinnamonTools&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;https://gitlab.com/Odyseus/CinnamonTools&quot;</span><span class="p">:</span>
         <span class="n">do_save</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/Odyseus/CinnamonTools&quot;</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;https://gitlab.com/Odyseus/CinnamonTools&quot;</span>
 
     <span class="c1"># Add the Language-Team field to the header to STFU all msgfmt warnings.</span>
     <span class="k">if</span> <span class="s2">&quot;Language-Team&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language-Team&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -496,7 +492,7 @@
     <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;cinnamon-version&quot;</span><span class="p">]):</span>
         <span class="k">if</span> <span class="n">for_readme</span><span class="p">:</span>
             <span class="c1"># The README files uses SVG images hosted on-line for the compatibility badges.</span>
-            <span class="n">data</span> <span class="o">+=</span> <span class="s2">&quot;![Cinnamon </span><span class="si">{0}</span><span class="s2">](https://odyseus.github.io/CinnamonTools/lib/badges/cinn-</span><span class="si">{0}</span><span class="s2">.svg)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">+=</span> <span class="s2">&quot;![Cinnamon </span><span class="si">{0}</span><span class="s2">](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-</span><span class="si">{0}</span><span class="s2">.svg)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># The help files uses a custom Bootstrap label for the compatibility badges.</span>
             <span class="k">if</span> <span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">]:</span>

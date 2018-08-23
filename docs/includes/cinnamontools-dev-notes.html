@@ -46,12 +46,12 @@
 <div class="section" id="xlets-development-commandments">
 <h2>Xlets development <em>commandments</em><a class="headerlink" href="#xlets-development-commandments" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p>Eradicate from your thoughts the existence of Node.js.</p></li>
+<li><p>Eradicate from your thoughts the existence of Node.js. I can do infinitely more with just ten lines of Python code than with a hundred lines of JavaScript code that depend on 10 Node.js modules with a thousand lines of code each.</p></li>
 <li><p>If a Python module is required, make it part of the Python application if possible. Otherwise, create a mechanism to install required modules.</p></li>
 <li><p>Try to use <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside the initialization code of an xlet if possible. Take into account the following:</p>
 <blockquote>
 <div><ol class="loweralpha simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">_expandAppletContextMenu</span></code> (the function that I use to add/remove/override an applet context menu items) method call should NOT be inside <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">_expandAppletContextMenu</span></code> and the <code class="docutils literal notranslate"><span class="pre">_bindSettings</span></code> method calls should NOT be inside <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code>.</p></li>
 <li><p>Avoid using <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside an extension code for obvious reasons.</p></li>
 <li><p>Be aware of using <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside a <em>very advanced</em> xlet. For example, using <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> to delay the initialization of the <strong>Window list applet</strong> or the <strong>System Tray applet</strong> will inevitably break these applets initialization process.</p></li>
 </ol>
@@ -95,6 +95,37 @@
 <div class="section" id="z-create-localized-help-py-file-inside-xlets-directories">
 <h2>z_create_localized_help.py file inside xlets directories<a class="headerlink" href="#z-create-localized-help-py-file-inside-xlets-directories" title="Permalink to this headline">¶</a></h2>
 <p>This file is used to generate the <strong>HELP.html</strong> page for each xlet. The <strong>HELP.html</strong> file is a standalone HTML page, which means that all resources are in-line (CSS stylesheets, JavaScript code, images, etc.).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I explored several ways of creating a help file with translated content. This one is the most optimal and less dependent of external tools.</p>
+<ul class="simple">
+<li><p>I have the power as to what should be considered a string that needs to be translated or not.</p></li>
+<li><p>I can write in basic markdown or pure HTML indistinctly. So I can write simple things as paragraphs or complex things as HTML tables without making the source code visible in the translation templates.</p></li>
+<li><p>The Python modules that this method depends on are very simple, one-file-only, and non dependent of third-party Python modules. So I have them integrated in the repository and I can even expand their capabilities (as I did with the <strong>mistune</strong> module).</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>What I have considered and discarded:</p>
+<ul>
+<li><p>Sphinx</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>By itself, Sphinx has hundreds of moving parts (Python modules and/or external tools).</p></li>
+<li><p>It internationalization capabilities are too complex.</p></li>
+<li><p>Generating one single HELP.html file that is at the same time self contained is practically impossible.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Translate Toolkit</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>None of its converters, tools, and scripts gave me the power that I get with the method that I ended up using.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
 <div class="section" id="html-assets">
 <h3>HTML assets<a class="headerlink" href="#html-assets" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">

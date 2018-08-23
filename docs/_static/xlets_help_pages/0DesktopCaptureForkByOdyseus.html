@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    <title>Help for Feeds Reader (Fork By Odyseus)</title>
+    <title>Help for Desktop Capture (Fork By Odyseus)</title>
     <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript">
@@ -457,6 +457,76 @@ body {
 
 /* For fixed header */
 
+    /* Specific CSS code for specific HELP files */
+        /* Copied over the table class from bootstrap theme and applied it
+         directly to the table tag.*/
+        table {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+        }
+        table>thead>tr>th,
+        table>tbody>tr>th,
+        table>tfoot>tr>th,
+        table>thead>tr>td,
+        table>tbody>tr>td,
+        table>tfoot>tr>td {
+        padding: 8px !important;
+        line-height: 1.42857143 !important;
+        vertical-align: top !important;
+        border-top: 1px solid #ecf0f1 !important;
+        }
+        table>thead>tr>th {
+        vertical-align: bottom !important;
+        border-bottom: 2px solid #ecf0f1 !important;
+        }
+        table>caption+thead>tr:first-child>th,
+        table>colgroup+thead>tr:first-child>th,
+        table>thead:first-child>tr:first-child>th,
+        table>caption+thead>tr:first-child>td,
+        table>colgroup+thead>tr:first-child>td,
+        table>thead:first-child>tr:first-child>td {
+            border-top: 0 !important;
+        }
+        table>tbody+tbody {
+            border-top: 2px solid #ecf0f1 !important;
+        }
+        table{
+            border: 1px solid #ecf0f1 !important;
+        }
+        table>thead>tr>th,
+        table>tbody>tr>th,
+        table>tfoot>tr>th,
+        table>thead>tr>td,
+        table>tbody>tr>td,
+        table>tfoot>tr>td {
+            border: 1px solid #ecf0f1 !important;
+        }
+        table>thead>tr>th,
+        table>thead>tr>td {
+            border-bottom-width: 2px !important;
+        }
+
+        table>td,
+        table>th {
+            position: static !important;
+            float: none !important;
+            display: table-cell !important;
+        }
+        table>thead>tr>td.active,
+        table>tbody>tr>td.active,
+        table>tfoot>tr>td.active,
+        table>thead>tr>th.active,
+        table>tbody>tr>th.active,
+        table>tfoot>tr>th.active,
+        table>thead>tr.active>td,
+        table>tbody>tr.active>td,
+        table>tfoot>tr.active>td,
+        table>thead>tr.active>th,
+        table>tbody>tr.active>th,
+        table>tfoot>tr.active>th {
+            background-color: #ecf0f1 !important;
+        }
     
     </style>
 </head>
@@ -485,8 +555,8 @@ body {
 <!-- Using the Bootstrap classes "form-control" or "input-sm" and the like
      breaks the styling of the "select" elements!!! ¬¬ -->
             <select class="form-control-static" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
-<!-- English --><option selected data-title="Help for Feeds Reader (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Help for Feeds Reader (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="es">Español (Spanish) (0%)</option>
+<!-- English --><option selected data-title="Help for Desktop Capture (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
+<!-- Español --><option data-title="Ayuda para Captura de Escritorio (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish) (17%)</option>
             </select>
         </div>
     </form>
@@ -497,21 +567,21 @@ body {
 
 <div id="es" class="localization-content hidden">
 
-<h1>Help for Feeds Reader (Fork By Odyseus)</h1>
+<h1>Ayuda para Desktop Capture (Fork By Odyseus)</h1>
 
 <div style="font-weight:bold;" class="alert alert-warning">
-<h2>IMPORTANT!!!</h2>
+<h2>¡IMPORTANTE!</h2>
 
-<p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
+<p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 
-<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
 
 <div class="panel panel-success">
     <div class="panel-heading">
-        <h3 class="panel-title">Compatibility</h3>
+        <h3 class="panel-title">Compatibilidad</h3>
     </div>
     <div class="panel-body compatibility">
         <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">3.0</span></span>
@@ -531,47 +601,422 @@ body {
 <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-warning">5.8</span></span>
 <span class="compatibility-badge"><span class="label label-primary">Cinnamon</span><span class="label label-success">6.0</span></span>
 
-<br/><p class="text-danger compatibility-disclaimer">Do not install on any other version of Cinnamon.</p>
+<br/><p class="text-danger compatibility-disclaimer">No instalar en ninguna otra versión de Cinnamon.</p>
     </div>
 </div>
 
-<h2>Description</h2>
-<p>This applet is a fork of <a href="https://cinnamon-spices.linuxmint.com/applets/view/149">Feeds Reader</a> applet by Jason Jackson (a.k.a. jake1164).</p>
-<h2>Differences with the original applet</h2>
+<h2>Descripción</h2>
+<p>This applet is a fork of <a href="https://github.com/rjanja/desktop-capture">Desktop Capture</a> applet by Rob Adams (a.k.a. rjanja).</p>
+<h2>Diferencias con el applet original</h2>
+<p>The principal differences of this fork with the original applet are in usability and of the kind 'do more with less code'.</p>
 <ul>
-<li>Added keyboard shortcut to be able to open/clese the menu.</li>
-<li>Added option to hide the graphs background, not just set it transparent.</li>
+<li>More convenient handling of settings. Most settings can be changed directly from the applet menu or its context menu without the need to constantly open the applet settings window.</li>
+<li>Keyboard shortcuts are not only available for Cinnamon's built-in features, but for all screenshot/screencast programs.</li>
+<li>Settings are immediately available after changed without the need to restart Cinnamon.</li>
+<li>The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program.</li>
 </ul>
-<h2>Dependencies</h2>
+
+<h2>Programs support</h2>
+<p>In addition to Cinnamon's built-in screenshot/screencast tools, this applet also supports third-party programs to take captures. By default, this applet comes with support for several known programs (Shutter, Gnome Screenshot, XWD, ImageMagic, FFmepg, RecordMyDesktop, Byzanz and Kazam).</p>
+<div class="alert alert-info">
+<p><strong>Highlights</strong></p>
+
+</br>
 <ul>
-<li><strong>feedparser:</strong> Universal feed parser that handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds.
-Install with <code>pip</code></li>
+<li>Programs are stored inside an applet preference. They are grouped by devices. A device called <strong>camera</strong> that contains programs that take screenshots. And a device called <strong>recorder</strong> that contains programs that capture screencasts.</li>
 </ul>
-<pre><code>sudo pip3 install feedparser
+
+<ul>
+<li>Programs can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent programs, modifying the generated JSON file and importing the modified file again.</li>
+</ul>
+
+<ul>
+<li>Commands are exactly that, commands. They are composed of command line arguments , placeholders, and/or flags.</li>
+</ul>
+
+<ul>
+<li>Placeholders are strings specifically formatted with double curly braces (<code>{{PLACEHOLDER_NAME}}</code>) and can be placed in any part of a string. These strings are replaced with dynamically generated data (an applet preference, screen coordinates, etc.) when a command is executed.</li>
+</ul>
+
+<ul>
+<li>Flags are another type of specifically formatted strings surrounded by hashes (<code>#FLAG_NAME#</code>) and they always must be placed at the beginning of a string. Flags indicate that an action must be taken before a command is executed.</li>
+</ul>
+
+<ul>
+<li>The exported JSON file exemplifies almost all the options, flags and placeholders documented below.</li>
+</ul>
+
+<ul>
+<li>The command that will be executed can be previewed before actually executing it by simply right clicking a menu item.</li>
+</ul>
+
+</div><div class="alert alert-warning">
+<ul>
+<li>All option names, flags, and placeholders are case sensitive. Command option names are lower cased and use dashes as word separators. Placeholders and flags are upper cased and use low dashes as word separators.</li>
+</ul>
+
+<ul>
+<li>An imported JSON file will overwrite an existent preference.</li>
+</ul>
+
+<ul>
+<li>Importing a malformed/invalid JSON file will cancel the import operation without modifying an existent preference.</li>
+</ul>
+
+<ul>
+<li>There isn't a mechanism to check if a command is available or not on the system the applet is installed. So, use common sense.</li>
+</ul>
+
+</div><h3>Basic example</h3>
+<pre><code>{
+    "camera": {
+        "Program/Command name": {
+            "title": "Name of the program shown on the program selector menu",
+            "cursor": {
+                "on": "Argument to include cursor in capture",
+                "off": "Argument to not include cursor in capture"
+            },
+            "timer": true,
+            "append-1": "The content here will be used to replace the {{APPEND_1}} placeholder",
+            "menuitems": {
+                "Menu item label 1": "Command to execute when clicking this menu item",
+                "---": "This is a separator",
+                "Menu item label 2": "Command to execute when clicking this menu item",
+            }
+        }
+    },
+    "recorder": {
+        "Program/Command name": {
+            "title": "Name of the program shown on the program selector menu",
+            "fps": true,
+            "cursor": {
+                "on": "Argument to include cursor in capture",
+                "off": "Argument to not include cursor in capture"
+            },
+            "sound": {
+                "on": "Argument to include sound in capture",
+                "off": "Argument to not include sound in capture"
+            },
+            "menuitems": {
+                "#Menu item label 1": "Command to execute when clicking this menu item (See **Menu item label flags**.)",
+                "---": "This is a separator",
+                "Menu item label 2": "Command to execute when clicking this menu item",
+            },
+            "stop-command": "Command to stop recording"
+        }
+    }
+}
 </code></pre>
+<h3>Program options</h3>
+<table>
+<thead><tr>
+<th>Option</th>
+<th>Usage</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>Mandatory</td>
+<td>This option will be used as the program name in the program selector sub-menu.</td>
+</tr>
+<tr>
+<td><code>menuitems</code></td>
+<td>Mandatory</td>
+<td>This option contains all the data that will be used to create the menu items for a program.</td>
+</tr>
+<tr>
+<td><code>stop-command</code></td>
+<td>Mandatory - Recorder only</td>
+<td>The command to stop recording a screencast.</td>
+</tr>
+<tr>
+<td><code>timer</code></td>
+<td>Optional - Camera only</td>
+<td>This option is used in combination with the <code>{{DELAY}}</code> placeholder. If set to <strong>true</strong>, sets the visibility of the <strong>Capture delay</strong> option inside this applet menu.</td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td>Optional - Recorder only</td>
+<td>This option, if set to <strong>true</strong>, sets the visibility of the <strong>Frames per second</strong> option inside this applet menu.</td>
+</tr>
+<tr>
+<td><code>cursor</code></td>
+<td>Optional</td>
+<td>This option is used in combination with the <code>{{CURSOR}}</code> placeholder. It must contain two keys named <strong>on</strong> and <strong>off</strong> which respectively must contain a comand line argument for enabling/disabling the display of the mouse cursor on the captured file.</td>
+</tr>
+<tr>
+<td><code>sound</code></td>
+<td>Optional - Recorder only</td>
+<td>This option is used in combination with the <code>{{SOUND}}</code> placeholder. It must contain two keys named <strong>on</strong> and <strong>off</strong> which respectively must contain a comand line argument for enabling/disabling the inclusion of sound on the captured file.</td>
+</tr>
+<tr>
+<td><code>append-1</code> ... <code>append-10</code></td>
+<td>Optional</td>
+<td>These options are used in combination with the <code>{{APPEND_1}}</code> to <code>{{APPEND_10}}</code> placeholders. This is done to avoid repeating the same arguments on all menu items commands.</td>
+</tr>
+</tbody>
+</table>
+<h3>Flags</h3>
+<h4>Menu item label flags</h4>
+<table>
+<thead><tr>
+<th>Flag</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#</code></td>
+<td>The hash (#) character in front of a menu item label is a flag that inhibits the menu item from changing the state of the applet (the change of the applet icon from normal to recording).</td>
+</tr>
+</tbody>
+</table>
+<h4>Menu item command flags</h4>
+<table>
+<thead><tr>
+<th>Flag</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#INTERACTIVE_AREA_HELPER#</code></td>
+<td>This flag will allow the use of this applet area selector helper. See <a href="#menu-item-command-interactive-placeholders-es"><strong>Menu item command interactive placeholders</strong></a></td>
+</tr>
+<tr>
+<td><code>#INTERACTIVE_WINDOW_HELPER#</code></td>
+<td>This flag will allow the use of this applet window selector helper. See <a href="#menu-item-command-interactive-placeholders-es"><strong>Menu item command interactive placeholders</strong></a></td>
+</tr>
+</tbody>
+</table>
+<h3>Menu item command placeholders</h3>
+<table>
+<thead><tr>
+<th>Placeholder</th>
+<th>Usage</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{{APPEND_1}}</code> ... <code>{{APPEND_10}}</code></td>
+<td></td>
+<td>Placeholder for the program options <code>append-1</code> to <code>append-10</code>.</td>
+</tr>
+<tr>
+<td><code>{{CURSOR}}</code></td>
+<td></td>
+<td>The command line argument used to decide if the capture will display the cursor or not.</td>
+</tr>
+<tr>
+<td><code>{{DELAY}}</code></td>
+<td>Camera only</td>
+<td>Delay in seconds before taking a screenshot.</td>
+</tr>
+<tr>
+<td><code>{{DIRECTORY}}</code></td>
+<td></td>
+<td>The directory used as storage for the captures.</td>
+</tr>
+<tr>
+<td><code>{{EXT}}</code></td>
+<td></td>
+<td>The file extension that the generated capture will have. It has to be used in pairs (Example: <code>{{EXT}}png{{EXT}}</code>).</td>
+</tr>
+<tr>
+<td><code>{{FILENAME}}</code></td>
+<td></td>
+<td>The file name (no extension included) that the generated capture will have.</td>
+</tr>
+<tr>
+<td><code>{{FPS}}</code></td>
+<td>Recorder only</td>
+<td>Frames per second (frame rate).</td>
+</tr>
+<tr>
+<td><code>{{RECORDER_DIR}}</code></td>
+<td></td>
+<td>The directory used to store the screencast captures.</td>
+</tr>
+<tr>
+<td><code>{{SCREEN_DIMENSIONS}}</code></td>
+<td></td>
+<td>The screen dimensions with format <code>widthxheight</code>. Example: <code>1440x900</code></td>
+</tr>
+<tr>
+<td><code>{{SCREEN_HEIGHT}}</code></td>
+<td></td>
+<td>The screen height.</td>
+</tr>
+<tr>
+<td><code>{{SCREEN_WIDTH}}</code></td>
+<td></td>
+<td>The screen width.</td>
+</tr>
+<tr>
+<td><code>{{SCREENSHOT_DIR}}</code></td>
+<td></td>
+<td>The directory used to store the screenshot captures.</td>
+</tr>
+<tr>
+<td><code>{{SOUND}}</code></td>
+<td>Recorder only</td>
+<td>The command line argument used to decide if the capture include sound or not.</td>
+</tr>
+</tbody>
+</table>
+<p><span id="menu-item-command-interactive-placeholders-es"></span></p>
+<h3>Menu item command interactive placeholders</h3>
+<table>
+<thead><tr>
+<th>Placeholder</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{{I_X}}</code></td>
+<td><code>x</code> screen coordinates.</td>
+</tr>
+<tr>
+<td><code>{{I_Y}}</code></td>
+<td><code>y</code> screen coordinates.</td>
+</tr>
+<tr>
+<td><code>{{I_X_Y}}</code></td>
+<td><code>x</code> and <code>y</code> screen coordinates separated by a comma.</td>
+</tr>
+<tr>
+<td><code>{{I_WIDTH}}</code></td>
+<td>It could be either the width of a selected area or the width of a selected window.</td>
+</tr>
+<tr>
+<td><code>{{I_HEIGHT}}</code></td>
+<td>It could be either the height of a selected area or the height of a selected window.</td>
+</tr>
+<tr>
+<td><code>{{I_NICE_WIDTH}}</code></td>
+<td>Same as <code>I_WIDTH</code>, but with <code>1</code> added to its value.</td>
+</tr>
+<tr>
+<td><code>{{I_NICE_HEIGHT}}</code></td>
+<td>Same as <code>I_HEIGHT</code>, but with <code>1</code> added to its value.</td>
+</tr>
+<tr>
+<td><code>{{I_X_WINDOW_ID}}</code></td>
+<td>The selected window ID.</td>
+</tr>
+<tr>
+<td><code>{{I_X_WINDOW_FRAME}}</code></td>
+<td>The 'x-window' property of the selected window.</td>
+</tr>
+<tr>
+<td><code>{{I_WM_CLASS}}</code></td>
+<td>The selected window class name.</td>
+</tr>
+<tr>
+<td><code>{{I_WINDOW_TITLE}}</code></td>
+<td>The selected window class title.</td>
+</tr>
+</tbody>
+</table>
+<h2>Cinnamon recorder profiles</h2>
+<p>The built-in Cinnamon recorder uses the GStreamer general-purpose multimedia framework (<a href="https://gstreamer.freedesktop.org/documentation/index.html">GStreamer documentation</a>). It generates a video file with the <code>webm</code> extension using the <code>vp8enc</code> encoder and the <code>webmmux</code> muxer. This applet exposes the use of the Cinnamon recorder through profiles.</p>
+<div class="alert alert-info">
+<p><strong>Highlights</strong></p>
 
-
-<h2>Applets/Desklets/Extensions (a.k.a. xlets) localization</h2>
+</br>
 <ul>
-<li>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</li>
-<li>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called <strong>helper.py</strong> from a terminal opened inside the xlet's folder.</li>
-<li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
+<li>Profiles are stored inside an applet preference.</li>
 </ul>
 
-<div style="font-weight:bold;" class="alert alert-info">The following two sections are available only in English.</div>
+<ul>
+<li>Profiles can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent profiles, modifying the generated JSON file and importing the modified file again.</li>
+</ul>
+
+</div><div class="alert alert-warning">
+<ul>
+<li>An imported JSON file will overwrite an existent preference.</li>
+</ul>
+
+<ul>
+<li>Importing a malformed/invalid JSON file will cancel the import operation without modifying an existent preference.</li>
+</ul>
+
+<ul>
+<li>Like everything coming from Gnome, GStreamer is an always-evolving-never-finished-barely-functional piece of software. With that in mind, when using the wrong combination of encoder/muxer, Cinnamon will miserably crash. So, experiment at your own risk.</li>
+</ul>
+
+</div><h3>Basic example</h3>
+<p>Below are the two Cinnamon recorder profiles shipped with this applet. The profile named default cannot be modified/deleted.</p>
+<pre><code>{
+    "default": {
+        "title": "Default",
+        "description": "Encoder: On2 VP8\nMuxer: WebM\nFile extension: webm",
+        "file-extension": "webm",
+        "pipeline": "vp8enc min_quantizer=13 max_quantizer=13 cpu-used=5 deadline=1000000 threads=%T ! queue ! webmmux"
+    },
+    "x264enc": {
+        "title": "H264",
+        "description": "Encoder: H264\nMuxer: Matroska\nFile extension: mkv",
+        "file-extension": "mkv",
+        "pipeline": "x264enc ! queue ! matroskamux"
+    }
+}
+</code></pre>
+<h3>Profile options</h3>
+<p>All profile options are mandatory.</p>
+<table>
+<thead><tr>
+<th>Option</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>Name of the profile shown on the profile selector menu.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Basic description of the profile that will be displayed as a tooltip.</td>
+</tr>
+<tr>
+<td><code>file-extension</code></td>
+<td>The file extension of the generated file.</td>
+</tr>
+<tr>
+<td><code>pipeline</code></td>
+<td>GStreamer pipeline.</td>
+</tr>
+</tbody>
+</table>
+<h2>Atajos de teclado</h2>
+<p>Keyboard shortcuts are tied to specific capture types.</p>
+<h2>Problemas conocidos</h2>
+<h3 class='text-danger'>Cinnamon 3.0.x and its built-in screenshot mechanism</h3><p class='text-danger'><strong>The Cinnamon's 3.0.x built-in screenshot mechanism is broken!</strong></p><p class='text-danger'><strong>Do not use it or Cinnamon will crash!</strong></p><p class='text-danger'><strong>It can only be fixed by building from source the cinnamon package for version 3.0.x with the following patch (<a href='https://github.com/linuxmint/Cinnamon/pull/5777'>PR#5777</a>). Or by simply updating to any other newer version of Cinnamon (3.2.x, 3.4.x, etc.).</strong></p><p class='text-danger'><strong>To permanently dismiss the critical notification displayed when the applet is used under Cinnamon 3.0.x, enable the option found in this applet settings window called "I read the disclaimer and I'm aware of the consequences", under the "Disclaimer" section.</strong></p>
+<h2>Localización de applets/desklets/extensiones (también conocidos como xlets)</h2>
+<ul>
+<li>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</li>
+<li>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado <strong>helper.py</strong> desde una terminal abierta dentro de la carpeta del xlet.</li>
+</ul>
+
+<div style="font-weight:bold;" class="alert alert-info">Las siguientes secciones están disponibles sólo en Inglés.</div>
 </div> <!-- .localization-content -->
 
 
 <div id="en" class="localization-content">
 
-<h1>Help for Feeds Reader (Fork By Odyseus)</h1>
+<h1>Help for Desktop Capture (Fork By Odyseus)</h1>
 
 <div style="font-weight:bold;" class="alert alert-warning">
 <h2>IMPORTANT!!!</h2>
 
 <p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 
-<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -603,35 +1048,423 @@ Install with <code>pip</code></li>
 </div>
 
 <h2>Description</h2>
-<p>This applet is a fork of <a href="https://cinnamon-spices.linuxmint.com/applets/view/149">Feeds Reader</a> applet by Jason Jackson (a.k.a. jake1164).</p>
+<p>This applet is a fork of <a href="https://github.com/rjanja/desktop-capture">Desktop Capture</a> applet by Rob Adams (a.k.a. rjanja).</p>
 <h2>Differences with the original applet</h2>
+<p>The principal differences of this fork with the original applet are in usability and of the kind 'do more with less code'.</p>
 <ul>
-<li>Added keyboard shortcut to be able to open/clese the menu.</li>
-<li>Added option to hide the graphs background, not just set it transparent.</li>
+<li>More convenient handling of settings. Most settings can be changed directly from the applet menu or its context menu without the need to constantly open the applet settings window.</li>
+<li>Keyboard shortcuts are not only available for Cinnamon's built-in features, but for all screenshot/screencast programs.</li>
+<li>Settings are immediately available after changed without the need to restart Cinnamon.</li>
+<li>The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program.</li>
 </ul>
-<h2>Dependencies</h2>
+
+<h2>Programs support</h2>
+<p>In addition to Cinnamon's built-in screenshot/screencast tools, this applet also supports third-party programs to take captures. By default, this applet comes with support for several known programs (Shutter, Gnome Screenshot, XWD, ImageMagic, FFmepg, RecordMyDesktop, Byzanz and Kazam).</p>
+<div class="alert alert-info">
+<p><strong>Highlights</strong></p>
+
+</br>
 <ul>
-<li><strong>feedparser:</strong> Universal feed parser that handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds.
-Install with <code>pip</code></li>
+<li>Programs are stored inside an applet preference. They are grouped by devices. A device called <strong>camera</strong> that contains programs that take screenshots. And a device called <strong>recorder</strong> that contains programs that capture screencasts.</li>
 </ul>
-<pre><code>sudo pip3 install feedparser
+
+<ul>
+<li>Programs can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent programs, modifying the generated JSON file and importing the modified file again.</li>
+</ul>
+
+<ul>
+<li>Commands are exactly that, commands. They are composed of command line arguments , placeholders, and/or flags.</li>
+</ul>
+
+<ul>
+<li>Placeholders are strings specifically formatted with double curly braces (<code>{{PLACEHOLDER_NAME}}</code>) and can be placed in any part of a string. These strings are replaced with dynamically generated data (an applet preference, screen coordinates, etc.) when a command is executed.</li>
+</ul>
+
+<ul>
+<li>Flags are another type of specifically formatted strings surrounded by hashes (<code>#FLAG_NAME#</code>) and they always must be placed at the beginning of a string. Flags indicate that an action must be taken before a command is executed.</li>
+</ul>
+
+<ul>
+<li>The exported JSON file exemplifies almost all the options, flags and placeholders documented below.</li>
+</ul>
+
+<ul>
+<li>The command that will be executed can be previewed before actually executing it by simply right clicking a menu item.</li>
+</ul>
+
+</div><div class="alert alert-warning">
+<ul>
+<li>All option names, flags, and placeholders are case sensitive. Command option names are lower cased and use dashes as word separators. Placeholders and flags are upper cased and use low dashes as word separators.</li>
+</ul>
+
+<ul>
+<li>An imported JSON file will overwrite an existent preference.</li>
+</ul>
+
+<ul>
+<li>Importing a malformed/invalid JSON file will cancel the import operation without modifying an existent preference.</li>
+</ul>
+
+<ul>
+<li>There isn't a mechanism to check if a command is available or not on the system the applet is installed. So, use common sense.</li>
+</ul>
+
+</div><h3>Basic example</h3>
+<pre><code>{
+    "camera": {
+        "Program/Command name": {
+            "title": "Name of the program shown on the program selector menu",
+            "cursor": {
+                "on": "Argument to include cursor in capture",
+                "off": "Argument to not include cursor in capture"
+            },
+            "timer": true,
+            "append-1": "The content here will be used to replace the {{APPEND_1}} placeholder",
+            "menuitems": {
+                "Menu item label 1": "Command to execute when clicking this menu item",
+                "---": "This is a separator",
+                "Menu item label 2": "Command to execute when clicking this menu item",
+            }
+        }
+    },
+    "recorder": {
+        "Program/Command name": {
+            "title": "Name of the program shown on the program selector menu",
+            "fps": true,
+            "cursor": {
+                "on": "Argument to include cursor in capture",
+                "off": "Argument to not include cursor in capture"
+            },
+            "sound": {
+                "on": "Argument to include sound in capture",
+                "off": "Argument to not include sound in capture"
+            },
+            "menuitems": {
+                "#Menu item label 1": "Command to execute when clicking this menu item (See **Menu item label flags**.)",
+                "---": "This is a separator",
+                "Menu item label 2": "Command to execute when clicking this menu item",
+            },
+            "stop-command": "Command to stop recording"
+        }
+    }
+}
 </code></pre>
+<h3>Program options</h3>
+<table>
+<thead><tr>
+<th>Option</th>
+<th>Usage</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>Mandatory</td>
+<td>This option will be used as the program name in the program selector sub-menu.</td>
+</tr>
+<tr>
+<td><code>menuitems</code></td>
+<td>Mandatory</td>
+<td>This option contains all the data that will be used to create the menu items for a program.</td>
+</tr>
+<tr>
+<td><code>stop-command</code></td>
+<td>Mandatory - Recorder only</td>
+<td>The command to stop recording a screencast.</td>
+</tr>
+<tr>
+<td><code>timer</code></td>
+<td>Optional - Camera only</td>
+<td>This option is used in combination with the <code>{{DELAY}}</code> placeholder. If set to <strong>true</strong>, sets the visibility of the <strong>Capture delay</strong> option inside this applet menu.</td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td>Optional - Recorder only</td>
+<td>This option, if set to <strong>true</strong>, sets the visibility of the <strong>Frames per second</strong> option inside this applet menu.</td>
+</tr>
+<tr>
+<td><code>cursor</code></td>
+<td>Optional</td>
+<td>This option is used in combination with the <code>{{CURSOR}}</code> placeholder. It must contain two keys named <strong>on</strong> and <strong>off</strong> which respectively must contain a comand line argument for enabling/disabling the display of the mouse cursor on the captured file.</td>
+</tr>
+<tr>
+<td><code>sound</code></td>
+<td>Optional - Recorder only</td>
+<td>This option is used in combination with the <code>{{SOUND}}</code> placeholder. It must contain two keys named <strong>on</strong> and <strong>off</strong> which respectively must contain a comand line argument for enabling/disabling the inclusion of sound on the captured file.</td>
+</tr>
+<tr>
+<td><code>append-1</code> ... <code>append-10</code></td>
+<td>Optional</td>
+<td>These options are used in combination with the <code>{{APPEND_1}}</code> to <code>{{APPEND_10}}</code> placeholders. This is done to avoid repeating the same arguments on all menu items commands.</td>
+</tr>
+</tbody>
+</table>
+<h3>Flags</h3>
+<h4>Menu item label flags</h4>
+<table>
+<thead><tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#</code></td>
+<td>The hash (#) character in front of a menu item label is a flag that inhibits the menu item from changing the state of the applet (the change of the applet icon from normal to recording).</td>
+</tr>
+</tbody>
+</table>
+<h4>Menu item command flags</h4>
+<table>
+<thead><tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#INTERACTIVE_AREA_HELPER#</code></td>
+<td>This flag will allow the use of this applet area selector helper. See <a href="#menu-item-command-interactive-placeholders-en"><strong>Menu item command interactive placeholders</strong></a></td>
+</tr>
+<tr>
+<td><code>#INTERACTIVE_WINDOW_HELPER#</code></td>
+<td>This flag will allow the use of this applet window selector helper. See <a href="#menu-item-command-interactive-placeholders-en"><strong>Menu item command interactive placeholders</strong></a></td>
+</tr>
+</tbody>
+</table>
+<h3>Menu item command placeholders</h3>
+<table>
+<thead><tr>
+<th>Placeholder</th>
+<th>Usage</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{{APPEND_1}}</code> ... <code>{{APPEND_10}}</code></td>
+<td></td>
+<td>Placeholder for the program options <code>append-1</code> to <code>append-10</code>.</td>
+</tr>
+<tr>
+<td><code>{{CURSOR}}</code></td>
+<td></td>
+<td>The command line argument used to decide if the capture will display the cursor or not.</td>
+</tr>
+<tr>
+<td><code>{{DELAY}}</code></td>
+<td>Camera only</td>
+<td>Delay in seconds before taking a screenshot.</td>
+</tr>
+<tr>
+<td><code>{{DIRECTORY}}</code></td>
+<td></td>
+<td>The directory used as storage for the captures.</td>
+</tr>
+<tr>
+<td><code>{{EXT}}</code></td>
+<td></td>
+<td>The file extension that the generated capture will have. It has to be used in pairs (Example: <code>{{EXT}}png{{EXT}}</code>).</td>
+</tr>
+<tr>
+<td><code>{{FILENAME}}</code></td>
+<td></td>
+<td>The file name (no extension included) that the generated capture will have.</td>
+</tr>
+<tr>
+<td><code>{{FPS}}</code></td>
+<td>Recorder only</td>
+<td>Frames per second (frame rate).</td>
+</tr>
+<tr>
+<td><code>{{RECORDER_DIR}}</code></td>
+<td></td>
+<td>The directory used to store the screencast captures.</td>
+</tr>
+<tr>
+<td><code>{{SCREEN_DIMENSIONS}}</code></td>
+<td></td>
+<td>The screen dimensions with format <code>widthxheight</code>. Example: <code>1440x900</code></td>
+</tr>
+<tr>
+<td><code>{{SCREEN_HEIGHT}}</code></td>
+<td></td>
+<td>The screen height.</td>
+</tr>
+<tr>
+<td><code>{{SCREEN_WIDTH}}</code></td>
+<td></td>
+<td>The screen width.</td>
+</tr>
+<tr>
+<td><code>{{SCREENSHOT_DIR}}</code></td>
+<td></td>
+<td>The directory used to store the screenshot captures.</td>
+</tr>
+<tr>
+<td><code>{{SOUND}}</code></td>
+<td>Recorder only</td>
+<td>The command line argument used to decide if the capture include sound or not.</td>
+</tr>
+</tbody>
+</table>
+<p><span id="menu-item-command-interactive-placeholders-en"></span></p>
+<h3>Menu item command interactive placeholders</h3>
+<table>
+<thead><tr>
+<th>Placeholder</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{{I_X}}</code></td>
+<td><code>x</code> screen coordinates.</td>
+</tr>
+<tr>
+<td><code>{{I_Y}}</code></td>
+<td><code>y</code> screen coordinates.</td>
+</tr>
+<tr>
+<td><code>{{I_X_Y}}</code></td>
+<td><code>x</code> and <code>y</code> screen coordinates separated by a comma.</td>
+</tr>
+<tr>
+<td><code>{{I_WIDTH}}</code></td>
+<td>It could be either the width of a selected area or the width of a selected window.</td>
+</tr>
+<tr>
+<td><code>{{I_HEIGHT}}</code></td>
+<td>It could be either the height of a selected area or the height of a selected window.</td>
+</tr>
+<tr>
+<td><code>{{I_NICE_WIDTH}}</code></td>
+<td>Same as <code>I_WIDTH</code>, but with <code>1</code> added to its value.</td>
+</tr>
+<tr>
+<td><code>{{I_NICE_HEIGHT}}</code></td>
+<td>Same as <code>I_HEIGHT</code>, but with <code>1</code> added to its value.</td>
+</tr>
+<tr>
+<td><code>{{I_X_WINDOW_ID}}</code></td>
+<td>The selected window ID.</td>
+</tr>
+<tr>
+<td><code>{{I_X_WINDOW_FRAME}}</code></td>
+<td>The 'x-window' property of the selected window.</td>
+</tr>
+<tr>
+<td><code>{{I_WM_CLASS}}</code></td>
+<td>The selected window class name.</td>
+</tr>
+<tr>
+<td><code>{{I_WINDOW_TITLE}}</code></td>
+<td>The selected window class title.</td>
+</tr>
+</tbody>
+</table>
+<h2>Cinnamon recorder profiles</h2>
+<p>The built-in Cinnamon recorder uses the GStreamer general-purpose multimedia framework (<a href="https://gstreamer.freedesktop.org/documentation/index.html">GStreamer documentation</a>). It generates a video file with the <code>webm</code> extension using the <code>vp8enc</code> encoder and the <code>webmmux</code> muxer. This applet exposes the use of the Cinnamon recorder through profiles.</p>
+<div class="alert alert-info">
+<p><strong>Highlights</strong></p>
 
+</br>
+<ul>
+<li>Profiles are stored inside an applet preference.</li>
+</ul>
 
+<ul>
+<li>Profiles can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent profiles, modifying the generated JSON file and importing the modified file again.</li>
+</ul>
+
+</div><div class="alert alert-warning">
+<ul>
+<li>An imported JSON file will overwrite an existent preference.</li>
+</ul>
+
+<ul>
+<li>Importing a malformed/invalid JSON file will cancel the import operation without modifying an existent preference.</li>
+</ul>
+
+<ul>
+<li>Like everything coming from Gnome, GStreamer is an always-evolving-never-finished-barely-functional piece of software. With that in mind, when using the wrong combination of encoder/muxer, Cinnamon will miserably crash. So, experiment at your own risk.</li>
+</ul>
+
+</div><h3>Basic example</h3>
+<p>Below are the two Cinnamon recorder profiles shipped with this applet. The profile named default cannot be modified/deleted.</p>
+<pre><code>{
+    "default": {
+        "title": "Default",
+        "description": "Encoder: On2 VP8\nMuxer: WebM\nFile extension: webm",
+        "file-extension": "webm",
+        "pipeline": "vp8enc min_quantizer=13 max_quantizer=13 cpu-used=5 deadline=1000000 threads=%T ! queue ! webmmux"
+    },
+    "x264enc": {
+        "title": "H264",
+        "description": "Encoder: H264\nMuxer: Matroska\nFile extension: mkv",
+        "file-extension": "mkv",
+        "pipeline": "x264enc ! queue ! matroskamux"
+    }
+}
+</code></pre>
+<h3>Profile options</h3>
+<p>All profile options are mandatory.</p>
+<table>
+<thead><tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>Name of the profile shown on the profile selector menu.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Basic description of the profile that will be displayed as a tooltip.</td>
+</tr>
+<tr>
+<td><code>file-extension</code></td>
+<td>The file extension of the generated file.</td>
+</tr>
+<tr>
+<td><code>pipeline</code></td>
+<td>GStreamer pipeline.</td>
+</tr>
+</tbody>
+</table>
+<h2>Keyboard shortcuts</h2>
+<p>Keyboard shortcuts are tied to specific capture types.</p>
+<h2>Known issues</h2>
+<h3 class='text-danger'>Cinnamon 3.0.x and its built-in screenshot mechanism</h3><p class='text-danger'><strong>The Cinnamon's 3.0.x built-in screenshot mechanism is broken!</strong></p><p class='text-danger'><strong>Do not use it or Cinnamon will crash!</strong></p><p class='text-danger'><strong>It can only be fixed by building from source the cinnamon package for version 3.0.x with the following patch (<a href='https://github.com/linuxmint/Cinnamon/pull/5777'>PR#5777</a>). Or by simply updating to any other newer version of Cinnamon (3.2.x, 3.4.x, etc.).</strong></p><p class='text-danger'><strong>To permanently dismiss the critical notification displayed when the applet is used under Cinnamon 3.0.x, enable the option found in this applet settings window called "I read the disclaimer and I'm aware of the consequences", under the "Disclaimer" section.</strong></p>
 <h2>Applets/Desklets/Extensions (a.k.a. xlets) localization</h2>
 <ul>
 <li>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</li>
 <li>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called <strong>helper.py</strong> from a terminal opened inside the xlet's folder.</li>
-<li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
-<div style="font-weight:bold;" class="alert alert-info">The following two sections are available only in English.</div>
+<div style="font-weight:bold;" class="alert alert-info">The following sections are available only in English.</div>
 </div> <!-- .localization-content -->
 
 </div> <!-- .container.boxed -->
 <span id="xlet-contributors" style="padding-top:140px;">
+<div class="container boxed">
+<h2>Contributors/Mentions</h2>
+<ul>
+<li><strong><a href="https://github.com/rjanja">Rob Adams</a>:</strong> Author of the Cinnamon applet called <a href="https://github.com/rjanja/desktop-capture">Desktop Capture</a>.</li>
+</ul>
+
+</div> <!-- .container.boxed -->
 
 <span id="xlet-changelog" style="padding-top:70px;">
+<div class="container boxed">
+<h2>Desktop Capture (Fork By Odyseus) changelog</h2>
+<h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+
+</div> <!-- .container.boxed -->
 
 </div> <!-- #mainarea -->
 <script type="text/javascript">toggleLocalizationVisibility(null);

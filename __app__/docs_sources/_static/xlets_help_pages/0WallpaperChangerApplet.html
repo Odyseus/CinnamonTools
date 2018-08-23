@@ -504,7 +504,7 @@ body {
 
 <p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 
-<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -565,7 +565,6 @@ body {
 <ul>
 <li>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</li>
 <li>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado <strong>helper.py</strong> desde una terminal abierta dentro de la carpeta del xlet.</li>
-<li>Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">Las siguientes secciones están disponibles sólo en Inglés.</div>
@@ -581,7 +580,7 @@ body {
 
 <p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 
-<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -642,7 +641,6 @@ body {
 <ul>
 <li>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</li>
 <li>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called <strong>helper.py</strong> from a terminal opened inside the xlet's folder.</li>
-<li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">The following sections are available only in English.</div>
@@ -661,7 +659,60 @@ body {
 <span id="xlet-changelog" style="padding-top:70px;">
 <div class="container boxed">
 <h2>Wallpaper Changer changelog</h2>
-<h4>This change log is only valid for the version of the xlet hosted on <a href="https://github.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 7 Aug 2018 03:12:39 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/780aaf6">780aaf6</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
+converted) to arrow functions.
+- Cleaned leftovers from previous cleanup.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 4 Aug 2018 05:13:53 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/931fd03">931fd03</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
+moving all JavaScript code to ES6.
+- Simplification of the procedure to set the applet icon.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 18 Jul 2018 08:09:41 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ee53956">ee53956</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Finally fixed issues when handling gsettings (probably ¬¬).
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 12 Jun 2018 00:13:13 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/d3625b9">d3625b9</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- gksu deprecation mitigation:
+- Removed gsettings schema installation/removal from the settings.py script. To avoid dealing
+with retarded policies (pkexec), I moved the installation process to a helper file (common to all
+xlets) that uses the good old sudo.
+- Cleaned some comments/commented lines.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 7 May 2018 04:52:28 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/130cad8">130cad8</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Revamped/simplified settings system.
+</code></pre>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed">
+<h2>Old repository history</h2>
 <hr>
 <ul>
 <li><strong>Date:</strong> Tue, 15 Aug 2017 05:35:42 -0300</li>

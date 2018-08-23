@@ -504,7 +504,7 @@ body {
 
 <p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 
-<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -558,7 +558,6 @@ Instalar con <code>pip</code> (Cinnamon necesita ser reiniciado luego de instala
 <ul>
 <li>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</li>
 <li>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado <strong>helper.py</strong> desde una terminal abierta dentro de la carpeta del xlet.</li>
-<li>Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">Las siguientes secciones están disponibles sólo en Inglés.</div>
@@ -574,7 +573,7 @@ Instalar con <code>pip</code> (Cinnamon necesita ser reiniciado luego de instala
 
 <p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 
-<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -628,7 +627,6 @@ Install with <code>pip</code> (Cinnamon needs to be restarted after installing f
 <ul>
 <li>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</li>
 <li>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called <strong>helper.py</strong> from a terminal opened inside the xlet's folder.</li>
-<li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">The following sections are available only in English.</div>
@@ -651,6 +649,75 @@ Install with <code>pip</code> (Cinnamon needs to be restarted after installing f
 </div> <!-- .container.boxed -->
 
 <span id="xlet-changelog" style="padding-top:70px;">
+<div class="container boxed">
+<h2>Feeds Reader (Fork By Odyseus) changelog</h2>
+<h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 7 Aug 2018 03:08:45 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0c43e68">0c43e68</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
+converted) to arrow functions.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 4 Aug 2018 05:15:18 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3aecd1d">3aecd1d</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
+moving all JavaScript code to ES6.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 18 Jul 2018 00:37:54 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/56ed4bb">56ed4bb</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Fixed an issue that prevented to set and use the default profile when the applet was placed in a
+panel for the first time.
+- Added options to set custom icons for use with the applet.
+- Removed some `try{} catch{}` blocks that were used for debugging.
+- Renamed the icons shipped with the applet to be less generic.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 13 Jun 2018 01:01:13 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c586d38">c586d38</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Corrected settings changed callback function due to different amount of arguments passed by
+different Cinnamon versions.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 5 Jun 2018 16:15:19 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e043ddd">e043ddd</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Re-based from the new applet version from the original author.
+- Added keyboard shortcut to be able to open/close the menu.
+- Added proper keyboard navigation for the menu.
+- Eliminated the need of a stylesheet.css file. The menu will be styled respecting the currently
+used Cinnamon theme.
+- Feeds will only be updated from their online sources if the last check was made after the refresh
+interval.
+- Added missing dependency message.
+- Forced the use of Python 3 in all Python modules/scripts.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 2 May 2018 00:40:33 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/aec58b6">aec58b6</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Fixed preference name type.
+</code></pre>
+<hr>
+
+</div> <!-- .container.boxed -->
 
 </div> <!-- #mainarea -->
 <script type="text/javascript">toggleLocalizationVisibility(null);

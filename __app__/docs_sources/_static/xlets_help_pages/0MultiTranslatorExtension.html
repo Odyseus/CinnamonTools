@@ -504,7 +504,7 @@ body {
 
 <p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 
-<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -552,17 +552,17 @@ body {
 <h3>Opción 1. Descarga directa</h3>
 <p>Este método sólo instalará el script <strong>trans</strong> en la ubicación especificada.</p>
 <p>Sólo para el usuario actual. <strong>~/.local/bin</strong> necesita estar en su PATH.</p>
-<pre><code class="lang-shell">    $ wget -O ~/.local/bin/trans git.io/trans &amp;&amp; chmod ugo+rx ~/.local/bin/trans
+<pre><code class="lang-shell">$ wget -O ~/.local/bin/trans git.io/trans &amp;&amp; chmod ugo+rx ~/.local/bin/trans
 </code></pre>
 <p>Para todos los usuarios sin sobre-escribir la versión instalada.</p>
-<pre><code class="lang-shell">    $ sudo wget -O /usr/local/bin/trans git.io/trans &amp;&amp; sudo chmod ugo+rx /usr/local/bin/trans
+<pre><code class="lang-shell">$ sudo wget -O /usr/local/bin/trans git.io/trans &amp;&amp; sudo chmod ugo+rx /usr/local/bin/trans
 </code></pre>
 <h3>Opción 2. Desde Git - <a href="https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers">Más detalles</a></h3>
 <p>Este método no sólo instalará el script <strong>trans</strong>, sino también sus páginas man. Consultar el enlace anterior para obtener más detalles sobre la instalación.</p>
-<pre><code class="lang-shell">    $ git clone https://github.com/soimort/translate-shell
-    $ cd translate-shell
-    $ make
-    $ sudo make install
+<pre><code class="lang-shell">$ git clone https://github.com/soimort/translate-shell
+$ cd translate-shell
+$ make
+$ sudo make install
 </code></pre>
 <h2>Uso de la extensión</h2>
 <p>Una vez instalada y activada, los siguientes atajos de teclado estarán disponibles.</p>
@@ -596,7 +596,6 @@ body {
 <ul>
 <li>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</li>
 <li>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado <strong>helper.py</strong> desde una terminal abierta dentro de la carpeta del xlet.</li>
-<li>Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">Las siguientes secciones están disponibles sólo en Inglés.</div>
@@ -612,7 +611,7 @@ body {
 
 <p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 
-<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -660,17 +659,17 @@ body {
 <h3>Option 1. Direct Download</h3>
 <p>This method will only install the trans script into the specified locations.</p>
 <p>For the current user only. <strong>~/.local/bin</strong> needs to be in your PATH.</p>
-<pre><code class="lang-shell">    $ wget -O ~/.local/bin/trans git.io/trans &amp;&amp; chmod ugo+rx ~/.local/bin/trans
+<pre><code class="lang-shell">$ wget -O ~/.local/bin/trans git.io/trans &amp;&amp; chmod ugo+rx ~/.local/bin/trans
 </code></pre>
 <p>For all users without overwriting the installed version.</p>
-<pre><code class="lang-shell">    $ sudo wget -O /usr/local/bin/trans git.io/trans &amp;&amp; sudo chmod ugo+rx /usr/local/bin/trans
+<pre><code class="lang-shell">$ sudo wget -O /usr/local/bin/trans git.io/trans &amp;&amp; sudo chmod ugo+rx /usr/local/bin/trans
 </code></pre>
 <h3>Option 2. From Git - <a href="https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers">More details</a></h3>
 <p>This method will not just install the trans script but also its man pages. Refer to the link above for more installation details.</p>
-<pre><code class="lang-shell">    $ git clone https://github.com/soimort/translate-shell
-    $ cd translate-shell
-    $ make
-    $ sudo make install
+<pre><code class="lang-shell">$ git clone https://github.com/soimort/translate-shell
+$ cd translate-shell
+$ make
+$ sudo make install
 </code></pre>
 <h2>Extension usage</h2>
 <p>Once installed and enabled, the following shortcuts will be available.</p>
@@ -704,7 +703,6 @@ body {
 <ul>
 <li>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</li>
 <li>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called <strong>helper.py</strong> from a terminal opened inside the xlet's folder.</li>
-<li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">The following sections are available only in English.</div>
@@ -725,7 +723,67 @@ body {
 <span id="xlet-changelog" style="padding-top:70px;">
 <div class="container boxed">
 <h2>Multi Translator changelog</h2>
-<h4>This change log is only valid for the version of the xlet hosted on <a href="https://github.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 7 Aug 2018 03:17:33 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/38b96da">38b96da</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
+converted) to arrow functions.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 4 Aug 2018 05:12:10 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e195789">e195789</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Revamped/simplified settings system.
+- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
+moving all JavaScript code to ES6.
+- Removed support for Cinnamon versions older than 3.0.x.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 12 Jun 2018 00:03:55 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0636a62">0636a62</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- gksu deprecation mitigation:
+- Removed gsettings schema installation/removal from the settings.py script. To avoid dealing
+with retarded policies (pkexec), I moved the installation process to a helper file (common to all
+xlets) that uses the good old sudo.
+- Cleaned some comments/commented lines.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 5 May 2018 05:00:45 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c41ae2e">c41ae2e</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Removed synchronous function calls. This effectively removes the *dangerous* flag displayed on the
+extensions manager for this extension.
+- Added proper **gsettings** handling for gathering proxy data.
+- Added two new translation engines (DeepL and Yandex, both used through Translate Shell).
+- Now translations providers based on Translate Shell are *sub-classed* from a base *class* so they
+can be initialized with just a *"couple lines of code"*.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 1 May 2018 22:47:20 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4c5f7e3">4c5f7e3</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>Fixed wrong function calls inside catch blocks. I copied the `loadStylesheet` and `unloadStylesheet`
+functions from Cinnamon's code itself, and I didn't do a very good job at adapting the original
+logging functions.
+</code></pre>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed">
+<h2>Old repository history</h2>
 <hr>
 <ul>
 <li><strong>Date:</strong> Tue, 15 Aug 2017 05:36:14 -0300</li>
