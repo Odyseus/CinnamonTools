@@ -280,16 +280,22 @@ ExtensionsManagerApplet.prototype = {
                         if (spicesCacheFile.query_exists(null)) {
                             spicesCacheFile.load_contents_async(null,
                                 (aFile, aResponce) => {
-                                    let rawData;
+                                    let success, contents, tag;
+
                                     try {
-                                        rawData = aFile.load_contents_finish(aResponce)[1];
+                                        [success, contents, tag] = aFile.load_contents_finish(aResponce);
                                     } catch (aErr) {
                                         global.logError("ERROR: " + aErr.message);
                                         this.store_spices_data(null, extensionData);
                                         return;
                                     }
 
-                                    this.store_spices_data(rawData, extensionData);
+                                    if (!success) {
+                                        global.logError("Error parsing %s".format(spicesCacheFile.get_path()));
+                                        return;
+                                    }
+
+                                    this.store_spices_data(contents, extensionData);
                                 });
                         } else {
                             this.store_spices_data(null, extensionData);
