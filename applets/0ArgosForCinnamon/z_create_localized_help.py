@@ -35,7 +35,8 @@ class Main(LocalizedHelpCreator):
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             ("- %s %s" % (
                 _("**100% API compatible with BitBar 1.9.2:** All BitBar plugins that run on Linux (i.e. do not contain macOS-specific code) will work with Argos (else it's a bug)."),
-                "" if for_readme else _("See **BitBar plugins with Argos for Cinnamon**.")
+                _("See %s." % (
+                    "[**%s**](#bitbar-plugins-with-argos-for-cinnamon-{{lhc_lang_id}})" % "BitBar plugins with Argos for Cinnamon"))
             )).strip(),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _("**Beyond BitBar:** Argos can do everything that BitBar can do, but also some things that BitBar can't do (yet). See the documentation for details."),
@@ -50,7 +51,7 @@ class Main(LocalizedHelpCreator):
             ("- **%s** %s" % (
                 _("Fully documented:"),
                 # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                "" if for_readme else _("See **Usage**.")
+                md(_("See %s." % ("[**%s**](#usage-{{lhc_lang_id}})" % "Usage")))
             )).strip(),
             "",
             "## %s" % _("Dependencies"),
@@ -65,6 +66,7 @@ class Main(LocalizedHelpCreator):
 
     def get_content_extra(self):
         return md("{}".format("\n".join([
+            '<span id="usage-{{lhc_lang_id}}"></span>',
             "## %s" % _("Usage"),
             "",
             "<div class=\"alert alert-info\">",
@@ -251,6 +253,8 @@ class Main(LocalizedHelpCreator):
                 "Version number of the Argos for Cinnamon applet. The presence of this environment variable can also be used to determine that the plugin is actually running in Argos, rather than BitBar or [kargos](https://github.com/lipido/kargos)."),
             "| `ARGOS_MENU_OPEN` | %s |" % _(
                 "`true` if the dropdown menu was open at the time the plugin was run, and `false` otherwise."),
+            "",
+            '<span id="bitbar-plugins-with-argos-for-cinnamon-{{lhc_lang_id}}"></span>',
             "",
             "## %s" % _("BitBar plugins with Argos for Cinnamon"),
             "<div class=\"alert alert-warning\">",

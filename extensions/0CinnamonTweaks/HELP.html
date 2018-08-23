@@ -504,7 +504,7 @@ body {
 
 <p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 
-<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -678,7 +678,6 @@ Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas co
 <ul>
 <li>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</li>
 <li>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado <strong>helper.py</strong> desde una terminal abierta dentro de la carpeta del xlet.</li>
-<li>Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">Las siguientes secciones están disponibles sólo en Inglés.</div>
@@ -694,7 +693,7 @@ Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas co
 
 <p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 
-<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://github.com/Odyseus/CinnamonTools">GitHub</a></p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p>
 
 </div>
 
@@ -868,7 +867,6 @@ Some tweaks have warnings, dependencies, limitations and or known issues that mu
 <ul>
 <li>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</li>
 <li>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called <strong>helper.py</strong> from a terminal opened inside the xlet's folder.</li>
-<li>If this xlet has no locale available for your language, you could create it by following the following instructions. <a href="https://github.com/Odyseus/CinnamonTools/wiki/Xlet-localization">Wiki</a></li>
 </ul>
 
 <div style="font-weight:bold;" class="alert alert-info">The following sections are available only in English.</div>
@@ -893,7 +891,70 @@ Some tweaks have warnings, dependencies, limitations and or known issues that mu
 <span id="xlet-changelog" style="padding-top:70px;">
 <div class="container boxed">
 <h2>Cinnamon Tweaks changelog</h2>
-<h4>This change log is only valid for the version of the xlet hosted on <a href="https://github.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 7 Aug 2018 03:14:28 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e794665">e794665</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Fixed notifications close buttons not working. This was caused by an unbound callback after the
+elimiation of the **Lang** module usage.
+- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
+converted) to arrow functions.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 4 Aug 2018 05:12:26 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/340e7de">340e7de</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. Also removed Cjs JS
+class notation in favor of prototypes. First step towards moving all JavaScript code to ES6.
+- Removed support for Cinnamon versions older than 3.0.x.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 18 Jul 2018 08:09:09 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/81ec82e">81ec82e</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Finally fixed issues when handling gsettings (probably ¬¬).
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 12 Jun 2018 00:13:52 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/85054cc">85054cc</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- gksu deprecation mitigation:
+- Removed gsettings schema installation/removal from the settings.py script. To avoid dealing
+with retarded policies (pkexec), I moved the installation process to a helper file (common to all
+xlets) that uses the good old sudo.
+- Cleaned some comments/commented lines.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 14 May 2018 07:12:36 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/53d5934">53d5934</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Fixed use of undefined variable.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sun, 6 May 2018 03:29:16 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ecff4ab">ecff4ab</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Revamped settings system. Switched to a JavaScript class which automatically generates
+getters/setters based on the schema keys.
+</code></pre>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed">
+<h2>Old repository history</h2>
 <hr>
 <ul>
 <li><strong>Date:</strong> Tue, 15 Aug 2017 05:36:01 -0300</li>
@@ -947,13 +1008,6 @@ avoid having a border at the top of a maximized window with its title bar remove
 perfectly fine until Cinnamon 3.4. On Cinnamon 3.4, setting that flag to 0x0 would result on windows
 that started maximized and with their title bars removed to become invisible. I simply added an
 option for people using Cinnamon 3.4 or greater to change that flag.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Mon, 5 Jun 2017 16:45:00 -0300</li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>Merge branch 'master' of git+ssh://github.com/Odyseus/CinnamonTools
 </code></pre>
 <hr>
 <ul>

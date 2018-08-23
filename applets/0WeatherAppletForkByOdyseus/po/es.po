@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-07 03:37-0300\n"
+"POT-Creation-Date: 2018-08-23 02:12-0300\n"
 "PO-Revision-Date: 2018-05-14 16:57-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Español; Castellano <zodiac_es@yahoo.es>\n"
@@ -30,8 +30,6 @@ msgstr "No instalar en ninguna otra versión de Cinnamon."
 msgid "Compatibility"
 msgstr "Compatibilidad"
 
-#. Define them before self._get_language_stats() is called so these
-#. strings are also counted.
 #: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Help"
 msgstr "Ayuda"
@@ -47,16 +45,16 @@ msgstr "Registro de cambios"
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
 #: ../../__app__/python_modules/localized_help_creator.py:322
-#: ../../__app__/python_modules/localized_help_creator.py:353
+#: ../../__app__/python_modules/localized_help_creator.py:356
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:357
 msgid "IMPORTANT!!!"
 msgstr "¡IMPORTANTE!"
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:358
 msgid ""
 "Never delete any of the files found inside this xlet folder. It might break "
 "this xlet functionality."
@@ -64,7 +62,7 @@ msgstr ""
 "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de "
 "este xlet. Podría romper la funcionalidad del xlet."
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:359
 msgid ""
 "Bug reports, feature requests and contributions should be done on this "
 "xlet's repository linked next."
@@ -72,12 +70,12 @@ msgstr ""
 "Los reportes de fallos, peticiones de características y contribuciones deben "
 "hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 "Localización de applets/desklets/extensiones (también conocidos como xlets)"
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid ""
 "If this xlet was installed from Cinnamon Settings, all of this xlet's "
 "localizations were automatically installed."
@@ -86,7 +84,7 @@ msgstr ""
 "localizaciones de este xlet se instalaron automáticamente."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:372
+#: ../../__app__/python_modules/localized_help_creator.py:375
 msgid ""
 "If this xlet was installed manually and not trough Cinnamon Settings, "
 "localizations can be installed by executing the script called **helper.py** "
@@ -96,14 +94,6 @@ msgstr ""
 "Cinnamon, las localizaciones se pueden instalar ejecutando el archivo "
 "llamado **helper.py** desde una terminal abierta dentro de la carpeta del "
 "xlet."
-
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid ""
-"If this xlet has no locale available for your language, you could create it "
-"by following the following instructions."
-msgstr ""
-"Si este xlet no está disponible en su idioma, la localización puede ser "
-"creada siguiendo las siguientes instrucciones."
 
 #: applet.js:138
 msgid "..."
@@ -577,6 +567,13 @@ msgstr "minutos"
 #. settings-schema.json->pref_refresh_interval->description
 msgid "Update interval"
 msgstr "Intervalo de actualización"
+
+#~ msgid ""
+#~ "If this xlet has no locale available for your language, you could create "
+#~ "it by following the following instructions."
+#~ msgstr ""
+#~ "Si este xlet no está disponible en su idioma, la localización puede ser "
+#~ "creada siguiendo las siguientes instrucciones."
 
 #~ msgid "Settings"
 #~ msgstr "Ajustes"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.05\n"
-"POT-Creation-Date: 2018-08-07 03:40-0300\n"
+"POT-Creation-Date: 2018-08-23 02:16-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,9 +27,7 @@ msgstr ""
 msgid "Compatibility"
 msgstr ""
 
-#. Define them before self._get_language_stats() is called so these
-#. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:930
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:940
 msgid "Help"
 msgstr ""
 
@@ -43,39 +41,35 @@ msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:356
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:357
 msgid "IMPORTANT!!!"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:358
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:359
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:372
+#: ../../__app__/python_modules/localized_help_creator.py:375
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
 #: appletHelper.py:69
@@ -281,63 +275,63 @@ msgstr ""
 msgid "New tasks list..."
 msgstr ""
 
-#: applet.js:836
+#: applet.js:846
 msgid "Save as TODO"
 msgstr ""
 
-#: applet.js:844
+#: applet.js:854
 msgid "Save all current tasks lists as a TODO file."
 msgstr ""
 
-#: applet.js:850
+#: applet.js:860
 msgid "Export tasks"
 msgstr ""
 
-#: applet.js:858
+#: applet.js:868
 msgid "Export all current tasks lists into a JSON file."
 msgstr ""
 
-#: applet.js:859 applet.js:873
+#: applet.js:869 applet.js:883
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr ""
 
-#: applet.js:865
+#: applet.js:875
 msgid "Import tasks"
 msgstr ""
 
-#: applet.js:872
+#: applet.js:882
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr ""
 
-#: applet.js:882
+#: applet.js:892
 msgid "Restore example tasks"
 msgstr ""
 
-#: applet.js:896
+#: applet.js:906
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr ""
 
-#: applet.js:902
+#: applet.js:912
 msgid "Reset tasks"
 msgstr ""
 
-#: applet.js:908 applet.js:921
+#: applet.js:918 applet.js:931
 msgid "WARNING!!!"
 msgstr ""
 
-#: applet.js:909
+#: applet.js:919
 msgid "Do you really want to remove all your current tasks?"
 msgstr ""
 
-#: applet.js:910 applet.js:921
+#: applet.js:920 applet.js:931
 msgid "This operation cannot be reverted!!!"
 msgstr ""
 
-#: applet.js:920
+#: applet.js:930
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr ""
 
-#: applet.js:934
+#: applet.js:944
 msgid "Open this applet help file."
 msgstr ""
 
@@ -370,78 +364,78 @@ msgid "This is a @low priority task"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:209
+#: utils.js:201
 msgid "low"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:211
+#: utils.js:203
 msgid "today"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:213
+#: utils.js:205
 msgid "medium"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:215
+#: utils.js:207
 msgid "high"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:217
+#: utils.js:209
 msgid "critical"
 msgstr ""
 
-#: utils.js:605
+#: utils.js:597
 msgid "New task..."
 msgstr ""
 
-#: utils.js:624
+#: utils.js:608
 msgid "Tasks list options"
 msgstr ""
 
-#: utils.js:682
+#: utils.js:666
 msgid "Export this tasks list"
 msgstr ""
 
-#: utils.js:687
+#: utils.js:671
 msgid "Save this tasks list as TODO"
 msgstr ""
 
-#: utils.js:692
+#: utils.js:676
 msgid "Sort tasks alphabetically"
 msgstr ""
 
-#: utils.js:697 utils.js:707
+#: utils.js:681 utils.js:691
 msgid "Takes effect after closing and re-opening the main menu."
 msgstr ""
 
-#: utils.js:702
+#: utils.js:686
 msgid "Sort tasks by completed state"
 msgstr ""
 
-#: utils.js:712
+#: utils.js:696
 msgid "Display remove tasks buttons"
 msgstr ""
 
-#: utils.js:717 utils.js:727
+#: utils.js:701 utils.js:711
 msgid "Takes effect immediately."
 msgstr ""
 
-#: utils.js:722
+#: utils.js:706
 msgid "Keep completed tasks hidden"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence.
 #. "Remove this section/task"
-#: utils.js:1652
+#: utils.js:1628
 #, javascript-format
 msgid "Remove this %s"
 msgstr ""
 
-#: utils.js:1655
+#: utils.js:1631
 msgid "(Hold Ctrl key)"
 msgstr ""
 

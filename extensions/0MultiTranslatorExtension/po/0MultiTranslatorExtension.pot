@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MultiTranslatorExtension 1.07\n"
-"POT-Creation-Date: 2018-08-07 03:40-0300\n"
+"POT-Creation-Date: 2018-08-23 02:16-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,8 +27,6 @@ msgstr ""
 msgid "Compatibility"
 msgstr ""
 
-#. Define them before self._get_language_stats() is called so these
-#. strings are also counted.
 #: ../../__app__/python_modules/localized_help_creator.py:319 settings.py:1394 utils.js:3628
 msgid "Help"
 msgstr ""
@@ -43,39 +41,35 @@ msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:356
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:357
 msgid "IMPORTANT!!!"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:358
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:359
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:372
+#: ../../__app__/python_modules/localized_help_creator.py:375
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
 #: extensionHelper.py:272
@@ -695,7 +689,7 @@ msgstr ""
 msgid "What percentage of screen height should the translation dialog fill."
 msgstr ""
 
-#: settings.py:342 extension.js:1134 extension.js:1137 utils.js:2854
+#: settings.py:342 extension.js:1140 extension.js:1143 utils.js:2854
 msgid "History"
 msgstr ""
 
@@ -952,121 +946,121 @@ msgstr ""
 msgid "The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x repositories is outdated and broken. It can be installed anyway so it will also install its dependencies. But updating to the latest version should be done as described bellow."
 msgstr ""
 
-#: z_create_localized_help.py:55
+#: z_create_localized_help.py:49
 msgid "How to install latest version of translate-shell"
 msgstr ""
 
-#: z_create_localized_help.py:56
+#: z_create_localized_help.py:50
 msgid "Option 1. Direct Download"
 msgstr ""
 
-#: z_create_localized_help.py:57
+#: z_create_localized_help.py:51
 msgid "This method will only install the trans script into the specified locations."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:60
+#: z_create_localized_help.py:54
 msgid "For the current user only. **~/.local/bin** needs to be in your PATH."
 msgstr ""
 
-#: z_create_localized_help.py:66
+#: z_create_localized_help.py:60
 msgid "For all users without overwriting the installed version."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:74
+#: z_create_localized_help.py:68
 msgid "Option 2. From Git - [More details](https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers)"
 msgstr ""
 
-#: z_create_localized_help.py:75
+#: z_create_localized_help.py:69
 msgid "This method will not just install the trans script but also its man pages. Refer to the link above for more installation details."
 msgstr ""
 
-#: z_create_localized_help.py:84
+#: z_create_localized_help.py:78
 msgid "Extension usage"
 msgstr ""
 
-#: z_create_localized_help.py:85
+#: z_create_localized_help.py:79
 msgid "Once installed and enabled, the following shortcuts will be available."
 msgstr ""
 
-#: z_create_localized_help.py:86
+#: z_create_localized_help.py:80
 msgid "Global shortcuts (configurable from the extension settings)"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:88
+#: z_create_localized_help.py:82
 msgid "**[[Super]] + [[T]]:** Open translator dialog."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:84
 msgid "**[[Super]] + [[Shift]] + [[T]]:** Open translator dialog and translate text from clipboard."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:92
+#: z_create_localized_help.py:86
 msgid "**[[Super]] + [[Alt]] + [[T]]:** Open translator dialog and translate from primary selection."
 msgstr ""
 
-#: z_create_localized_help.py:94
+#: z_create_localized_help.py:88
 msgid "Shortcuts available on the translation dialog"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:90
 msgid "**[[Ctrl]] + [[Enter]]:** Translate text."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:98
+#: z_create_localized_help.py:92
 msgid "**[[Shift]] + [[Enter]]:** Force text translation. Ignores translation history."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:100
+#: z_create_localized_help.py:94
 msgid "**[[Ctrl]] + [[Shift]] + [[C]]:** Copy translated text to clipboard."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:102
+#: z_create_localized_help.py:96
 msgid "**[[Ctrl]] + [[S]]:** Swap languages."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:104
+#: z_create_localized_help.py:98
 msgid "**[[Ctrl]] + [[D]]:** Reset languages to default."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:106
+#: z_create_localized_help.py:100
 msgid "**[[Escape]]:** Close dialog."
 msgstr ""
 
-#: z_create_localized_help.py:108
+#: z_create_localized_help.py:102
 msgid "Xlet's settings window"
 msgstr ""
 
-#: z_create_localized_help.py:109
+#: z_create_localized_help.py:103
 msgid "From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."
 msgstr ""
 
-#: z_create_localized_help.py:111
+#: z_create_localized_help.py:105
 msgid "To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:113
+#: z_create_localized_help.py:107
 msgid "Command to install the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:116
+#: z_create_localized_help.py:110
 msgid "Command to uninstall the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:119
+#: z_create_localized_help.py:113
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr ""
 

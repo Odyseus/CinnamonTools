@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PopupTranslator 1.08\n"
-"Report-Msgid-Bugs-To: https://github.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-08-07 03:37-0300\n"
-"PO-Revision-Date: 2018-05-04 21:10-0300\n"
+"Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
+"POT-Creation-Date: 2018-08-23 02:13-0300\n"
+"PO-Revision-Date: 2018-08-23 02:14-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -30,8 +30,6 @@ msgstr "No instalar en ninguna otra versión de Cinnamon."
 msgid "Compatibility"
 msgstr "Compatibilidad"
 
-#. Define them before self._get_language_stats() is called so these
-#. strings are also counted.
 #: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:371
 msgid "Help"
 msgstr "Ayuda"
@@ -46,40 +44,36 @@ msgstr "Registro de cambios"
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:356
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:357
 msgid "IMPORTANT!!!"
 msgstr "¡IMPORTANTE!"
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:358
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:359
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:372
+#: ../../__app__/python_modules/localized_help_creator.py:375
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
-
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
-msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."
 
 #: appletHelper.py:311
 msgid "Popup Translator history"
@@ -196,6 +190,10 @@ msgstr "Yo no uso ningún otro tipo de distribución Linux (basada en Gentoo, ba
 #: z_create_localized_help.py:86
 msgid "Note:"
 msgstr "Nota:"
+
+#: z_create_localized_help.py:91 z_create_localized_help.py:93
+msgid "Translation history window"
+msgstr "Ventana del historial de traducción"
 
 #: z_create_localized_help.py:95
 msgid "Usage"
@@ -364,11 +362,11 @@ msgstr "Hotkey para traducir"
 msgid "Force translation hotkey"
 msgstr "Hoykey para traducir forzosamente"
 
-#: applet.js:222 applet.js:1024 applet.js:1048
+#: applet.js:222 applet.js:1030 applet.js:1054
 msgid "Unmet dependencies found!!!"
 msgstr "¡Dependencias no satisfechas encontradas!"
 
-#: applet.js:223 applet.js:885 applet.js:1025
+#: applet.js:223 applet.js:885 applet.js:1031
 msgid "A detailed error has been logged into ~/.cinnamon/glass.log file."
 msgstr "Se ha registrado un error detallado en el archivo ~/.cinnamon/glass.log."
 
@@ -443,11 +441,11 @@ msgstr "Powered by %s"
 msgid "No Yandex API keys were found!!!"
 msgstr "¡No se encontraron claves de API de Yandex!"
 
-#: applet.js:642 applet.js:1050
+#: applet.js:642 applet.js:1056
 msgid "Check this applet help file for instructions."
 msgstr "Comprobar el archivo de ayuda de este applet para obtener instrucciones."
 
-#: applet.js:643 applet.js:1051
+#: applet.js:643 applet.js:1057
 msgid "It can be accessed from this applet context menu."
 msgstr "Se puede acceder a él desde el menú contextual de este applet."
 
@@ -480,26 +478,26 @@ msgstr "No se admite la dirección de traducción especificada"
 msgid "Error parsing %s's request."
 msgstr "Error al analizar la solicitud a %s."
 
-#: applet.js:1057
+#: applet.js:1063
 msgid "All dependencies seem to be met."
 msgstr "Todas las dependencias parecen ser cumplidas."
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file/command 'FileName or Command':"
-#: applet.js:1111
+#: applet.js:1117
 #, javascript-format
 msgid "Unable to execute file/command '%s':"
 msgstr "Imposible ejecutar el archivo/comando '%s':"
 
-#: utils.js:262
+#: utils.js:266
 msgid "Copy translated text to clipboard"
 msgstr "Copiar texto traducido al portapapeles"
 
-#: utils.js:268
+#: utils.js:272
 msgid "Translate text on provider's website"
 msgstr "Traducir texto en el sitio web del proveedor"
 
-#: utils.js:274
+#: utils.js:278
 msgid "Open translation history"
 msgstr "Abrir historial de traducción"
 
@@ -695,3 +693,6 @@ msgstr "Indentar los datos del historial de traducciones"
 #. settings-schema.json->pref_loggin_save_history_indented->tooltip
 msgid "It allows to save the translation history data with indentation."
 msgstr "Permite guardar los datos del historial de traducción con sangría."
+
+#~ msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
+#~ msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."

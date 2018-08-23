@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0QuickMenu 1.10\n"
-"POT-Creation-Date: 2018-08-07 03:40-0300\n"
+"POT-Creation-Date: 2018-08-23 02:16-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,9 +27,7 @@ msgstr ""
 msgid "Compatibility"
 msgstr ""
 
-#. Define them before self._get_language_stats() is called so these
-#. strings are also counted.
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:505
+#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:515
 msgid "Help"
 msgstr ""
 
@@ -43,39 +41,35 @@ msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:356
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:357
 msgid "IMPORTANT!!!"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:358
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:359
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:372
+#: ../../__app__/python_modules/localized_help_creator.py:375
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
 #: z_create_localized_help.py:29
@@ -111,11 +105,11 @@ msgstr ""
 msgid "A hotkey can be assigned to open/close the menu."
 msgstr ""
 
-#: z_create_localized_help.py:44 z_create_localized_help.py:63
+#: z_create_localized_help.py:44 z_create_localized_help.py:59
 msgid "Menu items to .desktop files will be displayed with the icon and name declared inside the .desktop files themselves."
 msgstr ""
 
-#: z_create_localized_help.py:47 z_create_localized_help.py:66
+#: z_create_localized_help.py:47 z_create_localized_help.py:62
 msgid "The menu can be kept open while activating menu items by pressing [[Ctrl]] + **Left click** or with **Middle click**."
 msgstr ""
 
@@ -123,64 +117,60 @@ msgstr ""
 msgid "This applet can create menu and sub-menu items even from symbolic links found inside the main folder."
 msgstr ""
 
-#: z_create_localized_help.py:50
-msgid "Settings window"
-msgstr ""
-
-#: z_create_localized_help.py:55
+#: z_create_localized_help.py:53 z_create_localized_help.py:56
 msgid "Image featuring different icons for each sub-menu and different icon sizes"
 msgstr ""
 
-#: z_create_localized_help.py:62
+#: z_create_localized_help.py:58
 msgid "Applet usage"
 msgstr ""
 
-#: z_create_localized_help.py:68
+#: z_create_localized_help.py:64
 msgid "How to set a different icon for each sub-menu"
 msgstr ""
 
-#: z_create_localized_help.py:71
+#: z_create_localized_help.py:67
 msgid "Create a file at the same level as the folders that will be used to create the sub-menus."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:73
+#: z_create_localized_help.py:69
 msgid "The file name can be customized, doesn't need to have an extension name and can be a hidden file (a dot file). By default is called **0_icons_for_sub_menus.json**."
 msgstr ""
 
-#: z_create_localized_help.py:75
+#: z_create_localized_help.py:71
 msgid "Whatever name is chosen for the file, it will be automatically ignored and will never be shown on the menu."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:77
+#: z_create_localized_help.py:73
 msgid "The path to the icon has to be a full path. A path starting with **~/** can be used and will be expanded to the user's home folder."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:79
+#: z_create_localized_help.py:75
 msgid "If any sub-folder has more folders that need to have custom icons, just create another **0_icons_for_sub_menus.json** file at the same level that those folders."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:81
+#: z_create_localized_help.py:77
 msgid "The content of the file is a *JSON object* and has to look as follows:"
 msgstr ""
 
-#: z_create_localized_help.py:89 z_create_localized_help.py:91 z_create_localized_help.py:93 z_create_localized_help.py:95
+#: z_create_localized_help.py:86
 msgid "Folder name"
 msgstr ""
 
-#: z_create_localized_help.py:90 z_create_localized_help.py:92 z_create_localized_help.py:94 z_create_localized_help.py:96
+#: z_create_localized_help.py:86
 msgid "Icon name or icon path for Folder name"
 msgstr ""
 
-#: z_create_localized_help.py:100
+#: z_create_localized_help.py:88
 msgid "Warning!!!"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:102
+#: z_create_localized_help.py:90
 msgid "JSON *language* is very strict. Just be sure to ONLY use double quotes. And the last key/value combination DOESN'T have to end with a comma (**Folder name #n** in the previous example)."
 msgstr ""
 
@@ -191,23 +181,23 @@ msgstr ""
 msgid "Remove '%s'"
 msgstr ""
 
-#: applet.js:487
+#: applet.js:497
 msgid "Update menu"
 msgstr ""
 
-#: applet.js:492
+#: applet.js:502
 msgid "Scan the main folder to re-create the menu."
 msgstr ""
 
-#: applet.js:495
+#: applet.js:505
 msgid "Open folder"
 msgstr ""
 
-#: applet.js:501
+#: applet.js:511
 msgid "Open the main folder."
 msgstr ""
 
-#: applet.js:511
+#: applet.js:521
 msgid "Open the help file."
 msgstr ""
 

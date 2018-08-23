@@ -36,11 +36,11 @@ class Main(LocalizedHelpCreator):
             _("The usage of this applet is very simple. Each task list is represented by a sub menu and each sub menu item inside a sub menu represents a task."),
             "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "- %s" % ("To add a new tasks list, simply focus the **New tasks list...** entry, give a name to the tasks list and press <kbd>Enter</kbd>." if for_readme else _(
-                "To add a new tasks list, simply focus the **New tasks list...** entry, give a name to the tasks list and press [[Enter]].")),
+            "- %s" % _(
+                "To add a new tasks list, simply focus the **New tasks list...** entry, give a name to the tasks list and press [[Enter]]."),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "- %s" % ("To add a new task, simply focus the **New task...** entry, give a name to the task and press <kbd>Enter</kbd>." if for_readme else _(
-                "To add a new task, simply focus the **New task...** entry, give a name to the task and press [[Enter]].")),
+            "- %s" % _(
+                "To add a new task, simply focus the **New task...** entry, give a name to the task and press [[Enter]]."),
             "- %s" % _("All tasks lists and tasks can be edited in-line."),
             "- %s" % _("Tasks can be marked as completed by changing the checked state of their sub menu items."),
             "- %s" % _("Each tasks list can have its own settings for sorting tasks (by name and/or by completed state), remove task button visibility and completed tasks visibility."),

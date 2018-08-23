@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ExtensionsManager 1.10\n"
-"POT-Creation-Date: 2018-08-07 03:40-0300\n"
+"POT-Creation-Date: 2018-08-23 02:16-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,8 +27,6 @@ msgstr ""
 msgid "Compatibility"
 msgstr ""
 
-#. Define them before self._get_language_stats() is called so these
-#. strings are also counted.
 #: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:179
 msgid "Help"
 msgstr ""
@@ -43,39 +41,35 @@ msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:353
+#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:356
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:357
 msgid "IMPORTANT!!!"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:358
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:359
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:372
 msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:373
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:372
+#: ../../__app__/python_modules/localized_help_creator.py:375
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:373
-msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
 msgstr ""
 
 #: appletHelper.py:269
@@ -102,7 +96,7 @@ msgstr ""
 msgid "Launch the debug process from a virtual terminal."
 msgstr ""
 
-#: z_create_localized_help.py:29 utils.js:318 utils.js:326
+#: z_create_localized_help.py:29 utils.js:319 utils.js:327
 msgid "Description"
 msgstr ""
 
@@ -130,6 +124,10 @@ msgstr ""
 msgid "Open its extension.js file"
 msgstr ""
 
+#: z_create_localized_help.py:42 z_create_localized_help.py:44
+msgid "Settings window"
+msgstr ""
+
 #: applet.js:124
 msgid "Open extensions manager"
 msgstr ""
@@ -154,32 +152,32 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: applet.js:272 applet.js:318
+#: applet.js:272 applet.js:324
 #, javascript-format
 msgid "Source of error: %s"
 msgstr ""
 
-#: applet.js:413
+#: applet.js:419
 msgid "There aren't any extensions installed on your system. Or you may need to refresh the list of extensions from this applet context menu."
 msgstr ""
 
-#: applet.js:486
+#: applet.js:492
 msgid "Enabled extensions"
 msgstr ""
 
-#: applet.js:489
+#: applet.js:495
 msgid "No enabled extensions"
 msgstr ""
 
-#: applet.js:493
+#: applet.js:499
 msgid "Disabled extensions"
 msgstr ""
 
-#: applet.js:495
+#: applet.js:501
 msgid "No disabled extensions"
 msgstr ""
 
-#: applet.js:532
+#: applet.js:538
 #, javascript-format
 msgid "Extension %s is not compatible with current version of cinnamon. Using it may break your system. Load anyway?"
 msgstr ""
@@ -188,35 +186,35 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: utils.js:139
+#: utils.js:140
 msgid "OK"
 msgstr ""
 
-#: utils.js:198
+#: utils.js:199
 msgid "Open settings window"
 msgstr ""
 
-#: utils.js:218
+#: utils.js:219
 msgid "Spices page"
 msgstr ""
 
-#: utils.js:237
+#: utils.js:238
 msgid "Edit extension main file"
 msgstr ""
 
-#: utils.js:253
+#: utils.js:254
 msgid "Open extension folder"
 msgstr ""
 
-#: utils.js:315 utils.js:324
+#: utils.js:316 utils.js:325
 msgid "Name"
 msgstr ""
 
-#: utils.js:437
+#: utils.js:438
 msgid "Error parsing JSON string."
 msgstr ""
 
-#: utils.js:439
+#: utils.js:440
 msgid "A detailed error has been logged into ~/.cinnamon/glass.log."
 msgstr ""
 

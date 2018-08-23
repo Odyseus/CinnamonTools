@@ -366,6 +366,7 @@ ConfirmationDialog.prototype = {
 
         this.setButtons([{
             label: aCancelButtonLabel,
+            focused: true,
             action: () => {
                 this.close();
             },

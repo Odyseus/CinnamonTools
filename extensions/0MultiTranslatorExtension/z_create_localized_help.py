@@ -41,13 +41,7 @@ class Main(LocalizedHelpCreator):
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "    - %s" % _("Check translate-shell [dependencies](https://github.com/soimort/translate-shell#dependencies) and [recommended dependencies](https://github.com/soimort/translate-shell#recommended-dependencies)."),
             "",
-            "**%s** %s" % (_("Note:"), _("The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x repositories is outdated and broken. It can be installed anyway so it will also install its dependencies. But updating to the latest version should be done as described bellow.")) if not for_readme else "",
-            "",
-            "**Read this extension help file for more details.**" if for_readme else "",
-            "",
-            "## Settings window image" if for_readme else "",
-            "",
-            "![MultiTranslatorExtension-options](https://odyseus.github.io/CinnamonTools/lib/img/MultiTranslatorExtension-options.png)" if for_readme else ""
+            "**%s** %s" % (_("Note:"), _("The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x repositories is outdated and broken. It can be installed anyway so it will also install its dependencies. But updating to the latest version should be done as described bellow.")),
         ])
 
     def get_content_extra(self):
@@ -60,14 +54,14 @@ class Main(LocalizedHelpCreator):
             _("For the current user only. **~/.local/bin** needs to be in your PATH."),
             "",
             """```shell
-    $ wget -O ~/.local/bin/trans git.io/trans && chmod ugo+rx ~/.local/bin/trans
-    ```""",
+$ wget -O ~/.local/bin/trans git.io/trans && chmod ugo+rx ~/.local/bin/trans
+```""",
             "",
             _("For all users without overwriting the installed version."),
             "",
             """```shell
-    $ sudo wget -O /usr/local/bin/trans git.io/trans && sudo chmod ugo+rx /usr/local/bin/trans
-    ```""",
+$ sudo wget -O /usr/local/bin/trans git.io/trans && sudo chmod ugo+rx /usr/local/bin/trans
+```""",
             "",
             "### %s" %
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
@@ -75,11 +69,11 @@ class Main(LocalizedHelpCreator):
             _("This method will not just install the trans script but also its man pages. Refer to the link above for more installation details."),
             "",
             """```shell
-    $ git clone https://github.com/soimort/translate-shell
-    $ cd translate-shell
-    $ make
-    $ sudo make install
-    ```""",
+$ git clone https://github.com/soimort/translate-shell
+$ cd translate-shell
+$ make
+$ sudo make install
+```""",
             "",
             "## %s" % _("Extension usage"),
             _("Once installed and enabled, the following shortcuts will be available."),
