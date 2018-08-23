@@ -258,16 +258,26 @@ QuickMenuApplet.prototype = {
                 if (iconsForSubMenusFile.query_exists(null)) {
                     iconsForSubMenusFile.load_contents_async(null,
                         (aFile, aResponce) => {
-                            let rawData;
+                            let success, contents, tag;
+
                             try {
-                                rawData = aFile.load_contents_finish(aResponce)[1];
-                                iconsForFolders = JSON.parse(rawData);
+                                [success, contents, tag] = aFile.load_contents_finish(aResponce);
                             } catch (aErr) {
                                 global.logError("ERROR: " + aErr.message);
                                 this._handleDir(aDir, currentDir, aMenu, null);
                                 return;
                             }
-                            this._handleDir(aDir, currentDir, aMenu, iconsForFolders);
+
+                            if (success) {
+                                try {
+                                    let iconsForFolders = JSON.parse(contents);
+                                    this._handleDir(aDir, currentDir, aMenu, iconsForFolders);
+                                } catch (aErr) {
+                                    this._handleDir(aDir, currentDir, aMenu, null);
+                                }
+                            } else {
+                                this._handleDir(aDir, currentDir, aMenu, null);
+                            }
                         });
                 }
             } else {
