@@ -8,4 +8,4 @@ pages:
     - public
   only:
     variables:
-    - $CI_COMMIT_MESSAGE =~ /.*\[build pages\].*/
+    - $CI_COMMIT_TITLE =~ /.*Documentation.*/
