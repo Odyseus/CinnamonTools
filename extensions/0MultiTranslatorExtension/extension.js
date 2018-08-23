@@ -1086,16 +1086,22 @@ TranslatorExtension.prototype = {
 
         if (this.historyFile.query_exists(null)) {
             this.historyFile.load_contents_async(null, (aFile, aResponce) => {
-                let rawData;
+                let success, contents, tag;
+
                 try {
-                    rawData = aFile.load_contents_finish(aResponce)[1];
+                    [success, contents, tag] = aFile.load_contents_finish(aResponce);
                 } catch (aErr) {
                     global.logError(aErr.message);
                     return;
                 }
 
+                if (!success) {
+                    global.logError("Error parsing %s".format(this.historyFile.get_path()));
+                    return;
+                }
+
                 try {
-                    this._translation_history = JSON.parse(rawData);
+                    this._translation_history = JSON.parse(contents);
                 } catch (aErr) {
                     global.logError(aErr.message);
                 }
