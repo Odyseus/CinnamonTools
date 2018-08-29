@@ -45,6 +45,10 @@
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="cli-help-page">
 <h2><abbr title="Command Line Interface">CLI</abbr> help page<a class="headerlink" href="#cli-help-page" title="Permalink to this headline">¶</a></h2>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>This Python application can generate a system executable with bash completions support. See <a class="reference internal" href="#system-executable-reference"><span class="std std-ref">app.py generate command</span></a>.</p>
+</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Cinnamon Tools Ω
 
 Usage:
@@ -140,15 +144,15 @@ Sub-commands for the `generate` command:
 <p>This command starts a <abbr title="Command Line Interface">CLI</abbr> menu from which building and development tasks can be performed.</p>
 <p><strong>Options:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-d</span> <span class="pre">&lt;domain&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--domain=&lt;domain&gt;</span></code>: See <code class="docutils literal notranslate"><span class="pre">build</span></code> command options.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">&lt;dir&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--output=&lt;dir&gt;</span></code>: See <code class="docutils literal notranslate"><span class="pre">build</span></code> command options.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> or <code class="docutils literal notranslate"><span class="pre">--no-confirmation</span></code>: See <code class="docutils literal notranslate"><span class="pre">build</span></code> command options.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-d</span> <span class="pre">&lt;domain&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--domain=&lt;domain&gt;</span></code>: See <a class="reference internal" href="#build-command-options-reference"><span class="std std-ref">build command options</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">&lt;dir&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--output=&lt;dir&gt;</span></code>: See <a class="reference internal" href="#build-command-options-reference"><span class="std std-ref">build command options</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> or <code class="docutils literal notranslate"><span class="pre">--no-confirmation</span></code>: See <a class="reference internal" href="#build-command-options-reference"><span class="std std-ref">build command options</span></a>.</p></li>
 </ul>
 </div>
 <div class="section" id="app-py-build-command">
 <h3><strong>app.py build</strong> command<a class="headerlink" href="#app-py-build-command" title="Permalink to this headline">¶</a></h3>
 <p>This command is used to build all or specifics xlets.</p>
-<p><strong>Options:</strong></p>
+<p id="build-command-options-reference"><strong>Options:</strong></p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">-x</span> <span class="pre">&lt;name&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--xlet=&lt;name&gt;</span></code>: Specify one or more xlets to build.</p>
 <blockquote>
@@ -179,6 +183,8 @@ Sub-commands for the `generate` command:
 </div>
 </div></blockquote>
 </li>
+</ul>
+<ul id="build-command-option-ooutput-reference">
 <li><p><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">&lt;dir&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--output=&lt;dir&gt;</span></code>: The output directory that will be used to save the built xlets. If not specified, the default storage location will be used.</p>
 <blockquote>
 <div><ul class="simple">
@@ -206,8 +212,8 @@ Sub-commands for the `generate` command:
 <p><strong>Options:</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">&lt;name&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--theme-name=&lt;name&gt;</span></code>: To be able to build the themes, it is necessary to specify a theme name. This theme name is then used to generate the full theme name (&lt;theme_name&gt;-&lt;theme_variant&gt;). To avoid passing this command line option every time one builds themes, a file named <strong>theme_name</strong> can be created at the root of the repository whose only content should be the desired theme name. This command line option has precedence over the <strong>theme_name</strong> file. Which means that if this option is used, the theme name found in an existent <strong>theme_name</strong> file will be ignored.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">&lt;dir&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--output=&lt;dir&gt;</span></code>: The output directory that will be used to save the built themes. If not specified, the default storage location will be used. See <code class="docutils literal notranslate"><span class="pre">build</span></code> command <code class="docutils literal notranslate"><span class="pre">--output=&lt;dir&gt;</span></code> option notes for more details.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> or <code class="docutils literal notranslate"><span class="pre">--no-confirmation</span></code>: Do not confirm the deletion of an already built theme when the <code class="docutils literal notranslate"><span class="pre">--output</span></code> option is used. See <code class="docutils literal notranslate"><span class="pre">build</span></code> command <code class="docutils literal notranslate"><span class="pre">--output=&lt;dir&gt;</span></code> option notes for more details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">&lt;dir&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--output=&lt;dir&gt;</span></code>: The output directory that will be used to save the built themes. If not specified, the default storage location will be used. See <a class="reference internal" href="#build-command-option-ooutput-reference"><span class="std std-ref">build command –output</span></a> option notes for more details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> or <code class="docutils literal notranslate"><span class="pre">--no-confirmation</span></code>: Do not confirm the deletion of an already built theme when the <code class="docutils literal notranslate"><span class="pre">--output</span></code> option is used. See <a class="reference internal" href="#build-command-option-ooutput-reference"><span class="std std-ref">build command –output</span></a> option notes for more details.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-r</span></code> or <code class="docutils literal notranslate"><span class="pre">--restart-cinnamon</span></code>: Restart Cinnamon’s shell after finishing the themes building process.</p></li>
 </ul>
 <p>There is actually one theme in this repository, but with two variants (two different color accents). One is called <strong>GreybirdBlue</strong>, because is the same blue used by the <a class="reference external" href="https://github.com/shimmerproject/Greybird">Greybird</a> theme. And the other variant is called <strong>MintGreen</strong>, because it uses as accent color a similar (but brighter) green color as the default Linux Mint theme called <strong>Mint-X</strong>.</p>
@@ -256,10 +262,17 @@ Sub-commands for the `generate` command:
 <p><strong>(*)</strong>: This check is not <em>very smart</em>. Currently, it simply checks for files with <code class="docutils literal notranslate"><span class="pre">.py</span></code> or <code class="docutils literal notranslate"><span class="pre">.sh</span></code> extension. And they will be set as executable regardless if they need to be or not.</p>
 </div>
 <div class="section" id="app-py-generate-command">
-<h3><strong>app.py generate</strong> command<a class="headerlink" href="#app-py-generate-command" title="Permalink to this headline">¶</a></h3>
+<span id="system-executable-reference"></span><h3><strong>app.py generate</strong> command<a class="headerlink" href="#app-py-generate-command" title="Permalink to this headline">¶</a></h3>
 <p><strong>Sub-commands:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">system_executable</span></code>: Create an executable for this application on the system PATH to be able to run it from anywhere.</p></li>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">system_executable</span></code>: Create an executable for this application on the system PATH to be able to run it from anywhere.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The system executable creation process will ask for an executable name (the default is <strong>cinnamon-tools-app</strong>) and the absolute path to store the executable file (the default is <strong>$HOME/.local/bin</strong>).</p></li>
+<li><p>It will also ask for bash completions creation.</p></li>
+</ul>
+</div></blockquote>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docs</span></code>: Generate this documentation page.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docs_no_api</span></code>: Generate this documentation page without extracting Python modules docstrings.</p></li>
 </ul>

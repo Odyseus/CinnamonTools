@@ -40,17 +40,17 @@
   <div class="section" id="cinnamon-tools-development-documentation">
 <h1>Cinnamon Tools’ development documentation<a class="headerlink" href="#cinnamon-tools-development-documentation" title="Permalink to this headline">¶</a></h1>
 <p>A collection of xlets for the Cinnamon Desktop Environment.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <p>The use of this Python application is merely to assist in the development of the xlets in this repository (creating this documentation, creating the xlet’s localized help pages, updating the xlet’s POT files, etc.). It is also used to <em>build</em> the xlets into their final usable state.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <p>All xlets in the repository aren’t directly usable, they need to be <em>built</em>. <em>Building</em> an xlet just means that the <em>raw xlet</em> (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (&lt;xlet_name&gt;&#64;&lt;custom_domain_name&gt;) to all files (files content and file names). It will also compile the <code class="docutils literal notranslate"><span class="pre">gsettings</span></code> files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, etc.).</p>
 <p>The same principle applies to the themes in this repository (they need to be <em>built</em>). Although, the process is totally different.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <p>Technically, the generic term <strong>xlet</strong> applies to applets, extensions, desklets and themes. But I will be using the explicit term <strong>theme</strong> for themes and <strong>xlet</strong> for the rest of xlets.</p>
 </div>
 </div>
@@ -75,11 +75,6 @@
 <li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-code-styling.html#css-sass">CSS/SASS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-code-styling.html#javascript">JavaScript</a></li>
 <li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-code-styling.html#python">Python</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="includes/cinnamontools-help-pages.html">Help pages for all xlets in this repository</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-help-pages.html#applets">Applets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="includes/cinnamontools-help-pages.html#extensions">Extensions</a></li>
 </ul>
 </li>
 </ul>

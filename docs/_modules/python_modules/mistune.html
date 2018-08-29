@@ -49,7 +49,8 @@
 
 <span class="sd">    **Modifications**:</span>
 
-<span class="sd">    - Added support for kbd tag. [[Ctrl]] will render as &lt;kbd&gt;Ctrl&lt;/kbd&gt;</span>
+<span class="sd">    - Added support for kbd tag. [[Ctrl]] will render as &lt;kbd&gt;Ctrl&lt;/kbd&gt;.</span>
+<span class="sd">    - Added table and table-bordered classes to the table tag.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">re</span>
@@ -805,7 +806,7 @@
 <span class="sd">        :param body: body part of the table.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="s1">&#39;&lt;table&gt;</span><span class="se">\n</span><span class="s1">&lt;thead&gt;</span><span class="si">%s</span><span class="s1">&lt;/thead&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="s1">&#39;&lt;table class=&quot;table table-bordered&quot;&gt;</span><span class="se">\n</span><span class="s1">&lt;thead&gt;</span><span class="si">%s</span><span class="s1">&lt;/thead&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
             <span class="s1">&#39;&lt;tbody&gt;</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&lt;/tbody&gt;</span><span class="se">\n</span><span class="s1">&lt;/table&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
         <span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
 

@@ -5,6 +5,10 @@ Usage
 :abbr:`CLI (Command Line Interface)` help page
 ----------------------------------------------
 
+.. hint::
+
+    This Python application can generate a system executable with bash completions support. See :ref:`system-executable-reference`.
+
 .. docopt-doc-literalinclude:: cinnamontools
 
 Detailed Usage
@@ -17,14 +21,16 @@ This command starts a :abbr:`CLI (Command Line Interface)` menu from which build
 
 **Options:**
 
-- ``-d <domain>`` or ``--domain=<domain>``: See ``build`` command options.
-- ``-o <dir>`` or ``--output=<dir>``: See ``build`` command options.
-- ``-n`` or ``--no-confirmation``: See ``build`` command options.
+- ``-d <domain>`` or ``--domain=<domain>``: See :ref:`build command options <build-command-options-reference>`.
+- ``-o <dir>`` or ``--output=<dir>``: See :ref:`build command options <build-command-options-reference>`.
+- ``-n`` or ``--no-confirmation``: See :ref:`build command options <build-command-options-reference>`.
 
 **app.py build** command
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 This command is used to build all or specifics xlets.
+
+.. _build-command-options-reference:
 
 **Options:**
 
@@ -50,6 +56,8 @@ This command is used to build all or specifics xlets.
         - It **must not** exceed 128 characters.
 
         These rules aren't necessarily standard rules to validate a domain name. But since the domain name is used to generate from files names to GTK+ application IDs, I find it easier to comply with a set of general rules.
+
+.. _build-command-option-ooutput-reference:
 
 - ``-o <dir>`` or ``--output=<dir>``: The output directory that will be used to save the built xlets. If not specified, the default storage location will be used.
 
@@ -80,9 +88,9 @@ This command is used to build all the themes.
 
 - ``-t <name>`` or ``--theme-name=<name>``: To be able to build the themes, it is necessary to specify a theme name. This theme name is then used to generate the full theme name (<theme_name>-<theme_variant>). To avoid passing this command line option every time one builds themes, a file named **theme_name** can be created at the root of the repository whose only content should be the desired theme name. This command line option has precedence over the **theme_name** file. Which means that if this option is used, the theme name found in an existent **theme_name** file will be ignored.
 
-- ``-o <dir>`` or ``--output=<dir>``: The output directory that will be used to save the built themes. If not specified, the default storage location will be used. See ``build`` command ``--output=<dir>`` option notes for more details.
+- ``-o <dir>`` or ``--output=<dir>``: The output directory that will be used to save the built themes. If not specified, the default storage location will be used. See :ref:`build command --output <build-command-option-ooutput-reference>` option notes for more details.
 
-- ``-n`` or ``--no-confirmation``: Do not confirm the deletion of an already built theme when the ``--output`` option is used. See ``build`` command ``--output=<dir>`` option notes for more details.
+- ``-n`` or ``--no-confirmation``: Do not confirm the deletion of an already built theme when the ``--output`` option is used. See :ref:`build command --output <build-command-option-ooutput-reference>` option notes for more details.
 
 - ``-r`` or ``--restart-cinnamon``: Restart Cinnamon's shell after finishing the themes building process.
 
@@ -123,11 +131,17 @@ This command is used to perform development tasks.
 
 **(*)**: This check is not *very smart*. Currently, it simply checks for files with ``.py`` or ``.sh`` extension. And they will be set as executable regardless if they need to be or not.
 
+.. _system-executable-reference:
+
 **app.py generate** command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Sub-commands:**
 
 - ``system_executable``: Create an executable for this application on the system PATH to be able to run it from anywhere.
+
+    + The system executable creation process will ask for an executable name (the default is **cinnamon-tools-app**) and the absolute path to store the executable file (the default is **$HOME/.local/bin**).
+    + It will also ask for bash completions creation.
+
 - ``docs``: Generate this documentation page.
 - ``docs_no_api``: Generate this documentation page without extracting Python modules docstrings.

@@ -49,6 +49,8 @@
 <span class="sd">    The main repository folder. All commands must be executed from this location without exceptions.</span>
 <span class="sd">translations : object</span>
 <span class="sd">    See &lt;class :any:`localized_help_utils.Translations`&gt;.</span>
+<span class="sd">utils : object</span>
+<span class="sd">    See &lt;class :any:`localized_help_utils`&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -62,11 +64,12 @@
 
 <span class="n">pyuca_collator</span> <span class="o">=</span> <span class="n">Collator</span><span class="p">()</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">mistune</span><span class="o">.</span><span class="n">Markdown</span><span class="p">()</span>
+<span class="n">utils</span> <span class="o">=</span> <span class="n">localized_help_utils</span>
 
 <span class="n">repo_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="o">*</span><span class="p">([</span><span class="s2">&quot;..&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)))</span>
 
-<span class="n">translations</span> <span class="o">=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">Translations</span><span class="p">()</span>
+<span class="n">translations</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">Translations</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="_"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator._">[docs]</a><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">aStr</span><span class="p">):</span>
@@ -97,9 +100,18 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">result</span>
 
+        <span class="c1"># REMINDER 1: Some strings doesn&#39;t need to be translated, like the name of a program,</span>
+        <span class="c1"># a programming language, etc. So, in these cases, the &quot;total&quot; and &quot;translated&quot; stats</span>
+        <span class="c1"># will differ, reporting a false percentage of translated strings.</span>
+        <span class="c1"># I&#39;m reluctant to create a blacklist mechanism to handle these untranslated strings.</span>
+        <span class="c1"># For now, I will simply avoid using `_()` call on these strings.</span>
         <span class="k">if</span> <span class="n">result</span> <span class="o">!=</span> <span class="n">aStr</span><span class="p">:</span>
             <span class="n">current_language_stats</span><span class="p">[</span><span class="s2">&quot;translated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_language_stats</span><span class="p">[</span><span class="s2">&quot;translated&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="k">return</span> <span class="n">result</span>
+        <span class="c1"># Debugging</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     if current_language != &quot;en&quot;:</span>
+        <span class="c1">#         print(aStr)</span>
 
     <span class="k">return</span> <span class="n">aStr</span></div>
 
@@ -147,11 +159,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xlet_dir</span> <span class="o">=</span> <span class="n">xlet_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xlet_slug</span> <span class="o">=</span> <span class="n">xlet_slug</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span> <span class="o">=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">XletMetadata</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">XletMetadata</span><span class="p">(</span>
             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_dir</span><span class="p">))</span><span class="o">.</span><span class="n">xlet_meta</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">html_assets</span> <span class="o">=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">HTMLInlineAssets</span><span class="p">(</span><span class="n">repo_folder</span><span class="o">=</span><span class="n">repo_folder</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">compatibility_data</span> <span class="o">=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">get_compatibility</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">html_assets</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">HTMLInlineAssets</span><span class="p">(</span><span class="n">repo_folder</span><span class="o">=</span><span class="n">repo_folder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compatibility_data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_compatibility</span><span class="p">(</span>
             <span class="n">xlet_meta</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span><span class="p">,</span>
             <span class="n">for_readme</span><span class="o">=</span><span class="kc">False</span>
         <span class="p">)</span>
@@ -171,10 +183,10 @@
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">contributors_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">contributors_file</span><span class="p">:</span>
                     <span class="n">contributors_rawdata</span> <span class="o">=</span> <span class="n">contributors_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">contributors</span> <span class="o">+=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">BOXED_CONTAINER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">contributors</span> <span class="o">+=</span> <span class="n">utils</span><span class="o">.</span><span class="n">BOXED_CONTAINER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">md</span><span class="p">(</span><span class="n">contributors_rawdata</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">localized_help_utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">contributors</span> <span class="o">+=</span> <span class="s2">&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">changelog_path</span><span class="p">):</span>
@@ -182,9 +194,9 @@
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">changelog_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">changelog_file</span><span class="p">:</span>
                     <span class="n">changelog_rawdata</span> <span class="o">=</span> <span class="n">changelog_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">changelog</span> <span class="o">+=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">BOXED_CONTAINER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">md</span><span class="p">(</span><span class="n">changelog_rawdata</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">changelog</span> <span class="o">+=</span> <span class="n">utils</span><span class="o">.</span><span class="n">BOXED_CONTAINER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">md</span><span class="p">(</span><span class="n">changelog_rawdata</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">localized_help_utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">changelog</span> <span class="o">+=</span> <span class="s2">&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">old_changelog_path</span><span class="p">):</span>
@@ -192,10 +204,10 @@
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">old_changelog_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">old_changelog_file</span><span class="p">:</span>
                     <span class="n">old_changelog_rawdata</span> <span class="o">=</span> <span class="n">old_changelog_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">changelog</span> <span class="o">+=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">BOXED_CONTAINER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">changelog</span> <span class="o">+=</span> <span class="n">utils</span><span class="o">.</span><span class="n">BOXED_CONTAINER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">md</span><span class="p">(</span><span class="n">old_changelog_rawdata</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">localized_help_utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">changelog</span> <span class="o">+=</span> <span class="s2">&quot;&quot;</span>
 
 <div class="viewcode-block" id="LocalizedHelpCreator.start"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -222,7 +234,7 @@
                         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                             <span class="n">lang_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-                        <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">validate_po_file</span><span class="p">(</span>
+                        <span class="n">utils</span><span class="o">.</span><span class="n">validate_po_file</span><span class="p">(</span>
                             <span class="n">pofile_path</span><span class="o">=</span><span class="n">pofile_path</span><span class="p">,</span>
                             <span class="n">lang_name</span><span class="o">=</span><span class="n">lang_name</span><span class="p">,</span>
                             <span class="n">xlet_meta</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span><span class="p">,</span>
@@ -246,7 +258,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">lang_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_html_document</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">localized_help_utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="s2">&quot;Dummy install failed.&quot;</span><span class="p">))</span></div>
+            <span class="nb">print</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="s2">&quot;Dummy install failed.&quot;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="LocalizedHelpCreator._create_html_document"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator._create_html_document">[docs]</a>    <span class="k">def</span> <span class="nf">_create_html_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create HTML document.</span>
@@ -266,30 +278,16 @@
                 <span class="s2">&quot;translated&quot;</span><span class="p">:</span> <span class="mi">0</span>
             <span class="p">}</span>
 
-            <span class="n">only_english_alert</span> <span class="o">=</span> <span class="n">md</span><span class="p">(</span><span class="s2">&quot;&lt;div style=</span><span class="se">\&quot;</span><span class="s2">font-weight:bold;</span><span class="se">\&quot;</span><span class="s2"> class=</span><span class="se">\&quot;</span><span class="s2">alert alert-info</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="si">{0}</span><span class="s2">&lt;/div&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The following sections are available only in English.&quot;</span><span class="p">))</span>
-            <span class="p">)</span>
-
-            <span class="n">compatibility_disclaimer</span> <span class="o">=</span> <span class="s2">&quot;&lt;p class=</span><span class="se">\&quot;</span><span class="s2">text-danger compatibility-disclaimer</span><span class="se">\&quot;</span><span class="s2">&gt;</span><span class="si">{}</span><span class="s2">&lt;/p&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Do not install on any other version of Cinnamon.&quot;</span><span class="p">)</span>
-            <span class="p">)</span>
-
-            <span class="n">compatibility_block</span> <span class="o">=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">BOOTSTRAP_PANEL</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">context</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
-                <span class="n">custom_class</span><span class="o">=</span><span class="s2">&quot;compatibility&quot;</span><span class="p">,</span>
-                <span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Compatibility&quot;</span><span class="p">),</span>
-                <span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compatibility_data</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;br/&gt;&quot;</span> <span class="o">+</span> <span class="n">compatibility_disclaimer</span><span class="p">,</span>
-            <span class="p">)</span>
-
-            <span class="n">section</span> <span class="o">=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">LOCALE_SECTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">section</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">LOCALE_SECTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">language_code</span><span class="o">=</span><span class="n">current_language</span><span class="p">,</span>
-                <span class="n">hidden</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">current_language</span> <span class="ow">is</span> <span class="s2">&quot;en&quot;</span> <span class="k">else</span> <span class="s2">&quot; hidden&quot;</span><span class="p">,</span>
-                <span class="n">introduction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_introduction</span><span class="p">(),</span>
-                <span class="n">compatibility</span><span class="o">=</span><span class="n">compatibility_block</span><span class="p">,</span>
+                <span class="n">hidden</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">current_language</span> <span class="ow">is</span> <span class="s2">&quot;en&quot;</span> <span class="k">else</span> <span class="s1">&#39;hidden=&quot;true&quot;&#39;</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">md</span><span class="p">(</span><span class="s2">&quot;# </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Help for </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="n">_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]))),</span>
+                <span class="n">warning</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_warning_block</span><span class="p">(),</span>
+                <span class="n">compatibility</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_compatibility_block</span><span class="p">(),</span>
                 <span class="n">content_base</span><span class="o">=</span><span class="n">md</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_content_base</span><span class="p">(</span><span class="n">for_readme</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span>
                 <span class="n">content_extra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_content_extra</span><span class="p">(),</span>
-                <span class="n">localization_info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_localization_info</span><span class="p">(),</span>
-                <span class="n">only_english_alert</span><span class="o">=</span><span class="n">only_english_alert</span><span class="p">,</span>
+                <span class="n">localization</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_localization_block</span><span class="p">(),</span>
+                <span class="n">only_english_alert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_only_english_alert</span><span class="p">(),</span>
             <span class="p">)</span>
 
             <span class="n">section</span> <span class="o">=</span> <span class="n">section</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;{{lhc_lang_id}}&quot;</span><span class="p">,</span> <span class="n">current_language</span><span class="p">)</span>
@@ -302,7 +300,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
 
-        <span class="n">html_doc</span> <span class="o">=</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">HTML_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">html_doc</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">HTML_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="c1"># This string doesn&#39;t need to be translated.</span>
             <span class="c1"># It&#39;s the initial title of the page that it&#39;s always in English.</span>
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Help for </span><span class="si">{xlet_name}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xlet_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]),</span>
@@ -322,8 +320,9 @@
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saving file...&quot;</span><span class="p">)</span>
 
-        <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">save_file</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">help_file_path</span><span class="p">,</span>
-                                       <span class="n">data</span><span class="o">=</span><span class="n">html_doc</span><span class="p">)</span></div>
+        <span class="n">utils</span><span class="o">.</span><span class="n">save_file</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">help_file_path</span><span class="p">,</span>
+                        <span class="n">data</span><span class="o">=</span><span class="n">html_doc</span><span class="p">,</span>
+                        <span class="n">is_xlet_help_file</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LocalizedHelpCreator._get_language_stats"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator._get_language_stats">[docs]</a>    <span class="k">def</span> <span class="nf">_get_language_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get language stats.</span>
@@ -359,13 +358,16 @@
         <span class="n">title</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Help for </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="n">_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
         <span class="c1"># Define them before self._get_language_stats() is called so these</span>
         <span class="c1"># strings are also counted.</span>
-        <span class="c1"># Comment put bellow so gettext doesn&#39;t catch them.</span>
+        <span class="c1"># Comment put bellow so gettext doesn&#39;t catch the comments.</span>
 
         <span class="k">if</span> <span class="n">current_language</span> <span class="o">==</span> <span class="s2">&quot;en&quot;</span> <span class="ow">or</span> <span class="n">endonym</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">translated_percentage</span> <span class="o">=</span> <span class="mi">100</span> <span class="k">if</span> <span class="n">current_language</span> <span class="o">==</span> <span class="s2">&quot;en&quot;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_language_stats</span><span class="p">()</span>
-            <span class="n">trans_perc_msg</span> <span class="o">=</span> <span class="s2">&quot; (</span><span class="si">%s%%</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">translated_percentage</span> <span class="k">if</span> <span class="n">translated_percentage</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="c1"># REMINDER 2: Consider a 95% of translated strings a complete translation.</span>
+            <span class="c1"># This is done to minimize the display of false percentages in the language selection</span>
+            <span class="c1"># menu on the HELP.html pages. See REMINDER 1.</span>
+            <span class="n">trans_perc_msg</span> <span class="o">=</span> <span class="s2">&quot; (</span><span class="si">%s%%</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">translated_percentage</span> <span class="k">if</span> <span class="n">translated_percentage</span> <span class="o">&lt;</span> <span class="mi">95</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
 
-            <span class="k">return</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">OPTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">OPTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">endonym</span><span class="o">=</span><span class="n">endonym</span><span class="p">,</span>
                 <span class="n">language_name</span><span class="o">=</span><span class="n">language_name</span><span class="p">,</span>
                 <span class="n">selected</span><span class="o">=</span><span class="s2">&quot;selected &quot;</span> <span class="k">if</span> <span class="n">current_language</span> <span class="ow">is</span> <span class="s2">&quot;en&quot;</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -379,38 +381,73 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="LocalizedHelpCreator._get_introduction"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator._get_introduction">[docs]</a>    <span class="k">def</span> <span class="nf">_get_introduction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get introduction.</span>
+<div class="viewcode-block" id="LocalizedHelpCreator._get_only_english_alert"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator._get_only_english_alert">[docs]</a>    <span class="k">def</span> <span class="nf">_get_only_english_alert</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get compatibility block.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
-<span class="sd">            The main title of the page and a generic warning.</span>
+<span class="sd">            A bootstrap panel containing Cinnamon compatibility data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">localized_help_utils</span><span class="o">.</span><span class="n">INTRODUCTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="c1"># TO TRANSLATORS: Full sentence:</span>
-            <span class="c1"># &quot;Help for &lt;xlet_name&gt;&quot;</span>
-            <span class="n">md</span><span class="p">(</span><span class="s2">&quot;# </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Help for </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])),</span>
-            <span class="n">md</span><span class="p">(</span><span class="s2">&quot;## </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;IMPORTANT!!!&quot;</span><span class="p">)),</span>
-            <span class="n">md</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Never delete any of the files found inside this xlet folder. It might break this xlet functionality.&quot;</span><span class="p">)),</span>
-            <span class="n">md</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Bug reports, feature requests and contributions should be done on this xlet&#39;s repository linked next.&quot;</span><span class="p">)</span> <span class="o">+</span>
-               <span class="s2">&quot; </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;[GitLab](</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;website&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;website&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_bootstrap_alert</span><span class="p">(</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;The following sections are available only in English.&quot;</span><span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="LocalizedHelpCreator._get_localization_info"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator._get_localization_info">[docs]</a>    <span class="k">def</span> <span class="nf">_get_localization_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get localization info.</span>
+<div class="viewcode-block" id="LocalizedHelpCreator._get_compatibility_block"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator._get_compatibility_block">[docs]</a>    <span class="k">def</span> <span class="nf">_get_compatibility_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get compatibility block.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
-<span class="sd">            Information about xlets localization mechanism.</span>
+<span class="sd">            A bootstrap panel containing Cinnamon compatibility data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">md</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
-            <span class="s2">&quot;## </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Applets/Desklets/Extensions (a.k.a. xlets) localization&quot;</span><span class="p">),</span>
-            <span class="s2">&quot;- </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;If this xlet was installed from Cinnamon Settings, all of this xlet&#39;s localizations were automatically installed.&quot;</span><span class="p">),</span>
-            <span class="c1"># TO TRANSLATORS: MARKDOWN string. Respect formatting.</span>
-            <span class="s2">&quot;- </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet&#39;s folder.&quot;</span><span class="p">)</span>
-        <span class="p">]))</span></div>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_bootstrap_card</span><span class="p">(</span>
+            <span class="n">context</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+            <span class="n">body_extra_classes</span><span class="o">=</span><span class="s2">&quot;text-font-size-x-large&quot;</span><span class="p">,</span>
+            <span class="n">header</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Cinnamon compatibility&quot;</span><span class="p">),</span>
+            <span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compatibility_data</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="LocalizedHelpCreator._get_warning_block"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator._get_warning_block">[docs]</a>    <span class="k">def</span> <span class="nf">_get_warning_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get warning block.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            A bootstrap panel containing generic warnings about xlets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;p&gt;</span><span class="si">{line1}</span><span class="s2">&lt;/p&gt;</span>
+<span class="s2">&lt;p&gt;</span><span class="si">{line2}</span><span class="s2"> &lt;a href=&quot;</span><span class="si">{repo_url}</span><span class="s2">&quot;&gt;GitLab&lt;/a&gt;&lt;/p&gt;&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_bootstrap_card</span><span class="p">(</span>
+            <span class="n">context</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">,</span>
+            <span class="n">header</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">),</span>
+            <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">line1</span><span class="o">=</span><span class="n">_</span><span class="p">(</span>
+                    <span class="s2">&quot;Never delete any of the files found inside this xlet folder. It might break this xlet functionality.&quot;</span><span class="p">),</span>
+                <span class="n">line2</span><span class="o">=</span><span class="n">_</span><span class="p">(</span>
+                    <span class="s2">&quot;Bug reports, feature requests and contributions should be done on this xlet&#39;s repository linked next.&quot;</span><span class="p">),</span>
+                <span class="n">repo_url</span><span class="o">=</span><span class="n">utils</span><span class="o">.</span><span class="n">app_utils</span><span class="o">.</span><span class="n">repo_url</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="LocalizedHelpCreator._get_localization_block"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator._get_localization_block">[docs]</a>    <span class="k">def</span> <span class="nf">_get_localization_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get localization block</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sre</span>
+<span class="sd">            A bootstrap panel containing xlets localization information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{line1}</span><span class="s2"></span>
+<span class="si">{line2}</span><span class="s2">&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_bootstrap_card</span><span class="p">(</span>
+            <span class="n">header</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Xlets localization&quot;</span><span class="p">),</span>
+            <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">line1</span><span class="o">=</span><span class="n">md</span><span class="p">(</span><span class="n">_</span><span class="p">(</span>
+                    <span class="s2">&quot;If this xlet was installed from Cinnamon Settings, all of this xlet&#39;s localizations were automatically installed.&quot;</span><span class="p">)),</span>
+                <span class="n">line2</span><span class="o">=</span><span class="n">md</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet&#39;s folder.&quot;</span><span class="p">))</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LocalizedHelpCreator.get_content_base"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_creator.html#python_modules.localized_help_creator.LocalizedHelpCreator.get_content_base">[docs]</a>    <span class="k">def</span> <span class="nf">get_content_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">for_readme</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get base content.</span>

@@ -59,15 +59,18 @@
 <span class="sd">    Message to display when creating a new xlet and that xlet already exists.</span>
 <span class="sd">extra_common_files : list</span>
 <span class="sd">    List of files common to all xlets.</span>
-<span class="sd">help_pages_index_template : str</span>
-<span class="sd">    The template (in reStructuredText format) used to create the index of xlets help pages in this</span>
-<span class="sd">    repository documentation.</span>
 <span class="sd">HOME : str</span>
 <span class="sd">    Path to the current user home folder.</span>
 <span class="sd">missing_domain_msg : str</span>
 <span class="sd">    Message to display when the domain name isn&#39;t specified at xlet build time.</span>
 <span class="sd">missing_theme_name_msg : str</span>
 <span class="sd">    Message to display when the theme name isn&#39;t specified at theme build time.</span>
+<span class="sd">readme_list_item_template : str</span>
+<span class="sd">    Template string to generate help pages list items.</span>
+<span class="sd">repo_pages_url : str</span>
+<span class="sd">    URL to the repository hosted web pages.</span>
+<span class="sd">repo_url : str</span>
+<span class="sd">    The repository URL.</span>
 <span class="sd">root_folder : str</span>
 <span class="sd">    The main folder containing the application. All commands must be executed from this location</span>
 <span class="sd">    without exceptions.</span>
@@ -325,21 +328,36 @@
 <span class="n">HOME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
 
 
-<span class="n">bash_completions_step1</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Bash completions creation. Step 1.</span>
+<span class="n">bash_completions_step1</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Bash completions creation. Step 1.</span>
+
 <span class="s2">The file </span><span class="si">{0}</span><span class="s2"></span>
 <span class="s2">will be created.</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 
-<span class="n">bash_completions_step2</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Bash completions creation. Step 2.</span>
+<span class="n">bash_completions_step2</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Bash completions creation. Step 2.</span>
+
 <span class="s2">The file </span><span class="si">{0}</span><span class="s2">/.bash_completion will be created if it doesn&#39;t exists.</span>
+
 <span class="s2">Or the pertinent code to load bash completions from the .bash_completion.d</span>
 <span class="s2">directory will be appended to the existent file.</span>
+
+<span class="s2">The </span><span class="si">{0}</span><span class="s2">/.bash_completion file needs to be manually sourced in your shell&#39;s</span>
+<span class="s2">configuration file (.bashrc, .zshrc, etc.).</span>
+
+<span class="s2">The following is the content that will be appended to the</span>
+<span class="si">{0}</span><span class="s2">/.bash_completion file.</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 
 <span class="n">root_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="o">*</span><span class="p">([</span><span class="s2">&quot;..&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))))))</span>
+
+<span class="n">repo_url</span> <span class="o">=</span> <span class="s2">&quot;https://gitlab.com/Odyseus/CinnamonTools&quot;</span>
+
+<span class="n">repo_pages_url</span> <span class="o">=</span> <span class="s2">&quot;https://odyseus.gitlab.io/CinnamonTools&quot;</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -391,20 +409,8 @@
     <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;helper.py&quot;</span><span class="p">,</span>
 <span class="p">}]</span>
 
-<span class="n">help_pages_index_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">Help pages for all xlets in this repository</span>
-<span class="s2">===========================================</span>
-
-<span class="s2">Applets</span>
-<span class="s2">-------</span>
-
-<span class="si">{applets}</span><span class="s2"></span>
-
-<span class="s2">Extensions</span>
-<span class="s2">----------</span>
-
-<span class="si">{extensions}</span><span class="s2"></span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">readme_list_item_template</span> <span class="o">=</span> <span class="s2">&quot;- [</span><span class="si">{xlet_name}</span><span class="s2">](</span><span class="si">%s</span><span class="s2">/docs/_static/xlets_help_pages/</span><span class="si">{xlet_slug}</span><span class="s2">/index.html)&quot;</span> <span class="o">%</span> <span class="p">(</span>
+    <span class="n">repo_pages_url</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="LogSystem"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.LogSystem">[docs]</a><span class="k">class</span> <span class="nc">LogSystem</span><span class="p">():</span>
@@ -606,38 +612,34 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating change logs...&quot;</span><span class="p">)</span>
 
-        <span class="n">logs_storage</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;changelogs&quot;</span><span class="p">)</span>
-
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">logs_storage</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
         <span class="k">for</span> <span class="n">xlet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlets_meta</span><span class="o">.</span><span class="n">meta_list</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating change log for </span><span class="si">%s</span><span class="s2">...&quot;</span> <span class="o">%</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
 
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">xlet_root_folder</span> <span class="o">=</span> <span class="n">get_parent_dir</span><span class="p">(</span><span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;meta-path&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
-                <span class="n">tmp_log_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">logs_storage</span><span class="p">,</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.md&quot;</span><span class="p">)</span>
+                <span class="n">log_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_root_folder</span><span class="p">,</span> <span class="s2">&quot;__data__&quot;</span><span class="p">,</span> <span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">log_path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">changelog_handler</span><span class="o">.</span><span class="n">CHANGELOG_HEADER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">xlet_name</span><span class="o">=</span><span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                        <span class="n">repo_url</span><span class="o">=</span><span class="n">repo_url</span>
+                    <span class="p">))</span>
 
                 <span class="c1"># Generate change log from current repository paths.</span>
-                <span class="n">relative_xlet_path1</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;s/&quot;</span> <span class="o">+</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]</span>
-                <span class="n">cmd1</span> <span class="o">=</span> <span class="n">changelog_handler</span><span class="o">.</span><span class="n">git_log_cmd</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">relative_xlet_path</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;s/&quot;</span> <span class="o">+</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="n">changelog_handler</span><span class="o">.</span><span class="n">git_log_cmd</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">xlet_slug</span><span class="o">=</span><span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">],</span>
-                    <span class="n">relative_xlet_path</span><span class="o">=</span><span class="n">relative_xlet_path1</span><span class="p">,</span>
-                    <span class="n">append_or_override</span><span class="o">=</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span>
-                    <span class="n">tmp_log_path</span><span class="o">=</span><span class="n">tmp_log_path</span>
+                    <span class="n">relative_xlet_path</span><span class="o">=</span><span class="n">relative_xlet_path</span><span class="p">,</span>
+                    <span class="n">append_or_override</span><span class="o">=</span><span class="s2">&quot;&gt;&gt;&quot;</span><span class="p">,</span>
+                    <span class="n">log_path</span><span class="o">=</span><span class="n">log_path</span><span class="p">,</span>
+                    <span class="n">repo_url</span><span class="o">=</span><span class="n">repo_url</span>
                 <span class="p">)</span>
-                <span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="n">cmd1</span><span class="p">,</span>
+                <span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="n">cmd</span><span class="p">,</span>
                              <span class="n">working_directory</span><span class="o">=</span><span class="n">root_folder</span><span class="p">,</span>
                              <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
-            <span class="k">finally</span><span class="p">:</span>
-                <span class="c1"># Sanitize and clean up formatting of the change logs and</span>
-                <span class="c1"># copy them to their final destinations.</span>
-                <span class="n">sanitizer</span> <span class="o">=</span> <span class="n">changelog_handler</span><span class="o">.</span><span class="n">ChangelogSanitizer</span><span class="p">(</span>
-                    <span class="n">xlet_name</span><span class="o">=</span><span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
-                    <span class="n">source_path</span><span class="o">=</span><span class="n">tmp_log_path</span><span class="p">,</span>
-                    <span class="n">target_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_root_folder</span><span class="p">,</span> <span class="s2">&quot;__data__&quot;</span><span class="p">,</span> <span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">)</span>
-                <span class="p">)</span>
-
-                <span class="n">sanitizer</span><span class="o">.</span><span class="n">sanitize</span><span class="p">()</span></div>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="XletsHelperCore.update_pot_files"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletsHelperCore.update_pot_files">[docs]</a>    <span class="k">def</span> <span class="nf">update_pot_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update POT files.</span>
@@ -680,9 +682,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting localized help creation...&quot;</span><span class="p">)</span>
 
-        <span class="n">applets_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">extensions_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">list_item_template</span> <span class="o">=</span> <span class="s2">&quot;- `</span><span class="si">%s</span><span class="s2"> &lt;../_static/xlets_help_pages/</span><span class="si">%s</span><span class="s2">.html&gt;`__&quot;</span>
+        <span class="n">applets_list_items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">extensions_list_items</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">xlet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlets_meta</span><span class="o">.</span><span class="n">meta_list</span><span class="p">:</span>
             <span class="n">xlet_root_folder</span> <span class="o">=</span> <span class="n">get_parent_dir</span><span class="p">(</span><span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;meta-path&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
@@ -692,24 +693,32 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating localized help for </span><span class="si">%s</span><span class="s2">...&quot;</span> <span class="o">%</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
                 <span class="n">call</span><span class="p">([</span><span class="n">script_file_path</span><span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="n">xlet_root_folder</span><span class="p">)</span>
 
-                <span class="n">list_item</span> <span class="o">=</span> <span class="n">list_item_template</span> <span class="o">%</span> <span class="p">(</span>
-                    <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">])</span>
+                <span class="c1"># Store list items for later creating the README.md file.</span>
+                <span class="n">list_item</span> <span class="o">=</span> <span class="n">readme_list_item_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">xlet_name</span><span class="o">=</span><span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                    <span class="n">xlet_slug</span><span class="o">=</span><span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;slug&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;applet&quot;</span><span class="p">:</span>
-                    <span class="n">applets_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">list_item</span><span class="p">)</span>
+                    <span class="n">applets_list_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">list_item</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">xlet</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;extension&quot;</span><span class="p">:</span>
-                    <span class="n">extensions_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">list_item</span><span class="p">)</span>
+                    <span class="n">extensions_list_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">list_item</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating xlets help pages index...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating repository README.md file...&quot;</span><span class="p">)</span>
 
-        <span class="n">help_pages_index</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;docs_sources&quot;</span><span class="p">,</span>
-                                        <span class="s2">&quot;includes&quot;</span><span class="p">,</span> <span class="s2">&quot;cinnamontools-help-pages.rst&quot;</span><span class="p">)</span>
+        <span class="n">readme_template_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;templates&quot;</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">)</span>
+        <span class="n">readme_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">)</span>
 
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">help_pages_index</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">index_file</span><span class="p">:</span>
-            <span class="n">index_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">help_pages_index_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">applets</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">applets_list</span><span class="p">)),</span>
-                <span class="n">extensions</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">extensions_list</span><span class="p">))</span>
-            <span class="p">))</span></div>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">readme_template_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">readme_template</span><span class="p">:</span>
+            <span class="n">template</span> <span class="o">=</span> <span class="n">readme_template</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">readme_file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">readme_file</span><span class="p">:</span>
+                <span class="n">readme_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">applets_help_pages</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">applets_list_items</span><span class="p">)),</span>
+                    <span class="n">extensions_help_pages</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">extensions_list_items</span><span class="p">)),</span>
+                    <span class="n">repo_pages_url</span><span class="o">=</span><span class="n">repo_pages_url</span>
+                <span class="p">))</span></div>
 
 <div class="viewcode-block" id="XletsHelperCore.generate_trans_stats"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletsHelperCore.generate_trans_stats">[docs]</a>    <span class="k">def</span> <span class="nf">generate_trans_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate translations statistics.</span>
@@ -1133,7 +1142,7 @@
     <span class="k">return</span> <span class="n">header</span></div>
 
 
-<div class="viewcode-block" id="get_cli_separator"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.get_cli_separator">[docs]</a><span class="k">def</span> <span class="nf">get_cli_separator</span><span class="p">(</span><span class="n">char</span><span class="p">):</span>
+<div class="viewcode-block" id="get_cli_separator"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.get_cli_separator">[docs]</a><span class="k">def</span> <span class="nf">get_cli_separator</span><span class="p">(</span><span class="n">char</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get a &quot;decorated separator&quot;.</span>
 
 <span class="sd">    Get a &quot;decorated separator&quot; to display whenever it is needed.</span>
@@ -1348,12 +1357,28 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">sys_exec_template</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span>
                                      <span class="s2">&quot;templates&quot;</span><span class="p">,</span> <span class="s2">&quot;system_executable&quot;</span><span class="p">)</span>
-    <span class="n">sys_exec_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HOME</span><span class="p">,</span> <span class="s2">&quot;.local&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">)</span>
 
-    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sys_exec_path&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HOME</span><span class="p">,</span> <span class="s2">&quot;.local&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">(</span><span class="s2">&quot;Set an executable file name or press Enter to use default&quot;</span><span class="p">))</span>
     <span class="n">do_prompt</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;Enter a file name&quot;</span><span class="p">,</span> <span class="n">exec_name</span><span class="p">)</span>
 
-    <span class="n">destination</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys_exec_path</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">(</span><span class="s2">&quot;Set full path to store executable file or press Enter to use default&quot;</span><span class="p">))</span>
+    <span class="n">do_prompt</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;sys_exec_path&quot;</span><span class="p">,</span> <span class="s2">&quot;Enter absolute path&quot;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;sys_exec_path&quot;</span><span class="p">])</span>
+
+    <span class="n">destination</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;sys_exec_path&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;sys_exec_path&quot;</span><span class="p">]):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">WARNING</span><span class="p">(</span><span class="s2">&quot;Path doesn&#39;t exists and needs to be created&quot;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">confirm</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Proceed?&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;sys_exec_path&quot;</span><span class="p">],</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;sys_exec_path&quot;</span><span class="p">]):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">WARNING</span><span class="p">(</span><span class="s2">&quot;Chosen path isn&#39;t a directory. Aborted!!!&quot;</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="n">generate_from_template</span><span class="p">(</span><span class="n">sys_exec_template</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;callback&quot;</span><span class="p">:</span> <span class="n">system_executable_generation</span><span class="p">,</span>
@@ -1391,6 +1416,9 @@
                                <span class="p">},</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">PURPLE</span><span class="p">(</span><span class="n">bash_completions_step2</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">HOME</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">INFO</span><span class="p">(</span><span class="n">get_cli_separator</span><span class="p">()))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">INFO</span><span class="p">(</span><span class="n">BASH_COMPLETION_LOADER_CONTENT</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">INFO</span><span class="p">(</span><span class="n">get_cli_separator</span><span class="p">()))</span>
 
     <span class="k">if</span> <span class="n">confirm</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Proceed?&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -1655,6 +1683,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="s2">&quot;z_config.py&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">replacement_data</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">(</span><span class="s2">&quot;{{UUID}}&quot;</span><span class="p">,</span> <span class="n">xlet_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span>
+            <span class="p">(</span><span class="s2">&quot;{{REPO_URL}}&quot;</span><span class="p">,</span> <span class="n">repo_url</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;{{XLET_TYPE}}&quot;</span><span class="p">,</span> <span class="n">xlet_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span>
         <span class="p">]</span>
 
@@ -1896,6 +1925,7 @@
 
         <span class="n">variant_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">themes_sources</span><span class="p">,</span> <span class="s2">&quot;_variants&quot;</span><span class="p">,</span> <span class="n">variant</span><span class="p">)</span>
         <span class="n">variant_config</span> <span class="o">=</span> <span class="n">run_path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">variant_folder</span><span class="p">,</span> <span class="s2">&quot;config.py&quot;</span><span class="p">))[</span><span class="s2">&quot;settings&quot;</span><span class="p">]</span>
+        <span class="n">variant_config</span><span class="p">[</span><span class="s2">&quot;replacement_data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;@repo_url@&quot;</span><span class="p">,</span> <span class="n">repo_url</span><span class="p">))</span>
         <span class="n">variant_config</span><span class="p">[</span><span class="s2">&quot;replacement_data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;@theme_name@&quot;</span><span class="p">,</span> <span class="n">theme_name</span><span class="p">))</span>
         <span class="n">variant_config</span><span class="p">[</span><span class="s2">&quot;replacement_data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;@theme_variant@&quot;</span><span class="p">,</span> <span class="n">variant</span><span class="p">))</span>
         <span class="n">variant_config</span><span class="p">[</span><span class="s2">&quot;replacement_data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>

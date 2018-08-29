@@ -70,6 +70,12 @@
 <dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.localized_help_utils.html#python_modules.localized_help_utils.Translations" title="python_modules.localized_help_utils.Translations"><code class="xref any py py-class docutils literal notranslate"><span class="pre">localized_help_utils.Translations</span></code></a>&gt;.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="python_modules.localized_help_creator.utils">
+<code class="descclassname">python_modules.localized_help_creator.</code><code class="descname">utils</code><a class="headerlink" href="#python_modules.localized_help_creator.utils" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.localized_help_utils.html#module-python_modules.localized_help_utils" title="python_modules.localized_help_utils"><code class="xref any py py-mod docutils literal notranslate"><span class="pre">localized_help_utils</span></code></a>&gt;.</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="python_modules.localized_help_creator._">
 <code class="descclassname">python_modules.localized_help_creator.</code><code class="descname">_</code><span class="sig-paren">(</span><em>aStr</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator._" title="Permalink to this definition">¶</a></dt>
@@ -210,12 +216,12 @@ localized content.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_introduction">
-<code class="descname">_get_introduction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_introduction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_introduction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get introduction.</p>
+<dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_only_english_alert">
+<code class="descname">_get_only_english_alert</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_only_english_alert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_only_english_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get compatibility block.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The main title of the page and a generic warning.</p>
+<dd class="field-odd"><p>A bootstrap panel containing Cinnamon compatibility data.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
@@ -224,15 +230,43 @@ localized content.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_localization_info">
-<code class="descname">_get_localization_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_localization_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_localization_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get localization info.</p>
+<dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_compatibility_block">
+<code class="descname">_get_compatibility_block</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_compatibility_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_compatibility_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get compatibility block.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Information about xlets localization mechanism.</p>
+<dd class="field-odd"><p>A bootstrap panel containing Cinnamon compatibility data.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_warning_block">
+<code class="descname">_get_warning_block</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_warning_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_warning_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get warning block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A bootstrap panel containing generic warnings about xlets.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.localized_help_creator.LocalizedHelpCreator._get_localization_block">
+<code class="descname">_get_localization_block</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_creator.html#LocalizedHelpCreator._get_localization_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_creator.LocalizedHelpCreator._get_localization_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get localization block</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A bootstrap panel containing xlets localization information.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sre</p>
 </dd>
 </dl>
 </dd></dl>

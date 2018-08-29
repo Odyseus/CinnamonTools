@@ -46,7 +46,7 @@
 <div class="section" id="xlets-development-commandments">
 <h2>Xlets development <em>commandments</em><a class="headerlink" href="#xlets-development-commandments" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p>Eradicate from your thoughts the existence of Node.js. I can do infinitely more with just ten lines of Python code than with a hundred lines of JavaScript code that depend on 10 Node.js modules with a thousand lines of code each.</p></li>
+<li><p>Eradicate from your thoughts the existence of Node.js. I can do infinitely more with just ten lines of Python code than with ten lines of JavaScript code that depend on 10 Node.js modules with a thousand lines of code each.</p></li>
 <li><p>If a Python module is required, make it part of the Python application if possible. Otherwise, create a mechanism to install required modules.</p></li>
 <li><p>Try to use <code class="docutils literal notranslate"><span class="pre">Mainloop.idle_add</span></code> inside the initialization code of an xlet if possible. Take into account the following:</p>
 <blockquote>
@@ -112,7 +112,7 @@
 <blockquote>
 <div><ul class="simple">
 <li><p>By itself, Sphinx has hundreds of moving parts (Python modules and/or external tools).</p></li>
-<li><p>It internationalization capabilities are too complex.</p></li>
+<li><p>Its internationalization capabilities are too complex.</p></li>
 <li><p>Generating one single HELP.html file that is at the same time self contained is practically impossible.</p></li>
 </ul>
 </div></blockquote>
@@ -129,7 +129,8 @@
 <div class="section" id="html-assets">
 <h3>HTML assets<a class="headerlink" href="#html-assets" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>Bootstrap 3 is used as a CSS framework. <em>Planing on moving to Bootstrap 4 with its default theme.</em></p></li>
+<li><p><a class="reference external" href="https://getbootstrap.com/">Bootstrap 4</a> is used as a CSS framework. No Bootstrap JavaScript plugins nor jQuery is used.</p></li>
+<li><p><a class="reference external" href="https://bootswatch.com/flatly/">Bootswatch’s Flatly theme</a> is used as Bootstrap theme. Only because the colors of the default Bootstrap theme are abhorrent.</p></li>
 <li><p>JavaScript is only used for the page localization mechanism and a smooth scroll effect when clicking in-line links.</p></li>
 </ul>
 </div>

@@ -43,8 +43,8 @@
 
 <span class="sd">Attributes</span>
 <span class="sd">----------</span>
-<span class="sd">CHANGELOG_TITLE : str</span>
-<span class="sd">    The main title in a changelog file.</span>
+<span class="sd">CHANGELOG_HEADER : str</span>
+<span class="sd">    The main header in a changelog file.</span>
 <span class="sd">git_log_cmd : str</span>
 <span class="sd">    The command to use when generating changelogs.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -54,15 +54,13 @@
 
 <span class="n">git_log_cmd</span> <span class="o">=</span> <span class="s1">&#39;git log --grep=</span><span class="si">{xlet_slug}</span><span class="s1"> --pretty=format:&quot;</span><span class="se">\</span>
 <span class="s1">- **Date:** %aD%n</span><span class="se">\</span>
-<span class="s1">- **Commit:** [%h](https://gitlab.com/Odyseus/CinnamonTools/commit/%h)%n</span><span class="se">\</span>
+<span class="s1">- **Commit:** [%h](</span><span class="si">{repo_url}</span><span class="s1">/commit/%h)%n</span><span class="se">\</span>
 <span class="s1">- **Author:** %aN%n%n\`\`\`%n%b%n\`\`\`%n%n***%n&quot; </span><span class="se">\</span>
-<span class="s1">-- </span><span class="si">{relative_xlet_path}</span><span class="s1"> </span><span class="si">{append_or_override}</span><span class="s1"> &quot;</span><span class="si">{tmp_log_path}</span><span class="s1">&quot;&#39;</span>
+<span class="s1">-- </span><span class="si">{relative_xlet_path}</span><span class="s1"> </span><span class="si">{append_or_override}</span><span class="s1"> &quot;</span><span class="si">{log_path}</span><span class="s1">&quot;&#39;</span>
 
-<span class="c1"># - **Author:** %aN%n%n\`\`\`%n%s%n%b%n\`\`\`%n%n***%n&quot; \</span>
+<span class="n">CHANGELOG_HEADER</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;## </span><span class="si">{xlet_name}</span><span class="s2"> changelog</span>
 
-<span class="n">CHANGELOG_TITLE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;## </span><span class="si">{xlet_name}</span><span class="s2"> changelog</span>
-
-<span class="s2">#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)</span>
+<span class="s2">#### This change log is only valid for the version of the xlet hosted on [its original repository](</span><span class="si">{repo_url}</span><span class="s2">)</span>
 
 <span class="s2">***</span>
 
@@ -72,23 +70,29 @@
 <div class="viewcode-block" id="ChangelogSanitizer"><a class="viewcode-back" href="../../modules/python_modules/python_modules.changelog_handler.html#python_modules.changelog_handler.ChangelogSanitizer">[docs]</a><span class="k">class</span> <span class="nc">ChangelogSanitizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Changelog sonitizer.</span>
 
+<span class="sd">    .. note::</span>
+<span class="sd">        Class not used anymore, but keeping it in case I need to implement it again.</span>
+
+
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    changelog_title : str</span>
-<span class="sd">        The main title in a changelog file.</span>
+<span class="sd">    changelog_header : str</span>
+<span class="sd">        Title and description for each generated change log file.</span>
 <span class="sd">    source_path : str</span>
 <span class="sd">        Temporary location of the changelog.</span>
 <span class="sd">    target_path : str</span>
 <span class="sd">        Final destination of the changelog.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xlet_name</span><span class="p">,</span> <span class="n">source_path</span><span class="p">,</span> <span class="n">target_path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xlet_name</span><span class="p">,</span> <span class="n">repo_url</span><span class="p">,</span> <span class="n">source_path</span><span class="p">,</span> <span class="n">target_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        xlet_name : str</span>
 <span class="sd">            Name of the xlet.</span>
+<span class="sd">        repo_url : str</span>
+<span class="sd">            URL to the repository.</span>
 <span class="sd">        source_path : str</span>
 <span class="sd">            Temporary location of the changelog.</span>
 <span class="sd">        target_path : str</span>
@@ -98,7 +102,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">source_path</span> <span class="o">=</span> <span class="n">source_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target_path</span> <span class="o">=</span> <span class="n">target_path</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">changelog_title</span> <span class="o">=</span> <span class="n">CHANGELOG_TITLE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xlet_name</span><span class="o">=</span><span class="n">xlet_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changelog_header</span> <span class="o">=</span> <span class="n">CHANGELOG_HEADER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xlet_name</span><span class="o">=</span><span class="n">xlet_name</span><span class="p">,</span> <span class="n">repo_url</span><span class="o">=</span><span class="n">repo_url</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ChangelogSanitizer.sanitize"><a class="viewcode-back" href="../../modules/python_modules/python_modules.changelog_handler.html#python_modules.changelog_handler.ChangelogSanitizer.sanitize">[docs]</a>    <span class="k">def</span> <span class="nf">sanitize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sanitize.</span>
@@ -135,7 +139,7 @@
                                                      <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;.{1,100}(?:\s+|$)&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
 
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">log_file_w</span><span class="p">:</span>
-                    <span class="n">log_file_w</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">changelog_title</span> <span class="o">+</span> <span class="n">wrapped_strings</span><span class="p">)</span></div></div>
+                    <span class="n">log_file_w</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">changelog_header</span> <span class="o">+</span> <span class="n">wrapped_strings</span><span class="p">)</span></div></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

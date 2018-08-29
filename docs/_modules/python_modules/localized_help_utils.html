@@ -43,18 +43,10 @@
 <span class="sd">----------</span>
 <span class="sd">Ansi : object</span>
 <span class="sd">    :any:`app_utils.ANSIColors` class initialization.</span>
-<span class="sd">BOOTSTRAP_ALERT : str</span>
-<span class="sd">    Bootstrap alert template.</span>
-<span class="sd">BOOTSTRAP_PANEL : str</span>
-<span class="sd">    Bootstrap panel template.</span>
 <span class="sd">BOXED_CONTAINER : str</span>
 <span class="sd">    Boxed container template.</span>
-<span class="sd">COMPATIBILITY_BADGE : str</span>
-<span class="sd">    Compatibility badge template.</span>
 <span class="sd">HTML_DOC : str</span>
 <span class="sd">    HTML document template.</span>
-<span class="sd">INTRODUCTION : str</span>
-<span class="sd">    Introduction section template.</span>
 <span class="sd">LOCALE_SECTION : str</span>
 <span class="sd">    Localized section template.</span>
 <span class="sd">OPTION : str</span>
@@ -66,9 +58,9 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">gettext</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">copy2</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">app_utils</span>
@@ -79,89 +71,111 @@
 
 <span class="n">HTML_DOC</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;!DOCTYPE html&gt;</span>
 <span class="s2">&lt;html&gt;</span>
+
 <span class="s2">&lt;head&gt;</span>
-<span class="s2">    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;</span>
-<span class="s2">    &lt;title&gt;</span><span class="si">{title}</span><span class="s2">&lt;/title&gt;</span>
-<span class="s2">    &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;./icon.png&quot;&gt;</span>
-<span class="s2">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span>
-<span class="s2">    &lt;script type=&quot;text/javascript&quot;&gt;</span>
-<span class="s2">    </span><span class="si">{js_localizations_handler}</span><span class="s2"></span>
-<span class="s2">    &lt;/script&gt;</span>
-<span class="s2">    &lt;style type=&quot;text/css&quot;&gt;</span>
-<span class="s2">    </span><span class="si">{css_bootstrap}</span><span class="s2"></span>
-<span class="s2">    </span><span class="si">{css_tweaks}</span><span class="s2"></span>
-<span class="s2">    </span><span class="si">{css_custom}</span><span class="s2"></span>
-<span class="s2">    &lt;/style&gt;</span>
+<span class="s2">&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;</span>
+<span class="s2">&lt;title&gt;</span><span class="si">{title}</span><span class="s2">&lt;/title&gt;</span>
+<span class="s2">&lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;./icon.png&quot;&gt;</span>
+<span class="s2">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span>
+<span class="s2">&lt;script type=&quot;text/javascript&quot;&gt;</span>
+<span class="si">{js_localizations_handler}</span><span class="s2"></span>
+<span class="s2">&lt;/script&gt;</span>
+<span class="s2">&lt;style type=&quot;text/css&quot;&gt;</span>
+<span class="si">{css_bootstrap}</span><span class="s2"></span>
+<span class="si">{css_tweaks}</span><span class="s2"></span>
+<span class="si">{css_custom}</span><span class="s2"></span>
+<span class="s2">&lt;/style&gt;</span>
 <span class="s2">&lt;/head&gt;</span>
+
 <span class="s2">&lt;body&gt;</span>
 <span class="s2">&lt;noscript&gt;</span>
-<span class="s2">&lt;div class=&quot;alert alert-warning&quot;&gt;</span>
+<span class="s2">&lt;div class=&quot;alert alert-warning&quot; role=&quot;alert&quot;&gt;</span>
 <span class="s2">&lt;p&gt;&lt;strong&gt;Oh snap! This page needs JavaScript enabled to display correctly.&lt;/strong&gt;&lt;/p&gt;</span>
-<span class="s2">&lt;p&gt;&lt;strong&gt;This page uses JavaScript only to switch between the available languages and/or display images.&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="s2">&lt;p&gt;&lt;strong&gt;This page uses JavaScript only to switch between the available languages, display images, smooth scrolling, etc.&lt;/strong&gt;&lt;/p&gt;</span>
 <span class="s2">&lt;p&gt;&lt;strong&gt;There are no tracking services of any kind and never will be (at least, not from my side).&lt;/strong&gt;&lt;/p&gt;</span>
-<span class="s2">&lt;/div&gt; &lt;!-- .alert.alert-warning --&gt;</span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s2">&lt;!-- .alert.alert-warning --&gt;</span>
 <span class="s2">&lt;/noscript&gt;</span>
 <span class="s2">&lt;div id=&quot;mainarea&quot;&gt;</span>
-<span class="s2">&lt;nav class=&quot;navbar navbar-default navbar-fixed-top&quot; role=&quot;navigation&quot;&gt;</span>
-<span class="s2">    &lt;div class=&quot;container-fluid&quot;&gt;</span>
-<span class="s2">    &lt;div class=&quot;navbar-header&quot;&gt;</span>
-<span class="s2">        &lt;ul class=&quot;nav navbar-nav navbar-left&quot;&gt;</span>
-<span class="s2">            &lt;li&gt;&lt;a id=&quot;nav-xlet-help&quot; class=&quot;js_smoothScroll navbar-brand&quot; href=&quot;#xlet-help&quot;&gt;Help&lt;/a&gt;&lt;/li&gt;</span>
-<span class="s2">            &lt;li&gt;&lt;a id=&quot;nav-xlet-contributors&quot; class=&quot;js_smoothScroll navbar-brand&quot; href=&quot;#xlet-contributors&quot;&gt;Contributors&lt;/a&gt;&lt;/li&gt;</span>
-<span class="s2">            &lt;li&gt;&lt;a id=&quot;nav-xlet-changelog&quot; class=&quot;js_smoothScroll navbar-brand&quot; href=&quot;#xlet-changelog&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;</span>
-<span class="s2">        &lt;/ul&gt;</span>
-<span class="s2">    &lt;/div&gt;</span>
-<span class="s2">    &lt;form class=&quot;navbar-form navbar-right&quot;&gt;</span>
-<span class="s2">        &lt;div class=&quot;form-group&quot;&gt;</span>
-<span class="s2">            &lt;span class=&quot;standalone-glyphicon-globe-wrapper&quot;&gt;&lt;span class=&quot;standalone-glyphicon-globe&quot;&gt;&lt;/span&gt;&lt;/span&gt;</span>
-<span class="s2">&lt;!-- WARNING!!! --&gt;</span>
-<span class="s2">&lt;!-- Using the Bootstrap classes &quot;form-control&quot; or &quot;input-sm&quot; and the like</span>
-<span class="s2">     breaks the styling of the &quot;select&quot; elements!!! ¬¬ --&gt;</span>
-<span class="s2">            &lt;select class=&quot;form-control-static&quot; id=&quot;localization-switch&quot; onchange=&quot;self.toggleLocalizationVisibility(value, this);&quot;&gt;</span>
+<span class="s2">    &lt;nav class=&quot;text-bold py-0 py-md-0 navbar navbar-expand-sm navbar-light fixed-top bg-light&quot; role=&quot;navigation&quot;&gt;</span>
+<span class="s2">        &lt;div class=&quot;container-fluid&quot;&gt;</span>
+<span class="s2">            &lt;div class=&quot;navbar-header&quot;&gt;</span>
+<span class="s2">                &lt;ul class=&quot;nav navbar-nav&quot;&gt;</span>
+<span class="s2">                    &lt;!-- The preventDefault() calls are to avoid changing the address in the address bar. --&gt;</span>
+<span class="s2">                    &lt;li&gt;&lt;a id=&quot;nav-xlet-help&quot; class=&quot;navbar-brand&quot; onclick=&quot;event.preventDefault();&quot; href=&quot;#xlet-help&quot;&gt;Help&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                    &lt;li&gt;&lt;a id=&quot;nav-xlet-contributors&quot; class=&quot;navbar-brand&quot; onclick=&quot;event.preventDefault();&quot; href=&quot;#xlet-contributors&quot;&gt;Contributors&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                    &lt;li&gt;&lt;a id=&quot;nav-xlet-changelog&quot; class=&quot;navbar-brand&quot; onclick=&quot;event.preventDefault();&quot; href=&quot;#xlet-changelog&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;</span>
+<span class="s2">                &lt;/ul&gt;</span>
+<span class="s2">            &lt;/div&gt;</span>
+<span class="s2">            &lt;form class=&quot;form-inline&quot;&gt;</span>
+<span class="s2">                &lt;div class=&quot;input-group input-group-sm&quot;&gt;</span>
+<span class="s2">                    &lt;div class=&quot;input-group-prepend&quot;&gt;</span>
+<span class="s2">                        &lt;span class=&quot;input-group-text text-bold text-font-size-xx-large&quot; for=&quot;localization-switch&quot;&gt;⊛&lt;/span&gt;</span>
+<span class="s2">                    &lt;/div&gt;</span>
+<span class="s2">                    &lt;select class=&quot;custom-select custom-select-sm text-bold&quot; id=&quot;localization-switch&quot; onchange=&quot;self.toggleLocalizationVisibility(value, this);&quot;&gt;</span>
 <span class="si">{options}</span><span class="s2"></span>
-<span class="s2">            &lt;/select&gt;</span>
+<span class="s2">                    &lt;/select&gt;</span>
+<span class="s2">                &lt;/div&gt;</span>
+<span class="s2">            &lt;/form&gt;</span>
 <span class="s2">        &lt;/div&gt;</span>
-<span class="s2">    &lt;/form&gt;</span>
-<span class="s2">    &lt;/div&gt;</span>
-<span class="s2">&lt;/nav&gt;</span>
-<span class="s2">&lt;span id=&quot;xlet-help&quot; style=&quot;padding-top:70px;&quot;&gt;</span>
-<span class="s2">&lt;div class=&quot;container boxed&quot;&gt;</span>
+<span class="s2">    &lt;/nav&gt;</span>
+<span class="s2">&lt;span id=&quot;xlet-help&quot;&gt;</span>
+<span class="s2">&lt;div class=&quot;container boxed my-3 py-3&quot;&gt;</span>
 <span class="si">{sections}</span><span class="s2"></span>
 <span class="s2">&lt;/div&gt; &lt;!-- .container.boxed --&gt;</span>
-<span class="s2">&lt;span id=&quot;xlet-contributors&quot; style=&quot;padding-top:140px;&quot;&gt;</span>
+<span class="s2">&lt;span id=&quot;xlet-contributors&quot;&gt;</span>
 <span class="si">{contributors}</span><span class="s2"></span>
-<span class="s2">&lt;span id=&quot;xlet-changelog&quot; style=&quot;padding-top:70px;&quot;&gt;</span>
+<span class="s2">&lt;span id=&quot;xlet-changelog&quot;&gt;</span>
 <span class="si">{changelog}</span><span class="s2"></span>
 <span class="s2">&lt;/div&gt; &lt;!-- #mainarea --&gt;</span>
+<span class="s2">&lt;!--Footer--&gt;</span>
+<span class="s2">&lt;footer class=&quot;page-footer text-bold bg-light pt-4 mt-4&quot;&gt;</span>
+<span class="s2">    &lt;!--Footer Links--&gt;</span>
+<span class="s2">    &lt;div class=&quot;container-fluid text-left&quot;&gt;</span>
+<span class="s2">        &lt;ul class=&quot;list-unstyled&quot;&gt;</span>
+<span class="s2">            &lt;li&gt;</span>
+<span class="s2">                &lt;p&gt;Page created with &lt;a href=&quot;https://getbootstrap.com&quot;&gt;&lt;b&gt;Bootstrap&lt;/b&gt;&lt;/a&gt; v4.1.3.&lt;/p&gt;</span>
+<span class="s2">            &lt;/li&gt;</span>
+<span class="s2">            &lt;li&gt;</span>
+<span class="s2">                &lt;p&gt;&lt;a href=&quot;https://bootswatch.com/flatly&quot;&gt;&lt;b&gt;Flatly&lt;/b&gt;&lt;/a&gt; Bootstrap theme by &lt;a href=&quot;https://bootswatch.com&quot;&gt;&lt;b&gt;Bootswatch&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span>
+<span class="s2">            &lt;/li&gt;</span>
+<span class="s2">            &lt;li&gt;</span>
+<span class="s2">                &lt;p&gt;&lt;a href=&quot;https://github.com/julienetie/smooth-scroll&quot;&gt;&lt;b&gt;Smooth Scroll plugin&lt;/b&gt;&lt;/a&gt; provided by &lt;a href=&quot;https://github.com/julienetie&quot;&gt;&lt;b&gt;Julien Etienne&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span>
+<span class="s2">            &lt;/li&gt;</span>
+<span class="s2">        &lt;/ul&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &lt;!--/.Footer Links--&gt;</span>
+<span class="s2">    &lt;!--Copyright--&gt;</span>
+<span class="s2">    &lt;div class=&quot;text-center py-3&quot;&gt;</span>
+<span class="s2">        &lt;div class=&quot;container-fluid&quot;&gt;</span>
+<span class="s2">            © 2016-</span><span class="si">%s</span><span class="s2"> &lt;a href=&quot;</span><span class="si">%s</span><span class="s2">&quot;&gt;Odyseus&lt;/a&gt;</span>
+<span class="s2">        &lt;/div&gt;</span>
+<span class="s2">    &lt;/div&gt;</span>
+<span class="s2">    &lt;!--/.Copyright--&gt;</span>
+<span class="s2">&lt;/footer&gt;</span>
+<span class="s2">&lt;!--/.Footer--&gt;</span>
 <span class="s2">&lt;script type=&quot;text/javascript&quot;&gt;toggleLocalizationVisibility(null);</span>
-<span class="si">{js_custom}</span><span class="s2">&lt;/script&gt;</span>
+<span class="si">{js_custom}</span><span class="s2"></span>
+<span class="s2">&lt;/script&gt;</span>
 <span class="s2">&lt;/body&gt;</span>
 <span class="s2">&lt;/html&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">repo_url</span><span class="p">)</span>
 
-<span class="n">BOXED_CONTAINER</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;div class=&quot;container boxed&quot;&gt;</span>
+<span class="n">BOXED_CONTAINER</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;div class=&quot;container boxed my-3 py-3&quot;&gt;</span>
 <span class="si">{0}</span><span class="s2"></span>
 <span class="s2">&lt;/div&gt; &lt;!-- .container.boxed --&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-
-<span class="n">INTRODUCTION</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="si">{0}</span><span class="s2"></span>
-<span class="s2">&lt;div style=&quot;font-weight:bold;&quot; class=&quot;alert alert-warning&quot;&gt;</span>
-<span class="si">{1}</span><span class="s2"></span>
-<span class="si">{2}</span><span class="s2"></span>
-<span class="si">{3}</span><span class="s2"></span>
-<span class="s2">&lt;/div&gt;</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 
 <span class="n">LOCALE_SECTION</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;div id=&quot;</span><span class="si">{language_code}</span><span class="s2">&quot; class=&quot;localization-content</span><span class="si">{hidden}</span><span class="s2">&quot;&gt;</span>
-<span class="si">{introduction}</span><span class="s2"></span>
+<span class="s2">&lt;div id=&quot;</span><span class="si">{language_code}</span><span class="s2">&quot; class=&quot;localization-content&quot; </span><span class="si">{hidden}</span><span class="s2">&gt;</span>
+<span class="si">{title}</span><span class="s2"></span>
+<span class="si">{warning}</span><span class="s2"></span>
 <span class="si">{compatibility}</span><span class="s2"></span>
+<span class="si">{localization}</span><span class="s2"></span>
 <span class="si">{content_base}</span><span class="s2"></span>
 <span class="si">{content_extra}</span><span class="s2"></span>
-<span class="si">{localization_info}</span><span class="s2"></span>
+<span class="s2">&lt;/br&gt;</span>
 <span class="si">{only_english_alert}</span><span class="s2"></span>
 <span class="s2">&lt;/div&gt; &lt;!-- .localization-content --&gt;</span>
 <span class="s2">&quot;&quot;&quot;</span>
@@ -174,27 +188,6 @@
 <span class="n">README_DOC</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{readme_compatibility}</span><span class="s2"></span>
 <span class="si">{readme_content}</span><span class="s2"></span>
 <span class="s2">&quot;&quot;&quot;</span>
-
-<span class="n">BOOTSTRAP_PANEL</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;div class=&quot;panel panel-</span><span class="si">{context}</span><span class="s2">&quot;&gt;</span>
-<span class="s2">    &lt;div class=&quot;panel-heading&quot;&gt;</span>
-<span class="s2">        &lt;h3 class=&quot;panel-title&quot;&gt;</span><span class="si">{title}</span><span class="s2">&lt;/h3&gt;</span>
-<span class="s2">    &lt;/div&gt;</span>
-<span class="s2">    &lt;div class=&quot;panel-body </span><span class="si">{custom_class}</span><span class="s2">&quot;&gt;</span>
-<span class="s2">        </span><span class="si">{content}</span><span class="s2"></span>
-<span class="s2">    &lt;/div&gt;</span>
-<span class="s2">&lt;/div&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="n">BOOTSTRAP_ALERT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;div class=&quot;alert alert-</span><span class="si">{context}</span><span class="s2">&quot;&gt;</span>
-<span class="si">{content}</span><span class="s2"></span>
-<span class="s2">&lt;/div&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-
-<span class="n">COMPATIBILITY_BADGE</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=&quot;compatibility-badge&quot;&gt;&lt;span class=&quot;label label-primary&quot;&gt;Cinnamon</span><span class="se">\</span>
-<span class="s1">&lt;/span&gt;&lt;span class=&quot;label label-</span><span class="si">{0}</span><span class="s1">&quot;&gt;</span><span class="si">{1}</span><span class="s1">&lt;/span&gt;&lt;/span&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
 
 
 <div class="viewcode-block" id="XletMetadata"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.XletMetadata">[docs]</a><span class="k">class</span> <span class="nc">XletMetadata</span><span class="p">():</span>
@@ -306,10 +299,10 @@
 
         <span class="n">assets_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;html_assets&quot;</span><span class="p">)</span>
         <span class="n">path_css_bootstrap</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;bootstrap-for-standalone.min.css&quot;</span><span class="p">)</span>
-        <span class="n">path_css_tweaks</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;tweaks.css&quot;</span><span class="p">)</span>
+            <span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;bootstrap.min.css&quot;</span><span class="p">)</span>
+        <span class="n">path_css_tweaks</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;tweaks.min.css&quot;</span><span class="p">)</span>
         <span class="n">path_js_localizations_handler</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;js&quot;</span><span class="p">,</span> <span class="s2">&quot;localizations-handler.js&quot;</span><span class="p">)</span>
+            <span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;js&quot;</span><span class="p">,</span> <span class="s2">&quot;localizations-handler.min.js&quot;</span><span class="p">)</span>
 
         <span class="c1"># Do the &quot;heavy lifting&quot; first.</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_css_bootstrap</span><span class="p">):</span>
@@ -364,7 +357,7 @@
 <span class="sd">    str</span>
 <span class="sd">        A time stamp in the same format used in .pot files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
     <span class="c1"># Since the &quot;padding&quot; with zeroes of the rest of the values converts</span>
     <span class="c1"># them into strings, lets convert to string the year too.</span>
     <span class="n">YEAR</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
@@ -407,9 +400,9 @@
         <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
 
     <span class="c1"># Add the Report-Msgid-Bugs- field to the header.</span>
-    <span class="k">if</span> <span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;https://gitlab.com/Odyseus/CinnamonTools&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">repo_url</span><span class="p">:</span>
         <span class="n">do_save</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;https://gitlab.com/Odyseus/CinnamonTools&quot;</span>
+        <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Report-Msgid-Bugs-To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">repo_url</span>
 
     <span class="c1"># Add the Language-Team field to the header to STFU all msgfmt warnings.</span>
     <span class="k">if</span> <span class="s2">&quot;Language-Team&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="n">po_file</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;Language-Team&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -435,37 +428,46 @@
         <span class="n">po_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="save_file"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.save_file">[docs]</a><span class="k">def</span> <span class="nf">save_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="save_file"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.save_file">[docs]</a><span class="k">def</span> <span class="nf">save_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">is_xlet_help_file</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Save file.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    path : str</span>
+<span class="sd">    file_path : str</span>
 <span class="sd">        Path to a file to save data to.</span>
 <span class="sd">    data : str</span>
 <span class="sd">        The data to save into a file.</span>
+<span class="sd">    is_xlet_help_file : bool, optional</span>
+<span class="sd">        If the saved file is the xlet&#39;s HELP.html file, copy it into the docs folder</span>
+<span class="sd">        for on-line hosting.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
         <span class="n">quit</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># This copies the HELP.html files just created to</span>
-        <span class="c1"># docs_sources/_static/xlets_help_pages for on-line hosting.</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;HELP.html&quot;</span><span class="p">:</span>
-            <span class="n">repo_folder</span> <span class="o">=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">get_parent_dir</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-            <span class="n">xlet_slug</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">get_parent_dir</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-            <span class="n">destination</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;docs_sources&quot;</span><span class="p">,</span>
-                                       <span class="s2">&quot;_static&quot;</span><span class="p">,</span> <span class="s2">&quot;xlets_help_pages&quot;</span><span class="p">,</span> <span class="n">xlet_slug</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_xlet_help_file</span><span class="p">:</span>
+            <span class="n">xlet_folder</span> <span class="o">=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">get_parent_dir</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">xlet_icon</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">xlet_folder</span><span class="p">,</span> <span class="s2">&quot;icon.png&quot;</span><span class="p">)</span>
+            <span class="n">repo_folder</span> <span class="o">=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">get_parent_dir</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">xlet_slug</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">get_parent_dir</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
+            <span class="n">dest_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_folder</span><span class="p">,</span> <span class="s2">&quot;docs&quot;</span><span class="p">,</span> <span class="s2">&quot;_static&quot;</span><span class="p">,</span>
+                                     <span class="s2">&quot;xlets_help_pages&quot;</span><span class="p">,</span> <span class="n">xlet_slug</span><span class="p">)</span>
+            <span class="n">dest_html_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dest_path</span><span class="p">,</span> <span class="s2">&quot;index.html&quot;</span><span class="p">)</span>
+            <span class="n">dest_icon_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dest_path</span><span class="p">,</span> <span class="s2">&quot;icon.png&quot;</span><span class="p">)</span>
 
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">destination</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dest_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">destination</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest_html_file</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dest_html_file</span><span class="p">)</span>
 
-            <span class="n">copy2</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest_icon_file</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dest_icon_file</span><span class="p">)</span>
+
+            <span class="n">copy2</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">dest_html_file</span><span class="p">)</span>
+            <span class="n">copy2</span><span class="p">(</span><span class="n">xlet_icon</span><span class="p">,</span> <span class="n">dest_icon_file</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_compatibility"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.get_compatibility">[docs]</a><span class="k">def</span> <span class="nf">get_compatibility</span><span class="p">(</span><span class="n">xlet_meta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">for_readme</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -492,22 +494,156 @@
     <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">xlet_meta</span><span class="p">[</span><span class="s2">&quot;cinnamon-version&quot;</span><span class="p">]):</span>
         <span class="k">if</span> <span class="n">for_readme</span><span class="p">:</span>
             <span class="c1"># The README files uses SVG images hosted on-line for the compatibility badges.</span>
-            <span class="n">data</span> <span class="o">+=</span> <span class="s2">&quot;![Cinnamon </span><span class="si">{0}</span><span class="s2">](https://odyseus.gitlab.io/CinnamonTools/lib/badges/cinn-</span><span class="si">{0}</span><span class="s2">.svg)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">+=</span> <span class="s2">&quot;![Cinnamon </span><span class="si">{0}</span><span class="s2">](</span><span class="si">{1}</span><span class="s2">/lib/badges/cinn-</span><span class="si">{0}</span><span class="s2">.svg)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">,</span>
+                                                                            <span class="n">app_utils</span><span class="o">.</span><span class="n">repo_pages_url</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># The help files uses a custom Bootstrap label for the compatibility badges.</span>
+            <span class="c1"># The help files uses a Bootstrap badge for the compatibility badges.</span>
             <span class="k">if</span> <span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">]:</span>
-                <span class="n">data</span> <span class="o">+=</span> <span class="n">COMPATIBILITY_BADGE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;warning&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">+=</span> <span class="n">get_bootstrap_badge</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">,</span>
+                                            <span class="n">extra_classes</span><span class="o">=</span><span class="s2">&quot;text-monospace&quot;</span><span class="p">,</span>
+                                            <span class="n">content</span><span class="o">=</span><span class="s2">&quot;v&quot;</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;9&quot;</span><span class="p">]:</span>
-                <span class="n">data</span> <span class="o">+=</span> <span class="n">COMPATIBILITY_BADGE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">+=</span> <span class="n">get_bootstrap_badge</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+                                            <span class="n">extra_classes</span><span class="o">=</span><span class="s2">&quot;text-monospace&quot;</span><span class="p">,</span>
+                                            <span class="n">content</span><span class="o">=</span><span class="s2">&quot;v&quot;</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">]:</span>
-                <span class="n">data</span> <span class="o">+=</span> <span class="n">COMPATIBILITY_BADGE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">+=</span> <span class="n">get_bootstrap_badge</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+                                            <span class="n">extra_classes</span><span class="o">=</span><span class="s2">&quot;text-monospace&quot;</span><span class="p">,</span>
+                                            <span class="n">content</span><span class="o">=</span><span class="s2">&quot;v&quot;</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">+=</span> <span class="n">COMPATIBILITY_BADGE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;warning&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">+=</span> <span class="n">get_bootstrap_badge</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">,</span>
+                                            <span class="n">extra_classes</span><span class="o">=</span><span class="s2">&quot;text-monospace&quot;</span><span class="p">,</span>
+                                            <span class="n">content</span><span class="o">=</span><span class="s2">&quot;v&quot;</span> <span class="o">+</span> <span class="n">version</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">for_readme</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&lt;span style=</span><span class="se">\&quot;</span><span class="s2">color:red;</span><span class="se">\&quot;</span><span class="s2">&gt;&lt;strong&gt;Do not install on any other version of Cinnamon.&lt;/strong&gt;&lt;/span&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
 
     <span class="k">return</span> <span class="n">data</span></div>
+
+
+<span class="c1"># ComplexBootstrap elements.</span>
+
+<div class="viewcode-block" id="get_bootstrap_alert"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.get_bootstrap_alert">[docs]</a><span class="k">def</span> <span class="nf">get_bootstrap_alert</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">heading</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bold_text</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get bootstrap alert.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    context : str, optional</span>
+<span class="sd">        A Boostrap &quot;context color class&quot;. Examples: &quot;primary&quot;, &quot;secondary&quot;, &quot;success&quot;,</span>
+<span class="sd">        &quot;danger&quot;, &quot;warning&quot;, &quot;info&quot;, etc.</span>
+<span class="sd">    content : str, optional</span>
+<span class="sd">        The content text.</span>
+<span class="sd">    heading : str, optional</span>
+<span class="sd">        A title for the alert.</span>
+<span class="sd">    bold_text : bool, optional</span>
+<span class="sd">        Whether to use the &quot;text-bold&quot; class or not.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        A bootstrap alert.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&lt;h4 class=&quot;alert-heading&quot;&gt;</span><span class="si">%s</span><span class="s1">&lt;/h4&gt;&#39;</span> <span class="o">%</span> <span class="n">heading</span><span class="p">)</span> <span class="k">if</span> <span class="n">heading</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;div class=&quot;alert alert-</span><span class="si">{context}</span><span class="s2"> </span><span class="si">{bold_text}</span><span class="s2"> shadow-sm&quot; role=&quot;alert&quot;&gt;</span>
+<span class="si">{heading}</span><span class="s2"></span>
+<span class="si">{content}</span><span class="s2"></span>
+<span class="s2">&lt;/div&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
+           <span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">,</span>
+           <span class="n">heading</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
+           <span class="n">bold_text</span><span class="o">=</span><span class="s2">&quot;text-bold&quot;</span> <span class="k">if</span> <span class="n">bold_text</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_bootstrap_card"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.get_bootstrap_card">[docs]</a><span class="k">def</span> <span class="nf">get_bootstrap_card</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
+                       <span class="n">header</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                       <span class="n">body</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                       <span class="n">body_extra_classes</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                       <span class="n">marging_y</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                       <span class="n">white_header</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get bootstrap card.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    context : str, optional</span>
+<span class="sd">        A Boostrap &quot;context color class&quot;. Examples: &quot;primary&quot;, &quot;secondary&quot;, &quot;success&quot;,</span>
+<span class="sd">        &quot;danger&quot;, &quot;warning&quot;, &quot;info&quot;, etc.</span>
+<span class="sd">    header : str, optional</span>
+<span class="sd">        The header text.</span>
+<span class="sd">    body : str, optional</span>
+<span class="sd">        The content text.</span>
+<span class="sd">    body_extra_classes : str, optional</span>
+<span class="sd">        Extra classes to set to the card body.</span>
+<span class="sd">    marging_y : int, optional</span>
+<span class="sd">        Margin top and botton for the card.</span>
+<span class="sd">    white_header : bool, optional</span>
+<span class="sd">        Whether to set the &quot;text-white&quot; class to the card header.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        A bootstrap card.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;&quot;&lt;div class=&quot;card text-bold my-</span><span class="si">{marging_y}</span><span class="s2"> border-</span><span class="si">{context}</span><span class="s2"> shadow-sm&quot;&gt;</span>
+<span class="s2">    &lt;div class=&quot;card-header bg-</span><span class="si">{context}</span><span class="s2"> </span><span class="si">{white_header}</span><span class="s2">&quot;&gt;</span><span class="si">{header}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">    &lt;div class=&quot;card-body text-</span><span class="si">{context}</span><span class="s2"> </span><span class="si">{body_extra_classes}</span><span class="s2">&quot;&gt;</span><span class="si">{body}</span><span class="s2">&lt;/div&gt;</span>
+<span class="s2">&lt;/div&gt;&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
+        <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+        <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span>
+        <span class="n">body_extra_classes</span><span class="o">=</span><span class="n">body_extra_classes</span><span class="p">,</span>
+        <span class="n">marging_y</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">marging_y</span><span class="p">),</span>
+        <span class="n">white_header</span><span class="o">=</span><span class="s2">&quot;text-white&quot;</span> <span class="k">if</span> <span class="n">white_header</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_bootstrap_badge"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.get_bootstrap_badge">[docs]</a><span class="k">def</span> <span class="nf">get_bootstrap_badge</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">extra_classes</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">is_pill</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get bootstrap badge.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    context : str, optional</span>
+<span class="sd">        A Boostrap &quot;context color class&quot;. Examples: &quot;primary&quot;, &quot;secondary&quot;, &quot;success&quot;,</span>
+<span class="sd">        &quot;danger&quot;, &quot;warning&quot;, &quot;info&quot;, etc.</span>
+<span class="sd">    content : str, optional</span>
+<span class="sd">        The content text.</span>
+<span class="sd">    extra_classes : str, optional</span>
+<span class="sd">        Extra classes to set to the &lt;img&gt; element.</span>
+<span class="sd">    is_pill : bool, optional</span>
+<span class="sd">        Whether to use the &quot;badge-pill&quot; class or not.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    srt</span>
+<span class="sd">        A bootstrap badge.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;&quot;&lt;span class=&quot;badge </span><span class="si">{is_pill}</span><span class="s2"> badge-</span><span class="si">{context}</span><span class="s2"> shadow-sm </span><span class="si">{extra_classes}</span><span class="s2">&quot;&gt;</span><span class="si">{content}</span><span class="s2">&lt;/span&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
+           <span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">,</span>
+           <span class="n">extra_classes</span><span class="o">=</span><span class="n">extra_classes</span><span class="p">,</span>
+           <span class="n">is_pill</span><span class="o">=</span><span class="s2">&quot;badge-pill&quot;</span> <span class="k">if</span> <span class="n">is_pill</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_image_container"><a class="viewcode-back" href="../../modules/python_modules/python_modules.localized_help_utils.html#python_modules.localized_help_creator.get_image_container">[docs]</a><span class="k">def</span> <span class="nf">get_image_container</span><span class="p">(</span><span class="n">extra_classes</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">centered</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get image container.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    extra_classes : str, optional</span>
+<span class="sd">        Extra classes to set to the &lt;img&gt; element.</span>
+<span class="sd">    alt : str, optional</span>
+<span class="sd">        Text to set the image alt attribute.</span>
+<span class="sd">    centered : bool, optional</span>
+<span class="sd">        Whether to wrap the &lt;img&gt; element with a &lt;div&gt; with the &quot;img-centered-container&quot; class set.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    srt</span>
+<span class="sd">        An &lt;img&gt; element or a container with an &lt;img&gt; element.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">container</span> <span class="o">=</span> <span class="s1">&#39;&lt;div class=&quot;img-centered-container&quot;&gt;</span><span class="si">%s</span><span class="s1">&lt;/div&gt;&#39;</span> <span class="k">if</span> <span class="n">centered</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">container</span> <span class="o">%</span> <span class="s2">&quot;&quot;&quot;&lt;img class=&quot;img-fluid </span><span class="si">{extra_classes}</span><span class="s2">&quot; alt=&quot;</span><span class="si">{alt}</span><span class="s2">&quot;&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alt</span><span class="o">=</span><span class="n">alt</span><span class="p">,</span>
+           <span class="n">extra_classes</span><span class="o">=</span><span class="n">extra_classes</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

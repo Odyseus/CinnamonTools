@@ -53,39 +53,15 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="python_modules.localized_help_utils.BOOTSTRAP_ALERT">
-<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">BOOTSTRAP_ALERT</code><a class="headerlink" href="#python_modules.localized_help_utils.BOOTSTRAP_ALERT" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Bootstrap alert template.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="python_modules.localized_help_utils.BOOTSTRAP_PANEL">
-<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">BOOTSTRAP_PANEL</code><a class="headerlink" href="#python_modules.localized_help_utils.BOOTSTRAP_PANEL" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Bootstrap panel template.</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="python_modules.localized_help_utils.BOXED_CONTAINER">
 <code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">BOXED_CONTAINER</code><a class="headerlink" href="#python_modules.localized_help_utils.BOXED_CONTAINER" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>str</em> – Boxed container template.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="python_modules.localized_help_utils.COMPATIBILITY_BADGE">
-<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">COMPATIBILITY_BADGE</code><a class="headerlink" href="#python_modules.localized_help_utils.COMPATIBILITY_BADGE" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Compatibility badge template.</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="python_modules.localized_help_utils.HTML_DOC">
 <code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">HTML_DOC</code><a class="headerlink" href="#python_modules.localized_help_utils.HTML_DOC" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>str</em> – HTML document template.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="python_modules.localized_help_utils.INTRODUCTION">
-<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">INTRODUCTION</code><a class="headerlink" href="#python_modules.localized_help_utils.INTRODUCTION" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Introduction section template.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -243,13 +219,15 @@
 
 <dl class="function">
 <dt id="python_modules.localized_help_utils.save_file">
-<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">save_file</code><span class="sig-paren">(</span><em>path</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_utils.html#save_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_utils.save_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">save_file</code><span class="sig-paren">(</span><em>file_path</em>, <em>data</em>, <em>is_xlet_help_file=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_utils.html#save_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_utils.save_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Path to a file to save data to.</p></li>
+<li><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Path to a file to save data to.</p></li>
 <li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The data to save into a file.</p></li>
+<li><p><strong>is_xlet_help_file</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – If the saved file is the xlet’s HELP.html file, copy it into the docs folder
+for on-line hosting.</p></li>
 </ul>
 </dd>
 </dl>
@@ -272,6 +250,98 @@ generated README.md file.</p></li>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="python_modules.localized_help_utils.get_bootstrap_alert">
+<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">get_bootstrap_alert</code><span class="sig-paren">(</span><em>context='info'</em>, <em>content=''</em>, <em>heading=''</em>, <em>bold_text=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_utils.html#get_bootstrap_alert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_utils.get_bootstrap_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get bootstrap alert.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – A Boostrap “context color class”. Examples: “primary”, “secondary”, “success”,
+“danger”, “warning”, “info”, etc.</p></li>
+<li><p><strong>content</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The content text.</p></li>
+<li><p><strong>heading</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – A title for the alert.</p></li>
+<li><p><strong>bold_text</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to use the “text-bold” class or not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A bootstrap alert.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="python_modules.localized_help_utils.get_bootstrap_card">
+<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">get_bootstrap_card</code><span class="sig-paren">(</span><em>context='info'</em>, <em>header=''</em>, <em>body=''</em>, <em>body_extra_classes=''</em>, <em>marging_y=3</em>, <em>white_header=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_utils.html#get_bootstrap_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_utils.get_bootstrap_card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get bootstrap card.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – A Boostrap “context color class”. Examples: “primary”, “secondary”, “success”,
+“danger”, “warning”, “info”, etc.</p></li>
+<li><p><strong>header</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The header text.</p></li>
+<li><p><strong>body</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The content text.</p></li>
+<li><p><strong>body_extra_classes</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Extra classes to set to the card body.</p></li>
+<li><p><strong>marging_y</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#int" title="(in Python v3.5)"><em>int</em></a><em>, </em><em>optional</em>) – Margin top and botton for the card.</p></li>
+<li><p><strong>white_header</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to set the “text-white” class to the card header.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A bootstrap card.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="python_modules.localized_help_utils.get_bootstrap_badge">
+<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">get_bootstrap_badge</code><span class="sig-paren">(</span><em>context='info'</em>, <em>content=''</em>, <em>extra_classes=''</em>, <em>is_pill=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_utils.html#get_bootstrap_badge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_utils.get_bootstrap_badge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get bootstrap badge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – A Boostrap “context color class”. Examples: “primary”, “secondary”, “success”,
+“danger”, “warning”, “info”, etc.</p></li>
+<li><p><strong>content</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The content text.</p></li>
+<li><p><strong>extra_classes</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Extra classes to set to the &lt;img&gt; element.</p></li>
+<li><p><strong>is_pill</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to use the “badge-pill” class or not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A bootstrap badge.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>srt</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="python_modules.localized_help_utils.get_image_container">
+<code class="descclassname">python_modules.localized_help_utils.</code><code class="descname">get_image_container</code><span class="sig-paren">(</span><em>extra_classes=''</em>, <em>alt=''</em>, <em>centered=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/localized_help_utils.html#get_image_container"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.localized_help_utils.get_image_container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get image container.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>extra_classes</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Extra classes to set to the &lt;img&gt; element.</p></li>
+<li><p><strong>alt</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Text to set the image alt attribute.</p></li>
+<li><p><strong>centered</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to wrap the &lt;img&gt; element with a &lt;div&gt; with the “img-centered-container” class set.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An &lt;img&gt; element or a container with an &lt;img&gt; element.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>srt</p>
 </dd>
 </dl>
 </dd></dl>

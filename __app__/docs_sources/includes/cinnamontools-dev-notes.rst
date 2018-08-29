@@ -5,7 +5,7 @@ Development notes
 Xlets development *commandments*
 --------------------------------
 
-1. Eradicate from your thoughts the existence of Node.js. I can do infinitely more with just ten lines of Python code than with a hundred lines of JavaScript code that depend on 10 Node.js modules with a thousand lines of code each.
+1. Eradicate from your thoughts the existence of Node.js. I can do infinitely more with just ten lines of Python code than with ten lines of JavaScript code that depend on 10 Node.js modules with a thousand lines of code each.
 2. If a Python module is required, make it part of the Python application if possible. Otherwise, create a mechanism to install required modules.
 3. Try to use ``Mainloop.idle_add`` inside the initialization code of an xlet if possible. Take into account the following:
 
@@ -78,7 +78,7 @@ This file is used to generate the **HELP.html** page for each xlet. The **HELP.h
     - Sphinx
 
         - By itself, Sphinx has hundreds of moving parts (Python modules and/or external tools).
-        - It internationalization capabilities are too complex.
+        - Its internationalization capabilities are too complex.
         - Generating one single HELP.html file that is at the same time self contained is practically impossible.
 
     - Translate Toolkit
@@ -89,7 +89,8 @@ This file is used to generate the **HELP.html** page for each xlet. The **HELP.h
 HTML assets
 ^^^^^^^^^^^
 
-- Bootstrap 3 is used as a CSS framework. *Planing on moving to Bootstrap 4 with its default theme.*
+- `Bootstrap 4 <https://getbootstrap.com/>`__ is used as a CSS framework. No Bootstrap JavaScript plugins nor jQuery is used.
+- `Bootswatch's Flatly theme <https://bootswatch.com/flatly/>`__ is used as Bootstrap theme. Only because the colors of the default Bootstrap theme are abhorrent.
 - JavaScript is only used for the page localization mechanism and a smooth scroll effect when clicking in-line links.
 
 
