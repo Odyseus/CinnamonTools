@@ -59,24 +59,24 @@ Most of the xlets in this repository come with help pages that describe their us
 
 ### Applets help pages
 
-- [Argos for Cinnamon](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0ArgosForCinnamon/index.html)
-- [Cinnamon Menu (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0CinnamonMenuForkByOdyseus/index.html)
-- [Desktop Handler](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0DesktopHandler/index.html)
-- [Extensions Manager](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0ExtensionsManager/index.html)
-- [Feeds Reader (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0FeedsByJonbrettForkByOdyseus/index.html)
-- [Popup Translator](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0PopupTranslator/index.html)
-- [Quick Menu](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0QuickMenu/index.html)
-- [Simple ToDo List](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0SimpleToDoList/index.html)
-- [System Monitor (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0SystemMonitorByOrcusForkByOdyseus/index.html)
-- [Wallpaper Changer](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0WallpaperChangerApplet/index.html)
-- [Window list (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0WindowListForkByOdyseus/index.html)
+- [Argos for Cinnamon](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0ArgosForCinnamon/index.html)
+- [Cinnamon Menu (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0CinnamonMenuForkByOdyseus/index.html)
+- [Desktop Handler](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0DesktopHandler/index.html)
+- [Extensions Manager](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0ExtensionsManager/index.html)
+- [Feeds Reader (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0FeedsByJonbrettForkByOdyseus/index.html)
+- [Popup Translator](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0PopupTranslator/index.html)
+- [Quick Menu](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0QuickMenu/index.html)
+- [Simple ToDo List](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0SimpleToDoList/index.html)
+- [System Monitor (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0SystemMonitorByOrcusForkByOdyseus/index.html)
+- [Wallpaper Changer](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0WallpaperChangerApplet/index.html)
+- [Window list (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0WindowListForkByOdyseus/index.html)
 
 ### Extensions help pages
 
-- [Cinnamon Maximus (Fork by Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0CinnamonMaximusForkByOdyseus/index.html)
-- [Cinnamon Tweaks](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0CinnamonTweaks/index.html)
-- [Multi Translator](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0MultiTranslatorExtension/index.html)
-- [Window demands attention behavior](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0WindowDemandsAttentionBehavior/index.html)
+- [Cinnamon Maximus (Fork by Odyseus)](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0CinnamonMaximusForkByOdyseus/index.html)
+- [Cinnamon Tweaks](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0CinnamonTweaks/index.html)
+- [Multi Translator](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0MultiTranslatorExtension/index.html)
+- [Window demands attention behavior](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0WindowDemandsAttentionBehavior/index.html)
 
 ## [Documentation](https://odyseus.gitlab.io/CinnamonTools)
 
