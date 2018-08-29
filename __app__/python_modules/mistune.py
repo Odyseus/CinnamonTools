@@ -12,7 +12,8 @@ The fastest markdown parser in pure Python with renderer feature.
 
     **Modifications**:
 
-    - Added support for kbd tag. [[Ctrl]] will render as <kbd>Ctrl</kbd>
+    - Added support for kbd tag. [[Ctrl]] will render as <kbd>Ctrl</kbd>.
+    - Added table and table-bordered classes to the table tag.
 """
 
 import re
@@ -768,7 +769,7 @@ class Renderer(object):
         :param body: body part of the table.
         """
         return (
-            '<table>\n<thead>%s</thead>\n'
+            '<table class="table table-bordered">\n<thead>%s</thead>\n'
             '<tbody>\n%s</tbody>\n</table>\n'
         ) % (header, body)
 

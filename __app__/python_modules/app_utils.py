@@ -22,15 +22,18 @@ existent_xlet_destination_msg : str
     Message to display when creating a new xlet and that xlet already exists.
 extra_common_files : list
     List of files common to all xlets.
-help_pages_index_template : str
-    The template (in reStructuredText format) used to create the index of xlets help pages in this
-    repository documentation.
 HOME : str
     Path to the current user home folder.
 missing_domain_msg : str
     Message to display when the domain name isn't specified at xlet build time.
 missing_theme_name_msg : str
     Message to display when the theme name isn't specified at theme build time.
+readme_list_item_template : str
+    Template string to generate help pages list items.
+repo_pages_url : str
+    URL to the repository hosted web pages.
+repo_url : str
+    The repository URL.
 root_folder : str
     The main folder containing the application. All commands must be executed from this location
     without exceptions.
@@ -288,21 +291,36 @@ class ValidationError(Exception):
 HOME = os.path.expanduser("~")
 
 
-bash_completions_step1 = """Bash completions creation. Step 1.
+bash_completions_step1 = """
+Bash completions creation. Step 1.
+
 The file {0}
 will be created.
 """
 
 
-bash_completions_step2 = """Bash completions creation. Step 2.
+bash_completions_step2 = """
+Bash completions creation. Step 2.
+
 The file {0}/.bash_completion will be created if it doesn't exists.
+
 Or the pertinent code to load bash completions from the .bash_completion.d
 directory will be appended to the existent file.
+
+The {0}/.bash_completion file needs to be manually sourced in your shell's
+configuration file (.bashrc, .zshrc, etc.).
+
+The following is the content that will be appended to the
+{0}/.bash_completion file.
 """
 
 
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
     os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
+
+repo_url = "https://gitlab.com/Odyseus/CinnamonTools"
+
+repo_pages_url = "https://odyseus.gitlab.io/CinnamonTools"
 
 env = os.environ.copy()
 
@@ -354,20 +372,8 @@ extra_common_files = [{
     "file_name": "helper.py",
 }]
 
-help_pages_index_template = """
-Help pages for all xlets in this repository
-===========================================
-
-Applets
--------
-
-{applets}
-
-Extensions
-----------
-
-{extensions}
-"""
+readme_list_item_template = "- [{xlet_name}](%s/docs/_static/xlets_help_pages/{xlet_slug}/index.html)" % (
+    repo_pages_url)
 
 
 class LogSystem():
@@ -569,38 +575,34 @@ class XletsHelperCore():
 
         self.logger.info("Generating change logs...")
 
-        logs_storage = os.path.join(root_folder, "tmp", "changelogs")
-
-        os.makedirs(logs_storage, exist_ok=True)
-
         for xlet in self.xlets_meta.meta_list:
             self.logger.info("Generating change log for %s..." % xlet["name"])
 
             try:
                 xlet_root_folder = get_parent_dir(xlet["meta-path"], 0)
-                tmp_log_path = os.path.join(logs_storage, xlet["slug"] + ".md")
+                log_path = os.path.join(xlet_root_folder, "__data__", "CHANGELOG.md")
+                os.makedirs(os.path.dirname(log_path), exist_ok=True)
+
+                with open(log_path, "w") as f:
+                    f.write(changelog_handler.CHANGELOG_HEADER.format(
+                        xlet_name=xlet["name"],
+                        repo_url=repo_url
+                    ))
 
                 # Generate change log from current repository paths.
-                relative_xlet_path1 = "./" + xlet["type"] + "s/" + xlet["slug"]
-                cmd1 = changelog_handler.git_log_cmd.format(
+                relative_xlet_path = "./" + xlet["type"] + "s/" + xlet["slug"]
+                cmd = changelog_handler.git_log_cmd.format(
                     xlet_slug=xlet["slug"],
-                    relative_xlet_path=relative_xlet_path1,
-                    append_or_override=">",
-                    tmp_log_path=tmp_log_path
+                    relative_xlet_path=relative_xlet_path,
+                    append_or_override=">>",
+                    log_path=log_path,
+                    repo_url=repo_url
                 )
-                exec_command(cmd=cmd1,
+                exec_command(cmd=cmd,
                              working_directory=root_folder,
                              logger=self.logger)
-            finally:
-                # Sanitize and clean up formatting of the change logs and
-                # copy them to their final destinations.
-                sanitizer = changelog_handler.ChangelogSanitizer(
-                    xlet_name=xlet["name"],
-                    source_path=tmp_log_path,
-                    target_path=os.path.join(xlet_root_folder, "__data__", "CHANGELOG.md")
-                )
-
-                sanitizer.sanitize()
+            except Exception as err:
+                self.logger.error(err)
 
     def update_pot_files(self):
         """Update POT files.
@@ -643,9 +645,8 @@ class XletsHelperCore():
         """
         self.logger.info("Starting localized help creation...")
 
-        applets_list = []
-        extensions_list = []
-        list_item_template = "- `%s <../_static/xlets_help_pages/%s.html>`__"
+        applets_list_items = []
+        extensions_list_items = []
 
         for xlet in self.xlets_meta.meta_list:
             xlet_root_folder = get_parent_dir(xlet["meta-path"], 0)
@@ -655,24 +656,32 @@ class XletsHelperCore():
                 self.logger.info("Creating localized help for %s..." % xlet["name"])
                 call([script_file_path], cwd=xlet_root_folder)
 
-                list_item = list_item_template % (
-                    xlet["name"], xlet["slug"])
+                # Store list items for later creating the README.md file.
+                list_item = readme_list_item_template.format(
+                    xlet_name=xlet["name"],
+                    xlet_slug=xlet["slug"]
+                )
 
                 if xlet["type"] == "applet":
-                    applets_list.append(list_item)
+                    applets_list_items.append(list_item)
                 elif xlet["type"] == "extension":
-                    extensions_list.append(list_item)
+                    extensions_list_items.append(list_item)
 
-        self.logger.info("Generating xlets help pages index...")
+        self.logger.info("Generating repository README.md file...")
 
-        help_pages_index = os.path.join(root_folder, "__app__", "docs_sources",
-                                        "includes", "cinnamontools-help-pages.rst")
+        readme_template_path = os.path.join(root_folder, "__app__", "data",
+                                            "templates", "README.md")
+        readme_file_path = os.path.join(root_folder, "README.md")
 
-        with open(help_pages_index, "w", encoding="UTF-8") as index_file:
-            index_file.write(help_pages_index_template.format(
-                applets="\n".join(sorted(applets_list)),
-                extensions="\n".join(sorted(extensions_list))
-            ))
+        with open(readme_template_path, "r", encoding="UTF-8") as readme_template:
+            template = readme_template.read()
+
+            with open(readme_file_path, "w", encoding="UTF-8") as readme_file:
+                readme_file.write(template.format(
+                    applets_help_pages="\n".join(sorted(applets_list_items)),
+                    extensions_help_pages="\n".join(sorted(extensions_list_items)),
+                    repo_pages_url=repo_pages_url
+                ))
 
     def generate_trans_stats(self):
         """Generate translations statistics.
@@ -1096,7 +1105,7 @@ def get_cli_header(name, char="#", length=80):
     return header
 
 
-def get_cli_separator(char):
+def get_cli_separator(char="#"):
     """Get a "decorated separator".
 
     Get a "decorated separator" to display whenever it is needed.
@@ -1311,12 +1320,28 @@ def system_executable_generation(exec_name, app_root_folder, do_completions=True
     """
     sys_exec_template = os.path.join(root_folder, "__app__", "data",
                                      "templates", "system_executable")
-    sys_exec_path = os.path.join(HOME, ".local", "bin")
 
-    d = {"name": ""}
+    d = {
+        "name": "",
+        "sys_exec_path": os.path.join(HOME, ".local", "bin")
+    }
+
+    print(Ansi.PURPLE("Set an executable file name or press Enter to use default"))
     do_prompt(d, "name", "Enter a file name", exec_name)
 
-    destination = os.path.join(sys_exec_path, d["name"])
+    print(Ansi.PURPLE("Set full path to store executable file or press Enter to use default"))
+    do_prompt(d, "sys_exec_path", "Enter absolute path", d["sys_exec_path"])
+
+    destination = os.path.join(d["sys_exec_path"], d["name"])
+
+    if not os.path.exists(d["sys_exec_path"]):
+        print(Ansi.WARNING("Path doesn't exists and needs to be created"))
+
+        if confirm(prompt="Proceed?", response=False):
+            os.makedirs(d["sys_exec_path"], exist_ok=True)
+    elif not os.path.isdir(d["sys_exec_path"]):
+        print(Ansi.WARNING("Chosen path isn't a directory. Aborted!!!"))
+        sys.exit(0)
 
     generate_from_template(sys_exec_template, destination, options={
         "callback": system_executable_generation,
@@ -1354,6 +1379,9 @@ def system_executable_generation(exec_name, app_root_folder, do_completions=True
                                }, logger=logger)
 
     print(Ansi.PURPLE(bash_completions_step2.format(HOME)))
+    print(Ansi.INFO(get_cli_separator()))
+    print(Ansi.INFO(BASH_COMPLETION_LOADER_CONTENT))
+    print(Ansi.INFO(get_cli_separator()))
 
     if confirm(prompt="Proceed?", response=False):
         try:
@@ -1618,6 +1646,7 @@ class XletBuilder(object):
         self.config_file = os.path.join(xlet_data["source"], "z_config.py")
         self.replacement_data = [
             ("{{UUID}}", xlet_data.get("uuid", "")),
+            ("{{REPO_URL}}", repo_url),
             ("{{XLET_TYPE}}", xlet_data.get("type", "")),
         ]
 
@@ -1859,6 +1888,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
 
         variant_folder = os.path.join(themes_sources, "_variants", variant)
         variant_config = run_path(os.path.join(variant_folder, "config.py"))["settings"]
+        variant_config["replacement_data"].append(("@repo_url@", repo_url))
         variant_config["replacement_data"].append(("@theme_name@", theme_name))
         variant_config["replacement_data"].append(("@theme_variant@", variant))
         variant_config["replacement_data"].append(

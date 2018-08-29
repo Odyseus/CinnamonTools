@@ -12,6 +12,8 @@ repo_folder : str
     The main repository folder. All commands must be executed from this location without exceptions.
 translations : object
     See <class :any:`localized_help_utils.Translations`>.
+utils : object
+    See <class :any:`localized_help_utils`>.
 """
 
 import os
@@ -25,11 +27,12 @@ from .pyuca import Collator
 
 pyuca_collator = Collator()
 md = mistune.Markdown()
+utils = localized_help_utils
 
 repo_folder = os.path.normpath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), *([".."] * 2)))
 
-translations = localized_help_utils.Translations()
+translations = utils.Translations()
 
 
 def _(aStr):
@@ -60,9 +63,18 @@ def _(aStr):
         except Exception:
             result = result
 
+        # REMINDER 1: Some strings doesn't need to be translated, like the name of a program,
+        # a programming language, etc. So, in these cases, the "total" and "translated" stats
+        # will differ, reporting a false percentage of translated strings.
+        # I'm reluctant to create a blacklist mechanism to handle these untranslated strings.
+        # For now, I will simply avoid using `_()` call on these strings.
         if result != aStr:
             current_language_stats["translated"] = current_language_stats["translated"] + 1
             return result
+        # Debugging
+        # else:
+        #     if current_language != "en":
+        #         print(aStr)
 
     return aStr
 
@@ -110,11 +122,11 @@ class LocalizedHelpCreator(object):
         """
         self.xlet_dir = xlet_dir
         self.xlet_slug = xlet_slug
-        self.xlet_meta = localized_help_utils.XletMetadata(
+        self.xlet_meta = utils.XletMetadata(
             os.path.join(xlet_dir)).xlet_meta
 
-        self.html_assets = localized_help_utils.HTMLInlineAssets(repo_folder=repo_folder)
-        self.compatibility_data = localized_help_utils.get_compatibility(
+        self.html_assets = utils.HTMLInlineAssets(repo_folder=repo_folder)
+        self.compatibility_data = utils.get_compatibility(
             xlet_meta=self.xlet_meta,
             for_readme=False
         )
@@ -134,10 +146,10 @@ class LocalizedHelpCreator(object):
                 with open(contributors_path, "r") as contributors_file:
                     contributors_rawdata = contributors_file.read()
 
-                self.contributors += localized_help_utils.BOXED_CONTAINER.format(
+                self.contributors += utils.BOXED_CONTAINER.format(
                     md(contributors_rawdata))
             except Exception as err:
-                print(localized_help_utils.Ansi.ERROR(err))
+                print(utils.Ansi.ERROR(err))
                 self.contributors += ""
 
         if os.path.exists(changelog_path):
@@ -145,9 +157,9 @@ class LocalizedHelpCreator(object):
                 with open(changelog_path, "r") as changelog_file:
                     changelog_rawdata = changelog_file.read()
 
-                self.changelog += localized_help_utils.BOXED_CONTAINER.format(md(changelog_rawdata))
+                self.changelog += utils.BOXED_CONTAINER.format(md(changelog_rawdata))
             except Exception as err:
-                print(localized_help_utils.Ansi.ERROR(err))
+                print(utils.Ansi.ERROR(err))
                 self.changelog += ""
 
         if os.path.exists(old_changelog_path):
@@ -155,10 +167,10 @@ class LocalizedHelpCreator(object):
                 with open(old_changelog_path, "r") as old_changelog_file:
                     old_changelog_rawdata = old_changelog_file.read()
 
-                self.changelog += localized_help_utils.BOXED_CONTAINER.format(
+                self.changelog += utils.BOXED_CONTAINER.format(
                     md(old_changelog_rawdata))
             except Exception as err:
-                print(localized_help_utils.Ansi.ERROR(err))
+                print(utils.Ansi.ERROR(err))
                 self.changelog += ""
 
     def start(self):
@@ -185,7 +197,7 @@ class LocalizedHelpCreator(object):
                         except Exception:
                             lang_name = ""
 
-                        localized_help_utils.validate_po_file(
+                        utils.validate_po_file(
                             pofile_path=pofile_path,
                             lang_name=lang_name,
                             xlet_meta=self.xlet_meta,
@@ -209,7 +221,7 @@ class LocalizedHelpCreator(object):
             self.lang_list.append("en")
             self._create_html_document()
         else:
-            print(localized_help_utils.Ansi.ERROR("Dummy install failed."))
+            print(utils.Ansi.ERROR("Dummy install failed."))
 
     def _create_html_document(self):
         """Create HTML document.
@@ -229,30 +241,16 @@ class LocalizedHelpCreator(object):
                 "translated": 0
             }
 
-            only_english_alert = md("<div style=\"font-weight:bold;\" class=\"alert alert-info\">{0}</div>".format(
-                _("The following sections are available only in English."))
-            )
-
-            compatibility_disclaimer = "<p class=\"text-danger compatibility-disclaimer\">{}</p>".format(
-                _("Do not install on any other version of Cinnamon.")
-            )
-
-            compatibility_block = localized_help_utils.BOOTSTRAP_PANEL.format(
-                context="success",
-                custom_class="compatibility",
-                title=_("Compatibility"),
-                content=self.compatibility_data + "\n<br/>" + compatibility_disclaimer,
-            )
-
-            section = localized_help_utils.LOCALE_SECTION.format(
+            section = utils.LOCALE_SECTION.format(
                 language_code=current_language,
-                hidden="" if current_language is "en" else " hidden",
-                introduction=self._get_introduction(),
-                compatibility=compatibility_block,
+                hidden="" if current_language is "en" else 'hidden="true"',
+                title=md("# %s" % (_("Help for %s") % _(self.xlet_meta["name"]))),
+                warning=self._get_warning_block(),
+                compatibility=self._get_compatibility_block(),
                 content_base=md(self.get_content_base(for_readme=False)),
                 content_extra=self.get_content_extra(),
-                localization_info=self._get_localization_info(),
-                only_english_alert=only_english_alert,
+                localization=self._get_localization_block(),
+                only_english_alert=self._get_only_english_alert(),
             )
 
             section = section.replace("{{lhc_lang_id}}", current_language)
@@ -265,7 +263,7 @@ class LocalizedHelpCreator(object):
                 self.sections.append(section)
                 self.options.append(option)
 
-        html_doc = localized_help_utils.HTML_DOC.format(
+        html_doc = utils.HTML_DOC.format(
             # This string doesn't need to be translated.
             # It's the initial title of the page that it's always in English.
             title="Help for {xlet_name}".format(xlet_name=self.xlet_meta["name"]),
@@ -285,8 +283,9 @@ class LocalizedHelpCreator(object):
 
         print("Saving file...")
 
-        localized_help_utils.save_file(path=self.help_file_path,
-                                       data=html_doc)
+        utils.save_file(file_path=self.help_file_path,
+                        data=html_doc,
+                        is_xlet_help_file=True)
 
     def _get_language_stats(self):
         """Get language stats.
@@ -322,13 +321,16 @@ class LocalizedHelpCreator(object):
         title = _("Help for %s") % _(self.xlet_meta["name"])
         # Define them before self._get_language_stats() is called so these
         # strings are also counted.
-        # Comment put bellow so gettext doesn't catch them.
+        # Comment put bellow so gettext doesn't catch the comments.
 
         if current_language == "en" or endonym is not None:
             translated_percentage = 100 if current_language == "en" else self._get_language_stats()
-            trans_perc_msg = " (%s%%)" % translated_percentage if translated_percentage < 100 else ""
+            # REMINDER 2: Consider a 95% of translated strings a complete translation.
+            # This is done to minimize the display of false percentages in the language selection
+            # menu on the HELP.html pages. See REMINDER 1.
+            trans_perc_msg = " (%s%%)" % translated_percentage if translated_percentage < 95 else ""
 
-            return localized_help_utils.OPTION.format(
+            return utils.OPTION.format(
                 endonym=endonym,
                 language_name=language_name,
                 selected="selected " if current_language is "en" else "",
@@ -342,38 +344,73 @@ class LocalizedHelpCreator(object):
         else:
             return None
 
-    def _get_introduction(self):
-        """Get introduction.
+    def _get_only_english_alert(self):
+        """Get compatibility block.
 
         Returns
         -------
         str
-            The main title of the page and a generic warning.
+            A bootstrap panel containing Cinnamon compatibility data.
         """
-        return localized_help_utils.INTRODUCTION.format(
-            # TO TRANSLATORS: Full sentence:
-            # "Help for <xlet_name>"
-            md("# %s" % (_("Help for %s") % self.xlet_meta["name"])),
-            md("## %s" % _("IMPORTANT!!!")),
-            md(_("Never delete any of the files found inside this xlet folder. It might break this xlet functionality.")),
-            md(_("Bug reports, feature requests and contributions should be done on this xlet's repository linked next.") +
-               " %s" % ("[GitLab](%s)" % self.xlet_meta["website"] if self.xlet_meta["website"] else self.xlet_meta["url"]))
+        return utils.get_bootstrap_alert(
+            content=_("The following sections are available only in English.")
         )
 
-    def _get_localization_info(self):
-        """Get localization info.
+    def _get_compatibility_block(self):
+        """Get compatibility block.
 
         Returns
         -------
         str
-            Information about xlets localization mechanism.
+            A bootstrap panel containing Cinnamon compatibility data.
         """
-        return md("\n".join([
-            "## %s" % _("Applets/Desklets/Extensions (a.k.a. xlets) localization"),
-            "- %s" % _("If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."),
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "- %s" % _("If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder.")
-        ]))
+        return utils.get_bootstrap_card(
+            context="success",
+            body_extra_classes="text-font-size-x-large",
+            header=_("Cinnamon compatibility"),
+            body=self.compatibility_data
+        )
+
+    def _get_warning_block(self):
+        """Get warning block.
+
+        Returns
+        -------
+        str
+            A bootstrap panel containing generic warnings about xlets.
+        """
+        body = """<p>{line1}</p>
+<p>{line2} <a href="{repo_url}">GitLab</a></p>"""
+        return utils.get_bootstrap_card(
+            context="warning",
+            header=_("Warning"),
+            body=body.format(
+                line1=_(
+                    "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."),
+                line2=_(
+                    "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."),
+                repo_url=utils.app_utils.repo_url
+            )
+        )
+
+    def _get_localization_block(self):
+        """Get localization block
+
+        Returns
+        -------
+        sre
+            A bootstrap panel containing xlets localization information.
+        """
+        body = """{line1}
+{line2}"""
+        return utils.get_bootstrap_card(
+            header=_("Xlets localization"),
+            body=body.format(
+                line1=md(_(
+                    "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.")),
+                line2=md(_("If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."))
+            )
+        )
 
     def get_content_base(self, for_readme=False):
         """Get base content.
