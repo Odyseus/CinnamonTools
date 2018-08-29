@@ -372,7 +372,7 @@ extra_common_files = [{
     "file_name": "helper.py",
 }]
 
-readme_list_item_template = "- [{xlet_name}](%s/docs/_static/xlets_help_pages/{xlet_slug}/index.html)" % (
+readme_list_item_template = "- [{xlet_name}](%s/_static/xlets_help_pages/{xlet_slug}/index.html)" % (
     repo_pages_url)
 
 
