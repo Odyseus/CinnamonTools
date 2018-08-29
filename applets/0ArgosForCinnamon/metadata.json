@@ -1,5 +1,5 @@
 {
-    "website": "https://gitlab.com/Odyseus/CinnamonTools",
+    "website": "{{REPO_URL}}",
     "cinnamon-version": [
         "3.0",
         "3.2",

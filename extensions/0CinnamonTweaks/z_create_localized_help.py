@@ -16,7 +16,7 @@ if app_folder not in sys.path:
     sys.path.insert(0, app_folder)
 
 
-from python_modules.localized_help_creator import LocalizedHelpCreator, _, md
+from python_modules.localized_help_creator import LocalizedHelpCreator, _, md, utils
 
 
 class Main(LocalizedHelpCreator):
@@ -33,13 +33,30 @@ class Main(LocalizedHelpCreator):
 
     def get_content_extra(self):
         return md("{}".format("\n".join([
-
             "## %s" % _("Extension options details"),
-            "<span style=\"color:red;font-weight: bold;font-size: large;\">",
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            _("Some tweaks have warnings, dependencies, limitations and or known issues that must be read and understood before a tweak is enabled. No worries, nothing *fatal* could ever happen."),
-            "</span>",
             "",
+            utils.get_bootstrap_alert(
+                context="warning",
+                heading=_("Warning"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                content=_("Some tweaks have warnings, dependencies, limitations and or known issues that must be read and understood before a tweak is enabled. No worries, nothing *fatal* could ever happen.")
+            ),
+            "",
+            "## %s" % _("Table of Content"),
+            "",
+            "- [%s](#appletsdesklets-tweaks-{{lhc_lang_id}})" % _("Applets/Desklets tweaks"),
+            "- [%s](#hot-corners-tweaks-{{lhc_lang_id}})" % _("Hot Corners tweaks"),
+            "- [%s](#desktop-area-tweaks-{{lhc_lang_id}})" % _("Desktop area tweaks"),
+            "- [%s](#popup-menus-tweaks-{{lhc_lang_id}})" % _("Popup menus tweaks"),
+            "- [%s](#tooltips-tweaks-{{lhc_lang_id}})" % _("Tooltips tweaks"),
+            "- [%s](#notifications-tweaks-{{lhc_lang_id}})" % _("Notifications tweaks"),
+            "- [%s](#window-focus-tweaks-{{lhc_lang_id}})" % _("Window focus tweaks"),
+            "- [%s](#window-shadows-tweaks-{{lhc_lang_id}})" % _("Window Shadows tweaks"),
+            "- [%s](#auto-move-windows-{{lhc_lang_id}})" % _("Auto move windows"),
+            "- [%s](#windows-decorations-removal-{{lhc_lang_id}})" % _(
+                "Windows decorations removal"),
+            "",
+            '<span id="appletsdesklets-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Applets/Desklets tweaks"),
             "- **%s** %s" % (_("Ask for confirmation on applet/desklet removal:"), _(
                 "Instead of directly remove the applet/desklet from the context menus, it will ask for confirmation. This option doesn't affect the removal of applets/desklets from the Applets/Desklets manager in Cinnamon settings (there will be no confirmation).")),
@@ -47,6 +64,7 @@ class Main(LocalizedHelpCreator):
                                       # TO TRANSLATORS: MARKDOWN string. Respect formatting.
                                       _("These options will add new menu items to the applets/desklets context menus. The place where this items will be located is chosen by the option **Where to place the menu item?**.")),
             "",
+            '<span id="hot-corners-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Hot Corners tweaks"),
             _("This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has hot corners delay activation."),
             "- **%s** %s" % (_("Top left hot corner activation delay:"), _("Crystal clear.")),
@@ -54,10 +72,12 @@ class Main(LocalizedHelpCreator):
             "- **%s** %s" % (_("Bottom left hot corner activation delay:"), _("Crystal clear.")),
             "- **%s** %s" % (_("Bottom right hot corner activation delay:"), _("Crystal clear.")),
             "",
+            '<span id="desktop-area-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Desktop area tweaks"),
             "- **%s** %s" % (_("Enable applications drop to the Desktop:"), _(
                 "This tweak enables the ability to drag and drop applications from the menu applet and from the panel launchers applet into the desktop.")),
             "",
+            '<span id="popup-menus-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Popup menus tweaks"),
             "##### %s" % _("Panel menus behavior"),
             "**%s** %s" % (_("Note:"), _(
@@ -65,10 +85,12 @@ class Main(LocalizedHelpCreator):
             "",
             "- **%s** %s" % (_("Don't eat clicks:"), _("By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open.")),
             "",
+            '<span id="tooltips-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Tooltips tweaks"),
             "- **%s** %s" % (_("Avoid mouse pointer overlapping tooltips:"), _("Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse pointer. This leads to having tooltips overlapped by the mouse pointer. This tweak aligns the tooltip to the bottom-right corner of the mouse pointer (approximately), reducing the possibility of the mouse pointer to overlap the tooltip. This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has the position of the tooltips changed.")),
             "- **%s** %s" % (_("Tooltips show delay:"), _("Crystal clear.")),
             "",
+            '<span id="notifications-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Notifications tweaks"),
             "- **%s** %s" % (_("Enable notifications open/close animation:"), _("Crystal clear.")),
             "- **%s** %s" % (_("Notifications position:"), _(
@@ -81,6 +103,7 @@ class Main(LocalizedHelpCreator):
             "- **%s** %s" % (_("Notification popup right margin:"), _(
                 "By default, the right margin of the notification popup is defined by the currently used theme. This option, set to any value other than 0 (zero), allows to set a custom right margin, ignoring the defined by the theme.")),
             "",
+            '<span id="window-focus-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Window focus tweaks"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Tweak based on the gnome-shell extension called [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) by [Valentin Dimitrov](https://github.com/v-dimitrov) and another gnome-shell extension called [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut) by [awamper](https://github.com/awamper)."),
@@ -96,6 +119,7 @@ class Main(LocalizedHelpCreator):
             "- **%s** %s" % (_("Keyboard shortcut:"),
                              _("Set a keyboard shortcut for the option **...is performed with a keyboard shortcut**.")),
             "",
+            '<span id="window-shadows-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Window Shadows tweaks"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Tweak based on a Cinnamon extension called [Custom Shadows](https://cinnamon-spices.linuxmint.com/extensions/view/43) created by [mikhail-ekzi](https://github.com/mikhail-ekzi). It allows to modify the shadows used by Cinnamon's window manager (Muffin)."),
@@ -109,6 +133,7 @@ class Main(LocalizedHelpCreator):
             "- **%s**" % _("No shadows"),
             "- **%s**" % _("Windows 10 shadows"),
             "",
+            '<span id="auto-move-windows-{{lhc_lang_id}}"></span>',
             "### %s" % _("Auto move windows"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Tweak based on the gnome-shell extension called [Auto Move Windows](https://extensions.gnome.org/extension/16/auto-move-windows/) by [Florian Muellner](https://github.com/fmuellner). It enables the ability to set rules to open determined applications on specific workspaces."),
@@ -117,6 +142,7 @@ class Main(LocalizedHelpCreator):
                            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
                            _("If the application that you want to select doesn't show up on the application chooser dialog, read the section on this help file called **Applications not showing up on the applications chooser dialogs**.")),
             "",
+            '<span id="windows-decorations-removal-{{lhc_lang_id}}"></span>',
             "### %s" % _("Windows decorations removal"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Tweak based on the extension called [Cinnamon Maximus](https://cinnamon-spices.linuxmint.com/extensions/view/29) by [Fatih Mete](https://github.com/fatihmete) with some options from the gnome-shell extension called [Maximus NG](https://github.com/luispabon/maximus-gnome-shell) by [Luis Pabon](https://github.com/luispabon). This tweak allows to remove the windows decorations from maximized/half-maximized/tiled windows."),

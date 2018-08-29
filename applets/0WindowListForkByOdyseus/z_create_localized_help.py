@@ -15,7 +15,7 @@ if app_folder not in sys.path:
     sys.path.insert(0, app_folder)
 
 
-from python_modules.localized_help_creator import LocalizedHelpCreator, _, md
+from python_modules.localized_help_creator import LocalizedHelpCreator, _, md, utils
 
 
 class Main(LocalizedHelpCreator):
@@ -42,7 +42,10 @@ class Main(LocalizedHelpCreator):
         return md("\n".join([
             "## %s" % _("Inverted menu on top panel"),
             "",
-            '<img class="inverted-menu-on-top-panel" alt="%s">' % _("Inverted menu on top panel")
+            utils.get_image_container(
+                extra_classes="inverted-menu-on-top-panel",
+                alt=_("Inverted menu on top panel")
+            ),
         ]))
 
     def get_css_custom(self):

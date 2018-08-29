@@ -1,5 +1,5 @@
 {
-    "website": "https://gitlab.com/Odyseus/CinnamonTools",
+    "website": "{{REPO_URL}}",
     "description": "Easily and quickly create a menu based on the files/folders found inside an specific folder.",
     "cinnamon-version": [
         "3.0",

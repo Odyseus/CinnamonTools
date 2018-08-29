@@ -16,7 +16,7 @@ if app_folder not in sys.path:
     sys.path.insert(0, app_folder)
 
 
-from python_modules.localized_help_creator import LocalizedHelpCreator, _, md
+from python_modules.localized_help_creator import LocalizedHelpCreator, _, md, utils
 
 
 class Main(LocalizedHelpCreator):
@@ -35,8 +35,8 @@ class Main(LocalizedHelpCreator):
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             ("- %s %s" % (
                 _("**100% API compatible with BitBar 1.9.2:** All BitBar plugins that run on Linux (i.e. do not contain macOS-specific code) will work with Argos (else it's a bug)."),
-                _("See %s." % (
-                    "[**%s**](#bitbar-plugins-with-argos-for-cinnamon-{{lhc_lang_id}})" % "BitBar plugins with Argos for Cinnamon"))
+                _("See %s.") % (
+                    "**[%s](#bitbar-plugins-with-argos-for-cinnamon-{{lhc_lang_id}})**" % _("BitBar plugins with Argos for Cinnamon"))
             )).strip(),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _("**Beyond BitBar:** Argos can do everything that BitBar can do, but also some things that BitBar can't do (yet). See the documentation for details."),
@@ -51,7 +51,7 @@ class Main(LocalizedHelpCreator):
             ("- **%s** %s" % (
                 _("Fully documented:"),
                 # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                md(_("See %s." % ("[**%s**](#usage-{{lhc_lang_id}})" % "Usage")))
+                md(_("See %s.") % ("**[%s](#usage-{{lhc_lang_id}})**" % _("Usage")))
             )).strip(),
             "",
             "## %s" % _("Dependencies"),
@@ -69,9 +69,10 @@ class Main(LocalizedHelpCreator):
             '<span id="usage-{{lhc_lang_id}}"></span>',
             "## %s" % _("Usage"),
             "",
-            "<div class=\"alert alert-info\">",
-            md(_("I will use the words *plugin* or *script* when referring to a script file associated with an instance of **Argos for Cinnamon** applet.")),
-            "</div>",
+            utils.get_bootstrap_alert(
+                content=md(
+                    _("I will use the words *plugin* or *script* when referring to a script file associated with an instance of **Argos for Cinnamon** applet."))
+            ),
             "",
             _("After placing a new instance of **Argos for Cinnamon** into a panel, one of the example scripts provided by this applet will be automatically attached to it and a menu will be created based on the output of the executed plugin. These example scripts contain various examples of what **Argos for Cinnamon** can do."),
             "",
@@ -79,14 +80,15 @@ class Main(LocalizedHelpCreator):
             "",
             _("For scripts that display non dynamic data, it isn't needed an execution interval. But if your script displays dynamic data (a clock for example), then an execution and/or applet text rotation interval needs to be specified. Both of these values can be set from the applet context menu."),
             "",
-            "<div class=\"alert alert-info\">",
-            md(_("The three example scripts provided by this applet will produce the exact same output, but they are created using three different languages (**bash_examples.bash**, **python_examples.py** and **ruby_examples.rb**).")),
-            "</div>",
-            "<div class=\"alert alert-warning\">",
+            utils.get_bootstrap_alert(
+                content=md(_("The three example scripts provided by this applet will produce the exact same output, but they are created using three different languages (**bash_examples.bash**, **python_examples.py** and **ruby_examples.rb**)."))
+            ),
             "",
-            "<strong>%s</strong>" % _(
-                "Never save your custom plugins/scripts inside this applet folder. Otherwise, you will loose them all when there is an update for the applet."),
-            "</div>",
+            utils.get_bootstrap_alert(
+                context="warning",
+                content="<strong>%s</strong>" % _(
+                    "Never save your custom plugins/scripts inside this applet folder. Otherwise, you will loose them all when there is an update for the applet.")
+            ),
             "",
             "### %s" % _("File name format"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
@@ -100,10 +102,10 @@ class Main(LocalizedHelpCreator):
             "",
             _("All attributes are optional, so the most basic plugins simply print lines consisting of text to be displayed. To include whitespace, attribute values may be quoted using the same convention employed by most command line shells."),
             "",
-            "<div class=\"alert alert-info\">",
-            "<strong>%s</strong>" % _(
-                "(*) Not just shell scripts, but also python scripts, ruby scripts or any other script in any other language that can print to standard output."),
-            "</div>",
+            utils.get_bootstrap_alert(
+                content="<strong>%s</strong>" % _(
+                    "(*) Not just shell scripts, but also python scripts, ruby scripts or any other script in any other language that can print to standard output.")
+            ),
             "",
             "### %s" % _("Rendering"),
             "",
@@ -257,103 +259,34 @@ class Main(LocalizedHelpCreator):
             '<span id="bitbar-plugins-with-argos-for-cinnamon-{{lhc_lang_id}}"></span>',
             "",
             "## %s" % _("BitBar plugins with Argos for Cinnamon"),
-            "<div class=\"alert alert-warning\">",
-            "<strong>",
-            _("WARNING!!! DO NOT RANDOMLY TEST SCRIPTS!!!"),
-            "\n<br>",
-            _("1. Apply common sense. Read and understand what a script does and how demanding it could be."),
-            "\n<br>",
-            _("2. Test unknown scripts on an environment from which you can recover easily (for example, a virtual machine)."),
-            "\n<br>",
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            _("3. I found one specific case in which a script can freeze and ultimately crash Cinnamon. It's a script that downloads a GIF image from the internet, converts it to Base64 and then that encoded image is inserted into a menu item using the *image* attribute. I will not provide a link to that script, but if you follow the very first advice that I listed here, when you see that script, you will know."),
-            "\n<br>",
-            "</strong>",
-            "</div>",
+            "",
+            utils.get_bootstrap_alert(
+                context="warning",
+                heading=_("WARNING!!! DO NOT RANDOMLY TEST SCRIPTS!!!"),
+                content=md("""
+{0}
+{1}
+{2}
+""".format("1. %s" % _("Apply common sense. Read and understand what a script does and how demanding it could be."),
+                    "2. %s" % _(
+                        "Test unknown scripts on an environment from which you can recover easily (for example, a virtual machine)."),
+                    "3. %s" % _("I found one specific case in which a script can freeze and ultimately crash Cinnamon. It's a script that downloads a GIF image from the internet, converts it to Base64 and then that encoded image is inserted into a menu item using the *image* attribute. I will not provide a link to that script, but if you follow the very first advice that I listed here, when you see that script, you will know.")
+           )
+                )),
             "",
             _("These screenshots show how some scripts from the BitBar plugin repository look when rendered by Argos compared to the \"canonical\" BitBar rendering (macOS screenshots taken from https://getbitbar.com)."),
             "",
             "| %s | %s | %s |" % (_("Plugin"), _("BitBar on macOS"), _("Argos on Cinnamon")),
             "| --- | :---: | :---: |",
-            "| [**Ping**](https://getbitbar.com/plugins/Network/ping.10s.sh) | <img class=\"image-ping-bitbar\" alt=\"Ping/BitBar\"> | <img class=\"image-ping-argos\" alt=\"Ping/Argos\"> |",
-            "| [**Stock Ticker**](https://getbitbar.com/plugins/Finance/gfinance.5m.py) | <img class=\"stock-ticker-bitbar\" alt=\"Stock Ticker/BitBar\"> | <img class=\"stock-ticker-argos\" alt=\"Stock Ticker/BitBar\"> |",
-            "| [**World Clock**](https://getbitbar.com/plugins/Time/worldclock.1s.sh) | <img class=\"world-clock-bitbar\" alt=\"World Clock/BitBar\"> | <img class=\"world-clock-argos\" alt=\"World Clock/BitBar\"> |",
-            "| [**ANSI**](https://getbitbar.com/plugins/Tutorial/ansi.sh) | <img class=\"ansi-bitbar\" alt=\"ANSI/BitBar\"> | <img class=\"ansi-argos\" alt=\"ANSI/BitBar\"> |",
+            "| [**Ping**](https://getbitbar.com/plugins/Network/ping.10s.sh) | <img class=\"img-fluid image-ping-bitbar\" alt=\"Ping/BitBar\"> | <img class=\"img-fluid image-ping-argos\" alt=\"Ping/Argos\"> |",
+            "| [**Stock Ticker**](https://getbitbar.com/plugins/Finance/gfinance.5m.py) | <img class=\"img-fluid stock-ticker-bitbar\" alt=\"Stock Ticker/BitBar\"> | <img class=\"img-fluid stock-ticker-argos\" alt=\"Stock Ticker/BitBar\"> |",
+            "| [**World Clock**](https://getbitbar.com/plugins/Time/worldclock.1s.sh) | <img class=\"img-fluid world-clock-bitbar\" alt=\"World Clock/BitBar\"> | <img class=\"img-fluid world-clock-argos\" alt=\"World Clock/BitBar\"> |",
+            "| [**ANSI**](https://getbitbar.com/plugins/Tutorial/ansi.sh) | <img class=\"img-fluid ansi-bitbar\" alt=\"ANSI/BitBar\"> | <img class=\"img-fluid ansi-argos\" alt=\"ANSI/BitBar\"> |",
         ])
         ))
 
     def get_css_custom(self):
-        return """/* Specific CSS code for specific HELP files */
-        /* Copied over the table class from bootstrap theme and applied it
-         directly to the table tag.*/
-        table {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-bottom: 20px !important;
-        }
-        table>thead>tr>th,
-        table>tbody>tr>th,
-        table>tfoot>tr>th,
-        table>thead>tr>td,
-        table>tbody>tr>td,
-        table>tfoot>tr>td {
-        padding: 8px !important;
-        line-height: 1.42857143 !important;
-        vertical-align: top !important;
-        border-top: 1px solid #ecf0f1 !important;
-        }
-        table>thead>tr>th {
-        vertical-align: bottom !important;
-        border-bottom: 2px solid #ecf0f1 !important;
-        }
-        table>caption+thead>tr:first-child>th,
-        table>colgroup+thead>tr:first-child>th,
-        table>thead:first-child>tr:first-child>th,
-        table>caption+thead>tr:first-child>td,
-        table>colgroup+thead>tr:first-child>td,
-        table>thead:first-child>tr:first-child>td {
-            border-top: 0 !important;
-        }
-        table>tbody+tbody {
-            border-top: 2px solid #ecf0f1 !important;
-        }
-        table{
-            border: 1px solid #ecf0f1 !important;
-        }
-        table>thead>tr>th,
-        table>tbody>tr>th,
-        table>tfoot>tr>th,
-        table>thead>tr>td,
-        table>tbody>tr>td,
-        table>tfoot>tr>td {
-            border: 1px solid #ecf0f1 !important;
-        }
-        table>thead>tr>th,
-        table>thead>tr>td {
-            border-bottom-width: 2px !important;
-        }
-
-        table>td,
-        table>th {
-            position: static !important;
-            float: none !important;
-            display: table-cell !important;
-        }
-        table>thead>tr>td.active,
-        table>tbody>tr>td.active,
-        table>tfoot>tr>td.active,
-        table>thead>tr>th.active,
-        table>tbody>tr>th.active,
-        table>tfoot>tr>th.active,
-        table>thead>tr.active>td,
-        table>tbody>tr.active>td,
-        table>tfoot>tr.active>td,
-        table>thead>tr.active>th,
-        table>tbody>tr.active>th,
-        table>tfoot>tr.active>th {
-            background-color: #ecf0f1 !important;
-        }
-    """
+        return ""
 
     def get_js_custom(self):
         return """

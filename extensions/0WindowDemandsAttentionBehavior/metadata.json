@@ -1,5 +1,5 @@
 {
-    "website": "https://gitlab.com/Odyseus/CinnamonTools",
+    "website": "{{REPO_URL}}",
     "description": "Activate demanding attention window with a keyboard shortcut or forced.",
     "cinnamon-version": [
         "3.0",
@@ -19,7 +19,7 @@
         "5.8",
         "6.0"
     ],
-    "url": "https://gitlab.com/Odyseus/CinnamonTools",
+    "url": "{{REPO_URL}}",
     "name": "Window demands attention behavior",
     "version": "1.05",
     "contributors": "See this xlet help file.",

@@ -1,5 +1,6 @@
 {
     "description": "View your local weather forecast",
+    "website": "{{REPO_URL}}",
     "max-instances": -1,
     "cinnamon-version": [
         "3.0",

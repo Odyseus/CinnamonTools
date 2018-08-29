@@ -16,7 +16,7 @@ if app_folder not in sys.path:
     sys.path.insert(0, app_folder)
 
 
-from python_modules.localized_help_creator import LocalizedHelpCreator, _, md
+from python_modules.localized_help_creator import LocalizedHelpCreator, _, md, utils
 
 
 class Main(LocalizedHelpCreator):
@@ -41,7 +41,11 @@ class Main(LocalizedHelpCreator):
         return md("\n".join([
             "## %s" % _("Settings window"),
             "",
-            '<img class="settings-window" alt="%s">' % _("Settings window")
+            utils.get_image_container(
+                extra_classes="settings-window",
+                alt=_("Settings window")
+            ),
+            "",
         ]))
 
     def get_css_custom(self):

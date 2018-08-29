@@ -16,7 +16,7 @@ if app_folder not in sys.path:
     sys.path.insert(0, app_folder)
 
 
-from python_modules.localized_help_creator import LocalizedHelpCreator, _, md
+from python_modules.localized_help_creator import LocalizedHelpCreator, _, md, utils
 
 
 class Main(LocalizedHelpCreator):
@@ -91,11 +91,17 @@ class Main(LocalizedHelpCreator):
             "",
             "### %s" % _("This is how entries should look like"),
             "",
-            "<img class=\"correct-entries-styling\" alt=\"%s\">" % _("Correct entries styling"),
+            utils.get_image_container(
+                extra_classes="correct-entries-styling",
+                alt=_("Correct entries styling")
+            ),
             "",
             "### %s" % _("This is how entries SHOULD NOT look like"),
             "",
-            "<img class=\"incorrect-entries-styling\" alt=\"%s\">" % _("Incorrect entries styling"),
+            utils.get_image_container(
+                extra_classes="incorrect-entries-styling",
+                alt=_("Incorrect entries styling")
+            ),
             "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."),

@@ -16,7 +16,7 @@ if app_folder not in sys.path:
     sys.path.insert(0, app_folder)
 
 
-from python_modules.localized_help_creator import LocalizedHelpCreator, _, md
+from python_modules.localized_help_creator import LocalizedHelpCreator, _, md, utils
 
 
 class Main(LocalizedHelpCreator):
@@ -55,7 +55,7 @@ class Main(LocalizedHelpCreator):
                 _("Installed by default in modern versions of Linux Mint.")
             ),
             "",
-            "### %s" % _("Python 3"),
+            "### %s" % "Python 3",
             "",
             _("It should come already installed in all Linux distributions."),
             "",
@@ -90,11 +90,16 @@ class Main(LocalizedHelpCreator):
         return md("{}".format("\n".join([
             "## %s" % _("Translation history window"),
             "",
-            '<img class="translation-history-window" alt="%s">' % _("Translation history window"),
+            utils.get_image_container(
+                extra_classes="translation-history-window",
+                alt=_("Translation history window")
+            ),
             "",
             "## %s" % _("Usage"),
+            "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("There are 4 *translations mechanisms* (**Left click**, **Middle click**, **Hotkey #1** and **Hotkey #2**). Each translation mechanism can be configured with their own service providers, language pairs and hotkeys."),
+            "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _("**First translation mechanism (Left click):** Translates any selected text from any application on your system. A hotkey can be assigned to perform this task."),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
@@ -108,13 +113,16 @@ class Main(LocalizedHelpCreator):
             "- %s" % _("**Third translation mechanism (Hotkey #1):** Two hotkeys can be configured to perform a translation and a forced translation."),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _("**Fourth translation mechanism (Hotkey #2):** Two hotkeys can be configured to perform a translation and a forced translation."),
+            "",
             _("All translations are stored into the translation history. If a string of text was already translated in the past, the popup will display that stored translated text without making use of the provider's translation service."),
             "",
             "## %s" % _("About translation history"),
+            "",
             _("I created the translation history mechanism mainly to avoid the abuse of the translation services."),
             "",
             "- %s" % _("If the Google Translate service is \"abused\", Google may block temporarily your IP. Or what is worse, they could change the translation mechanism making this applet useless and forcing me to update its code."),
             "- %s" % _("If the Yandex Translate service is \"abused\", you are \"wasting\" your API keys quota and they will be blocked (temporarily or permanently)."),
+            "",
             _("In the context menu of this applet is an item that can open the folder were the translation history file is stored. From there, the translation history file can be backed up or deleted."),
             "",
             "**%s**" % _("NEVER edit the translation history file manually!!!"),
@@ -122,6 +130,7 @@ class Main(LocalizedHelpCreator):
             "**%s**" % _("If the translation history file is deleted/renamed/moved, Cinnamon needs to be restarted."),
             "",
             "## %s" % _("How to get Yandex translator API keys"),
+            "",
             "- %s" % _("Visit one of the following links and register a Yandex account (or use one of the available social services)."),
             # TO TRANSLATORS: URL pointing to website in English
             "    - %s" % (_("English:") + " " + "https://tech.yandex.com/keys/get/?service=trnsl"),
@@ -132,6 +141,7 @@ class Main(LocalizedHelpCreator):
             "- %s" % _("Once you have several API keys, you can add them to Popup Translator's settings window (one API key per line)."),
             "",
             "### %s" % _("Important notes about Yandex API keys"),
+            "",
             "- %s" % _("The API keys will be stored into a preference. Keep your API keys backed up in case you reset Popup Translator's preferences."),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _("**NEVER make your API keys public!!!** The whole purpose of going to the trouble of getting your own API keys is that the only one \"consuming their limits\" is you and nobody else."),

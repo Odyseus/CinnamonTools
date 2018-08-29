@@ -5,6 +5,6 @@
         "version": "1.0",
         "type": "custom",
         "thumbnail": "thumbnail.png",
-        "url": "https://gitlab.com/Odyseus/CinnamonTools"
+        "url": "@repo_url@"
     }
 }

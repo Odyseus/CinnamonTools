@@ -1,5 +1,5 @@
 {
-    "website": "https://gitlab.com/Odyseus/CinnamonTools",
+    "website": "{{REPO_URL}}",
     "description": "A replacement for the abandoned System Tray Collapsible Cinnamon applet",
     "max-instances": 1,
     "cinnamon-version": [

@@ -16,7 +16,7 @@ if app_folder not in sys.path:
     sys.path.insert(0, app_folder)
 
 
-from python_modules.localized_help_creator import LocalizedHelpCreator, _, md
+from python_modules.localized_help_creator import LocalizedHelpCreator, _, md, utils
 
 
 class Main(LocalizedHelpCreator):
@@ -71,7 +71,10 @@ class Main(LocalizedHelpCreator):
         return md("{}".format("\n".join([
             "### %s" % _("Menu emulating the Whisker menu (XFCE)"),
             "",
-            '<img class="menu-emulating-the-whisker-menu" alt="%s">' % _("Menu emulating the Whisker menu (XFCE)"),
+            utils.get_image_container(
+                extra_classes="menu-emulating-the-whisker-menu",
+                alt=_("Menu emulating the Whisker menu (XFCE)")
+            ),
             "",
             "## %s" % _("Keyboard navigation"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.

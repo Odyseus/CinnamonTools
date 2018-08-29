@@ -1,5 +1,5 @@
 {
-    "website": "https://gitlab.com/Odyseus/CinnamonTools",
+    "website": "{{REPO_URL}}",
     "name": "Desktop Handler",
     "cinnamon-version": [
         "3.0",

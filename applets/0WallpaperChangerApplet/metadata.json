@@ -23,7 +23,7 @@
     "max-instances": 1,
     "description": "Cinnamon wallpaper slideshow applet with multiple profiles support.",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "website": "https://gitlab.com/Odyseus/CinnamonTools",
+    "website": "{{REPO_URL}}",
     "version": "1.03",
     "schema-file": "schemas/org.cinnamon.applets.{{UUID}}.gschema.xml",
     "name": "Wallpaper Changer"
