@@ -7,6 +7,7 @@ exported toggleLocalizationVisibility
 // Source: https://github.com/julienetie/smooth-scroll
 (function(window, document) {
     var prefixes = ["moz", "webkit", "o"],
+        stickyNavbarOffset = 50,
         animationFrame;
 
     // Modern rAF prefixing without setTimeout
@@ -23,7 +24,8 @@ exported toggleLocalizationVisibility
 
     function getOffsetTop(el) {
         if (!el) {
-            return 0;
+            // Account for the sticky navbar height.
+            return -stickyNavbarOffset;
         }
 
         var yOffset = el.offsetTop,
@@ -72,7 +74,7 @@ exported toggleLocalizationVisibility
     var speed = window.smoothScrollSpeed || 750;
 
     function smoothScroll(e) { // no smooth scroll class to ignore links
-        if (e.target.className === "no-ss") {
+        if (e.target.classList.contains("no-smooth-scroll")) {
             return;
         }
 
@@ -86,6 +88,7 @@ exported toggleLocalizationVisibility
 
         targetHref = targetHref.substring(1);
         target = document.getElementById(targetHref);
+
         if (!target) {
             return;
         }
@@ -244,7 +247,8 @@ function toggleLocalizationVisibility(aValue) {
         // Hide all sections.
         Array.prototype.slice.call(document.getElementsByClassName("localization-content"))
             .forEach(function(aEl) {
-                aEl && aEl.classList.add("hidden");
+                // aEl && aEl.classList.add("hidden");
+                aEl && aEl.setAttribute("hidden", true);
             });
 
         var option = selector.options[selector.selectedIndex];
@@ -273,12 +277,14 @@ function toggleLocalizationVisibility(aValue) {
         if (language && validLanguage) {
             // If there is language and it's also an element of the language selector,
             // use it to unhide the respective section...
-            document.getElementById(language).classList.remove("hidden");
+            document.getElementById(language).removeAttribute("hidden");
+            // document.getElementById(language).classList.remove("hidden");
             // ...and save it into localStorage (or a cookie).
             localStorage.setItem("cinnamon_tools_help_language", language);
         } else {
             // If there is no language, unhide the English section and move on.
-            document.getElementById("en").classList.remove("hidden");
+            document.getElementById("en").removeAttribute("hidden");
+            // document.getElementById("en").classList.remove("hidden");
         }
     }
 }

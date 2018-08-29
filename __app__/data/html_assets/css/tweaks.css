@@ -1,52 +1,31 @@
-﻿/* Various tweaks */
-.container.boxed,
-.container {
-    padding-bottom: 1em !important;
-    margin-bottom: 1em !important;
-}
-
-.container img {
-    max-width: 100% !important;
-    height: auto !important;
-}
-
-/* Various tweaks */
-
-/* Start box-sizing reset */
-
-/* Option 2A: Reset an entire region via CSS */
-.reset-box-sizing,
-.reset-box-sizing *,
-.reset-box-sizing *:before,
-.reset-box-sizing *:after {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-}
-
-/* End box-sizing reset */
-
-/* Class for center images */
-.centered_image {
+/* Class to center images */
+.img-centered-container {
     text-align: center;
 }
 
-/* Class for center images */
+.img-centered-container img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-/* Font preferences */
+/* Class to center images */
+
+/* Fonts overrides */
 html,
 body {
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+pre,
 code,
 kbd,
-pre,
-samp {
-    font-family: "DejaVu Sans Mono", "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+samp,
+.text-monospace {
+    font-family: "DejaVu Sans Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-/* Font preferences */
+/* Fonts overrides */
 
 /* Various tweaks */
 div.boxed {
@@ -63,89 +42,108 @@ div.boxed {
 /* Various tweaks */
 
 /* pre tag tweaks */
-pre {
-    background-color: #f8f8f8 !important; /* Tweak for XCode "Highlight" Theme */
-    padding: 0 !important;
-}
-
 .container pre {
+    white-space: pre-wrap !important;
+    background-color: #f8f8f8 !important;
+    border-radius: 4px !important;
+    border: 1px solid #ccc !important;
     padding-left: 15px !important;
     padding-right: 15px !important;
 }
 
 /* pre tag tweaks */
 
-/* Tweak spacing of the compatibility badges inside a panel */
-.panel-body.compatibility > .compatibility-disclaimer,
-.panel-body.compatibility > .compatibility-badge {
-    margin: 5px;
-    line-height: 2.5em;
+/* For fixed header */
+body {
+    padding-top: 50px !important;
 }
 
-/* Tweak spacing of the compatibility badges inside a panel */
+/* For fixed header */
 
-/* Tweak appearance of the compatibility badges inside a panel */
-.panel-body.compatibility > .compatibility-disclaimer {
-    font-weight: bold;
-}
-
-.panel-body.compatibility > .compatibility-badge > .label-primary {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.panel-body.compatibility > .compatibility-badge > .label-warning,
-.panel-body.compatibility > .compatibility-badge > .label-success,
-.panel-body.compatibility > .compatibility-badge > .label-info {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.panel-body.compatibility > .compatibility-badge > .label-warning {
-    background-color: #dfb317;
-}
-
-.panel-body.compatibility > .compatibility-badge > .label-success {
-    background-color: #97CA00;
-}
-
-.panel-body.compatibility > .compatibility-badge > .label-info {
-    background-color: #439cf7;
-}
-
-/* Tweak appearance of the compatibility badges inside a panel */
-.navbar-form {
-    margin-top: 8px !important;
-}
-
-.navbar-form .form-group {
-    display: block !important;
-}
-
-/* Override %100 width so it doesn't occupy the entire page width. */
-#localization-switch {
-    padding-top: 2px !important;
-    padding-bottom: 2px !important;
+/*
+ * Custom styling classes.
+ */
+.text-bold {
     font-weight: bold !important;
 }
 
-/* Wrapper class for resizing and centering the language selector image
-   on the navigation bar of the help files */
-.standalone-glyphicon-globe-wrapper {
-    vertical-align: middle;
-    display: inline-block;
-    width: 32px;
-    height: 32px;
+.text-bolder {
+    font-weight: bolder !important;
 }
 
-/* Replaces the glyphicon-globe class */
-.standalone-glyphicon-globe:before {
-    content: url('data:image/svg+xml;utf8,<svg enable-background=!string!id=!string!version=!string!viewBox=!string!xml:space=!string!xmlns=!string!xmlns:xlink=!string!><path d=!string!style=!string!/></svg>') !important;
+.text-italic {
+    font-style: italic !important;
 }
 
-/* For fixed header */
-body {
-    padding-top: 70px !important;
+.text-oblique {
+    font-style: oblique !important;
 }
 
-/* For fixed header */
+.text-overline {
+    text-decoration: overline !important;
+}
+
+.text-line-through {
+    text-decoration: line-through !important;
+}
+
+.text-underline {
+    text-decoration: underline !important;
+}
+
+.text-font-size-small {
+    font-size: 80% !important;
+}
+
+.text-font-size-medium {
+    font-size: 90% !important;
+}
+
+.text-font-size-large {
+    font-size: 110% !important;
+}
+
+.text-font-size-x-large {
+    font-size: 120% !important;
+}
+
+.text-font-size-xx-large {
+    font-size: 130% !important;
+}
+
+/*
+ * Custom styling classes.
+ */
+
+/* Override Flaty's headings with Bootstrap's headings because Flaty's are unnecessarily huge. */
+h1,
+.h1 {
+    font-size: 2.5rem;
+}
+
+h2,
+.h2 {
+    font-size: 2rem;
+}
+
+h3,
+.h3 {
+    font-size: 1.75rem;
+}
+
+h4,
+.h4 {
+    font-size: 1.5rem;
+}
+
+h5,
+.h5 {
+    font-size: 1.25rem;
+}
+
+h6,
+.h6 {
+    font-size: 1rem;
+}
+
+/* Override Flaty's headings with Bootstrap's headings because Flaty's are unnecessarily huge. */

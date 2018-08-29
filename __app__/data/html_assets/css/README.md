@@ -1,0 +1,5 @@
+- Bootstrap theme: https://bootswatch.com/flatly
+- Removed :root declarations.
+- Removed Lato font import.
+- Fonts overriden in tweaks.css.
+- Gigantic heading tags overriden in tweaks.css.
