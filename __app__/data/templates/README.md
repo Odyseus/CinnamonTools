@@ -13,7 +13,7 @@ The **app.py** script is the *application* that takes care of the xlet building 
 
 ### Examples
 
-#### [Interactive shell menu](https://odyseus.gitlab.io/CinnamonTools/includes/cinnamontools-usage.html#app-py-menu-command)
+#### [Interactive shell menu]({repo_pages_url}/includes/cinnamontools-usage.html#app-py-menu-command)
 
 The following command starts a CLI (Command Line Interface) menu from which one can select the xlets to build or build all xlets/themes at once, among other tasks.
 
@@ -21,7 +21,7 @@ The following command starts a CLI (Command Line Interface) menu from which one 
 $ ./app.py menu
 ```
 
-#### [Building xlets](https://odyseus.gitlab.io/CinnamonTools/includes/cinnamontools-usage.html#app-py-build-command)
+#### [Building xlets]({repo_pages_url}/includes/cinnamontools-usage.html#app-py-build-command)
 
 The following command will perform the following actions:
 
@@ -37,7 +37,7 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 
 **Note:** Refer to the [documentation](#documentation) for detailed command line usage.
 
-#### [Building themes](https://odyseus.gitlab.io/CinnamonTools/includes/cinnamontools-usage.html#app-py-build-themes-command)
+#### [Building themes]({repo_pages_url}/includes/cinnamontools-usage.html#app-py-build-themes-command)
 
 The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family and GTK+ 3 version). The following command will perform the following actions:
 
@@ -59,28 +59,15 @@ Most of the xlets in this repository come with help pages that describe their us
 
 ### Applets help pages
 
-- [Argos for Cinnamon](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0ArgosForCinnamon/index.html)
-- [Cinnamon Menu (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0CinnamonMenuForkByOdyseus/index.html)
-- [Desktop Handler](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0DesktopHandler/index.html)
-- [Extensions Manager](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0ExtensionsManager/index.html)
-- [Feeds Reader (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0FeedsByJonbrettForkByOdyseus/index.html)
-- [Popup Translator](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0PopupTranslator/index.html)
-- [Quick Menu](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0QuickMenu/index.html)
-- [Simple ToDo List](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0SimpleToDoList/index.html)
-- [System Monitor (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0SystemMonitorByOrcusForkByOdyseus/index.html)
-- [Wallpaper Changer](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0WallpaperChangerApplet/index.html)
-- [Window list (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0WindowListForkByOdyseus/index.html)
+{applets_help_pages}
 
 ### Extensions help pages
 
-- [Cinnamon Maximus (Fork by Odyseus)](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0CinnamonMaximusForkByOdyseus/index.html)
-- [Cinnamon Tweaks](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0CinnamonTweaks/index.html)
-- [Multi Translator](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0MultiTranslatorExtension/index.html)
-- [Window demands attention behavior](https://odyseus.gitlab.io/CinnamonTools/docs/_static/xlets_help_pages/0WindowDemandsAttentionBehavior/index.html)
+{extensions_help_pages}
 
-## [Documentation](https://odyseus.gitlab.io/CinnamonTools)
+## [Documentation]({repo_pages_url})
 
-The documentation of this repository is mainly a development documentation, but it also documents the xlets/themes building processes. It can be accessed [on-line](https://odyseus.gitlab.io/CinnamonTools) or locally by simply opening the **docs/index.html** file with any web browser.
+The documentation of this repository is mainly a development documentation, but it also documents the xlets/themes building processes. It can be accessed [on-line]({repo_pages_url}) or locally by simply opening the **docs/index.html** file with any web browser.
 
 ## Redistribution
 
