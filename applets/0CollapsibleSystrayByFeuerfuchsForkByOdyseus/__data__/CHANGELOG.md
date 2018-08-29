@@ -9,8 +9,7 @@
 - **Author:** Odyseus
 
 ```
-- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
-converted) to arrow functions.
+- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 - Added upstream fix for Skype tray icon.
 - *Strictified* comparisons.
 - Some minor cleanup.
@@ -24,8 +23,7 @@ converted) to arrow functions.
 - **Author:** Odyseus
 
 ```
-- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
-moving all JavaScript code to ES6.
+- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 
 ```
 
@@ -36,8 +34,7 @@ moving all JavaScript code to ES6.
 - **Author:** Odyseus
 
 ```
-- Corrected settings changed callback function due to different amount of arguments passed by
-different Cinnamon versions.
+- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
 
 ```
 
@@ -50,18 +47,15 @@ different Cinnamon versions.
 ```
 - Fixed the following warnings:
 
-> Cjs-Message: JS WARNING: Too many arguments to method Clutter.Container.add_actor: expected 1,
-got 2
+    > Cjs-Message: JS WARNING: Too many arguments to method Clutter.Container.add_actor: expected 1, got 2
 
     I changed `add_actor` to simply `add`.
 
     > Cjs-Message: JS WARNING: reference to undefined property "_direction"
 
-The `_direction` property was defined on initialization of the applet AFTER it was used for the
-first time. Fixing this uncovered more undefined properties. All fixed.
+    The `_direction` property was defined on initialization of the applet AFTER it was used for the first time. Fixing this uncovered more undefined properties. All fixed.
 
-- Moved applet settings initialization into a function and moved the call to the function at the
-beginning of the initialization code of the applet.
+- Moved applet settings initialization into a function and moved the call to the function at the beginning of the initialization code of the applet.
 - Changed a couple of properties into constants.
 - Added metadata to the applet's initialization arguments.
 - Some minor clean up.

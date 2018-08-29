@@ -4,13 +4,24 @@
 
 ***
 
+- **Date:** Thu, 23 Aug 2018 02:46:50 -0300
+- **Commit:** [9c831e6](https://gitlab.com/Odyseus/CinnamonTools/commit/9c831e6)
+- **Author:** Odyseus
+
+```
+- Implemented a more transparent way of calling `Gio.File.load_contents_finish`.
+- Set the **Cancel** button in the `ConfirmationDialog` prototype as focused by default.
+
+```
+
+***
+
 - **Date:** Tue, 7 Aug 2018 03:07:07 -0300
 - **Commit:** [e093145](https://gitlab.com/Odyseus/CinnamonTools/commit/e093145)
 - **Author:** Odyseus
 
 ```
-- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
-converted) to arrow functions.
+- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 
 ```
 
@@ -21,8 +32,7 @@ converted) to arrow functions.
 - **Author:** Odyseus
 
 ```
-- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
-moving all JavaScript code to ES6.
+- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 - Simplification of the procedure to set the applet icon.
 - Removed support for Cinnamon versions older than 3.0.x.
 
@@ -35,8 +45,7 @@ moving all JavaScript code to ES6.
 - **Author:** Odyseus
 
 ```
-- Corrected settings changed callback function due to different amount of arguments passed by
-different Cinnamon versions.
+- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
 
 ```
 

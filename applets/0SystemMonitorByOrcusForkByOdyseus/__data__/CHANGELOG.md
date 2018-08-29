@@ -9,8 +9,7 @@
 - **Author:** Odyseus
 
 ```
-- Fixed the use of the wrong `for` loop type (`in` was used instead of `of`) that triggered errors
-when changing the size of an applet graphic.
+- Fixed the use of the wrong `for` loop type (`in` was used instead of `of`) that triggered errors when changing the size of an applet graphic.
 
 ```
 
@@ -21,8 +20,7 @@ when changing the size of an applet graphic.
 - **Author:** Odyseus
 
 ```
-- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
-moving all JavaScript code to ES6.
+- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 
 ```
 
@@ -33,11 +31,9 @@ moving all JavaScript code to ES6.
 - **Author:** Odyseus
 
 ```
-- Implemented one settings changed callback to *rule them all*. At the same time, make the callback
-work homogeneously on all versions of Cinnamon.
+- Implemented one settings changed callback to *rule them all*. At the same time, make the callback work homogeneously on all versions of Cinnamon.
 - Added option to display CPU usage decimals in applet tooltip. Upstream feature.
-- Fixed the rendering, where some lines were half pixel off and therefore a bit blurry. All graphs
-should now be pixel perfect. Upstream fix.
+- Fixed the rendering, where some lines were half pixel off and therefore a bit blurry. All graphs should now be pixel perfect. Upstream fix.
 
 ```
 
@@ -51,8 +47,7 @@ should now be pixel perfect. Upstream fix.
 - Rebased from the new applet version from the original author.
     - Support for vertical panels.
     - Changed settings are applied on-the-fly without the need to restart Cinnamon.
-- Eradicated *multiversion*. I made the applet be supported on multiple versions of Cinnamon without
-the need to use Cinnamon's *multiversion* feature.
+- Eradicated *multiversion*. I made the applet be supported on multiple versions of Cinnamon without the need to use Cinnamon's *multiversion* feature.
 - Added keyboard shortcut to be able to launch a custom command.
 - Added option to hide the graphs background, not just set it transparent.
 

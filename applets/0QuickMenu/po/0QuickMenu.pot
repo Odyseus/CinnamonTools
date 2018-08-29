@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0QuickMenu 1.10\n"
-"POT-Creation-Date: 2018-08-23 02:16-0300\n"
+"POT-Creation-Date: 2018-08-29 12:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,61 +15,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-06-12 02:20:15.236\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following sections are available only in English."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:237
-msgid "Do not install on any other version of Cinnamon."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:243
-msgid "Compatibility"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:515
-msgid "Help"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:320
-msgid "Contributors"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:321
-msgid "Changelog"
-msgstr ""
-
-#. TO TRANSLATORS: Full sentence:
-#. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:357
-msgid "IMPORTANT!!!"
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:515
+msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:358
+#: ../../__app__/python_modules/localized_help_creator.py:319
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:320
+msgid "Changelog"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:386
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:389
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:391
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+#: ../../__app__/python_modules/localized_help_creator.py:407
+msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:373
+#: ../../__app__/python_modules/localized_help_creator.py:410
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:375
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
 #: z_create_localized_help.py:29
@@ -85,92 +78,92 @@ msgstr ""
 msgid "I mainly created this applet to replicate the functionality of the XFCE plugin called **Directory Menu** and the KDE widget called **Quick access**."
 msgstr ""
 
-#: z_create_localized_help.py:37
-msgid "Warning"
+#: z_create_localized_help.py:38
+msgid "Danger"
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:39
 msgid "This applet has to read every single file/folder inside a main folder to create its menu. So, do not try to use this applet to create a menu based on a folder that contains thousands of files!!! Your system may slow down, freeze or even crash!!!"
 msgstr ""
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:42
 msgid "Features"
 msgstr ""
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:43
 msgid "More than one instance of this applet can be installed at the same time."
 msgstr ""
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:44
 msgid "A hotkey can be assigned to open/close the menu."
 msgstr ""
 
-#: z_create_localized_help.py:44 z_create_localized_help.py:59
+#: z_create_localized_help.py:45 z_create_localized_help.py:62
 msgid "Menu items to .desktop files will be displayed with the icon and name declared inside the .desktop files themselves."
 msgstr ""
 
-#: z_create_localized_help.py:47 z_create_localized_help.py:62
+#: z_create_localized_help.py:48 z_create_localized_help.py:65
 msgid "The menu can be kept open while activating menu items by pressing [[Ctrl]] + **Left click** or with **Middle click**."
 msgstr ""
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:49
 msgid "This applet can create menu and sub-menu items even from symbolic links found inside the main folder."
 msgstr ""
 
-#: z_create_localized_help.py:53 z_create_localized_help.py:56
+#: z_create_localized_help.py:54 z_create_localized_help.py:58
 msgid "Image featuring different icons for each sub-menu and different icon sizes"
 msgstr ""
 
-#: z_create_localized_help.py:58
+#: z_create_localized_help.py:61
 msgid "Applet usage"
 msgstr ""
 
-#: z_create_localized_help.py:64
+#: z_create_localized_help.py:67
 msgid "How to set a different icon for each sub-menu"
 msgstr ""
 
-#: z_create_localized_help.py:67
+#: z_create_localized_help.py:70
 msgid "Create a file at the same level as the folders that will be used to create the sub-menus."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:69
+#: z_create_localized_help.py:72
 msgid "The file name can be customized, doesn't need to have an extension name and can be a hidden file (a dot file). By default is called **0_icons_for_sub_menus.json**."
 msgstr ""
 
-#: z_create_localized_help.py:71
+#: z_create_localized_help.py:74
 msgid "Whatever name is chosen for the file, it will be automatically ignored and will never be shown on the menu."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:73
+#: z_create_localized_help.py:76
 msgid "The path to the icon has to be a full path. A path starting with **~/** can be used and will be expanded to the user's home folder."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:75
+#: z_create_localized_help.py:78
 msgid "If any sub-folder has more folders that need to have custom icons, just create another **0_icons_for_sub_menus.json** file at the same level that those folders."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:77
+#: z_create_localized_help.py:80
 msgid "The content of the file is a *JSON object* and has to look as follows:"
 msgstr ""
 
-#: z_create_localized_help.py:86
+#: z_create_localized_help.py:89
 msgid "Folder name"
 msgstr ""
 
-#: z_create_localized_help.py:86
+#: z_create_localized_help.py:89
 msgid "Icon name or icon path for Folder name"
 msgstr ""
 
-#: z_create_localized_help.py:88
+#: z_create_localized_help.py:91
 msgid "Warning!!!"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:93
 msgid "JSON *language* is very strict. Just be sure to ONLY use double quotes. And the last key/value combination DOESN'T have to end with a comma (**Folder name #n** in the previous example)."
 msgstr ""
 

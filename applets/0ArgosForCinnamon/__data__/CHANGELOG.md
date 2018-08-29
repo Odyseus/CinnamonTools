@@ -9,8 +9,7 @@
 - **Author:** Odyseus
 
 ```
-- Removed from the example files references to the ~/.cinnamon/glass.log file. This file doesn't
-exist anymore since Cinnamon version 3.6.x.
+- Removed from the example files references to the ~/.cinnamon/glass.log file. This file doesn't exist anymore since Cinnamon version 3.6.x.
 
 ```
 
@@ -21,8 +20,7 @@ exist anymore since Cinnamon version 3.6.x.
 - **Author:** Odyseus
 
 ```
-- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
-converted) to arrow functions.
+- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 - Moved the **Emojis** variable into its own JavaScript module.
 
 ```
@@ -34,8 +32,7 @@ converted) to arrow functions.
 - **Author:** Odyseus
 
 ```
-- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
-moving all JavaScript code to ES6.
+- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 - Simplification of the procedure to set the applet icon.
 - Removed support for Cinnamon versions older than 3.0.x.
 
@@ -48,8 +45,7 @@ moving all JavaScript code to ES6.
 - **Author:** Odyseus
 
 ```
-- Corrected settings changed callback function due to different amount of arguments passed by
-different Cinnamon versions.
+- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
 
 ```
 

@@ -9,8 +9,7 @@
 - **Author:** Odyseus
 
 ```
-- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
-converted) to arrow functions.
+- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 - Removed leftovers from previous cleanup.
 
 ```
@@ -23,8 +22,7 @@ converted) to arrow functions.
 
 ```
 - Simplification of the procedure to set the applet icon.
-- Changed the **Custom text editor** setting from a **filechooser** to an **entry** (filechoosers on
-newer Cinnamon versions are garbage).
+- Changed the **Custom text editor** setting from a **filechooser** to an **entry** (filechoosers on newer Cinnamon versions are garbage).
 
 ```
 
@@ -35,10 +33,8 @@ newer Cinnamon versions are garbage).
 - **Author:** Odyseus
 
 ```
-- Fixed context menu handlers inside **Recent applications** menu. Now they are correctly closed
-when other context menus are opened.
-- Fixed stuck search results when clearing the search box content. I K.I.S.S.(ed) it. I just call
-_onOpenStateChanged and move on. ¬¬
+- Fixed context menu handlers inside **Recent applications** menu. Now they are correctly closed when other context menus are opened.
+- Fixed stuck search results when clearing the search box content. I K.I.S.S.(ed) it. I just call _onOpenStateChanged and move on. ¬¬
 - Cleaned some leftover comments.
 - Removed unnecessary try{}catch{} block.
 - Completely eradicated **Recent files** category.
@@ -46,9 +42,7 @@ _onOpenStateChanged and move on. ¬¬
 - Completely eradicated search providers.
 - Completely eradicated search in file system.
 - Completely eradicated the use of `Lang.bind()` in favor of using arrow functions.
-- "Strictified" some comparisons. There were mostly comparisons to **null**, to integers/strings and
-between actors. The comparisons to **undefined** were eradicated along with all the garbage that I
-cleared.
+- "Strictified" some comparisons. There were mostly comparisons to **null**, to integers/strings and between actors. The comparisons to **undefined** were eradicated along with all the garbage that I cleared.
 
 ```
 
@@ -59,8 +53,7 @@ cleared.
 - **Author:** Odyseus
 
 ```
-- Corrected settings changed callback function due to different amount of arguments passed by
-different Cinnamon versions.
+- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
 
 ```
 
@@ -72,16 +65,11 @@ different Cinnamon versions.
 
 ```
 - gksu deprecation mitigation:
-- Changed the *pref_privilege_elevator* setting type from **combobox** to **entry** to be able
-to set a custom privilege elevator command. Changed its default value from gksu to pkexec.
-- Added a launcher.py helper script to execute programs from the menu as root. This is a
-workaround that allows to use pkexec, since I wasn't able to directly execute pkexec from any of the
-available spawn* JavaScript functions. ¬¬
-- Renamed the main applet prototype to reflect the applet's name and not the development version of
-the applet's name.
+    - Changed the *pref_privilege_elevator* setting type from **combobox** to **entry** to be able to set a custom privilege elevator command. Changed its default value from gksu to pkexec.
+    - Added a launcher.py helper script to execute programs from the menu as root. This is a workaround that allows to use pkexec, since I wasn't able to directly execute pkexec from any of the available spawn* JavaScript functions. ¬¬
+- Renamed the main applet prototype to reflect the applet's name and not the development version of the applet's name.
 - Cleaned some comments/commented lines.
-- Moved some calls to the close menu function at the beginning of code blocks to avoid *problems*
-with opened dialogs when activating items.
+- Moved some calls to the close menu function at the beginning of code blocks to avoid *problems* with opened dialogs when activating items.
 
 ```
 

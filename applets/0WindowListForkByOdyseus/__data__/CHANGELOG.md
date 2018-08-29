@@ -9,8 +9,7 @@
 - **Author:** Odyseus
 
 ```
-- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
-converted) to arrow functions.
+- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 
 ```
 
@@ -21,8 +20,7 @@ converted) to arrow functions.
 - **Author:** Odyseus
 
 ```
-- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
-moving all JavaScript code to ES6.
+- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 
 ```
 
@@ -33,8 +31,7 @@ moving all JavaScript code to ES6.
 - **Author:** Odyseus
 
 ```
-- Corrected settings changed callback function due to different amount of arguments passed by
-different Cinnamon versions.
+- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
 
 ```
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.05\n"
-"POT-Creation-Date: 2018-08-23 02:16-0300\n"
+"POT-Creation-Date: 2018-08-29 12:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,61 +15,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-06-12 02:20:15.236\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following sections are available only in English."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:237
-msgid "Do not install on any other version of Cinnamon."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:243
-msgid "Compatibility"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:940
-msgid "Help"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:320
-msgid "Contributors"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:321
-msgid "Changelog"
-msgstr ""
-
-#. TO TRANSLATORS: Full sentence:
-#. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:357
-msgid "IMPORTANT!!!"
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:940
+msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:358
+#: ../../__app__/python_modules/localized_help_creator.py:319
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:320
+msgid "Changelog"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:386
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:389
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:391
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+#: ../../__app__/python_modules/localized_help_creator.py:407
+msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:373
+#: ../../__app__/python_modules/localized_help_creator.py:410
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:375
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
 #: appletHelper.py:69
@@ -254,20 +247,20 @@ msgstr ""
 msgid "This is how entries should look like"
 msgstr ""
 
-#: z_create_localized_help.py:94
+#: z_create_localized_help.py:96
 msgid "Correct entries styling"
 msgstr ""
 
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:99
 msgid "This is how entries SHOULD NOT look like"
 msgstr ""
 
-#: z_create_localized_help.py:98
+#: z_create_localized_help.py:103
 msgid "Incorrect entries styling"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:101
+#: z_create_localized_help.py:107
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr ""
 

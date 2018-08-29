@@ -4,15 +4,24 @@
 
 ***
 
+- **Date:** Thu, 23 Aug 2018 02:40:12 -0300
+- **Commit:** [f50c0a8](https://gitlab.com/Odyseus/CinnamonTools/commit/f50c0a8)
+- **Author:** Odyseus
+
+```
+- Set the **Cancel** button in the `ConfirmationDialog` prototype as focused by default.
+
+```
+
+***
+
 - **Date:** Tue, 7 Aug 2018 03:14:28 -0300
 - **Commit:** [e794665](https://gitlab.com/Odyseus/CinnamonTools/commit/e794665)
 - **Author:** Odyseus
 
 ```
-- Fixed notifications close buttons not working. This was caused by an unbound callback after the
-elimiation of the **Lang** module usage.
-- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
-converted) to arrow functions.
+- Fixed notifications close buttons not working. This was caused by an unbound callback after the elimiation of the **Lang** module usage.
+- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 
 ```
 
@@ -23,8 +32,7 @@ converted) to arrow functions.
 - **Author:** Odyseus
 
 ```
-- Eradication of **Lang** module usage in favor of arrow/standard functions. Also removed Cjs JS
-class notation in favor of prototypes. First step towards moving all JavaScript code to ES6.
+- Eradication of **Lang** module usage in favor of arrow/standard functions. Also removed Cjs JS class notation in favor of prototypes. First step towards moving all JavaScript code to ES6.
 - Removed support for Cinnamon versions older than 3.0.x.
 
 ```
@@ -48,9 +56,7 @@ class notation in favor of prototypes. First step towards moving all JavaScript 
 
 ```
 - gksu deprecation mitigation:
-- Removed gsettings schema installation/removal from the settings.py script. To avoid dealing
-with retarded policies (pkexec), I moved the installation process to a helper file (common to all
-xlets) that uses the good old sudo.
+    - Removed gsettings schema installation/removal from the settings.py script. To avoid dealing with retarded policies (pkexec), I moved the installation process to a helper file (common to all xlets) that uses the good old sudo.
 - Cleaned some comments/commented lines.
 
 ```
@@ -73,8 +79,7 @@ xlets) that uses the good old sudo.
 - **Author:** Odyseus
 
 ```
-- Revamped settings system. Switched to a JavaScript class which automatically generates
-getters/setters based on the schema keys.
+- Revamped settings system. Switched to a JavaScript class which automatically generates getters/setters based on the schema keys.
 
 ```
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PopupTranslator 1.08\n"
-"POT-Creation-Date: 2018-08-23 02:16-0300\n"
+"POT-Creation-Date: 2018-08-29 12:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,61 +15,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-06-12 02:20:15.236\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following sections are available only in English."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:237
-msgid "Do not install on any other version of Cinnamon."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:243
-msgid "Compatibility"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:371
-msgid "Help"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:320
-msgid "Contributors"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:321
-msgid "Changelog"
-msgstr ""
-
-#. TO TRANSLATORS: Full sentence:
-#. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:357
-msgid "IMPORTANT!!!"
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:371
+msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:358
+#: ../../__app__/python_modules/localized_help_creator.py:319
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:320
+msgid "Changelog"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:386
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:389
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:391
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+#: ../../__app__/python_modules/localized_help_creator.py:407
+msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:373
+#: ../../__app__/python_modules/localized_help_creator.py:410
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:375
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
 #: appletHelper.py:311
@@ -142,10 +135,6 @@ msgstr ""
 msgid "Installed by default in modern versions of Linux Mint."
 msgstr ""
 
-#: z_create_localized_help.py:58
-msgid "Python 3"
-msgstr ""
-
 #: z_create_localized_help.py:60
 msgid "It should come already installed in all Linux distributions."
 msgstr ""
@@ -188,122 +177,122 @@ msgstr ""
 msgid "Note:"
 msgstr ""
 
-#: z_create_localized_help.py:91 z_create_localized_help.py:93
+#: z_create_localized_help.py:91 z_create_localized_help.py:95
 msgid "Translation history window"
 msgstr ""
 
-#: z_create_localized_help.py:95
+#: z_create_localized_help.py:98
 msgid "Usage"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:97
+#: z_create_localized_help.py:101
 msgid "There are 4 *translations mechanisms* (**Left click**, **Middle click**, **Hotkey #1** and **Hotkey #2**). Each translation mechanism can be configured with their own service providers, language pairs and hotkeys."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:99
+#: z_create_localized_help.py:104
 msgid "**First translation mechanism (Left click):** Translates any selected text from any application on your system. A hotkey can be assigned to perform this task."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:101
+#: z_create_localized_help.py:106
 msgid "**First translation mechanism ([[Ctrl]] + Left click):** Same as **Left click**, but it will bypass the translation history. A hotkey can be assigned to perform this task."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:103
+#: z_create_localized_help.py:108
 msgid "**Second translation mechanism (Middle click):** Same as **Left click**."
 msgstr ""
 
-#: z_create_localized_help.py:106
+#: z_create_localized_help.py:111
 msgid "**Second translation mechanism ([[Ctrl]] + Middle click):** Same as [[Ctrl]] + **Left click**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:108
+#: z_create_localized_help.py:113
 msgid "**Third translation mechanism (Hotkey #1):** Two hotkeys can be configured to perform a translation and a forced translation."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:110
+#: z_create_localized_help.py:115
 msgid "**Fourth translation mechanism (Hotkey #2):** Two hotkeys can be configured to perform a translation and a forced translation."
 msgstr ""
 
-#: z_create_localized_help.py:111
+#: z_create_localized_help.py:117
 msgid "All translations are stored into the translation history. If a string of text was already translated in the past, the popup will display that stored translated text without making use of the provider's translation service."
 msgstr ""
 
-#: z_create_localized_help.py:113
+#: z_create_localized_help.py:119
 msgid "About translation history"
 msgstr ""
 
-#: z_create_localized_help.py:114
+#: z_create_localized_help.py:121
 msgid "I created the translation history mechanism mainly to avoid the abuse of the translation services."
 msgstr ""
 
-#: z_create_localized_help.py:116
+#: z_create_localized_help.py:123
 msgid "If the Google Translate service is \"abused\", Google may block temporarily your IP. Or what is worse, they could change the translation mechanism making this applet useless and forcing me to update its code."
 msgstr ""
 
-#: z_create_localized_help.py:117
+#: z_create_localized_help.py:124
 msgid "If the Yandex Translate service is \"abused\", you are \"wasting\" your API keys quota and they will be blocked (temporarily or permanently)."
 msgstr ""
 
-#: z_create_localized_help.py:118
+#: z_create_localized_help.py:126
 msgid "In the context menu of this applet is an item that can open the folder were the translation history file is stored. From there, the translation history file can be backed up or deleted."
 msgstr ""
 
-#: z_create_localized_help.py:120
+#: z_create_localized_help.py:128
 msgid "NEVER edit the translation history file manually!!!"
 msgstr ""
 
-#: z_create_localized_help.py:122
+#: z_create_localized_help.py:130
 msgid "If the translation history file is deleted/renamed/moved, Cinnamon needs to be restarted."
 msgstr ""
 
-#: z_create_localized_help.py:124
+#: z_create_localized_help.py:132
 msgid "How to get Yandex translator API keys"
 msgstr ""
 
-#: z_create_localized_help.py:125
+#: z_create_localized_help.py:134
 msgid "Visit one of the following links and register a Yandex account (or use one of the available social services)."
 msgstr ""
 
 #. TO TRANSLATORS: URL pointing to website in English
-#: z_create_localized_help.py:127
+#: z_create_localized_help.py:136
 msgid "English:"
 msgstr ""
 
 #. TO TRANSLATORS: URL pointing to website in Russian
-#: z_create_localized_help.py:129
+#: z_create_localized_help.py:138
 msgid "Russian:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:131
+#: z_create_localized_help.py:140
 msgid "Once you successfully finish creating your Yandex account, you can visit the link provided several times to create several API keys. **DO NOT ABUSE!!!**"
 msgstr ""
 
-#: z_create_localized_help.py:132
+#: z_create_localized_help.py:141
 msgid "Once you have several API keys, you can add them to Popup Translator's settings window (one API key per line)."
 msgstr ""
 
-#: z_create_localized_help.py:134
+#: z_create_localized_help.py:143
 msgid "Important notes about Yandex API keys"
 msgstr ""
 
-#: z_create_localized_help.py:135
+#: z_create_localized_help.py:145
 msgid "The API keys will be stored into a preference. Keep your API keys backed up in case you reset Popup Translator's preferences."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:137
+#: z_create_localized_help.py:147
 msgid "**NEVER make your API keys public!!!** The whole purpose of going to the trouble of getting your own API keys is that the only one \"consuming their limits\" is you and nobody else."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:139
+#: z_create_localized_help.py:149
 msgid "With each Yandex translator API key you can translate **UP TO** 1.000.000 (1 million) characters per day **BUT NOT MORE** than 10.000.000 (10 millions) per month."
 msgstr ""
 

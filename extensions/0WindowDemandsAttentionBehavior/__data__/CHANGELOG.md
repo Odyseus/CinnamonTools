@@ -9,8 +9,7 @@
 - **Author:** Odyseus
 
 ```
-- Eradication of **Lang** module usage in favor of arrow/standard functions. Also removed Cjs JS
-class notation in favor of prototypes. First step towards moving all JavaScript code to ES6.
+- Eradication of **Lang** module usage in favor of arrow/standard functions. Also removed Cjs JS class notation in favor of prototypes. First step towards moving all JavaScript code to ES6.
 - Removed support for Cinnamon versions older than 3.0.x.
 
 ```

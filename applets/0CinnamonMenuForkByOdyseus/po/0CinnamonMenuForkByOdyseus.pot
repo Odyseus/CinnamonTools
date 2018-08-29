@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
-"POT-Creation-Date: 2018-08-23 02:16-0300\n"
+"POT-Creation-Date: 2018-08-29 12:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,61 +15,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-06-12 02:20:15.236\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:233
-msgid "The following sections are available only in English."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:237
-msgid "Do not install on any other version of Cinnamon."
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:243
-msgid "Compatibility"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:319 applet.js:250
-msgid "Help"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:320
-msgid "Contributors"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:321
-msgid "Changelog"
-msgstr ""
-
-#. TO TRANSLATORS: Full sentence:
-#. "Help for <xlet_name>"
-#: ../../__app__/python_modules/localized_help_creator.py:322 ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:357
-msgid "IMPORTANT!!!"
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:250
+msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:358
+#: ../../__app__/python_modules/localized_help_creator.py:319
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:320
+msgid "Changelog"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:386
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:389
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:391
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:372
-msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
+#: ../../__app__/python_modules/localized_help_creator.py:407
+msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:373
+#: ../../__app__/python_modules/localized_help_creator.py:410
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: ../../__app__/python_modules/localized_help_creator.py:375
-msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
 #: appletHelper.py:59 appletHelper.py:63 appletHelper.py:67
@@ -283,168 +276,168 @@ msgstr ""
 msgid "**Run from terminal as root:** Same as above but the application is executed as root."
 msgstr ""
 
-#: z_create_localized_help.py:72 z_create_localized_help.py:74
+#: z_create_localized_help.py:72 z_create_localized_help.py:76
 msgid "Menu emulating the Whisker menu (XFCE)"
 msgstr ""
 
-#: z_create_localized_help.py:76
+#: z_create_localized_help.py:79
 msgid "Keyboard navigation"
 msgstr ""
 
-#: z_create_localized_help.py:78
+#: z_create_localized_help.py:81
 msgid "Almost all keyboard shortcuts on this menu are the same as the original menu. There are just a couple of differences that I was forced to add to my menu to make some of its features to work."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:78
+#: z_create_localized_help.py:81
 msgid "Note:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:81
+#: z_create_localized_help.py:84
 msgid "[[Left Arrow]] and [[Right Arrow]] keys:"
 msgstr ""
 
-#: z_create_localized_help.py:83
+#: z_create_localized_help.py:86
 msgid "Cycles through the applications box and categories box if the focus is in one of these boxes."
 msgstr ""
 
-#: z_create_localized_help.py:85
+#: z_create_localized_help.py:88
 msgid "If the focus is on the custom launchers box, these keys will cycle through this box buttons."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:87
+#: z_create_localized_help.py:90
 msgid "[[Tab]] key:"
 msgstr ""
 
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:93
 msgid "If the applications box or categories box are currently focused, the [[Tab]] key will switch the focus to the custom launchers box."
 msgstr ""
 
-#: z_create_localized_help.py:92 z_create_localized_help.py:97
+#: z_create_localized_help.py:95 z_create_localized_help.py:100
 msgid "If the focus is on the custom launchers box, the focus will go back to the categories box."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:94
+#: z_create_localized_help.py:97
 msgid "[[Up Arrow]] and [[Down Arrow]] keys:"
 msgstr ""
 
-#: z_create_localized_help.py:95
+#: z_create_localized_help.py:98
 msgid "If the applications box or categories box are currently focused, these keys will cycle through the items in the currently highlighted box."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:99
+#: z_create_localized_help.py:102
 msgid "[[Page Up]] and [[Page Down]] keys: Jumps to the first and last item of the currently selected box. This doesn't affect the custom launchers."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:101
+#: z_create_localized_help.py:104
 msgid "[[Menu]] or [[Alt]] + [[Enter]] keys: Opens and closes the context menu (if any) of the currently highlighted item."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:103
+#: z_create_localized_help.py:106
 msgid "[[Enter]] key: Executes the currently highlighted item."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:105
+#: z_create_localized_help.py:108
 msgid "[[Escape]] key: It closes the main menu. If a context menu is open, it will close the context menu instead and a second tap of this key will close the main menu."
 msgstr ""
 
-#: z_create_localized_help.py:108
+#: z_create_localized_help.py:111
 msgid "[[Shift]] + [[Enter]]: Executes the application as root. This doesn't affect the custom launchers."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:110
+#: z_create_localized_help.py:113
 msgid "[[Ctrl]] + [[Enter]]: Open a terminal and run application from there. This doesn't affect the custom launchers."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:112
+#: z_create_localized_help.py:115
 msgid "[[Ctrl]] + [[Shift]] + [[Enter]]: Open a terminal and run application from there, but the application is executed as root. This doesn't affect the custom launchers."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:115
+#: z_create_localized_help.py:118
 msgid "Applications left click extra actions"
 msgstr ""
 
-#: z_create_localized_help.py:116
+#: z_create_localized_help.py:119
 msgid "When left clicking an application on the menu, certain key modifiers can be pressed to execute an application in a special way."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:118
+#: z_create_localized_help.py:121
 msgid "[[Shift]] + **Left click**: Executes application as root."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:120
+#: z_create_localized_help.py:123
 msgid "[[Ctrl]] + **Left click**: Open a terminal and run application from there."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:122
+#: z_create_localized_help.py:125
 msgid "[[Ctrl]] + [[Shift]] + **Left click**: Open a terminal and run application from there, but the application is executed as root."
 msgstr ""
 
-#: z_create_localized_help.py:124
+#: z_create_localized_help.py:127
 msgid "About \"Run from terminal\" options"
 msgstr ""
 
-#: z_create_localized_help.py:125
+#: z_create_localized_help.py:128
 msgid "These options are meant for debugging purposes (to see the console output after opening/closing a program to detect possible errors, for example). Instead of opening a terminal to launch a program of which one might not know its command, one can do it directly from the menu and in just one step. Options to run from a terminal an application listed on the menu can be found on the applications context menu and can be hidden/shown from this applet settings window."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:128
+#: z_create_localized_help.py:131
 msgid "By default, these options will use the system's default terminal emulator (**x-terminal-emulator** on Debian based distributions). Any other terminal emulator can be specified inside the settings window of this applet, as long as said emulator has support for the **-e** argument. I did my tests with **gnome-terminal**, **xterm** and **terminator**. Additional arguments could be passed to the terminal emulator, but it's not supported by me."
 msgstr ""
 
-#: z_create_localized_help.py:130
+#: z_create_localized_help.py:133
 msgid "Favorites handling"
 msgstr ""
 
-#: z_create_localized_help.py:131
+#: z_create_localized_help.py:134
 msgid "**Note:** The favorites category will update its content after changing to another category and going back to the favorites category."
 msgstr ""
 
-#: z_create_localized_help.py:133
+#: z_create_localized_help.py:136
 msgid "Troubleshooting/extra information"
 msgstr ""
 
-#: z_create_localized_help.py:134
+#: z_create_localized_help.py:137
 msgid "Run from terminal."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:136
+#: z_create_localized_help.py:139
 msgid "Debian based distributions:"
 msgstr ""
 
-#: z_create_localized_help.py:137
+#: z_create_localized_help.py:140
 msgid "If the command **x-terminal-emulator** doesn't run the terminal emulator that one wants to be the default, run the following command to set a different default terminal emulator."
 msgstr ""
 
-#: z_create_localized_help.py:140
+#: z_create_localized_help.py:143
 msgid "Type in the number of the selection and hit enter."
 msgstr ""
 
-#: z_create_localized_help.py:142
+#: z_create_localized_help.py:145
 msgid "For other distributions:"
 msgstr ""
 
-#: z_create_localized_help.py:143
+#: z_create_localized_help.py:146
 msgid "Just set the terminal executable of your choice on this applet settings window."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:145
+#: z_create_localized_help.py:148
 msgid "There is a folder named **icons** inside this applet directory. It contains several symbolic icons (most of them are from the Faenza icon theme) and each icon can be used directly by name (on a custom launcher, for example)."
 msgstr ""
 

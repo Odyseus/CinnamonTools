@@ -9,8 +9,7 @@
 - **Author:** Odyseus
 
 ```
-- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be
-converted) to arrow functions.
+- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 - Cleaned leftovers from previous cleanup.
 
 ```
@@ -22,8 +21,7 @@ converted) to arrow functions.
 - **Author:** Odyseus
 
 ```
-- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards
-moving all JavaScript code to ES6.
+- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 - Simplification of the procedure to set the applet icon.
 
 ```
@@ -47,9 +45,7 @@ moving all JavaScript code to ES6.
 
 ```
 - gksu deprecation mitigation:
-- Removed gsettings schema installation/removal from the settings.py script. To avoid dealing
-with retarded policies (pkexec), I moved the installation process to a helper file (common to all
-xlets) that uses the good old sudo.
+    - Removed gsettings schema installation/removal from the settings.py script. To avoid dealing with retarded policies (pkexec), I moved the installation process to a helper file (common to all xlets) that uses the good old sudo.
 - Cleaned some comments/commented lines.
 
 ```
