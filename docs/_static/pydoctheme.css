@@ -10,6 +10,7 @@
  * - Center the logo in the sidebar.
  * - Custom styling classes
  */
+
 @import url("default.css");
 
 body {
@@ -49,7 +50,8 @@ form.inline-search input[type="submit"] {
 div.sphinxsidebar {
     background-color: #eeeeee;
     border-radius: 5px;
-    line-height: 130%;    /*font-size: smaller;*/
+    line-height: 130%;
+    /*font-size: smaller;*/
 }
 
 div.sphinxsidebar h3,
@@ -57,11 +59,11 @@ div.sphinxsidebar h4 {
     margin-top: 1.5em;
 }
 
-div.sphinxsidebarwrapper > h3:first-child {
+div.sphinxsidebarwrapper>h3:first-child {
     margin-top: 0.2em;
 }
 
-div.sphinxsidebarwrapper > ul > li > ul > li {
+div.sphinxsidebarwrapper>ul>li>ul>li {
     margin-bottom: 0.4em;
 }
 
@@ -73,7 +75,8 @@ form.inline-search input,
 div.sphinxsidebar input {
 
     /*font-family: 'Lucida Grande', Arial, sans-serif;*/
-    border: 1px solid #999999;    /*font-size: smaller;*/
+    border: 1px solid #999999;
+    /*font-size: smaller;*/
     border-radius: 3px;
 }
 
@@ -116,7 +119,7 @@ div.body div.impl-detail {
     border-radius: 3px;
 }
 
-div.body div.impl-detail > p {
+div.body div.impl-detail>p {
     margin: 0;
 }
 
@@ -222,9 +225,11 @@ div.footer a:hover {
     background: none !important;
 }
 
+
 /*
  * Override font for code-like blocks.
  */
+
 code,
 kbd,
 pre,
@@ -232,28 +237,35 @@ samp {
     font-family: "DejaVu Sans Mono", Consolas, "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
 }
 
+
 /*
  * Center the logo in the sidebar.
  */
+
 .sphinxsidebarwrapper .logo {
     text-align: center;
 }
 
+
 /*
  * Diplay the search input and the "Go" button INLINE!!!!! ¬¬
  */
-#searchbox form.search > div:nth-child(1),
-#searchbox form.search > div:nth-child(2) {
+
+#searchbox form.search>div:nth-child(1),
+#searchbox form.search>div:nth-child(2) {
     display: inline-block !important;
     width: auto !important;
 }
 
+
 /*
  * Some room at the bottom of the search box.
  */
+
 #searchbox {
     padding-bottom: 10px;
 }
+
 
 /*
  * Custom background color for "Requirements admonition".
@@ -268,9 +280,11 @@ div.body div.admonition-requirements {
     border: 1px solid #dddd66;
 }
 
+
 /*
  * Custom styling classes.
  */
+
 .text-bold {
     font-weight: bold !important;
 }
@@ -299,9 +313,11 @@ div.body div.admonition-requirements {
     text-decoration: underline !important;
 }
 
+
 /*
  * Custom styling classes
  */
+
 
 /*
  * Custom admonition styling
@@ -326,6 +342,7 @@ div.admonition.warning {
     background-color: #ffc;
     border: 1px solid #dd6;
 }
+
 
 /*
  * Custom admonition styling

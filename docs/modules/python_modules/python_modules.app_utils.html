@@ -745,26 +745,6 @@ This metadata file is used by several functions on the XletsHelperCore class.</p
 </dd></dl>
 
 <dl class="function">
-<dt id="python_modules.app_utils.get_time_diff">
-<code class="descclassname">python_modules.app_utils.</code><code class="descname">get_time_diff</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#get_time_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.get_time_diff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get time difference.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>s</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Start date.</p></li>
-<li><p><strong>e</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – End date.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The difference in hours, minutes, seconds, and milliseconds between two dates.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
 <dt id="python_modules.app_utils.confirm">
 <code class="descclassname">python_modules.app_utils.</code><code class="descname">confirm</code><span class="sig-paren">(</span><em>prompt=None</em>, <em>response=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#confirm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.confirm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prompts for yes or no response from the user.</p>
@@ -1019,23 +999,6 @@ For example: ask user for multiple options in one go.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="python_modules.app_utils.exec_command">
-<code class="descclassname">python_modules.app_utils.</code><code class="descname">exec_command</code><span class="sig-paren">(</span><em>cmd</em>, <em>working_directory</em>, <em>do_wait=True</em>, <em>do_log=True</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#exec_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.exec_command" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run commands using Popen.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The command to run.</p></li>
-<li><p><strong>working_directory</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Working directory used by the command.</p></li>
-<li><p><strong>do_wait</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Call or not the Popen wait() method. (default: {True})</p></li>
-<li><p><strong>do_log</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Log or not the command output. (default: {True})</p></li>
-<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
 <dt id="python_modules.app_utils.build_xlets">
 <code class="descclassname">python_modules.app_utils.</code><code class="descname">build_xlets</code><span class="sig-paren">(</span><em>xlets=[]</em>, <em>domain_name=None</em>, <em>build_output=''</em>, <em>do_not_cofirm=False</em>, <em>logger=None</em>, <em>from_menu=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#build_xlets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.build_xlets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build xlets.</p>
@@ -1060,7 +1023,7 @@ For example: ask user for multiple options in one go.</p>
 <dt id="python_modules.app_utils.XletBuilder">
 <em class="property">class </em><code class="descclassname">python_modules.app_utils.</code><code class="descname">XletBuilder</code><span class="sig-paren">(</span><em>xlet_data</em>, <em>do_not_cofirm</em>, <em>logger</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#XletBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.XletBuilder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>docstring for XletBuilder</p>
+<p>XletBuilder class.</p>
 <dl class="attribute">
 <dt id="python_modules.app_utils.XletBuilder.config_file">
 <code class="descname">config_file</code><a class="headerlink" href="#python_modules.app_utils.XletBuilder.config_file" title="Permalink to this definition">¶</a></dt>
@@ -1139,6 +1102,23 @@ For example: ask user for multiple options in one go.</p>
 <dd><p>Handle xlet configuration file if any.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="function">
+<dt id="python_modules.app_utils._list_xlets_dirs">
+<code class="descclassname">python_modules.app_utils.</code><code class="descname">_list_xlets_dirs</code><span class="sig-paren">(</span><em>xlet_type_subdir</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#_list_xlets_dirs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils._list_xlets_dirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of xlets directories for an xlet type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xlet_type_subdir</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The repository sub directory for an xlet type.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of xlet directory names.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)">list</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -1298,27 +1278,6 @@ spot build errors this way.</p>
 <dt id="python_modules.app_utils.restart_cinnamon">
 <code class="descclassname">python_modules.app_utils.</code><code class="descname">restart_cinnamon</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#restart_cinnamon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.restart_cinnamon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restart Cinnamon.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="python_modules.app_utils.split_on_uppercase">
-<code class="descclassname">python_modules.app_utils.</code><code class="descname">split_on_uppercase</code><span class="sig-paren">(</span><em>string</em>, <em>keep_contiguous=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#split_on_uppercase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.split_on_uppercase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Split string on uppercase.</p>
-<p>Based on <a class="reference external" href="https://stackoverflow.com/a/40382663">an answer</a> from a StackOverflow question.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The string to split by its uppercase characters.</p></li>
-<li><p><strong>keep_contiguous</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – Option to indicate we want to keep contiguous uppercase characters together.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The parts of the passed string.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)">list</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="class">

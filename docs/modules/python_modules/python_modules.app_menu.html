@@ -51,15 +51,15 @@
 <em class="property">class </em><code class="descclassname">python_modules.app_menu.</code><code class="descname">CLIMenu</code><span class="sig-paren">(</span><em>theme_name=''</em>, <em>domain_name=''</em>, <em>build_output=''</em>, <em>do_not_cofirm=False</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="attribute">
-<dt id="python_modules.app_menu.CLIMenu.build_output">
-<code class="descname">build_output</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.build_output" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Path to the folder were the built xlets are stored.</p>
+<dt id="python_modules.app_menu.CLIMenu.app_dev_menu">
+<code class="descname">app_dev_menu</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.app_dev_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>object</em> – App development menu. See &lt;class <a class="reference internal" href="python_modules.menu.html#python_modules.menu.Menu" title="python_modules.menu.Menu"><code class="xref any py py-class docutils literal notranslate"><span class="pre">menu.Menu</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="python_modules.app_menu.CLIMenu.dev_menu">
-<code class="descname">dev_menu</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.dev_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>object</em> – Development menu. See &lt;class <a class="reference internal" href="python_modules.menu.html#python_modules.menu.Menu" title="python_modules.menu.Menu"><code class="xref any py py-class docutils literal notranslate"><span class="pre">menu.Menu</span></code></a>&gt;.</p>
+<dt id="python_modules.app_menu.CLIMenu.build_output">
+<code class="descname">build_output</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.build_output" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – Path to the folder were the built xlets are stored.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -90,6 +90,12 @@
 <dt id="python_modules.app_menu.CLIMenu.theme_name">
 <code class="descname">theme_name</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.theme_name" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>str</em> – The given name of the theme.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.app_menu.CLIMenu.xlet_dev_menu">
+<code class="descname">xlet_dev_menu</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.xlet_dev_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>object</em> – Xlet development menu. See &lt;class <a class="reference internal" href="python_modules.menu.html#python_modules.menu.Menu" title="python_modules.menu.Menu"><code class="xref any py py-class docutils literal notranslate"><span class="pre">menu.Menu</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -138,6 +144,30 @@
 <dt id="python_modules.app_menu.CLIMenu.display_build_selector">
 <code class="descname">display_build_selector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu.display_build_selector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu.display_build_selector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display the build selector menu.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.app_menu.CLIMenu.system_executable_generation">
+<code class="descname">system_executable_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu.system_executable_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu.system_executable_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.system_executable_generation" title="python_modules.app_utils.system_executable_generation"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.system_executable_generation</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.app_menu.CLIMenu.docs_generation">
+<code class="descname">docs_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu.docs_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu.docs_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.generate_docs" title="python_modules.app_utils.generate_docs"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.generate_docs</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.app_menu.CLIMenu.docs_no_api_generation">
+<code class="descname">docs_no_api_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu.docs_no_api_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu.docs_no_api_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.generate_docs" title="python_modules.app_utils.generate_docs"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.generate_docs</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.app_menu.CLIMenu.base_xlet_generation">
+<code class="descname">base_xlet_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu.base_xlet_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu.base_xlet_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.BaseXletGenerator" title="python_modules.app_utils.BaseXletGenerator"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.BaseXletGenerator</span></code></a></p>
 </dd></dl>
 
 </dd></dl>

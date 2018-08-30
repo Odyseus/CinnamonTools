@@ -44,11 +44,6 @@
 <span class="sd">----------</span>
 <span class="sd">docopt_doc : str</span>
 <span class="sd">    Used to store/define the docstring that will be passed to docopt as the &quot;doc&quot; argument.</span>
-<span class="sd">env : dict</span>
-<span class="sd">    Copy of the system&#39;s environment to be passed to Popen.</span>
-<span class="sd">root_folder : str</span>
-<span class="sd">    The main folder containing the application. All commands must be executed from this location</span>
-<span class="sd">    without exceptions.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -63,11 +58,6 @@
 
 <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
     <span class="k">raise</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">WrongPythonVersion</span><span class="p">()</span>
-
-<span class="n">env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-<span class="n">root_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="o">*</span><span class="p">([</span><span class="s2">&quot;..&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))))))</span>
 
 
 <span class="n">docopt_doc</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{__appname__}</span><span class="s2"> </span><span class="si">{__version__}</span><span class="s2"></span>
@@ -364,7 +354,7 @@
         <span class="sd">&quot;&quot;&quot;See :any:`app_utils.system_executable_generation`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">app_utils</span><span class="o">.</span><span class="n">system_executable_generation</span><span class="p">(</span>
-            <span class="s2">&quot;cinnamon-tools-app&quot;</span><span class="p">,</span> <span class="n">root_folder</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
+            <span class="s2">&quot;cinnamon-tools-app&quot;</span><span class="p">,</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CommandLineTool.docs_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.docs_generation">[docs]</a>    <span class="k">def</span> <span class="nf">docs_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;See :any:`app_utils.generate_docs`</span>

@@ -88,7 +88,7 @@
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">copy2</span><span class="p">,</span> <span class="n">get_terminal_size</span><span class="p">,</span> <span class="n">copytree</span><span class="p">,</span> <span class="n">ignore_patterns</span><span class="p">,</span> <span class="n">rmtree</span><span class="p">,</span> <span class="n">which</span>
-<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">call</span><span class="p">,</span> <span class="n">STDOUT</span><span class="p">,</span> <span class="n">run</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">call</span><span class="p">,</span> <span class="n">STDOUT</span><span class="p">,</span> <span class="n">run</span>
 
 
 <div class="viewcode-block" id="ANSIColors"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.ANSIColors">[docs]</a><span class="k">class</span> <span class="nc">ANSIColors</span><span class="p">():</span>
@@ -369,25 +369,32 @@
 
 
 <span class="n">missing_domain_msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;DomainNameNotSet:</span>
+
 <span class="s2">The command line option `--domain=&lt;domain&gt;` should be used to define a domain</span>
 <span class="s2">name for use when building xlets.</span>
+
 <span class="s2">Or a file named &quot;domain_name&quot; should be created at the root of the repository</span>
 <span class="s2">whose only content should be the desired domain name.</span>
+
 <span class="s2">The `--domain` command line option has precedence over the domain name found</span>
 <span class="s2">inside the &quot;domain_name&quot; file.</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 <span class="n">missing_theme_name_msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;ThemeNameNotSet:</span>
+
 <span class="s2">The command line option `--theme-name=&lt;name&gt;` should be used to define a theme</span>
 <span class="s2">name for use when building themes.</span>
+
 <span class="s2">Or a file named &quot;theme_name&quot; should be created at the root of the repository</span>
 <span class="s2">whose only content should be the desired theme name.</span>
+
 <span class="s2">The `--theme-name` command line option has precedence over the theme name found</span>
 <span class="s2">inside the &quot;theme_name&quot; file.</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 <span class="n">existent_xlet_destination_msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Destination folder exists!!!</span>
 <span class="si">{path}</span><span class="s2"></span>
+
 <span class="s2">Choosing to proceed will completely remove the existent folder.</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
@@ -635,9 +642,7 @@
                     <span class="n">log_path</span><span class="o">=</span><span class="n">log_path</span><span class="p">,</span>
                     <span class="n">repo_url</span><span class="o">=</span><span class="n">repo_url</span>
                 <span class="p">)</span>
-                <span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="n">cmd</span><span class="p">,</span>
-                             <span class="n">working_directory</span><span class="o">=</span><span class="n">root_folder</span><span class="p">,</span>
-                             <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
+                <span class="n">call</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
 
@@ -717,6 +722,7 @@
                 <span class="n">readme_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">applets_help_pages</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">applets_list_items</span><span class="p">)),</span>
                     <span class="n">extensions_help_pages</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">extensions_list_items</span><span class="p">)),</span>
+                    <span class="n">repo_url</span><span class="o">=</span><span class="n">repo_url</span><span class="p">,</span>
                     <span class="n">repo_pages_url</span><span class="o">=</span><span class="n">repo_pages_url</span>
                 <span class="p">))</span></div>
 
@@ -1003,33 +1009,6 @@
 <span class="sd">        The date string converted.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">date</span><span class="p">[:</span><span class="o">-</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:03d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">date</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:])</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)))</span></div>
-
-
-<div class="viewcode-block" id="get_time_diff"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.get_time_diff">[docs]</a><span class="k">def</span> <span class="nf">get_time_diff</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get time difference.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    s : str</span>
-<span class="sd">        Start date.</span>
-<span class="sd">    e : str</span>
-<span class="sd">        End date.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    str</span>
-<span class="sd">        The difference in hours, minutes, seconds, and milliseconds between two dates.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">ends</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="n">diff</span> <span class="o">=</span> <span class="n">ends</span> <span class="o">-</span> <span class="n">start</span>
-
-    <span class="n">m</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">diff</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-    <span class="n">h</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-    <span class="n">ms</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">microseconds</span> <span class="o">/</span> <span class="mi">1000</span>
-
-    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> hr/s, </span><span class="si">%d</span><span class="s2"> min/s, </span><span class="si">%d</span><span class="s2"> sec/s, </span><span class="si">%d</span><span class="s2"> msec/s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">ms</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="confirm"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.confirm">[docs]</a><span class="k">def</span> <span class="nf">confirm</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -1522,54 +1501,6 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="exec_command"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.exec_command">[docs]</a><span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">working_directory</span><span class="p">,</span> <span class="n">do_wait</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">do_log</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;exec_command</span>
-
-<span class="sd">    Run commands using Popen.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    cmd : str</span>
-<span class="sd">        The command to run.</span>
-<span class="sd">    working_directory : str</span>
-<span class="sd">        Working directory used by the command.</span>
-<span class="sd">    do_wait : bool, optional</span>
-<span class="sd">        Call or not the Popen wait() method. (default: {True})</span>
-<span class="sd">    do_log : bool, optional</span>
-<span class="sd">        Log or not the command output. (default: {True})</span>
-<span class="sd">    logger : object</span>
-<span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="c1"># Passing a list instead of a string is the recommended.</span>
-        <span class="c1"># I would do so if it would freaking work!!!</span>
-        <span class="c1"># Always one step forward and two steps back with Python!!!</span>
-        <span class="n">po</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span>
-            <span class="n">cmd</span><span class="p">,</span>
-            <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span>
-            <span class="n">stdin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">universal_newlines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
-            <span class="n">cwd</span><span class="o">=</span><span class="n">working_directory</span>
-        <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">do_wait</span><span class="p">:</span>
-            <span class="n">po</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-
-        <span class="k">if</span> <span class="n">do_log</span><span class="p">:</span>
-            <span class="n">output</span><span class="p">,</span> <span class="n">error_output</span> <span class="o">=</span> <span class="n">po</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
-
-            <span class="k">if</span> <span class="n">po</span><span class="o">.</span><span class="n">returncode</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_output</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Execution failed!!!&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="build_xlets"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.build_xlets">[docs]</a><span class="k">def</span> <span class="nf">build_xlets</span><span class="p">(</span><span class="n">xlets</span><span class="o">=</span><span class="p">[],</span> <span class="n">domain_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">build_output</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
                 <span class="n">do_not_cofirm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_menu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Build xlets.</span>
@@ -1645,7 +1576,7 @@
 
 
 <div class="viewcode-block" id="XletBuilder"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletBuilder">[docs]</a><span class="k">class</span> <span class="nc">XletBuilder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;docstring for XletBuilder</span>
+    <span class="sd">&quot;&quot;&quot;XletBuilder class.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -1685,6 +1616,9 @@
             <span class="p">(</span><span class="s2">&quot;{{UUID}}&quot;</span><span class="p">,</span> <span class="n">xlet_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span>
             <span class="p">(</span><span class="s2">&quot;{{REPO_URL}}&quot;</span><span class="p">,</span> <span class="n">repo_url</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;{{XLET_TYPE}}&quot;</span><span class="p">,</span> <span class="n">xlet_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span>
+            <span class="c1"># Yes, include the escaped double quotes to keep the template file without errors.</span>
+            <span class="c1"># The replacement data will be a &quot;Python boolean&quot; (True or False).</span>
+            <span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">{{XLET_HAS_SCHEMA}}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;True&quot;</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schemas_dir</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;False&quot;</span><span class="p">),</span>
         <span class="p">]</span>
 
 <div class="viewcode-block" id="XletBuilder.build"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.XletBuilder.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1764,6 +1698,22 @@
                 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">root_folder</span><span class="p">)</span></div></div>
 
 
+<div class="viewcode-block" id="_list_xlets_dirs"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils._list_xlets_dirs">[docs]</a><span class="k">def</span> <span class="nf">_list_xlets_dirs</span><span class="p">(</span><span class="n">xlet_type_subdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get list of xlets directories for an xlet type.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xlet_type_subdir : str</span>
+<span class="sd">        The repository sub directory for an xlet type.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        The list of xlet directory names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">xlet_type_subdir</span><span class="p">))</span></div>
+
+
 <div class="viewcode-block" id="get_xlets_dirs"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.get_xlets_dirs">[docs]</a><span class="k">def</span> <span class="nf">get_xlets_dirs</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Get xlets dirs.</span>
 
@@ -1772,10 +1722,8 @@
 <span class="sd">    list</span>
 <span class="sd">        The list of xlets directory names prefixed with their &quot;types&quot;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">applets_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Applet &quot;</span> <span class="o">+</span>
-                    <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;applets&quot;</span><span class="p">))]</span>
-    <span class="n">extensions_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Extension &quot;</span> <span class="o">+</span>
-                       <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;extensions&quot;</span><span class="p">))]</span>
+    <span class="n">applets_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Applet </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">_list_xlets_dirs</span><span class="p">(</span><span class="s2">&quot;applets&quot;</span><span class="p">)]</span>
+    <span class="n">extensions_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Extension </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">_list_xlets_dirs</span><span class="p">(</span><span class="s2">&quot;extensions&quot;</span><span class="p">)]</span>
 
     <span class="k">return</span> <span class="n">applets_dirs</span> <span class="o">+</span> <span class="n">extensions_dirs</span></div>
 
@@ -2045,6 +1993,10 @@
                 <span class="n">file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>
 
             <span class="c1"># Check and set execution permissions for Bash and Python scripts.</span>
+            <span class="c1"># FIXME: Should I hard-code the file names that should be set as executable?</span>
+            <span class="c1"># I don&#39;t see a problem setting all Python files as exec., since I only use</span>
+            <span class="c1"># Python scripts, not Python modules.</span>
+            <span class="c1"># Lets put a pin on it and revisit in the future.</span>
             <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.bash&quot;</span><span class="p">)):</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">is_exec</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
                     <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="mo">0o755</span><span class="p">)</span>
@@ -2170,40 +2122,6 @@
     <span class="sd">&quot;&quot;&quot;Restart Cinnamon.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">call</span><span class="p">(</span><span class="s2">&quot;nohup cinnamon --replace &gt; /dev/null 2&gt;&amp;1 &amp;&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="split_on_uppercase"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.split_on_uppercase">[docs]</a><span class="k">def</span> <span class="nf">split_on_uppercase</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">keep_contiguous</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Split string on uppercase.</span>
-
-<span class="sd">    Based on `an answer &lt;https://stackoverflow.com/a/40382663&gt;`__ from a StackOverflow question.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    string : str</span>
-<span class="sd">        The string to split by its uppercase characters.</span>
-<span class="sd">    keep_contiguous : bool</span>
-<span class="sd">        Option to indicate we want to keep contiguous uppercase characters together.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    list</span>
-<span class="sd">        The parts of the passed string.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">string_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-    <span class="n">is_lower_around</span> <span class="o">=</span> <span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">string</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">islower</span><span class="p">()</span> <span class="ow">or</span>
-                       <span class="n">string_length</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">string</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">islower</span><span class="p">())</span>
-
-    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">string_length</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">keep_contiguous</span> <span class="ow">or</span> <span class="n">is_lower_around</span><span class="p">()):</span>
-            <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">[</span><span class="n">start</span><span class="p">:</span> <span class="n">i</span><span class="p">])</span>
-            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
-
-    <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">[</span><span class="n">start</span><span class="p">:])</span>
-
-    <span class="k">return</span> <span class="n">parts</span></div>
 
 
 <div class="viewcode-block" id="BaseXletGenerator"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_utils.html#python_modules.app_utils.BaseXletGenerator">[docs]</a><span class="k">class</span> <span class="nc">BaseXletGenerator</span><span class="p">():</span>
