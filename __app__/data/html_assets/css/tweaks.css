@@ -1,4 +1,5 @@
 /* Class to center images */
+
 .img-centered-container {
     text-align: center;
 }
@@ -9,9 +10,12 @@
     margin-right: auto;
 }
 
+
 /* Class to center images */
 
+
 /* Fonts overrides */
+
 html,
 body {
     font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -25,9 +29,12 @@ samp,
     font-family: "DejaVu Sans Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+
 /* Fonts overrides */
 
+
 /* Various tweaks */
+
 div.boxed {
     border: #ecece7 solid 1px;
     border-radius: 5px;
@@ -39,9 +46,12 @@ div.boxed {
     border-bottom: 1px solid #e0e0dc;
 }
 
+
 /* Various tweaks */
 
+
 /* pre tag tweaks */
+
 .container pre {
     white-space: pre-wrap !important;
     background-color: #f8f8f8 !important;
@@ -51,18 +61,24 @@ div.boxed {
     padding-right: 15px !important;
 }
 
+
 /* pre tag tweaks */
 
+
 /* For fixed header */
+
 body {
     padding-top: 50px !important;
 }
 
+
 /* For fixed header */
+
 
 /*
  * Custom styling classes.
  */
+
 .text-bold {
     font-weight: bold !important;
 }
@@ -111,11 +127,14 @@ body {
     font-size: 130% !important;
 }
 
+
 /*
  * Custom styling classes.
  */
 
+
 /* Override Flaty's headings with Bootstrap's headings because Flaty's are unnecessarily huge. */
+
 h1,
 .h1 {
     font-size: 2.5rem;
@@ -145,5 +164,6 @@ h6,
 .h6 {
     font-size: 1rem;
 }
+
 
 /* Override Flaty's headings with Bootstrap's headings because Flaty's are unnecessarily huge. */

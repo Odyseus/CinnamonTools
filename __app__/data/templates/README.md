@@ -3,6 +3,8 @@
 
 Applets/Extensions/Themes for the [Cinnamon desktop environment](https://github.com/linuxmint/Cinnamon).
 
+**Bug reports, feature requests and contributions must be done in [GitLab]({repo_url}).**
+
 ## Building xlets
 
 All xlets in the repository aren't directly usable, they need to be *built*. *Building* an xlet just means that the *raw xlet* (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (**xlet_name@custom_domain_name**) to all files (files content and file names). It will also compile the `gsettings` files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, helper script, etc.).

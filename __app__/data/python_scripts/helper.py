@@ -26,7 +26,7 @@ schema = "org.cinnamon.{{XLET_TYPE}}s.{{UUID}}"
 schema_path = "/org/cinnamon/{{XLET_TYPE}}s/{{UUID}}/"
 schema_filename = "%s.gschema.xml" % schema
 schema_storage = "/usr/share/glib-2.0/schemas/"
-xlet_has_schema = os.path.isdir(os.path.join(os.path.abspath(os.path.dirname(__file__)), "schemas"))
+xlet_has_schema = "{{XLET_HAS_SCHEMA}}"
 
 
 class ANSIColors():
@@ -126,7 +126,7 @@ def exit():
 def main_menu():
     """Main menu.
     """
-    print(Ansi.INFO(xlet_meta["name"]))
+    print(Ansi.INFO("{{UUID}}"))
     print()
     print(Ansi.INFO("Pick an option and press Enter:"))
     print()
@@ -255,24 +255,20 @@ def restart_cinnamon():
 
 
 if __name__ == "__main__":
-    global xlet_meta
-
-    try:
-        with open(os.path.join(os.path.abspath(os.getcwd()), "metadata.json"), "r") as metadata_file:
-            xlet_meta = json.load(metadata_file)
-    except FileNotFoundError:
+    if not os.path.exists(os.path.join(os.path.abspath(os.getcwd()), "metadata.json")):
         print(Ansi.ERROR("This script should be executed from inside the xlet folder!!!"))
         raise SystemExit()
 
     print(Ansi.PURPLE("This script has to be executed from inside this xlet folder and after this \
 xlet is installed."))
-    print(Ansi.PURPLE("If you installed this xlet via Cinnamon Settings, translations and settings \
-schema where already installed automatically by Cinnamon."))
-    print(Ansi.PURPLE("If you installed this xlet manually, you need to install the translations \
-and the settings schema."))
+    print(Ansi.PURPLE("If you installed this xlet via Cinnamon Settings, translations \
+where already installed automatically by Cinnamon. Otherwise, they need to be installed through this menu."))
 
     if xlet_has_schema:
-        print(Ansi.PURPLE("The dconf command is requiored to perform settings cleanup operations."))
+        print(Ansi.PURPLE("If you installed this xlet via Cinnamon Settings, and depending on the \
+Cinnamon version, the gsettings schema was already installed automatically by Cinnamon. Otherwise, \
+they need to be installed through this menu."))
+        print(Ansi.PURPLE("The dconf command is required to perform gsettings cleanup operations."))
 
     print()
 

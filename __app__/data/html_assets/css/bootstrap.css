@@ -13,39 +13,6 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
-:root {
-    --blue: #2C3E50;
-    --indigo: #6610f2;
-    --purple: #6f42c1;
-    --pink: #e83e8c;
-    --red: #E74C3C;
-    --orange: #fd7e14;
-    --yellow: #F39C12;
-    --green: #18BC9C;
-    --teal: #20c997;
-    --cyan: #3498DB;
-    --white: #fff;
-    --gray: #95a5a6;
-    --gray-dark: #343a40;
-    --primary: #2C3E50;
-    --secondary: #95a5a6;
-    --success: #18BC9C;
-    --info: #3498DB;
-    --warning: #F39C12;
-    --danger: #E74C3C;
-    --light: #ecf0f1;
-    --dark: #7b8a8b;
-    --breakpoint-xs: 0;
-    --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px;
-    --font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
 *,
 *::before,
 *::after {
