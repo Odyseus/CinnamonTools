@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#
+
 # Knowledge Base documentation build configuration file, created by
 # sphinx-quickstart on Mon Nov 13 12:08:10 2017.
 #
@@ -16,7 +16,7 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
+
 import os
 import sys
 
@@ -86,19 +86,13 @@ exclude_patterns = []
 # ########################### Options for HTML output ##########################
 # ##############################################################################
 
-html_theme = "pydoctheme"
+html_theme = "sphinx_rtd_theme"
 
 html_theme_path = ["."]
-
-html_theme_options = {
-    "collapsiblesidebar": False
-}
 
 html_output_encoding = "utf-8"
 
 html_favicon = "images/cinnamon-logo.svg"
-
-html_logo = "images/cinnamon-logo.png"
 
 html_experimental_html5_writer = True
 
