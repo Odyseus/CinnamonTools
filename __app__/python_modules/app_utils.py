@@ -51,7 +51,7 @@ import sys
 from datetime import datetime
 from glob import glob
 from shutil import copy2, get_terminal_size, copytree, ignore_patterns, rmtree, which
-from subprocess import Popen, PIPE, call, STDOUT, run
+from subprocess import PIPE, call, STDOUT, run
 
 
 class ANSIColors():
@@ -332,25 +332,32 @@ base_temp_folder = os.path.join("/tmp", "CinnamonToolsTemp")
 
 
 missing_domain_msg = """DomainNameNotSet:
+
 The command line option `--domain=<domain>` should be used to define a domain
 name for use when building xlets.
+
 Or a file named "domain_name" should be created at the root of the repository
 whose only content should be the desired domain name.
+
 The `--domain` command line option has precedence over the domain name found
 inside the "domain_name" file.
 """
 
 missing_theme_name_msg = """ThemeNameNotSet:
+
 The command line option `--theme-name=<name>` should be used to define a theme
 name for use when building themes.
+
 Or a file named "theme_name" should be created at the root of the repository
 whose only content should be the desired theme name.
+
 The `--theme-name` command line option has precedence over the theme name found
 inside the "theme_name" file.
 """
 
 existent_xlet_destination_msg = """Destination folder exists!!!
 {path}
+
 Choosing to proceed will completely remove the existent folder.
 """
 
@@ -598,9 +605,7 @@ class XletsHelperCore():
                     log_path=log_path,
                     repo_url=repo_url
                 )
-                exec_command(cmd=cmd,
-                             working_directory=root_folder,
-                             logger=self.logger)
+                call(cmd, cwd=root_folder, shell=True)
             except Exception as err:
                 self.logger.error(err)
 
@@ -680,6 +685,7 @@ class XletsHelperCore():
                 readme_file.write(template.format(
                     applets_help_pages="\n".join(sorted(applets_list_items)),
                     extensions_help_pages="\n".join(sorted(extensions_list_items)),
+                    repo_url=repo_url,
                     repo_pages_url=repo_pages_url
                 ))
 
@@ -966,33 +972,6 @@ def micro_to_milli(date):
         The date string converted.
     """
     return date[:-6] + str("{0:03d}".format(int(int(date[-6:]) / 1000)))
-
-
-def get_time_diff(s, e):
-    """Get time difference.
-
-    Parameters
-    ----------
-    s : str
-        Start date.
-    e : str
-        End date.
-
-    Returns
-    -------
-    str
-        The difference in hours, minutes, seconds, and milliseconds between two dates.
-    """
-    start = datetime.strptime(s, "%Y-%m-%d %H:%M:%S.%f")
-    ends = datetime.strptime(e, "%Y-%m-%d %H:%M:%S.%f")
-
-    diff = ends - start
-
-    m, s = divmod(diff.seconds, 60)
-    h, m = divmod(m, 60)
-    ms = diff.microseconds / 1000
-
-    return "%d hr/s, %d min/s, %d sec/s, %d msec/s" % (h, m, s, ms)
 
 
 def confirm(prompt=None, response=False):
@@ -1485,54 +1464,6 @@ def generate_from_template(source, destination, options={}, logger=None):
         logger.info(destination)
 
 
-def exec_command(cmd, working_directory, do_wait=True, do_log=True, logger=None):
-    """exec_command
-
-    Run commands using Popen.
-
-    Parameters
-    ----------
-    cmd : str
-        The command to run.
-    working_directory : str
-        Working directory used by the command.
-    do_wait : bool, optional
-        Call or not the Popen wait() method. (default: {True})
-    do_log : bool, optional
-        Log or not the command output. (default: {True})
-    logger : object
-        See <class :any:`LogSystem`>.
-    """
-    try:
-        # Passing a list instead of a string is the recommended.
-        # I would do so if it would freaking work!!!
-        # Always one step forward and two steps back with Python!!!
-        po = Popen(
-            cmd,
-            shell=True,
-            stdout=PIPE,
-            stdin=None,
-            universal_newlines=True,
-            env=env,
-            cwd=working_directory
-        )
-
-        if do_wait:
-            po.wait()
-
-        if do_log:
-            output, error_output = po.communicate()
-
-            if po.returncode:
-                logger.error(error_output)
-            else:
-                if output:
-                    logger.debug(output)
-    except OSError as err:
-        logger.error("Execution failed!!!")
-        logger.error(err)
-
-
 def build_xlets(xlets=[], domain_name=None, build_output="",
                 do_not_cofirm=False, logger=None, from_menu=False):
     """Build xlets.
@@ -1608,7 +1539,7 @@ def build_xlets(xlets=[], domain_name=None, build_output="",
 
 
 class XletBuilder(object):
-    """docstring for XletBuilder
+    """XletBuilder class.
 
     Attributes
     ----------
@@ -1648,6 +1579,9 @@ class XletBuilder(object):
             ("{{UUID}}", xlet_data.get("uuid", "")),
             ("{{REPO_URL}}", repo_url),
             ("{{XLET_TYPE}}", xlet_data.get("type", "")),
+            # Yes, include the escaped double quotes to keep the template file without errors.
+            # The replacement data will be a "Python boolean" (True or False).
+            ("\"{{XLET_HAS_SCHEMA}}\"", "True" if os.path.isdir(self.schemas_dir) else "False"),
         ]
 
     def build(self):
@@ -1727,6 +1661,22 @@ class XletBuilder(object):
                 os.chdir(root_folder)
 
 
+def _list_xlets_dirs(xlet_type_subdir):
+    """Get list of xlets directories for an xlet type.
+
+    Parameters
+    ----------
+    xlet_type_subdir : str
+        The repository sub directory for an xlet type.
+
+    Returns
+    -------
+    list
+        The list of xlet directory names.
+    """
+    return os.listdir(os.path.join(root_folder, xlet_type_subdir))
+
+
 def get_xlets_dirs():
     """Get xlets dirs.
 
@@ -1735,10 +1685,8 @@ def get_xlets_dirs():
     list
         The list of xlets directory names prefixed with their "types".
     """
-    applets_dirs = ["Applet " +
-                    item for item in os.listdir(os.path.join(root_folder, "applets"))]
-    extensions_dirs = ["Extension " +
-                       item for item in os.listdir(os.path.join(root_folder, "extensions"))]
+    applets_dirs = ["Applet %s" % item for item in _list_xlets_dirs("applets")]
+    extensions_dirs = ["Extension %s" % item for item in _list_xlets_dirs("extensions")]
 
     return applets_dirs + extensions_dirs
 
@@ -2008,6 +1956,10 @@ def do_string_substitutions(dir_path, replacement_data,
                 file.truncate()
 
             # Check and set execution permissions for Bash and Python scripts.
+            # FIXME: Should I hard-code the file names that should be set as executable?
+            # I don't see a problem setting all Python files as exec., since I only use
+            # Python scripts, not Python modules.
+            # Lets put a pin on it and revisit in the future.
             if fname.endswith((".py", ".bash")):
                 if not is_exec(file_path):
                     os.chmod(file_path, 0o755)
@@ -2133,40 +2085,6 @@ def restart_cinnamon():
     """Restart Cinnamon.
     """
     call("nohup cinnamon --replace > /dev/null 2>&1 &", shell=True)
-
-
-def split_on_uppercase(string, keep_contiguous=True):
-    """Split string on uppercase.
-
-    Based on `an answer <https://stackoverflow.com/a/40382663>`__ from a StackOverflow question.
-
-    Parameters
-    ----------
-    string : str
-        The string to split by its uppercase characters.
-    keep_contiguous : bool
-        Option to indicate we want to keep contiguous uppercase characters together.
-
-    Returns
-    -------
-    list
-        The parts of the passed string.
-    """
-    string_length = len(string)
-    is_lower_around = (lambda: string[i - 1].islower() or
-                       string_length > (i + 1) and string[i + 1].islower())
-
-    start = 0
-    parts = []
-
-    for i in range(1, string_length):
-        if string[i].isupper() and (not keep_contiguous or is_lower_around()):
-            parts.append(string[start: i])
-            start = i
-
-    parts.append(string[start:])
-
-    return parts
 
 
 class BaseXletGenerator():

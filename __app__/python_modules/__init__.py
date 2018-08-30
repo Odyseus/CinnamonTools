@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Summary
+"""Basic app data.
 """
 
 __appname__ = "Cinnamon Tools"

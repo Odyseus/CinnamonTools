@@ -7,11 +7,6 @@ Attributes
 ----------
 docopt_doc : str
     Used to store/define the docstring that will be passed to docopt as the "doc" argument.
-env : dict
-    Copy of the system's environment to be passed to Popen.
-root_folder : str
-    The main folder containing the application. All commands must be executed from this location
-    without exceptions.
 """
 
 import os
@@ -26,11 +21,6 @@ from .docopt import docopt
 
 if sys.version_info < (3, 5):
     raise app_utils.WrongPythonVersion()
-
-env = os.environ.copy()
-
-root_folder = os.path.realpath(os.path.abspath(os.path.join(
-    os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
 
 
 docopt_doc = """{__appname__} {__version__}
@@ -327,7 +317,7 @@ class CommandLineTool():
         """See :any:`app_utils.system_executable_generation`
         """
         app_utils.system_executable_generation(
-            "cinnamon-tools-app", root_folder, logger=self.logger)
+            "cinnamon-tools-app", app_utils.root_folder, logger=self.logger)
 
     def docs_generation(self):
         """See :any:`app_utils.generate_docs`
