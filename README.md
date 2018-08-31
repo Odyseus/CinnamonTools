@@ -7,11 +7,9 @@ Applets/Extensions/Themes for the [Cinnamon desktop environment](https://github.
 
 ## Building xlets
 
-All xlets in the repository aren't directly usable, they need to be *built*. *Building* an xlet just means that the *raw xlet* (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (**xlet_name@custom_domain_name**) to all files (files content and file names). It will also compile the `gsettings` files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, helper script, etc.).
+All xlets in this repository aren't directly usable, they need to be *built*. The same principle applies to the themes in this repository (they need to be *built*).
 
-The same principle applies to the themes in this repository (they need to be *built*). Although, the process is totally different.
-
-The **app.py** script is the *application* that takes care of the xlet building process. It has to be run from a terminal opened inside the repository's folder.
+The **app.py** script found at the root of the repository is the *application* that takes care of the xlet building process. It has to be run from a terminal opened inside the repository's folder. This Python *application* has no external dependencies other than Python 3.
 
 ### Examples
 

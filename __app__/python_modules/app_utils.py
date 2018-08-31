@@ -2008,10 +2008,6 @@ def custom_copytree(src, dst):
 def generate_docs(generate_api_docs=False):
     """Build this application documentation.
 
-    It executes a bash script instead of directly running the sphinx-apidoc command
-    so the colors of the terminal output are preserved. Infinitely easier to
-    spot build errors this way.
-
     Parameters
     ----------
     generate_api_docs : bool

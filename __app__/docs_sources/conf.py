@@ -20,6 +20,8 @@
 import os
 import sys
 
+from datetime import datetime
+
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
     os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
 
@@ -58,7 +60,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Cinnamon Tools"
-copyright = "2016-2018, Odyseus"
+copyright = "2016-%s, Odyseus" % datetime.today().year
 author = "Odyseus"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -86,7 +88,7 @@ exclude_patterns = []
 # ########################### Options for HTML output ##########################
 # ##############################################################################
 
-html_theme = "sphinx_rtd_theme"
+html_theme = "sphinx_rtd_theme_mod"
 
 html_theme_path = ["."]
 

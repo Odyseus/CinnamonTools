@@ -1,0 +1,3 @@
+[submodule "__app__/docs_sources/sphinx_rtd_theme_mod"]
+    path = __app__/docs_sources/sphinx_rtd_theme_mod
+    url = git@gitlab.com:Odyseus/sphinx_rtd_theme_mod.git
