@@ -1,0 +1,22 @@
+{
+    "folders": [{
+        "file_exclude_patterns": [
+            "*.png",
+            "*.po",
+            "*.pot",
+            "*.svg",
+            "HELP.html",
+            "LICENSE.md"
+        ],
+        "folder_exclude_patterns": [
+            "*/icons",
+            "__app__/docs_sources/_static",
+            "__app__/docs_sources/coverage",
+            "__app__/docs_sources/images",
+            "__app__/docs_sources/modules",
+            "__app__/docs_sources/sphinx_rtd_theme_mod",
+            "docs"
+        ],
+        "path": ".."
+    }]
+}

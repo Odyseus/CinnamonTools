@@ -1,17 +1,34 @@
-# My ignores #
+############################
+# Project specific ignores #
+############################
+
 # Ignore xlets whose directory name starts with 0z. These are non-functional.
 /*/0z*/
-# The .sublime directory contains the Sublime Text project files.
-/.sublime
-/__app__/python_modules/__pycache__
-/themes/_sass/cinnamon/.sass-cache
+
+# The "temp" folder at the root of the repository.
 /tmp
-__000__
+
+# Files at the root of the repository.
 domain_name
 theme_name
 
+##################
+# Global ignores #
+##################
+
+# A "trash" folder anywhere in the repository.
+__000__/
+
+# Ignore Sublime Text "workspace file" without ignoring the Sublime Text project file.
+*.sublime-workspace
+
+# A folder containing log files.
+logs/
+
 # Compiled source #
 ###################
+.sass-cache/
+__pycache__/
 *.com
 *.class
 *.dll
@@ -19,6 +36,8 @@ theme_name
 *.o
 *.so
 *.pyc
+*.pickle
+*.inv
 
 # Packages #
 ############
