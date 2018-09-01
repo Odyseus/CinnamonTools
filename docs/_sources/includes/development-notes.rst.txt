@@ -1,9 +1,10 @@
 
+*****************
 Development notes
-=================
+*****************
 
 Xlets development *commandments*
---------------------------------
+================================
 
 1. Eradicate from your thoughts the existence of Node.js. I can do infinitely more with just ten lines of Python code than with ten lines of JavaScript code that depend on 10 Node.js modules with a thousand lines of code each.
 2. If a Python module is required, make it part of the Python application if possible. Otherwise, create a mechanism to install required modules.
@@ -15,7 +16,7 @@ Xlets development *commandments*
 
 
 z_config.py file inside xlets directories
------------------------------------------
+=========================================
 
 This file contains a single variable called **settings** (a dictionary). These settings are read and applied when an xlet is built.
 
@@ -25,7 +26,8 @@ This file contains a single variable called **settings** (a dictionary). These s
 
     Right now it only contains a single setting (``symlinks``). But it has the potential of containing more settings in the future.
 
-Example:
+Example
+-------
 
 .. code::
 
@@ -43,7 +45,7 @@ Example:
 
 
 ``symlinks`` key
-^^^^^^^^^^^^^^^^
+----------------
 
 The main use of the ``symlinks`` key is to generate symbolic links to files in the root folder of an xlet inside a *version sub-folder* to be used by **multiversion** enabled xlets.
 
@@ -55,9 +57,8 @@ In the example above, the ``symlinks`` key will generate the symbolic links insi
 
     It's important to make all symbolic links targets relative, not absolute.
 
-
 z_create_localized_help.py file inside xlets directories
---------------------------------------------------------
+========================================================
 
 This file is used to generate the **HELP.html** page for each xlet. The **HELP.html** file is a standalone HTML page, which means that all resources are in-line (CSS stylesheets, JavaScript code, images, etc.).
 
@@ -87,7 +88,7 @@ This file is used to generate the **HELP.html** page for each xlet. The **HELP.h
 
 
 HTML assets
-^^^^^^^^^^^
+-----------
 
 - `Bootstrap 4 <https://getbootstrap.com/>`__ is used as a CSS framework. No Bootstrap JavaScript plugins nor jQuery is used.
 - `Bootswatch's Flatly theme <https://bootswatch.com/flatly/>`__ is used as Bootstrap theme. Only because the colors of the default Bootstrap theme are abhorrent.
@@ -95,15 +96,16 @@ HTML assets
 
 
 Main class methods overview (more details in API documentation)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------------------------
 
 - **get_content_base:** Basic information about the xlet.
 - **get_content_extra:** Detailed information about the xlet.
 - **get_css_custom:** Additional CSS styles.
 - **get_js_custom:** Some custom JS in case that the page needs it. For example: since I use Base64 encoded images, and if an image is used in more than one place in a page, I insert those images with JS.
 
+
 :abbr:`EOL (end-of-life)` ideas/plans
--------------------------------------
+=====================================
 
 - Linux Mint 18.x/Ubuntu 16.04.x :abbr:`EOL (end-of-life)` is 2021.
 - Remove all retro-compatible code from all xlets. They all are marked with the string *Mark for deletion on EOL*.

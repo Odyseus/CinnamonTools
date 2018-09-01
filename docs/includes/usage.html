@@ -30,8 +30,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Development notes" href="cinnamontools-dev-notes.html" />
-    <link rel="prev" title="Requirements" href="cinnamontools-requirements.html" /> 
+    <link rel="next" title="Development notes" href="development-notes.html" />
+    <link rel="prev" title="Requirements" href="requirements.html" /> 
 
 </head>
 
@@ -78,7 +78,7 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="cinnamontools-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#cli-help-page"><abbr title="Command Line Interface">CLI</abbr> help page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#detailed-usage">Detailed Usage</a><ul>
@@ -91,8 +91,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cinnamontools-dev-notes.html">Development notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinnamontools-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code-styling.html">Code styling/guidelines</a></li>
 </ul>
 
             
@@ -144,7 +144,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/includes/cinnamontools-usage.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/includes/usage.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -154,10 +154,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="cinnamontools-dev-notes.html" class="btn btn-neutral float-right" title="Development notes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="development-notes.html" class="btn btn-neutral float-right" title="Development notes" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="cinnamontools-requirements.html" class="btn btn-neutral" title="Requirements" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="requirements.html" class="btn btn-neutral" title="Requirements" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -267,17 +267,20 @@ Sub-commands for the `generate` command:
 <div class="section" id="app-py-menu-command">
 <h3><strong>app.py menu</strong> command<a class="headerlink" href="#app-py-menu-command" title="Permalink to this headline">¶</a></h3>
 <p>This command starts a <abbr title="Command Line Interface">CLI</abbr> menu from which building and development tasks can be performed.</p>
-<p><strong>Options:</strong></p>
+<div class="section" id="options">
+<h4>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-d</span> <span class="pre">&lt;domain&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--domain=&lt;domain&gt;</span></code>: See <a class="reference internal" href="#build-command-options-reference"><span class="std std-ref">build command options</span></a>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">&lt;dir&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--output=&lt;dir&gt;</span></code>: See <a class="reference internal" href="#build-command-options-reference"><span class="std std-ref">build command options</span></a>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> or <code class="docutils literal notranslate"><span class="pre">--no-confirmation</span></code>: See <a class="reference internal" href="#build-command-options-reference"><span class="std std-ref">build command options</span></a>.</p></li>
 </ul>
 </div>
+</div>
 <div class="section" id="app-py-build-command">
 <h3><strong>app.py build</strong> command<a class="headerlink" href="#app-py-build-command" title="Permalink to this headline">¶</a></h3>
 <p>This command is used to build all or specifics xlets.</p>
-<p id="build-command-options-reference"><strong>Options:</strong></p>
+<div class="section" id="build-command-options-reference">
+<span id="id1"></span><h4>Options<a class="headerlink" href="#build-command-options-reference" title="Permalink to this headline">¶</a></h4>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">-x</span> <span class="pre">&lt;name&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--xlet=&lt;name&gt;</span></code>: Specify one or more xlets to build.</p>
 <blockquote>
@@ -331,10 +334,12 @@ Sub-commands for the `generate` command:
 <li><p><code class="docutils literal notranslate"><span class="pre">-r</span></code> or <code class="docutils literal notranslate"><span class="pre">--restart-cinnamon</span></code>: Restart Cinnamon’s shell after finishing the xlets building process.</p></li>
 </ul>
 </div>
+</div>
 <div class="section" id="app-py-build-themes-command">
 <h3><strong>app.py build_themes</strong> command<a class="headerlink" href="#app-py-build-themes-command" title="Permalink to this headline">¶</a></h3>
 <p>This command is used to build all the themes.</p>
-<p><strong>Options:</strong></p>
+<div class="section" id="id2">
+<h4>Options<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">&lt;name&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--theme-name=&lt;name&gt;</span></code>: To be able to build the themes, it is necessary to specify a theme name. This theme name is then used to generate the full theme name (&lt;theme_name&gt;-&lt;theme_variant&gt;). To avoid passing this command line option every time one builds themes, a file named <strong>theme_name</strong> can be created at the root of the repository whose only content should be the desired theme name. This command line option has precedence over the <strong>theme_name</strong> file. Which means that if this option is used, the theme name found in an existent <strong>theme_name</strong> file will be ignored.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">&lt;dir&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">--output=&lt;dir&gt;</span></code>: The output directory that will be used to save the built themes. If not specified, the default storage location will be used. See <a class="reference internal" href="#build-command-option-ooutput-reference"><span class="std std-ref">build command –output</span></a> option notes for more details.</p></li>
@@ -344,7 +349,7 @@ Sub-commands for the `generate` command:
 <p>There is actually one theme in this repository, but with two variants (two different color accents). One is called <strong>GreybirdBlue</strong>, because is the same blue used by the <a class="reference external" href="https://github.com/shimmerproject/Greybird">Greybird</a> theme. And the other variant is called <strong>MintGreen</strong>, because it uses as accent color a similar (but brighter) green color as the default Linux Mint theme called <strong>Mint-X</strong>.</p>
 <p>The theme is basically the <strong>Mint-X</strong> theme with some graphics from the <strong>Mint-Y</strong> theme. But with added features that were removed from the previously mentioned default themes.</p>
 <div class="section" id="detailed-differences-with-the-mint-x-theme-family">
-<h4>Detailed differences with the Mint-X theme family<a class="headerlink" href="#detailed-differences-with-the-mint-x-theme-family" title="Permalink to this headline">¶</a></h4>
+<h5>Detailed differences with the Mint-X theme family<a class="headerlink" href="#detailed-differences-with-the-mint-x-theme-family" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
 <li><dl class="simple">
 <dt>GTK2/GTK3 themes:</dt>
@@ -368,6 +373,7 @@ Sub-commands for the `generate` command:
 </dl>
 </li>
 </ul>
+</div>
 </div>
 </div>
 <div class="section" id="app-py-dev-command">
@@ -413,10 +419,10 @@ Sub-commands for the `generate` command:
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="cinnamontools-dev-notes.html" class="btn btn-neutral float-right" title="Development notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="development-notes.html" class="btn btn-neutral float-right" title="Development notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="cinnamontools-requirements.html" class="btn btn-neutral" title="Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="requirements.html" class="btn btn-neutral" title="Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -435,6 +441,10 @@ Sub-commands for the `generate` command:
 
         </div>
       </div>
+
+      <a id="to-top-of-page" href="#top">
+        <i class="fa fa-chevron-circle-up"></i>
+      </a>
 
     </section>
 

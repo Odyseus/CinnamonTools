@@ -1,9 +1,10 @@
 
+*****
 Usage
-=====
+*****
 
 :abbr:`CLI (Command Line Interface)` help page
-----------------------------------------------
+==============================================
 
 .. hint::
 
@@ -12,27 +13,29 @@ Usage
 .. docopt-doc-literalinclude:: cinnamontools
 
 Detailed Usage
---------------
+==============
 
 **app.py menu** command
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 This command starts a :abbr:`CLI (Command Line Interface)` menu from which building and development tasks can be performed.
 
-**Options:**
+Options
+^^^^^^^
 
 - ``-d <domain>`` or ``--domain=<domain>``: See :ref:`build command options <build-command-options-reference>`.
 - ``-o <dir>`` or ``--output=<dir>``: See :ref:`build command options <build-command-options-reference>`.
 - ``-n`` or ``--no-confirmation``: See :ref:`build command options <build-command-options-reference>`.
 
 **app.py build** command
-^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 This command is used to build all or specifics xlets.
 
 .. _build-command-options-reference:
 
-**Options:**
+Options
+^^^^^^^
 
 - ``-x <name>`` or ``--xlet=<name>``: Specify one or more xlets to build.
 
@@ -80,11 +83,12 @@ This command is used to build all or specifics xlets.
 
 
 **app.py build_themes** command
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
 This command is used to build all the themes.
 
-**Options:**
+Options
+^^^^^^^
 
 - ``-t <name>`` or ``--theme-name=<name>``: To be able to build the themes, it is necessary to specify a theme name. This theme name is then used to generate the full theme name (<theme_name>-<theme_variant>). To avoid passing this command line option every time one builds themes, a file named **theme_name** can be created at the root of the repository whose only content should be the desired theme name. This command line option has precedence over the **theme_name** file. Which means that if this option is used, the theme name found in an existent **theme_name** file will be ignored.
 
@@ -114,7 +118,7 @@ _________________________________________________
 
 
 **app.py dev** command
-^^^^^^^^^^^^^^^^^^^^^^
+----------------------
 
 This command is used to perform development tasks.
 
@@ -134,7 +138,7 @@ This command is used to perform development tasks.
 .. _system-executable-reference:
 
 **app.py generate** command
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
 **Sub-commands:**
 

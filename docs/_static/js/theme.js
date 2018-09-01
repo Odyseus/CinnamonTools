@@ -134,3 +134,183 @@ require = function n(e, i, t) {
         jquery: "jquery"
     }]
 }, {}, ["sphinx-rtd-theme"]);
+
+// The delay is mostly to avoid triggering the function a million times when scrolling.
+var delayedToggleBackToTopButtonVisibility = utilThrottle(function() {
+    toggleBackToTopButtonVisibility();
+}, 100);
+
+function toggleBackToTopButtonVisibility() {
+    var scroll = $(document).scrollTop();
+
+    if (scroll > 100) {
+        $("#to-top-of-page").show();
+    } else {
+        $("#to-top-of-page").hide();
+    }
+}
+
+function utilThrottle(aFunc, aFreq) {
+    var frequency = aFreq !== undefined ? aFreq : 200,
+        last,
+        timer;
+
+    return function() {
+        var that = this,
+            now = +new Date(),
+            args = arguments;
+
+        if (last && now < last + frequency) {
+            clearTimeout(timer);
+
+            timer = setTimeout(function() {
+                last = undefined;
+                aFunc.apply(that, args);
+            }, frequency);
+        } else {
+            last = now;
+            aFunc.apply(that, args);
+        }
+    };
+}
+
+function smoothScrollToTop() {
+    // THIS IS GARBAGE!!! The animation is jerky on Firefox 62+ (ANOTHER GARBAGE!!!).
+    // $("html, body").animate({
+    //     scrollTop: 0
+    // }, 400);
+
+    // Forget the browser specific garbage. I don't need the headache.
+    if (window.requestAnimationFrame) {
+        try {
+            var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            if (currentScroll > 0) {
+                window.requestAnimationFrame(smoothScrollToTop);
+                window.scrollTo(0, currentScroll - (currentScroll / 5));
+            }
+        } catch (aErr) {
+            console.error(aErr);
+            window.scrollTo(0, 0);
+        }
+    } else {
+        window.scrollTo(0, 0);
+    }
+}
+
+jQuery(document).ready(function($) {
+    delayedToggleBackToTopButtonVisibility();
+
+    // Set back-to-top button visibility function.
+    $(window).scroll(function() {
+        delayedToggleBackToTopButtonVisibility();
+    });
+
+    $("#to-top-of-page").on("click", function() {
+        smoothScrollToTop();
+        return false;
+    });
+});
+
+// Source: https://github.com/julienetie/smooth-scroll
+(function(window, document) {
+    var prefixes = ["moz", "webkit", "o"],
+        stickyNavbarOffset = 0,
+        animationFrame;
+
+    // Modern rAF prefixing without setTimeout
+    function requestAnimationFrameNative() {
+        prefixes.map(function(prefix) {
+            if (!window.requestAnimationFrame) {
+                animationFrame = window[prefix + "RequestAnimationFrame"];
+            } else {
+                animationFrame = requestAnimationFrame;
+            }
+        });
+    }
+    requestAnimationFrameNative();
+
+    function getOffsetTop(el) {
+        if (!el) {
+            // Account for the sticky navbar height.
+            return -stickyNavbarOffset;
+        }
+
+        var yOffset = el.offsetTop,
+            parent = el.offsetParent;
+
+        yOffset += getOffsetTop(parent);
+
+        return yOffset;
+    }
+
+    function getScrollTop(scrollable) {
+        return scrollable.scrollTop || document.body.scrollTop || document.documentElement.scrollTop;
+    }
+
+    function scrollTo(scrollable, coords, millisecondsToTake) {
+        var currentY = getScrollTop(scrollable),
+            diffY = coords.y - currentY,
+            startTimestamp = null;
+
+        if (coords.y === currentY || typeof scrollable.scrollTo !== "function") {
+            return;
+        }
+
+        function doScroll(currentTimestamp) {
+            if (startTimestamp === null) {
+                startTimestamp = currentTimestamp;
+            }
+
+            var progress = currentTimestamp - startTimestamp,
+                fractionDone = (progress / millisecondsToTake),
+                pointOnSineWave = Math.sin(fractionDone * Math.PI / 2);
+            scrollable.scrollTo(0, currentY + (diffY * pointOnSineWave));
+
+            if (progress < millisecondsToTake) {
+                animationFrame(doScroll);
+            } else {
+                // Ensure we're at our destination
+                scrollable.scrollTo(coords.x, coords.y);
+            }
+        }
+
+        animationFrame(doScroll);
+    }
+
+    // Declaire scroll duration, (before script)
+    var speed = window.smoothScrollSpeed || 750;
+
+    function smoothScroll(e) { // no smooth scroll class to ignore links
+        if (e.target.classList.contains("no-smooth-scroll")) {
+            return;
+        }
+
+        var source = e.target.hasOwnProperty("hash") ? e.target : e.target.parentNode,
+            targetHref = source.hash,
+            target = null;
+
+        if (!source || !targetHref) {
+            return;
+        }
+
+        targetHref = targetHref.substring(1);
+        target = document.getElementById(targetHref);
+
+        if (!target) {
+            return;
+        }
+
+        scrollTo(window, {
+            x: 0,
+            y: getOffsetTop(target)
+        }, speed);
+
+        delayedToggleBackToTopButtonVisibility();
+    }
+
+    // Uses target's hash for scroll
+    document.addEventListener("click", smoothScroll, false);
+}(window, document));
+
+/* exported smoothScrollToTop
+ */

@@ -30,8 +30,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Code styling/guidelines" href="cinnamontools-code-styling.html" />
-    <link rel="prev" title="Usage" href="cinnamontools-usage.html" /> 
+    <link rel="next" title="Code styling/guidelines" href="code-styling.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
 
 </head>
 
@@ -78,11 +78,12 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="cinnamontools-requirements.html">Requirements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinnamontools-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Development notes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#xlets-development-commandments">Xlets development <em>commandments</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#z-config-py-file-inside-xlets-directories">z_config.py file inside xlets directories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#symlinks-key"><code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key</a></li>
 </ul>
 </li>
@@ -94,7 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#eol-ideas-plans"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cinnamontools-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code-styling.html">Code styling/guidelines</a></li>
 </ul>
 
             
@@ -146,7 +147,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/includes/cinnamontools-dev-notes.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/includes/development-notes.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -156,10 +157,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="cinnamontools-code-styling.html" class="btn btn-neutral float-right" title="Code styling/guidelines" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="code-styling.html" class="btn btn-neutral float-right" title="Code styling/guidelines" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="cinnamontools-usage.html" class="btn btn-neutral" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -194,7 +195,8 @@
 <p>I was forced to implement this configuration file due to one single reason. If I manually create the symbolic links inside the xlets folders, and since I’m working directly inside a Dropbox folder, the symbolic links are constantly <em>resolving themselves</em> (a Dropbox <em>feature</em>). So I came up with the idea of creating those symbolic links when the xlets are built.</p>
 <p>Right now it only contains a single setting (<code class="docutils literal notranslate"><span class="pre">symlinks</span></code>). But it has the potential of containing more settings in the future.</p>
 </div>
-<p>Example:</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;symlinks&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;3.8&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -207,6 +209,7 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
 </div>
 <div class="section" id="symlinks-key">
 <h3><code class="docutils literal notranslate"><span class="pre">symlinks</span></code> key<a class="headerlink" href="#symlinks-key" title="Permalink to this headline">¶</a></h3>
@@ -298,10 +301,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="cinnamontools-code-styling.html" class="btn btn-neutral float-right" title="Code styling/guidelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="code-styling.html" class="btn btn-neutral float-right" title="Code styling/guidelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="cinnamontools-usage.html" class="btn btn-neutral" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -320,6 +323,10 @@
 
         </div>
       </div>
+
+      <a id="to-top-of-page" href="#top">
+        <i class="fa fa-chevron-circle-up"></i>
+      </a>
 
     </section>
 

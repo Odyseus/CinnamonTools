@@ -1,10 +1,11 @@
 
+***********************
 Code styling/guidelines
-=======================
+***********************
 
 
 CSS/SASS
---------
+========
 
 1. CSS files that where generated from SASS sources are exempt from any styling rules. Trying to configure the output of SASS generated files is like trying to teach to talk to a rock!!! ¬¬
 2. Styling rules for CSS files:
@@ -30,7 +31,7 @@ CSS/SASS
 
 
 JavaScript
-----------
+==========
 
 This is an abhorrent/always-evolving/never-finished language with an abhorrent release cycle whose only goal seems to be the destruction of software development (cursed the day that web developers started contaminating the software industry!!!). Guidelines will never have a chance to survive the countless stupid implementations by the countless JS engines.
 
@@ -67,7 +68,7 @@ This is an abhorrent/always-evolving/never-finished language with an abhorrent r
 
 
 Python
-------
+======
 
 1. THERE IS ONLY PYTHON 3!!! NOTHING ELSE EXISTS!!!
 2. The minimum Python 3 version supported is the one shipped with Ubuntu LTS versions until EOL.
