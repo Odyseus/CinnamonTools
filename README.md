@@ -61,6 +61,7 @@ Most of the xlets in this repository come with help pages that describe their us
 
 - [Argos for Cinnamon](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0ArgosForCinnamon/index.html)
 - [Cinnamon Menu (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0CinnamonMenuForkByOdyseus/index.html)
+- [Desktop Capture (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0DesktopCaptureForkByOdyseus/index.html)
 - [Desktop Handler](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0DesktopHandler/index.html)
 - [Extensions Manager](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0ExtensionsManager/index.html)
 - [Feeds Reader (Fork By Odyseus)](https://odyseus.gitlab.io/CinnamonTools/_static/xlets_help_pages/0FeedsByJonbrettForkByOdyseus/index.html)
