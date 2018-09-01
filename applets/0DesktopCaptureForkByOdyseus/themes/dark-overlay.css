@@ -1,0 +1,149 @@
+/* Label for the program selector submenu. */
+.desktop-capture-program-selector-submenu-label {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Outline background (Window capture mode) */
+.desktop-capture-capture-outline-background {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Outline frame style (Window and Cinnamon UI capture modes) */
+.desktop-capture-capture-outline-frame {
+    border: 1px solid red;
+    border-radius: 4px;
+}
+
+/* Outline frame style only applied when capturing desktop window (Window capture mode) */
+.desktop-capture-capture-outline-frame.desktop {
+    border: none;
+}
+
+/* App icon (St.Icon) overlay (Window capture mode) */
+.desktop-capture-overlay-icon {
+    padding: 5px;
+    box-shadow: 5px 5px 5px #000;
+    box-shadow: inset 5px 5px 5px #fff;
+    border: 1px solid red;
+    width: 24px;
+    height: 24px;
+    icon-shadow: white 0 0 3px;
+}
+
+/* St.Bin container holding overlay-icon above */
+.desktop-capture-overlay-iconbox {
+}
+
+/* Window overlay: Application label (Window capture mode) */
+.desktop-capture-overlay-label-title {
+    padding-top: 5px;
+    color: #fff;
+    text-shadow: -1px 1px 8px #000;
+    font-weight: bold;
+    text-align: center !important;
+}
+
+/* Window overlay: Dimensions label (Window capture mode) */
+.desktop-capture-overlay-label-size {
+    color: #fff;
+    text-shadow: -1px 1px 3px #000;
+    text-align: center;
+    font-family: Monospace;
+    font-weight: bold;
+    clear: both;
+}
+
+.desktop-capture-overlay-box-2 {
+    text-align: center;
+}
+
+/* Current selection box (Area capture mode) - default: no styles */
+.desktop-capture-capture-area-selection {
+}
+
+/* Countdown timer (All capture modes) */
+.desktop-capture-capture-countdown-timer {
+    width: 50px;
+    height: 50px;
+    padding: 10px 14px 14px 10px;
+    font-size: 3em;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #398ee7;
+    border: 1px solid transparent;
+    box-shadow: inset 0 0 0 1px #000;
+    border-radius: 20px;
+}
+
+/* Rubberband border during selection (Area capture mode) */
+.desktop-capture-border-h {
+    border-image: url("border-horizontal.png") 0 2560 0 0;
+}
+
+.desktop-capture-border-v {
+    border-image: url("border-vertical.png") 0 0 2560 0;
+}
+
+/* Shadow for non-selected parts of screen (Area capture mode) */
+.desktop-capture-cover {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+/* St.Group holding the covers above */
+.desktop-capture-shadow-container {
+}
+
+/* Rubberband handles during selection (Area capture mode) */
+.desktop-capture-handle {
+    background-gradient-direction: radial; /* start=center, end=edges*/
+    background-gradient-start: #eee;
+    background-gradient-end: #ddd;
+    border: 1px solid #999;
+}
+
+.desktop-capture-handle:hover {
+    background-gradient-direction: radial; /* start=center, end=edges*/
+    background-gradient-start: #ddd;
+    background-gradient-end: #ccc;
+    border: 1px solid #bbb;
+}
+
+/* St.Group container for instructions */
+.desktop-capture-instructions-container {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.desktop-capture-instructions-container.ui {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.desktop-capture-instructions-container.area {
+    background-color: transparent;
+}
+
+/* St.Label for instructions header text */
+.desktop-capture-instructions-label-header {
+    text-align: center;
+    font-size: 2em;
+    color: #fff;
+    text-shadow: -2px 2px 2px #000;
+    margin: 0 50px;
+}
+
+/* St.Label for instructions subhead/detail text */
+.desktop-capture-instructions-label-text {
+    text-align: center;
+    font-size: 1.8em;
+    color: #fff;
+    text-shadow: -2px 2px 2px #000;
+}
+
+.desktop-capture-last-capture-submenu-label,
+.desktop-capture-cinnamon-recorder-profile-submenu-label,
+.desktop-capture-device-options-submenu-label,
+.desktop-capture-menu-header {
+    font-weight: bold;
+}

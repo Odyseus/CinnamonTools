@@ -1,0 +1,1253 @@
+# This is a template file for translating the 0DesktopCaptureForkByOdyseus package.
+# Copyright (C) 2018
+# This file is distributed under the same license as the 0DesktopCaptureForkByOdyseus package.
+# FIRST_AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0DesktopCaptureForkByOdyseus 2.35\n"
+"POT-Creation-Date: 2018-08-30 13:13-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-06-12 02:20:15.236\n"
+
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:232
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:319
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:320
+msgid "Changelog"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:386
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:389
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:391
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:407
+msgid "Xlets localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:410
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: appletHelper.py:62
+msgid "Select or enter file to export to"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: appletHelper.py:64 appletHelper.py:70 appletHelper.py:140
+msgid "_Cancel"
+msgstr ""
+
+#: appletHelper.py:65
+msgid "_Save"
+msgstr ""
+
+#: appletHelper.py:68
+msgid "Select a file to import"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: appletHelper.py:72
+msgid "_Open"
+msgstr ""
+
+#: appletHelper.py:88
+msgid "JSON files"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: appletHelper.py:142
+msgid "_OK"
+msgstr ""
+
+#: z_create_localized_help.py:29 z_create_localized_help.py:151 z_create_localized_help.py:182 z_create_localized_help.py:189 z_create_localized_help.py:198 z_create_localized_help.py:232 z_create_localized_help.py:305
+msgid "Description"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:32
+msgid "This applet is a fork of [Desktop Capture](https://github.com/rjanja/desktop-capture) applet by Rob Adams (a.k.a. rjanja)."
+msgstr ""
+
+#: z_create_localized_help.py:34
+msgid "Differences with the original applet"
+msgstr ""
+
+#: z_create_localized_help.py:36
+msgid "The principal differences of this fork with the original applet are in usability and of the kind 'do more with less code'."
+msgstr ""
+
+#: z_create_localized_help.py:38
+msgid "More convenient handling of settings. Most settings can be changed directly from the applet menu or its context menu without the need to constantly open the applet settings window."
+msgstr ""
+
+#: z_create_localized_help.py:39
+msgid "Keyboard shortcuts are not only available for Cinnamon's built-in features, but for all screenshot/screencast programs."
+msgstr ""
+
+#: z_create_localized_help.py:40
+msgid "Settings are immediately available after changed without the need to restart Cinnamon."
+msgstr ""
+
+#: z_create_localized_help.py:41
+msgid "The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program."
+msgstr ""
+
+#: z_create_localized_help.py:48
+msgid "Programs support"
+msgstr ""
+
+#: z_create_localized_help.py:50
+msgid "In addition to Cinnamon's built-in screenshot/screencast tools, this applet also supports third-party programs to take captures. By default, this applet comes with support for several known programs (Shutter, Gnome Screenshot, XWD, ImageMagic, FFmepg, RecordMyDesktop, Byzanz and Kazam)."
+msgstr ""
+
+#: z_create_localized_help.py:53 z_create_localized_help.py:257
+msgid "Highlights"
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the words "camera" and "recorder".
+#. MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:64
+msgid "Programs are stored inside an applet preference. They are grouped by devices. A device called **camera** that contains programs that take screenshots. And a device called **recorder** that contains programs that capture screencasts."
+msgstr ""
+
+#: z_create_localized_help.py:65
+msgid "Programs can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent programs, modifying the generated JSON file and importing the modified file again."
+msgstr ""
+
+#: z_create_localized_help.py:66
+msgid "Commands are exactly that, commands. They are composed of command line arguments , placeholders, and/or flags."
+msgstr ""
+
+#: z_create_localized_help.py:69
+msgid "Placeholders are strings specifically formatted with double curly braces (`{{PLACEHOLDER_NAME}}`) and can be placed in any part of a string. These strings are replaced with dynamically generated data (an applet preference, screen coordinates, etc.) when a command is executed."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:71
+msgid "Flags are another type of specifically formatted strings surrounded by hashes (`#FLAG_NAME#`) and they always must be placed at the beginning of a string. Flags indicate that an action must be taken before a command is executed."
+msgstr ""
+
+#: z_create_localized_help.py:72
+msgid "The exported JSON file exemplifies almost all the options, flags and placeholders documented below."
+msgstr ""
+
+#: z_create_localized_help.py:73
+msgid "The command that will be executed can be previewed before actually executing it by simply right clicking a menu item."
+msgstr ""
+
+#: z_create_localized_help.py:79 z_create_localized_help.py:269
+msgid "Warnings"
+msgstr ""
+
+#: z_create_localized_help.py:85
+msgid "All option names, flags, and placeholders are case sensitive. Command option names are lower cased and use dashes as word separators. Placeholders and flags are upper cased and use low dashes as word separators."
+msgstr ""
+
+#: z_create_localized_help.py:86 z_create_localized_help.py:274
+msgid "An imported JSON file will overwrite an existent preference."
+msgstr ""
+
+#: z_create_localized_help.py:87 z_create_localized_help.py:275
+msgid "Importing a malformed/invalid JSON file will cancel the import operation without modifying an existent preference."
+msgstr ""
+
+#: z_create_localized_help.py:88
+msgid "There isn't a mechanism to check if a command is available or not on the system the applet is installed. So, use common sense."
+msgstr ""
+
+#: z_create_localized_help.py:92 z_create_localized_help.py:280
+msgid "Basic example"
+msgstr ""
+
+#: z_create_localized_help.py:134
+msgid "Program/Command name"
+msgstr ""
+
+#: z_create_localized_help.py:135
+msgid "Name of the program shown on the program selector menu"
+msgstr ""
+
+#: z_create_localized_help.py:136
+msgid "Argument to include sound in capture"
+msgstr ""
+
+#: z_create_localized_help.py:137
+msgid "Argument to not include sound in capture"
+msgstr ""
+
+#: z_create_localized_help.py:138
+msgid "Command to stop recording"
+msgstr ""
+
+#: z_create_localized_help.py:139
+msgid "This is a separator"
+msgstr ""
+
+#: z_create_localized_help.py:140
+msgid "Argument to include cursor in capture"
+msgstr ""
+
+#: z_create_localized_help.py:141
+msgid "Argument to not include cursor in capture"
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the word "APPEND_1".
+#: z_create_localized_help.py:143
+msgid "The content here will be used to replace the {{APPEND_1}} placeholder"
+msgstr ""
+
+#: z_create_localized_help.py:144
+msgid "Menu item label"
+msgstr ""
+
+#: z_create_localized_help.py:145 z_create_localized_help.py:180
+msgid "Menu item label flags"
+msgstr ""
+
+#: z_create_localized_help.py:145
+#, python-format
+msgid "See %s."
+msgstr ""
+
+#: z_create_localized_help.py:146
+msgid "Command to execute when clicking this menu item"
+msgstr ""
+
+#: z_create_localized_help.py:149
+msgid "Program options"
+msgstr ""
+
+#: z_create_localized_help.py:151 z_create_localized_help.py:305
+msgid "Option"
+msgstr ""
+
+#: z_create_localized_help.py:151 z_create_localized_help.py:198
+msgid "Usage"
+msgstr ""
+
+#: z_create_localized_help.py:153 z_create_localized_help.py:155 z_create_localized_help.py:157
+msgid "Mandatory"
+msgstr ""
+
+#: z_create_localized_help.py:154
+msgid "This option will be used as the program name in the program selector sub-menu."
+msgstr ""
+
+#: z_create_localized_help.py:156
+msgid "This option contains all the data that will be used to create the menu items for a program."
+msgstr ""
+
+#: z_create_localized_help.py:158 z_create_localized_help.py:163 z_create_localized_help.py:171 z_create_localized_help.py:213 z_create_localized_help.py:225
+msgid "Recorder only"
+msgstr ""
+
+#: z_create_localized_help.py:158
+msgid "The command to stop recording a screencast."
+msgstr ""
+
+#: z_create_localized_help.py:159 z_create_localized_help.py:206
+msgid "Camera only"
+msgstr ""
+
+#: z_create_localized_help.py:159 z_create_localized_help.py:163 z_create_localized_help.py:167 z_create_localized_help.py:171 z_create_localized_help.py:175
+msgid "Optional"
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the words "true" and "DELAY".
+#. MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:162
+msgid "This option is used in combination with the `{{DELAY}}` placeholder. If set to **true**, sets the visibility of the **Capture delay** option inside this applet menu."
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the word "true".
+#. MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:166
+msgid "This option, if set to **true**, sets the visibility of the **Frames per second** option inside this applet menu."
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the words "on", "off", and "CURSOR".
+#. MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:170
+msgid "This option is used in combination with the `{{CURSOR}}` placeholder. It must contain two keys named **on** and **off** which respectively must contain a comand line argument for enabling/disabling the display of the mouse cursor on the captured file."
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the words "on", "off", and "SOUND".
+#. MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:174
+msgid "This option is used in combination with the `{{SOUND}}` placeholder. It must contain two keys named **on** and **off** which respectively must contain a comand line argument for enabling/disabling the inclusion of sound on the captured file."
+msgstr ""
+
+#: z_create_localized_help.py:176
+msgid "These options are used in combination with the `{{APPEND_1}}` to `{{APPEND_10}}` placeholders. This is done to avoid repeating the same arguments on all menu items commands."
+msgstr ""
+
+#: z_create_localized_help.py:178
+msgid "Flags"
+msgstr ""
+
+#: z_create_localized_help.py:182 z_create_localized_help.py:189
+msgid "Flag"
+msgstr ""
+
+#: z_create_localized_help.py:185
+msgid "The hash (#) character in front of a menu item label is a flag that inhibits the menu item from changing the state of the applet (the change of the applet icon from normal to recording)."
+msgstr ""
+
+#: z_create_localized_help.py:187
+msgid "Menu item command flags"
+msgstr ""
+
+#: z_create_localized_help.py:192 z_create_localized_help.py:194 z_create_localized_help.py:230
+msgid "Menu item command interactive placeholders"
+msgstr ""
+
+#: z_create_localized_help.py:192
+#, python-format
+msgid "This flag will allow the use of this applet area selector helper. See %s"
+msgstr ""
+
+#: z_create_localized_help.py:194
+#, python-format
+msgid "This flag will allow the use of this applet window selector helper. See %s"
+msgstr ""
+
+#: z_create_localized_help.py:196
+msgid "Menu item command placeholders"
+msgstr ""
+
+#: z_create_localized_help.py:198 z_create_localized_help.py:232
+msgid "Placeholder"
+msgstr ""
+
+#: z_create_localized_help.py:203
+msgid "Placeholder for the program options `append-1` to `append-10`."
+msgstr ""
+
+#: z_create_localized_help.py:205
+msgid "The command line argument used to decide if the capture will display the cursor or not."
+msgstr ""
+
+#: z_create_localized_help.py:207
+msgid "Delay in seconds before taking a screenshot."
+msgstr ""
+
+#: z_create_localized_help.py:208
+msgid "The directory used as storage for the captures."
+msgstr ""
+
+#: z_create_localized_help.py:210
+msgid "The file extension that the generated capture will have. It has to be used in pairs (Example: `{{EXT}}png{{EXT}}`)."
+msgstr ""
+
+#: z_create_localized_help.py:212
+msgid "The file name (no extension included) that the generated capture will have."
+msgstr ""
+
+#: z_create_localized_help.py:214
+msgid "Frames per second (frame rate)."
+msgstr ""
+
+#: z_create_localized_help.py:216
+msgid "The directory used to store the screencast captures."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:219
+msgid "The screen dimensions with format `widthxheight`. Example: `1440x900`"
+msgstr ""
+
+#: z_create_localized_help.py:221
+msgid "The screen height."
+msgstr ""
+
+#: z_create_localized_help.py:222
+msgid "The screen width."
+msgstr ""
+
+#: z_create_localized_help.py:224
+msgid "The directory used to store the screenshot captures."
+msgstr ""
+
+#: z_create_localized_help.py:226
+msgid "The command line argument used to decide if the capture include sound or not."
+msgstr ""
+
+#: z_create_localized_help.py:234
+msgid "`x` screen coordinates."
+msgstr ""
+
+#: z_create_localized_help.py:235
+msgid "`y` screen coordinates."
+msgstr ""
+
+#: z_create_localized_help.py:236
+msgid "`x` and `y` screen coordinates separated by a comma."
+msgstr ""
+
+#: z_create_localized_help.py:238
+msgid "It could be either the width of a selected area or the width of a selected window."
+msgstr ""
+
+#: z_create_localized_help.py:240
+msgid "It could be either the height of a selected area or the height of a selected window."
+msgstr ""
+
+#: z_create_localized_help.py:242
+msgid "Same as `I_WIDTH`, but with `1` added to its value."
+msgstr ""
+
+#: z_create_localized_help.py:244
+msgid "Same as `I_HEIGHT`, but with `1` added to its value."
+msgstr ""
+
+#: z_create_localized_help.py:245
+msgid "The selected window ID."
+msgstr ""
+
+#: z_create_localized_help.py:247
+msgid "The 'x-window' property of the selected window."
+msgstr ""
+
+#: z_create_localized_help.py:248
+msgid "The selected window class name."
+msgstr ""
+
+#: z_create_localized_help.py:249
+msgid "The selected window class title."
+msgstr ""
+
+#: z_create_localized_help.py:251
+msgid "Cinnamon recorder profiles"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:254
+msgid "The built-in Cinnamon recorder uses the GStreamer general-purpose multimedia framework ([GStreamer documentation](https://gstreamer.freedesktop.org/documentation/index.html)). It generates a video file with the `webm` extension using the `vp8enc` encoder and the `webmmux` muxer. This applet exposes the use of the Cinnamon recorder through profiles."
+msgstr ""
+
+#: z_create_localized_help.py:262
+msgid "Profiles are stored inside an applet preference."
+msgstr ""
+
+#: z_create_localized_help.py:263
+msgid "Profiles can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent profiles, modifying the generated JSON file and importing the modified file again."
+msgstr ""
+
+#: z_create_localized_help.py:276
+msgid "Like everything coming from Gnome, GStreamer is an always-evolving-never-finished-barely-functional piece of software. With that in mind, when using the wrong combination of encoder/muxer, Cinnamon will miserably crash. So, experiment at your own risk."
+msgstr ""
+
+#: z_create_localized_help.py:282
+msgid "Below are the two Cinnamon recorder profiles shipped with this applet. The profile named default cannot be modified/deleted."
+msgstr ""
+
+#: z_create_localized_help.py:301
+msgid "Profile options"
+msgstr ""
+
+#: z_create_localized_help.py:303
+msgid "All profile options are mandatory."
+msgstr ""
+
+#: z_create_localized_help.py:307
+msgid "Name of the profile shown on the profile selector menu."
+msgstr ""
+
+#: z_create_localized_help.py:309
+msgid "Basic description of the profile that will be displayed as a tooltip."
+msgstr ""
+
+#: z_create_localized_help.py:310
+msgid "The file extension of the generated file."
+msgstr ""
+
+#: z_create_localized_help.py:311
+msgid "GStreamer pipeline."
+msgstr ""
+
+#: z_create_localized_help.py:313
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: z_create_localized_help.py:315
+msgid "Keyboard shortcuts are tied to specific capture types."
+msgstr ""
+
+#: z_create_localized_help.py:317
+msgid "Known issues"
+msgstr ""
+
+#: z_create_localized_help.py:320
+msgid "Cinnamon 3.0.x and its built-in screenshot mechanism"
+msgstr ""
+
+#: z_create_localized_help.py:323 applet.js:1941
+msgid "The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"
+msgstr ""
+
+#: z_create_localized_help.py:326 applet.js:1942
+msgid "Do not use it or Cinnamon will crash!"
+msgstr ""
+
+#: z_create_localized_help.py:329
+#, python-format
+msgid "It can only be fixed by building from source the cinnamon package for version 3.0.x with the following patch (%s). Or by simply updating to any other newer version of Cinnamon (3.2.x, 3.4.x, etc.)."
+msgstr ""
+
+#: z_create_localized_help.py:332
+msgid "To permanently dismiss the critical notification displayed when the applet is used under Cinnamon 3.0.x, enable the option found in this applet settings window called \"I read the disclaimer and I'm aware of the consequences\", under the \"Disclaimer\" section."
+msgstr ""
+
+#: applet.js:126
+msgid "Open screenshots folder"
+msgstr ""
+
+#: applet.js:136
+msgid "Open screencasts folder"
+msgstr ""
+
+#: applet.js:177
+msgid "Programs Support"
+msgstr ""
+
+#: applet.js:178
+msgid "Export programs"
+msgstr ""
+
+#: applet.js:179
+msgid "Import programs"
+msgstr ""
+
+#: applet.js:180
+msgid "Reset programs"
+msgstr ""
+
+#: applet.js:181
+msgid "Remove all programs"
+msgstr ""
+
+#: applet.js:184
+msgid "Cinnamon Recorder Profiles"
+msgstr ""
+
+#: applet.js:185
+msgid "Export profiles"
+msgstr ""
+
+#: applet.js:186
+msgid "Import profiles"
+msgstr ""
+
+#: applet.js:187
+msgid "Reset profiles"
+msgstr ""
+
+#: applet.js:188
+msgid "Remove all profiles"
+msgstr ""
+
+#: applet.js:335
+msgid "No stylesheet found"
+msgstr ""
+
+#: applet.js:678
+msgid "Choose camera"
+msgstr ""
+
+#: applet.js:679
+msgid "Choose recorder"
+msgstr ""
+
+#: applet.js:684
+msgid "Latest Capture"
+msgstr ""
+
+#: applet.js:716
+msgid "Screencast"
+msgstr ""
+
+#: applet.js:716
+msgid "Screenshot"
+msgstr ""
+
+#: applet.js:727
+msgid "Assign a title to your program!!!"
+msgstr ""
+
+#: applet.js:731 utils.js:47
+msgid "Disabled"
+msgstr ""
+
+#: applet.js:802
+msgid "Include cursor"
+msgstr ""
+
+#: applet.js:809
+msgid "Whether to include mouse cursor in screenshot."
+msgstr ""
+
+#: applet.js:823
+#, javascript-format
+msgid "Monitor %d"
+msgstr ""
+
+#: applet.js:836
+msgid "Auto copy image"
+msgstr ""
+
+#: applet.js:852 applet.js:948
+msgid "Repeat last"
+msgstr ""
+
+#: applet.js:869
+msgid "Capture delay"
+msgstr ""
+
+#. TO TRANSLATORS:
+#. sec. = abbreviation of "second"
+#. secs. = abbreviation of "seconds"
+#: applet.js:883
+msgid "sec."
+msgid_plural "secs."
+msgstr[0] ""
+msgstr[1] ""
+
+#: applet.js:891
+msgid "How many seconds to wait before taking a screenshot."
+msgstr ""
+
+#: applet.js:903 utils.js:518
+msgid "Profile"
+msgstr ""
+
+#: applet.js:912
+msgid "Choose Cinnamon recorder profile"
+msgstr ""
+
+#: applet.js:918 applet.js:1285
+msgid "Start recording"
+msgstr ""
+
+#: applet.js:931
+msgid "Record sound"
+msgstr ""
+
+#: applet.js:938
+msgid "Whether to record sound."
+msgstr ""
+
+#: applet.js:964 applet.js:1282
+msgid "Stop recording"
+msgstr ""
+
+#: applet.js:975 applet.js:994
+msgid "Frames per second"
+msgstr ""
+
+#: applet.js:986
+msgid "FPS"
+msgstr ""
+
+#: applet.js:1007
+msgid "Device options"
+msgstr ""
+
+#: applet.js:1208 utils.js:2747
+msgid "File path copied to clipboard."
+msgstr ""
+
+#: applet.js:1212 utils.js:2743
+msgid "Image data copied to clipboard."
+msgstr ""
+
+#: applet.js:1296
+msgid "Save folder doesn't exist!"
+msgstr ""
+
+#: applet.js:1304
+msgid "Path to save folder is not a directory!"
+msgstr ""
+
+#: applet.js:1324
+msgid "File cannot be created!"
+msgstr ""
+
+#: applet.js:1568 applet.js:1630
+msgid "Displaying command that will be executed"
+msgstr ""
+
+#: applet.js:1663
+msgid "Command exited with error status"
+msgstr ""
+
+#: applet.js:1816
+msgid "Possibly malformed JSON file."
+msgstr ""
+
+#: applet.js:1817
+msgid "Check the logs."
+msgstr ""
+
+#: applet.js:1877
+msgid "Do you really want to reset this preference to its default value?"
+msgstr ""
+
+#: applet.js:1918
+msgid "Do you really want to empty this preference?"
+msgstr ""
+
+#: applet.js:1943
+msgid "Read this applet help page (Known issues) for more details on the matter."
+msgstr ""
+
+#: applet.js:1944
+msgid "You will keep seeing this notification until you follow the instructions found on the help page."
+msgstr ""
+
+#: applet.js:1955
+msgid "Operation aborted!"
+msgstr ""
+
+#: utils.js:48
+msgid "Area"
+msgstr ""
+
+#: utils.js:49
+msgid "Cinnamon UI"
+msgstr ""
+
+#: utils.js:50
+msgid "Current Window"
+msgstr ""
+
+#: utils.js:51
+msgid "Monitor"
+msgstr ""
+
+#: utils.js:52
+msgid "Screen"
+msgstr ""
+
+#: utils.js:53
+msgid "Tooltip"
+msgstr ""
+
+#: utils.js:54
+msgid "Window Menu"
+msgstr ""
+
+#: utils.js:55
+msgid "Window Section"
+msgstr ""
+
+#: utils.js:56
+msgid "Window"
+msgstr ""
+
+#. settings-schema.json->pref_copy_to_clipboard->options
+#: utils.js:651
+msgid "Off"
+msgstr ""
+
+#: utils.js:1325
+msgid "Select an area by clicking and dragging"
+msgstr ""
+
+#: utils.js:1327
+msgid "Use arrow keys to move the selection"
+msgstr ""
+
+#: utils.js:1329
+msgid "Use SHIFT and arrow keys to resize the selection"
+msgstr ""
+
+#: utils.js:1331
+msgid "Press ENTER to confirm or ESC to cancel"
+msgstr ""
+
+#: utils.js:1335
+msgid "Select a UI element by moving the mouse"
+msgstr ""
+
+#: utils.js:1337
+msgid "Use mouse wheel to traverse hierarchy"
+msgstr ""
+
+#: utils.js:1339
+msgid "Hold SHIFT to allow clicking UI element"
+msgstr ""
+
+#: utils.js:1341
+msgid "Click to complete the capture, or ESC to cancel"
+msgstr ""
+
+#: utils.js:2564
+msgid "File no longer available"
+msgstr ""
+
+#: utils.js:2583
+msgid "Delete"
+msgstr ""
+
+#: utils.js:2584
+msgid "Delete captured file from file system."
+msgstr ""
+
+#: utils.js:2588
+msgid "Copy Data"
+msgstr ""
+
+#: utils.js:2589
+msgid "Copy image data to clipboard."
+msgstr ""
+
+#: utils.js:2593
+msgid "Copy Path"
+msgstr ""
+
+#: utils.js:2594
+msgid "Copy image path to clipboard."
+msgstr ""
+
+#: utils.js:2711
+msgid "Do you really want to delete this file?"
+msgstr ""
+
+#: utils.js:2734
+msgid "Failed copying image data."
+msgstr ""
+
+#: utils.js:2783
+msgid "Left click"
+msgstr ""
+
+#: utils.js:2783
+msgid "Open image file."
+msgstr ""
+
+#: utils.js:2784
+msgid "Open folder."
+msgstr ""
+
+#: utils.js:2784
+msgid "Right click"
+msgstr ""
+
+#: utils.js:2831
+msgid "WARNING!!!"
+msgstr ""
+
+#: utils.js:2969 utils.js:2970
+msgid "Ctrl"
+msgstr ""
+
+#: utils.js:2971
+msgid "Ctrl L"
+msgstr ""
+
+#: utils.js:2972
+msgid "Ctrl R"
+msgstr ""
+
+#: utils.js:2973
+msgid "Shift"
+msgstr ""
+
+#: utils.js:2974
+msgid "Shift L"
+msgstr ""
+
+#: utils.js:2975
+msgid "Shift R"
+msgstr ""
+
+#: utils.js:2976
+msgid "Alt"
+msgstr ""
+
+#: utils.js:2977
+msgid "Alt L"
+msgstr ""
+
+#: utils.js:2978
+msgid "Alt R"
+msgstr ""
+
+#: utils.js:2979
+msgid "Super"
+msgstr ""
+
+#: utils.js:2980
+msgid "Super L"
+msgstr ""
+
+#: utils.js:2981
+msgid "Super R"
+msgstr ""
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr ""
+
+#. metadata.json->description
+msgid "Screenshot and screencasting tools."
+msgstr ""
+
+#. metadata.json->name
+msgid "Desktop Capture (Fork By Odyseus)"
+msgstr ""
+
+#. settings-schema.json->general-settings->description
+msgid "Applet Settings"
+msgstr ""
+
+#. settings-schema.json->pref_custom_icon_for_applet->description
+msgid "Normal icon"
+msgstr ""
+
+#. settings-schema.json->pref_custom_icon_for_applet->tooltip
+msgid "Select an icon to show in the panel."
+msgstr ""
+
+#. settings-schema.json->pref_custom_icon_for_applet_recording->description
+msgid "Screencasting icon"
+msgstr ""
+
+#. settings-schema.json->pref_custom_icon_for_applet_recording->tooltip
+msgid "Select an icon to show in the panel when screencasting is active."
+msgstr ""
+
+#. settings-schema.json->pref_display_device_options_in_sub_menu->description
+msgid "Display menu quick options in a submenu"
+msgstr ""
+
+#. settings-schema.json->general-settings-screenshot->description
+msgid "Screenshots: General Settings"
+msgstr ""
+
+#. settings-schema.json->pref_camera_save_dir->description
+#. settings-schema.json->pref_recorder_save_dir->description
+msgid "Save location"
+msgstr ""
+
+#. settings-schema.json->pref_camera_save_dir->tooltip
+msgid "Path to a folder to save new screenshots."
+msgstr ""
+
+#. settings-schema.json->pref_camera_save_prefix->description
+#. settings-schema.json->pref_recorder_save_prefix->description
+msgid "File name format"
+msgstr ""
+
+#. settings-schema.json->pref_camera_save_prefix->tooltip
+#. settings-schema.json->pref_recorder_save_prefix->tooltip
+msgid ""
+"Format for the generated file name. Possible placeholders are:\n"
+"\n"
+"%Y = year\n"
+"%M = month\n"
+"%D = day\n"
+"%H = hours\n"
+"%I = minutes\n"
+"%S = seconds\n"
+"%m = milliseconds\n"
+"%TYPE = area, window, etc. (for screenshots only)"
+msgstr ""
+
+#. settings-schema.json->general-settings-recorder->description
+msgid "Recorder: General Settings"
+msgstr ""
+
+#. settings-schema.json->pref_copy_to_clipboard->options
+msgid "File path"
+msgstr ""
+
+#. settings-schema.json->pref_copy_to_clipboard->options
+msgid "Image Data"
+msgstr ""
+
+#. settings-schema.json->pref_copy_to_clipboard->description
+msgid "Copy to clipboard"
+msgstr ""
+
+#. settings-schema.json->pref_copy_to_clipboard->tooltip
+msgid "Whether to copy the file path or image data of screenshots to clipboard after capture."
+msgstr ""
+
+#. settings-schema.json->label-recorder-settings->description
+msgid "Please note not all recorder tools may respect these settings."
+msgstr ""
+
+#. settings-schema.json->pref_recorder_save_dir->tooltip
+msgid "Path to a folder for new screen recordings."
+msgstr ""
+
+#. settings-schema.json->keybindings-settings->description
+msgid "Keybindings Settings"
+msgstr ""
+
+#. settings-schema.json->apply-keybindings-button-1->description
+#. settings-schema.json->apply-keybindings-button-2->description
+msgid "Apply keybinding changes"
+msgstr ""
+
+#. settings-schema.json->keybindings-screenshot-settings->description
+msgid "Screenshot Keybindings"
+msgstr ""
+
+#. settings-schema.json->pref_key_camera_window->description
+msgid "Capture a window"
+msgstr ""
+
+#. settings-schema.json->pref_key_camera_area->description
+msgid "Capture an area"
+msgstr ""
+
+#. settings-schema.json->pref_key_camera_cinnamon_ui->description
+msgid "Capture a Cinnamon UI element"
+msgstr ""
+
+#. settings-schema.json->pref_key_camera_cinnamon_ui->tooltip
+#. settings-schema.json->pref_key_camera_monitor_0->tooltip
+#. settings-schema.json->pref_key_camera_monitor_1->tooltip
+#. settings-schema.json->pref_key_camera_monitor_2->tooltip
+msgid "Cinnamon only."
+msgstr ""
+
+#. settings-schema.json->pref_key_camera_screen->description
+msgid "Capture the screen"
+msgstr ""
+
+#. settings-schema.json->pref_key_camera_monitor_0->description
+msgid "Capture monitor 1"
+msgstr ""
+
+#. settings-schema.json->pref_key_camera_monitor_1->description
+msgid "Capture monitor 2"
+msgstr ""
+
+#. settings-schema.json->pref_key_camera_monitor_2->description
+msgid "Capture monitor 3"
+msgstr ""
+
+#. settings-schema.json->pref_key_camera_repeat->description
+#. settings-schema.json->pref_key_recorder_repeat->description
+msgid "Repeat last capture"
+msgstr ""
+
+#. settings-schema.json->keybindings-screencast-settings->description
+msgid "Screencast Keybindings"
+msgstr ""
+
+#. settings-schema.json->pref_key_recorder_stop_toggle->description
+msgid "Start/stop recording"
+msgstr ""
+
+#. settings-schema.json->pref_key_recorder_stop_toggle->tooltip
+msgid "Will start only Cinnamon Recorder. Will stop any recorder using its stop-command."
+msgstr ""
+
+#. settings-schema.json->recorder-settings->description
+msgid "Screenshots: Cinnamon's built-in Settings"
+msgstr ""
+
+#. settings-schema.json->pref_timer_display_on_screen->description
+msgid "Show capture timer"
+msgstr ""
+
+#. settings-schema.json->pref_timer_display_on_screen->tooltip
+msgid "Whether to show the timer on the screen."
+msgstr ""
+
+#. settings-schema.json->pref_capture_window_as_area->description
+msgid "Capture windows as area"
+msgstr ""
+
+#. settings-schema.json->pref_capture_window_as_area->tooltip
+msgid "Asking the desktop manager for a screenshot of a window would usually result in a nice image retaining any transparent regions. But depending on the graphics drivers and Cinnamon version it may turn out black or distorted."
+msgstr ""
+
+#. settings-schema.json->pref_include_window_frame->description
+msgid "Include window frame"
+msgstr ""
+
+#. settings-schema.json->pref_include_window_frame->tooltip
+msgid "Whether to include the window frame and titlebar in window captures."
+msgstr ""
+
+#. settings-schema.json->pref_use_camera_flash->description
+msgid "Show camera flash"
+msgstr ""
+
+#. settings-schema.json->pref_use_camera_flash->tooltip
+msgid "Whether to show a bright flash over the capture area"
+msgstr ""
+
+#. settings-schema.json->pref_include_styles->description
+msgid "Include highlight style on screenshot"
+msgstr ""
+
+#. settings-schema.json->pref_include_styles->tooltip
+msgid "When taking a screenshot of the Cinnamon UI, include the highlight effect in the captured image. The 'desktop-capture-capture-outline-frame' CSS class is the one that style the highlight effect."
+msgstr ""
+
+#. settings-schema.json->pref_play_shutter_sound->description
+msgid "Play shutter sound"
+msgstr ""
+
+#. settings-schema.json->pref_play_shutter_sound->tooltip
+msgid "Whether to play the shutter sound as the capture is made"
+msgstr ""
+
+#. settings-schema.json->pref_play_timer_interval_sound->description
+msgid "Play timer interval sound"
+msgstr ""
+
+#. settings-schema.json->pref_play_timer_interval_sound->tooltip
+msgid "Whether to play the timer interval sound as the timer counts down"
+msgstr ""
+
+#. settings-schema.json->pref_show_copy_toggle->description
+msgid "Show toggle button for copying image to clipboard"
+msgstr ""
+
+#. settings-schema.json->pref_show_copy_toggle->tooltip
+msgid "Whether to show another toggle button in the menu for copying image to clipboard. If you have notifications enabled you probably don't need this set."
+msgstr ""
+
+#. settings-schema.json->pref_auto_copy_data_auto_off->description
+msgid "Turn off auto copy image data toggle after capture"
+msgstr ""
+
+#. settings-schema.json->pref_auto_copy_data_auto_off->tooltip
+msgid "When set, the copy image to clipboard toggle button override will be turned off after a successful capture."
+msgstr ""
+
+#. settings-schema.json->theme-header->description
+msgid "Appearance"
+msgstr ""
+
+#. settings-schema.json->pref_theme_selector->options
+msgid "Light overlay"
+msgstr ""
+
+#. settings-schema.json->pref_theme_selector->options
+msgid "Dark overlay"
+msgstr ""
+
+#. settings-schema.json->pref_theme_selector->description
+msgid "Overlay theme"
+msgstr ""
+
+#. settings-schema.json->pref_theme_selector->tooltip
+#. settings-schema.json->pref_disclaimer_read->tooltip
+msgid "If you read the help page for this applet (Known issues), you know what this is about."
+msgstr ""
+
+#. settings-schema.json->pref_theme_custom->description
+msgid "Path to custom stylesheet"
+msgstr ""
+
+#. settings-schema.json->disclaimer-header->description
+msgid "Disclaimer"
+msgstr ""
+
+#. settings-schema.json->pref_disclaimer_read->description
+msgid "I read the disclaimer and I'm aware of the consequences"
+msgstr ""
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr ""
+
+#. settings-schema.json->pref_enable_verbose_logging->description
+msgid "Verbose logging"
+msgstr ""
+
+#. settings-schema.json->pref_enable_verbose_logging->tooltip
+msgid "Checking this will enable debug level logging."
+msgstr ""
+
+#. settings-schema.json->x264enc->title
+msgid "H264"
+msgstr ""
+
+#. settings-schema.json->x264enc->description
+msgid ""
+"Encoder: H264\n"
+"Muxer: Matroska\n"
+"File extension: mkv"
+msgstr ""
+
+#. settings-schema.json->gnome-screenshot->title
+msgid "GNOME Screenshot"
+msgstr ""
+
+#. settings-schema.json->shutter->title
+msgid "Shutter"
+msgstr ""
+
+#. settings-schema.json->xwd->title
+msgid "XWD"
+msgstr ""
+
+#. settings-schema.json->imagemagick->title
+msgid "ImageMagick"
+msgstr ""
+
+#. settings-schema.json->kazam->title
+msgid "Kazam"
+msgstr ""
+
+#. settings-schema.json->ffmpeg->title
+msgid "FFmpeg"
+msgstr ""
+
+#. settings-schema.json->recordmydesktop->title
+msgid "RecordMyDesktop"
+msgstr ""
+
+#. settings-schema.json->byzanz-gif->title
+msgid "Byzanz GIF"
+msgstr ""
+
+#. settings-schema.json->byzanz-ogv->title
+msgid "Byzanz OGV"
+msgstr ""
