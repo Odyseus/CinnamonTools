@@ -128,7 +128,7 @@ extensions = [
     "sphinx.ext.githubpages",
     # My Sphinx extensions
     "sphinx_extensions.contextual_admonition",
-    "sphinx_extensions.custom_literalinclude"
+    "sphinx_extensions.docopt_docstrings"
 ]
 
 # sphinx.ext.napoleon settings
@@ -148,8 +148,8 @@ napoleon_use_rtype = True
 # sphinx.ext.coverage.
 coverage_ignore_modules = ["common_modules.docopt", "common_modules.pyperclip"]
 
-# extensions.custom_literalinclude.
-custom_literalincludes = {
+# extensions.docopt_docstrings.
+docopt_docstrings = {
     "cinnamontools": cinnamontools_docopt_doc,
 }
 
