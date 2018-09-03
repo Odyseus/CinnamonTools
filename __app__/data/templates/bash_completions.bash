@@ -83,5 +83,15 @@ _cinnamon_tools_script(){
 update_pot_files update_spanish_localizations create_changelogs " -- "${cur}") )
         ;;
     esac
+
+    # Completion of options and sub-commands.
+    cmd="${COMP_WORDS[2]}"
+
+    case $cmd in
+    "docs"|"docs_no_api")
+        COMPREPLY=( $(compgen -W \
+            "-f --force-clean-build -u --update-inventories" -- "${cur}") )
+        ;;
+    esac
 } &&
 complete -F _cinnamon_tools_script {executable_name}

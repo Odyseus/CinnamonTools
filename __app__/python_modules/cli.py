@@ -41,6 +41,8 @@ Usage:
                         [-r | --restart-cinnamon]
     app.py dev <sub_commands>...
     app.py generate (system_executable | docs | docs_no_api | base_xlet)
+                    [-f | --force-clean-build]
+                    [-u | --update-inventories]
     app.py (-h | --help | --version | -r | --restart-cinnamon)
 
 Options:
@@ -85,6 +87,14 @@ Options:
     whose only content should be the desired theme name.
     This option has precedence over the theme name found inside
     the "theme_name" file.
+
+-f, --force-clean-build
+    Clear doctree cache and destination folder when building the documentation.
+
+-u, --update-inventories
+    Update inventory files from their on-line resources when building the
+    documentation. Inventory files will be updated automatically if they don't
+    already exist.
 
 Command `menu`:
     Open a CLI menu to perform tasks.
@@ -173,6 +183,8 @@ class CommandLineTool():
         self.domain_name = args["--domain"]
         self.xlets_helper = None
         self.restart_cinnamon = args["--restart-cinnamon"]
+        self.force_clean_build = args["--force-clean-build"]
+        self.update_inventories = args["--update-inventories"]
 
         if not args["menu"]:
             self.logger.info(app_utils.get_cli_header(__appname__), date=False)
@@ -322,12 +334,18 @@ class CommandLineTool():
     def docs_generation(self):
         """See :any:`app_utils.generate_docs`
         """
-        app_utils.generate_docs(True)
+        app_utils.generate_docs(generate_api_docs=True,
+                                update_inventories=self.update_inventories,
+                                force_clean_build=self.force_clean_build,
+                                logger=self.logger)
 
     def docs_no_api_generation(self):
         """See :any:`app_utils.generate_docs`
         """
-        app_utils.generate_docs(False)
+        app_utils.generate_docs(generate_api_docs=False,
+                                update_inventories=self.update_inventories,
+                                force_clean_build=self.force_clean_build,
+                                logger=self.logger)
 
     def base_xlet_generation(self):
         """See :any:`app_utils.BaseXletGenerator`

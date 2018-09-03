@@ -14,6 +14,8 @@ bash_completions_step1 : str
     Bash completions creation message. Step 1.
 bash_completions_step2 : str
     Bash completions creation message. Step 2.
+docs_sources_path : str
+    Path to the documentation source.
 domain_storage_file : str
     Path to the file were the domain name for xlets is stored.
 env : dict
@@ -24,6 +26,8 @@ extra_common_files : list
     List of files common to all xlets.
 HOME : str
     Path to the current user home folder.
+inventory_files_map : dict
+    Dictionary of URLs to inventory files and their download location.
 missing_domain_msg : str
     Message to display when the domain name isn't specified at xlet build time.
 missing_theme_name_msg : str
@@ -52,6 +56,8 @@ from datetime import datetime
 from glob import glob
 from shutil import copy2, get_terminal_size, copytree, ignore_patterns, rmtree, which
 from subprocess import PIPE, call, STDOUT, run
+
+from . import tqdm_wget
 
 
 class ANSIColors():
@@ -318,6 +324,8 @@ The following is the content that will be appended to the
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
     os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
 
+docs_sources_path = os.path.join(root_folder, "__app__", "docs_sources")
+
 repo_url = "https://gitlab.com/Odyseus/CinnamonTools"
 
 repo_pages_url = "https://odyseus.gitlab.io/CinnamonTools"
@@ -381,6 +389,11 @@ extra_common_files = [{
 
 readme_list_item_template = "- [{xlet_name}](%s/_static/xlets_help_pages/{xlet_slug}/index.html)" % (
     repo_pages_url)
+
+
+inventory_files_map = [
+    ("https://docs.python.org/3.5/objects.inv", os.path.join(docs_sources_path, "python-3.5-objects.inv"))
+]
 
 
 class LogSystem():
@@ -2005,21 +2018,81 @@ def custom_copytree(src, dst):
             copy2(s, d)
 
 
-def generate_docs(generate_api_docs=False):
+def check_inventories_existence(update_inventories, logger):
+    """Check inventories existence.
+
+    These inventory files are the ones used by the intersphinx Sphinx extension. Since
+    I couldn't make the intersphinx_mapping option to download the inventory files
+    automatically, I simple cutted to the chase and did it myself.
+
+    Parameters
+    ----------
+    logger : object
+        See <class :any:`LogSystem`>.
+
+    Raises
+    ------
+    KeyboardInterruption
+        Halt execution on Ctrl + C press.
+    """
+    logger.info("Checking existence of inventory files...")
+
+    for url, downloaded_file in inventory_files_map:
+        if update_inventories or not os.path.exists(downloaded_file):
+            logger.info("Downloading inventory file...")
+            logger.info("Download URL:")
+            logger.info(url, date=False)
+            logger.info("Download location")
+            logger.info(downloaded_file, date=False)
+
+            try:
+                tqdm_wget.download(url, downloaded_file)
+            except (KeyboardInterrupt, SystemExit):
+                raise KeyboardInterruption()
+            except Exception as err:
+                logger.error(err)
+        else:
+            logger.info("Inventory file exists:")
+            logger.info(downloaded_file, date=False)
+
+
+def generate_docs(generate_api_docs=False,
+                  update_inventories=False,
+                  force_clean_build=False,
+                  logger=None):
     """Build this application documentation.
 
     Parameters
     ----------
     generate_api_docs : bool
         If False, do not extract docstrings from Python modules.
+    force_clean_build : bool, optional
+        Remove destination and doctrees directories before building the documentation.
+    logger : object
+        See <class :any:`LogSystem`>.
     """
+    # No doubts about Sphinx power, but it can be absolutelly retarded sometimes!!!
+    # The intersphinx_mapping option makes no sense whatsoever!!!
+    # So, I have to get my hands dirty and do it all manually!!!
+    check_inventories_existence(update_inventories, logger)
+
+    doctree_temp_location = "/tmp/CinnamonTools-doctrees"
+    docs_location = os.path.join(root_folder, "docs")
+
+    if force_clean_build:
+        rmtree(doctree_temp_location, ignore_errors=True)
+        rmtree(docs_location, ignore_errors=True)
+
     if generate_api_docs:
         commmon_args = ["-M", "--separate", "--force", "-o"]
         # Ignore modules whose docstrings are a mess and/or are incomplete.
+        # Because such docstrings will produce hundred of annoying Sphinx warnings.
         ignored_modules = [
             os.path.join("__app__", "python_modules", "docopt.py"),
             os.path.join("__app__", "python_modules", "mistune.py"),
             os.path.join("__app__", "python_modules", "polib.py"),
+            os.path.join("__app__", "python_modules", "tqdm"),
+            os.path.join("__app__", "python_modules", "tqdm_wget.py"),
         ]
 
         call(["sphinx-apidoc"] + commmon_args + [
@@ -2030,12 +2103,12 @@ def generate_docs(generate_api_docs=False):
             cwd=root_folder)
 
     try:
-        call(["sphinx-build", ".", "-b", "coverage", "-d", "/tmp/CinnamonTools-doctrees", "./coverage"],
-             cwd=os.path.join(root_folder, "__app__", "docs_sources"))
+        call(["sphinx-build", ".", "-b", "coverage", "-d", doctree_temp_location, "./coverage"],
+             cwd=docs_sources_path)
     finally:
-        call(["sphinx-build", ".", "-b", "html", "-d", "/tmp/CinnamonTools-doctrees",
-              os.path.join(root_folder, "docs")],
-             cwd=os.path.join(root_folder, "__app__", "docs_sources"))
+        call(["sphinx-build", ".", "-b", "html", "-d", doctree_temp_location,
+              docs_location],
+             cwd=docs_sources_path)
 
 
 def recursive_glob(stem, file_pattern):
