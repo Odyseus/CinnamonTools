@@ -72,9 +72,9 @@ This file is used to generate the **HELP.html** page for each xlet. The **HELP.h
     - The Python modules that this method depends on are very simple, one-file-only, and non dependent of third-party Python modules. So I have them integrated in the repository and I can even expand their capabilities (as I did with the **mistune** module).
 
 
-.. warning::
-
-    What I have considered and discarded:
+.. contextual-admonition::
+    :context: note
+    :title: What I have considered and discarded
 
     - Sphinx
 
