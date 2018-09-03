@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Knowledge Base documentation build configuration file, created by
-# sphinx-quickstart on Mon Nov 13 12:08:10 2017.
-#
 # This file is execfile()d with the current directory set to its
 # containing dir.
 #
@@ -130,7 +127,8 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     # My Sphinx extensions
-    "extensions.docopt_doc_literalinclude"
+    "sphinx_extensions.contextual_admonition",
+    "sphinx_extensions.custom_literalinclude"
 ]
 
 # sphinx.ext.napoleon settings
@@ -150,8 +148,8 @@ napoleon_use_rtype = True
 # sphinx.ext.coverage.
 coverage_ignore_modules = ["common_modules.docopt", "common_modules.pyperclip"]
 
-# extensions.docopt_doc_literalinclude.
-docopt_doc_literalinclude_docstrings = {
+# extensions.custom_literalinclude.
+custom_literalincludes = {
     "cinnamontools": cinnamontools_docopt_doc,
 }
 
@@ -161,7 +159,7 @@ docopt_doc_literalinclude_docstrings = {
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    "python": ("https://docs.python.org/3.5", "python.3.5.objects.inv")
+    "python": ("https://docs.python.org/3.5", "python-3.5-objects.inv")
 }
 
 # Python's docs don't change every week.
