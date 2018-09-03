@@ -414,9 +414,8 @@ def save_file(file_path, data, is_xlet_help_file=False):
         if is_xlet_help_file:
             xlet_folder = app_utils.get_parent_dir(file_path, 0)
             xlet_icon = os.path.join(xlet_folder, "icon.png")
-            repo_folder = app_utils.get_parent_dir(file_path, 2)
             xlet_slug = os.path.basename(app_utils.get_parent_dir(file_path))
-            dest_path = os.path.join(repo_folder, "docs", "_static",
+            dest_path = os.path.join(app_utils.docs_sources_path, "_static",
                                      "xlets_help_pages", xlet_slug)
             dest_html_file = os.path.join(dest_path, "index.html")
             dest_icon_file = os.path.join(dest_path, "icon.png")
