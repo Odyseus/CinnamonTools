@@ -7,7 +7,7 @@ variant_names = ["GreybirdBlue", "MintGreen"]
 supported_cinnamon_versions = ["3.0", "3.4"]
 
 if __name__ == "__main__":
-    cmd = ["sass", "--sourcemap=none", "--no-cache"]
+    cmd = ["sass", "--no-source-map"]
 
     for variant in variant_names:
         # Parse Cinnamon themes
