@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Requirements" href="includes/requirements.html" /> 
+    <link rel="next" title="Requirements" href="includes/00-requirements.html" /> 
 
 </head>
 
@@ -77,10 +77,11 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="includes/requirements.html">Requirements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includes/usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includes/development-notes.html">Development notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includes/code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
 </ul>
 
             
@@ -142,7 +143,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="includes/requirements.html" class="btn btn-neutral float-right" title="Requirements" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="includes/00-requirements.html" class="btn btn-neutral float-right" title="Requirements" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
   </div>
@@ -154,44 +155,42 @@
             
   <div class="section" id="cinnamon-tools-development-documentation">
 <h1>Cinnamon Tools’ development documentation<a class="headerlink" href="#cinnamon-tools-development-documentation" title="Permalink to this headline">¶</a></h1>
-<p>A collection of xlets for the Cinnamon Desktop Environment.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>The use of this Python application is merely to assist in the development of the xlets in this repository (creating this documentation, creating the xlet’s localized help pages, updating the xlet’s POT files, etc.). It is also used to <em>build</em> the xlets into their final usable state.</p>
+<div class="admonition-about-this-documentation note admonition">
+<p class="admonition-title">About this documentation</p>
+<p>Here is documented the usage of the Cinnamon Tools’ Python application <code class="docutils literal notranslate"><span class="pre">app.py</span></code>. This Python application is used to build all xlets/themes into their final usable state and to assist in the development of the xlets/themes themselves.</p>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>All xlets in the repository aren’t directly usable, they need to be <em>built</em>. <em>Building</em> an xlet just means that the <em>raw xlet</em> (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (&lt;xlet_name&gt;&#64;&lt;custom_domain_name&gt;) to all files (files content and file names). It will also compile the <code class="docutils literal notranslate"><span class="pre">gsettings</span></code> files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, etc.).</p>
-<p>The same principle applies to the themes in this repository (they need to be <em>built</em>). Although, the process is totally different.</p>
+<div class="admonition-end-users note admonition">
+<p class="admonition-title">End users</p>
+<p>End users can focus their attention on <a class="reference internal" href="includes/01-usage.html#how-to-build-xlets-reference"><span class="std std-ref">how to build xlets</span></a> and <a class="reference internal" href="includes/01-usage.html#how-to-build-themes-reference"><span class="std std-ref">how to build themes</span></a> sections.</p>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Technically, the generic term <strong>xlet</strong> applies to applets, extensions, desklets and themes. But I will be using the explicit term <strong>theme</strong> for themes and <strong>xlet</strong> for the rest of xlets.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Technically, the generic term <strong>xlet</strong> applies to Cinnamon applets, extensions, desklets and themes. But I will be using throughout this documentation the explicit term <strong>theme</strong> for themes and <strong>xlet</strong> for the rest of xlets.</p>
 </div>
 </div>
 <div class="section" id="table-of-content">
 <h1>Table of Content<a class="headerlink" href="#table-of-content" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="includes/requirements.html">Requirements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includes/usage.html">Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="includes/usage.html#cli-help-page"><abbr title="Command Line Interface">CLI</abbr> help page</a></li>
-<li class="toctree-l2"><a class="reference internal" href="includes/usage.html#detailed-usage">Detailed Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/01-usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="includes/01-usage.html#cli-help-page"><abbr title="Command Line Interface">CLI</abbr> help page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/01-usage.html#detailed-usage">Detailed Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="includes/development-notes.html">Development notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="includes/development-notes.html#xlets-development-commandments">Xlets development <em>commandments</em></a></li>
-<li class="toctree-l2"><a class="reference internal" href="includes/development-notes.html#z-config-py-file-inside-xlets-directories">z_config.py file inside xlets directories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="includes/development-notes.html#z-create-localized-help-py-file-inside-xlets-directories">z_create_localized_help.py file inside xlets directories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="includes/development-notes.html#eol-ideas-plans"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/02-development-notes.html">Development notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="includes/02-development-notes.html#xlets-development-commandments">Xlets development <em>commandments</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/02-development-notes.html#z-config-py-file-inside-xlets-directories">z_config.py file inside xlets directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/02-development-notes.html#z-create-localized-help-py-file-inside-xlets-directories">z_create_localized_help.py file inside xlets directories</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="includes/code-styling.html">Code styling/guidelines</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="includes/code-styling.html#css-sass">CSS/SASS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="includes/code-styling.html#javascript">JavaScript</a></li>
-<li class="toctree-l2"><a class="reference internal" href="includes/code-styling.html#python">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includes/03-code-styling.html">Code styling/guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="includes/03-code-styling.html#css-sass">CSS/SASS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/03-code-styling.html#javascript">JavaScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includes/03-code-styling.html#python">Python</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -214,7 +213,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="includes/requirements.html" class="btn btn-neutral float-right" title="Requirements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="includes/00-requirements.html" class="btn btn-neutral float-right" title="Requirements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

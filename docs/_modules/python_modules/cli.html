@@ -76,10 +76,11 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../includes/requirements.html">Requirements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../includes/usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../includes/development-notes.html">Development notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../includes/code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
 </ul>
 
             
@@ -186,6 +187,8 @@
 <span class="s2">                        [-r | --restart-cinnamon]</span>
 <span class="s2">    app.py dev &lt;sub_commands&gt;...</span>
 <span class="s2">    app.py generate (system_executable | docs | docs_no_api | base_xlet)</span>
+<span class="s2">                    [-f | --force-clean-build]</span>
+<span class="s2">                    [-u | --update-inventories]</span>
 <span class="s2">    app.py (-h | --help | --version | -r | --restart-cinnamon)</span>
 
 <span class="s2">Options:</span>
@@ -230,6 +233,14 @@
 <span class="s2">    whose only content should be the desired theme name.</span>
 <span class="s2">    This option has precedence over the theme name found inside</span>
 <span class="s2">    the &quot;theme_name&quot; file.</span>
+
+<span class="s2">-f, --force-clean-build</span>
+<span class="s2">    Clear doctree cache and destination folder when building the documentation.</span>
+
+<span class="s2">-u, --update-inventories</span>
+<span class="s2">    Update inventory files from their on-line resources when building the</span>
+<span class="s2">    documentation. Inventory files will be updated automatically if they don&#39;t</span>
+<span class="s2">    already exist.</span>
 
 <span class="s2">Command `menu`:</span>
 <span class="s2">    Open a CLI menu to perform tasks.</span>
@@ -318,6 +329,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">domain_name</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;--domain&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xlets_helper</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">restart_cinnamon</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;--restart-cinnamon&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">force_clean_build</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;--force-clean-build&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_inventories</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;--update-inventories&quot;</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;menu&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">get_cli_header</span><span class="p">(</span><span class="n">__appname__</span><span class="p">),</span> <span class="n">date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -467,12 +480,18 @@
 <div class="viewcode-block" id="CommandLineTool.docs_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.docs_generation">[docs]</a>    <span class="k">def</span> <span class="nf">docs_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;See :any:`app_utils.generate_docs`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">app_utils</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="n">app_utils</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="n">generate_api_docs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">update_inventories</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_inventories</span><span class="p">,</span>
+                                <span class="n">force_clean_build</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">force_clean_build</span><span class="p">,</span>
+                                <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CommandLineTool.docs_no_api_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.docs_no_api_generation">[docs]</a>    <span class="k">def</span> <span class="nf">docs_no_api_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;See :any:`app_utils.generate_docs`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">app_utils</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+        <span class="n">app_utils</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="n">generate_api_docs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">update_inventories</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_inventories</span><span class="p">,</span>
+                                <span class="n">force_clean_build</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">force_clean_build</span><span class="p">,</span>
+                                <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CommandLineTool.base_xlet_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.base_xlet_generation">[docs]</a>    <span class="k">def</span> <span class="nf">base_xlet_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;See :any:`app_utils.BaseXletGenerator`</span>

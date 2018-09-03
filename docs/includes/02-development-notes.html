@@ -30,8 +30,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Code styling/guidelines" href="code-styling.html" />
-    <link rel="prev" title="Usage" href="usage.html" /> 
+    <link rel="next" title="Code styling/guidelines" href="03-code-styling.html" />
+    <link rel="prev" title="Usage" href="01-usage.html" /> 
 
 </head>
 
@@ -78,8 +78,8 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01-usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Development notes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#xlets-development-commandments">Xlets development <em>commandments</em></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#z-config-py-file-inside-xlets-directories">z_config.py file inside xlets directories</a><ul>
@@ -88,14 +88,14 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#z-create-localized-help-py-file-inside-xlets-directories">z_create_localized_help.py file inside xlets directories</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#html-assets">HTML assets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#help-pages-html-assets">Help pages HTML assets</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#main-class-methods-overview-more-details-in-api-documentation">Main class methods overview (more details in API documentation)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#eol-ideas-plans"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
 </ul>
 
             
@@ -147,7 +147,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/includes/development-notes.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/includes/02-development-notes.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -157,10 +157,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="code-styling.html" class="btn btn-neutral float-right" title="Code styling/guidelines" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="03-code-styling.html" class="btn btn-neutral float-right" title="Code styling/guidelines" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="usage.html" class="btn btn-neutral" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="01-usage.html" class="btn btn-neutral" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -256,8 +256,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="html-assets">
-<h3>HTML assets<a class="headerlink" href="#html-assets" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="help-pages-html-assets">
+<h3>Help pages HTML assets<a class="headerlink" href="#help-pages-html-assets" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://getbootstrap.com/">Bootstrap 4</a> is used as a CSS framework. No Bootstrap JavaScript plugins nor jQuery is used.</p></li>
 <li><p><a class="reference external" href="https://bootswatch.com/flatly/">Bootswatch’s Flatly theme</a> is used as Bootstrap theme. Only because the colors of the default Bootstrap theme are abhorrent.</p></li>
@@ -274,23 +274,6 @@
 </ul>
 </div>
 </div>
-<div class="section" id="eol-ideas-plans">
-<h2><abbr title="end-of-life">EOL</abbr> ideas/plans<a class="headerlink" href="#eol-ideas-plans" title="Permalink to this headline">¶</a></h2>
-<ul>
-<li><p>Linux Mint 18.x/Ubuntu 16.04.x <abbr title="end-of-life">EOL</abbr> is 2021.</p></li>
-<li><p>Remove all retro-compatible code from all xlets. They all are marked with the string <em>Mark for deletion on EOL</em>.</p></li>
-<li><p>Avoid at all cost to make xlets <strong>multiversion</strong>. I already went through that path. It wasn’t pretty all the nonsense that I had to endure.</p></li>
-<li><p>Convert all JavaScript code into ECMAScript 2015 syntax. By 2021, I might get used to that annoyance. LOL</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><strong>Step 1 (Done):</strong> Eradicate the use of the <strong>Lang</strong> Cjs module in favor of arrow/standard functions.</p></li>
-<li><p><strong>Step 2 (Done):</strong> Convert all functions (that can be converted) to arrow functions.</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>Remove all <code class="docutils literal notranslate"><span class="pre">try{}catch{}</span></code> blocks on xlets <code class="docutils literal notranslate"><span class="pre">_init</span></code> methods. Newer versions of Cinnamon already uses these code blocks to wrap xlets initialization. Keep an eye on it in case that they decide to change this yet again.</p></li>
-</ul>
-</div>
 </div>
 
 
@@ -301,10 +284,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="code-styling.html" class="btn btn-neutral float-right" title="Code styling/guidelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="03-code-styling.html" class="btn btn-neutral float-right" title="Code styling/guidelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="usage.html" class="btn btn-neutral" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="01-usage.html" class="btn btn-neutral" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

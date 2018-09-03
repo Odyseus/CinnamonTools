@@ -78,10 +78,11 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../includes/requirements.html">Requirements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../includes/usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../includes/development-notes.html">Development notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../includes/code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
 </ul>
 
             
@@ -193,6 +194,12 @@
 </dd></dl>
 
 <dl class="attribute">
+<dt id="python_modules.app_utils.docs_sources_path">
+<code class="descclassname">python_modules.app_utils.</code><code class="descname">docs_sources_path</code><a class="headerlink" href="#python_modules.app_utils.docs_sources_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – Path to the documentation source.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="python_modules.app_utils.domain_storage_file">
 <code class="descclassname">python_modules.app_utils.</code><code class="descname">domain_storage_file</code><a class="headerlink" href="#python_modules.app_utils.domain_storage_file" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>str</em> – Path to the file were the domain name for xlets is stored.</p>
@@ -220,6 +227,12 @@
 <dt id="python_modules.app_utils.HOME">
 <code class="descclassname">python_modules.app_utils.</code><code class="descname">HOME</code><a class="headerlink" href="#python_modules.app_utils.HOME" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>str</em> – Path to the current user home folder.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.app_utils.inventory_files_map">
+<code class="descclassname">python_modules.app_utils.</code><code class="descname">inventory_files_map</code><a class="headerlink" href="#python_modules.app_utils.inventory_files_map" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – Dictionary of URLs to inventory files and their download location.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -867,7 +880,7 @@ This metadata file is used by several functions on the XletsHelperCore class.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>prompt</strong> (<em>None</em><em>, </em><em>optional</em>) – The prompt text.</p></li>
+<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/constants.html#None" title="(in Python v3.5)"><em>None</em></a><em>, </em><em>optional</em>) – The prompt text.</p></li>
 <li><p><strong>response</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – “response” should be set to the default value assumed by the caller when
 user simply types ENTER.</p></li>
 </ul>
@@ -1023,7 +1036,7 @@ needed).</p>
 <li><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#dict" title="(in Python v3.5)"><em>dict</em></a>) – A dictionary of options.</p></li>
 <li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The “key” to change from “d”.</p></li>
 <li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The prompt text.</p></li>
-<li><p><strong>default</strong> (<em>None</em><em>, </em><em>optional</em>) – Default option if none entered.</p></li>
+<li><p><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/constants.html#None" title="(in Python v3.5)"><em>None</em></a><em>, </em><em>optional</em>) – Default option if none entered.</p></li>
 <li><p><strong>validator</strong> (<em>function</em><em>, </em><em>optional</em>) – A function to validate the input if needed.</p></li>
 </ul>
 </dd>
@@ -1100,7 +1113,7 @@ For example: ask user for multiple options in one go.</p>
 <dd class="field-even"><p>Stops execution when calling a callback function.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.5/library/constants.html#None" title="(in Python v3.5)">None</a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
@@ -1122,7 +1135,7 @@ For example: ask user for multiple options in one go.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>xlets</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)"><em>list</em></a><em>, </em><em>optional</em>) – The list of xlets to build.</p></li>
-<li><p><strong>domain_name</strong> (<em>None</em><em>, </em><em>optional</em>) – The domain name to use to build the xlets.</p></li>
+<li><p><strong>domain_name</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/constants.html#None" title="(in Python v3.5)"><em>None</em></a><em>, </em><em>optional</em>) – The domain name to use to build the xlets.</p></li>
 <li><p><strong>build_output</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Path to the folder were the built xlets are stored.</p></li>
 <li><p><strong>do_not_cofirm</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to ask for overwrite confirmation when an xlet destination exists or not.</p></li>
 <li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
@@ -1342,12 +1355,33 @@ For example: ask user for multiple options in one go.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="python_modules.app_utils.check_inventories_existence">
+<code class="descclassname">python_modules.app_utils.</code><code class="descname">check_inventories_existence</code><span class="sig-paren">(</span><em>update_inventories</em>, <em>logger</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#check_inventories_existence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.check_inventories_existence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check inventories existence.</p>
+<p>These inventory files are the ones used by the intersphinx Sphinx extension. Since
+I couldn’t make the intersphinx_mapping option to download the inventory files
+automatically, I simple cutted to the chase and did it myself.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#python_modules.app_utils.KeyboardInterruption" title="python_modules.app_utils.KeyboardInterruption"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterruption</span></code></a> – Halt execution on Ctrl + C press.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="python_modules.app_utils.generate_docs">
-<code class="descclassname">python_modules.app_utils.</code><code class="descname">generate_docs</code><span class="sig-paren">(</span><em>generate_api_docs=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#generate_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.generate_docs" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">python_modules.app_utils.</code><code class="descname">generate_docs</code><span class="sig-paren">(</span><em>generate_api_docs=False</em>, <em>update_inventories=False</em>, <em>force_clean_build=False</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_utils.html#generate_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_utils.generate_docs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build this application documentation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>generate_api_docs</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – If False, do not extract docstrings from Python modules.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>generate_api_docs</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – If False, do not extract docstrings from Python modules.</p></li>
+<li><p><strong>force_clean_build</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Remove destination and doctrees directories before building the documentation.</p></li>
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

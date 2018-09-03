@@ -87,8 +87,8 @@ This file is used to generate the **HELP.html** page for each xlet. The **HELP.h
         - None of its converters, tools, and scripts gave me the power that I get with the method that I ended up using.
 
 
-HTML assets
------------
+Help pages HTML assets
+----------------------
 
 - `Bootstrap 4 <https://getbootstrap.com/>`__ is used as a CSS framework. No Bootstrap JavaScript plugins nor jQuery is used.
 - `Bootswatch's Flatly theme <https://bootswatch.com/flatly/>`__ is used as Bootstrap theme. Only because the colors of the default Bootstrap theme are abhorrent.
@@ -103,16 +103,3 @@ Main class methods overview (more details in API documentation)
 - **get_css_custom:** Additional CSS styles.
 - **get_js_custom:** Some custom JS in case that the page needs it. For example: since I use Base64 encoded images, and if an image is used in more than one place in a page, I insert those images with JS.
 
-
-:abbr:`EOL (end-of-life)` ideas/plans
-=====================================
-
-- Linux Mint 18.x/Ubuntu 16.04.x :abbr:`EOL (end-of-life)` is 2021.
-- Remove all retro-compatible code from all xlets. They all are marked with the string *Mark for deletion on EOL*.
-- Avoid at all cost to make xlets **multiversion**. I already went through that path. It wasn't pretty all the nonsense that I had to endure.
-- Convert all JavaScript code into ECMAScript 2015 syntax. By 2021, I might get used to that annoyance. LOL
-
-    + **Step 1 (Done):** Eradicate the use of the **Lang** Cjs module in favor of arrow/standard functions.
-    + **Step 2 (Done):** Convert all functions (that can be converted) to arrow functions.
-
-- Remove all ``try{}catch{}`` blocks on xlets ``_init`` methods. Newer versions of Cinnamon already uses these code blocks to wrap xlets initialization. Keep an eye on it in case that they decide to change this yet again.
