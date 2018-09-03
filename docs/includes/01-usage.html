@@ -169,15 +169,16 @@
             
   <div class="section" id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="cli-help-page">
-<h2><abbr title="Command Line Interface">CLI</abbr> help page<a class="headerlink" href="#cli-help-page" title="Permalink to this headline">¶</a></h2>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>This Python application can generate a system executable with bash completions support. See <a class="reference internal" href="#system-executable-reference"><span class="std std-ref">app.py generate command</span></a>.</p>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Cinnamon Tools Ω
+<div class="section" id="cli-help-page">
+<h2><abbr title="Command Line Interface">CLI</abbr> help page<a class="headerlink" href="#cli-help-page" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight">
+<pre><span class="text-bold">Cinnamon Tools Ω</span>
 
-Usage:
+<span class="text-bold">Usage:</span>
     app.py menu [-d &lt;domain&gt; | --domain=&lt;domain&gt;]
                 [-o &lt;dir&gt; | --output=&lt;dir&gt;]
                 [-n | --no-confirmation]
@@ -197,21 +198,21 @@ Usage:
                     [-u | --update-inventories]
     app.py (-h | --help | --version | -r | --restart-cinnamon)
 
-Options:
+<span class="text-bold">Options:</span>
 
--h, --help
+<span class="text-bold">-h, --help</span>
     Show this screen.
 
---version
+<span class="text-bold">--version</span>
     Show application version.
 
--x &lt;name&gt;, --xlet=&lt;name&gt;
+<span class="text-bold">-x &lt;name&gt;, --xlet=&lt;name&gt;</span>
     Specify one or more applets/extensions to build.
 
--a, --all-xlets
+<span class="text-bold">-a, --all-xlets</span>
     Build all xlets.
 
--d &lt;domain&gt;, --domain=&lt;domain&gt;
+<span class="text-bold">-d &lt;domain&gt;, --domain=&lt;domain&gt;</span>
     This option should be used to define a domain name for use when
     building xlets.
     A file named &quot;domain_name&quot; can also be created at the root of the repository
@@ -219,20 +220,20 @@ Options:
     This option has precedence over the domain name found inside
     the &quot;domain_name&quot; file.
 
--o &lt;dir&gt;, --output=&lt;dir&gt;
+<span class="text-bold">-o &lt;dir&gt;, --output=&lt;dir&gt;</span>
     The output directory that will be used to save the built xlets.
     WARNING!!! If the destination folder is inside a Dropbox folder, all
     symbolic links will be resolved.
 
--n, --no-confirmation
+<span class="text-bold">-n, --no-confirmation</span>
     Do not ask confirmation when building an xlet and the destination already
     exists. Specifying this option means that an existent destination will be
     completely removed, no questions asked.
 
--r, --restart-cinnamon
+<span class="text-bold">-r, --restart-cinnamon</span>
     Restart Cinnamon.
 
--t &lt;name&gt;, --theme-name=&lt;name&gt;
+<span class="text-bold">-t &lt;name&gt;, --theme-name=&lt;name&gt;</span>
     A string used to give a name to the themes. The final theme names will look
     like this: &lt;theme_name&gt;-&lt;theme_variant&gt;.
     A file named &quot;theme_name&quot; can also be created at the root of the repository
@@ -240,38 +241,36 @@ Options:
     This option has precedence over the theme name found inside
     the &quot;theme_name&quot; file.
 
--f, --force-clean-build
+<span class="text-bold">-f, --force-clean-build</span>
     Clear doctree cache and destination folder when building the documentation.
 
--u, --update-inventories
+<span class="text-bold">-u, --update-inventories</span>
     Update inventory files from their on-line resources when building the
-    documentation. Inventory files will be updated automatically if they don&#39;t
+    documentation. Inventory files will be updated automatically if they don&#x27;t
     already exist.
 
-Command `menu`:
+<span class="text-bold">Command `menu`:</span>
     Open a CLI menu to perform tasks.
 
-Command `build`:
+<span class="text-bold">Command `build`:</span>
     Build the specified xlets.
 
-Command `build_themes`:
+<span class="text-bold">Command `build_themes`:</span>
     Build all the themes variants.
 
-Sub-commands for the `dev` command and the order they will be executed:
+<span class="text-bold">Sub-commands for the `dev` command and the order they will be executed:</span>
     generate_meta_file              update_pot_files
     update_spanish_localizations    create_localized_help
     generate_trans_stats            create_changelogs
 
-Sub-commands for the `generate` command:
+<span class="text-bold">Sub-commands for the `generate` command:</span>
     system_executable    Create an executable for this application on the system
                          PATH to be able to run it from anywhere.
     docs                 Generate documentation page.
     docs_no_api          Generate documentation page without extracting Python
                          modules docstrings.
-    base_xlet            Generate a &quot;skeleton&quot; xlet.
-
-</pre></div>
-</div>
+    base_xlet            Generate a &quot;skeleton&quot; xlet.</pre>
+</div></div>
 </div>
 <div class="section" id="detailed-usage">
 <h2>Detailed Usage<a class="headerlink" href="#detailed-usage" title="Permalink to this headline">¶</a></h2>

@@ -3,14 +3,14 @@
 Usage
 *****
 
-:abbr:`CLI (Command Line Interface)` help page
-==============================================
-
 .. hint::
 
     This Python application can generate a system executable with bash completions support. See :ref:`system-executable-reference`.
 
-.. custom-literalinclude:: cinnamontools
+:abbr:`CLI (Command Line Interface)` help page
+==============================================
+
+.. docopt-docstring:: cinnamontools
 
 Detailed Usage
 ==============
