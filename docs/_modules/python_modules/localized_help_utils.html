@@ -190,8 +190,8 @@
 <span class="si">{js_localizations_handler}</span><span class="s2"></span>
 <span class="s2">&lt;/script&gt;</span>
 <span class="s2">&lt;style type=&quot;text/css&quot;&gt;</span>
-<span class="si">{css_bootstrap}</span><span class="s2"></span>
-<span class="si">{css_tweaks}</span><span class="s2"></span>
+<span class="si">{css_bootstrap_theme}</span><span class="s2"></span>
+<span class="si">{css_bootstrap_tweaks}</span><span class="s2"></span>
 <span class="si">{css_custom}</span><span class="s2"></span>
 <span class="s2">&lt;/style&gt;</span>
 <span class="s2">&lt;/head&gt;</span>
@@ -385,10 +385,10 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    css_bootstrap : str</span>
-<span class="sd">        Bootstrap CSS stylesheet.</span>
-<span class="sd">    css_tweaks : str</span>
-<span class="sd">        CSS stylesheet tweaks.</span>
+<span class="sd">    css_bootstrap_theme : str</span>
+<span class="sd">        The content of the CSS Bootstrap theme.</span>
+<span class="sd">    css_bootstrap_tweaks : str</span>
+<span class="sd">        The content of the CSS with tweaks for the Bootstrap theme.</span>
 <span class="sd">    js_localizations_handler : str</span>
 <span class="sd">        Localizations handler JavaScript code.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -402,25 +402,25 @@
 <span class="sd">            Path to the repository folder.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">HTMLInlineAssets</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">css_bootstrap</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">css_tweaks</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">css_bootstrap_theme</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">css_bootstrap_tweaks</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">js_localizations_handler</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
         <span class="n">assets_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;html_assets&quot;</span><span class="p">)</span>
-        <span class="n">path_css_bootstrap</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;bootstrap.min.css&quot;</span><span class="p">)</span>
-        <span class="n">path_css_tweaks</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;tweaks.min.css&quot;</span><span class="p">)</span>
+        <span class="n">path_css_bootstrap_theme</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;flatly_bootstrap_theme&quot;</span><span class="p">,</span>
+                                                <span class="s2">&quot;dist&quot;</span><span class="p">,</span> <span class="s2">&quot;flatly_bootstrap_theme.min.css&quot;</span><span class="p">)</span>
+        <span class="n">path_css_bootstrap_tweaks</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;bootstrap-tweaks.css&quot;</span><span class="p">)</span>
         <span class="n">path_js_localizations_handler</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">assets_folder_path</span><span class="p">,</span> <span class="s2">&quot;js&quot;</span><span class="p">,</span> <span class="s2">&quot;localizations-handler.min.js&quot;</span><span class="p">)</span>
 
         <span class="c1"># Do the &quot;heavy lifting&quot; first.</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_css_bootstrap</span><span class="p">):</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_css_bootstrap</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bootstrap_css</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">css_bootstrap</span> <span class="o">=</span> <span class="n">bootstrap_css</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_css_bootstrap_theme</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_css_bootstrap_theme</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bootstrap_css</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">css_bootstrap_theme</span> <span class="o">=</span> <span class="n">bootstrap_css</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_css_tweaks</span><span class="p">):</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_css_tweaks</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tweaks_css</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">css_tweaks</span> <span class="o">=</span> <span class="n">tweaks_css</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_css_bootstrap_tweaks</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_css_bootstrap_tweaks</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bootstrap_css_tweaks</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">css_bootstrap_tweaks</span> <span class="o">=</span> <span class="n">bootstrap_css_tweaks</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_js_localizations_handler</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_js_localizations_handler</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">localizations_handler_js</span><span class="p">:</span>

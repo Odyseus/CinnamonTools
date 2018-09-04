@@ -176,7 +176,7 @@
 <span class="s2">                [-o &lt;dir&gt; | --output=&lt;dir&gt;]</span>
 <span class="s2">                [-n | --no-confirmation]</span>
 <span class="s2">    app.py build (-a | --all-xlets | -x &lt;name&gt; | --xlet=&lt;name&gt;)</span>
-<span class="s2">                 [-x &lt;name&gt; | --xlet=&lt;name&gt;]...</span>
+<span class="s2">                 [-x &lt;name&gt;... | --xlet=&lt;name&gt;...]</span>
 <span class="s2">                 [-d &lt;domain&gt; | --domain=&lt;domain&gt;]</span>
 <span class="s2">                 [-o &lt;dir&gt; | --output=&lt;dir&gt;]</span>
 <span class="s2">                 [-n | --no-confirmation]</span>
@@ -259,10 +259,10 @@
 <span class="s2">Sub-commands for the `generate` command:</span>
 <span class="s2">    system_executable    Create an executable for this application on the system</span>
 <span class="s2">                         PATH to be able to run it from anywhere.</span>
-<span class="s2">    docs                 Generate documentation page.</span>
-<span class="s2">    docs_no_api          Generate documentation page without extracting Python</span>
+<span class="s2">    docs                 Generate documentation.</span>
+<span class="s2">    docs_no_api          Generate documentation without extracting Python</span>
 <span class="s2">                         modules docstrings.</span>
-<span class="s2">    base_xlet            Generate a &quot;skeleton&quot; xlet.</span>
+<span class="s2">    base_xlet            Interactively generate a &quot;skeleton&quot; xlet.</span>
 
 <span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__appname__</span><span class="o">=</span><span class="n">__appname__</span><span class="p">,</span>
            <span class="n">__version__</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
@@ -285,6 +285,8 @@
 <span class="sd">        Whether to ask for overwrite confirmation when an xlet destination exists or not.</span>
 <span class="sd">    domain_name : str</span>
 <span class="sd">        The domain name to use to build the xlets.</span>
+<span class="sd">    force_clean_build : bool</span>
+<span class="sd">        Remove destination and doctrees directories before building the documentation.</span>
 <span class="sd">    func_names : list</span>
 <span class="sd">        Function names to be executed.</span>
 <span class="sd">    logger : object</span>
@@ -293,6 +295,9 @@
 <span class="sd">        Whether or not to restart Cinnamon after the xlet/theme build process.</span>
 <span class="sd">    theme_name : str</span>
 <span class="sd">        The given name of the theme.</span>
+<span class="sd">    update_inventories : bool</span>
+<span class="sd">        Whether to force the update of the inventory files. Inventory files will be updated</span>
+<span class="sd">        anyway f they don&#39;t exist.</span>
 <span class="sd">    xlets : list</span>
 <span class="sd">        The list of xlets to build.</span>
 <span class="sd">    xlets_helper : object</span>

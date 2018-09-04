@@ -1363,7 +1363,11 @@ I couldn’t make the intersphinx_mapping option to download the inventory files
 automatically, I simple cutted to the chase and did it myself.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update_inventories</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – Whether to force the update of the inventory files. Inventory files will be updated
+anyway f they don’t exist.</p></li>
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><a class="reference internal" href="#python_modules.app_utils.KeyboardInterruption" title="python_modules.app_utils.KeyboardInterruption"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterruption</span></code></a> – Halt execution on Ctrl + C press.</p>
@@ -1379,6 +1383,8 @@ automatically, I simple cutted to the chase and did it myself.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>generate_api_docs</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – If False, do not extract docstrings from Python modules.</p></li>
+<li><p><strong>update_inventories</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to force the update of the inventory files. Inventory files will be updated
+anyway f they don’t exist.</p></li>
 <li><p><strong>force_clean_build</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Remove destination and doctrees directories before building the documentation.</p></li>
 <li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
 </ul>
