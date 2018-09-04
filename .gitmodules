@@ -4,9 +4,3 @@
 [submodule "__app__/docs_sources/sphinx_extensions"]
     path = __app__/docs_sources/sphinx_extensions
     url = git@gitlab.com:Odyseus/sphinx_extensions.git
-[submodule "__app__/data/html_assets/css/bootswatch"]
-    path = __app__/data/html_assets/css/bootswatch
-    url = https://github.com/thomaspark/bootswatch.git
-[submodule "__app__/data/html_assets/css/bootstrap"]
-    path = __app__/data/html_assets/css/bootstrap
-    url = https://github.com/twbs/bootstrap.git
