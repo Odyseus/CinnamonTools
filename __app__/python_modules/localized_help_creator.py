@@ -271,8 +271,8 @@ class LocalizedHelpCreator(object):
             # CSS code interferes with formatting variables. ¬¬
             js_localizations_handler=self.html_assets.js_localizations_handler if
             self.html_assets.js_localizations_handler else "",
-            css_bootstrap=self.html_assets.css_bootstrap if self.html_assets.css_bootstrap else "",
-            css_tweaks=self.html_assets.css_tweaks if self.html_assets.css_tweaks else "",
+            css_bootstrap_theme=self.html_assets.css_bootstrap_theme if self.html_assets.css_bootstrap_theme else "",
+            css_bootstrap_tweaks=self.html_assets.css_bootstrap_tweaks if self.html_assets.css_bootstrap_tweaks else "",
             css_custom=self.get_css_custom(),
             options="\n".join(sorted(self.options, key=pyuca_collator.sort_key)),
             sections="\n".join(self.sections),

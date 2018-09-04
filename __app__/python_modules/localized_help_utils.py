@@ -44,8 +44,8 @@ HTML_DOC = """<!DOCTYPE html>
 {js_localizations_handler}
 </script>
 <style type="text/css">
-{css_bootstrap}
-{css_tweaks}
+{css_bootstrap_theme}
+{css_bootstrap_tweaks}
 {css_custom}
 </style>
 </head>
@@ -239,10 +239,10 @@ class HTMLInlineAssets(object):
 
     Attributes
     ----------
-    css_bootstrap : str
-        Bootstrap CSS stylesheet.
-    css_tweaks : str
-        CSS stylesheet tweaks.
+    css_bootstrap_theme : str
+        The content of the CSS Bootstrap theme.
+    css_bootstrap_tweaks : str
+        The content of the CSS with tweaks for the Bootstrap theme.
     js_localizations_handler : str
         Localizations handler JavaScript code.
     """
@@ -256,25 +256,25 @@ class HTMLInlineAssets(object):
             Path to the repository folder.
         """
         super(HTMLInlineAssets, self).__init__()
-        self.css_bootstrap = ""
-        self.css_tweaks = ""
+        self.css_bootstrap_theme = ""
+        self.css_bootstrap_tweaks = ""
         self.js_localizations_handler = ""
 
         assets_folder_path = os.path.join(repo_folder, "__app__", "data", "html_assets")
-        path_css_bootstrap = os.path.join(
-            assets_folder_path, "css", "bootstrap.min.css")
-        path_css_tweaks = os.path.join(assets_folder_path, "css", "tweaks.min.css")
+        path_css_bootstrap_theme = os.path.join(assets_folder_path, "css", "flatly_bootstrap_theme",
+                                                "dist", "flatly_bootstrap_theme.min.css")
+        path_css_bootstrap_tweaks = os.path.join(assets_folder_path, "css", "bootstrap-tweaks.css")
         path_js_localizations_handler = os.path.join(
             assets_folder_path, "js", "localizations-handler.min.js")
 
         # Do the "heavy lifting" first.
-        if os.path.exists(path_css_bootstrap):
-            with open(path_css_bootstrap, "r", encoding="UTF-8") as bootstrap_css:
-                self.css_bootstrap = bootstrap_css.read()
+        if os.path.exists(path_css_bootstrap_theme):
+            with open(path_css_bootstrap_theme, "r", encoding="UTF-8") as bootstrap_css:
+                self.css_bootstrap_theme = bootstrap_css.read()
 
-        if os.path.exists(path_css_tweaks):
-            with open(path_css_tweaks, "r", encoding="UTF-8") as tweaks_css:
-                self.css_tweaks = tweaks_css.read()
+        if os.path.exists(path_css_bootstrap_tweaks):
+            with open(path_css_bootstrap_tweaks, "r", encoding="UTF-8") as bootstrap_css_tweaks:
+                self.css_bootstrap_tweaks = bootstrap_css_tweaks.read()
 
         if os.path.exists(path_js_localizations_handler):
             with open(path_js_localizations_handler, "r", encoding="UTF-8") as localizations_handler_js:

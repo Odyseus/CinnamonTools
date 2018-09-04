@@ -30,7 +30,7 @@ Usage:
                 [-o <dir> | --output=<dir>]
                 [-n | --no-confirmation]
     app.py build (-a | --all-xlets | -x <name> | --xlet=<name>)
-                 [-x <name> | --xlet=<name>]...
+                 [-x <name>... | --xlet=<name>...]
                  [-d <domain> | --domain=<domain>]
                  [-o <dir> | --output=<dir>]
                  [-n | --no-confirmation]
@@ -113,10 +113,10 @@ Sub-commands for the `dev` command and the order they will be executed:
 Sub-commands for the `generate` command:
     system_executable    Create an executable for this application on the system
                          PATH to be able to run it from anywhere.
-    docs                 Generate documentation page.
-    docs_no_api          Generate documentation page without extracting Python
+    docs                 Generate documentation.
+    docs_no_api          Generate documentation without extracting Python
                          modules docstrings.
-    base_xlet            Generate a "skeleton" xlet.
+    base_xlet            Interactively generate a "skeleton" xlet.
 
 """.format(__appname__=__appname__,
            __version__=__version__)
@@ -139,6 +139,8 @@ class CommandLineTool():
         Whether to ask for overwrite confirmation when an xlet destination exists or not.
     domain_name : str
         The domain name to use to build the xlets.
+    force_clean_build : bool
+        Remove destination and doctrees directories before building the documentation.
     func_names : list
         Function names to be executed.
     logger : object
@@ -147,6 +149,9 @@ class CommandLineTool():
         Whether or not to restart Cinnamon after the xlet/theme build process.
     theme_name : str
         The given name of the theme.
+    update_inventories : bool
+        Whether to force the update of the inventory files. Inventory files will be updated
+        anyway f they don't exist.
     xlets : list
         The list of xlets to build.
     xlets_helper : object

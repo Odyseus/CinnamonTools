@@ -2027,6 +2027,9 @@ def check_inventories_existence(update_inventories, logger):
 
     Parameters
     ----------
+    update_inventories : bool
+        Whether to force the update of the inventory files. Inventory files will be updated
+        anyway f they don't exist.
     logger : object
         See <class :any:`LogSystem`>.
 
@@ -2066,6 +2069,9 @@ def generate_docs(generate_api_docs=False,
     ----------
     generate_api_docs : bool
         If False, do not extract docstrings from Python modules.
+    update_inventories : bool, optional
+        Whether to force the update of the inventory files. Inventory files will be updated
+        anyway f they don't exist.
     force_clean_build : bool, optional
         Remove destination and doctrees directories before building the documentation.
     logger : object
