@@ -15,6 +15,8 @@
             "__app__/docs_sources/images",
             "__app__/docs_sources/modules",
             "__app__/docs_sources/sphinx_rtd_theme_mod",
+            "__app__/docs_sources/sphinx_extensions",
+            "__app__/data/html_assets/css/flatly_bootstrap_theme",
             "docs"
         ],
         "path": ".."

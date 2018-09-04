@@ -4,3 +4,6 @@
 [submodule "__app__/docs_sources/sphinx_extensions"]
     path = __app__/docs_sources/sphinx_extensions
     url = git@gitlab.com:Odyseus/sphinx_extensions.git
+[submodule "__app__/data/html_assets/css/flatly_bootstrap_theme"]
+    path = __app__/data/html_assets/css/flatly_bootstrap_theme
+    url = git@gitlab.com:Odyseus/flatly_bootstrap_theme.git

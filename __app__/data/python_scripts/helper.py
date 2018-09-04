@@ -16,7 +16,6 @@ xlet_has_schema : bool
     Whether or not an xlet contains a directory named schemas.
 """
 import os
-import json
 
 from subprocess import run
 from shutil import which
