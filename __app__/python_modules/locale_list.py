@@ -553,3 +553,7 @@ locale_list = {
         "endonym": "isiZulu"
     }
 }
+
+
+if __name__ == "__main__":
+    pass

@@ -4,8 +4,6 @@
 
 Attributes
 ----------
-Ansi : object
-    :any:`app_utils.ANSIColors` class initialization.
 BOXED_CONTAINER : str
     Boxed container template.
 HTML_DOC : str
@@ -27,10 +25,9 @@ from datetime import datetime
 from shutil import copy2
 
 from . import app_utils
-from . import polib
+from .python_utils import polib
+from .python_utils.ansi_colors import Ansi
 
-
-Ansi = app_utils.Ansi
 
 HTML_DOC = """<!DOCTYPE html>
 <html>
@@ -408,7 +405,7 @@ def save_file(file_path, data, is_xlet_help_file=False):
         with open(file_path, "w") as f:
             f.write(data)
     except Exception as err:
-        print(app_utils.Ansi.ERROR(err))
+        print(Ansi.ERROR(err))
         quit()
     else:
         if is_xlet_help_file:

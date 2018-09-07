@@ -16,11 +16,12 @@ from threading import Thread
 
 from . import app_utils
 from .__init__ import __appname__, __version__
-from .docopt import docopt
+from .python_utils import exceptions, log_system, file_utils, shell_utils
+from .python_utils.docopt import docopt
 
 
 if sys.version_info < (3, 5):
-    raise app_utils.WrongPythonVersion()
+    raise exceptions.WrongPythonVersion()
 
 
 docopt_doc = """{__appname__} {__version__}
@@ -143,8 +144,10 @@ class CommandLineTool():
         Remove destination and doctrees directories before building the documentation.
     func_names : list
         Function names to be executed.
+    generate_api_docs : bool
+        If False, do not extract docstrings from Python modules.
     logger : object
-        See <class :any:`app_utils.LogSystem`>.
+        See <class :any:`log_system.LogSystem`>.
     restart_cinnamon : bool
         Whether or not to restart Cinnamon after the xlet/theme build process.
     theme_name : str
@@ -176,8 +179,8 @@ class CommandLineTool():
         super(CommandLineTool, self).__init__()
 
         self.action = None
-        app_utils.remove_surplus_files("tmp/logs", "CLI*")
-        self.logger = app_utils.LogSystem(filename=app_utils.get_log_file(
+        file_utils.remove_surplus_files("tmp/logs", "CLI*")
+        self.logger = log_system.LogSystem(filename=log_system.get_log_file(
             storage_dir="tmp/logs", prefix="CLI"), verbose=True)
 
         self.build_output = args["--output"]
@@ -190,9 +193,10 @@ class CommandLineTool():
         self.restart_cinnamon = args["--restart-cinnamon"]
         self.force_clean_build = args["--force-clean-build"]
         self.update_inventories = args["--update-inventories"]
+        self.generate_api_docs = args["docs"]
 
         if not args["menu"]:
-            self.logger.info(app_utils.get_cli_header(__appname__), date=False)
+            self.logger.info(shell_utils.get_cli_header(__appname__), date=False)
             print("")
 
         if args["menu"]:
@@ -246,13 +250,9 @@ class CommandLineTool():
                 self.logger.info("System executable generation...")
                 self.action = self.system_executable_generation
 
-            if args["docs"]:
+            if args["docs"] or args["docs_no_api"]:
                 self.logger.info("Documentation generation...")
-                self.action = self.docs_generation
-
-            if args["docs_no_api"]:
-                self.logger.info("Documentation generation...")
-                self.action = self.docs_no_api_generation
+                self.action = self.generate_docs
 
             if args["base_xlet"]:
                 self.logger.info("Base xlet generation...")
@@ -263,7 +263,7 @@ class CommandLineTool():
 
         Raises
         ------
-        app_utils.KeyboardInterruption
+        exceptions.KeyboardInterruption
             Halt execution on Ctrl + C press.
         """
         try:
@@ -300,7 +300,7 @@ class CommandLineTool():
                     if thread is not None and thread.isAlive():
                         thread.join()
         except (KeyboardInterrupt, SystemExit):
-            raise app_utils.KeyboardInterruption()
+            raise exceptions.KeyboardInterruption()
 
     def display_main_menu(self):
         """See :any:`app_menu.CLIMenu`
@@ -331,23 +331,21 @@ class CommandLineTool():
                                logger=self.logger)
 
     def system_executable_generation(self):
-        """See :any:`app_utils.system_executable_generation`
+        """See :any:`template_utils.system_executable_generation`
         """
-        app_utils.system_executable_generation(
-            "cinnamon-tools-app", app_utils.root_folder, logger=self.logger)
+        from .python_utils import template_utils
 
-    def docs_generation(self):
-        """See :any:`app_utils.generate_docs`
-        """
-        app_utils.generate_docs(generate_api_docs=True,
-                                update_inventories=self.update_inventories,
-                                force_clean_build=self.force_clean_build,
-                                logger=self.logger)
+        template_utils.system_executable_generation(
+            "cinnamon-tools-app",
+            app_utils.root_folder,
+            sys_exec_template=os.path.join(app_utils.root_folder, "__app__", "data",
+                                           "templates", "system_executable"),
+            logger=self.logger)
 
-    def docs_no_api_generation(self):
-        """See :any:`app_utils.generate_docs`
+    def generate_docs(self):
+        """See :any:`python_utils.sphinx_docs_utils.generate_docs`
         """
-        app_utils.generate_docs(generate_api_docs=False,
+        app_utils.generate_docs(generate_api_docs=self.generate_api_docs,
                                 update_inventories=self.update_inventories,
                                 force_clean_build=self.force_clean_build,
                                 logger=self.logger)
@@ -364,12 +362,12 @@ def main():
 
     Raises
     ------
-    app_utils.BadExecutionLocation
+    exceptions.BadExecutionLocation
         Do not allow to run any command if the "flag" file isn't
-        found where it should be. See :any:`app_utils.BadExecutionLocation`.
+        found where it should be. See :any:`exceptions.BadExecutionLocation`.
     """
     if not os.path.exists(".cinnamon-tools.flag"):
-        raise app_utils.BadExecutionLocation()
+        raise exceptions.BadExecutionLocation()
 
     arguments = docopt(docopt_doc, version="%s %s" % (__appname__, __version__))
     cli = CommandLineTool(arguments)

@@ -21,9 +21,9 @@ import os
 from subprocess import call
 
 from . import localized_help_utils
-from . import mistune
 from .locale_list import locale_list
-from .pyuca import Collator
+from .python_utils import mistune
+from .python_utils.pyuca import Collator
 
 pyuca_collator = Collator()
 md = mistune.Markdown()

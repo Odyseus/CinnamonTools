@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Command Line Interface menu.
+"""Command Line Interface menu to build xlets and themes.
 """
 
-from . import app_utils, menu, multi_select
+from . import app_utils
 from .__init__ import __appname__, __version__
+from .python_utils import menu, multi_select
 
 
 class CLIMenu():
@@ -12,8 +13,6 @@ class CLIMenu():
 
     Attributes
     ----------
-    app_dev_menu : object
-        App development menu. See <class :any:`menu.Menu`>.
     build_output : str
         Path to the folder were the built xlets are stored.
     do_not_cofirm : bool
@@ -21,15 +20,13 @@ class CLIMenu():
     domain_name : str
         The domain name to use to build the xlets.
     logger : object
-        See <class :any:`app_utils.LogSystem`>.
+        See <class :any:`LogSystem`>.
     main_menu : object
         Main menu. See <class :any:`menu.Menu`>.
     theme_name : str
         The given name of the theme.
-    xlet_dev_menu : object
-        Xlet development menu. See <class :any:`menu.Menu`>.
     xlets_helper : object
-        Helper functions. See <class :any:`app_utils.LogSystem`>.
+        Helper functions. See <class :any:`app_utils.XletsHelperCore`>.
     """
 
     def __init__(self, theme_name="", domain_name="",
@@ -47,7 +44,7 @@ class CLIMenu():
         do_not_cofirm : bool
             Whether to ask for overwrite confirmation when an xlet destination exists or not.
         logger : object
-            See <class :any:`app_utils.LogSystem`>.
+            See <class :any:`LogSystem`>.
         """
         self.theme_name = theme_name
         self.domain_name = domain_name
@@ -58,37 +55,13 @@ class CLIMenu():
 
         self.main_menu = menu.Menu(title="%s %s" % (__appname__, __version__),
                                    message="Main menu")
-        self.xlet_dev_menu = menu.Menu(title="%s %s" % (__appname__, __version__),
-                                       message="Xlet development menu")
-        self.app_dev_menu = menu.Menu(title="%s %s" % (__appname__, __version__),
-                                      message="App development menu")
 
         self.main_menu.set_menu_items([
             ("Choose xlets to build", self.display_build_selector),
             ("Build all xlets", self.build_all_xlets),
             ("Build themes", self.build_themes),
-            ("Xlet development", self.xlet_dev_menu.open),
-            ("App development", self.app_dev_menu.open),
             ("Restart Cinnamon", app_utils.restart_cinnamon),
             ("Exit", self.main_menu.close)
-        ])
-
-        self.xlet_dev_menu.set_menu_items([
-            ("Generate metadata file", self.xlets_helper.generate_meta_file),
-            ("Update POT files", self.xlets_helper.update_pot_files),
-            ("Update Spanish localizations", self.xlets_helper.update_spanish_localizations),
-            ("Create localized help", self.xlets_helper.create_localized_help),
-            ("Generate translations stats", self.xlets_helper.generate_trans_stats),
-            ("Create changelogs", self.xlets_helper.create_changelogs),
-            ("Exit", self.xlet_dev_menu.close)
-        ])
-
-        self.app_dev_menu.set_menu_items([
-            ("Generate system executable", self.system_executable_generation),
-            ("Generate docs", self.docs_generation),
-            ("Generate docs (No API)", self.docs_no_api_generation),
-            ("Generate base xlet", self.base_xlet_generation),
-            ("Exit", self.app_dev_menu.close)
         ])
 
     def open_main_menu(self):
@@ -138,28 +111,6 @@ class CLIMenu():
                                   from_menu=True)
         else:
             print(app_utils.Ansi.WARNING("Operation aborted."))
-
-    def system_executable_generation(self):
-        """See :any:`app_utils.system_executable_generation`
-        """
-        app_utils.system_executable_generation(
-            "cinnamon-tools-app", app_utils.root_folder, logger=self.logger)
-
-    def docs_generation(self):
-        """See :any:`app_utils.generate_docs`
-        """
-        app_utils.generate_docs(True)
-
-    def docs_no_api_generation(self):
-        """See :any:`app_utils.generate_docs`
-        """
-        app_utils.generate_docs(False)
-
-    def base_xlet_generation(self):
-        """See :any:`app_utils.BaseXletGenerator`
-        """
-        base_xlet_generetor = app_utils.BaseXletGenerator(logger=self.logger)
-        base_xlet_generetor.generate()
 
 
 if __name__ == "__main__":
