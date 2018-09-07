@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python_modules.python_utils.pyuca.utils &mdash; Cinnamon Tools  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/cinnamon-logo.svg"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Cinnamon Tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Cinnamon Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_modules.python_utils.pyuca.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_modules.python_utils.pyuca.utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">utilities for formatting the datastructures used in pyuca.</span>
+
+<span class="sd">Useful mostly for debugging output.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+
+<div class="viewcode-block" id="hexstrings2int"><a class="viewcode-back" href="../../../../modules/python_modules/python_modules.python_utils.pyuca.utils.html#python_modules.python_utils.pyuca.utils.hexstrings2int">[docs]</a><span class="k">def</span> <span class="nf">hexstrings2int</span><span class="p">(</span><span class="n">hexstrings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    list of hex strings to list of integers</span>
+
+<span class="sd">    &gt;&gt;&gt; hexstrings2int([&quot;0000&quot;, &quot;0001&quot;, &quot;FFFF&quot;])</span>
+<span class="sd">    [0, 1, 65535]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">hexstring</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span> <span class="k">for</span> <span class="n">hexstring</span> <span class="ow">in</span> <span class="n">hexstrings</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="int2hexstrings"><a class="viewcode-back" href="../../../../modules/python_modules/python_modules.python_utils.pyuca.utils.html#python_modules.python_utils.pyuca.utils.int2hexstrings">[docs]</a><span class="k">def</span> <span class="nf">int2hexstrings</span><span class="p">(</span><span class="n">number_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    list of integers to list of 4-digit hex strings</span>
+
+<span class="sd">    &gt;&gt;&gt; int2hexstrings([0, 1, 65535])</span>
+<span class="sd">    [&#39;0000&#39;, &#39;0001&#39;, &#39;FFFF&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:04X}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">number_list</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="format_collation_elements"><a class="viewcode-back" href="../../../../modules/python_modules/python_modules.python_utils.pyuca.utils.html#python_modules.python_utils.pyuca.utils.format_collation_elements">[docs]</a><span class="k">def</span> <span class="nf">format_collation_elements</span><span class="p">(</span><span class="n">collation_elements</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    format collation element array (list of list of integer weights)</span>
+
+<span class="sd">    &gt;&gt;&gt; str(format_collation_elements([[1, 2, 3], [4, 5]]))</span>
+<span class="sd">    &#39;[0001.0002.0003], [0004.0005]&#39;</span>
+<span class="sd">    &gt;&gt;&gt; format_collation_elements(None)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">collation_elements</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">int2hexstrings</span><span class="p">(</span><span class="n">collation_element</span><span class="p">)</span>
+            <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span> <span class="k">for</span> <span class="n">collation_element</span> <span class="ow">in</span> <span class="n">collation_elements</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="format_sort_key"><a class="viewcode-back" href="../../../../modules/python_modules/python_modules.python_utils.pyuca.utils.html#python_modules.python_utils.pyuca.utils.format_sort_key">[docs]</a><span class="k">def</span> <span class="nf">format_sort_key</span><span class="p">(</span><span class="n">sort_key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    format sort key (list of integers) with | level boundaries</span>
+<span class="sd">    &gt;&gt;&gt; str(format_sort_key([1, 0, 65535]))</span>
+<span class="sd">    &#39;0001 | FFFF&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;</span><span class="si">{:04X}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="k">else</span> <span class="s2">&quot;|&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sort_key</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Odyseus.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a modified version of <a href="https://github.com/rtfd/sphinx_rtd_theme">sphinx-rtd-theme</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+      <a id="to-top-of-page" href="#top">
+        <i class="fa fa-chevron-circle-up"></i>
+      </a>
+
+    </section>
+
+  </div>
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/theme.min.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

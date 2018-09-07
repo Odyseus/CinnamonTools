@@ -13,7 +13,7 @@ Requirements
     :context: warning
     :title: Development tasks requirements
 
-    All delelopment tasks require the Cinnamon Tools' repository to be *deep cloned* (``git clone --recursive git_repository_url``) to checkout all the needed sub-modules.
+    Almost all development tasks require the Cinnamon Tools' repository to be *deep cloned* (``git clone --recursive git_repository_url``) to checkout all the needed sub-modules.
 
 .. contextual-admonition::
     :context: warning

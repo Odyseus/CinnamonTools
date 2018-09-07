@@ -146,11 +146,12 @@
   <h1>Source code for python_modules.app_menu</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python3</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Command Line Interface menu.</span>
+<span class="sd">&quot;&quot;&quot;Command Line Interface menu to build xlets and themes.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">app_utils</span><span class="p">,</span> <span class="n">menu</span><span class="p">,</span> <span class="n">multi_select</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">app_utils</span>
 <span class="kn">from</span> <span class="nn">.__init__</span> <span class="k">import</span> <span class="n">__appname__</span><span class="p">,</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">.python_utils</span> <span class="k">import</span> <span class="n">menu</span><span class="p">,</span> <span class="n">multi_select</span>
 
 
 <div class="viewcode-block" id="CLIMenu"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_menu.html#python_modules.app_menu.CLIMenu">[docs]</a><span class="k">class</span> <span class="nc">CLIMenu</span><span class="p">():</span>
@@ -158,8 +159,6 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    app_dev_menu : object</span>
-<span class="sd">        App development menu. See &lt;class :any:`menu.Menu`&gt;.</span>
 <span class="sd">    build_output : str</span>
 <span class="sd">        Path to the folder were the built xlets are stored.</span>
 <span class="sd">    do_not_cofirm : bool</span>
@@ -167,15 +166,13 @@
 <span class="sd">    domain_name : str</span>
 <span class="sd">        The domain name to use to build the xlets.</span>
 <span class="sd">    logger : object</span>
-<span class="sd">        See &lt;class :any:`app_utils.LogSystem`&gt;.</span>
+<span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
 <span class="sd">    main_menu : object</span>
 <span class="sd">        Main menu. See &lt;class :any:`menu.Menu`&gt;.</span>
 <span class="sd">    theme_name : str</span>
 <span class="sd">        The given name of the theme.</span>
-<span class="sd">    xlet_dev_menu : object</span>
-<span class="sd">        Xlet development menu. See &lt;class :any:`menu.Menu`&gt;.</span>
 <span class="sd">    xlets_helper : object</span>
-<span class="sd">        Helper functions. See &lt;class :any:`app_utils.LogSystem`&gt;.</span>
+<span class="sd">        Helper functions. See &lt;class :any:`app_utils.XletsHelperCore`&gt;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theme_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">domain_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -193,7 +190,7 @@
 <span class="sd">        do_not_cofirm : bool</span>
 <span class="sd">            Whether to ask for overwrite confirmation when an xlet destination exists or not.</span>
 <span class="sd">        logger : object</span>
-<span class="sd">            See &lt;class :any:`app_utils.LogSystem`&gt;.</span>
+<span class="sd">            See &lt;class :any:`LogSystem`&gt;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theme_name</span> <span class="o">=</span> <span class="n">theme_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">domain_name</span> <span class="o">=</span> <span class="n">domain_name</span>
@@ -204,37 +201,13 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">main_menu</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">__appname__</span><span class="p">,</span> <span class="n">__version__</span><span class="p">),</span>
                                    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Main menu&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xlet_dev_menu</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">__appname__</span><span class="p">,</span> <span class="n">__version__</span><span class="p">),</span>
-                                       <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Xlet development menu&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">app_dev_menu</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">__appname__</span><span class="p">,</span> <span class="n">__version__</span><span class="p">),</span>
-                                      <span class="n">message</span><span class="o">=</span><span class="s2">&quot;App development menu&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">main_menu</span><span class="o">.</span><span class="n">set_menu_items</span><span class="p">([</span>
             <span class="p">(</span><span class="s2">&quot;Choose xlets to build&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_build_selector</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;Build all xlets&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_all_xlets</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;Build themes&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_themes</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Xlet development&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_dev_menu</span><span class="o">.</span><span class="n">open</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;App development&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">app_dev_menu</span><span class="o">.</span><span class="n">open</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;Restart Cinnamon&quot;</span><span class="p">,</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">restart_cinnamon</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;Exit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_menu</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
-        <span class="p">])</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">xlet_dev_menu</span><span class="o">.</span><span class="n">set_menu_items</span><span class="p">([</span>
-            <span class="p">(</span><span class="s2">&quot;Generate metadata file&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlets_helper</span><span class="o">.</span><span class="n">generate_meta_file</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Update POT files&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlets_helper</span><span class="o">.</span><span class="n">update_pot_files</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Update Spanish localizations&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlets_helper</span><span class="o">.</span><span class="n">update_spanish_localizations</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Create localized help&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlets_helper</span><span class="o">.</span><span class="n">create_localized_help</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Generate translations stats&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlets_helper</span><span class="o">.</span><span class="n">generate_trans_stats</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Create changelogs&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlets_helper</span><span class="o">.</span><span class="n">create_changelogs</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Exit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xlet_dev_menu</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
-        <span class="p">])</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">app_dev_menu</span><span class="o">.</span><span class="n">set_menu_items</span><span class="p">([</span>
-            <span class="p">(</span><span class="s2">&quot;Generate system executable&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_executable_generation</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Generate docs&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">docs_generation</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Generate docs (No API)&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">docs_no_api_generation</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Generate base xlet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_xlet_generation</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;Exit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">app_dev_menu</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
         <span class="p">])</span>
 
 <div class="viewcode-block" id="CLIMenu.open_main_menu"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_menu.html#python_modules.app_menu.CLIMenu.open_main_menu">[docs]</a>    <span class="k">def</span> <span class="nf">open_main_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -283,29 +256,7 @@
                                   <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span>
                                   <span class="n">from_menu</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">WARNING</span><span class="p">(</span><span class="s2">&quot;Operation aborted.&quot;</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="CLIMenu.system_executable_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_menu.html#python_modules.app_menu.CLIMenu.system_executable_generation">[docs]</a>    <span class="k">def</span> <span class="nf">system_executable_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;See :any:`app_utils.system_executable_generation`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">app_utils</span><span class="o">.</span><span class="n">system_executable_generation</span><span class="p">(</span>
-            <span class="s2">&quot;cinnamon-tools-app&quot;</span><span class="p">,</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="CLIMenu.docs_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_menu.html#python_modules.app_menu.CLIMenu.docs_generation">[docs]</a>    <span class="k">def</span> <span class="nf">docs_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;See :any:`app_utils.generate_docs`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">app_utils</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="CLIMenu.docs_no_api_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_menu.html#python_modules.app_menu.CLIMenu.docs_no_api_generation">[docs]</a>    <span class="k">def</span> <span class="nf">docs_no_api_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;See :any:`app_utils.generate_docs`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">app_utils</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="CLIMenu.base_xlet_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.app_menu.html#python_modules.app_menu.CLIMenu.base_xlet_generation">[docs]</a>    <span class="k">def</span> <span class="nf">base_xlet_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;See :any:`app_utils.BaseXletGenerator`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">base_xlet_generetor</span> <span class="o">=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">BaseXletGenerator</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
-        <span class="n">base_xlet_generetor</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span></div></div>
+            <span class="nb">print</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">WARNING</span><span class="p">(</span><span class="s2">&quot;Operation aborted.&quot;</span><span class="p">))</span></div></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

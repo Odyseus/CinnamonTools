@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python_modules.python_utils.exceptions &mdash; Cinnamon Tools  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/cinnamon-logo.svg"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Cinnamon Tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cinnamon Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_modules.python_utils.exceptions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_modules.python_utils.exceptions</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Miscellaneous exceptions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">.ansi_colors</span> <span class="k">import</span> <span class="n">Ansi</span>
+
+
+<div class="viewcode-block" id="ExceptionWhitoutTraceBack"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack">[docs]</a><span class="k">class</span> <span class="nc">ExceptionWhitoutTraceBack</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raise an exception without a traceback.</span>
+
+<span class="sd">    Only used when the traceback isn&#39;t important and the message is clear, to</span>
+<span class="sd">    the point, and highlighted in red.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : tuple</span>
+<span class="sd">        Arguments.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    Based on an answer from a `StackOverflow question &lt;https://stackoverflow.com/a/41414413&gt;`__.</span>
+<span class="sd">    Stripped the line number report from the original class because is not needed for my usage case.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg : str</span>
+<span class="sd">            Message that the exception should display.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This is an evil spawn that I don&#39;t freaking understand!!!</span>
+        <span class="c1"># It works as intended for now, so moving on.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0.__name__}</span><span class="s2">: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">msg</span><span class="p">)),</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExceptionWhitoutTraceBackWarning"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning">[docs]</a><span class="k">class</span> <span class="nc">ExceptionWhitoutTraceBackWarning</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raise an exception without a traceback nor an exit errror.</span>
+
+<span class="sd">    Only used when the traceback isn&#39;t important and the message is clear, to</span>
+<span class="sd">    the point, and highlighted in red.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : tuple</span>
+<span class="sd">        Arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg : str</span>
+<span class="sd">            Message that the exception should display.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This is an evil spawn that I don&#39;t freaking understand!!!</span>
+        <span class="c1"># It works as intended for now, so moving on.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">Ansi</span><span class="o">.</span><span class="n">WARNING</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0.__name__}</span><span class="s2">: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">msg</span><span class="p">)),</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BadExecutionLocation"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.BadExecutionLocation">[docs]</a><span class="k">class</span> <span class="nc">BadExecutionLocation</span><span class="p">(</span><span class="n">ExceptionWhitoutTraceBack</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;BadExecutionLocation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;All commands must be launched from the application&#39;s root directory!!!&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg : str, optional</span>
+<span class="sd">            Message that the exception should display.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BadExecutionLocation</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WrongPythonVersion"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.WrongPythonVersion">[docs]</a><span class="k">class</span> <span class="nc">WrongPythonVersion</span><span class="p">(</span><span class="n">ExceptionWhitoutTraceBack</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;WrongPythonVersion</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Minimum Python version supported: 3.5&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg : str, optional</span>
+<span class="sd">            Message that the exception should display.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WrongPythonVersion</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MissingCommand"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.MissingCommand">[docs]</a><span class="k">class</span> <span class="nc">MissingCommand</span><span class="p">(</span><span class="n">ExceptionWhitoutTraceBack</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;MissingCommand</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="MissingDependencyModule"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.MissingDependencyModule">[docs]</a><span class="k">class</span> <span class="nc">MissingDependencyModule</span><span class="p">(</span><span class="n">ExceptionWhitoutTraceBack</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;MissingDependencyModule</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ExistentLocation"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.ExistentLocation">[docs]</a><span class="k">class</span> <span class="nc">ExistentLocation</span><span class="p">(</span><span class="n">ExceptionWhitoutTraceBack</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ExistentLocation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="KeyboardInterruption"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.KeyboardInterruption">[docs]</a><span class="k">class</span> <span class="nc">KeyboardInterruption</span><span class="p">(</span><span class="n">ExceptionWhitoutTraceBackWarning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;KeyboardInterruption</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Operation aborted.&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg : str, optional</span>
+<span class="sd">            Message that the exception should display.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">KeyboardInterruption</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MissingRequiredFile"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.MissingRequiredFile">[docs]</a><span class="k">class</span> <span class="nc">MissingRequiredFile</span><span class="p">(</span><span class="n">ExceptionWhitoutTraceBackWarning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;MissingRequiredFile</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="InvalidDestination"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.InvalidDestination">[docs]</a><span class="k">class</span> <span class="nc">InvalidDestination</span><span class="p">(</span><span class="n">ExceptionWhitoutTraceBackWarning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;InvalidDestination</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="OperationAborted"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.OperationAborted">[docs]</a><span class="k">class</span> <span class="nc">OperationAborted</span><span class="p">(</span><span class="n">ExceptionWhitoutTraceBackWarning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;OperationAborted</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="ne">OSError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Error</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ValidationError"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.ValidationError">[docs]</a><span class="k">class</span> <span class="nc">ValidationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised for validation errors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Odyseus.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a modified version of <a href="https://github.com/rtfd/sphinx_rtd_theme">sphinx-rtd-theme</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+      <a id="to-top-of-page" href="#top">
+        <i class="fa fa-chevron-circle-up"></i>
+      </a>
+
+    </section>
+
+  </div>
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.min.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

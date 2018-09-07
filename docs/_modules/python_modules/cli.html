@@ -162,11 +162,12 @@
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">app_utils</span>
 <span class="kn">from</span> <span class="nn">.__init__</span> <span class="k">import</span> <span class="n">__appname__</span><span class="p">,</span> <span class="n">__version__</span>
-<span class="kn">from</span> <span class="nn">.docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="kn">from</span> <span class="nn">.python_utils</span> <span class="k">import</span> <span class="n">exceptions</span><span class="p">,</span> <span class="n">log_system</span><span class="p">,</span> <span class="n">file_utils</span><span class="p">,</span> <span class="n">shell_utils</span>
+<span class="kn">from</span> <span class="nn">.python_utils.docopt</span> <span class="k">import</span> <span class="n">docopt</span>
 
 
 <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
-    <span class="k">raise</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">WrongPythonVersion</span><span class="p">()</span>
+    <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">WrongPythonVersion</span><span class="p">()</span>
 
 
 <span class="n">docopt_doc</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{__appname__}</span><span class="s2"> </span><span class="si">{__version__}</span><span class="s2"></span>
@@ -289,8 +290,10 @@
 <span class="sd">        Remove destination and doctrees directories before building the documentation.</span>
 <span class="sd">    func_names : list</span>
 <span class="sd">        Function names to be executed.</span>
+<span class="sd">    generate_api_docs : bool</span>
+<span class="sd">        If False, do not extract docstrings from Python modules.</span>
 <span class="sd">    logger : object</span>
-<span class="sd">        See &lt;class :any:`app_utils.LogSystem`&gt;.</span>
+<span class="sd">        See &lt;class :any:`log_system.LogSystem`&gt;.</span>
 <span class="sd">    restart_cinnamon : bool</span>
 <span class="sd">        Whether or not to restart Cinnamon after the xlet/theme build process.</span>
 <span class="sd">    theme_name : str</span>
@@ -322,8 +325,8 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">CommandLineTool</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">app_utils</span><span class="o">.</span><span class="n">remove_surplus_files</span><span class="p">(</span><span class="s2">&quot;tmp/logs&quot;</span><span class="p">,</span> <span class="s2">&quot;CLI*&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">LogSystem</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">app_utils</span><span class="o">.</span><span class="n">get_log_file</span><span class="p">(</span>
+        <span class="n">file_utils</span><span class="o">.</span><span class="n">remove_surplus_files</span><span class="p">(</span><span class="s2">&quot;tmp/logs&quot;</span><span class="p">,</span> <span class="s2">&quot;CLI*&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">log_system</span><span class="o">.</span><span class="n">LogSystem</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">log_system</span><span class="o">.</span><span class="n">get_log_file</span><span class="p">(</span>
             <span class="n">storage_dir</span><span class="o">=</span><span class="s2">&quot;tmp/logs&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;CLI&quot;</span><span class="p">),</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">build_output</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;--output&quot;</span><span class="p">]</span>
@@ -336,9 +339,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">restart_cinnamon</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;--restart-cinnamon&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">force_clean_build</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;--force-clean-build&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_inventories</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;--update-inventories&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_api_docs</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;docs&quot;</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;menu&quot;</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">get_cli_header</span><span class="p">(</span><span class="n">__appname__</span><span class="p">),</span> <span class="n">date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">shell_utils</span><span class="o">.</span><span class="n">get_cli_header</span><span class="p">(</span><span class="n">__appname__</span><span class="p">),</span> <span class="n">date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;menu&quot;</span><span class="p">]:</span>
@@ -392,13 +396,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;System executable generation...&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_executable_generation</span>
 
-            <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;docs&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;docs&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;docs_no_api&quot;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Documentation generation...&quot;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">docs_generation</span>
-
-            <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;docs_no_api&quot;</span><span class="p">]:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Documentation generation...&quot;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">docs_no_api_generation</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_docs</span>
 
             <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;base_xlet&quot;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Base xlet generation...&quot;</span><span class="p">)</span>
@@ -409,7 +409,7 @@
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
-<span class="sd">        app_utils.KeyboardInterruption</span>
+<span class="sd">        exceptions.KeyboardInterruption</span>
 <span class="sd">            Halt execution on Ctrl + C press.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -446,7 +446,7 @@
                     <span class="k">if</span> <span class="n">thread</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">thread</span><span class="o">.</span><span class="n">isAlive</span><span class="p">():</span>
                         <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">KeyboardInterrupt</span><span class="p">,</span> <span class="ne">SystemExit</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">KeyboardInterruption</span><span class="p">()</span></div>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">KeyboardInterruption</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="CommandLineTool.display_main_menu"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.display_main_menu">[docs]</a>    <span class="k">def</span> <span class="nf">display_main_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;See :any:`app_menu.CLIMenu`</span>
@@ -477,23 +477,21 @@
                                <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CommandLineTool.system_executable_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.system_executable_generation">[docs]</a>    <span class="k">def</span> <span class="nf">system_executable_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;See :any:`app_utils.system_executable_generation`</span>
+        <span class="sd">&quot;&quot;&quot;See :any:`template_utils.system_executable_generation`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">app_utils</span><span class="o">.</span><span class="n">system_executable_generation</span><span class="p">(</span>
-            <span class="s2">&quot;cinnamon-tools-app&quot;</span><span class="p">,</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
+        <span class="kn">from</span> <span class="nn">.python_utils</span> <span class="k">import</span> <span class="n">template_utils</span>
 
-<div class="viewcode-block" id="CommandLineTool.docs_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.docs_generation">[docs]</a>    <span class="k">def</span> <span class="nf">docs_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;See :any:`app_utils.generate_docs`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">app_utils</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="n">generate_api_docs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                <span class="n">update_inventories</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_inventories</span><span class="p">,</span>
-                                <span class="n">force_clean_build</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">force_clean_build</span><span class="p">,</span>
-                                <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
+        <span class="n">template_utils</span><span class="o">.</span><span class="n">system_executable_generation</span><span class="p">(</span>
+            <span class="s2">&quot;cinnamon-tools-app&quot;</span><span class="p">,</span>
+            <span class="n">app_utils</span><span class="o">.</span><span class="n">root_folder</span><span class="p">,</span>
+            <span class="n">sys_exec_template</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">root_folder</span><span class="p">,</span> <span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span>
+                                           <span class="s2">&quot;templates&quot;</span><span class="p">,</span> <span class="s2">&quot;system_executable&quot;</span><span class="p">),</span>
+            <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CommandLineTool.docs_no_api_generation"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.docs_no_api_generation">[docs]</a>    <span class="k">def</span> <span class="nf">docs_no_api_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;See :any:`app_utils.generate_docs`</span>
+<div class="viewcode-block" id="CommandLineTool.generate_docs"><a class="viewcode-back" href="../../modules/python_modules/python_modules.cli.html#python_modules.cli.CommandLineTool.generate_docs">[docs]</a>    <span class="k">def</span> <span class="nf">generate_docs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;See :any:`python_utils.sphinx_docs_utils.generate_docs`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">app_utils</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="n">generate_api_docs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">app_utils</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="n">generate_api_docs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_api_docs</span><span class="p">,</span>
                                 <span class="n">update_inventories</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_inventories</span><span class="p">,</span>
                                 <span class="n">force_clean_build</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">force_clean_build</span><span class="p">,</span>
                                 <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span></div>
@@ -510,12 +508,12 @@
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
-<span class="sd">    app_utils.BadExecutionLocation</span>
+<span class="sd">    exceptions.BadExecutionLocation</span>
 <span class="sd">        Do not allow to run any command if the &quot;flag&quot; file isn&#39;t</span>
-<span class="sd">        found where it should be. See :any:`app_utils.BadExecutionLocation`.</span>
+<span class="sd">        found where it should be. See :any:`exceptions.BadExecutionLocation`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;.cinnamon-tools.flag&quot;</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">BadExecutionLocation</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">BadExecutionLocation</span><span class="p">()</span>
 
     <span class="n">arguments</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="n">docopt_doc</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">__appname__</span><span class="p">,</span> <span class="n">__version__</span><span class="p">))</span>
     <span class="n">cli</span> <span class="o">=</span> <span class="n">CommandLineTool</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>

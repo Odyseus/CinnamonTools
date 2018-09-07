@@ -218,9 +218,15 @@
 </dd></dl>
 
 <dl class="attribute">
+<dt id="python_modules.cli.CommandLineTool.generate_api_docs">
+<code class="descname">generate_api_docs</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.generate_api_docs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – If False, do not extract docstrings from Python modules.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="python_modules.cli.CommandLineTool.logger">
 <code class="descname">logger</code><a class="headerlink" href="#python_modules.cli.CommandLineTool.logger" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.LogSystem</span></code></a>&gt;.</p>
+<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.python_utils.log_system.html#python_modules.python_utils.log_system.LogSystem" title="python_modules.python_utils.log_system.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">log_system.LogSystem</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -270,7 +276,7 @@ anyway f they don’t exist.</p>
 <dd><p>Execute the assigned actions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">app_utils.KeyboardInterruption</span></code> – Halt execution on Ctrl + C press.</p>
+<dd class="field-odd"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">exceptions.KeyboardInterruption</span></code> – Halt execution on Ctrl + C press.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -296,19 +302,13 @@ anyway f they don’t exist.</p>
 <dl class="method">
 <dt id="python_modules.cli.CommandLineTool.system_executable_generation">
 <code class="descname">system_executable_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.system_executable_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.system_executable_generation" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.system_executable_generation" title="python_modules.app_utils.system_executable_generation"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.system_executable_generation</span></code></a></p>
+<dd><p>See <a class="reference internal" href="python_modules.python_utils.template_utils.html#python_modules.python_utils.template_utils.system_executable_generation" title="python_modules.python_utils.template_utils.system_executable_generation"><code class="xref any py py-func docutils literal notranslate"><span class="pre">template_utils.system_executable_generation</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="python_modules.cli.CommandLineTool.docs_generation">
-<code class="descname">docs_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.docs_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.docs_generation" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.generate_docs" title="python_modules.app_utils.generate_docs"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.generate_docs</span></code></a></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="python_modules.cli.CommandLineTool.docs_no_api_generation">
-<code class="descname">docs_no_api_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.docs_no_api_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.docs_no_api_generation" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.generate_docs" title="python_modules.app_utils.generate_docs"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.generate_docs</span></code></a></p>
+<dt id="python_modules.cli.CommandLineTool.generate_docs">
+<code class="descname">generate_docs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/cli.html#CommandLineTool.generate_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.cli.CommandLineTool.generate_docs" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="python_modules.python_utils.sphinx_docs_utils.html#python_modules.python_utils.sphinx_docs_utils.generate_docs" title="python_modules.python_utils.sphinx_docs_utils.generate_docs"><code class="xref any py py-func docutils literal notranslate"><span class="pre">python_utils.sphinx_docs_utils.generate_docs</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -325,8 +325,8 @@ anyway f they don’t exist.</p>
 <dd><p>Initialize main command line interface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">app_utils.BadExecutionLocation</span></code> – Do not allow to run any command if the “flag” file isn’t
-found where it should be. See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.BadExecutionLocation" title="python_modules.app_utils.BadExecutionLocation"><code class="xref any py py-exc docutils literal notranslate"><span class="pre">app_utils.BadExecutionLocation</span></code></a>.</p>
+<dd class="field-odd"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">exceptions.BadExecutionLocation</span></code> – Do not allow to run any command if the “flag” file isn’t
+found where it should be. See <a class="reference internal" href="python_modules.python_utils.exceptions.html#python_modules.python_utils.exceptions.BadExecutionLocation" title="python_modules.python_utils.exceptions.BadExecutionLocation"><code class="xref any py py-exc docutils literal notranslate"><span class="pre">exceptions.BadExecutionLocation</span></code></a>.</p>
 </dd>
 </dl>
 </dd></dl>

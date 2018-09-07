@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python_modules.python_utils.sphinx_docs_utils &mdash; Cinnamon Tools  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/cinnamon-logo.svg"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Cinnamon Tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cinnamon Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_modules.python_utils.sphinx_docs_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_modules.python_utils.sphinx_docs_utils</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Utilities to generate documentations with Sphinx.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">rmtree</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">call</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">exceptions</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">tqdm_wget</span>
+<span class="kn">from</span> <span class="nn">.misc_utils</span> <span class="k">import</span> <span class="n">get_system_tempdir</span>
+
+
+<div class="viewcode-block" id="check_inventories_existence"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.sphinx_docs_utils.html#python_modules.python_utils.sphinx_docs_utils.check_inventories_existence">[docs]</a><span class="k">def</span> <span class="nf">check_inventories_existence</span><span class="p">(</span><span class="n">update_inventories</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">docs_sources_path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                                <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check inventories existence. Download them if they don&#39;t exists.</span>
+
+<span class="sd">    These inventory files are the ones used by the intersphinx Sphinx extension. Since</span>
+<span class="sd">    I couldn&#39;t make the intersphinx_mapping option to download the inventory files</span>
+<span class="sd">    automatically, I simply cut to the chase and did it myself.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    update_inventories : bool</span>
+<span class="sd">        Whether to force the update of the inventory files. Inventory files will be updated</span>
+<span class="sd">        anyway f they don&#39;t exist.</span>
+<span class="sd">    docs_sources_path : str, optional</span>
+<span class="sd">        Path to the documentation source files that will be used to store the</span>
+<span class="sd">        downloaded inventories.</span>
+<span class="sd">    logger : object</span>
+<span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    exceptions.KeyboardInterruption</span>
+<span class="sd">        Halt execution on Ctrl + C press.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    I may need to implement the inventory_files_map variable as an argument so I can</span>
+<span class="sd">    selectively use different inventories for specific documentations. As of now, Python</span>
+<span class="sd">    inventory is enough.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inventory_files_map</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;https://docs.python.org/3.5/objects.inv&quot;</span><span class="p">,</span>
+         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">docs_sources_path</span><span class="p">,</span> <span class="s2">&quot;python-3.5-objects.inv&quot;</span><span class="p">))</span>
+    <span class="p">]</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checking existence of inventory files...&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">url</span><span class="p">,</span> <span class="n">downloaded_file</span> <span class="ow">in</span> <span class="n">inventory_files_map</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">update_inventories</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">downloaded_file</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Downloading inventory file...&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Download URL:&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Download location&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">downloaded_file</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">tqdm_wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">downloaded_file</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyboardInterrupt</span><span class="p">,</span> <span class="ne">SystemExit</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">KeyboardInterruption</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Inventory file exists:&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">downloaded_file</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_docs"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.sphinx_docs_utils.html#python_modules.python_utils.sphinx_docs_utils.generate_docs">[docs]</a><span class="k">def</span> <span class="nf">generate_docs</span><span class="p">(</span><span class="n">root_folder</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                  <span class="n">docs_src_path_rel_to_root</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;__app__&quot;</span><span class="p">,</span> <span class="s2">&quot;docs_sources&quot;</span><span class="p">),</span>
+                  <span class="n">docs_dest_path_rel_to_root</span><span class="o">=</span><span class="s2">&quot;docs&quot;</span><span class="p">,</span>
+                  <span class="n">apidoc_src_path_rel_to_root</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                  <span class="n">apidoc_dest_path_rel_to_root</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                  <span class="n">doctree_temp_location_rel_to_sys_temp</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                  <span class="n">ignored_modules</span><span class="o">=</span><span class="p">[],</span>
+                  <span class="n">generate_api_docs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="n">update_inventories</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="n">force_clean_build</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Build this application documentation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    root_folder : str, optional</span>
+<span class="sd">        Path to the main folder that most paths should be relative to.</span>
+<span class="sd">    docs_src_path_rel_to_root : str, optional</span>
+<span class="sd">        Docs sources path relative to root_folder.</span>
+<span class="sd">    docs_dest_path_rel_to_root : str, optional</span>
+<span class="sd">        Built docs destination path relative to root_folder.</span>
+<span class="sd">    apidoc_src_path_rel_to_root : str, optional</span>
+<span class="sd">        Docs dcstrings extraction path relative to root_folder.</span>
+<span class="sd">    apidoc_dest_path_rel_to_root : str, optional</span>
+<span class="sd">        Docs docstrings storage path relative to root_folder.</span>
+<span class="sd">    doctree_temp_location_rel_to_sys_temp : str, optional</span>
+<span class="sd">        Name of a temporary folder that will be used to create a path relative to the</span>
+<span class="sd">        system temporary folder.</span>
+<span class="sd">    ignored_modules : list, optional</span>
+<span class="sd">        A list of paths to Python modules relative to the root_folder. These are ignored</span>
+<span class="sd">        modules whose docstrings are a mess and/or are incomplete. Because such docstrings</span>
+<span class="sd">        will produce hundred of annoying Sphinx warnings.</span>
+<span class="sd">    generate_api_docs : bool</span>
+<span class="sd">        If False, do not extract docstrings from Python modules.</span>
+<span class="sd">    update_inventories : bool, optional</span>
+<span class="sd">        Whether to force the update of the inventory files. Inventory files will be updated</span>
+<span class="sd">        anyway f they don&#39;t exist.</span>
+<span class="sd">    force_clean_build : bool, optional</span>
+<span class="sd">        Remove destination and doctrees directories before building the documentation.</span>
+<span class="sd">    logger : object</span>
+<span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">doctree_temp_location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_system_tempdir</span><span class="p">(),</span>
+                                         <span class="n">doctree_temp_location_rel_to_sys_temp</span><span class="p">)</span>
+    <span class="n">docs_sources_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">docs_src_path_rel_to_root</span><span class="p">)</span>
+    <span class="n">docs_destination_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">docs_dest_path_rel_to_root</span><span class="p">)</span>
+
+    <span class="n">apidoc_source_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">apidoc_src_path_rel_to_root</span><span class="p">)</span>
+    <span class="n">apidoc_destination_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">apidoc_dest_path_rel_to_root</span><span class="p">)</span>
+
+    <span class="n">check_inventories_existence</span><span class="p">(</span><span class="n">update_inventories</span><span class="p">,</span> <span class="n">docs_sources_path</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">force_clean_build</span><span class="p">:</span>
+        <span class="n">rmtree</span><span class="p">(</span><span class="n">doctree_temp_location</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">rmtree</span><span class="p">(</span><span class="n">docs_destination_path</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">generate_api_docs</span><span class="p">:</span>
+            <span class="n">rmtree</span><span class="p">(</span><span class="n">apidoc_destination_path</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">generate_api_docs</span><span class="p">:</span>
+        <span class="n">commmon_args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-M&quot;</span><span class="p">,</span> <span class="s2">&quot;--separate&quot;</span><span class="p">,</span> <span class="s2">&quot;--force&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">]</span>
+
+        <span class="n">call</span><span class="p">([</span><span class="s2">&quot;sphinx-apidoc&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">commmon_args</span> <span class="o">+</span> <span class="p">[</span>
+            <span class="n">apidoc_destination_path</span><span class="p">,</span>
+            <span class="n">apidoc_source_path</span>
+        <span class="p">]</span> <span class="o">+</span> <span class="n">ignored_modules</span><span class="p">,</span>
+            <span class="n">cwd</span><span class="o">=</span><span class="n">root_folder</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">call</span><span class="p">([</span><span class="s2">&quot;sphinx-build&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="s2">&quot;coverage&quot;</span><span class="p">,</span> <span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="n">doctree_temp_location</span><span class="p">,</span> <span class="s2">&quot;./coverage&quot;</span><span class="p">],</span>
+             <span class="n">cwd</span><span class="o">=</span><span class="n">docs_sources_path</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">call</span><span class="p">([</span><span class="s2">&quot;sphinx-build&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="n">doctree_temp_location</span><span class="p">,</span>
+              <span class="n">docs_destination_path</span><span class="p">],</span>
+             <span class="n">cwd</span><span class="o">=</span><span class="n">docs_sources_path</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Odyseus.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a modified version of <a href="https://github.com/rtfd/sphinx_rtd_theme">sphinx-rtd-theme</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+      <a id="to-top-of-page" href="#top">
+        <i class="fa fa-chevron-circle-up"></i>
+      </a>
+
+    </section>
+
+  </div>
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.min.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

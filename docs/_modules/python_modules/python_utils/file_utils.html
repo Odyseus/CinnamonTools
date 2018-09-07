@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python_modules.python_utils.file_utils &mdash; Cinnamon Tools  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/cinnamon-logo.svg"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Cinnamon Tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cinnamon Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python_modules.python_utils.file_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python_modules.python_utils.file_utils</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Common utilities to perform file operations.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">copy2</span><span class="p">,</span> <span class="n">rmtree</span><span class="p">,</span> <span class="n">copystat</span><span class="p">,</span> <span class="n">ignore_patterns</span>
+<span class="kn">from</span> <span class="nn">stat</span> <span class="k">import</span> <span class="n">ST_MTIME</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">exceptions</span>
+
+
+<div class="viewcode-block" id="is_exec"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.file_utils.html#python_modules.python_utils.file_utils.is_exec">[docs]</a><span class="k">def</span> <span class="nf">is_exec</span><span class="p">(</span><span class="n">fpath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check if file is executable.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fpath : str</span>
+<span class="sd">        The path to the file to check.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        If file is executable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="custom_copytree2"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.file_utils.html#python_modules.python_utils.file_utils.custom_copytree2">[docs]</a><span class="k">def</span> <span class="nf">custom_copytree2</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Custom copytree.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    source : str</span>
+<span class="sd">        Source path to copy from.</span>
+<span class="sd">    destination : str</span>
+<span class="sd">        Destination path to copy to.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    I don&#39;t remember why I had to use this custom function instead of :any:`shutil.copytree`.</span>
+<span class="sd">    When it comes back to me, I will document it (LOL).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">destination</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+
+    <span class="n">lst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+            <span class="n">custom_copytree2</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">copy2</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_parent_dir"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.file_utils.html#python_modules.python_utils.file_utils.get_parent_dir">[docs]</a><span class="k">def</span> <span class="nf">get_parent_dir</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">go_up</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get parent directory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fpath : str</span>
+<span class="sd">        The full path to a file.</span>
+<span class="sd">    go_up : int, optional</span>
+<span class="sd">        How many directories to go up.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The new path to a directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">go_up</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">go_up</span><span class="p">)):</span>
+            <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">dir_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dir_path</span></div>
+
+
+<div class="viewcode-block" id="recursive_glob"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.file_utils.html#python_modules.python_utils.file_utils.recursive_glob">[docs]</a><span class="k">def</span> <span class="nf">recursive_glob</span><span class="p">(</span><span class="n">stem</span><span class="p">,</span> <span class="n">file_pattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Recursively match files in a directory according to a pattern.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    stem : str</span>
+<span class="sd">        The directory in which to recourse.</span>
+<span class="sd">    file_pattern : str</span>
+<span class="sd">        The file name regex pattern to which to match.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    matches_list : list</span>
+<span class="sd">        A list of file names in the directory that match the file pattern.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">glob</span><span class="p">(</span><span class="n">stem</span> <span class="o">+</span> <span class="s2">&quot;/**/&quot;</span> <span class="o">+</span> <span class="n">file_pattern</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="remove_surplus_files"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.file_utils.html#python_modules.python_utils.file_utils.remove_surplus_files">[docs]</a><span class="k">def</span> <span class="nf">remove_surplus_files</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file_pattern</span><span class="p">,</span> <span class="n">max_files_to_keep</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Remove surplus files from folder.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    folder : str</span>
+<span class="sd">        Path to a folder were to search for files.</span>
+<span class="sd">    file_pattern : str</span>
+<span class="sd">        The file name pattern to search for.</span>
+<span class="sd">    max_files_to_keep : int, optional</span>
+<span class="sd">        Maximum amount of files to keep inside the folder.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">all_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">recursive_glob</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file_pattern</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_files_to_keep</span><span class="p">:</span>
+        <span class="n">files_to_delete</span> <span class="o">=</span> <span class="n">all_files</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">all_files</span><span class="p">)</span> <span class="o">-</span> <span class="n">max_files_to_keep</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files_to_delete</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="newer"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.file_utils.html#python_modules.python_utils.file_utils.newer">[docs]</a><span class="k">def</span> <span class="nf">newer</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check if &quot;source&quot; is newer than &quot;target&quot;.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    source : str</span>
+<span class="sd">        Source file path.</span>
+<span class="sd">    target : str</span>
+<span class="sd">        Target file path.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        Return true if &quot;source&quot; exists and is more recently modified than &quot;target&quot;, or if &quot;source&quot;</span>
+<span class="sd">        exists and &quot;target&quot; doesn&#39;t.  Return false if both exist and &quot;target&quot; is the same age or</span>
+<span class="sd">        younger than &quot;source&quot;.</span>
+
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    Exception</span>
+<span class="sd">        Raise if &quot;source&quot; does not exist.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;File &lt;</span><span class="si">%s</span><span class="s2">&gt; does not exist!!!&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="n">mtime1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">source</span><span class="p">)[</span><span class="n">ST_MTIME</span><span class="p">]</span>
+    <span class="n">mtime2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">target</span><span class="p">)[</span><span class="n">ST_MTIME</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">mtime1</span> <span class="o">&gt;</span> <span class="n">mtime2</span></div>
+
+
+<div class="viewcode-block" id="custom_copy2"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.file_utils.html#python_modules.python_utils.file_utils.custom_copy2">[docs]</a><span class="k">def</span> <span class="nf">custom_copy2</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_copied_file</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">relative_path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                 <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Custom copy function.</span>
+
+<span class="sd">    This function is basically :any:`shutil.copy2`, but it uses the :any:`newer` function</span>
+<span class="sd">    before performing the copy.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    source : str</span>
+<span class="sd">        Source file path.</span>
+<span class="sd">    destination : str</span>
+<span class="sd">        Target file path.</span>
+<span class="sd">    logger : object</span>
+<span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
+<span class="sd">    log_copied_file : bool, optional</span>
+<span class="sd">        If True, log the relative destination path of the copied file.</span>
+<span class="sd">    relative_path : str, optional</span>
+<span class="sd">        A relative path to exctract from the path that&#39;s going to be logged.</span>
+<span class="sd">    overwrite : bool, optional</span>
+<span class="sd">        Overwrite existent files without doing any checks.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">overwrite</span> <span class="ow">or</span> <span class="n">newer</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
+            <span class="n">destination_parent</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">destination_parent</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">destination_parent</span><span class="p">)</span>
+
+            <span class="n">copy2</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">follow_symlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">log_copied_file</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;File copied: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="copy_symlink"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.file_utils.html#python_modules.python_utils.file_utils.copy_symlink">[docs]</a><span class="k">def</span> <span class="nf">copy_symlink</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">follow_symlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Copy symlinks avoiding at all cost throwing errors.</span>
+
+<span class="sd">    This function is always triggered when &quot;source&quot; is a symlink. It will create the symlink only</span>
+<span class="sd">    after the following three tasks has been performed:</span>
+
+<span class="sd">        1. If &quot;destination&quot; is a symlink, use :any:`os.unlink` to eradicate it.</span>
+<span class="sd">        2. If &quot;destination&quot; is a directory, eradicate it with :any:`shutil.rmtree`.</span>
+<span class="sd">        3. If &quot;destination&quot; is a file, eradicate it with :any:`os.remove`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    source : str</span>
+<span class="sd">        Source.</span>
+<span class="sd">    destination : str</span>
+<span class="sd">        Destination.</span>
+<span class="sd">    logger : object</span>
+<span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
+<span class="sd">    follow_symlinks : bool, optional</span>
+<span class="sd">        Follow symlinks.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function is mostly needed when performing an &quot;incremental&quot; backup, since in a &quot;compressed&quot;</span>
+<span class="sd">    backup job, the &quot;copy&quot; is handled by tar, and in a &quot;stacked&quot; backup job the &quot;destination&quot; is</span>
+<span class="sd">    always empty.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">destination</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">destination</span><span class="p">):</span>
+            <span class="n">rmtree</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">destination</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">readlink</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="n">copystat</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">follow_symlinks</span><span class="o">=</span><span class="n">follow_symlinks</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="custom_copytree"><a class="viewcode-back" href="../../../modules/python_modules/python_modules.python_utils.file_utils.html#python_modules.python_utils.file_utils.custom_copytree">[docs]</a><span class="k">def</span> <span class="nf">custom_copytree</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignored_patterns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_dangling_symlinks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_copied_file</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">relative_path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Recursively copy a directory tree.</span>
+
+<span class="sd">    This function is basically the same as :any:`shutil.copytree`, but with the following</span>
+<span class="sd">    differences:</span>
+
+<span class="sd">    - It copies directories whether the destination directory exists or not.</span>
+<span class="sd">    - It uses a custom function to copy symlinks (:any:`copy_symlink`), it not just uses \</span>
+<span class="sd">    :any:`os.symlink` directly.</span>
+<span class="sd">    - Switched the *ignore* parameter (originally a method) into *ignored_patterns* (now a list \</span>
+<span class="sd">    of file patterns). Just for the kick of it, not really needed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    src : str</span>
+<span class="sd">        Source directory.</span>
+<span class="sd">    dst : str</span>
+<span class="sd">        Destination directory.</span>
+<span class="sd">    symlinks : bool, optional</span>
+<span class="sd">        Handle symlinks.</span>
+<span class="sd">    ignored_patterns : None, optional</span>
+<span class="sd">         A list of file name patterns to be ignored by the copy functions.</span>
+<span class="sd">    ignore_dangling_symlinks : bool, optional</span>
+<span class="sd">        Whether to ignore dangling symlinks.</span>
+<span class="sd">    logger : object</span>
+<span class="sd">        See &lt;class :any:`LogSystem`&gt;.</span>
+<span class="sd">    log_copied_file : bool, optional</span>
+<span class="sd">        See :any:`custom_copy2` &gt; log_copied_file parameter.</span>
+<span class="sd">    relative_path : str, optional</span>
+<span class="sd">        A relative path to exctract from the path that&#39;s going to be logged.</span>
+<span class="sd">    overwrite : bool, optional</span>
+<span class="sd">        Overwrite existent files without doing any checks.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The destination if no errors were raised.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    exceptions.Error</span>
+<span class="sd">        A list of errors after all items in a directory were processed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ignored_patterns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ignored_names</span> <span class="o">=</span> <span class="n">ignore_patterns</span><span class="p">(</span><span class="o">*</span><span class="n">ignored_patterns</span><span class="p">)(</span><span class="n">src</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ignored_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">ignored_names</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">srcname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">dstname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">srcname</span><span class="p">):</span>
+                <span class="n">linkto</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">readlink</span><span class="p">(</span><span class="n">srcname</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">symlinks</span><span class="p">:</span>
+                    <span class="c1"># os.symlink(linkto, dstname)</span>
+                    <span class="c1"># copystat(srcname, dstname, follow_symlinks=not symlinks)</span>
+                    <span class="c1"># Let :any:`copy_symlink` take care of symlinks. With the approach taken by</span>
+                    <span class="c1"># the original :any:`shutil.copytree` function, I&#39;m constantly spammed with</span>
+                    <span class="c1"># useless errors thrown by the direct use of :any:`os.symlink`.</span>
+                    <span class="c1"># I fixed this nuisance by simply getting rid of the destination.</span>
+                    <span class="c1"># MOVING ON!!!</span>
+                    <span class="n">copy_symlink</span><span class="p">(</span><span class="n">srcname</span><span class="p">,</span> <span class="n">dstname</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span> <span class="n">follow_symlinks</span><span class="o">=</span><span class="ow">not</span> <span class="n">symlinks</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Ignore dangling symlink if the flag is on</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">linkto</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ignore_dangling_symlinks</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="c1"># Otherwise let the copy occurs. copy2 will raise an error</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">srcname</span><span class="p">):</span>
+                        <span class="n">custom_copytree</span><span class="p">(</span><span class="n">srcname</span><span class="p">,</span> <span class="n">dstname</span><span class="p">,</span>
+                                        <span class="n">symlinks</span><span class="o">=</span><span class="n">symlinks</span><span class="p">,</span>
+                                        <span class="n">ignored_patterns</span><span class="o">=</span><span class="n">ignored_patterns</span><span class="p">,</span>
+                                        <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span>
+                                        <span class="n">log_copied_file</span><span class="o">=</span><span class="n">log_copied_file</span><span class="p">,</span>
+                                        <span class="n">relative_path</span><span class="o">=</span><span class="n">relative_path</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">custom_copy2</span><span class="p">(</span><span class="n">srcname</span><span class="p">,</span> <span class="n">dstname</span><span class="p">,</span>
+                                     <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span>
+                                     <span class="n">log_copied_file</span><span class="o">=</span><span class="n">log_copied_file</span><span class="p">,</span>
+                                     <span class="n">relative_path</span><span class="o">=</span><span class="n">relative_path</span><span class="p">,</span>
+                                     <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">srcname</span><span class="p">):</span>
+                <span class="n">custom_copytree</span><span class="p">(</span><span class="n">srcname</span><span class="p">,</span> <span class="n">dstname</span><span class="p">,</span>
+                                <span class="n">symlinks</span><span class="o">=</span><span class="n">symlinks</span><span class="p">,</span>
+                                <span class="n">ignored_patterns</span><span class="o">=</span><span class="n">ignored_patterns</span><span class="p">,</span>
+                                <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span>
+                                <span class="n">log_copied_file</span><span class="o">=</span><span class="n">log_copied_file</span><span class="p">,</span>
+                                <span class="n">relative_path</span><span class="o">=</span><span class="n">relative_path</span><span class="p">,</span>
+                                <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Will raise a SpecialFileError for unsupported file types</span>
+                <span class="n">custom_copy2</span><span class="p">(</span><span class="n">srcname</span><span class="p">,</span> <span class="n">dstname</span><span class="p">,</span>
+                             <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span>
+                             <span class="n">log_copied_file</span><span class="o">=</span><span class="n">log_copied_file</span><span class="p">,</span>
+                             <span class="n">relative_path</span><span class="o">=</span><span class="n">relative_path</span><span class="p">,</span>
+                             <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+        <span class="c1"># Catch the Error from the recursive custom_copytree so that we can</span>
+        <span class="c1"># continue with other files</span>
+        <span class="k">except</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">why</span><span class="p">:</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">srcname</span><span class="p">,</span> <span class="n">dstname</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">why</span><span class="p">)))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">copystat</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">why</span><span class="p">:</span>
+        <span class="c1"># Copying file access times may fail on Windows</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">why</span><span class="p">,</span> <span class="s2">&quot;winerror&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">why</span><span class="p">)))</span>
+
+    <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dst</span></div>
+
+
+<span class="c1"># def file_hash(file_path):</span>
+<span class="c1">#     &quot;&quot;&quot;Not used for now</span>
+
+<span class="c1">#     Returns the hash of a given file.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+
+<span class="c1">#     h = hashlib.sha256()</span>
+
+<span class="c1">#     with open(file_path, &quot;rb&quot;, buffering=0) as f:</span>
+<span class="c1">#         for b in iter(lambda: f.read(128 * 1024), b&#39;&#39;):</span>
+<span class="c1">#             h.update(b)</span>
+
+<span class="c1">#     return h.hexdigest()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Odyseus.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a modified version of <a href="https://github.com/rtfd/sphinx_rtd_theme">sphinx-rtd-theme</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+      <a id="to-top-of-page" href="#top">
+        <i class="fa fa-chevron-circle-up"></i>
+      </a>
+
+    </section>
+
+  </div>
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.min.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

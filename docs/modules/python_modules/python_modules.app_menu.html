@@ -31,7 +31,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="python_modules.app_utils module" href="python_modules.app_utils.html" />
-    <link rel="prev" title="python_modules.pyuca.utils module" href="python_modules.pyuca.utils.html" /> 
+    <link rel="prev" title="python_modules.python_utils.template_utils module" href="python_modules.python_utils.template_utils.html" /> 
 
 </head>
 
@@ -151,7 +151,7 @@
         <a href="python_modules.app_utils.html" class="btn btn-neutral float-right" title="python_modules.app_utils module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="python_modules.pyuca.utils.html" class="btn btn-neutral" title="python_modules.pyuca.utils module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="python_modules.python_utils.template_utils.html" class="btn btn-neutral" title="python_modules.python_utils.template_utils module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -162,17 +162,11 @@
             
   <div class="section" id="module-python_modules.app_menu">
 <span id="python-modules-app-menu-module"></span><h1>python_modules.app_menu module<a class="headerlink" href="#module-python_modules.app_menu" title="Permalink to this headline">¶</a></h1>
-<p>Command Line Interface menu.</p>
+<p>Command Line Interface menu to build xlets and themes.</p>
 <dl class="class">
 <dt id="python_modules.app_menu.CLIMenu">
 <em class="property">class </em><code class="descclassname">python_modules.app_menu.</code><code class="descname">CLIMenu</code><span class="sig-paren">(</span><em>theme_name=''</em>, <em>domain_name=''</em>, <em>build_output=''</em>, <em>do_not_cofirm=False</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="attribute">
-<dt id="python_modules.app_menu.CLIMenu.app_dev_menu">
-<code class="descname">app_dev_menu</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.app_dev_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>object</em> – App development menu. See &lt;class <a class="reference internal" href="python_modules.menu.html#python_modules.menu.Menu" title="python_modules.menu.Menu"><code class="xref any py py-class docutils literal notranslate"><span class="pre">menu.Menu</span></code></a>&gt;.</p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="python_modules.app_menu.CLIMenu.build_output">
 <code class="descname">build_output</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.build_output" title="Permalink to this definition">¶</a></dt>
@@ -194,13 +188,13 @@
 <dl class="attribute">
 <dt id="python_modules.app_menu.CLIMenu.logger">
 <code class="descname">logger</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.logger" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.LogSystem</span></code></a>&gt;.</p>
+<dd><p><em>object</em> – See &lt;class <a class="reference internal" href="python_modules.python_utils.log_system.html#python_modules.python_utils.log_system.LogSystem" title="python_modules.python_utils.log_system.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="python_modules.app_menu.CLIMenu.main_menu">
 <code class="descname">main_menu</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.main_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>object</em> – Main menu. See &lt;class <a class="reference internal" href="python_modules.menu.html#python_modules.menu.Menu" title="python_modules.menu.Menu"><code class="xref any py py-class docutils literal notranslate"><span class="pre">menu.Menu</span></code></a>&gt;.</p>
+<dd><p><em>object</em> – Main menu. See &lt;class <a class="reference internal" href="python_modules.python_utils.menu.html#python_modules.python_utils.menu.Menu" title="python_modules.python_utils.menu.Menu"><code class="xref any py py-class docutils literal notranslate"><span class="pre">menu.Menu</span></code></a>&gt;.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -210,15 +204,9 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="python_modules.app_menu.CLIMenu.xlet_dev_menu">
-<code class="descname">xlet_dev_menu</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.xlet_dev_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>object</em> – Xlet development menu. See &lt;class <a class="reference internal" href="python_modules.menu.html#python_modules.menu.Menu" title="python_modules.menu.Menu"><code class="xref any py py-class docutils literal notranslate"><span class="pre">menu.Menu</span></code></a>&gt;.</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="python_modules.app_menu.CLIMenu.xlets_helper">
 <code class="descname">xlets_helper</code><a class="headerlink" href="#python_modules.app_menu.CLIMenu.xlets_helper" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>object</em> – Helper functions. See &lt;class <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.LogSystem</span></code></a>&gt;.</p>
+<dd><p><em>object</em> – Helper functions. See &lt;class <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.XletsHelperCore" title="python_modules.app_utils.XletsHelperCore"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.XletsHelperCore</span></code></a>&gt;.</p>
 </dd></dl>
 
 <p>Initialize.</p>
@@ -229,7 +217,7 @@
 <li><p><strong>domain_name</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The domain name to use to build the xlets.</p></li>
 <li><p><strong>build_output</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Path to the folder were the built xlets are stored.</p></li>
 <li><p><strong>do_not_cofirm</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – Whether to ask for overwrite confirmation when an xlet destination exists or not.</p></li>
-<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.LogSystem" title="python_modules.app_utils.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.LogSystem</span></code></a>&gt;.</p></li>
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="python_modules.python_utils.log_system.html#python_modules.python_utils.log_system.LogSystem" title="python_modules.python_utils.log_system.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
 </ul>
 </dd>
 </dl>
@@ -263,30 +251,6 @@
 <dd><p>Display the build selector menu.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="python_modules.app_menu.CLIMenu.system_executable_generation">
-<code class="descname">system_executable_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu.system_executable_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu.system_executable_generation" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.system_executable_generation" title="python_modules.app_utils.system_executable_generation"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.system_executable_generation</span></code></a></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="python_modules.app_menu.CLIMenu.docs_generation">
-<code class="descname">docs_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu.docs_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu.docs_generation" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.generate_docs" title="python_modules.app_utils.generate_docs"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.generate_docs</span></code></a></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="python_modules.app_menu.CLIMenu.docs_no_api_generation">
-<code class="descname">docs_no_api_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu.docs_no_api_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu.docs_no_api_generation" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.generate_docs" title="python_modules.app_utils.generate_docs"><code class="xref any py py-func docutils literal notranslate"><span class="pre">app_utils.generate_docs</span></code></a></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="python_modules.app_menu.CLIMenu.base_xlet_generation">
-<code class="descname">base_xlet_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/app_menu.html#CLIMenu.base_xlet_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.app_menu.CLIMenu.base_xlet_generation" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference internal" href="python_modules.app_utils.html#python_modules.app_utils.BaseXletGenerator" title="python_modules.app_utils.BaseXletGenerator"><code class="xref any py py-class docutils literal notranslate"><span class="pre">app_utils.BaseXletGenerator</span></code></a></p>
-</dd></dl>
-
 </dd></dl>
 
 </div>
@@ -302,7 +266,7 @@
         <a href="python_modules.app_utils.html" class="btn btn-neutral float-right" title="python_modules.app_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="python_modules.pyuca.utils.html" class="btn btn-neutral" title="python_modules.pyuca.utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="python_modules.python_utils.template_utils.html" class="btn btn-neutral" title="python_modules.python_utils.template_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

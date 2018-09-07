@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python_modules.python_utils.sphinx_docs_utils module &mdash; Cinnamon Tools  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cinnamon-logo.svg"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="python_modules.python_utils.string_utils module" href="python_modules.python_utils.string_utils.html" />
+    <link rel="prev" title="python_modules.python_utils.shell_utils module" href="python_modules.python_utils.shell_utils.html" /> 
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Cinnamon Tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cinnamon Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">python_modules</a> &raquo;</li>
+        
+          <li><a href="python_modules.html">python_modules package</a> &raquo;</li>
+        
+          <li><a href="python_modules.python_utils.html">python_modules.python_utils package</a> &raquo;</li>
+        
+      <li>python_modules.python_utils.sphinx_docs_utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/modules/python_modules/python_modules.python_utils.sphinx_docs_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="python_modules.python_utils.string_utils.html" class="btn btn-neutral float-right" title="python_modules.python_utils.string_utils module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python_modules.python_utils.shell_utils.html" class="btn btn-neutral" title="python_modules.python_utils.shell_utils module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-python_modules.python_utils.sphinx_docs_utils">
+<span id="python-modules-python-utils-sphinx-docs-utils-module"></span><h1>python_modules.python_utils.sphinx_docs_utils module<a class="headerlink" href="#module-python_modules.python_utils.sphinx_docs_utils" title="Permalink to this headline">¶</a></h1>
+<p>Utilities to generate documentations with Sphinx.</p>
+<dl class="function">
+<dt id="python_modules.python_utils.sphinx_docs_utils.check_inventories_existence">
+<code class="descclassname">python_modules.python_utils.sphinx_docs_utils.</code><code class="descname">check_inventories_existence</code><span class="sig-paren">(</span><em>update_inventories=False</em>, <em>docs_sources_path=''</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/sphinx_docs_utils.html#check_inventories_existence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.sphinx_docs_utils.check_inventories_existence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check inventories existence. Download them if they don’t exists.</p>
+<p>These inventory files are the ones used by the intersphinx Sphinx extension. Since
+I couldn’t make the intersphinx_mapping option to download the inventory files
+automatically, I simply cut to the chase and did it myself.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update_inventories</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – Whether to force the update of the inventory files. Inventory files will be updated
+anyway f they don’t exist.</p></li>
+<li><p><strong>docs_sources_path</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Path to the documentation source files that will be used to store the
+downloaded inventories.</p></li>
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="python_modules.python_utils.log_system.html#python_modules.python_utils.log_system.LogSystem" title="python_modules.python_utils.log_system.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">exceptions.KeyboardInterruption</span></code> – Halt execution on Ctrl + C press.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I may need to implement the inventory_files_map variable as an argument so I can
+selectively use different inventories for specific documentations. As of now, Python
+inventory is enough.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="python_modules.python_utils.sphinx_docs_utils.generate_docs">
+<code class="descclassname">python_modules.python_utils.sphinx_docs_utils.</code><code class="descname">generate_docs</code><span class="sig-paren">(</span><em>root_folder=''</em>, <em>docs_src_path_rel_to_root='__app__/docs_sources'</em>, <em>docs_dest_path_rel_to_root='docs'</em>, <em>apidoc_src_path_rel_to_root=''</em>, <em>apidoc_dest_path_rel_to_root=''</em>, <em>doctree_temp_location_rel_to_sys_temp=''</em>, <em>ignored_modules=[]</em>, <em>generate_api_docs=False</em>, <em>update_inventories=False</em>, <em>force_clean_build=False</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/sphinx_docs_utils.html#generate_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.sphinx_docs_utils.generate_docs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build this application documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_folder</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Path to the main folder that most paths should be relative to.</p></li>
+<li><p><strong>docs_src_path_rel_to_root</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Docs sources path relative to root_folder.</p></li>
+<li><p><strong>docs_dest_path_rel_to_root</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Built docs destination path relative to root_folder.</p></li>
+<li><p><strong>apidoc_src_path_rel_to_root</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Docs dcstrings extraction path relative to root_folder.</p></li>
+<li><p><strong>apidoc_dest_path_rel_to_root</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Docs docstrings storage path relative to root_folder.</p></li>
+<li><p><strong>doctree_temp_location_rel_to_sys_temp</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Name of a temporary folder that will be used to create a path relative to the
+system temporary folder.</p></li>
+<li><p><strong>ignored_modules</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)"><em>list</em></a><em>, </em><em>optional</em>) – A list of paths to Python modules relative to the root_folder. These are ignored
+modules whose docstrings are a mess and/or are incomplete. Because such docstrings
+will produce hundred of annoying Sphinx warnings.</p></li>
+<li><p><strong>generate_api_docs</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – If False, do not extract docstrings from Python modules.</p></li>
+<li><p><strong>update_inventories</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to force the update of the inventory files. Inventory files will be updated
+anyway f they don’t exist.</p></li>
+<li><p><strong>force_clean_build</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a><em>, </em><em>optional</em>) – Remove destination and doctrees directories before building the documentation.</p></li>
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="python_modules.python_utils.log_system.html#python_modules.python_utils.log_system.LogSystem" title="python_modules.python_utils.log_system.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python_modules.python_utils.string_utils.html" class="btn btn-neutral float-right" title="python_modules.python_utils.string_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python_modules.python_utils.shell_utils.html" class="btn btn-neutral" title="python_modules.python_utils.shell_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Odyseus.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a modified version of <a href="https://github.com/rtfd/sphinx_rtd_theme">sphinx-rtd-theme</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+      <a id="to-top-of-page" href="#top">
+        <i class="fa fa-chevron-circle-up"></i>
+      </a>
+
+    </section>
+
+  </div>
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.min.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

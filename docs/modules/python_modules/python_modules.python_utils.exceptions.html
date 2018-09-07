@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python_modules.python_utils.exceptions module &mdash; Cinnamon Tools  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cinnamon-logo.svg"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="python_modules.python_utils.file_utils module" href="python_modules.python_utils.file_utils.html" />
+    <link rel="prev" title="python_modules.python_utils.ansi_colors module" href="python_modules.python_utils.ansi_colors.html" /> 
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Cinnamon Tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cinnamon Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">python_modules</a> &raquo;</li>
+        
+          <li><a href="python_modules.html">python_modules package</a> &raquo;</li>
+        
+          <li><a href="python_modules.python_utils.html">python_modules.python_utils package</a> &raquo;</li>
+        
+      <li>python_modules.python_utils.exceptions module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/modules/python_modules/python_modules.python_utils.exceptions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="python_modules.python_utils.file_utils.html" class="btn btn-neutral float-right" title="python_modules.python_utils.file_utils module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python_modules.python_utils.ansi_colors.html" class="btn btn-neutral" title="python_modules.python_utils.ansi_colors module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-python_modules.python_utils.exceptions">
+<span id="python-modules-python-utils-exceptions-module"></span><h1>python_modules.python_utils.exceptions module<a class="headerlink" href="#module-python_modules.python_utils.exceptions" title="Permalink to this headline">¶</a></h1>
+<p>Miscellaneous exceptions.</p>
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">ExceptionWhitoutTraceBack</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#ExceptionWhitoutTraceBack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#Exception" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Raise an exception without a traceback.</p>
+<p>Only used when the traceback isn’t important and the message is clear, to
+the point, and highlighted in red.</p>
+<dl class="attribute">
+<dt id="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack.args">
+<code class="descname">args</code><a class="headerlink" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack.args" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple</em> – Arguments.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Based on an answer from a <a class="reference external" href="https://stackoverflow.com/a/41414413">StackOverflow question</a>.
+Stripped the line number report from the original class because is not needed for my usage case.</p>
+</div>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">ExceptionWhitoutTraceBackWarning</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#ExceptionWhitoutTraceBackWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#Exception" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Raise an exception without a traceback nor an exit errror.</p>
+<p>Only used when the traceback isn’t important and the message is clear, to
+the point, and highlighted in red.</p>
+<dl class="attribute">
+<dt id="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning.args">
+<code class="descname">args</code><a class="headerlink" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning.args" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple</em> – Arguments.</p>
+</dd></dl>
+
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.BadExecutionLocation">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">BadExecutionLocation</code><span class="sig-paren">(</span><em>msg=&quot;All commands must be launched from the application's root directory!!!&quot;</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#BadExecutionLocation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.BadExecutionLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack" title="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack</span></code></a></p>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.WrongPythonVersion">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">WrongPythonVersion</code><span class="sig-paren">(</span><em>msg='Minimum Python version supported: 3.5'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#WrongPythonVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.WrongPythonVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack" title="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack</span></code></a></p>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.MissingCommand">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">MissingCommand</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#MissingCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.MissingCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack" title="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack</span></code></a></p>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.MissingDependencyModule">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">MissingDependencyModule</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#MissingDependencyModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.MissingDependencyModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack" title="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack</span></code></a></p>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.ExistentLocation">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">ExistentLocation</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#ExistentLocation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.ExistentLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack" title="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_modules.python_utils.exceptions.ExceptionWhitoutTraceBack</span></code></a></p>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.KeyboardInterruption">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">KeyboardInterruption</code><span class="sig-paren">(</span><em>msg='Operation aborted.'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#KeyboardInterruption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.KeyboardInterruption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning" title="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning</span></code></a></p>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.MissingRequiredFile">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">MissingRequiredFile</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#MissingRequiredFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.MissingRequiredFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning" title="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning</span></code></a></p>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.InvalidDestination">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">InvalidDestination</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#InvalidDestination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.InvalidDestination" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning" title="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning</span></code></a></p>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.OperationAborted">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">OperationAborted</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#OperationAborted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.OperationAborted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning" title="python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">python_modules.python_utils.exceptions.ExceptionWhitoutTraceBackWarning</span></code></a></p>
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Message that the exception should display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.Error">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">Error</code><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#Error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#OSError" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OSError</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="python_modules.python_utils.exceptions.ValidationError">
+<em class="property">exception </em><code class="descclassname">python_modules.python_utils.exceptions.</code><code class="descname">ValidationError</code><a class="reference internal" href="../../_modules/python_modules/python_utils/exceptions.html#ValidationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.exceptions.ValidationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#Exception" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Raised for validation errors.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python_modules.python_utils.file_utils.html" class="btn btn-neutral float-right" title="python_modules.python_utils.file_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python_modules.python_utils.ansi_colors.html" class="btn btn-neutral" title="python_modules.python_utils.ansi_colors module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Odyseus.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a modified version of <a href="https://github.com/rtfd/sphinx_rtd_theme">sphinx-rtd-theme</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+      <a id="to-top-of-page" href="#top">
+        <i class="fa fa-chevron-circle-up"></i>
+      </a>
+
+    </section>
+
+  </div>
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.min.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

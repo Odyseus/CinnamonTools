@@ -11,7 +11,7 @@ Subpackages
 
 .. toctree::
 
-    python_modules.pyuca
+    python_modules.python_utils
 
 Submodules
 ----------
@@ -25,6 +25,4 @@ Submodules
    python_modules.locale_list
    python_modules.localized_help_creator
    python_modules.localized_help_utils
-   python_modules.menu
-   python_modules.multi_select
 

@@ -1,0 +1,464 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python_modules.python_utils.menu module &mdash; Cinnamon Tools  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cinnamon-logo.svg"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="python_modules.python_utils.misc_utils module" href="python_modules.python_utils.misc_utils.html" />
+    <link rel="prev" title="python_modules.python_utils.log_system module" href="python_modules.python_utils.log_system.html" /> 
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Cinnamon Tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/00-requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/01-usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/02-development-notes.html">Development notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/03-code-styling.html">Code styling/guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includes/04-EOL.html"><abbr title="end-of-life">EOL</abbr> ideas/plans</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cinnamon Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">python_modules</a> &raquo;</li>
+        
+          <li><a href="python_modules.html">python_modules package</a> &raquo;</li>
+        
+          <li><a href="python_modules.python_utils.html">python_modules.python_utils package</a> &raquo;</li>
+        
+      <li>python_modules.python_utils.menu module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/modules/python_modules/python_modules.python_utils.menu.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="python_modules.python_utils.misc_utils.html" class="btn btn-neutral float-right" title="python_modules.python_utils.misc_utils module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python_modules.python_utils.log_system.html" class="btn btn-neutral" title="python_modules.python_utils.log_system module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-python_modules.python_utils.menu">
+<span id="python-modules-python-utils-menu-module"></span><h1>python_modules.python_utils.menu module<a class="headerlink" href="#module-python_modules.python_utils.menu" title="Permalink to this headline">¶</a></h1>
+<p>Command line menu creator.</p>
+<dl class="class">
+<dt id="python_modules.python_utils.menu.Menu">
+<em class="property">class </em><code class="descclassname">python_modules.python_utils.menu.</code><code class="descname">Menu</code><span class="sig-paren">(</span><em>menu_items=[]</em>, <em>title=''</em>, <em>message=''</em>, <em>prompt='❯ '</em>, <em>refresh=&lt;function Menu.&lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Easily create command-line menus.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a slightly modified version of the <a class="reference external" href="https://pypi.python.org/pypi/Menu">Menu module</a>.</p>
+<p><strong>Modifications</strong>:</p>
+<ul class="simple">
+<li><p>Changed some default values to suit my needs.</p></li>
+<li><p>Some aesthetic changes for better readability of the menu items on the screen.</p></li>
+<li><p>This modified version doesn’t clear the screen every time a menu is opened.</p></li>
+</ul>
+</div>
+<dl class="attribute">
+<dt id="python_modules.python_utils.menu.Menu.is_message_enabled">
+<code class="descname">is_message_enabled</code><a class="headerlink" href="#python_modules.python_utils.menu.Menu.is_message_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Used to whether or not to display the menu message.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.python_utils.menu.Menu.is_open">
+<code class="descname">is_open</code><a class="headerlink" href="#python_modules.python_utils.menu.Menu.is_open" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Whether the menu is open or not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.python_utils.menu.Menu.is_title_enabled">
+<code class="descname">is_title_enabled</code><a class="headerlink" href="#python_modules.python_utils.menu.Menu.is_title_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Used to whether or not to display the menu title.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.python_utils.menu.Menu.menu_items">
+<code class="descname">menu_items</code><a class="headerlink" href="#python_modules.python_utils.menu.Menu.menu_items" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – The list of menu items to create the menu.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.python_utils.menu.Menu.message">
+<code class="descname">message</code><a class="headerlink" href="#python_modules.python_utils.menu.Menu.message" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – A message/description to use in the menu.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.python_utils.menu.Menu.prompt">
+<code class="descname">prompt</code><a class="headerlink" href="#python_modules.python_utils.menu.Menu.prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The character used as a prompt for the menu.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.python_utils.menu.Menu.refresh">
+<code class="descname">refresh</code><a class="headerlink" href="#python_modules.python_utils.menu.Menu.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>method</em> – A function to call before displaying the menu.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python_modules.python_utils.menu.Menu.title">
+<code class="descname">title</code><a class="headerlink" href="#python_modules.python_utils.menu.Menu.title" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – A title to use on the menu.</p>
+</dd></dl>
+
+<p>Initialize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>menu_items</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)"><em>list</em></a><em>, </em><em>optional</em>) – The list of menu items to create the menu.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – A title to use on the menu.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – A message/description to use in the menu.</p></li>
+<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a><em>, </em><em>optional</em>) – The character used as a prompt for the menu.</p></li>
+<li><p><strong>refresh</strong> (<em>method</em><em>, </em><em>optional</em>) – A function to call before displaying the menu.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.set_menu_items">
+<code class="descname">set_menu_items</code><span class="sig-paren">(</span><em>menu_items</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.set_menu_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.set_menu_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set menu items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>menu_items</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)"><em>list</em></a>) – List of tuples used to create the menu itmes.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#SystemExit" title="(in Python v3.5)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SystemExit</span></code></a> – Halt execution.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#TypeError" title="(in Python v3.5)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> – If a menu item inside the menu list isn’t a tuple.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#ValueError" title="(in Python v3.5)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – If the tuple lenght of the menu item inside the menu list is not equal to two (2).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.set_title">
+<code class="descname">set_title</code><span class="sig-paren">(</span><em>title</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.set_title"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.set_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set title.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The string used as the menu title.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.set_title_enabled">
+<code class="descname">set_title_enabled</code><span class="sig-paren">(</span><em>is_enabled</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.set_title_enabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.set_title_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set title enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>is_enabled</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – Whether the menu title will be displayed or not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.set_message">
+<code class="descname">set_message</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.set_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.set_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The string used as the menu message.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.set_message_enabled">
+<code class="descname">set_message_enabled</code><span class="sig-paren">(</span><em>is_enabled</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.set_message_enabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.set_message_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set message enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>is_enabled</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#bool" title="(in Python v3.5)"><em>bool</em></a>) – Whether the menu message will be displayed or not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.set_prompt">
+<code class="descname">set_prompt</code><span class="sig-paren">(</span><em>prompt</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.set_prompt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.set_prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set prompt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The prompt character to be used by the menu.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.set_refresh">
+<code class="descname">set_refresh</code><span class="sig-paren">(</span><em>refresh</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.set_refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.set_refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set refresh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>refresh</strong> (<em>method</em>) – A function to call before displaying the menu.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#TypeError" title="(in Python v3.5)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> – Halt execution if the refresh method isn’t a callable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.add_menu_item">
+<code class="descname">add_menu_item</code><span class="sig-paren">(</span><em>label</em>, <em>handler</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.add_menu_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.add_menu_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add menu item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – The text used by a menu item.</p></li>
+<li><p><strong>handler</strong> (<em>method</em>) – The function to call when activating a menu item.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.5/library/exceptions.html#TypeError" title="(in Python v3.5)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> – Halt execution if the handler method isn’t a callable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">exceptions.KeyboardInterruption</span></code> – Halt execution on Ctrl + C press.</p></li>
+<li><p><code class="xref py py-exc docutils literal notranslate"><span class="pre">exceptions.OperationAborted</span></code> – Halt execution.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close menu.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.show">
+<code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display menu.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.input">
+<code class="descname">input</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The method to call when a menu item is activated.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>method</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_modules.python_utils.menu.Menu.CLOSE">
+<code class="descname">CLOSE</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/menu.html#Menu.CLOSE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.menu.Menu.CLOSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close menu.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python_modules.python_utils.misc_utils.html" class="btn btn-neutral float-right" title="python_modules.python_utils.misc_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python_modules.python_utils.log_system.html" class="btn btn-neutral" title="python_modules.python_utils.log_system module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Odyseus.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a modified version of <a href="https://github.com/rtfd/sphinx_rtd_theme">sphinx-rtd-theme</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+      <a id="to-top-of-page" href="#top">
+        <i class="fa fa-chevron-circle-up"></i>
+      </a>
+
+    </section>
+
+  </div>
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.min.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

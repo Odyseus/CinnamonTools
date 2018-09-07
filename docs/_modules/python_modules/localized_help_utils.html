@@ -150,8 +150,6 @@
 
 <span class="sd">Attributes</span>
 <span class="sd">----------</span>
-<span class="sd">Ansi : object</span>
-<span class="sd">    :any:`app_utils.ANSIColors` class initialization.</span>
 <span class="sd">BOXED_CONTAINER : str</span>
 <span class="sd">    Boxed container template.</span>
 <span class="sd">HTML_DOC : str</span>
@@ -173,10 +171,9 @@
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">copy2</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">app_utils</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">polib</span>
+<span class="kn">from</span> <span class="nn">.python_utils</span> <span class="k">import</span> <span class="n">polib</span>
+<span class="kn">from</span> <span class="nn">.python_utils.ansi_colors</span> <span class="k">import</span> <span class="n">Ansi</span>
 
-
-<span class="n">Ansi</span> <span class="o">=</span> <span class="n">app_utils</span><span class="o">.</span><span class="n">Ansi</span>
 
 <span class="n">HTML_DOC</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;!DOCTYPE html&gt;</span>
 <span class="s2">&lt;html&gt;</span>
@@ -554,7 +551,7 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">app_utils</span><span class="o">.</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">Ansi</span><span class="o">.</span><span class="n">ERROR</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
         <span class="n">quit</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">is_xlet_help_file</span><span class="p">:</span>
