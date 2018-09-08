@@ -3,6 +3,7 @@
 
 ### Third party modules
 
+- **bottle:** Bottle is a fast, simple and lightweight [WSGI](https://wsgi.readthedocs.io/en/latest/) micro web-framework for Python.
 - **docopt:** Slightly modified version of the [docopt](https://github.com/docopt/docopt) Python module.
     - Print help "headers" in bold.
     - Re-declared some strings as raw strings (``r"..."``) to avoid some invalid escape sequence linter warnings.
@@ -16,4 +17,5 @@
 - **polib:** [polib](https://bitbucket.org/izi/polib) is a library to manipulate, create and modify `gettext` files (pot, po and mo files).
 - **pyperclip:** [Pyperclip](https://github.com/asweigart/pyperclip) is a cross-platform Python module for copy and paste clipboard functions.
 - **pyuca:** This [Python module](https://github.com/jtauber/pyuca) is used to allow the correct sorting of strings with Unicode characters.
+- **titlecase:** [titlecase](https://github.com/ppannuto/python-titlecase) changes all words to Title Caps, and attempts to be clever about SMALL words like a/an/the in the input.
 - **tqdm:** [tqdm](https://pypi.python.org/pypi/tqdm) is a fast and extensible progress bar for Python and CLI.
