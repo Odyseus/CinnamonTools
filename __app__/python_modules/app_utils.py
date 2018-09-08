@@ -113,10 +113,12 @@ readme_list_item_template = "- [{xlet_name}](%s/_static/xlets_help_pages/{xlet_s
     repo_pages_url)
 
 ignored_apidoc_modules = [
+    os.path.join("__app__", "python_modules", "python_utils", "bottle.py"),
     os.path.join("__app__", "python_modules", "python_utils", "docopt.py"),
     os.path.join("__app__", "python_modules", "python_utils", "mistune.py"),
     os.path.join("__app__", "python_modules", "python_utils", "polib.py"),
     os.path.join("__app__", "python_modules", "python_utils", "pyperclip"),
+    os.path.join("__app__", "python_modules", "python_utils", "titlecase.py"),
     os.path.join("__app__", "python_modules", "python_utils", "tqdm"),
     # The following module has perfectly valid docstrings, but Sphinx is being a
     # b*tch and throws a million warnings for no reason.

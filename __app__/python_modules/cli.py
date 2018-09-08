@@ -44,6 +44,7 @@ Usage:
     app.py generate (system_executable | docs | docs_no_api | base_xlet)
                     [-f | --force-clean-build]
                     [-u | --update-inventories]
+    app.py repo (submodules | subtrees) (init | update)
     app.py (-h | --help | --version | -r | --restart-cinnamon)
 
 Options:
@@ -118,6 +119,10 @@ Sub-commands for the `generate` command:
     docs_no_api          Generate documentation without extracting Python
                          modules docstrings.
     base_xlet            Interactively generate a "skeleton" xlet.
+
+Sub-commands for the `repo` command:
+    submodules           Manage Cinnamon Tools' repository sub-modules.
+    subtrees             Manage Cinnamon Tools' repository sub-trees.
 
 """.format(__appname__=__appname__,
            __version__=__version__)
@@ -258,6 +263,17 @@ class CommandLineTool():
                 self.logger.info("Base xlet generation...")
                 self.action = self.base_xlet_generation
 
+        if args["repo"]:
+            self.repo_action = "init" if args["init"] else "update" if args["update"] else ""
+
+            if args["submodules"]:
+                self.logger.info("Managing repository sub-modules...")
+                self.action = self.manage_repo_submodules
+
+            if args["subtrees"]:
+                self.logger.info("Managing repository sub-trees...")
+                self.action = self.manage_repo_subtrees
+
     def run(self):
         """Execute the assigned actions.
 
@@ -306,6 +322,7 @@ class CommandLineTool():
         """See :any:`app_menu.CLIMenu`
         """
         from . import app_menu
+
         cli_menu = app_menu.CLIMenu(theme_name=self.theme_name,
                                     domain_name=self.domain_name,
                                     build_output=self.build_output,
@@ -355,6 +372,36 @@ class CommandLineTool():
         """
         base_xlet_generetor = app_utils.BaseXletGenerator(logger=self.logger)
         base_xlet_generetor.generate()
+
+    def manage_repo_submodules(self):
+        """See :any:`git_utils.manage_repo`
+        """
+        from . import git_utils
+
+        git_utils.manage_repo(
+            "submodule",
+            self.repo_action,
+            cwd=app_utils.root_folder,
+            logger=self.logger
+        )
+
+    def manage_repo_subtrees(self):
+        """See :any:`git_utils.manage_repo`
+        """
+        from . import git_utils
+
+        subtrees = [{
+            "remote_name": "python_utils",
+            "remote_url": "git@gitlab.com:Odyseus/python_utils.git",
+            "path": "__app__/python_modules/python_utils"
+        }]
+        git_utils.manage_repo(
+            "subtree",
+            self.repo_action,
+            cwd=app_utils.root_folder,
+            subtrees=subtrees,
+            logger=self.logger
+        )
 
 
 def main():

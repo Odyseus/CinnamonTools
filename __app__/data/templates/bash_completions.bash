@@ -49,7 +49,7 @@ _cinnamon_tools_script(){
     # Completion of commands.
     if [[ $COMP_CWORD == 1 ]]; then
         COMPREPLY=( $(compgen -W \
-            "menu build build_themes generate dev -h --help --version -r --restart-cinnamon" -- "${cur}") )
+            "menu build build_themes generate dev repo -h --help --version -r --restart-cinnamon" -- "${cur}") )
         return 0
     fi
 
@@ -61,6 +61,10 @@ _cinnamon_tools_script(){
         COMPREPLY=( $(compgen -W \
             "-d --domain= -o --output= -n --no-confirmation" -- "${cur}") )
         _decide_nospace ${COMPREPLY[0]}
+        ;;
+    "repo")
+        COMPREPLY=( $(compgen -W \
+            "submodules subtrees" -- "${cur}") )
         ;;
     "generate")
         COMPREPLY=( $(compgen -W \
@@ -91,6 +95,10 @@ update_pot_files update_spanish_localizations create_changelogs " -- "${cur}") )
     "docs"|"docs_no_api")
         COMPREPLY=( $(compgen -W \
             "-f --force-clean-build -u --update-inventories" -- "${cur}") )
+        ;;
+    "submodules"|"subtrees")
+        COMPREPLY=( $(compgen -W \
+            "init update" -- "${cur}") )
         ;;
     esac
 } &&
