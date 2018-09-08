@@ -80,7 +80,6 @@ Options
         Built xlets will always be created inside a folder named as the xlet type (applets or extensions). The exception to this are the themes. Themes will be directly built into the output directory.
 
 - ``-n`` or ``--no-confirmation``: Do not confirm the deletion of an already built xlet when the ``--output`` option is used.
-
 - ``-r`` or ``--restart-cinnamon``: Restart Cinnamon's shell after finishing the xlets building process.
 
 .. _how-to-build-themes-reference:
@@ -94,11 +93,8 @@ Options
 ^^^^^^^
 
 - ``-t <name>`` or ``--theme-name=<name>``: To be able to build the themes, it is necessary to specify a theme name. This theme name is then used to generate the full theme name (theme_name-theme_variant). To avoid passing this command line option every time one builds themes, a file named **theme_name** can be created at the root of the repository whose only content should be the desired theme name. This command line option has precedence over the **theme_name** file. Which means that if this option is used, the theme name found in an existent **theme_name** file will be ignored.
-
 - ``-o <dir>`` or ``--output=<dir>``: The output directory that will be used to save the built themes. If not specified, the default storage location will be used. See :ref:`build command --output <build-command-option-ooutput-reference>` option notes for more details.
-
 - ``-n`` or ``--no-confirmation``: Do not confirm the deletion of an already built theme when the ``--output`` option is used. See :ref:`build command --output <build-command-option-ooutput-reference>` option notes for more details.
-
 - ``-r`` or ``--restart-cinnamon``: Restart Cinnamon's shell after finishing the themes building process.
 
 .. note::
@@ -136,10 +132,6 @@ Sub-commands
 - ``update_pot_files``: It re-generates all xlets POT files to reflect the changes made to the translatable strings on them.
 - ``update_spanish_localizations``: It updates the **es.po** files from all xlets from their respective POT files.
 - ``create_changelogs``: Generates *human readable* changelogs from the Git history of changes.
-- ``check_executables`` **(*)**: It checks if the files that need to be executable, actually are.
-- ``set_executables`` **(*)**: Same as ``check_executables``, but if non executable files are found, they will be set as such.
-
-**(*)**: This check is not *very smart*. Currently, it simply checks for files with ``.py`` or ``.sh`` extension. And they will be set as executable regardless if they need to be or not.
 
 .. _system-executable-reference:
 
@@ -156,3 +148,29 @@ Sub-commands
 
 - ``docs``: Generate this documentation page.
 - ``docs_no_api``: Generate this documentation page without extracting Python modules docstrings.
+- ``base_xlet``: Interactively generate a "skeleton" xlet.
+
+
+Options for ``docs`` and ``docs_no_api`` sub-commands
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- ``-f`` or ``--force-clean-build``: Clear doctree cache and destination folder when building the documentation.
+- ``-u`` or ``--update-inventories``: Update inventory files from their on-line resources when building the documentation. Inventory files will be updated automatically if they don't already exist.
+
+**app.py repo** command
+-----------------------
+
+Command to perform tasks in the Cinnamon Tool's repository. These tasks where directly intregrated into this application to avoid fatal errors (a simple error could mangle the local repository).
+
+Sub-commands
+^^^^^^^^^^^^
+
+- ``submodules``: Manage sub-modules.
+
+    + ``init``: Initialize sub-modules. Only needed if the Cinnamon Tools' repository wasn't *deep cloned*.
+    + ``update``: This is needed only to merge the changes done on the upstream sub-module.
+
+- ``subtrees``: Manage repositories handled by the subtree merge strategy.
+
+    + ``init``: Add the git remote of the repository added to Cinnamon Tools' repository as a sub-tree.
+    + ``update``: This is needed only to merge the changes done on the upstream repository added as a sub-tree.

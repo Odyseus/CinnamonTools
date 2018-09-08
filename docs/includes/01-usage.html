@@ -87,6 +87,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#app-py-build-themes-command"><strong>app.py build_themes</strong> command</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#app-py-dev-command"><strong>app.py dev</strong> command</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#app-py-generate-command"><strong>app.py generate</strong> command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#app-py-repo-command"><strong>app.py repo</strong> command</a></li>
 </ul>
 </li>
 </ul>
@@ -196,6 +197,7 @@
     app.py generate (system_executable | docs | docs_no_api | base_xlet)
                     [-f | --force-clean-build]
                     [-u | --update-inventories]
+    app.py repo (submodules | subtrees) (init | update)
     app.py (-h | --help | --version | -r | --restart-cinnamon)
 
 <span class="text-bold">Options:</span>
@@ -269,7 +271,11 @@
     docs                 Generate documentation.
     docs_no_api          Generate documentation without extracting Python
                          modules docstrings.
-    base_xlet            Interactively generate a &quot;skeleton&quot; xlet.</pre>
+    base_xlet            Interactively generate a &quot;skeleton&quot; xlet.
+
+<span class="text-bold">Sub-commands for the `repo` command:</span>
+    submodules           Manage Cinnamon Tools&#x27; repository sub-modules.
+    subtrees             Manage Cinnamon Tools&#x27; repository sub-trees.</pre>
 </div></div>
 </div>
 <div class="section" id="detailed-usage">
@@ -401,10 +407,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">update_pot_files</span></code>: It re-generates all xlets POT files to reflect the changes made to the translatable strings on them.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">update_spanish_localizations</span></code>: It updates the <strong>es.po</strong> files from all xlets from their respective POT files.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">create_changelogs</span></code>: Generates <em>human readable</em> changelogs from the Git history of changes.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">check_executables</span></code> <strong>(*)</strong>: It checks if the files that need to be executable, actually are.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">set_executables</span></code> <strong>(*)</strong>: Same as <code class="docutils literal notranslate"><span class="pre">check_executables</span></code>, but if non executable files are found, they will be set as such.</p></li>
 </ul>
-<p><strong>(*)</strong>: This check is not <em>very smart</em>. Currently, it simply checks for files with <code class="docutils literal notranslate"><span class="pre">.py</span></code> or <code class="docutils literal notranslate"><span class="pre">.sh</span></code> extension. And they will be set as executable regardless if they need to be or not.</p>
 </div>
 </div>
 <div class="section" id="app-py-generate-command">
@@ -422,6 +425,39 @@
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docs</span></code>: Generate this documentation page.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docs_no_api</span></code>: Generate this documentation page without extracting Python modules docstrings.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">base_xlet</span></code>: Interactively generate a “skeleton” xlet.</p></li>
+</ul>
+</div>
+<div class="section" id="options-for-docs-and-docs-no-api-sub-commands">
+<h4>Options for <code class="docutils literal notranslate"><span class="pre">docs</span></code> and <code class="docutils literal notranslate"><span class="pre">docs_no_api</span></code> sub-commands<a class="headerlink" href="#options-for-docs-and-docs-no-api-sub-commands" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> or <code class="docutils literal notranslate"><span class="pre">--force-clean-build</span></code>: Clear doctree cache and destination folder when building the documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-u</span></code> or <code class="docutils literal notranslate"><span class="pre">--update-inventories</span></code>: Update inventory files from their on-line resources when building the documentation. Inventory files will be updated automatically if they don’t already exist.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="app-py-repo-command">
+<h3><strong>app.py repo</strong> command<a class="headerlink" href="#app-py-repo-command" title="Permalink to this headline">¶</a></h3>
+<p>Command to perform tasks in the Cinnamon Tool’s repository. These tasks where directly intregrated into this application to avoid fatal errors (a simple error could mangle the local repository).</p>
+<div class="section" id="id4">
+<h4>Sub-commands<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">submodules</span></code>: Manage sub-modules.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">init</span></code>: Initialize sub-modules. Only needed if the Cinnamon Tools’ repository wasn’t <em>deep cloned</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update</span></code>: This is needed only to merge the changes done on the upstream sub-module.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subtrees</span></code>: Manage repositories handled by the subtree merge strategy.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">init</span></code>: Add the git remote of the repository added to Cinnamon Tools’ repository as a sub-tree.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update</span></code>: This is needed only to merge the changes done on the upstream repository added as a sub-tree.</p></li>
+</ul>
+</div></blockquote>
+</li>
 </ul>
 </div>
 </div>

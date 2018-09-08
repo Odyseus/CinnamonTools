@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>python_modules.python_utils package &mdash; Cinnamon Tools  documentation</title>
+  <title>python_modules.python_utils.git_utils module &mdash; Cinnamon Tools  documentation</title>
   
 
   
@@ -30,8 +30,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="python_modules.python_utils.pyuca package" href="python_modules.python_utils.pyuca.html" />
-    <link rel="prev" title="python_modules package" href="python_modules.html" /> 
+    <link rel="next" title="python_modules.python_utils.log_system module" href="python_modules.python_utils.log_system.html" />
+    <link rel="prev" title="python_modules.python_utils.file_utils module" href="python_modules.python_utils.file_utils.html" /> 
 
 </head>
 
@@ -132,13 +132,15 @@
         
           <li><a href="python_modules.html">python_modules package</a> &raquo;</li>
         
-      <li>python_modules.python_utils package</li>
+          <li><a href="python_modules.python_utils.html">python_modules.python_utils package</a> &raquo;</li>
+        
+      <li>python_modules.python_utils.git_utils module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/modules/python_modules/python_modules.python_utils.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/modules/python_modules/python_modules.python_utils.git_utils.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -148,10 +150,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="python_modules.python_utils.pyuca.html" class="btn btn-neutral float-right" title="python_modules.python_utils.pyuca package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="python_modules.python_utils.log_system.html" class="btn btn-neutral float-right" title="python_modules.python_utils.log_system module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="python_modules.html" class="btn btn-neutral" title="python_modules package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="python_modules.python_utils.file_utils.html" class="btn btn-neutral" title="python_modules.python_utils.file_utils module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -160,44 +162,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-python_modules.python_utils">
-<span id="python-modules-python-utils-package"></span><h1>python_modules.python_utils package<a class="headerlink" href="#module-python_modules.python_utils" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
+  <div class="section" id="module-python_modules.python_utils.git_utils">
+<span id="python-modules-python-utils-git-utils-module"></span><h1>python_modules.python_utils.git_utils module<a class="headerlink" href="#module-python_modules.python_utils.git_utils" title="Permalink to this headline">¶</a></h1>
+<p>Git utilities.</p>
+<dl class="function">
+<dt id="python_modules.python_utils.git_utils.manage_repo">
+<code class="descclassname">python_modules.python_utils.git_utils.</code><code class="descname">manage_repo</code><span class="sig-paren">(</span><em>mechanism</em>, <em>action</em>, <em>subtrees=[]</em>, <em>cwd=None</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/python_modules/python_utils/git_utils.html#manage_repo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python_modules.python_utils.git_utils.manage_repo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manage repository.</p>
+<p>Perform some complex tasks on a repository. Mostly sub-trees and sub-modules initialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mechanism</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Which “mechanism” to work with (“submodule” or “subtree”).</p></li>
+<li><p><strong>action</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#str" title="(in Python v3.5)"><em>str</em></a>) – Which action to perform (“init” or “update”).</p></li>
+<li><p><strong>subtrees</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/stdtypes.html#list" title="(in Python v3.5)"><em>list</em></a><em>, </em><em>optional</em>) – <p>A list of dictionaries representing sub-tree options.</p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.pyuca.html">python_modules.python_utils.pyuca package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="python_modules.python_utils.pyuca.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="python_modules.python_utils.pyuca.collator.html">python_modules.python_utils.pyuca.collator module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="python_modules.python_utils.pyuca.trie.html">python_modules.python_utils.pyuca.trie module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="python_modules.python_utils.pyuca.utils.html">python_modules.python_utils.pyuca.utils module</a></li>
+<li><p><strong>remote_name</strong>: The sub-tree remote name.</p></li>
+<li><p><strong>remote_url</strong>: The sub-tree remote URL.</p></li>
+<li><p><strong>path</strong>: Path inside the parent repository where the sub-tree will be stored.</p></li>
 </ul>
-</li>
+</p></li>
+<li><p><strong>cwd</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/constants.html#None" title="(in Python v3.5)"><em>None</em></a><em>, </em><em>optional</em>) – Path to working directory. It should be a folder that belongs to a Git repository.</p></li>
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3.5/library/functions.html#object" title="(in Python v3.5)"><em>object</em></a>) – See &lt;class <a class="reference internal" href="python_modules.python_utils.log_system.html#python_modules.python_utils.log_system.LogSystem" title="python_modules.python_utils.log_system.LogSystem"><code class="xref any py py-class docutils literal notranslate"><span class="pre">LogSystem</span></code></a>&gt;.</p></li>
 </ul>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.ansi_colors.html">python_modules.python_utils.ansi_colors module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.exceptions.html">python_modules.python_utils.exceptions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.file_utils.html">python_modules.python_utils.file_utils module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.git_utils.html">python_modules.python_utils.git_utils module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.log_system.html">python_modules.python_utils.log_system module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.menu.html">python_modules.python_utils.menu module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.misc_utils.html">python_modules.python_utils.misc_utils module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.multi_select.html">python_modules.python_utils.multi_select module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.prompts.html">python_modules.python_utils.prompts module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.shell_utils.html">python_modules.python_utils.shell_utils module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.sphinx_docs_utils.html">python_modules.python_utils.sphinx_docs_utils module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.string_utils.html">python_modules.python_utils.string_utils module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_modules.python_utils.template_utils.html">python_modules.python_utils.template_utils module</a></li>
-</ul>
-</div>
-</div>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
@@ -208,10 +199,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="python_modules.python_utils.pyuca.html" class="btn btn-neutral float-right" title="python_modules.python_utils.pyuca package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="python_modules.python_utils.log_system.html" class="btn btn-neutral float-right" title="python_modules.python_utils.log_system module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="python_modules.html" class="btn btn-neutral" title="python_modules package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="python_modules.python_utils.file_utils.html" class="btn btn-neutral" title="python_modules.python_utils.file_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
