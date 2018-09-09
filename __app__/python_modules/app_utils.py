@@ -674,8 +674,10 @@ def get_xlets_dirs():
     list
         The list of xlets directory names prefixed with their "types".
     """
-    applets_dirs = ["Applet %s" % item for item in _list_xlets_dirs("applets")]
-    extensions_dirs = ["Extension %s" % item for item in _list_xlets_dirs("extensions")]
+    applets_dirs = ["Applet %s" % item for item in _list_xlets_dirs("applets")
+                    if not item.startswith("0z")]
+    extensions_dirs = ["Extension %s" % item for item in _list_xlets_dirs("extensions")
+                       if not item.startswith("0z")]
 
     return applets_dirs + extensions_dirs
 
@@ -699,7 +701,7 @@ def validate_themes_options(x):
         Halt execution if option is not valid.
     """
     if not x or x not in ["1", "2"]:
-        raise exceptions.ValidationError('Posible options are "1" or "2".')
+        raise exceptions.ValidationError('Possible options are "1" or "2".')
 
     return x
 
