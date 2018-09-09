@@ -2,15 +2,16 @@
 # Project specific ignores #
 ############################
 
+# Ignore this repository. Purposely not added as a sub-module nor a sub-tree
+# to avoid dealing with pushes to a sub-module/sub-tree from inside a parent
+# repository.
+__app__/cinnamon_tools_docs/
+
 # Ignore xlets whose directory name starts with 0z. These are non-functional.
 /*/0z*/
 
 # The "temp" folder at the root of the repository.
 /tmp
-
-# Files at the root of the repository.
-domain_name
-theme_name
 
 ##################
 # Global ignores #
