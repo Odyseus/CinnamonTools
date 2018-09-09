@@ -48,15 +48,15 @@ from .python_utils.ansi_colors import Ansi
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
     os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
 
-docs_sources_path = os.path.join(root_folder, "__app__", "docs_sources")
+docs_sources_path = os.path.join(root_folder, "__app__", "cinnamon_tools_docs")
 
 repo_url = "https://gitlab.com/Odyseus/CinnamonTools"
 
 repo_pages_url = "https://odyseus.gitlab.io/CinnamonTools"
 
-domain_storage_file = os.path.join(root_folder, "domain_name")
+domain_storage_file = os.path.join(root_folder, "tmp", "domain_name")
 
-theme_name_storage_file = os.path.join(root_folder, "theme_name")
+theme_name_storage_file = os.path.join(root_folder, "tmp", "theme_name")
 
 
 all_xlets_meta_file = os.path.join(root_folder, "tmp", "xlets_metadata.json")
@@ -66,8 +66,8 @@ missing_domain_msg = """DomainNameNotSet:
 The command line option `--domain=<domain>` should be used to define a domain
 name for use when building xlets.
 
-Or a file named "domain_name" should be created at the root of the repository
-whose only content should be the desired domain name.
+Or a file named "domain_name" should be created inside a folder named "tmp" at
+the root of the repository whose only content should be the desired domain name.
 
 The `--domain` command line option has precedence over the domain name found
 inside the "domain_name" file.
@@ -78,8 +78,8 @@ missing_theme_name_msg = """ThemeNameNotSet:
 The command line option `--theme-name=<name>` should be used to define a theme
 name for use when building themes.
 
-Or a file named "theme_name" should be created at the root of the repository
-whose only content should be the desired theme name.
+Or a file named "theme_name" should be created inside a folder named "tmp" at
+the root of the repository whose only content should be the desired theme name.
 
 The `--theme-name` command line option has precedence over the theme name found
 inside the "theme_name" file.
@@ -476,13 +476,21 @@ def build_xlets(xlets=[], domain_name=None, build_output="",
     SystemExit
         Halt execution if the domain name cannot be obtained.
     """
+    options_map_defaults = {
+        "domain_name": "domain.com"
+    }
+
     if not domain_name:
         try:
             with open(domain_storage_file, "r", encoding="UTF-8") as domain_file:
                 domain_name = domain_file.read().strip()
         except Exception:
-            print(Ansi.WARNING(missing_domain_msg))
-            raise SystemExit()
+            domain_name = False
+
+    if not domain_name:
+        print(Ansi.PURPLE("\nEnter a domain name:"))
+        prompts.do_prompt(options_map_defaults, "domain_name", "Enter name", options_map_defaults["domain_name"])
+        domain_name = options_map_defaults["domain_name"].strip()
 
     # TODO:
     # Implement a "domain name validator" function.
@@ -739,6 +747,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
     }
 
     options_map_defaults = {
+        "theme_name": "MyThemeName",
         "cinnamon_version": "1",
         "cinnamon_font_size": "9pt",
         "cinnamon_font_family": '"Noto Sans", sans, Sans-Serif',
@@ -780,8 +789,12 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
             with open(theme_name_storage_file, "r", encoding="UTF-8") as theme_file:
                 theme_name = theme_file.read().strip()
         except Exception:
-            print(Ansi.WARNING(missing_theme_name_msg))
-            raise SystemExit()
+            theme_name = False
+
+    if not theme_name:
+        print(Ansi.PURPLE("\nEnter a name for the theme:"))
+        prompts.do_prompt(options_map_defaults, "theme_name", "Enter name", options_map_defaults["theme_name"])
+        theme_name = options_map_defaults["theme_name"].strip()
 
     if not theme_name:
         print(Ansi.WARNING(missing_theme_name_msg))
@@ -1046,6 +1059,8 @@ def generate_docs(generate_api_docs=False,
     from .python_utils import sphinx_docs_utils
 
     sphinx_docs_utils.generate_docs(root_folder=root_folder,
+                                    docs_dest_path_rel_to_root=os.path.join(
+                                        "__app__", "cinnamon_tools_docs", "docs"),
                                     apidoc_src_path_rel_to_root=os.path.join(
                                         "__app__", "python_modules"),
                                     apidoc_dest_path_rel_to_root=os.path.join(
