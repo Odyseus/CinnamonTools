@@ -376,7 +376,7 @@ class CommandLineTool():
     def manage_repo_submodules(self):
         """See :any:`git_utils.manage_repo`
         """
-        from . import git_utils
+        from .python_utils import git_utils
 
         git_utils.manage_repo(
             "submodule",
@@ -388,7 +388,7 @@ class CommandLineTool():
     def manage_repo_subtrees(self):
         """See :any:`git_utils.manage_repo`
         """
-        from . import git_utils
+        from .python_utils import git_utils
 
         subtrees = [{
             "remote_name": "python_utils",
