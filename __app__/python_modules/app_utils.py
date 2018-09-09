@@ -1059,12 +1059,14 @@ def generate_docs(generate_api_docs=False,
     from .python_utils import sphinx_docs_utils
 
     sphinx_docs_utils.generate_docs(root_folder=root_folder,
+                                    docs_src_path_rel_to_root=os.path.join(
+                                        "__app__", "cinnamon_tools_docs"),
                                     docs_dest_path_rel_to_root=os.path.join(
                                         "__app__", "cinnamon_tools_docs", "docs"),
                                     apidoc_src_path_rel_to_root=os.path.join(
                                         "__app__", "python_modules"),
                                     apidoc_dest_path_rel_to_root=os.path.join(
-                                        "__app__", "docs_sources", "modules", "python_modules"),
+                                        "__app__", "cinnamon_tools_docs", "modules", "python_modules"),
                                     doctree_temp_location_rel_to_sys_temp="CinnamonTools-doctrees",
                                     ignored_modules=ignored_apidoc_modules,
                                     generate_api_docs=generate_api_docs,
