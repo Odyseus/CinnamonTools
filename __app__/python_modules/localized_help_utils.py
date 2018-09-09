@@ -25,7 +25,7 @@ from datetime import datetime
 from shutil import copy2
 
 from . import app_utils
-from .python_utils import polib
+from .python_utils import polib, file_utils
 from .python_utils.ansi_colors import Ansi
 
 
@@ -409,9 +409,9 @@ def save_file(file_path, data, is_xlet_help_file=False):
         quit()
     else:
         if is_xlet_help_file:
-            xlet_folder = app_utils.get_parent_dir(file_path, 0)
+            xlet_folder = file_utils.get_parent_dir(file_path, 0)
             xlet_icon = os.path.join(xlet_folder, "icon.png")
-            xlet_slug = os.path.basename(app_utils.get_parent_dir(file_path))
+            xlet_slug = os.path.basename(file_utils.get_parent_dir(file_path))
             dest_path = os.path.join(app_utils.docs_sources_path, "_static",
                                      "xlets_help_pages", xlet_slug)
             dest_html_file = os.path.join(dest_path, "index.html")

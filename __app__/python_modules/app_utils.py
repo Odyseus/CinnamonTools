@@ -54,6 +54,8 @@ repo_url = "https://gitlab.com/Odyseus/CinnamonTools"
 
 repo_pages_url = "https://odyseus.gitlab.io/CinnamonTools"
 
+repo_docs_url = "https://odyseus.gitlab.io/cinnamon_tools_docs"
+
 domain_storage_file = os.path.join(root_folder, "tmp", "domain_name")
 
 theme_name_storage_file = os.path.join(root_folder, "tmp", "theme_name")
@@ -110,7 +112,7 @@ extra_common_files = [{
 }]
 
 readme_list_item_template = "- [{xlet_name}](%s/_static/xlets_help_pages/{xlet_slug}/index.html)" % (
-    repo_pages_url)
+    repo_docs_url)
 
 ignored_apidoc_modules = [
     os.path.join("__app__", "python_modules", "python_utils", "bottle.py"),
@@ -272,7 +274,7 @@ class XletsHelperCore():
                     applets_help_pages="\n".join(sorted(applets_list_items)),
                     extensions_help_pages="\n".join(sorted(extensions_list_items)),
                     repo_url=repo_url,
-                    repo_pages_url=repo_pages_url
+                    repo_docs_url=repo_docs_url
                 ))
 
     def generate_trans_stats(self):
