@@ -13,7 +13,7 @@ The **app.py** script found at the root of the repository is the *application* t
 
 ### Examples
 
-#### [Interactive shell menu]({repo_pages_url}/includes/cinnamontools-usage.html#app-py-menu-command)
+#### [Interactive shell menu]({repo_docs_url}/includes/cinnamontools-usage.html#app-py-menu-command)
 
 The following command starts a CLI (Command Line Interface) menu from which one can select the xlets to build or build all xlets/themes at once, among other tasks.
 
@@ -21,7 +21,7 @@ The following command starts a CLI (Command Line Interface) menu from which one 
 $ ./app.py menu
 ```
 
-#### [Building xlets]({repo_pages_url}/includes/cinnamontools-usage.html#app-py-build-command)
+#### [Building xlets]({repo_docs_url}/includes/cinnamontools-usage.html#app-py-build-command)
 
 The following command will perform the following actions:
 
@@ -37,7 +37,7 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 
 **Note:** Refer to the [documentation](#documentation) for detailed command line usage.
 
-#### [Building themes]({repo_pages_url}/includes/cinnamontools-usage.html#app-py-build-themes-command)
+#### [Building themes]({repo_docs_url}/includes/cinnamontools-usage.html#app-py-build-themes-command)
 
 The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family and GTK+ 3 version). The following command will perform the following actions:
 
@@ -65,9 +65,9 @@ Most of the xlets in this repository come with help pages that describe their us
 
 {extensions_help_pages}
 
-## [Documentation]({repo_pages_url})
+## [Documentation]({repo_docs_url})
 
-The documentation of this repository is mainly a development documentation, but it also documents the xlets/themes building processes. It can be accessed [on-line]({repo_pages_url}) or locally by simply opening the **docs/index.html** file with any web browser.
+The documentation of this repository is mainly a development documentation, but it also documents the xlets/themes building processes.
 
 ## Redistribution
 
