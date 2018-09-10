@@ -97,10 +97,10 @@ HTML_DOC = """<!DOCTYPE html>
                 <p>Page created with <a href="https://getbootstrap.com"><b>Bootstrap</b></a> v4.1.3.</p>
             </li>
             <li>
-                <p><a href="https://bootswatch.com/flatly"><b>Flatly</b></a> Bootstrap theme by <a href="https://bootswatch.com"><b>Bootswatch</b></a></p>
+                <p><a href="https://bootswatch.com/flatly"><b>Flatly</b></a> Bootstrap theme by <a href="https://bootswatch.com"><b>Bootswatch</b></a>.</p>
             </li>
             <li>
-                <p><a href="https://github.com/julienetie/smooth-scroll"><b>Smooth Scroll plugin</b></a> provided by <a href="https://github.com/julienetie"><b>Julien Etienne</b></a></p>
+                <p><a href="https://github.com/julienetie/smooth-scroll"><b>Smooth Scroll plugin</b></a> provided by <a href="https://github.com/julienetie"><b>Julien Etienne</b></a>.</p>
             </li>
         </ul>
     </div>
