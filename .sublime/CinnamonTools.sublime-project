@@ -5,7 +5,6 @@
             "*.po",
             "*.pot",
             "*.svg",
-            "HELP.html",
             "LICENSE.md"
         ],
         "folder_exclude_patterns": [
