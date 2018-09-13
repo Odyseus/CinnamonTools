@@ -158,5 +158,41 @@ class ValidationError(Exception):
     pass
 
 
+class WrongValueForOption(ExceptionWhitoutTraceBack):
+    """WrongValueForOption
+    """
+    pass
+
+
+class NoProfileNameProvided(ExceptionWhitoutTraceBack):
+    """NoProfileNameProvided
+    """
+    pass
+
+
+class MissingConfigFileForProfile(ExceptionWhitoutTraceBack):
+    """MissingConfigFileForProfile
+    """
+    pass
+
+
+class MissingSourcesOnConfigFile(ExceptionWhitoutTraceBack):
+    """MissingSourcesOnConfigFile
+    """
+    pass
+
+
+class MalformedSources(ExceptionWhitoutTraceBack):
+    """MalformedSources
+    """
+    pass
+
+
+class MissingMandatoryField(ExceptionWhitoutTraceBack):
+    """MissingMandatoryField
+    """
+    pass
+
+
 if __name__ == "__main__":
     pass

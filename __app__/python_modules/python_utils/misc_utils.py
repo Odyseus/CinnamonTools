@@ -35,6 +35,8 @@ def get_date_time(type="date"):
         return datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")
     elif type == "filename":
         return datetime.now().strftime("%Y-%m-%d_%H.%M.%S.%f")
+    elif type == "function_name":
+        return datetime.now().strftime("%Y_%m_%d_%H_%M_%S_%f")
     else:  # type == "date"
         return datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
 
