@@ -11,6 +11,38 @@ from stat import ST_MTIME
 from . import exceptions
 
 
+def is_real_dir(dir_path):
+    """Directory is a real directory.
+
+    Parameters
+    ----------
+    dir_path : str
+        Path to the directory to check.
+
+    Returns
+    -------
+    bool
+        If dir_path is a directory and not a symbolic link to a directory.
+    """
+    return os.path.isdir(dir_path) and not os.path.islink(dir_path)
+
+
+def is_real_file(file_path):
+    """File is a real file, not a symbolic link to a file.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the file to check.
+
+    Returns
+    -------
+    bool
+        If file_path is a file and not a symbolic link to a file.
+    """
+    return os.path.isfile(file_path) and not os.path.islink(file_path)
+
+
 def is_exec(fpath):
     """Check if file is executable.
 
