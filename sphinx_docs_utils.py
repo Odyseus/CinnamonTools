@@ -70,10 +70,9 @@ def check_inventories_existence(update_inventories=False,
 
 
 def generate_docs(root_folder="",
-                  docs_src_path_rel_to_root=os.path.join("__app__", "docs_sources"),
+                  docs_src_path_rel_to_root="",
                   docs_dest_path_rel_to_root="docs",
-                  apidoc_src_path_rel_to_root="",
-                  apidoc_dest_path_rel_to_root="",
+                  apidoc_paths_rel_to_root=[],
                   doctree_temp_location_rel_to_sys_temp="",
                   ignored_modules=[],
                   generate_api_docs=False,
@@ -90,10 +89,10 @@ def generate_docs(root_folder="",
         Docs sources path relative to root_folder.
     docs_dest_path_rel_to_root : str, optional
         Built docs destination path relative to root_folder.
-    apidoc_src_path_rel_to_root : str, optional
-        Docs dcstrings extraction path relative to root_folder.
-    apidoc_dest_path_rel_to_root : str, optional
-        Docs docstrings storage path relative to root_folder.
+    apidoc_paths_rel_to_root : list, optional
+        A list of tuples. Each tuple of length two contains the path to the Python modules
+        folder at index zero from which to extract docstrings and the path to where to store
+        the generated rst files at index one.
     doctree_temp_location_rel_to_sys_temp : str, optional
         Name of a temporary folder that will be used to create a path relative to the
         system temporary folder.
@@ -116,26 +115,27 @@ def generate_docs(root_folder="",
     docs_sources_path = os.path.join(root_folder, docs_src_path_rel_to_root)
     docs_destination_path = os.path.join(root_folder, docs_dest_path_rel_to_root)
 
-    apidoc_source_path = os.path.join(root_folder, apidoc_src_path_rel_to_root)
-    apidoc_destination_path = os.path.join(root_folder, apidoc_dest_path_rel_to_root)
-
     check_inventories_existence(update_inventories, docs_sources_path, logger)
 
     if force_clean_build:
         rmtree(doctree_temp_location, ignore_errors=True)
         rmtree(docs_destination_path, ignore_errors=True)
 
-        if generate_api_docs:
-            rmtree(apidoc_destination_path, ignore_errors=True)
-
     if generate_api_docs:
-        commmon_args = ["-M", "--separate", "--force", "-o"]
+        commmon_args = ["--module-first", "--separate", "--private",
+                        "--force", "--suffix", "rst", "--output-dir"]
 
-        call(["sphinx-apidoc"] + commmon_args + [
-            apidoc_destination_path,
-            apidoc_source_path
-        ] + ignored_modules,
-            cwd=root_folder)
+        for rel_source_path, rel_destination_path in apidoc_paths_rel_to_root:
+            apidoc_destination_path = os.path.join(root_folder, rel_destination_path)
+
+            if force_clean_build:
+                rmtree(apidoc_destination_path, ignore_errors=True)
+
+            call(["sphinx-apidoc"] + commmon_args + [
+                apidoc_destination_path,
+                os.path.join(root_folder, rel_source_path)
+            ] + ignored_modules,
+                cwd=root_folder)
 
     try:
         call(["sphinx-build", ".", "-b", "coverage", "-d", doctree_temp_location, "./coverage"],
