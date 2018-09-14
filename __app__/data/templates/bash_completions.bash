@@ -16,7 +16,7 @@ _list_dirs(){
         set -- */; printf "%s\n" "${@%/}";
     )
 } &&
-_cinnamon_tools_script(){
+__cinnamon_tools_cli_{current_date}(){
     local cur prev cmd xlets_slugs applets_dir extensions_dir
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -49,7 +49,8 @@ _cinnamon_tools_script(){
     # Completion of commands.
     if [[ $COMP_CWORD == 1 ]]; then
         COMPREPLY=( $(compgen -W \
-            "menu build build_themes generate dev repo -h --help --version -r --restart-cinnamon" -- "${cur}") )
+            "manual menu build build_themes generate dev repo -h --help --version -r \
+--restart-cinnamon" -- "${cur}") )
         return 0
     fi
 
@@ -102,4 +103,4 @@ update_pot_files update_spanish_localizations create_changelogs " -- "${cur}") )
         ;;
     esac
 } &&
-complete -F _cinnamon_tools_script {executable_name}
+complete -F __cinnamon_tools_cli_{current_date} {executable_name}

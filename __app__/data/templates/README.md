@@ -15,7 +15,7 @@ The **app.py** script found at the root of the repository is the *application* t
 
 #### [Interactive shell menu]({repo_docs_url}/includes/cinnamontools-usage.html#app-py-menu-command)
 
-The following command starts a CLI (Command Line Interface) menu from which one can select the xlets to build or build all xlets/themes at once, among other tasks.
+The following command starts a CLI (Command Line Interface) interactive menu from which one can select the xlets to build or build all xlets/themes at once.
 
 ```shell
 $ ./app.py menu
