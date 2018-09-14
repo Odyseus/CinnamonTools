@@ -14,14 +14,14 @@ existent_xlet_destination_msg : str
     Message to display when creating a new xlet and that xlet already exists.
 extra_common_files : list
     List of files common to all xlets.
-ignored_apidoc_modules : list
-    List of paths to modules to ignore docstrings extraction.
 missing_domain_msg : str
     Message to display when the domain name isn't specified at xlet build time.
 missing_theme_name_msg : str
     Message to display when the theme name isn't specified at theme build time.
 readme_list_item_template : str
     Template string to generate help pages list items.
+repo_docs_url : str
+    Path to Cinnamon Tools' documentation repository.
 repo_pages_url : str
     URL to the repository hosted web pages.
 repo_url : str
@@ -113,20 +113,6 @@ extra_common_files = [{
 
 readme_list_item_template = "- [{xlet_name}](%s/_static/xlets_help_pages/{xlet_slug}/index.html)" % (
     repo_docs_url)
-
-ignored_apidoc_modules = [
-    os.path.join("__app__", "python_modules", "python_utils", "bottle.py"),
-    os.path.join("__app__", "python_modules", "python_utils", "docopt.py"),
-    os.path.join("__app__", "python_modules", "python_utils", "mistune.py"),
-    os.path.join("__app__", "python_modules", "python_utils", "polib.py"),
-    os.path.join("__app__", "python_modules", "python_utils", "pyperclip"),
-    os.path.join("__app__", "python_modules", "python_utils", "titlecase.py"),
-    os.path.join("__app__", "python_modules", "python_utils", "tqdm"),
-    # The following module has perfectly valid docstrings, but Sphinx is being a
-    # b*tch and throws a million warnings for no reason.
-    # Ignore it until Sphinx gets its sh*t together.
-    os.path.join("__app__", "python_modules", "python_utils", "tqdm_wget.py"),
-]
 
 
 class XletsHelperCore():
@@ -491,7 +477,8 @@ def build_xlets(xlets=[], domain_name=None, build_output="",
 
     if not domain_name:
         print(Ansi.PURPLE("\nEnter a domain name:"))
-        prompts.do_prompt(options_map_defaults, "domain_name", "Enter name", options_map_defaults["domain_name"])
+        prompts.do_prompt(options_map_defaults, "domain_name",
+                          "Enter name", options_map_defaults["domain_name"])
         domain_name = options_map_defaults["domain_name"].strip()
 
     # TODO:
@@ -795,7 +782,8 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
 
     if not theme_name:
         print(Ansi.PURPLE("\nEnter a name for the theme:"))
-        prompts.do_prompt(options_map_defaults, "theme_name", "Enter name", options_map_defaults["theme_name"])
+        prompts.do_prompt(options_map_defaults, "theme_name",
+                          "Enter name", options_map_defaults["theme_name"])
         theme_name = options_map_defaults["theme_name"].strip()
 
     if not theme_name:
@@ -1059,22 +1047,73 @@ def generate_docs(generate_api_docs=False,
         See :any:`LogSystem`.
     """
     from .python_utils import sphinx_docs_utils
+    from .cli import docopt_doc
+
+    ignored_apidoc_modules = [
+        os.path.join("__app__", "python_modules", "python_utils", "bottle.py"),
+        os.path.join("__app__", "python_modules", "python_utils", "docopt.py"),
+        os.path.join("__app__", "python_modules", "python_utils", "mistune.py"),
+        os.path.join("__app__", "python_modules", "python_utils", "polib.py"),
+        os.path.join("__app__", "python_modules", "python_utils", "pyperclip"),
+        os.path.join("__app__", "python_modules", "python_utils", "titlecase.py"),
+        os.path.join("__app__", "python_modules", "python_utils", "tqdm"),
+        # The following module has perfectly valid docstrings, but Sphinx is being a
+        # b*tch and throws a million warnings for no reason.
+        # Ignore it until Sphinx gets its sh*t together.
+        os.path.join("__app__", "python_modules", "python_utils", "tqdm_wget.py"),
+        # Ignore the python_utils folder from all apps.
+    ]
+
+    base_apidoc_dest_path_rel_to_root = os.path.join("__app__", "cinnamon_tools_docs", "modules")
+
+    apidoc_paths_rel_to_root = [
+        (os.path.join("__app__", "python_modules"),
+            os.path.join(base_apidoc_dest_path_rel_to_root, "python_modules"))
+    ]
 
     sphinx_docs_utils.generate_docs(root_folder=root_folder,
                                     docs_src_path_rel_to_root=os.path.join(
                                         "__app__", "cinnamon_tools_docs"),
                                     docs_dest_path_rel_to_root=os.path.join(
                                         "__app__", "cinnamon_tools_docs", "docs"),
-                                    apidoc_src_path_rel_to_root=os.path.join(
-                                        "__app__", "python_modules"),
-                                    apidoc_dest_path_rel_to_root=os.path.join(
-                                        "__app__", "cinnamon_tools_docs", "modules", "python_modules"),
+                                    apidoc_paths_rel_to_root=apidoc_paths_rel_to_root,
                                     doctree_temp_location_rel_to_sys_temp="CinnamonTools-doctrees",
                                     ignored_modules=ignored_apidoc_modules,
                                     generate_api_docs=generate_api_docs,
                                     update_inventories=update_inventories,
                                     force_clean_build=force_clean_build,
                                     logger=logger)
+
+    # Man pages building.
+    man_page_template = os.path.join(root_folder, "__app__", "cinnamon_tools_docs",
+                                     "includes", "00-man-page-template")
+    man_page_file_path = os.path.join(root_folder, "__app__", "cinnamon_tools_docs",
+                                      "includes", "00-man-page.rst")
+
+    docopt_doc_usage = docopt_doc[docopt_doc.find("Usage:") + len("Usage:"):
+                                  docopt_doc.rfind("Options:")]
+
+    replacement_data = [
+        ("{{docopt-usage-docstring}}", docopt_doc_usage),
+    ]
+
+    with open(man_page_template, "r", encoding="UTF-8") as template_file:
+        template_modified = string_utils.do_replacements(template_file.read(), replacement_data)
+
+        with open(man_page_file_path, "w", encoding="UTF-8") as man_page_file:
+            man_page_file.write(template_modified)
+
+    sphinx_docs_utils.generate_man_pages(root_folder=root_folder,
+                                         docs_src_path_rel_to_root=os.path.join(
+                                             "__app__", "cinnamon_tools_docs"),
+                                         docs_dest_path_rel_to_root=os.path.join(
+                                             "__app__", "data", "man"),
+                                         doctree_temp_location_rel_to_sys_temp="CinnamonTools-man-doctrees",
+                                         logger=logger)
+
+    # Do not put up with nonsense!!! Remove this file so it doesn't bother the HTML
+    # documentation building.
+    os.remove(man_page_file_path)
 
 
 def get_base_temp_folder():

@@ -15,7 +15,7 @@ import sys
 from threading import Thread
 
 from . import app_utils
-from .__init__ import __appname__, __version__
+from .__init__ import __appname__, __version__, __appdescription__
 from .python_utils import exceptions, log_system, file_utils, shell_utils
 from .python_utils.docopt import docopt
 
@@ -26,7 +26,10 @@ if sys.version_info < (3, 5):
 
 docopt_doc = """{__appname__} {__version__}
 
+{__appdescription__}
+
 Usage:
+    app.py manual
     app.py menu [-d <domain> | --domain=<domain>]
                 [-o <dir> | --output=<dir>]
                 [-n | --no-confirmation]
@@ -98,6 +101,9 @@ Options:
     documentation. Inventory files will be updated automatically if they don't
     already exist.
 
+Command `manual`:
+    Display the manual page for this application.
+
 Command `menu`:
     Open a CLI menu to perform tasks.
 
@@ -125,6 +131,7 @@ Sub-commands for the `repo` command:
     subtrees             Manage Cinnamon Tools' repository sub-trees.
 
 """.format(__appname__=__appname__,
+           __appdescription__=__appdescription__,
            __version__=__version__)
 
 
@@ -152,7 +159,7 @@ class CommandLineTool():
     generate_api_docs : bool
         If False, do not extract docstrings from Python modules.
     logger : object
-        See <class :any:`log_system.LogSystem`>.
+        See <class :any:`LogSystem`>.
     restart_cinnamon : bool
         Whether or not to restart Cinnamon after the xlet/theme build process.
     theme_name : str
@@ -200,9 +207,12 @@ class CommandLineTool():
         self.update_inventories = args["--update-inventories"]
         self.generate_api_docs = args["docs"]
 
-        if not args["menu"]:
+        if not args["menu"] and not args["manual"]:
             self.logger.info(shell_utils.get_cli_header(__appname__), date=False)
             print("")
+
+        if args["manual"]:
+            self.action = self.display_manual_page
 
         if args["menu"]:
             self.action = self.display_main_menu
@@ -330,6 +340,13 @@ class CommandLineTool():
                                     logger=self.logger)
         cli_menu.open_main_menu()
 
+    def display_manual_page(self):
+        """See :any:`app_menu.CLIMenu`
+        """
+        from subprocess import call
+
+        call(["man", "./app.py.1"], cwd=os.path.join(app_utils.root_folder, "__app__", "data", "man"))
+
     def build_xlets(self):
         """See :any:`app_utils.build_xlets`
         """
@@ -353,14 +370,17 @@ class CommandLineTool():
         from .python_utils import template_utils
 
         template_utils.system_executable_generation(
-            "cinnamon-tools-app",
-            app_utils.root_folder,
-            sys_exec_template=os.path.join(app_utils.root_folder, "__app__", "data",
-                                           "templates", "system_executable"),
-            logger=self.logger)
+            exec_name="cinnamon-tools-cli",
+            app_root_folder=app_utils.root_folder,
+            sys_exec_template_path=os.path.join(
+                app_utils.root_folder, "__app__", "data", "templates", "system_executable"),
+            bash_completions_template_path=os.path.join(
+                app_utils.root_folder, "__app__", "data", "templates", "bash_completions.bash"),
+            logger=self.logger
+        )
 
     def generate_docs(self):
-        """See :any:`python_utils.sphinx_docs_utils.generate_docs`
+        """See :any:`sphinx_docs_utils.generate_docs`
         """
         app_utils.generate_docs(generate_api_docs=self.generate_api_docs,
                                 update_inventories=self.update_inventories,
