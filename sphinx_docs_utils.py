@@ -146,5 +146,36 @@ def generate_docs(root_folder="",
              cwd=docs_sources_path)
 
 
+def generate_man_pages(root_folder="",
+                       docs_src_path_rel_to_root="",
+                       docs_dest_path_rel_to_root="",
+                       doctree_temp_location_rel_to_sys_temp="",
+                       logger=None):
+    """Generate man pages.
+
+    Parameters
+    ----------
+    root_folder : str, optional
+        Path to the main folder that most paths should be relative to.
+    docs_src_path_rel_to_root : str, optional
+        Docs sources path relative to root_folder.
+    docs_dest_path_rel_to_root : str, optional
+        Built docs destination path relative to root_folder.
+    doctree_temp_location_rel_to_sys_temp : str, optional
+        Name of a temporary folder that will be used to create a path relative to the
+        system temporary folder.
+    logger : object
+        See <class :any:`LogSystem`>.
+    """
+    doctree_temp_location = os.path.join(get_system_tempdir(),
+                                         doctree_temp_location_rel_to_sys_temp)
+    docs_sources_path = os.path.join(root_folder, docs_src_path_rel_to_root)
+    man_pages_destination_path = os.path.join(root_folder, docs_dest_path_rel_to_root)
+
+    call(["sphinx-build", ".", "-b", "man", "-d", doctree_temp_location,
+          man_pages_destination_path],
+         cwd=docs_sources_path)
+
+
 if __name__ == "__main__":
     pass
