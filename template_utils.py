@@ -134,6 +134,9 @@ def system_executable_generation(exec_name="",
         print(Ansi.PURPLE("Set full path to store executable file or press Enter to use default"))
         prompts.do_prompt(d, "sys_exec_path", "Enter absolute path", d["sys_exec_path"])
 
+    d["sys_exec_path"] = os.path.expanduser(d["sys_exec_path"])
+    d["sys_exec_path"] = os.path.expandvars(d["sys_exec_path"])
+
     destination = os.path.join(d["sys_exec_path"], d["name"])
 
     if not os.path.exists(d["sys_exec_path"]):
