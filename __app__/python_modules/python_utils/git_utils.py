@@ -7,7 +7,7 @@ from subprocess import call
 from . import prompts
 
 
-def manage_repo(mechanism, action, subtrees=[], cwd=None, logger=None):
+def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False, cwd=None, logger=None):
     """Manage repository.
 
     Perform some complex tasks on a repository. Mostly sub-trees and sub-modules initialization.
@@ -24,6 +24,8 @@ def manage_repo(mechanism, action, subtrees=[], cwd=None, logger=None):
         - **remote_name**: The sub-tree remote name.
         - **remote_url**: The sub-tree remote URL.
         - **path**: Path inside the parent repository where the sub-tree will be stored.
+    do_not_confirm : bool, optional
+        Do not ask for confirmation before executing commands.
     cwd : None, optional
         Path to working directory. It should be a folder that belongs to a Git repository.
     logger : object
@@ -57,7 +59,7 @@ def manage_repo(mechanism, action, subtrees=[], cwd=None, logger=None):
 
         print()
 
-        if prompts.confirm(prompt="Proceed?", response=False):
+        if do_not_confirm or prompts.confirm(prompt="Proceed?", response=False):
             for cmd in commands:
                 call(cmd, shell=True, cwd=cwd)
 
