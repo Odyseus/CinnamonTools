@@ -10,9 +10,14 @@
 
     **Modifications**:
 
-    - Print help "headers" in bold.
+    - Print help "headers" in bold. It basically highlights in bold any line that doesn't start \
+    with a white space character.
     - Re-declared some strings as raw strings (``r"..."``) to avoid some invalid escape \
     sequence linter warnings.
+    - Added a basic Markdown parsing for highlighting the help message with bold text. \
+    It will highlight in bold any text surrounded with double asterisks (e.g. **bold text**). \
+    The parsing is done line by line. It should only be used to highlight words inside \
+    options/commands descriptions.
 
 .. warning::
     Some warnings/workarounds to bypass some known issues with docopt.
@@ -519,19 +524,27 @@ def formal_usage(printable_usage):
     return '( ' + ' '.join(') | (' if s == pu[0] else s for s in pu[1:]) + ' )'
 
 
+def print_bold(s):
+    print("\033[1m" + s + "\033[0m")
+
+
 def extras(help, version, options, doc):
+    bold_markdown_re = re.compile(r"\*\*([^\*\*]*)\*\*")
+    bold_rendered_markdown_placeholder = r'\033[1m\1\033[0m'
+
     if help and any((o.name in ('-h', '--help')) and o.value for o in options):
         for line in doc.strip("\n").splitlines():
             if line.startswith((" ", "\t")):
+                line = re.sub(bold_markdown_re, bold_rendered_markdown_placeholder, line)
                 print(line)
             else:
-                print("\033[1m" + line + "\033[0m")
+                print_bold(line)
         # Original line
         # print(doc.strip("\n"))
         sys.exit()
 
     if version and any(o.name == '--version' and o.value for o in options):
-        print("\033[1m" + version + "\033[0m")
+        print_bold(version)
         # Original line
         # print(version)
         sys.exit()
