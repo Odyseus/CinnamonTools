@@ -55,9 +55,12 @@ def popen(cmd, stdout=None, stderr=None, output_stream=STREAM_BOTH,
     elif output_stream == STREAM_STDOUT:
         stdout = stdout or PIPE
         stderr = DEVNULL
-    else:  # STREAM_STDERR
+    elif output_stream == STREAM_STDERR:
         stdout = DEVNULL
         stderr = stderr or PIPE
+    else:
+        stdout = DEVNULL
+        stderr = DEVNULL
 
     if env is None:
         env = get_environment()
@@ -81,7 +84,7 @@ def popen(cmd, stdout=None, stderr=None, output_stream=STREAM_BOTH,
         raise
 
 
-def exec_command(cmd, working_directory, do_wait=True, do_log=True, logger=None):
+def exec_command(cmd, cwd=None, do_wait=True, do_log=True, logger=None):
     """Execute command.
 
     Run commands using Popen.
@@ -90,7 +93,7 @@ def exec_command(cmd, working_directory, do_wait=True, do_log=True, logger=None)
     ----------
     cmd : str
         The command to run.
-    working_directory : str
+    cwd : str
         Working directory used by the command.
     do_wait : bool, optional
         Call or not the Popen wait() method. (default: {True})
@@ -100,9 +103,6 @@ def exec_command(cmd, working_directory, do_wait=True, do_log=True, logger=None)
         See <class :any:`LogSystem`>.
     """
     try:
-        # Passing a list instead of a string is the recommended.
-        # I would do so if it would freaking work!!!
-        # Always one step forward and two steps back with Python!!!
         po = Popen(
             cmd,
             shell=True,
@@ -110,7 +110,7 @@ def exec_command(cmd, working_directory, do_wait=True, do_log=True, logger=None)
             stdin=None,
             universal_newlines=True,
             env=get_environment(),
-            cwd=working_directory
+            cwd=cwd
         )
 
         if do_wait:
