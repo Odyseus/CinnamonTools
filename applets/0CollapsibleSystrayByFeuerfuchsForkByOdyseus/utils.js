@@ -217,7 +217,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             this.actor.style = "spacing: 5px;";
         }
 
-        this._signalManager = new SignalManager.SignalManager(this);
+        this._signalManager = new SignalManager.SignalManager(null);
         let manager;
 
         this.orientation = orientation;
@@ -305,9 +305,12 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             indicatorActor._applet = this;
 
             this._shellIndicators[appIndicator.id] = indicatorActor;
-            this._signalManager.connect(indicatorActor.actor, "destroy", this._onIndicatorIconDestroy);
-            this._signalManager.connect(indicatorActor.actor, "enter-event", this._onEnterEvent);
-            this._signalManager.connect(indicatorActor.actor, "leave-event", this._onLeaveEvent);
+            this._signalManager.connect(indicatorActor.actor, "destroy",
+                (aActor) => this._onIndicatorIconDestroy(aActor));
+            this._signalManager.connect(indicatorActor.actor, "enter-event",
+                (aActor, aEvent) => this._onEnterEvent(aActor, aEvent));
+            this._signalManager.connect(indicatorActor.actor, "leave-event",
+                (aActor, aEvent) => this._onLeaveEvent(aActor, aEvent));
 
             this.manager_container.add_actor(indicatorActor.actor);
 
@@ -453,10 +456,14 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
     on_applet_added_to_panel: function() {
         Main.statusIconDispatcher.start(this.actor.get_parent().get_parent());
 
-        this._signalManager.connect(Main.statusIconDispatcher, "status-icon-added", this._onTrayIconAdded);
-        this._signalManager.connect(Main.statusIconDispatcher, "status-icon-removed", this._onTrayIconRemoved);
-        this._signalManager.connect(Main.statusIconDispatcher, "before-redisplay", this._onBeforeRedisplay);
-        this._signalManager.connect(Main.systrayManager, "changed", Main.statusIconDispatcher.redisplay, Main.statusIconDispatcher);
+        this._signalManager.connect(Main.statusIconDispatcher, "status-icon-added",
+            (o, icon, role) => this._onTrayIconAdded(o, icon, role));
+        this._signalManager.connect(Main.statusIconDispatcher, "status-icon-removed",
+            (o, icon) => this._onTrayIconRemoved(o, icon));
+        this._signalManager.connect(Main.statusIconDispatcher, "before-redisplay",
+            () => this._onBeforeRedisplay());
+        this._signalManager.connect(Main.systrayManager, "changed",
+            Main.statusIconDispatcher.redisplay, Main.statusIconDispatcher);
         this._addIndicatorSupport();
     },
 

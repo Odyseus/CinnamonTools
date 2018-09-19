@@ -78,7 +78,7 @@ CollapsibleSystrayApplet.prototype = {
         //
         // Variables
 
-        this._signalManager = new SignalManager.SignalManager(this);
+        this._signalManager = new SignalManager.SignalManager(null);
         this._hovering = false;
         this._hoverTimerID = null;
         this._registeredAppIcons = {};
