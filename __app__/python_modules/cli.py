@@ -29,7 +29,7 @@ docopt_doc = """{__appname__} {__version__}
 {__appdescription__}
 
 Usage:
-    app.py manual
+    app.py (-h | --help | --version | --manual | -r | --restart-cinnamon)
     app.py menu [-d <domain> | --domain=<domain>]
                 [-o <dir> | --output=<dir>]
                 [-n | --no-confirmation]
@@ -48,18 +48,17 @@ Usage:
                     [-f | --force-clean-build]
                     [-u | --update-inventories]
     app.py repo (submodules | subtrees) (init | update)
-    app.py (-h | --help | --version | -r | --restart-cinnamon)
 
 Options:
 
 -h, --help
-    Show this screen.
+    Show this application basic help.
+
+--manual
+    Show this application manual page.
 
 --version
     Show application version.
-
--x <name>, --xlet=<name>
-    Specify one or more applets/extensions to build.
 
 -a, --all-xlets
     Build all xlets.
@@ -67,68 +66,42 @@ Options:
 -d <domain>, --domain=<domain>
     This option should be used to define a domain name for use when
     building xlets.
-    A file named "domain_name" can also be created at the root of the repository
-    whose only content should be the desired domain name.
+    A file named **domain_name** can also be created at the root of the
+    repository whose only content should be the desired domain name.
     This option has precedence over the domain name found inside
-    the "domain_name" file.
+    the **domain_name** file.
 
--o <dir>, --output=<dir>
-    The output directory that will be used to save the built xlets.
-    WARNING!!! If the destination folder is inside a Dropbox folder, all
-    symbolic links will be resolved.
+-f, --force-clean-build
+    Clear doctree cache and destination folder when building the documentation.
 
 -n, --no-confirmation
     Do not ask confirmation when building an xlet and the destination already
     exists. Specifying this option means that an existent destination will be
     completely removed, no questions asked.
 
+-o <dir>, --output=<dir>
+    The output directory that will be used to save the built xlets.
+    **WARNING!!!** If the destination folder is inside a Dropbox folder, all
+    symbolic links will be resolved.
+
 -r, --restart-cinnamon
     Restart Cinnamon.
 
 -t <name>, --theme-name=<name>
     A string used to give a name to the themes. The final theme names will look
-    like this: <theme_name>-<theme_variant>.
-    A file named "theme_name" can also be created at the root of the repository
-    whose only content should be the desired theme name.
+    like this: **<theme_name>-<theme_variant>**.
+    A file named **theme_name** can also be created at the root of the
+    repository whose only content should be the desired theme name.
     This option has precedence over the theme name found inside
-    the "theme_name" file.
-
--f, --force-clean-build
-    Clear doctree cache and destination folder when building the documentation.
+    the **theme_name** file.
 
 -u, --update-inventories
     Update inventory files from their on-line resources when building the
     documentation. Inventory files will be updated automatically if they don't
     already exist.
 
-Command `manual`:
-    Display the manual page for this application.
-
-Command `menu`:
-    Open a CLI menu to perform tasks.
-
-Command `build`:
-    Build the specified xlets.
-
-Command `build_themes`:
-    Build all the themes variants.
-
-Sub-commands for the `dev` command and the order they will be executed:
-    generate_meta_file              update_pot_files
-    update_spanish_localizations    create_localized_help
-    generate_trans_stats            create_changelogs
-
-Sub-commands for the `generate` command:
-    system_executable    Create an executable for this application on the system
-                         PATH to be able to run it from anywhere.
-    docs                 Generate documentation.
-    docs_no_api          Generate documentation without extracting Python
-                         modules docstrings.
-    base_xlet            Interactively generate a "skeleton" xlet.
-
-Sub-commands for the `repo` command:
-    submodules           Manage Cinnamon Tools' repository sub-modules.
-    subtrees             Manage Cinnamon Tools' repository sub-trees.
+-x <name>, --xlet=<name>
+    Specify one or more applets/extensions to build.
 
 """.format(__appname__=__appname__,
            __appdescription__=__appdescription__,
@@ -207,11 +180,11 @@ class CommandLineTool():
         self.update_inventories = args["--update-inventories"]
         self.generate_api_docs = args["docs"]
 
-        if not args["menu"] and not args["manual"]:
+        if not args["menu"] and not args["--manual"]:
             self.logger.info(shell_utils.get_cli_header(__appname__), date=False)
             print("")
 
-        if args["manual"]:
+        if args["--manual"]:
             self.action = self.display_manual_page
 
         if args["menu"]:
@@ -341,7 +314,7 @@ class CommandLineTool():
         cli_menu.open_main_menu()
 
     def display_manual_page(self):
-        """See :any:`app_menu.CLIMenu`
+        """Display manual page.
         """
         from subprocess import call
 

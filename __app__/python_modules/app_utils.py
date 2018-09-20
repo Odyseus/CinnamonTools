@@ -191,7 +191,7 @@ class XletsHelperCore():
         Raises
         ------
         SystemExit
-            Halt execution if the make-cinnamon-xlet-pot-app command is not found.
+            Halt execution if the make-cinnamon-xlet-pot-cli command is not found.
         """
         self.logger.info("Starting POT files update...")
 
@@ -202,12 +202,12 @@ class XletsHelperCore():
                 "Updating localization template for %s..." % xlet["name"])
 
             try:
-                if not which("make-cinnamon-xlet-pot-app"):
-                    print(Ansi.ERROR("MissingCommand: make-cinnamon-xlet-pot-app command not found!!!"))
+                if not which("make-cinnamon-xlet-pot-cli"):
+                    print(Ansi.ERROR("MissingCommand: make-cinnamon-xlet-pot-cli command not found!!!"))
                     raise SystemExit()
 
                 cmd = [
-                    "make-cinnamon-xlet-pot-app",
+                    "make-cinnamon-xlet-pot-cli",
                     "--custom-header",
                     "--scan-additional-file=../../__app__/python_modules/localized_help_creator.py",
                     "--ignored-pattern=__data__/*"
@@ -1047,7 +1047,6 @@ def generate_docs(generate_api_docs=False,
         See :any:`LogSystem`.
     """
     from .python_utils import sphinx_docs_utils
-    from .cli import docopt_doc
 
     ignored_apidoc_modules = [
         os.path.join("__app__", "python_modules", "python_utils", "bottle.py"),
@@ -1085,24 +1084,6 @@ def generate_docs(generate_api_docs=False,
                                     logger=logger)
 
     # Man pages building.
-    man_page_template = os.path.join(root_folder, "__app__", "cinnamon_tools_docs",
-                                     "includes", "00-man-page-template")
-    man_page_file_path = os.path.join(root_folder, "__app__", "cinnamon_tools_docs",
-                                      "includes", "00-man-page.rst")
-
-    docopt_doc_usage = docopt_doc[docopt_doc.find("Usage:") + len("Usage:"):
-                                  docopt_doc.rfind("Options:")]
-
-    replacement_data = [
-        ("{{docopt-usage-docstring}}", docopt_doc_usage),
-    ]
-
-    with open(man_page_template, "r", encoding="UTF-8") as template_file:
-        template_modified = string_utils.do_replacements(template_file.read(), replacement_data)
-
-        with open(man_page_file_path, "w", encoding="UTF-8") as man_page_file:
-            man_page_file.write(template_modified)
-
     sphinx_docs_utils.generate_man_pages(root_folder=root_folder,
                                          docs_src_path_rel_to_root=os.path.join(
                                              "__app__", "cinnamon_tools_docs"),
@@ -1110,10 +1091,6 @@ def generate_docs(generate_api_docs=False,
                                              "__app__", "data", "man"),
                                          doctree_temp_location_rel_to_sys_temp="CinnamonTools-man-doctrees",
                                          logger=logger)
-
-    # Do not put up with nonsense!!! Remove this file so it doesn't bother the HTML
-    # documentation building.
-    os.remove(man_page_file_path)
 
 
 def get_base_temp_folder():
