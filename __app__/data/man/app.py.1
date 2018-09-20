@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "APP.PY" "1" "Sep 14, 2018" "" "Cinnamon Tools"
+.TH "APP.PY" "1" "Sep 20, 2018" "" "Cinnamon Tools"
 .SH NAME
 app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .
@@ -32,14 +32,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 ..
 .SH HINT
 .sp
-This Python application can generate a system executable with bash completions support. See \fBapp.py generate\fP\&.
-.SH SINOPSYS
+This Python application can generate a system executable with Bash completions support. See \fBapp.py generate\fP\&.
+.SH SYNOPSIS
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .nf
 .ft C
-app.py manual
+
+app.py (\-h | \-\-help | \-\-version | \-\-manual | \-r | \-\-restart\-cinnamon)
 app.py menu [\-d <domain> | \-\-domain=<domain>]
             [\-o <dir> | \-\-output=<dir>]
             [\-n | \-\-no\-confirmation]
@@ -58,11 +59,48 @@ app.py generate (system_executable | docs | docs_no_api | base_xlet)
                 [\-f | \-\-force\-clean\-build]
                 [\-u | \-\-update\-inventories]
 app.py repo (submodules | subtrees) (init | update)
-app.py (\-h | \-\-help | \-\-version | \-r | \-\-restart\-cinnamon)
+
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
+.SH REQUIREMENTS
+.SS Xlets/Themes building requirements
+.sp
+No mayor requirements are needed to build xlets/themes other than Python 3.5+.
+.SS Development tasks requirements
+.sp
+Almost all development tasks require the Cinnamon Tools\(aq repository to be \fIdeep cloned\fP to checkout all the needed sub\-modules.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+git clone \-\-recurse\-submodules \-\-shallow\-submodules git_repository_url
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fB\-\-shallow\-submodules\fP argument is to clone the sub\-modules to a depth of one commit. This is to avoid downloading a lot of unnecessary data (bootstrap 100MB+ and bootswatch 50MB+).
+.SS Documentation building requirements
+.INDENT 0.0
+.IP \(bu 2
+\fBPython 3\fP
+.IP \(bu 2
+\fBsphinx>=1.6.5\fP: \fBsudo pip3 install sphinx\fP
+.UNINDENT
+.sp
+\fBNote:\fP Deep cloning required.
+.SS Cinnamon theme building from SASS sources
+.INDENT 0.0
+.IP \(bu 2
+Python 3
+.IP \(bu 2
+\fBsass\fP: \fI\%Download package\fP <\fBhttps://github.com/sass/dart-sass/releases\fP> and add to PATH.
+.UNINDENT
+.sp
+\fBNote:\fP Deep cloning required.
 .SH DETAILED USAGE
 .SS app.py manual
 .sp
@@ -73,11 +111,11 @@ This command starts a CLI menu from which building and development tasks can be 
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
-\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: See build command options\&.
+\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: See \fI\%build command options\fP\&.
 .IP \(bu 2
-\fB\-o <dir>\fP or \fB\-\-output=<dir>\fP: See build command options\&.
+\fB\-o <dir>\fP or \fB\-\-output=<dir>\fP: See \fI\%build command options\fP\&.
 .IP \(bu 2
-\fB\-n\fP or \fB\-\-no\-confirmation\fP: See build command options\&.
+\fB\-n\fP or \fB\-\-no\-confirmation\fP: See \fI\%build command options\fP\&.
 .UNINDENT
 .SS app.py build
 .sp
@@ -97,7 +135,7 @@ This command will build the Argos for Cinnamon applet and the Cinnamon Tweaks ex
 .UNINDENT
 .UNINDENT
 .IP \(bu 2
-\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: To be able to build any xlet, it is necessary to specify a domain name. This domain name is then used to generate an xlet UUID (an other data). To avoid passing this command line option every time one builds xlets, a file named \fBdomain_name\fP can be created at the root of the repository whose only content should be the desired domain name. This command line option has precedence over the \fBdomain_name\fP file. Which means that if this option is used, the domain name found in an existent \fBdomain_name\fP file will be ignored.
+\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: To be able to build any xlet, it is necessary to specify a domain name. This domain name is then used to generate an xlet UUID (an other data). To avoid passing this command line option every time one builds xlets, a file named \fBdomain_name\fP can be created inside a folder named \fBtmp\fP at the root of the repository whose only content should be the desired domain name. This command line option has precedence over the \fBdomain_name\fP file. Which means that if this option is used, the domain name found in an existent \fBdomain_name\fP file will be ignored.
 .INDENT 2.0
 .INDENT 3.5
 .INDENT 0.0
@@ -174,9 +212,9 @@ This command is used to build all the themes. Just like xlets, the themes found 
 .IP \(bu 2
 \fB\-t <name>\fP or \fB\-\-theme\-name=<name>\fP: To be able to build the themes, it is necessary to specify a theme name. This theme name is then used to generate the full theme name (theme_name\-theme_variant). To avoid passing this command line option every time one builds themes, a file named \fBtheme_name\fP can be created at the root of the repository whose only content should be the desired theme name. This command line option has precedence over the \fBtheme_name\fP file. Which means that if this option is used, the theme name found in an existent \fBtheme_name\fP file will be ignored.
 .IP \(bu 2
-\fB\-o <dir>\fP or \fB\-\-output=<dir>\fP: The output directory that will be used to save the built themes. If not specified, the default storage location will be used. See build command \-\-output option notes for more details.
+\fB\-o <dir>\fP or \fB\-\-output=<dir>\fP: The output directory that will be used to save the built themes. If not specified, the default storage location will be used. See \fI\%build command \-\-output\fP option notes for more details.
 .IP \(bu 2
-\fB\-n\fP or \fB\-\-no\-confirmation\fP: Do not confirm the deletion of an already built theme when the \fB\-\-output\fP option is used. See build command \-\-output option notes for more details.
+\fB\-n\fP or \fB\-\-no\-confirmation\fP: Do not confirm the deletion of an already built theme when the \fB\-\-output\fP option is used. See \fI\%build command \-\-output\fP option notes for more details.
 .IP \(bu 2
 \fB\-r\fP or \fB\-\-restart\-cinnamon\fP: Restart Cinnamon\(aqs shell after finishing the themes building process.
 .UNINDENT

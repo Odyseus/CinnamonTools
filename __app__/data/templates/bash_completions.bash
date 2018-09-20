@@ -4,12 +4,12 @@
 # https://unix.stackexchange.com/a/55622
 
 _have {executable_name} &&
-_decide_nospace(){
+_decide_nospace_{current_date}(){
     if [[ ${1} == "--"*"=" ]] ; then
         compopt -o nospace
     fi
 } &&
-_list_dirs(){
+_list_dirs_{current_date}(){
     # Source: https://stackoverflow.com/a/31603260 <3
     (
         cd "${1}" && \
@@ -23,8 +23,8 @@ __cinnamon_tools_cli_{current_date}(){
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     applets_dir="{full_path_to_app_folder}/applets"
     extensions_dir="{full_path_to_app_folder}/extensions"
-    applets_slugs=`_list_dirs ${applets_dir}`
-    extensions_slugs=`_list_dirs ${extensions_dir}`
+    applets_slugs=`_list_dirs_{current_date} ${applets_dir}`
+    extensions_slugs=`_list_dirs_{current_date} ${extensions_dir}`
     xlets_slugs=("${applets_slugs[@]}"\n"${extensions_slugs[@]}")
 
     case $prev in
@@ -49,7 +49,7 @@ __cinnamon_tools_cli_{current_date}(){
     # Completion of commands.
     if [[ $COMP_CWORD == 1 ]]; then
         COMPREPLY=( $(compgen -W \
-            "manual menu build build_themes generate dev repo -h --help --version -r \
+            "menu build build_themes generate dev repo -h --help --manual --version -r \
 --restart-cinnamon" -- "${cur}") )
         return 0
     fi
@@ -61,7 +61,7 @@ __cinnamon_tools_cli_{current_date}(){
     "menu")
         COMPREPLY=( $(compgen -W \
             "-d --domain= -o --output= -n --no-confirmation" -- "${cur}") )
-        _decide_nospace ${COMPREPLY[0]}
+        _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
     "repo")
         COMPREPLY=( $(compgen -W \
@@ -75,12 +75,12 @@ __cinnamon_tools_cli_{current_date}(){
         COMPREPLY=( $(compgen -W \
             "-a --all-xlets -x --xlet= -d --domain= -o --output= -n --no-confirmation -r \
 --restart-cinnamon" -- "${cur}") )
-        _decide_nospace ${COMPREPLY[0]}
+        _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
     "build_themes")
         COMPREPLY=( $(compgen -W \
             "-t --theme-name= -o --output= -n --no-confirmation -r --restart-cinnamon" -- "${cur}") )
-        _decide_nospace ${COMPREPLY[0]}
+        _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
     "dev")
         COMPREPLY=( $(compgen -W \
