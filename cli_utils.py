@@ -12,29 +12,6 @@ if sys.version_info < (3, 5):
     raise exceptions.WrongPythonVersion()
 
 
-def get_docopt_base_doc(app_meta):
-    """Get docopt base docstring.
-
-    Parameters
-    ----------
-    app_meta : list
-        The __init__ module with an application meta data.
-
-    Returns
-    -------
-    str
-        The docopt base docstring with an application meta data.
-    """
-    return """{appname} {version}{status}
-
-{appdescription}
-
-""".format(appname=app_meta.__appname__,
-           appdescription=app_meta.__appdescription__,
-           version=app_meta.__version__,
-           status=" (%s)" % app_meta.__status__ if app_meta.__status__ else "")
-
-
 class CommandLineInterfaceSuper():
     """Command line interface super class.
 
@@ -45,41 +22,25 @@ class CommandLineInterfaceSuper():
     logger : object
         See <class :any:`LogSystem`>.
     """
-    _app_meta = None
     _cli_header_blacklist = []
-    _logs_storage_dir = None
 
-    def __init__(self):
+    def __init__(self, app_name, logs_storage_dir):
         """Initialize.
         """
-        self._check_required_properties()
+        self._app_name = app_name
 
-        log_file = log_system.get_log_file(storage_dir=self._logs_storage_dir,
+        log_file = log_system.get_log_file(storage_dir=logs_storage_dir,
                                            prefix="CLI")
-        file_utils.remove_surplus_files(self._logs_storage_dir, "CLI*")
+        file_utils.remove_surplus_files(logs_storage_dir, "CLI*")
         self.logger = log_system.LogSystem(log_file, verbose=True)
 
         self._display_cli_header()
-
-    def _check_required_properties(self):
-        """Check required properties.
-
-        Raises
-        ------
-        exceptions.MissingMandatoryProperty
-            Description
-        """
-        if not self._app_meta:
-            raise exceptions.MissingMandatoryProperty("CommandLineInterfaceSuper._app_meta")
-
-        if not self._logs_storage_dir:
-            raise exceptions.MissingMandatoryProperty("CommandLineInterfaceSuper._logs_storage_dir")
 
     def _display_cli_header(self):
         """Display CLI header.
         """
         if not self._cli_header_blacklist or not all(self._cli_header_blacklist):
-            self.logger.info(shell_utils.get_cli_header(self._app_meta.__appname__), date=False)
+            self.logger.info(shell_utils.get_cli_header(self._app_name), date=False)
             print("")
 
     def run(self):
@@ -117,7 +78,7 @@ class CommandLineInterfaceSuper():
         call(["man", man_page_path])
 
 
-def run_cli(flag_file="", docopt_doc="", app_meta={}, cli_class=None):
+def run_cli(flag_file="", docopt_doc="", app_name="", app_version="", app_status="", cli_class=None):
     """Initialize main command line interface.
 
     Raises
@@ -141,9 +102,9 @@ def run_cli(flag_file="", docopt_doc="", app_meta={}, cli_class=None):
         raise exceptions.BadExecutionLocation()
 
     arguments = docopt(docopt_doc, version="%s %s%s" %
-                       (app_meta.__appname__,
-                        app_meta.__version__,
-                        " (%s)" % app_meta.__status__ if app_meta.__status__ else ""))
+                       (app_name,
+                        app_version,
+                        " (%s)" % app_status if app_status else ""))
     cli = cli_class(arguments)
     cli.run()
 
