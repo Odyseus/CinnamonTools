@@ -76,7 +76,7 @@ class BadExecutionLocation(ExceptionWhitoutTraceBack):
         msg : str, optional
             Message that the exception should display.
         """
-        super(BadExecutionLocation, self).__init__(msg=msg)
+        super().__init__(msg=msg)
 
 
 class WrongPythonVersion(ExceptionWhitoutTraceBack):
@@ -91,7 +91,7 @@ class WrongPythonVersion(ExceptionWhitoutTraceBack):
         msg : str, optional
             Message that the exception should display.
         """
-        super(WrongPythonVersion, self).__init__(msg=msg)
+        super().__init__(msg=msg)
 
 
 class MissingCommand(ExceptionWhitoutTraceBack):
@@ -125,7 +125,7 @@ class KeyboardInterruption(ExceptionWhitoutTraceBackWarning):
             Message that the exception should display.
         """
         print("")
-        super(KeyboardInterruption, self).__init__(msg=msg)
+        super().__init__(msg=msg)
 
 
 class MissingRequiredFile(ExceptionWhitoutTraceBackWarning):
@@ -192,6 +192,24 @@ class MissingMandatoryField(ExceptionWhitoutTraceBack):
     """MissingMandatoryField
     """
     pass
+
+
+class MethodNotImplemented(ExceptionWhitoutTraceBack):
+    """MethodNotImplemented
+    """
+    def __init__(self, method=""):
+        msg = "The <%s> method needs to be implemented." % method
+        print("")
+        super().__init__(msg=msg)
+
+
+class MissingMandatoryProperty(ExceptionWhitoutTraceBack):
+    """MissingMandatoryProperty
+    """
+    def __init__(self, prop=""):
+        msg = "The property <%s> needs to be declared." % prop
+        print("")
+        super().__init__(msg=msg)
 
 
 if __name__ == "__main__":
