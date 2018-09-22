@@ -26,6 +26,13 @@ class CommandLineInterfaceSuper():
 
     def __init__(self, app_name, logs_storage_dir):
         """Initialize.
+
+        Parameters
+        ----------
+        app_name : str
+            Application name.
+        logs_storage_dir : str
+            Log files storage location.
         """
         self._app_name = app_name
 
@@ -93,8 +100,12 @@ def run_cli(flag_file="", docopt_doc="", app_name="", app_version="", app_status
         The name of a "flag" file.
     docopt_doc : str
         docopt docstring.
-    app_meta : module
-        The __init__ module with an application meta data.
+    app_name : str, optional
+        Application name.
+    app_version : str, optional
+        Application version.
+    app_status : str, optional
+        Application status.
     cli_class : class
         See <class :any:`CommandLineInterfaceSuper`>.
     """
