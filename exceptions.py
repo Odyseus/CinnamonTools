@@ -194,9 +194,16 @@ class MissingMandatoryField(ExceptionWhitoutTraceBack):
     pass
 
 
+class MissingMandatoryArgument(ExceptionWhitoutTraceBack):
+    """MissingMandatoryArgument
+    """
+    pass
+
+
 class MethodNotImplemented(ExceptionWhitoutTraceBack):
     """MethodNotImplemented
     """
+
     def __init__(self, method=""):
         msg = "The <%s> method needs to be implemented." % method
         print("")
@@ -206,6 +213,7 @@ class MethodNotImplemented(ExceptionWhitoutTraceBack):
 class MissingMandatoryProperty(ExceptionWhitoutTraceBack):
     """MissingMandatoryProperty
     """
+
     def __init__(self, prop=""):
         msg = "The property <%s> needs to be declared." % prop
         print("")
