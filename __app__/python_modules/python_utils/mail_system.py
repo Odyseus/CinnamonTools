@@ -65,7 +65,7 @@ class MailSystem():
         mail_settings : dict
             Where all the data to send the email/s is stored.
         """
-        super(MailSystem, self).__init__()
+        super().__init__()
         self.logger = logger
         self.allowed = True
 
