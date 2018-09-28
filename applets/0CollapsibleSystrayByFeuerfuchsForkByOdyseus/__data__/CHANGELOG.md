@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Wed, 19 Sep 2018 12:34:31 -0300
+- **Commit:** [f7913e1](https://gitlab.com/Odyseus/CinnamonTools/commit/f7913e1)
+- **Author:** Odyseus
+
+```
+- Avoid passing xlet context to SignalManager due to changes on Cinnamon's core.
+
+```
+
+***
+
 - **Date:** Tue, 7 Aug 2018 03:06:00 -0300
 - **Commit:** [742ed1c](https://gitlab.com/Odyseus/CinnamonTools/commit/742ed1c)
 - **Author:** Odyseus

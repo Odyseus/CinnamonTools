@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Wed, 19 Sep 2018 12:35:24 -0300
+- **Commit:** [3ca9a5a](https://gitlab.com/Odyseus/CinnamonTools/commit/3ca9a5a)
+- **Author:** Odyseus
+
+```
+- Added localization template options file.
+
+```
+
+***
+
 - **Date:** Sat, 1 Sep 2018 12:49:18 -0300
 - **Commit:** [daf1136](https://gitlab.com/Odyseus/CinnamonTools/commit/daf1136)
 - **Author:** Odyseus
