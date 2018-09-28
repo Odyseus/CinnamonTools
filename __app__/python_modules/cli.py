@@ -14,8 +14,11 @@ import os
 from threading import Thread
 
 from . import app_utils
-from .__init__ import __appname__, __version__, __appdescription__
-from .python_utils import cli_utils, exceptions
+from .__init__ import __appdescription__
+from .__init__ import __appname__
+from .__init__ import __version__
+from .python_utils import cli_utils
+from .python_utils import exceptions
 
 
 docopt_doc = """{__appname__} {__version__}

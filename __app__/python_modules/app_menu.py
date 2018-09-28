@@ -4,8 +4,10 @@
 """
 
 from . import app_utils
-from .__init__ import __appname__, __version__
-from .python_utils import menu, multi_select
+from .__init__ import __appname__
+from .__init__ import __version__
+from .python_utils import menu
+from .python_utils import multi_select
 
 
 class CLIMenu():

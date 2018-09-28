@@ -38,10 +38,22 @@ xlet_dir_ignored_patterns : list
 import json
 import os
 
-from shutil import copy2, copytree, ignore_patterns, rmtree, which
-from subprocess import PIPE, call, STDOUT, run
+from shutil import copy2
+from shutil import copytree
+from shutil import ignore_patterns
+from shutil import rmtree
+from shutil import which
+from subprocess import PIPE
+from subprocess import STDOUT
+from subprocess import call
+from subprocess import run
 
-from .python_utils import exceptions, prompts, file_utils, misc_utils, string_utils, shell_utils
+from .python_utils import exceptions
+from .python_utils import file_utils
+from .python_utils import misc_utils
+from .python_utils import prompts
+from .python_utils import shell_utils
+from .python_utils import string_utils
 from .python_utils.ansi_colors import Ansi
 
 
@@ -294,7 +306,7 @@ class XletsHelperCore():
                 po_tmp_storage, "%ss" % xlet_type.lower(), xlet_dir_name)
             os.makedirs(tmp_xlet_po_dir, exist_ok=True)
 
-            if os.path.isdir(xlet_po_dir):
+            if file_utils.is_real_dir(xlet_po_dir):
                 xlet_po_list = file_utils.recursive_glob(xlet_po_dir, "*.po")
 
                 if xlet_po_list:
@@ -362,7 +374,7 @@ class XletsHelperCore():
                                   xlet_type.lower(), xlet_dir_name, "po")
             po_file = os.path.join(po_dir, "es.po")
 
-            if os.path.isdir(po_dir) and os.path.exists(po_file):
+            if file_utils.is_real_dir(po_dir) and file_utils.is_real_file(po_file):
                 self.logger.info("Updating localization for %s" % xlet_dir_name)
 
                 if call([
@@ -567,7 +579,7 @@ class XletBuilder(object):
             ("{{XLET_TYPE}}", xlet_data.get("type", "")),
             # Yes, include the escaped double quotes to keep the template file without errors.
             # The replacement data will be a "Python boolean" (True or False).
-            ("\"{{XLET_HAS_SCHEMA}}\"", "True" if os.path.isdir(self.schemas_dir) else "False"),
+            ("\"{{XLET_HAS_SCHEMA}}\"", "True" if file_utils.is_real_dir(self.schemas_dir) else "False"),
         ]
 
     def build(self):
@@ -583,6 +595,7 @@ class XletBuilder(object):
                                              logger=self.logger)
         self._compile_schemas()
         self._handle_config_file()
+        self._set_executable()
 
     def _do_copy(self):
         """Copy xlet files into its final destination.
@@ -594,11 +607,11 @@ class XletBuilder(object):
         exceptions.OperationAborted
             Halt build operation.
         """
-        if os.path.isfile(self.xlet_data["destination"]):
+        if file_utils.is_real_file(self.xlet_data["destination"]):
             raise exceptions.InvalidDestination(
                 "Destination exists and is a file!!! Aborted!!!")
 
-        if os.path.isdir(self.xlet_data["destination"]):
+        if file_utils.is_real_dir(self.xlet_data["destination"]):
             if not self.do_not_cofirm:
                 print(Ansi.WARNING(existent_xlet_destination_msg.format(
                     path=self.xlet_data["destination"])))
@@ -622,7 +635,7 @@ class XletBuilder(object):
     def _compile_schemas(self):
         """Compile schemas file if any.
         """
-        if os.path.isdir(self.schemas_dir):
+        if file_utils.is_real_dir(self.schemas_dir):
             self.logger.info("Compiling gsettings schema...")
             call(["glib-compile-schemas", ".", "--targetdir=."], cwd=self.schemas_dir)
 
@@ -645,6 +658,22 @@ class XletBuilder(object):
                         os.symlink(src, os.path.join(dir, dst))
 
                 os.chdir(root_folder)
+
+    def _set_executable(self):
+        self.logger.info("Setting execution permissions to the following files:")
+
+        for root, dirs, files in os.walk(self.xlet_data["destination"], topdown=False):
+            for fname in files:
+                # Only deal with a limited set of file extensions.
+                if not fname.endswith((".py", ".bash", ".sh", ".rb")):
+                    continue
+
+                file_path = os.path.join(root, fname)
+
+                if file_utils.is_real_file(file_path):
+                    self.logger.info(os.path.relpath(
+                        file_path, self.xlet_data["destination"]), date=False)
+                    os.chmod(file_path, 0o755)
 
 
 def _list_xlets_dirs(xlet_type_subdir):
@@ -815,11 +844,11 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
 
         destination_folder = os.path.join(base_output_path, full_theme_name)
 
-        if os.path.isfile(destination_folder):
+        if file_utils.is_real_file(destination_folder):
             print(Ansi.ERROR("InvalidDestination: Destination exists and is a file!!! Aborted!!!"))
             raise SystemExit()
 
-        if os.path.isdir(destination_folder):
+        if file_utils.is_real_dir(destination_folder):
             if not do_not_cofirm:
                 print(Ansi.WARNING(existent_xlet_destination_msg.format(path=destination_folder)))
 

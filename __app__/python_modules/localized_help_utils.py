@@ -16,16 +16,17 @@ README_DOC : str
     README file template.
 """
 
-import os
-import json
 import gettext
+import json
+import os
 import time
 
 from datetime import datetime
 from shutil import copy2
 
 from . import app_utils
-from .python_utils import polib, file_utils
+from .python_utils import file_utils
+from .python_utils import polib
 from .python_utils.ansi_colors import Ansi
 
 
