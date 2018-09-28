@@ -21,6 +21,8 @@ The following command starts a CLI (Command Line Interface) interactive menu fro
 $ ./app.py menu
 ```
 
+![CLI menu]({repo_docs_url}/_static/images/cli-menu.gif "CLI menu")
+
 #### [Building xlets]({repo_docs_url}/includes/cinnamontools-usage.html#app-py-build-command)
 
 The following command will perform the following actions:
@@ -34,8 +36,6 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 - `--domain`: The domain *domain.com* will be used as part of all xlets UUIDs.
 - `--no-confirmation`: All existent xlets will be overwritten without confirmation.
 - `--restart-cinnamon`: Cinnamon will be restarted when the build process is finished.
-
-![CLI menu]({repo_docs_url}/_static/images/cli-menu.png "CLI menu")
 
 **Note:** Refer to the [documentation](#documentation) for detailed command line usage.
 
