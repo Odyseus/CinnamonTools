@@ -19,5 +19,10 @@
             "docs"
         ],
         "path": ".."
-    }]
+    }],
+    "settings": {
+        "python_fiximports": {
+            "autofix_on_save": true
+        }
+    }
 }

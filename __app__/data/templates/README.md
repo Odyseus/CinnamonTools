@@ -35,6 +35,8 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 - `--no-confirmation`: All existent xlets will be overwritten without confirmation.
 - `--restart-cinnamon`: Cinnamon will be restarted when the build process is finished.
 
+![CLI menu]({repo_docs_url}/_static/images/cli-menu.png "CLI menu")
+
 **Note:** Refer to the [documentation](#documentation) for detailed command line usage.
 
 #### [Building themes]({repo_docs_url}/includes/cinnamontools-usage.html#app-py-build-themes-command)
@@ -71,8 +73,8 @@ The documentation of this repository is mainly a development documentation, but 
 
 ## Redistribution
 
-Anyone is free to redistribute any of the xlets in this repository as long the following points are respected:
+Anyone is free to redistribute any of the xlets in this repository as long as the following points are respected:
 
 1. **Respect the license (GPL-3.0).**
 2. **Complete eradication of my name (Odyseus) from all xlets file names and files content.**
-3. **Complete eradication of references to this repository from all xlets files content.**
+3. **Complete eradication of references to this repository (or any of its mirrors) from all xlets files content.**
