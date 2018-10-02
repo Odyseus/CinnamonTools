@@ -5,10 +5,31 @@
 import os
 
 from glob import glob
-from shutil import copy2, rmtree, copystat, ignore_patterns
+from shutil import copy2
+from shutil import copystat
+from shutil import ignore_patterns
+from shutil import rmtree
 from stat import ST_MTIME
 
 from . import exceptions
+
+
+def expand_path(path):
+    """Expand environment variables used in ``path``. See :any:`os.path.expandvars` and
+    :any:`os.path.expanduser`.
+
+    Parameters
+    ----------
+    path : str
+        Path with environment variables or with a start "~" character that will
+        be expanded.
+
+    Returns
+    -------
+    str
+        An absolute path with expanded environment variables.
+    """
+    return os.path.expandvars(os.path.expanduser(path))
 
 
 def is_real_dir(dir_path):
@@ -227,7 +248,7 @@ def custom_copy2(source, destination, logger=None, log_copied_file=False, relati
         logger.error(err)
 
 
-def copy_symlink(source, destination, logger=None, follow_symlinks=False):
+def copy_create_symlink(source, destination, source_is_symlink=False, logger=None, follow_symlinks=False):
     """Copy symlinks avoiding at all cost throwing errors.
 
     This function is always triggered when "source" is a symlink. It will create the symlink only
@@ -264,7 +285,7 @@ def copy_symlink(source, destination, logger=None, follow_symlinks=False):
         if os.path.isfile(destination):
             os.remove(destination)
 
-        os.symlink(os.readlink(source), destination)
+        os.symlink(os.readlink(source) if source_is_symlink else source, destination)
         copystat(source, destination, follow_symlinks=follow_symlinks)
     except Exception as err:
         logger.error(err)
@@ -278,7 +299,7 @@ def custom_copytree(src, dst, symlinks=True, ignored_patterns=None, ignore_dangl
     differences:
 
     - It copies directories whether the destination directory exists or not.
-    - It uses a custom function to copy symlinks (:any:`copy_symlink`), it not just uses \
+    - It uses a custom function to copy symlinks (:any:`copy_create_symlink`), it not just uses \
     :any:`os.symlink` directly.
     - Switched the *ignore* parameter (originally a method) into *ignored_patterns* (now a list \
     of file patterns). Just for the kick of it, not really needed.
@@ -343,12 +364,13 @@ def custom_copytree(src, dst, symlinks=True, ignored_patterns=None, ignore_dangl
                 if symlinks:
                     # os.symlink(linkto, dstname)
                     # copystat(srcname, dstname, follow_symlinks=not symlinks)
-                    # Let :any:`copy_symlink` take care of symlinks. With the approach taken by
+                    # Let :any:`copy_create_symlink` take care of symlinks. With the approach taken by
                     # the original :any:`shutil.copytree` function, I'm constantly spammed with
                     # useless errors thrown by the direct use of :any:`os.symlink`.
                     # I fixed this nuisance by simply getting rid of the destination.
                     # MOVING ON!!!
-                    copy_symlink(srcname, dstname, logger=logger, follow_symlinks=not symlinks)
+                    copy_create_symlink(srcname, dstname, source_is_symlink=True,
+                                        logger=logger, follow_symlinks=not symlinks)
                 else:
                     # Ignore dangling symlink if the flag is on
                     if not os.path.exists(linkto) and ignore_dangling_symlinks:
@@ -400,21 +422,6 @@ def custom_copytree(src, dst, symlinks=True, ignored_patterns=None, ignore_dangl
         raise exceptions.Error(errors)
 
     return dst
-
-
-# def file_hash(file_path):
-#     """Not used for now
-
-#     Returns the hash of a given file.
-#     """
-
-#     h = hashlib.sha256()
-
-#     with open(file_path, "rb", buffering=0) as f:
-#         for b in iter(lambda: f.read(128 * 1024), b''):
-#             h.update(b)
-
-#     return h.hexdigest()
 
 
 if __name__ == "__main__":

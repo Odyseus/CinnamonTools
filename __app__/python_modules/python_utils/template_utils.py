@@ -15,7 +15,11 @@ bash_completions_step2 : str
 import os
 import sys
 
-from . import exceptions, prompts, file_utils, shell_utils, misc_utils
+from . import exceptions
+from . import file_utils
+from . import misc_utils
+from . import prompts
+from . import shell_utils
 from .ansi_colors import Ansi
 
 

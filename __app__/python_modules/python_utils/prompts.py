@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """CLI prompts and confirmation "dialogs" utilities.
 """
-from .ansi_colors import Ansi
 from . import exceptions
+from .ansi_colors import Ansi
 
 
 def confirm(prompt=None, response=False):

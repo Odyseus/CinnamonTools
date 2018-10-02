@@ -15,7 +15,8 @@ except (SystemError, ImportError):
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from smtplib import SMTP, SMTPException
+from smtplib import SMTP
+from smtplib import SMTPException
 
 
 class MailSystem():

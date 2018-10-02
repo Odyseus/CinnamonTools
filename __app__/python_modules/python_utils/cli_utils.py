@@ -5,7 +5,10 @@
 import os
 import sys
 
-from . import log_system, file_utils, shell_utils, exceptions
+from . import exceptions
+from . import file_utils
+from . import log_system
+from . import shell_utils
 from .docopt import docopt
 
 if sys.version_info < (3, 5):
