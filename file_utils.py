@@ -5,7 +5,10 @@
 import os
 
 from glob import glob
-from shutil import copy2, rmtree, copystat, ignore_patterns
+from shutil import copy2
+from shutil import copystat
+from shutil import ignore_patterns
+from shutil import rmtree
 from stat import ST_MTIME
 
 from . import exceptions

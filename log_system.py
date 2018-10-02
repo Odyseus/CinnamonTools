@@ -6,7 +6,8 @@ import logging
 import os
 
 from .ansi_colors import Ansi
-from .misc_utils import micro_to_milli, get_date_time
+from .misc_utils import get_date_time
+from .misc_utils import micro_to_milli
 
 
 class LogSystem():

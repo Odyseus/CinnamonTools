@@ -13,7 +13,10 @@ STREAM_STDOUT : int
 """
 import os
 
-from subprocess import Popen, PIPE, DEVNULL
+from subprocess import DEVNULL
+from subprocess import PIPE
+from subprocess import Popen
+from subprocess import run
 
 
 STREAM_STDOUT = 1
