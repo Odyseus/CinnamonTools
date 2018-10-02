@@ -44,6 +44,7 @@ class LogSystem():
                 os.makedirs(dirname)
 
         self.verbose = verbose
+        self.user_home = os.path.expanduser("~")
         logging.basicConfig(filename=filename, level=logging.DEBUG)
 
     def debug(self, msg, term=True, date=True):
@@ -148,22 +149,26 @@ class LogSystem():
             logging.debug(m)
 
             if self.verbose and term:
-                print(m)
+                print(self.obfuscate_user_home(m))
         elif type == "INFO" or type == "SUCCESS":
             logging.info(m)
 
             if self.verbose and term:
-                print(getattr(Ansi, "SUCCESS" if type == "SUCCESS" else "INFO")(m))
+                print(getattr(Ansi, "SUCCESS" if type == "SUCCESS" else "INFO")
+                      (self.obfuscate_user_home(m)))
         elif type == "WARNING":
             logging.warning(m)
 
             if self.verbose and term:
-                print(Ansi.WARNING(m))
+                print(Ansi.WARNING(self.obfuscate_user_home(m)))
         elif type == "ERROR":
             logging.error(m)
 
             if self.verbose and term:
-                print(Ansi.ERROR(m))
+                print(Ansi.ERROR(self.obfuscate_user_home(m)))
+
+    def obfuscate_user_home(self, msg):
+        return msg.replace(self.user_home, "~")
 
 
 def get_log_file(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_"):
