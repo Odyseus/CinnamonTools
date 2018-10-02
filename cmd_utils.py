@@ -204,5 +204,9 @@ def find_executables(executable):
     return None
 
 
+def run_cmd(cmd, **kwargs):
+    return run(cmd, **kwargs)
+
+
 if __name__ == "__main__":
     pass
