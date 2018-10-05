@@ -328,7 +328,13 @@ TranslationMenuItem.prototype = {
 
     _copyToClipboard: function() {
         let text = this.translatedText.get_text();
-        St.Clipboard.get_default().set_text(text);
+
+        if (St.ClipboardType) {
+            St.Clipboard.get_default().set_text(St.ClipboardType.CLIPBOARD, text);
+        } else {
+            St.Clipboard.get_default().set_text(text);
+        }
+
         this.closeMenu();
     },
 
