@@ -221,7 +221,13 @@ TranslatorExtension.prototype = {
                 );
             } else {
                 let clipboard = St.Clipboard.get_default();
-                clipboard.set_text(text);
+
+                if (St.ClipboardType) {
+                    clipboard.set_text(St.ClipboardType.CLIPBOARD, text);
+                } else {
+                    clipboard.set_text(text);
+                }
+
                 this._dialog.statusbar.add_message(
                     _("Translated text copied to clipboard."),
                     1500,
@@ -810,7 +816,7 @@ TranslatorExtension.prototype = {
             });
         } else {
             let clipboard = St.Clipboard.get_default();
-            clipboard.get_text((clipboard, text) => {
+            let clipCallback = (clipboard, text) => {
                 if ($.is_blank(text)) {
                     this._dialog.statusbar.add_message(
                         _("Clipboard is empty."),
@@ -824,7 +830,13 @@ TranslatorExtension.prototype = {
                 this._dialog.source.text = text;
                 this.open();
                 this._translate();
-            });
+            };
+
+            if (St.ClipboardType) {
+                clipboard.get_text(St.ClipboardType.CLIPBOARD, clipCallback);
+            } else {
+                clipboard.get_text(clipCallback);
+            }
         }
     },
 

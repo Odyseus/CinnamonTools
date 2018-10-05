@@ -2578,11 +2578,16 @@ EntryBase.prototype = {
                 text = this._clutter_text.text;
             }
 
-            clipboard.set_text(text);
+            if (St.ClipboardType) {
+                clipboard.set_text(St.ClipboardType.CLIPBOARD, text);
+            } else {
+                clipboard.set_text(text);
+            }
+
             return true;
         } else if (control_mask && code == 55) { // cyrillic Ctrl + V
             let clipboard = St.Clipboard.get_default();
-            clipboard.get_text((clipboard, text) => {
+            let clipCallback = (clipboard, text) => {
                 if (!is_blank(text)) {
                     this._clutter_text.delete_selection();
                     this._clutter_text.set_text(
@@ -2592,7 +2597,13 @@ EntryBase.prototype = {
                 }
 
                 return false;
-            });
+            };
+
+            if (St.ClipboardType) {
+                clipboard.get_text(St.ClipboardType.CLIPBOARD, clipCallback);
+            } else {
+                clipboard.get_text(clipCallback);
+            }
         } else if ((shift_mask || control_mask) && (symbol == Clutter.Return || symbol == Clutter.KP_Enter)) {
             this.emit("activate", event);
             return Clutter.EVENT_STOP;
