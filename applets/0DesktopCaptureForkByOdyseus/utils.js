@@ -2850,7 +2850,11 @@ function askForConfirmation(aParams, aCallback) {
 }
 
 function setClipboardText(aText) {
-    St.Clipboard.get_default().set_text(St.ClipboardType.CLIPBOARD, aText);
+    if (St.ClipboardType) {
+        St.Clipboard.get_default().set_text(St.ClipboardType.CLIPBOARD, aText);
+    } else {
+        St.Clipboard.get_default().set_text(aText);
+    }
 }
 
 function escapeHTML(aStr) {
