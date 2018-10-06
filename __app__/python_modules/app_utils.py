@@ -1133,5 +1133,16 @@ def get_base_temp_folder():
     return os.path.join(misc_utils.get_system_tempdir(), "CinnamonToolsTemp")
 
 
+def print_xlets_slugs():
+    """Print xlets slugs.
+
+    This method is called by the Bash completions script to auto-complete
+    xlets slugs for the ``--xlet=`` and ``-x`` CLI options.
+    """
+    for xlet in get_xlets_dirs():
+        xlet_type, xlet_dir_name = xlet.split(" ")
+        print(xlet_dir_name)
+
+
 if __name__ == "__main__":
     pass

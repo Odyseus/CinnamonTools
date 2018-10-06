@@ -44,6 +44,7 @@ Usage:
     app.py generate (system_executable | docs | docs_no_api | base_xlet)
                     [-f | --force-clean-build]
                     [-u | --update-inventories]
+    app.py print_xlets_slugs
     app.py repo (submodules | subtrees) (init | update)
 
 Options:
@@ -152,11 +153,17 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             The dictionary of arguments as returned by docopt parser.
         """
         self.a = docopt_args
-        self._cli_header_blacklist = [self.a["--manual"], self.a["menu"]]
+        self._cli_header_blacklist = [
+            self.a["--manual"],
+            self.a["print_xlets_slugs"],
+            self.a["menu"]
+        ]
 
         super().__init__(__appname__, "UserData/tmp/logs")
 
-        if self.a["--manual"]:
+        if self.a["print_xlets_slugs"]:
+            self.action = self.print_xlets_slugs
+        elif self.a["--manual"]:
             self.action = self.display_manual_page
         elif self.a["menu"]:
             self.action = self.display_main_menu
@@ -282,7 +289,8 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
     def display_manual_page(self):
         """See :any:`cli_utils.CommandLineInterfaceSuper._display_manual_page`.
         """
-        self._display_manual_page(os.path.join(app_utils.root_folder, "__app__", "data", "man", "app.py.1"))
+        self._display_manual_page(os.path.join(app_utils.root_folder,
+                                               "__app__", "data", "man", "app.py.1"))
 
     def build_xlets(self):
         """See :any:`app_utils.build_xlets`
@@ -357,6 +365,11 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             subtrees=subtrees,
             logger=self.logger
         )
+
+    def print_xlets_slugs(self):
+        """See :any:`app_utils.print_xlets_slugs`
+        """
+        app_utils.print_xlets_slugs()
 
 
 def main():
