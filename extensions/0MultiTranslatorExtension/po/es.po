@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MultiTranslatorExtension 1.07\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-08-28 10:40-0300\n"
+"POT-Creation-Date: 2018-10-06 08:39-0300\n"
 "PO-Revision-Date: 2018-08-25 02:49-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 settings.py:1394 utils.js:3628
+#: ../../__app__/python_modules/localized_help_creator.py:318 settings.py:1394 utils.js:3639
 msgid "Help"
 msgstr "Ayuda"
 
@@ -557,7 +557,7 @@ msgstr "Seleccionar el proveedor de traducción predeterminado."
 msgid "Providers marked with (*) require translate-shell package to work."
 msgstr "Los proveedores marcados con (*) requieren el paquete de translate-shell para trabajar."
 
-#: settings.py:195 utils.js:3728
+#: settings.py:195 utils.js:3739
 msgid "See the extended help of this extension for more information."
 msgstr "Consulte la ayuda extendida de esta extensión para más información."
 
@@ -685,7 +685,7 @@ msgstr "Porcentaje de altura de la pantalla"
 msgid "What percentage of screen height should the translation dialog fill."
 msgstr "¿Qué porcentaje de altura de pantalla debe llenar el cuadro de diálogo de traducción?"
 
-#: settings.py:342 extension.js:1140 extension.js:1143 utils.js:2854
+#: settings.py:342 extension.js:1152 extension.js:1155 utils.js:2865
 msgid "History"
 msgstr "Historial"
 
@@ -1071,11 +1071,11 @@ msgstr "Comando para desinstalar el esquema de preferencias:"
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr "Para importar/exportar preferencias, el comando **dconf** necesita estar disponible en el sistema."
 
-#: extension.js:159 extension.js:420
+#: extension.js:159 extension.js:426
 msgid "Choose source language"
 msgstr "Elegir idioma de origen"
 
-#: extension.js:167 extension.js:450
+#: extension.js:167 extension.js:456
 msgid "Choose target language"
 msgstr "Elegir idioma de destino"
 
@@ -1083,100 +1083,100 @@ msgstr "Elegir idioma de destino"
 msgid "There is nothing to copy."
 msgstr "No hay nada que copiar."
 
-#: extension.js:226
+#: extension.js:232
 msgid "Translated text copied to clipboard."
 msgstr "Texto traducido copiado al portapapeles."
 
-#: extension.js:276
+#: extension.js:282
 #, javascript-format
 msgid "Go to %s's website"
 msgstr "Ir al sitio de %s"
 
-#: extension.js:278
+#: extension.js:284
 #, javascript-format
 msgid "Service provided by %s"
 msgstr "Servicio proporcionado por %s"
 
 #. TO TRANSLATORS: Full sentence:
 #. "»From« source language to target language with service provider."
-#: extension.js:392 extension.js:415
+#: extension.js:398 extension.js:421
 msgid "From"
 msgstr "Desde"
 
 #. TO TRANSLATORS: Full sentence:
 #. "From source language »to« target language with service provider."
-#: extension.js:400 extension.js:445
+#: extension.js:406 extension.js:451
 msgid "to"
 msgstr "hacia"
 
-#: extension.js:475
+#: extension.js:481
 msgid "Swap languages"
 msgstr "Cambiar idiomas"
 
-#: extension.js:499
+#: extension.js:505
 msgid "Choose translation provider"
 msgstr "Elegir proveedor de traducción"
 
-#: extension.js:555
+#: extension.js:561
 msgid "Go!"
 msgstr "¡Ir!"
 
-#: extension.js:556
+#: extension.js:562
 msgid "Translate text (<Ctrl> + <Enter>)"
 msgstr "Traducir texto (<Ctrl> + <Intro>)"
 
-#: extension.js:573
+#: extension.js:579
 msgid "Main menu"
 msgstr "Menú principal"
 
-#: extension.js:587
+#: extension.js:593
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: extension.js:595
+#: extension.js:601
 msgid "Translation history"
 msgstr "Historial de traducción"
 
-#: extension.js:603
+#: extension.js:609
 msgid "Check dependencies"
 msgstr "Comprobar dependencias"
 
 #. Just in case.
-#: extension.js:611 utils.js:3629
+#: extension.js:617 utils.js:3640
 msgid "Extended help"
 msgstr "Ayuda extendida"
 
-#: extension.js:647
+#: extension.js:653
 msgid "Quick help"
 msgstr "Ayuda rápida"
 
-#: extension.js:662
+#: extension.js:668
 msgid "Quit"
 msgstr "Salir"
 
 #. TO TRANSLATORS: Full sentence:
 #. "From source language to target language »with« service provider."
-#: extension.js:689
+#: extension.js:695
 msgid "with"
 msgstr "con"
 
-#: extension.js:758
+#: extension.js:764
 msgid "Translating..."
 msgstr "Traduciendo..."
 
-#: extension.js:816
+#: extension.js:822
 msgid "Clipboard is empty."
 msgstr "El portapapeles está vacío."
 
-#: extension.js:1014
+#: extension.js:1026
 msgid "Error trying to get theme"
 msgstr "Error al intentar obtener el tema"
 
-#: extension.js:1022
+#: extension.js:1034
 msgid "Stylesheet parse error"
 msgstr "Error de análisis de hoja de estilo"
 
-#: extension.js:1032
+#: extension.js:1044
 msgid "Error unloading stylesheet"
 msgstr "Error al descargar la hoja de estilos"
 
@@ -1216,7 +1216,7 @@ msgstr "No se admite la dirección de traducción especificada"
 msgid "No Yandex API keys were found!!!"
 msgstr "¡No se encontraron claves de API de Yandex!"
 
-#: translation_providers/yandex_translation_provider.js:346 utils.js:3607 utils.js:3624
+#: translation_providers/yandex_translation_provider.js:346 utils.js:3618 utils.js:3635
 msgid "Check this extension help file for instructions."
 msgstr "Comprobar el archivo de ayuda de esta extensión para obtener instrucciones."
 
@@ -1291,43 +1291,43 @@ msgstr "No se pueden cargar las preferencias de %s"
 msgid "Not implemented"
 msgstr "No implementado"
 
-#: utils.js:3412
+#: utils.js:3423
 msgid "Error executing translate-shell"
 msgstr "Error al ejecutar translate-shell"
 
-#: utils.js:3605 utils.js:3622
+#: utils.js:3616 utils.js:3633
 msgid "Unmet dependencies found!!!"
 msgstr "¡Dependencias no satisfechas encontradas!"
 
-#: utils.js:3608
+#: utils.js:3619
 msgid "It can be accessed from the translation dialog main menu."
 msgstr "Se puede acceder desde el menú principal del diálogo de traducción."
 
-#: utils.js:3613
+#: utils.js:3624
 msgid "All dependencies seem to be met."
 msgstr "Todas las dependencias parecen ser cumplidas."
 
-#: utils.js:3625
+#: utils.js:3636
 msgid "This information has also been logged into the ~/.cinnamon/glass.log file."
 msgstr "Esta información también ha sido registrada en el archivo ~/.cinnamon/glass.log."
 
-#: utils.js:3669
+#: utils.js:3680
 msgid "Press <Esc> to close"
 msgstr "Presione <Esc> para cerrar"
 
-#: utils.js:3724
+#: utils.js:3735
 msgid "This translation provider doesn't require translate-shell to work."
 msgstr "Este proveedor de traducción no requiere translate-shell para trabajar."
 
-#: utils.js:3727
+#: utils.js:3738
 msgid "This translation provider requires translate-shell to work."
 msgstr "Este proveedor de traducción requiere translate-shell para trabajar."
 
-#: utils.js:3951
+#: utils.js:3962
 msgid "Error while parsing data"
 msgstr "Error al analizar datos"
 
-#: utils.js:3983
+#: utils.js:3994
 msgid "Error while translating, check your internet connection"
 msgstr "Error al traducir, comprobar conexión a Internet"
 

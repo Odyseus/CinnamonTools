@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MultiTranslatorExtension 1.07\n"
-"POT-Creation-Date: 2018-09-28 00:29-0300\n"
+"POT-Creation-Date: 2018-10-06 08:39-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 settings.py:1394 utils.js:3628
+#: ../../__app__/python_modules/localized_help_creator.py:318 settings.py:1394 utils.js:3639
 msgid "Help"
 msgstr ""
 
@@ -554,7 +554,7 @@ msgstr ""
 msgid "Providers marked with (*) require translate-shell package to work."
 msgstr ""
 
-#: settings.py:195 utils.js:3728
+#: settings.py:195 utils.js:3739
 msgid "See the extended help of this extension for more information."
 msgstr ""
 
@@ -682,7 +682,7 @@ msgstr ""
 msgid "What percentage of screen height should the translation dialog fill."
 msgstr ""
 
-#: settings.py:342 extension.js:1140 extension.js:1143 utils.js:2854
+#: settings.py:342 extension.js:1152 extension.js:1155 utils.js:2865
 msgid "History"
 msgstr ""
 
@@ -1057,11 +1057,11 @@ msgstr ""
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr ""
 
-#: extension.js:159 extension.js:420
+#: extension.js:159 extension.js:426
 msgid "Choose source language"
 msgstr ""
 
-#: extension.js:167 extension.js:450
+#: extension.js:167 extension.js:456
 msgid "Choose target language"
 msgstr ""
 
@@ -1069,100 +1069,100 @@ msgstr ""
 msgid "There is nothing to copy."
 msgstr ""
 
-#: extension.js:226
+#: extension.js:232
 msgid "Translated text copied to clipboard."
 msgstr ""
 
-#: extension.js:276
+#: extension.js:282
 #, javascript-format
 msgid "Go to %s's website"
 msgstr ""
 
-#: extension.js:278
+#: extension.js:284
 #, javascript-format
 msgid "Service provided by %s"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "»From« source language to target language with service provider."
-#: extension.js:392 extension.js:415
+#: extension.js:398 extension.js:421
 msgid "From"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "From source language »to« target language with service provider."
-#: extension.js:400 extension.js:445
+#: extension.js:406 extension.js:451
 msgid "to"
 msgstr ""
 
-#: extension.js:475
+#: extension.js:481
 msgid "Swap languages"
 msgstr ""
 
-#: extension.js:499
+#: extension.js:505
 msgid "Choose translation provider"
 msgstr ""
 
-#: extension.js:555
+#: extension.js:561
 msgid "Go!"
 msgstr ""
 
-#: extension.js:556
+#: extension.js:562
 msgid "Translate text (<Ctrl> + <Enter>)"
 msgstr ""
 
-#: extension.js:573
+#: extension.js:579
 msgid "Main menu"
 msgstr ""
 
-#: extension.js:587
+#: extension.js:593
 msgid "Preferences"
 msgstr ""
 
-#: extension.js:595
+#: extension.js:601
 msgid "Translation history"
 msgstr ""
 
-#: extension.js:603
+#: extension.js:609
 msgid "Check dependencies"
 msgstr ""
 
 #. Just in case.
-#: extension.js:611 utils.js:3629
+#: extension.js:617 utils.js:3640
 msgid "Extended help"
 msgstr ""
 
-#: extension.js:647
+#: extension.js:653
 msgid "Quick help"
 msgstr ""
 
-#: extension.js:662
+#: extension.js:668
 msgid "Quit"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "From source language to target language »with« service provider."
-#: extension.js:689
+#: extension.js:695
 msgid "with"
 msgstr ""
 
-#: extension.js:758
+#: extension.js:764
 msgid "Translating..."
 msgstr ""
 
-#: extension.js:816
+#: extension.js:822
 msgid "Clipboard is empty."
 msgstr ""
 
-#: extension.js:1014
+#: extension.js:1026
 msgid "Error trying to get theme"
 msgstr ""
 
-#: extension.js:1022
+#: extension.js:1034
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: extension.js:1032
+#: extension.js:1044
 msgid "Error unloading stylesheet"
 msgstr ""
 
@@ -1202,7 +1202,7 @@ msgstr ""
 msgid "No Yandex API keys were found!!!"
 msgstr ""
 
-#: translation_providers/yandex_translation_provider.js:346 utils.js:3607 utils.js:3624
+#: translation_providers/yandex_translation_provider.js:346 utils.js:3618 utils.js:3635
 msgid "Check this extension help file for instructions."
 msgstr ""
 
@@ -1277,43 +1277,43 @@ msgstr ""
 msgid "Not implemented"
 msgstr ""
 
-#: utils.js:3412
+#: utils.js:3423
 msgid "Error executing translate-shell"
 msgstr ""
 
-#: utils.js:3605 utils.js:3622
+#: utils.js:3616 utils.js:3633
 msgid "Unmet dependencies found!!!"
 msgstr ""
 
-#: utils.js:3608
+#: utils.js:3619
 msgid "It can be accessed from the translation dialog main menu."
 msgstr ""
 
-#: utils.js:3613
+#: utils.js:3624
 msgid "All dependencies seem to be met."
 msgstr ""
 
-#: utils.js:3625
+#: utils.js:3636
 msgid "This information has also been logged into the ~/.cinnamon/glass.log file."
 msgstr ""
 
-#: utils.js:3669
+#: utils.js:3680
 msgid "Press <Esc> to close"
 msgstr ""
 
-#: utils.js:3724
+#: utils.js:3735
 msgid "This translation provider doesn't require translate-shell to work."
 msgstr ""
 
-#: utils.js:3727
+#: utils.js:3738
 msgid "This translation provider requires translate-shell to work."
 msgstr ""
 
-#: utils.js:3951
+#: utils.js:3962
 msgid "Error while parsing data"
 msgstr ""
 
-#: utils.js:3983
+#: utils.js:3994
 msgid "Error while translating, check your internet connection"
 msgstr ""
 

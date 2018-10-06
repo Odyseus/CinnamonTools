@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Fri, 5 Oct 2018 04:40:41 -0300
+- **Commit:** [7ef1100](https://gitlab.com/Odyseus/CinnamonTools/commit/7ef1100)
+- **Author:** Odyseus
+
+```
+- Fixed handling of clipboard for Cinnamon versions greater than 3.6.x due to API changes.
+
+```
+
+***
+
 - **Date:** Thu, 23 Aug 2018 02:45:25 -0300
 - **Commit:** [9a40db2](https://gitlab.com/Odyseus/CinnamonTools/commit/9a40db2)
 - **Author:** Odyseus

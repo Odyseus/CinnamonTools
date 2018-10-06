@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus 2.35\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-08-28 10:40-0300\n"
+"POT-Creation-Date: 2018-10-06 08:38-0300\n"
 "PO-Revision-Date: 2018-08-25 02:47-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -878,51 +878,51 @@ msgstr ""
 msgid "WARNING!!!"
 msgstr "¡ADVERTENCIA!"
 
-#: utils.js:2969 utils.js:2970
+#: utils.js:2973 utils.js:2974
 msgid "Ctrl"
 msgstr ""
 
-#: utils.js:2971
+#: utils.js:2975
 msgid "Ctrl L"
 msgstr ""
 
-#: utils.js:2972
+#: utils.js:2976
 msgid "Ctrl R"
 msgstr ""
 
-#: utils.js:2973
+#: utils.js:2977
 msgid "Shift"
 msgstr ""
 
-#: utils.js:2974
+#: utils.js:2978
 msgid "Shift L"
 msgstr ""
 
-#: utils.js:2975
+#: utils.js:2979
 msgid "Shift R"
 msgstr ""
 
-#: utils.js:2976
+#: utils.js:2980
 msgid "Alt"
 msgstr ""
 
-#: utils.js:2977
+#: utils.js:2981
 msgid "Alt L"
 msgstr ""
 
-#: utils.js:2978
+#: utils.js:2982
 msgid "Alt R"
 msgstr ""
 
-#: utils.js:2979
+#: utils.js:2983
 msgid "Super"
 msgstr ""
 
-#: utils.js:2980
+#: utils.js:2984
 msgid "Super L"
 msgstr ""
 
-#: utils.js:2981
+#: utils.js:2985
 msgid "Super R"
 msgstr ""
 
