@@ -204,8 +204,8 @@ def find_executables(executable):
     return None
 
 
-def run_cmd(cmd, **kwargs):
-    return run(cmd, **kwargs)
+def run_cmd(cmd, stdout=PIPE, stderr=PIPE, **kwargs):
+    return run(cmd, stdout=stdout, stderr=stderr, **kwargs)
 
 
 if __name__ == "__main__":
