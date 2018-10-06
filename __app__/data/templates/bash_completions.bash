@@ -3,44 +3,37 @@
 # It would have been impossible to create this without the following post on Stack Exchange!!!
 # https://unix.stackexchange.com/a/55622
 
-_have {executable_name} &&
+type "{executable_name}" &> /dev/null &&
 _decide_nospace_{current_date}(){
     if [[ ${1} == "--"*"=" ]] ; then
-        compopt -o nospace
+        type "compopt" &> /dev/null && compopt -o nospace
     fi
 } &&
-_list_dirs_{current_date}(){
-    # Source: https://stackoverflow.com/a/31603260 <3
-    (
-        cd "${1}" && \
-        set -- */; printf "%s\n" "${@%/}";
-    )
+_get_xlets_slugs_{current_date}(){
+    echo $(cd {full_path_to_app_folder}; ./app.py print_xlets_slugs)
 } &&
 __cinnamon_tools_cli_{current_date}(){
-    local cur prev cmd xlets_slugs applets_dir extensions_dir
+    local cur prev cmd xlets_slugs
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    applets_dir="{full_path_to_app_folder}/applets"
-    extensions_dir="{full_path_to_app_folder}/extensions"
-    applets_slugs=`_list_dirs_{current_date} ${applets_dir}`
-    extensions_slugs=`_list_dirs_{current_date} ${extensions_dir}`
-    xlets_slugs=("${applets_slugs[@]}"\n"${extensions_slugs[@]}")
 
     case $prev in
         --xlet)
+            xlets_slugs=( $(_get_xlets_slugs_{current_date}) )
             COMPREPLY=( $( compgen -W "${xlets_slugs[*]}") )
             return 0
             ;;
         -x)
+            xlets_slugs=( $(_get_xlets_slugs_{current_date}) )
             COMPREPLY=( $( compgen -W "${xlets_slugs[*]}" -- ${cur}) )
             return 0
             ;;
     esac
 
-    # # Handle --xxxxx=path
     if [[ ${prev} == "=" ]] ; then
         if [[ ${cur} != *"/"* ]]; then
+            xlets_slugs=( $(_get_xlets_slugs_{current_date}) )
             COMPREPLY=( $( compgen -W "${xlets_slugs[*]}" -- ${cur}) )
             return 0
         fi

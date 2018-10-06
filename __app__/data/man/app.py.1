@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "APP.PY" "1" "Oct 02, 2018" "" "Cinnamon Tools"
+.TH "APP.PY" "1" "Oct 06, 2018" "" "Cinnamon Tools"
 .SH NAME
 app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .
@@ -58,6 +58,7 @@ app.py dev <sub_commands>...
 app.py generate (system_executable | docs | docs_no_api | base_xlet)
                 [\-f | \-\-force\-clean\-build]
                 [\-u | \-\-update\-inventories]
+app.py print_xlets_slugs
 app.py repo (submodules | subtrees) (init | update)
 
 .ft P
@@ -285,7 +286,7 @@ This command is used to perform development tasks.
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-The system executable creation process will ask for an executable name (the default is \fBcinnamon\-tools\-app\fP) and the absolute path to store the executable file (the default is \fB$HOME/.local/bin\fP).
+The system executable creation process will ask for an executable name (the default is \fBcinnamon\-tools\-cli\fP) and the absolute path to store the executable file (the default is \fB$HOME/.local/bin\fP).
 .IP \(bu 2
 It will also ask for bash completions creation.
 .UNINDENT
@@ -296,7 +297,7 @@ It will also ask for bash completions creation.
 .IP \(bu 2
 \fBdocs_no_api\fP: Generate this documentation page without extracting Python modules docstrings.
 .IP \(bu 2
-\fBbase_xlet\fP: Interactively generate a "skeleton" xlet.
+\fBbase_xlet\fP: Interactively generate a \fIskeleton\fP xlet.
 .UNINDENT
 .SS Options for \fBdocs\fP and \fBdocs_no_api\fP sub\-commands
 .INDENT 0.0
