@@ -159,7 +159,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             self.a["menu"]
         ]
 
-        super().__init__(__appname__, "UserData/tmp/logs")
+        super().__init__(__appname__, "tmp/logs")
 
         if self.a["print_xlets_slugs"]:
             self.action = self.print_xlets_slugs
