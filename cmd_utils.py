@@ -131,7 +131,7 @@ def exec_command(cmd, cwd=None, do_wait=True, do_log=True, logger=None):
         logger.error(err)
 
 
-def get_environment():
+def get_environment(set_vars={}, unset_vars=[]):
     """Return a dict with os.environ.
 
     Returns
@@ -141,6 +141,13 @@ def get_environment():
     """
     env = {}
     env.update(os.environ)
+
+    if set_vars:
+        env.update(set_vars)
+
+    if unset_vars:
+        for var in unset_vars:
+            del env[var]
 
     return env
 
@@ -204,8 +211,8 @@ def find_executables(executable):
     return None
 
 
-def run_cmd(cmd, stdout=PIPE, stderr=PIPE, **kwargs):
-    return run(cmd, stdout=stdout, stderr=stderr, **kwargs)
+def run_cmd(cmd, stdout=PIPE, stderr=PIPE, env=get_environment(), **kwargs):
+    return run(cmd, stdout=stdout, stderr=stderr, env=env, **kwargs)
 
 
 if __name__ == "__main__":
