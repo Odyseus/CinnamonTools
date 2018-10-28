@@ -5,7 +5,7 @@ mistune
 
 The fastest markdown parser in pure Python with renderer feature.
 
-:copyright: (c) 2014 - 2017 by Hsiaoming Yang.
+:copyright: (c) 2014 - 2018 by Hsiaoming Yang.
 
 .. note::
     This is a slightly modified version of the mistune module.
@@ -16,10 +16,10 @@ The fastest markdown parser in pure Python with renderer feature.
     - Added table and table-bordered classes to the table tag.
 """
 
-import re
 import inspect
+import re
 
-__version__ = '0.8.3'
+__version__ = '0.8.4'
 __author__ = 'Hsiaoming Yang <me@lepture.com>'
 __all__ = [
     'BlockGrammar', 'BlockLexer',
@@ -43,7 +43,7 @@ _inline_tags = [
 ]
 _pre_tags = ['pre', 'script', 'style']
 _valid_end = r'(?!:/|[^\w\s@]*@)\b'
-_valid_attr = r'''\s*[a-zA-Z\-](?:\=(?:"[^"]*"|'[^']*'|[^\s'">]+))?'''
+_valid_attr = r'''\s*[a-zA-Z\-](?:\s*\=\s*(?:"[^"]*"|'[^']*'|[^\s'">]+))?'''
 _block_tag = r'(?!(?:%s)\b)\w+%s' % ('|'.join(_inline_tags), _valid_end)
 _scheme_blacklist = ('javascript:', 'vbscript:')
 
@@ -117,7 +117,7 @@ class BlockGrammar(object):
     newline = re.compile(r'^\n+')
     block_code = re.compile(r'^( {4}[^\n]+\n*)+')
     fences = re.compile(
-        r'^ *(`{3,}|~{3,}) *(\S+)? *\n'  # ```lang
+        r'^ *(`{3,}|~{3,}) *([^`\s]+)? *\n'  # ```lang
         r'([\s\S]+?)\s*'
         r'\1 *(?:\n+|$)'  # ```
     )
@@ -207,6 +207,11 @@ class BlockLexer(object):
 
         self.rules = rules or self.grammar_class()
 
+        self.rules = rules
+        self._max_recursive_depth = kwargs.get('max_recursive_depth', 6)
+        self._list_depth = 0
+        self._blockquote_depth = 0
+
     def __call__(self, text, rules=None):
         return self.parse(text, rules)
 
@@ -279,9 +284,16 @@ class BlockLexer(object):
             'type': 'list_start',
             'ordered': '.' in bull,
         })
-        cap = m.group(0)
-        self._process_list_item(cap, bull)
+        self._list_depth += 1
+        if self._list_depth > self._max_recursive_depth:
+            self.tokens.append({'type': 'list_item_start'})
+            self.parse_text(m)
+            self.tokens.append({'type': 'list_item_end'})
+        else:
+            cap = m.group(0)
+            self._process_list_item(cap, bull)
         self.tokens.append({'type': 'list_end'})
+        self._list_depth -= 1
 
     def _process_list_item(self, cap, bull):
         cap = self.rules.list_item.findall(cap)
@@ -309,7 +321,7 @@ class BlockLexer(object):
 
             rest = len(item)
             if i != length - 1 and rest:
-                _next = item[rest-1] == '\n'
+                _next = item[rest - 1] == '\n'
                 if not loose:
                     loose = _next
 
@@ -322,10 +334,15 @@ class BlockLexer(object):
 
     def parse_block_quote(self, m):
         self.tokens.append({'type': 'block_quote_start'})
-        # clean leading >
-        cap = _block_quote_leading_pattern.sub('', m.group(0))
-        self.parse(cap)
+        self._blockquote_depth += 1
+        if self._blockquote_depth > self._max_recursive_depth:
+            self.parse_text(m)
+        else:
+            # clean leading >
+            cap = _block_quote_leading_pattern.sub('', m.group(0))
+            self.parse(cap)
         self.tokens.append({'type': 'block_quote_end'})
+        self._blockquote_depth -= 1
 
     def parse_def_links(self, m):
         key = _keyify(m.group(1))
@@ -514,7 +531,7 @@ class InlineLexer(object):
         'linebreak', 'strikethrough', 'text',
     ]
     inline_html_rules = [
-        'escape', 'autolink', 'url', 'link', 'reflink',
+        'escape', 'inline_html', 'autolink', 'url', 'link', 'reflink',
         'nolink', 'kbd_tag', 'double_emphasis', 'emphasis', 'code',
         'linebreak', 'strikethrough', 'text',
     ]
@@ -715,7 +732,7 @@ class Renderer(object):
 
         :param text: text content of the blockquote.
         """
-        return '<blockquote>%s\n</blockquote>\n' % text.rstrip('\n')
+        return '<blockquote class="blockquote">%s\n</blockquote>\n' % text.rstrip('\n')
 
     def block_html(self, html):
         """Rendering block level pure html content.
@@ -947,6 +964,7 @@ class Markdown(object):
     :param inline: An inline lexer class or instance.
     :param block: A block lexer class or instance.
     """
+
     def __init__(self, renderer=None, inline=None, block=None, **kwargs):
         if not renderer:
             renderer = Renderer(**kwargs)
