@@ -61,9 +61,9 @@ WindowPreview.prototype = {
         this._applet = item._applet;
         this.uiScale = St.ThemeContext.get_for_stage(global.stage).scale_factor;
         this.thumbScale = previewScale;
-        this.metaWindow = metaWindow;
-        this.muffinWindow = null;
+        this.muffinWindow = metaWindow.get_compositor_private();
         this._sizeChangedId = null;
+        this.thumbnail = null;
 
         // Mark for deletion on EOL. Cinnamon 3.6.x+
         // window-list-preview class introduced in Cinnamon 3.6.x+
@@ -105,7 +105,8 @@ WindowPreview.prototype = {
                 // Condition needed for retro-compatibility.
                 // Mark for deletion on EOL. Cinnamon 3.2.x+
                 () => {
-                    (typeof this._onShowTimerComplete === "function" ?
+                    (
+                        typeof this._onShowTimerComplete === "function" ?
                         this._onShowTimerComplete() :
                         this._onTimerComplete());
                 }
@@ -141,6 +142,7 @@ WindowPreview.prototype = {
         if (this.thumbnail) {
             this.thumbnailBin.set_child(null);
             this.thumbnail.destroy();
+            this.thumbnail = null;
         }
 
         this.thumbnail = new Clutter.Clone({
@@ -153,44 +155,14 @@ WindowPreview.prototype = {
             () => {
                 let [width, height] = this._getScaledTextureSize(windowTexture);
                 this.thumbnail.set_size(width, height);
+                this._set_position();
             });
 
         this.thumbnailBin.set_child(this.thumbnail);
 
-        let allocation = this.actor.get_allocation_box();
-        let previewHeight = allocation.y2 - allocation.y1;
-        let previewWidth = allocation.x2 - allocation.x1;
-
-        let monitor = Main.layoutManager.findMonitorForActor(this.item);
-        let previewTop;
-
-        if (this._applet.orientation == St.Side.BOTTOM) {
-            previewTop = this.item.get_transformed_position()[1] - previewHeight - 5;
-        } else if (this._applet.orientation == St.Side.TOP) {
-            previewTop = this.item.get_transformed_position()[1] + this.item.get_transformed_size()[1] + 5;
-        } else {
-            previewTop = this.item.get_transformed_position()[1];
-        }
-
-        let previewLeft;
-        if (this._applet.orientation == St.Side.BOTTOM || this._applet.orientation == St.Side.TOP) {
-            // centre the applet on the window list item if window list is on the top or bottom panel
-            previewLeft = this.item.get_transformed_position()[0] + this.item.get_transformed_size()[0] / 2 - previewWidth / 2;
-        } else if (this._applet.orientation == St.Side.LEFT) {
-            previewLeft = this.item.get_transformed_position()[0] + this.item.get_transformed_size()[0] + 5;
-        } else if (this._applet.orientation == St.Side.RIGHT) {
-            previewLeft = this.item.get_transformed_position()[0] - previewWidth - 5;
-        }
-        previewLeft = Math.round(previewLeft);
-        previewLeft = Math.max(previewLeft, monitor.x);
-        previewLeft = Math.min(previewLeft, monitor.x + monitor.width - previewWidth);
-
-        previewTop = Math.round(previewTop);
-        previewTop = Math.min(previewTop, monitor.y + monitor.height - previewHeight);
-
-        this.actor.set_position(previewLeft, previewTop);
-
         this.actor.show();
+        this._set_position();
+
         this.visible = true;
         this._applet.cancelErodeTooltip();
         this._applet._tooltipShowing = true;
@@ -204,11 +176,51 @@ WindowPreview.prototype = {
         if (this.thumbnail) {
             this.thumbnailBin.set_child(null);
             this.thumbnail.destroy();
+            this.thumbnail = null;
         }
         if (this.actor) {
             this.actor.hide();
         }
         this.visible = false;
+    },
+
+    _set_position: function() {
+        if (!this.actor) {
+            return;
+        }
+
+        let allocation = this.actor.get_allocation_box();
+        let previewHeight = allocation.y2 - allocation.y1;
+        let previewWidth = allocation.x2 - allocation.x1;
+        let monitor = Main.layoutManager.findMonitorForActor(this.item);
+        let previewTop;
+
+        if (this._applet.orientation === St.Side.BOTTOM) {
+            previewTop = this.item.get_transformed_position()[1] - previewHeight - 5;
+        } else if (this._applet.orientation === St.Side.TOP) {
+            previewTop = this.item.get_transformed_position()[1] + this.item.get_transformed_size()[1] + 5;
+        } else {
+            previewTop = this.item.get_transformed_position()[1];
+        }
+
+        let previewLeft;
+
+        if (this._applet.orientation === St.Side.BOTTOM || this._applet.orientation === St.Side.TOP) {
+            // centre the applet on the window list item if window list is on the top or bottom panel
+            previewLeft = this.item.get_transformed_position()[0] + this.item.get_transformed_size()[0] / 2 - previewWidth / 2;
+        } else if (this._applet.orientation === St.Side.LEFT) {
+            previewLeft = this.item.get_transformed_position()[0] + this.item.get_transformed_size()[0] + 5;
+        } else if (this._applet.orientation === St.Side.RIGHT) {
+            previewLeft = this.item.get_transformed_position()[0] - previewWidth - 5;
+        }
+
+        previewLeft = Math.round(previewLeft);
+        previewLeft = Math.max(previewLeft, monitor.x);
+        previewLeft = Math.min(previewLeft, monitor.x + monitor.width - previewWidth);
+        previewTop = Math.round(previewTop);
+        previewTop = Math.min(previewTop, monitor.y + monitor.height - previewHeight);
+
+        this.actor.set_position(previewLeft, previewTop);
     },
 
     set_text: function(text) {
@@ -223,11 +235,13 @@ WindowPreview.prototype = {
         if (this.thumbnail) {
             this.thumbnailBin.set_child(null);
             this.thumbnail.destroy();
+            this.thumbnail = null;
         }
         if (this.actor) {
             this.actor.destroy();
+            this.actor = null;
         }
-        this.actor = null;
+        this.muffinWindow = null;
     }
 };
 
