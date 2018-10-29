@@ -49,6 +49,13 @@ class LogSystem():
         logging.basicConfig(filename=filename, level=logging.DEBUG)
 
     def get_log_file(self):
+        """Get log file path.
+
+        Returns
+        -------
+        str
+            The path to the log file.
+        """
         return self._log_file
 
     def debug(self, msg, term=True, date=True):
@@ -172,6 +179,18 @@ class LogSystem():
                 print(Ansi.ERROR(self._obfuscate_user_home(m)))
 
     def _obfuscate_user_home(self, msg):
+        """Obfuscate User's home path.
+
+        Parameters
+        ----------
+        msg : str
+            The string from which the path to the User's home will be replaced by the "~" character.
+
+        Returns
+        -------
+        str
+            The obfuscated string.
+        """
         return msg.replace(self._user_home, "~")
 
 

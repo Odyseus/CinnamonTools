@@ -264,6 +264,8 @@ def copy_create_symlink(source, destination, source_is_symlink=False, logger=Non
         Source.
     destination : str
         Destination.
+    source_is_symlink : bool, optional
+        If the source path is a symbolic link.
     logger : object
         See <class :any:`LogSystem`>.
     follow_symlinks : bool, optional

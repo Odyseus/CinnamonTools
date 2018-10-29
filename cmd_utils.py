@@ -138,6 +138,13 @@ def get_environment(set_vars={}, unset_vars=[]):
     -------
     dict
         A copy of the system environment.
+
+    Parameters
+    ----------
+    set_vars : dict, optional
+        A dictinary used to add or override keys in the default environment variables.
+    unset_vars : list, optional
+        A list of keys to remove from the default environment variables.
     """
     env = {}
     env.update(os.environ)
@@ -212,6 +219,26 @@ def find_executables(executable):
 
 
 def run_cmd(cmd, stdout=PIPE, stderr=PIPE, env=get_environment(), **kwargs):
+    """See :any:`subprocess.run`.
+
+    Parameters
+    ----------
+    cmd : list|str
+        See :any:`subprocess.run`.
+    stdout : None|int|file object, optional
+        See :any:`subprocess.run`.
+    stderr : None|int|file object, optional
+        See :any:`subprocess.run`.
+    env : object, optional
+        See :any:`subprocess.run`.
+    **kwargs
+        See :any:`subprocess.run`.
+
+    Returns
+    -------
+    object
+        See :any:`subprocess.CompletedProcess`.
+    """
     return run(cmd, stdout=stdout, stderr=stderr, env=env, **kwargs)
 
 

@@ -91,6 +91,20 @@ def merge_dict(first, second, logger=None):
 
     It *deep merges* keys of type :any:`dict` and :any:`list`.
     Any other type is overwritten.
+
+    Parameters
+    ----------
+    first : dict
+        A dictionary to which to merge a second dictinary.
+    second : dict
+        A dictionary to merge into another dictionary.
+    logger : object
+        See <class :any:`LogSystem`>.
+
+    Returns
+    -------
+    dict
+        A merged dictionary.
     """
     key = None
     try:
