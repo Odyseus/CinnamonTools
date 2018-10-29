@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-28 10:40-0300\n"
+"POT-Creation-Date: 2018-10-29 11:14-0300\n"
 "PO-Revision-Date: 2018-08-25 02:47-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Español; Castellano <zodiac_es@yahoo.es>\n"
@@ -18,37 +18,37 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
-#: ../../__app__/python_modules/localized_help_creator.py:321
+#: ../../__app__/python_modules/localized_help_creator.py:251
+#: ../../__app__/python_modules/localized_help_creator.py:325
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318
+#: ../../__app__/python_modules/localized_help_creator.py:322
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:319
+#: ../../__app__/python_modules/localized_help_creator.py:323
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:320
+#: ../../__app__/python_modules/localized_help_creator.py:324
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:360
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:374
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:390
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:389
+#: ../../__app__/python_modules/localized_help_creator.py:393
 msgid ""
 "Never delete any of the files found inside this xlet folder. It might break "
 "this xlet functionality."
@@ -56,7 +56,7 @@ msgstr ""
 "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de "
 "este xlet. Podría romper la funcionalidad del xlet."
 
-#: ../../__app__/python_modules/localized_help_creator.py:391
+#: ../../__app__/python_modules/localized_help_creator.py:395
 msgid ""
 "Bug reports, feature requests and contributions should be done on this "
 "xlet's repository linked next."
@@ -64,11 +64,11 @@ msgstr ""
 "Los reportes de fallos, peticiones de características y contribuciones deben "
 "hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:411
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:414
 msgid ""
 "If this xlet was installed from Cinnamon Settings, all of this xlet's "
 "localizations were automatically installed."
@@ -76,7 +76,7 @@ msgstr ""
 "Si este xlet se instaló desde Configuración de Cinnamon, todas las "
 "localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:411
+#: ../../__app__/python_modules/localized_help_creator.py:415
 msgid ""
 "If this xlet was installed manually and not trough Cinnamon Settings, "
 "localizations can be installed by executing the script called helper.py from "
