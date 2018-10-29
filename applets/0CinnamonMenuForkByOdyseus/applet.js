@@ -1396,7 +1396,9 @@ CinnamonMenuForkByOdyseus.prototype = {
         while ((nextType = iter.next()) !== CMenu.TreeItemType.INVALID) {
             if (nextType === CMenu.TreeItemType.ENTRY) {
                 let entry = iter.get_entry();
-                if (!entry.get_app_info().get_nodisplay()) {
+                let appInfo = entry.get_app_info();
+
+                if (appInfo && !appInfo.get_nodisplay()) {
                     has_entries = true;
                     let app = appsys.lookup_app_by_tree_entry(entry);
                     if (!app) {
