@@ -9,7 +9,7 @@ Applets/Extensions/Themes for the [Cinnamon desktop environment](https://github.
 
 All xlets in this repository aren't directly usable, they need to be *built*. The same principle applies to the themes in this repository (they need to be *built*).
 
-The **app.py** script found at the root of the repository is the *application* that takes care of the xlet building process. It has to be run from a terminal opened inside the repository's folder. This Python *application* has no external dependencies other than Python 3.
+The **app.py** script found at the root of the repository is the *application* that takes care of the xlet building process. It has to be run from a terminal opened inside the repository's folder. This Python *application* has no external dependencies other than Python 3.5+.
 
 ### Examples
 
@@ -25,7 +25,7 @@ $ ./app.py menu
 
 #### [Building xlets](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/cinnamontools-usage.html#app-py-build-command)
 
-The following command will perform the following actions:
+The command bellow will perform the following actions:
 
 ```shell
 $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/cinnamon" --no-confirmation --restart-cinnamon
@@ -41,7 +41,7 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 
 #### [Building themes](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/cinnamontools-usage.html#app-py-build-themes-command)
 
-The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family and GTK+ 3 version). The following command will perform the following actions:
+The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family and GTK+ 3 version). The command bellow will perform the following actions:
 
 ```shell
 $ ./app.py build_themes --theme-name="MyThemeName" --output="$HOME/.themes" --no-confirmation --restart-cinnamon
@@ -57,9 +57,13 @@ $ ./app.py build_themes --theme-name="MyThemeName" --output="$HOME/.themes" --no
 
 ## Xlets help pages
 
-Most of the xlets in this repository come with help pages that describe their usage, Cinnamon version compatibility, dependencies, etc. These help pages can be read **on-line**, **before** an xlet is actually installed on the system. Or they can be read **off-line**, **after** an xlet has been installed.
+Most of the xlets in this repository come with help pages that describe their usage, Cinnamon version compatibility, list of dependencies (if any), list of contributors, change logs, etc. These help pages can be read **on-line**, **before** an xlet is actually installed on the system. Or they can be read **off-line**, **after** an xlet has been installed.
+
+The help pages are standalone HTML files named **HELP.html** that can be found inside each xlet folder.
 
 ### Applets help pages
+
+Applet's help pages can be accessed from an applet context menu (item named **Help**).
 
 - [Argos for Cinnamon](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0ArgosForCinnamon/index.html)
 - [Cinnamon Menu (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0CinnamonMenuForkByOdyseus/index.html)

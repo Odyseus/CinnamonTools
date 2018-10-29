@@ -17,8 +17,8 @@ xlet_has_schema : bool
 """
 import os
 
-from subprocess import run
 from shutil import which
+from subprocess import run
 
 menu_actions = {}
 schema = "org.cinnamon.{{XLET_TYPE}}s.{{UUID}}"
