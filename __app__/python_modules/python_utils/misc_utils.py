@@ -86,5 +86,54 @@ def get_time_diff(s, e):
     return "%d hr/s, %d min/s, %d sec/s, %d msec/s" % (h, m, s, ms)
 
 
+def merge_dict(first, second, logger=None):
+    """Merges **second** dictionary into **first** dictionary and return merged result.
+
+    It *deep merges* keys of type :any:`dict` and :any:`list`.
+    Any other type is overwritten.
+
+    Parameters
+    ----------
+    first : dict
+        A dictionary to which to merge a second dictinary.
+    second : dict
+        A dictionary to merge into another dictionary.
+    logger : object
+        See <class :any:`LogSystem`>.
+
+    Returns
+    -------
+    dict
+        A merged dictionary.
+    """
+    key = None
+    try:
+        if isinstance(first, list):
+            # Lists can be only appended.
+            if isinstance(second, list):
+                # Merge lists.
+                first.extend(second)
+            else:
+                # Append to list.
+                first.append(second)
+        elif isinstance(first, dict):
+            # Dictionaries must be merged.
+            if isinstance(second, dict):
+                for key in second:
+                    if key in first:
+                        first[key] = merge_dict(first[key], second[key])
+                    else:
+                        first[key] = second[key]
+            else:
+                logger.warning('Cannot merge non-dict "%s" into dict "%s"' % (second, first))
+        else:
+            first = second
+    except TypeError as err:
+        logger.error('TypeError "%s" in key "%s" when merging "%s" into "%s"' %
+                     (err, key, second, first))
+
+    return first
+
+
 if __name__ == "__main__":
     pass

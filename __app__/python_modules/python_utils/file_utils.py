@@ -237,7 +237,7 @@ def custom_copy2(source, destination, logger=None, log_copied_file=False, relati
         if overwrite or newer(source, destination):
             destination_parent = os.path.dirname(destination)
 
-            if not os.path.exists(destination_parent):
+            if not is_real_dir(destination_parent):
                 os.makedirs(destination_parent)
 
             copy2(source, destination, follow_symlinks=False)
@@ -264,6 +264,8 @@ def copy_create_symlink(source, destination, source_is_symlink=False, logger=Non
         Source.
     destination : str
         Destination.
+    source_is_symlink : bool, optional
+        If the source path is a symbolic link.
     logger : object
         See <class :any:`LogSystem`>.
     follow_symlinks : bool, optional

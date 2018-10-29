@@ -4,19 +4,27 @@
 
 Send email to an email list.
 """
-
-from . import exceptions
-
 try:
     import keyring
 except (SystemError, ImportError):
     keyring = None
-    raise exceptions.MissingDependencyModule("Module not installed: <keyring>")
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from smtplib import SMTP
 from smtplib import SMTPException
+
+__pass_setup_msg = """
+There are two ways to specify a password to send e-mails:
+
+1. Unattended: This requires to have the <keyring> Python 3 module installed and
+the keys <secret_service_name> and <secret_user_name> specified in the mail
+system settings. See documentation/manual page for details.
+2. Always prompt: With the key called <ask_for_password> set to True in the
+mail system settings, every attempt to send an e-mail will prompt for the
+sender's e-mail password. This method supersedes the unattended method.
+
+"""
 
 
 class MailSystem():
@@ -24,65 +32,75 @@ class MailSystem():
 
     Attributes
     ----------
-    allowed : bool
-        If set to False, it will not allow to send the email/s.
     logger : object
         See <class :any:`LogSystem`>.
-    mailing_list : list
-        A list of email addresses to which to send the backup report/s.
-    mandatory_fields : list
-        A fixed list of mandatory fields. If any of them is missing, email/s will not be sent.
-    sender_address : str
-        The email address of the sender.
-    sender_secret : tuple
-        The "secret" tuple to retrieve the sender's password from the system keyring.
-    sender_username : str
-        The sender user name.
-    smtp_port : int
-        The port number of the SMTP server.
-    smtp_server : str
-        The SMTP server address.
-    use_tls : bool
-        Sets the use of TLS by the SMTP server.
     """
 
-    mandatory_fields = [
-        "smtp_server",
-        "smtp_port",
+    _validator_set = {
+        "ask_for_password",
+        "mailing_list",
+        "secret_service_name",
+        "secret_user_name",
         "sender_address",
         "sender_username",
-        "sender_secret",
+        "smtp_port",
+        "smtp_server",
         "use_tls",
-        "mailing_list",
-    ]
+    }
 
-    def __init__(self, logger, mail_settings):
+    def __init__(self, mail_settings={}, logger=None):
         """Initialize.
 
         Parameters
         ----------
-        logger : object
-            See <class :any:`LogSystem`>.
         mail_settings : dict
             Where all the data to send the email/s is stored.
+        logger : object
+            See <class :any:`LogSystem`>.
         """
         super().__init__()
+        self._config = mail_settings
         self.logger = logger
-        self.allowed = True
+        self._allowed = True
 
-        self.smtp_server = mail_settings.get("smtp_server", None)
-        self.smtp_port = mail_settings.get("smtp_port", None)
-        self.sender_address = mail_settings.get("sender_address", None)
-        self.sender_username = mail_settings.get("sender_username", None)
-        self.sender_secret = mail_settings.get("sender_secret", None)
-        self.use_tls = mail_settings.get("use_tls", None)
-        self.mailing_list = mail_settings.get("mailing_list", None)
+        self._validate_config()
 
-        for f in self.mandatory_fields:
-            if getattr(self, f, None) is None:
-                self.allowed = False
-                self.logger.error(
-                    "Missing mandatory field <%s> for MailSystem." % f)
+    def _validate_config(self):
+        """Validate mail settings.
+        """
+        missing_fields = []
+
+        if not self._validator_set.issubset(self._config):
+            missing_fields += [field for field in self._validator_set if field not in self._config]
+
+        if missing_fields:
+            self._allowed = False
+            self.logger.warning("MailSystem::MissingMandatoryFields")
+            self.logger.warning("The <%s> field/s is/are required." % ", ".join(missing_fields))
+
+    def _get_password(self):
+        """Get password.
+
+        Returns
+        -------
+        str
+            The serder's e-mail password.
+        """
+        ask_for_password = self._config.get("ask_for_password")
+        sender_password = None
+        secret_service_name = self._config.get("secret_service_name")
+        secret_user_name = self._config.get("secret_user_name")
+        use_keyring = keyring and secret_service_name and secret_user_name and not ask_for_password
+
+        if use_keyring:
+            sender_password = keyring.get_password(secret_service_name,
+                                                   secret_user_name)
+        elif ask_for_password:
+            import getpass
+
+            sender_password = getpass.getpass(prompt="Enter Sender E-Mail Password: ")
+
+        return sender_password
 
     def send(self, subject, message):
         """Send the email/s.
@@ -99,32 +117,38 @@ class MailSystem():
         bool
             It returns only if it is not allowed to send emails.
         """
-        if not self.allowed:
+        if not self._allowed:
+            return True
+
+        sender_password = self._get_password()
+
+        if not sender_password:
+            self.logger.warning("No password could be obtained. Aborted.")
+            self.logger.warning(__pass_setup_msg)
             return True
 
         msg = MIMEMultipart()
         msg["Subject"] = subject
-        msg["From"] = self.sender_address
-        msg["To"] = ",".join(self.mailing_list)
+        msg["From"] = self._config.get("sender_address")
+        msg["To"] = ",".join(self._config.get("mailing_list"))
 
         msg.attach(MIMEText(message, "plain"))
 
-        sender_password = keyring.get_password(*self.sender_secret)
-
         try:
-            with SMTP(self.smtp_server, self.smtp_port) as s:
-                if self.use_tls:
+            with SMTP(self._config.get("smtp_server"), self._config.get("smtp_port")) as s:
+                if self._config.get("use_tls"):
                     s.ehlo()
                     s.starttls()
 
                 s.ehlo()
-                s.login(self.sender_username, sender_password)
-                s.sendmail(self.sender_address, self.mailing_list, msg.as_string())
+                s.login(self._config.get("sender_username"), sender_password)
+                s.sendmail(self._config.get("sender_address"),
+                           self._config.get("mailing_list"), msg.as_string())
                 s.close()
 
-            self.logger.info("Email sent!", "INFO")
+            self.logger.info("Email sent!")
         except SMTPException as e:
-            self.logger.error("Could not send the emails: %s" % e)
+            self.logger.error("Could not send the e-mail/s: %s" % e)
 
 
 if __name__ == "__main__":

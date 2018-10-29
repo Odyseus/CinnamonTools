@@ -19,7 +19,7 @@ class LogSystem():
         Display message in terminal.
     """
 
-    def __init__(self, filename="backup.log", verbose=False):
+    def __init__(self, filename="log.log", verbose=False):
         """
         Parameters
         ----------
@@ -44,8 +44,19 @@ class LogSystem():
                 os.makedirs(dirname)
 
         self.verbose = verbose
-        self.user_home = os.path.expanduser("~")
+        self._log_file = filename
+        self._user_home = os.path.expanduser("~")
         logging.basicConfig(filename=filename, level=logging.DEBUG)
+
+    def get_log_file(self):
+        """Get log file path.
+
+        Returns
+        -------
+        str
+            The path to the log file.
+        """
+        return self._log_file
 
     def debug(self, msg, term=True, date=True):
         """Log message with "DEBUG" level.
@@ -53,13 +64,13 @@ class LogSystem():
         Parameters
         ----------
         msg : str
-            See :any:`LogSystem.update_log` > msg
+            See :any:`LogSystem._update_log` > msg
         term : bool, optional
-            See :any:`LogSystem.update_log` > term
+            See :any:`LogSystem._update_log` > term
         date : bool, optional
-            See :any:`LogSystem.update_log` > date
+            See :any:`LogSystem._update_log` > date
         """
-        self.update_log(msg, type="DEBUG", term=term, date=date)
+        self._update_log(msg, type="DEBUG", term=term, date=date)
 
     def info(self, msg, term=True, date=True):
         """Log message with "INFO" level.
@@ -67,13 +78,13 @@ class LogSystem():
         Parameters
         ----------
         msg : str
-            See :any:`LogSystem.update_log` > msg
+            See :any:`LogSystem._update_log` > msg
         term : bool, optional
-            See :any:`LogSystem.update_log` > term
+            See :any:`LogSystem._update_log` > term
         date : bool, optional
-            See :any:`LogSystem.update_log` > date
+            See :any:`LogSystem._update_log` > date
         """
-        self.update_log(msg, type="INFO", term=term, date=date)
+        self._update_log(msg, type="INFO", term=term, date=date)
 
     def success(self, msg, term=True, date=True):
         """Log message with "INFO" level but with green color on screen.
@@ -81,13 +92,13 @@ class LogSystem():
         Parameters
         ----------
         msg : str
-            See :any:`LogSystem.update_log` > msg
+            See :any:`LogSystem._update_log` > msg
         term : bool, optional
-            See :any:`LogSystem.update_log` > term
+            See :any:`LogSystem._update_log` > term
         date : bool, optional
-            See :any:`LogSystem.update_log` > date
+            See :any:`LogSystem._update_log` > date
         """
-        self.update_log(msg, type="SUCCESS", term=term, date=date)
+        self._update_log(msg, type="SUCCESS", term=term, date=date)
 
     def warning(self, msg, term=True, date=True):
         """Log message with "WARNING" level.
@@ -95,13 +106,13 @@ class LogSystem():
         Parameters
         ----------
         msg : str
-            See :any:`LogSystem.update_log` > msg
+            See :any:`LogSystem._update_log` > msg
         term : bool, optional
-            See :any:`LogSystem.update_log` > term
+            See :any:`LogSystem._update_log` > term
         date : bool, optional
-            See :any:`LogSystem.update_log` > date
+            See :any:`LogSystem._update_log` > date
         """
-        self.update_log(msg, type="WARNING", term=term, date=date)
+        self._update_log(msg, type="WARNING", term=term, date=date)
 
     def error(self, msg, term=True, date=True):
         """Log message with "ERROR" level.
@@ -109,15 +120,15 @@ class LogSystem():
         Parameters
         ----------
         msg : str
-            See :any:`LogSystem.update_log` > msg
+            See :any:`LogSystem._update_log` > msg
         term : bool, optional
-            See :any:`LogSystem.update_log` > term
+            See :any:`LogSystem._update_log` > term
         date : bool, optional
-            See :any:`LogSystem.update_log` > date
+            See :any:`LogSystem._update_log` > date
         """
-        self.update_log(msg, term=term, date=date)
+        self._update_log(msg, term=term, date=date)
 
-    def get_now(self):
+    def _get_now(self):
         """Get current time.
 
         Returns
@@ -127,7 +138,7 @@ class LogSystem():
         """
         return micro_to_milli(get_date_time())
 
-    def update_log(self, msg, type="ERROR", term=True, date=True):
+    def _update_log(self, msg, type="ERROR", term=True, date=True):
         """Do the actual logging.
 
         Parameters
@@ -143,32 +154,44 @@ class LogSystem():
             Log the date. If set to False, the current date will not be attached to the logged
             message.
         """
-        m = "%s%s" % (self.get_now() + ": " if date else "", str(msg))
+        m = "%s%s" % (self._get_now() + ": " if date else "", str(msg))
 
         if type == "DEBUG":
             logging.debug(m)
 
             if self.verbose and term:
-                print(self.obfuscate_user_home(m))
+                print(self._obfuscate_user_home(m))
         elif type == "INFO" or type == "SUCCESS":
             logging.info(m)
 
             if self.verbose and term:
                 print(getattr(Ansi, "SUCCESS" if type == "SUCCESS" else "INFO")
-                      (self.obfuscate_user_home(m)))
+                      (self._obfuscate_user_home(m)))
         elif type == "WARNING":
             logging.warning(m)
 
             if self.verbose and term:
-                print(Ansi.WARNING(self.obfuscate_user_home(m)))
+                print(Ansi.WARNING(self._obfuscate_user_home(m)))
         elif type == "ERROR":
             logging.error(m)
 
             if self.verbose and term:
-                print(Ansi.ERROR(self.obfuscate_user_home(m)))
+                print(Ansi.ERROR(self._obfuscate_user_home(m)))
 
-    def obfuscate_user_home(self, msg):
-        return msg.replace(self.user_home, "~")
+    def _obfuscate_user_home(self, msg):
+        """Obfuscate User's home path.
+
+        Parameters
+        ----------
+        msg : str
+            The string from which the path to the User's home will be replaced by the "~" character.
+
+        Returns
+        -------
+        str
+            The obfuscated string.
+        """
+        return msg.replace(self._user_home, "~")
 
 
 def get_log_file(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_"):
