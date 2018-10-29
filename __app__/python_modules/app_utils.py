@@ -29,6 +29,8 @@ repo_url : str
 root_folder : str
     The main folder containing the application. All commands must be executed from this location
     without exceptions.
+theme_latest_build_data_file : str
+    Path to the JSON file where the last data used to build themes is stored.
 theme_name_storage_file : str
     Path to the file were the theme name for xlets is stored.
 xlet_dir_ignored_patterns : list
@@ -42,12 +44,8 @@ from shutil import copy2
 from shutil import copytree
 from shutil import ignore_patterns
 from shutil import rmtree
-from shutil import which
-from subprocess import PIPE
-from subprocess import STDOUT
-from subprocess import call
-from subprocess import run
 
+from .python_utils import cmd_utils
 from .python_utils import exceptions
 from .python_utils import file_utils
 from .python_utils import misc_utils
@@ -72,8 +70,9 @@ domain_storage_file = os.path.join(root_folder, "tmp", "domain_name")
 
 theme_name_storage_file = os.path.join(root_folder, "tmp", "theme_name")
 
-
 all_xlets_meta_file = os.path.join(root_folder, "tmp", "xlets_metadata.json")
+
+theme_latest_build_data_file = os.path.join(root_folder, "tmp", "theme_latest_default_data.json")
 
 missing_domain_msg = """DomainNameNotSet:
 
@@ -191,7 +190,7 @@ class XletsHelperCore():
                     log_path=log_path,
                     repo_url=repo_url
                 )
-                call(cmd, cwd=root_folder, shell=True)
+                cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=root_folder, shell=True)
             except Exception as err:
                 self.logger.error(err)
 
@@ -214,7 +213,7 @@ class XletsHelperCore():
                 "Updating localization template for %s..." % xlet["name"])
 
             try:
-                if not which("make-cinnamon-xlet-pot-cli"):
+                if not cmd_utils.which("make-cinnamon-xlet-pot-cli"):
                     print(Ansi.ERROR("MissingCommand: make-cinnamon-xlet-pot-cli command not found!!!"))
                     raise SystemExit()
 
@@ -224,7 +223,7 @@ class XletsHelperCore():
                     "--scan-additional-file=../../__app__/python_modules/localized_help_creator.py",
                     "--ignored-pattern=__data__/*"
                 ]
-                call(cmd, cwd=xlet_root_folder)
+                cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=xlet_root_folder)
             except Exception:
                 continue
 
@@ -245,7 +244,8 @@ class XletsHelperCore():
 
             if os.path.exists(script_file_path):
                 self.logger.info("Creating localized help for %s..." % xlet["name"])
-                call([script_file_path], cwd=xlet_root_folder)
+                cmd_utils.run_cmd([script_file_path], stdout=None,
+                                  stderr=None,  cwd=xlet_root_folder)
 
                 # Store list items for later creating the README.md file.
                 list_item = readme_list_item_template.format(
@@ -287,7 +287,7 @@ class XletsHelperCore():
         """
         self.logger.info("Generating translation statistics...")
 
-        if not which("msgmerge"):
+        if not cmd_utils.which("msgmerge"):
             print(Ansi.ERROR("MissingCommand: msgmerge command not found!!!"))
             raise SystemExit()
 
@@ -329,7 +329,7 @@ class XletsHelperCore():
 
                         self.logger.info("Updating temporary %s from localization template..." %
                                          po_base_name, date=False)
-                        call([
+                        cmd_utils.run_cmd([
                             "msgmerge",
                             "--no-fuzzy-matching",  # Do not use fuzzy matching.
                             "--previous",           # Keep previous msgids of translated messages.
@@ -337,14 +337,12 @@ class XletsHelperCore():
                             "--update",             # Update .po file, do nothing if up to date.
                             tmp_po_file_path,       # The .po file to update.
                             tmp_pot_file_path       # The template file to update from.
-                        ])
+                        ], stdout=None, stderr=None)
 
                         self.logger.info("Counting untranslated strings...", date=False)
                         trans_count_cmd = 'msggrep -v -T -e "." "%s" | grep -c ^msgstr'
-                        trans_count_output = run(trans_count_cmd % tmp_po_file_path,
-                                                 stderr=STDOUT,
-                                                 stdout=PIPE,
-                                                 shell=True).stdout
+                        trans_count_output = cmd_utils.run_cmd(trans_count_cmd % tmp_po_file_path,
+                                                               shell=True).stdout
                         trans_count = str(trans_count_output.decode("UTF-8").strip())
                         markdown_content += "|%s|%s|\n" % (po_base_name, trans_count)
 
@@ -364,7 +362,7 @@ class XletsHelperCore():
         """
         self.logger.info("Updating Spanish localizations...")
 
-        if not which("msgmerge"):
+        if not cmd_utils.which("msgmerge"):
             print(Ansi.ERROR("MissingCommand: msgmerge command not found!!!"))
             raise SystemExit()
 
@@ -377,7 +375,7 @@ class XletsHelperCore():
             if file_utils.is_real_dir(po_dir) and file_utils.is_real_file(po_file):
                 self.logger.info("Updating localization for %s" % xlet_dir_name)
 
-                if call([
+                if cmd_utils.run_cmd([
                     "msgmerge",
                     "--no-fuzzy-matching",      # Do not use fuzzy matching.
                     "--previous",               # Keep previous msgids of translated messages.
@@ -385,7 +383,7 @@ class XletsHelperCore():
                     "--update",                 # Update .po file, do nothing if up to date.
                     "es.po",                    # The .po file to update.
                     "%s.pot" % xlet_dir_name    # The template file to update from.
-                ], cwd=po_dir):
+                ], stdout=None, stderr=None, cwd=po_dir).returncode:
                     self.logger.warning("Something might have gone wrong!")
 
 
@@ -403,7 +401,6 @@ class AllXletsMetadata(object):
         """
         try:
             if not os.path.exists(all_xlets_meta_file):
-                print(Ansi.WARNING("xlets_metadata.json file not found. It will be generated."))
                 generate_meta_file()
         finally:
             with open(all_xlets_meta_file, "r", encoding="UTF-8") as xlets_metadata:
@@ -414,7 +411,6 @@ def generate_meta_file():
     """Generate the file containing all the metadata of all xlets on this repository.
     This metadata file is used by several functions on the XletsHelperCore class.
     """
-    print(Ansi.INFO("Generating xlets metadata file..."))
     xlet_meta_files = []
     xlet_meta = []
 
@@ -637,7 +633,8 @@ class XletBuilder(object):
         """
         if file_utils.is_real_dir(self.schemas_dir):
             self.logger.info("Compiling gsettings schema...")
-            call(["glib-compile-schemas", ".", "--targetdir=."], cwd=self.schemas_dir)
+            cmd_utils.run_cmd(["glib-compile-schemas", ".", "--targetdir=."],
+                              stdout=None, stderr=None, cwd=self.schemas_dir)
 
     def _handle_config_file(self):
         """Handle xlet configuration file if any.
@@ -660,6 +657,8 @@ class XletBuilder(object):
                 os.chdir(root_folder)
 
     def _set_executable(self):
+        """Set files as executable.
+        """
         self.logger.info("Setting execution permissions to the following files:")
 
         for root, dirs, files in os.walk(self.xlet_data["destination"], topdown=False):
@@ -753,6 +752,12 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
     SystemExit
         Halt execution if the theme name cannot be obtained.
     """
+    try:
+        with open(theme_latest_build_data_file, "r", encoding="UTF-8") as f:
+            options_map_latest_used_values = json.loads(f.read())
+    except Exception:
+        options_map_latest_used_values = None
+
     options_map = {
         "cinnamon_version": {
             "1": "3.0",
@@ -772,27 +777,41 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
         "gtk3_version": "1"
     }
 
+    if options_map_latest_used_values is not None and \
+            options_map_defaults != options_map_latest_used_values:
+        print(Ansi.PURPLE("Build data from a previous theme build found."))
+        print(Ansi.PURPLE("Do you wish to use that data for the current build?"))
+
+        if prompts.confirm(prompt="Load new defaults?", response=False):
+            options_map_defaults = options_map_latest_used_values
+
+    # Ask for Cinnamon theme version.
     print(Ansi.PURPLE("Choose in which Cinnamon version the theme will be used."))
     print(Ansi.PURPLE("1. 3.0.x to 3.2.x (Default)"))
     print(Ansi.PURPLE("2. 3.4.x to 3.8.x"))
 
-    prompts.do_prompt(options_map_defaults, "cinnamon_version", "Enter an option", "1",
-                      validator=validate_themes_options)
+    prompts.do_prompt(options_map_defaults, "cinnamon_version", "Enter an option",
+                      options_map_defaults["cinnamon_version"], validator=validate_themes_options)
 
+    # Ask for Cinnamon theme font size.
     print(Ansi.PURPLE("Set the Cinnamon theme font size."))
 
-    prompts.do_prompt(options_map_defaults, "cinnamon_font_size", "Enter a value", "9pt")
+    prompts.do_prompt(options_map_defaults, "cinnamon_font_size", "Enter a value",
+                      options_map_defaults["cinnamon_font_size"])
 
+    # Ask for Cinnamon theme font family.
     print(Ansi.PURPLE("Set the Cinnamon theme font family."))
 
-    prompts.do_prompt(options_map_defaults, "cinnamon_font_family",
-                      "Enter a value", '"Noto Sans", sans, Sans-Serif')
+    prompts.do_prompt(options_map_defaults, "cinnamon_font_family", "Enter a value",
+                      options_map_defaults["cinnamon_font_family"])
 
-    print(Ansi.PURPLE("Choose in which Gtk+ version the theme will be used.\n"))
+    # Ask for Gtk3 theme version.
+    print(Ansi.PURPLE("Choose in which Gtk+ version the theme will be used."))
     print(Ansi.PURPLE("1. 3.18.x (Default)"))
     print(Ansi.PURPLE("2. 3.22.x"))
 
-    prompts.do_prompt(options_map_defaults, "gtk3_version", "Enter an option", "1",
+    prompts.do_prompt(options_map_defaults, "gtk3_version", "Enter an option",
+                      options_map_defaults["gtk3_version"],
                       validator=validate_themes_options)
 
     theme_data = {
@@ -802,20 +821,20 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
         "gtk3_version": options_map["gtk3_version"][options_map_defaults["gtk3_version"]]
     }
 
-    if not theme_name:
+    if theme_name:
+        options_map_defaults["theme_name"] = theme_name
+    else:
         try:
             with open(theme_name_storage_file, "r", encoding="UTF-8") as theme_file:
-                theme_name = theme_file.read().strip()
+                options_map_defaults["theme_name"] = theme_file.read().strip()
         except Exception:
-            theme_name = False
+            pass
 
-    if not theme_name:
-        print(Ansi.PURPLE("\nEnter a name for the theme:"))
-        prompts.do_prompt(options_map_defaults, "theme_name",
-                          "Enter name", options_map_defaults["theme_name"])
-        theme_name = options_map_defaults["theme_name"].strip()
+    print(Ansi.PURPLE("Enter a name for the theme:"))
+    prompts.do_prompt(options_map_defaults, "theme_name",
+                      "Enter name", options_map_defaults["theme_name"])
 
-    if not theme_name:
+    if not options_map_defaults["theme_name"].strip():
         print(Ansi.WARNING(missing_theme_name_msg))
         raise SystemExit()
 
@@ -840,7 +859,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
     for variant in theme_variants:
         logger.info("Generating variant: %s" % variant)
 
-        full_theme_name = "%s-%s" % (theme_name, variant)
+        full_theme_name = "%s-%s" % (options_map_defaults["theme_name"].strip(), variant)
 
         destination_folder = os.path.join(base_output_path, full_theme_name)
 
@@ -861,7 +880,8 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
         variant_folder = os.path.join(themes_sources, "_variants", variant)
         variant_config = run_path(os.path.join(variant_folder, "config.py"))["settings"]
         variant_config["replacement_data"].append(("@repo_url@", repo_url))
-        variant_config["replacement_data"].append(("@theme_name@", theme_name))
+        variant_config["replacement_data"].append(
+            ("@theme_name@", options_map_defaults["theme_name"].strip()))
         variant_config["replacement_data"].append(("@theme_variant@", variant))
         variant_config["replacement_data"].append(
             ('"@font_size@"', theme_data["cinnamon_font_size"]))
@@ -920,11 +940,15 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False, logger=Non
     print("")
     logger.info("Built themes saved in %s" % base_output_path)
 
+    with open(theme_latest_build_data_file, "w", encoding="UTF-8") as outfile:
+        json.dump(options_map_defaults, outfile, indent=4, ensure_ascii=False)
+
 
 def restart_cinnamon():
     """Restart Cinnamon.
     """
-    call("nohup cinnamon --replace > /dev/null 2>&1 &", shell=True)
+    cmd_utils.run_cmd("nohup cinnamon --replace > /dev/null 2>&1 &",
+                      stdout=None, stderr=None, shell=True)
 
 
 class BaseXletGenerator():

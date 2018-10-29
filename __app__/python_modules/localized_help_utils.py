@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 """Utils for the localized_help_creator module.
 
+.. note::
+
+    No <class :any:`LogSystem`> available in this module since this module is imported
+    by scripts executed outside the main Python application.
+
 Attributes
 ----------
 BOXED_CONTAINER : str
@@ -481,7 +486,7 @@ def get_compatibility(xlet_meta=None, for_readme=False):
     return data
 
 
-# ComplexBootstrap elements.
+# Complex Bootstrap elements.
 
 def get_bootstrap_alert(context="info", content="", heading="", bold_text=True):
     """Get bootstrap alert.

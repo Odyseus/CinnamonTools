@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 """Localized help creator.
 
+.. note::
+
+    No <class :any:`LogSystem`> available in this module since this module is imported
+    by scripts executed outside the main Python application.
+
 Attributes
 ----------
 md : object
@@ -18,10 +23,9 @@ utils : object
 
 import os
 
-from subprocess import call
-
 from . import localized_help_utils
 from .locale_list import locale_list
+from .python_utils import cmd_utils
 from .python_utils import mistune
 from .python_utils.pyuca import Collator
 
@@ -207,8 +211,8 @@ class LocalizedHelpCreator(object):
                         self.lang_list.append(parts[0])
                         this_locale_dir = os.path.join(dummy_locale_path, parts[0], "LC_MESSAGES")
                         os.makedirs(this_locale_dir, exist_ok=True)
-                        call(["msgfmt", "-c", pofile_path, "-o",
-                              os.path.join(this_locale_dir, "%s.mo" % self.xlet_slug)])
+                        cmd_utils.run_cmd(["msgfmt", "-c", pofile_path, "-o",
+                                           os.path.join(this_locale_dir, "%s.mo" % self.xlet_slug)])
                         done_one = True
 
         if done_one:
