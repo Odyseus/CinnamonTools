@@ -200,6 +200,12 @@ class MissingMandatoryArgument(ExceptionWhitoutTraceBack):
     pass
 
 
+class InvalidArgument(ExceptionWhitoutTraceBack):
+    """InvalidArgument
+    """
+    pass
+
+
 class MethodNotImplemented(ExceptionWhitoutTraceBack):
     """MethodNotImplemented
     """
