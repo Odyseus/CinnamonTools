@@ -58,7 +58,6 @@ class MailSystem():
         logger : object
             See <class :any:`LogSystem`>.
         """
-        super().__init__()
         self._config = mail_settings
         self.logger = logger
         self._allowed = True
