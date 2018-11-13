@@ -58,6 +58,16 @@ class LogSystem():
         """
         return self._log_file
 
+    def log_dry_run(self, msg):
+        """Log message with "INFO" level prefixed with "[DRY_RUN]" and no date.
+
+        Parameters
+        ----------
+        msg : str
+            See :any:`LogSystem._update_log` > msg
+        """
+        self.info("[DRY_RUN] %s" % str(msg), date=False)
+
     def debug(self, msg, term=True, date=True):
         """Log message with "DEBUG" level.
 
