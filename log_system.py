@@ -138,16 +138,6 @@ class LogSystem():
         """
         self._update_log(msg, term=term, date=date)
 
-    def _get_now(self):
-        """Get current time.
-
-        Returns
-        -------
-        str
-            Date formatted with milliseconds instead of microseconds.
-        """
-        return micro_to_milli(get_date_time())
-
     def _update_log(self, msg, type="ERROR", term=True, date=True):
         """Do the actual logging.
 
@@ -164,29 +154,15 @@ class LogSystem():
             Log the date. If set to False, the current date will not be attached to the logged
             message.
         """
-        m = "%s%s" % (self._get_now() + ": " if date else "", str(msg))
+        m = "%s%s" % ("%s: " % micro_to_milli(get_date_time()) if date else "", str(msg))
 
-        if type == "DEBUG":
-            logging.debug(m)
+        getattr(logging, type.lower(), "INFO")(m)
 
-            if self.verbose and term:
-                print(self._obfuscate_user_home(m))
-        elif type == "INFO" or type == "SUCCESS":
-            logging.info(m)
-
-            if self.verbose and term:
-                print(getattr(Ansi, "SUCCESS" if type == "SUCCESS" else "INFO")
-                      (self._obfuscate_user_home(m)))
-        elif type == "WARNING":
-            logging.warning(m)
-
-            if self.verbose and term:
-                print(Ansi.WARNING(self._obfuscate_user_home(m)))
-        elif type == "ERROR":
-            logging.error(m)
-
-            if self.verbose and term:
-                print(Ansi.ERROR(self._obfuscate_user_home(m)))
+        if self.verbose and term:
+            try:
+                print(getattr(Ansi, type, "INFO")(self._obfuscate_user_home(m)))
+            except Exception:
+                print(m)
 
     def _obfuscate_user_home(self, msg):
         """Obfuscate User's home path.
