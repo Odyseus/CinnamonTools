@@ -9,6 +9,13 @@ from .ansi_colors import Ansi
 from .misc_utils import get_date_time
 from .misc_utils import micro_to_milli
 
+_allowed_logging_levels = {
+    "INFO",
+    "DEBUG",
+    "WARNING",
+    "ERROR"
+}
+
 
 class LogSystem():
     """LogSystem class.
@@ -66,7 +73,7 @@ class LogSystem():
         msg : str
             See :any:`LogSystem._update_log` > msg
         """
-        self.info("[DRY_RUN] %s" % str(msg), date=False)
+        self._update_log("[DRY_RUN] %s" % str(msg), log_level="PURPLE", date=False)
 
     def debug(self, msg, term=True, date=True):
         """Log message with "DEBUG" level.
@@ -80,7 +87,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, log_type="DEBUG", term=term, date=date)
+        self._update_log(msg, log_level="DEBUG", term=term, date=date)
 
     def info(self, msg, term=True, date=True):
         """Log message with "INFO" level.
@@ -94,7 +101,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, log_type="INFO", term=term, date=date)
+        self._update_log(msg, log_level="INFO", term=term, date=date)
 
     def success(self, msg, term=True, date=True):
         """Log message with "INFO" level but with green color on screen.
@@ -108,7 +115,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, log_type="SUCCESS", term=term, date=date)
+        self._update_log(msg, log_level="SUCCESS", term=term, date=date)
 
     def warning(self, msg, term=True, date=True):
         """Log message with "WARNING" level.
@@ -122,7 +129,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, log_type="WARNING", term=term, date=date)
+        self._update_log(msg, log_level="WARNING", term=term, date=date)
 
     def error(self, msg, term=True, date=True):
         """Log message with "ERROR" level.
@@ -138,14 +145,14 @@ class LogSystem():
         """
         self._update_log(msg, term=term, date=date)
 
-    def _update_log(self, msg, log_type="ERROR", term=True, date=True):
+    def _update_log(self, msg, log_level="ERROR", term=True, date=True):
         """Do the actual logging.
 
         Parameters
         ----------
         msg : str
             The message to log.
-        log_type : str, optional
+        log_level : str, optional
             The logging level (DEBUG, INFO, WARNING or ERROR).
         term : bool, optional
             Display message in terminal. If set to False, and even with versbose set to True,
@@ -156,12 +163,11 @@ class LogSystem():
         """
         m = "%s%s" % ("%s: " % micro_to_milli(get_date_time()) if date else "", str(msg))
 
-        # success doesn't exist in logging, DUMB ARSE!!!
-        getattr(logging, "info" if log_type is "SUCCESS" else log_type.lower())(m)
+        getattr(logging, "info" if log_level not in _allowed_logging_levels else log_level.lower())(m)
 
         if self.verbose and term:
             try:
-                print(getattr(Ansi, log_type, "INFO")(self._obfuscate_user_home(m)))
+                print(getattr(Ansi, log_level, "INFO")(self._obfuscate_user_home(m)))
             except Exception:
                 print(m)
 
