@@ -46,7 +46,7 @@ def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False, cwd=None, 
                     remote_url=sub_tree["remote_url"]
                 ))
             elif action == "update":
-                commands.append("git pull --strategy-option=subtree={path} {remote_name} master".format(
+                commands.append("git pull --strategy-option=subtree={path} --squash {remote_name} master".format(
                     path=sub_tree["path"],
                     remote_name=sub_tree["remote_name"]
                 ))
