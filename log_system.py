@@ -80,7 +80,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, type="DEBUG", term=term, date=date)
+        self._update_log(msg, log_type="DEBUG", term=term, date=date)
 
     def info(self, msg, term=True, date=True):
         """Log message with "INFO" level.
@@ -94,7 +94,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, type="INFO", term=term, date=date)
+        self._update_log(msg, log_type="INFO", term=term, date=date)
 
     def success(self, msg, term=True, date=True):
         """Log message with "INFO" level but with green color on screen.
@@ -108,7 +108,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, type="SUCCESS", term=term, date=date)
+        self._update_log(msg, log_type="SUCCESS", term=term, date=date)
 
     def warning(self, msg, term=True, date=True):
         """Log message with "WARNING" level.
@@ -122,7 +122,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, type="WARNING", term=term, date=date)
+        self._update_log(msg, log_type="WARNING", term=term, date=date)
 
     def error(self, msg, term=True, date=True):
         """Log message with "ERROR" level.
@@ -138,14 +138,14 @@ class LogSystem():
         """
         self._update_log(msg, term=term, date=date)
 
-    def _update_log(self, msg, type="ERROR", term=True, date=True):
+    def _update_log(self, msg, log_type="ERROR", term=True, date=True):
         """Do the actual logging.
 
         Parameters
         ----------
         msg : str
             The message to log.
-        type : str, optional
+        log_type : str, optional
             The logging level (DEBUG, INFO, WARNING or ERROR).
         term : bool, optional
             Display message in terminal. If set to False, and even with versbose set to True,
@@ -156,11 +156,12 @@ class LogSystem():
         """
         m = "%s%s" % ("%s: " % micro_to_milli(get_date_time()) if date else "", str(msg))
 
-        getattr(logging, type.lower(), "INFO")(m)
+        # success doesn't exist in logging, DUMB ARSE!!!
+        getattr(logging, "info" if log_type is "SUCCESS" else log_type.lower())(m)
 
         if self.verbose and term:
             try:
-                print(getattr(Ansi, type, "INFO")(self._obfuscate_user_home(m)))
+                print(getattr(Ansi, log_type, "INFO")(self._obfuscate_user_home(m)))
             except Exception:
                 print(m)
 
