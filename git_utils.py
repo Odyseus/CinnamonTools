@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 """Git utilities.
 """
-from subprocess import call
+from subprocess import CalledProcessError
 
+from . import cmd_utils
 from . import prompts
+from . import shell_utils
 
 
-def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False, cwd=None, logger=None):
+def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False,
+                cwd=None, dry_run=False, logger=None):
     """Manage repository.
 
     Perform some complex tasks on a repository. Mostly sub-trees and sub-modules initialization.
@@ -21,8 +24,7 @@ def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False, cwd=None, 
     subtrees : list, optional
         A list of dictionaries representing sub-tree options.
 
-        - **remote_name**: The sub-tree remote name.
-        - **remote_url**: The sub-tree remote URL.
+        - **url**: The sub-tree repository URL.
         - **path**: Path inside the parent repository where the sub-tree will be stored.
     do_not_confirm : bool, optional
         Do not ask for confirmation before executing commands.
@@ -30,38 +32,42 @@ def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False, cwd=None, 
         Path to working directory. It should be a folder that belongs to a Git repository.
     logger : object
         See <class :any:`LogSystem`>.
+
+    Note
+    ----
+    Sub-modules are initialized or updated *in-bulk* with just one command. Sub-trees are
+    initialized or updated with one command per sub-tree repository.
     """
     commands = []
 
     if mechanism == "submodule":
-        if action == "init":
-            commands.append("git submodule update --init")
-        elif action == "update":
-            commands.append("git submodule update --remote --merge")
+        commands.append("git submodule update %s" %
+                        "--init" if action is "init" else "--remote --merge")
     elif mechanism == "subtree":
         for sub_tree in subtrees:
-            if action == "init":
-                commands.append("git remote add -f {remote_name} {remote_url}".format(
-                    remote_name=sub_tree["remote_name"],
-                    remote_url=sub_tree["remote_url"]
-                ))
-            elif action == "update":
-                commands.append("git pull --strategy-option=subtree={path} {remote_name} master".format(
-                    path=sub_tree["path"],
-                    remote_name=sub_tree["remote_name"]
-                ))
+            commands.append("git subtree {cmd} --prefix {prefix} {url} {branch} --squash".format(
+                cmd="add" if action is "init" else "pull",
+                prefix=sub_tree["path"],
+                url=sub_tree["url"],
+                branch=sub_tree.get("main_repo_branch", "master")
+            ))
 
     if commands:
-        logger.info("The following command/s will be executed:")
-
-        for cmd in commands:
-            logger.info(cmd, date=False)
-
-        print()
-
         if do_not_confirm or prompts.confirm(prompt="Proceed?", response=False):
             for cmd in commands:
-                call(cmd, shell=True, cwd=cwd)
+                logger.info(shell_utils.get_cli_separator("-"), date=False)
+
+                if dry_run:
+                    logger.log_dry_run("Command that will be executed:\n%s" % cmd)
+                    logger.log_dry_run("Command will be executed at:\n%s" % cwd)
+                else:
+                    try:
+                        logger.info("Executing command:\n%s" % cmd)
+                        cmd_utils.run_cmd(cmd, stdout=None, stderr=None,
+                                          check=True, shell=True, cwd=cwd)
+                    except CalledProcessError as err:
+                        logger.error(err)
+                        continue
 
 
 if __name__ == "__main__":
