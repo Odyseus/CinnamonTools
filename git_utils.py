@@ -26,6 +26,7 @@ def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False,
 
         - **url**: The sub-tree repository URL.
         - **path**: Path inside the parent repository where the sub-tree will be stored.
+        - **ref**: The sub-tree repository remote reference (Default: master).
     do_not_confirm : bool, optional
         Do not ask for confirmation before executing commands.
     cwd : None, optional
@@ -45,11 +46,11 @@ def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False,
                         "--init" if action is "init" else "--remote --merge")
     elif mechanism == "subtree":
         for sub_tree in subtrees:
-            commands.append("git subtree {cmd} --prefix {prefix} {url} {branch} --squash".format(
+            commands.append("git subtree {cmd} --prefix {prefix} {url} {ref} --squash".format(
                 cmd="add" if action is "init" else "pull",
                 prefix=sub_tree["path"],
                 url=sub_tree["url"],
-                branch=sub_tree.get("main_repo_branch", "master")
+                ref=sub_tree.get("ref", "master")
             ))
 
     if commands:
