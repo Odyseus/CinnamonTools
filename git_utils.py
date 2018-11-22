@@ -43,7 +43,7 @@ def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False,
 
     if mechanism == "submodule":
         commands.append("git submodule update %s" %
-                        "--init" if action is "init" else "--remote --merge")
+                        ("--init" if action is "init" else "--remote --merge"))
     elif mechanism == "subtree":
         for sub_tree in subtrees:
             commands.append("git subtree {cmd} --prefix {prefix} {url} {ref} --squash".format(
