@@ -9,6 +9,13 @@ from .ansi_colors import Ansi
 from .misc_utils import get_date_time
 from .misc_utils import micro_to_milli
 
+_allowed_logging_levels = {
+    "INFO",
+    "DEBUG",
+    "WARNING",
+    "ERROR"
+}
+
 
 class LogSystem():
     """LogSystem class.
@@ -58,6 +65,16 @@ class LogSystem():
         """
         return self._log_file
 
+    def log_dry_run(self, msg):
+        """Log message with "INFO" level prefixed with "[DRY_RUN]" and no date.
+
+        Parameters
+        ----------
+        msg : str
+            See :any:`LogSystem._update_log` > msg
+        """
+        self._update_log("[DRY_RUN] %s" % str(msg), log_level="PURPLE", date=False)
+
     def debug(self, msg, term=True, date=True):
         """Log message with "DEBUG" level.
 
@@ -70,7 +87,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, type="DEBUG", term=term, date=date)
+        self._update_log(msg, log_level="DEBUG", term=term, date=date)
 
     def info(self, msg, term=True, date=True):
         """Log message with "INFO" level.
@@ -84,7 +101,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, type="INFO", term=term, date=date)
+        self._update_log(msg, log_level="INFO", term=term, date=date)
 
     def success(self, msg, term=True, date=True):
         """Log message with "INFO" level but with green color on screen.
@@ -98,7 +115,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, type="SUCCESS", term=term, date=date)
+        self._update_log(msg, log_level="SUCCESS", term=term, date=date)
 
     def warning(self, msg, term=True, date=True):
         """Log message with "WARNING" level.
@@ -112,7 +129,7 @@ class LogSystem():
         date : bool, optional
             See :any:`LogSystem._update_log` > date
         """
-        self._update_log(msg, type="WARNING", term=term, date=date)
+        self._update_log(msg, log_level="WARNING", term=term, date=date)
 
     def error(self, msg, term=True, date=True):
         """Log message with "ERROR" level.
@@ -128,24 +145,14 @@ class LogSystem():
         """
         self._update_log(msg, term=term, date=date)
 
-    def _get_now(self):
-        """Get current time.
-
-        Returns
-        -------
-        str
-            Date formatted with milliseconds instead of microseconds.
-        """
-        return micro_to_milli(get_date_time())
-
-    def _update_log(self, msg, type="ERROR", term=True, date=True):
+    def _update_log(self, msg, log_level="ERROR", term=True, date=True):
         """Do the actual logging.
 
         Parameters
         ----------
         msg : str
             The message to log.
-        type : str, optional
+        log_level : str, optional
             The logging level (DEBUG, INFO, WARNING or ERROR).
         term : bool, optional
             Display message in terminal. If set to False, and even with versbose set to True,
@@ -154,29 +161,15 @@ class LogSystem():
             Log the date. If set to False, the current date will not be attached to the logged
             message.
         """
-        m = "%s%s" % (self._get_now() + ": " if date else "", str(msg))
+        m = "%s%s" % ("%s: " % micro_to_milli(get_date_time()) if date else "", str(msg))
 
-        if type == "DEBUG":
-            logging.debug(m)
+        getattr(logging, "info" if log_level not in _allowed_logging_levels else log_level.lower())(m)
 
-            if self.verbose and term:
-                print(self._obfuscate_user_home(m))
-        elif type == "INFO" or type == "SUCCESS":
-            logging.info(m)
-
-            if self.verbose and term:
-                print(getattr(Ansi, "SUCCESS" if type == "SUCCESS" else "INFO")
-                      (self._obfuscate_user_home(m)))
-        elif type == "WARNING":
-            logging.warning(m)
-
-            if self.verbose and term:
-                print(Ansi.WARNING(self._obfuscate_user_home(m)))
-        elif type == "ERROR":
-            logging.error(m)
-
-            if self.verbose and term:
-                print(Ansi.ERROR(self._obfuscate_user_home(m)))
+        if self.verbose and term:
+            try:
+                print(getattr(Ansi, log_level, "INFO")(self._obfuscate_user_home(m)))
+            except Exception:
+                print(m)
 
     def _obfuscate_user_home(self, msg):
         """Obfuscate User's home path.

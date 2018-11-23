@@ -5,8 +5,8 @@
 import os
 
 from shutil import rmtree
-from subprocess import call
 
+from . import cmd_utils
 from . import exceptions
 from . import tqdm_wget
 from .misc_utils import get_system_tempdir
@@ -78,6 +78,7 @@ def generate_docs(root_folder="",
                   generate_api_docs=False,
                   update_inventories=False,
                   force_clean_build=False,
+                  build_coverage=True,
                   logger=None):
     """Build this application documentation.
 
@@ -107,6 +108,8 @@ def generate_docs(root_folder="",
         anyway f they don't exist.
     force_clean_build : bool, optional
         Remove destination and doctrees directories before building the documentation.
+    build_coverage : bool, optional
+        If True, build Sphinx coverage documents.
     logger : object
         See <class :any:`LogSystem`>.
     """
@@ -131,19 +134,23 @@ def generate_docs(root_folder="",
             if force_clean_build:
                 rmtree(apidoc_destination_path, ignore_errors=True)
 
-            call(["sphinx-apidoc"] + commmon_args + [
+            cmd_utils.run_cmd(["sphinx-apidoc"] + commmon_args + [
                 apidoc_destination_path,
                 os.path.join(root_folder, rel_source_path)
             ] + ignored_modules,
+                stdout=None,
                 cwd=root_folder)
 
     try:
-        call(["sphinx-build", ".", "-b", "coverage", "-d", doctree_temp_location, "./coverage"],
-             cwd=docs_sources_path)
+        if build_coverage:
+            cmd_utils.run_cmd(["sphinx-build", ".", "-b", "coverage", "-d", doctree_temp_location, "./coverage"],
+                              stdout=None,
+                              cwd=docs_sources_path)
     finally:
-        call(["sphinx-build", ".", "-b", "html", "-d", doctree_temp_location,
-              docs_destination_path],
-             cwd=docs_sources_path)
+        cmd_utils.run_cmd(["sphinx-build", ".", "-b", "html", "-d", doctree_temp_location,
+                           docs_destination_path],
+                          stdout=None,
+                          cwd=docs_sources_path)
 
 
 def generate_man_pages(root_folder="",
@@ -172,9 +179,10 @@ def generate_man_pages(root_folder="",
     docs_sources_path = os.path.join(root_folder, docs_src_path_rel_to_root)
     man_pages_destination_path = os.path.join(root_folder, docs_dest_path_rel_to_root)
 
-    call(["sphinx-build", ".", "-b", "man", "-d", doctree_temp_location,
-          man_pages_destination_path],
-         cwd=docs_sources_path)
+    cmd_utils.run_cmd(["sphinx-build", ".", "-b", "man", "-d", doctree_temp_location,
+                       man_pages_destination_path],
+                      stdout=None,
+                      cwd=docs_sources_path)
 
 
 if __name__ == "__main__":
