@@ -11,8 +11,6 @@ Attributes
 ----------
 md : object
     The mistune Markdown parser.
-pyuca_collator : object
-    See <class :any:`pyuca.collator.Collator`>.
 repo_folder : str
     The main repository folder. All commands must be executed from this location without exceptions.
 translations : object
@@ -27,11 +25,15 @@ from . import localized_help_utils
 from .locale_list import locale_list
 from .python_utils import cmd_utils
 from .python_utils import mistune
-from .python_utils.pyuca import Collator
 
-pyuca_collator = Collator()
 md = mistune.Markdown()
 utils = localized_help_utils
+
+try:
+    from pyuca import Collator
+    pyuca_collator = Collator()
+except (ImportError, SystemError):
+    pyuca_collator = None
 
 repo_folder = os.path.normpath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), *([".."] * 2)))
@@ -83,7 +85,7 @@ def _(aStr):
     return aStr
 
 
-class LocalizedHelpCreator(object):
+class LocalizedHelpCreator():
     """LocalizedHelpCreator
 
     Attributes
@@ -267,6 +269,11 @@ class LocalizedHelpCreator(object):
                 self.sections.append(section)
                 self.options.append(option)
 
+        if pyuca_collator is None:
+            print(utils.Ansi.WARNING("<pyuca> module not installed."))
+
+        options_sort_function = pyuca_collator.sort_key if pyuca_collator else str.lower
+
         html_doc = utils.HTML_DOC.format(
             # This string doesn't need to be translated.
             # It's the initial title of the page that it's always in English.
@@ -275,10 +282,12 @@ class LocalizedHelpCreator(object):
             # CSS code interferes with formatting variables. ¬¬
             js_localizations_handler=self.html_assets.js_localizations_handler if
             self.html_assets.js_localizations_handler else "",
-            css_bootstrap_theme=self.html_assets.css_bootstrap_theme if self.html_assets.css_bootstrap_theme else "",
-            css_bootstrap_tweaks=self.html_assets.css_bootstrap_tweaks if self.html_assets.css_bootstrap_tweaks else "",
+            css_bootstrap_theme=self.html_assets.css_bootstrap_theme if
+            self.html_assets.css_bootstrap_theme else "",
+            css_bootstrap_tweaks=self.html_assets.css_bootstrap_tweaks if
+            self.html_assets.css_bootstrap_tweaks else "",
             css_custom=self.get_css_custom(),
-            options="\n".join(sorted(self.options, key=pyuca_collator.sort_key)),
+            options="\n".join(sorted(self.options, key=options_sort_function)),
             sections="\n".join(self.sections),
             contributors=self.contributors if self.contributors else "",
             changelog=self.changelog if self.changelog else "",
@@ -393,7 +402,7 @@ class LocalizedHelpCreator(object):
                     "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."),
                 line2=_(
                     "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."),
-                repo_url=utils.app_utils.repo_url
+                repo_url=utils.app_utils.URLS["repo"]
             )
         )
 

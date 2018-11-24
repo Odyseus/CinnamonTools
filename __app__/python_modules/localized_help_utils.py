@@ -125,7 +125,7 @@ HTML_DOC = """<!DOCTYPE html>
 </script>
 </body>
 </html>
-""" % (datetime.today().year, app_utils.repo_url)
+""" % (datetime.today().year, app_utils.URLS["repo"])
 
 BOXED_CONTAINER = """<div class="container boxed my-3 py-3">
 {0}
@@ -237,7 +237,7 @@ class Translations(object):
         return self._null
 
 
-class HTMLInlineAssets(object):
+class HTMLInlineAssets():
     """HTML inline assets.
 
     Attributes
@@ -258,7 +258,6 @@ class HTMLInlineAssets(object):
         repo_folder : str
             Path to the repository folder.
         """
-        super(HTMLInlineAssets, self).__init__()
         self.css_bootstrap_theme = ""
         self.css_bootstrap_tweaks = ""
         self.js_localizations_handler = ""
@@ -366,9 +365,9 @@ def validate_po_file(pofile_path, lang_name, xlet_meta, xlet_slug):
         po_file.metadata["Language"] = po_file.metadata["Language"].replace("-", "_")
 
     # Add the Report-Msgid-Bugs- field to the header.
-    if "Report-Msgid-Bugs-To" not in po_file.metadata or po_file.metadata["Report-Msgid-Bugs-To"] != app_utils.repo_url:
+    if "Report-Msgid-Bugs-To" not in po_file.metadata or po_file.metadata["Report-Msgid-Bugs-To"] != app_utils.URLS["repo"]:
         do_save = True
-        po_file.metadata["Report-Msgid-Bugs-To"] = app_utils.repo_url
+        po_file.metadata["Report-Msgid-Bugs-To"] = app_utils.URLS["repo"]
 
     # Add the Language-Team field to the header to STFU all msgfmt warnings.
     if "Language-Team" not in po_file.metadata or po_file.metadata["Language-Team"] == "":
@@ -418,7 +417,7 @@ def save_file(file_path, data, is_xlet_help_file=False):
             xlet_folder = file_utils.get_parent_dir(file_path, 0)
             xlet_icon = os.path.join(xlet_folder, "icon.png")
             xlet_slug = os.path.basename(file_utils.get_parent_dir(file_path))
-            dest_path = os.path.join(app_utils.docs_sources_path, "_static",
+            dest_path = os.path.join(app_utils.PATHS["docs_sources"], "_static",
                                      "xlets_help_pages", xlet_slug)
             dest_html_file = os.path.join(dest_path, "index.html")
             dest_icon_file = os.path.join(dest_path, "icon.png")
@@ -460,7 +459,7 @@ def get_compatibility(xlet_meta=None, for_readme=False):
         if for_readme:
             # The README files uses SVG images hosted on-line for the compatibility badges.
             data += "![Cinnamon {0}]({1}/lib/badges/cinn-{0}.svg)\n".format(version,
-                                                                            app_utils.repo_pages_url)
+                                                                            app_utils.URLS["repo_pages"])
         else:
             # The help files uses a Bootstrap badge for the compatibility badges.
             if version[0] in ["2", "5", "8"]:

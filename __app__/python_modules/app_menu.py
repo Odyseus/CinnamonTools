@@ -31,8 +31,8 @@ class CLIMenu():
         Helper functions. See <class :any:`app_utils.XletsHelperCore`>.
     """
 
-    def __init__(self, theme_name="", domain_name="",
-                 build_output="", do_not_cofirm=False, logger=None):
+    def __init__(self, theme_name="", domain_name="", build_output="",
+                 do_not_cofirm=False, dry_run=False, logger=None):
         """Initialize.
 
         Parameters
@@ -45,6 +45,8 @@ class CLIMenu():
             Path to the folder were the built xlets are stored.
         do_not_cofirm : bool
             Whether to ask for overwrite confirmation when an xlet destination exists or not.
+        dry_run : bool, optional
+            See <class :any:`XletBuilder`>.
         logger : object
             See <class :any:`LogSystem`>.
         """
@@ -52,6 +54,7 @@ class CLIMenu():
         self.domain_name = domain_name
         self.build_output = build_output
         self.do_not_cofirm = do_not_cofirm
+        self._dry_run = dry_run
         self.logger = logger
         self.xlets_helper = app_utils.XletsHelperCore(logger=self.logger)
 
@@ -83,6 +86,7 @@ class CLIMenu():
                               domain_name=self.domain_name,
                               build_output=self.build_output,
                               do_not_cofirm=self.do_not_cofirm,
+                              dry_run=self._dry_run,
                               logger=self.logger,
                               from_menu=True)
 
@@ -92,6 +96,7 @@ class CLIMenu():
         app_utils.build_themes(theme_name=self.theme_name,
                                build_output=self.build_output,
                                do_not_cofirm=self.do_not_cofirm,
+                               dry_run=self._dry_run,
                                logger=self.logger,
                                from_menu=True)
 
@@ -109,6 +114,7 @@ class CLIMenu():
                                   domain_name=self.domain_name,
                                   build_output=self.build_output,
                                   do_not_cofirm=self.do_not_cofirm,
+                                  dry_run=self._dry_run,
                                   logger=self.logger,
                                   from_menu=True)
         else:

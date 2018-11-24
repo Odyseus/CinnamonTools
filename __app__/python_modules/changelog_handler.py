@@ -35,7 +35,7 @@ CHANGELOG_HEADER = """## {xlet_name} changelog
 """
 
 
-class ChangelogSanitizer(object):
+class ChangelogSanitizer():
     """Changelog sonitizer.
 
     .. note::
@@ -66,7 +66,6 @@ class ChangelogSanitizer(object):
         target_path : str
             Final destination of the changelog.
         """
-        super(ChangelogSanitizer, self).__init__()
         self.source_path = source_path
         self.target_path = target_path
 

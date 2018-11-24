@@ -30,22 +30,25 @@ Usage:
     app.py menu [-d <domain> | --domain=<domain>]
                 [-o <dir> | --output=<dir>]
                 [-n | --no-confirmation]
+                [-y | --dry-run]
     app.py build (-a | --all-xlets | -x <name> | --xlet=<name>)
                  [-x <name>... | --xlet=<name>...]
                  [-d <domain> | --domain=<domain>]
                  [-o <dir> | --output=<dir>]
                  [-n | --no-confirmation]
                  [-r | --restart-cinnamon]
+                 [-y | --dry-run]
     app.py build_themes [-t <name> | --theme-name=<name>]
                         [-o <dir> | --output=<dir>]
                         [-n | --no-confirmation]
                         [-r | --restart-cinnamon]
+                        [-y | --dry-run]
     app.py dev <sub_commands>...
     app.py generate (system_executable | docs | docs_no_api | base_xlet)
                     [-f | --force-clean-build]
                     [-u | --update-inventories]
     app.py print_xlets_slugs
-    app.py repo (submodules | subtrees) (init | update)
+    app.py repo (submodules | subtrees) (init | update) [-y | --dry-run]
 
 Options:
 
@@ -102,6 +105,12 @@ Options:
 
 -x <name>, --xlet=<name>
     Specify one or more applets/extensions to build.
+
+-y, --dry-run
+    Do not perform file system changes. Only display messages informing of the
+    actions that will be performed or commands that will be executed.
+    WARNING! Some file system changes will be performed (e.g. temporary files
+    creation).
 
 """.format(__appname__=__appname__,
            __appdescription__=__appdescription__,
@@ -263,14 +272,17 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                         thread.join()
 
             if self.a["--restart-cinnamon"]:
-                t = Thread(target=app_utils.restart_cinnamon)
-                t.daemon = True
-                t.start()
-                threads.append(t)
+                if self.a["--dry-run"]:
+                    self.logger.log_dry_run("Cinnamon will be restarted.")
+                else:
+                    t = Thread(target=app_utils.restart_cinnamon)
+                    t.daemon = True
+                    t.start()
+                    threads.append(t)
 
-                for thread in threads:
-                    if thread is not None and thread.isAlive():
-                        thread.join()
+                    for thread in threads:
+                        if thread is not None and thread.isAlive():
+                            thread.join()
         except (KeyboardInterrupt, SystemExit):
             raise exceptions.KeyboardInterruption()
 
@@ -283,6 +295,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                                     domain_name=self.a["--domain"],
                                     build_output=self.a["--output"],
                                     do_not_cofirm=self.a["--no-confirmation"],
+                                    dry_run=self.a["--dry-run"],
                                     logger=self.logger)
         cli_menu.open_main_menu()
 
@@ -299,6 +312,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                               domain_name=self.a["--domain"],
                               build_output=self.a["--output"],
                               do_not_cofirm=self.a["--no-confirmation"],
+                              dry_run=self.a["--dry-run"],
                               logger=self.logger)
 
     def build_themes(self):
@@ -307,6 +321,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         app_utils.build_themes(theme_name=self.a["--theme-name"],
                                build_output=self.a["--output"],
                                do_not_cofirm=self.a["--no-confirmation"],
+                               dry_run=self.a["--dry-run"],
                                logger=self.logger)
 
     def system_executable_generation(self):
@@ -345,6 +360,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             "submodule",
             self.repo_action,
             cwd=app_utils.root_folder,
+            dry_run=self.a["--dry-run"],
             logger=self.logger
         )
 
@@ -354,8 +370,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         from .python_utils import git_utils
 
         subtrees = [{
-            "remote_name": "python_utils",
-            "remote_url": "git@gitlab.com:Odyseus/python_utils.git",
+            "url": "git@gitlab.com:Odyseus/python_utils.git",
             "path": "__app__/python_modules/python_utils"
         }]
         git_utils.manage_repo(
@@ -363,6 +378,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             self.repo_action,
             cwd=app_utils.root_folder,
             subtrees=subtrees,
+            dry_run=self.a["--dry-run"],
             logger=self.logger
         )
 
