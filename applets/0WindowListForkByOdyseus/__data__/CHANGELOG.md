@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Mon, 29 Oct 2018 13:43:27 -0300
+- **Commit:** [a50966d](https://gitlab.com/Odyseus/CinnamonTools/commit/a50966d)
+- **Author:** Odyseus
+
+```
+- Some upstream fixes.
+
+```
+
+***
+
 - **Date:** Tue, 7 Aug 2018 03:13:17 -0300
 - **Commit:** [c868f1f](https://gitlab.com/Odyseus/CinnamonTools/commit/c868f1f)
 - **Author:** Odyseus
