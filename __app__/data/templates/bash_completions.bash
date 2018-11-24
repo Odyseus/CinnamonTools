@@ -53,7 +53,7 @@ __cinnamon_tools_cli_{current_date}(){
     case $cmd in
     "menu")
         COMPREPLY=( $(compgen -W \
-            "-d --domain= -o --output= -n --no-confirmation" -- "${cur}") )
+            "-d --domain= -o --output= -n --no-confirmation -y --dry-run" -- "${cur}") )
         _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
     "repo")
@@ -67,12 +67,13 @@ __cinnamon_tools_cli_{current_date}(){
     "build")
         COMPREPLY=( $(compgen -W \
             "-a --all-xlets -x --xlet= -d --domain= -o --output= -n --no-confirmation -r \
---restart-cinnamon" -- "${cur}") )
+--restart-cinnamon -y --dry-run" -- "${cur}") )
         _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
     "build_themes")
         COMPREPLY=( $(compgen -W \
-            "-t --theme-name= -o --output= -n --no-confirmation -r --restart-cinnamon" -- "${cur}") )
+            "-t --theme-name= -o --output= -n --no-confirmation -r --restart-cinnamon \
+-y --dry-run" -- "${cur}") )
         _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
     "dev")
@@ -87,12 +88,19 @@ update_pot_files update_spanish_localizations create_changelogs " -- "${cur}") )
 
     case $cmd in
     "docs"|"docs_no_api")
-        COMPREPLY=( $(compgen -W \
-            "-f --force-clean-build -u --update-inventories" -- "${cur}") )
+        COMPREPLY=( $(compgen -W "-f --force-clean-build -u --update-inventories" -- "${cur}") )
         ;;
     "submodules"|"subtrees")
-        COMPREPLY=( $(compgen -W \
-            "init update" -- "${cur}") )
+        COMPREPLY=( $(compgen -W "init update" -- "${cur}") )
+        ;;
+    esac
+
+    # Completion of options and sub-commands.
+    cmd="${COMP_WORDS[3]}"
+
+    case $cmd in
+    "init"|"update")
+        COMPREPLY=( $(compgen -W " -y --dry-run" -- "${cur}") )
         ;;
     esac
 } &&

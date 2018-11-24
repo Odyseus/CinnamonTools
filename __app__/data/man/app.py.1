@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "APP.PY" "1" "Oct 29, 2018" "" "Cinnamon Tools"
+.TH "APP.PY" "1" "Nov 24, 2018" "" "Cinnamon Tools"
 .SH NAME
 app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .
@@ -44,22 +44,25 @@ app.py (\-h | \-\-help | \-\-version | \-\-manual | \-r | \-\-restart\-cinnamon)
 app.py menu [\-d <domain> | \-\-domain=<domain>]
             [\-o <dir> | \-\-output=<dir>]
             [\-n | \-\-no\-confirmation]
+            [\-y | \-\-dry\-run]
 app.py build (\-a | \-\-all\-xlets | \-x <name> | \-\-xlet=<name>)
              [\-x <name>... | \-\-xlet=<name>...]
              [\-d <domain> | \-\-domain=<domain>]
              [\-o <dir> | \-\-output=<dir>]
              [\-n | \-\-no\-confirmation]
              [\-r | \-\-restart\-cinnamon]
+             [\-y | \-\-dry\-run]
 app.py build_themes [\-t <name> | \-\-theme\-name=<name>]
                     [\-o <dir> | \-\-output=<dir>]
                     [\-n | \-\-no\-confirmation]
                     [\-r | \-\-restart\-cinnamon]
+                    [\-y | \-\-dry\-run]
 app.py dev <sub_commands>...
 app.py generate (system_executable | docs | docs_no_api | base_xlet)
                 [\-f | \-\-force\-clean\-build]
                 [\-u | \-\-update\-inventories]
 app.py print_xlets_slugs
-app.py repo (submodules | subtrees) (init | update)
+app.py repo (submodules | subtrees) (init | update) [\-y | \-\-dry\-run]
 
 .ft P
 .fi
@@ -87,7 +90,7 @@ git clone \-\-recurse\-submodules \-\-shallow\-submodules git_repository_url
 .SS Documentation building requirements
 .INDENT 0.0
 .IP \(bu 2
-\fBPython 3\fP
+\fBPython 3.5+\fP
 .IP \(bu 2
 \fBsphinx>=1.6.5\fP: \fBsudo pip3 install sphinx\fP
 .UNINDENT
@@ -96,12 +99,17 @@ git clone \-\-recurse\-submodules \-\-shallow\-submodules git_repository_url
 .SS Cinnamon theme building from SASS sources
 .INDENT 0.0
 .IP \(bu 2
-Python 3
+\fBPython 3.5+\fP
 .IP \(bu 2
 \fBsass\fP: \fI\%Download package\fP <\fBhttps://github.com/sass/dart-sass/releases\fP> and add to PATH.
 .UNINDENT
 .sp
 \fBNote:\fP Deep cloning required.
+.SS Xlets help pages building optional requirement
+.INDENT 0.0
+.IP \(bu 2
+\fBpyuca\fP: \fBsudo pip3 install pyuca\fP
+.UNINDENT
 .SH DETAILED USAGE
 .SS app.py manual
 .sp
@@ -112,15 +120,17 @@ This command starts a CLI menu from which building and development tasks can be 
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
-\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: See \fI\%build command options\fP\&.
+\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: See \fI\%build command \-\-domain=<domain>\fP\&.
 .IP \(bu 2
-\fB\-o <dir>\fP or \fB\-\-output=<dir>\fP: See \fI\%build command options\fP\&.
+\fB\-o <dir>\fP or \fB\-\-output=<dir>\fP: See \fI\%build command \-\-output=<dir>\fP\&.
 .IP \(bu 2
-\fB\-n\fP or \fB\-\-no\-confirmation\fP: See \fI\%build command options\fP\&.
+\fB\-n\fP or \fB\-\-no\-confirmation\fP: See \fI\%build command \-\-no\-confirmation\fP\&.
+.IP \(bu 2
+\fB\-y\fP or \fB\-\-dry\-run\fP: See \fI\%build command \-\-dry\-run\fP\&.
 .UNINDENT
 .SS app.py build
 .sp
-This command is used to build all or specifics xlets. All xlets found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. \fIBuilding\fP an xlet just means that the \fIraw xlet\fP (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (\fI\%xlet_name@custom_domain_name\fP <\fBxlet_name@custom_domain_name\fP>) to all files (files content and file names). It will also compile the \fBgsettings\fP files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, etc.).
+This command is used to build all or specifics xlets. All xlets found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. \fIBuilding\fP an xlet just means that the \fIraw xlet\fP (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (\fBxlet_name@custom_domain_name\fP) to all files (files content and file names). It will also compile the \fBgsettings\fP files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, etc.).
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
@@ -135,6 +145,8 @@ This command will build the Argos for Cinnamon applet and the Cinnamon Tweaks ex
 .UNINDENT
 .UNINDENT
 .UNINDENT
+.UNINDENT
+.INDENT 0.0
 .IP \(bu 2
 \fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: To be able to build any xlet, it is necessary to specify a domain name. This domain name is then used to generate an xlet UUID (an other data). To avoid passing this command line option every time one builds xlets, a file named \fBdomain_name\fP can be created inside a folder named \fBtmp\fP at the root of the repository whose only content should be the desired domain name. This command line option has precedence over the \fBdomain_name\fP file. Which means that if this option is used, the domain name found in an existent \fBdomain_name\fP file will be ignored.
 .INDENT 2.0
@@ -200,10 +212,27 @@ Built xlets will always be created inside a folder named as the xlet type (apple
 .UNINDENT
 .UNINDENT
 .UNINDENT
+.UNINDENT
+.INDENT 0.0
 .IP \(bu 2
 \fB\-n\fP or \fB\-\-no\-confirmation\fP: Do not confirm the deletion of an already built xlet when the \fB\-\-output\fP option is used.
 .IP \(bu 2
 \fB\-r\fP or \fB\-\-restart\-cinnamon\fP: Restart Cinnamon\(aqs shell after finishing the xlets building process.
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+\fB\-y\fP or \fB\-\-dry\-run\fP: Do not perform file system changes. Only display messages informing of the actions that will be performed or commands that will be executed.
+.INDENT 2.0
+.INDENT 3.5
+.sp
+\fBWARNING:\fP
+.INDENT 0.0
+.INDENT 3.5
+Some file system changes will be performed (e.g. temporary files creation).
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .SS app.py build_themes
 .sp
@@ -218,12 +247,14 @@ This command is used to build all the themes. Just like xlets, the themes found 
 \fB\-n\fP or \fB\-\-no\-confirmation\fP: Do not confirm the deletion of an already built theme when the \fB\-\-output\fP option is used. See \fI\%build command \-\-output\fP option notes for more details.
 .IP \(bu 2
 \fB\-r\fP or \fB\-\-restart\-cinnamon\fP: Restart Cinnamon\(aqs shell after finishing the themes building process.
+.IP \(bu 2
+\fB\-y\fP or \fB\-\-dry\-run\fP: See \fI\%build command \-\-dry\-run\fP\&.
 .UNINDENT
 .sp
 \fBNOTE:\fP
 .INDENT 0.0
 .INDENT 3.5
-There is actually one theme in this repository, but with two variants (two different color accents). One is called \fBGreybirdBlue\fP, because is the same blue used by the \fI\%Greybird\fP <\fBhttps://github.com/shimmerproject/Greybird\fP> theme. And the other variant is called \fBMintGreen\fP, because it uses as accent color a similar (but brighter) green color as the default Linux Mint theme called \fBMint\-X\fP\&.
+There is actually one theme in this repository, but with two variants (two different color accents). One is called \fBGreybirdBlue\fP, because it\(aqs the same blue used by the \fI\%Greybird\fP <\fBhttps://github.com/shimmerproject/Greybird\fP> theme. And the other variant is called \fBMintGreen\fP, because it uses as accent color a similar (but brighter) green color as the default Linux Mint theme called \fBMint\-X\fP\&.
 .sp
 The theme is basically the \fBMint\-X\fP theme with some graphics from the \fBMint\-Y\fP theme. But with added features that were removed from the previously mentioned default themes.
 .UNINDENT
@@ -275,7 +306,7 @@ This command is used to perform development tasks.
 .IP \(bu 2
 \fBupdate_spanish_localizations\fP: It updates the \fBes.po\fP files from all xlets from their respective POT files.
 .IP \(bu 2
-\fBcreate_changelogs\fP: Generates \fIhuman readable\fP changelogs from the Git history of changes.
+\fBcreate_changelogs\fP: Generates \fIhuman readable\fP changelogs from the Git history of changes for each xlet.
 .UNINDENT
 .SS app.py generate
 .SS Sub\-commands
@@ -308,7 +339,7 @@ It will also ask for bash completions creation.
 .UNINDENT
 .SS app.py repo
 .sp
-Command to perform tasks in the Cinnamon Tool\(aqs repository. These tasks where directly intregrated into this application to avoid fatal errors (a simple error could mangle the local repository).
+Command to perform tasks in the Cinnamon Tool\(aqs Git repository. These tasks where directly intregrated into this application to avoid fatal errors (a simple error could mangle the local Git repository).
 .SS Sub\-commands
 .INDENT 0.0
 .IP \(bu 2
@@ -319,7 +350,7 @@ Command to perform tasks in the Cinnamon Tool\(aqs repository. These tasks where
 .IP \(bu 2
 \fBinit\fP: Initialize sub\-modules. Only needed if the Cinnamon Tools\(aq repository wasn\(aqt \fIdeep cloned\fP\&.
 .IP \(bu 2
-\fBupdate\fP: This is needed only to merge the changes done on the upstream sub\-module.
+\fBupdate\fP: This is needed only to merge the changes done on the upstream sub\-modules.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -329,9 +360,9 @@ Command to perform tasks in the Cinnamon Tool\(aqs repository. These tasks where
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-\fBinit\fP: Add the git remote of the repository added to Cinnamon Tools\(aq repository as a sub\-tree.
+\fBinit\fP: Setup sub\-trees added to the Cinnamon Tools\(aq repository.
 .IP \(bu 2
-\fBupdate\fP: This is needed only to merge the changes done on the upstream repository added as a sub\-tree.
+\fBupdate\fP: This is needed only to merge the changes done on the upstream repositories added as a sub\-trees.
 .UNINDENT
 .UNINDENT
 .UNINDENT
