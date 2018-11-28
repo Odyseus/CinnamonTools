@@ -9,15 +9,6 @@ from .ansi_colors import Ansi
 class Menu(object):
     """Easily create command-line menus.
 
-    .. note::
-        This is a slightly modified version of the `Menu module <https://pypi.python.org/pypi/Menu>`__.
-
-        **Modifications**:
-
-        - Changed some default values to suit my needs.
-        - Some aesthetic changes for better readability of the menu items on the screen.
-        - This modified version doesn't clear the screen every time a menu is opened.
-
     Attributes
     ----------
     is_message_enabled : bool
@@ -36,10 +27,20 @@ class Menu(object):
         A function to call before displaying the menu.
     title : str
         A title to use on the menu.
+
+    Note
+    ----
+    Based on: `Menu module <https://pypi.python.org/pypi/Menu>`__.
+
+    **Modifications**:
+
+    - Changed some default values to suit my needs.
+    - Some aesthetic changes for better readability of the menu items on the screen.
+    - This modified version doesn't clear the screen every time a menu is opened.
     """
 
     def __init__(self, menu_items=[], title="", message="", prompt="❯ ", refresh=lambda: None):
-        """Initialize.
+        """Initialization.
 
         Parameters
         ----------

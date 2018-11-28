@@ -31,6 +31,8 @@ def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False,
         Do not ask for confirmation before executing commands.
     cwd : None, optional
         Path to working directory. It should be a folder that belongs to a Git repository.
+    dry_run : bool, optional
+        Do not execute the final commads, just log them.
     logger : object
         See <class :any:`LogSystem`>.
 

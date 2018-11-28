@@ -12,8 +12,7 @@ The fastest markdown parser in pure Python with renderer feature.
 
     **Modifications**:
 
-    - Added support for kbd tag. [[Ctrl]] will render as <kbd>Ctrl</kbd>.
-    - Added table and table-bordered classes to the table tag.
+    - Removed the use of ``startswith`` and ``endswith`` in some string checks.
 """
 
 import inspect
@@ -493,7 +492,6 @@ class InlineGrammar(object):
     )
     nolink = re.compile(r'^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]')
     url = re.compile(r'''^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])''')
-    kbd_tag = re.compile(r'^\[\[(?=\S)([\s\S]*?\S)\]\]')  # [[Keyboard key]]
     double_emphasis = re.compile(
         r'^_{2}([\s\S]+?)_{2}(?!_)'  # __word__
         r'|'
@@ -526,13 +524,13 @@ class InlineLexer(object):
 
     default_rules = [
         'escape', 'inline_html', 'autolink', 'url',
-        'footnote', 'link', 'reflink', 'nolink', 'kbd_tag',
+        'footnote', 'link', 'reflink', 'nolink',
         'double_emphasis', 'emphasis', 'code',
         'linebreak', 'strikethrough', 'text',
     ]
     inline_html_rules = [
         'escape', 'inline_html', 'autolink', 'url', 'link', 'reflink',
-        'nolink', 'kbd_tag', 'double_emphasis', 'emphasis', 'code',
+        'nolink', 'double_emphasis', 'emphasis', 'code',
         'linebreak', 'strikethrough', 'text',
     ]
 
@@ -663,10 +661,6 @@ class InlineLexer(object):
         self._in_link = False
         return self.renderer.link(link, title, text)
 
-    def output_kbd_tag(self, m):
-        text = self.output(m.group(1))
-        return self.renderer.kbd_tag(text)
-
     def output_double_emphasis(self, m):
         text = m.group(2) or m.group(1)
         text = self.output(text)
@@ -732,7 +726,7 @@ class Renderer(object):
 
         :param text: text content of the blockquote.
         """
-        return '<blockquote class="blockquote">%s\n</blockquote>\n' % text.rstrip('\n')
+        return '<blockquote>%s\n</blockquote>\n' % text.rstrip('\n')
 
     def block_html(self, html):
         """Rendering block level pure html content.
@@ -786,7 +780,7 @@ class Renderer(object):
         :param body: body part of the table.
         """
         return (
-            '<table class="table table-bordered">\n<thead>%s</thead>\n'
+            '<table>\n<thead>%s</thead>\n'
             '<tbody>\n%s</tbody>\n</table>\n'
         ) % (header, body)
 
@@ -811,13 +805,6 @@ class Renderer(object):
         return '<%s style="text-align:%s">%s</%s>\n' % (
             tag, align, content, tag
         )
-
-    def kbd_tag(self, text):
-        """Rendering [[Ctrl]] text.
-
-        :param text: text content for keyboard keys.
-        """
-        return '<kbd>%s</kbd>' % text
 
     def double_emphasis(self, text):
         """Rendering **strong** text.

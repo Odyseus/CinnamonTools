@@ -139,17 +139,20 @@ def generate_docs(root_folder="",
                 os.path.join(root_folder, rel_source_path)
             ] + ignored_modules,
                 stdout=None,
+                stderr=None,
                 cwd=root_folder)
 
     try:
         if build_coverage:
             cmd_utils.run_cmd(["sphinx-build", ".", "-b", "coverage", "-d", doctree_temp_location, "./coverage"],
                               stdout=None,
+                              stderr=None,
                               cwd=docs_sources_path)
     finally:
         cmd_utils.run_cmd(["sphinx-build", ".", "-b", "html", "-d", doctree_temp_location,
                            docs_destination_path],
                           stdout=None,
+                          stderr=None,
                           cwd=docs_sources_path)
 
 
@@ -182,6 +185,7 @@ def generate_man_pages(root_folder="",
     cmd_utils.run_cmd(["sphinx-build", ".", "-b", "man", "-d", doctree_temp_location,
                        man_pages_destination_path],
                       stdout=None,
+                      stderr=None,
                       cwd=docs_sources_path)
 
 

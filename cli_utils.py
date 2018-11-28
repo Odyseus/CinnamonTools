@@ -28,7 +28,7 @@ class CommandLineInterfaceSuper():
     _cli_header_blacklist = []
 
     def __init__(self, app_name, logs_storage_dir):
-        """Initialize.
+        """Initialization.
 
         Parameters
         ----------
@@ -69,7 +69,7 @@ class CommandLineInterfaceSuper():
         Parameters
         ----------
         **kwargs
-            Description
+            See :any:`template_utils.system_executable_generation`
         """
         from . import template_utils
 
