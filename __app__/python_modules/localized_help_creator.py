@@ -9,8 +9,6 @@
 
 Attributes
 ----------
-md : object
-    The mistune Markdown parser.
 repo_folder : str
     The main repository folder. All commands must be executed from this location without exceptions.
 translations : object
@@ -24,9 +22,8 @@ import os
 from . import localized_help_utils
 from .locale_list import locale_list
 from .python_utils import cmd_utils
-from .python_utils import mistune
+from .python_utils.mistune_utils import md
 
-md = mistune.Markdown()
 utils = localized_help_utils
 
 try:
