@@ -49,7 +49,7 @@ class MailSystem():
     }
 
     def __init__(self, mail_settings={}, logger=None):
-        """Initialize.
+        """Initialization.
 
         Parameters
         ----------

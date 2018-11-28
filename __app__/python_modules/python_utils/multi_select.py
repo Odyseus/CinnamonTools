@@ -14,8 +14,6 @@ from . import exceptions
 class MultiSelect():
     """Allows you to select from a list with curses.
 
-    Based on `picker Python module <https://github.com/MSchuwalow/picker>`__.
-
     Attributes
     ----------
     aborted : bool
@@ -70,6 +68,10 @@ class MultiSelect():
             print("Aborted!")
         else:
             print(opts)
+
+    Note
+    ----
+    Based on: `picker Python module <https://github.com/MSchuwalow/picker>`__.
     """
 
     def __init__(self, menu_items=[], title="", arrow="==>",

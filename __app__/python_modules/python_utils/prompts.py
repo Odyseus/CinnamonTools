@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 """CLI prompts and confirmation "dialogs" utilities.
 """
+import sys
+import termios
+import tty
+
 from . import exceptions
 from .ansi_colors import Ansi
 
@@ -35,16 +39,20 @@ def confirm(prompt=None, response=False):
     Create Directory? [N|y]: y
     True
 
-    Note
-    ----
-        `Based on <http://code.activestate.com/recipes/541096-prompt-the-user-for-confirmation>`__.
-        Eradicated Python 2 code from original function and added "transparent handling" of upper/
-        lower case input responses.
-
     Raises
     ------
     exceptions.KeyboardInterruption
         Halt execution on Ctrl + C press.
+
+    Note
+    ----
+    Based on: `Prompt the user for confirmation (Python recipe) \
+    <http://code.activestate.com/recipes/541096-prompt-the-user-for-confirmation>`__.
+
+    **Modifications**:
+
+    - Eradicated Python 2 code and added *transparent handling* of \
+    upper/lower case input responses.
     """
 
     if prompt is None:
@@ -91,7 +99,11 @@ def term_input(prompt):
 
     Note
     ----
-        Extracted from Sphinx itself.
+    Based on: Utilities found in `Sphinx <https://github.com/sphinx-doc/sphinx>`__
+
+    **Modifications**:
+
+    - Eradicated Python 2 specific code.
     """
     print(prompt, end="")
     return input("")
@@ -117,7 +129,11 @@ def nonempty(x):
 
     Note
     ----
-        Extracted from Sphinx itself.
+    Based on: Utilities found in `Sphinx <https://github.com/sphinx-doc/sphinx>`__
+
+    **Modifications**:
+
+    - Eradicated Python 2 specific code.
     """
     if not x:
         raise exceptions.ValidationError("Please enter some text.")
@@ -140,7 +156,11 @@ def term_decode(text):
 
     Note
     ----
-        Extracted from Sphinx itself. Eradicated Python 2 specific code.
+    Based on: Utilities found in `Sphinx <https://github.com/sphinx-doc/sphinx>`__
+
+    **Modifications**:
+
+    - Eradicated Python 2 specific code.
     """
     if isinstance(text, str):
         return text
@@ -173,16 +193,18 @@ def do_prompt(d, key, text, default=None, validator=nonempty):
     validator : function, optional
         A function to validate the input if needed.
 
-    Note
-    ----
-        Extracted from Sphinx itself. Eradicated Python 2 specific code.
-        Keeping it with the same capabilities just in case that I find more uses for it.
-        For example: ask user for multiple options in one go.
-
     Raises
     ------
     exceptions.KeyboardInterruption
         Halt execution on Ctrl + C press.
+
+    Note
+    ----
+    Based on: Utilities found in `Sphinx <https://github.com/sphinx-doc/sphinx>`__
+
+    **Modifications**:
+
+    - Eradicated Python 2 specific code.
     """
     try:
         while True:
@@ -209,6 +231,34 @@ def do_prompt(d, key, text, default=None, validator=nonempty):
         raise exceptions.KeyboardInterruption()
     else:
         d[key] = x
+
+
+def read_char(txt):
+    """Read character.
+
+    Read single characters from standard input.
+
+    Parameters
+    ----------
+    txt : str
+        Message to display.
+
+    Returns
+    -------
+    str
+        The read character.
+    """
+    print(Ansi.INFO(txt))
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+
+    try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
+    return ch
 
 
 if __name__ == "__main__":
