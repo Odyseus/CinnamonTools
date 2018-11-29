@@ -10,8 +10,8 @@ md : object
     **Markdown parser additions/overrides**:
 
     - Added support for ``kbd`` tag. ``[[Ctrl]]`` will render as ``<kbd>Ctrl</kbd>``.
-    - Added **table** and **table-bordered** classes to the ``table`` tag.
-    - Added **blockquote** class to the ``blockquote`` tag.
+    - Added **table** and **table-bordered** classes to the ``<table>`` HTML tag.
+    - Added **blockquote** class to the ``<blockquote>`` HTML tag.
 """
 import re
 
@@ -25,12 +25,12 @@ class MistuneCustomRenderer(Renderer):
     """
 
     def kbd_tag(self, text):
-        """kbd HTML tag.
+        """<kbd> HTML tag.
 
         Parameters
         ----------
         text : str
-            kbd HTML tag content.
+            <kbd> HTML tag content.
 
         Returns
         -------
@@ -47,7 +47,7 @@ class MistuneCustomRenderer(Renderer):
         Parameters
         ----------
         text : str
-            blockquote HTML tag content.
+            <blockquote> HTML tag content.
 
         Returns
         -------
@@ -65,9 +65,9 @@ class MistuneCustomRenderer(Renderer):
         Parameters
         ----------
         header : str
-            thead HTML tag content.
+            <thead> HTML tag content.
         body : str
-            tbody HTML tag content.
+            <tbody> HTML tag content.
 
         Returns
         -------
@@ -85,14 +85,14 @@ class MistuneCustomInlineLexer(InlineLexer):
     """
 
     def enable_kbd_tag(self):
-        """Enable kbd HTML tag rules.
+        """Enable <kbd> HTML tag rules.
         """
         self.rules.kbd_tag = re.compile(r'^\[\[(?=\S)([\s\S]*?\S)\]\]')  # [[Keyboard key]]
 
         self.default_rules.insert(3, "kbd_tag")
 
     def output_kbd_tag(self, m):
-        """Generate kbd HTML tag output.
+        """Generate <kbd> HTML tag output.
 
         Parameters
         ----------
