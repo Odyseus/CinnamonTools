@@ -12,7 +12,6 @@
     - Some aesthetic changes for better readability of the menu items on the screen.
     - This modified version doesn't clear the screen every time a menu is opened.
 - **mistune:** This [Python module](https://github.com/lepture/mistune) is a markdown parser in pure Python with renderer feature.
-    - Modified to add support for keyboard keys (`kbd` HTML tags). `[[Key]]` will render as `<kbd>Key</kbd>`.
 - **multi_select:** Slightly modified version of the [picker](https://github.com/MSchuwalow/picker) Python module.
 - **polib:** [polib](https://bitbucket.org/izi/polib) is a library to manipulate, create and modify `gettext` files (pot, po and mo files).
 - **pyperclip:** [Pyperclip](https://github.com/asweigart/pyperclip) is a cross-platform Python module for copy and paste clipboard functions.
