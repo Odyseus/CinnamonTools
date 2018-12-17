@@ -48,11 +48,17 @@ def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False,
                         ("--init" if action is "init" else "--remote --merge"))
     elif mechanism == "subtree":
         for sub_tree in subtrees:
-            commands.append("git subtree {cmd} --prefix {prefix} {url} {ref} --squash".format(
+            sub_ref = sub_tree.get("ref", "master")
+            commit_message = "Merge ref. '{ref}' of {sub_url}".format(
+                ref=sub_ref,
+                sub_url=sub_tree["url"]
+            )
+            commands.append("git subtree {cmd} {msg} --prefix {prefix} {url} {ref} --squash".format(
                 cmd="add" if action is "init" else "pull",
+                msg="" if action is "init" else '"-m %s"' % commit_message,
                 prefix=sub_tree["path"],
                 url=sub_tree["url"],
-                ref=sub_tree.get("ref", "master")
+                ref=sub_ref
             ))
 
     if commands:
@@ -61,11 +67,11 @@ def manage_repo(mechanism, action, subtrees=[], do_not_confirm=False,
                 logger.info(shell_utils.get_cli_separator("-"), date=False)
 
                 if dry_run:
-                    logger.log_dry_run("Command that will be executed:\n%s" % cmd)
-                    logger.log_dry_run("Command will be executed at:\n%s" % cwd)
+                    logger.log_dry_run("**Command that will be executed:**\n%s" % cmd)
+                    logger.log_dry_run("**Command will be executed at:**\n%s" % cwd)
                 else:
                     try:
-                        logger.info("Executing command:\n%s" % cmd)
+                        logger.info("**Executing command:**\n%s" % cmd)
                         cmd_utils.run_cmd(cmd, stdout=None, stderr=None,
                                           check=True, shell=True, cwd=cwd)
                     except CalledProcessError as err:

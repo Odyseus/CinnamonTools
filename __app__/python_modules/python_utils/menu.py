@@ -88,12 +88,12 @@ class Menu(object):
             for item in menu_items:
                 if not isinstance(item, tuple):
                     print(item)
-                    print(Ansi.ERROR("TypeError: item is not a tuple"))
+                    print(Ansi.LIGHT_RED("**TypeError:** item is not a tuple"))
                     raise TypeError()
 
                 if len(item) != 2:
                     print(item)
-                    print(Ansi.ERROR("ValueError: item is not of length 2"))
+                    print(Ansi.LIGHT_RED("**ValueError:** item is not of length 2"))
                     raise ValueError()
 
                 self.add_menu_item(item[0], item[1])
@@ -166,7 +166,7 @@ class Menu(object):
         """
         if not callable(refresh):
             print(refresh)
-            print(Ansi.ERROR("TypeError: refresh is not callable"))
+            print(Ansi.LIGHT_RED("**TypeError:** refresh is not callable"))
             raise TypeError()
 
         self.refresh = refresh
@@ -188,7 +188,7 @@ class Menu(object):
         """
         if not callable(handler):
             print(handler)
-            print(Ansi.ERROR("TypeError: handler is not callable"))
+            print(Ansi.LIGHT_RED("**TypeError:** handler is not callable"))
             raise TypeError()
 
         self.menu_items += [(label, handler)]
@@ -231,7 +231,7 @@ class Menu(object):
         """Display menu.
         """
         if self.is_title_enabled:
-            print(Ansi.INFO(self.title))
+            print(Ansi.DEFAULT("**%s**" % self.title))
             print()
 
         if self.is_message_enabled:
@@ -239,7 +239,7 @@ class Menu(object):
             print()
 
         for (index, item) in enumerate(self.menu_items):
-            print(Ansi.INFO(str(index + 1) + ". "), end="")
+            print(Ansi.DEFAULT("**%s**" % str(index + 1) + ". "), end="")
             print(item[0])
 
         print()
@@ -260,7 +260,7 @@ class Menu(object):
             index = int(input(self.prompt)) - 1
             return self.menu_items[index][1]
         except (ValueError, IndexError):
-            print(Ansi.WARNING("Invalid item."))
+            print(Ansi.LIGHT_YELLOW("**Invalid item selected!**"))
             return self.input()
 
     def CLOSE(self):

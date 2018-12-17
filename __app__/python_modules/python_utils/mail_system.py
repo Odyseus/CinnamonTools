@@ -14,17 +14,30 @@ from email.mime.text import MIMEText
 from smtplib import SMTP
 from smtplib import SMTPException
 
-__pass_setup_msg = """
-There are two ways to specify a password to send e-mails:
+from . import json_schema_utils
+from .ansi_colors import Ansi
+from .exceptions import ExceptionWhitoutTraceBack
+from .schemas.mail_system_schema import settings_schema
 
-1. Unattended: This requires to have the <keyring> Python 3 module installed and
+__pass_setup_msg = """
+**There are two ways to specify a password to send e-mails:**
+
+**1. Unattended:** This requires to have the <keyring> Python 3 module installed and
 the keys <secret_service_name> and <secret_user_name> specified in the mail
 system settings. See documentation/manual page for details.
-2. Always prompt: With the key called <ask_for_password> set to True in the
+**2. Always prompt:** With the key called <ask_for_password> set to True in the
 mail system settings, every attempt to send an e-mail will prompt for the
 sender's e-mail password. This method supersedes the unattended method.
 
 """
+
+
+class EmptyMailSubjectOrBody(ExceptionWhitoutTraceBack):
+    """EmptyMailSubjectOrBody"""
+
+    def __init__(self):
+        msg = "Neither e-mail subject nor e-mail body can be left blank."
+        super().__init__(msg)
 
 
 class MailSystem():
@@ -35,18 +48,6 @@ class MailSystem():
     logger : object
         See <class :any:`LogSystem`>.
     """
-
-    _validator_set = {
-        "ask_for_password",
-        "mailing_list",
-        "secret_service_name",
-        "secret_user_name",
-        "sender_address",
-        "sender_username",
-        "smtp_port",
-        "smtp_server",
-        "use_tls",
-    }
 
     def __init__(self, mail_settings={}, logger=None):
         """Initialization.
@@ -60,22 +61,15 @@ class MailSystem():
         """
         self._config = mail_settings
         self.logger = logger
-        self._allowed = True
 
         self._validate_config()
 
     def _validate_config(self):
         """Validate mail settings.
         """
-        missing_fields = []
-
-        if not self._validator_set.issubset(self._config):
-            missing_fields += [field for field in self._validator_set if field not in self._config]
-
-        if missing_fields:
-            self._allowed = False
-            self.logger.warning("MailSystem::MissingMandatoryFields")
-            self.logger.warning("The <%s> field/s is/are required." % ", ".join(missing_fields))
+        json_schema_utils.validate(
+            self._config, settings_schema,
+            logger=self.logger)
 
     def _get_password(self):
         """Get password.
@@ -83,7 +77,7 @@ class MailSystem():
         Returns
         -------
         str
-            The serder's e-mail password.
+            The sender's e-mail password.
         """
         ask_for_password = self._config.get("ask_for_password")
         sender_password = None
@@ -97,43 +91,40 @@ class MailSystem():
         elif ask_for_password:
             import getpass
 
-            sender_password = getpass.getpass(prompt="Enter Sender E-Mail Password: ")
+            sender_password = getpass.getpass(prompt=Ansi.DEFAULT("**Enter Sender E-Mail Password:** "))
 
         return sender_password
 
-    def send(self, subject, message):
+    def send(self, mail_subject, mail_body):
         """Send the email/s.
 
         Parameters
         ----------
-        subject : str
-            The email subject.
-        message : str
-            The email body.
-
-        Returns
-        -------
-        bool
-            It returns only if it is not allowed to send emails.
+        mail_subject : str
+            The e-mail subject.
+        mail_body : str
+            The e-mail body.
         """
-        if not self._allowed:
-            return True
-
         sender_password = self._get_password()
 
         if not sender_password:
-            self.logger.warning("No password could be obtained. Aborted.")
+            self.logger.warning("**No password could be obtained. Aborted.**")
             self.logger.warning(__pass_setup_msg)
             return True
 
+        if not mail_subject or not mail_body:
+            raise EmptyMailSubjectOrBody()
+
         msg = MIMEMultipart()
-        msg["Subject"] = subject
+        msg["Subject"] = mail_subject
         msg["From"] = self._config.get("sender_address")
         msg["To"] = ",".join(self._config.get("mailing_list"))
 
-        msg.attach(MIMEText(message, "plain"))
+        msg.attach(MIMEText(mail_body, "plain"))
 
         try:
+            self.logger.info("**Sending e-mail...**")
+
             with SMTP(self._config.get("smtp_server"), self._config.get("smtp_port")) as s:
                 if self._config.get("use_tls"):
                     s.ehlo()
@@ -145,9 +136,9 @@ class MailSystem():
                            self._config.get("mailing_list"), msg.as_string())
                 s.close()
 
-            self.logger.info("Email sent!")
-        except SMTPException as e:
-            self.logger.error("Could not send the e-mail/s: %s" % e)
+            self.logger.info("**Email sent!**")
+        except SMTPException as err:
+            self.logger.error("**Could not send the e-mail/s:**\n%s" % err)
 
 
 if __name__ == "__main__":

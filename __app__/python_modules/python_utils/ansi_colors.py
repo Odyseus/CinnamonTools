@@ -6,91 +6,120 @@ Attributes
 ----------
 Ansi : object
     :any:`ANSIColors` class initialization.
+color_table : dict
+    ANSI color table.
 """
+import re
+
+color_table = {
+    "default":
+    {"fg": "39", "bg": "49"},
+    "black":
+    {"fg": "30", "bg": "40"},
+    "red":
+    {"fg": "31", "bg": "41"},
+    "green":
+    {"fg": "32", "bg": "42"},
+    "yellow":
+    {"fg": "33", "bg": "43"},
+    "blue":
+    {"fg": "34", "bg": "44"},
+    "magenta":
+    {"fg": "35", "bg": "45"},
+    "cyan":
+    {"fg": "36", "bg": "46"},
+    "light-gray":
+    {"fg": "37", "bg": "47"},
+    "dark-gray":
+    {"fg": "90", "bg": "100"},
+    "light-red":
+    {"fg": "91", "bg": "101"},
+    "light-green":
+    {"fg": "92", "bg": "102"},
+    "light-yellow":
+    {"fg": "93", "bg": "103"},
+    "light-blue":
+    {"fg": "94", "bg": "104"},
+    "light-magenta":
+    {"fg": "95", "bg": "105"},
+    "light-cyan":
+    {"fg": "96", "bg": "106"},
+    "white":
+    {"fg": "97", "bg": "107"},
+}
+
+
+_bold_markdown_re = re.compile(r"\*\*([^\*\*]*)\*\*")
+_bold_placeholder = r"\033[0m\033[1;49;{code}m\1\033[0m\033[0;49;{code}m"
 
 
 class ANSIColors():
     """Class to colorize terminal output.
     """
 
-    def ERROR(self, string):
-        """Red color that symbolizes error.
+    def __init__(self):
+        """Initialization.
+        """
+        self._extend()
+
+    def _extend(self):
+        """Extend class' functions.
+        """
+        for c in color_table:
+            setattr(self, c.upper().replace("-", "_"),
+                    self._make_color_function(color_table[c]["fg"]))
+
+    def _colorize(self, text, code):
+        """Colorize text.
 
         Parameters
         ----------
-        string : str
-            The string that will be "colorized".
+        text : str
+            Text to colorize.
+        code : str
+            ANSI color code.
 
         Returns
         -------
         str
-            String surrounded by ANSI codes.
+            ANSI formatted string.
         """
-        return "\033[38;5;166;1m" + str(string) + "\033[0m"
+        return "\033[0;49;%sm" % code + re.sub(_bold_markdown_re,
+                                               _bold_placeholder.format(code=code),
+                                               str(text)) + "\033[0m"
 
-    def INFO(self, string):
-        """No color, just bold text.
+    def _make_color_function(self, code):
+        """Make color function.
 
         Parameters
         ----------
-        string : str
-            The string that will be "colorized".
+        code : str
+            ANSI color code.
 
         Returns
         -------
-        str
-            String surrounded by ANSI codes.
+        function
+            Function to colorize string.
         """
-        return "\033[1m" + str(string) + "\033[0m"
+        def f(text):
+            """Colorize text.
 
-    def WARNING(self, string):
-        """Yellow color that symbolizes warning.
+            Parameters
+            ----------
+            text : str
+                Text to colorize.
 
-        Parameters
-        ----------
-        string : str
-            The string that will be "colorized".
+            Returns
+            -------
+            str
+                ANSI formatted string.
+            """
+            return self._colorize(text, code)
 
-        Returns
-        -------
-        str
-            String surrounded by ANSI codes.
-        """
-        return "\033[38;5;220;1m" + str(string) + "\033[0m"
-
-    def SUCCESS(self, string):
-        """Green color that symbolizes success.
-
-        Parameters
-        ----------
-        string : str
-            The string that will be "colorized".
-
-        Returns
-        -------
-        str
-            String surrounded by ANSI codes.
-        """
-        return "\033[38;5;77;1m" + str(string) + "\033[0m"
-
-    def PURPLE(self, string):
-        """Purple color.
-
-        Parameters
-        ----------
-        string : str
-            The string that will be "colorized".
-
-        Returns
-        -------
-        str
-            String surrounded by ANSI codes.
-        """
-        return "\033[38;5;164;1m" + str(string) + "\033[0m"
+        return f
 
 
 Ansi = ANSIColors()
-
 
 if __name__ == "__main__":
     pass
