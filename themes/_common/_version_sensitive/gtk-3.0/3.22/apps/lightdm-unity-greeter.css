@@ -105,7 +105,6 @@ window.background.lightdm entry:selected {
     to {
         -gtk-icon-transform: rotate(1turn);
     }
-
 }
 
 window.background.lightdm entry:active {

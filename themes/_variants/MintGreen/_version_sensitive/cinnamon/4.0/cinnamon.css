@@ -107,8 +107,8 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
   background-gradient-end: #d7d7d7;
-  border: 1px solid #398ee7;
-  box-shadow: inset 0 0 0 1px #398ee7;
+  border: 1px solid #accd8a;
+  box-shadow: inset 0 0 0 1px #accd8a;
 }
 .notification-button:focus:checked, .notification-button:focus:active,
 .notification-icon-button:focus:checked,
@@ -136,8 +136,8 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #f0f0f0;
   background-gradient-end: #e4e4e4;
-  border: 1px solid #398ee7;
-  box-shadow: inset 0 0 0 1px #398ee7;
+  border: 1px solid #accd8a;
+  box-shadow: inset 0 0 0 1px #accd8a;
 }
 
 /* =============================================================================
@@ -146,72 +146,6 @@ StScrollView StScrollBar {
 /* Mark for deletion on EOL. Cinnamon 3.2.x+
  * Remove condition and rule/s.
  */
-.popup-menu-boxpointer {
-  -arrow-border-radius: 4px;
-  -arrow-background-color: #ebebeb;
-  -arrow-border-width: 1px;
-  -arrow-border-color: rgba(41, 41, 41, 0.3);
-  -arrow-base: 18px;
-  -arrow-rise: 10px;
-  -st-shadow: 0 -1px 2px 0 rgba(255, 255, 255, 0.9);
-  -boxpointer-gap: 2px;
-}
-
-.popup-menu {
-  color: #464646;
-  min-width: 100px;
-}
-.popup-menu StEntry {
-  border-radius: 4px;
-  border: 1px solid #a6a6a6;
-  caret-color: #2a2a2a;
-  caret-size: 1px;
-  color: #2a2a2a;
-  min-height: 16px;
-  min-width: 250px;
-  padding: 4px 12px;
-  selected-color: white;
-  selection-background-color: #398ee7;
-  transition-duration: 150;
-  background-gradient-direction: vertical;
-  background-gradient-start: #eeeeee;
-  background-gradient-end: #f3f3f3;
-}
-.popup-menu StEntry:focus {
-  border-radius: 4px;
-  border: 1px solid #a6a6a6;
-  caret-color: #2a2a2a;
-  caret-size: 1px;
-  color: #2a2a2a;
-  min-height: 16px;
-  min-width: 250px;
-  padding: 4px 12px;
-  selected-color: white;
-  selection-background-color: #398ee7;
-  transition-duration: 150;
-  background-gradient-direction: vertical;
-  background-gradient-start: #f3f3f3;
-  background-gradient-end: #f8f8f8;
-  box-shadow: inset 0 0 2px #ababab;
-}
-.popup-menu StEntry:hover {
-  border-radius: 4px;
-  border: 1px solid #a6a6a6;
-  caret-color: #2a2a2a;
-  caret-size: 1px;
-  color: #2a2a2a;
-  min-height: 16px;
-  min-width: 250px;
-  padding: 4px 12px;
-  selected-color: white;
-  selection-background-color: #398ee7;
-  transition-duration: 150;
-  background-gradient-direction: vertical;
-  background-gradient-start: #eeeeee;
-  background-gradient-end: #f3f3f3;
-  box-shadow: 0 0 2px #ababab;
-}
-
 .menu {
   background-color: #ebebeb;
   border: 1px solid rgba(41, 41, 41, 0.3);
@@ -240,7 +174,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -256,7 +190,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
@@ -273,7 +207,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -332,8 +266,8 @@ StScrollView StScrollBar {
 }
 .popup-menu-item:active {
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   box-shadow: inset 0 0 1px 1px #ababab;
   color: white;
 }
@@ -363,7 +297,7 @@ StScrollView StScrollBar {
   -slider-height: 0.3em;
   -slider-background-color: #a6a6a6;
   -slider-border-color: transparent;
-  -slider-active-background-color: #398ee7;
+  -slider-active-background-color: #accd8a;
   -slider-active-border-color: transparent;
   -slider-border-width: 1px;
   -slider-handle-radius: 0.5em;
@@ -464,10 +398,10 @@ StScrollView StScrollBar {
   border-bottom: 1px solid transparent;
 }
 .panel-top:highlight {
-  box-shadow: 0 0 1px 1px rgba(57, 142, 231, 0.4);
+  box-shadow: 0 0 1px 1px rgba(172, 205, 138, 0.4);
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
 }
 .panel-bottom {
   box-shadow: 0 0 1px 1px #292929;
@@ -481,10 +415,10 @@ StScrollView StScrollBar {
   border-top: 1px solid transparent;
 }
 .panel-bottom:highlight {
-  box-shadow: 0 0 1px 1px rgba(57, 142, 231, 0.4);
+  box-shadow: 0 0 1px 1px rgba(172, 205, 138, 0.4);
   background-gradient-direction: vertical;
-  background-gradient-start: #abcff5;
-  background-gradient-end: #94c2f2;
+  background-gradient-start: #ebf3e3;
+  background-gradient-end: #dfecd1;
 }
 .panel-left {
   box-shadow: 0 0 1px 1px #292929;
@@ -499,10 +433,10 @@ StScrollView StScrollBar {
   spacing: 0;
 }
 .panel-left:highlight {
-  box-shadow: 0 0 1px 1px rgba(57, 142, 231, 0.4);
+  box-shadow: 0 0 1px 1px rgba(172, 205, 138, 0.4);
   background-gradient-direction: horizontal;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
 }
 .panel-right {
   box-shadow: 0 0 1px 1px #292929;
@@ -517,17 +451,17 @@ StScrollView StScrollBar {
   spacing: 0;
 }
 .panel-right:highlight {
-  box-shadow: 0 0 1px 1px rgba(57, 142, 231, 0.4);
+  box-shadow: 0 0 1px 1px rgba(172, 205, 138, 0.4);
   background-gradient-direction: horizontal;
-  background-gradient-start: #abcff5;
-  background-gradient-end: #94c2f2;
+  background-gradient-start: #ebf3e3;
+  background-gradient-end: #dfecd1;
 }
 .panel-dummy {
-  border: 1px solid #398ee7;
-  background-color: rgba(57, 142, 231, 0.6);
+  border: 1px solid #accd8a;
+  background-color: rgba(172, 205, 138, 0.6);
 }
 .panel-dummy:entered {
-  background-color: rgba(57, 142, 231, 0.9);
+  background-color: rgba(172, 205, 138, 0.9);
 }
 
 .system-status-icon {
@@ -539,6 +473,19 @@ StScrollView StScrollBar {
   /* Mark for deletion on EOL. Cinnamon 3.4.x+
    * Remove condition only.
    */
+  /* #####################################################################
+   * Added in Cinnamon 3.4
+   *
+   * The new warning/error colors used on .system-status-icon are
+   * currently used by the power applet to warn the user when their
+   * battery is low.
+   * ##################################################################### */
+}
+.system-status-icon.warning {
+  color: #e6e100;
+}
+.system-status-icon.error {
+  color: #cc0000;
 }
 
 /* #appMenu {
@@ -556,6 +503,11 @@ StScrollView StScrollBar {
 
 .workspace-overview-background-shade {
   background-color: transparent;
+}
+
+.overview-empty-placeholder {
+  color: white;
+  font-size: 2em;
 }
 
 /* =============================================================================
@@ -598,7 +550,7 @@ StScrollView StScrollBar {
   min-width: unset;
   padding: 8px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-color: #404040;
   text-align: center;
@@ -660,15 +612,13 @@ StScrollView StScrollBar {
   spacing: 8px;
   -cinnamon-caption-spacing: 10px;
 }
-.window-caption#selected {
+.window-caption:focus {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
-  font-weight: bold;
-  spacing: 25px;
 }
 
 .window-close {
@@ -682,8 +632,13 @@ StScrollView StScrollBar {
   background-image: url("assets/close-hover.svg");
   transition-duration: 150;
 }
-.window-close:rtl {
-  -st-background-image-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+
+.window-border {
+  border: 3px #accd8a;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.05);
+  /* Cover rounded corners and some bad adjustment gaps */
+  box-shadow: 0 0 0 1px #accd8a inset;
 }
 
 /* =============================================================================
@@ -693,10 +648,10 @@ StScrollView StScrollBar {
   color: #464646;
 }
 .desklet:highlight {
-  background-color: #398ee7;
+  background-color: #accd8a;
 }
 .desklet-with-borders:highlight, .desklet-with-borders-and-header:highlight {
-  background-color: #398ee7;
+  background-color: #accd8a;
 }
 .desklet-with-borders {
   background-color: #e1e1e1;
@@ -799,7 +754,7 @@ StScrollView StScrollBar {
   height: 2.4em;
 }
 .calendar-day-base:active {
-  background: #398ee7;
+  background: #accd8a;
   box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.1);
   color: white;
 }
@@ -831,7 +786,7 @@ StScrollView StScrollBar {
   background-color: rgba(128, 128, 128, 0.1);
 }
 .calendar-today {
-  color: #398ee7;
+  color: #accd8a;
   font-weight: bold;
 }
 .calendar-other-month-day {
@@ -880,7 +835,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -896,7 +851,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
@@ -913,7 +868,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -1013,8 +968,8 @@ StScrollView StScrollBar {
 .switcher-list .item-box:selected {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
 }
@@ -1074,8 +1029,8 @@ StScrollView StScrollBar {
   /* 50% is not recognized. */
   background-gradient-direction: radial;
   /* start=center, end=edges */
-  background-gradient-start: rgba(57, 142, 231, 0.3);
-  background-gradient-end: rgba(57, 142, 231, 0.2);
+  background-gradient-start: rgba(172, 205, 138, 0.3);
+  background-gradient-end: rgba(172, 205, 138, 0.2);
 }
 
 /* =============================================================================
@@ -1116,8 +1071,8 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
   background-gradient-end: #d7d7d7;
-  border: 1px solid #398ee7;
-  box-shadow: inset 0 0 0 1px #398ee7;
+  border: 1px solid #accd8a;
+  box-shadow: inset 0 0 0 1px #accd8a;
   padding: 4px 20px;
 }
 .modal-dialog-button:focus:hover {
@@ -1125,8 +1080,8 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #f0f0f0;
   background-gradient-end: #e4e4e4;
-  border: 1px solid #398ee7;
-  box-shadow: inset 0 0 0 1px #398ee7;
+  border: 1px solid #accd8a;
+  box-shadow: inset 0 0 0 1px #accd8a;
   padding: 4px 20px;
 }
 .modal-dialog-button:focus:checked, .modal-dialog-button:focus:active {
@@ -1175,7 +1130,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -1191,7 +1146,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
@@ -1208,7 +1163,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -1407,8 +1362,8 @@ StScrollView StScrollBar {
 .menu-favorites-button:hover {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
 }
@@ -1434,8 +1389,8 @@ StScrollView StScrollBar {
 .menu-application-button-selected {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
   padding: 7px;
@@ -1465,8 +1420,8 @@ StScrollView StScrollBar {
 .menu-category-button-selected {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
   padding: 7px;
@@ -1510,7 +1465,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -1526,7 +1481,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
@@ -1543,7 +1498,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -1571,6 +1526,9 @@ StScrollView StScrollBar {
   /* Mark for deletion on EOL. Cinnamon 3.6.x+
    * Remove condition only.
    */
+  /* #########################################################################
+   * Class "window-list-preview":Added in Cinnamon 3.6
+   * ######################################################################### */
 }
 .window-list-box {
   spacing: 3px;
@@ -1602,7 +1560,7 @@ StScrollView StScrollBar {
 }
 .window-list-item-box:active, .window-list-item-box:checked, .window-list-item-box:focus, .window-list-item-box:checked:hover, .window-list-item-box:focus:hover, .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 3px 0 0;
   font-weight: bold;
@@ -1612,6 +1570,12 @@ StScrollView StScrollBar {
   background-color: #eeeeee;
   color: #464646;
   border-radius: 3px 3px 0 0;
+}
+.window-list-item-box .progress {
+  border-radius: 3px 3px 0 0;
+  background-gradient-direction: vertical;
+  background-gradient-start: rgba(172, 205, 138, 0.5);
+  background-gradient-end: rgba(172, 205, 138, 0.9);
 }
 .panel-top .window-list-item-box {
   box-shadow: inset 0 0 0 1px #ababab;
@@ -1624,7 +1588,7 @@ StScrollView StScrollBar {
 }
 .panel-top .window-list-item-box:active, .panel-top .window-list-item-box:checked, .panel-top .window-list-item-box:focus, .panel-top .window-list-item-box:checked:hover, .panel-top .window-list-item-box:focus:hover, .panel-top .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 0 3px 3px;
 }
@@ -1632,6 +1596,9 @@ StScrollView StScrollBar {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #eeeeee;
   color: #464646;
+  border-radius: 0 0 3px 3px;
+}
+.panel-top .window-list-item-box .progress {
   border-radius: 0 0 3px 3px;
 }
 .panel-left .window-list-item-box {
@@ -1647,7 +1614,7 @@ StScrollView StScrollBar {
 }
 .panel-left .window-list-item-box:active, .panel-left .window-list-item-box:checked, .panel-left .window-list-item-box:focus, .panel-left .window-list-item-box:checked:hover, .panel-left .window-list-item-box:focus:hover, .panel-left .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 3px 3px 0;
 }
@@ -1655,6 +1622,9 @@ StScrollView StScrollBar {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #eeeeee;
   color: #464646;
+  border-radius: 0 3px 3px 0;
+}
+.panel-left .window-list-item-box .progress {
   border-radius: 0 3px 3px 0;
 }
 .panel-right .window-list-item-box {
@@ -1670,7 +1640,7 @@ StScrollView StScrollBar {
 }
 .panel-right .window-list-item-box:active, .panel-right .window-list-item-box:checked, .panel-right .window-list-item-box:focus, .panel-right .window-list-item-box:checked:hover, .panel-right .window-list-item-box:focus:hover, .panel-right .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 0 0 3px;
 }
@@ -1678,6 +1648,9 @@ StScrollView StScrollBar {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #eeeeee;
   color: #464646;
+  border-radius: 3px 0 0 3px;
+}
+.panel-right .window-list-item-box .progress {
   border-radius: 3px 0 0 3px;
 }
 .window-list-item-demands-attention {
@@ -1700,10 +1673,184 @@ StScrollView StScrollBar {
   background-color: rgba(255, 0, 0, 0.1);
   border-radius: 3px 0 0 3px;
 }
+.window-list-preview {
+  background-color: #e1e1e1;
+  border: 1px solid #ababab;
+  color: #464646;
+  border-radius: 4px;
+  /* The class itself doesn't respond to the set paddings. */
+  font-size: 1em;
+  font-weight: bold;
+  text-shadow: white 0 0 2px;
+}
+.window-list-preview StBin {
+  padding: 5px;
+}
 
 /* =============================================================================
  * Grouped window list applet (/usr/share/cinnamon/applets/grouped-window-list@cinnamon.org
  * ============================================================================= */
+.grouped-window-list-item-box {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #e1e1e1;
+  color: #464646;
+  border-radius: 3px 3px 0 0;
+  font-weight: bold;
+  padding: 1px 0 4px 4px;
+  border-image: none;
+}
+.grouped-window-list-item-box:active, .grouped-window-list-item-box:active:hover, .grouped-window-list-item-box:checked, .grouped-window-list-item-box:checked:hover, .grouped-window-list-item-box:focus, .grouped-window-list-item-box:focus:active:hover, .grouped-window-list-item-box:focus:hover, .grouped-window-list-item-box:hover {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #accd8a;
+  color: white;
+  border-radius: 3px 3px 0 0;
+  font-weight: bold;
+}
+.grouped-window-list-item-box .progress {
+  border-radius: 3px 3px 0 0;
+  background-gradient-direction: vertical;
+  background-gradient-start: rgba(172, 205, 138, 0.5);
+  background-gradient-end: rgba(172, 205, 138, 0.9);
+}
+.panel-top .grouped-window-list-item-box {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #e1e1e1;
+  color: #464646;
+  border-radius: 0 0 3px 3px;
+}
+.panel-top .grouped-window-list-item-box:hover {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #eeeeee;
+  color: #464646;
+  border-radius: 0 0 3px 3px;
+}
+.panel-top .grouped-window-list-item-box:focus:hover, .panel-top .grouped-window-list-item-box:focus:active:hover, .panel-top .grouped-window-list-item-box:focus {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #accd8a;
+  color: white;
+  border-radius: 0 0 3px 3px;
+}
+.panel-top .grouped-window-list-item-box .progress {
+  border-radius: 0 0 3px 3px;
+}
+.panel-left .grouped-window-list-item-box {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #e1e1e1;
+  color: #464646;
+  border-radius: 0 3px 3px 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.panel-left .grouped-window-list-item-box:hover {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #eeeeee;
+  color: #464646;
+  border-radius: 0 3px 3px 0;
+}
+.panel-left .grouped-window-list-item-box:focus:hover, .panel-left .grouped-window-list-item-box:focus:active:hover, .panel-left .grouped-window-list-item-box:focus {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #accd8a;
+  color: white;
+  border-radius: 0 3px 3px 0;
+}
+.panel-left .grouped-window-list-item-box .progress {
+  border-radius: 0 3px 3px 0;
+}
+.panel-right .grouped-window-list-item-box {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #e1e1e1;
+  color: #464646;
+  border-radius: 3px 0 0 3px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.panel-right .grouped-window-list-item-box:hover {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #eeeeee;
+  color: #464646;
+  border-radius: 3px 0 0 3px;
+}
+.panel-right .grouped-window-list-item-box:focus:hover, .panel-right .grouped-window-list-item-box:focus:active:hover, .panel-right .grouped-window-list-item-box:focus {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: #accd8a;
+  color: white;
+  border-radius: 3px 0 0 3px;
+}
+.panel-right .grouped-window-list-item-box .progress {
+  border-radius: 3px 0 0 3px;
+}
+.grouped-window-list-item-demands-attention {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 3px 3px 0 0;
+}
+.panel-top .grouped-window-list-item-demands-attention {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 0 0 3px 3px;
+}
+.panel-left .grouped-window-list-item-demands-attention {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 0 3px 3px 0;
+}
+.panel-right .grouped-window-list-item-demands-attention {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 3px 0 0 3px;
+}
+.grouped-window-list-thumbnail-menu {
+  background-color: #e1e1e1;
+  border: 1px solid #ababab;
+  color: #464646;
+  border-radius: 4px;
+  padding: 20px;
+  font-size: 1em;
+  font-weight: bold;
+}
+.grouped-window-list-thumbnail-menu .item-box {
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  spacing: 4px;
+}
+.grouped-window-list-thumbnail-menu .item-box:outlined {
+  padding: 6px;
+  border: 2px solid rgba(85, 85, 85, 0);
+}
+.grouped-window-list-thumbnail-menu .item-box:selected {
+  box-shadow: inset 0 0 2px #ababab;
+  background-gradient-direction: vertical;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
+  color: white;
+  border-radius: 4px;
+}
+.grouped-window-list-thumbnail-menu .thumbnail {
+  width: 256px;
+}
+.grouped-window-list-thumbnail-menu .separator {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.23);
+}
+.grouped-window-list-thumbnail-label {
+  padding-left: 4px;
+}
+.grouped-window-list-number-label {
+  z-index: 99;
+  color: #464646;
+}
+.grouped-window-list-badge {
+  border-radius: 256px;
+  background-color: white;
+}
+.grouped-window-list-button-label {
+  padding-left: 4px;
+}
+.grouped-window-list-thumbnail-alert {
+  background: rgba(255, 0, 0, 0.1);
+}
+
 /* =============================================================================
  * Sound applet (/usr/share/cinnamon/applets/sound@cinnamon.org/applet.js)
  * ============================================================================= */
@@ -1747,7 +1894,7 @@ StScrollView StScrollBar {
   -slider-height: 0.5em;
   -slider-background-color: #a6a6a6;
   -slider-border-color: transparent;
-  -slider-active-background-color: #398ee7;
+  -slider-active-background-color: #accd8a;
   -slider-active-border-color: transparent;
   -slider-border-width: 0;
   -slider-handle-radius: 0;
@@ -1808,7 +1955,7 @@ StScrollView StScrollBar {
 }
 .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 3px 0 0;
 }
@@ -1820,7 +1967,7 @@ StScrollView StScrollBar {
 }
 .panel-top .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 0 3px 3px;
 }
@@ -1832,7 +1979,7 @@ StScrollView StScrollBar {
 }
 .panel-left .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 3px 3px 0;
 }
@@ -1844,7 +1991,7 @@ StScrollView StScrollBar {
 }
 .panel-right .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 0 0 3px;
 }
@@ -1873,7 +2020,7 @@ StScrollView StScrollBar {
   -inactive-window-border: rgba(0, 0, 0, 0.7);
 }
 .workspace-graph .workspace:active .windows {
-  -active-window-background: #398ee7;
+  -active-window-background: #accd8a;
   -active-window-border: rgba(0, 0, 0, 0.9);
   -inactive-window-background: darkgray;
   -inactive-window-border: rgba(0, 0, 0, 0.7);
@@ -1885,21 +2032,6 @@ StScrollView StScrollBar {
 /* Mark for deletion on EOL. Cinnamon 3.2.x+
  * Remove condition and rule.
  */
-#panel-launchers-box {
-  padding-left: 0;
-}
-
-.panel-launcher {
-  margin: 1px;
-  padding: 2px;
-}
-.panel-launcher:hover {
-  box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #eeeeee;
-  color: #464646;
-  border-radius: 3px;
-}
-
 .panel-launchers {
   spacing: 0;
 }
@@ -1954,6 +2086,14 @@ StScrollView StScrollBar {
   /* Mark for deletion on EOL. Cinnamon 3.4.x+
    * Remove condition only.
    */
+  /* #########################################################################
+   * Added in Cinnamon 3.4
+   *
+   * The Cinnamon St library now reacts to margin, but that also has the
+   * effect of overriding the margin that was put in programmatically for
+   * TextIcon applets between the icon and the label.
+   * This restores some suitable spacing between icons and their labels.
+   * ######################################################################### */
 }
 .applet-box.vertical {
   font-weight: bold;
@@ -1969,10 +2109,13 @@ StScrollView StScrollBar {
 .applet-box:highlight {
   box-shadow: inset 0 0 0 1px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
   color: white;
   border-radius: 3px 3px 0 0;
+}
+.panel-top .applet-box, .panel-bottom .applet-box {
+  spacing: 3px;
 }
 .panel-top .applet-box:highlight, .panel-top .applet-box:checked, .panel-top .applet-box:hover {
   box-shadow: inset 0 0 0 1px #ababab;
@@ -1983,8 +2126,8 @@ StScrollView StScrollBar {
 .panel-top .applet-box:highlight {
   box-shadow: inset 0 0 0 1px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
   color: white;
   border-radius: 0 0 3px 3px;
 }
@@ -1997,8 +2140,8 @@ StScrollView StScrollBar {
 .panel-left .applet-box:highlight {
   box-shadow: inset 0 0 0 1px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
   color: white;
   border-radius: 0 3px 3px 0;
 }
@@ -2011,8 +2154,8 @@ StScrollView StScrollBar {
 .panel-right .applet-box:highlight {
   box-shadow: inset 0 0 0 1px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
   color: white;
   border-radius: 3px 0 0 3px;
 }
@@ -2179,6 +2322,12 @@ StScrollView StScrollBar {
   /* Mark for deletion on EOL. Cinnamon 3.4.x+
    * Remove condition only.
    */
+  /*level-bar class added in Cinnamon 3.4.x.*/
+}
+.osd-window .level-bar {
+  height: 0.7em;
+  border-radius: 0.3em;
+  background-color: #accd8a;
 }
 .osd-window .level {
   height: 0.7em;
@@ -2190,19 +2339,19 @@ StScrollView StScrollBar {
  * Snap/Tile Chrome (/usr/share/cinnamon/js/ui/windowManager.js)
  * ============================================================================= */
 .tile-preview {
-  background-color: rgba(57, 142, 231, 0.4);
-  border: 1px solid rgba(57, 142, 231, 0.8);
+  background-color: rgba(172, 205, 138, 0.4);
+  border: 1px solid rgba(172, 205, 138, 0.8);
 }
 .tile-preview.snap {
-  background-color: rgba(57, 142, 231, 0.8);
+  background-color: rgba(172, 205, 138, 0.8);
 }
 
 .tile-hud {
-  background-color: rgba(57, 142, 231, 0.4);
-  border: 1px solid rgba(57, 142, 231, 0.8);
+  background-color: rgba(172, 205, 138, 0.4);
+  border: 1px solid rgba(172, 205, 138, 0.8);
 }
 .tile-hud.snap {
-  background-color: rgba(57, 142, 231, 0.8);
+  background-color: rgba(172, 205, 138, 0.8);
 }
 .tile-hud:top {
   border-top-width: 0;
@@ -2244,3 +2393,13 @@ StScrollView StScrollBar {
 /* Mark for deletion on EOL. Cinnamon 3.4.x+
  * Remove condition only.
  */
+/* #########################################################################
+ * Systray Applet - Added in Cinnamon 3.4
+ *
+ * .systray is for theming to be applied to the systray as a whole.
+ * .applet-box is used for indicators (not tray icons) within the systray.
+ * Tray icons are not themed.
+ * ######################################################################### */
+.systray {
+  spacing: 5px;
+}

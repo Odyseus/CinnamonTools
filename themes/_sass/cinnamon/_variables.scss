@@ -3,7 +3,9 @@ $font_size: "@font_size@"; // Set at build time.
 $font_family: "@font_family@"; // Set at build time.
 
 // Colors
-$selected_fg_color: #ffffff;
+$white: white;
+
+$selected_fg_color: $white;
 $bg_color: #e1e1e1;
 $fg_color: #464646;
 $border_color: #ababab;
@@ -25,3 +27,4 @@ $button_active_bg_b: darken($bg_color, 16%);
 $border_button: darken($border_color, 1%);
 $border_button_hover: lighten($border_color, 1%);
 $border_button_active: darken($border_color, 13%);
+

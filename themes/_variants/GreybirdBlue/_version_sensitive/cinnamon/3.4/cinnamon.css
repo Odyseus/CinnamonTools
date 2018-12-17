@@ -1,3 +1,7 @@
+/* #############################################################################
+ * Section common with Gnome Shell.
+ * It contains a few cinnamon specific styles (rare occurences).
+ * ############################################################################# */
 stage {
   font-family: "@font_family@";
   font-size: "@font_size@";
@@ -139,6 +143,9 @@ StScrollView StScrollBar {
 /* =============================================================================
  * PopupMenu (/usr/share/cinnamon/js/ui/popupMenu.js)
  * ============================================================================= */
+/* Mark for deletion on EOL. Cinnamon 3.2.x+
+ * Remove condition and rule/s.
+ */
 .menu {
   background-color: #ebebeb;
   border: 1px solid rgba(41, 41, 41, 0.3);
@@ -166,7 +173,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -182,7 +189,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -199,7 +206,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -208,6 +215,9 @@ StScrollView StScrollBar {
   box-shadow: 0 0 2px #ababab;
 }
 
+/* .popup-submenu-menu-item:open {
+ *}
+ */
 .popup-sub-menu {
   background-color: gainsboro;
   border-top: 2px solid #cccccc;
@@ -243,6 +253,9 @@ StScrollView StScrollBar {
   border-radius: 4px;
 }
 
+/* The remaining popup-menu sizing is all done in ems, so that if you
+ * override .popup-menu.font-size, everything else will scale with it.
+ */
 .popup-menu-content {
   padding: 1em 0;
 }
@@ -256,7 +269,7 @@ StScrollView StScrollBar {
   background-gradient-start: #398ee7;
   background-gradient-end: #1a74d3;
   box-shadow: inset 0 0 1px 1px #ababab;
-  color: #ffffff;
+  color: white;
 }
 .popup-menu-item:insensitive {
   color: #8b8b8b;
@@ -373,6 +386,11 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #cfcfcf;
   background-gradient-end: whitesmoke;
+  /* I replaced the window-list-item class from using the border-image property
+   * to use the background-gradient-* properties. The images had a 1 pixel
+   * transparent border so, to imitate the same effect, I added a 1 pixel
+   * transparent border to all three panel boxes from all panels.
+   */
 }
 .panel-top #panelLeft,
 .panel-top #panelRight,
@@ -452,6 +470,16 @@ StScrollView StScrollBar {
   spacing: 0;
   margin: 0;
   icon-size: 1.14em;
+  /* Mark for deletion on EOL. Cinnamon 3.4.x+
+   * Remove condition only.
+   */
+  /* #####################################################################
+   * Added in Cinnamon 3.4
+   *
+   * The new warning/error colors used on .system-status-icon are
+   * currently used by the power applet to warn the user when their
+   * battery is low.
+   * ##################################################################### */
 }
 .system-status-icon.warning {
   color: #e6e100;
@@ -460,6 +488,12 @@ StScrollView StScrollBar {
   color: #cc0000;
 }
 
+/* #appMenu {
+ * }
+ */
+/* .popup-menu-item-dot {
+ * }
+ */
 /* =============================================================================
  * Overview (/usr/share/cinnamon/js/ui/overview.js)
  * ============================================================================= */
@@ -504,13 +538,13 @@ StScrollView StScrollBar {
 .expo-workspaces-name-entry {
   border-radius: 4px;
   border: 1px solid #6e6e6e;
-  caret-color: #ffffff;
+  caret-color: white;
   caret-size: 1px;
-  color: #ffffff;
+  color: white;
   min-height: 16px;
   min-width: unset;
   padding: 8px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-color: #404040;
@@ -518,15 +552,15 @@ StScrollView StScrollBar {
   font-weight: bold;
 }
 .expo-workspaces-name-entry#selected {
-  color: #ffffff;
+  color: white;
   transition-duration: 150;
 }
 .expo-workspaces-name-entry#selected:focus {
-  color: #ffffff;
+  color: white;
   transition-duration: 150;
 }
 .expo-workspaces-name-entry:focus {
-  color: #ffffff;
+  color: white;
   transition-duration: 150;
 }
 
@@ -570,6 +604,7 @@ StScrollView StScrollBar {
   spacing: 25px;
   font-size: 1em;
   padding: 6px 8px;
+  spacing: 8px;
   -cinnamon-caption-spacing: 10px;
 }
 .window-caption#selected {
@@ -577,7 +612,7 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #398ee7;
   background-gradient-end: #1a74d3;
-  color: #ffffff;
+  color: white;
   border-radius: 4px;
   font-weight: bold;
   spacing: 25px;
@@ -587,7 +622,7 @@ StScrollView StScrollBar {
   background-image: url("assets/close.svg");
   height: 35px;
   width: 35px;
-  -cinnamon-close-overlap: 25px;
+  -cinnamon-close-overlap: 16px;
   transition-duration: 150;
 }
 .window-close:hover {
@@ -642,6 +677,7 @@ StScrollView StScrollBar {
   background: none;
 }
 
+/* Class used by the default desklet called "Digital photo frame" (photoframe@cinnamon.org) */
 .photoframe-box {
   background-color: #e1e1e1;
   border: 1px solid #ababab;
@@ -650,6 +686,7 @@ StScrollView StScrollBar {
   padding: 10px;
 }
 
+/* Class used by the default desklet called "Clock desklet" (clock@cinnamon.org) */
 .clock-desklet-label {
   color: #464646;
 }
@@ -711,7 +748,7 @@ StScrollView StScrollBar {
 .calendar-day-base:active {
   background: #398ee7;
   box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-  color: #ffffff;
+  color: white;
 }
 .calendar-day-heading {
   font-size: 1em;
@@ -750,6 +787,7 @@ StScrollView StScrollBar {
   background-color: rgba(51, 51, 51, 0.1);
 }
 
+/* Calendar applet (/usr/share/cinnamon/applets/calendar@cinnamon.org/applet.js) */
 .datemenu-date-label {
   padding: 0.5em 0 1em;
   font-weight: bold;
@@ -758,7 +796,7 @@ StScrollView StScrollBar {
 }
 
 /* =============================================================================
- * Notifications  (/usr/share/cinnamon/js/ui/messageTray.js)
+ * Notifications    (/usr/share/cinnamon/js/ui/messageTray.js)
  * ============================================================================= */
 #notification {
   background-color: #e1e1e1;
@@ -771,6 +809,9 @@ StScrollView StScrollBar {
   spacing-columns: 10px;
   margin-from-right-edge-of-screen: 20px;
   width: 34em;
+  /* For the links inside notifications.
+   * These URLs are already underlined with Pango markup.
+   */
 }
 #notification.multi-line-notification {
   padding-bottom: 8px;
@@ -785,7 +826,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -801,7 +842,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -818,7 +859,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -853,6 +894,11 @@ StScrollView StScrollBar {
   link-color: #0000ee;
 }
 
+/* We use row-span = 2 for the image cell, which prevents its height preferences to be
+ * taken into account during allocation, so its height ends up being limited by the height
+ * of the content in the other rows. To avoid showing a stretched image, we set the minimum
+ * height of the table to be ICON_SIZE + IMAGE_SIZE + spacing-rows = 24 + 125 + 10 = 159
+ */
 .notification-with-image {
   min-height: 159px;
   color: #464646;
@@ -886,7 +932,7 @@ StScrollView StScrollBar {
 }
 
 /* =============================================================================
- * Alt Tab  (/usr/share/cinnamon/js/ui/appSwitcher/classicSwitcher.js)
+ * Alt Tab    (/usr/share/cinnamon/js/ui/appSwitcher/classicSwitcher.js)
  * ============================================================================= */
 #altTabPopup {
   padding: 8px;
@@ -916,7 +962,7 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #398ee7;
   background-gradient-end: #1a74d3;
-  color: #ffffff;
+  color: white;
   border-radius: 4px;
 }
 .switcher-list .thumbnail-box {
@@ -972,13 +1018,15 @@ StScrollView StScrollBar {
   width: 100px;
   height: 100px;
   border-radius: 50px;
+  /* 50% is not recognized. */
   background-gradient-direction: radial;
+  /* start=center, end=edges */
   background-gradient-start: rgba(57, 142, 231, 0.3);
   background-gradient-end: rgba(57, 142, 231, 0.2);
 }
 
 /* =============================================================================
- * Modal dialogs  (/usr/share/cinnamon/js/ui/modalDialog.js)
+ * Modal dialogs    (/usr/share/cinnamon/js/ui/modalDialog.js)
  * ============================================================================= */
 .modal-dialog {
   background-color: #e1e1e1;
@@ -1073,7 +1121,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -1089,7 +1137,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -1106,7 +1154,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -1300,7 +1348,7 @@ StScrollView StScrollBar {
 }
 
 .menu-favorites-button {
-  padding: 10px 15px;
+  padding: 0.9em 1em;
   border-radius: 4px;
 }
 .menu-favorites-button:hover {
@@ -1308,7 +1356,7 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #398ee7;
   background-gradient-end: #1a74d3;
-  color: #ffffff;
+  color: white;
   border-radius: 4px;
 }
 
@@ -1326,6 +1374,7 @@ StScrollView StScrollBar {
   max-width: 10px;
 }
 .menu-application-button:highlighted {
+  /* This style is used in menu application buttons for applications which were newly installed. */
   font-weight: bold;
 }
 
@@ -1334,12 +1383,13 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #398ee7;
   background-gradient-end: #1a74d3;
-  color: #ffffff;
+  color: white;
   border-radius: 4px;
   padding: 7px;
 }
 .menu-application-button-selected:highlighted {
   font-weight: bold;
+  /* This style is used in menu application buttons for applications which were newly installed. */
 }
 
 .menu-application-button-label:ltr {
@@ -1364,7 +1414,7 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #398ee7;
   background-gradient-end: #1a74d3;
-  color: #ffffff;
+  color: white;
   border-radius: 4px;
   padding: 7px;
 }
@@ -1376,6 +1426,9 @@ StScrollView StScrollBar {
   padding-right: 5px;
 }
 
+/* Name and description of the currently hovered item in the menu.
+ * This appears on the bottom right hand corner of the menu.
+ */
 .menu-selected-app-box {
   padding-right: 30px;
   padding-left: 28px;
@@ -1403,7 +1456,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -1419,7 +1472,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -1436,7 +1489,7 @@ StScrollView StScrollBar {
   min-height: 16px;
   min-width: 250px;
   padding: 4px 12px;
-  selected-color: #ffffff;
+  selected-color: white;
   selection-background-color: #398ee7;
   transition-duration: 150;
   background-gradient-direction: vertical;
@@ -1450,9 +1503,25 @@ StScrollView StScrollBar {
   color: #464646;
 }
 
+/* .menu-context-menu    {
+ *
+ * }
+ */
+/* .menu-background    {
+ *
+ * }
+ */
 /* =============================================================================
  * Window list applet (/usr/share/cinnamon/applets/window-list@cinnamon.org/applet.js)
  * ============================================================================= */
+.window-list {
+  /* Mark for deletion on EOL. Cinnamon 3.6.x+
+   * Remove condition only.
+   */
+  /* #########################################################################
+   * Class "window-list-preview":Added in Cinnamon 3.6
+   * ######################################################################### */
+}
 .window-list-box {
   spacing: 3px;
   padding-left: 0;
@@ -1474,11 +1543,17 @@ StScrollView StScrollBar {
   border-radius: 3px 3px 0 0;
   font-weight: bold;
   padding: 1px 4px;
+  /* #####################################################################
+   * Class "progress" (window list items progress overlay):Added in Cinnamon 3.4
+   * ##################################################################### */
+  /* Mark for deletion on EOL. Cinnamon 3.6.x+
+   * Remove condition only.
+   */
 }
 .window-list-item-box:active, .window-list-item-box:checked, .window-list-item-box:focus, .window-list-item-box:checked:hover, .window-list-item-box:focus:hover, .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #398ee7;
-  color: #ffffff;
+  color: white;
   border-radius: 3px 3px 0 0;
   font-weight: bold;
 }
@@ -1499,11 +1574,14 @@ StScrollView StScrollBar {
   background-color: #e1e1e1;
   color: #464646;
   border-radius: 0 0 3px 3px;
+  /* Mark for deletion on EOL. Cinnamon 3.6.x+
+   * Remove condition only.
+   */
 }
 .panel-top .window-list-item-box:active, .panel-top .window-list-item-box:checked, .panel-top .window-list-item-box:focus, .panel-top .window-list-item-box:checked:hover, .panel-top .window-list-item-box:focus:hover, .panel-top .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #398ee7;
-  color: #ffffff;
+  color: white;
   border-radius: 0 0 3px 3px;
 }
 .panel-top .window-list-item-box:hover {
@@ -1522,11 +1600,14 @@ StScrollView StScrollBar {
   border-radius: 0 3px 3px 0;
   padding-left: 0;
   padding-right: 0;
+  /* Mark for deletion on EOL. Cinnamon 3.6.x+
+   * Remove condition only.
+   */
 }
 .panel-left .window-list-item-box:active, .panel-left .window-list-item-box:checked, .panel-left .window-list-item-box:focus, .panel-left .window-list-item-box:checked:hover, .panel-left .window-list-item-box:focus:hover, .panel-left .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #398ee7;
-  color: #ffffff;
+  color: white;
   border-radius: 0 3px 3px 0;
 }
 .panel-left .window-list-item-box:hover {
@@ -1545,11 +1626,14 @@ StScrollView StScrollBar {
   border-radius: 3px 0 0 3px;
   padding-left: 0;
   padding-right: 0;
+  /* Mark for deletion on EOL. Cinnamon 3.6.x+
+   * Remove condition only.
+   */
 }
 .panel-right .window-list-item-box:active, .panel-right .window-list-item-box:checked, .panel-right .window-list-item-box:focus, .panel-right .window-list-item-box:checked:hover, .panel-right .window-list-item-box:focus:hover, .panel-right .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #398ee7;
-  color: #ffffff;
+  color: white;
   border-radius: 3px 0 0 3px;
 }
 .panel-right .window-list-item-box:hover {
@@ -1586,6 +1670,7 @@ StScrollView StScrollBar {
   border: 1px solid #ababab;
   color: #464646;
   border-radius: 4px;
+  /* The class itself doesn't respond to the set paddings. */
   font-size: 1em;
   font-weight: bold;
   text-shadow: white 0 0 2px;
@@ -1594,6 +1679,9 @@ StScrollView StScrollBar {
   padding: 5px;
 }
 
+/* =============================================================================
+ * Grouped window list applet (/usr/share/cinnamon/applets/grouped-window-list@cinnamon.org
+ * ============================================================================= */
 /* =============================================================================
  * Sound applet (/usr/share/cinnamon/applets/sound@cinnamon.org/applet.js)
  * ============================================================================= */
@@ -1699,7 +1787,7 @@ StScrollView StScrollBar {
 .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #398ee7;
-  color: #ffffff;
+  color: white;
   border-radius: 3px 3px 0 0;
 }
 .panel-top .workspace-button:hover {
@@ -1711,7 +1799,7 @@ StScrollView StScrollBar {
 .panel-top .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #398ee7;
-  color: #ffffff;
+  color: white;
   border-radius: 0 0 3px 3px;
 }
 .panel-left .workspace-button:hover {
@@ -1723,7 +1811,7 @@ StScrollView StScrollBar {
 .panel-left .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #398ee7;
-  color: #ffffff;
+  color: white;
   border-radius: 0 3px 3px 0;
 }
 .panel-right .workspace-button:hover {
@@ -1735,10 +1823,11 @@ StScrollView StScrollBar {
 .panel-right .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
   background-color: #398ee7;
-  color: #ffffff;
+  color: white;
   border-radius: 3px 0 0 3px;
 }
 
+/* Controls the style when using the "Visual representation" option. */
 .workspace-graph {
   padding: 3px 4px;
   spacing: 4px;
@@ -1771,6 +1860,9 @@ StScrollView StScrollBar {
 /* =============================================================================
  * Panel Launchers applet (/usr/share/cinnamon/applets/panel-launchers@cinnamon.org/applet.js)
  * ============================================================================= */
+/* Mark for deletion on EOL. Cinnamon 3.2.x+
+ * Remove condition and rule.
+ */
 .panel-launchers {
   spacing: 0;
 }
@@ -1805,10 +1897,34 @@ StScrollView StScrollBar {
 /* =============================================================================
  * Applets (/usr/share/cinnamon/js/ui/applet.js)
  * ============================================================================= */
+.applet {
+  /* =========================================================================
+   * Separator applet (/usr/share/cinnamon/applets/separator@cinnamon.org/applet.js)
+   * ========================================================================= */
+}
 .applet-box {
   font-weight: bold;
   color: #464646;
   padding: 0 4px;
+  text-align: center;
+  /* &:checked > .applet-icon,
+   * &:hover > .applet-icon {
+   * }
+   */
+  /* &:active {
+   * }
+   */
+  /* Mark for deletion on EOL. Cinnamon 3.4.x+
+   * Remove condition only.
+   */
+  /* #########################################################################
+   * Added in Cinnamon 3.4
+   *
+   * The Cinnamon St library now reacts to margin, but that also has the
+   * effect of overriding the margin that was put in programmatically for
+   * TextIcon applets between the icon and the label.
+   * This restores some suitable spacing between icons and their labels.
+   * ######################################################################### */
 }
 .applet-box.vertical {
   font-weight: bold;
@@ -1826,7 +1942,7 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #94c2f2;
   background-gradient-end: #abcff5;
-  color: #ffffff;
+  color: white;
   border-radius: 3px 3px 0 0;
 }
 .panel-top .applet-box, .panel-bottom .applet-box {
@@ -1843,7 +1959,7 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #94c2f2;
   background-gradient-end: #abcff5;
-  color: #ffffff;
+  color: white;
   border-radius: 0 0 3px 3px;
 }
 .panel-left .applet-box:highlight, .panel-left .applet-box:checked, .panel-left .applet-box:hover {
@@ -1857,7 +1973,7 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #94c2f2;
   background-gradient-end: #abcff5;
-  color: #ffffff;
+  color: white;
   border-radius: 0 3px 3px 0;
 }
 .panel-right .applet-box:highlight, .panel-right .applet-box:checked, .panel-right .applet-box:hover {
@@ -1871,7 +1987,7 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #94c2f2;
   background-gradient-end: #abcff5;
-  color: #ffffff;
+  color: white;
   border-radius: 3px 0 0 3px;
 }
 .applet-label {
@@ -1883,6 +1999,9 @@ StScrollView StScrollBar {
 }
 .applet-icon {
   icon-size: 22px;
+  /* &:hover,
+   * &:checked    {}
+   */
 }
 .applet-separator {
   padding: 4px;
@@ -2002,12 +2121,18 @@ StScrollView StScrollBar {
 }
 .about-description {
   padding-top: 4px;
+  /* Let the description text wrap at least for two
+   * lines until it "touches" the about-scrollBox.
+   */
   padding-bottom: 20px;
 }
 .about-version {
   padding-left: 7px;
 }
 
+/* =============================================================================
+ * OSD Popups
+ * ============================================================================= */
 .info-osd {
   background-color: #e1e1e1;
   border: 1px solid #ababab;
@@ -2025,6 +2150,10 @@ StScrollView StScrollBar {
   border-radius: 4px;
   padding: 20px;
   spacing: 1em;
+  /* Mark for deletion on EOL. Cinnamon 3.4.x+
+   * Remove condition only.
+   */
+  /*level-bar class added in Cinnamon 3.4.x.*/
 }
 .osd-window .level-bar {
   height: 0.7em;
@@ -2092,6 +2221,16 @@ StScrollView StScrollBar {
   border-radius: 8px 0 0;
 }
 
+/* Mark for deletion on EOL. Cinnamon 3.4.x+
+ * Remove condition only.
+ */
+/* #########################################################################
+ * Systray Applet - Added in Cinnamon 3.4
+ *
+ * .systray is for theming to be applied to the systray as a whole.
+ * .applet-box is used for indicators (not tray icons) within the systray.
+ * Tray icons are not themed.
+ * ######################################################################### */
 .systray {
   spacing: 5px;
 }

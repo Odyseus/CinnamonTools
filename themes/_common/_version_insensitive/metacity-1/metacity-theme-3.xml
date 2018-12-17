@@ -86,10 +86,6 @@
         <border name="button_border" left="0" right="0" top="0" bottom="0" />
     </frame_geometry>
     <frame_geometry name="attached" title_scale="medium" hide_buttons="true" rounded_top_left="4" rounded_top_right="4" rounded_bottom_left="4" rounded_bottom_right="4" parent="normal">
-        <distance name="title_vertical_pad" value="0" />
-        <distance name="bottom_height" value="3" />
-        <distance name="left_width" value="3" />
-        <distance name="right_width" value="3" />
     </frame_geometry>
     <!-- ::: BACKGROUND ::: -->
     <draw_ops name="entire_background_focused">
@@ -360,6 +356,10 @@
         <piece position="title" draw_ops="blank" />
     </frame_style>
     <frame_style name="attached_unfocused" geometry="attached">
+        <piece position="entire_background" draw_ops="entire_background_unfocused" />
+        <piece position="titlebar" draw_ops="titlebar_fill_unfocused" />
+        <piece position="title" draw_ops="title_unfocused" />
+        <piece position="overlay" draw_ops="rounded_border_unfocused" />
         <button function="close" state="normal">
             <draw_ops></draw_ops>
         </button>
@@ -422,6 +422,10 @@
         </button>
     </frame_style>
     <frame_style name="attached_focused" geometry="attached">
+        <piece position="entire_background" draw_ops="entire_background_focused" />
+        <piece position="titlebar" draw_ops="titlebar_fill_focused" />
+        <piece position="title" draw_ops="title_focused" />
+        <piece position="overlay" draw_ops="rounded_border_focused" />
         <button function="close" state="normal">
             <draw_ops></draw_ops>
         </button>

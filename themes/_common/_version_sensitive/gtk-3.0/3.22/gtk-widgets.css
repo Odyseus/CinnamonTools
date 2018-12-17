@@ -287,7 +287,7 @@ calendar.button.highlight {
  *******************/
 check,
 .check,
-radio
+radio,
 .radio {
     min-width: 16px;
     min-height: 16px;
@@ -362,14 +362,14 @@ colorswatch.bottom {
 
 colorswatch.left,
 colorswatch:first-child,
-colorswatch:first-child  overlay {
+colorswatch:first-child overlay {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
 }
 
 colorswatch.right,
 colorswatch:last-child,
-colorswatch:last-child  overlay {
+colorswatch:last-child overlay {
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
@@ -406,7 +406,7 @@ header button.dnd {
  * ComboBoxes *
  **************/
 combobox arrow {
-    -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
+    -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
     min-height: 16px;
     min-width: 16px;
 }
@@ -790,6 +790,38 @@ headerbar .subtitle {
     border-radius: 0;
 }
 
+.titlebar.default-decoration,
+.csd .titlebar.default-decoration,
+.titlebar.default-decoration:backdrop,
+.csd .titlebar.default-decoration:backdrop {
+    background-image: linear-gradient(to bottom, shade(@theme_bg_color, 1.08), @theme_bg_color);
+    min-height: 28px;
+    padding: 0 6px;
+    border-bottom-width: 0;
+}
+
+/* Fix the height of titlebars in window manager decorations */
+.titlebar.default-decoration button.titlebutton {
+    padding-top: 0;
+    padding-bottom: 0;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+}
+
+/* Workaround for header bars that are moved out of position in apps like
+ * gnome-system-monitor in non gnome destkops */
+window.background:not(csd) headerbar {
+    box-shadow: none;
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, @toolbar_bg_a, @toolbar_bg_b);
+}
+
+window.background:not(csd) headerbar:backdrop {
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, @toolbar_bg_a, @toolbar_bg_b);
+}
+
 /************
  * iconview *
  ************/
@@ -880,7 +912,7 @@ levelbar block {
 
 levelbar.vertical block {
     min-width: 3px;
-    min-height: 34px
+    min-height: 34px;
 }
 
 levelbar trough {
@@ -966,8 +998,9 @@ row:selected label:disabled {
 /*****************
  * miscellaneous *
  *****************/
-.dnd {
-    border: 1px solid shade(@theme_selected_bg_color, 1.12);
+*:drop(active):focus,
+*:drop(active) {
+    box-shadow: inset 0 0 0 1px @theme_selected_bg_color;
 }
 
 rubberband,
@@ -1103,14 +1136,14 @@ menu menuitem arrow,
 menu menuitem arrow:dir(ltr),
 .menu menuitem arrow:dir(ltr),
 .context-menu menuitem arrow:dir(ltr) {
-    -gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
+    -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
     margin-left: 10px;
 }
 
 menu menuitem arrow:dir(rtl),
 .menu menuitem arrow:dir(rtl),
 .context-menu menuitem arrow:dir(rtl) {
-    -gtk-icon-source: -gtk-icontheme('pan-end-symbolic-rtl');
+    -gtk-icon-source: -gtk-icontheme("pan-end-symbolic-rtl");
     margin-right: 10px;
 }
 
@@ -1118,7 +1151,7 @@ menu menuitem arrow:dir(rtl),
   https://bugzilla.gnome.org/show_bug.cgi?id=767058*/
 menu menuitem label:dir(rtl),
 .menu menuitem label:dir(rtl),
-.context-menu menuitem label:dir(rtl)
+.context-menu menuitem label:dir(rtl),
 menu menuitem label:dir(ltr),
 .menu menuitem label:dir(ltr),
 .context-menu menuitem label:dir(ltr) {
@@ -1162,7 +1195,7 @@ menu > arrow.top,
 .context-menu > arrow.top {
     margin-top: -6px;
     border-bottom: 1px solid @border;
-    -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
+    -gtk-icon-source: -gtk-icontheme("pan-up-symbolic");
 }
 
 menu > arrow.bottom,
@@ -1170,7 +1203,7 @@ menu > arrow.bottom,
 .context-menu > arrow.bottom {
     margin-bottom: -6px;
     border-top: 1px solid @border;
-    -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
+    -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
 }
 
 menu > arrow:hover,
@@ -1506,26 +1539,17 @@ paned.vertical > separator.wide {
 }
 
 paned.horizontal > separator {
+    margin: 0 -3px 0 -3px;
+    padding: 0 3px 0 3px;
     background-repeat: repeat-y;
-}
-
-paned.horizontal > separator:dir(ltr) {
-    margin: 0 -8px 0 0;
-    padding: 0 8px 0 0;
-    background-position: left;
-}
-
-paned.horizontal > separator:dir(rtl) {
-    margin: 0 0 0 -8px;
-    padding: 0 0 0 8px;
-    background-position: right;
+    background-position: center;
 }
 
 paned.vertical > separator {
-    margin: 0 0 -8px 0;
-    padding: 0 0 8px 0;
+    margin: -3px 0 -3px 0;
+    padding: 3px 0 3px 0;
     background-repeat: repeat-x;
-    background-position: top;
+    background-position: center;
 }
 
 /************
@@ -1654,8 +1678,8 @@ scale trough {
     box-shadow: inset 1px 1px alpha(black, 0.1), 0 1px alpha(white, 0.5);
 }
 
-.primary-toolbar  scale trough,
-headerbar  scale trough {
+.primary-toolbar scale trough,
+headerbar scale trough {
     background-color: shade(@theme_bg_color, 0.85);
 }
 
@@ -1737,8 +1761,8 @@ scale.vertical indicator {
 }
 
 /*************
-* scrollbar *
-*************/
+ * scrollbar *
+ *************/
 
 /* Set to 1. DO NOT REMOVE STEPPERS!!! */
 scrollbar {
@@ -1850,7 +1874,7 @@ scrollbar.vertical slider:hover {
 }
 
 /* Adding support for scrollbar buttons so it's easier for users who really want
-*  them to enable them. */
+ * them to enable them. */
 scrollbar button {
     min-width: 10px;
     min-height: 10px;
@@ -1860,22 +1884,22 @@ scrollbar button {
 
 scrollbar.vertical button.up {
     padding: 2px 0;
-    -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
+    -gtk-icon-source: -gtk-icontheme("pan-up-symbolic");
 }
 
 scrollbar.vertical button.down {
     padding: 2px 0;
-    -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
+    -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
 }
 
 scrollbar.horizontal button.down {
     padding: 0 2px;
-    -gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
+    -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
 }
 
 scrollbar.horizontal button.up {
     padding: 0 2px;
-    -gtk-icon-source: -gtk-icontheme('pan-start-symbolic');
+    -gtk-icon-source: -gtk-icontheme("pan-start-symbolic");
 }
 
 scrollbar.overlay-indicator:not(.dragging):not(.hovering) button {
@@ -1887,9 +1911,9 @@ scrollbar.overlay-indicator:not(.dragging):not(.hovering) button {
     -gtk-icon-source: none;
 }
 
-/*******************
-* scrolled windows *
-********************/
+/********************
+ * scrolled windows *
+ ********************/
 /*
 overshoot.top {
     background-image: -gtk-gradient(radial, center top, 0, center top, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
@@ -1971,9 +1995,9 @@ undershoot.right {
     background-position: right center;
 }
 */
-/*************
-* separators *
-**************/
+/**************
+ * separators *
+ **************/
 separator {
     min-height: 0;
     min-width: 0;
@@ -2214,7 +2238,6 @@ spinbutton.vertical entry:disabled {
     to {
         -gtk-icon-transform: rotate(1turn);
     }
-
 }
 
 spinner {
@@ -2363,9 +2386,9 @@ treeview.view {
     -GtkTreeView-horizontal-separator: 2;
     -GtkTreeView-vertical-separator: 0;
     -GtkTreeView-grid-line-width: 1;
-    -GtkTreeView-grid-line-pattern: '';
+    -GtkTreeView-grid-line-pattern: "";
     -GtkTreeView-tree-line-width: 1;
-    -GtkTreeView-tree-line-pattern: '';
+    -GtkTreeView-tree-line-pattern: "";
     -GtkTreeView-expander-size: 12;
     border-left-color: @border;
     border-top-color: @border;

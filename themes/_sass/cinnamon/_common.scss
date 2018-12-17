@@ -1,7 +1,7 @@
-// #############################################################################
-// Section common with Gnome Shell. It contains a few cinnamon specific styles (rare occurences).
-// #############################################################################
-
+/* #############################################################################
+ * Section common with Gnome Shell.
+ * It contains a few cinnamon specific styles (rare occurences).
+ * ############################################################################# */
 stage {
     font-family: $font_family;
     font-size: $font_size;
@@ -71,7 +71,6 @@ StScrollView {
 /* =============================================================================
  * Switches (to be used in menus)
  * ============================================================================= */
-
 .toggle-switch {
     width: 55px;
     height: 22px;
@@ -84,16 +83,15 @@ StScrollView {
             border-image: url("assets/switch-on.svg") 4;
         }
     }
+
 }
 
 /* =============================================================================
  * Shared button properties
  * ============================================================================= */
-
 .notification-button,
 .notification-icon-button {
     @include button(normal);
-
     font-size: 0.95em;
     font-weight: normal;
     text-align: center;
@@ -129,9 +127,10 @@ StScrollView {
  * PopupMenu (/usr/share/cinnamon/js/ui/popupMenu.js)
  * ============================================================================= */
 
-// Mark for deletion on EOL. Cinnamon 3.2.x+
-// Remove condition and rule/s.
-@if $cinnamon_version == "3.0" {
+/* Mark for deletion on EOL. Cinnamon 3.2.x+
+ * Remove condition and rule/s.
+ */
+@if $cinnamon_version == 30 {
     .popup-menu-boxpointer {
         -arrow-border-radius: 4px;
         -arrow-background-color: lighten($bg_color, 4%);
@@ -194,11 +193,12 @@ StScrollView {
             @include entry($state: hover);
         }
     }
+
 }
 
-// .popup-submenu-menu-item:open {
-// }
-
+/* .popup-submenu-menu-item:open {
+ *}
+ */
 .popup-sub-menu {
     background-color: darken($bg_color, 2%);
     border-top: 2px solid lighten($border_color, 13%);
@@ -232,6 +232,7 @@ StScrollView {
             }
         }
     }
+
 }
 
 .popup-combo-menu {
@@ -241,9 +242,9 @@ StScrollView {
     border-radius: 4px;
 }
 
-// The remaining popup-menu sizing is all done in ems, so that if you
-// override .popup-menu.font-size, everything else will scale with it.
-
+/* The remaining popup-menu sizing is all done in ems, so that if you
+ * override .popup-menu.font-size, everything else will scale with it.
+ */
 .popup-menu-content {
     padding: 1em 0;
 }
@@ -323,7 +324,6 @@ StScrollView {
 /* =============================================================================
  * Panel (/usr/share/cinnamon/js/ui/panel.js)
  * ============================================================================= */
-
 #panel {
     color: $fg_color;
     font-size: 1em;
@@ -385,10 +385,11 @@ StScrollView {
     &-top {
         @include panel-background(top);
 
-        // I replaced the window-list-item class from using the border-image property
-        // to use the background-gradient-* properties. The images had a 1 pixel
-        // transparent border so, to imitate the same effect, I added a 1 pixel
-        // transparent border to all three panel boxes from all panels.
+        /* I replaced the window-list-item class from using the border-image property
+         * to use the background-gradient-* properties. The images had a 1 pixel
+         * transparent border so, to imitate the same effect, I added a 1 pixel
+         * transparent border to all three panel boxes from all panels.
+         */
         #panelLeft,
         #panelRight,
         #panelCenter {
@@ -452,6 +453,7 @@ StScrollView {
             background-color: transparentize($selected_bg_color, 0.1);
         }
     }
+
 }
 
 .system-status-icon {
@@ -461,17 +463,18 @@ StScrollView {
     margin: 0;
     icon-size: 1.14em;
 
-    // Mark for deletion on EOL. Cinnamon 3.4.x+
-    // Remove condition only.
-    @if $cinnamon_version == "3.4" {
-        // #####################################################################
-        // Added in Cinnamon 3.4
-        //
-        // The new warning/error colors used on .system-status-icon are
-        // currently used by the power applet to warn the user when their
-        // battery is low.
-        // #####################################################################
+    /* Mark for deletion on EOL. Cinnamon 3.4.x+
+     * Remove condition only.
+     */
+    @if $cinnamon_version >= 34 {
 
+        /* #####################################################################
+         * Added in Cinnamon 3.4
+         *
+         * The new warning/error colors used on .system-status-icon are
+         * currently used by the power applet to warn the user when their
+         * battery is low.
+         * ##################################################################### */
         &.warning {
             color: $warning_color;
         }
@@ -480,18 +483,20 @@ StScrollView {
             color: $error_color;
         }
     }
+
 }
 
-// #appMenu {
-// }
+/* #appMenu {
+ * }
+ */
 
-// .popup-menu-item-dot {
-// }
+/* .popup-menu-item-dot {
+ * }
+ */
 
 /* =============================================================================
  * Overview (/usr/share/cinnamon/js/ui/overview.js)
  * ============================================================================= */
-
 #overview {
     spacing: 12px;
 }
@@ -500,10 +505,16 @@ StScrollView {
     background-color: transparent;
 }
 
+@if $cinnamon_version >= 40 {
+    .overview-empty-placeholder {
+        color: $white;
+        font-size: 2em;
+    }
+}
+
 /* =============================================================================
  * Overview (/usr/share/cinnamon/js/ui/expoThumbnail.js)
  * ============================================================================= */
-
 .workspace-thumbnails {
     spacing: 26px;
     padding-left: 0.9em;
@@ -555,7 +566,6 @@ StScrollView {
 /* =============================================================================
  * Overview (/usr/share/cinnamon/js/ui/expo.js)
  * ============================================================================= */
-
 .workspace-add-button {
     background-image: url("assets/plus.png");
     height: 200px;
@@ -585,29 +595,36 @@ StScrollView {
 /* =============================================================================
  * Overview (/usr/share/cinnamon/js/ui/workspace.js)
  * ============================================================================= */
-
 .window-caption {
     @include background(base-frame, null, 4px);
-
     font-weight: bold;
     spacing: 25px;
     font-size: 1em;
     padding: 6px 8px;
+    spacing: 8px;
     -cinnamon-caption-spacing: 10px;
 
-    &#selected {
-        @include background(app-selected, null, 4px);
-
-        font-weight: bold;
-        spacing: 25px;
+    @if $cinnamon_version < 40 {
+        &#selected {
+            @include background(app-selected, null, 4px);
+            font-weight: bold;
+            spacing: 25px;
+        }
     }
+
+    @if $cinnamon_version >= 40 {
+        &:focus {
+            @include background(app-selected, null, 4px);
+        }
+    }
+
 }
 
 .window-close {
     background-image: url("assets/close.svg");
     height: 35px;
     width: 35px;
-    -cinnamon-close-overlap: 25px;
+    -cinnamon-close-overlap: 16px;
     transition-duration: 150;
 
     &:hover {
@@ -615,15 +632,26 @@ StScrollView {
         transition-duration: 150;
     }
 
-    &:rtl {
-        -st-background-image-shadow: 2px 2px 6px transparentize(black, 0.5);
+    @if $cinnamon_version < 40 {
+        &:rtl {
+            -st-background-image-shadow: 2px 2px 6px transparentize(black, 0.5);
+        }
+    }
+
+}
+
+@if $cinnamon_version >= 40 {
+    .window-border {
+        border: 3px $selected_bg_color;
+        border-radius: 4px;
+        background-color: rgba(255, 255, 255, 0.05);/* Cover rounded corners and some bad adjustment gaps */
+        box-shadow: 0 0 0 1px $selected_bg_color inset;
     }
 }
 
 /* =============================================================================
  * Desklets (/usr/share/cinnamon/js/ui/desklet.js)
  * ============================================================================= */
-
 .desklet {
     color: $fg_color;
 
@@ -638,7 +666,6 @@ StScrollView {
 
     &-with-borders {
         @include background(base-frame, null, 4px);
-
         font-weight: bold;
         padding: 8px;
     }
@@ -670,14 +697,13 @@ StScrollView {
     }
 }
 
-// Class used by the default desklet called "Digital photo frame" (photoframe@cinnamon.org)
+/* Class used by the default desklet called "Digital photo frame" (photoframe@cinnamon.org) */
 .photoframe-box {
     @include background(base-frame, null, 4px);
-
     padding: 10px;
 }
 
-// Class used by the default desklet called "Clock desklet" (clock@cinnamon.org)
+/* Class used by the default desklet called "Clock desklet" (clock@cinnamon.org) */
 .clock-desklet-label {
     color: $fg_color;
 }
@@ -685,10 +711,8 @@ StScrollView {
 /* =============================================================================
  * Looking Glass (/usr/share/cinnamon/js/ui/lookingGlass.js)
  * ============================================================================= */
-
 #LookingGlassDialog {
     @include background(base-frame, null, 4px);
-
     transition-duration: 300;
     padding: 8px;
 }
@@ -696,7 +720,6 @@ StScrollView {
 /* =============================================================================
  * Calendar applet (/usr/share/cinnamon/applets/calendar@cinnamon.org/calendar.js)
  * ============================================================================= */
-
 .calendar {
     padding: 0.4em 1.75em 0.8em;
     spacing-rows: 0;
@@ -795,7 +818,7 @@ StScrollView {
     }
 }
 
-// Calendar applet (/usr/share/cinnamon/applets/calendar@cinnamon.org/applet.js)
+/* Calendar applet (/usr/share/cinnamon/applets/calendar@cinnamon.org/applet.js) */
 .datemenu-date-label {
     padding: 0.5em 0 1em;
     font-weight: bold;
@@ -804,12 +827,10 @@ StScrollView {
 }
 
 /* =============================================================================
- * Notifications  (/usr/share/cinnamon/js/ui/messageTray.js)
+ * Notifications    (/usr/share/cinnamon/js/ui/messageTray.js)
  * ============================================================================= */
-
 #notification {
     @include background(base-frame, null, 4px);
-
     font-size: 0.95em;
     padding: 8px;
     spacing-rows: 10px;
@@ -866,18 +887,19 @@ StScrollView {
         spacing: 10px;
     }
 
-    // For the links inside notifications.
-    // These URLs are already underlined with Pango markup.
+    /* For the links inside notifications.
+     * These URLs are already underlined with Pango markup.
+     */
     .url-highlighter {
         link-color: $link_color;
     }
 }
 
-// We use row-span = 2 for the image cell, which prevents its height preferences to be
-// taken into account during allocation, so its height ends up being limited by the height
-// of the content in the other rows. To avoid showing a stretched image, we set the minimum
-// height of the table to be ICON_SIZE + IMAGE_SIZE + spacing-rows = 24 + 125 + 10 = 159
-
+/* We use row-span = 2 for the image cell, which prevents its height preferences to be
+ * taken into account during allocation, so its height ends up being limited by the height
+ * of the content in the other rows. To avoid showing a stretched image, we set the minimum
+ * height of the table to be ICON_SIZE + IMAGE_SIZE + spacing-rows = 24 + 125 + 10 = 159
+ */
 .notification-with-image {
     min-height: 159px;
     color: $fg_color;
@@ -885,14 +907,12 @@ StScrollView {
 
 .notification-button {
     @include button(normal);
-
     font-size: 1.1em;
     padding: 4px 20px;
 }
 
 .notification-icon-button {
     @include button(normal);
-
     padding: 5px;
 
     &:focus {
@@ -905,9 +925,8 @@ StScrollView {
 }
 
 /* =============================================================================
- * Alt Tab  (/usr/share/cinnamon/js/ui/appSwitcher/classicSwitcher.js)
+ * Alt Tab    (/usr/share/cinnamon/js/ui/appSwitcher/classicSwitcher.js)
  * ============================================================================= */
-
 #altTabPopup {
     padding: 8px;
     spacing: 16px;
@@ -915,7 +934,6 @@ StScrollView {
 
 .switcher-list {
     @include background(base-frame, null, 4px);
-
     padding: 20px;
     font-size: 1em;
     font-weight: bold;
@@ -987,24 +1005,21 @@ StScrollView {
 /* =============================================================================
  * Hot corner ripple effect (/usr/share/cinnamon/js/ui/hotCorner.js).
  * ============================================================================= */
-
 .ripple-box,
 .ripple-box:rtl {
     width: 100px;
     height: 100px;
-    border-radius: 50px; // 50% is not recognized.
-    background-gradient-direction: radial; // start=center, end=edges
+    border-radius: 50px; /* 50% is not recognized. */
+    background-gradient-direction: radial; /* start=center, end=edges */
     background-gradient-start: transparentize($selected_bg_color, 0.7);
     background-gradient-end: transparentize($selected_bg_color, 0.8);
 }
 
 /* =============================================================================
- * Modal dialogs  (/usr/share/cinnamon/js/ui/modalDialog.js)
+ * Modal dialogs    (/usr/share/cinnamon/js/ui/modalDialog.js)
  * ============================================================================= */
-
 .modal-dialog {
     @include background(base-frame, null, 4px);
-
     font-size: 1.1em;
     padding: 30px;
 
@@ -1015,7 +1030,6 @@ StScrollView {
 
     &-button {
         @include button(normal);
-
         height: 22px;
         font-size: 1.1em;
         padding: 4px 20px;
@@ -1026,12 +1040,10 @@ StScrollView {
 
         &:focus {
             @include button(focus);
-
             padding: 4px 20px;
 
             &:hover {
                 @include button(focus-hover);
-
                 padding: 4px 20px;
             }
 
@@ -1050,12 +1062,12 @@ StScrollView {
             color: transparentize($fg_color, 0.2);
         }
     }
+
 }
 
 /* =============================================================================
  * Run dialog (/usr/share/cinnamon/js/ui/runDialog.js)
  * ============================================================================= */
-
 .run-dialog {
     padding: 10px 12px 0;
 
@@ -1095,7 +1107,6 @@ StScrollView {
 /* =============================================================================
  * Lightbox (/usr/share/cinnamon/js/ui/lightbox.js)
  * ============================================================================= */
-
 .lightbox {
     background-color: transparentize(black, 0.6);
 }
@@ -1103,7 +1114,6 @@ StScrollView {
 /* =============================================================================
  * Flashspot (/usr/share/cinnamon/js/ui/flashspot.js)
  * ============================================================================= */
-
 .flashspot {
     background-color: white;
 }
@@ -1111,7 +1121,6 @@ StScrollView {
 /* =============================================================================
  * CinnamonMountOperation Dialogs (/usr/share/cinnamon/js/ui/cinnamonMountOperation.js)
  * ============================================================================= */
-
 .cinnamon-mount-operation-icon {
     icon-size: 48px;
 }
@@ -1200,7 +1209,6 @@ StScrollView {
 /* =============================================================================
  * Magnifier (/usr/share/cinnamon/js/ui/magnifier.js)
  * ============================================================================= */
-
 .magnifier-zoom-region {
     border: 2px solid maroon;
 
@@ -1212,7 +1220,6 @@ StScrollView {
 /* =============================================================================
  * On screen keyboard (/usr/share/cinnamon/js/ui/keyboard.js)
  * ============================================================================= */
-
 #keyboard {
     background-color: $bg_color;
     box-shadow: inset 0 1px darken($border_color, 48%);
@@ -1229,7 +1236,6 @@ StScrollView {
 
 .keyboard-key {
     @include button(normal);
-
     min-height: 30px;
     min-width: 30px;
     font-size: 1.5em;
@@ -1265,7 +1271,6 @@ StScrollView {
 /* =============================================================================
  * Menu applet (/usr/share/cinnamon/applets/menu@cinnamon.org/applet.js)
  * ============================================================================= */
-
 .menu-favorites-box {
     background-color: lighten($bg_color, 4%);
     border: 1px solid silver;
@@ -1274,7 +1279,7 @@ StScrollView {
 }
 
 .menu-favorites-button {
-    padding: 10px 15px;
+    padding: 0.9em 1em;
     border-radius: 4px;
 
     &:hover {
@@ -1286,11 +1291,6 @@ StScrollView {
     padding: 10px 30px;
 }
 
-// Class added to the default menu for retro-compatibility.
-// .menu-applications-box {
-//     padding: 10px 10px 0;
-// }
-
 .menu-applications-inner-box,
 .menu-applications-outer-box {
     padding: 10px 10px 0;
@@ -1301,18 +1301,18 @@ StScrollView {
     max-width: 10px;
 
     &:highlighted {
-        // This style is used in menu application buttons for applications which were newly installed.
+
+        /* This style is used in menu application buttons for applications which were newly installed. */
         font-weight: bold;
     }
 }
 
 .menu-application-button-selected {
     @include background(app-selected, null, 4px);
-
     padding: 7px;
 
     &:highlighted {
-        font-weight: bold; // This style is used in menu application buttons for applications which were newly installed.
+        font-weight: bold;/* This style is used in menu application buttons for applications which were newly installed. */
     }
 }
 
@@ -1338,7 +1338,6 @@ StScrollView {
 
 .menu-category-button-selected {
     @include background(app-selected, null, 4px);
-
     padding: 7px;
 }
 
@@ -1352,9 +1351,9 @@ StScrollView {
     }
 }
 
-// Name and description of the currently hovered item in the menu.
-// This appears on the bottom right hand corner of the menu.
-
+/* Name and description of the currently hovered item in the menu.
+ * This appears on the bottom right hand corner of the menu.
+ */
 .menu-selected-app-box {
     padding-right: 30px;
     padding-left: 28px;
@@ -1390,16 +1389,19 @@ StScrollView {
     color: $fg_color;
 }
 
-// .menu-context-menu {
-// }
+/* .menu-context-menu    {
+ *
+ * }
+ */
 
-// .menu-background {
-// }
+/* .menu-background    {
+ *
+ * }
+ */
 
 /* =============================================================================
  * Window list applet (/usr/share/cinnamon/applets/window-list@cinnamon.org/applet.js)
  * ============================================================================= */
-
 .window-list {
     &-box {
         spacing: 3px;
@@ -1420,7 +1422,6 @@ StScrollView {
 
     &-item-box {
         @include background(normal, bottom);
-
         font-weight: bold;
         padding: 1px 4px;
 
@@ -1431,7 +1432,6 @@ StScrollView {
         &:focus:hover,
         &:active:hover {
             @include background(pressed, bottom);
-
             font-weight: bold;
         }
 
@@ -1439,13 +1439,14 @@ StScrollView {
             @include background(hover, bottom);
         }
 
-        // #####################################################################
-        // Class "progress" (window list items progress overlay): Added in Cinnamon 3.4
-        // #####################################################################
+        /* #####################################################################
+         * Class "progress" (window list items progress overlay):Added in Cinnamon 3.4
+         * ##################################################################### */
 
-        // Mark for deletion on EOL. Cinnamon 3.6.x+
-        // Remove condition only.
-        @if $cinnamon_version == "3.4" {
+        /* Mark for deletion on EOL. Cinnamon 3.6.x+
+         * Remove condition only.
+         */
+        @if $cinnamon_version >= 34 {
             .progress {
                 border-radius: 3px 3px 0 0;
                 background-gradient-direction: vertical;
@@ -1470,18 +1471,19 @@ StScrollView {
                 @include background(hover, top);
             }
 
-            // Mark for deletion on EOL. Cinnamon 3.6.x+
-            // Remove condition only.
-            @if $cinnamon_version == "3.4" {
+            /* Mark for deletion on EOL. Cinnamon 3.6.x+
+             * Remove condition only.
+             */
+            @if $cinnamon_version >= 34 {
                 .progress {
                     border-radius: 0 0 3px 3px;
                 }
             }
+
         }
 
         .panel-left & {
             @include background(normal, left);
-
             padding-left: 0;
             padding-right: 0;
 
@@ -1498,18 +1500,19 @@ StScrollView {
                 @include background(hover, left);
             }
 
-            // Mark for deletion on EOL. Cinnamon 3.6.x+
-            // Remove condition only.
-            @if $cinnamon_version == "3.4" {
+            /* Mark for deletion on EOL. Cinnamon 3.6.x+
+             * Remove condition only.
+             */
+            @if $cinnamon_version >= 34 {
                 .progress {
                     border-radius: 0 3px 3px 0;
                 }
             }
+
         }
 
         .panel-right & {
             @include background(normal, right);
-
             padding-left: 0;
             padding-right: 0;
 
@@ -1526,9 +1529,10 @@ StScrollView {
                 @include background(hover, right);
             }
 
-            // Mark for deletion on EOL. Cinnamon 3.6.x+
-            // Remove condition only.
-            @if $cinnamon_version == "3.4" {
+            /* Mark for deletion on EOL. Cinnamon 3.6.x+
+             * Remove condition only.
+             */
+            @if $cinnamon_version >= 34 {
                 .progress {
                     border-radius: 3px 0 0 3px;
                 }
@@ -1552,17 +1556,19 @@ StScrollView {
         }
     }
 
-    // Mark for deletion on EOL. Cinnamon 3.6.x+
-    // Remove condition only.
-    @if $cinnamon_version == "3.4" {
-        // #########################################################################
-        // Class "window-list-preview": Added in Cinnamon 3.6
-        // #########################################################################
+    /* Mark for deletion on EOL. Cinnamon 3.6.x+
+     * Remove condition only.
+     */
+    @if $cinnamon_version >= 34 {
 
+        /* #########################################################################
+         * Class "window-list-preview":Added in Cinnamon 3.6
+         * ######################################################################### */
         &-preview {
             @include background(base-frame, null, 4px);
 
-            // The class itself doesn't respond to the set paddings.
+            /* The class itself doesn't respond to the set paddings. */
+
             // padding: 6px 12px 12px;
             font-size: 1em;
             font-weight: bold;
@@ -1576,9 +1582,171 @@ StScrollView {
 }
 
 /* =============================================================================
+ * Grouped window list applet (/usr/share/cinnamon/applets/grouped-window-list@cinnamon.org
+ * ============================================================================= */
+@if $cinnamon_version >= 40 {
+    .grouped-window-list {
+        &-item-box {
+            @include background(normal, bottom);
+            font-weight: bold;
+            padding: 1px 0 4px 4px;
+            border-image: none;
+
+            &:active,
+            &:active:hover,
+            &:checked,
+            &:checked:hover,
+            &:focus,
+            &:focus:active:hover,
+            &:focus:hover,
+            &:hover {
+                @include background(pressed, bottom);
+                font-weight: bold;
+            }
+
+            .progress {
+                border-radius: 3px 3px 0 0;
+                background-gradient-direction: vertical;
+                background-gradient-start: transparentize($selected_bg_color, 0.5);
+                background-gradient-end: transparentize($selected_bg_color, 0.1);
+            }
+
+            .panel-top & {
+                @include background(normal, top);
+
+                &:hover {
+                    @include background(hover, top);
+                }
+
+                &:focus:hover,
+                &:focus:active:hover,
+                &:focus {
+                    @include background(pressed, top);
+                }
+
+                .progress {
+                    border-radius: 0 0 3px 3px;
+                }
+            }
+
+            .panel-left & {
+                @include background(normal, left);
+                padding-left: 0;
+                padding-right: 0;
+
+                &:hover {
+                    @include background(hover, left);
+                }
+
+                &:focus:hover,
+                &:focus:active:hover,
+                &:focus {
+                    @include background(pressed, left);
+                }
+
+                .progress {
+                    border-radius: 0 3px 3px 0;
+                }
+            }
+
+            .panel-right & {
+                @include background(normal, right);
+                padding-left: 0;
+                padding-right: 0;
+
+                &:hover {
+                    @include background(hover, right);
+                }
+
+                &:focus:hover,
+                &:focus:active:hover,
+                &:focus {
+                    @include background(pressed, right);
+                }
+
+                .progress {
+                    border-radius: 3px 0 0 3px;
+                }
+            }
+
+        }
+
+        &-item-demands-attention {
+            @include background(attention, bottom);
+
+            .panel-top & {
+                @include background(attention, top);
+            }
+
+            .panel-left & {
+                @include background(attention, left);
+            }
+
+            .panel-right & {
+                @include background(attention, right);
+            }
+        }
+
+        &-thumbnail-menu {
+            @include background(base-frame, null, 4px);
+            padding: 20px;
+            font-size: 1em;
+            font-weight: bold;
+
+            .item-box {
+                padding: 10px;
+                border: 1px solid transparent;
+                border-radius: 0;
+                spacing: 4px;
+
+                &:outlined {
+                    padding: 6px;
+                    border: 2px solid rgba(85, 85, 85, 0);
+                }
+
+                &:selected {
+                    @include background(app-selected, null, 4px);
+                }
+            }
+
+            .thumbnail {
+                width: 256px;
+            }
+
+            .separator {
+                width: 1px;
+                background: transparentize($white, 0.77);
+            }
+        }
+
+        &-thumbnail-label {
+            padding-left: 4px;
+        }
+
+        &-number-label {
+            z-index: 99;
+            color: $fg_color;
+        }
+
+        &-badge {
+            border-radius: 256px;
+            background-color: $white;
+        }
+
+        &-button-label {
+            padding-left: 4px;
+        }
+
+        &-thumbnail-alert {
+            background: transparentize(red, 0.9);
+        }
+    }
+
+}
+
+/* =============================================================================
  * Sound applet (/usr/share/cinnamon/applets/sound@cinnamon.org/applet.js)
  * ============================================================================= */
-
 .sound-player {
     StButton {
         width: 22px;
@@ -1665,7 +1833,6 @@ StScrollView {
 /* =============================================================================
  * Workspace Switcher applet (/usr/share/cinnamon/applets/workspace-switcher@cinnamon.org/applet.js)
  * ============================================================================= */
-
 .workspace-button {
     width: 20px;
     height: 6px;
@@ -1683,7 +1850,6 @@ StScrollView {
 
     &:hover {
         @include background(hover, bottom);
-
         border-color: lighten($border_color, 11%);
     }
 
@@ -1720,10 +1886,10 @@ StScrollView {
             @include background(pressed, right);
         }
     }
+
 }
 
-// Controls the style when using the "Visual representation" option.
-
+/* Controls the style when using the "Visual representation" option. */
 .workspace-graph {
     padding: 3px 4px;
     spacing: 4px;
@@ -1755,15 +1921,17 @@ StScrollView {
             -inactive-window-border: transparentize(black, 0.3);
         }
     }
+
 }
 
 /* =============================================================================
  * Panel Launchers applet (/usr/share/cinnamon/applets/panel-launchers@cinnamon.org/applet.js)
  * ============================================================================= */
 
-// Mark for deletion on EOL. Cinnamon 3.2.x+
-// Remove condition and rule.
-@if $cinnamon_version == "3.0" {
+/* Mark for deletion on EOL. Cinnamon 3.2.x+
+ * Remove condition and rule.
+ */
+@if $cinnamon_version == 30 {
     #panel-launchers-box {
         padding-left: 0;
     }
@@ -1776,6 +1944,7 @@ StScrollView {
             @include background(hover, null, 3px);
         }
     }
+
 }
 
 .panel-launchers {
@@ -1816,12 +1985,12 @@ StScrollView {
 /* =============================================================================
  * Applets (/usr/share/cinnamon/js/ui/applet.js)
  * ============================================================================= */
-
 .applet {
     &-box {
         font-weight: bold;
         color: $fg_color;
         padding: 0 4px;
+        text-align: center;
 
         &.vertical {
             font-weight: bold;
@@ -1841,24 +2010,28 @@ StScrollView {
             // border-radius: 3px 3px 0 0;
         }
 
-        // &:checked > .applet-icon,
-        // &:hover > .applet-icon {
-        // }
-        // &:active {
-        // }
+        /* &:checked > .applet-icon,
+         * &:hover > .applet-icon {
+         * }
+         */
 
-        // Mark for deletion on EOL. Cinnamon 3.4.x+
-        // Remove condition only.
-        @if $cinnamon_version == "3.4" {
-            // #########################################################################
-            // Added in Cinnamon 3.4
-            //
-            // The Cinnamon St library now reacts to margin, but that also has the
-            // effect of overriding the margin that was put in programmatically for
-            // TextIcon applets between the icon and the label.
-            // This restores some suitable spacing between icons and their labels.
-            // #########################################################################
+        /* &:active {
+         * }
+         */
 
+        /* Mark for deletion on EOL. Cinnamon 3.4.x+
+         * Remove condition only.
+         */
+        @if $cinnamon_version >= 34 {
+
+            /* #########################################################################
+             * Added in Cinnamon 3.4
+             *
+             * The Cinnamon St library now reacts to margin, but that also has the
+             * effect of overriding the margin that was put in programmatically for
+             * TextIcon applets between the icon and the label.
+             * This restores some suitable spacing between icons and their labels.
+             * ######################################################################### */
             .panel-top &,
             .panel-bottom & {
                 spacing: 3px;
@@ -1906,6 +2079,7 @@ StScrollView {
                 // border-radius: 3px 0 0 3px;
             }
         }
+
     }
 
     &-label {
@@ -1920,16 +2094,16 @@ StScrollView {
 
     &-icon {
         icon-size: 22px;
+        // DUMMY
 
-        // &:hover,
-        // &:checked {
-        // }
+        /* &:hover,
+         * &:checked    {}
+         */
     }
 
-    // =========================================================================
-    // Separator applet (/usr/share/cinnamon/applets/separator@cinnamon.org/applet.js)
-    // =========================================================================
-
+    /* =========================================================================
+     * Separator applet (/usr/share/cinnamon/applets/separator@cinnamon.org/applet.js)
+     * ========================================================================= */
     &-separator {
         padding: 4px;
     }
@@ -1948,10 +2122,8 @@ StScrollView {
 /* =============================================================================
  * Workspace OSD (/usr/share/cinnamon/js/ui/windowManager.js)
  * ============================================================================= */
-
 .workspace-osd {
     @include background(base-frame, null, 4px);
-
     padding: 9px 15px;
     font-weight: bold;
     font-size: 2.8em;
@@ -1960,7 +2132,6 @@ StScrollView {
 /* =============================================================================
  * Notification applet (/usr/share/cinnamon/applets/notifications@cinnamon.org/applet.js)
  * ============================================================================= */
-
 .notification-applet-padding {
     padding: 0.5em 1em;
 }
@@ -1968,7 +2139,6 @@ StScrollView {
 /* =============================================================================
  * Check Boxes
  * ============================================================================= */
-
 .check-box {
     CinnamonGenericContainer {
         spacing: 0.2em;
@@ -2022,7 +2192,6 @@ StScrollView {
 /* =============================================================================
  * User applet (/usr/share/cinnamon/applets/user@cinnamon.org/applet.js)
  * ============================================================================= */
-
 .user-icon {
     background-color: lighten($bg_color, 4%);
     border: 1px solid lighten($border_color, 8%);
@@ -2039,7 +2208,6 @@ StScrollView {
 /* =============================================================================
  * About Dialog (/usr/share/cinnamon/js/ui/modalDialog.js)
  * ============================================================================= */
-
 .about {
     &-content {
         width: 550px;
@@ -2072,7 +2240,11 @@ StScrollView {
 
     &-description {
         padding-top: 4px;
-        // Let the description text wrap at least for two lines until it "touches" the about-scrollBox.
+        // DUMMY
+
+        /* Let the description text wrap at least for two
+         * lines until it "touches" the about-scrollBox.
+         */
         padding-bottom: 20px;
     }
 
@@ -2081,13 +2253,11 @@ StScrollView {
     }
 }
 
-//  =============================================================================
-//  OSD Popups
-//  =============================================================================
-
+/* =============================================================================
+ * OSD Popups
+ * ============================================================================= */
 .info-osd {
     @include background(base-frame, null, 4px);
-
     font-size: 2em;
     padding: 12px;
     text-align: center;
@@ -2095,14 +2265,15 @@ StScrollView {
 
 .osd-window {
     @include background(base-frame, null, 4px);
-
     padding: 20px;
     spacing: 1em;
 
-    // Mark for deletion on EOL. Cinnamon 3.4.x+
-    // Remove condition only.
-    @if $cinnamon_version == "3.4" {
-        // level-bar class added in Cinnamon 3.4.x.
+    /* Mark for deletion on EOL. Cinnamon 3.4.x+
+     * Remove condition only.
+     */
+    @if $cinnamon_version >= 34 {
+
+        /*level-bar class added in Cinnamon 3.4.x.*/
         .level-bar {
             height: 0.7em;
             border-radius: 0.3em;
@@ -2120,7 +2291,6 @@ StScrollView {
 /* =============================================================================
  * Snap/Tile Chrome (/usr/share/cinnamon/js/ui/windowManager.js)
  * ============================================================================= */
-
 .tile-preview {
     background-color: transparentize($selected_bg_color, 0.6);
     border: 1px solid transparentize($selected_bg_color, 0.2);
@@ -2183,17 +2353,18 @@ StScrollView {
     }
 }
 
-// Mark for deletion on EOL. Cinnamon 3.4.x+
-// Remove condition only.
-@if $cinnamon_version == "3.4" {
-    // #########################################################################
-    // Systray Applet - Added in Cinnamon 3.4
-    //
-    // .systray is for theming to be applied to the systray as a whole.
-    // .applet-box is used for indicators (not tray icons) within the systray.
-    // Tray icons are not themed.
-    // #########################################################################
+/* Mark for deletion on EOL. Cinnamon 3.4.x+
+ * Remove condition only.
+ */
+@if $cinnamon_version >= 34 {
 
+    /* #########################################################################
+     * Systray Applet - Added in Cinnamon 3.4
+     *
+     * .systray is for theming to be applied to the systray as a whole.
+     * .applet-box is used for indicators (not tray icons) within the systray.
+     * Tray icons are not themed.
+     * ######################################################################### */
     .systray {
         spacing: 5px;
     }
