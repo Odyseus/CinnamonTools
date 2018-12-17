@@ -33,7 +33,7 @@ fi
 
 
 bash_completions_step1 = """
-Bash completions creation. Step 1.
+**Bash completions creation. Step 1.**
 
 The file {0}
 will be created.
@@ -41,18 +41,18 @@ will be created.
 
 
 bash_completions_step2 = """
-Bash completions creation. Step 2.
+**Bash completions creation. Step 2.**
 
-The file {0}/.bash_completion will be created if it doesn't exists.
+The file **{0}/.bash_completion** will be created if it doesn't exists.
 
 Or the pertinent code to load bash completions from the .bash_completion.d
 directory will be appended to the existent file.
 
-The {0}/.bash_completion file needs to be manually sourced in your shell's
+The **{0}/.bash_completion** file needs to be manually sourced in your shell's
 configuration file (.bashrc, .zshrc, etc.).
 
 The following is the content that will be appended to the
-{0}/.bash_completion file.
+**{0}/.bash_completion** file.
 """
 
 
@@ -131,11 +131,11 @@ def system_executable_generation(exec_name="",
     }
 
     if prompt_for_name:
-        print(Ansi.PURPLE("Set an executable file name or press Enter to use default"))
+        print(Ansi.LIGHT_MAGENTA("Set an executable file name or press Enter to use default"))
         prompts.do_prompt(d, "name", "Enter a file name", d["name"])
 
     if prompt_for_path:
-        print(Ansi.PURPLE("Set full path to store executable file or press Enter to use default"))
+        print(Ansi.LIGHT_MAGENTA("Set full path to store executable file or press Enter to use default"))
         prompts.do_prompt(d, "sys_exec_path", "Enter absolute path", d["sys_exec_path"])
 
     d["sys_exec_path"] = os.path.expanduser(d["sys_exec_path"])
@@ -144,12 +144,12 @@ def system_executable_generation(exec_name="",
     destination = os.path.join(d["sys_exec_path"], d["name"])
 
     if not os.path.exists(d["sys_exec_path"]):
-        print(Ansi.WARNING("Path doesn't exists and needs to be created"))
+        print(Ansi.LIGHT_YELLOW("Path doesn't exists and needs to be created"))
 
         if prompts.confirm(prompt="Proceed?", response=False):
             os.makedirs(d["sys_exec_path"], exist_ok=True)
     elif not file_utils.is_real_dir(d["sys_exec_path"]):
-        print(Ansi.WARNING("Chosen path isn't a directory. Aborted!!!"))
+        print(Ansi.LIGHT_YELLOW("Chosen path isn't a directory. Aborted!!!"))
         raise SystemExit()
 
     logger.info("Generating system executable...")
@@ -171,7 +171,7 @@ def system_executable_generation(exec_name="",
     if not bash_comp_step_one:
         return
 
-    print(Ansi.PURPLE(bash_completions_step1.format(bash_completions_file_destination)))
+    print(Ansi.LIGHT_MAGENTA(bash_completions_step1.format(bash_completions_file_destination)))
 
     if bash_comp_step_one_confirmed or prompts.confirm(prompt="Proceed?", response=False):
         logger.info("Generating bash completions file...")
@@ -189,10 +189,10 @@ def system_executable_generation(exec_name="",
     if not bash_comp_step_two:
         return
 
-    print(Ansi.PURPLE(bash_completions_step2.format(os.path.expanduser("~"))))
-    print(Ansi.INFO(shell_utils.get_cli_separator()))
-    print(Ansi.INFO(BASH_COMPLETION_LOADER_CONTENT))
-    print(Ansi.INFO(shell_utils.get_cli_separator()))
+    print(Ansi.LIGHT_MAGENTA(bash_completions_step2.format(os.path.expanduser("~"))))
+    print(Ansi.DEFAULT(shell_utils.get_cli_separator()))
+    print(Ansi.DEFAULT(BASH_COMPLETION_LOADER_CONTENT))
+    print(Ansi.DEFAULT(shell_utils.get_cli_separator()))
 
     if prompts.confirm(prompt="Proceed?", response=False):
         logger.info("Attempting to set up Bash completions loader...")

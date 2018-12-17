@@ -5,7 +5,7 @@
 from shutil import get_terminal_size
 
 
-def get_cli_header(name, char="#", length=80):
+def get_cli_header(name, char="#"):
     """Get a "decorated header".
 
     Get a "decorated header" to display at the beginning of the CLI execution (or whenever it is
@@ -17,8 +17,6 @@ def get_cli_header(name, char="#", length=80):
         The application name or a "title" to display as a "header".
     char : str, optional
         The "decorator" character.
-    length : int, optional
-        The total length that each line should have.
 
     Returns
     -------

@@ -27,7 +27,7 @@ class CommandLineInterfaceSuper():
     """
     _cli_header_blacklist = []
 
-    def __init__(self, app_name, logs_storage_dir):
+    def __init__(self, app_name, logs_storage_dir="UserData/logs"):
         """Initialization.
 
         Parameters
@@ -39,8 +39,8 @@ class CommandLineInterfaceSuper():
         """
         self._app_name = app_name
 
-        log_file = log_system.get_log_file(storage_dir=logs_storage_dir,
-                                           prefix="CLI")
+        log_file = log_system.generate_log_path(storage_dir=logs_storage_dir,
+                                                prefix="CLI")
         file_utils.remove_surplus_files(logs_storage_dir, "CLI*")
         self.logger = log_system.LogSystem(log_file, verbose=True)
 
@@ -50,7 +50,7 @@ class CommandLineInterfaceSuper():
         """Display CLI header.
         """
         if not self._cli_header_blacklist or not any(self._cli_header_blacklist):
-            self.logger.info(shell_utils.get_cli_header(self._app_name), date=False)
+            self.logger.info("**%s**" % shell_utils.get_cli_header(self._app_name), date=False, to_file=False)
             print("")
 
     def run(self):
@@ -83,9 +83,9 @@ class CommandLineInterfaceSuper():
         man_page_path : str
             The absolute path to the manual page.
         """
-        from subprocess import call
+        from subprocess import run
 
-        call(["man", man_page_path])
+        run(["man", man_page_path])
 
 
 def run_cli(flag_file="", docopt_doc="", app_name="", app_version="", app_status="", cli_class=None):

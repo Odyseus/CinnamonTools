@@ -9,11 +9,27 @@ from .ansi_colors import Ansi
 from .misc_utils import get_date_time
 from .misc_utils import micro_to_milli
 
-_allowed_logging_levels = {
-    "INFO",
-    "DEBUG",
-    "WARNING",
-    "ERROR"
+_log_levels = {
+    "INFO": {
+        "color": "DEFAULT",
+        "logging_support": True
+    },
+    "DEBUG": {
+        "color": "DEFAULT",
+        "logging_support": True
+    },
+    "WARNING": {
+        "color": "LIGHT_YELLOW",
+        "logging_support": True
+    },
+    "ERROR": {
+        "color": "LIGHT_RED",
+        "logging_support": True
+    },
+    "SUCCESS": {
+        "color": "LIGHT_GREEN",
+        "logging_support": False
+    },
 }
 
 
@@ -55,6 +71,42 @@ class LogSystem():
         self._log_file = filename
         self._user_home = os.path.expanduser("~")
         logging.basicConfig(filename=filename, level=logging.DEBUG)
+        self._extend()
+
+    def _extend(self):
+        """Extend class' functions.
+        """
+        for l in _log_levels:
+            setattr(self, l.lower(), self._make_log_function(l))
+
+    def _make_log_function(self, log_level):
+        """Make log function.
+
+        Parameters
+        ----------
+        log_level : str
+            See :any:`LogSystem._update_log` > log_level
+
+        Returns
+        -------
+        function
+            Function to log messages.
+        """
+        def f(msg, term=True, date=True, to_file=True):
+            """Log message.
+
+            Parameters
+            ----------
+            msg : str
+                See :any:`LogSystem._update_log` > msg
+            term : bool, optional
+                See :any:`LogSystem._update_log` > term
+            date : bool, optional
+                See :any:`LogSystem._update_log` > date
+            """
+            self._update_log(msg, log_level=log_level, term=term, date=date, to_file=to_file)
+
+        return f
 
     def get_log_file(self):
         """Get log file path.
@@ -74,79 +126,9 @@ class LogSystem():
         msg : str
             See :any:`LogSystem._update_log` > msg
         """
-        self._update_log("[DRY_RUN] %s" % str(msg), log_level="PURPLE", date=False)
+        self._update_log("**[DRY_RUN]** %s" % str(msg), log_level="LIGHT_MAGENTA", date=False)
 
-    def debug(self, msg, term=True, date=True):
-        """Log message with "DEBUG" level.
-
-        Parameters
-        ----------
-        msg : str
-            See :any:`LogSystem._update_log` > msg
-        term : bool, optional
-            See :any:`LogSystem._update_log` > term
-        date : bool, optional
-            See :any:`LogSystem._update_log` > date
-        """
-        self._update_log(msg, log_level="DEBUG", term=term, date=date)
-
-    def info(self, msg, term=True, date=True):
-        """Log message with "INFO" level.
-
-        Parameters
-        ----------
-        msg : str
-            See :any:`LogSystem._update_log` > msg
-        term : bool, optional
-            See :any:`LogSystem._update_log` > term
-        date : bool, optional
-            See :any:`LogSystem._update_log` > date
-        """
-        self._update_log(msg, log_level="INFO", term=term, date=date)
-
-    def success(self, msg, term=True, date=True):
-        """Log message with "INFO" level but with green color on screen.
-
-        Parameters
-        ----------
-        msg : str
-            See :any:`LogSystem._update_log` > msg
-        term : bool, optional
-            See :any:`LogSystem._update_log` > term
-        date : bool, optional
-            See :any:`LogSystem._update_log` > date
-        """
-        self._update_log(msg, log_level="SUCCESS", term=term, date=date)
-
-    def warning(self, msg, term=True, date=True):
-        """Log message with "WARNING" level.
-
-        Parameters
-        ----------
-        msg : str
-            See :any:`LogSystem._update_log` > msg
-        term : bool, optional
-            See :any:`LogSystem._update_log` > term
-        date : bool, optional
-            See :any:`LogSystem._update_log` > date
-        """
-        self._update_log(msg, log_level="WARNING", term=term, date=date)
-
-    def error(self, msg, term=True, date=True):
-        """Log message with "ERROR" level.
-
-        Parameters
-        ----------
-        msg : str
-            See :any:`LogSystem._update_log` > msg
-        term : bool, optional
-            See :any:`LogSystem._update_log` > term
-        date : bool, optional
-            See :any:`LogSystem._update_log` > date
-        """
-        self._update_log(msg, term=term, date=date)
-
-    def _update_log(self, msg, log_level="ERROR", term=True, date=True):
+    def _update_log(self, msg, log_level="ERROR", term=True, date=True, to_file=True):
         """Do the actual logging.
 
         Parameters
@@ -162,15 +144,22 @@ class LogSystem():
             Log the date. If set to False, the current date will not be attached to the logged
             message.
         """
-        m = "%s%s" % ("%s: " % micro_to_milli(get_date_time()) if date else "", str(msg))
+        now = "%s: " % micro_to_milli(get_date_time())
+        m = str(msg)
 
-        getattr(logging, "info" if log_level not in _allowed_logging_levels else log_level.lower())(m)
+        if to_file:
+            getattr(logging, "info" if (log_level not in _log_levels or not _log_levels[log_level].get(
+                "logging_support")) else log_level.lower())(now + m if date else m)
 
         if self.verbose and term:
+            pm = ("**%s**" % now) + m if date else m
+
             try:
-                print(getattr(Ansi, log_level, "INFO")(self._obfuscate_user_home(m)))
+                ansi_color = _log_levels[log_level].get("color") \
+                    if log_level in _log_levels else log_level
+                print(getattr(Ansi, ansi_color, "DEFAULT")(self._obfuscate_user_home(pm)))
             except Exception:
-                print(m)
+                print(pm)
 
     def _obfuscate_user_home(self, msg):
         """Obfuscate User's home path.
@@ -188,8 +177,8 @@ class LogSystem():
         return msg.replace(self._user_home, "~")
 
 
-def get_log_file(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_"):
-    """Get log file.
+def generate_log_path(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_"):
+    """Generate log file name.
 
     Returns
     -------

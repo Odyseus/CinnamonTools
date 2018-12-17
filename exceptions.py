@@ -39,7 +39,7 @@ class ExceptionWhitoutTraceBack(Exception):
         """
         # This is an evil spawn that I don't freaking understand!!!
         # It works as intended for now, so moving on.
-        self.args = Ansi.ERROR("{0.__name__}: {1}".format(type(self), msg)),
+        self.args = Ansi.LIGHT_RED("**{0.__name__}:** {1}".format(type(self), msg)),
         sys.exit(self)
 
 
@@ -65,7 +65,7 @@ class ExceptionWhitoutTraceBackWarning(Exception):
         """
         # This is an evil spawn that I don't freaking understand!!!
         # It works as intended for now, so moving on.
-        self.args = Ansi.WARNING("{0.__name__}: {1}".format(type(self), msg)),
+        self.args = Ansi.LIGHT_YELLOW("**{0.__name__}:** {1}".format(type(self), msg)),
         sys.exit(self)
 
 
