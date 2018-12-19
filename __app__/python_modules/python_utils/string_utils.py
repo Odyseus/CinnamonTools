@@ -85,7 +85,7 @@ def do_string_substitutions(dir_path, replacement_data,
     logger : object
         See <class :any:`LogSystem`>.
     """
-    logger.info("Performing string substitutions...")
+    logger.info("**Performing string substitutions...**")
 
     for root, dirs, files in os.walk(dir_path, topdown=False):
         for fname in files:
