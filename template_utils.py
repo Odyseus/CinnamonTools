@@ -112,15 +112,15 @@ def system_executable_generation(exec_name="",
         Halt execution.
     """
     if not file_utils.is_real_dir(app_root_folder):
-        logger.error("<app_root_folder> parameter should be a real directory.")
+        logger.error("**<app_root_folder> parameter should be a real directory.**")
         raise SystemExit()
 
     if not file_utils.is_real_file(sys_exec_template_path):
-        logger.error("<sys_exec_template_path> parameter should be a real file.")
+        logger.error("**<sys_exec_template_path> parameter should be a real file.**")
         raise SystemExit()
 
     if do_completions and not file_utils.is_real_file(bash_completions_template_path):
-        logger.error("<bash_completions_template_path> parameter should be a real file.")
+        logger.error("**<bash_completions_template_path> parameter should be a real file.**")
         raise SystemExit()
 
     user_home = os.path.expanduser("~")
@@ -152,7 +152,7 @@ def system_executable_generation(exec_name="",
         print(Ansi.LIGHT_YELLOW("Chosen path isn't a directory. Aborted!!!"))
         raise SystemExit()
 
-    logger.info("Generating system executable...")
+    logger.info("**Generating system executable...**")
 
     generate_from_template(sys_exec_template_path, destination, options={
         "replacements": [
@@ -174,7 +174,7 @@ def system_executable_generation(exec_name="",
     print(Ansi.LIGHT_MAGENTA(bash_completions_step1.format(bash_completions_file_destination)))
 
     if bash_comp_step_one_confirmed or prompts.confirm(prompt="Proceed?", response=False):
-        logger.info("Generating bash completions file...")
+        logger.info("**Generating bash completions file...**")
 
         generate_from_template(bash_completions_template_path, bash_completions_file_destination,
                                options={
@@ -195,7 +195,7 @@ def system_executable_generation(exec_name="",
     print(Ansi.DEFAULT(shell_utils.get_cli_separator()))
 
     if prompts.confirm(prompt="Proceed?", response=False):
-        logger.info("Attempting to set up Bash completions loader...")
+        logger.info("**Attempting to set up Bash completions loader...**")
 
         try:
             # KISS. If the exact string "/.bash_completion.d/" is found, assume that it is used to
@@ -205,14 +205,14 @@ def system_executable_generation(exec_name="",
                 found = any("/.bash_completion.d/" in line for line in file)
 
                 if found:
-                    logger.info("The <%s/.bash_completion.d> directory seems to be set up." %
+                    logger.info("**The <%s/.bash_completion.d> directory seems to be set up.**" %
                                 user_home)
-                    logger.info("Check the <%s> file content just in case." %
+                    logger.info("**Check the <%s> file content just in case.**" %
                                 bash_completions_loader)
                     sys.exit(0)
                 else:
                     file.write(BASH_COMPLETION_LOADER_CONTENT)
-                    logger.info("Bash completions loader set up.")
+                    logger.info("**Bash completions loader set up.**")
 
             sys.exit(0)
         except Exception as err:
@@ -290,7 +290,7 @@ def generate_from_template(source, destination, options={}, logger=None, confirm
     """
     try:
         if confirm_overwrite and os.path.exists(destination):
-            logger.warning("The following file already exists:")
+            logger.warning("**The following file already exists:**")
             logger.warning(destination)
 
             if prompts.confirm(prompt="Overwrite existent file?", response=False):
@@ -301,7 +301,7 @@ def generate_from_template(source, destination, options={}, logger=None, confirm
             dirname = os.path.dirname(destination)
 
             if os.path.exists(dirname) and (os.path.isfile(dirname) or os.path.islink(dirname)):
-                logger.error("Destination <%s> should be a directory!!!" % dirname)
+                logger.error("**Destination <%s> should be a directory!!!**" % dirname)
                 raise SystemExit()
 
             os.makedirs(dirname, exist_ok=True)
@@ -312,8 +312,8 @@ def generate_from_template(source, destination, options={}, logger=None, confirm
     except SystemExit:
         raise exceptions.OperationAborted("Operation aborted.")
     except Exception as err:
-        logger.error("Something went wrong!")
+        logger.error("**Something went wrong!**")
         raise Exception(err)
     else:
-        logger.info("File created at:")
+        logger.info("**File created at:**")
         logger.info(destination)

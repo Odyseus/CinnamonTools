@@ -125,11 +125,11 @@ def merge_dict(first, second, logger=None):
                     else:
                         first[key] = second[key]
             else:
-                logger.warning('Cannot merge non-dict "%s" into dict "%s"' % (second, first))
+                logger.warning('**Cannot merge non-dict "%s" into dict "%s"**' % (second, first))
         else:
             first = second
     except TypeError as err:
-        logger.error('TypeError "%s" in key "%s" when merging "%s" into "%s"' %
+        logger.error('**TypeError "%s" in key "%s" when merging "%s" into "%s"**' %
                      (err, key, second, first))
 
     return first

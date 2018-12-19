@@ -52,10 +52,10 @@ def check_inventories_existence(update_inventories=False,
 
     for url, downloaded_file in inventory_files_map:
         if update_inventories or not os.path.exists(downloaded_file):
-            logger.info("Downloading inventory file...")
-            logger.info("Download URL:")
+            logger.info("**Downloading inventory file...**")
+            logger.info("**Download URL:**")
             logger.info(url, date=False)
-            logger.info("Download location")
+            logger.info("**Download location:**")
             logger.info(downloaded_file, date=False)
 
             try:
@@ -65,7 +65,7 @@ def check_inventories_existence(update_inventories=False,
             except Exception as err:
                 logger.error(err)
         else:
-            logger.info("Inventory file exists:")
+            logger.info("**Inventory file exists:**")
             logger.info(downloaded_file, date=False)
 
 
