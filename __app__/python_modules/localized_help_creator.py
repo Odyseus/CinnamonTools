@@ -152,7 +152,7 @@ class LocalizedHelpCreator():
                 self.contributors += utils.BOXED_CONTAINER.format(
                     md(contributors_rawdata))
             except Exception as err:
-                print(utils.Ansi.ERROR(err))
+                print(utils.Ansi.LIGHT_RED(err))
                 self.contributors += ""
 
         if os.path.exists(changelog_path):
@@ -162,7 +162,7 @@ class LocalizedHelpCreator():
 
                 self.changelog += utils.BOXED_CONTAINER.format(md(changelog_rawdata))
             except Exception as err:
-                print(utils.Ansi.ERROR(err))
+                print(utils.Ansi.LIGHT_RED(err))
                 self.changelog += ""
 
         if os.path.exists(old_changelog_path):
@@ -173,7 +173,7 @@ class LocalizedHelpCreator():
                 self.changelog += utils.BOXED_CONTAINER.format(
                     md(old_changelog_rawdata))
             except Exception as err:
-                print(utils.Ansi.ERROR(err))
+                print(utils.Ansi.LIGHT_RED(err))
                 self.changelog += ""
 
     def start(self):
@@ -183,7 +183,7 @@ class LocalizedHelpCreator():
         done_one = False
         dummy_locale_path = os.path.join(repo_folder, "tmp", "locales", self.xlet_slug)
 
-        print("Starting temporary installation of locales...")
+        print(utils.Ansi.DEFAULT("Starting temporary installation of locales..."))
 
         if not os.path.exists(dummy_locale_path):
             os.makedirs(dummy_locale_path)
@@ -224,7 +224,7 @@ class LocalizedHelpCreator():
             self.lang_list.append("en")
             self._create_html_document()
         else:
-            print(utils.Ansi.ERROR("Dummy install failed."))
+            print(utils.Ansi.LIGHT_RED("Dummy install failed."))
 
     def _create_html_document(self):
         """Create HTML document.
@@ -267,7 +267,7 @@ class LocalizedHelpCreator():
                 self.options.append(option)
 
         if pyuca_collator is None:
-            print(utils.Ansi.WARNING("<pyuca> module not installed."))
+            print(utils.Ansi.LIGHT_YELLOW("<pyuca> module not installed."))
 
         options_sort_function = pyuca_collator.sort_key if pyuca_collator else str.lower
 

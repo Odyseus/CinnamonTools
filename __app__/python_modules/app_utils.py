@@ -48,32 +48,19 @@ PATHS = {
     "theme_latest_build_data_file": os.path.join(root_folder, "tmp", "theme_latest_default_data.json")
 }
 
+_missing_theme_or_domain_name_msg = """**{capital}NameNotSet:**
 
-_missing_domain_msg = """DomainNameNotSet:
+The command line option **--{lower}-name=<name>** should be used to define a {lower}
+name for use when building {types}.
 
-The command line option `--domain=<domain>` should be used to define a domain
-name for use when building xlets.
+Or a file named **theme_name** should be created inside a folder named **tmp** at
+the root of the repository whose only content should be the desired {lower} name.
 
-Or a file named "domain_name" should be created inside a folder named "tmp" at
-the root of the repository whose only content should be the desired domain name.
-
-The `--domain` command line option has precedence over the domain name found
-inside the "domain_name" file.
+The `--{lower}-name` command line option has precedence over the {lower} name found
+inside the **{lower}_name** file.
 """
 
-_missing_theme_name_msg = """ThemeNameNotSet:
-
-The command line option `--theme-name=<name>` should be used to define a theme
-name for use when building themes.
-
-Or a file named "theme_name" should be created inside a folder named "tmp" at
-the root of the repository whose only content should be the desired theme name.
-
-The `--theme-name` command line option has precedence over the theme name found
-inside the "theme_name" file.
-"""
-
-_existent_xlet_destination_msg = """Destination folder exists!!!
+_existent_xlet_destination_msg = """**Destination folder exists!!!**
 {path}
 
 Choosing to proceed will completely remove the existent folder.
@@ -99,6 +86,14 @@ _extra_common_files = [{
 
 _readme_list_item_template = "- [{xlet_name}](%s/_static/xlets_help_pages/{xlet_slug}/index.html)" % (
     URLS["repo_docs"])
+
+_theme_build_data = """
+**Cinnamon version:**       {cinnamon_version}
+**Cinnamon font size:**     {cinnamon_font_size}
+**Cinnamon font family:**   {cinnamon_font_family}
+**Gtk3 version:**           {gtk3_version}
+**Theme name:**             {theme_name}
+"""
 
 
 class XletsHelperCore():
@@ -139,10 +134,10 @@ class XletsHelperCore():
         """
         from . import changelog_handler
 
-        self.logger.info("Generating change logs...")
+        self.logger.info("**Generating change logs...**")
 
         for xlet in self.xlets_meta.meta_list:
-            self.logger.info("Generating change log for %s..." % xlet["name"])
+            self.logger.info("**Generating change log for %s...**" % xlet["name"])
 
             try:
                 xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
@@ -178,17 +173,17 @@ class XletsHelperCore():
         SystemExit
             Halt execution if the make-cinnamon-xlet-pot-cli command is not found.
         """
-        self.logger.info("Starting POT files update...")
+        self.logger.info("**Starting POT files update...**")
 
         for xlet in self.xlets_meta.meta_list:
             xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
 
             self.logger.info(
-                "Updating localization template for %s..." % xlet["name"])
+                "**Updating localization template for %s...**" % xlet["name"])
 
             try:
                 if not cmd_utils.which("make-cinnamon-xlet-pot-cli"):
-                    print(Ansi.ERROR("MissingCommand: make-cinnamon-xlet-pot-cli command not found!!!"))
+                    print(Ansi.LIGHT_RED("**MissingCommand:** make-cinnamon-xlet-pot-cli command not found!!!"))
                     raise SystemExit()
 
                 cmd = [
@@ -207,7 +202,7 @@ class XletsHelperCore():
         Execute the z_create_localized_help.py script for each xlet to generate their
         HELP.html files.
         """
-        self.logger.info("Starting localized help creation...")
+        self.logger.info("**Starting localized help creation...**")
 
         applets_list_items = []
         extensions_list_items = []
@@ -217,7 +212,7 @@ class XletsHelperCore():
             script_file_path = os.path.join(xlet_root_folder, "z_create_localized_help.py")
 
             if os.path.exists(script_file_path):
-                self.logger.info("Creating localized help for %s..." % xlet["name"])
+                self.logger.info("**Creating localized help for %s...**" % xlet["name"])
                 cmd_utils.run_cmd([script_file_path], stdout=None,
                                   stderr=None, cwd=xlet_root_folder)
 
@@ -232,7 +227,7 @@ class XletsHelperCore():
                 elif xlet["type"] == "extension":
                     extensions_list_items.append(list_item)
 
-        self.logger.info("Generating repository README.md file...")
+        self.logger.info("**Generating repository README.md file...**")
 
         readme_template_path = os.path.join(root_folder, "__app__", "data",
                                             "templates", "README.md")
@@ -259,10 +254,10 @@ class XletsHelperCore():
         SystemExit
             Halt execution if the msgmerge command is not found.
         """
-        self.logger.info("Generating translation statistics...")
+        self.logger.info("**Generating translation statistics...**")
 
         if not cmd_utils.which("msgmerge"):
-            print(Ansi.ERROR("MissingCommand: msgmerge command not found!!!"))
+            print(Ansi.LIGHT_RED("**MissingCommand:** msgmerge command not found!!!"))
             raise SystemExit()
 
         markdown_content = ""
@@ -297,11 +292,11 @@ class XletsHelperCore():
                         tmp_po_file_path = os.path.join(tmp_xlet_po_dir, po_base_name)
                         tmp_pot_file_path = os.path.join(xlet_po_dir, "%s.pot" % xlet_dir_name)
 
-                        self.logger.info("Copying %s to temporary location..." %
+                        self.logger.info("**Copying %s to temporary location...**" %
                                          po_base_name, date=False)
                         copy2(po_file_path, tmp_po_file_path)
 
-                        self.logger.info("Updating temporary %s from localization template..." %
+                        self.logger.info("**Updating temporary %s from localization template...**" %
                                          po_base_name, date=False)
                         cmd_utils.run_cmd([
                             "msgmerge",
@@ -313,7 +308,7 @@ class XletsHelperCore():
                             tmp_pot_file_path       # The template file to update from.
                         ], stdout=None, stderr=None)
 
-                        self.logger.info("Counting untranslated strings...", date=False)
+                        self.logger.info("**Counting untranslated strings...**", date=False)
                         trans_count_cmd = 'msggrep -v -T -e "." "%s" | grep -c ^msgstr'
                         trans_count_output = cmd_utils.run_cmd(trans_count_cmd % tmp_po_file_path,
                                                                shell=True).stdout
@@ -334,10 +329,10 @@ class XletsHelperCore():
         SystemExit
             Halt execution if the msgmerge command is not found.
         """
-        self.logger.info("Updating Spanish localizations...")
+        self.logger.info("**Updating Spanish localizations...**")
 
         if not cmd_utils.which("msgmerge"):
-            print(Ansi.ERROR("MissingCommand: msgmerge command not found!!!"))
+            print(Ansi.LIGHT_RED("**MissingCommand:** msgmerge command not found!!!"))
             raise SystemExit()
 
         for xlet in get_xlets_dirs():
@@ -347,7 +342,7 @@ class XletsHelperCore():
             po_file = os.path.join(po_dir, "es.po")
 
             if file_utils.is_real_dir(po_dir) and file_utils.is_real_file(po_file):
-                self.logger.info("Updating localization for %s" % xlet_dir_name)
+                self.logger.info("**Updating localization for %s**" % xlet_dir_name)
 
                 if cmd_utils.run_cmd([
                     "msgmerge",
@@ -358,7 +353,7 @@ class XletsHelperCore():
                     "es.po",                    # The .po file to update.
                     "%s.pot" % xlet_dir_name    # The template file to update from.
                 ], stdout=None, stderr=None, cwd=po_dir).returncode:
-                    self.logger.warning("Something might have gone wrong!")
+                    self.logger.warning("**Something might have gone wrong!**")
 
 
 class AllXletsMetadata():
@@ -460,7 +455,7 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
             domain_name = False
 
     if not domain_name:
-        print(Ansi.PURPLE("\nEnter a domain name:"))
+        inform("\nEnter a domain name:")
         prompts.do_prompt(options_map_defaults, "domain_name",
                           "Enter name", options_map_defaults["domain_name"])
         domain_name = options_map_defaults["domain_name"].strip()
@@ -471,7 +466,9 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
         # Message from the raised exception isn't printed when this function
         # is executed from the CLI menu.
         # So, print the message explicitly.
-        print(Ansi.WARNING(_missing_domain_msg))
+        print(Ansi.LIGHT_YELLOW(_missing_theme_or_domain_name_msg.format(capital="Domain",
+                                                                         lower="domain",
+                                                                         types="xlets")))
         raise SystemExit()
 
     if not build_output:
@@ -497,7 +494,7 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
                     "destination": os.path.join(base_output_path, "%ss" % xlet_type.lower(), uuid),
                 })
             else:
-                logger.warning("%s doesn't exists." % x)
+                logger.warning("**%s doesn't exists.**" % x)
 
     if xlets_data:
         for data in xlets_data:
@@ -505,7 +502,7 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
             builder.build()
 
     print("")
-    logger.info("Built xlets saved in %s" % base_output_path)
+    logger.info("**Built xlets saved at:**\n%s" % base_output_path)
 
 
 class XletBuilder():
@@ -551,13 +548,13 @@ class XletBuilder():
         """Build xlet.
         """
         self.logger.info(shell_utils.get_cli_separator("#"), date=False)
-        self.logger.info("Building the %s %s" %
+        self.logger.info("**Building the %s %s**" %
                          (self._xlet_data["type"], self._xlet_data["slug"]))
 
         self._do_copy()
 
         if self._dry_run:
-            self.logger.log_dry_run("String substitutions will be performed at:\n%s" %
+            self.logger.log_dry_run("**String substitutions will be performed at:**\n%s" %
                                     self._xlet_data["destination"])
         else:
             string_utils.do_string_substitutions(self._xlet_data["destination"],
@@ -583,12 +580,12 @@ class XletBuilder():
 
         if file_utils.is_real_dir(self._xlet_data["destination"]):
             if not self._do_not_cofirm:
-                print(Ansi.WARNING(_existent_xlet_destination_msg.format(
+                print(Ansi.LIGHT_YELLOW(_existent_xlet_destination_msg.format(
                     path=self._xlet_data["destination"])))
 
             if self._do_not_cofirm or prompts.confirm(prompt="Proceed?", response=False):
                 if self._dry_run:
-                    self.logger.log_dry_run("Destination will be eradicated:\n%s" %
+                    self.logger.log_dry_run("**Destination will be eradicated:**\n%s" %
                                             self._xlet_data["destination"])
                 else:
                     rmtree(self._xlet_data["destination"], ignore_errors=True)
@@ -596,23 +593,23 @@ class XletBuilder():
                 raise exceptions.OperationAborted("Building the %s %s was canceled." %
                                                   (self._xlet_data["type"], self._xlet_data["slug"]))
 
-        self.logger.info("Copying main xlet files...")
+        self.logger.info("**Copying main xlet files...**")
         if self._dry_run:
-            self.logger.log_dry_run("Source: %s" % self._xlet_data["source"])
-            self.logger.log_dry_run("Will be copied into: %s" % self._xlet_data["destination"])
+            self.logger.log_dry_run("**Source:** %s" % self._xlet_data["source"])
+            self.logger.log_dry_run("**Will be copied into:** %s" % self._xlet_data["destination"])
         else:
             copytree(self._xlet_data["source"], self._xlet_data["destination"], symlinks=False,
                      ignore=ignore_patterns(*_xlet_dir_ignored_patterns),
                      ignore_dangling_symlinks=True)
 
-        self.logger.info("Copying common xlet files...")
+        self.logger.info("**Copying common xlet files...**")
         for extra in _extra_common_files:
             src = os.path.join(extra["source_path"], extra["file_name"])
             dst = os.path.join(self._xlet_data["destination"], extra["file_name"])
 
             if self._dry_run:
-                self.logger.log_dry_run("Source: %s" % src)
-                self.logger.log_dry_run("Will be copied into: %s" % dst)
+                self.logger.log_dry_run("**Source:** %s" % src)
+                self.logger.log_dry_run("**Will be copied into:** %s" % dst)
             else:
                 copy2(src, dst)
 
@@ -620,13 +617,13 @@ class XletBuilder():
         """Compile schemas file if any.
         """
         if file_utils.is_real_dir(self._schemas_dir):
-            self.logger.info("Compiling gsettings schema...")
+            self.logger.info("**Compiling gsettings schema...**")
             cmd = ["glib-compile-schemas", ".", "--targetdir=."]
 
             if self._dry_run:
-                self.logger.log_dry_run("Command that will be executed:\n%s" % " ".join(cmd))
+                self.logger.log_dry_run("**Command that will be executed:**\n%s" % " ".join(cmd))
                 self.logger.log_dry_run(
-                    "Command will be executed on directory:\n%s" % self._schemas_dir)
+                    "**Command will be executed on directory:**\n%s" % self._schemas_dir)
             else:
                 cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=self._schemas_dir)
 
@@ -638,10 +635,10 @@ class XletBuilder():
             extra_settings = run_path(self._config_file)["settings"]
 
             if extra_settings.get("symlinks", False):
-                self.logger.info("Generating symbolic links...")
+                self.logger.info("**Generating symbolic links...**")
 
                 if self._dry_run:
-                    self.logger.log_dry_run("Changing current working directory to:\n%s" %
+                    self.logger.log_dry_run("**Changing current working directory to:**\n%s" %
                                             self._xlet_data["destination"])
                 else:
                     os.chdir(self._xlet_data["destination"])
@@ -651,21 +648,21 @@ class XletBuilder():
 
                     if self._dry_run:
                         self.logger.log_dry_run(
-                            "Parent directory will be created at:\n%s" % parent_dir)
+                            "**Parent directory will be created at:**\n%s" % parent_dir)
                     else:
                         os.makedirs(parent_dir, exist_ok=True)
 
                     for src, dst in extra_settings.get("symlinks")[dir]:
                         if self._dry_run:
                             self.logger.log_dry_run(
-                                "Symbolic link for file/folder:\n%s" % src)
+                                "**Symbolic link for file/folder:**\n%s" % src)
                             self.logger.log_dry_run(
-                                "Will be created at:\n%s" % os.path.join(dir, dst))
+                                "**Will be created at:**\n%s" % os.path.join(dir, dst))
                         else:
                             os.symlink(src, os.path.join(dir, dst))
 
                 if self._dry_run:
-                    self.logger.log_dry_run("Changing current working directory to:\n%s" %
+                    self.logger.log_dry_run("**Changing current working directory to:**\n%s" %
                                             root_folder)
                 else:
                     os.chdir(root_folder)
@@ -673,12 +670,12 @@ class XletBuilder():
     def _set_executable(self):
         """Set files as executable.
         """
-        self.logger.info("Setting execution permissions to the following files:")
+        self.logger.info("**Setting execution permissions to the following files:**")
         valid_extensions = (".py", ".bash", ".sh", ".rb")
 
         if self._dry_run:
-            self.logger.log_dry_run("Files located at:\n%s" % self._xlet_data["destination"])
-            self.logger.log_dry_run("Files ending with the following extensions: %s" %
+            self.logger.log_dry_run("**Files located at:**\n%s" % self._xlet_data["destination"])
+            self.logger.log_dry_run("**Files ending with the following extensions:** %s" %
                                     ", ".join(valid_extensions))
         else:
             for root, dirs, files in os.walk(self._xlet_data["destination"], topdown=False):
@@ -727,7 +724,31 @@ def get_xlets_dirs():
     return applets_dirs + extensions_dirs
 
 
-def validate_themes_options(x):
+def validate_cinn_theme_options(x):
+    """Validate themes options.
+
+    Parameters
+    ----------
+    x : str
+        The entered option to validate.
+
+    Returns
+    -------
+    str
+        The validated option.
+
+    Raises
+    ------
+    exceptions.ValidationError
+        Halt execution if option is not valid.
+    """
+    if not x or x not in ["1", "2", "3"]:
+        raise exceptions.ValidationError('Possible options are "1", "2" or "3".')
+
+    return x
+
+
+def validate_gtk3_theme_options(x):
     """Validate themes options.
 
     Parameters
@@ -777,14 +798,15 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
     """
     try:
         with open(PATHS["theme_latest_build_data_file"], "r", encoding="UTF-8") as f:
-            options_map_latest_used_values = json.loads(f.read())
+            o_m_l_v = json.loads(f.read())
     except Exception:
-        options_map_latest_used_values = None
+        o_m_l_v = None
 
     options_map = {
         "cinnamon_version": {
             "1": "3.0",
-            "2": "3.4"
+            "2": "3.4",
+            "3": "4.0"
         },
         "gtk3_version": {
             "1": "3.18",
@@ -792,7 +814,10 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         }
     }
 
+    # __version__ is used to verify that the stored data is compatible with the
+    # default data used when generating themes.
     options_map_defaults = {
+        "__version__": "1",
         "theme_name": "MyThemeName",
         "cinnamon_version": "1",
         "cinnamon_font_size": "9pt",
@@ -800,42 +825,75 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         "gtk3_version": "1"
     }
 
-    if options_map_latest_used_values is not None and \
-            options_map_defaults != options_map_latest_used_values:
-        print(Ansi.PURPLE("Build data from a previous theme build found."))
-        print(Ansi.PURPLE("Do you wish to use that data for the current build?"))
+    interactive = True
 
-        if prompts.confirm(prompt="Load new defaults?", response=False):
-            options_map_defaults = options_map_latest_used_values
+    # o_m_l_v a.k.a. options_map_latest_used_values
+    if o_m_l_v is not None and options_map_defaults != o_m_l_v and \
+            options_map_defaults["__version__"] == o_m_l_v.get("__version__"):
+        inform("Build data from a previous theme build found at:")
+        logger.info("**%s**" % PATHS["theme_latest_build_data_file"], date=False, to_file=False)
+        inform("Details:")
+        print(Ansi.DEFAULT(_theme_build_data.format(
+            cinnamon_version=options_map["cinnamon_version"][o_m_l_v["cinnamon_version"]],
+            cinnamon_font_size=o_m_l_v["cinnamon_font_size"],
+            cinnamon_font_family=o_m_l_v["cinnamon_font_family"],
+            gtk3_version=options_map["gtk3_version"][o_m_l_v["gtk3_version"]],
+            theme_name=o_m_l_v["theme_name"],
+        )))
+        inform("Choose an option:")
+        question = "%s\n%s\n%s" % ("**1.** Use data interactively.",
+                                   "**2.** Use data and directly build themes.",
+                                   "**Press any other key to not use stored data.**")
 
-    # Ask for Cinnamon theme version.
-    print(Ansi.PURPLE("Choose in which Cinnamon version the theme will be used."))
-    print(Ansi.PURPLE("1. 3.0.x to 3.2.x (Default)"))
-    print(Ansi.PURPLE("2. 3.4.x to 3.8.x"))
+        answer = prompts.read_char(question)
 
-    prompts.do_prompt(options_map_defaults, "cinnamon_version", "Enter an option",
-                      options_map_defaults["cinnamon_version"], validator=validate_themes_options)
+        # Do not change defaults if one chooses not to use stored build data.
+        if answer == "1" or answer == "2":
+            options_map_defaults = o_m_l_v
+        else:
+            pass
 
-    # Ask for Cinnamon theme font size.
-    print(Ansi.PURPLE("Set the Cinnamon theme font size."))
+        interactive = answer != "2"
 
-    prompts.do_prompt(options_map_defaults, "cinnamon_font_size", "Enter a value",
-                      options_map_defaults["cinnamon_font_size"])
+    if interactive:
+        # Ask for Cinnamon theme version.
+        inform("Choose in which Cinnamon version the theme will be used.")
+        inform("1. 3.0.x to 3.2.x (Default)")
+        inform("2. 3.4.x to 3.8.x")
+        inform("3. 4.0.x plus")
 
-    # Ask for Cinnamon theme font family.
-    print(Ansi.PURPLE("Set the Cinnamon theme font family."))
+        prompts.do_prompt(options_map_defaults,
+                          "cinnamon_version",
+                          "Enter an option",
+                          options_map_defaults["cinnamon_version"],
+                          validator=validate_cinn_theme_options)
 
-    prompts.do_prompt(options_map_defaults, "cinnamon_font_family", "Enter a value",
-                      options_map_defaults["cinnamon_font_family"])
+        # Ask for Cinnamon theme font size.
+        inform("Set the Cinnamon theme font size.")
 
-    # Ask for Gtk3 theme version.
-    print(Ansi.PURPLE("Choose in which Gtk+ version the theme will be used."))
-    print(Ansi.PURPLE("1. 3.18.x (Default)"))
-    print(Ansi.PURPLE("2. 3.22.x"))
+        prompts.do_prompt(options_map_defaults,
+                          "cinnamon_font_size",
+                          "Enter a value",
+                          options_map_defaults["cinnamon_font_size"])
 
-    prompts.do_prompt(options_map_defaults, "gtk3_version", "Enter an option",
-                      options_map_defaults["gtk3_version"],
-                      validator=validate_themes_options)
+        # Ask for Cinnamon theme font family.
+        inform("Set the Cinnamon theme font family.")
+
+        prompts.do_prompt(options_map_defaults,
+                          "cinnamon_font_family",
+                          "Enter a value",
+                          options_map_defaults["cinnamon_font_family"])
+
+        # Ask for Gtk3 theme version.
+        inform("Choose in which Gtk+ version the theme will be used.")
+        inform("1. 3.18.x (Default)")
+        inform("2. 3.22.x")
+
+        prompts.do_prompt(options_map_defaults,
+                          "gtk3_version",
+                          "Enter an option",
+                          options_map_defaults["gtk3_version"],
+                          validator=validate_gtk3_theme_options)
 
     theme_data = {
         "cinnamon_version": options_map["cinnamon_version"][options_map_defaults["cinnamon_version"]],
@@ -844,21 +902,26 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         "gtk3_version": options_map["gtk3_version"][options_map_defaults["gtk3_version"]]
     }
 
-    if theme_name:
-        options_map_defaults["theme_name"] = theme_name
-    else:
-        try:
-            with open(PATHS["theme_name_storage_file"], "r", encoding="UTF-8") as theme_file:
-                options_map_defaults["theme_name"] = theme_file.read().strip()
-        except Exception:
-            pass
+    if interactive:
+        if theme_name:
+            options_map_defaults["theme_name"] = theme_name
+        else:
+            try:
+                with open(PATHS["theme_name_storage_file"], "r", encoding="UTF-8") as theme_file:
+                    options_map_defaults["theme_name"] = theme_file.read().strip()
+            except Exception:
+                pass
 
-    print(Ansi.PURPLE("Enter a name for the theme:"))
-    prompts.do_prompt(options_map_defaults, "theme_name",
-                      "Enter name", options_map_defaults["theme_name"])
+        inform("Enter a name for the theme:")
+        prompts.do_prompt(options_map_defaults,
+                          "theme_name",
+                          "Enter name",
+                          options_map_defaults["theme_name"])
 
     if not options_map_defaults["theme_name"].strip():
-        print(Ansi.WARNING(_missing_theme_name_msg))
+        print(Ansi.LIGHT_YELLOW(_missing_theme_or_domain_name_msg.format(capital="Theme",
+                                                                         lower="theme",
+                                                                         types="themes")))
         raise SystemExit()
 
     if not build_output:
@@ -883,28 +946,28 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
 
     for variant in theme_variants:
         logger.info(shell_utils.get_cli_separator("-"), date=False)
-        logger.info("Generating variant: %s" % variant)
+        logger.info("**Generating variant:** %s" % variant)
 
         full_theme_name = "%s-%s" % (options_map_defaults["theme_name"].strip(), variant)
 
         destination_folder = os.path.join(base_output_path, full_theme_name)
 
         if file_utils.is_real_file(destination_folder):
-            print(Ansi.ERROR("InvalidDestination: Destination exists and is a file!!! Aborted!!!"))
+            print(Ansi.LIGHT_RED("**InvalidDestination:** Destination exists and is a file!!! Aborted!!!"))
             raise SystemExit()
 
         if file_utils.is_real_dir(destination_folder):
             if not do_not_cofirm:
-                print(Ansi.WARNING(_existent_xlet_destination_msg.format(path=destination_folder)))
+                print(Ansi.LIGHT_YELLOW(_existent_xlet_destination_msg.format(path=destination_folder)))
 
             if do_not_cofirm or prompts.confirm(prompt="Proceed?", response=False):
                 if dry_run:
-                    logger.log_dry_run("Destination will be eradicated:\n%s" %
+                    logger.log_dry_run("**Destination will be eradicated:**\n%s" %
                                        destination_folder)
                 else:
                     rmtree(destination_folder, ignore_errors=True)
             else:
-                print(Ansi.ERROR("OperationAborted: The theme building process was canceled."))
+                print(Ansi.LIGHT_RED("**OperationAborted:** The theme building process was canceled."))
                 raise SystemExit()
 
         variant_folder = os.path.join(themes_sources, "_variants", variant)
@@ -924,20 +987,20 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         variant_version_sensitive_gtk3_files = os.path.join(
             variant_version_sensitive, "gtk-3.0", theme_data["gtk3_version"])
 
-        logger.info("Copying files...")
+        logger.info("**Copying files...**")
 
         if dry_run:
-            logger.log_dry_run("Copying common version insensitive files:")
-            logger.log_dry_run("Source:\n%s" % common_version_insensitive_files)
-            logger.log_dry_run("Destination:\n%s" % destination_folder)
+            logger.log_dry_run("**Copying common version insensitive files:**")
+            logger.log_dry_run("**Source:**\n%s" % common_version_insensitive_files)
+            logger.log_dry_run("**Destination:**\n%s" % destination_folder)
         else:
             file_utils.custom_copytree2(common_version_insensitive_files, destination_folder)
 
         if os.path.exists(common_version_sensitive_cinnamon_files):
             if dry_run:
-                logger.log_dry_run("Copying version sensitive Cinnamon files:")
-                logger.log_dry_run("Source:\n%s" % common_version_sensitive_cinnamon_files)
-                logger.log_dry_run("Destination:\n%s" %
+                logger.log_dry_run("**Copying version sensitive Cinnamon files:**")
+                logger.log_dry_run("**Source:**\n%s" % common_version_sensitive_cinnamon_files)
+                logger.log_dry_run("**Destination:**\n%s" %
                                    os.path.join(destination_folder, "cinnamon"))
             else:
                 file_utils.custom_copytree2(common_version_sensitive_cinnamon_files,
@@ -945,43 +1008,45 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
 
         if os.path.exists(common_version_sensitive_gtk3_files):
             if dry_run:
-                logger.log_dry_run("Copying version sensitive Gtk 3 files:")
-                logger.log_dry_run("Source:\n%s" % common_version_sensitive_gtk3_files)
-                logger.log_dry_run("Destination:\n%s" % os.path.join(destination_folder, "gtk-3.0"))
+                logger.log_dry_run("**Copying version sensitive Gtk 3 files:**")
+                logger.log_dry_run("**Source:**\n%s" % common_version_sensitive_gtk3_files)
+                logger.log_dry_run("**Destination:**\n%s" %
+                                   os.path.join(destination_folder, "gtk-3.0"))
             else:
                 file_utils.custom_copytree2(common_version_sensitive_gtk3_files,
                                             os.path.join(destination_folder, "gtk-3.0"))
 
         if dry_run:
-            logger.log_dry_run("Copying variant version insensitive files:")
-            logger.log_dry_run("Source:\n%s" % variant_version_insensitive_files)
-            logger.log_dry_run("Destination:\n%s" % destination_folder)
+            logger.log_dry_run("**Copying variant version insensitive files:**")
+            logger.log_dry_run("**Source:**\n%s" % variant_version_insensitive_files)
+            logger.log_dry_run("**Destination:**\n%s" % destination_folder)
         else:
             file_utils.custom_copytree2(variant_version_insensitive_files, destination_folder)
 
         if os.path.exists(variant_version_sensitive_gtk3_files):
             if dry_run:
-                logger.log_dry_run("Copying variant version sensitive Gtk 3 files:")
-                logger.log_dry_run("Source:\n%s" % variant_version_sensitive_gtk3_files)
-                logger.log_dry_run("Destination:\n%s" % os.path.join(destination_folder, "gtk-3.0"))
+                logger.log_dry_run("**Copying variant version sensitive Gtk 3 files:**")
+                logger.log_dry_run("**Source:**\n%s" % variant_version_sensitive_gtk3_files)
+                logger.log_dry_run("**Destination:**\n%s" %
+                                   os.path.join(destination_folder, "gtk-3.0"))
             else:
                 file_utils.custom_copytree2(variant_version_sensitive_gtk3_files,
                                             os.path.join(destination_folder, "gtk-3.0"))
 
         if os.path.exists(variant_version_sensitive_cinnamon_files):
             if dry_run:
-                logger.log_dry_run("Copying variant version sensitive Cinnamon files:")
-                logger.log_dry_run("Source:\n%s" % variant_version_sensitive_cinnamon_files)
-                logger.log_dry_run("Destination:\n%s" %
+                logger.log_dry_run("**Copying variant version sensitive Cinnamon files:**")
+                logger.log_dry_run("**Source:**\n%s" % variant_version_sensitive_cinnamon_files)
+                logger.log_dry_run("**Destination:**\n%s" %
                                    os.path.join(destination_folder, "cinnamon"))
             else:
                 file_utils.custom_copytree2(variant_version_sensitive_cinnamon_files,
                                             os.path.join(destination_folder, "cinnamon"))
 
-        logger.info("Performing string substitutions...")
+        logger.info("**Performing string substitutions...**")
         if dry_run:
-            logger.log_dry_run("Files located at:\n%s" % destination_folder)
-            logger.log_dry_run("Files ending with the following extensions: %s" %
+            logger.log_dry_run("**Files located at:**\n%s" % destination_folder)
+            logger.log_dry_run("**Files ending with the following extensions:** %s" %
                                ", ".join(strings_subst_extensions))
         else:
             for root, dirs, files in os.walk(destination_folder, topdown=False):
@@ -1002,13 +1067,13 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                             file.write(file_data_modified)
                             file.truncate()
 
-        logger.info("Theme variant %s successfully built." % variant)
+        logger.success("**Theme variant %s successfully built.**" % variant)
 
     print("")
-    logger.info("Built themes saved in %s" % base_output_path)
+    logger.info("**Built themes saved at %s**" % base_output_path)
 
     if dry_run:
-        logger.log_dry_run("Theme build data will be saved at:\n%s" %
+        logger.log_dry_run("**Theme build data will be saved at:**\n%s" %
                            PATHS["theme_latest_build_data_file"])
     else:
         with open(PATHS["theme_latest_build_data_file"], "w", encoding="UTF-8") as outfile:
@@ -1093,11 +1158,11 @@ class BaseXletGenerator():
             }
         }
 
-        print(Ansi.PURPLE("\nEnter an xlet type:\n\n1. applet\n2. extension"))
+        inform("\nEnter an xlet type:\n\n1. applet\n2. extension")
         prompts.do_prompt(prompt_data, "type", "Choose an option", prompt_data["type"])
         self.xlet_data["type"] = prompt_data_map[prompt_data["type"]]["type"]
 
-        print(Ansi.PURPLE("\nEnter a name for the xlet:"))
+        inform("\nEnter a name for the xlet:")
         prompts.do_prompt(prompt_data, "name", "Enter name", prompt_data["name"])
         self.xlet_data["name"] = prompt_data["name"]
 
@@ -1112,16 +1177,16 @@ class BaseXletGenerator():
                                                  self.xlet_data["slug"])
 
         if os.path.exists(self.new_xlet_destination):
-            self.logger.warning("ExistentLocation: New xlet cannot be created.")
+            self.logger.warning("**ExistentLocation:** New xlet cannot be created.")
             raise SystemExit()
 
-        print(Ansi.PURPLE("\nEnter a description for the xlet:"))
+        inform("\nEnter a description for the xlet:")
         prompts.do_prompt(prompt_data, "description",
                           "Enter description", prompt_data["description"])
         self.xlet_data["description"] = prompt_data["description"]
 
         if self.xlet_data["type"] != "extension":
-            print(Ansi.PURPLE("\nEnter max instances for the xlet:"))
+            inform("\nEnter max instances for the xlet:")
             prompts.do_prompt(prompt_data, "max_instances",
                               "Enter description", prompt_data["max_instances"])
             self.xlet_data["max_instances"] = prompt_data["max_instances"]
@@ -1143,7 +1208,7 @@ class BaseXletGenerator():
         """
         os.makedirs(self.new_xlet_destination, exist_ok=True)
 
-        self.logger.info("Copying files...")
+        self.logger.info("**Copying files...**")
 
         for file_name in self.xlet_data["files"]:
             copy2(os.path.join(self.base_xlet_path, file_name),
@@ -1234,6 +1299,17 @@ def print_xlets_slugs():
     for xlet in get_xlets_dirs():
         xlet_type, xlet_dir_name = xlet.split(" ")
         print(xlet_dir_name)
+
+
+def inform(msg):
+    """Inform.
+
+    Parameters
+    ----------
+    msg : str
+        Message to display.
+    """
+    print(Ansi.LIGHT_MAGENTA("**%s**" % msg))
 
 
 if __name__ == "__main__":

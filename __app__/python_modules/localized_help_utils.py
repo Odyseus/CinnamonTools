@@ -410,7 +410,7 @@ def save_file(file_path, data, is_xlet_help_file=False):
         with open(file_path, "w") as f:
             f.write(data)
     except Exception as err:
-        print(Ansi.ERROR(err))
+        print(Ansi.LIGHT_RED(err))
         quit()
     else:
         if is_xlet_help_file:

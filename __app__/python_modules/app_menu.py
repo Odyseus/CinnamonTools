@@ -118,7 +118,7 @@ class CLIMenu():
                                   logger=self.logger,
                                   from_menu=True)
         else:
-            print(app_utils.Ansi.WARNING("Operation aborted."))
+            print(app_utils.Ansi.LIGHT_YELLOW("Operation aborted."))
 
 
 if __name__ == "__main__":

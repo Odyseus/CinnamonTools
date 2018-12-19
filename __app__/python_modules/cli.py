@@ -181,10 +181,10 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             all_xlets = app_utils.get_xlets_dirs()
 
             if self.a["--all-xlets"]:
-                self.logger.info("Building all xlets.")
+                self.logger.info("**Building all xlets.**")
                 self.xlets = all_xlets
             elif self.a["--xlet"]:
-                self.logger.info("Building the following xlets:")
+                self.logger.info("**Building the following xlets:**")
 
                 # Workaround docopt issue:
                 # https://github.com/docopt/docopt/issues/134
@@ -199,7 +199,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     self.logger.info(x)
         elif self.a["build_themes"]:
             self.action = self.build_themes
-            self.logger.info("Building all themes.")
+            self.logger.info("**Building all themes.**")
         elif self.a["dev"]:
             # Sort the arguments so one doesn't have to worry about the order
             # in which they are passed.
@@ -207,36 +207,36 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             dev_args = list(set(self.a["<sub_commands>"]))
             dev_args.sort(key=lambda x: self.dev_args_order.index(x))
             self.xlets_helper = app_utils.XletsHelperCore(logger=self.logger)
-            self.logger.info("Command: dev")
-            self.logger.info("Arguments:")
+            self.logger.info("**Command:** dev")
+            self.logger.info("**Arguments:**")
 
             for func in dev_args:
                 if getattr(self.xlets_helper, func, False):
                     self.logger.info(func)
                     self.func_names.append(func)
                 else:
-                    self.logger.warning("Non existent function: %s" % func)
+                    self.logger.warning("**Non existent function:** %s" % func)
         elif self.a["generate"]:
             if self.a["system_executable"]:
-                self.logger.info("System executable generation...")
+                self.logger.info("**System executable generation...**")
                 self.action = self.system_executable_generation
 
             if self.a["docs"] or self.a["docs_no_api"]:
-                self.logger.info("Documentation generation...")
+                self.logger.info("**Documentation generation...**")
                 self.action = self.generate_docs
 
             if self.a["base_xlet"]:
-                self.logger.info("Base xlet generation...")
+                self.logger.info("**Base xlet generation...**")
                 self.action = self.base_xlet_generation
         elif self.a["repo"]:
             self.repo_action = "init" if self.a["init"] else "update" if self.a["update"] else ""
 
             if self.a["submodules"]:
-                self.logger.info("Managing repository sub-modules...")
+                self.logger.info("**Managing repository sub-modules...**")
                 self.action = self.manage_repo_submodules
 
             if self.a["subtrees"]:
-                self.logger.info("Managing repository sub-trees...")
+                self.logger.info("**Managing repository sub-trees...**")
                 self.action = self.manage_repo_subtrees
 
     def run(self):
@@ -273,7 +273,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
 
             if self.a["--restart-cinnamon"]:
                 if self.a["--dry-run"]:
-                    self.logger.log_dry_run("Cinnamon will be restarted.")
+                    self.logger.log_dry_run("**Cinnamon will be restarted.**")
                 else:
                     t = Thread(target=app_utils.restart_cinnamon)
                     t.daemon = True
