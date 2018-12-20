@@ -31,6 +31,28 @@ __cinnamon_tools_cli_{current_date}(){
             ;;
     esac
 
+    # Handle --xxxxxx=
+    if [[ ${prev} == "--"* && ${cur} == "=" ]] ; then
+        compopt -o filenames
+        COMPREPLY=(*)
+        return 0
+    fi
+
+    # Handle --xxxxx=path
+    case ${prev} in
+        "="|"-o")
+            # Unescape space
+            cur=${cur//\\ / }
+            # Expand tilde to $HOME
+            [[ ${cur} == "~/"* ]] && cur=${cur/\~/$HOME}
+            # Show completion if path exist (and escape spaces)
+            compopt -o filenames
+            local files=("${cur}"*)
+            [[ -e ${files[0]} ]] && COMPREPLY=( "${files[@]// /\ }" )
+            return 0
+        ;;
+    esac
+
     if [[ ${prev} == "=" ]] ; then
         if [[ ${cur} != *"/"* ]]; then
             xlets_slugs=( $(_get_xlets_slugs_{current_date}) )
