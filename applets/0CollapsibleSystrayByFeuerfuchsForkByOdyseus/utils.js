@@ -18,6 +18,7 @@ const PANEL_SYMBOLIC_ICON_DEFAULT_HEIGHT = Applet.PANEL_SYMBOLIC_ICON_DEFAULT_HE
 const CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
 const CINN_3_2_PLUS = versionCompare(CINNAMON_VERSION, "3.2.0") >= 0;
 const CINN_3_4_PLUS = versionCompare(CINNAMON_VERSION, "3.4.0") >= 0;
+const CINN_4_0_PLUS = versionCompare(CINNAMON_VERSION, "4.0.0") >= 0;
 
 Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
 
@@ -92,7 +93,7 @@ CSCollapseBtn.prototype = {
     _setStyle: function() {
         let symb_scaleup = ((this._applet._panelHeight / DEFAULT_PANEL_HEIGHT) * PANEL_SYMBOLIC_ICON_DEFAULT_HEIGHT) / global.ui_scale;
 
-        this.icon.set_icon_size(this._applet._scaleMode ? symb_scaleup : -1);
+        this.icon.set_icon_size(this._applet._legacyScaleMode ? symb_scaleup : -1);
         this.icon.set_style_class_name("system-status-icon");
     },
 
@@ -297,7 +298,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
     _onIndicatorAddedNew: function(manager, appIndicator) {
         if (!(appIndicator.id in this._shellIndicators)) {
             let size = null;
-            if (this._scaleMode) {
+            if (this._legacyScaleMode) {
                 size = this._getIconSize();
             }
 
@@ -383,8 +384,18 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         }
     },
 
+    // Needed for retro-compatibility.
+    // Mark for deletion on EOL. Cinnamon 4.0.x+
+    get _legacyScaleMode() {
+        if (CINN_4_0_PLUS) {
+            return true;
+        } else {
+            return this._scaleMode;
+        }
+    },
+
     _getIndicatorSize: function(appIndicator) { // jshint ignore:line
-        if (this._scaleMode) {
+        if (this._legacyScaleMode) {
             return this._panelHeight * ICON_SCALE_FACTOR / global.ui_scale;
         }
         return 16;
@@ -473,7 +484,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         if (CINN_3_2_PLUS) {
             let size = null;
 
-            if (this._scaleMode) {
+            if (this._legacyScaleMode) {
                 size = this._getIconSize();
             }
 
@@ -599,7 +610,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         }
         icon._rolePosition = position;
 
-        if (this._scaleMode) {
+        if (this._legacyScaleMode) {
             let timerId = Mainloop.timeout_add(500, () => {
                 this._resizeStatusItem(role, icon);
                 Mainloop.source_remove(timerId);

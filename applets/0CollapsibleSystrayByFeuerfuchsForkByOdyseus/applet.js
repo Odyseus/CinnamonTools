@@ -36,7 +36,6 @@ CollapsibleSystrayApplet.prototype = {
     _init: function(metadata, orientation, panel_height, instance_id) {
         this.metadata = metadata;
         this.instance_id = instance_id;
-        this._panelHeight = panel_height;
         this._direction = (orientation === St.Side.TOP || orientation === St.Side.BOTTOM) ? APPLET_DIRECTION.HORIZONTAL : APPLET_DIRECTION.VERTICAL;
         this._bindSettings();
 
