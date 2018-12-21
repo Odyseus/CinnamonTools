@@ -91,9 +91,13 @@ CSCollapseBtn.prototype = {
      *
      */
     _setStyle: function() {
-        let symb_scaleup = ((this._applet._panelHeight / DEFAULT_PANEL_HEIGHT) * PANEL_SYMBOLIC_ICON_DEFAULT_HEIGHT) / global.ui_scale;
+        try {
+            let symb_scaleup = ((this._applet._panelHeight / DEFAULT_PANEL_HEIGHT) * PANEL_SYMBOLIC_ICON_DEFAULT_HEIGHT) / global.ui_scale;
+            this.icon.set_icon_size(this._applet._legacyScaleMode ? symb_scaleup : -1);
+        } catch (aErr) {
+            //
+        }
 
-        this.icon.set_icon_size(this._applet._legacyScaleMode ? symb_scaleup : -1);
         this.icon.set_style_class_name("system-status-icon");
     },
 
