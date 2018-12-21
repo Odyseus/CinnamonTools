@@ -815,11 +815,21 @@ AppMenuButton.prototype = {
         }
     },
 
+    // Needed for retro-compatibility.
+    // Mark for deletion on EOL. Cinnamon 4.0.x+
+    get _legacyScaleMode() {
+        if (versionCompare(CINNAMON_VERSION, "4.0.0") >= 0) {
+            return true;
+        } else {
+            return this._scaleMode;
+        }
+    },
+
     setIcon: function() {
         let tracker = Cinnamon.WindowTracker.get_default();
         let app = tracker.get_window_app(this.metaWindow);
 
-        if (this._applet._scaleMode && this.labelVisible) {
+        if (this._legacyScaleMode && this.labelVisible) {
             this.iconSize = Math.round(this._applet._panelHeight * ICON_HEIGHT_FACTOR / global.ui_scale);
         } else if (!this.labelVisible) {
             this.iconSize = Math.round(this._applet._panelHeight * VERTICAL_ICON_HEIGHT_FACTOR / global.ui_scale);
