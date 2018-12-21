@@ -644,7 +644,7 @@ StScrollView {
     .window-border {
         border: 3px $selected_bg_color;
         border-radius: 4px;
-        background-color: rgba(255, 255, 255, 0.05);/* Cover rounded corners and some bad adjustment gaps */
+        background-color: rgba(255, 255, 255, 0.05); /* Cover rounded corners and some bad adjustment gaps */
         box-shadow: 0 0 0 1px $selected_bg_color inset;
     }
 }
@@ -1312,7 +1312,7 @@ StScrollView {
     padding: 7px;
 
     &:highlighted {
-        font-weight: bold;/* This style is used in menu application buttons for applications which were newly installed. */
+        font-weight: bold; /* This style is used in menu application buttons for applications which were newly installed. */
     }
 }
 
@@ -1592,14 +1592,13 @@ StScrollView {
             padding: 1px 0 4px 4px;
             border-image: none;
 
-            &:active,
-            &:active:hover,
-            &:checked,
-            &:checked:hover,
-            &:focus,
-            &:focus:active:hover,
-            &:focus:hover,
             &:hover {
+                @include background(hover, bottom);
+            }
+
+            &:focus:hover,
+            &:focus:active:hover,
+            &:focus {
                 @include background(pressed, bottom);
                 font-weight: bold;
             }
