@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "APP.PY" "1" "Nov 29, 2018" "" "Cinnamon Tools"
+.TH "APP.PY" "1" "Dec 24, 2018" "" "Cinnamon Tools"
 .SH NAME
 app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .
@@ -148,7 +148,7 @@ This command will build the Argos for Cinnamon applet and the Cinnamon Tweaks ex
 .UNINDENT
 .INDENT 0.0
 .IP \(bu 2
-\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: To be able to build any xlet, it is necessary to specify a domain name. This domain name is then used to generate an xlet UUID (an other data). To avoid passing this command line option every time one builds xlets, a file named \fBdomain_name\fP can be created inside a folder named \fBtmp\fP at the root of the repository whose only content should be the desired domain name. This command line option has precedence over the \fBdomain_name\fP file. Which means that if this option is used, the domain name found in an existent \fBdomain_name\fP file will be ignored.
+\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: To be able to build any xlet, it is necessary to specify a domain name. This domain name is then used to generate an xlet UUID (and other data). To avoid passing this command line option every time one builds xlets, a file named \fBdomain_name\fP can be created inside a folder named \fBtmp\fP at the root of the repository whose only content should be the desired domain name. This command line option has precedence over the \fBdomain_name\fP file. Which means that if this option is used, the domain name found in an existent \fBdomain_name\fP file will be ignored.
 .INDENT 2.0
 .INDENT 3.5
 .INDENT 0.0
@@ -164,7 +164,7 @@ The domain name isn\(aqt internally validated (yet). But it needs to comply with
 .IP \(bu 2
 It cannot be empty.
 .IP \(bu 2
-It must contain only ASCII characters (A\-Z[0\-9]_\-.).
+It must contain only ASCII characters (A\-Z[0\-9]\-.).
 .IP \(bu 2
 It \fBmust not\fP begin nor end with a digit.
 .IP \(bu 2
