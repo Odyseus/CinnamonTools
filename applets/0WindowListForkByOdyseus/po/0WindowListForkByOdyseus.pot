@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus 1.12\n"
-"POT-Creation-Date: 2018-11-24 02:16-0300\n"
+"POT-Creation-Date: 2018-12-24 22:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,159 +15,159 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:334
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:331 utils.js:1059
+#: ../../__app__/python_modules/localized_help_creator.py:328 utils.js:1069
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:332
+#: ../../__app__/python_modules/localized_help_creator.py:329
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:333
+#: ../../__app__/python_modules/localized_help_creator.py:330
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:366
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:380
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:399
+#: ../../__app__/python_modules/localized_help_creator.py:396
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:399
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:404
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:420
+#: ../../__app__/python_modules/localized_help_creator.py:417
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:423
+#: ../../__app__/python_modules/localized_help_creator.py:420
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:424
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: z_create_localized_help.py:28
+#: z_create_localized_help.py:30
 msgid "Description"
 msgstr ""
 
-#: z_create_localized_help.py:30
+#: z_create_localized_help.py:32
 msgid "This applet is a fork of the default Window list applet shipped with Cinnamon."
 msgstr ""
 
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:34
 msgid "Differences with the original applet"
 msgstr ""
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:36
 msgid "Added option to remove the label from the window list buttons."
 msgstr ""
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:37
 msgid "Added option to remove the tooltips from the window list buttons."
 msgstr ""
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:38
 msgid "Added icons to the window list button's context menu."
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:39
 msgid "Added option to invert the contex menu items."
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:40
 msgid "Added option to hide/move the **Preferences** sub menu."
 msgstr ""
 
-#: z_create_localized_help.py:43 z_create_localized_help.py:47
+#: z_create_localized_help.py:45 z_create_localized_help.py:49
 msgid "Inverted menu on top panel"
 msgstr ""
 
-#: utils.js:911
+#: utils.js:921
 msgid "Preferences"
 msgstr ""
 
-#: utils.js:925
+#: utils.js:935
 msgid "Move to the other monitor"
 msgstr ""
 
-#: utils.js:936
+#: utils.js:946
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr ""
 
-#: utils.js:947
+#: utils.js:957
 msgid "Only on this workspace"
 msgstr ""
 
-#: utils.js:953
+#: utils.js:963
 msgid "Visible on all workspaces"
 msgstr ""
 
-#: utils.js:959
+#: utils.js:969
 msgid "Move to another workspace"
 msgstr ""
 
 #. Close all/others
-#: utils.js:989
+#: utils.js:999
 msgid "Close all"
 msgstr ""
 
-#: utils.js:999
+#: utils.js:1009
 msgid "Close others"
 msgstr ""
 
-#: utils.js:1014
+#: utils.js:1024
 msgid "Restore to full opacity"
 msgstr ""
 
-#: utils.js:1022
+#: utils.js:1032
 msgid "Restore"
 msgstr ""
 
-#: utils.js:1027
+#: utils.js:1037
 msgid "Minimize"
 msgstr ""
 
-#: utils.js:1035
+#: utils.js:1045
 msgid "Unmaximize"
 msgstr ""
 
-#: utils.js:1040
+#: utils.js:1050
 msgid "Maximize"
 msgstr ""
 
-#: utils.js:1047
+#: utils.js:1057
 msgid "Close"
 msgstr ""
 
-#: utils.js:1066
+#: utils.js:1076
 msgid "About..."
 msgstr ""
 
-#: utils.js:1071
+#: utils.js:1081
 msgid "Configure..."
 msgstr ""
 
-#: utils.js:1087
+#: utils.js:1097
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""

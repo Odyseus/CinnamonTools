@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Mon, 24 Dec 2018 21:40:13 -0300
+- **Commit:** [a22c604](https://gitlab.com/Odyseus/CinnamonTools/commit/a22c604)
+- **Author:** Odyseus
+
+```
+- Removed DeepL translator. Removed from translate-shell in https://github.com/soimort/translate-shell/pull/272.
+
+```
+
+***
+
 - **Date:** Fri, 5 Oct 2018 04:40:16 -0300
 - **Commit:** [0af034d](https://gitlab.com/Odyseus/CinnamonTools/commit/0af034d)
 - **Author:** Odyseus

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks 1.14\n"
-"POT-Creation-Date: 2018-11-24 02:16-0300\n"
+"POT-Creation-Date: 2018-12-24 22:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,52 +15,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:334
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:331 settings.py:2334
+#: ../../__app__/python_modules/localized_help_creator.py:328 settings.py:2334
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:332
+#: ../../__app__/python_modules/localized_help_creator.py:329
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:333
+#: ../../__app__/python_modules/localized_help_creator.py:330
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:366
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:380
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:399 z_create_localized_help.py:40
+#: ../../__app__/python_modules/localized_help_creator.py:396 z_create_localized_help.py:42
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:399
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:404
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:420
+#: ../../__app__/python_modules/localized_help_creator.py:417
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:423
+#: ../../__app__/python_modules/localized_help_creator.py:420
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:424
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -178,7 +178,7 @@ msgstr ""
 msgid "Desktop tweaks"
 msgstr ""
 
-#: settings.py:258 z_create_localized_help.py:49 z_create_localized_help.py:76
+#: settings.py:258 z_create_localized_help.py:51 z_create_localized_help.py:78
 msgid "Desktop area tweaks"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgstr ""
 msgid "With this option enabled, applications can be dragged from the menu applet and from the panel launchers applet and dropped into the desktop."
 msgstr ""
 
-#: settings.py:275 z_create_localized_help.py:51 z_create_localized_help.py:89
+#: settings.py:275 z_create_localized_help.py:53 z_create_localized_help.py:91
 msgid "Tooltips tweaks"
 msgstr ""
 
@@ -218,7 +218,7 @@ msgstr ""
 msgid "Set a delay in milliseconds to display Cinnamon's UI tooltips."
 msgstr ""
 
-#: settings.py:305 z_create_localized_help.py:50 z_create_localized_help.py:81
+#: settings.py:305 z_create_localized_help.py:52 z_create_localized_help.py:83
 msgid "Popup menus tweaks"
 msgstr ""
 
@@ -226,7 +226,7 @@ msgstr ""
 msgid "Enable Popup menus tweaks"
 msgstr ""
 
-#: settings.py:317 z_create_localized_help.py:82
+#: settings.py:317 z_create_localized_help.py:84
 msgid "Panel menus behavior"
 msgstr ""
 
@@ -251,7 +251,7 @@ msgstr ""
 msgid "Don't \"eat\" clicks"
 msgstr ""
 
-#: settings.py:330 settings.py:332 z_create_localized_help.py:52 z_create_localized_help.py:94
+#: settings.py:330 settings.py:332 z_create_localized_help.py:54 z_create_localized_help.py:96
 msgid "Notifications tweaks"
 msgstr ""
 
@@ -323,7 +323,7 @@ msgstr ""
 msgid "Windows tweaks"
 msgstr ""
 
-#: settings.py:404 z_create_localized_help.py:53 z_create_localized_help.py:107
+#: settings.py:404 z_create_localized_help.py:55 z_create_localized_help.py:109
 msgid "Window focus tweaks"
 msgstr ""
 
@@ -351,7 +351,7 @@ msgstr ""
 msgid "Window shadows tweaks"
 msgstr ""
 
-#: settings.py:426 z_create_localized_help.py:128
+#: settings.py:426 z_create_localized_help.py:130
 msgid "Client side decorated windows aren't affected by this tweak."
 msgstr ""
 
@@ -363,23 +363,23 @@ msgstr ""
 msgid "This tweak allows us to customize the shadow of all windows."
 msgstr ""
 
-#: settings.py:439 z_create_localized_help.py:130
+#: settings.py:439 z_create_localized_help.py:132
 msgid "Shadow presets"
 msgstr ""
 
-#: settings.py:441 z_create_localized_help.py:131
+#: settings.py:441 z_create_localized_help.py:133
 msgid "Custom shadows"
 msgstr ""
 
-#: settings.py:442 z_create_localized_help.py:132
+#: settings.py:442 z_create_localized_help.py:134
 msgid "Default shadows"
 msgstr ""
 
-#: settings.py:443 z_create_localized_help.py:133
+#: settings.py:443 z_create_localized_help.py:135
 msgid "No shadows"
 msgstr ""
 
-#: settings.py:444 z_create_localized_help.py:134
+#: settings.py:444 z_create_localized_help.py:136
 msgid "Windows 10 shadows"
 msgstr ""
 
@@ -387,7 +387,7 @@ msgstr ""
 msgid "Edit custom shadows values"
 msgstr ""
 
-#: settings.py:456 z_create_localized_help.py:55 z_create_localized_help.py:137
+#: settings.py:456 z_create_localized_help.py:57 z_create_localized_help.py:139
 msgid "Auto move windows"
 msgstr ""
 
@@ -407,7 +407,7 @@ msgstr ""
 msgid "Define auto move windows rules"
 msgstr ""
 
-#: settings.py:474 z_create_localized_help.py:57 z_create_localized_help.py:146
+#: settings.py:474 z_create_localized_help.py:59 z_create_localized_help.py:148
 msgid "Windows decorations removal"
 msgstr ""
 
@@ -415,11 +415,11 @@ msgstr ""
 msgid "This tweak settings are purposely NOT applied in real time. Click the »Apply windows decorations settings« button to save settings."
 msgstr ""
 
-#: settings.py:476 z_create_localized_help.py:169
+#: settings.py:476 z_create_localized_help.py:171
 msgid "Client side decorated windows and WINE applications aren't affected by this tweak."
 msgstr ""
 
-#: settings.py:477 z_create_localized_help.py:170
+#: settings.py:477 z_create_localized_help.py:172
 msgid "Close all windows that belongs to an application that is going to be added to the applications list and before applying the settings of this tweak."
 msgstr ""
 
@@ -725,361 +725,361 @@ msgstr ""
 msgid "Cinnamon Tweaks extension preferences"
 msgstr ""
 
-#: z_create_localized_help.py:29
+#: z_create_localized_help.py:31
 msgid "Description"
 msgstr ""
 
-#: z_create_localized_help.py:31
+#: z_create_localized_help.py:33
 msgid "This extension adds some options to modify the default behaviour of certain Cinnamon features."
 msgstr ""
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:38
 msgid "Extension options details"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:44
 msgid "Some tweaks have warnings, dependencies, limitations and or known issues that must be read and understood before a tweak is enabled. No worries, nothing *fatal* could ever happen."
 msgstr ""
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:47
 msgid "Table of Content"
 msgstr ""
 
-#: z_create_localized_help.py:47 z_create_localized_help.py:60
+#: z_create_localized_help.py:49 z_create_localized_help.py:62
 msgid "Applets/Desklets tweaks"
 msgstr ""
 
-#: z_create_localized_help.py:48 z_create_localized_help.py:68
+#: z_create_localized_help.py:50 z_create_localized_help.py:70
 msgid "Hot Corners tweaks"
 msgstr ""
 
-#: z_create_localized_help.py:54 z_create_localized_help.py:123
+#: z_create_localized_help.py:56 z_create_localized_help.py:125
 msgid "Window Shadows tweaks"
 msgstr ""
 
-#: z_create_localized_help.py:61
+#: z_create_localized_help.py:63
 msgid "Ask for confirmation on applet/desklet removal:"
 msgstr ""
 
-#: z_create_localized_help.py:62
+#: z_create_localized_help.py:64
 msgid "Instead of directly remove the applet/desklet from the context menus, it will ask for confirmation. This option doesn't affect the removal of applets/desklets from the Applets/Desklets manager in Cinnamon settings (there will be no confirmation)."
 msgstr ""
 
-#: z_create_localized_help.py:63
+#: z_create_localized_help.py:65
 msgid "Display \"Edit applet/desklet main file\" on context menu for applets/desklet:"
 msgstr ""
 
-#: z_create_localized_help.py:63
+#: z_create_localized_help.py:65
 msgid "Display \"Open applet/desklet folder\" on context menu for applets/desklets"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:65
+#: z_create_localized_help.py:67
 msgid "These options will add new menu items to the applets/desklets context menus. The place where this items will be located is chosen by the option **Where to place the menu item?**."
 msgstr ""
 
-#: z_create_localized_help.py:69
+#: z_create_localized_help.py:71
 msgid "This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has hot corners delay activation."
 msgstr ""
 
-#: z_create_localized_help.py:70 z_create_localized_help.py:71 z_create_localized_help.py:72 z_create_localized_help.py:73 z_create_localized_help.py:91 z_create_localized_help.py:95 z_create_localized_help.py:114
+#: z_create_localized_help.py:72 z_create_localized_help.py:73 z_create_localized_help.py:74 z_create_localized_help.py:75 z_create_localized_help.py:93 z_create_localized_help.py:97 z_create_localized_help.py:116
 msgid "Crystal clear."
 msgstr ""
 
-#: z_create_localized_help.py:70
+#: z_create_localized_help.py:72
 msgid "Top left hot corner activation delay:"
 msgstr ""
 
-#: z_create_localized_help.py:71
+#: z_create_localized_help.py:73
 msgid "Top right hot corner activation delay:"
 msgstr ""
 
-#: z_create_localized_help.py:72
+#: z_create_localized_help.py:74
 msgid "Bottom left hot corner activation delay:"
 msgstr ""
 
-#: z_create_localized_help.py:73
+#: z_create_localized_help.py:75
 msgid "Bottom right hot corner activation delay:"
 msgstr ""
 
-#: z_create_localized_help.py:77
+#: z_create_localized_help.py:79
 msgid "Enable applications drop to the Desktop:"
 msgstr ""
 
-#: z_create_localized_help.py:78
+#: z_create_localized_help.py:80
 msgid "This tweak enables the ability to drag and drop applications from the menu applet and from the panel launchers applet into the desktop."
 msgstr ""
 
-#: z_create_localized_help.py:83 z_create_localized_help.py:127 z_create_localized_help.py:141 z_create_localized_help.py:150
+#: z_create_localized_help.py:85 z_create_localized_help.py:129 z_create_localized_help.py:143 z_create_localized_help.py:152
 msgid "Note:"
 msgstr ""
 
-#: z_create_localized_help.py:84
+#: z_create_localized_help.py:86
 msgid "This setting affects only the behavior of menus that belongs to applets placed on any panel."
 msgstr ""
 
-#: z_create_localized_help.py:86
+#: z_create_localized_help.py:88
 msgid "By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open."
 msgstr ""
 
-#: z_create_localized_help.py:86
+#: z_create_localized_help.py:88
 msgid "Don't eat clicks:"
 msgstr ""
 
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:92
 msgid "Avoid mouse pointer overlapping tooltips:"
 msgstr ""
 
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:92
 msgid "Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse pointer. This leads to having tooltips overlapped by the mouse pointer. This tweak aligns the tooltip to the bottom-right corner of the mouse pointer (approximately), reducing the possibility of the mouse pointer to overlap the tooltip. This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has the position of the tooltips changed."
 msgstr ""
 
-#: z_create_localized_help.py:91
+#: z_create_localized_help.py:93
 msgid "Tooltips show delay:"
 msgstr ""
 
-#: z_create_localized_help.py:95
+#: z_create_localized_help.py:97
 msgid "Enable notifications open/close animation:"
 msgstr ""
 
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:98
 msgid "Notifications position:"
 msgstr ""
 
-#: z_create_localized_help.py:97
+#: z_create_localized_help.py:99
 msgid "Notifications can be displayed at the top-right of screen (system default) or at the bottom-right of screen."
 msgstr ""
 
-#: z_create_localized_help.py:98
+#: z_create_localized_help.py:100
 msgid "Distance from panel:"
 msgstr ""
 
-#: z_create_localized_help.py:99
+#: z_create_localized_help.py:101
 msgid "For notifications displayed at the top-right of screen:"
 msgstr ""
 
-#: z_create_localized_help.py:100
+#: z_create_localized_help.py:102
 msgid "This is the distance between the bottom border of the top panel (if no top panel, from the top of the screen) to the top border of the notification popup."
 msgstr ""
 
-#: z_create_localized_help.py:101
+#: z_create_localized_help.py:103
 msgid "For notifications displayed at the bottom-right of screen:"
 msgstr ""
 
-#: z_create_localized_help.py:102
+#: z_create_localized_help.py:104
 msgid "This is the distance between the top border of the bottom panel (if no bottom panel, from the bottom of the screen) to the bottom border of the notification popup."
 msgstr ""
 
-#: z_create_localized_help.py:103
+#: z_create_localized_help.py:105
 msgid "Notification popup right margin:"
 msgstr ""
 
-#: z_create_localized_help.py:104
+#: z_create_localized_help.py:106
 msgid "By default, the right margin of the notification popup is defined by the currently used theme. This option, set to any value other than 0 (zero), allows to set a custom right margin, ignoring the defined by the theme."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:109
+#: z_create_localized_help.py:111
 msgid "Tweak based on the gnome-shell extension called [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) by [Valentin Dimitrov](https://github.com/v-dimitrov) and another gnome-shell extension called [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut) by [awamper](https://github.com/awamper)."
 msgstr ""
 
-#: z_create_localized_help.py:111
+#: z_create_localized_help.py:113
 msgid "Some windows that demands attention will not gain focus regardless of the settings combination on Cinnamon settings. This option will allow you to correct that."
 msgstr ""
 
-#: z_create_localized_help.py:113
+#: z_create_localized_help.py:115
 msgid "The activation of windows demanding attention...:"
 msgstr ""
 
-#: z_create_localized_help.py:114
+#: z_create_localized_help.py:116
 msgid "...is handled by the system:"
 msgstr ""
 
-#: z_create_localized_help.py:115
+#: z_create_localized_help.py:117
 msgid "...is immediate:"
 msgstr ""
 
-#: z_create_localized_help.py:116
+#: z_create_localized_help.py:118
 msgid "will force windows demanding attention to be focused immediately."
 msgstr ""
 
-#: z_create_localized_help.py:117
+#: z_create_localized_help.py:119
 msgid "...is performed with a keyboard shortcut:"
 msgstr ""
 
-#: z_create_localized_help.py:118
+#: z_create_localized_help.py:120
 msgid "will focus windows demanding attention with a keyboard shortcut."
 msgstr ""
 
-#: z_create_localized_help.py:119
+#: z_create_localized_help.py:121
 msgid "Keyboard shortcut:"
 msgstr ""
 
-#: z_create_localized_help.py:120
+#: z_create_localized_help.py:122
 msgid "Set a keyboard shortcut for the option **...is performed with a keyboard shortcut**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:125
+#: z_create_localized_help.py:127
 msgid "Tweak based on a Cinnamon extension called [Custom Shadows](https://cinnamon-spices.linuxmint.com/extensions/view/43) created by [mikhail-ekzi](https://github.com/mikhail-ekzi). It allows to modify the shadows used by Cinnamon's window manager (Muffin)."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:139
+#: z_create_localized_help.py:141
 msgid "Tweak based on the gnome-shell extension called [Auto Move Windows](https://extensions.gnome.org/extension/16/auto-move-windows/) by [Florian Muellner](https://github.com/fmuellner). It enables the ability to set rules to open determined applications on specific workspaces."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:143 z_create_localized_help.py:152
+#: z_create_localized_help.py:145 z_create_localized_help.py:154
 msgid "If the application that you want to select doesn't show up on the application chooser dialog, read the section on this help file called **Applications not showing up on the applications chooser dialogs**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:148
+#: z_create_localized_help.py:150
 msgid "Tweak based on the extension called [Cinnamon Maximus](https://cinnamon-spices.linuxmint.com/extensions/view/29) by [Fatih Mete](https://github.com/fatihmete) with some options from the gnome-shell extension called [Maximus NG](https://github.com/luispabon/maximus-gnome-shell) by [Luis Pabon](https://github.com/luispabon). This tweak allows to remove the windows decorations from maximized/half-maximized/tiled windows."
 msgstr ""
 
-#: z_create_localized_help.py:154
+#: z_create_localized_help.py:156
 msgid "Dependencies"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:156
+#: z_create_localized_help.py:158
 msgid "This tweak requires two commands available on the system (**xprop** and **xwininfo**) for it to work."
 msgstr ""
 
-#: z_create_localized_help.py:158
+#: z_create_localized_help.py:160
 msgid "Debian based distributions:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:160
+#: z_create_localized_help.py:162
 msgid "These commands are provided by the **x11-utils** package. Linux Mint already has this package installed."
 msgstr ""
 
-#: z_create_localized_help.py:161
+#: z_create_localized_help.py:163
 msgid "Archlinux based distributions:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:163
+#: z_create_localized_help.py:165
 msgid "These commands are provided by the **xorg-xprop** and **xorg-xwininfo** packages."
 msgstr ""
 
-#: z_create_localized_help.py:164
+#: z_create_localized_help.py:166
 msgid "Fedora based distributions:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:166
+#: z_create_localized_help.py:168
 msgid "These commands are provided by the **xorg-x11-utils** package."
 msgstr ""
 
-#: z_create_localized_help.py:168
+#: z_create_localized_help.py:170
 msgid "Warnings"
 msgstr ""
 
-#: z_create_localized_help.py:171
+#: z_create_localized_help.py:173
 msgid "As a general rule to avoid issues, before enabling and configuring this tweak, close all windows currently opened, enable and configure this tweak and then log out and log back in."
 msgstr ""
 
-#: z_create_localized_help.py:173
+#: z_create_localized_help.py:175
 msgid "Known issues"
 msgstr ""
 
-#: z_create_localized_help.py:174
+#: z_create_localized_help.py:176
 msgid "Invisible windows:"
 msgstr ""
 
-#: z_create_localized_help.py:174
+#: z_create_localized_help.py:176
 msgid "Sometimes, windows of applications that are configured to remove their decorations can become invisible. The application's icon can still be seen in the panel (taskbar) and when clicked to focus its respective window, the invisible window will block the clicks as if it were visible. To fix this, the window needs to be unmaximized (it will become visible again) and then closed. When reopened, the window should behave normally."
 msgstr ""
 
-#: z_create_localized_help.py:175
+#: z_create_localized_help.py:177
 msgid "Applications stuck undecorated:"
 msgstr ""
 
-#: z_create_localized_help.py:176
+#: z_create_localized_help.py:178
 msgid "Some times, an application will get stuck undecorated even after unmaximizing it. Restarting the application will recover its ability to decorate and undecorate itself."
 msgstr ""
 
-#: z_create_localized_help.py:178
+#: z_create_localized_help.py:180
 msgid "Alternative"
 msgstr ""
 
-#: z_create_localized_help.py:179
+#: z_create_localized_help.py:181
 msgid "There is an alternative way of hiding the title bar of absolutely all maximized windows without exceptions. By editing your Metacity theme (window decorations theme). It works infinitely better and without any of the issues this tweak on this extension has."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:181
+#: z_create_localized_help.py:183
 msgid "Simply go to `/Path/To/Your/Theme/metacity-1` folder and edit with any text editor the file called **metacity-theme-3.xml**. If that file doesn't exists in your theme, then it should exist one called **metacity-theme-2.xml** or **metacity-theme-1.xml**. Choose the one with the bigger number."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:183
+#: z_create_localized_help.py:185
 msgid "Find the **frame_geometry** element named **max** (or **maximized** or **normal_max** or **normal_maximized**). Its exact name may vary depending on the theme."
 msgstr ""
 
-#: z_create_localized_help.py:184
+#: z_create_localized_help.py:186
 msgid "Basically, one has to set to that element the attribute **has_title** to false, and then set all sizes of all its properties to 0 (zero). Some themes might require to add more properties and set them to 0 (zero) to completely get rid of the title bar."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:186
+#: z_create_localized_help.py:188
 msgid "Next you will find examples on how to edit the Metacity themes found on the **Mint-X** and **Mint-Y** themes."
 msgstr ""
 
-#: z_create_localized_help.py:188
+#: z_create_localized_help.py:190
 msgid "For the Metacity theme found on the Mint-X theme"
 msgstr ""
 
-#: z_create_localized_help.py:202
+#: z_create_localized_help.py:204
 msgid "For the Metacity theme found on Mint-Y theme"
 msgstr ""
 
-#: z_create_localized_help.py:218
+#: z_create_localized_help.py:220
 msgid "General extension issues"
 msgstr ""
 
-#: z_create_localized_help.py:219
+#: z_create_localized_help.py:221
 msgid "Applications not showing up on the applications chooser dialogs"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:222
+#: z_create_localized_help.py:224
 msgid "The application chooser dialog used by the settings window of this extension lists only those applications that have available .desktop files. Simply because these applications are the only ones that any of the tweaks that require an application ID (**Auto move windows** and **Windows decorations removal**) will recognize and handle."
 msgstr ""
 
-#: z_create_localized_help.py:224
+#: z_create_localized_help.py:226
 msgid "Following the [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html), one can create a .desktop file for any application that doesn't appear in the applications list."
 msgstr ""
 
-#: z_create_localized_help.py:225
+#: z_create_localized_help.py:227
 msgid "Xlet's settings window"
 msgstr ""
 
-#: z_create_localized_help.py:226
+#: z_create_localized_help.py:228
 msgid "From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."
 msgstr ""
 
-#: z_create_localized_help.py:228
+#: z_create_localized_help.py:230
 msgid "To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:230
+#: z_create_localized_help.py:232
 msgid "Command to install the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:233
+#: z_create_localized_help.py:235
 msgid "Command to uninstall the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:236
+#: z_create_localized_help.py:238
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr ""
 

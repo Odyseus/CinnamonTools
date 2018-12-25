@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.05\n"
-"POT-Creation-Date: 2018-11-24 02:16-0300\n"
+"POT-Creation-Date: 2018-12-24 22:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,53 +15,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:334
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:331 applet.js:940
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:940
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:332
+#: ../../__app__/python_modules/localized_help_creator.py:329
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:333
+#: ../../__app__/python_modules/localized_help_creator.py:330
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:366
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:380
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:399
+#: ../../__app__/python_modules/localized_help_creator.py:396
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:399
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:404
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:420
+#: ../../__app__/python_modules/localized_help_creator.py:417
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:423
+#: ../../__app__/python_modules/localized_help_creator.py:420
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:424
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -103,164 +103,164 @@ msgstr ""
 msgid "Nothing to do here."
 msgstr ""
 
-#: z_create_localized_help.py:29
+#: z_create_localized_help.py:31
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:34
 msgid "Applet based on two gnome-shell extensions ([Todo list](https://github.com/bsaleil/todolist-gnome-shell-extension) and [Section Todo List](https://github.com/tomMoral/ToDoList)). It allows to create simple ToDo lists from a menu on the panel."
 msgstr ""
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:36
 msgid "Applet usage and features"
 msgstr ""
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:38
 msgid "The usage of this applet is very simple. Each task list is represented by a sub menu and each sub menu item inside a sub menu represents a task."
 msgstr ""
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:42
 msgid "To add a new tasks list, simply focus the **New tasks list...** entry, give a name to the tasks list and press [[Enter]]."
 msgstr ""
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:45
 msgid "To add a new task, simply focus the **New task...** entry, give a name to the task and press [[Enter]]."
 msgstr ""
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:46
 msgid "All tasks lists and tasks can be edited in-line."
 msgstr ""
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:47
 msgid "Tasks can be marked as completed by changing the checked state of their sub menu items."
 msgstr ""
 
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:48
 msgid "Each tasks list can have its own settings for sorting tasks (by name and/or by completed state), remove task button visibility and completed tasks visibility."
 msgstr ""
 
-#: z_create_localized_help.py:47
+#: z_create_localized_help.py:49
 msgid "Each tasks list can be saved as individual TODO files and also can be exported into a file for backup purposes."
 msgstr ""
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:50
 msgid "Tasks can be reordered by simply dragging them inside the tasks list they belong to (only if all automatic sorting options for the tasks list are disabled)."
 msgstr ""
 
-#: z_create_localized_help.py:49
+#: z_create_localized_help.py:51
 msgid "Tasks can be deleted by simply pressing the delete task button (if visible)."
 msgstr ""
 
-#: z_create_localized_help.py:50
+#: z_create_localized_help.py:52
 msgid "Colorized priority tags support. The background and text colors of a task can be colorized depending on the @tag found inside the task text."
 msgstr ""
 
-#: z_create_localized_help.py:51
+#: z_create_localized_help.py:53
 msgid "Configurable hotkey to open/close the menu."
 msgstr ""
 
-#: z_create_localized_help.py:52
+#: z_create_localized_help.py:54
 msgid "Read the tooltips of each option on this applet settings window for more details."
 msgstr ""
 
-#: z_create_localized_help.py:57
+#: z_create_localized_help.py:59
 msgid "Keyboard shortcuts"
 msgstr ""
 
-#: z_create_localized_help.py:58
+#: z_create_localized_help.py:60
 msgid "The keyboard navigation inside this applet menu is very similar to the keyboard navigation used by any other menu on Cinnamon. But it's slightly changed to facilitate tasks and sections handling and edition."
 msgstr ""
 
-#: z_create_localized_help.py:60
+#: z_create_localized_help.py:62
 msgid "When the focus is on a task"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:62
+#: z_create_localized_help.py:64
 msgid "[[Ctrl]] + [[Spacebar]]: Toggle the completed (checked) state of a task."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:65
+#: z_create_localized_help.py:67
 msgid "[[Shift]] + [[Delete]]: Deletes a task and focuses the element above of the deleted task."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:67
+#: z_create_localized_help.py:69
 msgid "[[Alt]] + [[Delete]]: Deletes a task and focuses the element bellow the deleted task."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:70
+#: z_create_localized_help.py:72
 msgid "[[Ctrl]] + [[Arrow Up]] or [[Ctrl]] + [[Arrow Down]]: Moves a task inside its tasks list."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:72
+#: z_create_localized_help.py:74
 msgid "[[Insert]]: Will focus the **New task...** entry of the currently opened task section."
 msgstr ""
 
-#: z_create_localized_help.py:74
+#: z_create_localized_help.py:76
 msgid "When the focus is on a task section"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:76
+#: z_create_localized_help.py:78
 msgid "[[Arrow Left]] and [[Arrow Right]]: If the tasks list (sub menu) is closed, these keys will open the sub menu. If the sub menu is open, these keys will move the cursor inside the sub menu label to allow the edition of the section text."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:78
+#: z_create_localized_help.py:80
 msgid "[[Insert]]: Will focus the **New task...** entry inside the task section. If the task section sub menu isn't open, it will be opened."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:81
+#: z_create_localized_help.py:83
 msgid "When the focus is on the **New task...** entry"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:83
+#: z_create_localized_help.py:85
 msgid "[[Ctrl]] + [[Spacebar]]: Toggles the visibility of the tasks list options menu."
 msgstr ""
 
-#: z_create_localized_help.py:85
+#: z_create_localized_help.py:87
 msgid "Known issues"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:87
+#: z_create_localized_help.py:89
 msgid "**Hovering over items inside the menu doesn't highlight menu items nor sub menus:** This is actually a desired feature. Allowing the items to highlight on mouse hover would cause the entries to loose focus, resulting in the impossibility to keep typing text inside them and constantly forcing us to move the mouse cursor to regain focus."
 msgstr ""
 
-#: z_create_localized_help.py:88
+#: z_create_localized_help.py:90
 msgid "Task entries look wrong:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:92
 msgid "Task entries on this applet have the ability to wrap its text in case one sets a fixed width for them. They also can be multi line ([[Shift]] + [[Enter]] inside an entry will create a new line). Some Cinnamon themes, like the default Mint-X family of themes, set a fixed width and a fixed height for entries inside menus. These fixed sizes makes it impossible to programmatically set a desired width for the entries (at least, I couldn't find a way to do it). And the fixed height doesn't allow the entries to expand, completely breaking the entries capability to wrap its text and to be multi line."
 msgstr ""
 
-#: z_create_localized_help.py:92
+#: z_create_localized_help.py:94
 msgid "This is how entries should look like"
 msgstr ""
 
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:98
 msgid "Correct entries styling"
 msgstr ""
 
-#: z_create_localized_help.py:99
+#: z_create_localized_help.py:101
 msgid "This is how entries SHOULD NOT look like"
 msgstr ""
 
-#: z_create_localized_help.py:103
+#: z_create_localized_help.py:105
 msgid "Incorrect entries styling"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:107
+#: z_create_localized_help.py:109
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr ""
 

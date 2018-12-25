@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WallpaperChangerApplet 1.03\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-11-24 02:16-0300\n"
+"POT-Creation-Date: 2018-12-24 21:59-0300\n"
 "PO-Revision-Date: 2018-08-25 04:22-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -18,53 +18,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:334
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:331 settings.py:1024
+#: ../../__app__/python_modules/localized_help_creator.py:328 settings.py:1024
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:332
+#: ../../__app__/python_modules/localized_help_creator.py:329
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:333
+#: ../../__app__/python_modules/localized_help_creator.py:330
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:366
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:380
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:399
+#: ../../__app__/python_modules/localized_help_creator.py:396
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:399
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:404
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:420
+#: ../../__app__/python_modules/localized_help_creator.py:417
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:423
+#: ../../__app__/python_modules/localized_help_creator.py:420
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:424
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -363,78 +363,78 @@ msgstr "Archivos DCONF"
 msgid "%s applet preferences"
 msgstr "Preferencias del applet %s"
 
-#: z_create_localized_help.py:29
+#: z_create_localized_help.py:31
 msgid "Description"
 msgstr "Descripción"
 
-#: z_create_localized_help.py:31
+#: z_create_localized_help.py:33
 msgid "Applet based on the gnome-shell extension called [Desk Changer](https://github.com/BigE/desk-changer) by [Eric Gach](https://github.com/BigE). A wallpaper slideshow applet with multiple profiles support."
 msgstr "Applet basado en la extensión para gnome-shell llamada [Desk Changer](https://github.com/BigE/desk-changer) por [Eric Gach](https://github.com/BigE). Un applet de diapositivas de papel tapiz con soporte para múltiples perfiles."
 
-#: z_create_localized_help.py:33
+#: z_create_localized_help.py:35
 msgid "Features"
 msgstr "Características"
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:37
 msgid "Possibility to create and switch between several profiles. A profile is simply a list of images and/or folders containing images that this applet will use to switch the wallpaper."
 msgstr "Posibilidad de crear y alternar entre varios perfiles.  Un perfil es simplemente una lista de imágenes y/o carpetas que contienen imágenes que este applet utilizará para cambiar el fondo de pantalla."
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:38
 msgid "Possibility to preview the next wallpaper from this applet menu."
 msgstr "Posibilidad de previsualizar el siguiente fondo de pantalla desde el menú de este applet."
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:39
 msgid "Wallpapers can be switched on demand from the controls found in this applet menu."
 msgstr "Los fondos de pantalla se pueden cambiar bajo demanda desde los controles que se encuentran en el menú de este applet."
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:40
 msgid "The wallpapers rotation can be alphabetically or random."
 msgstr "La rotación de fondos de pantalla puede ser alfabética o aleatoria."
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:41
 msgid "The wallpapers rotation can be defined by an interval in seconds or hourly."
 msgstr "La rotación de fondos de pantalla se puede definir por un intervalo en segundos o por hora."
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:42
 msgid "Possibility to open the next or current wallpapers from this applet menu."
 msgstr "Posibilidad de abrir los fondos de pantalla siguientes o actuales desde el menú de este applet."
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:43
 msgid "Possibility to display a notification every time the wallpaper is switched."
 msgstr "Posibilidad de mostrar una notificación cada vez que se cambia el fondo de pantalla."
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:44
 msgid "Configurable hotkeys to switch to next/previous wallpaper."
 msgstr "Teclas de acceso rápido configurables para cambiar al fondo de pantalla siguiente/anterior."
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:45
 msgid "Read the tooltips of each option on this applet settings window for more details."
 msgstr "Lea las sugerencias de cada opción en la ventana de configuración de este applet para obtener más detalles."
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:50
 msgid "Xlet's settings window"
 msgstr "Ventana de preferencias del xlet"
 
-#: z_create_localized_help.py:49
+#: z_create_localized_help.py:51
 msgid "From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."
 msgstr "Desde la ventana de preferencias de este xlet, todas las opciones pueden ser importadas, exportadas y/o restablecidas a sus valores por defecto."
 
-#: z_create_localized_help.py:51
+#: z_create_localized_help.py:53
 msgid "To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"
 msgstr "Para poder realizar cualquiera de estas tareas, el esquema de las preferencias necesita estar instalado en el sistema. Esto es realizado automáticamente cuando el xlet es instalado desde el administrador de xlets de Cinnamon. Pero si el xlet fue instalado manualmente, el esquema de las preferencias necesita ser instalado manualmente. Esto se logra simplemente con ir a la carpeta del xlet y ejecutar el siguiente comando:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:53
+#: z_create_localized_help.py:55
 msgid "Command to install the settings schema:"
 msgstr "Comando para instalar el esquema de preferencias:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:56
+#: z_create_localized_help.py:58
 msgid "Command to uninstall the settings schema:"
 msgstr "Comando para desinstalar el esquema de preferencias:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:59
+#: z_create_localized_help.py:61
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr "Para importar/exportar preferencias, el comando **dconf** necesita estar disponible en el sistema."
 

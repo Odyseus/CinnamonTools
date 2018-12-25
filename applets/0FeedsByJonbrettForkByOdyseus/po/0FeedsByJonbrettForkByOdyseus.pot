@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus 0.54\n"
-"POT-Creation-Date: 2018-11-24 02:16-0300\n"
+"POT-Creation-Date: 2018-12-24 22:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,98 +15,98 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:334
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:331 applet.js:263 python/manage_feeds.py:175
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:263 python/manage_feeds.py:175
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:332
+#: ../../__app__/python_modules/localized_help_creator.py:329
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:333
+#: ../../__app__/python_modules/localized_help_creator.py:330
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:366
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:380
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:399
+#: ../../__app__/python_modules/localized_help_creator.py:396
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:399
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:404
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:420
+#: ../../__app__/python_modules/localized_help_creator.py:417
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:423
+#: ../../__app__/python_modules/localized_help_creator.py:420
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:424
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: z_create_localized_help.py:29
+#: z_create_localized_help.py:30
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:33
 msgid "This applet is a fork of [Feeds Reader](https://cinnamon-spices.linuxmint.com/applets/view/149) applet by Jason Jackson (a.k.a. jake1164)."
 msgstr ""
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:35
 msgid "Differences with the original applet"
 msgstr ""
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:37
 msgid "Added keyboard shortcut to be able to open/close the menu."
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:38
 msgid "Added proper keyboard navigation for the menu."
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:39
 msgid "Eliminated the need of a stylesheet.css file. The menu will be styled respecting the currently used Cinnamon theme."
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:40
 msgid "Feeds will only be updated from their online sources if the last check was made after the refresh interval."
 msgstr ""
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:41
 msgid "Forced the use of Python 3 in all Python modules/scripts."
 msgstr ""
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:43
 msgid "Dependencies"
 msgstr ""
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:45
 msgid "The feedparser Python 3 module is a universal feed parser that handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds."
 msgstr ""
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:46
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr ""
 

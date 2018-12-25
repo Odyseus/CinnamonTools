@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import sys
 import os
+import sys
+
 
 xlet_dir = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 
@@ -15,8 +16,10 @@ app_folder = os.path.join(repo_folder, "__app__")
 if app_folder not in sys.path:
     sys.path.insert(0, app_folder)
 
-
-from python_modules.localized_help_creator import LocalizedHelpCreator, _, md, utils
+from python_modules.localized_help_creator import LocalizedHelpCreator
+from python_modules.localized_help_creator import _
+from python_modules.localized_help_creator import md
+from python_modules.localized_help_creator import utils
 
 
 class Main(LocalizedHelpCreator):
@@ -221,18 +224,24 @@ class Main(LocalizedHelpCreator):
             "",
             "| %s | %s | %s |" % (_("Attribute"), _("Value"), _("Description")),
             "| --- | --- | --- |",
-            "| `bash` | %s | %s |" % (_("Bash command"), _(
-                "Runs a command using `bash` inside any terminal emulator window.")),
+            "| `command` or `bash` | %s | **(1)** %s |" % (_("A command to execute"), _(
+                "Runs a command using a default shell specified in the options of an instance of Argos for Cinnamon or specified by the `shell` attribute.")),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "| `shell` | %s | %s |" % (_("Path or executable name of a shell program"), _(
+                "This attribute overrides the default shell set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if one decides to use different shells to execute commands whithin the menu created by an instance of Argos for Cinnamon.")),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "| `shellArgument` | %s | %s |" % (_("Argument to pass to a shell program"), _(
+                "The argument used by a shell program that allows to execute a command. In most shells is '-c'. This attribute overrides the default shell set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if the shell argument set on the settings of an instance of Argos for Cinnamon isn't compatible with the shell specified in the `shell` attribute.")),
             "| `terminal` | `true` %s `false` | %s |" %
             # TO TRANSLATORS: Conjunction used as follows:
             # "true or false"
             (_("or"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false`, runs the Bash command in the background (i.e. without opening a terminal window).")),
+             _("If `false`, runs the command specified in the `command` or `bash` attributes in the background (i.e. without opening a terminal window). If `true`, a terminal will be opened to execute a command and will be kept open.")),
             "| `param1`, `param2`, ... | %s | %s |" % (_("Command line arguments"),
                                                        # TO TRANSLATORS: MARKDOWN string. Respect
                                                        # formatting.
-                                                       _("Arguments to be passed to the Bash command. *Note: Provided for compatibility with BitBar only. Argos allows placing arguments directly in the command string.*")),
+                                                       _("Arguments to be passed to the command specified in the `command` or `bash` attributes. *Note: Provided for compatibility with BitBar only. Argos allows placing arguments directly in the command string.*")),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "| `href` | URI | %s |" % _("Opens a URI in the application registered to handle it. URIs starting with `http://` launch the web browser, while `file://` URIs open the file in its associated default application. **Argos for Cinnamon** also supports paths starting with `~/` that will be automatically expanded to the user's home folder."),
             "| `eval` | %s | %s |" % (_("JavaScript code"),
@@ -244,6 +253,11 @@ class Main(LocalizedHelpCreator):
             (_("or"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
              _("If `true`, re-runs the plugin, updating its output.")),
+            "",
+            utils.get_bootstrap_alert(
+                heading="<strong>(1)</strong> %s" % _("About the `command` and `bash` attributes"),
+                content=md(_("These attributes are mutually exclusive. I added the `command` attribute because it didn't make much sense to have it named `bash` when Argos for Cinnamon can use any shell, not just Bash. I left the `bash` attribute so any scripts written for BitBar or for the original Argos for Gnome Shell extension can be used without modifications. I will never remove the `bash` attribute while the two previously mentioned tools keep using it."))
+            ),
             "",
             "### %s" % _("Environment variables"),
             _("Plugin executables are run with the following special environment variables set:"),

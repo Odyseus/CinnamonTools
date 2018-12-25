@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus 1.12\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-11-24 02:16-0300\n"
+"POT-Creation-Date: 2018-12-24 21:59-0300\n"
 "PO-Revision-Date: 2018-08-25 02:48-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -18,159 +18,159 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:334
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:331 utils.js:1059
+#: ../../__app__/python_modules/localized_help_creator.py:328 utils.js:1069
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:332
+#: ../../__app__/python_modules/localized_help_creator.py:329
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:333
+#: ../../__app__/python_modules/localized_help_creator.py:330
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:366
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:380
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:399
+#: ../../__app__/python_modules/localized_help_creator.py:396
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:399
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:404
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:420
+#: ../../__app__/python_modules/localized_help_creator.py:417
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:423
+#: ../../__app__/python_modules/localized_help_creator.py:420
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:424
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: z_create_localized_help.py:28
+#: z_create_localized_help.py:30
 msgid "Description"
 msgstr "Descripción"
 
-#: z_create_localized_help.py:30
+#: z_create_localized_help.py:32
 msgid "This applet is a fork of the default Window list applet shipped with Cinnamon."
 msgstr "Este applet está basado en el applet Lista de ventanas predeterminado de Cinnamon."
 
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:34
 msgid "Differences with the original applet"
 msgstr "Diferencias con el original"
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:36
 msgid "Added option to remove the label from the window list buttons."
 msgstr "Se agregó la opción para eliminar la etiqueta de los botones de lista de ventanas."
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:37
 msgid "Added option to remove the tooltips from the window list buttons."
 msgstr "Se agregó la opción para eliminar las sugerencias de los botones de lista de ventanas."
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:38
 msgid "Added icons to the window list button's context menu."
 msgstr "Iconos añadidos al menú contextual del botón de lista de ventanas."
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:39
 msgid "Added option to invert the contex menu items."
 msgstr "Se agregó la opción para invertir los elementos del menú contextual."
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:40
 msgid "Added option to hide/move the **Preferences** sub menu."
 msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 
-#: z_create_localized_help.py:43 z_create_localized_help.py:47
+#: z_create_localized_help.py:45 z_create_localized_help.py:49
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 
-#: utils.js:911
+#: utils.js:921
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: utils.js:925
+#: utils.js:935
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: utils.js:936
+#: utils.js:946
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: utils.js:947
+#: utils.js:957
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: utils.js:953
+#: utils.js:963
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: utils.js:959
+#: utils.js:969
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: utils.js:989
+#: utils.js:999
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: utils.js:999
+#: utils.js:1009
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: utils.js:1014
+#: utils.js:1024
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: utils.js:1022
+#: utils.js:1032
 msgid "Restore"
 msgstr "Restaurar"
 
-#: utils.js:1027
+#: utils.js:1037
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: utils.js:1035
+#: utils.js:1045
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: utils.js:1040
+#: utils.js:1050
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: utils.js:1047
+#: utils.js:1057
 msgid "Close"
 msgstr "Cerrar"
 
-#: utils.js:1066
+#: utils.js:1076
 msgid "About..."
 msgstr "Acerca de..."
 
-#: utils.js:1071
+#: utils.js:1081
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: utils.js:1087
+#: utils.js:1097
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"

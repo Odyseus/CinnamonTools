@@ -4,6 +4,29 @@
 
 ***
 
+- **Date:** Fri, 21 Dec 2018 13:10:06 -0300
+- **Commit:** [a509ddd](https://gitlab.com/Odyseus/CinnamonTools/commit/a509ddd)
+- **Author:** Odyseus
+
+```
+- Fixed crash caused by an unbelievable retarded behavior.
+
+```
+
+***
+
+- **Date:** Thu, 20 Dec 2018 18:18:17 -0300
+- **Commit:** [c44799e](https://gitlab.com/Odyseus/CinnamonTools/commit/c44799e)
+- **Author:** Odyseus
+
+```
+- Removed _panelHeight property declaration from applet initialization. This caused an error that prevented the applet from loading on Cinnamon 4.0.x since in this version of Cinnamon that property is a getter without a setter.
+- Removed usage of Applet._scaleMode calls due to its deprecation and to avoid a myriad of warnings. ¬¬
+
+```
+
+***
+
 - **Date:** Wed, 19 Sep 2018 12:34:31 -0300
 - **Commit:** [f7913e1](https://gitlab.com/Odyseus/CinnamonTools/commit/f7913e1)
 - **Author:** Odyseus

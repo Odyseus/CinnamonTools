@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import sys
 import os
+import sys
 
 xlet_dir = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 
@@ -15,7 +15,9 @@ app_folder = os.path.join(repo_folder, "__app__")
 if app_folder not in sys.path:
     sys.path.insert(0, app_folder)
 
-from python_modules.localized_help_creator import LocalizedHelpCreator, _, md
+from python_modules.localized_help_creator import LocalizedHelpCreator
+from python_modules.localized_help_creator import _
+from python_modules.localized_help_creator import md
 
 
 class Main(LocalizedHelpCreator):

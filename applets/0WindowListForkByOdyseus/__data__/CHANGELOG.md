@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Fri, 21 Dec 2018 13:07:21 -0300
+- **Commit:** [ae83195](https://gitlab.com/Odyseus/CinnamonTools/commit/ae83195)
+- **Author:** Odyseus
+
+```
+- Removed usage of Applet._scaleMode calls due to its deprecation and to avoid a myriad of warnings. ¬¬
+
+```
+
+***
+
 - **Date:** Mon, 29 Oct 2018 13:43:27 -0300
 - **Commit:** [a50966d](https://gitlab.com/Odyseus/CinnamonTools/commit/a50966d)
 - **Author:** Odyseus

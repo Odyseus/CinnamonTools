@@ -272,19 +272,29 @@ body {
 </thead>
 <tbody>
 <tr>
-<td><code>bash</code></td>
-<td>Comando Bash</td>
-<td>Ejecuta un comando usando <code>bash</code> dentro de cualquier ventana de emulador de terminal.</td>
+<td><code>command</code> or <code>bash</code></td>
+<td>El comando a ejecutar</td>
+<td><strong>(1)</strong> Ejecuta un comando usando una shell por defecto especificada en las opciones de una instancia de Argos para Cinnamon o especificada por el atributo <code>shell</code>.</td>
+</tr>
+<tr>
+<td><code>shell</code></td>
+<td>Camino o nombre de ejecutable de un programa shell</td>
+<td>Este atributo anula la shell especificada por defecto en las opciones de una instancia de Argos para Cinnamon. Este atributo debería ser usado sólo si uno decide usar shells diferentes para ejecutar comandos dentro del menú creado por una instancia de Argos para Cinnamon.</td>
+</tr>
+<tr>
+<td><code>shellArgument</code></td>
+<td>Argumento para pasar a un programa shell</td>
+<td>El argumento usado por un programa shell que permite ejecutar un comando. En la mayoría de las shells es '-c'. Este atributo anula el argumento de shell especificado en las preferencias de una instancia de Argos para Cinnamon.</td>
 </tr>
 <tr>
 <td><code>terminal</code></td>
 <td><code>true</code> o <code>false</code></td>
-<td>Si <code>false</code>, ejecuta el comando Bash en el fondo (es decir, sin abrir una ventana de terminal).</td>
+<td>Si <code>false</code>, ejecuta el comando especificado en los atributos <code>command</code> o <code>bash</code> en el fondo (i.e. sin abrir una ventana de terminal). Si <code>true</code>, una terminal será abierta para ejecutar un comando y se quedará abierta.</td>
 </tr>
 <tr>
 <td><code>param1</code>, <code>param2</code>, ...</td>
 <td>Argumentos de la línea de comandos</td>
-<td>Argumentos que se deben pasar al comando Bash. <em>Nota: Sólo para compatibilidad con BitBar. Argos permite colocar argumentos directamente en la cadena de comandos.</em></td>
+<td>Argumentos que se pasarán al comando especificado en los atributos <code>command</code> o <code>bash</code>. <em>Nota: Se proporciona solo para compatibilidad con BitBar. Argos permite colocar argumentos directamente en la cadena de comando.</em></td>
 </tr>
 <tr>
 <td><code>href</code></td>
@@ -303,7 +313,11 @@ body {
 </tr>
 </tbody>
 </table>
-<h3>Variables de entorno</h3>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading"><strong>(1)</strong> Sobre los atributos `command` y `bash`.</h4>
+<p>Estos atributos son mutuamente excluyentes. Agregué el atributo <code>command</code> porque no tenía mucho sentido que se llamara <code>bash</code> cuando Argos for Cinnamon puede usar cualquier shell, no solo Bash. Dejé el atributo <code>bash</code> para que cualquier archivo de comandos escrito para BitBar o para la extensión original Argos para Gnome-Shell puedan usarse sin modificaciones. Nunca eliminaré el atributo <code>bash</code> mientras las dos herramientas mencionadas anteriormente sigan usándolo.</p>
+
+</div><h3>Variables de entorno</h3>
 <p>Los complementos se ejecutan con las siguientes variables de entorno especiales establecidas:</p>
 <table class="table table-bordered">
 <thead><tr>
@@ -583,19 +597,29 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </thead>
 <tbody>
 <tr>
-<td><code>bash</code></td>
-<td>Bash command</td>
-<td>Runs a command using <code>bash</code> inside any terminal emulator window.</td>
+<td><code>command</code> or <code>bash</code></td>
+<td>A command to execute</td>
+<td><strong>(1)</strong> Runs a command using a default shell specified in the options of an instance of Argos for Cinnamon or specified by the <code>shell</code> attribute.</td>
+</tr>
+<tr>
+<td><code>shell</code></td>
+<td>Path or executable name of a shell program</td>
+<td>This attribute overrides the default shell set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if one decides to use different shells to execute commands whithin the menu created by an instance of Argos for Cinnamon.</td>
+</tr>
+<tr>
+<td><code>shellArgument</code></td>
+<td>Argument to pass to a shell program</td>
+<td>The argument used by a shell program that allows to execute a command. In most shells is '-c'. This attribute overrides the default shell set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if the shell argument set on the settings of an instance of Argos for Cinnamon isn't compatible with the shell specified in the <code>shell</code> attribute.</td>
 </tr>
 <tr>
 <td><code>terminal</code></td>
 <td><code>true</code> or <code>false</code></td>
-<td>If <code>false</code>, runs the Bash command in the background (i.e. without opening a terminal window).</td>
+<td>If <code>false</code>, runs the command specified in the <code>command</code> or <code>bash</code> attributes in the background (i.e. without opening a terminal window). If <code>true</code>, a terminal will be opened to execute a command and will be kept open.</td>
 </tr>
 <tr>
 <td><code>param1</code>, <code>param2</code>, ...</td>
 <td>Command line arguments</td>
-<td>Arguments to be passed to the Bash command. <em>Note: Provided for compatibility with BitBar only. Argos allows placing arguments directly in the command string.</em></td>
+<td>Arguments to be passed to the command specified in the <code>command</code> or <code>bash</code> attributes. <em>Note: Provided for compatibility with BitBar only. Argos allows placing arguments directly in the command string.</em></td>
 </tr>
 <tr>
 <td><code>href</code></td>
@@ -614,7 +638,11 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </tr>
 </tbody>
 </table>
-<h3>Environment variables</h3>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading"><strong>(1)</strong> About the `command` and `bash` attributes</h4>
+<p>These attributes are mutually exclusive. I added the <code>command</code> attribute because it didn't make much sense to have it named <code>bash</code> when Argos for Cinnamon can use any shell, not just Bash. I left the <code>bash</code> attribute so any scripts written for BitBar or for the original Argos for Gnome Shell extension can be used without modifications. I will never remove the <code>bash</code> attribute while the two previously mentioned tools keep using it.</p>
+
+</div><h3>Environment variables</h3>
 <p>Plugin executables are run with the following special environment variables set:</p>
 <table class="table table-bordered">
 <thead><tr>
@@ -698,6 +726,17 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Argos for Cinnamon changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 24 Dec 2018 21:58:49 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/60aefee">60aefee</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Now it is possible to specify the shell used to execute commands instead of having Bash hard-coded. A shell can be globally configured in an applet instance or specified individually for each menu item through the `shell` attribute. The argument used by a shell program that allows to execute a command is also exposed through an applet setting and can also be specified with the `shellArgument` attribute.
+- Exposed as an option the argument used by a terminal program that allows to execute a command inside a terminal window. Workaround due to retarded terminals that keep being dumbed down to the point of uselessness.
+- Removed retro compatible code that was left over when removing compatibility with Cinnamon versions older than 3.0.x.
+- Implemented a getBoolean function to simplify conditions.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Tue, 7 Aug 2018 03:36:48 -0300</li>
@@ -1035,7 +1074,7 @@ if there is a localization language available.
                 <p>Page created with <a href="https://getbootstrap.com"><b>Bootstrap</b></a> v4.1.3.</p>
             </li>
             <li>
-                <p><a href="https://bootswatch.com/flatly"><b>Flatly</b></a> Bootstrap theme by <a href="https://bootswatch.com"><b>Bootswatch</b></a>.</p>
+                <p><a href="https://gitlab.com/Odyseus/flatly_bootstrap_theme"><b>Boostrap theme</b></a> based on <a href="https://bootswatch.com"><b>Bootswatch</b></a>'s <a href="https://bootswatch.com/flatly"><b>Flatly theme</b></a>.</p>
             </li>
             <li>
                 <p><a href="https://github.com/julienetie/smooth-scroll"><b>Smooth Scroll plugin</b></a> provided by <a href="https://github.com/julienetie"><b>Julien Etienne</b></a>.</p>

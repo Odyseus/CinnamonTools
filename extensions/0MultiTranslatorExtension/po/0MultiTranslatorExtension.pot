@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MultiTranslatorExtension 1.07\n"
-"POT-Creation-Date: 2018-11-24 02:16-0300\n"
+"POT-Creation-Date: 2018-12-24 22:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,53 +15,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:334
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:331 settings.py:1394 utils.js:3639
+#: ../../__app__/python_modules/localized_help_creator.py:328 settings.py:1394 utils.js:3629
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:332
+#: ../../__app__/python_modules/localized_help_creator.py:329
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:333
+#: ../../__app__/python_modules/localized_help_creator.py:330
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:369
+#: ../../__app__/python_modules/localized_help_creator.py:366
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:380
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:399
+#: ../../__app__/python_modules/localized_help_creator.py:396
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:399
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:404
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:420
+#: ../../__app__/python_modules/localized_help_creator.py:417
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:423
+#: ../../__app__/python_modules/localized_help_creator.py:420
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:424
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -106,431 +106,431 @@ msgstr ""
 msgid "Multi Translator"
 msgstr ""
 
-#: settings.py:69 utils.js:228
+#: settings.py:69 utils.js:218
 msgid "Detect language"
 msgstr ""
 
-#: settings.py:70 utils.js:229
+#: settings.py:70 utils.js:219
 msgid "Afrikaans"
 msgstr ""
 
-#: settings.py:71 utils.js:230
+#: settings.py:71 utils.js:220
 msgid "Amharic"
 msgstr ""
 
-#: settings.py:72 utils.js:231
+#: settings.py:72 utils.js:221
 msgid "Arabic"
 msgstr ""
 
-#: settings.py:73 utils.js:232
+#: settings.py:73 utils.js:222
 msgid "Azerbaijani"
 msgstr ""
 
-#: settings.py:74 utils.js:233
+#: settings.py:74 utils.js:223
 msgid "Belarusian"
 msgstr ""
 
-#: settings.py:75 utils.js:234
+#: settings.py:75 utils.js:224
 msgid "Bulgarian"
 msgstr ""
 
-#: settings.py:76 utils.js:235
+#: settings.py:76 utils.js:225
 msgid "Bengali"
 msgstr ""
 
-#: settings.py:77 utils.js:236
+#: settings.py:77 utils.js:226
 msgid "Bosnian (Y)"
 msgstr ""
 
-#: settings.py:78 utils.js:237
+#: settings.py:78 utils.js:227
 msgid "Catalan"
 msgstr ""
 
-#: settings.py:79 utils.js:238
+#: settings.py:79 utils.js:228
 msgid "Chichewa"
 msgstr ""
 
-#: settings.py:80 utils.js:239
+#: settings.py:80 utils.js:229
 msgid "Corsican"
 msgstr ""
 
-#: settings.py:81 utils.js:240
+#: settings.py:81 utils.js:230
 msgid "Czech"
 msgstr ""
 
-#: settings.py:82 utils.js:241
+#: settings.py:82 utils.js:231
 msgid "Welsh"
 msgstr ""
 
-#: settings.py:83 utils.js:242
+#: settings.py:83 utils.js:232
 msgid "Danish"
 msgstr ""
 
-#: settings.py:84 utils.js:243
+#: settings.py:84 utils.js:233
 msgid "German"
 msgstr ""
 
-#: settings.py:85 utils.js:244
+#: settings.py:85 utils.js:234
 msgid "Greek"
 msgstr ""
 
-#: settings.py:86 utils.js:245
+#: settings.py:86 utils.js:235
 msgid "English"
 msgstr ""
 
-#: settings.py:87 utils.js:246
+#: settings.py:87 utils.js:236
 msgid "Esperanto"
 msgstr ""
 
-#: settings.py:88 utils.js:247
+#: settings.py:88 utils.js:237
 msgid "Spanish"
 msgstr ""
 
-#: settings.py:89 utils.js:248
+#: settings.py:89 utils.js:238
 msgid "Estonian"
 msgstr ""
 
-#: settings.py:90 utils.js:249
+#: settings.py:90 utils.js:239
 msgid "Basque"
 msgstr ""
 
-#: settings.py:91 utils.js:250
+#: settings.py:91 utils.js:240
 msgid "Persian"
 msgstr ""
 
-#: settings.py:92 utils.js:251
+#: settings.py:92 utils.js:241
 msgid "Finnish"
 msgstr ""
 
-#: settings.py:93 utils.js:252
+#: settings.py:93 utils.js:242
 msgid "French"
 msgstr ""
 
-#: settings.py:94 utils.js:253
+#: settings.py:94 utils.js:243
 msgid "Frisian"
 msgstr ""
 
-#: settings.py:95 utils.js:254
+#: settings.py:95 utils.js:244
 msgid "Irish"
 msgstr ""
 
-#: settings.py:96 utils.js:255
+#: settings.py:96 utils.js:245
 msgid "Scots Gaelic"
 msgstr ""
 
-#: settings.py:97 utils.js:256
+#: settings.py:97 utils.js:246
 msgid "Galician"
 msgstr ""
 
-#: settings.py:98 utils.js:257
+#: settings.py:98 utils.js:247
 msgid "Gujarati"
 msgstr ""
 
-#: settings.py:99 utils.js:258
+#: settings.py:99 utils.js:248
 msgid "Hausa"
 msgstr ""
 
-#: settings.py:100 utils.js:259
+#: settings.py:100 utils.js:249
 msgid "Hawaiian"
 msgstr ""
 
-#: settings.py:101 utils.js:260
+#: settings.py:101 utils.js:250
 msgid "Hebrew (Y)"
 msgstr ""
 
-#: settings.py:102 utils.js:261
+#: settings.py:102 utils.js:251
 msgid "Hindi"
 msgstr ""
 
-#: settings.py:103 utils.js:262
+#: settings.py:103 utils.js:252
 msgid "Hmong"
 msgstr ""
 
-#: settings.py:104 utils.js:263
+#: settings.py:104 utils.js:253
 msgid "Croatian"
 msgstr ""
 
-#: settings.py:105 utils.js:264
+#: settings.py:105 utils.js:254
 msgid "Haitian Creole"
 msgstr ""
 
-#: settings.py:106 utils.js:265
+#: settings.py:106 utils.js:255
 msgid "Hungarian"
 msgstr ""
 
-#: settings.py:107 utils.js:266
+#: settings.py:107 utils.js:256
 msgid "Armenian"
 msgstr ""
 
-#: settings.py:108 utils.js:267
+#: settings.py:108 utils.js:257
 msgid "Indonesian"
 msgstr ""
 
-#: settings.py:109 utils.js:268
+#: settings.py:109 utils.js:258
 msgid "Igbo"
 msgstr ""
 
-#: settings.py:110 utils.js:269
+#: settings.py:110 utils.js:259
 msgid "Icelandic"
 msgstr ""
 
-#: settings.py:111 utils.js:270
+#: settings.py:111 utils.js:260
 msgid "Italian"
 msgstr ""
 
-#: settings.py:112 utils.js:271
+#: settings.py:112 utils.js:261
 msgid "Hebrew"
 msgstr ""
 
-#: settings.py:113 utils.js:272
+#: settings.py:113 utils.js:262
 msgid "Japanese"
 msgstr ""
 
-#: settings.py:114 utils.js:273
+#: settings.py:114 utils.js:263
 msgid "Javanese"
 msgstr ""
 
-#: settings.py:115 utils.js:274
+#: settings.py:115 utils.js:264
 msgid "Georgian"
 msgstr ""
 
-#: settings.py:116 utils.js:275
+#: settings.py:116 utils.js:265
 msgid "Kazakh"
 msgstr ""
 
-#: settings.py:117 utils.js:276
+#: settings.py:117 utils.js:266
 msgid "Khmer"
 msgstr ""
 
-#: settings.py:118 utils.js:277
+#: settings.py:118 utils.js:267
 msgid "Kannada"
 msgstr ""
 
-#: settings.py:119 utils.js:278
+#: settings.py:119 utils.js:268
 msgid "Korean"
 msgstr ""
 
-#: settings.py:120 utils.js:279
+#: settings.py:120 utils.js:269
 msgid "Kurdish (Kurmanji)"
 msgstr ""
 
-#: settings.py:121 utils.js:280
+#: settings.py:121 utils.js:270
 msgid "Kyrgyz"
 msgstr ""
 
-#: settings.py:122 utils.js:281
+#: settings.py:122 utils.js:271
 msgid "Latin"
 msgstr ""
 
-#: settings.py:123 utils.js:282
+#: settings.py:123 utils.js:272
 msgid "Luxembourgish"
 msgstr ""
 
-#: settings.py:124 utils.js:283
+#: settings.py:124 utils.js:273
 msgid "Lao"
 msgstr ""
 
-#: settings.py:125 utils.js:284
+#: settings.py:125 utils.js:274
 msgid "Lithuanian"
 msgstr ""
 
-#: settings.py:126 utils.js:285
+#: settings.py:126 utils.js:275
 msgid "Latvian"
 msgstr ""
 
-#: settings.py:127 utils.js:286
+#: settings.py:127 utils.js:276
 msgid "Malagasy"
 msgstr ""
 
-#: settings.py:128 utils.js:287
+#: settings.py:128 utils.js:277
 msgid "Maori"
 msgstr ""
 
-#: settings.py:129 utils.js:288
+#: settings.py:129 utils.js:278
 msgid "Macedonian"
 msgstr ""
 
-#: settings.py:130 utils.js:289
+#: settings.py:130 utils.js:279
 msgid "Malayalam"
 msgstr ""
 
-#: settings.py:131 utils.js:290
+#: settings.py:131 utils.js:280
 msgid "Mongolian"
 msgstr ""
 
-#: settings.py:132 utils.js:291
+#: settings.py:132 utils.js:281
 msgid "Marathi"
 msgstr ""
 
-#: settings.py:133 utils.js:292
+#: settings.py:133 utils.js:282
 msgid "Malay"
 msgstr ""
 
-#: settings.py:134 utils.js:293
+#: settings.py:134 utils.js:283
 msgid "Maltese"
 msgstr ""
 
-#: settings.py:135 utils.js:294
+#: settings.py:135 utils.js:284
 msgid "Myanmar (Burmese)"
 msgstr ""
 
-#: settings.py:136 utils.js:295
+#: settings.py:136 utils.js:285
 msgid "Nepali"
 msgstr ""
 
-#: settings.py:137 utils.js:296
+#: settings.py:137 utils.js:286
 msgid "Dutch"
 msgstr ""
 
-#: settings.py:138 utils.js:297
+#: settings.py:138 utils.js:287
 msgid "Norwegian"
 msgstr ""
 
-#: settings.py:139 utils.js:298
+#: settings.py:139 utils.js:288
 msgid "Cebuano"
 msgstr ""
 
-#: settings.py:140 utils.js:299
+#: settings.py:140 utils.js:289
 msgid "Punjabi"
 msgstr ""
 
-#: settings.py:141 utils.js:300
+#: settings.py:141 utils.js:290
 msgid "Polish"
 msgstr ""
 
-#: settings.py:142 utils.js:301
+#: settings.py:142 utils.js:291
 msgid "Pashto"
 msgstr ""
 
-#: settings.py:143 utils.js:302
+#: settings.py:143 utils.js:292
 msgid "Portuguese"
 msgstr ""
 
-#: settings.py:144 utils.js:303
+#: settings.py:144 utils.js:293
 msgid "Romanian"
 msgstr ""
 
-#: settings.py:145 utils.js:304
+#: settings.py:145 utils.js:294
 msgid "Russian"
 msgstr ""
 
-#: settings.py:146 utils.js:305
+#: settings.py:146 utils.js:295
 msgid "Sindhi"
 msgstr ""
 
-#: settings.py:147 utils.js:306
+#: settings.py:147 utils.js:296
 msgid "Sinhala"
 msgstr ""
 
-#: settings.py:148 utils.js:307
+#: settings.py:148 utils.js:297
 msgid "Slovak"
 msgstr ""
 
-#: settings.py:149 utils.js:308
+#: settings.py:149 utils.js:298
 msgid "Slovenian"
 msgstr ""
 
-#: settings.py:150 utils.js:309
+#: settings.py:150 utils.js:299
 msgid "Samoan"
 msgstr ""
 
-#: settings.py:151 utils.js:310
+#: settings.py:151 utils.js:300
 msgid "Shona"
 msgstr ""
 
-#: settings.py:152 utils.js:311
+#: settings.py:152 utils.js:301
 msgid "Somali"
 msgstr ""
 
-#: settings.py:153 utils.js:312
+#: settings.py:153 utils.js:302
 msgid "Albanian"
 msgstr ""
 
-#: settings.py:154 utils.js:313
+#: settings.py:154 utils.js:303
 msgid "Serbian"
 msgstr ""
 
-#: settings.py:155 utils.js:314
+#: settings.py:155 utils.js:304
 msgid "Sesotho"
 msgstr ""
 
-#: settings.py:156 utils.js:315
+#: settings.py:156 utils.js:305
 msgid "Sundanese"
 msgstr ""
 
-#: settings.py:157 utils.js:316
+#: settings.py:157 utils.js:306
 msgid "Swedish"
 msgstr ""
 
-#: settings.py:158 utils.js:317
+#: settings.py:158 utils.js:307
 msgid "Swahili"
 msgstr ""
 
-#: settings.py:159 utils.js:318
+#: settings.py:159 utils.js:308
 msgid "Tamil"
 msgstr ""
 
-#: settings.py:160 utils.js:319
+#: settings.py:160 utils.js:309
 msgid "Telugu"
 msgstr ""
 
-#: settings.py:161 utils.js:320
+#: settings.py:161 utils.js:310
 msgid "Tajik"
 msgstr ""
 
-#: settings.py:162 utils.js:321
+#: settings.py:162 utils.js:311
 msgid "Thai"
 msgstr ""
 
-#: settings.py:163 utils.js:322
+#: settings.py:163 utils.js:312
 msgid "Filipino"
 msgstr ""
 
-#: settings.py:164 utils.js:323
+#: settings.py:164 utils.js:313
 msgid "Turkish"
 msgstr ""
 
-#: settings.py:165 utils.js:324
+#: settings.py:165 utils.js:314
 msgid "Ukrainian"
 msgstr ""
 
-#: settings.py:166 utils.js:325
+#: settings.py:166 utils.js:315
 msgid "Urdu"
 msgstr ""
 
-#: settings.py:167 utils.js:326
+#: settings.py:167 utils.js:316
 msgid "Uzbek"
 msgstr ""
 
-#: settings.py:168 utils.js:327
+#: settings.py:168 utils.js:317
 msgid "Vietnamese"
 msgstr ""
 
-#: settings.py:169 utils.js:328
+#: settings.py:169 utils.js:318
 msgid "Xhosa"
 msgstr ""
 
-#: settings.py:170 utils.js:329
+#: settings.py:170 utils.js:319
 msgid "Yiddish"
 msgstr ""
 
-#: settings.py:171 utils.js:330
+#: settings.py:171 utils.js:320
 msgid "Yoruba"
 msgstr ""
 
-#: settings.py:172 utils.js:331
+#: settings.py:172 utils.js:321
 msgid "Chinese (Y)"
 msgstr ""
 
-#: settings.py:173 utils.js:332
+#: settings.py:173 utils.js:322
 msgid "Chinese Simplified"
 msgstr ""
 
-#: settings.py:174 utils.js:333
+#: settings.py:174 utils.js:323
 msgid "Chinese Traditional"
 msgstr ""
 
-#: settings.py:175 utils.js:334
+#: settings.py:175 utils.js:324
 msgid "Zulu"
 msgstr ""
 
@@ -554,7 +554,7 @@ msgstr ""
 msgid "Providers marked with (*) require translate-shell package to work."
 msgstr ""
 
-#: settings.py:195 utils.js:3739
+#: settings.py:195 utils.js:3729
 msgid "See the extended help of this extension for more information."
 msgstr ""
 
@@ -682,7 +682,7 @@ msgstr ""
 msgid "What percentage of screen height should the translation dialog fill."
 msgstr ""
 
-#: settings.py:342 extension.js:1152 extension.js:1155 utils.js:2865
+#: settings.py:342 extension.js:1152 extension.js:1155 utils.js:2855
 msgid "History"
 msgstr ""
 
@@ -893,167 +893,167 @@ msgstr ""
 msgid "DCONF files"
 msgstr ""
 
-#: z_create_localized_help.py:28
+#: z_create_localized_help.py:30
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:31
+#: z_create_localized_help.py:33
 msgid "The Multi Translator extension is an extension ported from a gnome-shell extension called [Text Translator](https://github.com/gufoe/text-translator) by [gufoe](https://github.com/gufoe). It provides translation of text by different translation providers (currently [Google](https://translate.google.com), [Yandex](https://translate.yandex.net), [Bing](https://www.bing.com/translator), [Apertium](https://www.apertium.org) and [Transltr](http://transltr.org))."
 msgstr ""
 
-#: z_create_localized_help.py:33
+#: z_create_localized_help.py:35
 msgid "Dependencies"
 msgstr ""
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:37
 msgid "If one or more of these dependencies are missing in your system, you will not be able to use this extension."
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:39
 msgid "xsel command:"
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:40
 msgid "XSel is a command-line program for getting and setting the contents of the X selection."
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:41
 msgid "trans command:"
 msgstr ""
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:42
 msgid "Command provided by the package translate-shell. Is a simple command line interface for several translation providers (Google Translate, Yandex Translate, Bing Translate and Apertium) which allows you to translate strings in your terminal."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:44
 msgid "Check translate-shell [dependencies](https://github.com/soimort/translate-shell#dependencies) and [recommended dependencies](https://github.com/soimort/translate-shell#recommended-dependencies)."
 msgstr ""
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:46
 msgid "Note:"
 msgstr ""
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:46
 msgid "The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x repositories is outdated and broken. It can be installed anyway so it will also install its dependencies. But updating to the latest version should be done as described bellow."
 msgstr ""
 
-#: z_create_localized_help.py:49
+#: z_create_localized_help.py:51
 msgid "How to install latest version of translate-shell"
 msgstr ""
 
-#: z_create_localized_help.py:50
+#: z_create_localized_help.py:52
 msgid "Option 1. Direct Download"
 msgstr ""
 
-#: z_create_localized_help.py:51
+#: z_create_localized_help.py:53
 msgid "This method will only install the trans script into the specified locations."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:54
+#: z_create_localized_help.py:56
 msgid "For the current user only. **~/.local/bin** needs to be in your PATH."
 msgstr ""
 
-#: z_create_localized_help.py:60
+#: z_create_localized_help.py:62
 msgid "For all users without overwriting the installed version."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:68
+#: z_create_localized_help.py:70
 msgid "Option 2. From Git - [More details](https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers)"
 msgstr ""
 
-#: z_create_localized_help.py:69
+#: z_create_localized_help.py:71
 msgid "This method will not just install the trans script but also its man pages. Refer to the link above for more installation details."
 msgstr ""
 
-#: z_create_localized_help.py:78
+#: z_create_localized_help.py:80
 msgid "Extension usage"
 msgstr ""
 
-#: z_create_localized_help.py:79
+#: z_create_localized_help.py:81
 msgid "Once installed and enabled, the following shortcuts will be available."
 msgstr ""
 
-#: z_create_localized_help.py:80
+#: z_create_localized_help.py:82
 msgid "Global shortcuts (configurable from the extension settings)"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:82
+#: z_create_localized_help.py:84
 msgid "**[[Super]] + [[T]]:** Open translator dialog."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:84
+#: z_create_localized_help.py:86
 msgid "**[[Super]] + [[Shift]] + [[T]]:** Open translator dialog and translate text from clipboard."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:86
+#: z_create_localized_help.py:88
 msgid "**[[Super]] + [[Alt]] + [[T]]:** Open translator dialog and translate from primary selection."
 msgstr ""
 
-#: z_create_localized_help.py:88
+#: z_create_localized_help.py:90
 msgid "Shortcuts available on the translation dialog"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:92
 msgid "**[[Ctrl]] + [[Enter]]:** Translate text."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:92
+#: z_create_localized_help.py:94
 msgid "**[[Shift]] + [[Enter]]:** Force text translation. Ignores translation history."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:94
+#: z_create_localized_help.py:96
 msgid "**[[Ctrl]] + [[Shift]] + [[C]]:** Copy translated text to clipboard."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:98
 msgid "**[[Ctrl]] + [[S]]:** Swap languages."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:98
+#: z_create_localized_help.py:100
 msgid "**[[Ctrl]] + [[D]]:** Reset languages to default."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:100
+#: z_create_localized_help.py:102
 msgid "**[[Escape]]:** Close dialog."
 msgstr ""
 
-#: z_create_localized_help.py:102
+#: z_create_localized_help.py:104
 msgid "Xlet's settings window"
 msgstr ""
 
-#: z_create_localized_help.py:103
+#: z_create_localized_help.py:105
 msgid "From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."
 msgstr ""
 
-#: z_create_localized_help.py:105
+#: z_create_localized_help.py:107
 msgid "To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:107
+#: z_create_localized_help.py:109
 msgid "Command to install the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:110
+#: z_create_localized_help.py:112
 msgid "Command to uninstall the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:113
+#: z_create_localized_help.py:115
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr ""
 
@@ -1128,7 +1128,7 @@ msgid "Check dependencies"
 msgstr ""
 
 #. Just in case.
-#: extension.js:617 utils.js:3640
+#: extension.js:617 utils.js:3630
 msgid "Extended help"
 msgstr ""
 
@@ -1166,7 +1166,7 @@ msgstr ""
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: translation_providers/google_translation_provider.js:86 translation_providers/transltr_translation_provider.js:76 translation_providers/yandex_translation_provider.js:282 utils.js:2379
+#: translation_providers/google_translation_provider.js:86 translation_providers/transltr_translation_provider.js:76 translation_providers/yandex_translation_provider.js:282 utils.js:2369
 msgid "Error"
 msgstr ""
 
@@ -1202,118 +1202,118 @@ msgstr ""
 msgid "No Yandex API keys were found!!!"
 msgstr ""
 
-#: translation_providers/yandex_translation_provider.js:346 utils.js:3618 utils.js:3635
+#: translation_providers/yandex_translation_provider.js:346 utils.js:3608 utils.js:3625
 msgid "Check this extension help file for instructions."
 msgstr ""
 
-#: utils.js:466
+#: utils.js:456
 #, javascript-format
 msgid "Schema %s could not be found for extension %s."
 msgstr ""
 
-#: utils.js:467
+#: utils.js:457
 msgid "Please check your installation."
 msgstr ""
 
-#: utils.js:989
+#: utils.js:979
 msgid "Icon and label are both false."
 msgstr ""
 
-#: utils.js:1394
+#: utils.js:1384
 msgid "Shortcuts"
 msgstr ""
 
-#: utils.js:1396
+#: utils.js:1386
 msgid "Open translator dialog."
 msgstr ""
 
-#: utils.js:1398
+#: utils.js:1388
 msgid "Open translator dialog and translate text from clipboard."
 msgstr ""
 
-#: utils.js:1400
+#: utils.js:1390
 msgid "Open translator dialog and translate from primary selection."
 msgstr ""
 
-#: utils.js:1402
+#: utils.js:1392
 msgid "Translate text."
 msgstr ""
 
-#: utils.js:1404
+#: utils.js:1394
 msgid "Force text translation. Ignores translation history."
 msgstr ""
 
-#: utils.js:1406
+#: utils.js:1396
 msgid "Copy translated text to clipboard."
 msgstr ""
 
-#: utils.js:1408
+#: utils.js:1398
 msgid "Swap languages."
 msgstr ""
 
-#: utils.js:1410
+#: utils.js:1400
 msgid "Reset languages to default."
 msgstr ""
 
-#: utils.js:1412
+#: utils.js:1402
 msgid "Close dialog."
 msgstr ""
 
-#: utils.js:1557
+#: utils.js:1547
 msgid "Type to search..."
 msgstr ""
 
-#: utils.js:1772
+#: utils.js:1762
 msgid "Most used languages​​."
 msgstr ""
 
-#: utils.js:2254
+#: utils.js:2244
 #, javascript-format
 msgid "Can't load preferences for %s"
 msgstr ""
 
 #. jshint ignore:line
-#: utils.js:2437 utils.js:2441
+#: utils.js:2427 utils.js:2431
 msgid "Not implemented"
 msgstr ""
 
-#: utils.js:3423
+#: utils.js:3413
 msgid "Error executing translate-shell"
 msgstr ""
 
-#: utils.js:3616 utils.js:3633
+#: utils.js:3606 utils.js:3623
 msgid "Unmet dependencies found!!!"
 msgstr ""
 
-#: utils.js:3619
+#: utils.js:3609
 msgid "It can be accessed from the translation dialog main menu."
 msgstr ""
 
-#: utils.js:3624
+#: utils.js:3614
 msgid "All dependencies seem to be met."
 msgstr ""
 
-#: utils.js:3636
+#: utils.js:3626
 msgid "This information has also been logged into the ~/.cinnamon/glass.log file."
 msgstr ""
 
-#: utils.js:3680
+#: utils.js:3670
 msgid "Press <Esc> to close"
 msgstr ""
 
-#: utils.js:3735
+#: utils.js:3725
 msgid "This translation provider doesn't require translate-shell to work."
 msgstr ""
 
-#: utils.js:3738
+#: utils.js:3728
 msgid "This translation provider requires translate-shell to work."
 msgstr ""
 
-#: utils.js:3962
+#: utils.js:3952
 msgid "Error while parsing data"
 msgstr ""
 
-#: utils.js:3994
+#: utils.js:3984
 msgid "Error while translating, check your internet connection"
 msgstr ""
 

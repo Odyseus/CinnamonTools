@@ -4,6 +4,20 @@
 
 ***
 
+- **Date:** Mon, 24 Dec 2018 21:58:49 -0300
+- **Commit:** [60aefee](https://gitlab.com/Odyseus/CinnamonTools/commit/60aefee)
+- **Author:** Odyseus
+
+```
+- Now it is possible to specify the shell used to execute commands instead of having Bash hard-coded. A shell can be globally configured in an applet instance or specified individually for each menu item through the `shell` attribute. The argument used by a shell program that allows to execute a command is also exposed through an applet setting and can also be specified with the `shellArgument` attribute.
+- Exposed as an option the argument used by a terminal program that allows to execute a command inside a terminal window. Workaround due to retarded terminals that keep being dumbed down to the point of uselessness.
+- Removed retro compatible code that was left over when removing compatibility with Cinnamon versions older than 3.0.x.
+- Implemented a getBoolean function to simplify conditions.
+
+```
+
+***
+
 - **Date:** Tue, 7 Aug 2018 03:36:48 -0300
 - **Commit:** [c114f50](https://gitlab.com/Odyseus/CinnamonTools/commit/c114f50)
 - **Author:** Odyseus
