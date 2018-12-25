@@ -92,13 +92,6 @@ const DEFAULT_ENGINES = {
         "last_source": "",
         "last_target": "",
         "remember_last_lang": true
-    },
-    "DeepL.TranslatorTS": {
-        "default_source": "auto",
-        "default_target": "en",
-        "last_source": "",
-        "last_target": "",
-        "remember_last_lang": true
     }
 };
 
@@ -195,7 +188,6 @@ var PROVIDERS = {
     website: {
         "Apertium.TS": "https://www.apertium.org",
         "Bing.TranslatorTS": "https://www.bing.com/translator/",
-        "DeepL.TranslatorTS": "https://www.deepl.com/translator",
         "Google.Translate": "https://translate.google.com",
         "Google.TranslateTS": "https://translate.google.com",
         "Transltr": "http://transltr.org",
@@ -205,7 +197,6 @@ var PROVIDERS = {
     display_name: {
         "Apertium.TS": "Apertium",
         "Bing.TranslatorTS": "Bing Translator",
-        "DeepL.TranslatorTS": "DeepL Translator",
         "Google.Translate": "Google Translate",
         "Google.TranslateTS": "Google Translate",
         "Transltr": "Transltr",
@@ -215,7 +206,6 @@ var PROVIDERS = {
     icon: {
         "Apertium.TS": "multi-translator-generic-translator",
         "Bing.TranslatorTS": "multi-translator-bing-translator",
-        "DeepL.TranslatorTS": "multi-translator-google-translate",
         "Google.Translate": "multi-translator-google-translate",
         "Google.TranslateTS": "multi-translator-google-translate",
         "Transltr": "multi-translator-generic-translator",
