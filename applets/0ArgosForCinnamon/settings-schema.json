@@ -112,14 +112,7 @@
     },
     "head2": {
         "type": "header",
-        "description": "Extra settings"
-    },
-    "pref_terminal_emulator": {
-        "type": "entry",
-        "indent": true,
-        "default": "gnome-terminal",
-        "description": "Terminal emulator",
-        "tooltip": "Choose the terminal emulator used by this applet.\nIMPORTANT!!! The terminal emulator has to support the -e argument."
+        "description": "Appearance settings"
     },
     "pref_default_icon_size": {
         "type": "spinbutton",
@@ -164,6 +157,38 @@
         "units": "pixels",
         "description": "Spacing for items inside the applet",
         "tooltip": ""
+    },
+    "head3": {
+        "type": "header",
+        "description": "Advanced settings"
+    },
+    "pref_terminal_emulator": {
+        "type": "entry",
+        "indent": true,
+        "default": "gnome-terminal",
+        "description": "Terminal emulator",
+        "tooltip": "Choose the terminal emulator used by this applet. Used when an item has the 'terminal' attribute set to true."
+    },
+    "pref_terminal_emulator_argument": {
+        "type": "entry",
+        "indent": true,
+        "default": "-e",
+        "description": "Terminal emulator argument",
+        "tooltip": "The argument used by a terminal program that allows to execute a command inside the terminal window. In most terminals is '-e'. In terminals that decided to reinvent the wheel, read their manual pages."
+    },
+    "pref_shell": {
+        "type": "entry",
+        "indent": true,
+        "default": "/bin/bash",
+        "description": "Default shell",
+        "tooltip": "Default shell used to execute commands."
+    },
+    "pref_shell_argument": {
+        "type": "entry",
+        "indent": true,
+        "default": "-c",
+        "description": "Shell argument",
+        "tooltip": "The argument used by a shell program that allows to execute a command. In most shells is '-c'."
     },
     "pref_last_selected_directory": {
         "type": "generic",

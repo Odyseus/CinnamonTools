@@ -385,8 +385,7 @@ ArgosForCinnamonApplet.prototype = {
                     menus[dropdownLines[l + 1].menuLevel] = menuItem.menu;
                 } else if ((l + 1) < dropdownLines.length &&
                     dropdownLines[l + 1].menuLevel === dropdownLines[l].menuLevel &&
-                    (dropdownLines[l + 1].hasOwnProperty("alternate") &&
-                        dropdownLines[l + 1].alternate === "true")) {
+                    $.getBoolean(dropdownLines[l + 1], "alternate")) {
                     menuItem = new $.ArgosMenuItem(this, dropdownLines[l], dropdownLines[l + 1]);
                     // Skip alternate line
                     l++;
@@ -786,6 +785,9 @@ ArgosForCinnamonApplet.prototype = {
             "pref_rotation_interval",
             "pref_rotation_interval_units",
             "pref_terminal_emulator",
+            "pref_terminal_emulator_argument",
+            "pref_shell",
+            "pref_shell_argument",
             "pref_last_selected_directory",
             "pref_initial_load_done"
         ];

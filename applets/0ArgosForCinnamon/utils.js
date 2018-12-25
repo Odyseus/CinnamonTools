@@ -28,8 +28,9 @@ const St = imports.gi.St;
 const Tooltips = imports.ui.tooltips;
 const Util = imports.misc.util;
 
-const CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
-const CINN_2_8 = versionCompare(CINNAMON_VERSION, "2.8.8") <= 0;
+// KEEP ME: There will always be non retro compatible changes on Cinnamon as long
+// as it keeps being treated as a F***ING web application!!!
+// const CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
 const ANSI_COLORS = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"];
 
 const OrnamentType = {
@@ -44,6 +45,11 @@ const NotificationUrgency = {
     NORMAL: 1,
     HIGH: 2,
     CRITICAL: 3
+};
+
+const truthyMap = {
+    "true": true,
+    "1": true
 };
 
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
@@ -321,31 +327,16 @@ ArgosLineView.prototype = {
     setLine: function(aLine) {
         this.line = aLine;
 
-        // Special case for the moronic Cinnamon 2.8.x
-        // actor.remove_all_children > Doesn't work.
-        // actor.destroy_all_children > Doesn't work.
-        // actor.destroy_children > Doesn't work.
-        // And all of those are available functions on 2.8.x!!!! ¬¬
-        // By "doesn't work" I mean that, all children are removed,
-        // but the space occupied by them still remains.
-        if (CINN_2_8) {
-            let children = this.actor.get_children();
-
-            for (let i = children.length - 1; i >= 0; i--) {
-                try {
-                    children[i].destroy();
-                } catch (aErr) {
-                    continue;
-                }
-            }
-        } else {
-            this.actor.remove_all_children();
-        }
+        this.actor.remove_all_children();
 
         if (aLine.hasOwnProperty("iconName")) {
             let icon = null;
             let iconName = aLine.iconName;
-            // if the aLine.iconName is a path to an icon
+            let iconSize = aLine.hasOwnProperty("iconSize") ?
+                aLine.iconSize :
+                this._applet.pref_default_icon_size;
+
+            // If aLine.iconName is a path to an icon.
             if (iconName[0] === "/" || iconName[0] === "~") {
                 // Expand ~ to the user's home folder.
                 if (/^~\//.test(iconName)) {
@@ -360,25 +351,16 @@ ArgosLineView.prototype = {
                 icon = new St.Icon({
                     style_class: "popup-menu-icon",
                     gicon: iconFile,
-                    icon_size: (aLine.hasOwnProperty("iconSize") ?
-                        aLine.iconSize :
-                        this._applet.pref_default_icon_size),
-                    // It seems that this is not supported.
-                    // icon_type: (aLine.iconIsSymbolic !== "true" ?
-                    //     St.IconType.FULLCOLOR :
-                    //     St.IconType.SYMBOLIC)
+                    icon_size: iconSize
                 });
             } else { // use a themed icon
                 icon = new St.Icon({
                     style_class: "popup-menu-icon",
-                    icon_size: (aLine.hasOwnProperty("iconSize") ?
-                        aLine.iconSize :
-                        this._applet.pref_default_icon_size),
+                    icon_size: iconSize,
                     icon_name: iconName,
-                    icon_type: (!aLine.hasOwnProperty("iconIsSymbolic") ||
-                        (aLine.hasOwnProperty("iconIsSymbolic") && aLine.iconIsSymbolic !== "true") ?
-                        St.IconType.FULLCOLOR :
-                        St.IconType.SYMBOLIC)
+                    icon_type: (getBoolean(aLine, "iconIsSymbolic") ?
+                        St.IconType.SYMBOLIC :
+                        St.IconType.FULLCOLOR)
                 });
             }
 
@@ -388,13 +370,17 @@ ArgosLineView.prototype = {
         }
 
         if (aLine.hasOwnProperty("image") || aLine.hasOwnProperty("templateImage")) {
-            let image = aLine.hasOwnProperty("image") ? aLine.image : aLine.templateImage;
-
-            // Source: https://github.com/GNOME/gnome-maps (mapSource.js)
-            let bytes = GLib.Bytes.new(GLib.base64_decode(image));
-            let stream = Gio.MemoryInputStream.new_from_bytes(bytes);
+            let image = aLine.hasOwnProperty("image") ?
+                aLine.image :
+                aLine.hasOwnProperty("templateImage") ?
+                aLine.templateImage :
+                null;
 
             try {
+                // Source: https://github.com/GNOME/gnome-maps (mapSource.js)
+                let bytes = GLib.Bytes.new(GLib.base64_decode(image));
+                let stream = Gio.MemoryInputStream.new_from_bytes(bytes);
+
                 let pixbuf = GdkPixbuf.Pixbuf.new_from_stream(stream, null);
 
                 // TextureCache.load_gicon returns a square texture no matter what the Pixbuf's
@@ -653,22 +639,39 @@ ArgosMenuItem.prototype = {
                     }
                 }
 
-                if (activeLine.hasOwnProperty("bash")) {
+                if (activeLine.hasOwnProperty("command") || activeLine.hasOwnProperty("bash")) {
                     let argv = [];
+                    let shell = activeLine.hasOwnProperty("shell") ?
+                        activeLine.shell :
+                        aApplet.pref_shell ?
+                        aApplet.pref_shell :
+                        "/bin/bash";
+                    let shell_arg = activeLine.hasOwnProperty("shellArgument") ?
+                        activeLine.shellArgument :
+                        aApplet.pref_shell_argument ?
+                        aApplet.pref_shell_argument :
+                        "-c";
+                    let cmd = activeLine.hasOwnProperty("command") ?
+                        activeLine.command :
+                        activeLine.hasOwnProperty("bash") ?
+                        activeLine.bash :
+                        'echo "Something is screwed up!"';
 
-                    if (!activeLine.hasOwnProperty("terminal") || activeLine.terminal === "false") {
-                        argv = [
-                            "bash",
-                            "-c",
-                            activeLine.bash
-                        ];
-                    } else if (activeLine.hasOwnProperty("terminal") && activeLine.terminal === "true") {
-                        // Run bash immediately after executing the command to keep the terminal window open
+                    if (getBoolean(activeLine, "terminal")) {
+                        // Run shell immediately after executing the command to keep the terminal window open
                         // (see http://stackoverflow.com/q/3512055)
                         argv = [
                             aApplet.pref_terminal_emulator,
-                            "-e",
-                            "bash -c " + GLib.shell_quote(activeLine.bash + "; exec bash")
+                            aApplet.pref_terminal_emulator_argument,
+                        ].concat(
+                            // Workaround for the terminal that decided to reinvent the wheel. ¬¬
+                            aApplet.pref_terminal_emulator_argument === "--" ?
+                            [shell, shell_arg, cmd + "; exec " + shell] :
+                            [shell + " " + shell_arg + " " + GLib.shell_quote(cmd + "; exec " + shell)]
+                        );
+                    } else {
+                        argv = [
+                            shell + " -c " + GLib.shell_quote(cmd)
                         ];
                     }
 
@@ -677,14 +680,14 @@ ArgosMenuItem.prototype = {
 
                     if (success) {
                         GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, () => {
-                            if (activeLine.hasOwnProperty("refresh") && activeLine.refresh === "true") {
+                            if (getBoolean(activeLine, "refresh")) {
                                 aApplet.update();
                             }
                         });
                     }
                 }
 
-                if (activeLine.hasOwnProperty("refresh") && activeLine.refresh === "true") {
+                if (getBoolean(activeLine, "refresh")) {
                     aApplet.update();
                 }
 
@@ -896,22 +899,22 @@ function parseLine(aLineString) {
 
     line.markup = line.text;
 
-    if (!line.hasOwnProperty("unescape") || (line.hasOwnProperty("unescape") && line.unescape !== "false")) {
+    if (getBoolean(line, "unescape", true)) {
         line.markup = GLib.strcompress(line.markup);
     }
 
-    if (!line.hasOwnProperty("emojize") || (line.hasOwnProperty("emojize") && line.emojize !== "false")) {
+    if (getBoolean(line, "emojize", true)) {
         line.markup = line.markup.replace(/:([\w+-]+):/g, (aMatch, aEmojiName) => {
             let emojiName = aEmojiName.toLowerCase();
             return Emojis.hasOwnProperty(emojiName) ? Emojis[emojiName] : aMatch;
         });
     }
 
-    if (!line.hasOwnProperty("trim") || (line.hasOwnProperty("trim") && line.trim !== "false")) {
+    if (getBoolean(line, "trim", true)) {
         line.markup = line.markup.trim();
     }
 
-    if (line.hasOwnProperty("useMarkup") && line.useMarkup === "false") {
+    if (getBoolean(line, "useMarkup")) {
         line.markup = GLib.markup_escape_text(line.markup, -1);
         // Restore escaped ESC characters (needed for ANSI sequences)
         line.markup = line.markup.replace("&#x1b;", "\x1b");
@@ -919,7 +922,7 @@ function parseLine(aLineString) {
 
     // Note that while it is possible to format text using a combination of Pango markup
     // and ANSI escape sequences, lines like "<b>ABC \e[1m DEF</b>" lead to unmatched tags
-    if (!line.hasOwnProperty("ansi") || (line.hasOwnProperty("ansi") && line.ansi !== "false")) {
+    if (getBoolean(line, "ansi", true)) {
         line.markup = ansiToMarkup(line.markup);
     }
 
@@ -927,13 +930,15 @@ function parseLine(aLineString) {
         line.markup = "<span " + markupAttributes.join(" ") + ">" + line.markup + "</span>";
     }
 
-    if (line.hasOwnProperty("bash")) {
-        // Append BitBar's legacy "paramN" attributes to the bash command
-        // (Argos allows placing arguments directy in the command string)
-        let i = 1;
-        while (line.hasOwnProperty("param" + i)) {
-            line.bash += " " + GLib.shell_quote(line["param" + i]);
-            i++;
+    for (let x in ["bash", "command"]) {
+        if (line.hasOwnProperty(x)) {
+            // Append BitBar's legacy "paramN" attributes to the bash command
+            // (Argos allows placing arguments directly in the command string)
+            let i = 1;
+            while (line.hasOwnProperty("param" + i)) {
+                line[x] += " " + GLib.shell_quote(line["param" + i]);
+                i++;
+            }
         }
     }
 
@@ -944,8 +949,11 @@ function parseLine(aLineString) {
         }
     }
 
-    line.hasAction = line.hasOwnProperty("bash") || line.hasOwnProperty("href") ||
-        line.hasOwnProperty("eval") || (line.hasOwnProperty("refresh") && line.refresh === "true");
+    line.hasAction = line.hasOwnProperty("bash") ||
+        line.hasOwnProperty("command") ||
+        line.hasOwnProperty("href") ||
+        line.hasOwnProperty("eval") ||
+        getBoolean(line, "refresh");
 
     return line;
 }
@@ -1086,6 +1094,8 @@ function readStream(aStream, aCallback) {
     });
 }
 
+// KEEP ME: There will always be non retro compatible changes on Cinnamon as long
+// as it keeps being treated as a F***ING web application!!!
 /**
  * Compares two software version numbers (e.g. "1.7.1" or "1.2b").
  *
@@ -1116,54 +1126,54 @@ function readStream(aStream, aCallback) {
  * @copyright by Jon Papaioannou (["john", "papaioannou"].join(".") + "@gmail.com")
  * @license This function is in the public domain. Do what you want with it, no strings attached.
  */
-function versionCompare(v1, v2, options) {
-    let lexicographical = options && options.lexicographical,
-        zeroExtend = options && options.zeroExtend,
-        v1parts = v1.split("."),
-        v2parts = v2.split(".");
+// function versionCompare(v1, v2, options) {
+//     let lexicographical = options && options.lexicographical,
+//         zeroExtend = options && options.zeroExtend,
+//         v1parts = v1.split("."),
+//         v2parts = v2.split(".");
 
-    function isValidPart(x) {
-        return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
-    }
+//     function isValidPart(x) {
+//         return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
+//     }
 
-    if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
-        return NaN;
-    }
+//     if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
+//         return NaN;
+//     }
 
-    if (zeroExtend) {
-        while (v1parts.length < v2parts.length) {
-            v1parts.push("0");
-        }
-        while (v2parts.length < v1parts.length) {
-            v2parts.push("0");
-        }
-    }
+//     if (zeroExtend) {
+//         while (v1parts.length < v2parts.length) {
+//             v1parts.push("0");
+//         }
+//         while (v2parts.length < v1parts.length) {
+//             v2parts.push("0");
+//         }
+//     }
 
-    if (!lexicographical) {
-        v1parts = v1parts.map(Number);
-        v2parts = v2parts.map(Number);
-    }
+//     if (!lexicographical) {
+//         v1parts = v1parts.map(Number);
+//         v2parts = v2parts.map(Number);
+//     }
 
-    for (let i = 0; i < v1parts.length; ++i) {
-        if (v2parts.length === i) {
-            return 1;
-        }
+//     for (let i = 0; i < v1parts.length; ++i) {
+//         if (v2parts.length === i) {
+//             return 1;
+//         }
 
-        if (v1parts[i] === v2parts[i]) {
-            continue;
-        } else if (v1parts[i] > v2parts[i]) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
+//         if (v1parts[i] === v2parts[i]) {
+//             continue;
+//         } else if (v1parts[i] > v2parts[i]) {
+//             return 1;
+//         } else {
+//             return -1;
+//         }
+//     }
 
-    if (v1parts.length !== v2parts.length) {
-        return -1;
-    }
+//     if (v1parts.length !== v2parts.length) {
+//         return -1;
+//     }
 
-    return 0;
-}
+//     return 0;
+// }
 
 function informAboutMissingDependencies(aMsg, aRes) {
     customNotify(
@@ -1289,9 +1299,27 @@ function escapeHTML(aStr) {
     return aStr;
 }
 
+/**
+ * Get a boolean from the value of an object's property.
+ *
+ * @param {Object}  aObj     - The object.
+ * @param {String}  aProp    - The property.
+ * @param {Boolean} aDefault - Default value in case aObj doesn't have the desired aProp.
+ *
+ * @return {Boolean} Boolean representation of an object's property value.
+ */
+function getBoolean(aObj, aProp, aDefault = false) {
+    if (aObj.hasOwnProperty(aProp)) {
+        return String(aObj[aProp]).toLowerCase() in truthyMap;
+    }
+
+    return aDefault;
+}
+
 /*
 exported parseLine,
          spawnWithCallback,
          informAboutMissingDependencies,
-         escapeHTML
+         escapeHTML,
+         versionCompare
  */
