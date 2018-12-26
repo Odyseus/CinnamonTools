@@ -157,48 +157,30 @@ class Main(LocalizedHelpCreator):
                                                            _("Sets the dimensions of the image. If only one dimension is specified, the image's original aspect ratio is maintained. **Argos only**.")),
             "| `length` | %s | %s |" % (_("Length in characters"), _(
                 "Truncate the line text to the specified number of characters, ellipsizing the truncated part.")),
-            "| `trim` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
+            "| `trim` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s %s |" %
+            (_("Boolean value"),
+             _("If disabled, preserve leading and trailing whitespace of the line text."), _("Enabled by default if not specified.")),
+            "| `dropdown` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s %s |" %
+            (_("Boolean value"),
+             _("If disabled and the line is a button line (see above), exclude it from being displayed in the dropdown menu."), _("Enabled by default if not specified.")),
+            "| `alternate` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s |" %
+            (_("Boolean value"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false`, preserve leading and trailing whitespace of the line text.")),
-            "| `dropdown` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
+             _("If enabled, the item is hidden by default, and shown in place of the preceding item when the [[Alt]] key is pressed.")),
+            "| `emojize` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s %s |" %
+            (_("Boolean value"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false` and the line is a button line (see above), exclude it from being displayed in the dropdown menu.")),
-            "| `alternate` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
+             _("If disabled, disable substitution of `:emoji_name:` with emoji characters in the line text."), _("Enabled by default if not specified.")),
+            "| `ansi` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s %s |" %
+            (_("Boolean value"),
+             _("If disabled, disable interpretation of ANSI escape sequences in the line text."), _("Enabled by default if not specified.")),
+            "| `useMarkup` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s %s |" %
+            (_("Boolean value"),
+             _("If disabled, disable interpretation of Pango markup in the line text. **Argos only**."), _("Enabled by default if not specified.")),
+            "| `unescape` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s %s |" %
+            (_("Boolean value"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `true`, the item is hidden by default, and shown in place of the preceding item when the [[Alt]] key is pressed.")),
-            "| `emojize` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
-             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false`, disable substitution of `:emoji_name:` with emoji characters in the line text.")),
-            "| `ansi` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
-             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false`, disable interpretation of ANSI escape sequences in the line text.")),
-            "| `useMarkup` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
-             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false`, disable interpretation of Pango markup in the line text. **Argos only**.")),
-            "| `unescape` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
-             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false`, disable interpretation of backslash escapes such as `\\n` in the line text. **Argos only**.")),
+             _("If disabled, disable interpretation of backslash escapes such as `\\n` in the line text. **Argos only**."), _("Enabled by default if not specified.")),
             "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Attributes available on **Argos for Cinnamon** only."),
@@ -209,13 +191,11 @@ class Main(LocalizedHelpCreator):
                                          _("Sets the tooltip for the item.")),
             "| `iconSize` | %s | %s |" % (_("An integer from 12 to 512"),
                                           # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                                          _("Sets the size for the item's `iconName`.")),
-            "| `iconIsSymbolic` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
+                                          _("Sets the size for the menu item's icon if any. The size for menu item icons can be defined globally in the settings of an instance of Argos for Cinnamon.")),
+            "| `iconIsSymbolic` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s |" %
+            (_("Boolean value"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `true`, the symbolic version of `iconName` will be used on the item (if exists).")),
+             _("If enabled, the symbolic version of `iconName` will be used on the item (if exists). This attribute is ignored if the icon defined in `iconName` is a path to an icon file.")),
             "### %s" % _("Actions"),
             _("Define actions to be performed when the user clicks on the line's menu item."),
             "",
@@ -224,20 +204,18 @@ class Main(LocalizedHelpCreator):
             "",
             "| %s | %s | %s |" % (_("Attribute"), _("Value"), _("Description")),
             "| --- | --- | --- |",
-            "| `command` or `bash` | %s | **(1)** %s |" % (_("A command to execute"), _(
+            "| `command` or `bash` | %s | **[(1)](#about-command-bash-attributes-{{lhc_lang_id}})** %s |" % (_("A command to execute"), _(
                 "Runs a command using a default shell specified in the options of an instance of Argos for Cinnamon or specified by the `shell` attribute.")),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "| `shell` | %s | %s |" % (_("Path or executable name of a shell program"), _(
                 "This attribute overrides the default shell set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if one decides to use different shells to execute commands whithin the menu created by an instance of Argos for Cinnamon.")),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "| `shellArgument` | %s | %s |" % (_("Argument to pass to a shell program"), _(
-                "The argument used by a shell program that allows to execute a command. In most shells is '-c'. This attribute overrides the default shell set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if the shell argument set on the settings of an instance of Argos for Cinnamon isn't compatible with the shell specified in the `shell` attribute.")),
-            "| `terminal` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
+                "The argument used by a shell program that allows to execute a command. In most shells is '-c'. This attribute overrides the shell argument set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if the shell argument set on the settings of an instance of Argos for Cinnamon isn't compatible with the shell specified in the `shell` attribute.")),
+            "| `terminal` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s |" %
+            (_("Boolean value"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `false`, runs the command specified in the `command` or `bash` attributes in the background (i.e. without opening a terminal window). If `true`, a terminal will be opened to execute a command and will be kept open.")),
+             _("If disabled, runs the command specified in the `command` or `bash` attributes in the background (i.e. without opening a terminal window). If enabled, a terminal will be opened to execute a command and will be kept open.")),
             "| `param1`, `param2`, ... | %s | %s |" % (_("Command line arguments"),
                                                        # TO TRANSLATORS: MARKDOWN string. Respect
                                                        # formatting.
@@ -247,16 +225,29 @@ class Main(LocalizedHelpCreator):
             "| `eval` | %s | %s |" % (_("JavaScript code"),
                                       # TO TRANSLATORS: MARKDOWN string. Respect formatting.
                                       _("Passes the code to JavaScript's `eval` function. **Argos only**.")),
-            "| `refresh` | `true` %s `false` | %s |" %
-            # TO TRANSLATORS: Conjunction used as follows:
-            # "true or false"
-            (_("or"),
+            "| `refresh` | **[(2)](#about-boolean-attributes-{{lhc_lang_id}})** %s | %s |" %
+            (_("Boolean value"),
              # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-             _("If `true`, re-runs the plugin, updating its output.")),
+             _("If enabled, re-runs the plugin, updating its output.")),
+            "",
+            '<span id="about-command-bash-attributes-{{lhc_lang_id}}"></span>',
             "",
             utils.get_bootstrap_alert(
-                heading="<strong>(1)</strong> %s" % _("About the `command` and `bash` attributes"),
+                heading="<strong>(1)</strong> %s" % _(
+                    # TO TRANSLATORS: Full sentence:
+                    # About the "command" and "bash" attributes.
+                    # Do not translate nor modify the {command} and {bash} placeholders.
+                    "About the {command} and {bash} attributes").format(
+                    command="<code>command</code>",
+                    bash="<code>bash</code>"),
                 content=md(_("These attributes are mutually exclusive. I added the `command` attribute because it didn't make much sense to have it named `bash` when Argos for Cinnamon can use any shell, not just Bash. I left the `bash` attribute so any scripts written for BitBar or for the original Argos for Gnome Shell extension can be used without modifications. I will never remove the `bash` attribute while the two previously mentioned tools keep using it."))
+            ),
+            "",
+            '<span id="about-boolean-attributes-{{lhc_lang_id}}"></span>',
+            "",
+            utils.get_bootstrap_alert(
+                heading="<strong>(2)</strong> %s" % _("About boolean attributes"),
+                content=md(_("Any boolean attribute can have a value of `true` or `1` (one) to enable a feature/option. Or a value of `false` or `0` (zero) to disable a feature/option. Values are case-insensitive. Any other value will be considered `false`."))
             ),
             "",
             "### %s" % _("Environment variables"),

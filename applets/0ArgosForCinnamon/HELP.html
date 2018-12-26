@@ -199,38 +199,38 @@ body {
 </tr>
 <tr>
 <td><code>trim</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>false</code>, conserva los espacios en blanco al inicio y al final de la línea de texto.</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si deshabilitado, conserva los espacios en blanco al inicio y al final de la línea de texto. Habilitado por defecto si no es especificado.</td>
 </tr>
 <tr>
 <td><code>dropdown</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>false</code> y la línea es una línea para el botón (ver arriba), excluya que se muestre en el menú desplegable.</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si deshabilitado y la línea es una línea para el botón (ver arriba), excluya que se muestre en el menú desplegable. Habilitado por defecto si no es especificado.</td>
 </tr>
 <tr>
 <td><code>alternate</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>true</code>, el elemento se oculta de forma predeterminada y se muestra en lugar del elemento anterior cuando se pulsa la tecla <kbd>Alt</kbd>.</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si habilitado, el elemento se oculta de forma predeterminada y se muestra en lugar del elemento anterior cuando se pulsa la tecla <kbd>Alt</kbd>.</td>
 </tr>
 <tr>
 <td><code>emojize</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>false</code>, deshabilita la sustitución de <code>:emoji_name:</code> con caracteres emoji en el texto de línea.</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si deshabilitado, deshabilita la sustitución de <code>:emoji_name:</code> con caracteres emoji en el texto de línea. Habilitado por defecto si no es especificado.</td>
 </tr>
 <tr>
 <td><code>ansi</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>false</code>, desactivar la interpretación de las secuencias de escape ANSI en el texto de línea.</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si deshabilitado, desactivar la interpretación de las secuencias de escape ANSI en el texto de línea. Habilitado por defecto si no es especificado.</td>
 </tr>
 <tr>
 <td><code>useMarkup</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>false</code>, deshabilita la interpretación del marcado de Pango en el texto de línea.  <strong>Argos solamente</strong>.</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si deshabilitado, deshabilita la interpretación del marcado de Pango en el texto de línea.  <strong>Argos solamente.</strong> Habilitado por defecto si no es especificado.</td>
 </tr>
 <tr>
 <td><code>unescape</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>false</code>, deshabilitar la interpretación de los escapes de barra invertida como <code>\n</code> en el texto de línea.  <strong>Argos solamente</strong>.</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si deshabilitado, deshabilitar la interpretación de los escapes de barra invertida como <code>\n</code> en el texto de línea.  <strong>Argos solamente</strong>. Habilitado por defecto si no es especificado.</td>
 </tr>
 </tbody>
 </table>
@@ -251,12 +251,12 @@ body {
 <tr>
 <td><code>iconSize</code></td>
 <td>Un número entero de 12 a 512</td>
-<td>Establece el tamaño del ícono <code>iconName</code> del elemento.</td>
+<td>Establece el tamaño del ícono para el ítem de menú si lo hay. El tamaño de los íconos de los ítems de menú pueden ser definidos globalmente en las preferencias de una instancia de Argos para Cinnamon.</td>
 </tr>
 <tr>
 <td><code>iconIsSymbolic</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>true</code>, la versión simbólica de <code>iconName</code> se utilizará en el elemento (si existe).</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si habilitado, la versión simbólica de <code>iconName</code> será usada en el ítem (si existe). Este atributo is ignorado si el ícono definido en <code>iconName</code> es una ruta a un archivo de ícono.</td>
 </tr>
 </tbody>
 </table>
@@ -274,7 +274,7 @@ body {
 <tr>
 <td><code>command</code> or <code>bash</code></td>
 <td>El comando a ejecutar</td>
-<td><strong>(1)</strong> Ejecuta un comando usando una shell por defecto especificada en las opciones de una instancia de Argos para Cinnamon o especificada por el atributo <code>shell</code>.</td>
+<td><strong><a href="#about-command-bash-attributes-es">(1)</a></strong> Ejecuta un comando usando una shell por defecto especificada en las opciones de una instancia de Argos para Cinnamon o especificada por el atributo <code>shell</code>.</td>
 </tr>
 <tr>
 <td><code>shell</code></td>
@@ -284,12 +284,12 @@ body {
 <tr>
 <td><code>shellArgument</code></td>
 <td>Argumento para pasar a un programa shell</td>
-<td>El argumento usado por un programa shell que permite ejecutar un comando. En la mayoría de las shells es '-c'. Este atributo anula el argumento de shell especificado en las preferencias de una instancia de Argos para Cinnamon.</td>
+<td>El argumento usado por un programa shell que permite ejecutar un comando. En la mayoría de las shells es '-c'. Este atributo anula el argumento de shell especificado en las preferencias de una instancia de Argos para Cinnamon. Este atributo debería ser usado sólo si el argumento para shell especificado en las preferencias de una instancia de Argos para Cinnamon no es compatible con la shell especificada por el atributo <code>shell</code>.</td>
 </tr>
 <tr>
 <td><code>terminal</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>false</code>, ejecuta el comando especificado en los atributos <code>command</code> o <code>bash</code> en el fondo (i.e. sin abrir una ventana de terminal). Si <code>true</code>, una terminal será abierta para ejecutar un comando y se quedará abierta.</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si deshabilitado, ejecuta el comando especificado en los atributos <code>command</code> o <code>bash</code> en el fondo (i.e. sin abrir una ventana de terminal). Si <code>true</code>, una terminal será abierta para ejecutar un comando y se quedará abierta.</td>
 </tr>
 <tr>
 <td><code>param1</code>, <code>param2</code>, ...</td>
@@ -308,14 +308,20 @@ body {
 </tr>
 <tr>
 <td><code>refresh</code></td>
-<td><code>true</code> o <code>false</code></td>
-<td>Si <code>true</code>, vuelve a ejecutar el complemento, actualizando su salida.</td>
+<td><strong><a href="#about-boolean-attributes-es">(2)</a></strong> Valor booleano</td>
+<td>Si habilitado, vuelve a ejecutar el complemento, actualizando su salida.</td>
 </tr>
 </tbody>
 </table>
+<p><span id="about-command-bash-attributes-es"></span></p>
 <div class="alert alert-info text-bold shadow-sm" role="alert">
-<h4 class="alert-heading"><strong>(1)</strong> Sobre los atributos `command` y `bash`.</h4>
+<h4 class="alert-heading"><strong>(1)</strong> Sobre los atributos <code>command</code> y <code>bash</code>.</h4>
 <p>Estos atributos son mutuamente excluyentes. Agregué el atributo <code>command</code> porque no tenía mucho sentido que se llamara <code>bash</code> cuando Argos for Cinnamon puede usar cualquier shell, no solo Bash. Dejé el atributo <code>bash</code> para que cualquier archivo de comandos escrito para BitBar o para la extensión original Argos para Gnome-Shell puedan usarse sin modificaciones. Nunca eliminaré el atributo <code>bash</code> mientras las dos herramientas mencionadas anteriormente sigan usándolo.</p>
+
+</div><p><span id="about-boolean-attributes-es"></span></p>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading"><strong>(2)</strong> Sobre los valores booleanos</h4>
+<p>Cualquier atributo booleano puede tener un valor de <code>true</code> o <code>1</code> (uno) para habilitar una opción/característica. O un valor de <code>false</code> o <code>0</code> (cero) para deshabilitar una opción/característica. Los valores son insensibles a mayúsculas y minúsculas. Cualquier otro valor será considerado como <code>false</code>.</p>
 
 </div><h3>Variables de entorno</h3>
 <p>Los complementos se ejecutan con las siguientes variables de entorno especiales establecidas:</p>
@@ -524,38 +530,38 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </tr>
 <tr>
 <td><code>trim</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>false</code>, preserve leading and trailing whitespace of the line text.</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If disabled, preserve leading and trailing whitespace of the line text. Enabled by default if not specified.</td>
 </tr>
 <tr>
 <td><code>dropdown</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>false</code> and the line is a button line (see above), exclude it from being displayed in the dropdown menu.</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If disabled and the line is a button line (see above), exclude it from being displayed in the dropdown menu. Enabled by default if not specified.</td>
 </tr>
 <tr>
 <td><code>alternate</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>true</code>, the item is hidden by default, and shown in place of the preceding item when the <kbd>Alt</kbd> key is pressed.</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If enabled, the item is hidden by default, and shown in place of the preceding item when the <kbd>Alt</kbd> key is pressed.</td>
 </tr>
 <tr>
 <td><code>emojize</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>false</code>, disable substitution of <code>:emoji_name:</code> with emoji characters in the line text.</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If disabled, disable substitution of <code>:emoji_name:</code> with emoji characters in the line text. Enabled by default if not specified.</td>
 </tr>
 <tr>
 <td><code>ansi</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>false</code>, disable interpretation of ANSI escape sequences in the line text.</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If disabled, disable interpretation of ANSI escape sequences in the line text. Enabled by default if not specified.</td>
 </tr>
 <tr>
 <td><code>useMarkup</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>false</code>, disable interpretation of Pango markup in the line text. <strong>Argos only</strong>.</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If disabled, disable interpretation of Pango markup in the line text. <strong>Argos only</strong>. Enabled by default if not specified.</td>
 </tr>
 <tr>
 <td><code>unescape</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>false</code>, disable interpretation of backslash escapes such as <code>\n</code> in the line text. <strong>Argos only</strong>.</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If disabled, disable interpretation of backslash escapes such as <code>\n</code> in the line text. <strong>Argos only</strong>. Enabled by default if not specified.</td>
 </tr>
 </tbody>
 </table>
@@ -576,12 +582,12 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <tr>
 <td><code>iconSize</code></td>
 <td>An integer from 12 to 512</td>
-<td>Sets the size for the item's <code>iconName</code>.</td>
+<td>Sets the size for the menu item's icon if any. The size for menu item icons can be defined globally in the settings of an instance of Argos for Cinnamon.</td>
 </tr>
 <tr>
 <td><code>iconIsSymbolic</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>true</code>, the symbolic version of <code>iconName</code> will be used on the item (if exists).</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If enabled, the symbolic version of <code>iconName</code> will be used on the item (if exists). This attribute is ignored if the icon defined in <code>iconName</code> is a path to an icon file.</td>
 </tr>
 </tbody>
 </table>
@@ -599,7 +605,7 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <tr>
 <td><code>command</code> or <code>bash</code></td>
 <td>A command to execute</td>
-<td><strong>(1)</strong> Runs a command using a default shell specified in the options of an instance of Argos for Cinnamon or specified by the <code>shell</code> attribute.</td>
+<td><strong><a href="#about-command-bash-attributes-en">(1)</a></strong> Runs a command using a default shell specified in the options of an instance of Argos for Cinnamon or specified by the <code>shell</code> attribute.</td>
 </tr>
 <tr>
 <td><code>shell</code></td>
@@ -609,12 +615,12 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <tr>
 <td><code>shellArgument</code></td>
 <td>Argument to pass to a shell program</td>
-<td>The argument used by a shell program that allows to execute a command. In most shells is '-c'. This attribute overrides the default shell set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if the shell argument set on the settings of an instance of Argos for Cinnamon isn't compatible with the shell specified in the <code>shell</code> attribute.</td>
+<td>The argument used by a shell program that allows to execute a command. In most shells is '-c'. This attribute overrides the shell argument set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if the shell argument set on the settings of an instance of Argos for Cinnamon isn't compatible with the shell specified in the <code>shell</code> attribute.</td>
 </tr>
 <tr>
 <td><code>terminal</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>false</code>, runs the command specified in the <code>command</code> or <code>bash</code> attributes in the background (i.e. without opening a terminal window). If <code>true</code>, a terminal will be opened to execute a command and will be kept open.</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If disabled, runs the command specified in the <code>command</code> or <code>bash</code> attributes in the background (i.e. without opening a terminal window). If enabled, a terminal will be opened to execute a command and will be kept open.</td>
 </tr>
 <tr>
 <td><code>param1</code>, <code>param2</code>, ...</td>
@@ -633,14 +639,20 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </tr>
 <tr>
 <td><code>refresh</code></td>
-<td><code>true</code> or <code>false</code></td>
-<td>If <code>true</code>, re-runs the plugin, updating its output.</td>
+<td><strong><a href="#about-boolean-attributes-en">(2)</a></strong> Boolean value</td>
+<td>If enabled, re-runs the plugin, updating its output.</td>
 </tr>
 </tbody>
 </table>
+<p><span id="about-command-bash-attributes-en"></span></p>
 <div class="alert alert-info text-bold shadow-sm" role="alert">
-<h4 class="alert-heading"><strong>(1)</strong> About the `command` and `bash` attributes</h4>
+<h4 class="alert-heading"><strong>(1)</strong> About the <code>command</code> and <code>bash</code> attributes</h4>
 <p>These attributes are mutually exclusive. I added the <code>command</code> attribute because it didn't make much sense to have it named <code>bash</code> when Argos for Cinnamon can use any shell, not just Bash. I left the <code>bash</code> attribute so any scripts written for BitBar or for the original Argos for Gnome Shell extension can be used without modifications. I will never remove the <code>bash</code> attribute while the two previously mentioned tools keep using it.</p>
+
+</div><p><span id="about-boolean-attributes-en"></span></p>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading"><strong>(2)</strong> About boolean attributes</h4>
+<p>Any boolean attribute can have a value of <code>true</code> or <code>1</code> (one) to enable a feature/option. Or a value of <code>false</code> or <code>0</code> (zero) to disable a feature/option. Values are case-insensitive. Any other value will be considered <code>false</code>.</p>
 
 </div><h3>Environment variables</h3>
 <p>Plugin executables are run with the following special environment variables set:</p>
