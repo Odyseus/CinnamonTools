@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 """Custom initialization and overrides for the mistune module.
 
-Attributes
-----------
-md : object
-    Initialized ``mistune.Markdown`` instance.
+..note:
 
     **Markdown parser additions/overrides**:
 
@@ -114,7 +111,28 @@ _mistune_inline_lexer = MistuneCustomInlineLexer(_mistune_renderer)
 # Enable new feature/s.
 _mistune_inline_lexer.enable_kbd_tag()
 
-md = Markdown(_mistune_renderer, inline=_mistune_inline_lexer)
+
+def md(text, escape=True, **kwargs):
+    """Render markdown formatted text to html.
+
+    Parameters
+    ----------
+    text : str
+        Markdown string to parse into HTML.
+    escape : bool, optional
+        If set to False, all HTML tags will not be escaped.
+    **kwargs
+        Extra keyword arguments.
+
+    Returns
+    -------
+    str
+        HTML string.
+    """
+    return Markdown(renderer=_mistune_renderer,
+                    inline=_mistune_inline_lexer,
+                    escape=escape, **kwargs)(text)
+
 
 if __name__ == "__main__":
     pass

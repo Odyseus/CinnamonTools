@@ -13,7 +13,8 @@ from .jsonschema import draft4_format_checker as format_checker
 
 
 _extra_types = {
-    "custom_callable": Callable
+    "custom_callable": Callable,
+    "custom_tuple": tuple
 }
 
 
@@ -36,6 +37,7 @@ def validate(instance, schema,
              raise_error=True,
              error_message_extra_info="",
              error_header="Data didn't pass validation!",
+             extra_types={},
              logger=None):
     """Validate data using a JSON schema.
 
@@ -45,10 +47,14 @@ def validate(instance, schema,
         The data to validate.
     schema : dict
         The schema to use for validation.
+    raise_error : bool, optional
+        Whether or not to raise an exception.
     error_message_extra_info : str, optional
         Extra information to display wehn raising a :any:`SchemaValidationError` error.
     error_header : str, optional
         Text to be displayed as "CLI header".
+    extra_types : dict, optional
+        Extra type checks.
     logger : object
         See <class :any:`LogSystem`>.
 
@@ -56,6 +62,12 @@ def validate(instance, schema,
     ------
     SchemaValidationError
         See :any:`SchemaValidationError`.
+
+    Returns
+    -------
+    int
+        1 (one) if errors were found. 0 (zero) if no errors were found.
+        It only returns if raise_error is False.
     """
     # Just in case, use a copy of instance to validate, not the original.
     try:
@@ -64,7 +76,9 @@ def validate(instance, schema,
         instance_copy = instance
         logger.warning(err)
 
-    v = schema_validator(schema, types=_extra_types, format_checker=format_checker)
+    v = schema_validator(schema,
+                         types={**extra_types, **_extra_types},
+                         format_checker=format_checker)
     errors = sorted(v.iter_errors(instance_copy), key=lambda e: e.path)
 
     if errors:
@@ -92,7 +106,8 @@ def validate(instance, schema,
 
                 for x in extra_info_keys:
                     if error_schema.get(x):
-                        logger.info("**%s:** %s" % (x.capitalize(), error_schema.get(x)), date=False)
+                        logger.info("**%s:** %s" %
+                                    (x.capitalize(), error_schema.get(x)), date=False)
 
         logger.info(shell_utils.get_cli_separator("-"), date=False)
 
