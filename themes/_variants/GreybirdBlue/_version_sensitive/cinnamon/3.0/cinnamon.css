@@ -1458,8 +1458,7 @@ StScrollView StScrollBar {
 
 .menu-category-button-greyed {
   padding: 7px;
-  color: #656565;
-  font-style: italic;
+  color: #868686;
 }
 
 .menu-category-button-selected {
