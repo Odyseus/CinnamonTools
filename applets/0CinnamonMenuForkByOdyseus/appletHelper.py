@@ -10,7 +10,11 @@ import sys
 
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gtk, GLib, Gio, GdkPixbuf, Pango
+from gi.repository import GLib
+from gi.repository import GdkPixbuf
+from gi.repository import Gio
+from gi.repository import Gtk
+from gi.repository import Pango
 
 gettext.install("cinnamon", "/usr/share/locale")
 
@@ -549,51 +553,6 @@ class List(SettingsWidget):
         pass
 
 
-class AboutDialog(Gtk.AboutDialog):
-
-    def __init__(self, app):
-        logo = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            os.path.join(app.xlet_dir, "icon.png"), 64, 64)
-
-        Gtk.AboutDialog.__init__(self, transient_for=app.window)
-        data = app.xlet_meta
-
-        try:
-            contributors_translated = []
-            contributors = data["contributors"]
-
-            if isinstance(contributors, str):
-                contributors = contributors.split(",")
-
-            for contributor in contributors:
-                contributors_translated.append(_(contributor.strip()))
-
-            self.add_credit_section(_("Contributors/Mentions:"),
-                                    sorted(contributors_translated, key=self.lowered))
-        except Exception:
-            pass
-
-        # TO TRANSLATORS:
-        # Here goes the name/s of the author/s of the translations.
-        # Only e-mail addresses and links to GitHub accounts are allowed. NOTHING MORE.
-        self.set_translator_credits(_("translator-credits"))
-        self.set_license_type(Gtk.License.GPL_3_0)
-        self.set_wrap_license(True)
-        self.set_version(data["version"])
-        self.set_comments(_(data["description"]))
-        self.set_website(data["website"])
-        self.set_website_label(_(data["name"]))
-        self.set_authors(["Odyseus https://gitlab.com/Odyseus"])
-        self.set_logo(logo)
-        self.connect("response", self.on_response)
-
-    def lowered(self, item):
-        return item.lower()
-
-    def on_response(self, dialog, response):
-        self.destroy()
-
-
 class JSONSettingsHandler(object):
     def __init__(self, filepath):
         super(JSONSettingsHandler, self).__init__()
@@ -715,11 +674,6 @@ class CustomLaunchersManagerWindow(Gtk.ApplicationWindow):
         self.set_default_size(800, 450)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_icon_from_file(os.path.join(app.xlet_dir, "icon.png"))
-
-    def open_about_dialog(self, widget):
-        if app.xlet_meta is not None:
-            aboutdialog = AboutDialog(app.xlet_dir)
-            aboutdialog.run()
 
 
 class CustomLaunchersManagerApplication(Gtk.Application):

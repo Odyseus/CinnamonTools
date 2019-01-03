@@ -316,10 +316,6 @@ CinnamonMenuForkByOdyseus.prototype = {
         }
     },
 
-    _refreshBelowApps: function() {
-        this._resizeApplicationsBox();
-    },
-
     openMenu: function() {
         if (!this._applet_context_menu.isOpen) {
             this.menu.open(this.pref_animate_menu);
@@ -979,8 +975,7 @@ CinnamonMenuForkByOdyseus.prototype = {
         if (this._previousSelectedActor && this._previousSelectedActor !== actor) {
             if (this._previousSelectedActor._delegate instanceof $.ApplicationButton ||
                 this._previousSelectedActor._delegate instanceof $.RecentAppsClearButton ||
-                this._previousSelectedActor._delegate instanceof $.CustomCommandButton ||
-                this._previousSelectedActor._delegate instanceof $.TransientButton) {
+                this._previousSelectedActor._delegate instanceof $.CustomCommandButton) {
                 this._previousSelectedActor.style_class = "menu-application-button";
             }
         }
@@ -1775,7 +1770,7 @@ CinnamonMenuForkByOdyseus.prototype = {
         if (aName === "favorites") {
             this._displayButtons(aName);
         } else if (aName === "recentApps") {
-            this._displayButtons(aName, null, null, true);
+            this._displayButtons(aName, null, true);
         } else {
             this._displayButtons(this._listApplications(aName));
         }
@@ -1833,7 +1828,7 @@ CinnamonMenuForkByOdyseus.prototype = {
         }
     },
 
-    _displayButtons: function(aAppCategory, aApps, aAutocompletes, aRecentApps) {
+    _displayButtons: function(aAppCategory, aApps, aRecentApps) {
         if (aAppCategory) {
             if (aAppCategory === "favorites") {
                 for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
@@ -1868,25 +1863,6 @@ CinnamonMenuForkByOdyseus.prototype = {
             this._loopAppButtons(this._recentAppsButtons, "show");
         } else {
             this._loopAppButtons(this._recentAppsButtons, "hide");
-        }
-
-        if (aAutocompletes) {
-            for (let i = this._transientButtons.length - 1; i >= 0; i--) {
-                this._transientButtons[i].actor.destroy();
-            }
-            this._transientButtons = [];
-            // DO NOT USE INVERSE LOOP HERE!!!
-            let i = 0,
-                iLen = aAutocompletes.length;
-            for (; i < iLen; i++) {
-                let button = new $.TransientButton(this, aAutocompletes[i]);
-                this._handleButtonEnterEvent(button);
-                this._handleButtonLeaveEvent(button);
-                this._setSelectedItemTooltip(button, button.app.get_name(), button.app.get_description() || "");
-                this._transientButtons.push(button);
-                this.applicationsBox.add_actor(button.actor);
-                button.actor.realize();
-            }
         }
     },
 
@@ -2014,7 +1990,7 @@ CinnamonMenuForkByOdyseus.prototype = {
 
         let appResults = this._listApplications(null, pattern);
 
-        this._displayButtons(null, appResults, null);
+        this._displayButtons(null, appResults);
 
         this.appBoxIter.reloadVisible();
         if (this.appBoxIter.getNumVisibleChildren() > 0) {
