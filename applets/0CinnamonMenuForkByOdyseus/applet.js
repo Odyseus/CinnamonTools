@@ -93,6 +93,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                 });
                 this._searchIconClickedId = 0;
                 this._applicationsButtons = [];
+                this._applicationsOrder = {};
                 this._applicationsButtonFromApp = {};
                 this._transientButtons = [];
                 this._categoryButtons = [];
@@ -219,7 +220,8 @@ CinnamonMenuForkByOdyseus.prototype = {
             "pref_recently_used_apps_ignore_favorites",
             "pref_recently_used_apps_invert_order",
             "pref_recently_used_apps_max_amount",
-            "pref_hard_refresh_menu"
+            "pref_hard_refresh_menu",
+            "pref_max_search_results"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -662,7 +664,8 @@ CinnamonMenuForkByOdyseus.prototype = {
         // If a context menu is open, hijack keyboard navigation and concentrate on the context menu.
         if (this._activeContextMenuParent && this._activeContextMenuParent._contextIsOpen &&
             this._activeContainer === this.applicationsBox &&
-            this._activeContextMenuParent instanceof $.ApplicationButton) {
+            (this._activeContextMenuParent instanceof $.ApplicationButton ||
+                this._activeContextMenuParent instanceof $.SearchResultButton)) {
             let continueNavigation = false;
             switch (symbol) {
                 case Clutter.KEY_Up:
@@ -911,14 +914,16 @@ CinnamonMenuForkByOdyseus.prototype = {
                     item_actor._delegate.activate();
                 } else if (ctrlKey && this._activeContainer === this.applicationsBox) {
                     item_actor = this.applicationsBox.get_child_at_index(this._selectedItemIndex);
-                    if (item_actor._delegate instanceof $.ApplicationButton) {
+                    if (item_actor._delegate instanceof $.ApplicationButton ||
+                        item_actor._delegate instanceof $.SearchResultButton) {
                         item_actor._delegate.activateContextMenus();
                     }
                 }
                 return true;
             } else if (this._activeContainer === this.applicationsBox && symbol === Clutter.KEY_Menu) {
                 item_actor = this.applicationsBox.get_child_at_index(this._selectedItemIndex);
-                if (item_actor._delegate instanceof $.ApplicationButton) {
+                if (item_actor._delegate instanceof $.ApplicationButton ||
+                    item_actor._delegate instanceof $.SearchResultButton) {
                     item_actor._delegate.activateContextMenus();
                 }
                 return true;
@@ -974,6 +979,7 @@ CinnamonMenuForkByOdyseus.prototype = {
     _clearPrevSelection: function(actor) {
         if (this._previousSelectedActor && this._previousSelectedActor !== actor) {
             if (this._previousSelectedActor._delegate instanceof $.ApplicationButton ||
+                this._previousSelectedActor._delegate instanceof $.SearchResultButton ||
                 this._previousSelectedActor._delegate instanceof $.RecentAppsClearButton ||
                 this._previousSelectedActor._delegate instanceof $.CustomCommandButton) {
                 this._previousSelectedActor.style_class = "menu-application-button";
@@ -1129,6 +1135,10 @@ CinnamonMenuForkByOdyseus.prototype = {
             // It doesn't matter the "direction" of either of these loops.
             // recentApplications will be sorted anyways.
             for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
+                if (this._applicationsButtons[i].isSearchResult) {
+                    continue;
+                }
+
                 for (let c = this.recentAppsManager.recentApps.length - 1; c >= 0; c--) {
                     let [recAppID, recLastAccess] = this.recentAppsManager.recentApps[c].split(":");
 
@@ -1367,6 +1377,14 @@ CinnamonMenuForkByOdyseus.prototype = {
             return a > b;
         });
 
+        // Add search result buttons here.
+        for (let s = this.pref_max_search_results - 1; s >= 0; s--) {
+            let searchResultButton = new $.SearchResultButton(this);
+            this._handleButtonEnterEvent(searchResultButton);
+            this._handleButtonLeaveEvent(searchResultButton);
+            this._applicationsButtons.push(searchResultButton);
+        }
+
         // DO NOT USE INVERSE LOOP HERE!!!
         let i = 0,
             iLen = this._applicationsButtons.length;
@@ -1405,7 +1423,6 @@ CinnamonMenuForkByOdyseus.prototype = {
                             app.get_description();
                     }
                     if (!(app_key in this._applicationsButtonFromApp)) {
-
                         let applicationButton = new $.ApplicationButton(this, app);
 
                         if (!this.pref_disable_new_apps_highlighting) {
@@ -1781,11 +1798,10 @@ CinnamonMenuForkByOdyseus.prototype = {
     closeContextMenus: function(excluded, animate) {
         for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
             if (this._applicationsButtons[i] !== excluded && this._applicationsButtons[i].menu.isOpen) {
-                if (animate) {
-                    this._applicationsButtons[i].toggleMenu();
-                } else {
-                    this._applicationsButtons[i].closeMenu();
-                }
+                this._applicationsButtons[i][animate ?
+                    "toggleMenu" :
+                    "closeMenu"
+                ]();
             }
         }
 
@@ -1793,12 +1809,13 @@ CinnamonMenuForkByOdyseus.prototype = {
             if (this._recentAppsButtons[i] !== excluded &&
                 // Check if it is an ApplicationButton
                 // (the Clear list button and the No recent apps... "button" aren't).
-                this._recentAppsButtons[i] instanceof $.ApplicationButton && this._recentAppsButtons[i].menu.isOpen) {
-                if (animate) {
-                    this._recentAppsButtons[i].toggleMenu();
-                } else {
-                    this._recentAppsButtons[i].closeMenu();
-                }
+                (this._recentAppsButtons[i] instanceof $.ApplicationButton ||
+                    this._recentAppsButtons[i] instanceof $.SearchResultButton) &&
+                this._recentAppsButtons[i].menu.isOpen) {
+                this._recentAppsButtons[i][animate ?
+                    "toggleMenu" :
+                    "closeMenu"
+                ]();
             }
         }
     },
@@ -1832,48 +1849,46 @@ CinnamonMenuForkByOdyseus.prototype = {
         if (aAppCategory) {
             if (aAppCategory === "favorites") {
                 for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
-                    if (AppFavorites.getAppFavorites().isFavorite(this._applicationsButtons[i].app.get_id())) {
-                        this._applicationsButtons[i].actor.show();
-                    } else {
-                        this._applicationsButtons[i].actor.hide();
-                    }
+                    this._applicationsButtons[i].actor[
+                        (AppFavorites.getAppFavorites().isFavorite(this._applicationsButtons[i].app.get_id()) &&
+                            !this._applicationsButtons[i].isSearchResult) ?
+                        "show" :
+                        "hide"
+                    ]();
                 }
             } else {
                 for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
-                    if (this._applicationsButtons[i].category.indexOf(aAppCategory) !== -1) {
-                        this._applicationsButtons[i].actor.show();
-                    } else {
-                        this._applicationsButtons[i].actor.hide();
-                    }
+                    this._applicationsButtons[i].actor[
+                        (this._applicationsButtons[i].category.indexOf(aAppCategory) !== -1 &&
+                            !this._applicationsButtons[i].isSearchResult) ?
+                        "show" :
+                        "hide"
+                    ]();
                 }
             }
         } else if (aApps) {
             for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
-                if (aApps.indexOf(this._applicationsButtons[i].app.get_id()) !== -1) {
-                    this._applicationsButtons[i].actor.show();
-                } else {
-                    this._applicationsButtons[i].actor.hide();
-                }
+                this._applicationsButtons[i].actor[
+                    this._applicationsButtons[i].isSearchResult ?
+                    "show" :
+                    "hide"
+                ]();
             }
         } else {
             this._loopAppButtons(this._applicationsButtons, "hide");
         }
 
-        if (aRecentApps) {
-            this._loopAppButtons(this._recentAppsButtons, "show");
-        } else {
-            this._loopAppButtons(this._recentAppsButtons, "hide");
-        }
+        this._loopAppButtons(this._recentAppsButtons, aRecentApps ? "show" : "hide");
     },
 
     _setCategoriesButtonActive: function(active) {
         let categoriesButtons = this.categoriesBox.get_children();
         for (let i = categoriesButtons.length - 1; i >= 0; i--) {
-            if (active) {
-                categoriesButtons[i].set_style_class_name("menu-category-button");
-            } else {
-                categoriesButtons[i].set_style_class_name("menu-category-button-greyed");
-            }
+            categoriesButtons[i].set_style_class_name(
+                active ?
+                "menu-category-button" :
+                "menu-category-button-greyed"
+            );
         }
     },
 
@@ -1924,40 +1939,70 @@ CinnamonMenuForkByOdyseus.prototype = {
     },
 
     _listApplications: function(category_menu_id, pattern) {
-        let applist = [];
-        if (category_menu_id) {
-            applist = category_menu_id;
-        } else {
-            applist = "all";
-        }
+        let applist = category_menu_id || "all";
+
         let res;
+
         if (pattern) {
-            res = [];
-            let regexpPattern = new RegExp("\\b" + pattern);
-            let foundByName = false;
-            // DO NOT USE INVERSE LOOP HERE!!!
+            let searchData = [{
+                "method": "get_name",
+                "priority": $.SEARCH_PRIORITY.HIGH
+            }, {
+                "method": "get_keywords",
+                "priority": $.SEARCH_PRIORITY.MEDIUM
+            }, {
+                "method": "get_description",
+                "priority": $.SEARCH_PRIORITY.VERY_LOW
+            }];
+
+            res = {};
+            this._applicationsOrder = {};
             let i = 0,
                 iLen = this._applicationsButtons.length;
             for (; i < iLen; i++) {
-                if (Util.latinise(this._applicationsButtons[i].app.get_name().toLowerCase()).match(regexpPattern) !== null) {
-                    res.push(this._applicationsButtons[i].app.get_id());
-                    foundByName = true;
-                }
-            }
+                if (!this._applicationsButtons[i].isSearchResult) {
+                    let appID = this._applicationsButtons[i].app.get_id();
+                    let fuzzy = [false, 0];
+                    let matches = 0;
 
-            if (!foundByName) {
-                // DO NOT USE INVERSE LOOP HERE!!!
-                let i = 0,
-                    iLen = this._applicationsButtons.length;
-                for (; i < iLen; i++) {
-                    if (Util.latinise(this._applicationsButtons[i].app.get_name().toLowerCase()).indexOf(pattern) !== -1 ||
-                        (this._applicationsButtons[i].app.get_keywords() &&
-                            Util.latinise(this._applicationsButtons[i].app.get_keywords().toLowerCase()).indexOf(pattern) !== -1) ||
-                        (this._applicationsButtons[i].app.get_description() &&
-                            Util.latinise(this._applicationsButtons[i].app.get_description().toLowerCase()).indexOf(pattern) !== -1) ||
-                        (this._applicationsButtons[i].app.get_id() &&
-                            Util.latinise(this._applicationsButtons[i].app.get_id().slice(0, -8).toLowerCase()).indexOf(pattern) !== -1)) {
-                        res.push(this._applicationsButtons[i].app.get_id());
+                    for (let s = searchData.length - 1; s >= 0; s--) {
+                        let method = searchData[s].method;
+
+                        if (this._applicationsButtons[i].app[method]()) {
+                            let haystack;
+                            let match;
+
+                            switch (method) {
+                                case "get_keywords":
+                                    haystack = this._applicationsButtons[i].app[method]().split(";");
+                                    break;
+                                case "get_description":
+                                    haystack = this._applicationsButtons[i].app[method]().split("\s+").filter((x) => {
+                                        return x.length > 6;
+                                    });
+                                    break;
+                                default:
+                                    haystack = this._applicationsButtons[i].app[method]();
+                            }
+
+                            if (haystack instanceof Array) {
+                                for (let h of haystack) {
+                                    match = this._fuzzyMatch(pattern, h.trim(), fuzzy, matches, searchData[s].priority);
+                                    fuzzy = match[0];
+                                    matches = match[1];
+                                }
+                            } else {
+                                match = this._fuzzyMatch(pattern, haystack, fuzzy, matches, searchData[s].priority);
+                                fuzzy = match[0];
+                                matches = match[1];
+                            }
+                        }
+                    }
+
+                    if (fuzzy[0]) {
+                        fuzzy[1] = fuzzy[1] / matches;
+                        res[appID] = this._applicationsButtons[i].app;
+                        this._applicationsOrder[appID] = fuzzy[1];
                     }
                 }
             }
@@ -1967,13 +2012,78 @@ CinnamonMenuForkByOdyseus.prototype = {
         return res;
     },
 
+    _fuzzyMatch: function(aNeedle, aHaystack, aFuzzy, aMatches, aPriority) {
+        let match = this._fuzzySearch(aNeedle, Util.latinise(aHaystack.toLowerCase()), aPriority);
+
+        if (match[0]) {
+            aMatches += 1;
+            aFuzzy[0] = true;
+            aFuzzy[1] += match[1] + aPriority;
+        }
+
+        return [aFuzzy, aMatches];
+    },
+
+    _fuzzySort: function() {
+        return (a, b) => {
+            let avalue = this._applicationsOrder[a] || 99999;
+            let bvalue = this._applicationsOrder[b] || 99999;
+            return avalue > bvalue;
+        };
+    },
+
+    _fuzzySearch: function(needle, haystack, aPriority) {
+        let hlen = haystack.length;
+        let nlen = needle.length;
+        let occurrenceAt = 0;
+        let previousJ = 0;
+
+        if (nlen > hlen) {
+            return [false, 0];
+        }
+
+        if (nlen === hlen) {
+            return [needle === haystack, aPriority];
+        }
+
+        outer:
+            for (let i = 0, j = 0; i < nlen; i++) {
+                let nch = needle.charCodeAt(i);
+                while (j < hlen) {
+                    if (haystack.charCodeAt(j++) === nch) {
+                        if (previousJ === 0) {
+                            previousJ = j;
+                        } else {
+                            if (haystack.charCodeAt(j - 2) == 32 && (previousJ == 1 ||
+                                    haystack.charCodeAt(previousJ - 1) == 32)) {
+                                // If every character in search pattern is preceded by
+                                // a space and matches it should be first result.
+                                occurrenceAt -= 100;
+                            } else {
+                                // Otherwise sort result based on the distance between
+                                // matching characters
+                                occurrenceAt = occurrenceAt + ((j - previousJ - 1) * 10);
+                            }
+                            previousJ = j;
+                        }
+                        occurrenceAt += j;
+                        continue outer;
+                    }
+                }
+                return [false, 0];
+            }
+
+        return [true, occurrenceAt];
+    },
+
     _doSearch: function() {
         this._searchTimeoutId = 0;
-        let pattern = this.searchEntryText.get_text().replace(/^\s+/g, "").replace(/\s+$/g, "").toLowerCase();
-        pattern = Util.latinise(pattern);
+        let pattern = Util.latinise(this.searchEntryText.get_text().trim().toLowerCase());
+
         if (pattern === this._previousSearchPattern) {
             return false;
         }
+
         this._previousSearchPattern = pattern;
         this._activeContainer = null;
         this._activeActor = null;
@@ -1982,15 +2092,18 @@ CinnamonMenuForkByOdyseus.prototype = {
         this._previousSelectedActor = null;
 
         // _listApplications returns all the applications when the search
-        // string is zero length. This will happened if you type a space
+        // string is zero length. This will happen if you type a space
         // in the search entry.
-        if (pattern.length === 0) {
+        // Don't bother to trigger search with just one character.
+        if (pattern.length <= 1) {
             return false;
         }
 
         let appResults = this._listApplications(null, pattern);
 
-        this._displayButtons(null, appResults);
+        this._displayButtons(null, !!appResults);
+
+        appResults && this._populateSearchResults(appResults);
 
         this.appBoxIter.reloadVisible();
         if (this.appBoxIter.getNumVisibleChildren() > 0) {
@@ -2003,6 +2116,33 @@ CinnamonMenuForkByOdyseus.prototype = {
         }
 
         return false;
+    },
+
+    _populateSearchResults: function(aAppResults) {
+        let sortedResuls = Object.keys(aAppResults).sort(this._fuzzySort());
+        let searchResultButtons = this._applicationsButtons.filter((x) => {
+            return x.isSearchResult;
+        });
+
+        let i = 0,
+            iLen = searchResultButtons.length;
+
+        for (; i < iLen; i++) {
+            let sRB = searchResultButtons[i];
+            if (sortedResuls[i]) {
+                let app = aAppResults[sortedResuls[i]];
+                sRB.populateResult(app);
+                sRB.actor.show();
+                this._setSelectedItemTooltip(
+                    sRB,
+                    sRB.app.get_name(),
+                    sRB.app.get_description() || ""
+                );
+            } else {
+                sRB.populateResult(null);
+                sRB.actor.hide();
+            }
+        }
     },
 
     closeMainMenu: function() {

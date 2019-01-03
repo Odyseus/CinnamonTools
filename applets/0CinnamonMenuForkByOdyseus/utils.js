@@ -27,6 +27,12 @@ const USER_DESKTOP_PATH = FileUtils.getUserDesktopDir();
 
 var INITIAL_BUTTON_LOAD = 30; // jshint ignore:line
 var SETTINGS_SCHEMA = "org.cinnamon.applets." + XletUUID;
+var SEARCH_PRIORITY = {
+    HIGH: -99999,
+    MEDIUM: 0,
+    LOW: 50000,
+    VERY_LOW: 99999
+};
 
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
@@ -371,18 +377,20 @@ GenericApplicationButton.prototype = {
     },
 
     highlight: function() {
-        this.actor.add_style_pseudo_class("highlighted");
+        this.isSearchResult || this.actor.add_style_pseudo_class("highlighted");
     },
 
     unhighlight: function() {
-        let app_key = this.app.get_id();
+        if (!this.isSearchResult) {
+            let app_key = this.app.get_id();
 
-        if (app_key === null) {
-            app_key = this.app.get_name() + ":" + this.app.get_description();
+            if (app_key === null) {
+                app_key = this.app.get_name() + ":" + this.app.get_description();
+            }
+
+            this._applet._knownApps.push(app_key);
+            this.actor.remove_style_pseudo_class("highlighted");
         }
-
-        this._applet._knownApps.push(app_key);
-        this.actor.remove_style_pseudo_class("highlighted");
     },
 
     _onButtonReleaseEvent: function(actor, event) {
@@ -614,6 +622,10 @@ GenericApplicationButton.prototype = {
         return this.menu.isOpen;
     },
 
+    get isSearchResult() {
+        return false;
+    },
+
     destroy: function() {
         this.label.destroy();
 
@@ -664,6 +676,111 @@ ApplicationButton.prototype = {
 
     get_app_id: function() {
         return this.app.get_id();
+    }
+};
+
+function SearchResultButton() {
+    this._init.apply(this, arguments);
+}
+
+SearchResultButton.prototype = {
+    __proto__: GenericApplicationButton.prototype,
+    _dummyApp: {
+        get_app_info: {
+            get_filename: () => {
+                return "";
+            }
+        },
+        get_keywords: () => {
+            return false;
+        },
+        get_id: () => {
+            return -1;
+        },
+        get_description: () => {
+            return "";
+        },
+        get_name: () => {
+            return "";
+        },
+        get_icon: () => {
+            return "custom-really-empty";
+        }
+    },
+
+    _init: function(aApplet) {
+        GenericApplicationButton.prototype._init.call(this, aApplet, this._dummyApp, true);
+        this.category = [];
+        this.actor.set_style_class_name("menu-application-button");
+        this._buildItem();
+        this.tooltip = new CustomTooltip(this.actor, "");
+    },
+
+    populateResult: function(aApp) {
+        // aApp is null when search result buttons aren't used.
+        // And if this.app didn't changed, do not continue.
+        if (aApp === null || this.app === aApp) {
+            return true;
+        }
+
+        // FIXME: I was forced to "use a hammer" here because I couldn't set this.icon
+        // on-the-fly (the icon didn't show up in the menu). I always have problems when
+        // attempted to replace an actor or removing an actor at an specific index, so
+        // I didn't even bother to try.
+        // The text of this.label wasn't a problem to set with set_text().
+        // Removing all children of a menu item doesn't
+        // seem to affect performance at all.
+        // DO NOT remove children unless they are going to be re-created.
+        for (let child of [this.label, this.icon]) {
+            child && this.removeActor(child);
+        }
+
+        this.app = aApp;
+
+        this._buildItem(true);
+
+        return true;
+    },
+
+    _buildItem: function(aFromSearch) {
+        if (this._applet.pref_show_application_icons) {
+            if (aFromSearch) {
+                this.icon = this.app.create_icon_texture(this._applet.pref_application_icon_size);
+            } else {
+                this.icon = new St.Icon({
+                    icon_name: "custom-really-empty",
+                    icon_size: this._applet.pref_application_icon_size,
+                    icon_type: St.IconType.FULLCOLOR
+                });
+            }
+
+            this.addActor(this.icon);
+        }
+
+        this.name = this.app.get_name();
+        this.label = new St.Label({
+            text: this.name,
+            style_class: "menu-application-button-label"
+        });
+        this.label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
+        this.label.set_style(this._applet.max_width_for_buttons);
+        this.addActor(this.label);
+
+        this.actor.label_actor = this.label;
+
+        if (this._applet.pref_show_application_icons) {
+            this.icon.realize();
+        }
+
+        this.label.realize();
+    },
+
+    get_app_id: function() {
+        return this.app.get_id();
+    },
+
+    get isSearchResult() {
+        return true;
     }
 };
 
@@ -1088,5 +1205,6 @@ function escapeHTML(aStr) {
     return aStr;
 }
 
-/* exported escapeHTML
+/* exported escapeHTML,
+            SEARCH_PRIORITY
  */

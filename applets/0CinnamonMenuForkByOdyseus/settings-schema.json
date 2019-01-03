@@ -83,6 +83,17 @@
         "description": "Menu hover delay",
         "tooltip": "Delay before the menu opens when hovered"
     },
+    "pref_max_search_results": {
+        "type": "spinbutton",
+        "indent": true,
+        "default": 20,
+        "min": 10,
+        "max": 50,
+        "step": 1,
+        "units": "items",
+        "description": "Maximum search results",
+        "tooltip": "Set the maximum amount of search results to be displayed"
+    },
 
     "menu_layout_separator": {
         "type": "separator"
