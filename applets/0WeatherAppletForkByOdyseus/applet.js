@@ -587,6 +587,8 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             } catch (aErr) {
                 global.logError(aErr);
             }
+
+            return true;
         });
 
         if (recurse) {
