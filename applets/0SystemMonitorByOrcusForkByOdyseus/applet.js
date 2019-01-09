@@ -295,6 +295,8 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
         if (this.hasOwnProperty(prop)) {
             return this[prop];
         }
+
+        return 0;
     },
 
     on_applet_clicked: function() {
