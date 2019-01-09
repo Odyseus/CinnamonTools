@@ -1655,6 +1655,8 @@ DesktopCapture.prototype = {
             on_failure: (aParams) => this.onProcessError(aParams),
             on_complete: (aParams) => this.onProcessComplete(aParams)
         });
+
+        return true;
     },
 
     onProcessSpawned: function(aParams) {
