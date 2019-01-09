@@ -7,8 +7,12 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
-const Gettext = imports.gettext;
-const GLib = imports.gi.GLib;
+const {
+    gettext: Gettext,
+    gi: {
+        GLib
+    },
+} = imports;
 
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 

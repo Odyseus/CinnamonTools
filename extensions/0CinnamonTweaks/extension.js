@@ -10,19 +10,27 @@ if (typeof require === "function") {
 const _ = $._;
 const Settings = $.Settings;
 
-const Applet = imports.ui.applet;
-const Cinnamon = imports.gi.Cinnamon;
-const Clutter = imports.gi.Clutter;
-const Desklet = imports.ui.desklet;
-const Gio = imports.gi.Gio;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const Meta = imports.gi.Meta;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
-const Tweener = imports.ui.tweener;
+const {
+    gi: {
+        Cinnamon,
+        Clutter,
+        Gio,
+        Meta,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        desklet: Desklet,
+        main: Main,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips,
+        tweener: Tweener
+    }
+} = imports;
 
 // Imported only when needed in an attempt to gain performance.
 // Not that it's needed, but, the more tweaks I add, the more crap will I need to import.

@@ -1,12 +1,21 @@
 const AppletUUID = "{{UUID}}";
-const Cinnamon = imports.gi.Cinnamon;
-const Gettext = imports.gettext;
-const GLib = imports.gi.GLib;
-const Pango = imports.gi.Pango;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
+
+const {
+    gettext: Gettext,
+    gi: {
+        Cinnamon,
+        GLib,
+        Pango,
+        St
+    },
+    misc: {
+        util: Util
+    },
+    ui: {
+        popupMenu: PopupMenu,
+        tooltips: Tooltips
+    }
+} = imports;
 
 Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
 

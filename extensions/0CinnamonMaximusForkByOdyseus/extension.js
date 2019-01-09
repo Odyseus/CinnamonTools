@@ -88,12 +88,20 @@
  */
 
 /*** Code proper, don't edit anything below **/
-const Cinnamon = imports.gi.Cinnamon;
-const GLib = imports.gi.GLib;
-const Mainloop = imports.mainloop;
-const Meta = imports.gi.Meta;
-const Settings = imports.ui.settings;
-const Util = imports.misc.util;
+const {
+    gi: {
+        Cinnamon,
+        GLib,
+        Meta
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        settings: Settings
+    }
+} = imports;
 
 Meta.MaximizeFlags.BOTH = (Meta.MaximizeFlags.VERTICAL | Meta.MaximizeFlags.HORIZONTAL);
 

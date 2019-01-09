@@ -7,18 +7,26 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
-const Clutter = imports.gi.Clutter;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const MessageTray = imports.ui.messageTray;
-const ModalDialog = imports.ui.modalDialog;
-const Pango = imports.gi.Pango;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
+const {
+    gettext: Gettext,
+    gi: {
+        Clutter,
+        Gio,
+        GLib,
+        Pango,
+        St
+    },
+    misc: {
+        util: Util
+    },
+    ui: {
+        main: Main,
+        messageTray: MessageTray,
+        modalDialog: ModalDialog,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips
+    }
+} = imports;
 
 const NotificationUrgency = {
     LOW: 0,

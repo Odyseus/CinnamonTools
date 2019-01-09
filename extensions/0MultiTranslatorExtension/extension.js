@@ -10,14 +10,22 @@ if (typeof require === "function") {
 const _ = $._;
 const Settings = $.Settings;
 
-const Cinnamon = imports.gi.Cinnamon;
-const Clutter = imports.gi.Clutter;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const St = imports.gi.St;
-const Util = imports.misc.util;
+const {
+    gi: {
+        Cinnamon,
+        Clutter,
+        Gio,
+        GLib,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        main: Main
+    }
+} = imports;
 
 let XletMeta;
 

@@ -8,20 +8,31 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta[XletUUID];
 }
 
-const AppFavorites = imports.ui.appFavorites;
-const Atk = imports.gi.Atk;
-const Clutter = imports.gi.Clutter;
-const FileUtils = imports.misc.fileUtils;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
+const {
+    gettext: Gettext,
+    gi: {
+        Atk,
+        Clutter,
+        Gio,
+        GLib,
+        Gtk,
+        Pango,
+        St
+    },
+    misc: {
+        fileUtils: FileUtils,
+        params: Params,
+        util: Util
+    },
+    ui: {
+        appFavorites: AppFavorites,
+        main: Main,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips
+    }
+} = imports;
+
 const GioSSS = Gio.SettingsSchemaSource;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Pango = imports.gi.Pango;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
 
 const USER_DESKTOP_PATH = FileUtils.getUserDesktopDir();
 

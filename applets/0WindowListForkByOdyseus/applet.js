@@ -9,16 +9,24 @@ if (typeof require === "function") {
     $ = imports.ui.appletManager.applets[AppletUUID].utils;
 }
 
-const Applet = imports.ui.applet;
-const Clutter = imports.gi.Clutter;
-const DND = imports.ui.dnd;
-const Gdk = imports.gi.Gdk;
-const Gio = imports.gi.Gio;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const Settings = imports.ui.settings;
-const SignalManager = imports.misc.signalManager;
-const St = imports.gi.St;
+const {
+    gi: {
+        Clutter,
+        Gdk,
+        Gio,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        signalManager: SignalManager
+    },
+    ui: {
+        applet: Applet,
+        dnd: DND,
+        main: Main,
+        settings: Settings
+    }
+} = imports;
 
 function WindowListForkByOdyseusApplet() {
     this._init.apply(this, arguments);

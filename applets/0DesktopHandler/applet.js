@@ -11,22 +11,30 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const Cinnamon = imports.gi.Cinnamon;
-const Clutter = imports.gi.Clutter;
-const ExtensionSystem = imports.ui.extensionSystem;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Gtk = imports.gi.Gtk;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const Meta = imports.gi.Meta;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Tweener = imports.ui.tweener;
-const Util = imports.misc.util;
+const {
+    gi: {
+        Cinnamon,
+        Clutter,
+        Gio,
+        GLib,
+        Gtk,
+        Meta,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        extensionSystem: ExtensionSystem,
+        main: Main,
+        popupMenu: PopupMenu,
+        settings: Settings,
+        tooltips: Tooltips,
+        tweener: Tweener
+    }
+} = imports;
 
 function DesktopHandlerApplet() {
     this._init.apply(this, arguments);

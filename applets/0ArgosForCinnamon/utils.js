@@ -15,18 +15,26 @@ if (typeof require === "function") {
     Emojis = imports.ui.appletManager.applets[XletMeta.uuid].emojis.Emojis;
 }
 
-const Clutter = imports.gi.Clutter;
-const GdkPixbuf = imports.gi.GdkPixbuf;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const MessageTray = imports.ui.messageTray;
-const Pango = imports.gi.Pango;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
+const {
+    gettext: Gettext,
+    gi: {
+        Clutter,
+        GdkPixbuf,
+        Gio,
+        GLib,
+        Pango,
+        St
+    },
+    misc: {
+        util: Util
+    },
+    ui: {
+        main: Main,
+        messageTray: MessageTray,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips
+    }
+} = imports;
 
 // KEEP ME: There will always be non retro compatible changes on Cinnamon as long
 // as it keeps being treated as a F***ING web application!!!

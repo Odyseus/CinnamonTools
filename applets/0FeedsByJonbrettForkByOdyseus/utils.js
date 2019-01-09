@@ -7,18 +7,26 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
-const Clutter = imports.gi.Clutter;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const MessageTray = imports.ui.messageTray;
-const Pango = imports.gi.Pango;
-const PopupMenu = imports.ui.popupMenu;
-const Signals = imports.signals;
-const Soup = imports.gi.Soup;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
+const {
+    gettext: Gettext,
+    gi: {
+        Clutter,
+        Gio,
+        GLib,
+        Pango,
+        Soup,
+        St
+    },
+    misc: {
+        util: Util
+    },
+    signals: Signals,
+    ui: {
+        messageTray: MessageTray,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips
+    }
+} = imports;
 
 var DataStorage = GLib.get_home_dir() + "/.cinnamon/" + XletMeta.uuid + "-Storage";
 

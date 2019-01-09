@@ -11,19 +11,27 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const FileUtils = imports.misc.fileUtils;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Gtk = imports.gi.Gtk;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const ModalDialog = imports.ui.modalDialog;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
+const {
+    gi: {
+        Gio,
+        GLib,
+        Gtk,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        fileUtils: FileUtils,
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        main: Main,
+        modalDialog: ModalDialog,
+        popupMenu: PopupMenu,
+        settings: Settings,
+        tooltips: Tooltips
+    }
+} = imports;
 
 function ArgosForCinnamonApplet() {
     this._init.apply(this, arguments);

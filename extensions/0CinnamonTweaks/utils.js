@@ -7,21 +7,30 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
-const Cinnamon = imports.gi.Cinnamon;
-const Clutter = imports.gi.Clutter;
-const DND = imports.ui.dnd;
-const Extension = imports.ui.extension;
-const FileUtils = imports.misc.fileUtils;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
+const {
+    gettext: Gettext,
+    gi: {
+        Cinnamon,
+        Clutter,
+        Gio,
+        GLib,
+        Meta,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        fileUtils: FileUtils,
+        util: Util
+    },
+    ui: {
+        dnd: DND,
+        extension: Extension,
+        main: Main,
+        modalDialog: ModalDialog
+    }
+} = imports;
+
 const GioSSS = Gio.SettingsSchemaSource;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const Meta = imports.gi.Meta;
-const ModalDialog = imports.ui.modalDialog;
-const St = imports.gi.St;
-const Util = imports.misc.util;
 
 const SETTINGS_SCHEMA = "org.cinnamon.extensions." + XletMeta.uuid;
 

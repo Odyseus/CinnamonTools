@@ -9,13 +9,21 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const Main = imports.ui.main;
-const Settings = imports.ui.settings;
-const PopupMenu = imports.ui.popupMenu;
-const Mainloop = imports.mainloop;
-const Util = imports.misc.util;
-const St = imports.gi.St;
+const {
+    gi: {
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        main: Main,
+        popupMenu: PopupMenu,
+        settings: Settings
+    }
+} = imports;
 
 function PanelDrawerForkByOdyseusApplet() {
     this._init.apply(this, arguments);

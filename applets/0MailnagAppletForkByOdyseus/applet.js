@@ -9,15 +9,23 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const Gio = imports.gi.Gio;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const MessageTray = imports.ui.messageTray;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const St = imports.gi.St;
-const Util = imports.misc.util;
+const {
+    gi: {
+        Gio,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        main: Main,
+        messageTray: MessageTray,
+        popupMenu: PopupMenu,
+        settings: Settings
+    }
+} = imports;
 
 const dbus_name = "mailnag.MailnagService";
 const dbus_path = "/mailnag/MailnagService";

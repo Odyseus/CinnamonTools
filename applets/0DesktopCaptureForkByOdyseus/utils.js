@@ -7,22 +7,30 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
-const Cinnamon = imports.gi.Cinnamon;
-const Clutter = imports.gi.Clutter;
-const Flashspot = imports.ui.flashspot;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const Meta = imports.gi.Meta;
-const Pango = imports.gi.Pango;
-const Params = imports.misc.params;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Tweener = imports.ui.tweener;
-const Util = imports.misc.util;
+const {
+    gettext: Gettext,
+    gi: {
+        Cinnamon,
+        Clutter,
+        Gio,
+        GLib,
+        Meta,
+        Pango,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        params: Params,
+        util: Util
+    },
+    ui: {
+        flashspot: Flashspot,
+        main: Main,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips,
+        tweener: Tweener
+    }
+} = imports;
 
 const SOUND_ID = 1;
 const HANDLE_SIZE = 10;

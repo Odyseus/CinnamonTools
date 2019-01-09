@@ -1,17 +1,26 @@
 const AppletUUID = "{{UUID}}";
-const AppSwitcher = imports.ui.appSwitcher.appSwitcher;
-const Cinnamon = imports.gi.Cinnamon;
-const ClassicSwitcher = imports.ui.appSwitcher.classicSwitcher;
-const Clutter = imports.gi.Clutter;
-const CoverflowSwitcher = imports.ui.appSwitcher.coverflowSwitcher;
-const Gettext = imports.gettext;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const ModalDialog = imports.ui.modalDialog;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
-const TimelineSwitcher = imports.ui.appSwitcher.timelineSwitcher;
+
+const {
+    gettext: Gettext,
+    gi: {
+        Cinnamon,
+        Clutter,
+        GLib,
+        St
+    },
+    mainloop: Mainloop,
+    ui: {
+        appSwitcher: {
+            appSwitcher: AppSwitcher,
+            classicSwitcher: ClassicSwitcher,
+            coverflowSwitcher: CoverflowSwitcher,
+            timelineSwitcher: TimelineSwitcher
+        },
+        main: Main,
+        modalDialog: ModalDialog,
+        popupMenu: PopupMenu
+    }
+} = imports;
 
 Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
 

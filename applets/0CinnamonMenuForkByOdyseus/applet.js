@@ -9,22 +9,30 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const AppFavorites = imports.ui.appFavorites;
-const Applet = imports.ui.applet;
-const Atk = imports.gi.Atk;
-const Cinnamon = imports.gi.Cinnamon;
-const Clutter = imports.gi.Clutter;
-const CMenu = imports.gi.CMenu;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Gtk = imports.gi.Gtk;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const Meta = imports.gi.Meta;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const St = imports.gi.St;
-const Util = imports.misc.util;
+const {
+    gi: {
+        Atk,
+        Cinnamon,
+        Clutter,
+        CMenu,
+        Gio,
+        GLib,
+        Gtk,
+        Meta,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        appFavorites: AppFavorites,
+        applet: Applet,
+        main: Main,
+        popupMenu: PopupMenu,
+        settings: Settings
+    }
+} = imports;
 
 let appsys = Cinnamon.AppSystem.get_default();
 

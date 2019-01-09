@@ -9,14 +9,22 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const St = imports.gi.St;
-const Util = imports.misc.util;
+const {
+    gi: {
+        GLib,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        main: Main,
+        popupMenu: PopupMenu,
+        settings: Settings
+    }
+} = imports;
 
 function SystemMonitorByOrcusForkByOdyseusApplet() {
     this._init.apply(this, arguments);

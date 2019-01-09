@@ -1,15 +1,23 @@
 const AppletUUID = "{{UUID}}";
 
-const Applet = imports.ui.applet;
-const Clutter = imports.gi.Clutter;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const PopupMenu = imports.ui.popupMenu;
-const SignalManager = imports.misc.signalManager;
-const St = imports.gi.St;
+const {
+    gettext: Gettext,
+    gi: {
+        Clutter,
+        Gio,
+        GLib,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        signalManager: SignalManager
+    },
+    ui: {
+        applet: Applet,
+        main: Main,
+        popupMenu: PopupMenu
+    }
+} = imports;
 
 const ICON_SCALE_FACTOR = 0.8; // for custom panel heights, 20 (default icon size) / 25 (default panel height)
 const DEFAULT_ICON_SIZE = 20;

@@ -1,19 +1,28 @@
-const Applet = imports.ui.applet;
 const AppletManager = imports.ui.appletManager;
 const AppletUUID = "{{UUID}}";
-const Cinnamon = imports.gi.Cinnamon;
-const Clutter = imports.gi.Clutter;
-const DND = imports.ui.dnd;
-const Gettext = imports.gettext;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const Meta = imports.gi.Meta;
-const PopupMenu = imports.ui.popupMenu;
-const SignalManager = imports.misc.signalManager;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
+
+const {
+    gettext: Gettext,
+    gi: {
+        Cinnamon,
+        Clutter,
+        GLib,
+        Meta,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util,
+        signalManager: SignalManager
+    },
+    ui: {
+        applet: Applet,
+        dnd: DND,
+        main: Main,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips
+    }
+} = imports;
 
 var CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
 

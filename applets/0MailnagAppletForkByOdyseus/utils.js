@@ -7,11 +7,17 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
-const Gettext = imports.gettext;
-const GLib = imports.gi.GLib;
-const MessageTray = imports.ui.messageTray;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
+const {
+    gettext: Gettext,
+    gi: {
+        GLib,
+        St
+    },
+    ui: {
+        messageTray: MessageTray,
+        popupMenu: PopupMenu
+    }
+} = imports;
 
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 

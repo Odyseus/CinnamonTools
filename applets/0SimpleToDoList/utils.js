@@ -1,15 +1,22 @@
 const AppletUUID = "{{UUID}}";
-const Clutter = imports.gi.Clutter;
-const DND = imports.ui.dnd;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Gtk = imports.gi.Gtk;
-const Meta = imports.gi.Meta;
-const Pango = imports.gi.Pango;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
+
+const {
+    gettext: Gettext,
+    gi: {
+        Clutter,
+        Gio,
+        GLib,
+        Gtk,
+        Meta,
+        Pango,
+        St
+    },
+    ui: {
+        dnd: DND,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips
+    }
+} = imports;
 
 const OrnamentType = {
     NONE: 0,

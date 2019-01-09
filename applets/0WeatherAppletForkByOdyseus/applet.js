@@ -9,17 +9,25 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const Cairo = imports.cairo;
-const Gio = imports.gi.Gio;
-const Gtk = imports.gi.Gtk;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const Soup = imports.gi.Soup;
-const St = imports.gi.St;
-const Util = imports.misc.util;
+const {
+    cairo: Cairo,
+    gi: {
+        Gio,
+        Gtk,
+        Soup,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        main: Main,
+        popupMenu: PopupMenu,
+        settings: Settings
+    }
+} = imports;
 
 const APPLET_ICON = "view-refresh-symbolic";
 const WOEID_URL = "http://woeid.rosselliot.co.nz";

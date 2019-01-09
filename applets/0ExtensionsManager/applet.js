@@ -11,17 +11,25 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const Extension = imports.ui.extension;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Gtk = imports.gi.Gtk;
-const Mainloop = imports.mainloop;
-const Pango = imports.gi.Pango;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const St = imports.gi.St;
-const Util = imports.misc.util;
+const {
+    gi: {
+        Gio,
+        GLib,
+        Gtk,
+        Pango,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        extension: Extension,
+        popupMenu: PopupMenu,
+        settings: Settings
+    }
+} = imports;
 
 function ExtensionsManagerApplet() {
     this._init.apply(this, arguments);

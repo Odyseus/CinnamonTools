@@ -1,7 +1,13 @@
-const Cinnamon = imports.gi.Cinnamon;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const Settings = imports.ui.settings;
+const {
+    gi: {
+        Cinnamon
+    },
+    mainloop: Mainloop,
+    ui: {
+        main: Main,
+        settings: Settings
+    }
+} = imports;
 
 let CONNECTION_IDS = {
     WDAE: 0

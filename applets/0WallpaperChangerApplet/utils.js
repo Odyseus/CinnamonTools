@@ -9,21 +9,31 @@ if (typeof __meta === "object") {
 
 const AppletManager = imports.ui.appletManager;
 const AppletUUID = "{{UUID}}";
-const Clutter = imports.gi.Clutter;
-const Cogl = imports.gi.Cogl;
-const GdkPixbuf = imports.gi.GdkPixbuf;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
+
+const {
+    gettext: Gettext,
+    gi: {
+        Clutter,
+        Cogl,
+        GdkPixbuf,
+        Gio,
+        GLib,
+        Pango,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    signals: Signals,
+    ui: {
+        main: Main,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips
+    }
+} = imports;
+
 const GioSSS = Gio.SettingsSchemaSource;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const Pango = imports.gi.Pango;
-const PopupMenu = imports.ui.popupMenu;
-const Signals = imports.signals;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
 
 const SETTINGS_SCHEMA = "org.cinnamon.applets.{{UUID}}";
 

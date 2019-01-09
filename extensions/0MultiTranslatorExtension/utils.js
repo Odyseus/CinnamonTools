@@ -7,27 +7,36 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
-const Atk = imports.gi.Atk;
-const Cinnamon = imports.gi.Cinnamon;
-const CinnamonEntry = imports.ui.cinnamonEntry;
-const Clutter = imports.gi.Clutter;
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
+const {
+    gettext: Gettext,
+    gi: {
+        Atk,
+        Cinnamon,
+        Clutter,
+        Gio,
+        GLib,
+        Pango,
+        Soup,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util,
+        params: Params
+    },
+    signals: Signals,
+    ui: {
+        cinnamonEntry: CinnamonEntry,
+        lightbox: Lightbox,
+        main: Main,
+        messageTray: MessageTray,
+        popupMenu: PopupMenu,
+        tooltips: Tooltips,
+        tweener: Tweener
+    }
+} = imports;
+
 const GioSSS = Gio.SettingsSchemaSource;
-const GLib = imports.gi.GLib;
-const Lightbox = imports.ui.lightbox;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const MessageTray = imports.ui.messageTray;
-const Pango = imports.gi.Pango;
-const Params = imports.misc.params;
-const PopupMenu = imports.ui.popupMenu;
-const Signals = imports.signals;
-const Soup = imports.gi.Soup;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Tweener = imports.ui.tweener;
-const Util = imports.misc.util;
 
 const _httpSession = new Soup.SessionAsync();
 const TTS_URI = "https://translate.google.com/translate_tts?client=tw-ob&ie=UTF-8&total=1&idx=0&textlen=%d&q=%s&tl=%s";

@@ -9,12 +9,20 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Mainloop = imports.mainloop;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const SignalManager = imports.misc.signalManager;
-const St = imports.gi.St;
-const Tweener = imports.ui.tweener;
+const {
+    gi: {
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        signalManager: SignalManager
+    },
+    ui: {
+        popupMenu: PopupMenu,
+        settings: Settings,
+        tweener: Tweener
+    }
+} = imports;
 
 const MENU = {
     ACTIVE_APPLICATIONS: true,

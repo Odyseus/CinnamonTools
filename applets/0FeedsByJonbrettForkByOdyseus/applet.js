@@ -9,17 +9,25 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Gtk = imports.gi.Gtk;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const MessageTray = imports.ui.messageTray;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const St = imports.gi.St;
-const Util = imports.misc.util;
+const {
+    gi: {
+        Gio,
+        GLib,
+        Gtk,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        main: Main,
+        messageTray: MessageTray,
+        popupMenu: PopupMenu,
+        settings: Settings
+    }
+} = imports;
 
 const FEED_CONFIG_FILE = $.DataStorage + "/feeds.json";
 

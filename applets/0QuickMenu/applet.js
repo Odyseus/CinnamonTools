@@ -9,16 +9,24 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const St = imports.gi.St;
-const Tooltips = imports.ui.tooltips;
-const Util = imports.misc.util;
+const {
+    gi: {
+        Gio,
+        GLib,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        main: Main,
+        popupMenu: PopupMenu,
+        settings: Settings,
+        tooltips: Tooltips
+    }
+} = imports;
 
 function QuickMenuApplet() {
     this._init.apply(this, arguments);
@@ -85,7 +93,7 @@ QuickMenuApplet.prototype = {
                 .monitor_directory(Gio.FileMonitorFlags.NONE, null);
             this.monitor_id = this.main_folder_monitor.connect("changed",
                 (aMonitor, aFileObj, aN, aEventType) => {
-                    this._onMainFolderChanged(aMonitor, aFileObj, aN, aEventType)
+                    this._onMainFolderChanged(aMonitor, aFileObj, aN, aEventType);
                 });
         }
     },

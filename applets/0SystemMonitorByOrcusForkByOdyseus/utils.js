@@ -1,8 +1,15 @@
 const AppletUUID = "{{UUID}}";
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
-const GLib = imports.gi.GLib;
-const Tooltips = imports.ui.tooltips;
+
+const {
+    gettext: Gettext,
+    gi: {
+        Gio,
+        GLib
+    },
+    ui: {
+        tooltips: Tooltips
+    }
+} = imports;
 
 Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
 
