@@ -36,7 +36,6 @@ const GioSSS = Gio.SettingsSchemaSource;
 
 const USER_DESKTOP_PATH = FileUtils.getUserDesktopDir();
 
-var INITIAL_BUTTON_LOAD = 30; // jshint ignore:line
 var SETTINGS_SCHEMA = "org.cinnamon.applets." + XletUUID;
 var SEARCH_PRIORITY = {
     HIGH: -99999,
@@ -44,6 +43,19 @@ var SEARCH_PRIORITY = {
     LOW: 50000,
     VERY_LOW: 99999
 };
+var SEARCH_DATA = [{
+    "context": "description",
+    "priority": SEARCH_PRIORITY.VERY_LOW
+}, {
+    "context": "keywords",
+    "priority": SEARCH_PRIORITY.MEDIUM
+}, {
+    "context": "generic_name",
+    "priority": SEARCH_PRIORITY.HIGH
+}, {
+    "context": "name",
+    "priority": SEARCH_PRIORITY.HIGH
+}];
 
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
@@ -223,7 +235,7 @@ ApplicationContextMenuItem.prototype = {
                     likelyHasSucceeded = false;
                 } finally {
                     if (this._appButton._applet.pref_recently_used_apps_enabled &&
-                        this._appButton instanceof ApplicationButton &&
+                        this._appButton instanceof GenericApplicationButton &&
                         likelyHasSucceeded) {
                         this._appButton._applet.recentAppsManager.storeRecentApp(this._appButton.app.get_id());
                     }
@@ -252,7 +264,7 @@ ApplicationContextMenuItem.prototype = {
                     likelyHasSucceeded = false;
                 } finally {
                     if (this._appButton._applet.pref_recently_used_apps_enabled &&
-                        this._appButton instanceof ApplicationButton &&
+                        this._appButton instanceof GenericApplicationButton &&
                         likelyHasSucceeded) {
                         this._appButton._applet.recentAppsManager.storeRecentApp(this._appButton.app.get_id());
                     }
@@ -288,7 +300,7 @@ ApplicationContextMenuItem.prototype = {
                     likelyHasSucceeded = false;
                 } finally {
                     if (this._appButton._applet.pref_recently_used_apps_enabled &&
-                        this._appButton instanceof ApplicationButton &&
+                        this._appButton instanceof GenericApplicationButton &&
                         likelyHasSucceeded) {
                         this._appButton._applet.recentAppsManager.storeRecentApp(this._appButton.app.get_id());
                     }
@@ -373,6 +385,8 @@ GenericApplicationButton.prototype = {
     _init: function(aApplet, aApp, aWithContextMenu) {
         this.app = aApp;
         this._applet = aApplet;
+        this._button_type = null;
+        this._should_be_displayed = true;
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
             hover: false
         });
@@ -387,23 +401,6 @@ GenericApplicationButton.prototype = {
         }
     },
 
-    highlight: function() {
-        this.isSearchResult || this.actor.add_style_pseudo_class("highlighted");
-    },
-
-    unhighlight: function() {
-        if (!this.isSearchResult) {
-            let app_key = this.app.get_id();
-
-            if (app_key === null) {
-                app_key = this.app.get_name() + ":" + this.app.get_description();
-            }
-
-            this._applet._knownApps.push(app_key);
-            this.actor.remove_style_pseudo_class("highlighted");
-        }
-    },
-
     _onButtonReleaseEvent: function(actor, event) {
         if (event.get_button() === 1) {
             this.activate(event);
@@ -415,7 +412,6 @@ GenericApplicationButton.prototype = {
     },
 
     activate: function(event) { // jshint ignore:line
-        this.unhighlight();
         let likelyHasSucceeded = false;
 
         let ctrlKey = (Clutter.ModifierType.CONTROL_MASK & global.get_pointer()[2]) !== 0;
@@ -462,7 +458,7 @@ GenericApplicationButton.prototype = {
         }
 
         if (this._applet.pref_recently_used_apps_enabled &&
-            this instanceof ApplicationButton &&
+            this instanceof GenericApplicationButton &&
             likelyHasSucceeded) {
             this._applet.recentAppsManager.storeRecentApp(this.app.get_id());
         }
@@ -489,7 +485,8 @@ GenericApplicationButton.prototype = {
         if (!this.menu.isOpen) {
             let children = this.menu.box.get_children();
 
-            for (let i = children.length - 1; i >= 0; i--) {
+            let i = children.length;
+            while (i--) {
                 this.menu.box.remove_actor(children[i]);
             }
 
@@ -633,8 +630,16 @@ GenericApplicationButton.prototype = {
         return this.menu.isOpen;
     },
 
-    get isSearchResult() {
-        return false;
+    get buttonType() {
+        return this._button_type;
+    },
+
+    get shouldBeDisplayed() {
+        return this._should_be_displayed;
+    },
+
+    set shouldBeDisplayed(aVal) {
+        this._should_be_displayed = aVal;
     },
 
     destroy: function() {
@@ -661,6 +666,8 @@ ApplicationButton.prototype = {
 
     _init: function(aApplet, aApp) {
         GenericApplicationButton.prototype._init.call(this, aApplet, aApp, true);
+        this._button_type = "app";
+        this._should_be_displayed = true;
         this.category = [];
         this.actor.set_style_class_name("menu-application-button");
 
@@ -690,11 +697,11 @@ ApplicationButton.prototype = {
     }
 };
 
-function SearchResultButton() {
+function DummyApplicationButton() {
     this._init.apply(this, arguments);
 }
 
-SearchResultButton.prototype = {
+DummyApplicationButton.prototype = {
     __proto__: GenericApplicationButton.prototype,
     _dummyApp: {
         get_app_info: {
@@ -719,51 +726,19 @@ SearchResultButton.prototype = {
         }
     },
 
-    _init: function(aApplet) {
+    _init: function(aApplet, aButtonType, aIconSize) {
         GenericApplicationButton.prototype._init.call(this, aApplet, this._dummyApp, true);
+        this._button_type = aButtonType;
+        this._should_be_displayed = true;
         this.category = [];
         this.actor.set_style_class_name("menu-application-button");
-        this._buildItem();
-        this.tooltip = new CustomTooltip(this.actor, "");
-    },
 
-    populateResult: function(aApp) {
-        // aApp is null when search result buttons aren't used.
-        // And if this.app didn't changed, do not continue.
-        if (aApp === null || this.app === aApp) {
-            return true;
-        }
-
-        // FIXME: I was forced to "use a hammer" here because I couldn't set this.icon
-        // on-the-fly (the icon didn't show up in the menu). I always have problems when
-        // attempted to replace an actor or removing an actor at an specific index, so
-        // I didn't even bother to try.
-        // The text of this.label wasn't a problem to set with set_text().
-        // Removing all children of a menu item doesn't
-        // seem to affect performance at all.
-        // DO NOT remove children unless they are going to be re-created.
-        for (let child of [this.label, this.icon]) {
-            child && this.removeActor(child);
-        }
-
-        this.app = aApp;
-
-        this._buildItem(true);
-
-        return true;
-    },
-
-    _buildItem: function(aFromSearch) {
         if (this._applet.pref_show_application_icons) {
-            if (aFromSearch) {
-                this.icon = this.app.create_icon_texture(this._applet.pref_application_icon_size);
-            } else {
-                this.icon = new St.Icon({
-                    icon_name: "custom-really-empty",
-                    icon_size: this._applet.pref_application_icon_size,
-                    icon_type: St.IconType.FULLCOLOR
-                });
-            }
+            this.icon = new St.Icon({
+                icon_name: "custom-really-empty",
+                icon_size: aIconSize,
+                icon_type: St.IconType.FULLCOLOR
+            });
 
             this.addActor(this.icon);
         }
@@ -784,14 +759,57 @@ SearchResultButton.prototype = {
         }
 
         this.label.realize();
+
+        this.tooltip = new CustomTooltip(this.actor, "");
+    },
+
+    populateItem: function(aApp) {
+        /* NOTE TO SELF: Do NOT compare objects, you moron!
+         */
+        /* NOTE: If this.app didn't changed, do not modify an item.
+         * This most likelly will fail with apps. that have no ID.
+         * The day that one such app. is found, put it in banned apps. list
+         * that should never contaminate a system!!!
+         */
+        if (this.app.get_id() === aApp.get_id()) {
+            return true;
+        }
+
+        this.app = aApp;
+
+        this.name = this.app.get_name();
+        this.label.set_text(this.name);
+
+        if (this._applet.pref_show_application_icons) {
+            let icon = this.app.get_app_info().get_icon();
+
+            if (icon instanceof Gio.FileIcon) {
+                this.icon.set_gicon(icon);
+            } else {
+                this.icon.set_icon_name(this._tryToGetValidIcon(icon.get_names()));
+            }
+        }
+
+        return true;
+    },
+
+    _tryToGetValidIcon: function(aIconNames) {
+        let i = 0,
+            iLen = aIconNames.length;
+        for (; i < iLen; i++) {
+            if (Gtk.IconTheme.get_default().has_icon(aIconNames[i])) {
+                return aIconNames[i].toString();
+            }
+        }
+
+        // Always give priority to the icons in aIconNames if any.
+        // Because, even if Gtk.IconTheme.get_default can't find them,
+        // it most likely is a valid icon.
+        return iLen > 0 ? aIconNames[0] : this._dummyApp.get_icon();
     },
 
     get_app_id: function() {
         return this.app.get_id();
-    },
-
-    get isSearchResult() {
-        return true;
     }
 };
 
@@ -802,24 +820,45 @@ function GenericButton() {
 GenericButton.prototype = {
     __proto__: PopupMenu.PopupBaseMenuItem.prototype,
 
-    _init: function(aApplet, aLabel, aIcon, aReactive, aCallback) {
+    _init: function(aApplet, aParams) {
+        let params = Params.parse(aParams, {
+            label: "",
+            bold_label: false,
+            icon: null,
+            reactive: false,
+            callback: null,
+            button_type: ""
+        });
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
             hover: false
         });
+        this._button_type = params.button_type;
+        this._should_be_displayed = true;
         this.actor.set_style_class_name("menu-application-button");
         this.actor._delegate = this;
         this.button_name = "";
 
         this.label = new St.Label({
-            text: aLabel,
             style_class: "menu-application-button-label"
         });
+
+        if (params.bold_label) {
+            try {
+                this.label.clutter_text.set_markup(
+                    '<span weight="bold">' + escapeHTML(params.label) + "</span>");
+            } catch (aErr) {
+                this.label.set_text(params.label);
+            }
+        } else {
+            this.label.set_text(params.label);
+        }
+
         this.label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
         this.label.set_style(aApplet.max_width_for_buttons);
 
-        if (aIcon !== null) {
+        if (params.icon !== null) {
             let icon_actor = new St.Icon({
-                icon_name: aIcon,
+                icon_name: params.icon,
                 icon_type: St.IconType.FULLCOLOR,
                 icon_size: aApplet.pref_application_icon_size
             });
@@ -829,15 +868,28 @@ GenericButton.prototype = {
         this.addActor(this.label);
         this.label.realize();
 
-        this.actor.reactive = aReactive;
-        this.callback = aCallback;
+        this.actor.reactive = params.reactive;
+        this.callback = params.callcback;
     },
 
     _onButtonReleaseEvent: function(actor, event) {
         if (event.get_button() === 1) {
             this.callback();
         }
+    },
+
+    get buttonType() {
+        return this._button_type;
+    },
+
+    get shouldBeDisplayed() {
+        return this._should_be_displayed;
+    },
+
+    set shouldBeDisplayed(aVal) {
+        this._should_be_displayed = aVal;
     }
+
 };
 
 function CategoryButton() {
@@ -853,42 +905,41 @@ CategoryButton.prototype = {
         });
 
         this.actor.set_style_class_name("menu-category-button");
+        this.category_id = aCategory.get_menu_id();
         let label;
         let icon = null;
-        if (aCategory) {
-            if (aApplet.pref_show_category_icons) {
-                if (aCategory.get_menu_id() === "favorites" ||
-                    aCategory.get_menu_id() === "recentApps") {
-                    this.icon_name = aCategory.get_icon();
-                    icon = new St.Icon({
-                        icon_name: this.icon_name,
-                        icon_size: aApplet.pref_category_icon_size,
-                        icon_type: St.IconType.FULLCOLOR
-                    });
-                } else {
-                    icon = aCategory.get_icon();
-                    if (icon && icon.get_names) {
-                        this.icon_name = icon.get_names().toString();
-                    } else {
-                        this.icon_name = "";
-                    }
-                }
+
+        if (aApplet.pref_show_category_icons) {
+            if (aCategory.get_menu_id() === aApplet.favoritesCatName ||
+                aCategory.get_menu_id() === aApplet.recentAppsCatName) {
+                this.icon_name = aCategory.get_icon();
+                icon = new St.Icon({
+                    icon_name: this.icon_name,
+                    icon_size: aApplet.pref_category_icon_size,
+                    icon_type: St.IconType.FULLCOLOR
+                });
             } else {
-                this.icon_name = "";
+                icon = aCategory.get_icon();
+                if (icon && icon.get_names) {
+                    this.icon_name = icon.get_names().toString();
+                } else {
+                    this.icon_name = "";
+                }
             }
-            label = aCategory.get_name();
         } else {
-            label = _("All Applications");
+            this.icon_name = "";
         }
+        label = aCategory.get_name();
 
         this.actor._delegate = this;
         this.label = new St.Label({
             text: label,
             style_class: "menu-category-button-label"
         });
-        if (aCategory && this.icon_name) {
-            if (aCategory.get_menu_id() === "favorites" ||
-                aCategory.get_menu_id() === "recentApps") {
+
+        if (this.icon_name) {
+            if (aCategory.get_menu_id() === aApplet.favoritesCatName ||
+                aCategory.get_menu_id() === aApplet.recentAppsCatName) {
                 this.icon = icon;
             } else {
                 this.icon = new St.Icon({
@@ -902,6 +953,7 @@ CategoryButton.prototype = {
                 this.icon.realize();
             }
         }
+
         this.actor.accessible_role = Atk.Role.LIST_ITEM;
         this.addActor(this.label);
         this.label.realize();
@@ -916,41 +968,6 @@ CategoriesApplicationsBox.prototype = {
     _init: function() {
         this.actor = new St.BoxLayout();
         this.actor._delegate = this;
-    }
-};
-
-function RecentAppsCategoryButton() {
-    this._init.apply(this, arguments);
-}
-
-RecentAppsCategoryButton.prototype = {
-    __proto__: PopupMenu.PopupBaseMenuItem.prototype,
-
-    _init: function(aApplet) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
-        });
-        this.actor.set_style_class_name("menu-category-button");
-        this.actor._delegate = this;
-        this.label = new St.Label({
-            text: _("Recent Applications"),
-            style_class: "menu-category-button-label"
-        });
-
-        if (aApplet.pref_show_category_icons) {
-            this.icon = new St.Icon({
-                icon_name: "folder-recent",
-                icon_size: aApplet.pref_category_icon_size,
-                icon_type: St.IconType.FULLCOLOR
-            });
-            this.addActor(this.icon);
-            this.icon.realize();
-        } else {
-            this.icon = null;
-        }
-
-        this.addActor(this.label);
-        this.label.realize();
     }
 };
 
@@ -1021,9 +1038,10 @@ CustomCommandButton.prototype = {
                 // GLib.SpawnFlags.SEARCH_PATH flag is enabled, other flags are not.
                 GLib.spawn_command_line_async(cmd);
             } catch (aErr1) {
-                // FIXME:
-                // This catch block is kind of useless.
-                // Maybe I should remove it.
+                /* FIXME:
+                 * This catch block is kind of useless.
+                 * Maybe I should remove it.
+                 */
                 try {
                     if (cmd.indexOf("/") !== -1) { // Try to open file if cmd is a path
                         Main.Util.spawnCommandLine("xdg-open " + '"' + cmd + '"');
@@ -1070,6 +1088,8 @@ RecentAppsClearButton.prototype = {
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
             hover: false
         });
+        this._button_type = "recent_application";
+        this._should_be_displayed = true;
         this._applet = aApplet;
         this.actor.set_style_class_name("menu-application-button");
         this.button_name = _("Clear list");
@@ -1099,6 +1119,18 @@ RecentAppsClearButton.prototype = {
         this._applet.closeMainMenu();
         this._applet.recentAppsManager.recentApps = [];
         this._applet._refreshRecentApps();
+    },
+
+    get buttonType() {
+        return this._button_type;
+    },
+
+    get shouldBeDisplayed() {
+        return this._should_be_displayed;
+    },
+
+    set shouldBeDisplayed(aVal) {
+        this._should_be_displayed = aVal;
     }
 };
 
@@ -1142,37 +1174,44 @@ RecentAppsManager.prototype = {
             return;
         }
 
-        try {
-            let t = new Date().getTime();
-            let recApps = this.recentApps;
-            let recAppUpdated = false;
+        let t = new Date().getTime();
+        let recApps = this.recentApps;
+        let recAppUpdated = false;
 
-            // Update recent app if it was previously launched.
-            for (let i = recApps.length; i--;) {
-                if (recApps[i].indexOf(aAppID) === 0) {
-                    recApps[i] = aAppID + ":" + t;
-                    recAppUpdated = true;
-                    break;
-                }
+        // Update recent app if it was previously launched.
+        let i = recApps.length;
+        while (i--) {
+            if (recApps[i].indexOf(aAppID) === 0) {
+                recApps[i] = aAppID + ":" + t;
+                recAppUpdated = true;
+                break;
             }
-
-            // Push the app if it wasn't previously launched.
-            if (!recAppUpdated) {
-                recApps.push(aAppID + ":" + t);
-            }
-
-            // Holy ·$%&/()!!! The only freaking way that I could find to remove duplicates!!!
-            // Like always, Stack Overflow is a life saver.
-            // http://stackoverflow.com/questions/31014324/remove-duplicated-object-in-array
-            let temp = [];
-
-            this.recentApps = recApps.filter((aVal) => {
-                let appID = aVal.split(":")[0];
-                return temp.indexOf(appID) === -1 ? temp.push(appID) : false;
-            });
-        } catch (aErr) {
-            global.logError(aErr);
         }
+
+        // Push the app if it wasn't previously launched.
+        if (!recAppUpdated) {
+            recApps.push(aAppID + ":" + t);
+        }
+
+        this.filterAndStore(recApps);
+    },
+
+    filterAndStore: function(aRecentApps) {
+        /* NOTE: This function is also called when favorites are changed, so when a
+         * favorite is added, the recent apps. list is also updated.
+         */
+        let recentApps = aRecentApps || this.recentApps;
+        // Holy ·$%&/()!!! The only freaking way that I could find to remove duplicates!!!
+        // Like always, Stack Overflow is a life saver.
+        // http://stackoverflow.com/questions/31014324/remove-duplicated-object-in-array
+        let temp = new Set();
+
+        this.recentApps = recentApps.filter((aVal) => {
+            let appID = aVal.split(":")[0];
+            return (temp.has(appID) ? false : temp.add(appID)) ||
+                (this._applet.pref_recently_used_apps_ignore_favorites &&
+                    !AppFavorites.getAppFavorites().isFavorite(appID));
+        });
     },
 
     set recentApps(aValue) {
@@ -1217,5 +1256,6 @@ function escapeHTML(aStr) {
 }
 
 /* exported escapeHTML,
-            SEARCH_PRIORITY
+            SEARCH_PRIORITY,
+            SEARCH_DATA
  */

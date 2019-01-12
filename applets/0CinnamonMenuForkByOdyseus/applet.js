@@ -34,8 +34,6 @@ const {
     }
 } = imports;
 
-let appsys = Cinnamon.AppSystem.get_default();
-
 function CinnamonMenuForkByOdyseus() {
     this._init.apply(this, arguments);
 }
@@ -68,17 +66,22 @@ CinnamonMenuForkByOdyseus.prototype = {
 
         Mainloop.idle_add(() => {
             try {
+                this.appsys = Cinnamon.AppSystem.get_default();
                 this.menuManager = new PopupMenu.PopupMenuManager(this);
                 this.menu = new Applet.AppletPopupMenu(this, aOrientation);
                 this.menuManager.addMenu(this.menu);
                 this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
+                this.recentAppsCatName = this.instance_id + "recent_applications";
+                this.favoritesCatName = this.instance_id + "favorites";
+                this.searchResultsCatName = this.instance_id + "search_results";
 
                 this._appletEnterEventId = 0;
                 this._appletLeaveEventId = 0;
                 this._appletHoverDelayId = 0;
                 this._hardRefreshTimeout = 0;
+                this._searchingTimeout = 0;
                 this._updateRecentAppsId = 0;
-                this._recentAppsButtons = [];
+                this._updateRecentAppsOnFavChangedId = 0;
 
                 // Condition needed for retro-compatibility.
                 // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -101,9 +104,11 @@ CinnamonMenuForkByOdyseus.prototype = {
                 });
                 this._searchIconClickedId = 0;
                 this._applicationsButtons = [];
+                this._searchDatabase = [];
+                this._searchResultButtons = [];
+                this._recentAppsButtons = [];
                 this._applicationsOrder = {};
                 this._applicationsButtonFromApp = {};
-                this._transientButtons = [];
                 this._categoryButtons = [];
                 this._selectedItemIndex = null;
                 this._previousSelectedActor = null;
@@ -113,24 +118,31 @@ CinnamonMenuForkByOdyseus.prototype = {
                 this._activeActor = null;
                 this._applicationsBoxWidth = 0;
                 this.menuIsOpening = false;
-                this._knownApps = [];
-                this._appsWereRefreshed = false;
                 this._activeContextMenuParent = null;
                 this._activeContextMenuItem = null;
                 this._display();
-                this.lastAcResults = [];
                 this.refreshing = false;
                 this.recentAppsManager = null;
-                this.appsContextMenu = null;
                 this.lastSelectedCategory = null;
+                this.recentAppsEmptyButton = null;
+                this.recentAppsClearButton = null;
+                this.searchResultsEmptyButton = null;
+                this.searching = false;
 
                 this.actor.connect("key-press-event",
                     (actor, event) => this._onSourceKeyPress(actor, event));
                 this.menu.connect("open-state-changed",
                     (aMenu, aOpen) => this._onOpenStateChanged(aMenu, aOpen));
+                /* NOTE: Triggering this.onAppSysChanged in the below connections
+                 * because inside this.onAppSysChanged is triggered this._hardRefreshAll.
+                 * this._hardRefreshAll is triggered because I fed up of the asymmetry
+                 * of the menu elements when they are re-allocated/styled. So,
+                 * using this._hardRefreshAll will rebuild the entire menu from scratch.
+                 * (When the scalpel doesn't cut it, use the freaking sledgehammer!!!)
+                 */
                 Main.themeManager.connect("theme-set",
-                    () => this._updateIconAndLabel());
-                appsys.connect("installed-changed",
+                    () => this.onAppSysChanged());
+                this.appsys.connect("installed-changed",
                     () => this.onAppSysChanged());
 
                 this._setupRecentAppsManager();
@@ -139,8 +151,8 @@ CinnamonMenuForkByOdyseus.prototype = {
                 this._updateKeybinding();
                 this._updateIconAndLabel();
 
-                // We shouldn't need to call refreshAll() here... since we get a "icon-theme-changed" signal when CSD starts.
-                // The reason we do is in case the Cinnamon icon theme is the same as the one specificed in GTK itself (in .config)
+                // We shouldn't need to call _refreshAll() here... since we get a "icon-theme-changed" signal when CSD starts.
+                // The reason we do is in case the Cinnamon icon theme is the same as the one specified in GTK itself (in .config)
                 // In that particular case we get no signal at all.
                 this._refreshAll();
 
@@ -178,10 +190,12 @@ CinnamonMenuForkByOdyseus.prototype = {
             "pref_enable_autoscroll",
             "pref_menu_hover_delay",
             // Extras
+            "pref_strict_search_results",
             "pref_swap_categories_box",
             "pref_hide_applications_list_scrollbar",
             "pref_category_icon_size",
             "pref_application_icon_size",
+            "pref_search_result_icon_size",
             "pref_terminal_emulator",
             "pref_default_shell",
             "pref_privilege_elevator",
@@ -213,7 +227,6 @@ CinnamonMenuForkByOdyseus.prototype = {
             "pref_search_box_padding_left",
             "pref_custom_launchers_box_invert_buttons_order",
             "pref_invert_menu_layout",
-            "pref_disable_new_apps_highlighting",
             "pref_context_show_add_to_panel",
             "pref_context_show_add_to_desktop",
             "pref_context_show_add_remove_favorite",
@@ -270,12 +283,34 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.recentAppsManager.disconnect(this._updateRecentAppsId);
         }
 
+        if (this._updateRecentAppsOnFavChangedId > 0) {
+            AppFavorites.getAppFavorites().disconnect(this._updateRecentAppsOnFavChangedId);
+        }
+
         if (this.pref_recently_used_apps_enabled && !this.recentAppsManager) {
             this.recentAppsManager = new $.RecentAppsManager(this);
             this._updateRecentAppsId = this.recentAppsManager.connect(
                 "changed::pref-recently-used-applications",
                 () => this._refreshRecentApps()
             );
+
+            /* NOTE: When adding a favorite from the applications listed inside the
+             * recent apps. category, the list of recent apps. will be updated
+             * to ignore the recently favorited app. (if configured to do so) and
+             * a call to this._displayButtons will be made to update the list
+             * of recent apps. category. WOW Isn't this micro-managing!?
+             */
+            if (this.pref_recently_used_apps_ignore_favorites) {
+                this._updateRecentAppsOnFavChangedId = AppFavorites
+                    .getAppFavorites().connect("changed",
+                        () => {
+                            this.recentAppsManager.filterAndStore();
+
+                            if (this.lastSelectedCategory === this.recentAppsCatName) {
+                                this._displayButtons(this.lastSelectedCategory);
+                            }
+                        });
+            }
         }
 
         if (this.recentAppsManager && !this.pref_recently_used_apps_enabled) {
@@ -310,14 +345,13 @@ CinnamonMenuForkByOdyseus.prototype = {
     onAppSysChanged: function() {
         if (!this.refreshing) {
             this.refreshing = true;
-            Mainloop.timeout_add_seconds(1, () => this._refreshAll());
+            Mainloop.timeout_add_seconds(1, () => this._hardRefreshAll());
         }
     },
 
     _refreshAll: function() {
         try {
             this._refreshApps();
-            this._refreshRecentApps();
         } catch (aErr) {
             global.logError(aErr);
         } finally {
@@ -418,11 +452,14 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.recentAppsManager.disconnect(this._updateRecentAppsId);
         }
 
+        if (this._updateRecentAppsOnFavChangedId > 0) {
+            AppFavorites.getAppFavorites().disconnect(this._updateRecentAppsOnFavChangedId);
+        }
+
         if (this._hardRefreshTimeout) {
             Mainloop.source_remove(this._hardRefreshTimeout);
             this._hardRefreshTimeout = 0;
         }
-
     },
 
     _launch_editor: function() {
@@ -471,7 +508,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.lastSelectedCategory = null;
 
             this._favoritesCategoryButton.actor.style_class = "menu-category-button-selected";
-            this._selectCategory("favorites");
+            this._selectCategory(this.favoritesCatName);
         } else {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -485,7 +522,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                 this.resetSearch();
             } else {
                 // _clearAllSelections is also called by resetSearch.
-                this._clearAllSelections(true);
+                this._clearAllSelections();
             }
 
             this._previousTreeSelectedActor = null;
@@ -624,6 +661,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             this._activeContextMenuItem = null;
             return;
         }
+
         // DO NOT USE INVERSE LOOP HERE!!!
         let i = minIndex;
         for (; i < menuItemsLength; i++) {
@@ -672,8 +710,7 @@ CinnamonMenuForkByOdyseus.prototype = {
         // If a context menu is open, hijack keyboard navigation and concentrate on the context menu.
         if (this._activeContextMenuParent && this._activeContextMenuParent._contextIsOpen &&
             this._activeContainer === this.applicationsBox &&
-            (this._activeContextMenuParent instanceof $.ApplicationButton ||
-                this._activeContextMenuParent instanceof $.SearchResultButton)) {
+            (this._activeContextMenuParent instanceof $.GenericApplicationButton)) {
             let continueNavigation = false;
             switch (symbol) {
                 case Clutter.KEY_Up:
@@ -721,29 +758,61 @@ CinnamonMenuForkByOdyseus.prototype = {
             case Clutter.KEY_Right:
                 if (!this.searchActive) {
                     whichWay = this.pref_swap_categories_box ? "left" : "right";
+                } else {
+                    navigationKey = false;
                 }
 
-                if (this._activeContainer === this.applicationsBox) {
-                    this.pref_swap_categories_box ? "left" : "none";
-                } else if (this._activeContainer === this.categoriesBox &&
-                    (this.categoriesBox.get_child_at_index(index))._delegate instanceof $.RecentAppsCategoryButton) {
-                    whichWay = "none";
-                } else if (this._activeContainer === this.customLaunchersBox) {
-                    whichWay = "jump-right";
+                switch (this._activeContainer) {
+                    case this.applicationsBox:
+                        whichWay = this.pref_swap_categories_box ? "left" : "right";
+                        break;
+                    case this.categoriesBox:
+                        let catBtn = this.categoriesBox.get_child_at_index(index)._delegate;
+                        let isRecentAppsCatButton = catBtn.hasOwnProperty("category_id") &&
+                            catBtn.category_id === this.recentAppsCatName;
+
+                        if (isRecentAppsCatButton && this.recentAppsManager.recentApps.length === 0) {
+                            whichWay = "none";
+                        } else {
+                            whichWay = this.pref_swap_categories_box ? "right" : "left";
+                        }
+                        break;
+                    case this.customLaunchersBox:
+                        whichWay = "jump-right";
+                        break;
+                    case null:
+                        whichWay = "none";
+                        break;
                 }
                 break;
             case Clutter.KEY_Left:
                 if (!this.searchActive) {
                     whichWay = this.pref_swap_categories_box ? "right" : "left";
+                } else {
+                    navigationKey = false;
                 }
 
-                if ((this._activeContainer === this.categoriesBox /*|| this._activeContainer === null*/ )) {
-                    whichWay = this.pref_swap_categories_box ? "right" : "none";
-                } else if (this._activeContainer === this.categoriesBox &&
-                    (this.categoriesBox.get_child_at_index(index))._delegate instanceof $.RecentAppsCategoryButton) {
-                    whichWay = "none";
-                } else if (this._activeContainer === this.customLaunchersBox) {
-                    whichWay = "jump-left";
+                switch (this._activeContainer) {
+                    case this.applicationsBox:
+                        whichWay = this.pref_swap_categories_box ? "left" : "right";
+                        break;
+                    case this.categoriesBox:
+                        let catBtn = this.categoriesBox.get_child_at_index(index)._delegate;
+                        let isRecentAppsCatButton = catBtn.hasOwnProperty("category_id") &&
+                            catBtn.category_id === this.recentAppsCatName;
+
+                        if (isRecentAppsCatButton && this.recentAppsManager.recentApps.length === 0) {
+                            whichWay = "none";
+                        } else {
+                            whichWay = this.pref_swap_categories_box ? "left" : "right";
+                        }
+                        break;
+                    case this.customLaunchersBox:
+                        whichWay = "jump-left";
+                        break;
+                    case null:
+                        whichWay = "none";
+                        break;
                 }
                 break;
             case Clutter.Tab:
@@ -922,16 +991,14 @@ CinnamonMenuForkByOdyseus.prototype = {
                     item_actor._delegate.activate();
                 } else if (ctrlKey && this._activeContainer === this.applicationsBox) {
                     item_actor = this.applicationsBox.get_child_at_index(this._selectedItemIndex);
-                    if (item_actor._delegate instanceof $.ApplicationButton ||
-                        item_actor._delegate instanceof $.SearchResultButton) {
+                    if (item_actor._delegate instanceof $.GenericApplicationButton) {
                         item_actor._delegate.activateContextMenus();
                     }
                 }
                 return true;
             } else if (this._activeContainer === this.applicationsBox && symbol === Clutter.KEY_Menu) {
                 item_actor = this.applicationsBox.get_child_at_index(this._selectedItemIndex);
-                if (item_actor._delegate instanceof $.ApplicationButton ||
-                    item_actor._delegate instanceof $.SearchResultButton) {
+                if (item_actor._delegate instanceof $.GenericApplicationButton) {
                     item_actor._delegate.activateContextMenus();
                 }
                 return true;
@@ -986,8 +1053,7 @@ CinnamonMenuForkByOdyseus.prototype = {
 
     _clearPrevSelection: function(actor) {
         if (this._previousSelectedActor && this._previousSelectedActor !== actor) {
-            if (this._previousSelectedActor._delegate instanceof $.ApplicationButton ||
-                this._previousSelectedActor._delegate instanceof $.SearchResultButton ||
+            if (this._previousSelectedActor._delegate instanceof $.GenericApplicationButton ||
                 this._previousSelectedActor._delegate instanceof $.RecentAppsClearButton ||
                 this._previousSelectedActor._delegate instanceof $.CustomCommandButton) {
                 this._previousSelectedActor.style_class = "menu-application-button";
@@ -1009,7 +1075,8 @@ CinnamonMenuForkByOdyseus.prototype = {
             }
         } else {
             let catChildren = this.categoriesBox.get_children();
-            for (let i = catChildren.length - 1; i >= 0; i--) {
+            let i = catChildren.length;
+            while (i--) {
                 catChildren[i].style_class = "menu-category-button";
             }
         }
@@ -1123,88 +1190,79 @@ CinnamonMenuForkByOdyseus.prototype = {
     },
 
     _refreshRecentApps: function() {
-        for (let r = this._recentAppsButtons.length - 1; r >= 0; r--) {
-            this._recentAppsButtons[r].actor.destroy();
-        }
-
-        this._recentAppsButtons = [];
-        let recentApplications = [];
-
         if (!this.pref_recently_used_apps_enabled) {
-            for (let c = this._categoryButtons.length - 1; c >= 0; c--) {
-                if (this._categoryButtons[c] instanceof $.RecentAppsCategoryButton) {
+            let c = this._categoryButtons.length;
+            while (c--) {
+                if (this._categoryButtons[c].category_id === this.recentAppsCatName) {
                     this._categoryButtons[c].actor.destroy();
+                    this._categoryButtons.splice(c, 1);
+                    break;
                 }
             }
             return;
         }
 
+        let recentApplications = [];
+
         if (this.recentAppsManager.recentApps.length > 0) {
             // It doesn't matter the "direction" of either of these loops.
             // recentApplications will be sorted anyways.
-            for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
-                if (this._applicationsButtons[i].isSearchResult) {
-                    continue;
-                }
+            let i = this._applicationsButtons.length;
+            while (i--) {
+                if (this._applicationsButtons[i].buttonType === "app") {
+                    let c = this.recentAppsManager.recentApps.length;
+                    while (c--) {
+                        let [recAppID, recLastAccess] = this.recentAppsManager.recentApps[c].split(":");
 
-                for (let c = this.recentAppsManager.recentApps.length - 1; c >= 0; c--) {
-                    let [recAppID, recLastAccess] = this.recentAppsManager.recentApps[c].split(":");
-
-                    if (recAppID === this._applicationsButtons[i].get_app_id()) {
-                        this._applicationsButtons[i].app.lastAccess = recLastAccess;
-                        recentApplications.push(this._applicationsButtons[i].app);
-                        continue;
+                        if (recAppID === this._applicationsButtons[i].get_app_id()) {
+                            this._applicationsButtons[i].app.lastAccess = recLastAccess;
+                            recentApplications.push({
+                                app: this._applicationsButtons[i].app,
+                                categories: this._applicationsButtons[i].category
+                            });
+                            continue;
+                        }
                     }
                 }
             }
-
-            let clearBtn = new $.RecentAppsClearButton(this);
-            this._addEnterEvent(clearBtn, () => {
-                this._clearPrevSelection(clearBtn.actor);
-                clearBtn.actor.style_class = "menu-application-button-selected";
-            });
-            clearBtn.actor.connect("leave-event", () => {
-                clearBtn.actor.style_class = "menu-application-button";
-                this._previousSelectedActor = clearBtn.actor;
-            });
-
-            if (this.pref_recently_used_apps_invert_order) {
-                this._recentAppsButtons.push(clearBtn);
-                this.applicationsBox.add_actor(clearBtn.actor);
-            }
-
-            recentApplications = recentApplications.sort((a, b) => {
-                if (this.pref_recently_used_apps_invert_order) {
-                    return a["lastAccess"] > b["lastAccess"];
-                }
-                return a["lastAccess"] < b["lastAccess"];
-            });
-
-            let id = 0,
-                idLen = recentApplications.length;
-            for (; id < this.pref_recently_used_apps_max_amount && id < idLen; id++) {
-                let button = new $.ApplicationButton(this, recentApplications[id]);
-                this._handleButtonEnterEvent(button);
-                this._handleButtonLeaveEvent(button);
-                this._recentAppsButtons.push(button);
-                this.applicationsBox.add_actor(button.actor);
-                this.applicationsBox.add_actor(button.menu.actor);
-            }
-
-            if (!this.pref_recently_used_apps_invert_order) {
-                this._recentAppsButtons.push(clearBtn);
-                this.applicationsBox.add_actor(clearBtn.actor);
-            }
+            this.recentAppsEmptyButton.shouldBeDisplayed = false;
+            this.recentAppsClearButton.shouldBeDisplayed = true;
         } else {
-            let button = new $.GenericButton(this, _("No recent applications"), null, false, null);
-            this._recentAppsButtons.push(button);
-            this.applicationsBox.add_actor(button.actor);
+            if (this.recentAppsEmptyButton !== null) {
+                this.recentAppsEmptyButton.shouldBeDisplayed = true;
+            }
+
+            if (this.recentAppsClearButton !== null) {
+                this.recentAppsClearButton.shouldBeDisplayed = false;
+            }
         }
 
-        this._setCategoriesButtonActive(!this.searchActive);
+        if (recentApplications.length > 0) {
+            recentApplications = recentApplications.sort((a, b) => {
+                return this.pref_recently_used_apps_invert_order ?
+                    a["app"]["lastAccess"] > b["app"]["lastAccess"] :
+                    a["app"]["lastAccess"] < b["app"]["lastAccess"];
+            });
+        }
 
-        this._recalc_height();
-        this._resizeApplicationsBox();
+        let i = 0,
+            iLen = this._recentAppsButtons.length;
+        for (; i < iLen; i++) {
+            let rAB = this._recentAppsButtons[i];
+            if (recentApplications[i]) {
+                let app = recentApplications[i].app;
+                rAB.populateItem(app);
+                rAB.shouldBeDisplayed = true;
+                this._setSelectedItemTooltip(
+                    rAB,
+                    rAB.app.get_name(),
+                    rAB.app.get_description() || "",
+                    recentApplications[i].categories
+                );
+            } else {
+                rAB.shouldBeDisplayed = false;
+            }
+        }
     },
 
     _sortDirs: function(a, b) {
@@ -1233,26 +1291,28 @@ CinnamonMenuForkByOdyseus.prototype = {
     _refreshApps: function() {
         // Iterate in reverse, so multiple splices will not upset
         // the remaining elements
-        for (let i = this._categoryButtons.length - 1; i > -1; i--) {
-            if (this._categoryButtons[i] instanceof $.CategoryButton ||
-                this._categoryButtons[i] instanceof $.RecentAppsCategoryButton) {
-                this._categoryButtons[i].destroy();
-                this._categoryButtons.splice(i, 1);
+        let c = this._categoryButtons.length;
+        while (c--) {
+            if (this._categoryButtons[c] instanceof $.CategoryButton) {
+                this._categoryButtons[c].destroy();
+                this._categoryButtons.splice(c, 1);
             }
         }
 
-        for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
-            this._applicationsButtons[i].destroy();
+        let a = this._applicationsButtons.length;
+        while (a--) {
+            this._applicationsButtons[a].destroy();
+            this._applicationsButtons.splice(a, 1);
         }
 
         this._applicationsButtons = [];
-        this._transientButtons = [];
         this._applicationsButtonFromApp = {};
         this._applicationsBoxWidth = 0;
+        this._searchDatabase = [];
 
         let favCat = {
             get_menu_id: () => {
-                return "favorites";
+                return this.favoritesCatName;
             },
             get_id: () => {
                 return -1;
@@ -1273,15 +1333,13 @@ CinnamonMenuForkByOdyseus.prototype = {
 
         this._favoritesCategoryButton = new $.CategoryButton(this, favCat);
         this._addEnterEvent(this._favoritesCategoryButton, () => {
-            if (!this.searchActive) {
-                this._favoritesCategoryButton.isHovered = true;
+            this._favoritesCategoryButton.isHovered = true;
 
-                this._clearPrevCatSelection(this._favoritesCategoryButton.actor);
-                this._favoritesCategoryButton.actor.style_class = "menu-category-button-selected";
-                this._selectCategory("favorites");
+            this._clearPrevCatSelection(this._favoritesCategoryButton.actor);
+            this._favoritesCategoryButton.actor.style_class = "menu-category-button-selected";
+            this._selectCategory(this.favoritesCatName);
 
-                this.makeVectorBox(this._favoritesCategoryButton.actor);
-            }
+            this.makeVectorBox(this._favoritesCategoryButton.actor);
         });
         this._favoritesCategoryButton.actor.connect("leave-event", () => {
             this._previousSelectedActor = this._favoritesCategoryButton.actor;
@@ -1292,17 +1350,36 @@ CinnamonMenuForkByOdyseus.prototype = {
         this._categoryButtons.push(this._favoritesCategoryButton);
 
         if (this.pref_recently_used_apps_enabled) {
-            this.recentAppsCatButton = new $.RecentAppsCategoryButton(this);
-            this._addEnterEvent(this.recentAppsCatButton, () => {
-                if (!this.searchActive) {
-                    this.recentAppsCatButton.isHovered = true;
-
-                    this._clearPrevCatSelection(this.recentAppsCatButton.actor);
-                    this.recentAppsCatButton.actor.style_class = "menu-category-button-selected";
-                    this._selectCategory("recentApps");
-
-                    this.makeVectorBox(this.recentAppsCatButton.actor);
+            let recentAppsCat = {
+                get_menu_id: () => {
+                    return this.recentAppsCatName;
+                },
+                get_id: () => {
+                    return -1;
+                },
+                get_description: () => {
+                    return this.get_name();
+                },
+                get_name: () => {
+                    return _("Recent Applications");
+                },
+                get_is_nodisplay: () => {
+                    return false;
+                },
+                get_icon: () => {
+                    return "folder-recent";
                 }
+            };
+
+            this.recentAppsCatButton = new $.CategoryButton(this, recentAppsCat);
+            this._addEnterEvent(this.recentAppsCatButton, () => {
+                this.recentAppsCatButton.isHovered = true;
+
+                this._clearPrevCatSelection(this.recentAppsCatButton.actor);
+                this.recentAppsCatButton.actor.style_class = "menu-category-button-selected";
+                this._selectCategory(this.recentAppsCatName);
+
+                this.makeVectorBox(this.recentAppsCatButton.actor);
             });
 
             this.recentAppsCatButton.actor.connect("leave-event", () => {
@@ -1313,19 +1390,17 @@ CinnamonMenuForkByOdyseus.prototype = {
             this._categoryButtons.push(this.recentAppsCatButton);
         }
 
-        let trees = [appsys.get_tree()];
+        let trees = [this.appsys.get_tree()];
 
         let handleEnterEvent = (categoryButton, dir) => {
             this._addEnterEvent(categoryButton, () => {
-                if (!this.searchActive) {
-                    categoryButton.isHovered = true;
+                categoryButton.isHovered = true;
 
-                    this._clearPrevCatSelection(categoryButton.actor);
-                    categoryButton.actor.style_class = "menu-category-button-selected";
-                    this._selectCategory(dir.get_menu_id());
+                this._clearPrevCatSelection(categoryButton.actor);
+                categoryButton.actor.style_class = "menu-category-button-selected";
+                this._selectCategory(dir.get_menu_id());
 
-                    this.makeVectorBox(categoryButton.actor);
-                }
+                this.makeVectorBox(categoryButton.actor);
             });
         };
 
@@ -1378,31 +1453,121 @@ CinnamonMenuForkByOdyseus.prototype = {
                 }
             }
         }
-        // Sort apps and add to applicationsBox
+        // Sort apps and add to applicationsBox.
+        // At this point, this._applicationsButtons only contains "pure"
+        // application buttons.
         this._applicationsButtons.sort((a, b) => {
             a = Util.latinise(a.app.get_name().toLowerCase());
             b = Util.latinise(b.app.get_name().toLowerCase());
             return a > b;
         });
 
+        /* NOTE:
+         * From this point on, insertion order into this._applicationsButtons matters.
+         */
+        this.searchResultsEmptyButton = new $.GenericButton(this, {
+            label: _("No search results"),
+            button_type: "search_result"
+        });
+        this._applicationsButtons.push(this.searchResultsEmptyButton);
+
         // Add search result buttons here.
-        for (let s = this.pref_max_search_results - 1; s >= 0; s--) {
-            let searchResultButton = new $.SearchResultButton(this);
+        let s = this.pref_max_search_results;
+        while (s--) {
+            let searchResultButton = new $.DummyApplicationButton(this, "search_result",
+                this.pref_search_result_icon_size);
             this._handleButtonEnterEvent(searchResultButton);
             this._handleButtonLeaveEvent(searchResultButton);
             this._applicationsButtons.push(searchResultButton);
         }
 
+        // Add recent apps buttons here.
+        if (this.pref_recently_used_apps_enabled) {
+            this.recentAppsEmptyButton = new $.GenericButton(this, {
+                label: _("No recent applications"),
+                button_type: "recent_application"
+            });
+            this._applicationsButtons.push(this.recentAppsEmptyButton);
+
+            this.recentAppsClearButton = new $.RecentAppsClearButton(this);
+            this._addEnterEvent(this.recentAppsClearButton, () => {
+                this._clearPrevSelection(this.recentAppsClearButton.actor);
+                this.recentAppsClearButton.actor.style_class = "menu-application-button-selected";
+            });
+            this.recentAppsClearButton.actor.connect("leave-event", () => {
+                this.recentAppsClearButton.actor.style_class = "menu-application-button";
+                this._previousSelectedActor = this.recentAppsClearButton.actor;
+            });
+
+            if (this.pref_recently_used_apps_invert_order) {
+                this._applicationsButtons.push(this.recentAppsClearButton);
+            }
+
+            let r = this.pref_recently_used_apps_max_amount;
+            while (r--) {
+                let recentAppButton = new $.DummyApplicationButton(this,
+                    "recent_application",
+                    this.pref_application_icon_size);
+                this._handleButtonEnterEvent(recentAppButton);
+                this._handleButtonLeaveEvent(recentAppButton);
+                this._applicationsButtons.push(recentAppButton);
+            }
+
+            if (!this.pref_recently_used_apps_invert_order) {
+                this._applicationsButtons.push(this.recentAppsClearButton);
+            }
+        }
+
+        // "Multipurpose" loop.
         // DO NOT USE INVERSE LOOP HERE!!!
         let i = 0,
             iLen = this._applicationsButtons.length;
         for (; i < iLen; i++) {
-            this.applicationsBox.add_actor(this._applicationsButtons[i].actor);
-            this.applicationsBox.add_actor(this._applicationsButtons[i].menu.actor);
+            let button = this._applicationsButtons[i];
+            // Add button to menu.
+            this.applicationsBox.add_actor(button.actor);
+
+            // Add menu, if any. Check for menu existence instead of creating dummy
+            // menus for buttons that doesn't need one.
+            if (button.hasOwnProperty("menu")) {
+                this.applicationsBox.add_actor(button.menu.actor);
+            }
+
+            // Handle only "pure" application buttons.
+            if (button.buttonType === "app") {
+                // Set the tooltip here because at this point is when the category
+                // property of a button contains all categories an app. belongs to.
+                this._setSelectedItemTooltip(
+                    button,
+                    button.app.get_name(),
+                    button.app.get_description() || "",
+                    button.category
+                );
+
+                // Store search data.
+                this._storeAppSearchData(button.app, button.category);
+            }
         }
 
-        this._appsWereRefreshed = true;
         this._setStyling();
+
+        Mainloop.idle_add(() => {
+            // Store at menu build time the search results and recent apps. buttons.
+            this._searchResultButtons = this._applicationsButtons.filter((x) => {
+                return x.buttonType === "search_result" &&
+                    x instanceof $.DummyApplicationButton;
+            });
+
+            this._recentAppsButtons = this._applicationsButtons.filter((x) => {
+                return x.buttonType === "recent_application" &&
+                    x instanceof $.DummyApplicationButton;
+            });
+
+            // Lets hope that reassigning this property eradicates from memory
+            // its original and never to be used again content. ¬¬
+            this._applicationsButtonFromApp = {};
+            this._refreshRecentApps();
+        });
     },
 
     _loadCategory: function(dir, top_dir) {
@@ -1421,38 +1586,21 @@ CinnamonMenuForkByOdyseus.prototype = {
 
                 if (appInfo && !appInfo.get_nodisplay()) {
                     has_entries = true;
-                    let app = appsys.lookup_app_by_tree_entry(entry);
+                    let app = this.appsys.lookup_app_by_tree_entry(entry);
                     if (!app) {
-                        app = appsys.lookup_settings_app_by_tree_entry(entry);
+                        app = this.appsys.lookup_settings_app_by_tree_entry(entry);
                     }
                     let app_key = app.get_id();
                     if (app_key === null) {
                         app_key = app.get_name() + ":" +
                             app.get_description();
                     }
+
                     if (!(app_key in this._applicationsButtonFromApp)) {
                         let applicationButton = new $.ApplicationButton(this, app);
 
-                        if (!this.pref_disable_new_apps_highlighting) {
-                            let app_is_known = false;
-                            for (let i = this._knownApps.length - 1; i >= 0; i--) {
-                                if (this._knownApps[i] === app_key) {
-                                    app_is_known = true;
-                                }
-                            }
-
-                            if (!app_is_known) {
-                                if (this._appsWereRefreshed) {
-                                    applicationButton.highlight();
-                                } else {
-                                    this._knownApps.push(app_key);
-                                }
-                            }
-                        }
-
                         this._handleButtonEnterEvent(applicationButton);
                         this._handleButtonLeaveEvent(applicationButton);
-                        this._setSelectedItemTooltip(applicationButton, applicationButton.app.get_name(), applicationButton.app.get_description() || "");
                         this._applicationsButtons.push(applicationButton);
                         applicationButton.category.push(top_dir.get_menu_id());
                         this._applicationsButtonFromApp[app_key] = applicationButton;
@@ -1662,13 +1810,12 @@ CinnamonMenuForkByOdyseus.prototype = {
         this.catBoxIter = new $.VisibleChildIterator(this.categoriesBox);
         this.categoriesBox._vis_iter = this.catBoxIter;
 
-        Mainloop.idle_add(() => this._clearAllSelections(true));
+        Mainloop.idle_add(() => this._clearAllSelections());
 
         this.menu.actor.connect("allocation-changed",
             (box, flags, data) => this._on_allocation_changed(box, flags, data));
 
         this._updateCustomLaunchersBox();
-        this._setStyling();
     },
 
     _setStyling: function() {
@@ -1701,8 +1848,6 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.applicationsBox.get_allocation_box().x1);
         searchEntryWidth = searchEntryWidth + (this.categoriesBox.get_allocation_box().x2 -
             this.categoriesBox.get_allocation_box().x1);
-
-        this.searchEntry.set_width(searchEntryWidth);
     },
 
     _updateCustomLaunchersBox: function() {
@@ -1713,7 +1858,9 @@ CinnamonMenuForkByOdyseus.prototype = {
 
         // Non-inverted = The "first" button is the left-most one.
         // Inverted = The "first" button is the right-most one.
-        if (this.pref_custom_launchers_box_invert_buttons_order) {
+        // Due to using an inverse loop for adding the button, reverse
+        // the array if pref_custom_launchers_box_invert_buttons_order is disabled. LOL
+        if (!this.pref_custom_launchers_box_invert_buttons_order) {
             customLaunchers = customLaunchers.slice().reverse();
         }
 
@@ -1729,8 +1876,10 @@ CinnamonMenuForkByOdyseus.prototype = {
             });
         };
 
-        // Don't bother optimizing this loop.
-        for (let btn_props of customLaunchers) {
+        let i = customLaunchers.length;
+        while (i--) {
+            let btn_props = customLaunchers[i];
+
             if (btn_props["command"] === "" || btn_props["icon"] === "") {
                 continue;
             }
@@ -1746,7 +1895,11 @@ CinnamonMenuForkByOdyseus.prototype = {
             let button = new $.CustomCommandButton(this, app);
             handleLeaveEvent(button);
             handleEnterEvent(button);
-            this._setSelectedItemTooltip(button, button.app.label, button.app.description || "");
+            this._setSelectedItemTooltip(
+                button,
+                button.app.label,
+                button.app.description || ""
+            );
             this.customLaunchersBox.add_actor(button.actor);
         }
     },
@@ -1769,19 +1922,20 @@ CinnamonMenuForkByOdyseus.prototype = {
         this._recalc_height();
     },
 
-    _clearAllSelections: function(hide_apps) {
-        let actors = this.applicationsBox.get_children();
-        for (let i = actors.length - 1; i >= 0; i--) {
+    _clearAllSelections: function() {
+        /* NOTE: Take care of selected items, NOTHING more!
+         */
+        let actors = this.applicationsBox.get_children()
+            .concat(this.customLaunchersBox.get_children());
+        let i = actors.length;
+        while (i--) {
             actors[i].style_class = "menu-application-button";
-            if (hide_apps) {
-                actors[i].hide();
-            }
         }
 
         actors = this.categoriesBox.get_children();
-        for (let i = actors.length - 1; i >= 0; i--) {
+        i = actors.length;
+        while (i--) {
             actors[i].style_class = "menu-category-button";
-            actors[i].show();
         }
     },
 
@@ -1791,36 +1945,17 @@ CinnamonMenuForkByOdyseus.prototype = {
         }
 
         this.lastSelectedCategory = aName;
-
-        if (aName === "favorites") {
-            this._displayButtons(aName);
-        } else if (aName === "recentApps") {
-            this._displayButtons(aName, null, true);
-        } else {
-            this._displayButtons(this._listApplications(aName));
-        }
-
+        this._displayButtons(aName);
         this.closeContextMenus(null, false);
     },
 
     closeContextMenus: function(excluded, animate) {
-        for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
-            if (this._applicationsButtons[i] !== excluded && this._applicationsButtons[i].menu.isOpen) {
+        let i = this._applicationsButtons.length;
+        while (i--) {
+            if (this._applicationsButtons[i] !== excluded &&
+                this._applicationsButtons[i].hasOwnProperty("menu") &&
+                this._applicationsButtons[i].menu.isOpen) {
                 this._applicationsButtons[i][animate ?
-                    "toggleMenu" :
-                    "closeMenu"
-                ]();
-            }
-        }
-
-        for (let i = this._recentAppsButtons.length - 1; i >= 0; i--) {
-            if (this._recentAppsButtons[i] !== excluded &&
-                // Check if it is an ApplicationButton
-                // (the Clear list button and the No recent apps... "button" aren't).
-                (this._recentAppsButtons[i] instanceof $.ApplicationButton ||
-                    this._recentAppsButtons[i] instanceof $.SearchResultButton) &&
-                this._recentAppsButtons[i].menu.isOpen) {
-                this._recentAppsButtons[i][animate ?
                     "toggleMenu" :
                     "closeMenu"
                 ]();
@@ -1847,51 +1982,49 @@ CinnamonMenuForkByOdyseus.prototype = {
         }
     },
 
-    _loopAppButtons: function(aButtons, aAction) {
-        for (let i = aButtons.length - 1; i >= 0; i--) {
-            aButtons[i].actor[aAction]();
-        }
-    },
-
-    _displayButtons: function(aAppCategory, aApps, aRecentApps) {
-        if (aAppCategory) {
-            if (aAppCategory === "favorites") {
-                for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
-                    this._applicationsButtons[i].actor[
-                        (AppFavorites.getAppFavorites().isFavorite(this._applicationsButtons[i].app.get_id()) &&
-                            !this._applicationsButtons[i].isSearchResult) ?
+    _displayButtons: function(aAppCategory) {
+        let i = this._applicationsButtons.length;
+        while (i--) {
+            let btn = this._applicationsButtons[i];
+            let action;
+            switch (aAppCategory) {
+                case this.favoritesCatName:
+                    action = (btn.buttonType === "app" &&
+                            AppFavorites.getAppFavorites().isFavorite(btn.app.get_id())) ?
                         "show" :
-                        "hide"
-                    ]();
-                }
-            } else {
-                for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
-                    this._applicationsButtons[i].actor[
-                        (this._applicationsButtons[i].category.indexOf(aAppCategory) !== -1 &&
-                            !this._applicationsButtons[i].isSearchResult) ?
+                        "hide";
+                    break;
+                case this.searchResultsCatName:
+                    action = btn.buttonType === "search_result" &&
+                        btn instanceof $.DummyApplicationButton ?
                         "show" :
-                        "hide"
-                    ]();
-                }
+                        "hide";
+                    break;
+                case this.recentAppsCatName:
+                    action = (btn.buttonType === "recent_application" &&
+                            btn.shouldBeDisplayed) ?
+                        "show" :
+                        "hide";
+                    break;
+                default:
+                    action = (btn.buttonType === "app" &&
+                            btn.category.indexOf(aAppCategory) !== -1) ?
+                        "show" :
+                        "hide";
             }
-        } else if (aApps) {
-            for (let i = this._applicationsButtons.length - 1; i >= 0; i--) {
-                this._applicationsButtons[i].actor[
-                    this._applicationsButtons[i].isSearchResult ?
-                    "show" :
-                    "hide"
-                ]();
-            }
-        } else {
-            this._loopAppButtons(this._applicationsButtons, "hide");
-        }
 
-        this._loopAppButtons(this._recentAppsButtons, aRecentApps ? "show" : "hide");
+            btn.actor[action]();
+        }
     },
 
     _setCategoriesButtonActive: function(active) {
         let categoriesButtons = this.categoriesBox.get_children();
-        for (let i = categoriesButtons.length - 1; i >= 0; i--) {
+        let i = categoriesButtons.length;
+        while (i--) {
+            // If the mouse is moved over the categories box while performing a search,
+            // the keyboard focus of the applications box will be lost.
+            // Toggling the reactive state of the category buttons fixes this.
+            categoriesButtons[i].reactive = active;
             categoriesButtons[i].set_style_class_name(
                 active ?
                 "menu-category-button" :
@@ -1901,10 +2034,12 @@ CinnamonMenuForkByOdyseus.prototype = {
     },
 
     resetSearch: function() {
+        this.searchEntry.set_secondary_icon(this._searchInactiveIcon);
         this.searchEntry.set_text("");
         this._previousSearchPattern = "";
         this.searchActive = false;
-        this._clearAllSelections(true);
+        this.searching = false;
+        this._clearAllSelections();
         this._setCategoriesButtonActive(true);
         global.stage.set_key_focus(this.searchEntry);
     },
@@ -1914,122 +2049,57 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.menuIsOpening = false;
             return;
         } else {
-            let searchString = this.searchEntry.get_text();
-            if (searchString === "" && !this.searchActive) {
-                return;
-            }
-            this.searchActive = searchString !== "";
-            this._clearAllSelections();
+            this._searchingTimeout = Mainloop.timeout_add(50, () => {
+                let searchString = this.searchEntry.get_text();
+                if (searchString === "" && !this.searchActive) {
+                    return false;
+                }
+                this.searchActive = searchString !== "";
+                this._clearAllSelections();
 
-            if (this.searchActive) {
-                this.searchEntry.set_secondary_icon(this._searchActiveIcon);
-                if (this._searchIconClickedId === 0) {
-                    this._searchIconClickedId = this.searchEntry.connect("secondary-icon-clicked",
-                        () => {
-                            this.resetSearch();
-                            this._onOpenStateChanged(null, true);
-                        });
+                if (this.searchActive) {
+                    this.searchEntry.set_secondary_icon(this._searchActiveIcon);
+                    if (this._searchIconClickedId === 0) {
+                        this._searchIconClickedId = this.searchEntry.connect("secondary-icon-clicked",
+                            () => {
+                                this.resetSearch();
+                                this._onOpenStateChanged(null, true);
+                            });
+                    }
+                    this._setCategoriesButtonActive(false);
+                    this._doSearch();
+                } else {
+                    this.searching = false;
+                    if (this._searchIconClickedId > 0) {
+                        this.searchEntry.disconnect(this._searchIconClickedId);
+                    }
+                    this._searchIconClickedId = 0;
+                    this.searchEntry.set_secondary_icon(this._searchInactiveIcon);
+                    this._previousSearchPattern = "";
+                    this._setCategoriesButtonActive(true);
+                    this._onOpenStateChanged(null, true);
                 }
-                this._setCategoriesButtonActive(false);
-                this._doSearch();
-            } else {
-                if (this._searchIconClickedId > 0) {
-                    this.searchEntry.disconnect(this._searchIconClickedId);
-                }
-                this._searchIconClickedId = 0;
-                this.searchEntry.set_secondary_icon(this._searchInactiveIcon);
-                this._previousSearchPattern = "";
-                this._setCategoriesButtonActive(true);
-                this._onOpenStateChanged(null, true);
-            }
+
+                return false;
+            });
+
             return;
         }
     },
 
-    _listApplications: function(category_menu_id, pattern) {
-        let applist = category_menu_id || "all";
+    _fuzzyMatch: function(aNeedle, aHaystack, aResult, aMatchCount, aPriority) {
+        let result = this._fuzzySearch(aNeedle, aHaystack, aPriority);
 
-        let res;
-
-        if (pattern) {
-            let searchData = [{
-                "method": "get_name",
-                "priority": $.SEARCH_PRIORITY.HIGH
-            }, {
-                "method": "get_keywords",
-                "priority": $.SEARCH_PRIORITY.MEDIUM
-            }, {
-                "method": "get_description",
-                "priority": $.SEARCH_PRIORITY.VERY_LOW
-            }];
-
-            res = {};
-            this._applicationsOrder = {};
-            let i = 0,
-                iLen = this._applicationsButtons.length;
-            for (; i < iLen; i++) {
-                if (!this._applicationsButtons[i].isSearchResult) {
-                    let appID = this._applicationsButtons[i].app.get_id();
-                    let fuzzy = [false, 0];
-                    let matches = 0;
-
-                    for (let s = searchData.length - 1; s >= 0; s--) {
-                        let method = searchData[s].method;
-
-                        if (this._applicationsButtons[i].app[method]()) {
-                            let haystack;
-                            let match;
-
-                            switch (method) {
-                                case "get_keywords":
-                                    haystack = this._applicationsButtons[i].app[method]().split(";");
-                                    break;
-                                case "get_description":
-                                    haystack = this._applicationsButtons[i].app[method]().split("\s+").filter((x) => {
-                                        return x.length > 6;
-                                    });
-                                    break;
-                                default:
-                                    haystack = this._applicationsButtons[i].app[method]();
-                            }
-
-                            if (haystack instanceof Array) {
-                                for (let h of haystack) {
-                                    match = this._fuzzyMatch(pattern, h.trim(), fuzzy, matches, searchData[s].priority);
-                                    fuzzy = match[0];
-                                    matches = match[1];
-                                }
-                            } else {
-                                match = this._fuzzyMatch(pattern, haystack, fuzzy, matches, searchData[s].priority);
-                                fuzzy = match[0];
-                                matches = match[1];
-                            }
-                        }
-                    }
-
-                    if (fuzzy[0]) {
-                        fuzzy[1] = fuzzy[1] / matches;
-                        res[appID] = this._applicationsButtons[i].app;
-                        this._applicationsOrder[appID] = fuzzy[1];
-                    }
-                }
-            }
-        } else {
-            res = applist;
-        }
-        return res;
-    },
-
-    _fuzzyMatch: function(aNeedle, aHaystack, aFuzzy, aMatches, aPriority) {
-        let match = this._fuzzySearch(aNeedle, Util.latinise(aHaystack.toLowerCase()), aPriority);
-
-        if (match[0]) {
-            aMatches += 1;
-            aFuzzy[0] = true;
-            aFuzzy[1] += match[1] + aPriority;
+        if (result.matches) {
+            aMatchCount += 1;
+            aResult.matches = true;
+            aResult.priority += result.priority + aPriority;
         }
 
-        return [aFuzzy, aMatches];
+        return {
+            result: aResult,
+            match_count: aMatchCount
+        };
     },
 
     _fuzzySort: function() {
@@ -2040,30 +2110,36 @@ CinnamonMenuForkByOdyseus.prototype = {
         };
     },
 
-    _fuzzySearch: function(needle, haystack, aPriority) {
-        let hlen = haystack.length;
-        let nlen = needle.length;
+    _fuzzySearch: function(aNeedle, aHaystack, aPriority) {
+        let hlen = aHaystack.length;
+        let nlen = aNeedle.length;
         let occurrenceAt = 0;
         let previousJ = 0;
 
         if (nlen > hlen) {
-            return [false, 0];
+            return {
+                matches: false,
+                priority: 0
+            };
         }
 
         if (nlen === hlen) {
-            return [needle === haystack, aPriority];
+            return {
+                matches: aNeedle === aHaystack,
+                priority: aPriority
+            };
         }
 
         outer:
             for (let i = 0, j = 0; i < nlen; i++) {
-                let nch = needle.charCodeAt(i);
+                let nch = aNeedle.charCodeAt(i);
                 while (j < hlen) {
-                    if (haystack.charCodeAt(j++) === nch) {
+                    if (aHaystack.charCodeAt(j++) === nch) {
                         if (previousJ === 0) {
                             previousJ = j;
                         } else {
-                            if (haystack.charCodeAt(j - 2) == 32 && (previousJ == 1 ||
-                                    haystack.charCodeAt(previousJ - 1) == 32)) {
+                            if (aHaystack.charCodeAt(j - 2) == 32 && (previousJ == 1 ||
+                                    aHaystack.charCodeAt(previousJ - 1) == 32)) {
                                 // If every character in search pattern is preceded by
                                 // a space and matches it should be first result.
                                 occurrenceAt -= 100;
@@ -2078,17 +2154,23 @@ CinnamonMenuForkByOdyseus.prototype = {
                         continue outer;
                     }
                 }
-                return [false, 0];
+                return {
+                    matches: false,
+                    priority: 0
+                };
             }
 
-        return [true, occurrenceAt];
+        return {
+            matches: true,
+            priority: occurrenceAt
+        };
     },
 
     _doSearch: function() {
-        this._searchTimeoutId = 0;
         let pattern = Util.latinise(this.searchEntryText.get_text().trim().toLowerCase());
 
         if (pattern === this._previousSearchPattern) {
+            this._ensureFirstAppSelected();
             return false;
         }
 
@@ -2099,20 +2181,114 @@ CinnamonMenuForkByOdyseus.prototype = {
         this._previousTreeSelectedActor = null;
         this._previousSelectedActor = null;
 
-        // _listApplications returns all the applications when the search
-        // string is zero length. This will happen if you type a space
-        // in the search entry.
         // Don't bother to trigger search with just one character.
         if (pattern.length <= 1) {
             return false;
         }
 
-        let appResults = this._listApplications(null, pattern);
+        // Avoid triggering this._displayButtons on every keystroke while searching.
+        // When searching, all buttons that need to be displayed are already visible,
+        // and all that need to be hidden already are.
+        /* NOTE: this.searchActive serves a different purpose and is set at
+         * different times than this.searching.
+         */
+        if (!this.searching) {
+            this.searching = true;
+            this._displayButtons(this.searchResultsCatName);
+        }
 
-        this._displayButtons(null, !!appResults);
+        let appResults = {};
 
-        appResults && this._populateSearchResults(appResults);
+        this._applicationsOrder = {};
+        let i = this._searchDatabase.length;
+        while (i--) {
+            let result = {
+                matches: false,
+                priority: 0
+            };
+            let matchCount = 0;
 
+            /* NOTE: Labeled statements.
+             * Since I just learned of their existence, lets use them. LOL
+             */
+            let d = this._searchDatabase[i].haystacks.length;
+            comb:
+                while (d--) {
+                    let haystack = this._searchDatabase[i].haystacks[d];
+
+                    let h = haystack.data.length;
+                    while (h--) {
+                        /* NOTE: Exact app. name match logic.
+                         * If the haystack is the app. name and the app. name
+                         * contains the search pattern, stop looking for matches,
+                         * set matchCount to one (so there is no average calculation) and
+                         * multiply negative "distance" by 10.
+                         * patternIndex is added (subtracted because priority is a very
+                         * large negative number) so that when a pattern is closer to the
+                         * beginning of a string (lower index), a greater priority it has.
+                         */
+                        let patternIndex = haystack.data[h].indexOf(pattern);
+                        if (haystack.context === "name" &&
+                            patternIndex >= 0) {
+                            result = {
+                                matches: true,
+                                priority: (haystack.priority * 10) + patternIndex
+                            };
+                            matchCount = 1;
+                            break comb;
+                        }
+
+                        let match = this._fuzzyMatch(
+                            pattern, haystack.data[h], result, matchCount, haystack.priority
+                        );
+                        result = match.result;
+                        matchCount = match.match_count;
+                    }
+                }
+
+            if (result.matches) {
+                result.priority = result.priority / matchCount;
+
+                if (this.pref_strict_search_results &&
+                    result.priority >= $.SEARCH_PRIORITY.VERY_LOW) {
+                    continue;
+                }
+
+                appResults[this._searchDatabase[i].app.get_id()] = {
+                    app: this._searchDatabase[i].app,
+                    categories: this._searchDatabase[i].categories
+                };
+                this._applicationsOrder[this._searchDatabase[i].app.get_id()] = result.priority;
+            }
+        }
+
+        let sortedResuls = Object.keys(appResults).sort(this._fuzzySort());
+        // DO NOT USE INVERSE LOOP HERE!!!
+        let b = 0,
+            bLen = this._searchResultButtons.length;
+        for (; b < bLen; b++) {
+            let sRB = this._searchResultButtons[b];
+            if (sortedResuls[b]) {
+                sRB.populateItem(appResults[sortedResuls[b]].app);
+                sRB.actor.show();
+                this._setSelectedItemTooltip(
+                    sRB,
+                    appResults[sortedResuls[b]].app.get_name(),
+                    appResults[sortedResuls[b]].app.get_description() || "",
+                    appResults[sortedResuls[b]].categories
+                );
+            } else {
+                sRB.actor.hide();
+            }
+        }
+
+        this.searchResultsEmptyButton.actor[sortedResuls.length === 0 ? "show" : "hide"]();
+        this._ensureFirstAppSelected();
+
+        return false;
+    },
+
+    _ensureFirstAppSelected: function() {
         this.appBoxIter.reloadVisible();
         if (this.appBoxIter.getNumVisibleChildren() > 0) {
             let item_actor = this.appBoxIter.getFirstVisible();
@@ -2122,60 +2298,125 @@ CinnamonMenuForkByOdyseus.prototype = {
                 item_actor._delegate.emit("enter-event");
             }
         }
-
-        return false;
     },
 
-    _populateSearchResults: function(aAppResults) {
-        let sortedResuls = Object.keys(aAppResults).sort(this._fuzzySort());
-        let searchResultButtons = this._applicationsButtons.filter((x) => {
-            return x.isSearchResult;
-        });
+    _storeAppSearchData: function(aApp, aCategories) {
+        let haystacks = [];
 
-        let i = 0,
-            iLen = searchResultButtons.length;
+        let s = $.SEARCH_DATA.length;
+        while (s--) {
+            let context = $.SEARCH_DATA[s].context;
 
-        for (; i < iLen; i++) {
-            let sRB = searchResultButtons[i];
-            if (sortedResuls[i]) {
-                let app = aAppResults[sortedResuls[i]];
-                sRB.populateResult(app);
-                sRB.actor.show();
-                this._setSelectedItemTooltip(
-                    sRB,
-                    sRB.app.get_name(),
-                    sRB.app.get_description() || ""
-                );
-            } else {
-                sRB.populateResult(null);
-                sRB.actor.hide();
+            let haystack = [];
+
+            /* NOTE: Using regular expressions instead of .split() because
+             * .split() in JavaScript is an ABOMINATION!
+             * Splitting a string using an array works however and whenever
+             * it F***ING wants!!!
+             */
+            switch (context) {
+                case "keywords":
+                    /* NOTE: The filter(Boolean) part is just in case.
+                     * I don't think that it is need after using the
+                     * "word boundary match", but it doesn't hurt.
+                     */
+                    haystack = aApp.get_keywords() ?
+                        aApp.get_keywords().match(/\b(\w+)/g).filter(Boolean) :
+                        [];
+                    break;
+                case "generic_name":
+                    /* NOTE: I don't trust this thing. That's why the try{}catch{} block.
+                     */
+                    try {
+                        haystack = aApp.get_app_info().get_generic_name() ?
+                            [aApp.get_app_info().get_generic_name()] :
+                            [];
+                    } catch (aErr) {
+                        haystack = [];
+                    }
+                    break;
+                    /* NOTE: This is too strict.
+                     * Furthermore, for applications whose description was redacted
+                     * by a F***ING salesman, it will not produce any relevant results.
+                     * case "get_description":
+                     *     // Split sentence into words.
+                     *     // <3 https://stackoverflow.com/a/36508315
+                     *     haystack = (aApp.get_description().match(/\b(\w+)'?(\w+)?\b/g)).filter((x) => {
+                     *         // Ignore most contractions, articles, etc.
+                     *         return x && x.length > 4;
+                     *     });
+                     *     break;
+                     */
+                case "name":
+                case "description":
+                    haystack = aApp["get_" + context]() ?
+                        [aApp["get_" + context]()] :
+                        [];
+                    break;
             }
+
+            if (haystack.length === 0) {
+                continue;
+            }
+
+            /* NOTE:
+             * data: Array of strings.
+             * context: Part of an app. the array of strings was extracted from.
+             * priority: Priority level.
+             */
+            haystacks.push({
+                data: haystack.map(this._normalizeHaystack),
+                context: context,
+                priority: $.SEARCH_DATA[s].priority
+            });
         }
+
+        /* NOTE:
+         * app: The app. whose data will be used to populate the search result menu items.
+         * categories: The categories to which the app. belongs to. Used to set the
+         *             search result items tooltip. Stored in the database to avoid
+         *             accessing buttons at search time.
+         * haystacks: All the haystacks to search through.
+         */
+        this._searchDatabase.push({
+            app: aApp,
+            categories: aCategories,
+            haystacks: haystacks
+        });
+    },
+
+    _normalizeHaystack: function(aStr) {
+        return Util.latinise(aStr.trim().toLowerCase());
     },
 
     closeMainMenu: function() {
         this.menu.close(this.pref_animate_menu);
     },
 
-    _setSelectedItemTooltip: function(aEl, aTitle, aDescription) {
+    _setSelectedItemTooltip: function(aEl, aTitle, aDescription, aCategories = []) {
         if (aEl && aEl.tooltip) {
             try {
-                // Whithout using the escapeHTML function, the following warning is logged.
+                // Without using the escapeHTML function, the following warning is logged.
                 // Clutter-WARNING **: Failed to set the markup of the actor 'ClutterText':
                 // Error on line 1: Entity did not end with a semicolon; most likely you used
                 // an ampersand character without intending to start an entity - escape ampersand
                 // as &amp;
                 aEl.tooltip._tooltip.get_clutter_text().set_markup(
                     (aTitle ? '<span weight="bold">' + $.escapeHTML(aTitle) + "</span>" : "") +
-                    (aTitle && aDescription ? "\n" : "") +
-                    (aDescription ? $.escapeHTML(aDescription) : "")
+                    (aDescription ? "\n" + $.escapeHTML(aDescription) : "") +
+                    (aCategories.length > 0 ?
+                        "\n\n" + '<span weight="bold">' + $.escapeHTML(_("Categories")) + "</span>" +
+                        ": " + $.escapeHTML(aCategories.join(" - ")) :
+                        "")
                 );
             } catch (aErr) {
                 global.logError(aErr);
                 aEl.tooltip._tooltip.set_text(
                     (aTitle ? aTitle : "") +
-                    (aTitle && aDescription ? "\n" : "") +
-                    (aDescription ? aDescription : "")
+                    (aDescription ? "\n" + aDescription : "") +
+                    (aCategories.length > 0 ?
+                        "\n\n" + _("Categories") + ": " + aCategories.join(" - ") :
+                        "")
                 );
             }
         }
@@ -2216,10 +2457,6 @@ CinnamonMenuForkByOdyseus.prototype = {
             case "pref_overlay_key":
                 this._updateKeybinding();
                 break;
-            case "pref_show_category_icons":
-            case "pref_show_application_icons":
-                this._refreshAll();
-                break;
             case "pref_enable_autoscroll":
                 this._update_autoscroll();
                 break;
@@ -2228,9 +2465,13 @@ CinnamonMenuForkByOdyseus.prototype = {
             case "pref_context_show_bumblebee":
                 this._updateGlobalPreferences();
                 break;
+            case "pref_recently_used_apps_ignore_favorites":
             case "pref_recently_used_apps_enabled":
                 this._setupRecentAppsManager();
                 break;
+                /* NOTE: Setting toggled from the Edit Custom launchers
+                 * GUI when applying changes.
+                 */
             case "pref_hard_refresh_menu":
                 this._hardRefreshAll();
                 break;

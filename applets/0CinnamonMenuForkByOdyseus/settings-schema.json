@@ -71,6 +71,13 @@
         "description": "Open the menu when I move my mouse over it",
         "tooltip": "Enable opening the menu when the mouse enters the applet"
     },
+    "pref_strict_search_results": {
+        "type": "checkbox",
+        "indent": true,
+        "default": false,
+        "description": "Strict search results",
+        "tooltip": "If enabled, low priority search results will not be displayed."
+    },
     "pref_menu_hover_delay": {
         "type": "spinbutton",
         "indent": true,
@@ -86,9 +93,9 @@
     "pref_max_search_results": {
         "type": "spinbutton",
         "indent": true,
-        "default": 20,
-        "min": 10,
-        "max": 50,
+        "default": 15,
+        "min": 5,
+        "max": 100,
         "step": 1,
         "units": "items",
         "description": "Maximum search results",
@@ -135,7 +142,7 @@
         "indent": true,
         "default": false,
         "description": "Invert menu layout",
-        "tooltip": ""
+        "tooltip": "By default, the search box is at the top of the menu and the custom launchers box is at the bottom. Enabling this preference will invert those elements in the menu."
     },
     "pref_swap_categories_box": {
         "type": "checkbox",
@@ -149,13 +156,6 @@
         "indent": true,
         "default": true,
         "description": "Invert custom launches box buttons order",
-        "tooltip": ""
-    },
-    "pref_disable_new_apps_highlighting": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Disable newly installed applications highlighting",
         "tooltip": ""
     },
     "pref_max_width_for_buttons": {
@@ -191,6 +191,18 @@
         "step": 2,
         "units": "pixels",
         "description": "Applications icon size:",
+        "tooltip": ""
+    },
+    "pref_search_result_icon_size": {
+        "type": "spinbutton",
+        "indent": true,
+        "dependency": "pref_show_application_icons",
+        "default": 16,
+        "min": 16,
+        "max": 256,
+        "step": 2,
+        "units": "pixels",
+        "description": "Search results icon size:",
         "tooltip": ""
     },
     "pref_custom_launchers_icon_size": {
