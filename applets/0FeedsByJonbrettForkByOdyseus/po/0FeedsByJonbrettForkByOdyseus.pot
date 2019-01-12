@@ -1,12 +1,12 @@
 # This is a template file for translating the 0FeedsByJonbrettForkByOdyseus package.
-# Copyright (C) 2017-2018
+# Copyright (C) 2017-2019
 # This file is distributed under the same license as the 0FeedsByJonbrettForkByOdyseus package.
-# Odyseus <EMAIL@ADDRESS>, 2017-2018.
+# Odyseus <EMAIL@ADDRESS>, 2017-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus 0.54\n"
-"POT-Creation-Date: 2018-12-25 20:56-0300\n"
+"POT-Creation-Date: 2019-01-12 03:20-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:263 python/manage_feeds.py:175
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:271 python/manage_feeds.py:175
 msgid "Help"
 msgstr ""
 
@@ -110,35 +110,35 @@ msgstr ""
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr ""
 
-#: applet.js:70
+#: applet.js:78
 msgid "Feed reader"
 msgstr ""
 
-#: applet.js:170
+#: applet.js:178
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:171
+#: applet.js:179
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr ""
 
-#: applet.js:172
+#: applet.js:180
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:231
+#: applet.js:239
 msgid "Mark all read"
 msgstr ""
 
-#: applet.js:243
+#: applet.js:251
 msgid "Reload"
 msgstr ""
 
-#: applet.js:254
+#: applet.js:262
 msgid "Manage feeds"
 msgstr ""
 
-#: applet.js:357
+#: applet.js:365
 msgid "No unread feeds"
 msgstr ""
 
@@ -297,60 +297,60 @@ msgstr ""
 msgid "Feeds Reader (Fork By Odyseus)"
 msgstr ""
 
-#: utils.js:89
+#: utils.js:97
 msgid "Feeds"
 msgstr ""
 
-#: utils.js:280
+#: utils.js:288
 msgid "Right Click to open feed"
 msgstr ""
 
 #. Only one page of items to read, no need to display mark all posts option.
-#: utils.js:351
+#: utils.js:359
 msgid "Mark All Posts Read"
 msgstr ""
 
-#: utils.js:359
+#: utils.js:367
 #, javascript-format
 msgid "Mark Next %d Posts Read"
 msgstr ""
 
-#: utils.js:365
+#: utils.js:373
 msgid "Update feed URL"
 msgstr ""
 
-#: utils.js:450 utils.js:456
+#: utils.js:458 utils.js:464
 msgid "Published"
 msgstr ""
 
-#: utils.js:519
+#: utils.js:527
 msgid "Mark Post Read"
 msgstr ""
 
-#: utils.js:557
+#: utils.js:565
 msgid "d"
 msgstr ""
 
-#: utils.js:559 utils.js:561
+#: utils.js:567 utils.js:569
 msgid "h"
 msgstr ""
 
-#: utils.js:561
+#: utils.js:569
 #, javascript-format
 msgid "(<1%s) "
 msgstr ""
 
 #. Invalid feed detected, throw and log error.
-#: utils.js:839
+#: utils.js:847
 msgid "Invalid feed url"
 msgstr ""
 
-#: utils.js:919
+#: utils.js:927
 #, javascript-format
 msgid "%d unread items!"
 msgstr ""
 
-#: utils.js:1060 utils.js:1073
+#: utils.js:1068 utils.js:1081
 msgid "Loading feed"
 msgstr ""
 

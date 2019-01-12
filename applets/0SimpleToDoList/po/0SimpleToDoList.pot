@@ -1,12 +1,12 @@
 # This is a template file for translating the 0SimpleToDoList package.
-# Copyright (C) 2017-2018
+# Copyright (C) 2017-2019
 # This file is distributed under the same license as the 0SimpleToDoList package.
-# Odyseus <EMAIL@ADDRESS>, 2017-2018.
+# Odyseus <EMAIL@ADDRESS>, 2017-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.05\n"
-"POT-Creation-Date: 2018-12-25 20:56-0300\n"
+"POT-Creation-Date: 2019-01-12 03:20-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:940
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:948
 msgid "Help"
 msgstr ""
 
@@ -264,171 +264,171 @@ msgstr ""
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr ""
 
-#: applet.js:114 applet.js:174
+#: applet.js:122 applet.js:182
 msgid "New tasks list..."
 msgstr ""
 
-#: applet.js:846
+#: applet.js:854
 msgid "Save as TODO"
 msgstr ""
 
-#: applet.js:854
+#: applet.js:862
 msgid "Save all current tasks lists as a TODO file."
 msgstr ""
 
-#: applet.js:860
+#: applet.js:868
 msgid "Export tasks"
 msgstr ""
 
-#: applet.js:868
+#: applet.js:876
 msgid "Export all current tasks lists into a JSON file."
 msgstr ""
 
-#: applet.js:869 applet.js:883
+#: applet.js:877 applet.js:891
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr ""
 
-#: applet.js:875
+#: applet.js:883
 msgid "Import tasks"
 msgstr ""
 
-#: applet.js:882
+#: applet.js:890
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr ""
 
-#: applet.js:892
+#: applet.js:900
 msgid "Restore example tasks"
 msgstr ""
 
-#: applet.js:906
+#: applet.js:914
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr ""
 
-#: applet.js:912
+#: applet.js:920
 msgid "Reset tasks"
 msgstr ""
 
-#: applet.js:918 applet.js:931
+#: applet.js:926 applet.js:939
 msgid "WARNING!!!"
 msgstr ""
 
-#: applet.js:919
+#: applet.js:927
 msgid "Do you really want to remove all your current tasks?"
 msgstr ""
 
-#: applet.js:920 applet.js:931
+#: applet.js:928 applet.js:939
 msgid "This operation cannot be reverted!!!"
 msgstr ""
 
-#: applet.js:930
+#: applet.js:938
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr ""
 
-#: applet.js:944
+#: applet.js:952
 msgid "Open this applet help file."
 msgstr ""
 
-#: utils.js:46
+#: utils.js:53
 msgid "Tasks list - Some examples"
 msgstr ""
 
-#: utils.js:52
+#: utils.js:59
 msgid "Tasks can be \"tagged\" by simply writing \"@tagname\" as part of the task text. For now, there are 5 priority tags available."
 msgstr ""
 
-#: utils.js:55
+#: utils.js:62
 msgid "This is a @critical priority task"
 msgstr ""
 
-#: utils.js:58
+#: utils.js:65
 msgid "This is a @high priority task"
 msgstr ""
 
-#: utils.js:61
+#: utils.js:68
 msgid "This is a @medium priority task"
 msgstr ""
 
-#: utils.js:64
+#: utils.js:71
 msgid "This is a @today priority task"
 msgstr ""
 
-#: utils.js:67
+#: utils.js:74
 msgid "This is a @low priority task"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:201
+#: utils.js:208
 msgid "low"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:203
+#: utils.js:210
 msgid "today"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:205
+#: utils.js:212
 msgid "medium"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:207
+#: utils.js:214
 msgid "high"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:209
+#: utils.js:216
 msgid "critical"
 msgstr ""
 
-#: utils.js:597
+#: utils.js:604
 msgid "New task..."
 msgstr ""
 
-#: utils.js:608
+#: utils.js:615
 msgid "Tasks list options"
 msgstr ""
 
-#: utils.js:666
+#: utils.js:673
 msgid "Export this tasks list"
 msgstr ""
 
-#: utils.js:671
+#: utils.js:678
 msgid "Save this tasks list as TODO"
 msgstr ""
 
-#: utils.js:676
+#: utils.js:683
 msgid "Sort tasks alphabetically"
 msgstr ""
 
-#: utils.js:681 utils.js:691
+#: utils.js:688 utils.js:698
 msgid "Takes effect after closing and re-opening the main menu."
 msgstr ""
 
-#: utils.js:686
+#: utils.js:693
 msgid "Sort tasks by completed state"
 msgstr ""
 
-#: utils.js:696
+#: utils.js:703
 msgid "Display remove tasks buttons"
 msgstr ""
 
-#: utils.js:701 utils.js:711
+#: utils.js:708 utils.js:718
 msgid "Takes effect immediately."
 msgstr ""
 
-#: utils.js:706
+#: utils.js:713
 msgid "Keep completed tasks hidden"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence.
 #. "Remove this section/task"
-#: utils.js:1628
+#: utils.js:1635
 #, javascript-format
 msgid "Remove this %s"
 msgstr ""
 
-#: utils.js:1631
+#: utils.js:1638
 msgid "(Hold Ctrl key)"
 msgstr ""
 

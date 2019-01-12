@@ -1,12 +1,12 @@
 # This is a template file for translating the 0WindowListForkByOdyseus package.
-# Copyright (C) 2016-2018
+# Copyright (C) 2016-2019
 # This file is distributed under the same license as the 0WindowListForkByOdyseus package.
-# Odyseus <EMAIL@ADDRESS>, 2016-2018.
+# Odyseus <EMAIL@ADDRESS>, 2016-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus 1.12\n"
-"POT-Creation-Date: 2018-12-25 20:56-0300\n"
+"POT-Creation-Date: 2019-01-12 03:21-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 utils.js:1069
+#: ../../__app__/python_modules/localized_help_creator.py:328 utils.js:1078
 msgid "Help"
 msgstr ""
 
@@ -101,73 +101,73 @@ msgstr ""
 msgid "Inverted menu on top panel"
 msgstr ""
 
-#: utils.js:921
+#: utils.js:930
 msgid "Preferences"
 msgstr ""
 
-#: utils.js:935
+#: utils.js:944
 msgid "Move to the other monitor"
 msgstr ""
 
-#: utils.js:946
+#: utils.js:955
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr ""
 
-#: utils.js:957
+#: utils.js:966
 msgid "Only on this workspace"
 msgstr ""
 
-#: utils.js:963
+#: utils.js:972
 msgid "Visible on all workspaces"
 msgstr ""
 
-#: utils.js:969
+#: utils.js:978
 msgid "Move to another workspace"
 msgstr ""
 
 #. Close all/others
-#: utils.js:999
+#: utils.js:1008
 msgid "Close all"
 msgstr ""
 
-#: utils.js:1009
+#: utils.js:1018
 msgid "Close others"
 msgstr ""
 
-#: utils.js:1024
+#: utils.js:1033
 msgid "Restore to full opacity"
 msgstr ""
 
-#: utils.js:1032
+#: utils.js:1041
 msgid "Restore"
 msgstr ""
 
-#: utils.js:1037
+#: utils.js:1046
 msgid "Minimize"
 msgstr ""
 
-#: utils.js:1045
+#: utils.js:1054
 msgid "Unmaximize"
 msgstr ""
 
-#: utils.js:1050
+#: utils.js:1059
 msgid "Maximize"
 msgstr ""
 
-#: utils.js:1057
+#: utils.js:1066
 msgid "Close"
 msgstr ""
 
-#: utils.js:1076
+#: utils.js:1085
 msgid "About..."
 msgstr ""
 
-#: utils.js:1081
+#: utils.js:1090
 msgid "Configure..."
 msgstr ""
 
-#: utils.js:1097
+#: utils.js:1106
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""

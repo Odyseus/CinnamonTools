@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.05\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2018-12-24 21:59-0300\n"
+"POT-Creation-Date: 2019-01-12 03:05-0300\n"
 "PO-Revision-Date: 2018-08-25 02:48-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:940
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:948
 msgid "Help"
 msgstr "Ayuda"
 
@@ -267,171 +267,171 @@ msgstr "Estilo incorrecto de las entradas"
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr "La única manera de arreglar esto (que yo he podido encontrar) es editando el tema de Cinnamon que uno está usando y remover esas medidas fijas. Los selectores CSS que necesitan ser editados son **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** y **.popup-menu StEntry:focus**. Dependiendo para qué versión de Cinnamon el tema fue creado, uno puede encontrar sólo los primeros dos selectores, los últimos dos o todos ellos. Las propiedades CSS que necesitan ser editadas son **width** y **height**. Ellas podrían ser eliminadas, pero lo más sensible de hacer es renombrarlas a **min-width** y **min-height** respectivamente. Luego de editar el archivo del tema y reiniciar Cinnamon, las entradas de texto de este applet deberían lucir y funcionar correctamente."
 
-#: applet.js:114 applet.js:174
+#: applet.js:122 applet.js:182
 msgid "New tasks list..."
 msgstr "Nueva lista de tareas..."
 
-#: applet.js:846
+#: applet.js:854
 msgid "Save as TODO"
 msgstr "Guardar como TODO"
 
-#: applet.js:854
+#: applet.js:862
 msgid "Save all current tasks lists as a TODO file."
 msgstr "Guardar todas las listas de tareas actuales a un archivo TODO."
 
-#: applet.js:860
+#: applet.js:868
 msgid "Export tasks"
 msgstr "Exportar tareas"
 
-#: applet.js:868
+#: applet.js:876
 msgid "Export all current tasks lists into a JSON file."
 msgstr "Exportar todas las listas de tareas actuales a un archivo JSON."
 
-#: applet.js:869 applet.js:883
+#: applet.js:877 applet.js:891
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr "Archivos en formato JSON exportados por este applet pueden ser importados al applet y las listas de tareas encontradas dentro de dicho archivo serán agregadas a las listas de tareas actualmente cargadas en el applet."
 
-#: applet.js:875
+#: applet.js:883
 msgid "Import tasks"
 msgstr "Importar tareas"
 
-#: applet.js:882
+#: applet.js:890
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr "Importar listas de tareas hacia este applet desde un archivo JSON previamente exportado."
 
-#: applet.js:892
+#: applet.js:900
 msgid "Restore example tasks"
 msgstr "Restaurar tareas de ejemplo"
 
-#: applet.js:906
+#: applet.js:914
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr "Restaurar la lista de tareas de ejemplo que estaban presentes cuando se cargó por primera vez el applet."
 
-#: applet.js:912
+#: applet.js:920
 msgid "Reset tasks"
 msgstr "Restablecer tareas"
 
-#: applet.js:918 applet.js:931
+#: applet.js:926 applet.js:939
 msgid "WARNING!!!"
 msgstr "¡ADVERTENCIA!"
 
-#: applet.js:919
+#: applet.js:927
 msgid "Do you really want to remove all your current tasks?"
 msgstr "¿Realmente desea eliminar todas sus tareas actuales?"
 
-#: applet.js:920 applet.js:931
+#: applet.js:928 applet.js:939
 msgid "This operation cannot be reverted!!!"
 msgstr "¡Esta operación no puede ser revertida!"
 
-#: applet.js:930
+#: applet.js:938
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr "Eliminar todas las listas de tareas actualmente cargadas en este applet."
 
-#: applet.js:944
+#: applet.js:952
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 
-#: utils.js:46
+#: utils.js:53
 msgid "Tasks list - Some examples"
 msgstr "Lista de tareas - Algunos ejemplos"
 
-#: utils.js:52
+#: utils.js:59
 msgid "Tasks can be \"tagged\" by simply writing \"@tagname\" as part of the task text. For now, there are 5 priority tags available."
 msgstr "Tareas pueden ser \"etiquetadas\" simplemente escribiendo \"@etiqueta\" como parte del texto de la tarea. Por ahora, hay 5 etiquetas de prioridad disponibles."
 
-#: utils.js:55
+#: utils.js:62
 msgid "This is a @critical priority task"
 msgstr "Esta es una tarea de prioridad @crítica"
 
-#: utils.js:58
+#: utils.js:65
 msgid "This is a @high priority task"
 msgstr "Esta es una tarea de prioridad @alta"
 
-#: utils.js:61
+#: utils.js:68
 msgid "This is a @medium priority task"
 msgstr "Esta es una tarea de prioridad @media"
 
-#: utils.js:64
+#: utils.js:71
 msgid "This is a @today priority task"
 msgstr "Esta es una tarea de prioridad @hoy"
 
-#: utils.js:67
+#: utils.js:74
 msgid "This is a @low priority task"
 msgstr "Esta es una tarea de prioridad @baja"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:201
+#: utils.js:208
 msgid "low"
 msgstr "baja"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:203
+#: utils.js:210
 msgid "today"
 msgstr "hoy"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:205
+#: utils.js:212
 msgid "medium"
 msgstr "media"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:207
+#: utils.js:214
 msgid "high"
 msgstr "alta"
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:209
+#: utils.js:216
 msgid "critical"
 msgstr "crítica"
 
-#: utils.js:597
+#: utils.js:604
 msgid "New task..."
 msgstr "Nueva tarea..."
 
-#: utils.js:608
+#: utils.js:615
 msgid "Tasks list options"
 msgstr "Opciones de lista de tareas"
 
-#: utils.js:666
+#: utils.js:673
 msgid "Export this tasks list"
 msgstr "Exportar esta lista de tareas"
 
-#: utils.js:671
+#: utils.js:678
 msgid "Save this tasks list as TODO"
 msgstr "Guardar esta lista de tareas como archivo TODO"
 
-#: utils.js:676
+#: utils.js:683
 msgid "Sort tasks alphabetically"
 msgstr "Ordenar tareas alfabéticamente"
 
-#: utils.js:681 utils.js:691
+#: utils.js:688 utils.js:698
 msgid "Takes effect after closing and re-opening the main menu."
 msgstr "Toma efecto después de cerrar y volver a abrir el menú principal."
 
-#: utils.js:686
+#: utils.js:693
 msgid "Sort tasks by completed state"
 msgstr "Ordenar tareas por estado completado"
 
-#: utils.js:696
+#: utils.js:703
 msgid "Display remove tasks buttons"
 msgstr "Mostrar botones para borrar tareas"
 
-#: utils.js:701 utils.js:711
+#: utils.js:708 utils.js:718
 msgid "Takes effect immediately."
 msgstr "Toma efecto inmediatamente."
 
-#: utils.js:706
+#: utils.js:713
 msgid "Keep completed tasks hidden"
 msgstr "Mantener escondidas las tareas completadas"
 
 #. TO TRANSLATORS: Full sentence.
 #. "Remove this section/task"
-#: utils.js:1628
+#: utils.js:1635
 #, javascript-format
 msgid "Remove this %s"
 msgstr "Remover esta %s"
 
-#: utils.js:1631
+#: utils.js:1638
 msgid "(Hold Ctrl key)"
 msgstr "(Mantener presionada la tecla Control)"
 

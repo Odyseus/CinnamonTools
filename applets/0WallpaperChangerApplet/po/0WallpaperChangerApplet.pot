@@ -1,12 +1,12 @@
 # This is a template file for translating the 0WallpaperChangerApplet package.
-# Copyright (C) 2016-2018
+# Copyright (C) 2016-2019
 # This file is distributed under the same license as the 0WallpaperChangerApplet package.
-# Odyseus <EMAIL@ADDRESS>, 2016-2018.
+# Odyseus <EMAIL@ADDRESS>, 2016-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WallpaperChangerApplet 1.03\n"
-"POT-Creation-Date: 2018-12-25 20:56-0300\n"
+"POT-Creation-Date: 2019-01-12 03:21-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,11 +106,11 @@ msgstr ""
 msgid "Current Profile"
 msgstr ""
 
-#: settings.py:382 utils.js:723
+#: settings.py:382 utils.js:733
 msgid "Toggle and display the daemon status."
 msgstr ""
 
-#: settings.py:383 utils.js:715
+#: settings.py:383 utils.js:725
 msgid "Daemon Status"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Autostart Daemon"
 msgstr ""
 
-#: settings.py:411 applet.js:108
+#: settings.py:411 applet.js:116
 msgid "When enabled, the daemon will be automatically started when the applet is loaded. If it is already running or this is disabled, no action will be taken."
 msgstr ""
 
@@ -134,11 +134,11 @@ msgstr ""
 msgid "Manage keyboard shortcuts"
 msgstr ""
 
-#: settings.py:449 utils.js:617
+#: settings.py:449 utils.js:627
 msgid "Next Wallpaper"
 msgstr ""
 
-#: settings.py:453 utils.js:621
+#: settings.py:453 utils.js:631
 msgid "Previous Wallpaper"
 msgstr ""
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Remember Profiles State"
 msgstr ""
 
-#: settings.py:567 applet.js:123
+#: settings.py:567 applet.js:131
 msgid "When enabled, the daemon will remember its current and next wallpaper for the current profile when the profile is changed. This means returning back to the profile will restore the previous background plus the next in queue."
 msgstr ""
 
@@ -199,7 +199,7 @@ msgstr ""
 msgid "Show Notifications"
 msgstr ""
 
-#: settings.py:572 applet.js:118
+#: settings.py:572 applet.js:126
 msgid "Display a notification each time an event happens with wallpaper changer. This does not stop the applet from reporting errors."
 msgstr ""
 
@@ -435,124 +435,124 @@ msgstr ""
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr ""
 
-#: applet.js:102
+#: applet.js:110
 msgid "Extra Options"
 msgstr ""
 
-#: applet.js:107
+#: applet.js:115
 msgid "Auto Start Daemon"
 msgstr ""
 
-#: applet.js:112
+#: applet.js:120
 msgid "Change with Profile"
 msgstr ""
 
-#: applet.js:113
+#: applet.js:121
 msgid "When enabled, this will cause the daemon to automatically change the wallpaper whenever the current profile is changed."
 msgstr ""
 
-#: applet.js:117
+#: applet.js:125
 msgid "Notifications"
 msgstr ""
 
-#: applet.js:122
+#: applet.js:130
 msgid "Remember Profile State"
 msgstr ""
 
-#: applet.js:192
+#: applet.js:200
 msgid "Wallpaper Changed"
 msgstr ""
 
-#: applet.js:199
+#: applet.js:207
 msgid "Daemon Error"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Notifications are now enabled/disabled"
-#: applet.js:210
+#: applet.js:218
 #, javascript-format
 msgid "Notifications are now %s"
 msgstr ""
 
-#: applet.js:213
+#: applet.js:221
 msgid "disabled"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Notifications are now enabled/disabled"
-#: applet.js:213
+#: applet.js:221
 msgid "enabled"
 msgstr ""
 
-#: applet.js:229
+#: applet.js:237
 #, javascript-format
 msgid "Profile changed to %s"
 msgstr ""
 
-#: applet.js:259
+#: applet.js:267
 msgid "Configure..."
 msgstr ""
 
-#: utils.js:79
+#: utils.js:89
 #, javascript-format
 msgid "Schema %s could not be found for extension %s."
 msgstr ""
 
-#: utils.js:80
+#: utils.js:90
 msgid "Please check your installation."
 msgstr ""
 
-#: utils.js:410
+#: utils.js:420
 msgid "Wallpapers will be changed in random order"
 msgstr ""
 
-#: utils.js:412
+#: utils.js:422
 msgid "Wallpapers will be changed in alphabetical order"
 msgstr ""
 
-#: utils.js:414
+#: utils.js:424
 #, javascript-format
 msgid "Wallpaper rotation every %s seconds"
 msgstr ""
 
-#: utils.js:416
+#: utils.js:426
 msgid "Automatic rotation disabled"
 msgstr ""
 
-#: utils.js:418
+#: utils.js:428
 msgid "Wallpaper rotation at the beginning of every hour"
 msgstr ""
 
-#: utils.js:561
+#: utils.js:571
 msgid "You must provide at least two states for the button"
 msgstr ""
 
-#: utils.js:691
+#: utils.js:701
 msgid "Unable to go back any further, no history available"
 msgstr ""
 
-#: utils.js:750
+#: utils.js:760
 msgid "Open Current Wallpaper"
 msgstr ""
 
-#: utils.js:790
+#: utils.js:800
 msgid "Open Next Wallpaper"
 msgstr ""
 
-#: utils.js:827 utils.js:838
+#: utils.js:837 utils.js:848
 #, javascript-format
 msgid "Profile: %s"
 msgstr ""
 
-#: utils.js:1088
+#: utils.js:1098
 msgid "Applet activation aborted!!!"
 msgstr ""
 
-#: utils.js:1089
+#: utils.js:1099
 msgid "Your Cinnamon version may not be compatible!!!"
 msgstr ""
 
-#: utils.js:1090
+#: utils.js:1100
 msgid "Minimum Cinnamon version allowed: 3.0"
 msgstr ""
 

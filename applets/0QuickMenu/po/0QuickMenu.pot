@@ -1,12 +1,12 @@
 # This is a template file for translating the 0QuickMenu package.
-# Copyright (C) 2016-2018
+# Copyright (C) 2016-2019
 # This file is distributed under the same license as the 0QuickMenu package.
-# Odyseus <EMAIL@ADDRESS>, 2016-2018.
+# Odyseus <EMAIL@ADDRESS>, 2016-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0QuickMenu 1.10\n"
-"POT-Creation-Date: 2018-12-25 20:56-0300\n"
+"POT-Creation-Date: 2019-01-12 03:21-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:515
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:523
 msgid "Help"
 msgstr ""
 
@@ -169,28 +169,28 @@ msgstr ""
 
 #. NOTE: This string could be left blank because it's a default string,
 #. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:203
+#: applet.js:211
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""
 
-#: applet.js:497
+#: applet.js:505
 msgid "Update menu"
 msgstr ""
 
-#: applet.js:502
+#: applet.js:510
 msgid "Scan the main folder to re-create the menu."
 msgstr ""
 
-#: applet.js:505
+#: applet.js:513
 msgid "Open folder"
 msgstr ""
 
-#: applet.js:511
+#: applet.js:519
 msgid "Open the main folder."
 msgstr ""
 
-#: applet.js:521
+#: applet.js:529
 msgid "Open the help file."
 msgstr ""
 

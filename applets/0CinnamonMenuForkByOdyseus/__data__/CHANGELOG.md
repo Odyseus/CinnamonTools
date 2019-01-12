@@ -4,6 +4,61 @@
 
 ***
 
+- **Date:** Sat, 12 Jan 2019 03:05:32 -0300
+- **Commit:** [2e2562f](https://gitlab.com/Odyseus/CinnamonTools/commit/2e2562f)
+- **Author:** Odyseus
+
+```
+- Fuzzy search mechanism improvements.
+    - Added option to change the icon size of search results.
+    - Added option to not display low priority search results.
+    - Changed maximum search results preferences default value to 15, lowered minimum value to 5 and increased maximum value to 100.
+    - Now the generic name of an application will also be searched.
+    - Now the search is performed using a "data base" created at menu build time instead of looking up for search data in each button actor at search time.
+    - The search result items are now populated (their icon and label) in-place instead of removed and re-added.
+- Recent applications mechanism improvements.
+    - Implemented a mechanism similar to the one used by the search results.
+    - Instead of sorting actual button actors, only application data is sorted and then used to populate existent buttons.
+- Category selection mechanism improvements.
+    - Made the "custom category" names somewhat unique to prevent possible "complications".
+- Fixed issue that removed focus from a selected application when the mouse cursor was moved over the inactive categories box while performing a search.
+- Fixed issue that prevented the icon inside the search box to correctly change state.
+- Added category names to applications tooltips. This helps to know to which category belongs an application in the list of search results for example.
+- Keyboard navigation improvements.
+- Eradicated recently installed applications highlighting. It was never that useful to begin with because:
+    - Highlighting an application that one doesn't know in which category to find it was pointless.
+    - The list of "known applications" was ephemeral. Restarting Cinnamon or the system itself leave us still no knowing where the heck is the recently installed application.
+    - And finally, with fuzzy search implemented now, it is easier and more likely to find an unknown application.
+- Cleaned up more left over code.
+
+```
+
+***
+
+- **Date:** Thu, 3 Jan 2019 20:03:04 -0300
+- **Commit:** [dccd24e](https://gitlab.com/Odyseus/CinnamonTools/commit/dccd24e)
+- **Author:** Odyseus
+
+```
+- Implemented fuzzy search.
+- Added option to display a maximum amount of search results.
+
+```
+
+***
+
+- **Date:** Thu, 3 Jan 2019 08:38:01 -0300
+- **Commit:** [91dc16f](https://gitlab.com/Odyseus/CinnamonTools/commit/91dc16f)
+- **Author:** Odyseus
+
+```
+- Cleaned up left over code from previous features removal.
+- Cleaned up appletHelper.py script of unused code and re-organized import statements.
+
+```
+
+***
+
 - **Date:** Mon, 29 Oct 2018 13:44:46 -0300
 - **Commit:** [e971d74](https://gitlab.com/Odyseus/CinnamonTools/commit/e971d74)
 - **Author:** Odyseus

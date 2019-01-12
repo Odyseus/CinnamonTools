@@ -1,12 +1,12 @@
 # This is a template file for translating the 0ArgosForCinnamon package.
-# Copyright (C) 2017-2018
+# Copyright (C) 2017-2019
 # This file is distributed under the same license as the 0ArgosForCinnamon package.
-# Odyseus <EMAIL@ADDRESS>, 2017-2018.
+# Odyseus <EMAIL@ADDRESS>, 2017-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon 2.02\n"
-"POT-Creation-Date: 2018-12-25 20:56-0300\n"
+"POT-Creation-Date: 2019-01-12 03:20-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:749 utils.js:1185
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:757 utils.js:1193
 msgid "Help"
 msgstr ""
 
@@ -537,153 +537,153 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: applet.js:142
+#: applet.js:150
 msgid "Script file is not executable."
 msgstr ""
 
-#: applet.js:144
+#: applet.js:152
 msgid "The script file can be made executable from this applet context menu."
 msgstr ""
 
-#: applet.js:151 applet.js:733
+#: applet.js:159 applet.js:741
 msgid "Script file isn't a file, but a directory."
 msgstr ""
 
-#: applet.js:162 applet.js:740
+#: applet.js:170 applet.js:748
 msgid "Script file doesn't exists."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file 'FileName':"
-#: applet.js:251
+#: applet.js:259
 #, javascript-format
 msgid "Unable to execute file '%s':"
 msgstr ""
 
-#: applet.js:256 applet.js:579 applet.js:606
+#: applet.js:264 applet.js:587 applet.js:614
 msgid "Script file not set, cannot be found or it isn't an executable."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Invalid menu level for line 'LineWithTheError'"
-#: applet.js:358
+#: applet.js:366
 #, javascript-format
 msgid "Invalid menu level for line '%s'"
 msgstr ""
 
-#: applet.js:416 applet.js:418
+#: applet.js:424 applet.js:426
 msgid "Script file name:"
 msgstr ""
 
-#: applet.js:418
+#: applet.js:426
 msgid "No script set"
 msgstr ""
 
-#: applet.js:421 applet.js:507
+#: applet.js:429 applet.js:515
 msgid "Execution interval:"
 msgstr ""
 
-#: applet.js:424 applet.js:630
+#: applet.js:432 applet.js:638
 msgid "Rotation interval:"
 msgstr ""
 
-#: applet.js:431
+#: applet.js:439
 msgid "Script execution time:"
 msgstr ""
 
-#: applet.js:439
+#: applet.js:447
 msgid "Output process time:"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->tooltip
-#: applet.js:515
+#: applet.js:523
 msgid "Choose the time unit for the script execution interval."
 msgstr ""
 
-#: applet.js:528
+#: applet.js:536
 msgid "Set the script execution interval."
 msgstr ""
 
-#: applet.js:538
+#: applet.js:546
 msgid "Choose script"
 msgstr ""
 
-#: applet.js:565
+#: applet.js:573
 msgid "Choose a script file."
 msgstr ""
 
-#: applet.js:571
+#: applet.js:579
 msgid "Edit script"
 msgstr ""
 
-#: applet.js:590
+#: applet.js:598
 msgid "Edit the script file with your prefered text editor."
 msgstr ""
 
-#: applet.js:591
+#: applet.js:599
 msgid "After saving the changes made, the applet will update its data automatically if there is an interval set."
 msgstr ""
 
-#: applet.js:592
+#: applet.js:600
 msgid "Or the update could be done manually with the »Refresh« item on this applet context menu."
 msgstr ""
 
-#: applet.js:598
+#: applet.js:606
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:614
+#: applet.js:622
 msgid "This will re-run on demand the script assigned to this applet for the purpose of updating its output."
 msgstr ""
 
-#: applet.js:615
+#: applet.js:623
 msgid "This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited."
 msgstr ""
 
 #. Extras submenu
-#: applet.js:622
+#: applet.js:630
 msgid "Extras"
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval_units->tooltip
-#: applet.js:636
+#: applet.js:644
 msgid "Choose the time unit for the applet text rotation interval."
 msgstr ""
 
-#: applet.js:649
+#: applet.js:657
 msgid "Set the applet text rotation interval."
 msgstr ""
 
-#: applet.js:658
+#: applet.js:666
 msgid "Clear script"
 msgstr ""
 
-#: applet.js:664 applet.js:682
+#: applet.js:672 applet.js:690
 msgid "This operation will remove the current script from this applet leaving it \"blank\"."
 msgstr ""
 
-#: applet.js:665
+#: applet.js:673
 msgid "The current applet settings will be untouched and the actual script file will not be deleted."
 msgstr ""
 
-#: applet.js:666
+#: applet.js:674
 msgid "Do you want to proceed?"
 msgstr ""
 
-#: applet.js:696
+#: applet.js:704
 msgid "Make script executable"
 msgstr ""
 
-#: applet.js:702
+#: applet.js:710
 msgid "Make the script file executable so it can be used by this applet."
 msgstr ""
 
-#: applet.js:726
+#: applet.js:734
 msgid "Script file is already executable."
 msgstr ""
 
 #. Just in case.
-#: applet.js:753 utils.js:1186
+#: applet.js:761 utils.js:1194
 msgid "Open this applet help file."
 msgstr ""
 
@@ -884,31 +884,31 @@ msgstr ""
 msgid "Error underline"
 msgstr ""
 
-#: utils.js:112
+#: utils.js:120
 msgid "millisecond"
 msgid_plural "milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:114
+#: utils.js:122
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:116
+#: utils.js:124
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:118
+#: utils.js:126
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:120
+#: utils.js:128
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
@@ -916,36 +916,36 @@ msgstr[1] ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:130
+#: utils.js:138
 msgid "Seconds"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:133
+#: utils.js:141
 msgid "Minutes"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:136
+#: utils.js:144
 msgid "Hours"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:139
+#: utils.js:147
 msgid "Days"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to load image from Base64 representation: ErrorMessage"
-#: utils.js:414
+#: utils.js:422
 #, javascript-format
 msgid "Unable to load image from Base64 representation: %s"
 msgstr ""
 
-#: utils.js:1182
+#: utils.js:1190
 msgid "Check this applet help file for instructions."
 msgstr ""
 

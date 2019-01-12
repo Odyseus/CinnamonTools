@@ -99,22 +99,23 @@ body {
 </div>
 </div>
 <h2>Descripción</h2>
-<p>Este applet es una versión personalizada del menú predeterminado de Cinnamon, pero infinitamente más personalizable.</p>
-<h2>Características principales</h2>
+<p>Este applet es una versión personalizada del applet de menú predeterminado de Cinnamon, pero es más personalizable y sin cosas irrelevantes para buscar/iniciar aplicaciones.</p>
+<h2>Opciones/Características</h2>
 <ul>
-<li>Eliminada la caja de Favoritos en favor de la categoría Favoritos.</li>
-<li>Eliminada categoría Lugares.</li>
-<li>Eliminada categoría Archivos recientes.</li>
+<li>Implementada búsqueda difusa.</li>
+<li>Eliminada la caja de <strong>Favoritos</strong> en favor de la categoría <strong>Favoritos</strong>.</li>
+<li>Eliminada categoría <strong>Lugares</strong>.</li>
+<li>Eliminada categoría <strong>Archivos recientes</strong>.</li>
 <li>Eliminada búsqueda del archivo de sistema.</li>
 <li>Eliminados proveedores de búsqueda.</li>
 <li>Eliminada la caja de información de aplicaciones en favor de tooltips.</li>
-<li>Eliminada la categoría Todas las aplicaciones en favor de no tenerla (LOL).</li>
+<li>Eliminada la categoría <strong>Todas las aplicaciones</strong> en favor de no tenerla (LOL).</li>
 <li>Eliminadas las capacidades de arrastrar y soltar.</li>
+<li>Eliminado el resaltado de aplicaciones recién instaladas.</li>
 <li>Se ha añadido un cuadro de lanzadores personalizados que puede ejecutar cualquier comando/archivo de comandos/archivo.</li>
 <li>Los iconos de lanzadores personalizados pueden tener un tamaño personalizado y pueden ser simbólicos o a todo color.</li>
 <li>Los lanzadores personalizados pueden ejecutar cualquier comando (como se ingresa en un terminal) o una ruta de acceso a un archivo.  Si el archivo es un archivo de comandos ejecutable, se realizará un intento de ejecutarlo.  De lo contrario, el archivo se abrirá con el programa predeterminado para ese tipo de archivo.</li>
 <li>El tamaño de los iconos de Categorías/Aplicaciones pueden ser personalizados.</li>
-<li>La categoría <strong>Archivos recientes</strong> se puede ocultar.  Esto es para personas que desean que la categoría <strong>Archivos recientes</strong> se oculte sin deshabilitar los archivos recientes globalmente.</li>
 <li>La colocación del cuadro de categorías y el cuadro de aplicaciones se pueden intercambiar.</li>
 <li>La colocación de la caja de lanzadores personalizados y de la caja de búsqueda puede ser intercambiado.</li>
 <li>Las barras de desplazamiento en el cuadro de aplicaciones se pueden ocultar.</li>
@@ -232,22 +233,23 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </div>
 </div>
 <h2>Description</h2>
-<p>This applet is a custom version of the default Cinnamon Menu applet, but infinitely more customizable.</p>
-<h2>Added options/features</h2>
+<p>This applet is a custom version of the default Cinnamon Menu applet, but more customizable and without things irrelevant to searching/launching applications.</p>
+<h2>Options/Features</h2>
 <ul>
-<li>Removed Favorites box in favor of a Favorites category.</li>
-<li>Removed Places category.</li>
-<li>Removed Recent Files category.</li>
+<li>Implemented fuzzy search.</li>
+<li>Removed <strong>Favorites</strong> box in favor of a <strong>Favorites</strong> category.</li>
+<li>Removed <strong>Places</strong> category.</li>
+<li>Removed <strong>Recent Files</strong> category.</li>
 <li>Removed file system search.</li>
 <li>Removed search providers.</li>
 <li>Removed applications info box in favor of tooltips.</li>
-<li>Removed All Applications category in favor of not having it (LOL).</li>
+<li>Removed <strong>All Applications</strong> category in favor of not having it (LOL).</li>
 <li>Removed drag&amp;drop capabilities.</li>
+<li>Removed recently installed applications highlighting.</li>
 <li>Added a custom launchers box that can run any command/script/file.</li>
 <li>Custom launchers icons can have a custom size and can be symbolic or full color.</li>
 <li>Custom launchers can execute any command (as entered in a terminal) or a path to a file. If the file is an executable script, an attempt to execute it will be made. Otherwise, the file will be opened with the systems handler for that file type.</li>
 <li>The size of the Categories/Applications icons can be customized.</li>
-<li>The <strong>Recent Files</strong> category can be hidden. This is for people who want the <strong>Recent Files</strong> category hidden without disabling recent files globally.</li>
 <li>The placement of the categories box and the applications box can be swapped.</li>
 <li>The placement of the custom launchers box and the search box can be swapped.</li>
 <li>Scrollbars in the applications box can be hidden.</li>
@@ -334,7 +336,7 @@ The following sections are available only in English.
 <h2>Contributors/Mentions</h2>
 <ul>
 <li><strong><a href="https://github.com/lestcape">lestcape</a>:</strong> Some advanced features on this applet are based on his <a href="https://github.com/lestcape/Configurable-Menu">Configurable Menu applet</a> applet.</li>
-<li><strong><a href="https://github.com/nooulaif">nooulaif</a>:</strong> Fuzzy search feature based on his <a href="https://cinnamon-spices.linuxmint.com/applets/view/258">Sane Menu</a> applet.</li>
+<li><strong><a href="https://github.com/krismichalski">Kristopher Michalski</a>:</strong> Fuzzy search feature based on his <a href="https://github.com/krismichalski/cinnamon-sane-menu">Sane Menu</a> applet.</li>
 <li><strong>Daniel Bruce:</strong> Some icons used by this menu are from <a href="www.entypo.com">Entypo pictograms</a>.</li>
 </ul>
 
@@ -344,6 +346,52 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Cinnamon Menu (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 12 Jan 2019 03:05:32 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/2e2562f">2e2562f</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Fuzzy search mechanism improvements.
+    - Added option to change the icon size of search results.
+    - Added option to not display low priority search results.
+    - Changed maximum search results preferences default value to 15, lowered minimum value to 5 and increased maximum value to 100.
+    - Now the generic name of an application will also be searched.
+    - Now the search is performed using a "data base" created at menu build time instead of looking up for search data in each button actor at search time.
+    - The search result items are now populated (their icon and label) in-place instead of removed and re-added.
+- Recent applications mechanism improvements.
+    - Implemented a mechanism similar to the one used by the search results.
+    - Instead of sorting actual button actors, only application data is sorted and then used to populate existent buttons.
+- Category selection mechanism improvements.
+    - Made the "custom category" names somewhat unique to prevent possible "complications".
+- Fixed issue that removed focus from a selected application when the mouse cursor was moved over the inactive categories box while performing a search.
+- Fixed issue that prevented the icon inside the search box to correctly change state.
+- Added category names to applications tooltips. This helps to know to which category belongs an application in the list of search results for example.
+- Keyboard navigation improvements.
+- Eradicated recently installed applications highlighting. It was never that useful to begin with because:
+    - Highlighting an application that one doesn't know in which category to find it was pointless.
+    - The list of "known applications" was ephemeral. Restarting Cinnamon or the system itself leave us still no knowing where the heck is the recently installed application.
+    - And finally, with fuzzy search implemented now, it is easier and more likely to find an unknown application.
+- Cleaned up more left over code.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Thu, 3 Jan 2019 20:03:04 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/dccd24e">dccd24e</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Implemented fuzzy search.
+- Added option to display a maximum amount of search results.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Thu, 3 Jan 2019 08:38:01 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/91dc16f">91dc16f</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Cleaned up left over code from previous features removal.
+- Cleaned up appletHelper.py script of unused code and re-organized import statements.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Mon, 29 Oct 2018 13:44:46 -0300</li>
@@ -1068,7 +1116,7 @@ applications set as Favorite.
     <!--Copyright-->
     <div class="text-center py-3">
         <div class="container-fluid">
-            © 2016-2018 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
+            © 2016-2019 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
         </div>
     </div>
     <!--/.Copyright-->

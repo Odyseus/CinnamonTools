@@ -30,24 +30,28 @@ class Main(LocalizedHelpCreator):
         return "\n".join([
             "## %s" % _("Description"),
             "",
-            _("This applet is a custom version of the default Cinnamon Menu applet, but infinitely more customizable."),
+            _("This applet is a custom version of the default Cinnamon Menu applet, but more customizable and without things irrelevant to searching/launching applications."),
             "",
-            "## %s" % _("Added options/features"),
+            "## %s" % _("Options/Features"),
             "",
-            "- %s" % _("Removed Favorites box in favor of a Favorites category."),
-            "- %s" % _("Removed Places category."),
-            "- %s" % _("Removed Recent Files category."),
+            "- %s" % _("Implemented fuzzy search."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("Removed **Favorites** box in favor of a **Favorites** category."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("Removed **Places** category."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("Removed **Recent Files** category."),
             "- %s" % _("Removed file system search."),
             "- %s" % _("Removed search providers."),
             "- %s" % _("Removed applications info box in favor of tooltips."),
-            "- %s" % _("Removed All Applications category in favor of not having it (LOL)."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("Removed **All Applications** category in favor of not having it (LOL)."),
             "- %s" % _("Removed drag&drop capabilities."),
+            "- %s" % _("Removed recently installed applications highlighting."),
             "- %s" % _("Added a custom launchers box that can run any command/script/file."),
             "- %s" % _("Custom launchers icons can have a custom size and can be symbolic or full color."),
             "- %s" % _("Custom launchers can execute any command (as entered in a terminal) or a path to a file. If the file is an executable script, an attempt to execute it will be made. Otherwise, the file will be opened with the systems handler for that file type."),
             "- %s" % _("The size of the Categories/Applications icons can be customized."),
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "- %s" % _("The **Recent Files** category can be hidden. This is for people who want the **Recent Files** category hidden without disabling recent files globally."),
             "- %s" % _("The placement of the categories box and the applications box can be swapped."),
             "- %s" % _("The placement of the custom launchers box and the search box can be swapped."),
             "- %s" % _("Scrollbars in the applications box can be hidden."),

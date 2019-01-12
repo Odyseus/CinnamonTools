@@ -1,12 +1,12 @@
 # This is a template file for translating the 0ExtensionsManager package.
-# Copyright (C) 2016-2018
+# Copyright (C) 2016-2019
 # This file is distributed under the same license as the 0ExtensionsManager package.
-# Odyseus <EMAIL@ADDRESS>, 2016-2018.
+# Odyseus <EMAIL@ADDRESS>, 2016-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ExtensionsManager 1.10\n"
-"POT-Creation-Date: 2018-12-25 20:56-0300\n"
+"POT-Creation-Date: 2019-01-12 03:21-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:179
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:187
 msgid "Help"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Launch the debug process from a virtual terminal."
 msgstr ""
 
-#: z_create_localized_help.py:31 utils.js:319 utils.js:327
+#: z_create_localized_help.py:31 utils.js:327 utils.js:335
 msgid "Description"
 msgstr ""
 
@@ -121,93 +121,93 @@ msgstr ""
 msgid "Settings window"
 msgstr ""
 
-#: applet.js:124
+#: applet.js:132
 msgid "Open extensions manager"
 msgstr ""
 
-#: applet.js:137
+#: applet.js:145
 msgid "Disable all extensions"
 msgstr ""
 
-#: applet.js:147
+#: applet.js:155
 msgid "This will disable all active extensions. Are you sure you want to do this?"
 msgstr ""
 
-#: applet.js:156
+#: applet.js:164
 msgid "Refresh extension list"
 msgstr ""
 
-#: applet.js:163
+#: applet.js:171
 msgid "Restart Cinnamon"
 msgstr ""
 
-#: applet.js:170
+#: applet.js:178
 msgid "Debug"
 msgstr ""
 
-#: applet.js:272 applet.js:324
+#: applet.js:280 applet.js:332
 #, javascript-format
 msgid "Source of error: %s"
 msgstr ""
 
-#: applet.js:419
+#: applet.js:427
 msgid "There aren't any extensions installed on your system. Or you may need to refresh the list of extensions from this applet context menu."
 msgstr ""
 
-#: applet.js:492
+#: applet.js:500
 msgid "Enabled extensions"
 msgstr ""
 
-#: applet.js:495
+#: applet.js:503
 msgid "No enabled extensions"
 msgstr ""
 
-#: applet.js:499
+#: applet.js:507
 msgid "Disabled extensions"
 msgstr ""
 
-#: applet.js:501
+#: applet.js:509
 msgid "No disabled extensions"
 msgstr ""
 
-#: applet.js:538
+#: applet.js:546
 #, javascript-format
 msgid "Extension %s is not compatible with current version of cinnamon. Using it may break your system. Load anyway?"
 msgstr ""
 
-#: utils.js:133
+#: utils.js:141
 msgid "Cancel"
 msgstr ""
 
-#: utils.js:140
+#: utils.js:148
 msgid "OK"
 msgstr ""
 
-#: utils.js:199
+#: utils.js:207
 msgid "Open settings window"
 msgstr ""
 
-#: utils.js:219
+#: utils.js:227
 msgid "Spices page"
 msgstr ""
 
-#: utils.js:238
+#: utils.js:246
 msgid "Edit extension main file"
 msgstr ""
 
-#: utils.js:254
+#: utils.js:262
 msgid "Open extension folder"
 msgstr ""
 
-#: utils.js:316 utils.js:325
+#: utils.js:324 utils.js:333
 msgid "Name"
 msgstr ""
 
-#: utils.js:438
+#: utils.js:446
 msgid "Error parsing JSON string."
 msgstr ""
 
-#: utils.js:440
+#: utils.js:448
 msgid "A detailed error has been logged into ~/.cinnamon/glass.log."
 msgstr ""
 

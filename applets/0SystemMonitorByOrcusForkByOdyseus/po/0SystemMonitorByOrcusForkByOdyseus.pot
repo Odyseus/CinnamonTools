@@ -1,12 +1,12 @@
 # This is a template file for translating the 0SystemMonitorByOrcusForkByOdyseus package.
-# Copyright (C) 2016-2018
+# Copyright (C) 2016-2019
 # This file is distributed under the same license as the 0SystemMonitorByOrcusForkByOdyseus package.
-# Odyseus <EMAIL@ADDRESS>, 2016-2018.
+# Odyseus <EMAIL@ADDRESS>, 2016-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 2.6\n"
-"POT-Creation-Date: 2018-12-25 20:56-0300\n"
+"POT-Creation-Date: 2019-01-12 03:21-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:157
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:165
 msgid "Help"
 msgstr ""
 
@@ -125,51 +125,51 @@ msgstr ""
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr ""
 
-#: applet.js:168
+#: applet.js:176
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:169
+#: applet.js:177
 msgid "This applet needs the GTop library installed on your system for it  to work."
 msgstr ""
 
-#: applet.js:170
+#: applet.js:178
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:382
+#: applet.js:392
 msgid "Command not set!"
 msgstr ""
 
-#: applet.js:383
+#: applet.js:393
 msgid "Set a custom command from this applet settings window."
 msgstr ""
 
-#: utils.js:82
+#: utils.js:89
 msgid "CPU"
 msgstr ""
 
-#: utils.js:108 utils.js:134
+#: utils.js:115 utils.js:141
 msgid "MB"
 msgstr ""
 
-#: utils.js:113
+#: utils.js:120
 msgid "Memory"
 msgstr ""
 
-#: utils.js:139
+#: utils.js:146
 msgid "Swap"
 msgstr ""
 
-#: utils.js:184
+#: utils.js:191
 msgid "KB/s"
 msgstr ""
 
-#: utils.js:189
+#: utils.js:196
 msgid "Network D/U"
 msgstr ""
 
-#: utils.js:227
+#: utils.js:234
 msgid "Load average"
 msgstr ""
 

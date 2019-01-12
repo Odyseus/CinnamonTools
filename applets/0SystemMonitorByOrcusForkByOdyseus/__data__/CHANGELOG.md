@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Tue, 8 Jan 2019 21:40:45 -0300
+- **Commit:** [2b83e21](https://gitlab.com/Odyseus/CinnamonTools/commit/2b83e21)
+- **Author:** Odyseus
+
+```
+- Fixed strict mode warning.
+
+```
+
+***
+
 - **Date:** Tue, 7 Aug 2018 04:35:43 -0300
 - **Commit:** [e4bde9a](https://gitlab.com/Odyseus/CinnamonTools/commit/e4bde9a)
 - **Author:** Odyseus
