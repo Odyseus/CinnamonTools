@@ -45,68 +45,59 @@ PanelDrawerForkByOdyseusApplet.prototype = {
         this.instance_id = aInstance_id;
         this.orientation = aOrientation;
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             this._expandAppletContextMenu();
-        } catch (e) {
-            global.logError(e);
-        }
+        }, () => {
+            this.set_applet_icon_symbolic_name("pan-end");
 
-        Mainloop.idle_add(() => {
-            try {
-                this.set_applet_icon_symbolic_name("pan-end");
+            global.settings.connect("changed::panel-edit-mode",
+                () => this.on_panel_edit_mode_changed());
+            this.actor.connect("enter-event",
+                (aEvent) => this._onEntered(aEvent));
 
-                global.settings.connect("changed::panel-edit-mode",
-                    () => this.on_panel_edit_mode_changed());
-                this.actor.connect("enter-event",
-                    (aEvent) => this._onEntered(aEvent));
+            this._hideTimeoutId = 0;
+            this._rshideTimeoutId = 0;
+            this.h = true;
+            this.alreadyH = [];
 
-                this._hideTimeoutId = 0;
-                this._rshideTimeoutId = 0;
-                this.h = true;
-                this.alreadyH = [];
-
-                if ((!this.disable_starttime_autohide) || this.auto_hide) {
-                    this._hideTimeoutId = Mainloop.timeout_add_seconds(2,
-                        () => {
-                            if (this.h) {
-                                this.autodo(true);
-                            }
-                            return false;
+            if ((!this.disable_starttime_autohide) || this.auto_hide) {
+                this._hideTimeoutId = Mainloop.timeout_add_seconds(2,
+                    () => {
+                        if (this.h) {
+                            this.autodo(true);
                         }
-                    );
-                }
-
-                /*if more than one instance
-                this.actor.connect('hide', ()=>{
-                    if (this.h)
-                        this.doAction(true);
-                });*/
-
-                this.cbox = Main.panel._rightBox;
-
-                /*this doesn't work, i don't know why!
-                if (Main.panel2 !== null){
-                    let c2=Main.panel2._rightBox.get_children();
-                    if (c2.indexOf(this.actor) > -1)
-                        this.cbox = Main.panel2._rightBox;
-                }*/
-
-                this.cbox.connect("queue-relayout", () => {
-                    if (this.autohide_rs && !this.h) {
-                        this._rshideTimeoutId = Mainloop.timeout_add_seconds(this.autohide_rs_time, () => {
-                            if (!this.h) {
-                                // this.h=true;
-                                this.doAction(true);
-                                this.autodo(true);
-                            }
-                            return false;
-                        });
+                        return false;
                     }
-                });
-            } catch (aErr) {
-                global.logError(aErr);
+                );
             }
+
+            /*if more than one instance
+            this.actor.connect('hide', ()=>{
+                if (this.h)
+                    this.doAction(true);
+            });*/
+
+            this.cbox = Main.panel._rightBox;
+
+            /*this doesn't work, i don't know why!
+            if (Main.panel2 !== null){
+                let c2=Main.panel2._rightBox.get_children();
+                if (c2.indexOf(this.actor) > -1)
+                    this.cbox = Main.panel2._rightBox;
+            }*/
+
+            this.cbox.connect("queue-relayout", () => {
+                if (this.autohide_rs && !this.h) {
+                    this._rshideTimeoutId = Mainloop.timeout_add_seconds(this.autohide_rs_time, () => {
+                        if (!this.h) {
+                            // this.h=true;
+                            this.doAction(true);
+                            this.autodo(true);
+                        }
+                        return false;
+                    });
+                }
+            });
         });
     },
 
@@ -133,9 +124,46 @@ PanelDrawerForkByOdyseusApplet.prototype = {
         this._applet_context_menu.addMenuItem(addapplets);
     },
 
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
 
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
+    _bindSettings: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
