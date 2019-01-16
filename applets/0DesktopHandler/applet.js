@@ -56,45 +56,73 @@ DesktopHandlerApplet.prototype = {
         this.orientation = aOrientation;
         this.instance_id = aInstance_id;
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
-        } catch (e) {
-            global.logError(e);
-        }
+        }, () => {
+            this.cwm_settings = new Gio.Settings({
+                schema: "org.cinnamon.desktop.wm.preferences"
+            });
+            this.muf_settings = new Gio.Settings({
+                schema: "org.cinnamon.muffin"
+            });
 
-        Mainloop.idle_add(() => {
-            try {
-                this.cwm_settings = new Gio.Settings({
-                    schema: "org.cinnamon.desktop.wm.preferences"
-                });
-                this.muf_settings = new Gio.Settings({
-                    schema: "org.cinnamon.muffin"
-                });
+            this._lastScroll = this.last_sd_req = Date.now();
+            this.didpeek = false;
+            this.uptgg = true;
 
-                this._lastScroll = this.last_sd_req = Date.now();
-                this.didpeek = false;
-                this.uptgg = true;
+            this.actor.connect("scroll-event",
+                (aActor, aEvent) => this._onScroll(aActor, aEvent));
 
-                this.actor.connect("scroll-event",
-                    (aActor, aEvent) => this._onScroll(aActor, aEvent));
+            this._handleDesktopPeek();
+            this._handleWindowList();
+            this._setAppletStyle();
 
-                this._handleDesktopPeek();
-                this._handleWindowList();
-                this._setAppletStyle();
-
-                // Workaround to apply background color on applet load.
-                // Without the timeout, the style is not applied. ¬¬
-                Mainloop.timeout_add(3000, () => this._setAppletStyle(true));
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+            // Workaround to apply background color on applet load.
+            // Without the timeout, the style is not applied. ¬¬
+            Mainloop.timeout_add(3000, () => this._setAppletStyle(true));
         });
     },
 
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
 
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
+    _bindSettings: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
