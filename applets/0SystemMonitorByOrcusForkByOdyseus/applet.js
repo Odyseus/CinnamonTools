@@ -60,45 +60,74 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
             return;
         }
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             this._expandAppletContextMenu();
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        }, () => {
+            this._applet_icon_box.hide();
 
-        Mainloop.idle_add(() => {
-            try {
-                this._applet_icon_box.hide();
+            this.vertical = this.orientation == St.Side.LEFT || this.orientation == St.Side.RIGHT;
+            this.graph_ids = ["cpu", "mem", "swap", "net", "load"];
+            this.bg_color = $.colorToArray(this.pref_bg_color);
+            this.border_color = $.colorToArray(this.pref_border_color);
+            this.areas = new Array(this.graph_ids.length);
+            this.graphs = new Array(this.graph_ids.length);
+            this.graph_indices = new Array(this.graph_ids.length);
 
-                this.vertical = this.orientation == St.Side.LEFT || this.orientation == St.Side.RIGHT;
-                this.graph_ids = ["cpu", "mem", "swap", "net", "load"];
-                this.bg_color = $.colorToArray(this.pref_bg_color);
-                this.border_color = $.colorToArray(this.pref_border_color);
-                this.areas = new Array(this.graph_ids.length);
-                this.graphs = new Array(this.graph_ids.length);
-                this.graph_indices = new Array(this.graph_ids.length);
-
-                for (let i = 0; i < this.graph_ids.length; i++) {
-                    this.areas[i] = null;
-                    this.graphs[i] = null;
-                    this.graph_indices[i] = null;
-                }
-
-                this.graph_order = [0, 1, 2, 3, 4];
-
-                this._changePadding();
-                this._changeGraphEnabled();
-                this._updateKeybindings();
-                this.update();
-            } catch (aErr) {
-                global.logError(aErr);
+            for (let i = 0; i < this.graph_ids.length; i++) {
+                this.areas[i] = null;
+                this.graphs[i] = null;
+                this.graph_indices[i] = null;
             }
+
+            this.graph_order = [0, 1, 2, 3, 4];
+
+            this._changePadding();
+            this._changeGraphEnabled();
+            this._updateKeybindings();
+            this.update();
         });
     },
 
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
+
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
     _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
