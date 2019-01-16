@@ -77,50 +77,78 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         this.orientation = aOrientation;
         this.instance_id = aInstance_id;
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             this._applet_context_menu.addCommandlineAction(
                 "Configure Mailnag", "mailnag-config");
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        }, () => {
+            this.set_applet_icon_symbolic_name("mail-read");
+            this.set_applet_tooltip("?");
+            this.set_applet_label("?");
 
-        Mainloop.idle_add(() => {
-            try {
-                this.set_applet_icon_symbolic_name("mail-read");
-                this.set_applet_tooltip("?");
-                this.set_applet_label("?");
+            this.menuItems = {};
+            this.accountMenus = {};
+            this._onMailsAddedId = 0;
+            this._onMailsRemovedId = 0;
+            this.busWatcherId = 0;
 
-                this.menuItems = {};
-                this.accountMenus = {};
-                this._onMailsAddedId = 0;
-                this._onMailsRemovedId = 0;
-                this.busWatcherId = 0;
+            this.menuManager = new PopupMenu.PopupMenuManager(this);
+            this.menu = new Applet.AppletPopupMenu(this, this.orientation);
+            this.menuManager.addMenu(this.menu);
 
-                this.menuManager = new PopupMenu.PopupMenuManager(this);
-                this.menu = new Applet.AppletPopupMenu(this, this.orientation);
-                this.menuManager.addMenu(this.menu);
+            this.mailnagWasRunning = false;
 
-                this.mailnagWasRunning = false;
-
-                this._notificationSource = new $.NotificationSource();
-                if (Main.messageTray) {
-                    Main.messageTray.add(this._notificationSource);
-                }
-
-                // watch bus
-                this.busWatcherId = Gio.bus_watch_name(
-                    Gio.BusType.SESSION, dbus_name, Gio.BusNameOwnerFlags.NONE,
-                    () => this.onBusAppeared(), () => this.onBusVanished());
-            } catch (aErr) {
-                global.logError(aErr);
+            this._notificationSource = new $.NotificationSource();
+            if (Main.messageTray) {
+                Main.messageTray.add(this._notificationSource);
             }
+
+            // watch bus
+            this.busWatcherId = Gio.bus_watch_name(
+                Gio.BusType.SESSION, dbus_name, Gio.BusNameOwnerFlags.NONE,
+                () => this.onBusAppeared(), () => this.onBusVanished());
         });
     },
 
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
 
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
+    _bindSettings: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
