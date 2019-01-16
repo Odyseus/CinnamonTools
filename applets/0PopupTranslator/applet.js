@@ -54,58 +54,49 @@ PopupTranslatorApplet.prototype = {
         this.orientation = aOrientation;
         this.keybindings_base_name = this.metadata.uuid + "-" + this.instance_id;
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             this._expandAppletContextMenu();
             Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        }, () => {
+            this.menuManager = new PopupMenu.PopupMenuManager(this);
+            this.forceTranslation = false;
+            this._isDestroyed = false;
+            this._buildMenuId = 0;
+            this.key_1_id = null;
+            this.key_forced_1_id = null;
+            this.key_2_id = null;
+            this.key_forced_2_id = null;
+            this.key_3_id = null;
+            this.key_forced_3_id = null;
+            this.key_4_id = null;
+            this.key_forced_4_id = null;
 
-        Mainloop.idle_add(() => {
-            try {
-                this.menuManager = new PopupMenu.PopupMenuManager(this);
-                this.forceTranslation = false;
-                this._isDestroyed = false;
-                this._buildMenuId = 0;
-                this.key_1_id = null;
-                this.key_forced_1_id = null;
-                this.key_2_id = null;
-                this.key_forced_2_id = null;
-                this.key_3_id = null;
-                this.key_forced_3_id = null;
-                this.key_4_id = null;
-                this.key_forced_4_id = null;
+            this._buildMenu();
+            this._updateIconAndLabel();
+            this._setAppletTooltip();
+            this._updateKeybindings();
+            this.ensureHistoryFileExists();
 
-                this._buildMenu();
-                this._updateIconAndLabel();
-                this._setAppletTooltip();
-                this._updateKeybindings();
-                this.ensureHistoryFileExists();
-
-                if (!this.pref_all_dependencies_met) {
-                    this.checkDependencies();
-                }
-
-                // I use a custom cinnamon-json-makepot command to extract strings.
-                // One of the features that I added to that command is the ability to
-                // ignore specified settings on the settings-schema.json file at the
-                // moment of extracting strings.
-                // As a side effect, some strings that would need to be extracted are ignored.
-                // That's the purpose of this "dummy object", store strings that were ignored.
-                // This strings belong to the two settings that lists languages (pref_target_lang_# and pref_source_lang_#).
-                // I purposely ignore them because if they were translated, it will break their
-                // alphabetical order on the comboboxes. I have chosen the least of the evils.
-                // And I have chosen this approach to avoid at all cost the manual edition
-                // of the .pot file.
-                this.dummyTransObject = {
-                    1: _("Source language"),
-                    2: _("Target language"),
-                    3: _("(G) = Language supported only by Google Translate.\n(Y) = Language supported only by Yandex Translate.")
-                };
-            } catch (aErr) {
-                global.logError(aErr);
+            if (!this.pref_all_dependencies_met) {
+                this.checkDependencies();
             }
+
+            // I use a custom cinnamon-json-makepot command to extract strings.
+            // One of the features that I added to that command is the ability to
+            // ignore specified settings on the settings-schema.json file at the
+            // moment of extracting strings.
+            // As a side effect, some strings that would need to be extracted are ignored.
+            // That's the purpose of this "dummy object", store strings that were ignored.
+            // This strings belong to the two settings that lists languages (pref_target_lang_# and pref_source_lang_#).
+            // I purposely ignore them because if they were translated, it will break their
+            // alphabetical order on the comboboxes. I have chosen the least of the evils.
+            // And I have chosen this approach to avoid at all cost the manual edition
+            // of the .pot file.
+            this.dummyTransObject = {
+                1: _("Source language"),
+                2: _("Target language"),
+                3: _("(G) = Language supported only by Google Translate.\n(Y) = Language supported only by Yandex Translate.")
+            };
         });
     },
 
@@ -533,9 +524,46 @@ PopupTranslatorApplet.prototype = {
         }
     },
 
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
 
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
+    _bindSettings: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
