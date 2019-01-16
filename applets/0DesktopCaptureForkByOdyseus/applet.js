@@ -55,77 +55,68 @@ DesktopCapture.prototype = {
         this.orientation = aOrientation;
         this._keybinding_base = this.metadata.uuid + "-" + this.instance_id;
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             this._expandAppletContextMenu();
             Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        }, () => {
+            this.logger = new $.Logger("DesktopCapture", this.pref_enable_verbose_logging);
 
-        Mainloop.idle_add(() => {
-            try {
-                this.logger = new $.Logger("DesktopCapture", this.pref_enable_verbose_logging);
+            this.appletHelper = this.metadata.path + "/appletHelper.py";
+            this.cinnamonRecorder = null;
+            this.lastCapture = {
+                camera: null,
+                recorder: null
+            };
+            this.oldStylesheetPath = null;
+            this.rebuild_recorder_section_id = null;
+            this.rebuild_camera_section_id = null;
+            this.cameraSection = null;
+            this.recorderSection = null;
+            this.cameraHeader = null;
+            this.recorderHeader = null;
+            this.cameraLastCaptureContent = null;
+            this.recorderLastCaptureContent = null;
 
-                this.appletHelper = this.metadata.path + "/appletHelper.py";
-                this.cinnamonRecorder = null;
-                this.lastCapture = {
-                    camera: null,
-                    recorder: null
-                };
-                this.oldStylesheetPath = null;
-                this.rebuild_recorder_section_id = null;
-                this.rebuild_camera_section_id = null;
-                this.cameraSection = null;
-                this.recorderSection = null;
-                this.cameraHeader = null;
-                this.recorderHeader = null;
-                this.cameraLastCaptureContent = null;
-                this.recorderLastCaptureContent = null;
+            this._oldKeybindingsNames = [];
+            this._newKeybindingsStorage = {};
+            this._programSupport = {};
+            this._cinnamonRecorderProfiles = {};
+            this._cameraRedoMenuItem = null;
+            this._recorderRedoMenuItem = null;
 
-                this._oldKeybindingsNames = [];
-                this._newKeybindingsStorage = {};
-                this._programSupport = {};
-                this._cinnamonRecorderProfiles = {};
-                this._cameraRedoMenuItem = null;
-                this._recorderRedoMenuItem = null;
-
-                if (this.pref_recorder_program === "cinnamon") {
-                    this.cinnamonRecorder = new Cinnamon.Recorder({
-                        stage: global.stage
-                    });
-                }
-
-                // I'm forced to use a timeout because the absolutely retarded Cinnamon settings
-                // system isn't triggering the f*cking settings changed callbacks!!!!
-                // So, in versions of Cinnamon that doesn't trigger such callback, I have to call them
-                // manually. And in versions of Cinnamon that do trigger such callbacks, they are
-                // triggered manually AND automatically.
-                this._draw_menu_id = 0;
-                this._register_key_bindings_id = 0;
-
-                this._setupSaveDirs();
-
-                this.menuManager = new PopupMenu.PopupMenuManager(this);
-
-                this.set_applet_tooltip(_(this.metadata.description));
-
-                this.loadTheme();
-                this._setupProgramSupport();
-                this._setupCinnamonRecorderProfiles();
-
-                // When monitors are connected or disconnected, redraw the menu
-                Main.layoutManager.connect("monitors-changed", () => {
-                    if (this.pref_camera_program === "cinnamon") {
-                        this.drawMenu();
-                    }
+            if (this.pref_recorder_program === "cinnamon") {
+                this.cinnamonRecorder = new Cinnamon.Recorder({
+                    stage: global.stage
                 });
-                Main.themeManager.connect("theme-set", () => this.loadTheme());
-
-                this._disclaimerRead();
-            } catch (aErr) {
-                global.logError(aErr);
             }
+
+            // I'm forced to use a timeout because the absolutely retarded Cinnamon settings
+            // system isn't triggering the f*cking settings changed callbacks!!!!
+            // So, in versions of Cinnamon that doesn't trigger such callback, I have to call them
+            // manually. And in versions of Cinnamon that do trigger such callbacks, they are
+            // triggered manually AND automatically.
+            this._draw_menu_id = 0;
+            this._register_key_bindings_id = 0;
+
+            this._setupSaveDirs();
+
+            this.menuManager = new PopupMenu.PopupMenuManager(this);
+
+            this.set_applet_tooltip(_(this.metadata.description));
+
+            this.loadTheme();
+            this._setupProgramSupport();
+            this._setupCinnamonRecorderProfiles();
+
+            // When monitors are connected or disconnected, redraw the menu
+            Main.layoutManager.connect("monitors-changed", () => {
+                if (this.pref_camera_program === "cinnamon") {
+                    this.drawMenu();
+                }
+            });
+            Main.themeManager.connect("theme-set", () => this.loadTheme());
+
+            this._disclaimerRead();
         });
     },
 
@@ -246,8 +237,46 @@ DesktopCapture.prototype = {
         this._applet_context_menu.addMenuItem(mi);
     },
 
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
+
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
     _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
