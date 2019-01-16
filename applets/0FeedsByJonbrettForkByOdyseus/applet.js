@@ -52,57 +52,82 @@ FeedsReaderForkByOdyseus.prototype = {
         this.orientation = aOrientation;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
-        try {
-            this._bindSettings();
-
+        this._initializeSettings(() => {
             this.logger = new $.Logger("FeedsReader", this.pref_enable_verbose_logging);
-
             this._expandAppletContextMenu();
             Gtk.IconTheme.get_default().append_search_path(this.metadata.path + "/icons/");
-        } catch (aErr) {
-            this.logger.error(aErr);
-        }
+        }, () => {
+            this.open_menu = null;
+            this.feed_queue = [];
+            this.force_download = false;
 
-        Mainloop.idle_add(() => {
-            try {
-                this.open_menu = null;
-                this.feed_queue = [];
-                this.force_download = false;
+            this.logger.debug("Applet Instance ID: " + this.instance_id);
+            this.logger.debug("Selected Instance Name: " + this.pref_profile_name);
 
-                this.logger.debug("Applet Instance ID: " + this.instance_id);
-                this.logger.debug("Selected Instance Name: " + this.pref_profile_name);
+            this.feeds = [];
 
-                this.feeds = [];
+            this._setAppletIcon(false);
+            this.set_applet_tooltip(_("Feed reader"));
 
-                this._setAppletIcon(false);
-                this.set_applet_tooltip(_("Feed reader"));
+            this.logger.debug("Creating menus");
+            this.menuManager = new PopupMenu.PopupMenuManager(this);
+            this.menu = new Applet.AppletPopupMenu(this, this.orientation);
+            this.menuManager.addMenu(this.menu);
 
-                this.logger.debug("Creating menus");
-                this.menuManager = new PopupMenu.PopupMenuManager(this);
-                this.menu = new Applet.AppletPopupMenu(this, this.orientation);
-                this.menuManager.addMenu(this.menu);
+            this.feed_file_error = false;
+            this._read_json_config();
+            this._updateKeybindings();
 
-                this.feed_file_error = false;
-                this._read_json_config();
-                this._updateKeybindings();
+            this.timeout = this.pref_refresh_interval_mins * 60 * 1000;
+            this.logger.debug("Initial timeout set in: " + this.timeout + " ms");
+            /* Set the next timeout */
+            this.timer_id = Mainloop.timeout_add(this.timeout,
+                () => this._process_feeds());
 
-                this.timeout = this.pref_refresh_interval_mins * 60 * 1000;
-                this.logger.debug("Initial timeout set in: " + this.timeout + " ms");
-                /* Set the next timeout */
-                this.timer_id = Mainloop.timeout_add(this.timeout,
-                    () => this._process_feeds());
-
-                this.logger.debug("timer_id: " + this.timer_id);
-            } catch (aErr) {
-                this.logger.error(aErr);
-            }
+            this.logger.debug("timer_id: " + this.timer_id);
         });
     },
 
-    /* private function that connects to the settings-schema and initializes the variables */
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
 
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
+    _bindSettings: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
