@@ -134,80 +134,109 @@ WeatherAppletForkByOdyseusApplet.prototype = {
         this.orientation = aOrientation;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
-        try {
-            this._bindSettings();
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        this._initializeSettings(() => {
+            //
+        }, () => {
+            this.set_applet_icon_name(APPLET_ICON);
+            this.set_applet_label(_("..."));
+            this.set_applet_tooltip(_("Click to open"));
 
-        Mainloop.idle_add(() => {
-            try {
-                this.set_applet_icon_name(APPLET_ICON);
-                this.set_applet_label(_("..."));
-                this.set_applet_tooltip(_("Click to open"));
+            this.menuManager = new PopupMenu.PopupMenuManager(this);
+            this.menu = new Applet.AppletPopupMenu(this, this.orientation);
 
-                this.menuManager = new PopupMenu.PopupMenuManager(this);
-                this.menu = new Applet.AppletPopupMenu(this, this.orientation);
-
-                if (typeof this.menu.setCustomStyleClass === "function") {
-                    this.menu.setCustomStyleClass(STYLE.WEATHER_MENU);
-                } else {
-                    this.menu.actor.add_style_class_name(STYLE.WEATHER_MENU);
-                }
-
-                this.menuManager.addMenu(this.menu);
-
-                this._updateKeybindings();
-                this.updateIconType();
-                this.refresh_weather_id = 0;
-
-                // ------------------------------
-                // render graphics container
-                // ------------------------------
-
-                // build menu
-                let mainBox = new St.BoxLayout({
-                    vertical: true
-                });
-                this.menu.addActor(mainBox);
-
-                //  today's forecast
-                this._currentWeather = new St.Bin({
-                    style_class: STYLE.CURRENT
-                });
-                mainBox.add_actor(this._currentWeather);
-
-                //  horizontal rule
-                this._separatorArea = new St.DrawingArea({
-                    style_class: STYLE.POPUP_SEPARATOR_MENU_ITEM
-                });
-                this._separatorArea.width = 200;
-                this._separatorArea.connect("repaint",
-                    (aArea) => this._onSeparatorAreaRepaint(aArea));
-                mainBox.add_actor(this._separatorArea);
-
-                //  tomorrow's forecast
-                this._futureWeather = new St.Bin({
-                    style_class: STYLE.FORECAST
-                });
-                mainBox.add_actor(this._futureWeather);
-
-                this.rebuild();
-
-                this._refresh_weather_id = Mainloop.timeout_add_seconds(3,
-                    () => {
-                        this.refreshWeather(true);
-                        this._refresh_weather_id = 0;
-                    });
-            } catch (aErr) {
-                global.logError(aErr);
+            if (typeof this.menu.setCustomStyleClass === "function") {
+                this.menu.setCustomStyleClass(STYLE.WEATHER_MENU);
+            } else {
+                this.menu.actor.add_style_class_name(STYLE.WEATHER_MENU);
             }
+
+            this.menuManager.addMenu(this.menu);
+
+            this._updateKeybindings();
+            this.updateIconType();
+            this.refresh_weather_id = 0;
+
+            // ------------------------------
+            // render graphics container
+            // ------------------------------
+
+            // build menu
+            let mainBox = new St.BoxLayout({
+                vertical: true
+            });
+            this.menu.addActor(mainBox);
+
+            //  today's forecast
+            this._currentWeather = new St.Bin({
+                style_class: STYLE.CURRENT
+            });
+            mainBox.add_actor(this._currentWeather);
+
+            //  horizontal rule
+            this._separatorArea = new St.DrawingArea({
+                style_class: STYLE.POPUP_SEPARATOR_MENU_ITEM
+            });
+            this._separatorArea.width = 200;
+            this._separatorArea.connect("repaint",
+                (aArea) => this._onSeparatorAreaRepaint(aArea));
+            mainBox.add_actor(this._separatorArea);
+
+            //  tomorrow's forecast
+            this._futureWeather = new St.Bin({
+                style_class: STYLE.FORECAST
+            });
+            mainBox.add_actor(this._futureWeather);
+
+            this.rebuild();
+
+            this._refresh_weather_id = Mainloop.timeout_add_seconds(3,
+                () => {
+                    this.refreshWeather(true);
+                    this._refresh_weather_id = 0;
+                });
         });
     },
 
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
 
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
+    _bindSettings: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
