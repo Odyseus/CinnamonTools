@@ -50,51 +50,42 @@ ExtensionsManagerApplet.prototype = {
         this.instance_id = aInstance_id;
         this.orientation = aOrientation;
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             this.set_applet_tooltip(_(aMetadata.name));
             this._expandAppletContextMenu();
             Gtk.IconTheme.get_default().append_search_path(this.metadata.path + "/icons/");
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        }, () => {
+            this.menuManager = new PopupMenu.PopupMenuManager(this);
+            this.spices_data = null;
+            this.spices_file_path = GLib.get_home_dir() + "/.cinnamon/spices.cache/extension/index.json";
+            this._buildMenuId = null;
+            this._populateSubMenusId = 0;
+            this._spicesCacheUpdatedId = null;
+            this._forceMenuRebuild = false;
+            this._forceMenuRebuildDelay = 200;
 
-        Mainloop.idle_add(() => {
-            try {
-                this.menuManager = new PopupMenu.PopupMenuManager(this);
-                this.spices_data = null;
-                this.spices_file_path = GLib.get_home_dir() + "/.cinnamon/spices.cache/extension/index.json";
-                this._buildMenuId = null;
-                this._populateSubMenusId = 0;
-                this._spicesCacheUpdatedId = null;
-                this._forceMenuRebuild = false;
-                this._forceMenuRebuildDelay = 200;
+            global.settings.connect("changed::enabled-extensions",
+                () => {
+                    this._forceMenuRebuild = this.menu && !this.menu.isOpen;
+                    this._forceMenuRebuildDelay = 1000;
+                    this._populateSubMenus();
+                });
 
-                global.settings.connect("changed::enabled-extensions",
-                    () => {
-                        this._forceMenuRebuild = this.menu && !this.menu.isOpen;
-                        this._forceMenuRebuildDelay = 1000;
-                        this._populateSubMenus();
-                    });
-
-                let extSpicesCache = Gio.file_new_for_path(this.spices_file_path);
-                this._monitor = extSpicesCache.monitor(Gio.FileMonitorFlags.NONE, null);
-                this._monitor.connect("changed",
-                    (aMonitor, aFileObj, aN, aEventType) => {
-                        this._spices_cache_updated(aMonitor, aFileObj, aN, aEventType);
-                    }
-                );
-
-                this._updateIconAndLabel();
-
-                if (this.pref_initial_load_done) {
-                    this._build_menu();
-                } else {
-                    this.store_extension_data();
-                    this.pref_initial_load_done = true;
+            let extSpicesCache = Gio.file_new_for_path(this.spices_file_path);
+            this._monitor = extSpicesCache.monitor(Gio.FileMonitorFlags.NONE, null);
+            this._monitor.connect("changed",
+                (aMonitor, aFileObj, aN, aEventType) => {
+                    this._spices_cache_updated(aMonitor, aFileObj, aN, aEventType);
                 }
-            } catch (aErr) {
-                global.logError(aErr);
+            );
+
+            this._updateIconAndLabel();
+
+            if (this.pref_initial_load_done) {
+                this._build_menu();
+            } else {
+                this.store_extension_data();
+                this.pref_initial_load_done = true;
             }
         });
     },
@@ -202,8 +193,46 @@ ExtensionsManagerApplet.prototype = {
         global.settings.set_strv("enabled-extensions", aExtensionsArray);
     },
 
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
+
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
     _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
