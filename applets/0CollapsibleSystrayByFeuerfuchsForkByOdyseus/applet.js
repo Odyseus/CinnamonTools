@@ -45,123 +45,162 @@ CollapsibleSystrayApplet.prototype = {
         this.metadata = metadata;
         this.instance_id = instance_id;
         this._direction = (orientation === St.Side.TOP || orientation === St.Side.BOTTOM) ? APPLET_DIRECTION.HORIZONTAL : APPLET_DIRECTION.VERTICAL;
-        this._bindSettings();
 
-        //
-        // Expand/collapse button
-        this.collapseBtn = new $.CSCollapseBtn(this);
-        this.collapseBtn.actor.connect("clicked", (o, event) => { // jshint ignore:line
-            if (this._hoverTimerID) {
-                Mainloop.source_remove(this._hoverTimerID);
-                this._hoverTimerID = null;
-            }
-            if (this._initialCollapseTimerID) {
-                Mainloop.source_remove(this._initialCollapseTimerID);
-                this._initialCollapseTimerID = null;
-            }
+        this._initializeSettings(() => {
+            // Expand/collapse button
+            this.collapseBtn = new $.CSCollapseBtn(this);
+            this.collapseBtn.actor.connect("clicked", (o, event) => { // jshint ignore:line
+                if (this._hoverTimerID) {
+                    Mainloop.source_remove(this._hoverTimerID);
+                    this._hoverTimerID = null;
+                }
+                if (this._initialCollapseTimerID) {
+                    Mainloop.source_remove(this._initialCollapseTimerID);
+                    this._initialCollapseTimerID = null;
+                }
 
-            if (this._iconsAreHidden) {
-                this._showAppIcons(true);
-            } else {
-                this._hideAppIcons(true);
-            }
+                if (this._iconsAreHidden) {
+                    this._showAppIcons(true);
+                } else {
+                    this._hideAppIcons(true);
+                }
+            });
+
+            //
+            // Initialize Cinnamon applet
+
+            $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype._init.call(
+                this,
+                metadata,
+                orientation,
+                panel_height,
+                instance_id
+            );
+
+            this.actor.add_style_class_name("ff-collapsible-systray");
+
+            this.actor.remove_actor(this.manager_container);
+
+            //
+            // Variables
+
+            this._signalManager = new SignalManager.SignalManager(null);
+            this._hovering = false;
+            this._hoverTimerID = null;
+            this._registeredAppIcons = {};
+            this._activeMenuItems = {};
+            this._inactiveMenuItems = {};
+            this._animating = false;
+            this._iconsAreHidden = false;
+
+            //
+            // Root container
+
+            this.mainLayout = new St.BoxLayout({
+                vertical: this._direction === APPLET_DIRECTION.VERTICAL
+            });
+
+            //
+            // Container for hidden icons
+
+            this.hiddenIconsContainer = new St.BoxLayout({
+                vertical: this._direction === APPLET_DIRECTION.VERTICAL
+            });
+
+            // Add horizontal scrolling and scroll to the end on each redraw so that it looks like the
+            // collapse button "eats" the icons on collapse
+            this.hiddenIconsContainer.hadjustment = new St.Adjustment();
+            this.hiddenIconsContainer.connect("queue-redraw", () => {
+                this.hiddenIconsContainer.hadjustment.set_value(this.hiddenIconsContainer.hadjustment.upper);
+            });
+
+            //
+            // Container for shown icons
+
+            this.shownIconsContainer = new St.BoxLayout({
+                vertical: this._direction === APPLET_DIRECTION.VERTICAL
+            });
+
+            //
+            // Assemble layout
+
+            this.mainLayout.add_actor(this.collapseBtn.actor);
+            this.mainLayout.add_actor(this.hiddenIconsContainer);
+            this.mainLayout.add_actor(this.shownIconsContainer);
+            this.mainLayout.set_child_above_sibling(this.shownIconsContainer, this.hiddenIconsContainer);
+            this.actor.add_actor(this.mainLayout);
+
+            //
+            // Context menu items
+
+            this.cmitemActiveItems = new PopupMenu.PopupSubMenuMenuItem(_("Active applications"));
+            this.cmitemInactiveItems = new PopupMenu.PopupSubMenuMenuItem(_("Inactive applications"));
+
+            this._populateMenus();
+
+            //
+            // Settings
+
+            // FIXME
+            // I'll wait for the next Cinnamon release that contains support for vertical panels before I introduce these settings
+            this.verticalExpandIconName = "pan-up";
+            this.verticalCollapseIconName = "pan-down";
+
+            this._loadAppIconVisibilityList();
+            this.collapseBtn.setIsExpanded(!this._iconsAreHidden);
+
+            //
+            // Hover events
+
+            this._signalManager.connect(this.actor, "enter-event",
+                () => this._onEnter());
+            this._signalManager.connect(this.actor, "leave-event",
+                () => this._onLeave());
+        }, () => {
+
         });
+    },
 
-        //
-        // Initialize Cinnamon applet
-
-        $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype._init.call(
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
             this,
-            metadata,
-            orientation,
-            panel_height,
-            instance_id
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
         );
 
-        this.actor.add_style_class_name("ff-collapsible-systray");
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
 
-        this.actor.remove_actor(this.manager_container);
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
 
-        //
-        // Variables
-
-        this._signalManager = new SignalManager.SignalManager(null);
-        this._hovering = false;
-        this._hoverTimerID = null;
-        this._registeredAppIcons = {};
-        this._activeMenuItems = {};
-        this._inactiveMenuItems = {};
-        this._animating = false;
-        this._iconsAreHidden = false;
-
-        //
-        // Root container
-
-        this.mainLayout = new St.BoxLayout({
-            vertical: this._direction === APPLET_DIRECTION.VERTICAL
-        });
-
-        //
-        // Container for hidden icons
-
-        this.hiddenIconsContainer = new St.BoxLayout({
-            vertical: this._direction === APPLET_DIRECTION.VERTICAL
-        });
-
-        // Add horizontal scrolling and scroll to the end on each redraw so that it looks like the
-        // collapse button "eats" the icons on collapse
-        this.hiddenIconsContainer.hadjustment = new St.Adjustment();
-        this.hiddenIconsContainer.connect("queue-redraw", () => {
-            this.hiddenIconsContainer.hadjustment.set_value(this.hiddenIconsContainer.hadjustment.upper);
-        });
-
-        //
-        // Container for shown icons
-
-        this.shownIconsContainer = new St.BoxLayout({
-            vertical: this._direction === APPLET_DIRECTION.VERTICAL
-        });
-
-        //
-        // Assemble layout
-
-        this.mainLayout.add_actor(this.collapseBtn.actor);
-        this.mainLayout.add_actor(this.hiddenIconsContainer);
-        this.mainLayout.add_actor(this.shownIconsContainer);
-        this.mainLayout.set_child_above_sibling(this.shownIconsContainer, this.hiddenIconsContainer);
-        this.actor.add_actor(this.mainLayout);
-
-        //
-        // Context menu items
-
-        this.cmitemActiveItems = new PopupMenu.PopupSubMenuMenuItem(_("Active applications"));
-        this.cmitemInactiveItems = new PopupMenu.PopupSubMenuMenuItem(_("Inactive applications"));
-
-        this._populateMenus();
-
-        //
-        // Settings
-
-        // FIXME
-        // I'll wait for the next Cinnamon release that contains support for vertical panels before I introduce these settings
-        this.verticalExpandIconName = "pan-up";
-        this.verticalCollapseIconName = "pan-down";
-
-        this._loadAppIconVisibilityList();
-        this.collapseBtn.setIsExpanded(!this._iconsAreHidden);
-
-        //
-        // Hover events
-
-        this._signalManager.connect(this.actor, "enter-event",
-            () => this._onEnter());
-        this._signalManager.connect(this.actor, "leave-event",
-            () => this._onLeave());
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
     },
 
     _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
-
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
