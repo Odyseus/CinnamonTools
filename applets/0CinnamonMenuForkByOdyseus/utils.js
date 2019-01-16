@@ -167,10 +167,8 @@ ApplicationContextMenuItem.prototype = {
                 icon_size: 12,
                 icon_type: St.IconType.SYMBOLIC
             });
-            if (this.icon) {
-                this.addActor(this.icon);
-                this.icon.realize();
-            }
+
+            this.icon && this.addActor(this.icon);
         }
 
         this.addActor(this.label);
@@ -219,6 +217,11 @@ ApplicationContextMenuItem.prototype = {
             case "remove_from_favorites":
                 AppFavorites.getAppFavorites().removeFavorite(this._appButton.app.get_id());
                 this._appButton.toggleMenu();
+
+                // Refresh the favorites category. This allows to hide the recently removed favorite.
+                if (this._appButton._applet.lastSelectedCategory === this._appButton._applet.favoritesCatName) {
+                    this._appButton._applet._displayButtons(this._appButton._applet.lastSelectedCategory);
+                }
                 break;
             case "uninstall":
                 this._appButton._applet.closeMainMenu();
@@ -685,10 +688,6 @@ ApplicationButton.prototype = {
         this.addActor(this.label);
 
         this.actor.label_actor = this.label;
-        if (aApplet.pref_show_application_icons) {
-            this.icon.realize();
-        }
-        this.label.realize();
         this.tooltip = new CustomTooltip(this.actor, "");
     },
 
@@ -753,21 +752,14 @@ DummyApplicationButton.prototype = {
         this.addActor(this.label);
 
         this.actor.label_actor = this.label;
-
-        if (this._applet.pref_show_application_icons) {
-            this.icon.realize();
-        }
-
-        this.label.realize();
-
         this.tooltip = new CustomTooltip(this.actor, "");
     },
 
     populateItem: function(aApp) {
         /* NOTE TO SELF: Do NOT compare objects, you moron!
          */
-        /* NOTE: If this.app didn't changed, do not modify an item.
-         * This most likelly will fail with apps. that have no ID.
+        /* NOTE: If this.app hasn't changed, do not modify an item.
+         * This most likely will fail with apps. that have no ID.
          * The day that one such app. is found, put it in banned apps. list
          * that should never contaminate a system!!!
          */
@@ -866,8 +858,6 @@ GenericButton.prototype = {
         }
 
         this.addActor(this.label);
-        this.label.realize();
-
         this.actor.reactive = params.reactive;
         this.callback = params.callcback;
     },
@@ -948,15 +938,12 @@ CategoryButton.prototype = {
                     icon_type: St.IconType.FULLCOLOR
                 });
             }
-            if (this.icon) {
-                this.addActor(this.icon);
-                this.icon.realize();
-            }
+
+            this.icon && this.addActor(this.icon);
         }
 
         this.actor.accessible_role = Atk.Role.LIST_ITEM;
         this.addActor(this.label);
-        this.label.realize();
     }
 };
 
