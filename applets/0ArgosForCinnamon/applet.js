@@ -54,66 +54,57 @@ ArgosForCinnamonApplet.prototype = {
         this.orientation = aOrientation;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             this._expandAppletContextMenu();
             Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        }, () => {
+            this._lineView = new $.ArgosLineView(this);
+            this.actor.add_actor(this._lineView.actor);
 
-        Mainloop.idle_add(() => {
-            try {
-                this._lineView = new $.ArgosLineView(this);
-                this.actor.add_actor(this._lineView.actor);
+            this.menuManager = new PopupMenu.PopupMenuManager(this);
+            this.menu = new Applet.AppletPopupMenu(this, aOrientation);
+            this.menuManager.addMenu(this.menu);
 
-                this.menuManager = new PopupMenu.PopupMenuManager(this);
-                this.menu = new Applet.AppletPopupMenu(this, aOrientation);
-                this.menuManager.addMenu(this.menu);
+            this._file = null;
+            this._timeScriptExecutionStarted = null;
+            this._timeScriptExecutionFinished = null;
+            this._timeOutputProcessingStarted = null;
+            this._timeOutputProcessingFinished = null;
+            this._isDestroyed = false;
+            this._setFileModeTimeout = 0;
+            this._updateTimeout = 0;
+            this._callToUpdateTimeout = 0;
+            this._cycleTimeout = 0;
+            this._initialLoadTimeout = 0;
+            this._updateRunning = false;
+            this._processingFile = false;
+            this._sliderIsSliding = false;
+            this._script_path = "";
 
-                this._file = null;
-                this._timeScriptExecutionStarted = null;
-                this._timeScriptExecutionFinished = null;
-                this._timeOutputProcessingStarted = null;
-                this._timeOutputProcessingFinished = null;
-                this._isDestroyed = false;
-                this._setFileModeTimeout = 0;
-                this._updateTimeout = 0;
-                this._callToUpdateTimeout = 0;
-                this._cycleTimeout = 0;
-                this._initialLoadTimeout = 0;
-                this._updateRunning = false;
-                this._processingFile = false;
-                this._sliderIsSliding = false;
-                this._script_path = "";
+            this._processFile();
+            this._updateKeybindings();
+            this._updateIconAndLabel();
 
-                this._processFile();
-                this._updateKeybindings();
-                this._updateIconAndLabel();
-
-                this.menu.connect("open-state-changed", (aMenu, aOpen) => {
-                    if (this.pref_update_on_menu_open && aOpen) {
-                        this.update();
-                        global.log("Menu opened.");
-                    }
-                });
-
-                if (!this.pref_initial_load_done) {
-                    if (this._initialLoadTimeout > 0) {
-                        Mainloop.source_remove(this._initialLoadTimeout);
-                        this._initialLoadTimeout = 0;
-                    }
-
-                    this._initialLoadTimeout = Mainloop.timeout_add_seconds(1,
-                        () => {
-                            this.pref_file_path = aMetadata.path + "/examples/python_examples.py";
-                            this.pref_initial_load_done = true;
-                            this._processFile();
-                        }
-                    );
+            this.menu.connect("open-state-changed", (aMenu, aOpen) => {
+                if (this.pref_update_on_menu_open && aOpen) {
+                    this.update();
+                    global.log("Menu opened.");
                 }
-            } catch (aErr) {
-                global.logError(aErr);
+            });
+
+            if (!this.pref_initial_load_done) {
+                if (this._initialLoadTimeout > 0) {
+                    Mainloop.source_remove(this._initialLoadTimeout);
+                    this._initialLoadTimeout = 0;
+                }
+
+                this._initialLoadTimeout = Mainloop.timeout_add_seconds(1,
+                    () => {
+                        this.pref_file_path = aMetadata.path + "/examples/python_examples.py";
+                        this.pref_initial_load_done = true;
+                        this._processFile();
+                    }
+                );
             }
         });
     },
@@ -767,8 +758,46 @@ ArgosForCinnamonApplet.prototype = {
         this._syncLabelsWithSlidersValue();
     },
 
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
+
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
     _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
