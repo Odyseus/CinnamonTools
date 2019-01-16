@@ -81,28 +81,68 @@ WindowListForkByOdyseusApplet.prototype = {
         this._windows = [];
         this._monitorWatchList = [];
 
-        this.settings = new Settings.AppletSettings(this, "{{UUID}}", this.instance_id);
-        this._bindSettings();
+        this._initializeSettings(() => {
+            this.signals.connect(global.screen, "window-added", this._onWindowAddedAsync, this);
+            this.signals.connect(global.screen, "window-monitor-changed", this._onWindowMonitorChanged, this);
+            this.signals.connect(global.screen, "window-workspace-changed", this._onWindowWorkspaceChanged, this);
 
-        this.signals.connect(global.screen, "window-added", this._onWindowAddedAsync, this);
-        this.signals.connect(global.screen, "window-monitor-changed", this._onWindowMonitorChanged, this);
-        this.signals.connect(global.screen, "window-workspace-changed", this._onWindowWorkspaceChanged, this);
+            // Condition needed for retro-compatibility.
+            // Mark for deletion on EOL. Cinnamon 3.2.x+
+            if ($.versionCompare($.CINNAMON_VERSION, "3.2.0") >= 0) {
+                this.signals.connect(global.screen, "window-skip-taskbar-changed", this._onWindowSkipTaskbarChanged, this);
+            }
 
-        // Condition needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        if ($.versionCompare($.CINNAMON_VERSION, "3.2.0") >= 0) {
-            this.signals.connect(global.screen, "window-skip-taskbar-changed", this._onWindowSkipTaskbarChanged, this);
+            this.signals.connect(global.screen, "monitors-changed", this._updateWatchedMonitors, this);
+            this.signals.connect(global.window_manager, "switch-workspace", this._refreshAllItems, this);
+
+            this.actor.connect("style-changed", () => this._updateSpacing());
+
+            global.settings.bind("panel-edit-mode", this.actor, "reactive", Gio.SettingsBindFlags.DEFAULT);
+
+            this.on_orientation_changed(aOrientation);
+            this._updateAttentionGrabber();
+        }, () => {
+            //
+        });
+    },
+
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
+
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
         }
-
-        this.signals.connect(global.screen, "monitors-changed", this._updateWatchedMonitors, this);
-        this.signals.connect(global.window_manager, "switch-workspace", this._refreshAllItems, this);
-
-        this.actor.connect("style-changed", () => this._updateSpacing());
-
-        global.settings.bind("panel-edit-mode", this.actor, "reactive", Gio.SettingsBindFlags.DEFAULT);
-
-        this.on_orientation_changed(aOrientation);
-        this._updateAttentionGrabber();
     },
 
     _bindSettings: function() {
