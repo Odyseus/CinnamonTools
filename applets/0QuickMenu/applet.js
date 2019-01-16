@@ -49,33 +49,24 @@ QuickMenuApplet.prototype = {
         this.instance_id = aInstance_id;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             this._expandAppletContextMenu();
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        }, () => {
+            this.menuManager = new PopupMenu.PopupMenuManager(this);
 
-        Mainloop.idle_add(() => {
-            try {
-                this.menuManager = new PopupMenu.PopupMenuManager(this);
+            this.directory_last = this.pref_directory;
 
-                this.directory_last = this.pref_directory;
+            this._onSettingsCustomTooltip();
 
-                this._onSettingsCustomTooltip();
+            this.main_folder_monitor = null;
+            this.monitor_id = 0;
+            this.update_menu_id = 0;
+            this.folder_changed_id = 0;
 
-                this.main_folder_monitor = null;
-                this.monitor_id = 0;
-                this.update_menu_id = 0;
-                this.folder_changed_id = 0;
-
-                this._createMenu();
-                this._updateIconAndLabel();
-                this.dealWithFolderMonitor();
-                this._updateMenu(true);
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+            this._createMenu();
+            this._updateIconAndLabel();
+            this.dealWithFolderMonitor();
+            this._updateMenu(true);
         });
     },
 
@@ -131,9 +122,46 @@ QuickMenuApplet.prototype = {
         }
     },
 
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
 
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
+    _bindSettings: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
