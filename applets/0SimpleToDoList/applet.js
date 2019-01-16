@@ -51,41 +51,32 @@ SimpleToDoListApplet.prototype = {
         this.orientation = aOrientation;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
-        try {
-            this._bindSettings();
+        this._initializeSettings(() => {
             this.logger = new $.Logger("SimpleToDoList", this.pref_enable_verbose_logging);
             Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
             this._expandAppletContextMenu();
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        }, () => {
+            this.mainBox = null;
+            this.next_id = 0;
+            this.sections = [];
+            this._request_rebuild = false;
+            this._force_storage_dirs_creation = false;
+            this._update_label_id = 0;
+            this._build_ui_id = 0;
+            this._save_tasks_id = 0;
+            this._auto_backup_id = 0;
 
-        Mainloop.idle_add(() => {
-            try {
-                this.mainBox = null;
-                this.next_id = 0;
-                this.sections = [];
-                this._request_rebuild = false;
-                this._force_storage_dirs_creation = false;
-                this._update_label_id = 0;
-                this._build_ui_id = 0;
-                this._save_tasks_id = 0;
-                this._auto_backup_id = 0;
+            this.logger.debug("Creating menus");
+            this.menuManager = new PopupMenu.PopupMenuManager(this);
+            this.menu = new Applet.AppletPopupMenu(this, aOrientation);
+            this.menu.connect("open-state-changed",
+                (aMenu, aOpen) => this._onOpenStateChanged(aMenu, aOpen));
+            this.menuManager.addMenu(this.menu);
 
-                this.logger.debug("Creating menus");
-                this.menuManager = new PopupMenu.PopupMenuManager(this);
-                this.menu = new Applet.AppletPopupMenu(this, aOrientation);
-                this.menu.connect("open-state-changed",
-                    (aMenu, aOpen) => this._onOpenStateChanged(aMenu, aOpen));
-                this.menuManager.addMenu(this.menu);
-
-                this.set_applet_tooltip(_(this.metadata.name));
-                this._load();
-                this._updateKeybindings();
-                this._updateIconAndLabel();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+            this.set_applet_tooltip(_(this.metadata.name));
+            this._load();
+            this._updateKeybindings();
+            this._updateIconAndLabel();
         });
     },
 
@@ -518,9 +509,46 @@ SimpleToDoListApplet.prototype = {
         });
     },
 
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
 
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
+    _bindSettings: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
