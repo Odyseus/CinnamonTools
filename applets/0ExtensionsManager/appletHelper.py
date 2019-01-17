@@ -1,26 +1,35 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import os
 import argparse
 import gettext
 import gi
-import re
 import json
+import os
+import re
 import sys
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gio, Gtk, GLib
 
-home = os.path.expanduser("~")
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import GLib
+from gi.repository import Gio
+from gi.repository import Gtk
+
+HOME = os.path.expanduser("~")
+
+gettext.bindtextdomain("{{UUID}}", HOME + "/.local/share/locale")
+gettext.textdomain("{{UUID}}")
+_ = gettext.gettext
+
 APPLICATION_ID = "org.cinnamon.applets.odyseus.extensions-manager-debugger"
 SETTING_TYPE_NONE = 0
 SETTING_TYPE_INTERNAL = 1
 SETTING_TYPE_EXTERNAL = 2
-curr_ver = GLib.getenv("CINNAMON_VERSION")
-debug = False
-translations = {}
+CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION")
+TRANSLATIONS = {}
 XLET_DIR = os.path.dirname(os.path.abspath(__file__))
-XLET_UUID = str(os.path.basename(XLET_DIR))
+
+debug = False
 
 
 def cmp(x, y):
@@ -34,7 +43,7 @@ def cmp(x, y):
 
 def find_extension_subdir(directory):
     largest = [0]
-    curr_a = list(map(int, curr_ver.split(".")))
+    curr_a = list(map(int, CINNAMON_VERSION.split(".")))
 
     for subdir in os.listdir(directory):
         if not os.path.isdir(os.path.join(directory, subdir)):
@@ -56,26 +65,22 @@ def find_extension_subdir(directory):
             return os.path.join(directory, ".".join(list(map(str, largest))))
 
 
-def _(string):
-    return translate(XLET_UUID, string)
-
-
 def translate(uuid, string):
-    if uuid not in translations:
+    if uuid not in TRANSLATIONS:
         try:
-            translations[uuid] = gettext.translation(uuid, home + "/.local/share/locale").gettext
+            TRANSLATIONS[uuid] = gettext.translation(uuid, HOME + "/.local/share/locale").gettext
         except IOError:
             try:
-                translations[uuid] = gettext.translation(uuid, "/usr/share/locale").gettext
+                TRANSLATIONS[uuid] = gettext.translation(uuid, "/usr/share/locale").gettext
             except IOError:
-                translations[uuid] = None
+                TRANSLATIONS[uuid] = None
 
     # Do not translate white spaces
     if not string.strip():
         return string
 
-    if translations[uuid]:
-        result = translations[uuid](string)
+    if TRANSLATIONS[uuid]:
+        result = TRANSLATIONS[uuid](string)
 
         try:
             result = result.decode("UTF-8")
@@ -98,7 +103,7 @@ class ExtensionsManager:
     def list_extensions(self):
         self.load_extensions_in(directory=('/usr/share/cinnamon/extensions'), do_return=False)
         self.load_extensions_in(
-            directory=('%s/.local/share/cinnamon/extensions') % (home), do_return=True)
+            directory=('%s/.local/share/cinnamon/extensions') % (HOME), do_return=True)
 
     def load_extensions_in(self, directory=False, do_return=False):
         if not (os.path.exists(directory) and os.path.isdir(directory)):
@@ -167,7 +172,7 @@ class ExtensionsManager:
 
                     version_supported = False
                     try:
-                        version_supported = curr_ver in data["cinnamon-version"] or curr_ver.rsplit(
+                        version_supported = CINNAMON_VERSION in data["cinnamon-version"] or CINNAMON_VERSION.rsplit(
                             ".", 1)[0] in data["cinnamon-version"]
                     except KeyError:
                         version_supported = True  # Don't check version if not specified.
@@ -352,5 +357,5 @@ def main(argv=None):
         app.run()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
