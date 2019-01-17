@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-
-""" feedparser documentation:
- https://pypi.python.org/pypi/feedparser
- https://pythonhosted.org/feedparser/
 """
-import sys
+feedparser documentation:
+    https://pypi.python.org/pypi/feedparser
+    https://pythonhosted.org/feedparser/
+"""
 import json
+import sys
 import time
 
 try:
@@ -86,5 +86,5 @@ if __name__ == "__main__":
     except Exception as e:
         info["exception"] = e
 
-    # This print statement is the return value to the javascript.
+    # This print statement is the return value to the JavaScript code.
     print(json.dumps(info))

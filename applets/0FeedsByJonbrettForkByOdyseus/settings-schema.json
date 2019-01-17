@@ -68,7 +68,14 @@
         "type": "checkbox",
         "default": true,
         "description": "Show notifications for new items",
-        "tooltip": "If checked a popup notification will be displayed for new items"
+        "tooltip": "If enabled, a popup notification will be displayed for new items."
+    },
+    "pref_unified_notifications": {
+        "type": "checkbox",
+        "default": true,
+        "dependency": "pref_notifications_enabled",
+        "description": "Unified notifications",
+        "tooltip": "If enabled, all feeds notifications will use and update one notification."
     },
     "pref_enable_verbose_logging": {
         "type": "checkbox",

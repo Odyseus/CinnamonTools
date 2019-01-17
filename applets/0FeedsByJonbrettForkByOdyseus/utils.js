@@ -87,21 +87,26 @@ var escapeUnescapeReplacer = {
 };
 
 function FeedMessageTraySource() {
-    this._init();
+    this._init.apply(this, arguments);
 }
 
 FeedMessageTraySource.prototype = {
     __proto__: MessageTray.Source.prototype,
 
     _init: function() {
-        MessageTray.Source.prototype._init.call(this, _("Feeds"));
+        MessageTray.Source.prototype._init.call(this, _(XletMeta.name));
+        this._setSummaryIcon(this.createNotificationIcon());
+    },
 
-        let gicon = Gio.icon_new_for_string(XletMeta.path + "/icon.png");
-        let icon = new St.Icon({
-            gicon: gicon
+    createNotificationIcon: function() {
+        return new St.Icon({
+            gicon: Gio.icon_new_for_string(XletMeta.path + "/icon.png"),
+            icon_size: 24
         });
+    },
 
-        this._setSummaryIcon(icon);
+    open: function() {
+        this.destroy();
     }
 };
 
@@ -122,7 +127,7 @@ FeedSubMenuItem.prototype = {
         // Used to keep track of unique feeds.
         this.feed_id = params.feed_id;
         this.notify = params.notify;
-        this.interval = params.interval; // Not implemented.
+        this.interval = params.interval; // TODO: Not implemented.
 
         // TODO: Add Box layout type to facilitate adding an icon?
         this.menuItemCount = 0;
@@ -164,7 +169,7 @@ FeedSubMenuItem.prototype = {
 
         this.logger = params.logger;
         this.max_items = params.max_items;
-        this.show_feed_image = params.show_feed_image; // Not implemented.
+        this.show_feed_image = params.show_feed_image; // TODO: Not implemented.
         this.show_read_items = params.show_read_items;
         this.description_max_length = params.description_max_length;
         this.tooltip_max_width = params.tooltip_max_width;
@@ -172,7 +177,6 @@ FeedSubMenuItem.prototype = {
         this.logger.debug("Loading FeedReader url: " + aURL);
         this.custom_title = params.custom_title;
 
-        /* Create reader */
         this.reader = new FeedReader(
             this,
             this.logger,
@@ -190,27 +194,13 @@ FeedSubMenuItem.prototype = {
                 onDownloaded: () => {
                     this._applet.process_next_feed();
                 }
-                // onNewItem: function(feed, feedtitle, itemtitle) {
-                //     this.new_item_notification(feed, feedtitle, itemtitle);
-                // }.bind(this._applet),
-                // onItemRead: function(feed) {
-                //     this.item_read_notification(feed);
-                // }.bind(this._applet),
-                // onDownloaded: function() {
-                //     this.process_next_feed();
-                // }.bind(this._applet)
             }
         );
 
         this.reader.connect("items-loaded", () => {
             this.logger.debug("items-loaded Event Fired for reader");
             // Title needs to be set on items-loaded event
-            if (!this.custom_title) {
-                this.rssTitle = this.reader.title;
-            } else {
-                this.rssTitle = this.custom_title;
-            }
-
+            this.rssTitle = this.custom_title ? this.custom_title : this.reader.title;
             this._title.set_text(this.rssTitle);
 
             this.title_length = (this._title.length > MIN_MENU_WIDTH) ?
@@ -242,9 +232,6 @@ FeedSubMenuItem.prototype = {
 
     error: function(reader, message, full_message) { // jshint ignore:line
         this.menu.removeAll();
-
-        // this.menu.addMenuItem(new LabelMenuItem(
-        //     message, full_message));
     },
 
     update: function() {
@@ -289,7 +276,6 @@ FeedSubMenuItem.prototype = {
             escapeHTML(this.reader.url);
         this.tooltip = new Tooltips.Tooltip(this.actor, "");
         this.tooltip._tooltip.get_clutter_text().set_markup(tooltipText);
-        /* Append unread_count to title */
         this._title.set_text(this.get_title());
 
         if (this.unread_count > 0) {
@@ -303,7 +289,7 @@ FeedSubMenuItem.prototype = {
 
     on_settings_changed: function(params) {
         this.max_items = params.max_items;
-        this.show_feed_image = params.show_feed_image; // Not implemented.
+        this.show_feed_image = params.show_feed_image; // TODO: Not implemented.
         this.show_read_items = params.show_read_items;
         this.description_max_length = params.description_max_length;
         this.tooltip_max_width = params.tooltip_max_width;
@@ -615,7 +601,6 @@ FeedContextMenuItem.prototype = {
             case "mark_all_read":
                 this.logger.debug("Marking all items read");
                 try {
-                    // this._appButton.menu.close();
                     this._source_item.reader.mark_all_items_read();
                     this._source_item.update();
                     // All items have been marked so we know we are opening a new feed menu.
@@ -627,7 +612,6 @@ FeedContextMenuItem.prototype = {
             case "mark_next_read":
                 this.logger.debug("Marking next " + this._source_item.max_items + " items read");
                 try {
-                    // this._appButton.close_menu();
                     this._source_item.reader.mark_next_items_read(this._source_item.max_items);
                     this._source_item.update();
                     this._source_item._applet.toggle_feeds(this._source_item, true);
@@ -659,12 +643,12 @@ FeedContextMenuItem.prototype = {
                 this._source_item.mark_read();
                 break;
 
-                // Not implemented.
+                // TODO: Not implemented.
                 // case "delete_all_items":
                 //     this.logger.debug("Marking all items 'deleted'");
                 //     break;
 
-                // Not implemented.
+                // TODO: Not implemented.
                 // case "delete_post":
                 //     this.logger.debug("Deleting item");
                 //     break;
@@ -860,7 +844,9 @@ FeedReader.prototype = {
             }
 
             // Look for new items
-            for (let i = 0; i < info.entries.length; i++) {
+            let i = 0,
+                iLen = info.entries.length;
+            for (; i < iLen; i++) {
                 // We only need to process new items, so check if the item exists already
                 let existing = this._get_item_by_id(info.entries[i].id);
 
@@ -921,10 +907,12 @@ FeedReader.prototype = {
 
                 if (!this.notify) {
                     this.logger.debug("Item level notifications disabled");
-                } else if (unread_items.length == 1) {
-                    this.callbacks.onNewItem(this, this.title, unread_items[0].title);
-                } else if (unread_items.length > 1) {
-                    this.callbacks.onNewItem(this, this.title, _("%d unread items!".format(unread_items.length)));
+                } else {
+                    if (this.parent._applet.pref_unified_notifications || unread_items.length > 1) {
+                        this.callbacks.onNewItem(this, this.title, _("%d unread items!".format(unread_items.length)));
+                    } else if (!this.parent._applet.pref_unified_notifications && unread_items.length == 1) {
+                        this.callbacks.onNewItem(this, this.title, unread_items[0].title);
+                    }
                 }
             } catch (aErr) {
                 this.logger.error(aErr);
@@ -956,7 +944,8 @@ FeedReader.prototype = {
     mark_all_items_read: function() {
         this.logger.debug("");
 
-        for (let i = this.items.length - 1; i >= 0; i--) {
+        let i = this.items.length;
+        while (i--) {
             this.items[i].mark_read(false);
         }
 
@@ -971,7 +960,9 @@ FeedReader.prototype = {
 
         // Mark next unread n items read
         let marked = 0;
-        for (let i = 0; i < this.items.length; i++) {
+        let i = 0,
+            iLen = this.items.length;
+        for (; i < iLen; i++) {
             if (!this.items[i].read) {
                 marked++;
                 this.items[i].mark_read(false);
@@ -1043,9 +1034,9 @@ FeedReader.prototype = {
     },
 
     /* This is the callback for the async file load and will
-        load the id, read, deleted status of each message. This is a limited amount of
-        data and thus without a network connection we will not get the title information.
-    */
+     * load the id, read, deleted status of each message. This is a limited amount of
+     * data and thus without a network connection we will not get the title information.
+     */
     load_items: function() {
         this.logger.debug("");
 
@@ -1071,10 +1062,13 @@ FeedReader.prototype = {
             }
 
             try {
+                /* NOTE: The original authors were right on the money!
+                 * Do not even think about removing the escape/unescape processes.
+                 * That thing bite me right in the arse!!!
+                 */
                 let data = JSON.parse(escapeUnescapeReplacer.unescape(contents));
 
                 if (typeof data == "object") {
-                    /* Load feedreader data */
                     if (data.feed_title != undefined) {
                         this.title = data.feed_title;
                     } else {
@@ -1093,7 +1087,6 @@ FeedReader.prototype = {
                     global.logError("Invalid data file for " + this.url);
                 }
             } catch (aErr) {
-                /* Invalid file contents */
                 this.logger.error("Failed to read feed data file for " + this.url + ":" + aErr);
             }
         });
@@ -1110,7 +1103,8 @@ FeedReader.prototype = {
     },
 
     _get_item_by_id: function(id) {
-        for (let i = this.items.length - 1; i >= 0; i--) {
+        let i = this.items.length;
+        while (i--) {
             if (this.items[i].id == id) {
                 return this.items[i];
             }
@@ -1119,17 +1113,15 @@ FeedReader.prototype = {
     },
 
     _is_item_read: function(id) {
-        for (let i = this.item_status.length - 1; i >= 0; i--) {
+        let i = this.item_status.length;
+        while (i--) {
             if (this.item_status[i].id == id && this.item_status[i].read) {
                 return true;
             }
         }
         return false;
     },
-    /* Fatal error handler
-     *
-     * Log error state and report to application
-     */
+
     on_error: function(msg, details) {
         this.logger.debug("FeedReader (" + this.url + "): " + msg);
         this.error = true;

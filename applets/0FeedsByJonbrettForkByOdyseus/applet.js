@@ -11,7 +11,6 @@ const _ = $._;
 
 const {
     gi: {
-        Gio,
         GLib,
         Gtk,
         St
@@ -60,6 +59,13 @@ FeedsReaderForkByOdyseus.prototype = {
             this.open_menu = null;
             this.feed_queue = [];
             this.force_download = false;
+            this.unifiedNotification = null;
+            this._unifiedNotificationData = {};
+            this._unifiedNotificationParams = {
+                titleMarkup: true,
+                bannerMarkup: true,
+                bodyMarkup: true
+            };
 
             this.logger.debug("Applet Instance ID: " + this.instance_id);
             this.logger.debug("Selected Instance Name: " + this.pref_profile_name);
@@ -80,7 +86,6 @@ FeedsReaderForkByOdyseus.prototype = {
 
             this.timeout = this.pref_refresh_interval_mins * 60 * 1000;
             this.logger.debug("Initial timeout set in: " + this.timeout + " ms");
-            /* Set the next timeout */
             this.timer_id = Mainloop.timeout_add(this.timeout,
                 () => this._process_feeds());
 
@@ -142,6 +147,7 @@ FeedsReaderForkByOdyseus.prototype = {
             "pref_refresh_interval_mins",
             "pref_max_items",
             "pref_notifications_enabled",
+            "pref_unified_notifications",
             "pref_enable_verbose_logging",
             "pref_profile_name",
             "pref_overlay_key",
@@ -178,13 +184,12 @@ FeedsReaderForkByOdyseus.prototype = {
                 setIcon(icon);
             } else if (Gtk.IconTheme.get_default().has_icon(icon)) {
                 setIcon(icon);
-                /**
-                 * START mark Odyseus
+                /* NOTE:
                  * I added the last condition without checking Gtk.IconTheme.get_default.
                  * Otherwise, if there is a valid icon name added by
                  *  Gtk.IconTheme.get_default().append_search_path, it will not be recognized.
                  * With the following extra condition, the worst that can happen is that
-                 *  the applet icon will not change/be set.
+                 * the applet icon will not change/be set.
                  */
             } else {
                 try {
@@ -264,7 +269,8 @@ FeedsReaderForkByOdyseus.prototype = {
             _("Mark all read"),
             "object-select-symbolic",
             () => {
-                for (let i = this.feeds.length - 1; i >= 0; i--) {
+                let i = this.feeds.length;
+                while (i--) {
                     this.feeds[i].reader.mark_all_items_read();
                     this.feeds[i].update();
                 }
@@ -343,10 +349,10 @@ FeedsReaderForkByOdyseus.prototype = {
                                     description_max_length: this.pref_description_max_length,
                                     tooltip_max_width: this.pref_tooltip_max_width,
                                     show_read_items: feed["showreaditems"],
-                                    show_feed_image: feed["showimage"], // Not implemented.
+                                    show_feed_image: feed["showimage"], // TODO: Not implemented.
                                     custom_title: feed["title"],
                                     notify: feed["notify"],
-                                    interval: feed["interval"] // Not implemented.
+                                    interval: feed["interval"] // TODO: Not implemented.
                                 });
                             this.menu.addMenuItem(this.feeds[f]);
                         }
@@ -368,7 +374,8 @@ FeedsReaderForkByOdyseus.prototype = {
         let first = true;
 
         // Application tooltip will only list unread feeds.
-        for (let i = this.feeds.length - 1; i >= 0; i--) {
+        let i = this.feeds.length;
+        while (i--) {
             let count = this.feeds[i].get_unread_count();
 
             if (count > 0) {
@@ -401,7 +408,8 @@ FeedsReaderForkByOdyseus.prototype = {
             this.timer_id = 0;
         }
         this.logger.debug("Number of feeds to queue: " + this.feeds.length);
-        for (let i = this.feeds.length - 1; i >= 0; i--) {
+        let i = this.feeds.length;
+        while (i--) {
             this.enqueue_feed(this.feeds[i]);
         }
 
@@ -427,14 +435,11 @@ FeedsReaderForkByOdyseus.prototype = {
 
     new_item_notification: function(feed, feedtitle, itemtitle) {
         this.logger.debug("");
-        /* Displays a popup notification using notify-send */
 
-        // if notifications are disabled don't do anything
         if (!this.pref_notifications_enabled) {
             this.logger.debug("Notifications Disabled");
             return;
         }
-
         this._notifyMessage(feed, feedtitle, itemtitle);
     },
 
@@ -469,7 +474,9 @@ FeedsReaderForkByOdyseus.prototype = {
             this.feed_to_show = feed_to_show;
             this.feed_to_show.open_menu();
         } else {
-            for (let i = this.feeds.length - 1; i >= 0; i--) {
+            let i = 0,
+                iLen = this.feeds.length;
+            for (; i < iLen; i++) {
                 if (this.feeds[i].unread_count > 0) {
                     this.logger.debug("Opening Menu: " + this.feeds[i]);
                     this.feeds[i].open_menu();
@@ -484,7 +491,6 @@ FeedsReaderForkByOdyseus.prototype = {
         }
     },
 
-    /* Feed manager functions */
     manage_feeds: function() {
         this.logger.debug("");
 
@@ -518,59 +524,113 @@ FeedsReaderForkByOdyseus.prototype = {
         }
 
         // Remove all notifications since they no longer apply
-        for (let i = this.feeds.length - 1; i >= 0; i--) {
+        let i = this.feeds.length;
+        while (i--) {
             this._destroyMessage(this.feeds[i].reader);
         }
 
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
     },
 
-    _ensureSource: function() {
+    _ensureNotificationSource: function() {
         this.logger.debug("");
-        if (!this._source) {
-            let gicon = Gio.icon_new_for_string(this.metadata.path + "/icon.png");
-            let icon = new St.Icon({
-                gicon: gicon
+        if (!this._notificationSource) {
+            this._notificationSource = new $.FeedMessageTraySource();
+            this._notificationSource.connect("destroy", () => {
+                this._notificationSource = null;
             });
 
-            this._source = new $.FeedMessageTraySource("RSS Feed Notification", icon);
-            this._source.connect("destroy", () => {
-                this._source = null;
-            });
             if (Main.messageTray) {
-                Main.messageTray.add(this._source);
+                Main.messageTray.add(this._notificationSource);
             }
         }
     },
 
     _notifyMessage: function(reader, title, text) {
         this.logger.debug("");
+
         if (reader._notification) {
             reader._notification.destroy();
         }
 
-        this._ensureSource();
+        this._ensureNotificationSource();
 
-        let gicon = Gio.icon_new_for_string(this.metadata.path + "/icon.png");
-        let icon = new St.Icon({
-            gicon: gicon
-        });
-        reader._notification = new MessageTray.Notification(this._source, title, text, {
-            icon: icon
-        });
-        reader._notification.setTransient(false);
-        reader._notification.connect("destroy", function() {
-            reader._notification = null;
-        });
+        if (this.pref_unified_notifications) {
+            this._updateUnifiedNotificationData(reader, title, text);
+            this._updateUnifiedNotification(true);
+        } else {
+            reader._notification = new MessageTray.Notification(
+                this._notificationSource,
+                title,
+                text,
+                this._unifiedNotificationParams
+            );
+            reader._notification.setTransient(false);
+            reader._notification.connect("destroy", () => {
+                reader._notification = null;
+            });
 
-        this._source.notify(reader._notification);
+            this._notificationSource.notify(reader._notification);
+        }
     },
 
-    _destroyMessage: function(reader) {
+    _updateUnifiedNotification: function(aNotify) {
         this.logger.debug("");
-        if (reader._notification) {
-            reader._notification.destroy();
+        let body = "";
+
+        for (let id in this._unifiedNotificationData) {
+            let data = this._unifiedNotificationData[id];
+
+            if (data.title && data.text && data.unread > 0) {
+                body += "<b>%s</b>".format($.escapeHTML(data.title)) + "\n";
+                body += data.text + "\n";
+            }
         }
+
+        body = body.trim();
+
+        if (this._notificationSource && !this.unifiedNotification) {
+            this.unifiedNotification = new MessageTray.Notification(
+                this._notificationSource,
+                $.escapeHTML(_(this.metadata.name)),
+                body,
+                this._unifiedNotificationParams
+            );
+            this.unifiedNotification.setTransient(false);
+            this.unifiedNotification.connect("destroy", () => {
+                this.unifiedNotification = null;
+            });
+
+            this._notificationSource.notify(this.unifiedNotification);
+        }
+
+        if (body) {
+            this.unifiedNotification.update(
+                _(this.metadata.name),
+                body,
+                this._unifiedNotificationParams
+            );
+
+            aNotify && this._notificationSource.notify(this.unifiedNotification);
+        } else {
+            this.unifiedNotification && this.unifiedNotification.destroy();
+        }
+    },
+
+    _updateUnifiedNotificationData: function(aReader, aTitle, aText) {
+        this.logger.debug("");
+        this._unifiedNotificationData[aReader.id] = {
+            title: aTitle || "",
+            text: aText || "",
+            unread: parseInt(aReader.get_unread_count(), 10)
+        };
+    },
+
+    _destroyMessage: function(aReader) {
+        this.logger.debug("");
+        this._updateUnifiedNotificationData(aReader);
+        aReader._notification && aReader._notification.destroy();
+        this.unifiedNotification && this._updateUnifiedNotification(false);
     },
 
     _updateKeybindings: function() {
@@ -592,11 +652,12 @@ FeedsReaderForkByOdyseus.prototype = {
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
         this.logger.debug("");
 
-        // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
-        // settings callback instead of just one as in older versions. The first one is the
-        // setting value and the second one is the user data. To workaround this nonsense,
-        // check if the second argument is undefined to decide which
-        // argument to use as the pref key depending on the Cinnamon version.
+        /* NOTE: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
+         * settings callback instead of just one as in older versions. The first one is the
+         * setting value and the second one is the user data. To workaround this nonsense,
+         * check if the second argument is undefined to decide which
+         * argument to use as the pref key depending on the Cinnamon version.
+         */
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         // Remove the following variable and directly use the second argument.
         let pref_key = aPrefKey || aPrefValue;
@@ -606,7 +667,8 @@ FeedsReaderForkByOdyseus.prototype = {
             case "pref_tooltip_max_width":
             case "pref_notifications_enabled":
             case "pref_max_items":
-                for (let i = this.feeds.length - 1; i >= 0; i--) {
+                let i = this.feeds.length;
+                while (i--) {
                     this.feeds[i].on_settings_changed({
                         max_items: this.pref_max_items,
                         description_max_length: this.pref_description_max_length,

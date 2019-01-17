@@ -1,37 +1,70 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Summary
+"""Feeds Manager GUI.
 
 Attributes
 ----------
 APPLICATION_ID : str
     ID used by a Gtk.Application instance.
-home : str
-    Path to the user's home folder.
+APPLICATION_NAME : str
+    Application name.
 XLET_DIR : str
     Path to the xlet folder.
 """
 
+import argparse
+import cgi
+import gettext
+import gi
 import os
 import sys
-import gi
-import argparse
-import gettext
+
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gio
+
+from gi.repository import GLib
+from gi.repository import Gio
+from gi.repository import Gtk
+
 from config_file_manager import ConfigFileManager
 
-
-home = os.path.expanduser("~")
-XLET_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-gettext.install("{{UUID}}", home + "/.local/share/locale")
+gettext.bindtextdomain("{{UUID}}", os.path.expanduser("~") + "/.local/share/locale")
+gettext.textdomain("{{UUID}}")
+_ = gettext.gettext
 
 APPLICATION_ID = "org.Cinnamon.Applets.FeedsReader.Application"
+APPLICATION_NAME = _("Feeds Reader (Fork By Odyseus)")
+# NOTE: Look at the nested calls to os.path.dirname.
+# It's because this script is inside a sub-folder inside the actual xlet folder.
+XLET_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Avoids the highlighting of not defined "_" by a linter.
-_ = _  # noqa
+def display_warning_message(widget, title, message):
+    """Display warning message.
+
+    Parameters
+    ----------
+    widget : object
+        The widget attached to this callback.
+    title : str
+        Dialog title.
+    message : str
+        Dialog message.
+    """
+    dialog = Gtk.MessageDialog(transient_for=app.window,
+                               title=title,
+                               modal=True,
+                               message_type=Gtk.MessageType.WARNING,
+                               buttons=Gtk.ButtonsType.OK)
+
+    try:
+        esc = cgi.escape(message)
+    except Exception:
+        esc = message
+
+    dialog.set_markup(esc)
+    dialog.show_all()
+    dialog.run()
+    dialog.destroy()
 
 
 class BaseGrid(Gtk.Grid):
@@ -39,7 +72,7 @@ class BaseGrid(Gtk.Grid):
     """
 
     def __init__(self, tooltip="", orientation=Gtk.Orientation.VERTICAL):
-        """Initialize.
+        """Initialization.
 
         Parameters
         ----------
@@ -84,7 +117,7 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
     """
 
     def __init__(self, *args, **kwargs):
-        """Summary
+        """Initialization.
 
         Parameters
         ----------
@@ -120,7 +153,9 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
 
         toolbar_box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
         toolbar_box.set_spacing(5, 0)
-        toolbar_box.set_vexpand(False)
+        toolbar_box.set_property("hexpand", True)
+        toolbar_box.set_property("vexpand", False)
+
         toolbar_box_scrolledwindow = Gtk.ScrolledWindow(hadjustment=None, vadjustment=None)
         toolbar_box_scrolledwindow.set_policy(hscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
                                               vscrollbar_policy=Gtk.PolicyType.NEVER)
@@ -130,53 +165,57 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         dummy_grid = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
         dummy_grid.set_property("hexpand", True)
 
-        # Profile combo
-        self.profile_combo = Gtk.ComboBoxText()
-        self.profile_combo.set_vexpand(False)
-        self.profile_combo.set_model(self.config.profiles)
-
-        self.profile_combo.set_active(self.config.get_profile_id())
-
-        self.profile_combo.set_id_column(0)
-        self.profile_combo.connect("changed", self.change_profile)
-
         profile_label = Gtk.Label()
+        profile_label.set_property("vexpand", False)
+        profile_label.set_property("valign", Gtk.Align.CENTER)
         profile_label.set_text(_("Profile Name:"))
         profile_label.show()
 
+        # Profile combo
+        self.profile_combo = Gtk.ComboBoxText()
+        self.profile_combo.set_property("valign", Gtk.Align.CENTER)
+        self.profile_combo.set_property("vexpand", False)
+        self.profile_combo.set_model(self.config.profiles)
+        self.profile_combo.set_active(self.config.get_profile_id())
+        self.profile_combo.set_id_column(0)
+        self.profile_combo.connect("changed", self.change_profile)
+
         add_profile_button = Gtk.Button()
+        add_profile_button.set_property("valign", Gtk.Align.CENTER)
         add_profile_button.add(Gtk.Image.new_from_icon_name(
             "list-add-symbolic", Gtk.IconSize.MENU))
         add_profile_button.set_tooltip_text(_("Create a new profile"))
 
         add_profile_button.connect("clicked", self.on_new_profile_button_activate)
 
-        # remove_profile_button = Gtk.Button()  # label=
-        # remove_profile_button.add(Gtk.Image.new_from_icon_name(
-        #     "edit-delete-symbolic", Gtk.IconSize.MENU))
-        # remove_profile_button.set_tooltip_text(_("Remove profile"))
+        remove_profile_button = Gtk.Button()
+        remove_profile_button.set_property("valign", Gtk.Align.CENTER)
+        remove_profile_button.add(Gtk.Image.new_from_icon_name(
+            "edit-delete-symbolic", Gtk.IconSize.MENU))
+        remove_profile_button.set_tooltip_text(_("Remove current profile"))
 
-        # remove_profile_button.connect("clicked", self.on_remove_profile_button_activate)
+        remove_profile_button.connect("clicked", self.on_remove_profile_button_activate)
 
         # Menu button
         menu_popup = Gtk.Menu()
         menu_popup.set_halign(Gtk.Align.END)
-        menu_popup.append(self.createMenuItem(text=_("Import OPML"),
-                                              callback=self._import_opml))
-        menu_popup.append(self.createMenuItem(text=_("Import Feeds File"),
-                                              callback=self._import_feeds_file))
+        menu_popup.append(self.create_menu_item(text=_("Import OPML"),
+                                                callback=self._import_opml))
+        menu_popup.append(self.create_menu_item(text=_("Import Feeds File"),
+                                                callback=self._import_feeds_file))
         menu_popup.append(Gtk.SeparatorMenuItem())
-        menu_popup.append(self.createMenuItem(text=_("Export Feeds File"),
-                                              callback=self.on_menu_export_feeds))
+        menu_popup.append(self.create_menu_item(text=_("Export Feeds File"),
+                                                callback=self.on_menu_export_feeds))
         menu_popup.append(Gtk.SeparatorMenuItem())
-        menu_popup.append(self.createMenuItem(text=_("Toggle Hidden Fields"),
-                                              callback=self.on_menu_toggle_hidden))
+        menu_popup.append(self.create_menu_item(text=_("Toggle Hidden Fields"),
+                                                callback=self.on_menu_toggle_hidden))
         menu_popup.append(Gtk.SeparatorMenuItem())
-        menu_popup.append(self.createMenuItem(text=_("Help"),
-                                              callback=self.open_help_page))
+        menu_popup.append(self.create_menu_item(text=_("Help"),
+                                                callback=self.open_help_page))
 
         menu_popup.show_all()
         menu_button = Gtk.MenuButton()
+        menu_button.set_property("valign", Gtk.Align.CENTER)
         menu_button.set_popup(menu_popup)
         menu_button.add(Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU))
         menu_button.set_tooltip_text(_("Manage settings"))
@@ -184,7 +223,7 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         toolbar_box.attach(profile_label, 0, 0, 1, 1)
         toolbar_box.attach(self.profile_combo, 1, 0, 1, 1)
         toolbar_box.attach(add_profile_button, 2, 0, 1, 1)
-        # toolbar_box.attach(remove_profile_button, 3, 0, 1, 1)
+        toolbar_box.attach(remove_profile_button, 3, 0, 1, 1)
         toolbar_box.attach(dummy_grid, 4, 0, 1, 1)
         toolbar_box.attach(menu_button, 5, 0, 1, 1)
 
@@ -325,9 +364,28 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         Parameters
         ----------
         widget : object
-            The button to remove a profile.
+            The widget attached to this callback.
         """
-        pass
+        profile_name = self.config.get_profile_name(self.profile_combo.get_active())
+
+        if profile_name == "Default":
+            display_warning_message(None, _("Unauthorized action"),
+                                    _("Default profile cannot be removed."))
+        else:
+            question = Gtk.MessageDialog(self,
+                                         Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                                         Gtk.MessageType.QUESTION,
+                                         Gtk.ButtonsType.OK_CANCEL,
+                                         "\n".join([_("Do you wish to remove the currently selected profile?"),
+                                                    _("This operation cannot be undone!")]))
+            question.set_title(_("Profile removal"))
+            response = question.run()
+            question.destroy()
+
+            if response == Gtk.ResponseType.OK:
+                index = self.config.remove_profile(profile_name)
+                self.profile_combo.set_model(self.config.profiles)
+                self.profile_combo.set_active(index)
 
     def on_new_profile_button_activate(self, widget):
         """On new profile button activated.
@@ -335,7 +393,7 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         Parameters
         ----------
         widget : object
-            The button to add a new profile.
+            The widget attached to this callback.
         """
         checking = Gtk.MessageDialog(self,
                                      Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
@@ -345,46 +403,45 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         checking.set_title(_("Are you sure?"))
         response = checking.run()
         checking.destroy()
+
         if response == Gtk.ResponseType.OK:
             dialog = Gtk.MessageDialog(self,
                                        Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                                        Gtk.MessageType.QUESTION,
                                        Gtk.ButtonsType.OK_CANCEL,
                                        _("New Profile Name"))
+            # Make OK button the default.
+            # https://stackoverflow.com/q/23983975
+            ok_button = dialog.get_widget_for_response(response_id=Gtk.ResponseType.OK)
+            ok_button.set_can_default(True)
+            ok_button.grab_default()
+
             dialog_box = dialog.get_content_area()
             dialog.set_title(_("Add New Profile"))
             entry = Gtk.Entry()
+            entry.set_activates_default(True)
             entry.set_size_request(100, 0)
-            dialog_box.pack_end(entry, False, False, 5)
+            dialog_box.pack_end(entry, False, False, 0)
             dialog.show_all()
             response = dialog.run()
             name = entry.get_text()
             dialog.destroy()
+
             if response == Gtk.ResponseType.OK and name != "":
-                self.add_profile(name)
+                index = self.config.add_profile(name)
+                self.profile_combo.set_model(self.config.profiles)
+                self.profile_combo.set_active(index)
 
-    def add_profile(self, name):
-        """Add a new profile by name
-
-        Parameters
-        ----------
-        name : str
-            The name of a new profile.
-        """
-        index = self.config.add_profile(name)
-        self.profile_combo.set_model(self.config.profiles)
-        self.profile_combo.set_active(index)
-
-    def change_profile(self, combo):
+    def change_profile(self, widget):
         """When a new profile is selected we need to switch the feeds and the profile gets
         updated also.
 
         Parameters
         ----------
-        combo : object
-            The profile selector combo box.
+        widget : object
+            The widget attached to this callback.
         """
-        selected = combo.get_active()
+        selected = widget.get_active()
         self.config.set_profile(self.config.get_profile_name(selected))
         self.treeview.set_model(self.config.feeds)
 
@@ -394,13 +451,13 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         Parameters
         ----------
         widget : object
-            Description
-        row : TYPE
-            Description
-        text : TYPE
-            Description
-        col : TYPE
-            Description
+            The widget attached to this callback.
+        row : str
+            Row to edit.
+        text : str
+            Output.
+        col : int
+            Column to edit.
         """
         if len(text) > 0:
             self.config.feeds[row][col] = text
@@ -413,12 +470,12 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        row : TYPE
-            Description
-        col : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
+        row : str
+            Row to edit.
+        col : int
+            Column to edit.
         """
         self.config.feeds[row][col] = not self.config.feeds[row][col]
 
@@ -427,25 +484,26 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        row : TYPE
-            Description
-        text : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
+        row : str
+            Row to edit.
+        text : str
+            Output.
         """
         try:
             self.config.feeds[row][5] = int(text)
         except Exception:
             pass  # Nothing to do, ignore this.
 
-    def remove_feed(self, button):
-        """When delete button is clicked we find the selected record and remove it from the feed array
+    def remove_feed(self, widget):
+        """When delete button is clicked we find the selected record and remove it
+        from the feed array.
 
         Parameters
         ----------
-        button : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
         """
         selection = self.treeview.get_selection()
         result = selection.get_selected()
@@ -453,29 +511,35 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
             model, itr = result
         model.remove(itr)
 
-    def new_feed(self, button):
+    def new_feed(self, widget):
         """Adds a new row to the bottom of the array / Grid
 
         Parameters
         ----------
-        button : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
         """
         self.config.feeds.append([ConfigFileManager.get_new_id(), True,
                                   "http://", "", True, 5, False, False])
         self.treeview.set_cursor(len(self.config.feeds) - 1, self.treeview.get_column(0), True)
         self.set_size_request(-1, 150 + len(self.config.feeds) * 20)
 
-    def save_clicked(self, button):
+    def save_clicked(self, widget):
         """When the user clicks apply we update and save the json file to disk
 
         Parameters
         ----------
-        button : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
+        """
+        self.save_config()
+
+    def save_config(self):
+        """Summary
         """
         try:
             self.config.save()
+            # This "returns" data to be used on the JavaScript side. ¬¬
             print(self.config.get_profile())
         except Exception as err:
             dialog = Gtk.MessageDialog(self, 0,
@@ -487,34 +551,34 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
             dialog.destroy()
 
     def _import_opml(self, widget):
-        """Summary
+        """Import OPML.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
         """
         self.on_menu_import(widget, "OPML")
 
     def _import_feeds_file(self, widget):
-        """Summary
+        """Import feeds file.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
         """
         self.on_menu_import(widget, "FEEDS")
 
     def on_menu_import(self, widget, type):
-        """Summary
+        """Import dialog.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        type : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
+        type : str
+            Import type.
         """
         filter_type = Gtk.FileFilter()
         if type == "OPML":
@@ -523,8 +587,8 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
             filter_type.add_pattern("*.opml")
         else:
             title = _("Choose a feed file")
-            filter_type.set_name(_("Text files"))
-            filter_type.add_mime_type("text/plain")
+            filter_type.set_name(_("CSV files"))
+            filter_type.add_mime_type("text/x-csv")
 
         dialog = Gtk.FileChooserDialog(title, self,
                                        Gtk.FileChooserAction.OPEN,
@@ -535,17 +599,18 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
                                            Gtk.ResponseType.OK
                                        ))
 
-        # Add filters to dialog box
-        dialog.add_filter(filter_type)
-
         filter_any = Gtk.FileFilter()
         filter_any.set_name(_("All files"))
         filter_any.add_pattern("*")
+
+        # Add filters to dialog box
+        dialog.add_filter(filter_type)
         dialog.add_filter(filter_any)
 
         response = dialog.run()
         filename = dialog.get_filename()
         dialog.destroy()
+
         if response == Gtk.ResponseType.OK:
             try:
                 if type == "OPML":
@@ -571,12 +636,12 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
                 dialog.destroy()
 
     def on_menu_export_feeds(self, widget):
-        """Summary
+        """Export dialog.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
         """
         dialog = Gtk.FileChooserDialog(_("Save a feed file"), self,
                                        Gtk.FileChooserAction.SAVE,
@@ -587,10 +652,12 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
             Gtk.ResponseType.OK
         ))
 
+        dialog.set_current_name("%s.csv" % _("Untitled"))
+
         # Add filters to dialog box
         filter_text = Gtk.FileFilter()
-        filter_text.set_name(_("Text files"))
-        filter_text.add_mime_type("text/plain")
+        filter_text.set_name(_("CSV files"))
+        filter_text.add_mime_type("text/x-csv")
         dialog.add_filter(filter_text)
 
         filter_any = Gtk.FileFilter()
@@ -602,10 +669,10 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         filename = dialog.get_filename()
         dialog.destroy()
         sys.stderr.write(str(response))
+
         if response == Gtk.ResponseType.OK:
             try:
                 self.config.export_feeds(filename)
-                # ConfigManager.write(self.config.feeds, filename=filename)
             except Exception as ex:
                 sys.stderr.write(_("Unable to export file, exception: %s") % str(ex))
                 error_dialog = Gtk.MessageDialog(self, 0,
@@ -618,44 +685,44 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
                 error_dialog.destroy()
 
     def on_menu_toggle_hidden(self, widget):
-        """Summary
+        """Hide no implemented features.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
         """
         self.show_hidden_fields = not self.show_hidden_fields
         for column in self.hidden_fields:
             column.set_visible(self.show_hidden_fields)
 
     def open_help_page(self, widget):
-        """Summary
+        """Open xlet help page.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
+        widget : object
+            The widget attached to this callback.
         """
         from subprocess import call
         call(("xdg-open", os.path.join(XLET_DIR, "HELP.html")))
 
     # A million thanks to the """geniuses""" ($%&½€#&) at Gnome for
     # deprecating Gtk.ImageMenuItem!!! ¬¬
-    def createMenuItem(self, text, callback):
-        """Summary
+    def create_menu_item(self, text, callback):
+        """Create menu item.
 
         Parameters
         ----------
-        text : TYPE
-            Description
-        callback : TYPE
-            Description
+        text : str
+            Menu item label.
+        callback : object
+            Menu item activation callback.
 
         Returns
         -------
-        TYPE
-            Description
+        object
+            The generated menu item.
         """
         item = Gtk.MenuItem(text)
 
@@ -666,60 +733,59 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
 
 
 class FeedsManagerApplication(Gtk.Application):
-
-    """Summary
+    """Feeds Manager application.
 
     Attributes
     ----------
-    application : TYPE
-        Description
-    config : TYPE
-        Description
-    window : TYPE
-        Description
+    application : object
+        Instance of Gtk.Application.
+    config : object
+        Instance of ConfigFileManager.
+    window : object
+        Instance of FeedsManagerWindow.
     """
 
     def __init__(self, config, *args, **kwargs):
-        """Summary
+        """Initialization.
 
         Parameters
         ----------
-        config : TYPE
-            Description
+        config : object
+            Instance of ConfigFileManager.
         *args
-            Description
+            Positional arguments.
         **kwargs
-            Description
+            Keyword arguments.
         """
         self.config = config
 
-        GLib.set_application_name(_("Feeds Reader (Fork By Odyseus)"))
+        GLib.set_application_name(APPLICATION_NAME)
         super().__init__(*args,
                          application_id=APPLICATION_ID,
                          flags=Gio.ApplicationFlags.FLAGS_NONE,
                          **kwargs)
 
         self.application = Gtk.Application()
-        self.application.connect("startup", self.do_startup)
+        self.application.connect("startup", self.do_startup, "hello")
         self.application.connect("activate", self.do_activate)
 
     def do_activate(self, data=None):
-        """Summary
+        """Activate window.
 
         Parameters
         ----------
         data : None, optional
-            Description
+            Data.
         """
         self.window.present()
 
     def do_startup(self, data=None):
-        """Summary
+        """Initialize application.
 
         Parameters
         ----------
         data : None, optional
-            Description
+            Data.
         """
         Gtk.Application.do_startup(self)
         self._buildUI()
@@ -728,7 +794,7 @@ class FeedsManagerApplication(Gtk.Application):
         """Build UI.
         """
         self.window = FeedsManagerWindow(application=self,
-                                         title=_("Feeds Reader (Fork By Odyseus)"))
+                                         title=APPLICATION_NAME)
         self.window.config = self.config
 
         self.window.connect("destroy", self.on_quit)
@@ -751,8 +817,8 @@ class FeedsManagerApplication(Gtk.Application):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("filename", help="Settings filename including path.")
-    parser.add_argument("profile", help="Profile name to update the redirected url.")
+    parser.add_argument("filename", help=_("Path to the feeds.json file."))
+    parser.add_argument("profile", help=_("Profile name used by an instance of this applet."))
 
     args = parser.parse_args()
 
