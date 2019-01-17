@@ -9,14 +9,22 @@ if (typeof require === "function") {
 
 const _ = $._;
 
-const Applet = imports.ui.applet;
-const GLib = imports.gi.GLib;
-const Gtk = imports.gi.Gtk;
-const Mainloop = imports.mainloop;
-const PopupMenu = imports.ui.popupMenu;
-const Settings = imports.ui.settings;
-const St = imports.gi.St;
-const Util = imports.misc.util;
+const {
+    gi: {
+        GLib,
+        Gtk,
+        St
+    },
+    mainloop: Mainloop,
+    misc: {
+        util: Util
+    },
+    ui: {
+        applet: Applet,
+        popupMenu: PopupMenu,
+        settings: Settings
+    }
+} = imports;
 
 function MyApplet(aMetadata, aOrientation, aPanel_height, aInstance_id) {
     this._init(aMetadata, aOrientation, aPanel_height, aInstance_id);
@@ -38,32 +46,65 @@ MyApplet.prototype = {
         this.orientation = aOrientation;
         this.instance_id = aInstance_id;
 
-        // "Real time" declarations/calls that could/will cause problems if declared/executed
-        // inside Mainloop.idle_add.
-        try {
-            // Initialize applet's settings system.
-            this._bindSettings();
+        this._initializeSettings(() => {
+            /* NOTE: Direct function calls.
+             * These calls are performed AFTER the applet's settings are initialized
+             * (this._bindSettings() was called).
+             * These function calls can depend on settings (they were already initialized)
+             * but should't depend on any other properties.
+             */
             // Add new items to the applet context menu or override the default ones.
             this._expandAppletContextMenu();
             // To be able to use icons stored inside a folder called "icons" by name.
             Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
-        } catch (aErr) {
-            global.logError(aErr);
-        }
-
-        Mainloop.idle_add(() => {
-            try {
-                //
-                this._updateIconAndLabel();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+        }, () => {
+            /* NOTE: Idle function calls.
+             * All these function calls are performed inside a Mainloop.idle_add() call.
+             */
+            this._updateIconAndLabel();
         });
     },
 
-    _bindSettings: function() {
-        this.settings = new Settings.AppletSettings(this, this.metadata.uuid, this.instance_id);
+    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+        this.settings = new Settings.AppletSettings(
+            this,
+            this.metadata.uuid,
+            this.instance_id,
+            true // Asynchronous settings initialization.
+        );
 
+        let callback = () => {
+            try {
+                this._bindSettings();
+                aDirectCallback();
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            Mainloop.idle_add(() => {
+                try {
+                    aIdleCallback();
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+            });
+        };
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.2.x+
+        // Always use promise. Declare content of callback variable
+        // directly inside the promise callback.
+        switch (this.settings.hasOwnProperty("promise")) {
+            case true:
+                this.settings.promise.then(() => callback());
+                break;
+            case false:
+                callback();
+                break;
+        }
+    },
+
+    _bindSettings: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         let bD = {
@@ -144,7 +185,7 @@ MyApplet.prototype = {
     updateLabelVisibility: function() {
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
-        if (typeof this.hide_applet_label !== "function") {
+        if (typeof this.hide_applet_label === "function") {
             if (this.orientation == St.Side.LEFT || this.orientation == St.Side.RIGHT) {
                 this.hide_applet_label(true);
             } else {
@@ -157,8 +198,17 @@ MyApplet.prototype = {
         }
     },
 
-    _onSettingsChanged: function(aPrefKey) {
-        switch (aPrefKey) {
+    _onSettingsChanged: function(aPrefValue, aPrefKey) {
+        /* NOTE: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
+         * settings callback instead of just one as in older versions. The first one is the
+         * setting value and the second one is the user data. To workaround this nonsense,
+         * check if the second argument is undefined to decide which
+         * argument to use as the pref key depending on the Cinnamon version.
+         */
+        // Mark for deletion on EOL. Cinnamon 3.2.x+
+        // Remove the following variable and directly use the second argument.
+        let pref_key = aPrefKey || aPrefValue;
+        switch (pref_key) {
             case "pref_custom_icon_for_applet":
             case "pref_custom_label_for_applet":
                 this._updateIconAndLabel();
