@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PanelDrawerForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-01-12 03:21-0300\n"
+"POT-Creation-Date: 2019-01-17 15:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,11 +64,11 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: applet.js:115
+#: applet.js:106
 msgid "Panel Edit mode"
 msgstr ""
 
-#: applet.js:121
+#: applet.js:112
 msgid "Add applets to the panel"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-12 03:05-0300\n"
+"POT-Creation-Date: 2019-01-17 15:51-0300\n"
 "PO-Revision-Date: 2018-08-25 02:48-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: \n"
@@ -87,46 +87,46 @@ msgstr ""
 "Cinnamon, las localizaciones se pueden instalar ejecutando el archivo "
 "llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: applet.js:403
+#: applet.js:431
 #, javascript-format
 msgid "You have %d new mails!"
 msgstr "¡Tienes %d correos nuevos!"
 
-#: applet.js:404 applet.js:441
+#: applet.js:432 applet.js:469
 msgid "Mark All Read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:413
+#: applet.js:441
 msgid "You have new mail!"
 msgstr "¡Tienes nuevo correo!"
 
-#: applet.js:415
+#: applet.js:443
 msgid "Mark Read"
 msgstr "Marcar como leído"
 
-#: applet.js:477 applet.js:524
+#: applet.js:505 applet.js:552
 msgid "No unread mails."
 msgstr "Sin mensajes no leídos."
 
-#: applet.js:505
+#: applet.js:533
 msgid "Mailnag daemon is not running!"
 msgstr "El demonio Mailnag no se está ejecutando!"
 
-#: applet.js:515
+#: applet.js:543
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr "¡Tienes un correo de %s!"
 
-#: applet.js:521
+#: applet.js:549
 #, javascript-format
 msgid "You have %d unread mails!"
 msgstr "¡Tienes %d correos sin leer!"
 
-#: applet.js:534
+#: applet.js:562
 msgid "Click to see error!"
 msgstr "Hacer clic para ver el error!"
 
-#: applet.js:535
+#: applet.js:563
 msgid "Error"
 msgstr "Error"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList 1.05\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-01-12 03:05-0300\n"
+"POT-Creation-Date: 2019-01-17 15:51-0300\n"
 "PO-Revision-Date: 2018-08-25 02:48-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:948
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:976
 msgid "Help"
 msgstr "Ayuda"
 
@@ -68,41 +68,41 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: appletHelper.py:69
+#: appletHelper.py:36
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:71 appletHelper.py:77 appletHelper.py:84
+#: appletHelper.py:38 appletHelper.py:44 appletHelper.py:51
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: appletHelper.py:72 appletHelper.py:85
+#: appletHelper.py:39 appletHelper.py:52
 msgid "_Save"
 msgstr "_Guardar"
 
-#: appletHelper.py:75
+#: appletHelper.py:42
 msgid "Select a file to import"
 msgstr "Seleccionar un archivo desde el cual importar"
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:79
+#: appletHelper.py:46
 msgid "_Open"
 msgstr "_Abrir"
 
-#: appletHelper.py:82
+#: appletHelper.py:49
 msgid "Select a file to save to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual guardar"
 
-#: appletHelper.py:102
+#: appletHelper.py:69
 msgid "TODO files"
 msgstr "Archivos TODO"
 
-#: appletHelper.py:105
+#: appletHelper.py:72
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: appletHelper.py:136
+#: appletHelper.py:103
 msgid "Nothing to do here."
 msgstr "Nada que hacer aquí."
 
@@ -267,67 +267,67 @@ msgstr "Estilo incorrecto de las entradas"
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr "La única manera de arreglar esto (que yo he podido encontrar) es editando el tema de Cinnamon que uno está usando y remover esas medidas fijas. Los selectores CSS que necesitan ser editados son **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** y **.popup-menu StEntry:focus**. Dependiendo para qué versión de Cinnamon el tema fue creado, uno puede encontrar sólo los primeros dos selectores, los últimos dos o todos ellos. Las propiedades CSS que necesitan ser editadas son **width** y **height**. Ellas podrían ser eliminadas, pero lo más sensible de hacer es renombrarlas a **min-width** y **min-height** respectivamente. Luego de editar el archivo del tema y reiniciar Cinnamon, las entradas de texto de este applet deberían lucir y funcionar correctamente."
 
-#: applet.js:122 applet.js:182
+#: applet.js:113 applet.js:173
 msgid "New tasks list..."
 msgstr "Nueva lista de tareas..."
 
-#: applet.js:854
+#: applet.js:882
 msgid "Save as TODO"
 msgstr "Guardar como TODO"
 
-#: applet.js:862
+#: applet.js:890
 msgid "Save all current tasks lists as a TODO file."
 msgstr "Guardar todas las listas de tareas actuales a un archivo TODO."
 
-#: applet.js:868
+#: applet.js:896
 msgid "Export tasks"
 msgstr "Exportar tareas"
 
-#: applet.js:876
+#: applet.js:904
 msgid "Export all current tasks lists into a JSON file."
 msgstr "Exportar todas las listas de tareas actuales a un archivo JSON."
 
-#: applet.js:877 applet.js:891
+#: applet.js:905 applet.js:919
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr "Archivos en formato JSON exportados por este applet pueden ser importados al applet y las listas de tareas encontradas dentro de dicho archivo serán agregadas a las listas de tareas actualmente cargadas en el applet."
 
-#: applet.js:883
+#: applet.js:911
 msgid "Import tasks"
 msgstr "Importar tareas"
 
-#: applet.js:890
+#: applet.js:918
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr "Importar listas de tareas hacia este applet desde un archivo JSON previamente exportado."
 
-#: applet.js:900
+#: applet.js:928
 msgid "Restore example tasks"
 msgstr "Restaurar tareas de ejemplo"
 
-#: applet.js:914
+#: applet.js:942
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr "Restaurar la lista de tareas de ejemplo que estaban presentes cuando se cargó por primera vez el applet."
 
-#: applet.js:920
+#: applet.js:948
 msgid "Reset tasks"
 msgstr "Restablecer tareas"
 
-#: applet.js:926 applet.js:939
+#: applet.js:954 applet.js:967
 msgid "WARNING!!!"
 msgstr "¡ADVERTENCIA!"
 
-#: applet.js:927
+#: applet.js:955
 msgid "Do you really want to remove all your current tasks?"
 msgstr "¿Realmente desea eliminar todas sus tareas actuales?"
 
-#: applet.js:928 applet.js:939
+#: applet.js:956 applet.js:967
 msgid "This operation cannot be reverted!!!"
 msgstr "¡Esta operación no puede ser revertida!"
 
-#: applet.js:938
+#: applet.js:966
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr "Eliminar todas las listas de tareas actualmente cargadas en este applet."
 
-#: applet.js:952
+#: applet.js:980
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 

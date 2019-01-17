@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks 1.14\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-01-12 03:06-0300\n"
+"POT-Creation-Date: 2019-01-17 15:51-0300\n"
 "PO-Revision-Date: 2018-08-25 02:49-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 settings.py:2334
+#: ../../__app__/python_modules/localized_help_creator.py:328 settings.py:2318
 msgid "Help"
 msgstr "Ayuda"
 
@@ -67,19 +67,19 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: settings.py:68 settings.py:70
+#: settings.py:45 settings.py:47
 msgid "Applets tweaks"
 msgstr "Ajustes de applets"
 
-#: settings.py:75
+#: settings.py:52
 msgid "Enable Applets tweaks"
 msgstr "Habilitar ajustes de applets"
 
-#: settings.py:82
+#: settings.py:59
 msgid "Ask for confirmation on applet removal"
 msgstr "Pedir confirmación al eliminar applets"
 
-#: settings.py:83 settings.py:145
+#: settings.py:60 settings.py:122
 msgid ""
 "Display a confirmation dialog on removal.\n"
 "Keeping the Ctrl key pressed will bypass the confirmation."
@@ -87,155 +87,155 @@ msgstr ""
 "Mostrar un diálogo de confirmación al eliminar.\n"
 "Manteniendo pulsada la tecla Ctrl se omitirá el diálogo de confirmación."
 
-#: settings.py:90
+#: settings.py:67
 msgid "Display \"Edit applet main file\" on context menu"
 msgstr "Mostrar \\\"Editar archivo principal del applet\\\" en el menú contextual"
 
-#: settings.py:97
+#: settings.py:74
 msgid "Where to place the \"Edit applet main file\" item?"
 msgstr "¿Dónde colocar el elemento \"Editar archivo principal del applet\"?"
 
-#: settings.py:99 settings.py:119 settings.py:161 settings.py:181
+#: settings.py:76 settings.py:96 settings.py:138 settings.py:158
 msgid "Last item on menu"
 msgstr "Último ítem en el menú"
 
-#: settings.py:100 settings.py:120 settings.py:162 settings.py:182
+#: settings.py:77 settings.py:97 settings.py:139 settings.py:159
 msgid "Before \"About...\" item"
 msgstr "Antes del ítem \"Acerca de...\""
 
-#: settings.py:101 settings.py:121 settings.py:163 settings.py:183
+#: settings.py:78 settings.py:98 settings.py:140 settings.py:160
 msgid "Before \"Configure...\" item"
 msgstr "Antes del ítem \"Configurar...\""
 
-#: settings.py:102 settings.py:122 settings.py:164 settings.py:184
+#: settings.py:79 settings.py:99 settings.py:141 settings.py:161
 msgid "Before \"Remove...\" item"
 msgstr "Antes del ítem \"Remover...\""
 
-#: settings.py:110
+#: settings.py:87
 msgid "Display \"Open applet folder\" on context menu"
 msgstr "Mostrar \"Abrir carpeta del applet\" en el menú contextual"
 
-#: settings.py:117
+#: settings.py:94
 msgid "Where to place the \"Open applet folder\" item?"
 msgstr "¿Dónde colocar el elemento \"Abrir carpeta del applet\"?"
 
-#: settings.py:130 settings.py:132
+#: settings.py:107 settings.py:109
 msgid "Desklets tweaks"
 msgstr "Ajustes de desklets"
 
-#: settings.py:137
+#: settings.py:114
 msgid "Enable Desklets tweaks"
 msgstr "Habilitar ajustes de desklets"
 
-#: settings.py:144
+#: settings.py:121
 msgid "Ask for confirmation on desklet removal"
 msgstr "Pedir confirmación al eliminar desklets"
 
-#: settings.py:152
+#: settings.py:129
 msgid "Display \"Edit desklet main file\" on context menu"
 msgstr "Mostrar \\\"Editar archivo principal del desklet\\\" en el menú contextual"
 
-#: settings.py:159
+#: settings.py:136
 msgid "Where to place the \"Edit desklet main file\" item?"
 msgstr "¿Dónde colocar el elemento \"Editar archivo principal del desklet\"?"
 
-#: settings.py:172
+#: settings.py:149
 msgid "Display \"Open desklet folder\" on context menu"
 msgstr "Mostrar \\\"Abrir carpeta del desklet\\\" en el menú contextual"
 
-#: settings.py:179
+#: settings.py:156
 msgid "Where to place the \"Open desklet folder\" item?"
 msgstr "¿Dónde colocar el elemento \"Abrir carpeta del desklet\"?"
 
-#: settings.py:193 settings.py:196
+#: settings.py:170 settings.py:173
 msgid "Hot corners tweaks"
 msgstr "Ajustes de esquinas activas"
 
-#: settings.py:201
+#: settings.py:178
 msgid "Enable Hot Corners tweaks"
 msgstr "Habilitar ajustes de esquinas activas"
 
-#: settings.py:208
+#: settings.py:185
 msgid "Top left hot corner activation delay"
 msgstr "Retardo de activación para la esquina superior izquierda"
 
-#: settings.py:209 settings.py:221 settings.py:233 settings.py:245
+#: settings.py:186 settings.py:198 settings.py:210 settings.py:222
 msgid "Set a delay in milliseconds to activate this hot corner."
 msgstr "Establecer un retardo en milisegundos para activar esta esquina activa."
 
-#: settings.py:213 settings.py:225 settings.py:237 settings.py:249 settings.py:301
+#: settings.py:190 settings.py:202 settings.py:214 settings.py:226 settings.py:278
 msgid "milliseconds"
 msgstr "milisegundos"
 
-#: settings.py:220
+#: settings.py:197
 msgid "Top right hot corner activation delay"
 msgstr "Retardo de activación para la esquina superior derecha"
 
-#: settings.py:232
+#: settings.py:209
 msgid "Bottom left hot corner activation delay"
 msgstr "Retardo de activación para la esquina inferior izquierda"
 
-#: settings.py:244
+#: settings.py:221
 msgid "Bottom right hot corner activation delay"
 msgstr "Retardo de activación para la esquina inferior derecha"
 
-#: settings.py:256
+#: settings.py:233
 msgid "Desktop tweaks"
 msgstr "Ajustes del Escritorio"
 
-#: settings.py:258 z_create_localized_help.py:51 z_create_localized_help.py:78
+#: settings.py:235 z_create_localized_help.py:51 z_create_localized_help.py:78
 msgid "Desktop area tweaks"
 msgstr "Ajustes del área de escritorio"
 
-#: settings.py:263
+#: settings.py:240
 msgid "Enable Desktop area tweaks"
 msgstr "Habilitar ajustes del área de escritorio"
 
-#: settings.py:270
+#: settings.py:247
 msgid "Enable applications drop to the Desktop"
 msgstr "Habilitar soltar aplicaciones en el escritorio"
 
-#: settings.py:271
+#: settings.py:248
 msgid "With this option enabled, applications can be dragged from the menu applet and from the panel launchers applet and dropped into the desktop."
 msgstr "Con esta opción habilitada, las aplicaciones se pueden arrastrar desde el menú y desde los lanzadores del panel para ser soltarlas en el escritorio."
 
-#: settings.py:275 z_create_localized_help.py:53 z_create_localized_help.py:91
+#: settings.py:252 z_create_localized_help.py:53 z_create_localized_help.py:91
 msgid "Tooltips tweaks"
 msgstr "Ajustes de caja de herramientas"
 
-#: settings.py:280
+#: settings.py:257
 msgid "Enable Tooltips tweaks"
 msgstr "Habilitar ajustes de caja de herramientas"
 
-#: settings.py:288 extension.js:1064
+#: settings.py:265 extension.js:1064
 msgid "Avoid mouse pointer overlapping tooltips"
 msgstr "Evitar la superposición de puntero del ratón sobre las cajas de información sobre herramientas"
 
-#: settings.py:289
+#: settings.py:266
 msgid "Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse pointer. This leads to having tooltips overlapped by the mouse pointer. This tweak aligns the tooltip to the bottom-right corner of the mouse pointer (approximately), reducing the possibility of the mouse pointer to overlap the tooltip."
 msgstr "Las cajas de información en la interfaz de usuario de Cinnamon están alineadas con la esquina superior izquierda del puntero del ratón. Esto lleva a tener esta información superpuesta por el puntero del ratón. Este ajuste alinea la caja de información sobre herramientas en la esquina inferior derecha del puntero del ratón (aproximadamente), reduciendo la posibilidad de que el puntero del ratón se solape con la caja de información sobre herramientas."
 
-#: settings.py:296
+#: settings.py:273
 msgid "Tooltips show delay"
 msgstr "Retardo para mostrar información sobre herramientas"
 
-#: settings.py:297
+#: settings.py:274
 msgid "Set a delay in milliseconds to display Cinnamon's UI tooltips."
 msgstr "Establezca un retraso en milisegundos para mostrar información sobre herramientas de la interfaz de Cinnamon."
 
-#: settings.py:305 z_create_localized_help.py:52 z_create_localized_help.py:83
+#: settings.py:282 z_create_localized_help.py:52 z_create_localized_help.py:83
 msgid "Popup menus tweaks"
 msgstr "Ajustes de menúes emergentes"
 
-#: settings.py:310
+#: settings.py:287
 msgid "Enable Popup menus tweaks"
 msgstr "Habilitar ajustes de menúes emergentes"
 
-#: settings.py:317 z_create_localized_help.py:84
+#: settings.py:294 z_create_localized_help.py:84
 msgid "Panel menus behavior"
 msgstr "Comportamiento de los menúes del panel"
 
-#: settings.py:318
+#: settings.py:295
 msgid ""
 "This setting affects only the behavior of menus that belongs to applets placed on any panel.\n"
 "\n"
@@ -249,63 +249,63 @@ msgstr ""
 "\n"
 "No consumir clics: de forma predeterminada, cuando se abre el menú de un applet en Cinnamon y luego se hace clic en otro applet para abrir su menú, el primer clic se utiliza para cerrar el primer menú abierto y, a continuación, se debe realizar otro clic para abrir el menú del segundo applet. Con esta opción habilitada, se puede abrir directamente el menú de cualquier applet incluso si otro applet tiene su menú abierto."
 
-#: settings.py:320
+#: settings.py:297
 msgid "Default behavior"
 msgstr "Comportamiento predeterminado"
 
-#: settings.py:321
+#: settings.py:298
 msgid "Emulate Gnome Shell menus"
 msgstr "Emular los menús de Gnome Shell"
 
-#: settings.py:322
+#: settings.py:299
 msgid "Don't \"eat\" clicks"
 msgstr "No \"consumir\" clics"
 
-#: settings.py:330 settings.py:332 z_create_localized_help.py:54 z_create_localized_help.py:96
+#: settings.py:307 settings.py:309 z_create_localized_help.py:54 z_create_localized_help.py:96
 msgid "Notifications tweaks"
 msgstr "Ajustes de notificaciones"
 
-#: settings.py:333
+#: settings.py:310
 msgid "After enabling notifications tweaks, some settings set by this extension will have priority over Cinnamon's notification settings."
 msgstr "Después de habilitar los ajustes de notificaciones, algunas configuraciones establecidas por esta extensión tendrán prioridad sobre las configuraciones de notificaciones de Cinnamon."
 
-#: settings.py:333
+#: settings.py:313
 msgid "The Cinnamon's setting to display notifications at the bottom of the screen is ignored. The position set by this extension is the only one that will take effect."
 msgstr "La opción de Cinnamon para mostrar notificaciones en la parte inferior de la pantalla se ignora. La posición establecida por esta extensión es la única que tendrá efecto."
 
-#: settings.py:333
+#: settings.py:314
 msgid "The notification positioning is calculated in a different way by this extension compared to the way Cinnamon calculates it. This extension offers complete control over the distance from all pertinent sides of the popup."
 msgstr "El posicionamiento de notificaciones es calculado de una manera diferente por esta extensión en comparación con la forma en que Cinnamon lo calcula. Esta extensión ofrece un control completo sobre la distancia desde todos los lados pertinentes de la ventana emergente."
 
-#: settings.py:338
+#: settings.py:319
 msgid "Enable notifications tweaks"
 msgstr "Habilitar ajustes de notificaciones"
 
-#: settings.py:345
+#: settings.py:326
 msgid "Enable notifications open/close animation"
 msgstr "Habilitar animación de notificaciones"
 
-#: settings.py:353
+#: settings.py:334
 msgid "Add close notification button"
 msgstr "Agregar botón de cerrado de notificación"
 
-#: settings.py:360
+#: settings.py:341
 msgid "Notifications position"
 msgstr "Posición de las notificaciones"
 
-#: settings.py:362
+#: settings.py:343
 msgid "Top-right of screen (System default)"
 msgstr "Parte superior derecha de la pantalla (por defecto del sistema)"
 
-#: settings.py:363
+#: settings.py:344
 msgid "Bottom-right of screen"
 msgstr "Parte inferior derecha de la pantalla"
 
-#: settings.py:371
+#: settings.py:352
 msgid "Distance from panel"
 msgstr "Distancia desde el panel"
 
-#: settings.py:372
+#: settings.py:353
 msgid ""
 "For notifications displayed at the top-right of screen: this is the distance between the bottom border of the top panel (if no top panel, from the top of the screen) to the top border of the notification popup.\n"
 "\n"
@@ -315,152 +315,152 @@ msgstr ""
 "\n"
 "Para las notificaciones que se muestran en la parte inferior derecha de la pantalla: esta la distancia entre el borde superior del panel inferior (si no hay panel inferior, desde la parte inferior de la pantalla) hasta el borde inferior de la ventana emergente de notificación."
 
-#: settings.py:376 settings.py:388
+#: settings.py:357 settings.py:369
 msgid "pixels"
 msgstr "pixeles"
 
-#: settings.py:383
+#: settings.py:364
 msgid "Notification popup right margin"
 msgstr "Margen derecho del popup de las notificaciones"
 
-#: settings.py:384
+#: settings.py:365
 msgid "By default, Cinnamon sets the right margin of the notification popup if it is defined by the currently used theme (margin-from-right-edge-of-screen CSS property). This option allows to set a custom right margin, ignoring the defined by the theme."
 msgstr "De forma predeterminada, Cinnamon establece el margen derecho de la ventana emergente de notificación si está definido por el tema utilizado actualmente (propiedad CSS de margen desde el borde derecho de la pantalla). Esta opción permite establecer un margen derecho personalizado, ignorando lo definido por el tema."
 
 #. TO TRANSLATORS: Could be left blank.
-#: settings.py:395
+#: settings.py:376
 msgid "Display a test notification"
 msgstr "Mostrar una notificación de prueba"
 
-#: settings.py:402
+#: settings.py:383
 msgid "Windows tweaks"
 msgstr "Ajustes de ventanas"
 
-#: settings.py:404 z_create_localized_help.py:55 z_create_localized_help.py:109
+#: settings.py:385 z_create_localized_help.py:55 z_create_localized_help.py:109
 msgid "Window focus tweaks"
 msgstr "Ajustes de foco de ventanas"
 
-#: settings.py:409
+#: settings.py:390
 msgid "The activation of windows demanding attention..."
 msgstr "La activación de ventanas que demandan atención..."
 
-#: settings.py:411
+#: settings.py:392
 msgid "...is handled by the system"
 msgstr "...es manejada por el sistema"
 
-#: settings.py:412
+#: settings.py:393
 msgid "...is immediate"
 msgstr "...es inmediata"
 
-#: settings.py:413
+#: settings.py:394
 msgid "...is performed with a keyboard shortcut"
 msgstr "...se lleva a cabo con un atajo de teclado"
 
-#: settings.py:420
+#: settings.py:401
 msgid "Activate window demanding attention"
 msgstr "Activar ventana exigiendo atención"
 
-#: settings.py:425 settings.py:1293
+#: settings.py:406 settings.py:1277
 msgid "Window shadows tweaks"
 msgstr "Ajustes de sombras de ventana"
 
-#: settings.py:426 z_create_localized_help.py:130
+#: settings.py:407 z_create_localized_help.py:130
 msgid "Client side decorated windows aren't affected by this tweak."
 msgstr "Las ventanas decoradas del lado del cliente no se ven afectadas por este ajuste."
 
-#: settings.py:431
+#: settings.py:412
 msgid "Enable window shadows tweaks"
 msgstr "Habilitar ajustes de sombras de ventana"
 
-#: settings.py:432
+#: settings.py:413
 msgid "This tweak allows us to customize the shadow of all windows."
 msgstr "Este ajuste nos permite personalizar la sombra de todas las ventanas."
 
-#: settings.py:439 z_create_localized_help.py:132
+#: settings.py:420 z_create_localized_help.py:132
 msgid "Shadow presets"
 msgstr "Preajustes de sombra"
 
-#: settings.py:441 z_create_localized_help.py:133
+#: settings.py:422 z_create_localized_help.py:133
 msgid "Custom shadows"
 msgstr "Sombras personalizadas"
 
-#: settings.py:442 z_create_localized_help.py:134
+#: settings.py:423 z_create_localized_help.py:134
 msgid "Default shadows"
 msgstr "Sombras por defecto"
 
-#: settings.py:443 z_create_localized_help.py:135
+#: settings.py:424 z_create_localized_help.py:135
 msgid "No shadows"
 msgstr "Sin sombras"
 
-#: settings.py:444 z_create_localized_help.py:136
+#: settings.py:425 z_create_localized_help.py:136
 msgid "Windows 10 shadows"
 msgstr "Sombras de Windows 10"
 
-#: settings.py:452 settings.py:1164
+#: settings.py:433 settings.py:1148
 msgid "Edit custom shadows values"
 msgstr "Editar valores personalizados de sombras"
 
-#: settings.py:456 z_create_localized_help.py:57 z_create_localized_help.py:139
+#: settings.py:437 z_create_localized_help.py:57 z_create_localized_help.py:139
 msgid "Auto move windows"
 msgstr "Mover ventanas automáticamente"
 
-#: settings.py:457
+#: settings.py:438
 msgid "Not all applications can be assigned to be moved. Most applications which can open multiple instances of themselves most likely cannot be configured to be automatically moved."
 msgstr "No todas las aplicaciones pueden ser asignadas para que se muevan. La mayoría de las aplicaciones que pueden abrir múltiples instancias de sí mismas lo más probable es no se puedan configurar para que se muevan automáticamente."
 
-#: settings.py:462
+#: settings.py:443
 msgid "Enable auto move windows tweak"
 msgstr "Habilitar el movimiento automático de ventanas"
 
-#: settings.py:463
+#: settings.py:444
 msgid "This tweak enables the ability to set rules to open determined applications on specific workspaces."
 msgstr "Este ajuste permite la capacidad de establecer reglas para abrir determinadas aplicaciones en espacios de trabajo específicos."
 
-#: settings.py:470
+#: settings.py:451
 msgid "Define auto move windows rules"
 msgstr "Definir reglas de ventanas de movimiento automático"
 
-#: settings.py:474 z_create_localized_help.py:59 z_create_localized_help.py:148
+#: settings.py:455 z_create_localized_help.py:59 z_create_localized_help.py:148
 msgid "Windows decorations removal"
 msgstr "Eliminación de decoraciones de ventanas"
 
-#: settings.py:475
+#: settings.py:457
 msgid "This tweak settings are purposely NOT applied in real time. Click the »Apply windows decorations settings« button to save settings."
 msgstr "Las configuraciones de este ajuste no son aplicadas en tiempo real a propósito.  Hacer clic en el botón »Aplicar ajustes de decoración de ventanas« para guardar las configuraciones."
 
-#: settings.py:476 z_create_localized_help.py:171
+#: settings.py:459 z_create_localized_help.py:171
 msgid "Client side decorated windows and WINE applications aren't affected by this tweak."
 msgstr "Las ventanas decoradas del lado del cliente y las aplicaciones WINE no se ven afectadas por este ajuste"
 
-#: settings.py:477 z_create_localized_help.py:172
+#: settings.py:461 z_create_localized_help.py:172
 msgid "Close all windows that belongs to an application that is going to be added to the applications list and before applying the settings of this tweak."
 msgstr "Cerrar todas las ventanas que pertenecen a una aplicación que se va a agregar a la lista de aplicaciones y antes de aplicar las configuraciones de este ajuste."
 
-#: settings.py:479
+#: settings.py:463
 msgid "Read this extension help for more detailed instructions, list of dependencies and known issues."
 msgstr "Leer la ayuda de esta extensión para obtener instrucciones más detalladas, lista de dependencias y problemas conocidos."
 
-#: settings.py:485
+#: settings.py:468
 msgid "Apply windows decorations settings"
 msgstr "Aplicar ajustes de decoración de ventanas"
 
-#: settings.py:491
+#: settings.py:474
 msgid "Enable maximized windows decoration removal"
 msgstr "Habilitar la eliminación de decoraciones de ventanas maximizadas"
 
-#: settings.py:498
+#: settings.py:481
 msgid "Undecorate half-maximized windows?"
 msgstr "¿No decorar las ventanas medio-maximizadas?"
 
-#: settings.py:505
+#: settings.py:488
 msgid "Undecorate tiled windows?"
 msgstr "¿No decorar las ventanas en mosaico?"
 
-#: settings.py:512
+#: settings.py:495
 msgid "Applications list is a blacklist?"
 msgstr "¿La lista de aplicaciones es una lista negra?"
 
-#: settings.py:513
+#: settings.py:496
 msgid ""
 "If enabled, all applications will have their window decorations removed, except those listed in the list of applications.\n"
 "\n"
@@ -470,274 +470,274 @@ msgstr ""
 "\n"
 "Con esta opción deshabilitada, sólo se eliminarán las decoraciones si la aplicación se encuentra en la lista de aplicaciones."
 
-#: settings.py:520
+#: settings.py:503
 msgid "Enable hack for invisible windows"
 msgstr "Habilitar hack para ventanas invisibles"
 
-#: settings.py:521
+#: settings.py:504
 msgid "On Cinnamon 3.4 or greater, the windows of the applications configured so that their decorations are removed when maximized, may become invisible. Enabling this option might prevent that, but it might also add a border of about 1 pixel in place of the title bar (it might depend on the metacity theme (Window borders) used)."
 msgstr "En Cinnamon 3.4 o superior, las ventanas de las aplicaciones configuradas para que sus decoraciones sean removidas al ser maximizadas, puede que se vuelvan invisibles. La habilitación de esta opción puede evitarlo, pero también puede agregar un borde de aproximadamente 1 píxel en lugar de la barra de título (puede depender del tema de metacity (bordes de ventana) utilizado)."
 
-#: settings.py:528
+#: settings.py:511
 msgid "Enable logging"
 msgstr "Habilitar el registro"
 
-#: settings.py:529
+#: settings.py:512
 msgid "For debugging purposes only."
 msgstr "Sólo para fines de depuración."
 
-#: settings.py:536
+#: settings.py:519
 msgid "Edit applications list"
 msgstr "Editar la lista de aplicaciones"
 
-#: settings.py:721
+#: settings.py:704
 msgid "Warnings related to this specific section"
 msgstr "Advertencias relacionadas con esta sección específica"
 
-#: settings.py:1025
+#: settings.py:1009
 msgid "Select a directory to use"
 msgstr "Seleccionar un directorio para usar"
 
-#: settings.py:1028
+#: settings.py:1012
 msgid "Select a file"
 msgstr "Seleccionar un archivo"
 
 #. TO TRANSLATORS: Could be left blank.
-#: settings.py:1033 settings.py:1166 settings.py:2411 settings.py:2417
+#: settings.py:1017 settings.py:1150 settings.py:2395 settings.py:2401
 msgid "_Cancel"
 msgstr "_Cancelar"
 
 #. TO TRANSLATORS: Could be left blank.
-#: settings.py:1035 settings.py:2419
+#: settings.py:1019 settings.py:2403
 msgid "_Open"
 msgstr "_Abrir"
 
-#: settings.py:1038
+#: settings.py:1022
 msgid "Directories"
 msgstr "Directorios"
 
-#: settings.py:1116
+#: settings.py:1100
 msgid "Focused windows"
 msgstr "Ventanas enfocadas"
 
-#: settings.py:1117
+#: settings.py:1101
 msgid "Unfocused windows"
 msgstr "Ventanas desenfocadas"
 
-#: settings.py:1120
+#: settings.py:1104
 msgid "Normal"
 msgstr "Normal"
 
-#: settings.py:1121
+#: settings.py:1105
 msgid "Dialog"
 msgstr "Diálogo"
 
-#: settings.py:1122
+#: settings.py:1106
 msgid "Modal dialog"
 msgstr "Diálogo modal"
 
-#: settings.py:1123
+#: settings.py:1107
 msgid "Utility"
 msgstr "Utilidad"
 
-#: settings.py:1124
+#: settings.py:1108
 msgid "Border"
 msgstr "Borde"
 
-#: settings.py:1125
+#: settings.py:1109
 msgid "Menu"
 msgstr "Menú"
 
-#: settings.py:1126
+#: settings.py:1110
 msgid "Popup menu"
 msgstr "Menú emergente"
 
-#: settings.py:1127
+#: settings.py:1111
 msgid "Dropdown menu"
 msgstr "Menú desplegable"
 
-#: settings.py:1128
+#: settings.py:1112
 msgid "Attached"
 msgstr "Adjunta"
 
-#: settings.py:1138
+#: settings.py:1122
 msgid "Radius"
 msgstr "Radio"
 
-#: settings.py:1139
+#: settings.py:1123
 msgid "Top fade"
 msgstr "Desvanecimiento superior"
 
-#: settings.py:1140
+#: settings.py:1124
 msgid "X offset"
 msgstr "X offset"
 
-#: settings.py:1141
+#: settings.py:1125
 msgid "Y offset"
 msgstr "Y offset"
 
-#: settings.py:1142
+#: settings.py:1126
 msgid "Opacity"
 msgstr "Opacidad"
 
-#: settings.py:1167 settings.py:2412
+#: settings.py:1151 settings.py:2396
 msgid "_Save"
 msgstr "_Guardar"
 
-#: settings.py:1204
+#: settings.py:1188
 msgid "Window type"
 msgstr "Tipo de ventana"
 
-#: settings.py:1215
+#: settings.py:1199
 msgid "Reset values"
 msgstr "Restablecer valores"
 
-#: settings.py:1217
+#: settings.py:1201
 msgid "Reset all values on the current view to their defaults."
 msgstr "Restablecer todos los valores de la vista actual a sus valores predeterminados."
 
-#: settings.py:1221
+#: settings.py:1205
 msgid "Apply custom shadow"
 msgstr "Aplicar sombra personalizada"
 
-#: settings.py:1223
+#: settings.py:1207
 msgid "Save and apply custom shadow values to see its effects in real time."
 msgstr "Guardar y aplicar valores de sombra personalizados para ver sus efectos en tiempo real."
 
-#: settings.py:1265 settings.py:1294
+#: settings.py:1249 settings.py:1278
 msgid "Remember to set »Shadow presets« option to »Custom shadows«"
 msgstr "Recordar ajustar la opción »Preajustes de sombra« al valor »Sombras personalizadas«"
 
 #. metadata.json->name
-#: settings.py:1292 settings.py:2458
+#: settings.py:1276 settings.py:2442
 msgid "Cinnamon Tweaks"
 msgstr "Ajustes de Cinnamon"
 
-#: settings.py:1305
+#: settings.py:1289
 msgid "Warning: Trying to reset custom shadows values!!!"
 msgstr "Advertencia: ¡Intentando restablecer valores de sombras personalizadas!"
 
-#: settings.py:1308
+#: settings.py:1292
 msgid "Are  you sure that you want to reset the shadows values of the current view to their defaults?"
 msgstr "¿Está seguro de que desea restablecer los valores de sombras de la vista actual a sus valores predeterminados?"
 
-#: settings.py:1406
+#: settings.py:1390
 msgid "Application Chooser"
 msgstr "Selector de aplicaciones"
 
 #. Can be programmatically changed if needed.
-#: settings.py:1427
+#: settings.py:1411
 msgid "Choose An Application"
 msgstr "Elegir una aplicación"
 
-#: settings.py:1560
+#: settings.py:1544
 msgid "Applications list"
 msgstr "Lista de aplicaciones"
 
-#: settings.py:1588 settings.py:1807
+#: settings.py:1572 settings.py:1791
 msgid "Application"
 msgstr "Aplicación"
 
-#: settings.py:1610
+#: settings.py:1594
 msgid "Add Application"
 msgstr "Agregar aplicación"
 
-#: settings.py:1644 settings.py:1875
+#: settings.py:1628 settings.py:1859
 msgid "Choose one or more applications (Hold Ctrl key)"
 msgstr "Elegir una o más aplicaciones (Mantener pulsada la tecla Ctrl)"
 
-#: settings.py:1778
+#: settings.py:1762
 msgid "Auto move windows rules"
 msgstr "Reglas para mover ventanas automáticamente"
 
-#: settings.py:1821
+#: settings.py:1805
 msgid "Workspace"
 msgstr "Espacio de trabajo"
 
-#: settings.py:1841
+#: settings.py:1825
 msgid "Add Rule"
 msgstr "Agregar regla"
 
-#: settings.py:2076
+#: settings.py:2060
 msgid "Shortcut action"
 msgstr "Acción de acceso directo"
 
-#: settings.py:2090
+#: settings.py:2074
 msgid "Shortcut"
 msgstr "Acceso directo"
 
-#: settings.py:2106
+#: settings.py:2090
 msgid "Click to set a new hotkey."
 msgstr "Hacer clic para establecer un nuevo acceso directo."
 
-#: settings.py:2158
+#: settings.py:2142
 msgid "Contributors/Mentions:"
 msgstr "Colaboradores/Menciones:"
 
 #. TO TRANSLATORS:
 #. Here goes the name/s of the author/s of the translations.
 #. Only e-mail addresses and links to GitHub accounts are allowed. NOTHING MORE.
-#: settings.py:2166
+#: settings.py:2150
 msgid "translator-credits"
 msgstr "Odyseus https://gitlab.com/Odyseus"
 
-#: settings.py:2300
+#: settings.py:2284
 msgid "Settings marked with (*) needs Cinnamon restart to take effect"
 msgstr "Los ajustes marcados con (*) necesitan que Cinnamon sea reiniciado para surtir efecto"
 
-#: settings.py:2309
+#: settings.py:2293
 msgid "Reset settings to defaults"
 msgstr "Restablecer los valores predeterminados"
 
-#: settings.py:2311
+#: settings.py:2295
 msgid "Import settings from a file"
 msgstr "Importar configuración desde un archivo"
 
-#: settings.py:2313
+#: settings.py:2297
 msgid "Export settings to a file"
 msgstr "Exportar configuración hacia un archivo"
 
-#: settings.py:2318
+#: settings.py:2302
 msgid "Remember window size"
 msgstr "Recordar tamaño de ventana"
 
-#: settings.py:2324
+#: settings.py:2308
 msgid "Remember last category"
 msgstr "Recordar la última categoría"
 
-#: settings.py:2330
+#: settings.py:2314
 msgid "Restart Cinnamon"
 msgstr "Reiniciar Cinnamon"
 
-#: settings.py:2336
+#: settings.py:2320
 msgid "About"
 msgstr "Acerca de"
 
-#: settings.py:2343
+#: settings.py:2327
 msgid "Manage settings"
 msgstr "Administrar configuración"
 
-#: settings.py:2388
+#: settings.py:2372
 msgid "Warning: Trying to reset all Cinnamon Tweaks settings!!!"
 msgstr "Advertencia: ¡Intentando restablecer todos los ajustes de Cinnamon Tweaks!"
 
-#: settings.py:2390
+#: settings.py:2374
 msgid "Reset all Cinnamon Tweaks settings to default?"
 msgstr "¿Restablecer todas las configuraciones de Cinnamon Tweaks por defecto?"
 
-#: settings.py:2409
+#: settings.py:2393
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: settings.py:2415
+#: settings.py:2399
 msgid "Select a file to import"
 msgstr "Seleccionar un archivo para importar"
 
-#: settings.py:2431
+#: settings.py:2415
 msgid "DCONF files"
 msgstr "Archivos DCONF"
 
-#: settings.py:2498
+#: settings.py:2482
 msgid "Cinnamon Tweaks extension preferences"
 msgstr "Preferencias de la extensión Cinnamon Tweaks"
 

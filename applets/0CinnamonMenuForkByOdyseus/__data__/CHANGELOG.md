@@ -4,6 +4,39 @@
 
 ***
 
+- **Date:** Thu, 17 Jan 2019 14:14:12 -0300
+- **Commit:** [9713b1f](https://gitlab.com/Odyseus/CinnamonTools/commit/9713b1f)
+- **Author:** Odyseus
+
+```
+- Modified procurement of application keywords due to changes to Cinnamon.AppSystem in the upcoming Cinnamon version (4.2.x?). Currently it returns a string, but it will return an array in the future.
+- Python files improvements:
+    - Simplified localization system.
+    - Homogenized/Cleaned up code.
+
+```
+
+***
+
+- **Date:** Tue, 15 Jan 2019 22:54:01 -0300
+- **Commit:** [431f936](https://gitlab.com/Odyseus/CinnamonTools/commit/431f936)
+- **Author:** Odyseus
+
+```
+- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
+- Improved *throttle* of the callback triggered when applications are installed/uninstalled.
+- Improved *throttle* of the callback triggered when performing searches.
+- Improved selected state of first item while performing searches.
+- Improved favorites removal. Now the list of favorites is instantly updated when a favorite is removed. Previously, it was needed to *deselect* the favorites category and select it back to update its content.
+- Improved search mechanism. Favor inline declarations instead of function declarations/calls.
+- Simplified _resizeApplicationsBox().
+- Adapted usage of Cinnamon.AppSystem to account for methods that will be removed in the next Cinnamon version (4.2.x?) (upstream tweak).
+- Don't manually realize actors (upstream tweak).
+
+```
+
+***
+
 - **Date:** Sat, 12 Jan 2019 03:05:32 -0300
 - **Commit:** [2e2562f](https://gitlab.com/Odyseus/CinnamonTools/commit/2e2562f)
 - **Author:** Odyseus

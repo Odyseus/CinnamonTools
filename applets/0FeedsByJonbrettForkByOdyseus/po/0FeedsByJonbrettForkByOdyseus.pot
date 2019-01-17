@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus 0.54\n"
-"POT-Creation-Date: 2019-01-12 03:20-0300\n"
+"POT-Creation-Date: 2019-01-17 15:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:271 python/manage_feeds.py:175
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:302 python/manage_feeds.py:213
 msgid "Help"
 msgstr ""
 
@@ -110,247 +110,279 @@ msgstr ""
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr ""
 
-#: applet.js:78
+#: applet.js:76
 msgid "Feed reader"
 msgstr ""
 
-#: applet.js:178
+#: applet.js:208
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:179
+#: applet.js:209
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr ""
 
-#: applet.js:180
+#: applet.js:210
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:239
+#: applet.js:269
 msgid "Mark all read"
 msgstr ""
 
-#: applet.js:251
+#: applet.js:282
 msgid "Reload"
 msgstr ""
 
-#: applet.js:262
+#: applet.js:293
 msgid "Manage feeds"
 msgstr ""
 
-#: applet.js:365
+#: applet.js:397
 msgid "No unread feeds"
 msgstr ""
 
-#: python/manage_feeds.py:144
+#. metadata.json->name
+#: python/manage_feeds.py:35
+msgid "Feeds Reader (Fork By Odyseus)"
+msgstr ""
+
+#: python/manage_feeds.py:171
 msgid "Profile Name:"
 msgstr ""
 
-#: python/manage_feeds.py:150
+#: python/manage_feeds.py:187
 msgid "Create a new profile"
 msgstr ""
 
-#: python/manage_feeds.py:164
+#: python/manage_feeds.py:195
+msgid "Remove current profile"
+msgstr ""
+
+#: python/manage_feeds.py:202
 msgid "Import OPML"
 msgstr ""
 
-#: python/manage_feeds.py:166
+#: python/manage_feeds.py:204
 msgid "Import Feeds File"
 msgstr ""
 
-#: python/manage_feeds.py:169
+#: python/manage_feeds.py:207
 msgid "Export Feeds File"
 msgstr ""
 
-#: python/manage_feeds.py:172
+#: python/manage_feeds.py:210
 msgid "Toggle Hidden Fields"
 msgstr ""
 
-#: python/manage_feeds.py:182
+#: python/manage_feeds.py:221
 msgid "Manage settings"
 msgstr ""
 
-#: python/manage_feeds.py:216
+#: python/manage_feeds.py:255
 msgid "Enable"
 msgstr ""
 
-#: python/manage_feeds.py:223
+#: python/manage_feeds.py:262
 msgid "Url"
 msgstr ""
 
-#: python/manage_feeds.py:230
+#: python/manage_feeds.py:269
 msgid "Custom title"
 msgstr ""
 
-#: python/manage_feeds.py:236
+#: python/manage_feeds.py:275
 msgid "Notify"
 msgstr ""
 
-#: python/manage_feeds.py:242
+#: python/manage_feeds.py:281
 msgid "Show Read"
 msgstr ""
 
-#: python/manage_feeds.py:249
+#: python/manage_feeds.py:288
 msgid "Interval"
 msgstr ""
 
-#: python/manage_feeds.py:257
+#: python/manage_feeds.py:296
 msgid "Show Image"
 msgstr ""
 
-#: python/manage_feeds.py:285
+#: python/manage_feeds.py:324
 msgid "Add Feed"
 msgstr ""
 
-#: python/manage_feeds.py:287
+#: python/manage_feeds.py:326
 msgid "Add a new Feed."
 msgstr ""
 
-#: python/manage_feeds.py:292
+#: python/manage_feeds.py:331
 msgid "Delete Feed"
 msgstr ""
 
-#: python/manage_feeds.py:294
+#: python/manage_feeds.py:333
 msgid "Delete selected Feed."
 msgstr ""
 
-#: python/manage_feeds.py:299
+#: python/manage_feeds.py:338
 msgid "Cancel"
 msgstr ""
 
-#: python/manage_feeds.py:305
+#: python/manage_feeds.py:344
 msgid "Apply"
 msgstr ""
 
-#: python/manage_feeds.py:307
+#: python/manage_feeds.py:346
 msgid "Save changes."
 msgstr ""
 
-#: python/manage_feeds.py:344
+#: python/manage_feeds.py:372
+msgid "Unauthorized action"
+msgstr ""
+
+#: python/manage_feeds.py:373
+msgid "Default profile cannot be removed."
+msgstr ""
+
+#: python/manage_feeds.py:379
+msgid "Do you wish to remove the currently selected profile?"
+msgstr ""
+
+#: python/manage_feeds.py:380
+msgid "This operation cannot be undone!"
+msgstr ""
+
+#: python/manage_feeds.py:381
+msgid "Profile removal"
+msgstr ""
+
+#: python/manage_feeds.py:402
 msgid "Changes will be discarded, continue?"
 msgstr ""
 
-#: python/manage_feeds.py:345
+#: python/manage_feeds.py:403
 msgid "Are you sure?"
 msgstr ""
 
-#: python/manage_feeds.py:353
+#: python/manage_feeds.py:412
 msgid "New Profile Name"
 msgstr ""
 
-#: python/manage_feeds.py:355
+#: python/manage_feeds.py:420
 msgid "Add New Profile"
 msgstr ""
 
-#: python/manage_feeds.py:484
+#: python/manage_feeds.py:548
 msgid "Failed to save config file"
 msgstr ""
 
-#: python/manage_feeds.py:521
+#: python/manage_feeds.py:585
 msgid "Choose a OPML feed file"
 msgstr ""
 
-#: python/manage_feeds.py:522
+#: python/manage_feeds.py:586
 msgid "OPML files"
 msgstr ""
 
-#: python/manage_feeds.py:525
+#: python/manage_feeds.py:589
 msgid "Choose a feed file"
 msgstr ""
 
-#: python/manage_feeds.py:526 python/manage_feeds.py:592
-msgid "Text files"
+#: python/manage_feeds.py:590 python/manage_feeds.py:659
+msgid "CSV files"
 msgstr ""
 
-#: python/manage_feeds.py:542 python/manage_feeds.py:597
+#: python/manage_feeds.py:603 python/manage_feeds.py:664
 msgid "All files"
 msgstr ""
 
-#: python/manage_feeds.py:559
+#: python/manage_feeds.py:624
 msgid "File imported"
 msgstr ""
 
-#: python/manage_feeds.py:560
+#: python/manage_feeds.py:625
 #, python-format
 msgid "Imported %d feeds"
 msgstr ""
 
-#: python/manage_feeds.py:568
+#: python/manage_feeds.py:633
 msgid "Failed to import file"
 msgstr ""
 
-#: python/manage_feeds.py:581
+#: python/manage_feeds.py:646
 msgid "Save a feed file"
 msgstr ""
 
-#: python/manage_feeds.py:610
+#: python/manage_feeds.py:655
+msgid "Untitled"
+msgstr ""
+
+#: python/manage_feeds.py:677
 #, python-format
 msgid "Unable to export file, exception: %s"
 msgstr ""
 
-#: python/manage_feeds.py:614
+#: python/manage_feeds.py:681
 msgid "Unable to export file"
 msgstr ""
 
-#. metadata.json->name
-#: python/manage_feeds.py:696 python/manage_feeds.py:731
-msgid "Feeds Reader (Fork By Odyseus)"
+#: python/manage_feeds.py:820
+msgid "Path to the feeds.json file."
 msgstr ""
 
-#: utils.js:97
-msgid "Feeds"
+#: python/manage_feeds.py:821
+msgid "Profile name used by an instance of this applet."
 msgstr ""
 
-#: utils.js:288
+#: utils.js:275
 msgid "Right Click to open feed"
 msgstr ""
 
 #. Only one page of items to read, no need to display mark all posts option.
-#: utils.js:359
+#: utils.js:345
 msgid "Mark All Posts Read"
 msgstr ""
 
-#: utils.js:367
+#: utils.js:353
 #, javascript-format
 msgid "Mark Next %d Posts Read"
 msgstr ""
 
-#: utils.js:373
+#: utils.js:359
 msgid "Update feed URL"
 msgstr ""
 
-#: utils.js:458 utils.js:464
+#: utils.js:444 utils.js:450
 msgid "Published"
 msgstr ""
 
-#: utils.js:527
+#: utils.js:513
 msgid "Mark Post Read"
 msgstr ""
 
-#: utils.js:565
+#: utils.js:551
 msgid "d"
 msgstr ""
 
-#: utils.js:567 utils.js:569
+#: utils.js:553 utils.js:555
 msgid "h"
 msgstr ""
 
-#: utils.js:569
+#: utils.js:555
 #, javascript-format
 msgid "(<1%s) "
 msgstr ""
 
 #. Invalid feed detected, throw and log error.
-#: utils.js:847
+#: utils.js:831
 msgid "Invalid feed url"
 msgstr ""
 
-#: utils.js:927
+#: utils.js:912
 #, javascript-format
 msgid "%d unread items!"
 msgstr ""
 
-#: utils.js:1068 utils.js:1081
+#: utils.js:1059 utils.js:1075
 msgid "Loading feed"
 msgstr ""
 
@@ -436,7 +468,15 @@ msgid "Show notifications for new items"
 msgstr ""
 
 #. settings-schema.json->pref_notifications_enabled->tooltip
-msgid "If checked a popup notification will be displayed for new items"
+msgid "If enabled, a popup notification will be displayed for new items."
+msgstr ""
+
+#. settings-schema.json->pref_unified_notifications->description
+msgid "Unified notifications"
+msgstr ""
+
+#. settings-schema.json->pref_unified_notifications->tooltip
+msgid "If enabled, all feeds notifications will use and update one notification."
 msgstr ""
 
 #. settings-schema.json->pref_enable_verbose_logging->description

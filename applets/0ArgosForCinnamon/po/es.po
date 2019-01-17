@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon 2.02\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-01-12 03:05-0300\n"
+"POT-Creation-Date: 2019-01-17 15:51-0300\n"
 "PO-Revision-Date: 2018-12-25 20:55-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:757 utils.js:1193
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:748 utils.js:1193
 msgid "Help"
 msgstr "Ayuda"
 
@@ -68,21 +68,21 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: appletHelper.py:64
+#: appletHelper.py:31
 msgid "Select a file"
 msgstr "Seleccionar un archivo"
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:66
+#: appletHelper.py:33
 msgid "_Cancel"
 msgstr "_Cancelar"
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:68
+#: appletHelper.py:35
 msgid "_Open"
 msgstr "_Abrir"
 
-#: appletHelper.py:98
+#: appletHelper.py:65
 msgid "Nothing to do here."
 msgstr "Nada que hacer aquí."
 
@@ -540,350 +540,350 @@ msgstr "BitBar en macOS"
 msgid "Plugin"
 msgstr "Complemento"
 
-#: applet.js:150
+#: applet.js:141
 msgid "Script file is not executable."
 msgstr "El archivo de comandos no es ejecutable."
 
-#: applet.js:152
+#: applet.js:143
 msgid "The script file can be made executable from this applet context menu."
 msgstr "El archivo de comandos puede hacerse ejecutable desde el menú contextual de este applet."
 
-#: applet.js:159 applet.js:741
+#: applet.js:150 applet.js:732
 msgid "Script file isn't a file, but a directory."
 msgstr "El archivo de comandos no es una archivo, es un directorio."
 
-#: applet.js:170 applet.js:748
+#: applet.js:161 applet.js:739
 msgid "Script file doesn't exists."
 msgstr "El archivo de comandos no existe."
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file 'FileName':"
-#: applet.js:259
+#: applet.js:250
 #, javascript-format
 msgid "Unable to execute file '%s':"
 msgstr "Imposible ejecutar el archivo '%s':"
 
-#: applet.js:264 applet.js:587 applet.js:614
+#: applet.js:255 applet.js:578 applet.js:605
 msgid "Script file not set, cannot be found or it isn't an executable."
 msgstr "Archivo de comandos no establecido, no puede ser encontrado o no es ejecutable."
 
 #. TO TRANSLATORS: Full sentence:
 #. "Invalid menu level for line 'LineWithTheError'"
-#: applet.js:366
+#: applet.js:357
 #, javascript-format
 msgid "Invalid menu level for line '%s'"
 msgstr "Nivel de menú inválido para la línea '%s'"
 
-#: applet.js:424 applet.js:426
+#: applet.js:415 applet.js:417
 msgid "Script file name:"
 msgstr "Nombre del archivo de secuencia de comandos:"
 
-#: applet.js:426
+#: applet.js:417
 msgid "No script set"
 msgstr "Archivo de comandos no establecido"
 
-#: applet.js:429 applet.js:515
+#: applet.js:420 applet.js:506
 msgid "Execution interval:"
 msgstr "Intervalo de ejecución:"
 
-#: applet.js:432 applet.js:638
+#: applet.js:423 applet.js:629
 msgid "Rotation interval:"
 msgstr "Intervalo de rotación:"
 
-#: applet.js:439
+#: applet.js:430
 msgid "Script execution time:"
 msgstr "Tiempo de ejecución de secuencias de comandos:"
 
-#: applet.js:447
+#: applet.js:438
 msgid "Output process time:"
 msgstr "Tiempo de procesado de salida:"
 
 #. settings-schema.json->pref_update_interval_units->tooltip
-#: applet.js:523
+#: applet.js:514
 msgid "Choose the time unit for the script execution interval."
 msgstr "Elegir la unidad de tiempo para el intervalo de ejecución del archivo de comandos."
 
-#: applet.js:536
+#: applet.js:527
 msgid "Set the script execution interval."
 msgstr "Elegir el intervalo de ejecución del archivo de comandos."
 
-#: applet.js:546
+#: applet.js:537
 msgid "Choose script"
 msgstr "Elegir archivo de comandos"
 
-#: applet.js:573
+#: applet.js:564
 msgid "Choose a script file."
 msgstr "Elegir un archivo de comandos."
 
-#: applet.js:579
+#: applet.js:570
 msgid "Edit script"
 msgstr "Editar archivo de comandos"
 
-#: applet.js:598
+#: applet.js:589
 msgid "Edit the script file with your prefered text editor."
 msgstr "Editar el archivo de comandos con su editor de textos preferido."
 
-#: applet.js:599
+#: applet.js:590
 msgid "After saving the changes made, the applet will update its data automatically if there is an interval set."
 msgstr "Luego de guardar los cambios realizados, el applet actualizará sus datos automáticamente si hay un intervalo de ejecución establecido."
 
-#: applet.js:600
+#: applet.js:591
 msgid "Or the update could be done manually with the »Refresh« item on this applet context menu."
 msgstr "O la actualización puede realizarse manualmente con el ítem »Refrescar« en el menú contextual de este applet."
 
-#: applet.js:606
+#: applet.js:597
 msgid "Refresh"
 msgstr "Refrescar"
 
-#: applet.js:622
+#: applet.js:613
 msgid "This will re-run on demand the script assigned to this applet for the purpose of updating its output."
 msgstr "Esto volverá a ejecutar a petición el archivo de comandos asignado a este applet con el propósito de actualizar su salida."
 
-#: applet.js:623
+#: applet.js:614
 msgid "This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited."
 msgstr "Esto es sólo necesario si no hay un intervalo de actualización establecido (o si el intervalo es muy largo), así que la actualización necesita realizarse manualmente en caso de que el archivo de comandos haya sido editado."
 
 #. Extras submenu
-#: applet.js:630
+#: applet.js:621
 msgid "Extras"
 msgstr "Extras"
 
 #. settings-schema.json->pref_rotation_interval_units->tooltip
-#: applet.js:644
+#: applet.js:635
 msgid "Choose the time unit for the applet text rotation interval."
 msgstr "Elegir la unidad de tiempo para el intervalo de rotación del texto del applet."
 
-#: applet.js:657
+#: applet.js:648
 msgid "Set the applet text rotation interval."
 msgstr "Establecer el intervalo de rotación del texto del applet."
 
-#: applet.js:666
+#: applet.js:657
 msgid "Clear script"
 msgstr "Vaciar archivo de comandos"
 
-#: applet.js:672 applet.js:690
+#: applet.js:663 applet.js:681
 msgid "This operation will remove the current script from this applet leaving it \"blank\"."
 msgstr "Esta operación eliminará el archivo de comandos de este applet dejándolo \"en blanco\"."
 
-#: applet.js:673
+#: applet.js:664
 msgid "The current applet settings will be untouched and the actual script file will not be deleted."
 msgstr "Las preferencias actuales del applet no serán modificadas y el archivo de comando en sí no será borrado."
 
-#: applet.js:674
+#: applet.js:665
 msgid "Do you want to proceed?"
 msgstr "¿Desea proceder?"
 
-#: applet.js:704
+#: applet.js:695
 msgid "Make script executable"
 msgstr "Hacer archivo de comandos ejecutable"
 
-#: applet.js:710
+#: applet.js:701
 msgid "Make the script file executable so it can be used by this applet."
 msgstr "Hacer el archivo de comandos ejecutable para que pueda ser utilizado por este applet."
 
-#: applet.js:734
+#: applet.js:725
 msgid "Script file is already executable."
 msgstr "El archivo de comandos ya es ejecutable."
 
 #. Just in case.
-#: applet.js:761 utils.js:1194
+#: applet.js:752 utils.js:1194
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 
-#: examples/python_examples.py:87
+#: examples/python_examples.py:56
 msgid "Argos line 1"
 msgstr "Argos línea 1"
 
-#: examples/python_examples.py:88
+#: examples/python_examples.py:57
 msgid "Argos line 2"
 msgstr "Argos línea 2"
 
 #. TO TRANSLATORS:
 #. The words "eval", "tooltip" and "alternate" are attributes
 #. and aren't meant to be translated.
-#: examples/python_examples.py:92
+#: examples/python_examples.py:61
 msgid "eval, tooltip and alternate examples"
 msgstr "Ejemplos de eval, tooltip y alternate"
 
 #. TO TRANSLATORS:
 #. The word "eval" is an attribute and isn't meant to be translated.
-#: examples/python_examples.py:95
+#: examples/python_examples.py:64
 msgid "Press Alt key to see effect"
 msgstr "Presionar la tecla Alt para ver el efecto"
 
-#: examples/python_examples.py:96
+#: examples/python_examples.py:65
 msgid "Default item - eval example"
 msgstr "Ítem predeterminado - ejemplo de eval"
 
-#: examples/python_examples.py:97
+#: examples/python_examples.py:66
 msgid "Default item tooltip - Press Alt key to display alternate item"
 msgstr "Caja de herramientas del ítem predeterminado - Presionar la tecla Alt para mostrar el ítem alternativo"
 
-#: examples/python_examples.py:98
+#: examples/python_examples.py:67
 msgid "Default item"
 msgstr "Ítem predeterminado"
 
-#: examples/python_examples.py:99
+#: examples/python_examples.py:68
 msgid "Notification activated by default item."
 msgstr "Notificación activada por el ítem predeterminado"
 
-#: examples/python_examples.py:100
+#: examples/python_examples.py:69
 msgid "Alternate item - eval example"
 msgstr "Ítem alternativo - ejemplo de eval"
 
-#: examples/python_examples.py:101
+#: examples/python_examples.py:70
 msgid "Alternate item tooltip"
 msgstr "Caja de herramientas del ítem alternativo"
 
-#: examples/python_examples.py:102
+#: examples/python_examples.py:71
 msgid "Alternate item"
 msgstr "Ítem alternativo"
 
-#: examples/python_examples.py:103
+#: examples/python_examples.py:72
 msgid "Notification activated by alternate item."
 msgstr "Notificación activada por el ítem alternativo"
 
-#: examples/python_examples.py:104
+#: examples/python_examples.py:73
 msgid "Default - PyGObject API Reference - URL example"
 msgstr "Predeterminado - Referencia de API de PyGObject - Ejemplo de URL"
 
-#: examples/python_examples.py:105
+#: examples/python_examples.py:74
 msgid "Alternate - DistroWatch - URL example"
 msgstr "Alternativo - DistroWatch - ejemplo de URL"
 
-#: examples/python_examples.py:106
+#: examples/python_examples.py:75
 msgid "Menu and submenu examples"
 msgstr "Ejemplos de menúes y submenúes"
 
-#: examples/python_examples.py:107
+#: examples/python_examples.py:76
 msgid "Sub menu level 2"
 msgstr "Submenú nivel 2"
 
-#: examples/python_examples.py:108
+#: examples/python_examples.py:77
 msgid "Sub menu item level 2"
 msgstr "Ítem de submenú nivel 2"
 
-#: examples/python_examples.py:109
+#: examples/python_examples.py:78
 msgid "Sub menu level 3"
 msgstr "Submenú nivel 3"
 
-#: examples/python_examples.py:110
+#: examples/python_examples.py:79
 msgid "Sub menu item level 3"
 msgstr "Ítem de submenú nivel 3"
 
-#: examples/python_examples.py:111
+#: examples/python_examples.py:80
 msgid "Sub menu level 4"
 msgstr "Submenú nivel 4"
 
-#: examples/python_examples.py:112
+#: examples/python_examples.py:81
 msgid "Sub menu item level 4"
 msgstr "Ítem de submenú nivel 4"
 
-#: examples/python_examples.py:113
+#: examples/python_examples.py:82
 msgid "Menu items with icons examples"
 msgstr "Ejemplos de menú ítems con íconos"
 
-#: examples/python_examples.py:114
+#: examples/python_examples.py:83
 msgid "A default icon size can be set on the applet settings window"
 msgstr "El tamaño de íconos predeterminado puede ser establecido las preferencias del applet"
 
-#: examples/python_examples.py:115
+#: examples/python_examples.py:84
 msgid "Item with a 12 pixels symbolic icon"
 msgstr "Ítem con un ícono simbólico de 12 píxeles"
 
-#: examples/python_examples.py:116
+#: examples/python_examples.py:85
 msgid "Item with a 14 pixels icon"
 msgstr "Ítem con un ícono de 14 píxeles"
 
-#: examples/python_examples.py:117
+#: examples/python_examples.py:86
 msgid "Item with a 16 pixels symbolic icon"
 msgstr "Ítem con un ícono simbólico de 16 píxeles"
 
-#: examples/python_examples.py:118
+#: examples/python_examples.py:87
 msgid "Item with a 18 pixels icon"
 msgstr "Ítem con un ícono de 18 píxeles"
 
-#: examples/python_examples.py:119
+#: examples/python_examples.py:88
 msgid "Item with a 20 pixels symbolic icon"
 msgstr "Ítem con un ícono simbólico de 20 píxeles"
 
-#: examples/python_examples.py:120
+#: examples/python_examples.py:89
 msgid "ANSI colors and emojis examples"
 msgstr "Ejemplos de colores ANSI y emotíconos"
 
-#: examples/python_examples.py:121
+#: examples/python_examples.py:90
 msgid "ANSI colors example"
 msgstr "Ejemplos de colores ANSI"
 
-#: examples/python_examples.py:122
+#: examples/python_examples.py:91
 msgid "Pango markup examples"
 msgstr "Ejemplos de Pango markup"
 
-#: examples/python_examples.py:123
+#: examples/python_examples.py:92
 msgid "Convenience tags"
 msgstr "Etiquetas de conveniencia"
 
-#: examples/python_examples.py:124
+#: examples/python_examples.py:93
 msgid "Bold text"
 msgstr "Texto en negrita"
 
-#: examples/python_examples.py:125
+#: examples/python_examples.py:94
 msgid "Italic text"
 msgstr "Texto en itálica"
 
-#: examples/python_examples.py:126
+#: examples/python_examples.py:95
 msgid "Strikethrough text"
 msgstr "Texto tachado"
 
-#: examples/python_examples.py:127
+#: examples/python_examples.py:96
 msgid "Underline text"
 msgstr "Texto subrayado"
 
-#: examples/python_examples.py:128
+#: examples/python_examples.py:97
 msgid "Subscript text"
 msgstr "Texto de subíndice"
 
-#: examples/python_examples.py:129
+#: examples/python_examples.py:98
 msgid "Superscript text"
 msgstr "Texto de superíndice"
 
-#: examples/python_examples.py:130
+#: examples/python_examples.py:99
 msgid "Big text"
 msgstr "Texto grande"
 
-#: examples/python_examples.py:131
+#: examples/python_examples.py:100
 msgid "Small text"
 msgstr "Texto pequeño"
 
-#: examples/python_examples.py:132
+#: examples/python_examples.py:101
 msgid "Monospace font"
 msgstr "Fuente mono-espacio"
 
 #. TO TRANSLATORS: Full sentence:
 #. "<span> attributes", which means "attributes that can be used on
 #. the Pango tag called span"
-#: examples/python_examples.py:136
+#: examples/python_examples.py:105
 #, python-format
 msgid "%s attributes"
 msgstr "Atributos para %s"
 
-#: examples/python_examples.py:137
+#: examples/python_examples.py:106
 msgid "Background and foreground colors"
 msgstr "Colores de fondo y de primer plano"
 
-#: examples/python_examples.py:138
+#: examples/python_examples.py:107
 msgid "Single underline"
 msgstr "Subrayado simple"
 
-#: examples/python_examples.py:139
+#: examples/python_examples.py:108
 msgid "Double underline"
 msgstr "Subrayado doble"
 
-#: examples/python_examples.py:140
+#: examples/python_examples.py:109
 msgid "Low underline"
 msgstr "Subrayado bajo"
 
-#: examples/python_examples.py:141
+#: examples/python_examples.py:110
 msgid "Error underline"
 msgstr "Subrayado de error"
 

@@ -4,6 +4,30 @@
 
 ***
 
+- **Date:** Thu, 17 Jan 2019 14:15:49 -0300
+- **Commit:** [040fe52](https://gitlab.com/Odyseus/CinnamonTools/commit/040fe52)
+- **Author:** Odyseus
+
+```
+- Python files improvements:
+    - Simplified localization system.
+    - Homogenized/Cleaned up code.
+
+```
+
+***
+
+- **Date:** Tue, 15 Jan 2019 22:36:52 -0300
+- **Commit:** [bd43310](https://gitlab.com/Odyseus/CinnamonTools/commit/bd43310)
+- **Author:** Odyseus
+
+```
+- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
+
+```
+
+***
+
 - **Date:** Fri, 5 Oct 2018 04:40:41 -0300
 - **Commit:** [7ef1100](https://gitlab.com/Odyseus/CinnamonTools/commit/7ef1100)
 - **Author:** Odyseus

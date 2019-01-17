@@ -4,6 +4,19 @@
 
 ***
 
+- **Date:** Thu, 17 Jan 2019 14:17:49 -0300
+- **Commit:** [1bc1bc4](https://gitlab.com/Odyseus/CinnamonTools/commit/1bc1bc4)
+- **Author:** Odyseus
+
+```
+- Python files improvements:
+    - Simplified localization system.
+    - Homogenized/Cleaned up code.
+
+```
+
+***
+
 - **Date:** Thu, 23 Aug 2018 02:40:12 -0300
 - **Commit:** [f50c0a8](https://gitlab.com/Odyseus/CinnamonTools/commit/f50c0a8)
 - **Author:** Odyseus

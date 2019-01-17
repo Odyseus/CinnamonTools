@@ -4,6 +4,35 @@
 
 ***
 
+- **Date:** Thu, 17 Jan 2019 13:59:27 -0300
+- **Commit:** [927b262](https://gitlab.com/Odyseus/CinnamonTools/commit/927b262)
+- **Author:** Odyseus
+
+```
+- Added button to remove profiles to the Feeds Manager GUI (Finally I figured out! LOL).
+- Added option to *unify* notifications.
+- Cleaned up inaccurate/unnecessary comments.
+- Changed default feeds to include a second profile.
+- Python files improvements:
+    - Simplified localization system.
+    - Homogenized/Cleaned up code.
+    - Docstrings completion/clean up.
+
+```
+
+***
+
+- **Date:** Tue, 15 Jan 2019 22:37:24 -0300
+- **Commit:** [99f22ba](https://gitlab.com/Odyseus/CinnamonTools/commit/99f22ba)
+- **Author:** Odyseus
+
+```
+- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
+
+```
+
+***
+
 - **Date:** Thu, 23 Aug 2018 02:46:10 -0300
 - **Commit:** [7c30cea](https://gitlab.com/Odyseus/CinnamonTools/commit/7c30cea)
 - **Author:** Odyseus

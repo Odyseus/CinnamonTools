@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WallpaperChangerApplet 1.03\n"
-"POT-Creation-Date: 2019-01-12 03:21-0300\n"
+"POT-Creation-Date: 2019-01-17 15:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 settings.py:1024
+#: ../../__app__/python_modules/localized_help_creator.py:328 settings.py:995
 msgid "Help"
 msgstr ""
 
@@ -67,295 +67,295 @@ msgstr ""
 
 #. TO TRANSLATORS: This is the applet name.
 #. metadata.json->name
-#: settings.py:60
+#: settings.py:31
 msgid "Wallpaper Changer"
 msgstr ""
 
-#: settings.py:171
+#: settings.py:142
 msgid "Choose an Icon"
 msgstr ""
 
 #. TO TRANSLATORS: Could be left blank.
-#: settings.py:174 settings.py:816 settings.py:1101 settings.py:1107
+#: settings.py:145 settings.py:787 settings.py:1072 settings.py:1078
 msgid "_Cancel"
 msgstr ""
 
 #. TO TRANSLATORS: Could be left blank.
-#: settings.py:175 settings.py:1109
+#: settings.py:146 settings.py:1080
 msgid "_Open"
 msgstr ""
 
-#: settings.py:178
+#: settings.py:149
 msgid "Image files"
 msgstr ""
 
-#: settings.py:275
+#: settings.py:246
 msgid "Warnings related to this specific section"
 msgstr ""
 
 #. Daemon settings
-#: settings.py:363
+#: settings.py:334
 msgid "Daemon"
 msgstr ""
 
-#: settings.py:367
+#: settings.py:338
 msgid "This is the current profile that the daemon will load."
 msgstr ""
 
-#: settings.py:368
+#: settings.py:339
 msgid "Current Profile"
 msgstr ""
 
-#: settings.py:382 utils.js:733
+#: settings.py:353 utils.js:733
 msgid "Toggle and display the daemon status."
 msgstr ""
 
-#: settings.py:383 utils.js:725
+#: settings.py:354 utils.js:725
 msgid "Daemon Status"
 msgstr ""
 
-#: settings.py:410
+#: settings.py:381
 msgid "Autostart Daemon"
 msgstr ""
 
-#: settings.py:411 applet.js:116
+#: settings.py:382 applet.js:116
 msgid "When enabled, the daemon will be automatically started when the applet is loaded. If it is already running or this is disabled, no action will be taken."
 msgstr ""
 
-#: settings.py:415
+#: settings.py:386
 msgid "Wallpaper Timer Interval (seconds)"
 msgstr ""
 
-#: settings.py:424 settings.py:550
+#: settings.py:395 settings.py:521
 msgid "Save"
 msgstr ""
 
-#: settings.py:435
+#: settings.py:406
 msgid "Manage keyboard shortcuts"
 msgstr ""
 
-#: settings.py:449 utils.js:627
+#: settings.py:420 utils.js:627
 msgid "Next Wallpaper"
 msgstr ""
 
-#: settings.py:453 utils.js:631
+#: settings.py:424 utils.js:631
 msgid "Previous Wallpaper"
 msgstr ""
 
-#: settings.py:457
+#: settings.py:428
 msgid "Open/Close Menu"
 msgstr ""
 
-#: settings.py:479
+#: settings.py:450
 msgid "Shortcut action"
 msgstr ""
 
-#: settings.py:495
+#: settings.py:466
 msgid "Shortcut"
 msgstr ""
 
-#: settings.py:506
+#: settings.py:477
 msgid "Other"
 msgstr ""
 
 #. Applet settings
-#: settings.py:512 settings.py:582
+#: settings.py:483 settings.py:553
 msgid "Applet"
 msgstr ""
 
-#: settings.py:517
+#: settings.py:488
 msgid "Custom icon"
 msgstr ""
 
-#: settings.py:518
+#: settings.py:489
 msgid "Select a custom icon for the applet."
 msgstr ""
 
-#: settings.py:522
+#: settings.py:493
 msgid "Enter custom text to show in the panel."
 msgstr ""
 
-#: settings.py:525
+#: settings.py:496
 msgid "Custom label"
 msgstr ""
 
-#: settings.py:541
+#: settings.py:512
 msgid "Wallpaper Preview Width"
 msgstr ""
 
-#: settings.py:561
+#: settings.py:532
 msgid "Invert Menu Items Order"
 msgstr ""
 
-#: settings.py:566
+#: settings.py:537
 msgid "Remember Profiles State"
 msgstr ""
 
-#: settings.py:567 applet.js:131
+#: settings.py:538 applet.js:131
 msgid "When enabled, the daemon will remember its current and next wallpaper for the current profile when the profile is changed. This means returning back to the profile will restore the previous background plus the next in queue."
 msgstr ""
 
-#: settings.py:571
+#: settings.py:542
 msgid "Show Notifications"
 msgstr ""
 
-#: settings.py:572 applet.js:126
+#: settings.py:543 applet.js:126
 msgid "Display a notification each time an event happens with wallpaper changer. This does not stop the applet from reporting errors."
 msgstr ""
 
-#: settings.py:576
+#: settings.py:547
 msgid "Enable Logging"
 msgstr ""
 
-#: settings.py:577
+#: settings.py:548
 msgid "It enables the ability to log the output of several functions used by the applet."
 msgstr ""
 
-#: settings.py:585
+#: settings.py:556
 msgid "Manage profiles"
 msgstr ""
 
-#: settings.py:595
+#: settings.py:566
 msgid "Profile"
 msgstr ""
 
-#: settings.py:605 settings.py:806
+#: settings.py:576 settings.py:777
 msgid "Create a new profile"
 msgstr ""
 
-#: settings.py:613 settings.py:779
+#: settings.py:584 settings.py:750
 msgid "Remove profile"
 msgstr ""
 
-#: settings.py:653
+#: settings.py:624
 msgid "Path"
 msgstr ""
 
-#: settings.py:662
+#: settings.py:633
 msgid "Sub Folders"
 msgstr ""
 
-#: settings.py:690 settings.py:716
+#: settings.py:661 settings.py:687
 msgid "Add Image"
 msgstr ""
 
-#: settings.py:693 settings.py:723
+#: settings.py:664 settings.py:694
 msgid "Add Folder"
 msgstr ""
 
-#: settings.py:709
+#: settings.py:680
 msgid "Remove"
 msgstr ""
 
-#: settings.py:730
+#: settings.py:701
 msgid "Profiles"
 msgstr ""
 
-#: settings.py:740
+#: settings.py:711
 msgid "Click to set a new hotkey."
 msgstr ""
 
-#: settings.py:749
+#: settings.py:720
 msgid "Whether or not to include images from sub-folders."
 msgstr ""
 
-#: settings.py:759 settings.py:769
+#: settings.py:730 settings.py:740
 msgid "Failed to update keybinding"
 msgstr ""
 
-#: settings.py:782
+#: settings.py:753
 #, python-format
 msgid "Are you sure you want to delete the profile »%s«?"
 msgstr ""
 
-#: settings.py:785
+#: settings.py:756
 msgid "Yes"
 msgstr ""
 
-#: settings.py:786
+#: settings.py:757
 msgid "No"
 msgstr ""
 
-#: settings.py:809
+#: settings.py:780
 msgid "Profile Name"
 msgstr ""
 
-#: settings.py:815
+#: settings.py:786
 msgid "OK"
 msgstr ""
 
-#: settings.py:928
+#: settings.py:899
 msgid "Contributors/Mentions:"
 msgstr ""
 
 #. TO TRANSLATORS:
 #. Here goes the name/s of the author/s of the translations.
 #. Only e-mail addresses and links to GitHub accounts are allowed. NOTHING MORE.
-#: settings.py:936
+#: settings.py:907
 msgid "translator-credits"
 msgstr ""
 
-#: settings.py:1006
+#: settings.py:977
 msgid "Reset settings to defaults"
 msgstr ""
 
-#: settings.py:1008
+#: settings.py:979
 msgid "Import settings from a file"
 msgstr ""
 
-#: settings.py:1010
+#: settings.py:981
 msgid "Export settings to a file"
 msgstr ""
 
-#: settings.py:1015
+#: settings.py:986
 msgid "Remember window size"
 msgstr ""
 
-#: settings.py:1020
+#: settings.py:991
 msgid "Restart Cinnamon"
 msgstr ""
 
-#: settings.py:1026
+#: settings.py:997
 msgid "About"
 msgstr ""
 
-#: settings.py:1033
+#: settings.py:1004
 msgid "Manage settings"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. Warning: Trying to reset all AppletName settings!!!
-#: settings.py:1076
+#: settings.py:1047
 #, python-format
 msgid "Warning: Trying to reset all %s settings!!!"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. Reset all AppletName settings to default?
-#: settings.py:1080
+#: settings.py:1051
 #, python-format
 msgid "Reset all %s settings to default?"
 msgstr ""
 
-#: settings.py:1099
+#: settings.py:1070
 msgid "Select or enter file to export to"
 msgstr ""
 
-#: settings.py:1102
+#: settings.py:1073
 msgid "_Save"
 msgstr ""
 
-#: settings.py:1105
+#: settings.py:1076
 msgid "Select a file to import"
 msgstr ""
 
-#: settings.py:1121
+#: settings.py:1092
 msgid "DCONF files"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. AppletName applet preferences
-#: settings.py:1190
+#: settings.py:1161
 #, python-format
 msgid "%s applet preferences"
 msgstr ""

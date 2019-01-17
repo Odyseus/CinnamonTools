@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0PopupTranslator 1.08\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-01-12 03:05-0300\n"
+"POT-Creation-Date: 2019-01-17 15:51-0300\n"
 "PO-Revision-Date: 2018-08-25 02:48-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:379
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:370
 msgid "Help"
 msgstr "Ayuda"
 
@@ -68,23 +68,23 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: appletHelper.py:311
+#: appletHelper.py:281
 msgid "Popup Translator history"
 msgstr "Historial del Traductor Emergente"
 
-#: appletHelper.py:335
+#: appletHelper.py:305
 msgid "Date"
 msgstr "Fecha"
 
-#: appletHelper.py:343
+#: appletHelper.py:313
 msgid "Source text"
 msgstr "Texto de origen"
 
-#: appletHelper.py:348 applet.js:207
+#: appletHelper.py:318 applet.js:198
 msgid "Language pair"
 msgstr "Par de idiomas"
 
-#: appletHelper.py:356
+#: appletHelper.py:326
 msgid "Target text"
 msgstr "Texto de destino"
 
@@ -299,15 +299,15 @@ msgstr "**¡NUNCA hacer públicas las llaves de API!** El sólo propósito de to
 msgid "With each Yandex translator API key you can translate **UP TO** 1.000.000 (1 million) characters per day **BUT NOT MORE** than 10.000.000 (10 millions) per month."
 msgstr "Con cada llave de API Yandex uno puede traducir **HASTA** 1.000.000 (1 millón) de caracteres por día **PERO NO MÁS** de 10.000.000 (10 millones) por mes."
 
-#: applet.js:102
+#: applet.js:96
 msgid "Source language"
 msgstr "Idioma de origen"
 
-#: applet.js:103
+#: applet.js:97
 msgid "Target language"
 msgstr "Idioma de destino"
 
-#: applet.js:104
+#: applet.js:98
 msgid ""
 "(G) = Language supported only by Google Translate.\n"
 "(Y) = Language supported only by Yandex Translate."
@@ -316,22 +316,22 @@ msgstr ""
 "(Y) = Idioma soportado únicamente por Yandex Translate."
 
 #. settings-schema.json->head_1->description
-#: applet.js:182
+#: applet.js:173
 msgid "First translation mechanism (Left click on applet)"
 msgstr "Primer mecanismo de traducción (Clic izquierdo en el applet)"
 
 #. settings-schema.json->head_2->description
-#: applet.js:186
+#: applet.js:177
 msgid "Second translation mechanism (Middle click on applet)"
 msgstr "Segundo mecanismo de traducción (Clic medio en el applet)"
 
 #. settings-schema.json->head_3->description
-#: applet.js:192
+#: applet.js:183
 msgid "Third translation mechanism (Hotkey #1)"
 msgstr "Tercer mecanismo de traducción (Tecla de acceso rápido #1)"
 
 #. settings-schema.json->head_4->description
-#: applet.js:199
+#: applet.js:190
 msgid "Fourth translation mechanism (Hotkey #2)"
 msgstr "Cuarto mecanismo de traducción (Tecla de acceso rápido #2)"
 
@@ -339,141 +339,141 @@ msgstr "Cuarto mecanismo de traducción (Tecla de acceso rápido #2)"
 #. settings-schema.json->pref_service_provider_2->description
 #. settings-schema.json->pref_service_provider_3->description
 #. settings-schema.json->pref_service_provider_4->description
-#: applet.js:205
+#: applet.js:196
 msgid "Service provider"
 msgstr "Proveedor de servicio"
 
-#: applet.js:214
+#: applet.js:205
 msgid "Translation hotkey"
 msgstr "Hotkey para traducir"
 
-#: applet.js:222
+#: applet.js:213
 msgid "Force translation hotkey"
 msgstr "Hoykey para traducir forzosamente"
 
-#: applet.js:230 applet.js:1038 applet.js:1062
+#: applet.js:221 applet.js:1066 applet.js:1090
 msgid "Unmet dependencies found!!!"
 msgstr "¡Dependencias no satisfechas encontradas!"
 
-#: applet.js:231 applet.js:893 applet.js:1039
+#: applet.js:222 applet.js:921 applet.js:1067
 msgid "A detailed error has been logged into ~/.cinnamon/glass.log file."
 msgstr "Se ha registrado un error detallado en el archivo ~/.cinnamon/glass.log."
 
-#: applet.js:273
+#: applet.js:264
 msgid "Left click on applet"
 msgstr "Clic izquierdo en el applet"
 
-#: applet.js:276
+#: applet.js:267
 msgid "Middle click on applet"
 msgstr "Clic medio en el applet"
 
-#: applet.js:279
+#: applet.js:270
 msgid "Hotkey #1"
 msgstr "Tecla de acceso rápido #1"
 
-#: applet.js:282
+#: applet.js:273
 msgid "Hotkey #2"
 msgstr "Tecla de acceso rápido #2"
 
-#: applet.js:295 applet.js:305
+#: applet.js:286 applet.js:296
 #, javascript-format
 msgid "Set %s as default translation engine."
 msgstr "Establecer %s como motor de traducción predeterminado."
 
-#: applet.js:324
+#: applet.js:315
 msgid "Applet extras"
 msgstr "Extras del applet"
 
-#: applet.js:328
+#: applet.js:319
 msgid "Translation history"
 msgstr "Historial de traducción"
 
-#: applet.js:334
+#: applet.js:325
 msgid "Open translation history window."
 msgstr "Abrir ventana del historial de traducción."
 
-#: applet.js:346
+#: applet.js:337
 msgid "History storage"
 msgstr "Almacenamiento del historial"
 
-#: applet.js:352
+#: applet.js:343
 msgid "Open the location where the translation history file is stored."
 msgstr "Abrir la ubicación donde se almacena el archivo de historial de traducción."
 
-#: applet.js:365
+#: applet.js:356
 msgid "Check dependencies"
 msgstr "Comprobar dependencias"
 
-#: applet.js:371
+#: applet.js:362
 msgid "Check whether the dependencies for this applet are met."
 msgstr "Comprobar si se cumplen las dependencias para este applet."
 
-#: applet.js:385
+#: applet.js:376
 msgid "Open this applet help file."
 msgstr "Abra el archivo de ayuda de este applet."
 
-#: applet.js:508
+#: applet.js:499
 msgid "History"
 msgstr "Historial"
 
-#: applet.js:524
+#: applet.js:515
 #, javascript-format
 msgid "Go to %s's website"
 msgstr "Ir al sitio web de %s"
 
-#: applet.js:526
+#: applet.js:517
 #, javascript-format
 msgid "Powered By %s"
 msgstr "Powered by %s"
 
-#: applet.js:649
+#: applet.js:677
 msgid "No Yandex API keys were found!!!"
 msgstr "¡No se encontraron claves de API de Yandex!"
 
-#: applet.js:650 applet.js:1064
+#: applet.js:678 applet.js:1092
 msgid "Check this applet help file for instructions."
 msgstr "Comprobar el archivo de ayuda de este applet para obtener instrucciones."
 
-#: applet.js:651 applet.js:1065
+#: applet.js:679 applet.js:1093
 msgid "It can be accessed from this applet context menu."
 msgstr "Se puede acceder a él desde el menú contextual de este applet."
 
-#: applet.js:718
+#: applet.js:746
 msgid "API key is invalid"
 msgstr "La clave de la API no es válida"
 
-#: applet.js:721
+#: applet.js:749
 msgid "Blocked API key"
 msgstr "Clave de API bloqueada"
 
-#: applet.js:724
+#: applet.js:752
 msgid "Exceeded the daily limit on the amount of translated text"
 msgstr "Excedió el límite diario de la cantidad de texto traducido"
 
-#: applet.js:727
+#: applet.js:755
 msgid "Exceeded the maximum text size"
 msgstr "Ha superado el tamaño máximo de texto"
 
-#: applet.js:730
+#: applet.js:758
 msgid "The text cannot be translated"
 msgstr "El texto no puede ser traducido"
 
-#: applet.js:733
+#: applet.js:761
 msgid "The specified translation direction is not supported"
 msgstr "No se admite la dirección de traducción especificada"
 
-#: applet.js:892
+#: applet.js:920
 #, javascript-format
 msgid "Error parsing %s's request."
 msgstr "Error al analizar la solicitud a %s."
 
-#: applet.js:1071
+#: applet.js:1099
 msgid "All dependencies seem to be met."
 msgstr "Todas las dependencias parecen ser cumplidas."
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file/command 'FileName or Command':"
-#: applet.js:1125
+#: applet.js:1153
 #, javascript-format
 msgid "Unable to execute file/command '%s':"
 msgstr "Imposible ejecutar el archivo/comando '%s':"

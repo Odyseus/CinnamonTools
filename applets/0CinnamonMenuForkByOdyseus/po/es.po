@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-01-12 03:05-0300\n"
+"POT-Creation-Date: 2019-01-17 15:51-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:273
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:301
 msgid "Help"
 msgstr "Ayuda"
 
@@ -64,84 +64,84 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: appletHelper.py:63 appletHelper.py:67 appletHelper.py:71
+#: appletHelper.py:29 appletHelper.py:33 appletHelper.py:37
 msgid "Mandatory"
 msgstr "Obligatorio"
 
-#: appletHelper.py:63
+#: appletHelper.py:29
 msgid "Title"
 msgstr "Título"
 
-#: appletHelper.py:67
+#: appletHelper.py:33
 msgid "Command"
 msgstr "Comando"
 
 #. settings-schema.json->pref_custom_icon_for_applet->description
-#: appletHelper.py:71
+#: appletHelper.py:37
 msgid "Icon"
 msgstr "Ícono:"
 
-#: appletHelper.py:75 z_create_localized_help.py:31
+#: appletHelper.py:41 z_create_localized_help.py:31
 msgid "Description"
 msgstr "Descripción"
 
-#: appletHelper.py:75
+#: appletHelper.py:41
 msgid "Optional"
 msgstr "Opcional"
 
-#: appletHelper.py:196
+#: appletHelper.py:163
 msgid "Choose an Icon"
 msgstr "Elegir un ícono"
 
-#: appletHelper.py:199 appletHelper.py:471
+#: appletHelper.py:166 appletHelper.py:438
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: appletHelper.py:200
+#: appletHelper.py:167
 msgid "_Open"
 msgstr "_Abrir"
 
-#: appletHelper.py:203
+#: appletHelper.py:170
 msgid "Image files"
 msgstr "Archivos de imagen"
 
-#: appletHelper.py:368
+#: appletHelper.py:335
 msgid "Add new launcher"
 msgstr "Agregar un nuevo lanzador"
 
-#: appletHelper.py:372
+#: appletHelper.py:339
 msgid "Remove selected launcher"
 msgstr "Eliminar lanzador seleccionado"
 
-#: appletHelper.py:377
+#: appletHelper.py:344
 msgid "Edit selected launcher"
 msgstr "Editar lanzador seleccionado"
 
-#: appletHelper.py:382
+#: appletHelper.py:349
 msgid "Move selected launcher up"
 msgstr "Mover lanzador seleccionado hacia arriba"
 
-#: appletHelper.py:387
+#: appletHelper.py:354
 msgid "Move selected launcher down"
 msgstr "Mover lanzador seleccionado hacia abajo"
 
-#: appletHelper.py:398
+#: appletHelper.py:365
 msgid "Apply changes"
 msgstr "Aplicar cambios"
 
-#: appletHelper.py:464
+#: appletHelper.py:431
 msgid "Add new entry"
 msgstr "Agregar nueva entrada"
 
-#: appletHelper.py:466
+#: appletHelper.py:433
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: appletHelper.py:472
+#: appletHelper.py:439
 msgid "_Save"
 msgstr "_Guardar"
 
-#: appletHelper.py:713
+#: appletHelper.py:680
 msgid "Custom launchers"
 msgstr "Lanzadores personalizados"
 
@@ -436,141 +436,141 @@ msgstr "Simplemente establezca el ejecutable de terminal de su elección en la v
 msgid "There is a folder named **icons** inside this applet directory. It contains several symbolic icons (most of them are from the Faenza icon theme) and each icon can be used directly by name (on a custom launcher, for example)."
 msgstr "Existe una carpeta llamada **icons** dentro dentro del directorio de este applet. Dicha carpeta contiene varios íconos simbólicos (la mayoría proviene del tema Faenza) y cada ícono puede ser usado directamente por nombre (en un lanzador personalizado, por ejemplo)."
 
-#: applet.js:60
+#: applet.js:59
 msgid "Menu"
 msgstr "Menú"
 
-#: applet.js:261
+#: applet.js:289
 msgid "Open the menu editor"
 msgstr "Abrir el editor de menús"
 
-#: applet.js:266
+#: applet.js:294
 msgid "Edit custom launchers"
 msgstr "Editar lanzadores personalizados"
 
-#: applet.js:1324
+#: applet.js:1343
 msgid "Favorites"
 msgstr "Favoritos"
 
 #. settings-schema.json->recent_apps_header->description
-#: applet.js:1364
+#: applet.js:1383
 msgid "Recent Applications"
 msgstr "Aplicaciones recientes"
 
-#: applet.js:1469
+#: applet.js:1507
 msgid "No search results"
 msgstr "No hay resultados de búsqueda"
 
-#: applet.js:1487
+#: applet.js:1525
 msgid "No recent applications"
 msgstr "Sin aplicaciones recientes"
 
-#: applet.js:1686
+#: applet.js:1721
 msgid "Type to search..."
 msgstr "Escriba para buscar..."
 
-#: applet.js:2408 applet.js:2418
+#: applet.js:2441 applet.js:2451
 msgid "Categories"
 msgstr "Categorías"
 
-#: utils.js:498
+#: utils.js:501
 msgid "Add to panel"
 msgstr "Añadir al panel"
 
-#: utils.js:502
+#: utils.js:505
 msgid "Add this application to the Panel launchers applet."
 msgstr "Agregar esta aplicación a los Lanzadores del panel."
 
-#: utils.js:509
+#: utils.js:512
 msgid "Add to desktop"
 msgstr "Añadir al escritorio"
 
-#: utils.js:513
+#: utils.js:516
 msgid "Add this application to the Desktop."
 msgstr "Agregar un acceso directo a esta aplicación en el Escritorio."
 
-#: utils.js:521
+#: utils.js:524
 msgid "Remove from favorites"
 msgstr "Quitar de favoritos"
 
-#: utils.js:525
+#: utils.js:528
 msgid "Remove application from your favorites."
 msgstr "Quitar aplicación de favoritos."
 
-#: utils.js:530
+#: utils.js:533
 msgid "Add to favorites"
 msgstr "Añadir a favoritos"
 
-#: utils.js:534
+#: utils.js:537
 msgid "Add application to your favorites."
 msgstr "Añadir esta aplicación a los favoritos."
 
-#: utils.js:542
+#: utils.js:545
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: utils.js:546
+#: utils.js:549
 msgid "Uninstall application from your system."
 msgstr "Desinstalar aplicación de su sistema."
 
-#: utils.js:553
+#: utils.js:556
 msgid "Run with NVIDIA GPU"
 msgstr "Ejecutar con GPU NVIDIA"
 
-#: utils.js:557
+#: utils.js:560
 msgid "Run application through optirun command (Bumblebee)."
 msgstr "Ejecutar aplicación a través del comando optirun (Bumblebee)."
 
-#: utils.js:564
+#: utils.js:567
 msgid "Run as root"
 msgstr "Ejecutar como root"
 
-#: utils.js:568
+#: utils.js:571
 msgid "Run application as root."
 msgstr "Ejecutar esta aplicación como root."
 
-#: utils.js:575
+#: utils.js:578
 msgid "Edit .desktop file"
 msgstr "Editar archivo .desktop"
 
-#: utils.js:579
+#: utils.js:582
 msgid "Edit this application .desktop file with a text editor."
 msgstr "Editar el archivo .desktop de esta aplicación con un editor de textos."
 
-#: utils.js:586
+#: utils.js:589
 msgid "Open .desktop file folder"
 msgstr "Abrir carpeta del archivo .desktop"
 
-#: utils.js:590
+#: utils.js:593
 msgid "Open the folder containg this application .desktop file."
 msgstr "Abrir la carpeta que contiene el archivo .desktop de esta aplicación."
 
-#: utils.js:597
+#: utils.js:600
 msgid "Run from terminal"
 msgstr "Ejecutar desde terminal"
 
-#: utils.js:601
+#: utils.js:604
 msgid "Run application from a terminal."
 msgstr "Ejecutar aplicación desde una terminal."
 
-#: utils.js:608
+#: utils.js:611
 msgid "Run from terminal as root"
 msgstr "Ejecutar desde terminal como root"
 
-#: utils.js:612
+#: utils.js:615
 msgid "Run application from a terminal as root."
 msgstr "Ejecutar aplicación desde una terminal como root."
 
-#: utils.js:1095
+#: utils.js:1082
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: utils.js:1160
+#: utils.js:1147
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr "No se pudo encontrar el esquema %s para el xlet %s."
 
-#: utils.js:1161
+#: utils.js:1148
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 

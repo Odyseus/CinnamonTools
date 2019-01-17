@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus 2.6\n"
-"POT-Creation-Date: 2019-01-12 03:21-0300\n"
+"POT-Creation-Date: 2019-01-17 15:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:165
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:194
 msgid "Help"
 msgstr ""
 
@@ -125,23 +125,23 @@ msgstr ""
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr ""
 
-#: applet.js:176
+#: applet.js:205
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:177
+#: applet.js:206
 msgid "This applet needs the GTop library installed on your system for it  to work."
 msgstr ""
 
-#: applet.js:178
+#: applet.js:207
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:392
+#: applet.js:421
 msgid "Command not set!"
 msgstr ""
 
-#: applet.js:393
+#: applet.js:422
 msgid "Set a custom command from this applet settings window."
 msgstr ""
 

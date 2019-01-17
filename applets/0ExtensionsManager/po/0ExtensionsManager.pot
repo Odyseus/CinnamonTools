@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ExtensionsManager 1.10\n"
-"POT-Creation-Date: 2019-01-12 03:21-0300\n"
+"POT-Creation-Date: 2019-01-17 15:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:187
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:178
 msgid "Help"
 msgstr ""
 
@@ -65,27 +65,27 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: appletHelper.py:269
+#: appletHelper.py:274
 msgid "This terminal will list the errors of extensions that couldn't be loaded by Extensions Manager."
 msgstr ""
 
-#: appletHelper.py:290 appletHelper.py:309
+#: appletHelper.py:295 appletHelper.py:314
 msgid "Extensions Manager debugger"
 msgstr ""
 
-#: appletHelper.py:324
+#: appletHelper.py:329
 msgid "Helper script for Extensions Manager applet for Cinnamon."
 msgstr ""
 
-#: appletHelper.py:329
+#: appletHelper.py:334
 msgid "Returns a JSON string with a list of all installed extensions."
 msgstr ""
 
-#: appletHelper.py:333
+#: appletHelper.py:338
 msgid "Process all extensions, but it will only display possible errors."
 msgstr ""
 
-#: appletHelper.py:337
+#: appletHelper.py:342
 msgid "Launch the debug process from a virtual terminal."
 msgstr ""
 
@@ -121,56 +121,56 @@ msgstr ""
 msgid "Settings window"
 msgstr ""
 
-#: applet.js:132
+#: applet.js:123
 msgid "Open extensions manager"
 msgstr ""
 
-#: applet.js:145
+#: applet.js:136
 msgid "Disable all extensions"
 msgstr ""
 
-#: applet.js:155
+#: applet.js:146
 msgid "This will disable all active extensions. Are you sure you want to do this?"
 msgstr ""
 
-#: applet.js:164
+#: applet.js:155
 msgid "Refresh extension list"
 msgstr ""
 
-#: applet.js:171
+#: applet.js:162
 msgid "Restart Cinnamon"
 msgstr ""
 
-#: applet.js:178
+#: applet.js:169
 msgid "Debug"
 msgstr ""
 
-#: applet.js:280 applet.js:332
+#: applet.js:309 applet.js:361
 #, javascript-format
 msgid "Source of error: %s"
 msgstr ""
 
-#: applet.js:427
+#: applet.js:456
 msgid "There aren't any extensions installed on your system. Or you may need to refresh the list of extensions from this applet context menu."
 msgstr ""
 
-#: applet.js:500
+#: applet.js:529
 msgid "Enabled extensions"
 msgstr ""
 
-#: applet.js:503
+#: applet.js:532
 msgid "No enabled extensions"
 msgstr ""
 
-#: applet.js:507
+#: applet.js:536
 msgid "Disabled extensions"
 msgstr ""
 
-#: applet.js:509
+#: applet.js:538
 msgid "No disabled extensions"
 msgstr ""
 
-#: applet.js:546
+#: applet.js:575
 #, javascript-format
 msgid "Extension %s is not compatible with current version of cinnamon. Using it may break your system. Load anyway?"
 msgstr ""

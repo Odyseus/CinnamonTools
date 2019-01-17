@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Tue, 15 Jan 2019 22:36:02 -0300
+- **Commit:** [5797433](https://gitlab.com/Odyseus/CinnamonTools/commit/5797433)
+- **Author:** Odyseus
+
+```
+- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
+
+```
+
+***
+
 - **Date:** Tue, 8 Jan 2019 21:40:05 -0300
 - **Commit:** [fbdef6f](https://gitlab.com/Odyseus/CinnamonTools/commit/fbdef6f)
 - **Author:** Odyseus

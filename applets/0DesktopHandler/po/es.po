@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopHandler 1.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-01-12 03:05-0300\n"
+"POT-Creation-Date: 2019-01-17 15:51-0300\n"
 "PO-Revision-Date: 2018-08-25 02:48-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:509
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:537
 msgid "Help"
 msgstr "Ayuda"
 
@@ -90,12 +90,12 @@ msgid "Scroll over applet actions:"
 msgstr "Acciones al desplazarse sobre el applet:"
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:38 applet.js:755
+#: z_create_localized_help.py:38 applet.js:783
 msgid "Switch between workspaces"
 msgstr "Alternar entre espacios de trabajo"
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:39 applet.js:756
+#: z_create_localized_help.py:39 applet.js:784
 msgid "Adjust opacity of windows"
 msgstr "Ajustar opacidad de ventanas"
 
@@ -109,7 +109,7 @@ msgid "Toggle Show desktop"
 msgstr "Activar Mostrar escritorio"
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:41 applet.js:758
+#: z_create_localized_help.py:41 applet.js:786
 msgid "Switch between windows"
 msgstr "Cambiar entre ventanas"
 
@@ -129,7 +129,7 @@ msgstr "Acciones para los desplazamientos arriba/abajo y/o los clics izquierdo/c
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:45 applet.js:446 applet.js:739
+#: z_create_localized_help.py:45 applet.js:474 applet.js:767
 msgid "Expo"
 msgstr "Visualizar áreas de trabajo"
 
@@ -137,7 +137,7 @@ msgstr "Visualizar áreas de trabajo"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:46 applet.js:740
+#: z_create_localized_help.py:46 applet.js:768
 msgid "Overview"
 msgstr "Visión general"
 
@@ -145,7 +145,7 @@ msgstr "Visión general"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:47 applet.js:741
+#: z_create_localized_help.py:47 applet.js:769
 msgid "Launch App Switcher"
 msgstr "Lanzar conmutador de aplicaciones"
 
@@ -157,7 +157,7 @@ msgstr "Mostrar Escritorio"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:49 applet.js:742
+#: z_create_localized_help.py:49 applet.js:770
 msgid "Run 1st Custom Command"
 msgstr "Ejecutar 1.º comando personalizado"
 
@@ -165,7 +165,7 @@ msgstr "Ejecutar 1.º comando personalizado"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:50 applet.js:743
+#: z_create_localized_help.py:50 applet.js:771
 msgid "Run 2nd Custom Command"
 msgstr "Ejecutar 2.º comando personalizado"
 
@@ -173,7 +173,7 @@ msgstr "Ejecutar 2.º comando personalizado"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:51 applet.js:744
+#: z_create_localized_help.py:51 applet.js:772
 msgid "Run 3rd Custom Command"
 msgstr "Ejecutar 3.º comando personalizado"
 
@@ -181,7 +181,7 @@ msgstr "Ejecutar 3.º comando personalizado"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:52 applet.js:745
+#: z_create_localized_help.py:52 applet.js:773
 msgid "Run 4rd Custom Command"
 msgstr "Ejecutar 4.º comando personalizado"
 
@@ -197,51 +197,51 @@ msgstr "Clic Izquierdo/Medio/Derecho en el applet se puede configurar para abrir
 msgid "Desktop peek functionality with configurable levels of opacity."
 msgstr "Funcionalidad Desktop Peek con niveles configurables de opacidad."
 
-#: applet.js:348 applet.js:414
+#: applet.js:376 applet.js:442
 msgid "Close window"
 msgstr "Cerrar ventana"
 
-#: applet.js:383
+#: applet.js:411
 msgid "Close all windows from this wrokspace"
 msgstr "Cerrar todas las ventanas de este espacio de trabajo"
 
-#: applet.js:433
+#: applet.js:461
 msgid "No open windows"
 msgstr "No hay ventanas abiertas"
 
-#: applet.js:455
+#: applet.js:483
 msgid "Close all windows from all workspaces"
 msgstr "Cerrar todas las ventanas de todos los espacios de trabajo"
 
 #. NOTE: This string could be left blank because it's a default string,
 #. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:520
+#: applet.js:548
 msgid "About..."
 msgstr "Acerca de..."
 
 #. NOTE: This string could be left blank because it's a default string,
 #. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:530
+#: applet.js:558
 msgid "Configure..."
 msgstr "Configurar..."
 
 #. NOTE: This string could be left blank because it's a default string,
 #. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:544
+#: applet.js:572
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
 
-#: applet.js:553
+#: applet.js:581
 #, javascript-format
 msgid "Are you sure that you want to remove '%s' from your panel?"
 msgstr "¿Está seguro de que desea remover '%s' del panel?"
 
-#: applet.js:555
+#: applet.js:583
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: applet.js:555
+#: applet.js:583
 msgid "OK"
 msgstr "Aceptar"
 
@@ -250,82 +250,82 @@ msgstr "Aceptar"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: applet.js:746
+#: applet.js:774
 msgid "None"
 msgstr "Ninguna"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:747
+#: applet.js:775
 msgid "Icons only"
 msgstr "Sólo íconos"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:748
+#: applet.js:776
 msgid "Thumbnails only"
 msgstr "Sólo miniaturas"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:749
+#: applet.js:777
 msgid "Icons and thumbnails"
 msgstr "Íconos y miniaturas"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:750
+#: applet.js:778
 msgid "Icons and window preview"
 msgstr "Íconos y vista previa de ventana"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:751
+#: applet.js:779
 msgid "Window preview (no icons)"
 msgstr "Vista previa de ventana (sin íconos)"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:752
+#: applet.js:780
 msgid "Coverflow (3D)"
 msgstr "Coverflow (3D)"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:753
+#: applet.js:781
 msgid "Timeline (3D)"
 msgstr "Timeline (3D)"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:754
+#: applet.js:782
 msgid "System default"
 msgstr "Predeterminado por el sistema"
 
-#: applet.js:757
+#: applet.js:785
 msgid "Toggle show desktop"
 msgstr "Activar Mostrar escritorio"
 
-#: applet.js:759
+#: applet.js:787
 msgid "Open windows list menu"
 msgstr "Abrir el menú de lista de ventanas"
 
-#: applet.js:777
+#: applet.js:805
 msgid "Scroll Up"
 msgstr "Desplazar hacia arriba"
 
-#: applet.js:778
+#: applet.js:806
 msgid "Scroll Down"
 msgstr "Desplazar hacia abajo"
 
-#: applet.js:780
+#: applet.js:808
 msgid "Scroll"
 msgstr "Desplazamiento del ratón"
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:787
+#: applet.js:815
 msgid "Left click"
 msgstr "Botón izquierdo"
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:793
+#: applet.js:821
 msgid "Middle click"
 msgstr "Botón central"
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:797
+#: applet.js:825
 msgid "Right click"
 msgstr "Botón derecho"
 
