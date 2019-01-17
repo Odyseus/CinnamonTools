@@ -8,17 +8,22 @@ The version of the Gio library available on the repositories of Linux Mint 17.3 
 seem to have the methods used/needed by this daemon in its current state.
 """
 
+import gettext
+import gi
 import os.path
 import random
 import sys
-import gettext
-import gi
 
 gi.require_version("Gio", "2.0")
 
 from datetime import datetime
-from gi.repository import GLib, Gio
 from gi._gi import variant_type_from_string
+from gi.repository import GLib
+from gi.repository import Gio
+
+gettext.bindtextdomain("{{UUID}}", os.path.expanduser("~") + "/.local/share/locale")
+gettext.textdomain("{{UUID}}")
+_ = gettext.gettext
 
 # The application ID is also used as the daemon name.
 APPLICATION_ID = "org.cinnamon.Applets.WallpaperChangerApplet.Daemon"
@@ -26,45 +31,10 @@ SCHEMA_NAME = "org.cinnamon.applets.{{UUID}}"
 SCHEMA_PATH = "/org/cinnamon/applets/{{UUID}}/"
 
 CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION")
-HOME = os.path.expanduser("~")
-EXTENSION_DIR = os.path.dirname(os.path.abspath(__file__))
-EXTENSION_UUID = str(os.path.basename(EXTENSION_DIR))
-TRANSLATIONS = {}
+XLET_DIR = os.path.dirname(os.path.abspath(__file__))
 
-
-__daemon_path__ = EXTENSION_DIR
+__daemon_path__ = XLET_DIR
 __version__ = "2.2.0"
-
-
-def _(string):
-    # check for a translation for this xlet
-    if EXTENSION_UUID not in TRANSLATIONS:
-        try:
-            TRANSLATIONS[EXTENSION_UUID] = gettext.translation(
-                EXTENSION_UUID, HOME + "/.local/share/locale").gettext
-        except IOError:
-            try:
-                TRANSLATIONS[EXTENSION_UUID] = gettext.translation(
-                    EXTENSION_UUID, "/usr/share/locale").gettext
-            except IOError:
-                TRANSLATIONS[EXTENSION_UUID] = None
-
-    # do not translate white spaces
-    if not string.strip():
-        return string
-
-    if TRANSLATIONS[EXTENSION_UUID]:
-        result = TRANSLATIONS[EXTENSION_UUID](string)
-
-        try:
-            result = result.decode("utf-8")
-        except Exception:
-            result = result
-
-        if result != string:
-            return result
-
-    return gettext.gettext(string)
 
 
 WallChangerDaemonDBusInterface = Gio.DBusNodeInfo.new_for_xml("""<node>\
@@ -97,7 +67,7 @@ WallChangerDaemonDBusInterface = Gio.DBusNodeInfo.new_for_xml("""<node>\
 class WallChangerDaemon(Gio.Application):
 
     def __init__(self, **kwargs):
-        super(WallChangerDaemon, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.add_main_option("version", ord("v"), GLib.OptionFlags.NONE, GLib.OptionArg.NONE,
                              "Show the current daemon version and exit", None)
         # We use this as our DBus interface name also
@@ -637,7 +607,7 @@ class Settings(object):
         """ Get settings values from corresponding schema file """
 
         # Try to get schema from local installation directory
-        schemas_dir = "%s/schemas" % EXTENSION_DIR
+        schemas_dir = "%s/schemas" % XLET_DIR
         if os.path.isfile("%s/gschemas.compiled" % schemas_dir):
             schema_source = Gio.SettingsSchemaSource.new_from_directory(
                 schemas_dir, Gio.SettingsSchemaSource.get_default(), False)

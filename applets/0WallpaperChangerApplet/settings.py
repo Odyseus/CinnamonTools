@@ -2,62 +2,33 @@
 # -*- coding: utf-8 -*-
 
 import cgi
-import json
-import subprocess
-import os.path
 import gettext
 import gi
+import json
+import os.path
+import subprocess
 
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gtk, GLib, Gio, GObject, GdkPixbuf
+from gi.repository import GLib
+from gi.repository import GObject
+from gi.repository import GdkPixbuf
+from gi.repository import Gio
+from gi.repository import Gtk
 
+gettext.bindtextdomain("{{UUID}}", os.path.expanduser("~") + "/.local/share/locale")
+gettext.textdomain("{{UUID}}")
+_ = gettext.gettext
 
 # The application ID is also used as the daemon name.
 APPLICATION_ID = "org.Cinnamon.Applets.WallChanger.Daemon"
 SCHEMA_NAME = "org.cinnamon.applets.{{UUID}}"
 SCHEMA_PATH = "/org/cinnamon/applets/{{UUID}}/"
-
 CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION")
-HOME = os.path.expanduser("~")
-APPLET_DIR = os.path.dirname(os.path.abspath(__file__))
-APPLET_UUID = str(os.path.basename(APPLET_DIR))
-TRANSLATIONS = {}
-
-
-def _(string):
-    # check for a translation for this xlet
-    if APPLET_UUID not in TRANSLATIONS:
-        try:
-            TRANSLATIONS[APPLET_UUID] = gettext.translation(
-                APPLET_UUID, HOME + "/.local/share/locale").gettext
-        except IOError:
-            try:
-                TRANSLATIONS[APPLET_UUID] = gettext.translation(
-                    APPLET_UUID, "/usr/share/locale").gettext
-            except IOError:
-                TRANSLATIONS[APPLET_UUID] = None
-
-    # do not translate white spaces
-    if not string.strip():
-        return string
-
-    if TRANSLATIONS[APPLET_UUID]:
-        result = TRANSLATIONS[APPLET_UUID](string)
-
-        try:
-            result = result.decode("utf-8")
-        except Exception:
-            result = result
-
-        if result != string:
-            return result
-
-    return gettext.gettext(string)
-
+XLET_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # TO TRANSLATORS: This is the applet name.
-APPLET_NAME = _("Wallpaper Changer")
+XLET_NAME = _("Wallpaper Changer")
 
 
 class Settings(object):
@@ -79,7 +50,7 @@ class Settings(object):
         """ Get settings values from corresponding schema file """
 
         # Try to get schema from local installation directory
-        schemas_dir = "%s/schemas" % APPLET_DIR
+        schemas_dir = "%s/schemas" % XLET_DIR
         if os.path.isfile("%s/gschemas.compiled" % schemas_dir):
             schema_source = Gio.SettingsSchemaSource.new_from_directory(
                 schemas_dir, Gio.SettingsSchemaSource.get_default(), False)
@@ -910,7 +881,7 @@ class AboutDialog(Gtk.AboutDialog):
 
     def __init__(self):
         logo = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            os.path.join(APPLET_DIR, "icon.png"), 64, 64)
+            os.path.join(XLET_DIR, "icon.png"), 64, 64)
 
         Gtk.AboutDialog.__init__(self, transient_for=app.window)
         data = app.extension_meta
@@ -966,7 +937,7 @@ class AppletPrefsWindow(Gtk.ApplicationWindow):
             self.set_default_size(720, 420)
 
         self.set_position(Gtk.WindowPosition.CENTER)
-        self.set_icon_from_file(os.path.join(APPLET_DIR, "icon.png"))
+        self.set_icon_from_file(os.path.join(XLET_DIR, "icon.png"))
 
         self.stack = Gtk.Stack()
 
@@ -1040,7 +1011,7 @@ class AppletPrefsWindow(Gtk.ApplicationWindow):
             aboutdialog.run()
 
     def open_help_page(self, widget):
-        subprocess.call(("xdg-open", os.path.join(APPLET_DIR, "HELP.html")))
+        subprocess.call(("xdg-open", os.path.join(XLET_DIR, "HELP.html")))
 
     def createCheckMenuItem(self, text, key=None, *args):
         if Settings().settings_has_key(key) is False:
@@ -1073,11 +1044,11 @@ class AppletPrefsWindow(Gtk.ApplicationWindow):
                                    buttons=Gtk.ButtonsType.YES_NO)
         # TO TRANSLATORS: Full sentence:
         # Warning: Trying to reset all AppletName settings!!!
-        dialog.set_title(_("Warning: Trying to reset all %s settings!!!") % APPLET_NAME)
+        dialog.set_title(_("Warning: Trying to reset all %s settings!!!") % XLET_NAME)
 
         # TO TRANSLATORS: Full sentence:
         # Reset all AppletName settings to default?
-        esc = cgi.escape(_("Reset all %s settings to default?") % APPLET_NAME)
+        esc = cgi.escape(_("Reset all %s settings to default?") % XLET_NAME)
         dialog.set_markup(esc)
         dialog.show_all()
         response = dialog.run()
@@ -1145,14 +1116,14 @@ class AppletPrefsWindow(Gtk.ApplicationWindow):
 class AppletPrefsApplication(Gtk.Application):
 
     def __init__(self, *args, **kwargs):
-        GLib.set_application_name(APPLET_NAME)
+        GLib.set_application_name(XLET_NAME)
         super().__init__(*args,
                          application_id=APPLICATION_ID,
                          flags=Gio.ApplicationFlags.FLAGS_NONE,
                          **kwargs)
 
-        if os.path.exists("%s/metadata.json" % APPLET_DIR):
-            raw_data = open("%s/metadata.json" % APPLET_DIR).read()
+        if os.path.exists("%s/metadata.json" % XLET_DIR):
+            raw_data = open("%s/metadata.json" % XLET_DIR).read()
 
             try:
                 self.extension_meta = json.loads(raw_data)
@@ -1187,7 +1158,7 @@ class AppletPrefsApplication(Gtk.Application):
         self.window = AppletPrefsWindow(
             # TO TRANSLATORS: Full sentence:
             # AppletName applet preferences
-            application=self, title=_("%s applet preferences") % APPLET_NAME)
+            application=self, title=_("%s applet preferences") % XLET_NAME)
 
         self.window.connect("destroy", self.on_quit)
         self.window.connect("delete_event", self.on_delete_event)
