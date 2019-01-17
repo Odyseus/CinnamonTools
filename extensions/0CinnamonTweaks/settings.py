@@ -1,24 +1,33 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import cgi
+import gettext
+import gi
+import json
 import math
 import os
 import subprocess
-import gettext
-import json
-import cgi
-import gi
+
 gi.require_version("Gtk", "3.0")
 gi.require_version("Notify", "0.7")
-from gi.repository import Gio, Gtk, GObject, GLib, Gdk, Notify, GdkPixbuf
+gi.require_version("Gdk", "3.0")
+
+from gi.repository import GLib
+from gi.repository import GObject
+from gi.repository import Gdk
+from gi.repository import GdkPixbuf
+from gi.repository import Gio
+from gi.repository import Gtk
+from gi.repository import Notify
 from pkg_resources import parse_version
 
-gettext.install("cinnamon", "/usr/share/locale")
+gettext.bindtextdomain("{{UUID}}", os.path.expanduser("~") + "/.local/share/locale")
+gettext.textdomain("{{UUID}}")
+_ = gettext.gettext
 
 CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION")
-HOME = os.path.expanduser("~")
-EXTENSION_DIR = os.path.dirname(os.path.abspath(__file__))
-EXTENSION_UUID = str(os.path.basename(EXTENSION_DIR))
+XLET_DIR = os.path.dirname(os.path.abspath(__file__))
 # NOTE TO SELF
 # - Application identifiers must contain only the ASCII characters "A-Z[0-9]_-." and must not begin with a digit.
 # - Application identifiers must contain at least one '.' (period) character (and thus at least three elements).
@@ -30,39 +39,7 @@ EXTENSION_UUID = str(os.path.basename(EXTENSION_DIR))
 APPLICATION_ID = "org.cinnamon.extensions.odyseus.cinnamon.tweaks"
 SCHEMA_NAME = "org.cinnamon.extensions.{{UUID}}"
 SCHEMA_PATH = "/org/cinnamon/extensions/{{UUID}}/"
-TRANSLATIONS = {}
-
-
-def _(string):
-    # check for a translation for this xlet
-    if EXTENSION_UUID not in TRANSLATIONS:
-        try:
-            TRANSLATIONS[EXTENSION_UUID] = gettext.translation(
-                EXTENSION_UUID, HOME + "/.local/share/locale").gettext
-        except IOError:
-            try:
-                TRANSLATIONS[EXTENSION_UUID] = gettext.translation(
-                    EXTENSION_UUID, "/usr/share/locale").gettext
-            except IOError:
-                TRANSLATIONS[EXTENSION_UUID] = None
-
-    # do not translate white spaces
-    if not string.strip():
-        return string
-
-    if TRANSLATIONS[EXTENSION_UUID]:
-        result = TRANSLATIONS[EXTENSION_UUID](string)
-
-        try:
-            result = result.decode("utf-8")
-        except Exception:
-            result = result
-
-        if result != string:
-            return result
-
-    return gettext.gettext(string)
-
+CIRCLE = "<b>⚫</b>"
 
 APPLETS_TAB = {
     "title": _("Applets tweaks"),
@@ -330,7 +307,11 @@ NOTIFICATIONS_TAB = {
     "title": _("Notifications tweaks"),
     "sections": [{
         "title": _("Notifications tweaks"),
-        "warning_message": _("After enabling notifications tweaks, some settings set by this extension will have priority over Cinnamon's notification settings.") + "\n\n<b>⚫</b> " + _("The Cinnamon's setting to display notifications at the bottom of the screen is ignored. The position set by this extension is the only one that will take effect.") + "\n<b>⚫</b> " + _("The notification positioning is calculated in a different way by this extension compared to the way Cinnamon calculates it. This extension offers complete control over the distance from all pertinent sides of the popup."),
+        "warning_message": "\n".join([_("After enabling notifications tweaks, some settings set by this extension will have priority over Cinnamon's notification settings."),
+                                      "",
+                                      "%s %s" % (CIRCLE, _(
+                                          "The Cinnamon's setting to display notifications at the bottom of the screen is ignored. The position set by this extension is the only one that will take effect.")),
+                                      "%s %s" % (CIRCLE, _("The notification positioning is calculated in a different way by this extension compared to the way Cinnamon calculates it. This extension offers complete control over the distance from all pertinent sides of the popup."))]),
         "widgets": [{
             "type": "switch",
             "args": {
@@ -472,12 +453,14 @@ WINDOWS_TAB = {
         }]
     }, {
         "title": _("Windows decorations removal"),
-        "warning_message": "<b>⚫</b> " + _("This tweak settings are purposely NOT applied in real time. Click the »Apply windows decorations settings« button to save settings.") + "\n" +
-        "<b>⚫</b> " + _("Client side decorated windows and WINE applications aren't affected by this tweak.") + "\n" +
-        "<b>⚫</b> " + _("Close all windows that belongs to an application that is going to be added to the applications list and before applying the settings of this tweak.") + "\n" +
-        "<b>⚫ " +
-        _("Read this extension help for more detailed instructions, list of dependencies and known issues.") +
-        "</b>",
+        "warning_message": "\n".join(["%s %s" % (CIRCLE,
+                                                 _("This tweak settings are purposely NOT applied in real time. Click the »Apply windows decorations settings« button to save settings.")),
+                                      "%s %s" % (CIRCLE,
+                                                 _("Client side decorated windows and WINE applications aren't affected by this tweak.")),
+                                      "%s %s" % (CIRCLE,
+                                                 _("Close all windows that belongs to an application that is going to be added to the applications list and before applying the settings of this tweak.")),
+                                      "%s %s" % (CIRCLE,
+                                                 _("Read this extension help for more detailed instructions, list of dependencies and known issues."))]),
         "widgets": [{
             "type": "boolean_button",
             "args": {
@@ -766,7 +749,7 @@ class Settings(object):
         """ Get settings values from corresponding schema file """
 
         # Try to get schema from local installation directory
-        schemas_dir = "%s/schemas" % EXTENSION_DIR
+        schemas_dir = "%s/schemas" % XLET_DIR
         if os.path.isfile("%s/gschemas.compiled" % schemas_dir):
             schema_source = Gio.SettingsSchemaSource.new_from_directory(
                 schemas_dir, Gio.SettingsSchemaSource.get_default(), False)
@@ -873,6 +856,7 @@ class Widgets():
         label.set_property("halign", Gtk.Align.START)
         widget = Gtk.ComboBoxText()
         widget.set_property("halign", Gtk.Align.END)
+        widget.set_property("valign", Gtk.Align.CENTER)
 
         for command, name in sorted(values.items()):
             widget.append(command, name)
@@ -1290,8 +1274,8 @@ class CustomShadowSetter(Gtk.Button):
     def notify_custom(self, widget):
         n = Notify.Notification.new(
             _("Cinnamon Tweaks"),
-            "<b>" + _("Window shadows tweaks") + "</b>\n" +
-            _("Remember to set »Shadow presets« option to »Custom shadows«"),
+            "\n".join(["<b>" + _("Window shadows tweaks") + "</b>",
+                       _("Remember to set »Shadow presets« option to »Custom shadows«")]),
             "dialog-warning"
         )
         n.show()
@@ -2140,7 +2124,7 @@ class AboutDialog(Gtk.AboutDialog):
 
     def __init__(self):
         logo = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            os.path.join(EXTENSION_DIR, "icon.png"), 64, 64)
+            os.path.join(XLET_DIR, "icon.png"), 64, 64)
 
         Gtk.AboutDialog.__init__(self, transient_for=app.window)
         data = app.extension_meta
@@ -2199,7 +2183,7 @@ class ExtensionPrefsWindow(Gtk.ApplicationWindow):
                 self.set_default_size(800, 500)
 
         self.set_position(Gtk.WindowPosition.CENTER)
-        self.set_icon_from_file(os.path.join(EXTENSION_DIR, "icon.png"))
+        self.set_icon_from_file(os.path.join(XLET_DIR, "icon.png"))
 
         main_box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
 
@@ -2225,7 +2209,7 @@ class ExtensionPrefsWindow(Gtk.ApplicationWindow):
     def load_css(self):
         css_provider = Gtk.CssProvider()
         # css_provider.load_from_path(
-        #     os.path.join(EXTENSION_DIR, "stylesheet.css"))
+        #     os.path.join(XLET_DIR, "stylesheet.css"))
         # Loading from data so I don't have to deal with a style sheet file
         # with just a couple of lines of code.
         css_provider.load_from_data(str.encode(
@@ -2353,7 +2337,7 @@ class ExtensionPrefsWindow(Gtk.ApplicationWindow):
             aboutdialog.run()
 
     def open_help_page(self, widget):
-        subprocess.call(("xdg-open", os.path.join(EXTENSION_DIR, "HELP.html")))
+        subprocess.call(("xdg-open", os.path.join(XLET_DIR, "HELP.html")))
 
     def createCheckMenuItem(self, text, key=None, *args):
         if Settings().settings_has_key(key) is False:
@@ -2461,8 +2445,8 @@ class ExtensionPrefsApplication(Gtk.Application):
                          flags=Gio.ApplicationFlags.FLAGS_NONE,
                          **kwargs)
 
-        if os.path.exists("%s/metadata.json" % EXTENSION_DIR):
-            raw_data = open("%s/metadata.json" % EXTENSION_DIR).read()
+        if os.path.exists("%s/metadata.json" % XLET_DIR):
+            raw_data = open("%s/metadata.json" % XLET_DIR).read()
 
             try:
                 self.extension_meta = json.loads(raw_data)
