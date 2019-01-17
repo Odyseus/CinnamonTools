@@ -1,25 +1,26 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import gettext
+import gi
+import json
 import os
 import sys
-import gettext
-import json
-from inspect import getsourcefile
-from os.path import abspath
-# from pkgutil import iter_modules
 
-import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gio, Gtk, Pango, GObject
 
-# i18n
-gettext.install("cinnamon", "/usr/share/locale")
+from gi.repository import GObject
+from gi.repository import Gio
+from gi.repository import Gtk
+from gi.repository import Pango
 
-home = os.path.expanduser("~")
-scriptPath = abspath(getsourcefile(lambda: 0))
-extensionDir = os.path.realpath(os.path.dirname(scriptPath))
-extensionUUID = str(os.path.basename(extensionDir))
+HOME = os.path.expanduser("~")
+
+gettext.bindtextdomain("{{UUID}}", HOME + "/.local/share/locale")
+gettext.textdomain("{{UUID}}")
+_ = gettext.gettext
+
+XLET_DIR = os.path.dirname(os.path.abspath(__file__))
 
 langList = {
     "?": "Unknown",
@@ -211,38 +212,6 @@ HISTORY_UI = '''
 </interface>
 '''
 
-translations = {}
-
-
-def _(string):
-    # check for a translation for this xlet
-    if extensionUUID not in translations:
-        try:
-            translations[extensionUUID] = gettext.translation(extensionUUID,
-                                                              home + "/.local/share/locale").gettext
-        except IOError:
-            try:
-                translations[extensionUUID] = gettext.translation(extensionUUID,
-                                                                  "/usr/share/locale").gettext
-            except IOError:
-                translations[extensionUUID] = None
-
-    # do not translate whitespaces
-    if not string.strip():
-        return string
-
-    if translations[extensionUUID]:
-        result = translations[extensionUUID](string)
-
-        try:
-            result = result.decode("utf-8")
-        except Exception:
-            result = result
-
-        if result != string:
-            return result
-    return gettext.gettext(string)
-
 
 class HistoryWindow(Gtk.ApplicationWindow):
 
@@ -268,7 +237,7 @@ class HistoryApplication(Gtk.Application):
             self.window = HistoryWindow(application=self, title="")
             self.window.set_position(Gtk.WindowPosition.CENTER)
             self.window.set_size_request(width=-1, height=300)
-            self.window.set_icon_from_file(os.path.join(extensionDir, "icon.png"))
+            self.window.set_icon_from_file(os.path.join(XLET_DIR, "icon.png"))
             self.window.set_title(_("Multi Translator history"))
             self.window.set_default_size(int(self.sizes[0]), int(self.sizes[1]))
             self.window.connect("destroy", self.on_quit)
@@ -281,7 +250,7 @@ class HistoryApplication(Gtk.Application):
         Gtk.Application.do_startup(self)
 
         self.filepath = os.path.join(
-            home, ".cinnamon", "configs", "{{UUID}}-History", "translation_history.json")
+            HOME, ".cinnamon", "configs", "{{UUID}}-History", "translation_history.json")
         self.file_obj = Gio.File.new_for_path(self.filepath)
         self.file_monitor = self.file_obj.monitor_file(Gio.FileMonitorFlags.SEND_MOVED, None)
         self.file_monitor.connect("changed", self.monitor_triggered)
@@ -341,7 +310,7 @@ class HistoryApplication(Gtk.Application):
         # reload_button.set_tooltip_text(_("Reload translation history"))
         # reload_button.connect("clicked", self.populate)
         # img_path = os.path.join(
-        #     extensionDir, "icons", "popup-translator-document-open-recent-symbolic.svg")
+        #     XLET_DIR, "icons", "popup-translator-document-open-recent-symbolic.svg")
         # img_file = Gio.File.new_for_path(img_path)
         # img_file_icon = Gio.FileIcon.new(img_file)
         # img = Gtk.Image.new_from_gicon(img_file_icon, Gtk.IconSize.BUTTON)
@@ -358,7 +327,7 @@ class HistoryApplication(Gtk.Application):
 
         model = Gtk.TreeStore(str, str, str, str)
         path = os.path.join(
-            home, ".cinnamon", "configs", "{{UUID}}-History", "translation_history.json")
+            HOME, ".cinnamon", "configs", "{{UUID}}-History", "translation_history.json")
 
         if (os.path.exists(path)):
             data = open(path, 'r').read()

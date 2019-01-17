@@ -1,21 +1,26 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import cgi
+import gettext
+import gi
+import json
 import os
 import subprocess
-import gettext
-import json
-import cgi
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gio, Gtk, GObject, GLib, GdkPixbuf
 
-gettext.install("cinnamon", "/usr/share/locale")
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import GLib
+from gi.repository import GObject
+from gi.repository import GdkPixbuf
+from gi.repository import Gio
+from gi.repository import Gtk
+
+gettext.bindtextdomain("{{UUID}}", os.path.expanduser("~") + "/.local/share/locale")
+gettext.textdomain("{{UUID}}")
+_ = gettext.gettext
 
 CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION")
-HOME = os.path.expanduser("~")
-EXTENSION_DIR = os.path.dirname(os.path.abspath(__file__))
-EXTENSION_UUID = str(os.path.basename(EXTENSION_DIR))
 # NOTE TO SELF
 # - Application identifiers must contain only the ASCII characters "A-Z[0-9]_-."
 #   and must not begin with a digit.
@@ -29,41 +34,8 @@ EXTENSION_UUID = str(os.path.basename(EXTENSION_DIR))
 APPLICATION_ID = "org.cinnamon.extensions.odyseus-multi-translator-extension"
 SCHEMA_NAME = "org.cinnamon.extensions.{{UUID}}"
 SCHEMA_PATH = "/org/cinnamon/extensions/{{UUID}}/"
-TRANSLATIONS = {}
-
-
-def _(string):
-    # check for a translation for this xlet
-    if EXTENSION_UUID not in TRANSLATIONS:
-        try:
-            TRANSLATIONS[EXTENSION_UUID] = gettext.translation(
-                EXTENSION_UUID, HOME + "/.local/share/locale").gettext
-        except IOError:
-            try:
-                TRANSLATIONS[EXTENSION_UUID] = gettext.translation(
-                    EXTENSION_UUID, "/usr/share/locale").gettext
-            except IOError:
-                TRANSLATIONS[EXTENSION_UUID] = None
-
-    # do not translate white spaces
-    if not string.strip():
-        return string
-
-    if TRANSLATIONS[EXTENSION_UUID]:
-        result = TRANSLATIONS[EXTENSION_UUID](string)
-
-        try:
-            result = result.decode("utf-8")
-        except Exception:
-            result = result
-
-        if result != string:
-            return result
-
-    return gettext.gettext(string)
-
-
-EXTENSION_NAME = _("Multi Translator")
+XLET_NAME = _("Multi Translator")
+XLET_DIR = os.path.dirname(os.path.abspath(__file__))
 
 LANGUAGES_LIST = {
     "auto": _("Detect language"),
@@ -647,7 +619,7 @@ class Settings(object):
         ''' Get settings values from corresponding schema file '''
 
         # Try to get schema from local installation directory
-        schemas_dir = "%s/schemas" % EXTENSION_DIR
+        schemas_dir = "%s/schemas" % XLET_DIR
         if os.path.isfile("%s/gschemas.compiled" % schemas_dir):
             schema_source = Gio.SettingsSchemaSource.new_from_directory(
                 schemas_dir, Gio.SettingsSchemaSource.get_default(), False)
@@ -723,6 +695,7 @@ class Widgets():
         label.set_property("halign", Gtk.Align.START)
         widget = Gtk.ComboBoxText()
         widget.set_property("halign", Gtk.Align.END)
+        widget.set_property("valign", Gtk.Align.CENTER)
 
         for command, name in sorted(values.items()):
             widget.append(command, name)
@@ -1237,7 +1210,7 @@ class AboutDialog(Gtk.AboutDialog):
 
     def __init__(self):
         logo = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            os.path.join(EXTENSION_DIR, "icon.png"), 64, 64)
+            os.path.join(XLET_DIR, "icon.png"), 64, 64)
 
         Gtk.AboutDialog.__init__(self, transient_for=app.window)
         data = app.extension_meta
@@ -1287,7 +1260,7 @@ class ExtensionPrefsWindow(Gtk.ApplicationWindow):
 class ExtensionPrefsApplication(Gtk.Application):
 
     def __init__(self, *args, **kwargs):
-        GLib.set_application_name(EXTENSION_NAME)
+        GLib.set_application_name(XLET_NAME)
         super().__init__(*args,
                          application_id=APPLICATION_ID,
                          flags=Gio.ApplicationFlags.FLAGS_NONE,
@@ -1297,8 +1270,8 @@ class ExtensionPrefsApplication(Gtk.Application):
         self.application.connect("activate", self.do_activate)
         self.application.connect("startup", self.do_startup)
 
-        if os.path.exists("%s/metadata.json" % EXTENSION_DIR):
-            raw_data = open("%s/metadata.json" % EXTENSION_DIR).read()
+        if os.path.exists("%s/metadata.json" % XLET_DIR):
+            raw_data = open("%s/metadata.json" % XLET_DIR).read()
 
             try:
                 self.extension_meta = json.loads(raw_data)
@@ -1330,7 +1303,7 @@ class ExtensionPrefsApplication(Gtk.Application):
         self.window = ExtensionPrefsWindow(
             # TO TRANSLATORS: Full sentence:
             # ExtensionName extension preferences
-            application=self, title=_("%s extension preferences") % EXTENSION_NAME)
+            application=self, title=_("%s extension preferences") % XLET_NAME)
 
         if (Settings().get_settings().get_boolean("window-remember-size")):
             width = Settings().get_settings().get_int("window-width")
@@ -1341,7 +1314,7 @@ class ExtensionPrefsApplication(Gtk.Application):
 
         self.window.set_position(Gtk.WindowPosition.CENTER)
         self.window.set_size_request(width=-1, height=-1)
-        self.window.set_icon_from_file(os.path.join(EXTENSION_DIR, "icon.png"))
+        self.window.set_icon_from_file(os.path.join(XLET_DIR, "icon.png"))
         self.window.connect("destroy", self.on_quit)
         self.window.connect("delete_event", self.on_delete_event)
 
@@ -1421,7 +1394,7 @@ class ExtensionPrefsApplication(Gtk.Application):
             aboutdialog.run()
 
     def open_help_page(self, widget):
-        subprocess.call(("xdg-open", os.path.join(EXTENSION_DIR, "HELP.html")))
+        subprocess.call(("xdg-open", os.path.join(XLET_DIR, "HELP.html")))
 
     def createCheckMenuItem(self, text, key=None, *args):
         if Settings().settings_has_key(key) is False:
@@ -1453,11 +1426,11 @@ class ExtensionPrefsApplication(Gtk.Application):
 
         # TO TRANSLATORS: Full sentence:
         # Warning: Trying to reset all ExtensionName settings!!!
-        dialog.set_title(_("Warning: Trying to reset all %s settings!!!") % EXTENSION_NAME)
+        dialog.set_title(_("Warning: Trying to reset all %s settings!!!") % XLET_NAME)
 
         # TO TRANSLATORS: Full sentence:
         # Reset all ExtensionName settings to default?
-        esc = cgi.escape(_("Reset all %s settings to default?") % EXTENSION_NAME)
+        esc = cgi.escape(_("Reset all %s settings to default?") % XLET_NAME)
         dialog.set_markup(esc)
         dialog.show_all()
         response = dialog.run()
