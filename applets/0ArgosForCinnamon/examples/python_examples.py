@@ -4,40 +4,9 @@
 import gettext
 import os
 
-APPLET_UUID = "{{UUID}}"
-HOME = os.path.expanduser("~")
-TRANSLATIONS = {}
-
-
-def _(string):
-    # check for a translation for this xlet
-    if APPLET_UUID not in TRANSLATIONS:
-        try:
-            TRANSLATIONS[APPLET_UUID] = gettext.translation(
-                APPLET_UUID, HOME + "/.local/share/locale").gettext
-        except IOError:
-            try:
-                TRANSLATIONS[APPLET_UUID] = gettext.translation(
-                    APPLET_UUID, "/usr/share/locale").gettext
-            except IOError:
-                TRANSLATIONS[APPLET_UUID] = None
-
-    # do not translate white spaces
-    if not string.strip():
-        return string
-
-    if TRANSLATIONS[APPLET_UUID]:
-        result = TRANSLATIONS[APPLET_UUID](string)
-
-        try:
-            result = result.decode("utf-8")
-        except Exception:
-            result = result
-
-        if result != string:
-            return result
-
-    return gettext.gettext(string)
+gettext.bindtextdomain("{{UUID}}", os.path.expanduser("~") + "/.local/share/locale")
+gettext.textdomain("{{UUID}}")
+_ = gettext.gettext
 
 
 print("""
