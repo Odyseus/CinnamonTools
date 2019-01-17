@@ -16,47 +16,13 @@ from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import Pango
 
-gettext.install("cinnamon", "/usr/share/locale")
-
 HOME = os.path.expanduser("~")
-APPLET_DIR = os.path.dirname(os.path.abspath(__file__))
-APPLET_UUID = str(os.path.basename(APPLET_DIR))
-APPLET_CONFIG_DIR = os.path.join(HOME, ".cinnamon", "configs", APPLET_UUID)
+
+gettext.bindtextdomain("{{UUID}}", HOME + "/.local/share/locale")
+gettext.textdomain("{{UUID}}")
+_ = gettext.gettext
+
 APPLICATION_ID = "org.Cinnamon.Applets.CinnamonMenu.CustomLaunchersManager"
-
-TRANSLATIONS = {}
-
-
-def _(string):
-    # check for a translation for this xlet
-    if APPLET_UUID not in TRANSLATIONS:
-        try:
-            TRANSLATIONS[APPLET_UUID] = gettext.translation(
-                APPLET_UUID, HOME + "/.local/share/locale").gettext
-        except IOError:
-            try:
-                TRANSLATIONS[APPLET_UUID] = gettext.translation(
-                    APPLET_UUID, "/usr/share/locale").gettext
-            except IOError:
-                TRANSLATIONS[APPLET_UUID] = None
-
-    # do not translate white spaces
-    if not string.strip():
-        return string
-
-    if TRANSLATIONS[APPLET_UUID]:
-        result = TRANSLATIONS[APPLET_UUID](string)
-
-        try:
-            result = result.decode("utf-8")
-        except Exception:
-            result = result
-
-        if result != string:
-            return result
-
-    return gettext.gettext(string)
-
 
 COLUMNS = [{
     "id": "title",
@@ -80,7 +46,7 @@ COLUMNS = [{
 class BaseGrid(Gtk.Grid):
 
     def __init__(self, tooltip="", orientation=Gtk.Orientation.VERTICAL):
-        Gtk.Grid.__init__(self)
+        super().__init__()
         self.set_orientation(orientation)
         self.set_tooltip_text(tooltip)
 
@@ -92,7 +58,7 @@ class BaseGrid(Gtk.Grid):
 class SectionContainer(Gtk.Frame):
 
     def __init__(self, title):
-        Gtk.Frame.__init__(self)
+        super().__init__()
         self.set_shadow_type(Gtk.ShadowType.OUT)
 
         self.box = BaseGrid()
@@ -114,7 +80,7 @@ class SectionContainer(Gtk.Frame):
 
 class SettingsWidget(BaseGrid):
     def __init__(self):
-        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
+        super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
 
     def add_to_size_group(self, group):
         group.add_widget(self.content_widget)
@@ -136,7 +102,8 @@ class SettingsWidget(BaseGrid):
 class SettingsLabel(Gtk.Label):
 
     def __init__(self, text=None, markup=None):
-        Gtk.Label.__init__(self)
+        super().__init__()
+
         if text:
             self.set_label(text)
 
@@ -157,7 +124,7 @@ class IconChooser(SettingsWidget):
     bind_dir = Gio.SettingsBindFlags.DEFAULT
 
     def __init__(self, label):
-        super(IconChooser, self).__init__()
+        super().__init__()
 
         valid, self.width, self.height = Gtk.icon_size_lookup(Gtk.IconSize.BUTTON)
 
@@ -237,7 +204,7 @@ class Entry(SettingsWidget):
     bind_dir = Gio.SettingsBindFlags.DEFAULT
 
     def __init__(self, label):
-        super(Entry, self).__init__()
+        super().__init__()
         self.set_spacing(5, 5)
 
         self.label = SettingsLabel(label)
@@ -270,7 +237,7 @@ def list_edit_factory(options):
 
     class Widget(widget_type):
         def __init__(self, **kwargs):
-            super(Widget, self).__init__(**kwargs)
+            super().__init__(**kwargs)
 
             if self.bind_dir is None:
                 self.connect_widget_handlers()
@@ -319,7 +286,7 @@ class List(SettingsWidget):
     bind_dir = None
 
     def __init__(self, label=None, columns=None, height=200):
-        super(List, self).__init__()
+        super().__init__()
         self.columns = columns
         self.set_hexpand(True)
         self.set_vexpand(True)
@@ -555,7 +522,7 @@ class List(SettingsWidget):
 
 class JSONSettingsHandler(object):
     def __init__(self, filepath):
-        super(JSONSettingsHandler, self).__init__()
+        super().__init__()
 
         self.resume_timeout = None
 
@@ -663,7 +630,7 @@ class JSONSettingsList(List, JSONSettingsBackend):
         kwargs = {
             "columns": COLUMNS
         }
-        super(JSONSettingsList, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.attach_backend()
 
 
@@ -680,7 +647,7 @@ class CustomLaunchersManagerApplication(Gtk.Application):
 
     def __init__(self, *args, **kwargs):
         self.type = "applet"
-        self.uuid = APPLET_UUID
+        self.uuid = "{{UUID}}"
         self.selected_instance = None
         self.gsettings = Gio.Settings.new("org.cinnamon")
         self.load_xlet_data()

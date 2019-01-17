@@ -2346,8 +2346,14 @@ CinnamonMenuForkByOdyseus.prototype = {
                          * I don't think that it is need after using the
                          * "word boundary match", but it doesn't hurt.
                          */
-                        haystack = aApp.get_keywords() ?
-                            aApp.get_keywords().match(/\b(\w+)/g).filter(Boolean) :
+                        let keywords = aApp.get_keywords();
+                        haystack = keywords ?
+                            // Mark for deletion on EOL. Cinnamon 4.2.x+
+                            // Remove Array.isArray check and assume get_keywords
+                            // returns an array.
+                            Array.isArray(keywords) ?
+                            keywords.filter(Boolean) :
+                            keywords.match(/\b(\w+)/g).filter(Boolean) :
                             [];
                         break;
                     case "generic_name":
