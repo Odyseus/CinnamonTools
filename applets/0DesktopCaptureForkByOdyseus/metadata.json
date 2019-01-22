@@ -5,7 +5,6 @@
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
     "description": "Screenshot and screencasting tools.",
     "uuid": "{{UUID}}",
-    "version": "2.35",
     "name": "Desktop Capture (Fork By Odyseus)",
     "cinnamon-version": [
         "3.0",

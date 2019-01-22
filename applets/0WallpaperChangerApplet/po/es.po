@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WallpaperChangerApplet 1.03\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-01-17 15:51-0300\n"
+"POT-Creation-Date: 2019-01-21 21:56-0300\n"
 "PO-Revision-Date: 2018-08-25 04:22-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 settings.py:995
+#: ../../__app__/python_modules/localized_help_creator.py:328 settings.py:994
 msgid "Help"
 msgstr "Ayuda"
 
@@ -70,295 +70,295 @@ msgstr "Si este xlet se instaló manualmente y no a través de Configuración de
 
 #. TO TRANSLATORS: This is the applet name.
 #. metadata.json->name
-#: settings.py:31
+#: settings.py:32
 msgid "Wallpaper Changer"
 msgstr "Cambiador de Fondos de Pantalla"
 
-#: settings.py:142
+#: settings.py:141
 msgid "Choose an Icon"
 msgstr "Elegir un ícono"
 
 #. TO TRANSLATORS: Could be left blank.
-#: settings.py:145 settings.py:787 settings.py:1072 settings.py:1078
+#: settings.py:144 settings.py:786 settings.py:1071 settings.py:1077
 msgid "_Cancel"
 msgstr "_Cancelar"
 
 #. TO TRANSLATORS: Could be left blank.
-#: settings.py:146 settings.py:1080
+#: settings.py:145 settings.py:1079
 msgid "_Open"
 msgstr "_Abrir"
 
-#: settings.py:149
+#: settings.py:148
 msgid "Image files"
 msgstr "Archivos de imagen"
 
-#: settings.py:246
+#: settings.py:245
 msgid "Warnings related to this specific section"
 msgstr "Advertencias relacionadas con esta sección específica"
 
 #. Daemon settings
-#: settings.py:334
+#: settings.py:333
 msgid "Daemon"
 msgstr "Demonio"
 
-#: settings.py:338
+#: settings.py:337
 msgid "This is the current profile that the daemon will load."
 msgstr "Este es el perfil actual que el demonio cargará."
 
-#: settings.py:339
+#: settings.py:338
 msgid "Current Profile"
 msgstr "Perfil Actual"
 
-#: settings.py:353 utils.js:733
+#: settings.py:352 utils.js:733
 msgid "Toggle and display the daemon status."
 msgstr "Alternar y mostrar el estado del demonio."
 
-#: settings.py:354 utils.js:725
+#: settings.py:353 utils.js:725
 msgid "Daemon Status"
 msgstr "Estado del Demonio"
 
-#: settings.py:381
+#: settings.py:380
 msgid "Autostart Daemon"
 msgstr "Auto Iniciar Demonio"
 
-#: settings.py:382 applet.js:116
+#: settings.py:381 applet.js:116
 msgid "When enabled, the daemon will be automatically started when the applet is loaded. If it is already running or this is disabled, no action will be taken."
 msgstr "Con esta opción activada, el demonio se iniciará automáticamente cuando se cargue el applet.  Si el demonio ya se está ejecutando o si esta opción está deshabilitada, no se realizará ninguna acción."
 
-#: settings.py:386
+#: settings.py:385
 msgid "Wallpaper Timer Interval (seconds)"
 msgstr "Intervalo del Temporizador (segundos)"
 
-#: settings.py:395 settings.py:521
+#: settings.py:394 settings.py:520
 msgid "Save"
 msgstr "Guardar"
 
-#: settings.py:406
+#: settings.py:405
 msgid "Manage keyboard shortcuts"
 msgstr "Ajustes de atajos de teclado."
 
-#: settings.py:420 utils.js:627
+#: settings.py:419 utils.js:627
 msgid "Next Wallpaper"
 msgstr "Fondo de Pantalla Siguiente"
 
-#: settings.py:424 utils.js:631
+#: settings.py:423 utils.js:631
 msgid "Previous Wallpaper"
 msgstr "Fondo de pantalla Previo"
 
-#: settings.py:428
+#: settings.py:427
 msgid "Open/Close Menu"
 msgstr "Abrir/Cerrar Menú"
 
-#: settings.py:450
+#: settings.py:449
 msgid "Shortcut action"
 msgstr "Acción del acceso directo"
 
-#: settings.py:466
+#: settings.py:465
 msgid "Shortcut"
 msgstr "Acceso directo"
 
-#: settings.py:477
+#: settings.py:476
 msgid "Other"
 msgstr "Otros"
 
 #. Applet settings
-#: settings.py:483 settings.py:553
+#: settings.py:482 settings.py:552
 msgid "Applet"
 msgstr "Applet"
 
-#: settings.py:488
+#: settings.py:487
 msgid "Custom icon"
 msgstr "Ícono personalizado"
 
-#: settings.py:489
+#: settings.py:488
 msgid "Select a custom icon for the applet."
 msgstr "Establecer un ícono personalizado para el applet."
 
-#: settings.py:493
+#: settings.py:492
 msgid "Enter custom text to show in the panel."
 msgstr "Introduzca un texto personalizado para mostrar en el panel."
 
-#: settings.py:496
+#: settings.py:495
 msgid "Custom label"
 msgstr "Etiqueta personalizada"
 
-#: settings.py:512
+#: settings.py:511
 msgid "Wallpaper Preview Width"
 msgstr "Ancho de la Vista Previa del Fondo de Pantalla"
 
-#: settings.py:532
+#: settings.py:531
 msgid "Invert Menu Items Order"
 msgstr "Invertir Orden de los Ítems del Menú"
 
-#: settings.py:537
+#: settings.py:536
 msgid "Remember Profiles State"
 msgstr "Recordar Estado del Perfil"
 
-#: settings.py:538 applet.js:131
+#: settings.py:537 applet.js:131
 msgid "When enabled, the daemon will remember its current and next wallpaper for the current profile when the profile is changed. This means returning back to the profile will restore the previous background plus the next in queue."
 msgstr "Con esta opción activada, el demonio recordará su fondo de pantalla actual y siguiente para el perfil actual cuando se cambia el perfil.  Esto significa que volver al perfil restablecerá el fondo anterior más el siguiente en la cola."
 
-#: settings.py:542
+#: settings.py:541
 msgid "Show Notifications"
 msgstr "Mostrar Notificaciones"
 
-#: settings.py:543 applet.js:126
+#: settings.py:542 applet.js:126
 msgid "Display a notification each time an event happens with wallpaper changer. This does not stop the applet from reporting errors."
 msgstr "Mostrar una notificación cada vez que ocurre un evento con el cambiador de fondo de pantalla.  Esto no impide que el applet informe sobre errores."
 
-#: settings.py:547
+#: settings.py:546
 msgid "Enable Logging"
 msgstr "Habilitar el registro"
 
-#: settings.py:548
+#: settings.py:547
 msgid "It enables the ability to log the output of several functions used by the applet."
 msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por el applet."
 
-#: settings.py:556
+#: settings.py:555
 msgid "Manage profiles"
 msgstr "Administrar perfiles"
 
-#: settings.py:566
+#: settings.py:565
 msgid "Profile"
 msgstr "Perfil"
 
-#: settings.py:576 settings.py:777
+#: settings.py:575 settings.py:776
 msgid "Create a new profile"
 msgstr "Crear un perfil nuevo"
 
-#: settings.py:584 settings.py:750
+#: settings.py:583 settings.py:749
 msgid "Remove profile"
 msgstr "Eliminar perfil"
 
-#: settings.py:624
+#: settings.py:623
 msgid "Path"
 msgstr "Ruta"
 
-#: settings.py:633
+#: settings.py:632
 msgid "Sub Folders"
 msgstr "Subcarpetas"
 
-#: settings.py:661 settings.py:687
+#: settings.py:660 settings.py:686
 msgid "Add Image"
 msgstr "Agregar Imagen"
 
-#: settings.py:664 settings.py:694
+#: settings.py:663 settings.py:693
 msgid "Add Folder"
 msgstr "Agregar Carpeta"
 
-#: settings.py:680
+#: settings.py:679
 msgid "Remove"
 msgstr "Eliminar"
 
-#: settings.py:701
+#: settings.py:700
 msgid "Profiles"
 msgstr "Perfiles"
 
-#: settings.py:711
+#: settings.py:710
 msgid "Click to set a new hotkey."
 msgstr "Haga clic para establecer una nueva tecla de acceso directo."
 
-#: settings.py:720
+#: settings.py:719
 msgid "Whether or not to include images from sub-folders."
 msgstr "Incluir o no imágenes en subcarpetas."
 
-#: settings.py:730 settings.py:740
+#: settings.py:729 settings.py:739
 msgid "Failed to update keybinding"
 msgstr "Error al actualizar la vinculación de teclas"
 
-#: settings.py:753
+#: settings.py:752
 #, python-format
 msgid "Are you sure you want to delete the profile »%s«?"
 msgstr "¿Está seguro de que quiere eliminar el perfil »%s«?"
 
-#: settings.py:756
+#: settings.py:755
 msgid "Yes"
 msgstr "Si"
 
-#: settings.py:757
+#: settings.py:756
 msgid "No"
 msgstr "No"
 
-#: settings.py:780
+#: settings.py:779
 msgid "Profile Name"
 msgstr "Nombre del Perfil"
 
-#: settings.py:786
+#: settings.py:785
 msgid "OK"
 msgstr "Aceptar"
 
-#: settings.py:899
+#: settings.py:898
 msgid "Contributors/Mentions:"
 msgstr "Colaboradores/Menciones:"
 
 #. TO TRANSLATORS:
 #. Here goes the name/s of the author/s of the translations.
 #. Only e-mail addresses and links to GitHub accounts are allowed. NOTHING MORE.
-#: settings.py:907
+#: settings.py:906
 msgid "translator-credits"
 msgstr "Odyseus https://gitlab.com/Odyseus"
 
-#: settings.py:977
+#: settings.py:976
 msgid "Reset settings to defaults"
 msgstr "Restablecer preferencias a los valores predeterminados"
 
-#: settings.py:979
+#: settings.py:978
 msgid "Import settings from a file"
 msgstr "Importar preferencias desde un archivo"
 
-#: settings.py:981
+#: settings.py:980
 msgid "Export settings to a file"
 msgstr "Exportar preferencias a un archivo"
 
-#: settings.py:986
+#: settings.py:985
 msgid "Remember window size"
 msgstr "Recordar tamaño de ventana"
 
-#: settings.py:991
+#: settings.py:990
 msgid "Restart Cinnamon"
 msgstr "Reiniciar Cinnamon"
 
-#: settings.py:997
+#: settings.py:996
 msgid "About"
 msgstr "Acerca de"
 
-#: settings.py:1004
+#: settings.py:1003
 msgid "Manage settings"
 msgstr "Administrar preferencias"
 
 #. TO TRANSLATORS: Full sentence:
 #. Warning: Trying to reset all AppletName settings!!!
-#: settings.py:1047
+#: settings.py:1046
 #, python-format
 msgid "Warning: Trying to reset all %s settings!!!"
 msgstr "Advertencia: ¡Intentando restablecer todos los ajustes de %s!"
 
 #. TO TRANSLATORS: Full sentence:
 #. Reset all AppletName settings to default?
-#: settings.py:1051
+#: settings.py:1050
 #, python-format
 msgid "Reset all %s settings to default?"
 msgstr "¿Restablecer todas las configuraciones de %s por defecto?"
 
-#: settings.py:1070
+#: settings.py:1069
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: settings.py:1073
+#: settings.py:1072
 msgid "_Save"
 msgstr "_Guardar"
 
-#: settings.py:1076
+#: settings.py:1075
 msgid "Select a file to import"
 msgstr "Seleccionar un archivo desde el cual importar"
 
-#: settings.py:1092
+#: settings.py:1091
 msgid "DCONF files"
 msgstr "Archivos DCONF"
 
 #. TO TRANSLATORS: Full sentence:
 #. AppletName applet preferences
-#: settings.py:1161
+#: settings.py:1160
 #, python-format
 msgid "%s applet preferences"
 msgstr "Preferencias del applet %s"

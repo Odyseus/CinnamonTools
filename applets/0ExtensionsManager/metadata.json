@@ -23,6 +23,5 @@
     "max-instances": -1,
     "uuid": "{{UUID}}",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "version": "1.10",
     "description": "Allows enabling/disabling extensions (and other tasks) from a menu."
 }

@@ -4,6 +4,28 @@
 
 ***
 
+- **Date:** Mon, 21 Jan 2019 21:50:38 -0300
+- **Commit:** [ebb12e6](https://gitlab.com/Odyseus/CinnamonTools/commit/ebb12e6)
+- **Author:** Odyseus
+
+```
+- Mayor performance improvements based on changes from upstream. Highlights:
+    - One context menu to rule them all.
+    - A generic and more simple button class not based on PopupMenu.PopupBaseMenuItem.
+    - Function calls instead of signals for button enter/leave events.
+- Added back "All Applications" category. There is no reason not to have it now, since the code is a lot more simple than it was and having this category doesn't add any complexity.
+- Added option to display a separator below "Recently Used" category
+- Custom launchers GUI improvements:
+    - Added ability to enable/disable launchers instead of being forced to delete them and enter all data back.
+    - Added icon preview to the list instead of displaying the icon names.
+    - Added confirmation dialog when deleting items. It can be bypassed by holding Ctrl key.
+    - Added keyboard shortcuts to be able to add/remove/move items in the list of launchers.
+    - Added ability to export/import the list of launchers.
+
+```
+
+***
+
 - **Date:** Thu, 17 Jan 2019 14:14:12 -0300
 - **Commit:** [9713b1f](https://gitlab.com/Odyseus/CinnamonTools/commit/9713b1f)
 - **Author:** Odyseus

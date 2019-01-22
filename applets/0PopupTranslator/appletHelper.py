@@ -4,7 +4,7 @@
 try:
     import requests
 except ImportError:
-    print('ImportError: requests')
+    print("ImportError: requests")
 
 import gettext
 import gi
@@ -12,7 +12,7 @@ import json
 import os
 import sys
 
-gi.require_version('Gtk', '3.0')
+gi.require_version("Gtk", "3.0")
 
 from gi.repository import GObject
 from gi.repository import Gio
@@ -307,9 +307,9 @@ class HistoryApplication(Gtk.Application):
         column1.set_resizable(True)
 
         cr2 = Gtk.CellRendererText()
-        cr2.set_property('wrap-mode', Pango.WrapMode.WORD_CHAR)
-        cr2.set_property('wrap-width', int(self.sizes[2]))
-        cr2.set_property('editable', True)
+        cr2.set_property("wrap-mode", Pango.WrapMode.WORD_CHAR)
+        cr2.set_property("wrap-width", int(self.sizes[2]))
+        cr2.set_property("editable", True)
         column2 = Gtk.TreeViewColumn(_("Source text"), cr2, text=0)
         column2.set_sort_column_id(0)
         column2.set_resizable(True)
@@ -320,9 +320,9 @@ class HistoryApplication(Gtk.Application):
         column3.set_resizable(True)
 
         cr4 = Gtk.CellRendererText()
-        cr4.set_property('wrap-mode', Pango.WrapMode.WORD_CHAR)
-        cr4.set_property('wrap-width', int(self.sizes[2]))
-        cr4.set_property('editable', True)
+        cr4.set_property("wrap-mode", Pango.WrapMode.WORD_CHAR)
+        cr4.set_property("wrap-width", int(self.sizes[2]))
+        cr4.set_property("editable", True)
         column4 = Gtk.TreeViewColumn(_("Target text"), cr4, text=3)
         column4.set_sort_column_id(3)
         column4.set_resizable(True)
@@ -370,7 +370,7 @@ class HistoryApplication(Gtk.Application):
             HOME, ".cinnamon", "configs", "{{UUID}}History", "translation_history.json")
 
         if (os.path.exists(path)):
-            data = open(path, 'r').read()
+            data = open(path, "r").read()
             transList = json.loads(data)
 
             for lang in transList:

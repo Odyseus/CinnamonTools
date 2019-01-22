@@ -25,7 +25,6 @@
         "5.8",
         "6.0"
     ],
-    "version": "1.07",
     "schema-file": "schemas/org.cinnamon.extensions.{{UUID}}.gschema.xml",
     "name": "Multi Translator"
 }

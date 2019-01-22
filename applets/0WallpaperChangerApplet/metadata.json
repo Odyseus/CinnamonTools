@@ -24,7 +24,6 @@
     "description": "Cinnamon wallpaper slideshow applet with multiple profiles support.",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
     "website": "{{REPO_URL}}",
-    "version": "1.03",
     "schema-file": "schemas/org.cinnamon.applets.{{UUID}}.gschema.xml",
     "name": "Wallpaper Changer"
 }

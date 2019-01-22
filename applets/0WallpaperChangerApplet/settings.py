@@ -9,6 +9,7 @@ import os.path
 import subprocess
 
 gi.require_version("Gtk", "3.0")
+gi.require_version("GdkPixbuf", "2.0")
 
 from gi.repository import GLib
 from gi.repository import GObject
@@ -100,8 +101,6 @@ class SettingsLabel(Gtk.Label):
 
 
 class IconChooser(BaseGrid):
-
-    ''' IconChooser widget '''
 
     def __init__(self, key, label, tooltip=""):
         BaseGrid.__init__(self, tooltip)

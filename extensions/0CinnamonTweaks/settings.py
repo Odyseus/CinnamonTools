@@ -12,6 +12,7 @@ import subprocess
 gi.require_version("Gtk", "3.0")
 gi.require_version("Notify", "0.7")
 gi.require_version("Gdk", "3.0")
+gi.require_version("GdkPixbuf", "2.0")
 
 from gi.repository import GLib
 from gi.repository import GObject
@@ -1289,7 +1290,7 @@ class CustomShadowSetter(Gtk.Button):
         dialog.set_title(_("Warning: Trying to reset custom shadows values!!!"))
 
         esc = cgi.escape(
-            _("Are  you sure that you want to reset the shadows values of the current view to their defaults?"))
+            _("Are you sure that you want to reset the shadows values of the current view to their defaults?"))
         dialog.set_markup(esc)
         dialog.show_all()
         response = dialog.run()

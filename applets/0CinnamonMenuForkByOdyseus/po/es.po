@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-01-17 15:51-0300\n"
+"POT-Creation-Date: 2019-01-21 22:10-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -14,12 +14,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
+#: ../../__app__/python_modules/localized_help_creator.py:250
+#: ../../__app__/python_modules/localized_help_creator.py:331
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:301
+#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:307
 msgid "Help"
 msgstr "Ayuda"
 
@@ -64,84 +65,123 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: appletHelper.py:29 appletHelper.py:33 appletHelper.py:37
-msgid "Mandatory"
-msgstr "Obligatorio"
-
-#: appletHelper.py:29
-msgid "Title"
-msgstr "Título"
-
 #: appletHelper.py:33
-msgid "Command"
-msgstr "Comando"
+msgid "Enabled"
+msgstr "Habilitado"
 
 #. settings-schema.json->pref_custom_icon_for_applet->description
 #: appletHelper.py:37
 msgid "Icon"
 msgstr "Ícono:"
 
-#: appletHelper.py:41 z_create_localized_help.py:31
+#: appletHelper.py:41
+msgid "Title"
+msgstr "Título"
+
+#: appletHelper.py:45
+msgid "Command"
+msgstr "Comando"
+
+#: appletHelper.py:49 z_create_localized_help.py:31
 msgid "Description"
 msgstr "Descripción"
 
-#: appletHelper.py:41
-msgid "Optional"
-msgstr "Opcional"
-
-#: appletHelper.py:163
+#: appletHelper.py:171
 msgid "Choose an Icon"
 msgstr "Elegir un ícono"
 
-#: appletHelper.py:166 appletHelper.py:438
+#. TO TRANSLATORS: Could be left blank.
+#: appletHelper.py:174 appletHelper.py:340 appletHelper.py:346
+#: appletHelper.py:682
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: appletHelper.py:167
+#. TO TRANSLATORS: Could be left blank.
+#: appletHelper.py:175 appletHelper.py:348
 msgid "_Open"
 msgstr "_Abrir"
 
-#: appletHelper.py:170
+#: appletHelper.py:178
 msgid "Image files"
 msgstr "Archivos de imagen"
 
-#: appletHelper.py:335
-msgid "Add new launcher"
-msgstr "Agregar un nuevo lanzador"
+#: appletHelper.py:338
+msgid "Select or enter file to export to"
+msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: appletHelper.py:339
-msgid "Remove selected launcher"
-msgstr "Eliminar lanzador seleccionado"
-
-#: appletHelper.py:344
-msgid "Edit selected launcher"
-msgstr "Editar lanzador seleccionado"
-
-#: appletHelper.py:349
-msgid "Move selected launcher up"
-msgstr "Mover lanzador seleccionado hacia arriba"
-
-#: appletHelper.py:354
-msgid "Move selected launcher down"
-msgstr "Mover lanzador seleccionado hacia abajo"
-
-#: appletHelper.py:365
-msgid "Apply changes"
-msgstr "Aplicar cambios"
-
-#: appletHelper.py:431
-msgid "Add new entry"
-msgstr "Agregar nueva entrada"
-
-#: appletHelper.py:433
-msgid "Edit entry"
-msgstr "Editar entrada"
-
-#: appletHelper.py:439
+#: appletHelper.py:341 appletHelper.py:683
 msgid "_Save"
 msgstr "_Guardar"
 
-#: appletHelper.py:680
+#: appletHelper.py:344
+msgid "Select a file to import"
+msgstr "Seleccionar un archivo para importar"
+
+#: appletHelper.py:363
+msgid "JSON files"
+msgstr "Archivos JSON"
+
+#: appletHelper.py:450
+msgid "Add new launcher"
+msgstr "Agregar un nuevo lanzador"
+
+#: appletHelper.py:455
+msgid "Remove selected launcher"
+msgstr "Eliminar lanzador seleccionado"
+
+#: appletHelper.py:463
+msgid "Edit selected launcher"
+msgstr "Editar lanzador seleccionado"
+
+#: appletHelper.py:469
+msgid "Move selected launcher up"
+msgstr "Mover lanzador seleccionado hacia arriba"
+
+#: appletHelper.py:475
+msgid "Move selected launcher down"
+msgstr "Mover lanzador seleccionado hacia abajo"
+
+#: appletHelper.py:481
+msgid "Export launchers"
+msgstr "Exportar lanzadores"
+
+#: appletHelper.py:486
+msgid "Import launchers"
+msgstr "Importar lanzadores"
+
+#: appletHelper.py:491
+msgid "Apply changes"
+msgstr "Aplicar cambios"
+
+#: appletHelper.py:583
+msgid "Custom launcher removal"
+msgstr "Eliminación de lanzador personalizado"
+
+#: appletHelper.py:586
+msgid "Are you sure that you want to remove this custom launcher?"
+msgstr "¿Está seguro de que desea remover este lanzador personalizado?"
+
+#: appletHelper.py:587
+msgid "Note"
+msgstr "Nota"
+
+#: appletHelper.py:588
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
+
+#: appletHelper.py:675
+msgid "Add new entry"
+msgstr "Agregar nueva entrada"
+
+#: appletHelper.py:677
+msgid "Edit entry"
+msgstr "Editar entrada"
+
+#: appletHelper.py:729
+msgid "Mandatory fields"
+msgstr "Campos obligatorios"
+
+#: appletHelper.py:940
 msgid "Custom launchers"
 msgstr "Lanzadores personalizados"
 
@@ -184,255 +224,246 @@ msgstr "Eliminados proveedores de búsqueda."
 msgid "Removed applications info box in favor of tooltips."
 msgstr "Eliminada la caja de información de aplicaciones en favor de tooltips."
 
-#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:48
-msgid "Removed **All Applications** category in favor of not having it (LOL)."
-msgstr "Eliminada la categoría **Todas las aplicaciones** en favor de no tenerla (LOL)."
-
-#: z_create_localized_help.py:49
+#: z_create_localized_help.py:47
 msgid "Removed drag&drop capabilities."
 msgstr "Eliminadas las capacidades de arrastrar y soltar."
 
-#: z_create_localized_help.py:50
+#: z_create_localized_help.py:48
 msgid "Removed recently installed applications highlighting."
 msgstr "Eliminado el resaltado de aplicaciones recién instaladas."
 
-#: z_create_localized_help.py:51
+#: z_create_localized_help.py:49
 msgid "Added a custom launchers box that can run any command/script/file."
 msgstr "Se ha añadido un cuadro de lanzadores personalizados que puede ejecutar cualquier comando/archivo de comandos/archivo."
 
-#: z_create_localized_help.py:52
+#: z_create_localized_help.py:50
 msgid "Custom launchers icons can have a custom size and can be symbolic or full color."
 msgstr "Los iconos de lanzadores personalizados pueden tener un tamaño personalizado y pueden ser simbólicos o a todo color."
 
-#: z_create_localized_help.py:53
+#: z_create_localized_help.py:51
 msgid "Custom launchers can execute any command (as entered in a terminal) or a path to a file. If the file is an executable script, an attempt to execute it will be made. Otherwise, the file will be opened with the systems handler for that file type."
 msgstr "Los lanzadores personalizados pueden ejecutar cualquier comando (como se ingresa en un terminal) o una ruta de acceso a un archivo.  Si el archivo es un archivo de comandos ejecutable, se realizará un intento de ejecutarlo.  De lo contrario, el archivo se abrirá con el programa predeterminado para ese tipo de archivo."
 
-#: z_create_localized_help.py:54
+#: z_create_localized_help.py:52
 msgid "The size of the Categories/Applications icons can be customized."
 msgstr "El tamaño de los iconos de Categorías/Aplicaciones pueden ser personalizados."
 
-#: z_create_localized_help.py:55
+#: z_create_localized_help.py:53
 msgid "The placement of the categories box and the applications box can be swapped."
 msgstr "La colocación del cuadro de categorías y el cuadro de aplicaciones se pueden intercambiar."
 
-#: z_create_localized_help.py:56
+#: z_create_localized_help.py:54
 msgid "The placement of the custom launchers box and the search box can be swapped."
 msgstr "La colocación de la caja de lanzadores personalizados y de la caja de búsqueda puede ser intercambiado."
 
-#: z_create_localized_help.py:57
+#: z_create_localized_help.py:55
 msgid "Scrollbars in the applications box can be hidden."
 msgstr "Las barras de desplazamiento en el cuadro de aplicaciones se pueden ocultar."
 
-#: z_create_localized_help.py:58
-msgid "Recently installed applications highlighting can be disabled."
-msgstr "El resaltado de las aplicaciones instaladas recientemente se pueden desactivar."
-
-#: z_create_localized_help.py:59
-msgid "Recently used applications can be remembered and will be displayed on a category called **Recent Applications**. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed."
-msgstr "Las aplicaciones usadas recientemente se pueden recordar y se mostrarán en una categoría llamada **Aplicaciones Recientes**. Las aplicaciones se ordenarán por tiempo de ejecución. El orden de estas aplicaciones se puede invertir y existe una opción para excluir a los favoritos de la lista."
+#: z_create_localized_help.py:56
+msgid "Recently used applications can be remembered and will be displayed on a category called **Recently Used**. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed."
+msgstr "Las aplicaciones usadas recientemente se pueden recordar y se mostrarán en una categoría llamada **Recientemente Usadas**. Las aplicaciones se ordenarán por tiempo de ejecución. El orden de estas aplicaciones se puede invertir y existe una opción para excluir a los favoritos de la lista."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:61
+#: z_create_localized_help.py:58
 msgid "The default **Add to panel**, **Add to desktop** and **Uninstall** context menu items can be hidden."
 msgstr "Los elementos predeterminados del menú contextual (**Añadir al panel**, **Añadir al escritorio** y **Desinstalar**) se pueden ocultar."
 
-#: z_create_localized_help.py:62
+#: z_create_localized_help.py:59
 msgid "The menu editor can be directly opened from this applet context menu without the need to open it from the settings windows of this applet."
 msgstr "El editor de menús se puede abrir directamente desde este menú contextual del applet sin necesidad de abrirlo desde la ventana de configuración de este applet."
 
-#: z_create_localized_help.py:63
+#: z_create_localized_help.py:60
 msgid "The context menu for applications has 5 new items:"
 msgstr "El menú contextual para aplicaciones tiene 5 nuevos elementos:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:65
+#: z_create_localized_help.py:62
 msgid "**Run as root:** Executes application as root."
 msgstr "**Ejecutar como root:** Ejecuta la aplicación como root."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:67
+#: z_create_localized_help.py:64
 msgid "**Edit .desktop file:** Open the application's .desktop file with a text editor."
 msgstr "**Editar archivo.desktop:** Abrir el archivo .desktop de la aplicación con un editor de texto."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:69
+#: z_create_localized_help.py:66
 msgid "**Open .desktop file folder:** Open the folder where the application's .desktop file is stored."
 msgstr "**Abrir la carpeta de archivo .desktop:** Abrir la carpeta donde se almacena el archivo .desktop de la aplicación."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:71
+#: z_create_localized_help.py:68
 msgid "**Run from terminal:** Open a terminal and run application from there."
 msgstr "**Ejecutar desde el terminal:** Abrir un terminal y ejecutar la aplicación desde allí."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:73
+#: z_create_localized_help.py:70
 msgid "**Run from terminal as root:** Same as above but the application is executed as root."
 msgstr "**Ejecutar desde el terminal como root:** Igual que el anterior, pero la aplicación se ejecuta como root."
 
-#: z_create_localized_help.py:78 z_create_localized_help.py:82
+#: z_create_localized_help.py:75 z_create_localized_help.py:79
 msgid "Menu emulating the Whisker menu (XFCE)"
 msgstr "Menú emulando el menú Whisker (XFCE)"
 
-#: z_create_localized_help.py:85
+#: z_create_localized_help.py:82
 msgid "Keyboard navigation"
 msgstr "Navegación por teclado"
 
-#: z_create_localized_help.py:87
+#: z_create_localized_help.py:84
 msgid "Almost all keyboard shortcuts on this menu are the same as the original menu. There are just a couple of differences that I was forced to add to my menu to make some of its features to work."
 msgstr "Casi todos los atajos de teclado de este menú son los mismos utilizados por el menú original. Hay sólo un par de diferencias que me vi forzado a agregar a mi menú para que hacer funcionar algunas de sus características."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:87
+#: z_create_localized_help.py:84
 msgid "Note:"
 msgstr "Nota:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:87
 msgid "[[Left Arrow]] and [[Right Arrow]] keys:"
 msgstr "Teclas [[Flecha izquierda]] y [[Flecha derecha]]:"
 
-#: z_create_localized_help.py:92
+#: z_create_localized_help.py:89
 msgid "Cycles through the applications box and categories box if the focus is in one of these boxes."
 msgstr "Se desplaza por la caja de aplicaciones y categorías si el foco está en una de estas cajas."
 
-#: z_create_localized_help.py:94
+#: z_create_localized_help.py:91
 msgid "If the focus is on the custom launchers box, these keys will cycle through this box buttons."
 msgstr "Si el foco se encuentra dentro de la caja de lanzadores personalizados, estas teclas van a ciclar a través de los botones dentro de esta caja."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:93
 msgid "[[Tab]] key:"
 msgstr "Tecla [[Tabuladora]]:"
 
-#: z_create_localized_help.py:99
+#: z_create_localized_help.py:96
 msgid "If the applications box or categories box are currently focused, the [[Tab]] key will switch the focus to the custom launchers box."
 msgstr "Si la caja de aplicaciones o la caja de categorías están actualmente enfocadas, la tecla [[Tabuladora]] va a cambiar el foco hacia la caja de lanzadores personalizados."
 
-#: z_create_localized_help.py:101 z_create_localized_help.py:106
+#: z_create_localized_help.py:98 z_create_localized_help.py:103
 msgid "If the focus is on the custom launchers box, the focus will go back to the categories box."
 msgstr "Si el foco está en la caja de lanzadores personalizados, el foco será devuelto a la caja de categorías."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:103
+#: z_create_localized_help.py:100
 msgid "[[Up Arrow]] and [[Down Arrow]] keys:"
 msgstr "Teclas [[Flecha Arriba]] y [[Flecha Abajo]]:"
 
-#: z_create_localized_help.py:104
+#: z_create_localized_help.py:101
 msgid "If the applications box or categories box are currently focused, these keys will cycle through the items in the currently highlighted box."
 msgstr "Si la caja de aplicaciones o la caja de categorías tienen actualmente el foco, estas teclas van a ciclar a través de los ítems de la caja actualmente enfocada."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:108
+#: z_create_localized_help.py:105
 msgid "[[Page Up]] and [[Page Down]] keys: Jumps to the first and last item of the currently selected box. This doesn't affect the custom launchers."
 msgstr "Teclas [[Página Arriba]] y [[Página Abajo]]: Salta al primer y último ítem de la caja actualmente enfocada. Estas teclas no afectan a los lanzadores personalizados."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:110
+#: z_create_localized_help.py:107
 msgid "[[Menu]] or [[Alt]] + [[Enter]] keys: Opens and closes the context menu (if any) of the currently highlighted item."
 msgstr "Teclas [[Menú]] o [[Alt]] + [[Enter]]: Abren y cierran el menú contextual (si lo hubiere) del ítem actualmente seleccionado."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:112
+#: z_create_localized_help.py:109
 msgid "[[Enter]] key: Executes the currently highlighted item."
 msgstr "Tecla [[Enter]]: Ejecuta el ítem actualmente seleccionado."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:114
+#: z_create_localized_help.py:111
 msgid "[[Escape]] key: It closes the main menu. If a context menu is open, it will close the context menu instead and a second tap of this key will close the main menu."
 msgstr "Tecla [[Escape]]: Cierra el menú principal. Si un menú contextual está actualmente abierto, va a cerrar el menú contextual en su lugar y un segundo accionamiento de esta tecla sí va a cerrar el menú principal del applet."
 
-#: z_create_localized_help.py:117
+#: z_create_localized_help.py:114
 msgid "[[Shift]] + [[Enter]]: Executes the application as root. This doesn't affect the custom launchers."
 msgstr "[[Shift]] + [[Enter]]: Ejecuta la aplicación como root. Esta combinación de teclas no afectan a los lanzadores personalizados."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:119
+#: z_create_localized_help.py:116
 msgid "[[Ctrl]] + [[Enter]]: Open a terminal and run application from there. This doesn't affect the custom launchers."
 msgstr "[[Ctrl]] + [[Enter]]: Abre una terminal y se ejecuta la aplicación desde allí. Esta combinación de teclas no afectan a los lanzadores personalizados."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:121
+#: z_create_localized_help.py:118
 msgid "[[Ctrl]] + [[Shift]] + [[Enter]]: Open a terminal and run application from there, but the application is executed as root. This doesn't affect the custom launchers."
 msgstr "[[Ctrl]] + [[Shift]] + [[Enter]]: Abre una terminal y se ejecuta la aplicación desde allí, pero la aplicación es ejecutada como root. Esta combinación de teclas no afectan a los lanzadores personalizados."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:124
+#: z_create_localized_help.py:121
 msgid "Applications left click extra actions"
 msgstr "Acciones extras al hacer clic en las aplicaciones"
 
-#: z_create_localized_help.py:125
+#: z_create_localized_help.py:122
 msgid "When left clicking an application on the menu, certain key modifiers can be pressed to execute an application in a special way."
 msgstr "Al hacer clic izquierdo en una aplicación del menú, ciertas teclas modificadoras pueden presionarse para ejecutar una aplicación de una manera especial."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:127
+#: z_create_localized_help.py:124
 msgid "[[Shift]] + **Left click**: Executes application as root."
 msgstr "[[Shift]] + **Clic Derecho**: Ejecuta la aplicación como root."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:129
+#: z_create_localized_help.py:126
 msgid "[[Ctrl]] + **Left click**: Open a terminal and run application from there."
 msgstr "[[Ctrl]] + **Clic izquierdo**: Abre una terminal y se ejecuta la aplicación desde allí."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:131
+#: z_create_localized_help.py:128
 msgid "[[Ctrl]] + [[Shift]] + **Left click**: Open a terminal and run application from there, but the application is executed as root."
 msgstr "[[Ctrl]] + [[Shift]] + **Clic izquierdo**: Abre una terminal y se ejecuta la aplicación desde allí, pero la aplicación es ejecutada como root."
 
-#: z_create_localized_help.py:133
+#: z_create_localized_help.py:130
 msgid "About \"Run from terminal\" options"
 msgstr "Sobre las opciones \"Ejecutar desde terminal\""
 
-#: z_create_localized_help.py:134
+#: z_create_localized_help.py:131
 msgid "These options are meant for debugging purposes (to see the console output after opening/closing a program to detect possible errors, for example). Instead of opening a terminal to launch a program of which one might not know its command, one can do it directly from the menu and in just one step. Options to run from a terminal an application listed on the menu can be found on the applications context menu and can be hidden/shown from this applet settings window."
 msgstr "Estas opciones están diseñadas para fines de depuración (para ver la salida de la consola después de abrir/cerrar un programa para detectar posibles errores, por ejemplo). En vez de abrir una terminal para ejecutar un programa del cual uno puede que no sepa su comando, uno puede hacerlo directamente desde el menú y en un sólo paso. Opciones para ejecutar un programa del menú desde una terminal pueden ser encontradas en el menú contextual de dichas aplicaciones y dichas opciones pueden ser mostradas o escondidas desde la ventana de opciones de este applet."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:137
+#: z_create_localized_help.py:134
 msgid "By default, these options will use the system's default terminal emulator (**x-terminal-emulator** on Debian based distributions). Any other terminal emulator can be specified inside the settings window of this applet, as long as said emulator has support for the **-e** argument. I did my tests with **gnome-terminal**, **xterm** and **terminator**. Additional arguments could be passed to the terminal emulator, but it's not supported by me."
 msgstr "Por defecto, estas opciones van a usar el emulador de terminal por defecto del sistema (**x-terminal-emulator** en distribuciones basadas en Debian). Cualquier otro emulador de terminal puede ser especificado en la ventana de opciones de este applet, siempre y cuando dicho emulador tenga soporte para el argumento **-e**. Yo he realizado mis pruebas con **gnome-terminal**, **xterm** and **terminator**. Argumentos adicionales podrían ser pasados al emulador de terminal, pero no es soportado por mí."
 
-#: z_create_localized_help.py:139
+#: z_create_localized_help.py:136
 msgid "Favorites handling"
 msgstr "Manejo de favoritos"
 
-#: z_create_localized_help.py:140
+#: z_create_localized_help.py:137
 msgid "**Note:** The favorites category will update its content after changing to another category and going back to the favorites category."
 msgstr "**Nota:** La categoría favoritos actualizará su contenido luego de cambiar a otra categoría y regresar a la categoría favoritos."
 
-#: z_create_localized_help.py:142
+#: z_create_localized_help.py:139
 msgid "Troubleshooting/extra information"
 msgstr "Solución de problemas/información adicional"
 
-#: z_create_localized_help.py:143
+#: z_create_localized_help.py:140
 msgid "Run from terminal."
 msgstr "Ejecutar desde terminal."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:145
+#: z_create_localized_help.py:142
 msgid "Debian based distributions:"
 msgstr "Distribuciones basadas en Debian:"
 
-#: z_create_localized_help.py:146
+#: z_create_localized_help.py:143
 msgid "If the command **x-terminal-emulator** doesn't run the terminal emulator that one wants to be the default, run the following command to set a different default terminal emulator."
 msgstr "Si el comando **x-terminal-emulator** no ejecuta el emulador de terminal que uno desea como predeterminado, ejecute el siguiente comando para establecer un emulador de terminal predeterminado diferente."
 
-#: z_create_localized_help.py:149
+#: z_create_localized_help.py:146
 msgid "Type in the number of the selection and hit enter."
 msgstr "Tipear el número que se desea y presionar [[Enter]]."
 
-#: z_create_localized_help.py:151
+#: z_create_localized_help.py:148
 msgid "For other distributions:"
 msgstr "Para otras distribuciones:"
 
-#: z_create_localized_help.py:152
+#: z_create_localized_help.py:149
 msgid "Just set the terminal executable of your choice on this applet settings window."
 msgstr "Simplemente establezca el ejecutable de terminal de su elección en la ventana de configuración de este applet."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:154
+#: z_create_localized_help.py:151
 msgid "There is a folder named **icons** inside this applet directory. It contains several symbolic icons (most of them are from the Faenza icon theme) and each icon can be used directly by name (on a custom launcher, for example)."
 msgstr "Existe una carpeta llamada **icons** dentro dentro del directorio de este applet. Dicha carpeta contiene varios íconos simbólicos (la mayoría proviene del tema Faenza) y cada ícono puede ser usado directamente por nombre (en un lanzador personalizado, por ejemplo)."
 
@@ -440,137 +471,140 @@ msgstr "Existe una carpeta llamada **icons** dentro dentro del directorio de est
 msgid "Menu"
 msgstr "Menú"
 
-#: applet.js:289
+#: applet.js:295
 msgid "Open the menu editor"
 msgstr "Abrir el editor de menús"
 
-#: applet.js:294
+#: applet.js:300
 msgid "Edit custom launchers"
 msgstr "Editar lanzadores personalizados"
 
-#: applet.js:1343
+#: applet.js:1422
 msgid "Favorites"
 msgstr "Favoritos"
 
-#. settings-schema.json->recent_apps_header->description
-#: applet.js:1383
-msgid "Recent Applications"
-msgstr "Aplicaciones recientes"
+#: applet.js:1448
+msgid "Recently Used"
+msgstr "Recientemente Usadas"
 
-#: applet.js:1507
+#: applet.js:1478
+msgid "All Applications"
+msgstr "Todas las aplicaciones"
+
+#: applet.js:1560
 msgid "No search results"
 msgstr "No hay resultados de búsqueda"
 
-#: applet.js:1525
+#: applet.js:1582
 msgid "No recent applications"
 msgstr "Sin aplicaciones recientes"
 
-#: applet.js:1721
-msgid "Type to search..."
-msgstr "Escriba para buscar..."
-
-#: applet.js:2441 applet.js:2451
-msgid "Categories"
-msgstr "Categorías"
-
-#: utils.js:501
-msgid "Add to panel"
-msgstr "Añadir al panel"
-
-#: utils.js:505
-msgid "Add this application to the Panel launchers applet."
-msgstr "Agregar esta aplicación a los Lanzadores del panel."
-
-#: utils.js:512
-msgid "Add to desktop"
-msgstr "Añadir al escritorio"
-
-#: utils.js:516
-msgid "Add this application to the Desktop."
-msgstr "Agregar un acceso directo a esta aplicación en el Escritorio."
-
-#: utils.js:524
-msgid "Remove from favorites"
-msgstr "Quitar de favoritos"
-
-#: utils.js:528
-msgid "Remove application from your favorites."
-msgstr "Quitar aplicación de favoritos."
-
-#: utils.js:533
-msgid "Add to favorites"
-msgstr "Añadir a favoritos"
-
-#: utils.js:537
-msgid "Add application to your favorites."
-msgstr "Añadir esta aplicación a los favoritos."
-
-#: utils.js:545
-msgid "Uninstall"
-msgstr "Desinstalar"
-
-#: utils.js:549
-msgid "Uninstall application from your system."
-msgstr "Desinstalar aplicación de su sistema."
-
-#: utils.js:556
-msgid "Run with NVIDIA GPU"
-msgstr "Ejecutar con GPU NVIDIA"
-
-#: utils.js:560
-msgid "Run application through optirun command (Bumblebee)."
-msgstr "Ejecutar aplicación a través del comando optirun (Bumblebee)."
-
-#: utils.js:567
-msgid "Run as root"
-msgstr "Ejecutar como root"
-
-#: utils.js:571
-msgid "Run application as root."
-msgstr "Ejecutar esta aplicación como root."
-
-#: utils.js:578
-msgid "Edit .desktop file"
-msgstr "Editar archivo .desktop"
-
-#: utils.js:582
-msgid "Edit this application .desktop file with a text editor."
-msgstr "Editar el archivo .desktop de esta aplicación con un editor de textos."
-
-#: utils.js:589
-msgid "Open .desktop file folder"
-msgstr "Abrir carpeta del archivo .desktop"
-
-#: utils.js:593
-msgid "Open the folder containg this application .desktop file."
-msgstr "Abrir la carpeta que contiene el archivo .desktop de esta aplicación."
-
-#: utils.js:600
-msgid "Run from terminal"
-msgstr "Ejecutar desde terminal"
-
-#: utils.js:604
-msgid "Run application from a terminal."
-msgstr "Ejecutar aplicación desde una terminal."
-
-#: utils.js:611
-msgid "Run from terminal as root"
-msgstr "Ejecutar desde terminal como root"
-
-#: utils.js:615
-msgid "Run application from a terminal as root."
-msgstr "Ejecutar aplicación desde una terminal como root."
-
-#: utils.js:1082
+#: applet.js:1590
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: utils.js:1147
+#: applet.js:1760
+msgid "Type to search..."
+msgstr "Escriba para buscar..."
+
+#: applet.js:2493 applet.js:2503
+msgid "Categories"
+msgstr "Categorías"
+
+#: utils.js:645
+msgid "Add to panel"
+msgstr "Añadir al panel"
+
+#: utils.js:649
+msgid "Add this application to the Panel launchers applet."
+msgstr "Agregar esta aplicación a los Lanzadores del panel."
+
+#: utils.js:656
+msgid "Add to desktop"
+msgstr "Añadir al escritorio"
+
+#: utils.js:660
+msgid "Add this application to the Desktop."
+msgstr "Agregar un acceso directo a esta aplicación en el Escritorio."
+
+#: utils.js:668
+msgid "Remove from favorites"
+msgstr "Quitar de favoritos"
+
+#: utils.js:672
+msgid "Remove application from your favorites."
+msgstr "Quitar aplicación de favoritos."
+
+#: utils.js:677
+msgid "Add to favorites"
+msgstr "Añadir a favoritos"
+
+#: utils.js:681
+msgid "Add application to your favorites."
+msgstr "Añadir esta aplicación a los favoritos."
+
+#: utils.js:689
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: utils.js:693
+msgid "Uninstall application from your system."
+msgstr "Desinstalar aplicación de su sistema."
+
+#: utils.js:700
+msgid "Run with NVIDIA GPU"
+msgstr "Ejecutar con GPU NVIDIA"
+
+#: utils.js:704
+msgid "Run application through optirun command (Bumblebee)."
+msgstr "Ejecutar aplicación a través del comando optirun (Bumblebee)."
+
+#: utils.js:711
+msgid "Run as root"
+msgstr "Ejecutar como root"
+
+#: utils.js:715
+msgid "Run application as root."
+msgstr "Ejecutar esta aplicación como root."
+
+#: utils.js:722
+msgid "Edit .desktop file"
+msgstr "Editar archivo .desktop"
+
+#: utils.js:726
+msgid "Edit this application .desktop file with a text editor."
+msgstr "Editar el archivo .desktop de esta aplicación con un editor de textos."
+
+#: utils.js:733
+msgid "Open .desktop file folder"
+msgstr "Abrir carpeta del archivo .desktop"
+
+#: utils.js:737
+msgid "Open the folder containg this application .desktop file."
+msgstr "Abrir la carpeta que contiene el archivo .desktop de esta aplicación."
+
+#: utils.js:744
+msgid "Run from terminal"
+msgstr "Ejecutar desde terminal"
+
+#: utils.js:748
+msgid "Run application from a terminal."
+msgstr "Ejecutar aplicación desde una terminal."
+
+#: utils.js:755
+msgid "Run from terminal as root"
+msgstr "Ejecutar desde terminal como root"
+
+#: utils.js:759
+msgid "Run application from a terminal as root."
+msgstr "Ejecutar aplicación desde una terminal como root."
+
+#: utils.js:1032
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr "No se pudo encontrar el esquema %s para el xlet %s."
 
-#: utils.js:1148
+#: utils.js:1033
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 
@@ -693,17 +727,25 @@ msgstr "Establecer la cantidad máxima de resultados de búsqueda que se mostrar
 msgid "Menu layout"
 msgstr "Disposición del menú"
 
+#. settings-schema.json->pref_show_all_applications_category->description
+msgid "Show \"All Applications\" category"
+msgstr "Mostrar la categoría \"Todas las aplicaciones\""
+
 #. settings-schema.json->pref_recently_used_apps_enabled->description
-msgid "Show \"Recent Applications\" category"
-msgstr "Mostrar la categoría \"Aplicaciones recientes\""
+msgid "Show \"Recently Used\" category"
+msgstr "Mostrar categoría \"Recientemente Usadas\""
 
 #. settings-schema.json->pref_recently_used_apps_enabled->tooltip
 msgid ""
-"From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recent Applications\" category.\n"
+"From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recently Used\" category.\n"
 "Every time this option is disabled, the list of recently used applications will be cleared."
 msgstr ""
-"Desde el momento en que esta opción está activada, todas las aplicaciones lanzadas desde el menú serán almacenadas y estarán listadas en la categoría llamada \"Aplicaciones recientes\".\n"
+"Desde el momento en que esta opción está activada, todas las aplicaciones lanzadas desde el menú serán almacenadas y estarán listadas en la categoría llamada \"Recientemente Usadas\".\n"
 "Cada vez que esta opción se desactiva, se borrará la lista de aplicaciones usadas recientemente."
+
+#. settings-schema.json->pref_recently_used_apps_show_separator->description
+msgid "Show separator below \"Recently Used\" category"
+msgstr "Mostrar separador debajo de \"Recientemente Usadas\""
 
 #. settings-schema.json->pref_show_category_icons->description
 msgid "Show category icons"
@@ -815,6 +857,10 @@ msgstr "Centro"
 #. settings-schema.json->pref_custom_launchers_box_alignment->options
 msgid "Right"
 msgstr "Derecha"
+
+#. settings-schema.json->recent_apps_header->description
+msgid "Recent Applications"
+msgstr "Aplicaciones recientes"
 
 #. settings-schema.json->pref_recently_used_apps_ignore_favorites->description
 msgid "Ignore Favorites"
@@ -1002,6 +1048,31 @@ msgstr "Espaciado personalizado para la caja de entrada de búsqueda"
 msgid "Search box padding"
 msgstr "Espaciado personalizado para la caja de búsqueda"
 
+#~ msgid "Removed **All Applications** category in favor of not having it (LOL)."
+#~ msgstr "Eliminada la categoría **Todas las aplicaciones** en favor de no tenerla (LOL)."
+
+#~ msgid "Recently installed applications highlighting can be disabled."
+#~ msgstr "El resaltado de las aplicaciones instaladas recientemente se pueden desactivar."
+
+#~ msgid "Recently used applications can be remembered and will be displayed on a category called **Recent Applications**. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed."
+#~ msgstr "Las aplicaciones usadas recientemente se pueden recordar y se mostrarán en una categoría llamada **Aplicaciones Recientes**. Las aplicaciones se ordenarán por tiempo de ejecución. El orden de estas aplicaciones se puede invertir y existe una opción para excluir a los favoritos de la lista."
+
+#~ msgid "Mandatory"
+#~ msgstr "Obligatorio"
+
+#~ msgid "Optional"
+#~ msgstr "Opcional"
+
+#~ msgid "Show \"Recent Applications\" category"
+#~ msgstr "Mostrar la categoría \"Aplicaciones recientes\""
+
+#~ msgid ""
+#~ "From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recent Applications\" category.\n"
+#~ "Every time this option is disabled, the list of recently used applications will be cleared."
+#~ msgstr ""
+#~ "Desde el momento en que esta opción está activada, todas las aplicaciones lanzadas desde el menú serán almacenadas y estarán listadas en la categoría llamada \"Aplicaciones recientes\".\n"
+#~ "Cada vez que esta opción se desactiva, se borrará la lista de aplicaciones usadas recientemente."
+
 #~ msgid "Contributors/Mentions:"
 #~ msgstr "Colaboradores/Menciones:"
 
@@ -1028,9 +1099,6 @@ msgstr "Espaciado personalizado para la caja de búsqueda"
 
 #~ msgid "The **Recent Files** category can be hidden. This is for people who want the **Recent Files** category hidden without disabling recent files globally."
 #~ msgstr "La categoría **Archivos recientes** se puede ocultar.  Esto es para personas que desean que la categoría **Archivos recientes** se oculte sin deshabilitar los archivos recientes globalmente."
-
-#~ msgid "All Applications"
-#~ msgstr "Todas las aplicaciones"
 
 #~ msgid "Disable newly installed applications highlighting"
 #~ msgstr "Desactivar el resaltado de aplicaciones recién instaladas"

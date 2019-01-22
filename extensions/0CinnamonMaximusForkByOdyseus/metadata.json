@@ -21,7 +21,6 @@
     ],
     "url": "{{REPO_URL}}",
     "uuid": "{{UUID}}",
-    "version": "0.3.9",
     "contributors": "See this xlet help file.",
     "name": "Cinnamon Maximus (Fork by Odyseus)"
 }

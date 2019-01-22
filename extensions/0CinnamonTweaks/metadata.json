@@ -6,7 +6,6 @@
     "url": "{{REPO_URL}}",
     "description": "Several tweaks for Cinnamon.",
     "schema-file": "schemas/org.cinnamon.extensions.{{UUID}}.gschema.xml",
-    "version": "1.14",
     "cinnamon-version": [
         "3.0",
         "3.2",

@@ -1,6 +1,5 @@
 {
     "uuid": "{{UUID}}",
-    "version": "0.0.0",
     "name": "$$XLET_NAME$$",
     "description": "$$XLET_DESCRIPTION$$",
     "contributors": "See this xlet help file.",

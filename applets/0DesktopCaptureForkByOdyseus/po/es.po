@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus 2.35\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-01-17 15:51-0300\n"
+"POT-Creation-Date: 2019-01-21 21:56-0300\n"
 "PO-Revision-Date: 2018-08-25 02:47-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -69,34 +69,34 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: appletHelper.py:27
+#: appletHelper.py:29
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:29 appletHelper.py:35 appletHelper.py:105
+#: appletHelper.py:31 appletHelper.py:37 appletHelper.py:107
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: appletHelper.py:30
+#: appletHelper.py:32
 msgid "_Save"
 msgstr "_Guardar"
 
-#: appletHelper.py:33
+#: appletHelper.py:35
 msgid "Select a file to import"
 msgstr "Seleccionar un archivo desde el cual importar"
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:37
+#: appletHelper.py:39
 msgid "_Open"
 msgstr "_Abrir"
 
-#: appletHelper.py:53
+#: appletHelper.py:55
 msgid "JSON files"
 msgstr "Archivos JSON"
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:107
+#: appletHelper.py:109
 msgid "_OK"
 msgstr "Aceptar"
 

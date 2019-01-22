@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Mon, 21 Jan 2019 21:54:37 -0300
+- **Commit:** [cea22b7](https://gitlab.com/Odyseus/CinnamonTools/commit/cea22b7)
+- **Author:** Odyseus
+
+```
+- Changed applet icon.
+
+```
+
+***
+
 - **Date:** Tue, 15 Jan 2019 22:37:00 -0300
 - **Commit:** [bdac179](https://gitlab.com/Odyseus/CinnamonTools/commit/bdac179)
 - **Author:** Odyseus

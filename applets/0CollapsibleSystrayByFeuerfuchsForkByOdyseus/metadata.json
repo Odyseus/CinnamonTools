@@ -21,7 +21,6 @@
         "6.0"
     ],
     "uuid": "{{UUID}}",
-    "version": "1.6",
     "icon": "indicator-applet",
     "name": "Collapsible Systray (Fork By Odyseus)"
 }

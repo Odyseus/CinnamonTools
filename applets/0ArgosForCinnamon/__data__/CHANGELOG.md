@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Mon, 21 Jan 2019 21:48:00 -0300
+- **Commit:** [2d5dfec](https://gitlab.com/Odyseus/CinnamonTools/commit/2d5dfec)
+- **Author:** Odyseus
+
+```
+- Updated emoji library.
+- Changed applet icon.
+
+```
+
+***
+
 - **Date:** Thu, 17 Jan 2019 14:00:29 -0300
 - **Commit:** [c910029](https://gitlab.com/Odyseus/CinnamonTools/commit/c910029)
 - **Author:** Odyseus

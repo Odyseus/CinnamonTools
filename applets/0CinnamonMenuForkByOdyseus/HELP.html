@@ -109,7 +109,6 @@ body {
 <li>Eliminada búsqueda del archivo de sistema.</li>
 <li>Eliminados proveedores de búsqueda.</li>
 <li>Eliminada la caja de información de aplicaciones en favor de tooltips.</li>
-<li>Eliminada la categoría <strong>Todas las aplicaciones</strong> en favor de no tenerla (LOL).</li>
 <li>Eliminadas las capacidades de arrastrar y soltar.</li>
 <li>Eliminado el resaltado de aplicaciones recién instaladas.</li>
 <li>Se ha añadido un cuadro de lanzadores personalizados que puede ejecutar cualquier comando/archivo de comandos/archivo.</li>
@@ -119,8 +118,7 @@ body {
 <li>La colocación del cuadro de categorías y el cuadro de aplicaciones se pueden intercambiar.</li>
 <li>La colocación de la caja de lanzadores personalizados y de la caja de búsqueda puede ser intercambiado.</li>
 <li>Las barras de desplazamiento en el cuadro de aplicaciones se pueden ocultar.</li>
-<li>El resaltado de las aplicaciones instaladas recientemente se pueden desactivar.</li>
-<li>Las aplicaciones usadas recientemente se pueden recordar y se mostrarán en una categoría llamada <strong>Aplicaciones Recientes</strong>. Las aplicaciones se ordenarán por tiempo de ejecución. El orden de estas aplicaciones se puede invertir y existe una opción para excluir a los favoritos de la lista.</li>
+<li>Recently used applications can be remembered and will be displayed on a category called <strong>Recently Used</strong>. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed.</li>
 <li>Los elementos predeterminados del menú contextual (<strong>Añadir al panel</strong>, <strong>Añadir al escritorio</strong> y <strong>Desinstalar</strong>) se pueden ocultar.</li>
 <li>El editor de menús se puede abrir directamente desde este menú contextual del applet sin necesidad de abrirlo desde la ventana de configuración de este applet.</li>
 <li>El menú contextual para aplicaciones tiene 5 nuevos elementos:<ul>
@@ -243,7 +241,6 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <li>Removed file system search.</li>
 <li>Removed search providers.</li>
 <li>Removed applications info box in favor of tooltips.</li>
-<li>Removed <strong>All Applications</strong> category in favor of not having it (LOL).</li>
 <li>Removed drag&amp;drop capabilities.</li>
 <li>Removed recently installed applications highlighting.</li>
 <li>Added a custom launchers box that can run any command/script/file.</li>
@@ -253,8 +250,7 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <li>The placement of the categories box and the applications box can be swapped.</li>
 <li>The placement of the custom launchers box and the search box can be swapped.</li>
 <li>Scrollbars in the applications box can be hidden.</li>
-<li>Recently installed applications highlighting can be disabled.</li>
-<li>Recently used applications can be remembered and will be displayed on a category called <strong>Recent Applications</strong>. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed.</li>
+<li>Recently used applications can be remembered and will be displayed on a category called <strong>Recently Used</strong>. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed.</li>
 <li>The default <strong>Add to panel</strong>, <strong>Add to desktop</strong> and <strong>Uninstall</strong> context menu items can be hidden.</li>
 <li>The menu editor can be directly opened from this applet context menu without the need to open it from the settings windows of this applet.</li>
 <li>The context menu for applications has 5 new items:<ul>
@@ -346,6 +342,25 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Cinnamon Menu (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 21 Jan 2019 21:50:38 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ebb12e6">ebb12e6</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Mayor performance improvements based on changes from upstream. Highlights:
+    - One context menu to rule them all.
+    - A generic and more simple button class not based on PopupMenu.PopupBaseMenuItem.
+    - Function calls instead of signals for button enter/leave events.
+- Added back "All Applications" category. There is no reason not to have it now, since the code is a lot more simple than it was and having this category doesn't add any complexity.
+- Added option to display a separator below "Recently Used" category
+- Custom launchers GUI improvements:
+    - Added ability to enable/disable launchers instead of being forced to delete them and enter all data back.
+    - Added icon preview to the list instead of displaying the icon names.
+    - Added confirmation dialog when deleting items. It can be bypassed by holding Ctrl key.
+    - Added keyboard shortcuts to be able to add/remove/move items in the list of launchers.
+    - Added ability to export/import the list of launchers.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Thu, 17 Jan 2019 14:14:12 -0300</li>

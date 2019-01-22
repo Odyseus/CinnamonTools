@@ -24,7 +24,7 @@ from python_modules.localized_help_creator import md
 class Main(LocalizedHelpCreator):
 
     def __init__(self, xlet_dir, xlet_slug):
-        super(Main, self).__init__(xlet_dir, xlet_slug)
+        super().__init__(xlet_dir, xlet_slug)
 
     def get_content_base(self, for_readme):
         return "\n".join([

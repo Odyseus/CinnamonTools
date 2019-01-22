@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Mon, 21 Jan 2019 21:53:32 -0300
+- **Commit:** [8b49e1e](https://gitlab.com/Odyseus/CinnamonTools/commit/8b49e1e)
+- **Author:** Odyseus
+
+```
+- Changed applet icon.
+
+```
+
+***
+
 - **Date:** Thu, 17 Jan 2019 14:15:20 -0300
 - **Commit:** [6c88fce](https://gitlab.com/Odyseus/CinnamonTools/commit/6c88fce)
 - **Author:** Odyseus

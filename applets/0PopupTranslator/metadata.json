@@ -5,7 +5,6 @@
     "max-instances": "-1",
     "uuid": "{{UUID}}",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "version": "1.08",
     "cinnamon-version": [
         "3.0",
         "3.2",

@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Mon, 21 Jan 2019 21:52:17 -0300
+- **Commit:** [a1b18e7](https://gitlab.com/Odyseus/CinnamonTools/commit/a1b18e7)
+- **Author:** Odyseus
+
+```
+- Changed applet icon file. The same icon but 48x48 in size.
+
+```
+
+***
+
 - **Date:** Thu, 17 Jan 2019 14:14:50 -0300
 - **Commit:** [dfc83ac](https://gitlab.com/Odyseus/CinnamonTools/commit/dfc83ac)
 - **Author:** Odyseus

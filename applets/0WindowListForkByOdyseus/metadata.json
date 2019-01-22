@@ -5,7 +5,6 @@
     "max-instances": -1,
     "description": "Fork of the main Cinnamon Window list applet.",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "version": "1.12",
     "cinnamon-version": [
         "3.0",
         "3.2",

@@ -6,7 +6,6 @@
     "contributors": "See this xlet help file.",
     "max-instances": -1,
     "uuid": "{{UUID}}",
-    "version": "2.19",
     "cinnamon-version": [
         "3.0",
         "3.2",

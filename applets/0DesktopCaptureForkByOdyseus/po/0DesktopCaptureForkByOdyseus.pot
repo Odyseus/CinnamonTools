@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus 2.35\n"
-"POT-Creation-Date: 2019-01-17 15:57-0300\n"
+"POT-Creation-Date: 2019-01-21 22:10-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,34 +65,34 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: appletHelper.py:27
+#: appletHelper.py:29
 msgid "Select or enter file to export to"
 msgstr ""
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:29 appletHelper.py:35 appletHelper.py:105
+#: appletHelper.py:31 appletHelper.py:37 appletHelper.py:107
 msgid "_Cancel"
 msgstr ""
 
-#: appletHelper.py:30
+#: appletHelper.py:32
 msgid "_Save"
 msgstr ""
 
-#: appletHelper.py:33
+#: appletHelper.py:35
 msgid "Select a file to import"
 msgstr ""
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:37
+#: appletHelper.py:39
 msgid "_Open"
 msgstr ""
 
-#: appletHelper.py:53
+#: appletHelper.py:55
 msgid "JSON files"
 msgstr ""
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:107
+#: appletHelper.py:109
 msgid "_OK"
 msgstr ""
 

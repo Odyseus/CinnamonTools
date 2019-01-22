@@ -24,7 +24,7 @@ from python_modules.localized_help_creator import utils
 class Main(LocalizedHelpCreator):
 
     def __init__(self, xlet_dir, xlet_slug):
-        super(Main, self).__init__(xlet_dir, xlet_slug)
+        super().__init__(xlet_dir, xlet_slug)
 
     def get_content_base(self, for_readme):
         return "\n".join([
@@ -44,8 +44,6 @@ class Main(LocalizedHelpCreator):
             "- %s" % _("Removed file system search."),
             "- %s" % _("Removed search providers."),
             "- %s" % _("Removed applications info box in favor of tooltips."),
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "- %s" % _("Removed **All Applications** category in favor of not having it (LOL)."),
             "- %s" % _("Removed drag&drop capabilities."),
             "- %s" % _("Removed recently installed applications highlighting."),
             "- %s" % _("Added a custom launchers box that can run any command/script/file."),
@@ -55,8 +53,7 @@ class Main(LocalizedHelpCreator):
             "- %s" % _("The placement of the categories box and the applications box can be swapped."),
             "- %s" % _("The placement of the custom launchers box and the search box can be swapped."),
             "- %s" % _("Scrollbars in the applications box can be hidden."),
-            "- %s" % _("Recently installed applications highlighting can be disabled."),
-            "- %s" % _("Recently used applications can be remembered and will be displayed on a category called **Recent Applications**. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed."),
+            "- %s" % _("Recently used applications can be remembered and will be displayed on a category called **Recently Used**. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed."),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _("The default **Add to panel**, **Add to desktop** and **Uninstall** context menu items can be hidden."),
             "- %s" % _("The menu editor can be directly opened from this applet context menu without the need to open it from the settings windows of this applet."),
