@@ -15,13 +15,13 @@ const {
         Clutter,
         Gio,
         GLib,
-        Gtk,
         Pango,
         St
     },
     misc: {
         fileUtils: FileUtils,
         params: Params,
+        signalManager: SignalManager,
         util: Util
     },
     ui: {
@@ -35,6 +35,19 @@ const {
 const GioSSS = Gio.SettingsSchemaSource;
 
 const USER_DESKTOP_PATH = FileUtils.getUserDesktopDir();
+
+/**
+ * SimpleMenuItem default parameters.
+ */
+const SMI_DEFAULT_PARAMS = Object.freeze({
+    name: "",
+    description: "",
+    type: "none",
+    styleClass: "popup-menu-item",
+    reactive: true,
+    activatable: true,
+    withMenu: false
+});
 
 var SETTINGS_SCHEMA = "org.cinnamon.applets." + XletUUID;
 var SEARCH_PRIORITY = {
@@ -143,6 +156,173 @@ VisibleChildIterator.prototype = {
     }
 };
 
+/**
+ * A simpler/lighter alternative to PopupBaseMenuItem.
+ *
+ * It does not implement all interfaces of PopupBaseMenuItem. Any additional properties
+ * in the aParams object beyond defaults will also be set on the instance.
+ *
+ * @param {Object}  aApplet             - The menu applet instance
+ * @param {Object}  aParams             - Object containing item parameters, all optional.
+ * @param {String}  aParams.name        - The label for the menu item.
+ * @param {String}  aParams.description - The app's description the menu item belongs to.
+ * @param {String}  aParams.type        - A string describing the type of item.
+ * @param {String}  aParams.styleClass  - The item's CSS style class.
+ * @param {Boolean} aParams.reactive    - Item recieves events.
+ * @param {Boolean} aParams.activatable - Activates via primary click.
+ *                                        Must provide an "activate" function on the prototype or instance.
+ * @param {Boolean} aParams.withMenu    - Shows menu via secondary click.
+ *                                        Must provide a "populateMenu" function on the prototype or instance.
+ */
+function SimpleMenuItem() {
+    this._init.apply(this, arguments);
+}
+
+SimpleMenuItem.prototype = {
+    _init: function(aApplet, aParams) {
+        let params = Params.parse(aParams, SMI_DEFAULT_PARAMS, true);
+        this._signals = new SignalManager.SignalManager(null);
+
+        this.actor = new St.BoxLayout({
+            style_class: params.styleClass,
+            style: aApplet.max_width_for_buttons,
+            reactive: params.reactive,
+            accessible_role: Atk.Role.MENU_ITEM
+        });
+
+        this._signals.connect(this.actor, "destroy", () => this.destroy(true));
+
+        this.actor._delegate = this;
+        this.applet = aApplet;
+        this.label = null;
+        this.icon = null;
+        this._shouldBeDisplayed = true;
+
+        for (let prop in params) {
+            this[prop] = params[prop];
+        }
+
+        if (params.reactive) {
+            this._signals.connect(this.actor, "enter-event",
+                () => aApplet._buttonEnterEvent(this));
+            this._signals.connect(this.actor, "leave-event",
+                () => aApplet._buttonLeaveEvent(this));
+
+            if (params.activatable || params.withMenu) {
+                this._signals.connect(this.actor, "button-release-event",
+                    (aActor, aEvent) => this._onButtonReleaseEvent(aActor, aEvent));
+                this._signals.connect(this.actor, "key-press-event",
+                    (aActor, aEvent) => this._onKeyPressEvent(aActor, aEvent));
+            }
+        }
+    },
+
+    _onButtonReleaseEvent: function(actor, event) {
+        let button = event.get_button();
+
+        if (this.activate && button === Clutter.BUTTON_PRIMARY) {
+            this.activate();
+            return Clutter.EVENT_STOP;
+        } else if (this.populateMenu && button === Clutter.BUTTON_SECONDARY) {
+            this.applet.toggleContextMenu(this);
+            return Clutter.EVENT_STOP;
+        }
+
+        return Clutter.EVENT_PROPAGATE;
+    },
+
+    _onKeyPressEvent: function(actor, event) {
+        let symbol = event.get_key_symbol();
+
+        if (this.activate &&
+            (symbol === Clutter.KEY_space ||
+                symbol === Clutter.KEY_Return ||
+                symbol === Clutter.KP_Enter)) {
+            this.activate();
+            return Clutter.EVENT_STOP;
+        }
+
+        return Clutter.EVENT_PROPAGATE;
+    },
+
+    addIcon: function(aSize, aIcon = null, aSymbolic = false) {
+        if (this.icon || !aIcon) {
+            return;
+        }
+
+        let params = {
+            icon_size: aSize
+        };
+
+        switch (typeof aIcon) {
+            case "string":
+                params.icon_name = aIcon;
+                break;
+            case "object":
+                if (aIcon instanceof Gio.FileIcon) {
+                    params.gicon = aIcon;
+                } else if (aIcon.get_names) {
+                    params.icon_name = aIcon.get_names().toString();
+                }
+                break;
+        }
+
+        params.icon_type = aSymbolic ? St.IconType.SYMBOLIC : St.IconType.FULLCOLOR;
+
+        this.icon = new St.Icon(params);
+        this.actor.add_actor(this.icon);
+    },
+
+    addLabel: function(aLabel = "", aStyleClass = "menu-application-button-label") {
+        if (this.label) {
+            return;
+        }
+
+        this.label = new St.Label({
+            text: aLabel,
+            y_expand: true,
+            y_align: Clutter.ActorAlign.CENTER
+        });
+
+        aStyleClass && this.label.set_style_class_name(aStyleClass);
+        this.label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
+        this.actor.add_actor(this.label);
+    },
+
+    addActor: function(child) {
+        this.actor.add_actor(child);
+    },
+
+    removeActor: function(child) {
+        this.actor.remove_actor(child);
+    },
+
+    destroy: function(actorDestroySignal = false) {
+        try {
+            this._signals.disconnectAllSignals();
+
+            this.label && this.label.destroy();
+            this.icon && this.icon.destroy();
+            actorDestroySignal || this.actor && this.actor.destroy();
+
+            this.actor && this.actor._delegate && delete this.actor._delegate;
+            this.actor && delete this.actor;
+            this.label && delete this.label;
+            this.icon && delete this.icon;
+        } catch (aErr) {
+            global.logError(aErr);
+        }
+    },
+
+    get shouldBeDisplayed() {
+        return this._shouldBeDisplayed;
+    },
+
+    set shouldBeDisplayed(aVal) {
+        this._shouldBeDisplayed = aVal;
+    }
+};
+
 function ApplicationContextMenuItem() {
     this._init.apply(this, arguments);
 }
@@ -191,8 +371,6 @@ ApplicationContextMenuItem.prototype = {
 
                 let launcherApplet = Main.AppletManager.get_role_provider(Main.AppletManager.Roles.PANEL_LAUNCHER);
                 launcherApplet.acceptNewLauncher(this._appButton.app.get_id());
-
-                this._appButton.toggleMenu();
                 break;
             case "add_to_desktop":
                 let file = Gio.file_new_for_path(this._appButton.app.get_app_info().get_filename());
@@ -208,27 +386,24 @@ ApplicationContextMenuItem.prototype = {
                 } catch (e) {
                     global.log(e);
                 }
-                this._appButton.toggleMenu();
                 break;
             case "add_to_favorites":
                 AppFavorites.getAppFavorites().addFavorite(this._appButton.app.get_id());
-                this._appButton.toggleMenu();
                 break;
             case "remove_from_favorites":
                 AppFavorites.getAppFavorites().removeFavorite(this._appButton.app.get_id());
-                this._appButton.toggleMenu();
 
                 // Refresh the favorites category. This allows to hide the recently removed favorite.
-                if (this._appButton._applet.lastSelectedCategory === this._appButton._applet.favoritesCatName) {
-                    this._appButton._applet._displayButtons(this._appButton._applet.lastSelectedCategory);
+                if (this._appButton.applet.lastSelectedCategory === this._appButton.applet.favoritesCatName) {
+                    this._appButton.applet._displayButtons(this._appButton.applet.lastSelectedCategory);
                 }
                 break;
             case "uninstall":
-                this._appButton._applet.closeMainMenu();
+                this._appButton.applet.closeMainMenu();
                 Util.spawnCommandLine("/usr/bin/cinnamon-remove-application '" + this._appButton.app.get_app_info().get_filename() + "'");
                 break;
             case "run_with_nvidia_gpu":
-                this._appButton._applet.closeMainMenu();
+                this._appButton.applet.closeMainMenu();
 
                 try {
                     Util.spawnCommandLine("optirun gtk-launch " + this._appButton.app.get_id());
@@ -237,26 +412,26 @@ ApplicationContextMenuItem.prototype = {
                     global.logError(aErr.message);
                     likelyHasSucceeded = false;
                 } finally {
-                    if (this._appButton._applet.pref_recently_used_apps_enabled &&
+                    if (this._appButton.applet.pref_recently_used_apps_enabled &&
                         this._appButton instanceof GenericApplicationButton &&
                         likelyHasSucceeded) {
-                        this._appButton._applet.recentAppsManager.storeRecentApp(this._appButton.app.get_id());
+                        this._appButton.applet.recentAppsManager.storeRecentApp(this._appButton.app.get_id());
                     }
                 }
                 break;
             case "launch_from_terminal":
             case "launch_from_terminal_as_root":
-                this._appButton._applet.closeMainMenu();
+                this._appButton.applet.closeMainMenu();
 
                 let elevated = this._action === "launch_from_terminal_as_root" ?
-                    this._appButton._applet.pref_privilege_elevator + " " :
+                    this._appButton.applet.pref_privilege_elevator + " " :
                     "";
                 let cmd = elevated + "gtk-launch " + this._appButton.app.get_id().replace(/.desktop$/g, "");
                 let argv = [
-                    this._appButton._applet.pref_terminal_emulator,
+                    this._appButton.applet.pref_terminal_emulator,
                     "-e",
-                    this._appButton._applet.pref_default_shell + " -c " +
-                    GLib.shell_quote(cmd + "; exec " + this._appButton._applet.pref_default_shell)
+                    this._appButton.applet.pref_default_shell + " -c " +
+                    GLib.shell_quote(cmd + "; exec " + this._appButton.applet.pref_default_shell)
                 ];
 
                 try {
@@ -266,10 +441,10 @@ ApplicationContextMenuItem.prototype = {
                     global.logError(aErr.message);
                     likelyHasSucceeded = false;
                 } finally {
-                    if (this._appButton._applet.pref_recently_used_apps_enabled &&
+                    if (this._appButton.applet.pref_recently_used_apps_enabled &&
                         this._appButton instanceof GenericApplicationButton &&
                         likelyHasSucceeded) {
-                        this._appButton._applet.recentAppsManager.storeRecentApp(this._appButton.app.get_id());
+                        this._appButton.applet.recentAppsManager.storeRecentApp(this._appButton.app.get_id());
                     }
                 }
                 break;
@@ -277,13 +452,13 @@ ApplicationContextMenuItem.prototype = {
                 try {
                     this._openDesktopFileFolder(GLib.path_get_dirname(pathToDesktopFile));
                 } catch (aErr) {
-                    Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
+                    Main.notify(_(this._appButton.applet.metadata.name), aErr.message);
                     global.logError(aErr.message);
                     this._openDesktopFileFolder("");
                 }
                 break;
             case "run_as_root":
-                this._appButton._applet.closeMainMenu();
+                this._appButton.applet.closeMainMenu();
 
                 try {
                     // The garbage of pkexec will not work with any spawn* function!!!
@@ -291,26 +466,26 @@ ApplicationContextMenuItem.prototype = {
                     // GLib.spawn_async. NOTHING F*CKING WORKS!!!!
                     // So, let's leave a REAL programing language (Python) do the F*CKING job!!!
                     Util.spawn_async([
-                        this._appButton._applet.metadata.path + "/launcher.py",
-                        this._appButton._applet.pref_privilege_elevator,
+                        this._appButton.applet.metadata.path + "/launcher.py",
+                        this._appButton.applet.pref_privilege_elevator,
                         "gtk-launch",
                         this._appButton.app.get_id()
                     ], null);
                     likelyHasSucceeded = true;
                 } catch (aErr) {
-                    Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
+                    Main.notify(_(this._appButton.applet.metadata.name), aErr.message);
                     global.logError(aErr.message);
                     likelyHasSucceeded = false;
                 } finally {
-                    if (this._appButton._applet.pref_recently_used_apps_enabled &&
+                    if (this._appButton.applet.pref_recently_used_apps_enabled &&
                         this._appButton instanceof GenericApplicationButton &&
                         likelyHasSucceeded) {
-                        this._appButton._applet.recentAppsManager.storeRecentApp(this._appButton.app.get_id());
+                        this._appButton.applet.recentAppsManager.storeRecentApp(this._appButton.app.get_id());
                     }
                 }
                 break;
             case "open_with_text_editor":
-                if (this._appButton._applet.pref_context_gain_privileges) {
+                if (this._appButton.applet.pref_context_gain_privileges) {
                     try {
                         Util.spawn_async(["stat", "-c", '"%U"', pathToDesktopFile],
                             (aOutput) => {
@@ -335,33 +510,36 @@ ApplicationContextMenuItem.prototype = {
                     this._launchDesktopFile("");
                 }
                 break;
+            default:
+                return true;
         }
+        this._appButton.applet.toggleContextMenu(this._appButton);
         return false;
     },
 
     _openDesktopFileFolder: function(aDirPath) {
-        this._appButton._applet.closeMainMenu();
+        this._appButton.applet.closeMainMenu();
 
         try {
             if (aDirPath !== "") {
                 GLib.spawn_command_line_async("xdg-open " + '"' + aDirPath + '"');
             }
         } catch (aErr) {
-            Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
+            Main.notify(_(this._appButton.applet.metadata.name), aErr.message);
             global.logError(aErr.message);
         }
     },
 
     _launchDesktopFile: function(aFileOwner) {
-        this._appButton._applet.closeMainMenu();
+        this._appButton.applet.closeMainMenu();
 
         let cmd = "";
-        if (this._appButton._applet.pref_context_gain_privileges &&
+        if (this._appButton.applet.pref_context_gain_privileges &&
             GLib.get_user_name().toString() !== aFileOwner) {
-            cmd += this._appButton._applet.pref_privilege_elevator;
+            cmd += this._appButton.applet.pref_privilege_elevator;
         }
 
-        let editor = this._appButton._applet.pref_context_custom_editor_for_edit_desktop_file;
+        let editor = this._appButton.applet.pref_context_custom_editor_for_edit_desktop_file;
 
         if (editor !== "") {
             cmd += " " + editor + " " + '"' + this._appButton.app.get_app_info().get_filename() + '"';
@@ -372,7 +550,7 @@ ApplicationContextMenuItem.prototype = {
         try {
             GLib.spawn_command_line_async(cmd);
         } catch (aErr) {
-            Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
+            Main.notify(_(this._appButton.applet.metadata.name), aErr.message);
             global.logError(aErr.message);
         }
     }
@@ -383,35 +561,26 @@ function GenericApplicationButton() {
 }
 
 GenericApplicationButton.prototype = {
-    __proto__: PopupMenu.PopupBaseMenuItem.prototype,
+    __proto__: SimpleMenuItem.prototype,
 
-    _init: function(aApplet, aApp, aWithContextMenu) {
-        this.app = aApp;
-        this._applet = aApplet;
-        this._button_type = null;
-        this._should_be_displayed = true;
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
+    _init: function(aApplet, aParams) {
+        let params = Params.parse(aParams, {
+            app: {},
+            withMenu: true,
+            type: "app",
+            styleClass: "menu-application-button"
         });
 
-        this.withContextMenu = aWithContextMenu;
-
-        if (this.withContextMenu) {
-            this.menu = new PopupMenu.PopupSubMenu(this.actor);
-            this.menu.actor.set_style_class_name("menu-context-menu");
-            this.menu.connect("open-state-changed",
-                () => this._subMenuOpenStateChanged());
-        }
-    },
-
-    _onButtonReleaseEvent: function(actor, event) {
-        if (event.get_button() === 1) {
-            this.activate(event);
-        }
-        if (event.get_button() === 3) {
-            this.activateContextMenus(event);
-        }
-        return true;
+        SimpleMenuItem.prototype._init.call(this,
+            aApplet, {
+                name: params.app.get_name(),
+                description: params.app.get_description() || "",
+                type: params.type,
+                withMenu: params.withMenu,
+                styleClass: params.styleClass,
+                app: params.app
+            }
+        );
     },
 
     activate: function(event) { // jshint ignore:line
@@ -424,19 +593,19 @@ GenericApplicationButton.prototype = {
         // global.logError("shiftKey " + shiftKey);
         // global.logError("altKey " + altKey);
 
-        this._applet.closeMainMenu();
+        this.applet.closeMainMenu();
 
         if (ctrlKey) {
             try {
                 let elevated = shiftKey ?
-                    this._applet.pref_privilege_elevator + " " :
+                    this.applet.pref_privilege_elevator + " " :
                     "";
                 let cmd = elevated + "gtk-launch " + this.app.get_id().replace(/.desktop$/g, "");
                 let argv = [
-                    this._applet.pref_terminal_emulator,
+                    this.applet.pref_terminal_emulator,
                     "-e",
-                    this._applet.pref_default_shell + " -c " +
-                    GLib.shell_quote(cmd + "; exec " + this._applet.pref_default_shell)
+                    this.applet.pref_default_shell + " -c " +
+                    GLib.shell_quote(cmd + "; exec " + this.applet.pref_default_shell)
                 ];
 
                 GLib.spawn_async(null, argv, null, GLib.SpawnFlags.SEARCH_PATH, null);
@@ -447,11 +616,11 @@ GenericApplicationButton.prototype = {
             }
         } else if (shiftKey && !ctrlKey) {
             try {
-                Util.spawnCommandLine(this._applet.pref_privilege_elevator +
+                Util.spawnCommandLine(this.applet.pref_privilege_elevator +
                     " gtk-launch " + this.app.get_id());
                 likelyHasSucceeded = true;
             } catch (aErr) {
-                Main.notify(_(this._appButton._applet.metadata.name), aErr.message);
+                Main.notify(_(this._appButton.applet.metadata.name), aErr.message);
                 global.logError(aErr.message);
                 likelyHasSucceeded = false;
             }
@@ -460,203 +629,136 @@ GenericApplicationButton.prototype = {
             likelyHasSucceeded = true;
         }
 
-        if (this._applet.pref_recently_used_apps_enabled &&
+        if (this.applet.pref_recently_used_apps_enabled &&
             this instanceof GenericApplicationButton &&
             likelyHasSucceeded) {
-            this._applet.recentAppsManager.storeRecentApp(this.app.get_id());
+            this.applet.recentAppsManager.storeRecentApp(this.app.get_id());
         }
     },
 
-    activateContextMenus: function(event) { // jshint ignore:line
-        if (this.withContextMenu && !this.menu.isOpen) {
-            this._applet.closeContextMenus(this.app, true);
-        }
-        this.toggleMenu();
-    },
+    populateMenu: function(aMenu) {
+        let menuItem;
 
-    closeMenu: function() {
-        if (this.withContextMenu) {
-            this.menu.close();
-        }
-    },
-
-    toggleMenu: function() {
-        if (!this.withContextMenu) {
-            return;
+        if (this.applet.pref_context_show_add_to_panel) {
+            menuItem = new ApplicationContextMenuItem(
+                this,
+                _("Add to panel"),
+                "add_to_panel",
+                "list-add"
+            );
+            menuItem._tooltip.set_text(_("Add this application to the Panel launchers applet."));
+            aMenu.addMenuItem(menuItem);
         }
 
-        if (!this.menu.isOpen) {
-            let children = this.menu.box.get_children();
-
-            let i = children.length;
-            while (i--) {
-                this.menu.box.remove_actor(children[i]);
-            }
-
-            let menuItem;
-
-            if (this._applet.pref_context_show_add_to_panel) {
-                menuItem = new ApplicationContextMenuItem(
-                    this,
-                    _("Add to panel"),
-                    "add_to_panel",
-                    "list-add"
-                );
-                menuItem._tooltip.set_text(_("Add this application to the Panel launchers applet."));
-                this.menu.addMenuItem(menuItem);
-            }
-
-            if (this._applet.pref_context_show_add_to_desktop && USER_DESKTOP_PATH) {
-                menuItem = new ApplicationContextMenuItem(
-                    this,
-                    _("Add to desktop"),
-                    "add_to_desktop",
-                    "computer"
-                );
-                menuItem._tooltip.set_text(_("Add this application to the Desktop."));
-                this.menu.addMenuItem(menuItem);
-            }
-
-            if (this._applet.pref_context_show_add_remove_favorite) {
-                if (AppFavorites.getAppFavorites().isFavorite(this.app.get_id())) {
-                    menuItem = new ApplicationContextMenuItem(
-                        this,
-                        _("Remove from favorites"),
-                        "remove_from_favorites",
-                        "starred"
-                    );
-                    menuItem._tooltip.set_text(_("Remove application from your favorites."));
-                    this.menu.addMenuItem(menuItem);
-                } else {
-                    menuItem = new ApplicationContextMenuItem(
-                        this,
-                        _("Add to favorites"),
-                        "add_to_favorites",
-                        "non-starred"
-                    );
-                    menuItem._tooltip.set_text(_("Add application to your favorites."));
-                    this.menu.addMenuItem(menuItem);
-                }
-            }
-
-            if (this._applet._canUninstallApps) {
-                menuItem = new ApplicationContextMenuItem(
-                    this,
-                    _("Uninstall"),
-                    "uninstall",
-                    "edit-delete"
-                );
-                menuItem._tooltip.set_text(_("Uninstall application from your system."));
-                this.menu.addMenuItem(menuItem);
-            }
-
-            if (this._applet._isBumblebeeInstalled) {
-                menuItem = new ApplicationContextMenuItem(
-                    this,
-                    _("Run with NVIDIA GPU"),
-                    "run_with_nvidia_gpu",
-                    "cpu"
-                );
-                menuItem._tooltip.set_text(_("Run application through optirun command (Bumblebee)."));
-                this.menu.addMenuItem(menuItem);
-            }
-
-            if (this._applet.pref_context_show_run_as_root) {
-                menuItem = new ApplicationContextMenuItem(
-                    this,
-                    _("Run as root"),
-                    "run_as_root",
-                    "system-run"
-                );
-                menuItem._tooltip.set_text(_("Run application as root."));
-                this.menu.addMenuItem(menuItem);
-            }
-
-            if (this._applet.pref_context_show_edit_desktop_file) {
-                menuItem = new ApplicationContextMenuItem(
-                    this,
-                    _("Edit .desktop file"),
-                    "open_with_text_editor",
-                    "custom-entypo-edit"
-                );
-                menuItem._tooltip.set_text(_("Edit this application .desktop file with a text editor."));
-                this.menu.addMenuItem(menuItem);
-            }
-
-            if (this._applet.pref_context_show_desktop_file_folder) {
-                menuItem = new ApplicationContextMenuItem(
-                    this,
-                    _("Open .desktop file folder"),
-                    "open_desktop_file_folder",
-                    "folder"
-                );
-                menuItem._tooltip.set_text(_("Open the folder containg this application .desktop file."));
-                this.menu.addMenuItem(menuItem);
-            }
-
-            if (this._applet.pref_context_show_run_from_terminal) {
-                menuItem = new ApplicationContextMenuItem(
-                    this,
-                    _("Run from terminal"),
-                    "launch_from_terminal",
-                    "custom-terminal"
-                );
-                menuItem._tooltip.set_text(_("Run application from a terminal."));
-                this.menu.addMenuItem(menuItem);
-            }
-
-            if (this._applet.pref_context_show_run_from_terminal_as_root) {
-                menuItem = new ApplicationContextMenuItem(
-                    this,
-                    _("Run from terminal as root"),
-                    "launch_from_terminal_as_root",
-                    "custom-terminal"
-                );
-                menuItem._tooltip.set_text(_("Run application from a terminal as root."));
-                this.menu.addMenuItem(menuItem);
-            }
-        }
-        this.menu.toggle();
-    },
-
-    _subMenuOpenStateChanged: function() {
-        if (this.menu.isOpen) {
-            this._applet._activeContextMenuParent = this;
-            this._applet._scrollToButton(this.menu);
-        } else {
-            this._applet._activeContextMenuItem = null;
-            this._applet._activeContextMenuParent = null;
-        }
-    },
-
-    get _contextIsOpen() {
-        return this.menu.isOpen;
-    },
-
-    get buttonType() {
-        return this._button_type;
-    },
-
-    get shouldBeDisplayed() {
-        return this._should_be_displayed;
-    },
-
-    set shouldBeDisplayed(aVal) {
-        this._should_be_displayed = aVal;
-    },
-
-    destroy: function() {
-        this.label.destroy();
-
-        if (this.icon) {
-            this.icon.destroy();
+        if (this.applet.pref_context_show_add_to_desktop && USER_DESKTOP_PATH) {
+            menuItem = new ApplicationContextMenuItem(
+                this,
+                _("Add to desktop"),
+                "add_to_desktop",
+                "computer"
+            );
+            menuItem._tooltip.set_text(_("Add this application to the Desktop."));
+            aMenu.addMenuItem(menuItem);
         }
 
-        if (this.withContextMenu) {
-            this.menu.destroy();
+        if (this.applet.pref_context_show_add_remove_favorite) {
+            if (AppFavorites.getAppFavorites().isFavorite(this.app.get_id())) {
+                menuItem = new ApplicationContextMenuItem(
+                    this,
+                    _("Remove from favorites"),
+                    "remove_from_favorites",
+                    "starred"
+                );
+                menuItem._tooltip.set_text(_("Remove application from your favorites."));
+                aMenu.addMenuItem(menuItem);
+            } else {
+                menuItem = new ApplicationContextMenuItem(
+                    this,
+                    _("Add to favorites"),
+                    "add_to_favorites",
+                    "non-starred"
+                );
+                menuItem._tooltip.set_text(_("Add application to your favorites."));
+                aMenu.addMenuItem(menuItem);
+            }
         }
 
-        PopupMenu.PopupBaseMenuItem.prototype.destroy.call(this);
+        if (this.applet._canUninstallApps) {
+            menuItem = new ApplicationContextMenuItem(
+                this,
+                _("Uninstall"),
+                "uninstall",
+                "edit-delete"
+            );
+            menuItem._tooltip.set_text(_("Uninstall application from your system."));
+            aMenu.addMenuItem(menuItem);
+        }
+
+        if (this.applet._isBumblebeeInstalled) {
+            menuItem = new ApplicationContextMenuItem(
+                this,
+                _("Run with NVIDIA GPU"),
+                "run_with_nvidia_gpu",
+                "cpu"
+            );
+            menuItem._tooltip.set_text(_("Run application through optirun command (Bumblebee)."));
+            aMenu.addMenuItem(menuItem);
+        }
+
+        if (this.applet.pref_context_show_run_as_root) {
+            menuItem = new ApplicationContextMenuItem(
+                this,
+                _("Run as root"),
+                "run_as_root",
+                "system-run"
+            );
+            menuItem._tooltip.set_text(_("Run application as root."));
+            aMenu.addMenuItem(menuItem);
+        }
+
+        if (this.applet.pref_context_show_edit_desktop_file) {
+            menuItem = new ApplicationContextMenuItem(
+                this,
+                _("Edit .desktop file"),
+                "open_with_text_editor",
+                "custom-entypo-edit"
+            );
+            menuItem._tooltip.set_text(_("Edit this application .desktop file with a text editor."));
+            aMenu.addMenuItem(menuItem);
+        }
+
+        if (this.applet.pref_context_show_desktop_file_folder) {
+            menuItem = new ApplicationContextMenuItem(
+                this,
+                _("Open .desktop file folder"),
+                "open_desktop_file_folder",
+                "folder"
+            );
+            menuItem._tooltip.set_text(_("Open the folder containg this application .desktop file."));
+            aMenu.addMenuItem(menuItem);
+        }
+
+        if (this.applet.pref_context_show_run_from_terminal) {
+            menuItem = new ApplicationContextMenuItem(
+                this,
+                _("Run from terminal"),
+                "launch_from_terminal",
+                "custom-terminal"
+            );
+            menuItem._tooltip.set_text(_("Run application from a terminal."));
+            aMenu.addMenuItem(menuItem);
+        }
+
+        if (this.applet.pref_context_show_run_from_terminal_as_root) {
+            menuItem = new ApplicationContextMenuItem(
+                this,
+                _("Run from terminal as root"),
+                "launch_from_terminal_as_root",
+                "custom-terminal"
+            );
+            menuItem._tooltip.set_text(_("Run application from a terminal as root."));
+            aMenu.addMenuItem(menuItem);
+        }
     }
 };
 
@@ -668,26 +770,20 @@ ApplicationButton.prototype = {
     __proto__: GenericApplicationButton.prototype,
 
     _init: function(aApplet, aApp) {
-        GenericApplicationButton.prototype._init.call(this, aApplet, aApp, true);
-        this._button_type = "app";
-        this._should_be_displayed = true;
+        GenericApplicationButton.prototype._init.call(this,
+            aApplet, {
+                app: aApp,
+                type: "app"
+            }
+        );
         this.category = [];
-        this.actor.set_style_class_name("menu-application-button");
 
         if (aApplet.pref_show_application_icons) {
             this.icon = this.app.create_icon_texture(aApplet.pref_application_icon_size);
             this.addActor(this.icon);
         }
-        this.name = this.app.get_name();
-        this.label = new St.Label({
-            text: this.name,
-            style_class: "menu-application-button-label"
-        });
-        this.label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
-        this.label.set_style(aApplet.max_width_for_buttons);
-        this.addActor(this.label);
 
-        this.actor.label_actor = this.label;
+        this.addLabel(this.name);
         this.tooltip = new CustomTooltip(this.actor, "");
     },
 
@@ -726,32 +822,19 @@ DummyApplicationButton.prototype = {
     },
 
     _init: function(aApplet, aButtonType, aIconSize) {
-        GenericApplicationButton.prototype._init.call(this, aApplet, this._dummyApp, true);
-        this._button_type = aButtonType;
-        this._should_be_displayed = true;
+        GenericApplicationButton.prototype._init.call(this,
+            aApplet, {
+                app: this._dummyApp,
+                type: aButtonType
+            }
+        );
         this.category = [];
-        this.actor.set_style_class_name("menu-application-button");
 
-        if (this._applet.pref_show_application_icons) {
-            this.icon = new St.Icon({
-                icon_name: "custom-really-empty",
-                icon_size: aIconSize,
-                icon_type: St.IconType.FULLCOLOR
-            });
-
-            this.addActor(this.icon);
+        if (this.applet.pref_show_application_icons) {
+            this.addIcon(aIconSize, "custom-really-empty");
         }
 
-        this.name = this.app.get_name();
-        this.label = new St.Label({
-            text: this.name,
-            style_class: "menu-application-button-label"
-        });
-        this.label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
-        this.label.set_style(this._applet.max_width_for_buttons);
-        this.addActor(this.label);
-
-        this.actor.label_actor = this.label;
+        this.addLabel(this.name);
         this.tooltip = new CustomTooltip(this.actor, "");
     },
 
@@ -772,32 +855,17 @@ DummyApplicationButton.prototype = {
         this.name = this.app.get_name();
         this.label.set_text(this.name);
 
-        if (this._applet.pref_show_application_icons) {
+        if (this.applet.pref_show_application_icons) {
             let icon = this.app.get_app_info().get_icon();
 
             if (icon instanceof Gio.FileIcon) {
                 this.icon.set_gicon(icon);
             } else {
-                this.icon.set_icon_name(this._tryToGetValidIcon(icon.get_names()));
+                this.icon.set_icon_name(icon.get_names().toString());
             }
         }
 
         return true;
-    },
-
-    _tryToGetValidIcon: function(aIconNames) {
-        let i = 0,
-            iLen = aIconNames.length;
-        for (; i < iLen; i++) {
-            if (Gtk.IconTheme.get_default().has_icon(aIconNames[i])) {
-                return aIconNames[i].toString();
-            }
-        }
-
-        // Always give priority to the icons in aIconNames if any.
-        // Because, even if Gtk.IconTheme.get_default can't find them,
-        // it most likely is a valid icon.
-        return iLen > 0 ? aIconNames[0] : this._dummyApp.get_icon();
     },
 
     get_app_id: function() {
@@ -805,145 +873,29 @@ DummyApplicationButton.prototype = {
     }
 };
 
-function GenericButton() {
-    this._init.apply(this, arguments);
-}
-
-GenericButton.prototype = {
-    __proto__: PopupMenu.PopupBaseMenuItem.prototype,
-
-    _init: function(aApplet, aParams) {
-        let params = Params.parse(aParams, {
-            label: "",
-            bold_label: false,
-            icon: null,
-            reactive: false,
-            callback: null,
-            button_type: ""
-        });
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
-        });
-        this._button_type = params.button_type;
-        this._should_be_displayed = true;
-        this.actor.set_style_class_name("menu-application-button");
-        this.actor._delegate = this;
-        this.button_name = "";
-
-        this.label = new St.Label({
-            style_class: "menu-application-button-label"
-        });
-
-        if (params.bold_label) {
-            try {
-                this.label.clutter_text.set_markup(
-                    '<span weight="bold">' + escapeHTML(params.label) + "</span>");
-            } catch (aErr) {
-                this.label.set_text(params.label);
-            }
-        } else {
-            this.label.set_text(params.label);
-        }
-
-        this.label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
-        this.label.set_style(aApplet.max_width_for_buttons);
-
-        if (params.icon !== null) {
-            let icon_actor = new St.Icon({
-                icon_name: params.icon,
-                icon_type: St.IconType.FULLCOLOR,
-                icon_size: aApplet.pref_application_icon_size
-            });
-            this.addActor(icon_actor);
-        }
-
-        this.addActor(this.label);
-        this.actor.reactive = params.reactive;
-        this.callback = params.callcback;
-    },
-
-    _onButtonReleaseEvent: function(actor, event) {
-        if (event.get_button() === 1) {
-            this.callback();
-        }
-    },
-
-    get buttonType() {
-        return this._button_type;
-    },
-
-    get shouldBeDisplayed() {
-        return this._should_be_displayed;
-    },
-
-    set shouldBeDisplayed(aVal) {
-        this._should_be_displayed = aVal;
-    }
-
-};
-
 function CategoryButton() {
     this._init.apply(this, arguments);
 }
 
 CategoryButton.prototype = {
-    __proto__: PopupMenu.PopupBaseMenuItem.prototype,
+    __proto__: SimpleMenuItem.prototype,
 
     _init: function(aApplet, aCategory) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
-        });
-
-        this.actor.set_style_class_name("menu-category-button");
-        this.category_id = aCategory.get_menu_id();
-        let label;
-        let icon = null;
+        SimpleMenuItem.prototype._init.call(this,
+            aApplet, {
+                activatable: false,
+                name: aCategory.get_name(),
+                styleClass: "menu-category-button",
+                categoryId: aCategory.get_menu_id()
+            }
+        );
+        this.actor.accessible_role = Atk.Role.LIST_ITEM;
 
         if (aApplet.pref_show_category_icons) {
-            if (aCategory.get_menu_id() === aApplet.favoritesCatName ||
-                aCategory.get_menu_id() === aApplet.recentAppsCatName) {
-                this.icon_name = aCategory.get_icon();
-                icon = new St.Icon({
-                    icon_name: this.icon_name,
-                    icon_size: aApplet.pref_category_icon_size,
-                    icon_type: St.IconType.FULLCOLOR
-                });
-            } else {
-                icon = aCategory.get_icon();
-                if (icon && icon.get_names) {
-                    this.icon_name = icon.get_names().toString();
-                } else {
-                    this.icon_name = "";
-                }
-            }
-        } else {
-            this.icon_name = "";
-        }
-        label = aCategory.get_name();
-
-        this.actor._delegate = this;
-        this.label = new St.Label({
-            text: label,
-            style_class: "menu-category-button-label"
-        });
-
-        if (this.icon_name) {
-            if (aCategory.get_menu_id() === aApplet.favoritesCatName ||
-                aCategory.get_menu_id() === aApplet.recentAppsCatName) {
-                this.icon = icon;
-            } else {
-                this.icon = new St.Icon({
-                    gicon: icon,
-                    icon_size: aApplet.pref_category_icon_size,
-                    icon_type: St.IconType.FULLCOLOR
-                });
-            }
-
-            this.icon && this.addActor(this.icon);
+            this.addIcon(aApplet.pref_category_icon_size, aCategory.get_icon());
         }
 
-        this.actor.accessible_role = Atk.Role.LIST_ITEM;
-        this.addActor(this.label);
+        this.addLabel(this.name, "menu-category-button-label");
     }
 };
 
@@ -963,60 +915,50 @@ function CustomCommandButton() {
 }
 
 CustomCommandButton.prototype = {
-    __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
+    __proto__: SimpleMenuItem.prototype,
 
     _init: function(aApplet, aApp, aCallback) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
-        });
-        this.actor.set_style_class_name("menu-application-button");
+        SimpleMenuItem.prototype._init.call(this,
+            aApplet, {
+                name: aApp.label,
+                styleClass: "menu-application-button"
+            }
+        );
 
         this.app = aApp;
-        this._applet = aApplet;
         // this.callback is a remnants of past version of this applet. Not used at present.
         // Leave it just in case I want to add custom launchers programmatically.
         this.callback = aCallback;
 
-        let icon_type = (this.app.icon.search("-symbolic") !== -1) ? 0 : 1;
-        let iconObj = {
-            icon_size: this._applet.pref_custom_launchers_icon_size,
-            icon_type: icon_type
-        };
+        let icon;
 
         if (this.app.icon.indexOf("/") !== -1) {
-            iconObj["gicon"] = new Gio.FileIcon({
+            icon = new Gio.FileIcon({
                 file: Gio.file_new_for_path(this.app.icon)
             });
         } else {
-            iconObj["icon_name"] = this.app.icon;
+            icon = this.app.icon;
         }
 
-        this.icon = new St.Icon(iconObj);
-        this.addActor(this.icon);
-
-        this.name = this.app.label;
-        this.isDraggableApp = false;
+        this.addIcon(
+            this.applet.pref_custom_launchers_icon_size,
+            icon,
+            this.app.icon.search("-symbolic") !== -1
+        );
 
         this.tooltip = new CustomTooltip(this.actor, "");
     },
 
-    _onButtonReleaseEvent: function(actor, event) {
-        if (event.get_button() === 1) {
-            this.activate(event);
-        }
-        return true;
-    },
-
     activate: function(event) { // jshint ignore:line
-        this.actor.set_style_class_name("menu-application-button");
+        // this.actor.set_style_class_name("menu-application-button");
         // Remnants of past version of this applet. Not used at present.
         // Leave it just in case.
         if (this.callback) {
+            this.applet.closeMainMenu();
             this.callback();
-            this._applet.closeMainMenu();
         } else {
             let cmd = this.app.command;
-            this._applet.closeMainMenu();
+            this.applet.closeMainMenu();
             try { // Try to execute
                 // From the docs:
                 // spawn_command_line_async: A simple version of GLib.spawn_async() that parses a
@@ -1034,7 +976,7 @@ CustomCommandButton.prototype = {
                         Main.Util.spawnCommandLine("xdg-open " + '"' + cmd + '"');
                     }
                 } catch (aErr2) {
-                    Main.notify(_(this._applet.metadata.name), aErr2.message);
+                    Main.notify(_(this.applet.metadata.name), aErr2.message);
                 }
             }
         }
@@ -1064,70 +1006,13 @@ CustomTooltip.prototype = {
     }
 };
 
-function RecentAppsClearButton() {
-    this._init.apply(this, arguments);
-}
-
-RecentAppsClearButton.prototype = {
-    __proto__: PopupMenu.PopupBaseMenuItem.prototype,
-
-    _init: function(aApplet) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
-        });
-        this._button_type = "recent_application";
-        this._should_be_displayed = true;
-        this._applet = aApplet;
-        this.actor.set_style_class_name("menu-application-button");
-        this.button_name = _("Clear list");
-        this.actor._delegate = this;
-        this.label = new St.Label({
-            text: this.button_name,
-            style_class: "menu-application-button-label"
-        });
-        this.icon = new St.Icon({
-            icon_name: "edit-clear",
-            icon_type: St.IconType.SYMBOLIC,
-            icon_size: this._applet.pref_application_icon_size
-        });
-        this.addActor(this.icon);
-        this.addActor(this.label);
-
-        this.menu = new PopupMenu.PopupSubMenu(this.actor);
-    },
-
-    _onButtonReleaseEvent: function(actor, event) {
-        if (event.get_button() === 1) {
-            this.activate(event);
-        }
-    },
-
-    activate: function(event) { // jshint ignore:line
-        this._applet.closeMainMenu();
-        this._applet.recentAppsManager.recentApps = [];
-        this._applet._refreshRecentApps();
-    },
-
-    get buttonType() {
-        return this._button_type;
-    },
-
-    get shouldBeDisplayed() {
-        return this._should_be_displayed;
-    },
-
-    set shouldBeDisplayed(aVal) {
-        this._should_be_displayed = aVal;
-    }
-};
-
 function RecentAppsManager() {
     this._init.apply(this, arguments);
 }
 
 RecentAppsManager.prototype = {
     _init: function(aApplet) {
-        this._applet = aApplet;
+        this.applet = aApplet;
 
         let schema = SETTINGS_SCHEMA;
         let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
@@ -1156,7 +1041,7 @@ RecentAppsManager.prototype = {
     },
 
     storeRecentApp: function(aAppID) {
-        if (this._applet.pref_recently_used_apps_ignore_favorites &&
+        if (this.applet.pref_recently_used_apps_ignore_favorites &&
             AppFavorites.getAppFavorites().isFavorite(aAppID)) {
             return;
         }
@@ -1196,7 +1081,7 @@ RecentAppsManager.prototype = {
         this.recentApps = recentApps.filter((aVal) => {
             let appID = aVal.split(":")[0];
             return (temp.has(appID) ? false : temp.add(appID)) ||
-                (this._applet.pref_recently_used_apps_ignore_favorites &&
+                (this.applet.pref_recently_used_apps_ignore_favorites &&
                     !AppFavorites.getAppFavorites().isFavorite(appID));
         });
     },

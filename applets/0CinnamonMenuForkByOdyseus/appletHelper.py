@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import cgi
 import collections
 import gettext
 import gi
@@ -9,8 +10,11 @@ import os
 import sys
 
 gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
+gi.require_version("GdkPixbuf", "2.0")
 
 from gi.repository import GLib
+from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import Gtk
@@ -25,20 +29,24 @@ _ = gettext.gettext
 APPLICATION_ID = "org.Cinnamon.Applets.CinnamonMenu.CustomLaunchersManager"
 
 COLUMNS = [{
+    "id": "enabled",
+    "title": _("Enabled"),
+    "type": "boolean"
+}, {
+    "id": "icon",
+    "title": "%s (*)" % _("Icon"),
+    "type": "icon"
+}, {
     "id": "title",
-    "title": "%s (%s)" % (_("Title"), _("Mandatory")),
+    "title": "%s (*)" % _("Title"),
     "type": "string"
 }, {
     "id": "command",
-    "title": "%s (%s)" % (_("Command"), _("Mandatory")),
+    "title": "%s (*)" % _("Command"),
     "type": "string"
 }, {
-    "id": "icon",
-    "title": "%s (%s)" % (_("Icon"), _("Mandatory")),
-    "type": "icon"
-}, {
     "id": "description",
-    "title": "%s (%s)" % (_("Description"), _("Optional")),
+    "title": _("Description"),
     "type": "string"
 }]
 
@@ -216,14 +224,56 @@ class Entry(SettingsWidget):
         self.attach(self.content_widget, 1, 0, 1, 1)
 
 
+class Switch(SettingsWidget):
+    bind_prop = "active"
+    bind_dir = Gio.SettingsBindFlags.DEFAULT
+
+    def __init__(self, label):
+        super().__init__()
+        self.set_spacing(5, 5)
+
+        self.label = SettingsLabel(label)
+        self.label.set_hexpand(True)
+        self.content_widget = Gtk.Switch(valign=Gtk.Align.CENTER)
+
+        self.attach(self.label, 0, 0, 1, 1)
+        self.attach(self.content_widget, 1, 0, 1, 1)
+
+    def clicked(self, *args):
+        if self.is_sensitive():
+            self.content_widget.set_active(not self.content_widget.get_active())
+
+
+class InfoLabel(BaseGrid):
+    def __init__(self, label, align=Gtk.Align.START):
+        super().__init__()
+        self.set_spacing(5, 5)
+
+        if align == Gtk.Align.END:
+            xalign = 1.0
+            justification = Gtk.Justification.RIGHT
+        elif align == Gtk.Align.CENTER:
+            xalign = 0.5
+            justification = Gtk.Justification.CENTER
+        else:  # START and FILL align left
+            xalign = 0
+            justification = Gtk.Justification.LEFT
+
+        self.content_widget = Gtk.Label(label, halign=align, xalign=xalign, justify=justification)
+        self.content_widget.set_line_wrap(True)
+        self.attach(self.content_widget, 0, 0, 1, 1)
+
+
 VARIABLE_TYPE_MAP = {
     "string": str,
     "icon": str,
+    "boolean": bool
 }
 
 CLASS_TYPE_MAP = {
     "string": Entry,
     "icon": IconChooser,
+    "boolean": Switch
 }
 
 PROPERTIES_MAP = {
@@ -282,6 +332,52 @@ def list_edit_factory(options):
     return Widget(**kwargs)
 
 
+def _import_export(parent, type, last_dir):
+    if type == "export":
+        mode = Gtk.FileChooserAction.SAVE
+        string = _("Select or enter file to export to")
+        # TO TRANSLATORS: Could be left blank.
+        btns = (_("_Cancel"), Gtk.ResponseType.CANCEL,
+                _("_Save"), Gtk.ResponseType.ACCEPT)
+    elif type == "import":
+        mode = Gtk.FileChooserAction.OPEN
+        string = _("Select a file to import")
+        # TO TRANSLATORS: Could be left blank.
+        btns = (_("_Cancel"), Gtk.ResponseType.CANCEL,
+                # TO TRANSLATORS: Could be left blank.
+                _("_Open"), Gtk.ResponseType.OK)
+
+    dialog = Gtk.FileChooserDialog(transient_for=parent.get_toplevel(),
+                                   title=string,
+                                   action=mode,
+                                   buttons=btns)
+
+    if last_dir:
+        dialog.set_current_folder(last_dir)
+
+    if type == "export":
+        dialog.set_do_overwrite_confirmation(True)
+
+    filter_text = Gtk.FileFilter()
+    filter_text.add_pattern("*.json")
+    filter_text.set_name(_("JSON files"))
+
+    dialog.add_filter(filter_text)
+
+    filepath = None
+    response = dialog.run()
+
+    if response == Gtk.ResponseType.ACCEPT or response == Gtk.ResponseType.OK:
+        filepath = dialog.get_filename()
+
+        if type == "export" and ".json" not in filepath:
+            filepath = filepath + ".json"
+
+    dialog.destroy()
+
+    return filepath
+
+
 class List(SettingsWidget):
     bind_dir = None
 
@@ -295,6 +391,7 @@ class List(SettingsWidget):
             self.label = Gtk.Label(label)
 
         self.content_widget = Gtk.TreeView()
+        self.content_widget.connect("key-press-event", self.key_press_cb)
 
         scrollbox = Gtk.ScrolledWindow()
         scrollbox.set_size_request(-1, height)
@@ -305,14 +402,32 @@ class List(SettingsWidget):
         scrollbox.add(self.content_widget)
 
         types = []
+
         for i in range(len(columns)):
-            types.append(VARIABLE_TYPE_MAP[columns[i]["type"]])
-            renderer = Gtk.CellRendererText()
-            renderer.set_property("wrap-mode", Pango.WrapMode.WORD_CHAR)
-            renderer.set_property("wrap-width", 250)
-            column = Gtk.TreeViewColumn(columns[i]["title"], renderer, text=i)
-            column.set_resizable(True)
+            column_def = columns[i]
+            types.append(VARIABLE_TYPE_MAP[column_def["type"]])
+
+            if column_def["type"] == "boolean":
+                renderer = Gtk.CellRendererToggle()
+                renderer.connect("toggled", self.checkbox_toggled_cb, i)
+                prop_name = "active"
+            elif column_def["type"] == "icon":
+                renderer = Gtk.CellRendererPixbuf()
+                prop_name = "icon_name"
+            else:
+                renderer = Gtk.CellRendererText()
+                renderer.set_property("wrap-mode", Pango.WrapMode.WORD_CHAR)
+                renderer.set_property("wrap-width", 250)
+                prop_name = "text"
+
+            column = Gtk.TreeViewColumn(column_def["title"], renderer)
+            column.add_attribute(renderer, prop_name, i)
+            # NOTE: Do not set resizable the first column because the GUI crashes
+            # when the column is resized to the point of disappearance. ¬¬
+            # FYI: The crash doesn't happen on Cinnamon's settings windows.
+            column.set_resizable(i != 0)
             self.content_widget.append_column(column)
+
         self.model = Gtk.ListStore(*types)
         self.content_widget.set_model(self.model)
 
@@ -334,41 +449,86 @@ class List(SettingsWidget):
         self.add_button.set_icon_name("list-add-symbolic")
         self.add_button.set_tooltip_text(_("Add new launcher"))
         self.add_button.connect("clicked", self.add_item)
+
         self.remove_button = Gtk.ToolButton(None, None)
         self.remove_button.set_icon_name("list-remove-symbolic")
         self.remove_button.set_tooltip_text(_("Remove selected launcher"))
-        self.remove_button.connect("clicked", self.remove_item)
+        # NOTE: Using button-release-event to be able to catch events.
+        # clicked event doesn't pass the event. ¬¬
+        self.remove_button.connect("button-release-event", self.remove_item_cb)
         self.remove_button.set_sensitive(False)
+
         self.edit_button = Gtk.ToolButton(None, None)
         self.edit_button.set_icon_name("view-list-symbolic")
         self.edit_button.set_tooltip_text(_("Edit selected launcher"))
         self.edit_button.connect("clicked", self.edit_item)
         self.edit_button.set_sensitive(False)
+
         self.move_up_button = Gtk.ToolButton(None, None)
         self.move_up_button.set_icon_name("go-up-symbolic")
         self.move_up_button.set_tooltip_text(_("Move selected launcher up"))
         self.move_up_button.connect("clicked", self.move_item_up)
         self.move_up_button.set_sensitive(False)
+
         self.move_down_button = Gtk.ToolButton(None, None)
         self.move_down_button.set_icon_name("go-down-symbolic")
         self.move_down_button.set_tooltip_text(_("Move selected launcher down"))
         self.move_down_button.connect("clicked", self.move_item_down)
         self.move_down_button.set_sensitive(False)
-        buttons_box.attach(self.add_button, 0, 0, 1, 1)
-        buttons_box.attach(self.remove_button, 1, 0, 1, 1)
-        buttons_box.attach(self.edit_button, 2, 0, 1, 1)
-        buttons_box.attach(self.move_up_button, 3, 0, 1, 1)
-        buttons_box.attach(self.move_down_button, 4, 0, 1, 1)
+
+        self.export_button = Gtk.ToolButton(None, None)
+        self.export_button.set_icon_name("custom-export-launchers-symbolic")
+        self.export_button.set_tooltip_text(_("Export launchers"))
+        self.export_button.connect("clicked", self.export_launchers)
+
+        import_button = Gtk.ToolButton(None, None)
+        import_button.set_icon_name("custom-import-launchers-symbolic")
+        import_button.set_tooltip_text(_("Import launchers"))
+        import_button.connect("clicked", self.import_launchers)
 
         refresh_button = Gtk.ToolButton(None, None)
         refresh_button.set_icon_name("document-save-symbolic")
         refresh_button.set_tooltip_text(_("Apply changes"))
         refresh_button.connect("clicked", self.reload_menu)
-        buttons_box.attach(refresh_button, 5, 0, 1, 1)
+
+        buttons_box.attach(self.add_button, 0, 0, 1, 1)
+        buttons_box.attach(self.remove_button, 1, 0, 1, 1)
+        buttons_box.attach(self.edit_button, 2, 0, 1, 1)
+        buttons_box.attach(self.move_up_button, 3, 0, 1, 1)
+        buttons_box.attach(self.move_down_button, 4, 0, 1, 1)
+        buttons_box.attach(self.export_button, 5, 0, 1, 1)
+        buttons_box.attach(import_button, 6, 0, 1, 1)
+        buttons_box.attach(refresh_button, 7, 0, 1, 1)
 
         self.content_widget.get_selection().connect("changed", self.update_button_sensitivity)
         self.content_widget.set_activate_on_single_click(False)
         self.content_widget.connect("row-activated", self.on_row_activated)
+
+    def key_press_cb(self, widget, event):
+        state = event.get_state() & Gdk.ModifierType.CONTROL_MASK
+        ctrl = state == Gdk.ModifierType.CONTROL_MASK
+        symbol, keyval = event.get_keyval()
+
+        if symbol and keyval == Gdk.KEY_Delete:
+            self.remove_item_cb(None, event)
+            return True
+        elif ctrl and symbol and (keyval == Gdk.KEY_N or keyval == Gdk.KEY_n):
+            self.add_item()
+            return True
+        elif ctrl and symbol and keyval == Gdk.KEY_Up:
+            self.move_item_up()
+            return True
+        elif ctrl and symbol and keyval == Gdk.KEY_Down:
+            self.move_item_down()
+            return True
+        elif ctrl and symbol and keyval == Gdk.KEY_Page_Up:
+            self.move_item_to_first_position()
+            return True
+        elif ctrl and symbol and keyval == Gdk.KEY_Page_Down:
+            self.move_item_to_last_position()
+            return True
+
+        return False
 
     def update_button_sensitivity(self, *args):
         model, selected = self.content_widget.get_selection().get_selected()
@@ -389,8 +549,20 @@ class List(SettingsWidget):
         else:
             self.move_down_button.set_sensitive(True)
 
+        if len(self.settings.get_value("pref_custom_launchers")) == 0:
+            self.export_button.set_sensitive(False)
+        else:
+            self.export_button.set_sensitive(True)
+
     def on_row_activated(self, *args):
         self.edit_item()
+
+    def checkbox_toggled_cb(self, cell, path, col, *ignore):
+        if path is not None:
+            iter = self.model.get_iter(path)
+            self.model[iter][col] = not self.model[iter][col]
+
+            self.list_changed()
 
     def add_item(self, *args):
         data = self.open_add_edit_dialog()
@@ -398,7 +570,35 @@ class List(SettingsWidget):
             self.model.append(data)
             self.list_changed()
 
-    def remove_item(self, *args):
+    def remove_item_cb(self, widget, event):
+        state = event.get_state() & Gdk.ModifierType.CONTROL_MASK
+        confirm_removal = state != Gdk.ModifierType.CONTROL_MASK
+
+        if confirm_removal:
+            dialog = Gtk.MessageDialog(transient_for=self.get_toplevel(),
+                                       modal=True,
+                                       message_type=Gtk.MessageType.WARNING,
+                                       buttons=Gtk.ButtonsType.YES_NO)
+
+            dialog.set_title(_("Custom launcher removal"))
+
+            esc = cgi.escape(
+                _("Are you sure that you want to remove this custom launcher?"))
+            esc += "\n\n<b>%s</b>: %s" % (_("Note"),
+                                          _("Press and hold Control key to remove items without confirmation."))
+            dialog.set_markup(esc)
+            dialog.show_all()
+            response = dialog.run()
+            dialog.destroy()
+
+            if response == Gtk.ResponseType.YES:
+                self.remove_item()
+
+            return None
+        else:
+            self.remove_item()
+
+    def remove_item(self):
         model, t_iter = self.content_widget.get_selection().get_selected()
         model.remove(t_iter)
 
@@ -417,10 +617,54 @@ class List(SettingsWidget):
         model.swap(t_iter, model.iter_previous(t_iter))
         self.list_changed()
 
+    def move_item_to_first_position(self, *args):
+        model, t_iter = self.content_widget.get_selection().get_selected()
+        model.move_after(t_iter, None)
+        self.list_changed()
+
     def move_item_down(self, *args):
         model, t_iter = self.content_widget.get_selection().get_selected()
         model.swap(t_iter, model.iter_next(t_iter))
         self.list_changed()
+
+    def move_item_to_last_position(self, *args):
+        model, t_iter = self.content_widget.get_selection().get_selected()
+        model.move_before(t_iter, None)
+        self.list_changed()
+
+    def export_launchers(self, *args):
+        filepath = _import_export(self, "export",
+                                  self.settings.get_value("pref_imp_exp_last_selected_directory"))
+
+        if filepath:
+            if os.path.exists(filepath):
+                os.remove(filepath)
+
+            raw_data = json.dumps(self.settings.get_value("pref_custom_launchers"), indent=4)
+
+            with open(filepath, "w+", encoding="UTF-8") as launchers_file:
+                launchers_file.write(raw_data)
+
+            self.settings.set_value("pref_imp_exp_last_selected_directory",
+                                    os.path.dirname(filepath))
+
+    def import_launchers(self, *args):
+        filepath = _import_export(self, "import",
+                                  self.settings.get_value("pref_imp_exp_last_selected_directory"))
+
+        if filepath:
+            with open(filepath, "r", encoding="UTF-8") as launchers_file:
+                raw_data = launchers_file.read()
+
+            try:
+                launchers = json.loads(raw_data, encoding="UTF-8")
+            except Exception:
+                raise Exception("Failed to parse settings JSON data for file %s" % (filepath))
+
+            self.settings.set_value("pref_custom_launchers", launchers)
+            self.settings.set_value("pref_imp_exp_last_selected_directory",
+                                    os.path.dirname(filepath))
+            self.on_setting_changed()
 
     def reload_menu(self, *args):
         self.settings.set_value("pref_hard_refresh_menu",
@@ -453,17 +697,22 @@ class List(SettingsWidget):
         frame.add(content)
 
         widgets = []
+        last_widget_pos = 0
+
         for i in range(len(self.columns)):
             if len(widgets) != 0:
                 content.add(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
 
-            widget = list_edit_factory(self.columns[i])
-            widget.set_border_width(5)
-            widgets.append(widget)
-
             settings_box = Gtk.ListBox()
             settings_box.set_selection_mode(Gtk.SelectionMode.NONE)
 
+            widget = list_edit_factory(self.columns[i])
+            widget.set_border_width(5)
+
+            if isinstance(widget, Switch):
+                settings_box.connect("row-activated", widget.clicked)
+
+            widgets.append(widget)
             content.attach(settings_box, 0, i, 1, 1)
             settings_box.add(widget)
 
@@ -471,6 +720,17 @@ class List(SettingsWidget):
                 widget.set_widget_value(info[i])
             elif "default" in self.columns[i]:
                 widget.set_widget_value(self.columns[i]["default"])
+
+            last_widget_pos += 1
+
+        content.add(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
+        info_label = InfoLabel(" ")
+        info_label.set_border_width(5)
+        info_label.content_widget.set_markup("<b>(*) %s</b>" % _("Mandatory fields"))
+        info_label_container = Gtk.ListBox()
+        info_label_container.set_selection_mode(Gtk.SelectionMode.NONE)
+        content.attach(info_label_container, 0, last_widget_pos, 1, 1)
+        info_label_container.add(info_label)
 
         content_area.show_all()
         response = dialog.run()
@@ -564,7 +824,7 @@ class JSONSettingsHandler(object):
             os.remove(self.filepath)
 
         raw_data = json.dumps(self.settings, indent=4)
-        new_file = open(self.filepath, 'w+')
+        new_file = open(self.filepath, "w+")
         new_file.write(raw_data)
         new_file.close()
 
@@ -591,7 +851,7 @@ class JSONSettingsHandler(object):
         if os.path.exists(filepath):
             os.remove(filepath)
         raw_data = json.dumps(self.settings, indent=4)
-        new_file = open(filepath, 'w+')
+        new_file = open(filepath, "w+")
         new_file.write(raw_data)
         new_file.close()
 

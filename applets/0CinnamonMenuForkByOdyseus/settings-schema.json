@@ -60,7 +60,7 @@
     "pref_animate_menu": {
         "type": "checkbox",
         "indent": true,
-        "default": true,
+        "default": false,
         "description": "Use menu animations",
         "tooltip": "Allow the menu to animate on open and close"
     },
@@ -109,12 +109,27 @@
         "type": "header",
         "description": "Menu layout"
     },
+    "pref_show_all_applications_category": {
+        "type": "checkbox",
+        "indent": true,
+        "default": false,
+        "description": "Show \"All Applications\" category",
+        "tooltip": ""
+    },
     "pref_recently_used_apps_enabled": {
         "type": "checkbox",
         "indent": true,
         "default": true,
-        "description": "Show \"Recent Applications\" category",
-        "tooltip": "From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recent Applications\" category.\nEvery time this option is disabled, the list of recently used applications will be cleared."
+        "description": "Show \"Recently Used\" category",
+        "tooltip": "From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recently Used\" category.\nEvery time this option is disabled, the list of recently used applications will be cleared."
+    },
+    "pref_recently_used_apps_show_separator": {
+        "type": "checkbox",
+        "indent": true,
+        "default": false,
+        "dependency": "pref_recently_used_apps_enabled",
+        "description": "Show separator below \"Recently Used\" category",
+        "tooltip": ""
     },
     "pref_show_category_icons": {
         "type": "checkbox",
@@ -161,10 +176,10 @@
     "pref_max_width_for_buttons": {
         "type": "spinbutton",
         "indent": true,
-        "default": 15,
+        "default": 12.0,
         "min": 1,
         "max": 50,
-        "step": 1,
+        "step": 0.5,
         "units": "ems",
         "description": "Maximum button width:",
         "tooltip": "Define the maximum width of menu items inside the applications box."
@@ -633,58 +648,66 @@
         "default": true,
         "callback": "_hardRefreshAll"
     },
+    "pref_imp_exp_last_selected_directory": {
+        "type": "generic",
+        "default": ""
+    },
     "pref_custom_launchers": {
         "type": "generic",
         "default": [{
             "title": "Quit",
             "command": "cinnamon-session-quit --power-off",
             "icon": "custom-system-shutdown-symbolic",
-            "description": "Shutdown the computer"
+            "description": "Shutdown the computer",
+            "enabled": true
         }, {
             "title": "Logout",
             "command": "cinnamon-session-quit --logout",
             "icon": "custom-system-log-out-symbolic",
-            "description": "Leave the session"
+            "description": "Leave the session",
+            "enabled": true
         }, {
             "title": "Lock screen",
             "command": "cinnamon-screensaver-lock-dialog",
             "icon": "custom-system-lock-screen-symbolic",
-            "description": "Lock the screen"
+            "description": "Lock the screen",
+            "enabled": true
         }, {
             "title": "System Settings",
             "command": "cinnamon-settings",
             "icon": "custom-preferences-system-symbolic",
-            "description": "System Settings"
+            "description": "System Settings",
+            "enabled": true
         }, {
             "title": "Update Manager",
             "command": "mintupdate",
             "icon": "custom-security-high-symbolic",
-            "description": "Linux Mint update manager"
-        }, {
-            "title": "Printers",
-            "command": "system-config-printer",
-            "icon": "custom-printer-symbolic",
-            "description": "Printers"
+            "description": "Linux Mint update manager",
+            "enabled": true
         }, {
             "title": "Cinnamon extensions",
             "command": "cinnamon-settings extensions",
             "icon": "custom-cs-extensions-symbolic",
-            "description": "Cinnamon extensions manager"
+            "description": "Cinnamon extensions manager",
+            "enabled": true
         }, {
             "title": "Cinnamon themes",
             "command": "cinnamon-settings themes",
             "icon": "custom-cs-themes-symbolic",
-            "description": "Cinnamon themes manager"
+            "description": "Cinnamon themes manager",
+            "enabled": true
         }, {
             "title": "Cinnamon applets",
             "command": "cinnamon-settings applets",
             "icon": "custom-cs-applets-symbolic",
-            "description": "Cinnamon applets manager"
+            "description": "Cinnamon applets manager",
+            "enabled": true
         }, {
             "title": "Cinnamon desklets",
             "command": "cinnamon-settings desklets",
             "icon": "custom-cs-desklets-symbolic",
-            "description": "Cinnamon desklets manager"
+            "description": "Cinnamon desklets manager",
+            "enabled": true
         }]
     }
 }

@@ -60,6 +60,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             this._expandAppletContextMenu();
             Gtk.IconTheme.get_default().append_search_path(this.metadata.path + "/icons/");
         }, () => {
+            this._updateGlobalPreferences();
             this.appsys = Cinnamon.AppSystem.get_default();
             this.menuManager = new PopupMenu.PopupMenuManager(this);
             this.menu = new Applet.AppletPopupMenu(this, aOrientation);
@@ -68,6 +69,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.recentAppsCatName = this.instance_id + "recent_applications";
             this.favoritesCatName = this.instance_id + "favorites";
             this.searchResultsCatName = this.instance_id + "search_results";
+            this.allAppsCatName = this.instance_id + "all_applications";
 
             this._appletEnterEventId = 0;
             this._appletLeaveEventId = 0;
@@ -110,11 +112,10 @@ CinnamonMenuForkByOdyseus.prototype = {
             this._previousTreeSelectedActor = null;
             this._activeContainer = null;
             this._activeActor = null;
-            this._applicationsBoxWidth = 0;
+            this._searchResultsLength = 0;
             this.menuIsOpening = false;
             this._activeContextMenuParent = null;
             this._activeContextMenuItem = null;
-            this._display();
             this.refreshing = false;
             this.recentAppsManager = null;
             this.lastSelectedCategory = null;
@@ -122,6 +123,9 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.recentAppsClearButton = null;
             this.searchResultsEmptyButton = null;
             this.searching = false;
+            this.contextMenu = null;
+            this.applicationsBoxFixedWidth = 0;
+            this._display();
 
             this.actor.connect("key-press-event",
                 (actor, event) => this._onSourceKeyPress(actor, event));
@@ -140,7 +144,6 @@ CinnamonMenuForkByOdyseus.prototype = {
                 () => this.onAppSysChanged());
 
             this._setupRecentAppsManager();
-            this._updateGlobalPreferences();
             this._updateActivateOnHover();
             this._updateKeybinding();
             this._updateIconAndLabel();
@@ -265,12 +268,15 @@ CinnamonMenuForkByOdyseus.prototype = {
             "pref_context_show_desktop_file_folder",
             "pref_context_show_run_from_terminal",
             "pref_context_show_run_from_terminal_as_root",
+            "pref_show_all_applications_category",
+            "pref_recently_used_apps_show_separator",
             "pref_recently_used_apps_enabled",
             "pref_recently_used_apps_ignore_favorites",
             "pref_recently_used_apps_invert_order",
             "pref_recently_used_apps_max_amount",
             "pref_hard_refresh_menu",
-            "pref_max_search_results"
+            "pref_max_search_results",
+            "pref_imp_exp_last_selected_directory"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -547,9 +553,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             this._activeContainer = null;
             this._activeActor = null;
             this.lastSelectedCategory = null;
-
-            this._favoritesCategoryButton.actor.style_class = "menu-category-button-selected";
-            this._selectCategory(this.favoritesCatName);
+            this._selectFirstCategory();
         } else {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -568,7 +572,7 @@ CinnamonMenuForkByOdyseus.prototype = {
 
             this._previousTreeSelectedActor = null;
             this._previousSelectedActor = null;
-            this.closeContextMenus(null, false);
+            this.closeContextMenu(false);
             this.destroyVectorBox();
         }
     },
@@ -664,63 +668,102 @@ CinnamonMenuForkByOdyseus.prototype = {
         }
     },
 
-    _navigateContextMenu: function(button, symbol, ctrlKey) {
-        if (symbol === Clutter.KEY_Menu || symbol === Clutter.Escape ||
-            (ctrlKey && (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter))) {
-            button.activateContextMenus();
-            return;
-        }
-
-        let minIndex = 0;
-        let goUp = symbol === Clutter.KEY_Up;
-        let nextActive = null;
-        let menuItems = button.menu._getMenuItems(); // The context menu items
-        let menuItemsLength = menuItems.length;
-
-        switch (symbol) {
-            case Clutter.KEY_Page_Up:
-                this._activeContextMenuItem = menuItems[minIndex];
-                this._activeContextMenuItem.setActive(true);
-                return;
-            case Clutter.KEY_Page_Down:
-                this._activeContextMenuItem = menuItems[menuItemsLength - 1];
-                this._activeContextMenuItem.setActive(true);
-                return;
-        }
-
-        if (!this._activeContextMenuItem) {
-            if (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter) {
-                button.activate();
-            } else {
-                this._activeContextMenuItem = menuItems[goUp ? menuItemsLength - 1 : minIndex];
-                this._activeContextMenuItem.setActive(true);
-            }
-            return;
-        } else if (this._activeContextMenuItem &&
-            (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter)) {
-            this._activeContextMenuItem.activate();
+    _contextMenuOpenStateChanged: function(menu) {
+        if (menu.isOpen) {
+            this._activeContextMenuParent = menu.sourceActor._delegate;
+            this._scrollToButton(menu);
+        } else {
             this._activeContextMenuItem = null;
+            this._activeContextMenuParent = null;
+            menu.sourceActor = null;
+        }
+    },
+
+    toggleContextMenu: function(button) {
+        if (!button.withMenu) {
             return;
         }
 
-        // DO NOT USE INVERSE LOOP HERE!!!
-        let i = minIndex;
-        for (; i < menuItemsLength; i++) {
-            if (menuItems[i] === this._activeContextMenuItem) {
-                let nextActiveIndex = (goUp ? i - 1 : i + 1);
+        if (!this.contextMenu) {
+            let menu = new PopupMenu.PopupSubMenu(null); // NOTE: creating without sourceActor.
+            menu.actor.set_style_class_name("menu-context-menu");
+            menu.connect("open-state-changed",
+                (aMenu) => this._contextMenuOpenStateChanged(aMenu));
+            this.contextMenu = menu;
+            this.applicationsBox.add_actor(menu.actor);
+        }
 
-                if (nextActiveIndex < minIndex) {
-                    nextActiveIndex = menuItemsLength - 1;
-                } else if (nextActiveIndex > menuItemsLength - 1) {
-                    nextActiveIndex = minIndex;
-                }
+        if (!this.contextMenu.isOpen) {
+            this.contextMenu.box.destroy_all_children();
+            this.applicationsBox.set_child_above_sibling(this.contextMenu.actor, button.actor);
+            this.contextMenu.sourceActor = button.actor;
+            button.populateMenu(this.contextMenu);
+        }
 
-                nextActive = menuItems[nextActiveIndex];
-                nextActive.setActive(true);
-                this._activeContextMenuItem = nextActive;
+        this.contextMenu.toggle();
+    },
 
-                break;
+    _navigateContextMenu: function(button, symbol, ctrlKey) {
+        try {
+            if (symbol === Clutter.KEY_Menu || symbol === Clutter.Escape ||
+                (ctrlKey && (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter))) {
+                this.toggleContextMenu(button);
+                return;
             }
+
+            let minIndex = 0;
+            let goUp = symbol === Clutter.KEY_Up;
+            let nextActive = null;
+            let menuItems = this.contextMenu._getMenuItems(); // The context menu items
+            let menuItemsLength = menuItems.length;
+
+            switch (symbol) {
+                case Clutter.KEY_Page_Up:
+                    this._activeContextMenuItem = menuItems[minIndex];
+                    this._activeContextMenuItem.setActive(true);
+                    return;
+                case Clutter.KEY_Page_Down:
+                    this._activeContextMenuItem = menuItems[menuItemsLength - 1];
+                    this._activeContextMenuItem.setActive(true);
+                    return;
+            }
+
+            if (!this._activeContextMenuItem) {
+                if (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter) {
+                    button.activate();
+                } else {
+                    this._activeContextMenuItem = menuItems[goUp ? menuItemsLength - 1 : minIndex];
+                    this._activeContextMenuItem.setActive(true);
+                }
+                return;
+            } else if (this._activeContextMenuItem &&
+                (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter)) {
+                this._activeContextMenuItem.activate();
+                this._activeContextMenuItem = null;
+                return;
+            }
+
+            // DO NOT USE INVERSE LOOP HERE!!!
+            let i = minIndex;
+            for (; i < menuItemsLength; i++) {
+                if (menuItems[i] === this._activeContextMenuItem) {
+                    let nextActiveIndex = (goUp ? i - 1 : i + 1);
+
+                    if (nextActiveIndex < minIndex) {
+                        nextActiveIndex = menuItemsLength - 1;
+                    } else if (nextActiveIndex > menuItemsLength - 1) {
+                        nextActiveIndex = minIndex;
+                    }
+
+                    nextActive = menuItems[nextActiveIndex];
+                    nextActive.setActive(true);
+                    this._activeContextMenuItem = nextActive;
+
+                    break;
+                }
+            }
+        } catch (aErr) {
+            global.logError(aErr);
         }
     },
 
@@ -749,9 +792,8 @@ CinnamonMenuForkByOdyseus.prototype = {
         let ctrlKey = modifierState & Clutter.ModifierType.CONTROL_MASK;
 
         // If a context menu is open, hijack keyboard navigation and concentrate on the context menu.
-        if (this._activeContextMenuParent && this._activeContextMenuParent._contextIsOpen &&
-            this._activeContainer === this.applicationsBox &&
-            (this._activeContextMenuParent instanceof $.GenericApplicationButton)) {
+        if (this._activeContextMenuParent &&
+            this._activeContainer === this.applicationsBox) {
             let continueNavigation = false;
             switch (symbol) {
                 case Clutter.KEY_Up:
@@ -771,7 +813,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                     continueNavigation = true;
 
                     if (symbol === Clutter.Tab || symbol === Clutter.ISO_Left_Tab) {
-                        this.closeContextMenus(null, false);
+                        this.closeContextMenu(false);
                     }
                     break;
             }
@@ -808,11 +850,9 @@ CinnamonMenuForkByOdyseus.prototype = {
                         whichWay = this.pref_swap_categories_box ? "left" : "right";
                         break;
                     case this.categoriesBox:
-                        let catBtn = this.categoriesBox.get_child_at_index(index)._delegate;
-                        let isRecentAppsCatButton = catBtn.hasOwnProperty("category_id") &&
-                            catBtn.category_id === this.recentAppsCatName;
-
-                        if (isRecentAppsCatButton && this.recentAppsManager.recentApps.length === 0) {
+                        if (this.categoriesBox.get_child_at_index(index)
+                            ._delegate.categoryId === this.recentAppsCatName &&
+                            this.recentAppsManager.recentApps.length === 0) {
                             whichWay = "none";
                         } else {
                             whichWay = this.pref_swap_categories_box ? "right" : "left";
@@ -821,8 +861,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                     case this.customLaunchersBox:
                         whichWay = "jump-right";
                         break;
-                    case null:
-                        whichWay = "none";
+                    default:
                         break;
                 }
                 break;
@@ -838,11 +877,9 @@ CinnamonMenuForkByOdyseus.prototype = {
                         whichWay = this.pref_swap_categories_box ? "left" : "right";
                         break;
                     case this.categoriesBox:
-                        let catBtn = this.categoriesBox.get_child_at_index(index)._delegate;
-                        let isRecentAppsCatButton = catBtn.hasOwnProperty("category_id") &&
-                            catBtn.category_id === this.recentAppsCatName;
-
-                        if (isRecentAppsCatButton && this.recentAppsManager.recentApps.length === 0) {
+                        if (this.categoriesBox.get_child_at_index(index)
+                            ._delegate.categoryId === this.recentAppsCatName &&
+                            this.recentAppsManager.recentApps.length === 0) {
                             whichWay = "none";
                         } else {
                             whichWay = this.pref_swap_categories_box ? "left" : "right";
@@ -851,9 +888,9 @@ CinnamonMenuForkByOdyseus.prototype = {
                     case this.customLaunchersBox:
                         whichWay = "jump-left";
                         break;
-                    case null:
-                        whichWay = "none";
+                    default:
                         break;
+
                 }
                 break;
             case Clutter.Tab:
@@ -868,6 +905,18 @@ CinnamonMenuForkByOdyseus.prototype = {
                 navigationKey = false;
         }
 
+        // Do not navigate to the empty search results button!!! SHEESH!!!
+        switch (whichWay) {
+            case "up":
+            case "down":
+            case "top":
+            case "bottom":
+                if (this.searchActive && this._searchResultsLength === 0) {
+                    navigationKey = false;
+                }
+                break;
+        }
+
         if (navigationKey) {
             switch (this._activeContainer) {
                 case null:
@@ -879,33 +928,33 @@ CinnamonMenuForkByOdyseus.prototype = {
                         case "up":
                             this._activeContainer = this.categoriesBox;
                             item_actor = this.catBoxIter.getLastVisible();
-                            this._scrollToButton(this.appBoxIter.getFirstVisible()._delegate);
+                            this._scrollToButton();
                             break;
                         case "down":
                             this._activeContainer = this.categoriesBox;
                             item_actor = this.catBoxIter.getFirstVisible();
                             item_actor = this.catBoxIter.getNextVisible(item_actor);
-                            this._scrollToButton(this.appBoxIter.getFirstVisible()._delegate);
+                            this._scrollToButton();
                             break;
                         case "right":
                             this._activeContainer = this.applicationsBox;
                             item_actor = this.appBoxIter.getFirstVisible();
-                            this._scrollToButton(item_actor._delegate);
+                            this._scrollToButton();
                             break;
                         case "left":
                             this._activeContainer = this.applicationsBox;
                             item_actor = this.appBoxIter.getFirstVisible();
-                            this._scrollToButton(item_actor._delegate);
+                            this._scrollToButton();
                             break;
                         case "top":
                             this._activeContainer = this.categoriesBox;
                             item_actor = this.catBoxIter.getFirstVisible();
-                            this._scrollToButton(this.appBoxIter.getFirstVisible()._delegate);
+                            this._scrollToButton();
                             break;
                         case "bottom":
                             this._activeContainer = this.categoriesBox;
                             item_actor = this.catBoxIter.getLastVisible();
-                            this._scrollToButton(this.appBoxIter.getFirstVisible()._delegate);
+                            this._scrollToButton();
                             break;
                     }
                     break;
@@ -940,13 +989,13 @@ CinnamonMenuForkByOdyseus.prototype = {
                             this._previousTreeSelectedActor = this.categoriesBox.get_child_at_index(index);
                             this._previousTreeSelectedActor._delegate.isHovered = false;
                             item_actor = this.catBoxIter.getPrevVisible(this._activeActor);
-                            this._scrollToButton(this.appBoxIter.getFirstVisible()._delegate);
+                            this._scrollToButton();
                             break;
                         case "down":
                             this._previousTreeSelectedActor = this.categoriesBox.get_child_at_index(index);
                             this._previousTreeSelectedActor._delegate.isHovered = false;
                             item_actor = this.catBoxIter.getNextVisible(this._activeActor);
-                            this._scrollToButton(this.appBoxIter.getFirstVisible()._delegate);
+                            this._scrollToButton();
                             break;
                         case "right":
                             item_actor = (this._previousVisibleIndex !== null) ?
@@ -962,13 +1011,13 @@ CinnamonMenuForkByOdyseus.prototype = {
                             this._previousTreeSelectedActor = this.categoriesBox.get_child_at_index(index);
                             this._previousTreeSelectedActor._delegate.isHovered = false;
                             item_actor = this.catBoxIter.getFirstVisible();
-                            this._scrollToButton(this.appBoxIter.getFirstVisible()._delegate);
+                            this._scrollToButton();
                             break;
                         case "bottom":
                             this._previousTreeSelectedActor = this.categoriesBox.get_child_at_index(index);
                             this._previousTreeSelectedActor._delegate.isHovered = false;
                             item_actor = this.catBoxIter.getLastVisible();
-                            this._scrollToButton(this.appBoxIter.getFirstVisible()._delegate);
+                            this._scrollToButton();
                             break;
                     }
                     break;
@@ -983,13 +1032,13 @@ CinnamonMenuForkByOdyseus.prototype = {
                             this._previousSelectedActor = this.applicationsBox.get_child_at_index(index);
                             item_actor = this.appBoxIter.getPrevVisible(this._previousSelectedActor);
                             this._previousVisibleIndex = this.appBoxIter.getVisibleIndex(item_actor);
-                            this._scrollToButton(item_actor._delegate);
+                            this._scrollToButton();
                             break;
                         case "down":
                             this._previousSelectedActor = this.applicationsBox.get_child_at_index(index);
                             item_actor = this.appBoxIter.getNextVisible(this._previousSelectedActor);
                             this._previousVisibleIndex = this.appBoxIter.getVisibleIndex(item_actor);
-                            this._scrollToButton(item_actor._delegate);
+                            this._scrollToButton();
                             break;
                         case "right":
                             this._previousSelectedActor = this.applicationsBox.get_child_at_index(index);
@@ -1009,12 +1058,12 @@ CinnamonMenuForkByOdyseus.prototype = {
                         case "top":
                             item_actor = this.appBoxIter.getFirstVisible();
                             this._previousVisibleIndex = this.appBoxIter.getVisibleIndex(item_actor);
-                            this._scrollToButton(item_actor._delegate);
+                            this._scrollToButton();
                             break;
                         case "bottom":
                             item_actor = this.appBoxIter.getLastVisible();
                             this._previousVisibleIndex = this.appBoxIter.getVisibleIndex(item_actor);
-                            this._scrollToButton(item_actor._delegate);
+                            this._scrollToButton();
                             break;
                     }
                     break;
@@ -1032,16 +1081,12 @@ CinnamonMenuForkByOdyseus.prototype = {
                     item_actor._delegate.activate();
                 } else if (ctrlKey && this._activeContainer === this.applicationsBox) {
                     item_actor = this.applicationsBox.get_child_at_index(this._selectedItemIndex);
-                    if (item_actor._delegate instanceof $.GenericApplicationButton) {
-                        item_actor._delegate.activateContextMenus();
-                    }
+                    this.toggleContextMenu(item_actor._delegate);
                 }
                 return true;
             } else if (this._activeContainer === this.applicationsBox && symbol === Clutter.KEY_Menu) {
                 item_actor = this.applicationsBox.get_child_at_index(this._selectedItemIndex);
-                if (item_actor._delegate instanceof $.GenericApplicationButton) {
-                    item_actor._delegate.activateContextMenus();
-                }
+                this.toggleContextMenu(item_actor._delegate);
                 return true;
             } else if (symbol === Clutter.Tab || symbol === Clutter.ISO_Left_Tab) {
                 return true;
@@ -1056,46 +1101,83 @@ CinnamonMenuForkByOdyseus.prototype = {
             return false;
         }
 
-        item_actor._delegate.emit("enter-event");
+        this._buttonEnterEvent(item_actor._delegate);
         return true;
     },
 
-    _addEnterEvent: function(button, callback) {
-        let _callback = () => {
-            let parent = button.actor.get_parent();
-            if (this._activeContainer === this.categoriesBox && parent !== this._activeContainer) {
-                this._previousTreeSelectedActor = this._activeActor;
-                this._previousSelectedActor = null;
-            }
-            if (this._previousTreeSelectedActor && this._activeContainer !== this.categoriesBox &&
-                parent !== this._activeContainer && button !== this._previousTreeSelectedActor && !this.searchActive) {
-                this._previousTreeSelectedActor.style_class = "menu-category-button";
-            }
-            if (parent !== this._activeContainer) {
-                parent._vis_iter.reloadVisible();
-            }
-            let _maybePreviousActor = this._activeActor;
-            if (_maybePreviousActor && this._activeContainer !== this.categoriesBox) {
-                this._previousSelectedActor = _maybePreviousActor;
-                this._clearPrevSelection();
-            }
-            if (parent === this.categoriesBox && !this.searchActive) {
-                this._previousSelectedActor = _maybePreviousActor;
-                this._clearPrevCatSelection();
-            }
-            this._activeContainer = parent;
-            this._activeActor = button.actor;
+    _buttonEnterEvent: function(aButton) {
+        let parent = aButton.actor.get_parent();
+        if (this._activeContainer === this.categoriesBox && parent !== this._activeContainer) {
+            this._previousTreeSelectedActor = this._activeActor;
+            this._previousSelectedActor = null;
+        }
+        if (this._previousTreeSelectedActor && this._activeContainer !== this.categoriesBox &&
+            parent !== this._activeContainer && aButton !== this._previousTreeSelectedActor && !this.searchActive) {
+            this._previousTreeSelectedActor.style_class = "menu-category-button";
+        }
+        if (parent !== this._activeContainer && parent._vis_iter) {
+            parent._vis_iter.reloadVisible();
+        }
+        let _maybePreviousActor = this._activeActor;
+        if (_maybePreviousActor && this._activeContainer !== this.categoriesBox) {
+            this._previousSelectedActor = _maybePreviousActor;
+            this._clearPrevSelection();
+        }
+        if (parent === this.categoriesBox && !this.searchActive) {
+            this._previousSelectedActor = _maybePreviousActor;
+            this._clearPrevCatSelection();
+        }
+        this._activeContainer = parent;
+        this._activeActor = aButton.actor;
+
+        if (this._activeContainer._vis_iter) {
             this._selectedItemIndex = this._activeContainer._vis_iter.getAbsoluteIndexOfChild(this._activeActor);
-            callback();
-        };
-        button.connect("enter-event", _callback);
-        button.actor.connect("enter-event", _callback);
+        }
+
+        // Callback
+        if (aButton instanceof $.CategoryButton) {
+            if (this.searchActive) {
+                return;
+            }
+
+            aButton.isHovered = true;
+            this._clearPrevCatSelection(aButton.actor);
+            this.closeContextMenu(false);
+            this._selectCategory(aButton.categoryId);
+            this.makeVectorBox(aButton.actor);
+        } else {
+            this._previousVisibleIndex = parent._vis_iter.getVisibleIndex(aButton.actor);
+            this._clearPrevSelection(aButton.actor);
+        }
+
+        aButton.actor.set_style_class_name("%s-selected".format(aButton.styleClass));
+    },
+
+    _buttonLeaveEvent: function(aButton) {
+        if (aButton instanceof $.CategoryButton) {
+            if (this._previousTreeSelectedActor === null) {
+                this._previousTreeSelectedActor = aButton.actor;
+            } else {
+                let prevIdx = this.catBoxIter.getVisibleIndex(this._previousTreeSelectedActor);
+                let nextIdx = this.catBoxIter.getVisibleIndex(aButton.actor);
+
+                if (Math.abs(prevIdx - nextIdx) <= 1) {
+                    this._previousTreeSelectedActor = aButton.actor;
+                }
+            }
+            aButton.isHovered = false;
+        } else {
+            this._previousSelectedActor = aButton.actor;
+
+            // Category unselects are handled when the category actually changes
+            aButton.actor.set_style_class_name(aButton.styleClass);
+        }
     },
 
     _clearPrevSelection: function(actor) {
         if (this._previousSelectedActor && this._previousSelectedActor !== actor) {
             if (this._previousSelectedActor._delegate instanceof $.GenericApplicationButton ||
-                this._previousSelectedActor._delegate instanceof $.RecentAppsClearButton ||
+                this._previousSelectedActor._delegate === this.recentAppsClearButton ||
                 this._previousSelectedActor._delegate instanceof $.CustomCommandButton) {
                 this._previousSelectedActor.style_class = "menu-application-button";
             }
@@ -1107,7 +1189,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             this._previousTreeSelectedActor.style_class = "menu-category-button";
 
             if (this._previousTreeSelectedActor._delegate) {
-                this._previousTreeSelectedActor._delegate.emit("leave-event");
+                this._buttonLeaveEvent(this._previousTreeSelectedActor._delegate);
             }
 
             if (actor !== undefined) {
@@ -1171,6 +1253,7 @@ CinnamonMenuForkByOdyseus.prototype = {
 
         this.vectorBox = new St.Polygon({
             debug: false,
+            reactive: true,
             width: vi.w,
             height: vi.h,
             ulc_x: vi.mx,
@@ -1184,10 +1267,6 @@ CinnamonMenuForkByOdyseus.prototype = {
         });
 
         this.categoriesOverlayBox.add_actor(this.vectorBox);
-
-        this.vectorBox.show();
-        this.vectorBox.set_reactive(true);
-
         this.vectorBox.connect("leave-event", () => this.destroyVectorBox());
         this.vectorBox.connect("motion-event", () => this.maybeUpdateVectorBox());
         this.actor_motion_id = actor.connect("motion-event", () => this.maybeUpdateVectorBox());
@@ -1234,7 +1313,7 @@ CinnamonMenuForkByOdyseus.prototype = {
         if (!this.pref_recently_used_apps_enabled) {
             let c = this._categoryButtons.length;
             while (c--) {
-                if (this._categoryButtons[c].category_id === this.recentAppsCatName) {
+                if (this._categoryButtons[c].categoryId === this.recentAppsCatName) {
                     this._categoryButtons[c].actor.destroy();
                     this._categoryButtons.splice(c, 1);
                     break;
@@ -1250,7 +1329,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             // recentApplications will be sorted anyways.
             let i = this._applicationsButtons.length;
             while (i--) {
-                if (this._applicationsButtons[i].buttonType === "app") {
+                if (this._applicationsButtons[i].type === "app") {
                     let c = this.recentAppsManager.recentApps.length;
                     while (c--) {
                         let [recAppID, recLastAccess] = this.recentAppsManager.recentApps[c].split(":");
@@ -1308,70 +1387,30 @@ CinnamonMenuForkByOdyseus.prototype = {
     },
 
     _refreshApps: function() {
-        // Iterate in reverse, so multiple splices will not upset
-        // the remaining elements
-        let c = this._categoryButtons.length;
-        while (c--) {
-            if (this._categoryButtons[c] instanceof $.CategoryButton) {
-                this._categoryButtons[c].destroy();
-                this._categoryButtons.splice(c, 1);
+        try {
+            // Iterate in reverse, so multiple splices will not upset
+            // the remaining elements
+            let c = this._categoryButtons.length;
+            while (c--) {
+                if (this._categoryButtons[c] instanceof $.CategoryButton) {
+                    this._categoryButtons[c].destroy();
+                    this._categoryButtons.splice(c, 1);
+                }
             }
-        }
 
-        let a = this._applicationsButtons.length;
-        while (a--) {
-            this._applicationsButtons[a].destroy();
-            this._applicationsButtons.splice(a, 1);
-        }
-
-        this._applicationsButtons = [];
-        this._applicationsButtonFromApp = {};
-        this._applicationsBoxWidth = 0;
-        this._searchDatabase = [];
-
-        let favCat = {
-            get_menu_id: () => {
-                return this.favoritesCatName;
-            },
-            get_id: () => {
-                return -1;
-            },
-            get_description: () => {
-                return this.get_name();
-            },
-            get_name: () => {
-                return _("Favorites");
-            },
-            get_is_nodisplay: () => {
-                return false;
-            },
-            get_icon: () => {
-                return "user-bookmarks";
+            let a = this._applicationsButtons.length;
+            while (a--) {
+                this._applicationsButtons[a].destroy();
+                this._applicationsButtons.splice(a, 1);
             }
-        };
 
-        this._favoritesCategoryButton = new $.CategoryButton(this, favCat);
-        this._addEnterEvent(this._favoritesCategoryButton, () => {
-            this._favoritesCategoryButton.isHovered = true;
+            this._applicationsButtons = [];
+            this._applicationsButtonFromApp = {};
+            this._searchDatabase = [];
 
-            this._clearPrevCatSelection(this._favoritesCategoryButton.actor);
-            this._favoritesCategoryButton.actor.style_class = "menu-category-button-selected";
-            this._selectCategory(this.favoritesCatName);
-
-            this.makeVectorBox(this._favoritesCategoryButton.actor);
-        });
-        this._favoritesCategoryButton.actor.connect("leave-event", () => {
-            this._previousSelectedActor = this._favoritesCategoryButton.actor;
-            this._favoritesCategoryButton.isHovered = false;
-        });
-
-        this.categoriesBox.add_actor(this._favoritesCategoryButton.actor);
-        this._categoryButtons.push(this._favoritesCategoryButton);
-
-        if (this.pref_recently_used_apps_enabled) {
-            let recentAppsCat = {
+            let favCat = {
                 get_menu_id: () => {
-                    return this.recentAppsCatName;
+                    return this.favoritesCatName;
                 },
                 get_id: () => {
                     return -1;
@@ -1380,232 +1419,252 @@ CinnamonMenuForkByOdyseus.prototype = {
                     return this.get_name();
                 },
                 get_name: () => {
-                    return _("Recent Applications");
+                    return _("Favorites");
                 },
                 get_is_nodisplay: () => {
                     return false;
                 },
                 get_icon: () => {
-                    return "folder-recent";
+                    return "user-bookmarks";
                 }
             };
 
-            this.recentAppsCatButton = new $.CategoryButton(this, recentAppsCat);
-            this._addEnterEvent(this.recentAppsCatButton, () => {
-                this.recentAppsCatButton.isHovered = true;
+            let favoritesCategoryButton = new $.CategoryButton(this, favCat);
+            this.categoriesBox.add_actor(favoritesCategoryButton.actor);
+            this._categoryButtons.push(favoritesCategoryButton);
 
-                this._clearPrevCatSelection(this.recentAppsCatButton.actor);
-                this.recentAppsCatButton.actor.style_class = "menu-category-button-selected";
-                this._selectCategory(this.recentAppsCatName);
-
-                this.makeVectorBox(this.recentAppsCatButton.actor);
-            });
-
-            this.recentAppsCatButton.actor.connect("leave-event", () => {
-                this._previousSelectedActor = this.recentAppsCatButton.actor;
-                this.recentAppsCatButton.isHovered = false;
-            });
-            this.categoriesBox.add_actor(this.recentAppsCatButton.actor);
-            this._categoryButtons.push(this.recentAppsCatButton);
-        }
-
-        let handleEnterEvent = (categoryButton, dir) => {
-            this._addEnterEvent(categoryButton, () => {
-                categoryButton.isHovered = true;
-
-                this._clearPrevCatSelection(categoryButton.actor);
-                categoryButton.actor.style_class = "menu-category-button-selected";
-                this._selectCategory(dir.get_menu_id());
-
-                this.makeVectorBox(categoryButton.actor);
-            });
-        };
-
-        let handleLeaveEvent = (categoryButton, dir) => { // jshint ignore:line
-            categoryButton.actor.connect("leave-event", () => {
-                if (this._previousTreeSelectedActor === null) {
-                    this._previousTreeSelectedActor = categoryButton.actor;
-                } else {
-                    let prevIdx = this.catBoxIter.getVisibleIndex(this._previousTreeSelectedActor);
-                    let nextIdx = this.catBoxIter.getVisibleIndex(categoryButton.actor);
-                    if (Math.abs(prevIdx - nextIdx) <= 1) {
-                        this._previousTreeSelectedActor = categoryButton.actor;
+            if (this.pref_recently_used_apps_enabled) {
+                let recentAppsCat = {
+                    get_menu_id: () => {
+                        return this.recentAppsCatName;
+                    },
+                    get_id: () => {
+                        return -1;
+                    },
+                    get_description: () => {
+                        return this.get_name();
+                    },
+                    get_name: () => {
+                        return _("Recently Used");
+                    },
+                    get_is_nodisplay: () => {
+                        return false;
+                    },
+                    get_icon: () => {
+                        return "folder-recent";
                     }
+                };
+
+                let recentAppsCatButton = new $.CategoryButton(this, recentAppsCat);
+                this.categoriesBox.add_actor(recentAppsCatButton.actor);
+                this._categoryButtons.push(recentAppsCatButton);
+
+                this.pref_recently_used_apps_show_separator &&
+                    this.categoriesBox.add_actor(new PopupMenu.PopupSeparatorMenuItem().actor);
+            }
+
+            if (this.pref_show_all_applications_category) {
+                let allAppsCat = {
+                    get_menu_id: () => {
+                        return this.allAppsCatName;
+                    },
+                    get_id: () => {
+                        return -1;
+                    },
+                    get_description: () => {
+                        return this.get_name();
+                    },
+                    get_name: () => {
+                        return _("All Applications");
+                    },
+                    get_is_nodisplay: () => {
+                        return false;
+                    },
+                    get_icon: () => {
+                        return "applications-other";
+                    }
+                };
+
+                let allAppsCatButton = new $.CategoryButton(this, allAppsCat);
+                this.categoriesBox.add_actor(allAppsCatButton.actor);
+                this._categoryButtons.push(allAppsCatButton);
+            }
+
+            let tree = new CMenu.Tree({
+                menu_basename: "cinnamon-applications.menu"
+            });
+            tree.load_sync();
+            let root = tree.get_root_directory();
+            let dirs = [];
+            let iter = root.iter();
+            let nextType;
+
+            while ((nextType = iter.next()) !== CMenu.TreeItemType.INVALID) {
+                if (nextType === CMenu.TreeItemType.DIRECTORY) {
+                    dirs.push(iter.get_directory());
                 }
-                categoryButton.isHovered = false;
-            });
-        };
-
-        let tree = new CMenu.Tree({
-            menu_basename: "cinnamon-applications.menu"
-        });
-        tree.load_sync();
-        let root = tree.get_root_directory();
-        let dirs = [];
-        let iter = root.iter();
-        let nextType;
-
-        while ((nextType = iter.next()) !== CMenu.TreeItemType.INVALID) {
-            if (nextType === CMenu.TreeItemType.DIRECTORY) {
-                dirs.push(iter.get_directory());
-            }
-        }
-
-        dirs = dirs.sort((x, y) => {
-            let prefIdA = ["administration", "preferences"].indexOf(x.get_menu_id().toLowerCase());
-            let prefIdB = ["administration", "preferences"].indexOf(y.get_menu_id().toLowerCase());
-
-            if (prefIdA < 0 && prefIdB >= 0) {
-                return -1;
-            }
-            if (prefIdA >= 0 && prefIdB < 0) {
-                return 1;
             }
 
-            let nameA = x.get_name().toLowerCase();
-            let nameB = y.get_name().toLowerCase();
+            dirs = dirs.sort((x, y) => {
+                let prefIdA = ["administration", "preferences"].indexOf(x.get_menu_id().toLowerCase());
+                let prefIdB = ["administration", "preferences"].indexOf(y.get_menu_id().toLowerCase());
 
-            if (nameA > nameB) {
-                return 1;
-            }
-            if (nameA < nameB) {
-                return -1;
-            }
-            return 0;
-        });
+                if (prefIdA < 0 && prefIdB >= 0) {
+                    return -1;
+                }
+                if (prefIdA >= 0 && prefIdB < 0) {
+                    return 1;
+                }
 
-        // DO NOT USE INVERSE LOOP HERE!!!
-        let d = 0,
-            dLen = dirs.length;
-        for (; d < dLen; d++) {
-            if (dirs[d].get_is_nodisplay()) {
-                continue;
-            }
-            if (this._loadCategory(dirs[d])) {
-                let categoryButton = new $.CategoryButton(this, dirs[d]);
-                handleEnterEvent(categoryButton, dirs[d]);
-                handleLeaveEvent(categoryButton, dirs[d]);
+                let nameA = x.get_name().toLowerCase();
+                let nameB = y.get_name().toLowerCase();
 
-                this._categoryButtons.push(categoryButton);
-                this.categoriesBox.add_actor(categoryButton.actor);
-            }
-        }
-
-        // Sort apps and add to applicationsBox.
-        // At this point, this._applicationsButtons only contains "pure"
-        // application buttons.
-        this._applicationsButtons.sort((a, b) => {
-            a = Util.latinise(a.app.get_name().toLowerCase());
-            b = Util.latinise(b.app.get_name().toLowerCase());
-            return a > b;
-        });
-
-        /* NOTE:
-         * From this point on, insertion order into this._applicationsButtons matters.
-         */
-        this.searchResultsEmptyButton = new $.GenericButton(this, {
-            label: _("No search results"),
-            button_type: "search_result"
-        });
-        this._applicationsButtons.push(this.searchResultsEmptyButton);
-
-        // Add search result buttons here.
-        let s = this.pref_max_search_results;
-        while (s--) {
-            let searchResultButton = new $.DummyApplicationButton(this, "search_result",
-                this.pref_search_result_icon_size);
-            this._handleButtonEnterEvent(searchResultButton);
-            this._handleButtonLeaveEvent(searchResultButton);
-            this._applicationsButtons.push(searchResultButton);
-        }
-
-        // Add recent apps buttons here.
-        if (this.pref_recently_used_apps_enabled) {
-            this.recentAppsEmptyButton = new $.GenericButton(this, {
-                label: _("No recent applications"),
-                button_type: "recent_application"
-            });
-            this._applicationsButtons.push(this.recentAppsEmptyButton);
-
-            this.recentAppsClearButton = new $.RecentAppsClearButton(this);
-            this._addEnterEvent(this.recentAppsClearButton, () => {
-                this._clearPrevSelection(this.recentAppsClearButton.actor);
-                this.recentAppsClearButton.actor.style_class = "menu-application-button-selected";
-            });
-            this.recentAppsClearButton.actor.connect("leave-event", () => {
-                this.recentAppsClearButton.actor.style_class = "menu-application-button";
-                this._previousSelectedActor = this.recentAppsClearButton.actor;
+                if (nameA > nameB) {
+                    return 1;
+                }
+                if (nameA < nameB) {
+                    return -1;
+                }
+                return 0;
             });
 
-            if (this.pref_recently_used_apps_invert_order) {
-                this._applicationsButtons.push(this.recentAppsClearButton);
+            // DO NOT USE INVERSE LOOP HERE!!!
+            let d = 0,
+                dLen = dirs.length;
+            for (; d < dLen; d++) {
+                if (dirs[d].get_is_nodisplay()) {
+                    continue;
+                }
+                if (this._loadCategory(dirs[d])) {
+                    let categoryButton = new $.CategoryButton(this, dirs[d]);
+                    this._categoryButtons.push(categoryButton);
+                    this.categoriesBox.add_actor(categoryButton.actor);
+                }
             }
 
-            let r = this.pref_recently_used_apps_max_amount;
-            while (r--) {
-                let recentAppButton = new $.DummyApplicationButton(this,
-                    "recent_application",
-                    this.pref_application_icon_size);
-                this._handleButtonEnterEvent(recentAppButton);
-                this._handleButtonLeaveEvent(recentAppButton);
-                this._applicationsButtons.push(recentAppButton);
-            }
+            // Sort apps and add to applicationsBox.
+            // At this point, this._applicationsButtons only contains "pure"
+            // application buttons.
+            this._applicationsButtons.sort((a, b) => {
+                a = Util.latinise(a.app.get_name().toLowerCase());
+                b = Util.latinise(b.app.get_name().toLowerCase());
+                return a > b;
+            });
 
-            if (!this.pref_recently_used_apps_invert_order) {
-                this._applicationsButtons.push(this.recentAppsClearButton);
-            }
-        }
+            /* NOTE:
+             * From this point on, insertion order into this._applicationsButtons matters.
+             */
+            this.searchResultsEmptyButton = new $.SimpleMenuItem(this, {
+                reactive: false,
+                activatable: false,
+                name: _("No search results"),
+                styleClass: "menu-application-button",
+                type: "search_result"
+            });
+            this.searchResultsEmptyButton.addLabel(this.searchResultsEmptyButton.name);
+            this._applicationsButtons.push(this.searchResultsEmptyButton);
 
-        // "Multipurpose" loop.
-        // DO NOT USE INVERSE LOOP HERE!!!
-        let i = 0,
-            iLen = this._applicationsButtons.length;
-        for (; i < iLen; i++) {
-            let button = this._applicationsButtons[i];
-            // Add button to menu.
-            this.applicationsBox.add_actor(button.actor);
-
-            // Add menu, if any. Check for menu existence instead of creating dummy
-            // menus for buttons that doesn't need one.
-            if (button.hasOwnProperty("menu")) {
-                this.applicationsBox.add_actor(button.menu.actor);
-            }
-
-            // Handle only "pure" application buttons.
-            if (button.buttonType === "app") {
-                // Set the tooltip here because at this point is when the category
-                // property of a button contains all categories an app. belongs to.
-                this._setSelectedItemTooltip(
-                    button,
-                    button.app.get_name(),
-                    button.app.get_description() || "",
-                    button.category
+            // Add search result buttons here.
+            let s = this.pref_max_search_results;
+            while (s--) {
+                let searchResultButton = new $.DummyApplicationButton(this,
+                    "search_result",
+                    this.pref_search_result_icon_size
                 );
-
-                // Store search data.
-                this._storeAppSearchData(button.app, button.category);
+                this._applicationsButtons.push(searchResultButton);
             }
+
+            // Add recent apps buttons here.
+            if (this.pref_recently_used_apps_enabled) {
+                this.recentAppsEmptyButton = new $.SimpleMenuItem(this, {
+                    reactive: false,
+                    activatable: false,
+                    name: _("No recent applications"),
+                    styleClass: "menu-application-button",
+                    type: "recent_application"
+                });
+                this.recentAppsEmptyButton.addLabel(this.recentAppsEmptyButton.name);
+                this._applicationsButtons.push(this.recentAppsEmptyButton);
+
+                this.recentAppsClearButton = new $.SimpleMenuItem(this, {
+                    name: _("Clear list"),
+                    styleClass: "menu-application-button",
+                    type: "recent_application"
+                });
+                this.recentAppsClearButton.addIcon(this.pref_application_icon_size,
+                    "edit-clear", true);
+                this.recentAppsClearButton.addLabel(this.recentAppsClearButton.name);
+                this.recentAppsClearButton.activate = () => {
+                    this.closeMainMenu();
+                    this.recentAppsManager.recentApps = [];
+                    this._refreshRecentApps();
+                };
+
+                if (this.pref_recently_used_apps_invert_order) {
+                    this._applicationsButtons.push(this.recentAppsClearButton);
+                }
+
+                let r = this.pref_recently_used_apps_max_amount;
+                while (r--) {
+                    let recentAppButton = new $.DummyApplicationButton(this,
+                        "recent_application",
+                        this.pref_application_icon_size
+                    );
+                    this._applicationsButtons.push(recentAppButton);
+                }
+
+                if (!this.pref_recently_used_apps_invert_order) {
+                    this._applicationsButtons.push(this.recentAppsClearButton);
+                }
+            }
+
+            // "Multipurpose" loop.
+            // DO NOT USE INVERSE LOOP HERE!!!
+            let i = 0,
+                iLen = this._applicationsButtons.length;
+            for (; i < iLen; i++) {
+                let button = this._applicationsButtons[i];
+                // Add button to menu.
+                this.applicationsBox.add_actor(button.actor);
+
+                // Handle only "pure" application buttons.
+                if (button.type === "app") {
+                    // Set the tooltip here because at this point is when the category
+                    // property of a button contains all categories an app. belongs to.
+                    this._setSelectedItemTooltip(
+                        button,
+                        button.app.get_name(),
+                        button.app.get_description() || "",
+                        button.category
+                    );
+
+                    // Store search data.
+                    this._storeAppSearchData(button.app, button.category);
+                }
+            }
+
+            this._setStyling();
+
+            Mainloop.idle_add(() => {
+                // Store at menu build time the search results and recent apps. buttons.
+                this._searchResultButtons = this._applicationsButtons.filter((x) => {
+                    return x.type === "search_result" &&
+                        x instanceof $.DummyApplicationButton;
+                });
+
+                this._recentAppsButtons = this._applicationsButtons.filter((x) => {
+                    return x.type === "recent_application" &&
+                        x instanceof $.DummyApplicationButton;
+                });
+
+                // Lets hope that reassigning this property eradicates from memory
+                // its original and never to be used again content. ¬¬
+                this._applicationsButtonFromApp = {};
+                this._refreshRecentApps();
+            });
+        } catch (aErr) {
+            global.logError(aErr);
         }
-
-        this._setStyling();
-
-        Mainloop.idle_add(() => {
-            // Store at menu build time the search results and recent apps. buttons.
-            this._searchResultButtons = this._applicationsButtons.filter((x) => {
-                return x.buttonType === "search_result" &&
-                    x instanceof $.DummyApplicationButton;
-            });
-
-            this._recentAppsButtons = this._applicationsButtons.filter((x) => {
-                return x.buttonType === "recent_application" &&
-                    x instanceof $.DummyApplicationButton;
-            });
-
-            // Lets hope that reassigning this property eradicates from memory
-            // its original and never to be used again content. ¬¬
-            this._applicationsButtonFromApp = {};
-            this._refreshRecentApps();
-        });
     },
 
     _loadCategory: function(dir, top_dir) {
@@ -1633,9 +1692,6 @@ CinnamonMenuForkByOdyseus.prototype = {
 
                     if (!(app_key in this._applicationsButtonFromApp)) {
                         let applicationButton = new $.ApplicationButton(this, app);
-
-                        this._handleButtonEnterEvent(applicationButton);
-                        this._handleButtonLeaveEvent(applicationButton);
                         this._applicationsButtons.push(applicationButton);
                         applicationButton.category.push(top_dir.get_menu_id());
                         this._applicationsButtonFromApp[app_key] = applicationButton;
@@ -1653,48 +1709,31 @@ CinnamonMenuForkByOdyseus.prototype = {
         return has_entries;
     },
 
-    _handleButtonEnterEvent: function(aButton) {
-        this._addEnterEvent(aButton, () => {
-            this._appEnterEvent(aButton);
-        });
-    },
-
-    _handleButtonLeaveEvent: function(aButton) {
-        aButton.actor.connect("leave-event", (actor, event) => {
-            this._appLeaveEvent(actor, event, aButton);
-        });
-    },
-
-    _appLeaveEvent: function(actor, event, applicationButton) {
-        this._previousSelectedActor = applicationButton.actor;
-        applicationButton.actor.style_class = "menu-application-button";
-    },
-
-    _appEnterEvent: function(aApplicationButton) {
-        this._previousVisibleIndex = this.appBoxIter.getVisibleIndex(aApplicationButton.actor);
-        this._clearPrevSelection(aApplicationButton.actor);
-        aApplicationButton.actor.style_class = "menu-application-button-selected";
-    },
-
-    // Created a new exclusive function to avoid adding a condition to _appEnterEvent.
-    _customLauncherEnterEvent: function(aApplicationButton) {
-        this._previousVisibleIndex = this.customLaunchersBoxIter.getVisibleIndex(aApplicationButton.actor);
-        this._clearPrevSelection(aApplicationButton.actor);
-        aApplicationButton.actor.style_class = "menu-application-button-selected";
-    },
-
-    _scrollToButton: function(button) {
-        let current_scroll_value = this.applicationsScrollBox.get_vscroll_bar().get_adjustment().get_value();
-        let box_height = this.applicationsScrollBox.get_allocation_box().y2 - this.applicationsScrollBox.get_allocation_box().y1;
-        let new_scroll_value = current_scroll_value;
-        if (current_scroll_value > button.actor.get_allocation_box().y1 - 10) {
-            new_scroll_value = button.actor.get_allocation_box().y1 - 10;
+    _scrollToButton: function(button, scrollBox = null) {
+        if (!scrollBox) {
+            scrollBox = this.applicationsScrollBox;
         }
-        if (box_height + current_scroll_value < button.actor.get_allocation_box().y2 + 10) {
-            new_scroll_value = button.actor.get_allocation_box().y2 - box_height + 10;
-        }
-        if (new_scroll_value !== current_scroll_value) {
-            this.applicationsScrollBox.get_vscroll_bar().get_adjustment().set_value(new_scroll_value);
+
+        let adj = scrollBox.get_vscroll_bar().get_adjustment();
+        if (button) {
+            let box = scrollBox.get_allocation_box();
+            let boxHeight = box.y2 - box.y1;
+            let actorBox = button.actor.get_allocation_box();
+            let currentValue = adj.get_value();
+            let newValue = currentValue;
+
+            if (currentValue > actorBox.y1 - 10) {
+                newValue = actorBox.y1 - 10;
+            }
+            if (boxHeight + currentValue < actorBox.y2 + 10) {
+                newValue = actorBox.y2 - boxHeight + 10;
+            }
+
+            if (newValue != currentValue) {
+                adj.set_value(newValue);
+            }
+        } else {
+            adj.set_value(0);
         }
     },
 
@@ -1879,10 +1918,11 @@ CinnamonMenuForkByOdyseus.prototype = {
             "px; padding-bottom: " + this.pref_applications_box_padding_bottom +
             "px; padding-left: " + this.pref_applications_box_padding_left + "px;");
 
-        let searchEntryWidth = (this.applicationsBox.get_allocation_box().x2 -
-            this.applicationsBox.get_allocation_box().x1);
-        searchEntryWidth = searchEntryWidth + (this.categoriesBox.get_allocation_box().x2 -
-            this.categoriesBox.get_allocation_box().x1);
+        let appAllocBox = this.applicationsBox.get_allocation_box();
+        let catAllocBox = this.categoriesBox.get_allocation_box();
+
+        this.searchEntry.set_width((appAllocBox.x2 - appAllocBox.x1) +
+            (catAllocBox.x2 - catAllocBox.x1));
     },
 
     _updateCustomLaunchersBox: function() {
@@ -1890,6 +1930,20 @@ CinnamonMenuForkByOdyseus.prototype = {
         this.customLaunchersBoxIter = new $.VisibleChildIterator(this.customLaunchersBox);
         this.customLaunchersBox._vis_iter = this.customLaunchersBoxIter;
         let customLaunchers = this.pref_custom_launchers;
+        let customLaunchersModified = false;
+
+        customLaunchers = customLaunchers.map((aProps) =>{
+            if (!aProps.hasOwnProperty("enabled")) {
+                customLaunchersModified = true;
+                aProps["enabled"] = true;
+            }
+
+            return aProps;
+        });
+
+        if (customLaunchersModified) {
+            this.pref_custom_launchers = customLaunchers;
+        }
 
         // Non-inverted = The "first" button is the left-most one.
         // Inverted = The "first" button is the right-most one.
@@ -1899,23 +1953,11 @@ CinnamonMenuForkByOdyseus.prototype = {
             customLaunchers = customLaunchers.slice().reverse();
         }
 
-        let handleEnterEvent = (aButton) => {
-            this._addEnterEvent(aButton, () => {
-                this._customLauncherEnterEvent(aButton);
-            });
-        };
-
-        let handleLeaveEvent = (aButton) => {
-            aButton.actor.connect("leave-event", (actor, event) => {
-                this._appLeaveEvent(actor, event, aButton);
-            });
-        };
-
         let i = customLaunchers.length;
         while (i--) {
             let btn_props = customLaunchers[i];
 
-            if (btn_props["command"] === "" || btn_props["icon"] === "") {
+            if (btn_props["command"] === "" || btn_props["icon"] === "" || !btn_props["enabled"]) {
                 continue;
             }
 
@@ -1928,8 +1970,6 @@ CinnamonMenuForkByOdyseus.prototype = {
             };
 
             let button = new $.CustomCommandButton(this, app);
-            handleLeaveEvent(button);
-            handleEnterEvent(button);
             this._setSelectedItemTooltip(
                 button,
                 button.app.label,
@@ -1981,20 +2021,24 @@ CinnamonMenuForkByOdyseus.prototype = {
 
         this.lastSelectedCategory = aName;
         this._displayButtons(aName);
-        this.closeContextMenus(null, false);
+        this.closeContextMenu(false);
     },
 
-    closeContextMenus: function(excluded, animate) {
-        let i = this._applicationsButtons.length;
-        while (i--) {
-            if (this._applicationsButtons[i] !== excluded &&
-                this._applicationsButtons[i].hasOwnProperty("menu") &&
-                this._applicationsButtons[i].menu.isOpen) {
-                this._applicationsButtons[i][animate ?
-                    "toggleMenu" :
-                    "closeMenu"
-                ]();
-            }
+    _selectFirstCategory: function() {
+        let firstCategoryButton = this.categoriesBox.get_child_at_index(0)._delegate;
+        firstCategoryButton.actor.style_class = "menu-category-button-selected";
+        this._selectCategory(firstCategoryButton.categoryId);
+    },
+
+    closeContextMenu: function(animate) {
+        if (!this.contextMenu || !this.contextMenu.isOpen) {
+            return;
+        }
+
+        if (animate) {
+            this.contextMenu.toggle();
+        } else {
+            this.contextMenu.close();
         }
     },
 
@@ -2018,25 +2062,30 @@ CinnamonMenuForkByOdyseus.prototype = {
             let action;
             switch (aAppCategory) {
                 case this.favoritesCatName:
-                    action = (btn.buttonType === "app" &&
+                    action = (btn.type === "app" &&
                             AppFavorites.getAppFavorites().isFavorite(btn.app.get_id())) ?
                         "show" :
                         "hide";
                     break;
                 case this.searchResultsCatName:
-                    action = btn.buttonType === "search_result" &&
+                    action = btn.type === "search_result" &&
                         btn instanceof $.DummyApplicationButton ?
                         "show" :
                         "hide";
                     break;
                 case this.recentAppsCatName:
-                    action = (btn.buttonType === "recent_application" &&
+                    action = (btn.type === "recent_application" &&
                             btn.shouldBeDisplayed) ?
                         "show" :
                         "hide";
                     break;
+                case this.allAppsCatName:
+                    action = (btn.type === "app") ?
+                        "show" :
+                        "hide";
+                    break;
                 default:
-                    action = (btn.buttonType === "app" &&
+                    action = (btn.type === "app" &&
                             btn.category.indexOf(aAppCategory) !== -1) ?
                         "show" :
                         "hide";
@@ -2287,6 +2336,8 @@ CinnamonMenuForkByOdyseus.prototype = {
                 (appResults[b].priority || 99999);
         });
 
+        this._searchResultsLength = sortedResuls.length;
+
         // DO NOT USE INVERSE LOOP HERE!!!
         let b = 0,
             bLen = this._searchResultButtons.length;
@@ -2318,9 +2369,10 @@ CinnamonMenuForkByOdyseus.prototype = {
             let item_actor = this.appBoxIter.getFirstVisible();
             this._selectedItemIndex = this.appBoxIter.getAbsoluteIndexOfChild(item_actor);
             this._activeContainer = this.applicationsBox;
-            if (item_actor && item_actor !== this.searchEntry) {
-                item_actor._delegate.emit("enter-event");
+
+            if (item_actor && item_actor !== this.searchEntry && item_actor.reactive) {
                 this._scrollToButton(item_actor._delegate);
+                this._buttonEnterEvent(item_actor._delegate);
             }
         }
     },
