@@ -289,29 +289,21 @@ SimpleMenuItem.prototype = {
         this.actor.add_actor(this.label);
     },
 
-    addActor: function(child) {
-        this.actor.add_actor(child);
-    },
-
-    removeActor: function(child) {
-        this.actor.remove_actor(child);
-    },
-
     destroy: function(actorDestroySignal = false) {
-        try {
-            this._signals.disconnectAllSignals();
+        this._signals.disconnectAllSignals();
 
-            this.label && this.label.destroy();
-            this.icon && this.icon.destroy();
-            actorDestroySignal || this.actor && this.actor.destroy();
+        this.label && this.label.destroy();
+        this.icon && this.icon.destroy();
+        actorDestroySignal || this.actor && this.actor.destroy();
 
-            this.actor && this.actor._delegate && delete this.actor._delegate;
-            this.actor && delete this.actor;
-            this.label && delete this.label;
-            this.icon && delete this.icon;
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        this.actor && this.actor._delegate &&
+            delete this.actor._delegate;
+        this.actor &&
+            delete this.actor;
+        this.label &&
+            delete this.label;
+        this.icon &&
+            delete this.icon;
     },
 
     get shouldBeDisplayed() {
@@ -780,7 +772,7 @@ ApplicationButton.prototype = {
 
         if (aApplet.pref_show_application_icons) {
             this.icon = this.app.create_icon_texture(aApplet.pref_application_icon_size);
-            this.addActor(this.icon);
+            this.actor.add_actor(this.icon);
         }
 
         this.addLabel(this.name);

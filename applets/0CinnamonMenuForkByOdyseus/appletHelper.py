@@ -409,7 +409,12 @@ class List(SettingsWidget):
 
             if column_def["type"] == "boolean":
                 renderer = Gtk.CellRendererToggle()
-                renderer.connect("toggled", self.checkbox_toggled_cb, i)
+
+                def toggle_checkbox(widget, path, column):
+                    self.model[path][column] = not self.model[path][column]
+                    self.list_changed()
+
+                renderer.connect("toggled", toggle_checkbox, i)
                 prop_name = "active"
             elif column_def["type"] == "icon":
                 renderer = Gtk.CellRendererPixbuf()
@@ -556,13 +561,6 @@ class List(SettingsWidget):
 
     def on_row_activated(self, *args):
         self.edit_item()
-
-    def checkbox_toggled_cb(self, cell, path, col, *ignore):
-        if path is not None:
-            iter = self.model.get_iter(path)
-            self.model[iter][col] = not self.model[iter][col]
-
-            self.list_changed()
 
     def add_item(self, *args):
         data = self.open_add_edit_dialog()

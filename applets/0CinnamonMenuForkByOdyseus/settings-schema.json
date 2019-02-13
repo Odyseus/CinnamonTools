@@ -336,13 +336,13 @@
     "pref_context_show_run_from_terminal_as_root": {
         "type": "checkbox",
         "indent": true,
-        "default": true,
+        "default": false,
         "description": "Show \"Run from terminal as root\" on context"
     },
     "pref_context_show_desktop_file_folder": {
         "type": "checkbox",
         "indent": true,
-        "default": true,
+        "default": false,
         "description": "Show \"Open .desktop file folder\" on context"
     },
     "pref_context_show_edit_desktop_file": {
