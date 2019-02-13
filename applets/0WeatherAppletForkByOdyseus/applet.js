@@ -1570,31 +1570,12 @@ WeatherAppletForkByOdyseusApplet.prototype = {
     },
 
     sanitizeStoredLocations: function() {
-        // Step one. Remove duplicated locations.
-        // A duplicated location is a location that has the exact same
-        // location ID and uses the exact same provider.
-        let temp = [];
-        let control = new Set();
-
-        for (let [uuid, location] of this.locationsMap) { // jshint ignore:line
-            if (!control.has(uuid)) {
-                control.add(uuid);
-                temp.push(location);
-            }
-        }
-
-        temp = this.sortLocations(temp);
-
-        this.pref_locations_storage = temp;
-
         // Remove cached data of locations that don't exist anymore.
         let cachedLocationKeys = Object.keys(JSON.parse(JSON.stringify(this.pref_weather_data)));
         let i = cachedLocationKeys.length;
         while (i--) {
             if (!this.locationsMap.has(cachedLocationKeys[i])) {
-                let uuid = cachedLocationKeys[i].locationID + ":" +
-                    cachedLocationKeys[i].providerID;
-                delete this.pref_weather_data[uuid];
+                delete this.pref_weather_data[cachedLocationKeys[i]];
             }
         }
     },
