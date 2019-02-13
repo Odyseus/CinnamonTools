@@ -4,6 +4,25 @@
 
 ***
 
+- **Date:** Tue, 12 Feb 2019 23:33:32 -0300
+- **Commit:** [4fc8ec3](https://gitlab.com/Odyseus/CinnamonTools/commit/4fc8ec3)
+- **Author:** Odyseus
+
+```
+- Rewritten from scratch to suport changes to the Yahoo! Weather API and to add several features.
+- Added support for multiple locations.
+- Added support for multiple weather providers.
+- Added detailed tooltip to the applet about the current weather data location.
+- Menu layout redesigned.
+    - Forecasts can be displayed in one or two rows (or columns if the menu layout is set to vertical).
+    - Forecasts can display the name of the day or the full date.
+    - The date in which the weather data was published is always displayed in the menu.
+    - More customization options (current weather icon size, forecasts icon size, etc.).
+
+```
+
+***
+
 - **Date:** Mon, 21 Jan 2019 21:55:26 -0300
 - **Commit:** [24e684b](https://gitlab.com/Odyseus/CinnamonTools/commit/24e684b)
 - **Author:** Odyseus

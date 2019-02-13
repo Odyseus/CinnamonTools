@@ -338,77 +338,7 @@ class Main(LocalizedHelpCreator):
         ))
 
     def get_css_custom(self):
-        return """/* Specific CSS code for specific HELP files */
-        /* Copied over the table class from bootstrap theme and applied it
-         directly to the table tag.*/
-        table {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-bottom: 20px !important;
-        }
-        table>thead>tr>th,
-        table>tbody>tr>th,
-        table>tfoot>tr>th,
-        table>thead>tr>td,
-        table>tbody>tr>td,
-        table>tfoot>tr>td {
-        padding: 8px !important;
-        line-height: 1.42857143 !important;
-        vertical-align: top !important;
-        border-top: 1px solid #ecf0f1 !important;
-        }
-        table>thead>tr>th {
-        vertical-align: bottom !important;
-        border-bottom: 2px solid #ecf0f1 !important;
-        }
-        table>caption+thead>tr:first-child>th,
-        table>colgroup+thead>tr:first-child>th,
-        table>thead:first-child>tr:first-child>th,
-        table>caption+thead>tr:first-child>td,
-        table>colgroup+thead>tr:first-child>td,
-        table>thead:first-child>tr:first-child>td {
-            border-top: 0 !important;
-        }
-        table>tbody+tbody {
-            border-top: 2px solid #ecf0f1 !important;
-        }
-        table{
-            border: 1px solid #ecf0f1 !important;
-        }
-        table>thead>tr>th,
-        table>tbody>tr>th,
-        table>tfoot>tr>th,
-        table>thead>tr>td,
-        table>tbody>tr>td,
-        table>tfoot>tr>td {
-            border: 1px solid #ecf0f1 !important;
-        }
-        table>thead>tr>th,
-        table>thead>tr>td {
-            border-bottom-width: 2px !important;
-        }
-
-        table>td,
-        table>th {
-            position: static !important;
-            float: none !important;
-            display: table-cell !important;
-        }
-        table>thead>tr>td.active,
-        table>tbody>tr>td.active,
-        table>tfoot>tr>td.active,
-        table>thead>tr>th.active,
-        table>tbody>tr>th.active,
-        table>tfoot>tr>th.active,
-        table>thead>tr.active>td,
-        table>tbody>tr.active>td,
-        table>tfoot>tr.active>td,
-        table>thead>tr.active>th,
-        table>tbody>tr.active>th,
-        table>tfoot>tr.active>th {
-            background-color: #ecf0f1 !important;
-        }
-    """
+        return ""
 
     def get_js_custom(self):
         return ""

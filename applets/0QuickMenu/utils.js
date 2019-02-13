@@ -147,11 +147,6 @@ FileMenuItem.prototype = {
 
             this.addActor(this.label);
 
-            if (this.appsMenuButton.pref_show_applications_icons) {
-                this.icon.realize();
-            }
-
-            this.label.realize();
             this.menu = new PopupMenu.PopupSubMenu(this.actor);
         } catch (aErr) {
             global.logError(aErr);

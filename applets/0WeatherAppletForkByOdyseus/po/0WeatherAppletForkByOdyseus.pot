@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0WeatherAppletForkByOdyseus 2.5\n"
-"POT-Creation-Date: 2019-01-21 22:10-0300\n"
+"Project-Id-Version: 0WeatherAppletForkByOdyseus VERSION\n"
+"POT-Creation-Date: 2019-02-13 00:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,380 +15,950 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328
+#. menu_popup.append(self.create_menu_item(_("Reset settings to defaults"),
+#. self._restore_default_values))
+#. menu_popup.append(self.create_menu_item(_("Import settings from a file"),
+#. self._import_export_settings, False))
+#. menu_popup.append(self.create_menu_item(_("Export settings to a file"),
+#. self._import_export_settings, True))
+#. menu_popup.append(Gtk.SeparatorMenuItem())
+#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:257 applet.js:1326
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:329
+#: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:330
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:366
+#: ../../__app__/python_modules/localized_help_creator.py:356
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:380
+#: ../../__app__/python_modules/localized_help_creator.py:370
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:396
+#: ../../__app__/python_modules/localized_help_creator.py:386
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:399
+#: ../../__app__/python_modules/localized_help_creator.py:389
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:401
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:391
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:417
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:420
+#: ../../__app__/python_modules/localized_help_creator.py:410
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:421
+#: ../../__app__/python_modules/localized_help_creator.py:411
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: applet.js:141
-msgid "..."
+#: locationsManager.py:32 z_create_localized_help.py:125 applet.js:944
+msgid "Location name"
 msgstr ""
 
-#: applet.js:142
+#: locationsManager.py:37 z_create_localized_help.py:129
+msgid "Location ID"
+msgstr ""
+
+#: locationsManager.py:43 z_create_localized_help.py:136
+msgid "Language"
+msgstr ""
+
+#: locationsManager.py:109
+msgid "Fore. days"
+msgstr ""
+
+#: locationsManager.py:116
+msgid "days"
+msgstr ""
+
+#: locationsManager.py:119
+msgid "Fore. rows/cols"
+msgstr ""
+
+#: locationsManager.py:126
+msgid "rows/cols"
+msgstr ""
+
+#: locationsManager.py:129 z_create_localized_help.py:70 z_create_localized_help.py:148
+msgid "Provider"
+msgstr ""
+
+#: locationsManager.py:140 locationsManager.py:142
+msgid "Locations"
+msgstr ""
+
+#: locationsManager.py:160
+msgid "Credentials"
+msgstr ""
+
+#: locationsManager.py:162 z_create_localized_help.py:74 constants.js:219
+msgid "Dark Sky"
+msgstr ""
+
+#: locationsManager.py:174 z_create_localized_help.py:79 constants.js:221
+msgid "OpenWeatherMap"
+msgstr ""
+
+#: locationsManager.py:186 z_create_localized_help.py:84 constants.js:220
+msgid "Yahoo! Weather"
+msgstr ""
+
+#: z_create_localized_help.py:32
+msgid "Description"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:35
+msgid "This applet is a fork of [Weather](https://cinnamon-spices.linuxmint.com/applets/view/17) applet by [mockturtl](https://github.com/mockturtl)."
+msgstr ""
+
+#: z_create_localized_help.py:37
+msgid "Differences with the original applet"
+msgstr ""
+
+#: z_create_localized_help.py:39
+msgid "Added support for multiple locations."
+msgstr ""
+
+#: z_create_localized_help.py:40
+msgid "Added support for multiple weather providers."
+msgstr ""
+
+#: z_create_localized_help.py:41
+msgid "This applet caches the weather data used. Which means that weather providers will be contacted only when needed, preventing unnecessary API quota consumption."
+msgstr ""
+
+#: z_create_localized_help.py:42
+msgid "The style sheet of this fork is used to accommodate the layout of its elements and it doesn't modify colors."
+msgstr ""
+
+#: z_create_localized_help.py:43
+msgid "Added detailed tooltip to the applet about the current weather data location."
+msgstr ""
+
+#: z_create_localized_help.py:44
+msgid "Menu layout redesigned."
+msgstr ""
+
+#: z_create_localized_help.py:45
+msgid "Forecasts can be displayed in one or two rows (or columns if the menu layout is set to vertical)."
+msgstr ""
+
+#: z_create_localized_help.py:46
+msgid "Forecasts can display the name of the day or the full date."
+msgstr ""
+
+#: z_create_localized_help.py:47
+msgid "The date in which the weather data was published is always displayed in the menu."
+msgstr ""
+
+#: z_create_localized_help.py:48
+msgid "More customization options (current weather icon size, forecasts icon size, etc.)."
+msgstr ""
+
+#: z_create_localized_help.py:58 applet.js:140
+msgid "This applet requires valid credentials from any of the weather provider services for it to work."
+msgstr ""
+
+#: z_create_localized_help.py:59
+msgid "The credentials cannot be used until they have been activated by the weather providers."
+msgstr ""
+
+#: z_create_localized_help.py:64
+msgid "Getting API credentials"
+msgstr ""
+
+#: z_create_localized_help.py:66
+msgid "Follow the instructions made available by the providers."
+msgstr ""
+
+#: z_create_localized_help.py:68
+msgid "Weather providers"
+msgstr ""
+
+#: z_create_localized_help.py:71
+msgid "API credentials instructions"
+msgstr ""
+
+#: z_create_localized_help.py:71
+msgid "Location finder"
+msgstr ""
+
+#: z_create_localized_help.py:75 z_create_localized_help.py:80 z_create_localized_help.py:85
+msgid "Get credentials"
+msgstr ""
+
+#: z_create_localized_help.py:76 z_create_localized_help.py:81 z_create_localized_help.py:86
+msgid "Find location"
+msgstr ""
+
+#: z_create_localized_help.py:89 z_create_localized_help.py:93
+msgid "Menu layout"
+msgstr ""
+
+#: z_create_localized_help.py:96
+msgid "Current weather condition for the currently selected location."
+msgstr ""
+
+#: z_create_localized_help.py:97
+msgid "Forecasts for the currently selected location."
+msgstr ""
+
+#: z_create_localized_help.py:99
+msgid "The time in which the currently displayed data was published by the weather provider. Clicking it will attempt to retrieve updated weather data."
+msgstr ""
+
+#: z_create_localized_help.py:100
+msgid "Button to open the locations selector menu."
+msgstr ""
+
+#: z_create_localized_help.py:102
+msgid "Weather provider attribution. When clicked, it opens the weather provider website."
+msgstr ""
+
+#: z_create_localized_help.py:104 z_create_localized_help.py:121
+msgid "Locations manager"
+msgstr ""
+
+#: z_create_localized_help.py:107
+msgid "Highlights"
+msgstr ""
+
+#: z_create_localized_help.py:110
+msgid "The locations manager can be accessed from this applet context menu."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:112
+msgid "Locations with the exact same *Location ID* and *Provider* are considered duplicated and will be automatically removed when applying changes."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:114
+msgid "The *Apply changes* button must be pressed for the applet to reflect the changes made in the locations manager."
+msgstr ""
+
+#: z_create_localized_help.py:126
+msgid "This is an informative field and it isn't used to retrieve weather data. It is used to identify the displayed data in the menu and to generate the items inside the locations selector menu."
+msgstr ""
+
+#: z_create_localized_help.py:130
+msgid "A city/region ID used by the weather service providers to identify a location."
+msgstr ""
+
+#: z_create_localized_help.py:132
+msgid "Dark Sky uses only coordinates."
+msgstr ""
+
+#: z_create_localized_help.py:133
+msgid "Open Weather Map uses city IDs (the number at the end of a location URL) and coordinates."
+msgstr ""
+
+#: z_create_localized_help.py:134
+msgid "Yahoo! Weather uses WOEIDs and coordinates."
+msgstr ""
+
+#: z_create_localized_help.py:137
+msgid "Weather conditions localization. Languages are only used by DarkSky and OpenWeatherMap providers and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available)."
+msgstr ""
+
+#: z_create_localized_help.py:140
+msgid "Forecast days"
+msgstr ""
+
+#: z_create_localized_help.py:141
+msgid "The amount of forecasts to display in the menu."
+msgstr ""
+
+#: z_create_localized_help.py:144
+msgid "Forecast rows/columns"
+msgstr ""
+
+#: z_create_localized_help.py:145
+msgid "The amount of rows/cols to display the forecast days in."
+msgstr ""
+
+#: z_create_localized_help.py:149
+msgid "Weather data provider. All weather providers require proper credentials to function."
+msgstr ""
+
+#: applet.js:87
 msgid "Click to open"
 msgstr ""
 
-#. gettext can't see these inline
-#: applet.js:583
-msgid "Sunrise"
+#: applet.js:139
+msgid "Read the help page"
 msgstr ""
 
-#: applet.js:584
-msgid "Sunset"
+#. settings-schema.json->locations_manager_button->description
+#: applet.js:237
+msgid "Open locations manager"
 msgstr ""
 
-#: applet.js:697
-msgid "Loading current weather ..."
+#: applet.js:244
+msgid "Copy current location data"
 msgstr ""
 
-#: applet.js:700
-msgid "Loading future weather ..."
+#: applet.js:336
+msgid "Click to copy error to clipboard."
 msgstr ""
 
-#: applet.js:723
-msgid "Loading ..."
+#: applet.js:337
+msgid "Look at the logs for details."
 msgstr ""
 
-#: applet.js:729
+#: applet.js:379
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:797
-msgid "Temperature:"
+#: applet.js:392
+msgid "Click to refresh weather data"
 msgstr ""
 
-#: applet.js:801
-msgid "Humidity:"
+#: applet.js:621
+msgid "No current location set!"
 msgstr ""
 
-#: applet.js:805
-msgid "Pressure:"
+#: applet.js:671
+msgid "Error initializing weather provider!"
 msgstr ""
 
-#: applet.js:809
-msgid "Wind:"
+#: applet.js:734
+msgid "No weather data available!"
 msgstr ""
 
-#: applet.js:813
-msgid "Wind Chill:"
+#: applet.js:842
+#, javascript-format
+msgid "Powered by %s"
 msgstr ""
 
-#. tornado
-#: applet.js:1065
-msgid "Tornado"
+#: applet.js:998
+msgid "Current location"
 msgstr ""
 
-#. tropical storm
-#: applet.js:1068
-msgid "Tropical storm"
+#: applet.js:1011
+msgid "Open location weather details page"
 msgstr ""
 
-#. hurricane
-#: applet.js:1071
-msgid "Hurricane"
+#: applet.js:1058
+msgid "Temperature"
 msgstr ""
 
-#. severe thunderstorms
-#: applet.js:1074
-msgid "Severe thunderstorms"
+#: applet.js:1064
+msgid "Humidity"
 msgstr ""
 
-#. thunderstorms
-#: applet.js:1077
-msgid "Thunderstorms"
+#: applet.js:1070
+msgid "Pressure"
 msgstr ""
 
-#. mixed rain and snow
-#: applet.js:1080
-msgid "Mixed rain and snow"
+#: applet.js:1076
+msgid "Wind"
 msgstr ""
 
-#. mixed rain and sleet
-#: applet.js:1083
-msgid "Mixed rain and sleet"
+#: applet.js:1082
+msgid "Wind chill"
 msgstr ""
 
-#. mixed snow and sleet
-#: applet.js:1086
-msgid "Mixed snow and sleet"
+#: applet.js:1088
+msgid "Visibility"
 msgstr ""
 
-#. freezing drizzle
-#: applet.js:1089
-msgid "Freezing drizzle"
+#: applet.js:1094
+msgid "Sunrise"
 msgstr ""
 
-#. drizzle
-#: applet.js:1092
-msgid "Drizzle"
+#: applet.js:1100
+msgid "Sunset"
 msgstr ""
 
-#. freezing rain
-#: applet.js:1095
-msgid "Freezing rain"
-msgstr ""
-
-#. showers
-#: applet.js:1098 applet.js:1101
-msgid "Showers"
-msgstr ""
-
-#. snow flurries
-#: applet.js:1104
-msgid "Snow flurries"
-msgstr ""
-
-#. light snow showers
-#: applet.js:1107
-msgid "Light snow showers"
-msgstr ""
-
-#. blowing snow
-#: applet.js:1110
-msgid "Blowing snow"
-msgstr ""
-
-#. snow
-#: applet.js:1113
-msgid "Snow"
-msgstr ""
-
-#. hail
-#: applet.js:1116
-msgid "Hail"
-msgstr ""
-
-#. sleet
-#: applet.js:1119
-msgid "Sleet"
-msgstr ""
-
-#. dust
-#: applet.js:1122
-msgid "Dust"
-msgstr ""
-
-#. foggy
-#: applet.js:1125
-msgid "Foggy"
-msgstr ""
-
-#. haze
-#: applet.js:1128
-msgid "Haze"
-msgstr ""
-
-#. smoky
-#: applet.js:1131
-msgid "Smoky"
-msgstr ""
-
-#. blustery
-#: applet.js:1134
-msgid "Blustery"
-msgstr ""
-
-#. windy
-#: applet.js:1137
-msgid "Windy"
-msgstr ""
-
-#. cold
-#: applet.js:1140
-msgid "Cold"
-msgstr ""
-
-#. cloudy
-#: applet.js:1143
-msgid "Cloudy"
-msgstr ""
-
-#. mostly cloudy (day)
-#: applet.js:1148
-msgid "Mostly cloudy"
-msgstr ""
-
-#. partly cloudy (day)
-#. partly cloudy
-#: applet.js:1153 applet.js:1193
-msgid "Partly cloudy"
-msgstr ""
-
-#. clear (night)
-#: applet.js:1156
-msgid "Clear"
-msgstr ""
-
-#. sunny
-#: applet.js:1159
-msgid "Sunny"
-msgstr ""
-
-#. fair (day)
-#: applet.js:1164
-msgid "Fair"
-msgstr ""
-
-#. mixed rain and hail
-#: applet.js:1167
-msgid "Mixed rain and hail"
-msgstr ""
-
-#. hot
-#: applet.js:1170
-msgid "Hot"
-msgstr ""
-
-#. isolated thunderstorms
-#: applet.js:1173
-msgid "Isolated thunderstorms"
-msgstr ""
-
-#. scattered thunderstorms
-#: applet.js:1176
-msgid "Scattered thunderstorms"
-msgstr ""
-
-#. scattered showers
-#: applet.js:1181
-msgid "Scattered showers"
-msgstr ""
-
-#. heavy snow
-#: applet.js:1184 applet.js:1190
-msgid "Heavy snow"
-msgstr ""
-
-#. scattered snow showers
-#: applet.js:1187
-msgid "Scattered snow showers"
-msgstr ""
-
-#. thundershowers
-#: applet.js:1196
-msgid "Thundershowers"
-msgstr ""
-
-#. snow showers
-#: applet.js:1199
-msgid "Snow showers"
-msgstr ""
-
-#. isolated thundershowers
-#: applet.js:1202
-msgid "Isolated thundershowers"
-msgstr ""
-
-#: applet.js:1206
+#: applet.js:1240
 msgid "Not available"
 msgstr ""
 
-#: applet.js:1211
-msgid "Friday"
+#: applet.js:1651
+msgid "Debugging toggled"
 msgstr ""
 
-#: applet.js:1211
-msgid "Monday"
+#: applet.js:1652
+msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr ""
 
-#: applet.js:1211
-msgid "Saturday"
+#: constants.js:50
+msgid "Blowing snow"
 msgstr ""
 
-#: applet.js:1211
+#: constants.js:51
+msgid "Blustery"
+msgstr ""
+
+#: constants.js:52 weather_providers/DarkSky.js:109
+msgid "Clear"
+msgstr ""
+
+#: constants.js:53
+msgid "Cloudy"
+msgstr ""
+
+#: constants.js:54
+msgid "Cold"
+msgstr ""
+
+#: constants.js:55
+msgid "Drizzle"
+msgstr ""
+
+#: constants.js:56
+msgid "Dust"
+msgstr ""
+
+#: constants.js:57
+msgid "Fair"
+msgstr ""
+
+#: constants.js:58
+msgid "Foggy"
+msgstr ""
+
+#: constants.js:59
+msgid "Freezing drizzle"
+msgstr ""
+
+#: constants.js:60
+msgid "Freezing rain"
+msgstr ""
+
+#: constants.js:61
+msgid "Hail"
+msgstr ""
+
+#: constants.js:62
+msgid "Haze"
+msgstr ""
+
+#: constants.js:63
+msgid "Heavy snow"
+msgstr ""
+
+#: constants.js:64
+msgid "Hot"
+msgstr ""
+
+#: constants.js:65
+msgid "Hurricane"
+msgstr ""
+
+#: constants.js:66
+msgid "Isolated thundershowers"
+msgstr ""
+
+#: constants.js:67
+msgid "Isolated thunderstorms"
+msgstr ""
+
+#: constants.js:68
+msgid "Light snow showers"
+msgstr ""
+
+#: constants.js:69
+msgid "Mixed rain and hail"
+msgstr ""
+
+#: constants.js:70
+msgid "Mixed rain and sleet"
+msgstr ""
+
+#: constants.js:71
+msgid "Mixed rain and snow"
+msgstr ""
+
+#: constants.js:72
+msgid "Mixed snow and sleet"
+msgstr ""
+
+#: constants.js:73
+msgid "Mostly cloudy"
+msgstr ""
+
+#: constants.js:74
+msgid "Partly cloudy"
+msgstr ""
+
+#: constants.js:75
+msgid "Scattered showers"
+msgstr ""
+
+#: constants.js:76
+msgid "Scattered snow showers"
+msgstr ""
+
+#: constants.js:77
+msgid "Scattered thunderstorms"
+msgstr ""
+
+#: constants.js:78
+msgid "Severe thunderstorms"
+msgstr ""
+
+#: constants.js:79
+msgid "Showers"
+msgstr ""
+
+#: constants.js:80
+msgid "Sleet"
+msgstr ""
+
+#: constants.js:81
+msgid "Smoky"
+msgstr ""
+
+#: constants.js:82
+msgid "Snow flurries"
+msgstr ""
+
+#: constants.js:83
+msgid "Snow showers"
+msgstr ""
+
+#: constants.js:84
+msgid "Snow"
+msgstr ""
+
+#: constants.js:85
+msgid "Sunny"
+msgstr ""
+
+#: constants.js:86
+msgid "Thundershowers"
+msgstr ""
+
+#: constants.js:87
+msgid "Thunderstorms"
+msgstr ""
+
+#: constants.js:88
+msgid "Tornado"
+msgstr ""
+
+#: constants.js:89
+msgid "Tropical storm"
+msgstr ""
+
+#: constants.js:90
+msgid "Windy"
+msgstr ""
+
+#: constants.js:92
+msgid "Thunderstorm with light rain"
+msgstr ""
+
+#: constants.js:93
+msgid "Thunderstorm with rain"
+msgstr ""
+
+#: constants.js:94
+msgid "Thunderstorm with heavy rain"
+msgstr ""
+
+#: constants.js:95
+msgid "Light thunderstorm"
+msgstr ""
+
+#: constants.js:96
+msgid "Thunderstorm"
+msgstr ""
+
+#: constants.js:97
+msgid "Heavy thunderstorm"
+msgstr ""
+
+#: constants.js:98
+msgid "Ragged thunderstorm"
+msgstr ""
+
+#: constants.js:99
+msgid "Thunderstorm with light drizzle"
+msgstr ""
+
+#: constants.js:100
+msgid "Thunderstorm with drizzle"
+msgstr ""
+
+#: constants.js:101
+msgid "Thunderstorm with heavy drizzle"
+msgstr ""
+
+#: constants.js:102
+msgid "Light intensity drizzle"
+msgstr ""
+
+#: constants.js:103
+msgid "Heavy intensity drizzle"
+msgstr ""
+
+#: constants.js:104
+msgid "Light intensity drizzle rain"
+msgstr ""
+
+#: constants.js:105
+msgid "Drizzle rain"
+msgstr ""
+
+#: constants.js:106
+msgid "Heavy intensity drizzle rain"
+msgstr ""
+
+#: constants.js:107
+msgid "Shower rain and drizzle"
+msgstr ""
+
+#: constants.js:108
+msgid "Heavy shower rain and drizzle"
+msgstr ""
+
+#: constants.js:109
+msgid "Shower drizzle"
+msgstr ""
+
+#: constants.js:110
+msgid "Light rain"
+msgstr ""
+
+#: constants.js:111
+msgid "Moderate rain"
+msgstr ""
+
+#: constants.js:112
+msgid "Heavy intensity rain"
+msgstr ""
+
+#: constants.js:113
+msgid "Very heavy rain"
+msgstr ""
+
+#: constants.js:114
+msgid "Extreme rain"
+msgstr ""
+
+#: constants.js:115
+msgid "Light intensity shower rain"
+msgstr ""
+
+#: constants.js:116
+msgid "Shower rain"
+msgstr ""
+
+#: constants.js:117
+msgid "Heavy intensity shower rain"
+msgstr ""
+
+#: constants.js:118
+msgid "Ragged shower rain"
+msgstr ""
+
+#: constants.js:119
+msgid "Light snow"
+msgstr ""
+
+#: constants.js:120
+msgid "Shower sleet"
+msgstr ""
+
+#: constants.js:121
+msgid "Light rain and snow"
+msgstr ""
+
+#: constants.js:122
+msgid "Rain and snow"
+msgstr ""
+
+#: constants.js:123
+msgid "Light shower snow"
+msgstr ""
+
+#: constants.js:124
+msgid "Shower snow"
+msgstr ""
+
+#: constants.js:125
+msgid "Heavy shower snow"
+msgstr ""
+
+#: constants.js:126
+msgid "Mist"
+msgstr ""
+
+#: constants.js:127
+msgid "Smoke"
+msgstr ""
+
+#: constants.js:128
+msgid "Sand, dust whirls"
+msgstr ""
+
+#: constants.js:129
+msgid "Fog"
+msgstr ""
+
+#: constants.js:130
+msgid "Sand"
+msgstr ""
+
+#: constants.js:131
+msgid "Volcanic ash"
+msgstr ""
+
+#: constants.js:132
+msgid "Squalls"
+msgstr ""
+
+#: constants.js:133
+msgid "Clear sky"
+msgstr ""
+
+#: constants.js:134
+msgid "Few clouds"
+msgstr ""
+
+#: constants.js:135
+msgid "Scattered clouds"
+msgstr ""
+
+#: constants.js:136
+msgid "Broken clouds"
+msgstr ""
+
+#: constants.js:137
+msgid "Overcast clouds"
+msgstr ""
+
+#: constants.js:169
+msgid "Loading..."
+msgstr ""
+
+#: constants.js:190
+msgid "Missing credentials for weather provider!"
+msgstr ""
+
+#: constants.js:191
+msgid "Wrong location ID format!"
+msgstr ""
+
+#: constants.js:192
+msgid "Selected language not supported by weather provider!"
+msgstr ""
+
+#: constants.js:193
+#, javascript-format
+msgid "Error getting data! Status code: %s"
+msgstr ""
+
+#: constants.js:194
+msgid "Error parsing weather data."
+msgstr ""
+
+#: constants.js:199
 msgid "Sunday"
 msgstr ""
 
-#: applet.js:1211
-msgid "Thursday"
+#: constants.js:200
+msgid "Monday"
 msgstr ""
 
-#: applet.js:1211
+#: constants.js:201
 msgid "Tuesday"
 msgstr ""
 
-#: applet.js:1211
+#: constants.js:202
 msgid "Wednesday"
 msgstr ""
 
-#: applet.js:1216
+#: constants.js:203
+msgid "Thursday"
+msgstr ""
+
+#: constants.js:204
+msgid "Friday"
+msgstr ""
+
+#: constants.js:205
+msgid "Saturday"
+msgstr ""
+
+#: python/widgets.py:104
+msgid "Select or enter file to export to"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: python/widgets.py:106 python/widgets.py:112 python/widgets.py:388 python/widgets.py:1161
+msgid "_Cancel"
+msgstr ""
+
+#: python/widgets.py:107 python/widgets.py:1162
+msgid "_Save"
+msgstr ""
+
+#: python/widgets.py:110
+msgid "Select a file to import"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: python/widgets.py:114 python/widgets.py:389
+msgid "_Open"
+msgstr ""
+
+#: python/widgets.py:129
+msgid "JSON files"
+msgstr ""
+
+#: python/widgets.py:385
+msgid "Choose an Icon"
+msgstr ""
+
+#: python/widgets.py:392
+msgid "Image files"
+msgstr ""
+
+#: python/widgets.py:889
+msgid "Add new item"
+msgstr ""
+
+#: python/widgets.py:894
+msgid "Remove selected item"
+msgstr ""
+
+#: python/widgets.py:902
+msgid "Edit selected item"
+msgstr ""
+
+#: python/widgets.py:915
+msgid "Move selected item up"
+msgstr ""
+
+#: python/widgets.py:923
+msgid "Move selected item down"
+msgstr ""
+
+#: python/widgets.py:932
+msgid "Export data"
+msgstr ""
+
+#: python/widgets.py:940
+msgid "Import data"
+msgstr ""
+
+#: python/widgets.py:948
+msgid "Apply changes"
+msgstr ""
+
+#: python/widgets.py:1047
+msgid "Item removal"
+msgstr ""
+
+#: python/widgets.py:1050
+msgid "Are you sure that you want to remove this item?"
+msgstr ""
+
+#: python/widgets.py:1051
+msgid "Note"
+msgstr ""
+
+#: python/widgets.py:1052
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr ""
+
+#: python/widgets.py:1154
+msgid "Add new entry"
+msgstr ""
+
+#: python/widgets.py:1156
+msgid "Edit entry"
+msgstr ""
+
+#: utils.js:394
 msgid "E"
 msgstr ""
 
-#: applet.js:1216
+#: utils.js:394
 msgid "N"
 msgstr ""
 
-#: applet.js:1216
+#: utils.js:394
 msgid "NE"
 msgstr ""
 
-#: applet.js:1216
+#: utils.js:394
 msgid "NW"
 msgstr ""
 
-#: applet.js:1216
+#: utils.js:394
 msgid "S"
 msgstr ""
 
-#: applet.js:1216
+#: utils.js:394
 msgid "SE"
 msgstr ""
 
-#: applet.js:1216
+#: utils.js:394
 msgid "SW"
 msgstr ""
 
-#: applet.js:1216
+#: utils.js:394
 msgid "W"
 msgstr ""
 
+#: utils.js:567
+msgid "Displayed weather data doesn't belong to any currently configured location!"
+msgstr ""
+
+#: utils.js:805
+#, javascript-format
+msgid "Schema %s could not be found for xlet %s."
+msgstr ""
+
+#: utils.js:806
+msgid "Please check your installation."
+msgstr ""
+
+#: weather_providers/DarkSky.js:98 weather_providers/OpenWeatherMap.js:126 weather_providers/SKEL.js:119 weather_providers/YahooWeather.js:130
+msgid "Coordinates"
+msgstr ""
+
+#: weather_providers/DarkSky.js:101 weather_providers/SKEL.js:122 weather_providers/YahooWeather.js:133
+msgid "Time zone"
+msgstr ""
+
+#: weather_providers/OpenWeatherMap.js:125 weather_providers/SKEL.js:118 weather_providers/YahooWeather.js:129
+msgid "City ID"
+msgstr ""
+
 #. metadata.json->description
-msgid "View your local weather forecast"
+msgid "View your local weather forecast."
+msgstr ""
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
 msgstr ""
 
 #. metadata.json->name
@@ -399,20 +969,16 @@ msgstr ""
 msgid "Keyboard shortcut to open and close the menu"
 msgstr ""
 
-#. settings-schema.json->pref_woeid_lookup->description
-msgid "Get WOEID (Where On Earth IDentification)"
+#. settings-schema.json->pref_refresh_interval->units
+msgid "minutes"
 msgstr ""
 
-#. settings-schema.json->pref_woeid_lookup->tooltip
-msgid "http://woeid.rosselliot.co.nz/"
+#. settings-schema.json->pref_refresh_interval->description
+msgid "Update weather data interval"
 msgstr ""
 
-#. settings-schema.json->pref_woeid->description
-msgid "WOEID"
-msgstr ""
-
-#. settings-schema.json->pref_woeid->tooltip
-msgid "Where On Earth IDentification"
+#. settings-schema.json->header_units->description
+msgid "Units"
 msgstr ""
 
 #. settings-schema.json->pref_temperature_unit->description
@@ -420,15 +986,31 @@ msgid "Temperature unit"
 msgstr ""
 
 #. settings-schema.json->pref_temperature_unit->options
-msgid "celsius"
+msgid "Celsius"
 msgstr ""
 
 #. settings-schema.json->pref_temperature_unit->options
-msgid "fahrenheit"
+msgid "Fahrenheit"
 msgstr ""
 
-#. settings-schema.json->pref_temperature_high_first->description
-msgid "Show high temperature first in forecast"
+#. settings-schema.json->pref_temperature_unit->options
+msgid "Kelvin"
+msgstr ""
+
+#. settings-schema.json->pref_distance_unit->description
+msgid "Distance unit"
+msgstr ""
+
+#. settings-schema.json->pref_distance_unit->options
+msgid "Kilometers"
+msgstr ""
+
+#. settings-schema.json->pref_distance_unit->options
+msgid "Meters"
+msgstr ""
+
+#. settings-schema.json->pref_distance_unit->options
+msgid "Miles"
 msgstr ""
 
 #. settings-schema.json->pref_wind_speed_unit->description
@@ -436,19 +1018,19 @@ msgid "Wind speed unit"
 msgstr ""
 
 #. settings-schema.json->pref_wind_speed_unit->options
-msgid "kph"
+msgid "Kilometers per hour"
 msgstr ""
 
 #. settings-schema.json->pref_wind_speed_unit->options
-msgid "mph"
+msgid "Knots"
 msgstr ""
 
 #. settings-schema.json->pref_wind_speed_unit->options
-msgid "m/s"
+msgid "Meters per second"
 msgstr ""
 
 #. settings-schema.json->pref_wind_speed_unit->options
-msgid "knots"
+msgid "Miles per hour"
 msgstr ""
 
 #. settings-schema.json->pref_pressure_unit->description
@@ -456,81 +1038,120 @@ msgid "Atmospheric pressure unit"
 msgstr ""
 
 #. settings-schema.json->pref_pressure_unit->options
-msgid "mbar"
+msgid "Atmospheres"
 msgstr ""
 
 #. settings-schema.json->pref_pressure_unit->options
-msgid "in Hg"
+msgid "Hectopascals"
 msgstr ""
 
 #. settings-schema.json->pref_pressure_unit->options
-msgid "mm Hg"
+msgid "Inches mercury"
 msgstr ""
 
 #. settings-schema.json->pref_pressure_unit->options
-msgid "psi"
+msgid "Kilopascals"
 msgstr ""
 
 #. settings-schema.json->pref_pressure_unit->options
-msgid "at"
+msgid "Millibars"
 msgstr ""
 
 #. settings-schema.json->pref_pressure_unit->options
-msgid "atm"
+msgid "Millimeters mercury"
 msgstr ""
 
 #. settings-schema.json->pref_pressure_unit->options
-msgid "Pa"
+msgid "Pascals"
 msgstr ""
 
 #. settings-schema.json->pref_pressure_unit->options
-msgid "kPa"
+msgid "Pounds per square inch"
 msgstr ""
 
-#. settings-schema.json->pref_vertical_orientation->description
-msgid "Vertical orientation"
+#. settings-schema.json->header_menu_layout->description
+msgid "Menu Layout"
 msgstr ""
 
-#. settings-schema.json->pref_show_sunrise->description
-msgid "Show sunrise / sunset times"
+#. settings-schema.json->pref_menu_orientation->description
+msgid "Menu orientation"
+msgstr ""
+
+#. settings-schema.json->pref_menu_orientation->options
+msgid "Horizontal"
+msgstr ""
+
+#. settings-schema.json->pref_menu_orientation->options
+msgid "Vertical"
+msgstr ""
+
+#. settings-schema.json->header_menu_appearance->description
+msgid "Menu Appearance"
+msgstr ""
+
+#. settings-schema.json->pref_temperature_high_first->description
+msgid "Show high temperature first in forecast"
+msgstr ""
+
+#. settings-schema.json->pref_forecats_display_dates->description
+msgid "Display forecast dates"
 msgstr ""
 
 #. settings-schema.json->pref_show_common_sense_hours->description
-msgid "Display time in 24 hour format"
+msgid "Display time in 24 hours format"
 msgstr ""
 
-#. settings-schema.json->pref_forecast_days->units
-msgid "days"
+#. settings-schema.json->pref_current_weather_icon_size->units
+#. settings-schema.json->pref_forecasts_icon_size->units
+msgid "pixels"
 msgstr ""
 
-#. settings-schema.json->pref_forecast_days->description
-msgid "Forecast length"
+#. settings-schema.json->pref_current_weather_icon_size->description
+msgid "Current weather icon size"
 msgstr ""
 
-#. settings-schema.json->pref_translate_condition->description
-msgid "Translate condition"
+#. settings-schema.json->pref_forecasts_icon_size->description
+msgid "Forecasts icon size"
 msgstr ""
 
-#. settings-schema.json->pref_use_symbolic_icons->description
-msgid "Symbolic icons"
+#. settings-schema.json->pref_menu_icon_type->description
+msgid "Menu icon type"
 msgstr ""
 
-#. settings-schema.json->pref_show_text_in_panel->description
+#. settings-schema.json->pref_menu_icon_type->options
+#. settings-schema.json->pref_applet_icon_type->options
+msgid "Full color"
+msgstr ""
+
+#. settings-schema.json->pref_menu_icon_type->options
+#. settings-schema.json->pref_applet_icon_type->options
+msgid "Symbolic"
+msgstr ""
+
+#. settings-schema.json->header_applet_appearance->description
+msgid "Applet Appearance"
+msgstr ""
+
+#. settings-schema.json->pref_show_current_temperature_in_panel->description
 msgid "Display current temperature in panel"
 msgstr ""
 
-#. settings-schema.json->pref_show_comment_in_panel->description
-msgid "Show the weather condition (e.g., \"Windy\", \"Clear\") in the panel"
+#. settings-schema.json->pref_show_current_condition_in_panel->description
+msgid "Display weather condition in panel"
 msgstr ""
 
-#. settings-schema.json->pref_location_label_override->description
-msgid "Override location label"
+#. settings-schema.json->pref_applet_icon_type->description
+msgid "Applet icon type"
 msgstr ""
 
-#. settings-schema.json->pref_refresh_interval->units
-msgid "minutes"
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
 msgstr ""
 
-#. settings-schema.json->pref_refresh_interval->description
-msgid "Update interval"
+#. settings-schema.json->pref_enable_verbose_logging->description
+msgid "Verbose logging (needs Cinnamon restart)"
+msgstr ""
+
+#. settings-schema.json->pref_enable_verbose_logging->tooltip
+msgid "Checking this will enable debug level logging."
 msgstr ""

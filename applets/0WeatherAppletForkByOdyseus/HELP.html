@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>Help for Weather (Fork By Odyseus)</title>
+<link rel="shortcut icon" type="image/x-icon" href="./icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="./assets/js/localizations-handler.min.js"></script>
+<link type="text/css" rel="stylesheet" href="./assets/css/flatly_bootstrap_theme.min.css">
+<link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
+<style type="text/css">
+
+</style>
+</head>
+
+<body>
+<noscript>
+<div class="alert alert-warning" role="alert">
+<p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
+<p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
+<p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
+</div>
+<!-- .alert.alert-warning -->
+</noscript>
+<div id="mainarea">
+    <nav class="text-bold py-0 py-md-0 navbar navbar-expand-sm navbar-light fixed-top bg-light" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <!-- The preventDefault() calls are to avoid changing the address in the address bar. -->
+                    <li><a id="nav-xlet-help" class="navbar-brand" onclick="event.preventDefault();" href="#xlet-help">Help</a></li>
+                    <li><a id="nav-xlet-contributors" class="navbar-brand" onclick="event.preventDefault();" href="#xlet-contributors">Contributors</a></li>
+                    <li><a id="nav-xlet-changelog" class="navbar-brand" onclick="event.preventDefault();" href="#xlet-changelog">Changelog</a></li>
+                </ul>
+            </div>
+            <form class="form-inline">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-bold text-font-size-xx-large" for="localization-switch">⊛</span>
+                    </div>
+                    <select class="custom-select custom-select-sm text-bold" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
+<!-- English --><option selected data-title="Help for Weather (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
+<!-- Español --><option data-title="Ayuda para Clima (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </nav>
+<span id="xlet-help">
+<div class="container boxed my-3 py-3">
+
+<div id="es" class="localization-content" hidden="true">
+<h1>Ayuda para Clima (Modificado por Odyseus)</h1>
+
+<div class="card text-bold my-3 border-warning shadow-sm">
+    <div class="card-header bg-warning text-white">Advertencia</div>
+    <div class="card-body text-warning "><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
+</div>
+<div class="card text-bold my-3 border-success shadow-sm">
+    <div class="card-header bg-success text-white">Compatibilidad con Cinnamon</div>
+    <div class="card-body text-success text-font-size-x-large"><span class="badge  badge-success shadow-sm text-monospace">v3.0</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.2</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.4</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.6</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.8</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.0</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.2</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.4</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.6</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.8</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.0</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.2</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.4</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.6</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.8</span>
+<span class="badge  badge-success shadow-sm text-monospace">v6.0</span>
+</div>
+</div>
+<div class="card text-bold my-3 border-info shadow-sm">
+    <div class="card-header bg-info text-white">Localización de xlets</div>
+    <div class="card-body text-info "><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
+
+<p>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet.</p>
+</div>
+</div>
+<h2>Descripción</h2>
+<p>Este applet es una bifurcación de <a href="https://cinnamon-spices.linuxmint.com/applets/view/17">Clima</a> applet por <a href="https://github.com/mockturtl">mockturtl</a>.</p>
+<h2>Diferencias con el applet original</h2>
+<ul>
+<li>Agregado soporte para múltiples ubicaciones.</li>
+<li>Agregado soporte para múltiples proveedores de clima.</li>
+<li>Este applet almacena en caché los datos meteorológicos utilizados. Lo que significa que solo se contactará a los proveedores meteorológicos cuando sea necesario, evitando el consumo innecesario de cuotas de API.</li>
+<li>La hoja de estilo de este applet se utiliza para acomodar el diseño de sus elementos y no modifica los colores.</li>
+<li>Agregada información sobre herramientas detallada al applet sobre la ubicación actual de los datos meteorológicos.</li>
+<li>Diseño del menú re-diseñado.<ul>
+<li>Las previsiones se pueden mostrar en una o dos filas (o columnas si el diseño del menú se establece en vertical).</li>
+<li>Las previsiones pueden mostrar el nombre del día o la fecha completa.</li>
+<li>La fecha en la que se publicaron los datos meteorológicos siempre se muestra en el menú.</li>
+<li>Más opciones de personalización (tamaño del icono del tiempo actual, tamaño del icono de pronósticos, etc.).</li>
+</ul>
+</li>
+</ul>
+
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
+
+<ul>
+<li>Este applet requiere credenciales válidas de cualquiera de los servicios proveedores de clima para que funcione.</li>
+<li>Las credenciales no se pueden usar hasta que hayan sido activadas por los proveedores del clima.</li>
+</ul>
+
+</div><h2>Obteniendo credenciales para las APIs.</h2>
+<p>Seguir las instrucciones facilitadas por los proveedores.</p>
+<h3>Proveedores de clima</h3>
+<table class="table table-bordered">
+<thead><tr>
+<th>Proveedor</th>
+<th>Instrucciones para obtener credenciales para API</th>
+<th>Buscador de ubicaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dark Sky</td>
+<td><a href="https://darksky.net/dev">Obtener credenciales</a></td>
+<td><a href="https://darksky.net/forecast">Buscar ubicación</a></td>
+</tr>
+<tr>
+<td>OpenWeatherMap</td>
+<td><a href="https://openweathermap.org/appid">Obtener credenciales</a></td>
+<td><a href="https://openweathermap.org/find">Buscar ubicación</a></td>
+</tr>
+<tr>
+<td>Yahoo! Clima</td>
+<td><a href="https://developer.yahoo.com/weather">Obtener credenciales</a></td>
+<td><a href="http://woeid.rosselliot.co.nz">Buscar ubicación</a></td>
+</tr>
+</tbody>
+</table>
+<h2>Diseño del menú</h2>
+<div class="img-centered-container"><img src="assets/images/menu-layout.png" class="img-fluid " alt="Diseño del menú">
+</div><ol>
+<li>Condición del tiempo actual para la ubicación seleccionada actualmente.</li>
+<li>Pronósticos para la ubicación seleccionada actualmente.</li>
+<li>La hora en que el proveedor del tiempo publicó los datos mostrados actualmente. Al hacer clic en él se intentará obtener datos meteorológicos actualizados.</li>
+<li>Botón para abrir el menú selector de ubicaciones.</li>
+<li>Atribución del proveedor de tiempo. Cuando se hace clic, se abre el sitio web del proveedor de tiempo.</li>
+</ol>
+<h2>Administrador de ubicaciones</h2>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading">Destacados</h4>
+<ul>
+<li>Se puede acceder al administrador de ubicaciones desde este menú contextual del applet.</li>
+<li>Las ubicaciones con exactamente la misma <em>ID de ubicación</em> y <em>Proveedor</em> se consideran duplicadas y se eliminarán automáticamente al aplicar los cambios.</li>
+<li>Se debe presionar el botón <em>Aplicar cambios</em> para que el applet refleje los cambios realizados en el administrador de ubicaciones.</li>
+</ul>
+
+</div><div class="img-centered-container"><img src="assets/images/locations-manager.png" class="img-fluid " alt="Administrador de ubicaciones">
+</div><ul>
+<li><strong>Nombre de la ubicación</strong>: Este es un campo informativo y no se utiliza para recuperar datos meteorológicos. Se utiliza para identificar los datos mostrados en el menú y para generar los elementos dentro del menú de selección de ubicaciones.</li>
+<li><strong>ID de la ubicación</strong>: Una identificación de ciudad/región utilizada por los proveedores de servicios meteorológicos para identificar una ubicación.<ul>
+<li>Dark Sky usa solo coordenadas.</li>
+<li>OpenWeatherMap usa IDs de ciudad (el número al final de una URL de ubicación) y coordenadas.</li>
+<li>Yahoo! Clima usa WOEIDs y coordenadas.</li>
+</ul>
+</li>
+<li><strong>Lenguaje</strong>: Localización de condiciones climatológicas. Solo los proveedores DarkSky y OpenWeatherMap usan los idiomas y solo afectan el texto de las condiciones meteorológicas. Cualquier otro texto de la UI del applet es localizado por el propio applet (si está disponible).</li>
+<li><strong>Días de previsión</strong>: La cantidad de pronósticos a mostrar en el menú.</li>
+<li><strong>Filas/Columnas de pronóstico</strong>: La cantidad de files/columnas en las cuales mostrar los pronósticos.</li>
+<li><strong>Proveedor</strong>: Proveedor de datos meteorológicos. Todos los proveedores de clima requieren credenciales adecuadas para funcionar.</li>
+</ul>
+
+</br>
+
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+Las siguientes secciones están disponibles sólo en Inglés.
+</div>
+
+</div> <!-- .localization-content -->
+
+
+<div id="en" class="localization-content" >
+<h1>Help for Weather (Fork By Odyseus)</h1>
+
+<div class="card text-bold my-3 border-warning shadow-sm">
+    <div class="card-header bg-warning text-white">Warning</div>
+    <div class="card-body text-warning "><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
+</div>
+<div class="card text-bold my-3 border-success shadow-sm">
+    <div class="card-header bg-success text-white">Cinnamon compatibility</div>
+    <div class="card-body text-success text-font-size-x-large"><span class="badge  badge-success shadow-sm text-monospace">v3.0</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.2</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.4</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.6</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.8</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.0</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.2</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.4</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.6</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.8</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.0</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.2</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.4</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.6</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.8</span>
+<span class="badge  badge-success shadow-sm text-monospace">v6.0</span>
+</div>
+</div>
+<div class="card text-bold my-3 border-info shadow-sm">
+    <div class="card-header bg-info text-white">Xlets localization</div>
+    <div class="card-body text-info "><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
+
+<p>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder.</p>
+</div>
+</div>
+<h2>Description</h2>
+<p>This applet is a fork of <a href="https://cinnamon-spices.linuxmint.com/applets/view/17">Weather</a> applet by <a href="https://github.com/mockturtl">mockturtl</a>.</p>
+<h2>Differences with the original applet</h2>
+<ul>
+<li>Added support for multiple locations.</li>
+<li>Added support for multiple weather providers.</li>
+<li>This applet caches the weather data used. Which means that weather providers will be contacted only when needed, preventing unnecessary API quota consumption.</li>
+<li>The style sheet of this fork is used to accommodate the layout of its elements and it doesn't modify colors.</li>
+<li>Added detailed tooltip to the applet about the current weather data location.</li>
+<li>Menu layout redesigned.<ul>
+<li>Forecasts can be displayed in one or two rows (or columns if the menu layout is set to vertical).</li>
+<li>Forecasts can display the name of the day or the full date.</li>
+<li>The date in which the weather data was published is always displayed in the menu.</li>
+<li>More customization options (current weather icon size, forecasts icon size, etc.).</li>
+</ul>
+</li>
+</ul>
+
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
+
+<ul>
+<li>This applet requires valid credentials from any of the weather provider services for it to work.</li>
+<li>The credentials cannot be used until they have been activated by the weather providers.</li>
+</ul>
+
+</div><h2>Getting API credentials</h2>
+<p>Follow the instructions made available by the providers.</p>
+<h3>Weather providers</h3>
+<table class="table table-bordered">
+<thead><tr>
+<th>Provider</th>
+<th>API credentials instructions</th>
+<th>Location finder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dark Sky</td>
+<td><a href="https://darksky.net/dev">Get credentials</a></td>
+<td><a href="https://darksky.net/forecast">Find location</a></td>
+</tr>
+<tr>
+<td>OpenWeatherMap</td>
+<td><a href="https://openweathermap.org/appid">Get credentials</a></td>
+<td><a href="https://openweathermap.org/find">Find location</a></td>
+</tr>
+<tr>
+<td>Yahoo! Weather</td>
+<td><a href="https://developer.yahoo.com/weather">Get credentials</a></td>
+<td><a href="http://woeid.rosselliot.co.nz">Find location</a></td>
+</tr>
+</tbody>
+</table>
+<h2>Menu layout</h2>
+<div class="img-centered-container"><img src="assets/images/menu-layout.png" class="img-fluid " alt="Menu layout">
+</div><ol>
+<li>Current weather condition for the currently selected location.</li>
+<li>Forecasts for the currently selected location.</li>
+<li>The time in which the currently displayed data was published by the weather provider. Clicking it will attempt to retrieve updated weather data.</li>
+<li>Button to open the locations selector menu.</li>
+<li>Weather provider attribution. When clicked, it opens the weather provider website.</li>
+</ol>
+<h2>Locations manager</h2>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading">Highlights</h4>
+<ul>
+<li>The locations manager can be accessed from this applet context menu.</li>
+<li>Locations with the exact same <em>Location ID</em> and <em>Provider</em> are considered duplicated and will be automatically removed when applying changes.</li>
+<li>The <em>Apply changes</em> button must be pressed for the applet to reflect the changes made in the locations manager.</li>
+</ul>
+
+</div><div class="img-centered-container"><img src="assets/images/locations-manager.png" class="img-fluid " alt="Locations manager">
+</div><ul>
+<li><strong>Location name</strong>: This is an informative field and it isn't used to retrieve weather data. It is used to identify the displayed data in the menu and to generate the items inside the locations selector menu.</li>
+<li><strong>Location ID</strong>: A city/region ID used by the weather service providers to identify a location.<ul>
+<li>Dark Sky uses only coordinates.</li>
+<li>Open Weather Map uses city IDs (the number at the end of a location URL) and coordinates.</li>
+<li>Yahoo! Weather uses WOEIDs and coordinates.</li>
+</ul>
+</li>
+<li><strong>Language</strong>: Weather conditions localization. Languages are only used by DarkSky and OpenWeatherMap providers and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available).</li>
+<li><strong>Forecast days</strong>: The amount of forecasts to display in the menu.</li>
+<li><strong>Forecast rows/columns</strong>: The amount of rows/cols to display the forecast days in.</li>
+<li><strong>Provider</strong>: Weather data provider. All weather providers require proper credentials to function.</li>
+</ul>
+
+</br>
+
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+The following sections are available only in English.
+</div>
+
+</div> <!-- .localization-content -->
+
+</div> <!-- .container.boxed -->
+<span id="xlet-contributors">
+
+<span id="xlet-changelog">
+<div class="container boxed my-3 py-3">
+<h2>Weather (Fork By Odyseus) changelog</h2>
+<h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 12 Feb 2019 23:33:32 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4fc8ec3">4fc8ec3</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Rewritten from scratch to suport changes to the Yahoo! Weather API and to add several features.
+- Added support for multiple locations.
+- Added support for multiple weather providers.
+- Added detailed tooltip to the applet about the current weather data location.
+- Menu layout redesigned.
+    - Forecasts can be displayed in one or two rows (or columns if the menu layout is set to vertical).
+    - Forecasts can display the name of the day or the full date.
+    - The date in which the weather data was published is always displayed in the menu.
+    - More customization options (current weather icon size, forecasts icon size, etc.).
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 21 Jan 2019 21:55:26 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/24e684b">24e684b</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Changed applet icon.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 15 Jan 2019 22:36:02 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5797433">5797433</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 8 Jan 2019 21:40:05 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/fbdef6f">fbdef6f</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Fixed strict mode warning.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 7 Aug 2018 03:12:54 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ea72172">ea72172</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 4 Aug 2018 05:13:40 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4bfbd34">4bfbd34</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 13 Jun 2018 01:05:41 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0225402">0225402</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 14 May 2018 07:15:52 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/2e7d01c">2e7d01c</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Corrected the logic when polling for weather data.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 7 May 2018 04:47:37 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e8d1011">e8d1011</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Revamped/simplified settings mechanism.
+    - Renamed all settings keys to be prefixed with "pref_".
+    - Removed unnecessary properties definition.
+- Cleaned up unnecessary variable definitions.
+- Proper handling of key bindings.
+- Moved utility functions into the utils.js files.
+- Added a mechanism to update weather data from the online source only when it is needed.
+- Added Spanish localization.
+</code></pre>
+<hr>
+
+</div> <!-- .container.boxed -->
+
+</div> <!-- #mainarea -->
+<!--Footer-->
+<footer class="page-footer text-bold bg-light pt-4 mt-4">
+    <!--Footer Links-->
+    <div class="container-fluid text-left">
+        <ul class="list-unstyled">
+            <li>
+                <p>Page created with <a href="https://getbootstrap.com"><b>Bootstrap</b></a> v4.1.3.</p>
+            </li>
+            <li>
+                <p><a href="https://gitlab.com/Odyseus/flatly_bootstrap_theme"><b>Boostrap theme</b></a> based on <a href="https://bootswatch.com"><b>Bootswatch</b></a>'s <a href="https://bootswatch.com/flatly"><b>Flatly theme</b></a>.</p>
+            </li>
+            <li>
+                <p><a href="https://github.com/julienetie/smooth-scroll"><b>Smooth Scroll plugin</b></a> provided by <a href="https://github.com/julienetie"><b>Julien Etienne</b></a>.</p>
+            </li>
+        </ul>
+    </div>
+    <!--/.Footer Links-->
+    <!--Copyright-->
+    <div class="text-center py-3">
+        <div class="container-fluid">
+            © 2016-2019 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
+        </div>
+    </div>
+    <!--/.Copyright-->
+</footer>
+<!--/.Footer-->
+<script type="text/javascript">toggleLocalizationVisibility(null);
+
+</script>
+</body>
+</html>

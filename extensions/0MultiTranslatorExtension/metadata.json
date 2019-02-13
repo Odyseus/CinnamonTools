@@ -1,7 +1,6 @@
 {
     "external-configuration-app": "settings.py",
     "website": "{{REPO_URL}}",
-    "poeditor-url": "https://poeditor.com/join/project/GkOE0exZCp",
     "uuid": "{{UUID}}",
     "contributors": "See this xlet help file.",
     "url": "{{REPO_URL}}",

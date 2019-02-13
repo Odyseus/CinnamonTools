@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0CinnamonMenuForkByOdyseus 2.19\n"
-"POT-Creation-Date: 2019-01-21 22:10-0300\n"
+"Project-Id-Version: 0CinnamonMenuForkByOdyseus VERSION\n"
+"POT-Creation-Date: 2019-02-13 00:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,53 +15,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:331
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:328 applet.js:307
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:308
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:329
+#: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:330
+#: ../../__app__/python_modules/localized_help_creator.py:320
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:366
+#: ../../__app__/python_modules/localized_help_creator.py:356
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:380
+#: ../../__app__/python_modules/localized_help_creator.py:370
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:396
+#: ../../__app__/python_modules/localized_help_creator.py:386
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:399
+#: ../../__app__/python_modules/localized_help_creator.py:389
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:401
+#: ../../__app__/python_modules/localized_help_creator.py:391
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:417
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:420
+#: ../../__app__/python_modules/localized_help_creator.py:410
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:421
+#: ../../__app__/python_modules/localized_help_creator.py:411
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -91,7 +91,7 @@ msgid "Choose an Icon"
 msgstr ""
 
 #. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:174 appletHelper.py:340 appletHelper.py:346 appletHelper.py:682
+#: appletHelper.py:174 appletHelper.py:340 appletHelper.py:346 appletHelper.py:680
 msgid "_Cancel"
 msgstr ""
 
@@ -108,7 +108,7 @@ msgstr ""
 msgid "Select or enter file to export to"
 msgstr ""
 
-#: appletHelper.py:341 appletHelper.py:683
+#: appletHelper.py:341 appletHelper.py:681
 msgid "_Save"
 msgstr ""
 
@@ -120,67 +120,67 @@ msgstr ""
 msgid "JSON files"
 msgstr ""
 
-#: appletHelper.py:450
+#: appletHelper.py:455
 msgid "Add new launcher"
 msgstr ""
 
-#: appletHelper.py:455
+#: appletHelper.py:460
 msgid "Remove selected launcher"
 msgstr ""
 
-#: appletHelper.py:463
+#: appletHelper.py:468
 msgid "Edit selected launcher"
 msgstr ""
 
-#: appletHelper.py:469
+#: appletHelper.py:474
 msgid "Move selected launcher up"
 msgstr ""
 
-#: appletHelper.py:475
+#: appletHelper.py:480
 msgid "Move selected launcher down"
 msgstr ""
 
-#: appletHelper.py:481
+#: appletHelper.py:486
 msgid "Export launchers"
 msgstr ""
 
-#: appletHelper.py:486
+#: appletHelper.py:491
 msgid "Import launchers"
 msgstr ""
 
-#: appletHelper.py:491
+#: appletHelper.py:496
 msgid "Apply changes"
 msgstr ""
 
-#: appletHelper.py:583
+#: appletHelper.py:581
 msgid "Custom launcher removal"
 msgstr ""
 
-#: appletHelper.py:586
+#: appletHelper.py:584
 msgid "Are you sure that you want to remove this custom launcher?"
 msgstr ""
 
-#: appletHelper.py:587
+#: appletHelper.py:585
 msgid "Note"
 msgstr ""
 
-#: appletHelper.py:588
+#: appletHelper.py:586
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr ""
 
-#: appletHelper.py:675
+#: appletHelper.py:673
 msgid "Add new entry"
 msgstr ""
 
-#: appletHelper.py:677
+#: appletHelper.py:675
 msgid "Edit entry"
 msgstr ""
 
-#: appletHelper.py:729
+#: appletHelper.py:727
 msgid "Mandatory fields"
 msgstr ""
 
-#: appletHelper.py:940
+#: appletHelper.py:938
 msgid "Custom launchers"
 msgstr ""
 
@@ -470,140 +470,140 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: applet.js:295
+#: applet.js:296
 msgid "Open the menu editor"
 msgstr ""
 
-#: applet.js:300
+#: applet.js:301
 msgid "Edit custom launchers"
 msgstr ""
 
-#: applet.js:1422
+#: applet.js:1436
 msgid "Favorites"
 msgstr ""
 
-#: applet.js:1448
+#: applet.js:1462
 msgid "Recently Used"
 msgstr ""
 
-#: applet.js:1478
+#: applet.js:1492
 msgid "All Applications"
 msgstr ""
 
-#: applet.js:1560
+#: applet.js:1574
 msgid "No search results"
 msgstr ""
 
-#: applet.js:1582
+#: applet.js:1596
 msgid "No recent applications"
 msgstr ""
 
-#: applet.js:1590
+#: applet.js:1604
 msgid "Clear list"
 msgstr ""
 
-#: applet.js:1760
+#: applet.js:1774
 msgid "Type to search..."
 msgstr ""
 
-#: applet.js:2493 applet.js:2503
+#: applet.js:2498 applet.js:2508
 msgid "Categories"
 msgstr ""
 
-#: utils.js:645
+#: utils.js:637
 msgid "Add to panel"
 msgstr ""
 
-#: utils.js:649
+#: utils.js:641
 msgid "Add this application to the Panel launchers applet."
 msgstr ""
 
-#: utils.js:656
+#: utils.js:648
 msgid "Add to desktop"
 msgstr ""
 
-#: utils.js:660
+#: utils.js:652
 msgid "Add this application to the Desktop."
 msgstr ""
 
-#: utils.js:668
+#: utils.js:660
 msgid "Remove from favorites"
 msgstr ""
 
-#: utils.js:672
+#: utils.js:664
 msgid "Remove application from your favorites."
 msgstr ""
 
-#: utils.js:677
+#: utils.js:669
 msgid "Add to favorites"
 msgstr ""
 
-#: utils.js:681
+#: utils.js:673
 msgid "Add application to your favorites."
 msgstr ""
 
-#: utils.js:689
+#: utils.js:681
 msgid "Uninstall"
 msgstr ""
 
-#: utils.js:693
+#: utils.js:685
 msgid "Uninstall application from your system."
 msgstr ""
 
-#: utils.js:700
+#: utils.js:692
 msgid "Run with NVIDIA GPU"
 msgstr ""
 
-#: utils.js:704
+#: utils.js:696
 msgid "Run application through optirun command (Bumblebee)."
 msgstr ""
 
-#: utils.js:711
+#: utils.js:703
 msgid "Run as root"
 msgstr ""
 
-#: utils.js:715
+#: utils.js:707
 msgid "Run application as root."
 msgstr ""
 
-#: utils.js:722
+#: utils.js:714
 msgid "Edit .desktop file"
 msgstr ""
 
-#: utils.js:726
+#: utils.js:718
 msgid "Edit this application .desktop file with a text editor."
 msgstr ""
 
-#: utils.js:733
+#: utils.js:725
 msgid "Open .desktop file folder"
 msgstr ""
 
-#: utils.js:737
+#: utils.js:729
 msgid "Open the folder containg this application .desktop file."
 msgstr ""
 
-#: utils.js:744
+#: utils.js:736
 msgid "Run from terminal"
 msgstr ""
 
-#: utils.js:748
+#: utils.js:740
 msgid "Run application from a terminal."
 msgstr ""
 
-#: utils.js:755
+#: utils.js:747
 msgid "Run from terminal as root"
 msgstr ""
 
-#: utils.js:759
+#: utils.js:751
 msgid "Run application from a terminal as root."
 msgstr ""
 
-#: utils.js:1032
+#: utils.js:1024
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr ""
 
-#: utils.js:1033
+#: utils.js:1025
 msgid "Please check your installation."
 msgstr ""
 
