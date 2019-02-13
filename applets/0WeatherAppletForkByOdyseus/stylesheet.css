@@ -1,64 +1,123 @@
-/* taken from gnome-shell.css, .dash-search-button */
-.weather-current-location-link:selected,
-.weather-current-location-link:hover {
-    background-gradient-direction: vertical;
-    background-gradient-start: rgba(255, 255, 255, 0.4);
-    background-gradient-end: rgba(255, 255, 255, 0.2);
-}
+/* List of valid classes.
+ *
+ * popup-separator-menu-item
+ * weather-current
+ * weather-current-icon
+ * weather-current-iconbox
+ * weather-current-location-button
+ * weather-current-summary
+ * weather-current-summary-box
+ * weather-current-summary-details-box
+ * weather-current-summary-details-title
+ * weather-current-summary-details-value
+ * weather-error-box
+ * weather-error-message
+ * weather-footer-box
+ * weather-footer-button
+ * weather-forecast
+ * weather-forecast-box
+ * weather-forecast-data-box
+ * weather-forecast-day
+ * weather-forecast-icon
+ * weather-forecast-summary
+ * weather-forecast-temperature
+ * weather-menu
+ */
 
-.weather-current-summarybox {
-    padding-top: 15px;
-}
-
-.weather-current-summary {
-    font-size: 35px;
-}
-
-.weather-current-databox {
-    padding-top: 15px;
-    padding-left: 30px;
+.weather-current {
+    padding-bottom: 10px;
 }
 
 .weather-current-icon {
     padding: 0 30px;
 }
 
-.weather-current-iconbox {
-    padding: 10px;
+/*.weather-current-iconbox {}*/
+
+.weather-current-location-button {
+    font-size: 1.2em;
 }
 
-.weather-icon {
-    padding-right: 5px;
-}
-
-.weather-icon-rtl {
-    padding-left: 5px;
-}
-
-.weather-current-databox-captions {
+.weather-current-summary {
+    font-size: 1.5em;
     font-weight: bold;
-    text-align: right;
-    padding-right: 5px;    /*color: #999999;*/
 }
 
-.weather-current-astronomy {
-    font-weight: bold;    /*color: #AAAAAA;*/
+.weather-current-summary-box {
+    padding: 15px;
 }
 
-.weather-forecast-icon {
-    padding: 0 15px 0 30px;
+.weather-current-summary-details-box {
+    padding: 0 30px;
 }
 
-.weather-forecast-databox {
-    padding: 0 30px 0 0;
+.weather-current-summary-details-title {
+    padding: 0 5px;
+    font-weight: bold;
+}
+
+/*.weather-current-summary-details-value {}*/
+
+/*.weather-error-box:error {}*/
+
+.weather-error-message {
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+.weather-error-message:error {
+    background-color: red;
+    color: black;
+}
+
+.weather-error-message:warning {
+    background-color: yellow;
+    color: black;
+}
+
+.weather-footer-box {
+    padding: 10px 5px 0 5px;
+}
+
+.weather-footer-button {
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+/*.weather-forecast {}*/
+/*.weather-forecast-box {}*/
+
+.weather-forecast-data-box {
+    padding: 10px 15px 10px 0;
 }
 
 .weather-forecast-day {
-    /*color: #999999;*/
+    padding-left: 0;
     font-weight: bold;
-    /*font-size: 90%;*/
 }
 
-.weather-config {
-    padding-right: 10px;
+.weather-forecast-icon {
+    padding: 0 15px;
 }
+
+/* DarkSky summaries are kilometric!!! ¬¬ */
+.weather-forecast-summary {
+    max-width: 200px;
+}
+
+/*.weather-forecast-temperature {}*/
+
+.weather-footer-button:active,
+.weather-footer-button:focus,
+.weather-footer-button:hover,
+.weather-footer-button:selected,
+.weather-current-location-button:active,
+.weather-current-location-button:focus,
+.weather-current-location-button:hover,
+.weather-current-location-button:selected {
+    background-gradient-direction: vertical;
+    background-gradient-start: rgba(255, 255, 255, 0.4);
+    background-gradient-end: rgba(255, 255, 255, 0.2);
+}
+
+/*.weather-menu {}*/

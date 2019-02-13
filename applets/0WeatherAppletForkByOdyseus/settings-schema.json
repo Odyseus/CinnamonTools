@@ -1,125 +1,245 @@
 {
     "pref_overlay_key": {
         "type": "keybinding",
+        "indent": true,
         "description": "Keyboard shortcut to open and close the menu",
         "default": ""
     },
-    "pref_woeid_lookup": {
+    "locations_manager_button": {
         "type": "button",
-        "description": "Get WOEID (Where On Earth IDentification)",
-        "callback": "woeidLookup",
-        "tooltip": "http://woeid.rosselliot.co.nz/"
+        "description": "Open locations manager",
+        "callback": "_openLocationsManager"
     },
-    "pref_woeid": {
-        "type": "entry",
-        "default": "",
-        "description": "WOEID",
-        "tooltip": "Where On Earth IDentification"
+    "pref_refresh_interval": {
+        "type": "spinbutton",
+        "indent": true,
+        "default": 60,
+        "min": 30,
+        "max": 1440,
+        "units": "minutes",
+        "step": 5,
+        "description": "Update weather data interval"
+    },
+    "header_units": {
+        "type": "header",
+        "description": "Units"
     },
     "pref_temperature_unit": {
-        "type": "radiogroup",
+        "type": "combobox",
+        "indent": true,
         "default": "celsius",
         "description": "Temperature unit",
         "options": {
-            "celsius": "celsius",
-            "fahrenheit": "fahrenheit"
+            "Celsius": "celsius",
+            "Fahrenheit": "fahrenheit",
+            "Kelvin": "kelvin"
         }
     },
-    "pref_temperature_high_first": {
-        "type": "checkbox",
-        "default": false,
-        "description": "Show high temperature first in forecast"
+    "pref_distance_unit": {
+        "type": "combobox",
+        "indent": true,
+        "default": "km",
+        "description": "Distance unit",
+        "options": {
+            "Kilometers": "km",
+            "Meters": "m",
+            "Miles": "mile"
+        }
     },
     "pref_wind_speed_unit": {
         "type": "combobox",
+        "indent": true,
         "default": "kph",
         "description": "Wind speed unit",
         "options": {
-            "kph": "kph",
-            "mph": "mph",
-            "m/s": "m/s",
-            "knots": "knots"
+            "Kilometers per hour": "kph",
+            "Knots": "knot",
+            "Meters per second": "m/s",
+            "Miles per hour": "mph"
         }
     },
     "pref_pressure_unit": {
         "type": "combobox",
+        "indent": true,
         "default": "kPa",
         "description": "Atmospheric pressure unit",
         "options": {
-            "mbar": "mbar",
-            "in Hg": "in Hg",
-            "mm Hg": "mm Hg",
-            "psi": "psi",
-            "at": "at",
-            "atm": "atm",
-            "Pa": "Pa",
-            "kPa": "kPa"
+            "Atmospheres": "atm",
+            "Hectopascals": "hPa",
+            "Inches mercury": "inHg",
+            "Kilopascals": "kPa",
+            "Millibars": "mbar",
+            "Millimeters mercury": "mmHg",
+            "Pascals": "Pa",
+            "Pounds per square inch": "psi"
         }
     },
-    "pref_vertical_orientation": {
-        "type": "checkbox",
-        "default": false,
-        "description": "Vertical orientation"
+    "header_menu_layout": {
+        "type": "header",
+        "description": "Menu Layout"
     },
-    "pref_show_sunrise": {
+    "pref_menu_orientation": {
+        "type": "combobox",
+        "indent": true,
+        "default": "horizontal",
+        "description": "Menu orientation",
+        "options": {
+            "Horizontal": "horizontal",
+            "Vertical": "vertical"
+        }
+    },
+    "header_menu_appearance": {
+        "type": "header",
+        "description": "Menu Appearance"
+    },
+    "pref_temperature_high_first": {
         "type": "checkbox",
+        "indent": true,
+        "default": false,
+        "description": "Show high temperature first in forecast"
+    },
+    "pref_forecats_display_dates": {
+        "type": "checkbox",
+        "indent": true,
         "default": true,
-        "description": "Show sunrise / sunset times"
+        "description": "Display forecast dates"
     },
     "pref_show_common_sense_hours": {
         "type": "checkbox",
+        "indent": true,
         "default": true,
-        "description": "Display time in 24 hour format"
+        "description": "Display time in 24 hours format"
     },
-    "pref_forecast_days": {
+    "pref_current_weather_icon_size": {
         "type": "spinbutton",
-        "default": 5,
-        "min": 2,
-        "max": 7,
-        "units": "days",
-        "step": 1,
-        "description": "Forecast length"
+        "indent": true,
+        "default": 96,
+        "min": 16,
+        "max": 128,
+        "units": "pixels",
+        "step": 2,
+        "description": "Current weather icon size"
     },
-    "pref_translate_condition": {
-        "type": "checkbox",
-        "default": false,
-        "description": "Translate condition"
+    "pref_forecasts_icon_size": {
+        "type": "spinbutton",
+        "indent": true,
+        "default": 48,
+        "min": 16,
+        "max": 128,
+        "units": "pixels",
+        "step": 2,
+        "description": "Forecasts icon size"
     },
-    "pref_use_symbolic_icons": {
-        "type": "checkbox",
-        "default": true,
-        "description": "Symbolic icons"
+    "pref_menu_icon_type": {
+        "type": "combobox",
+        "indent": true,
+        "default": 0,
+        "description": "Menu icon type",
+        "options": {
+            "Full color": 1,
+            "Symbolic": 0
+        }
     },
-    "pref_show_text_in_panel": {
+    "header_applet_appearance": {
+        "type": "header",
+        "description": "Applet Appearance"
+    },
+    "pref_show_current_temperature_in_panel": {
         "type": "checkbox",
+        "indent": true,
         "default": true,
         "description": "Display current temperature in panel"
     },
-    "pref_show_comment_in_panel": {
+    "pref_show_current_condition_in_panel": {
         "type": "checkbox",
+        "indent": true,
         "default": false,
-        "description": "Show the weather condition (e.g., \"Windy\", \"Clear\") in the panel"
+        "description": "Display weather condition in panel"
     },
-    "pref_location_label_override": {
-        "type": "entry",
-        "default": "",
-        "description": "Override location label"
+    "pref_applet_icon_type": {
+        "type": "combobox",
+        "indent": true,
+        "default": 0,
+        "description": "Applet icon type",
+        "options": {
+            "Full color": 1,
+            "Symbolic": 0
+        }
     },
-    "pref_refresh_interval": {
-        "type": "spinbutton",
-        "default": 30,
-        "min": 1,
-        "max": 1440,
-        "units": "minutes",
-        "step": 5,
-        "description": "Update interval"
+    "debugging-header": {
+        "type": "header",
+        "description": "Debugging"
     },
-    "pref_last_check": {
+    "pref_enable_verbose_logging": {
+        "type": "checkbox",
+        "indent": true,
+        "default": false,
+        "description": "Verbose logging (needs Cinnamon restart)",
+        "tooltip": "Checking this will enable debug level logging."
+    },
+    "pref_imp_exp_last_selected_directory": {
         "type": "generic",
-        "default": 0
+        "default": ""
+    },
+    "pref_open_weather_map_credential_app_id": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_darksky_credential_app_id": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_yahoo_credential_app_id": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_yahoo_credential_client_id": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_yahoo_credential_client_secret": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_current_location": {
+        "type": "generic",
+        "default": "468739:YahooWeather"
+    },
+    "pref_locations_storage": {
+        "type": "generic",
+        "default": [{
+            "forecastRowsCols": 2,
+            "forecastDays": 10,
+            "languageID": "en",
+            "locationID": "468739",
+            "locationName": "Buenos Aires, Argentina",
+            "providerID": "YahooWeather"
+        }, {
+            "forecastRowsCols": 1,
+            "forecastDays": 5,
+            "languageID": "en",
+            "locationID": "3435910",
+            "locationName": "Buenos Aires, Argentina",
+            "providerID": "OpenWeatherMap"
+        }, {
+            "forecastRowsCols": 1,
+            "forecastDays": 5,
+            "languageID": "en",
+            "locationID": "-34.6076,-58.4371",
+            "locationName": "Buenos Aires, Argentina",
+            "providerID": "DarkSky"
+        }]
     },
     "pref_weather_data": {
         "type": "generic",
         "default": {}
+    },
+    "trigger_reload_locations": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_initial_load_done": {
+        "type": "generic",
+        "default": false
     }
 }

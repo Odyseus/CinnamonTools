@@ -1,6 +1,8 @@
 {
-    "description": "View your local weather forecast",
+    "description": "View your local weather forecast.",
     "website": "{{REPO_URL}}",
+    "contributors": "See this xlet help file.",
+    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
     "max-instances": -1,
     "cinnamon-version": [
         "3.0",
