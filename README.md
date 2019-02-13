@@ -80,6 +80,7 @@ Applet's help pages can be accessed from an applet context menu (item named **He
 - [Simple ToDo List](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0SimpleToDoList/index.html)
 - [System Monitor (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0SystemMonitorByOrcusForkByOdyseus/index.html)
 - [Wallpaper Changer](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WallpaperChangerApplet/index.html)
+- [Weather (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WeatherAppletForkByOdyseus/index.html)
 - [Window list (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WindowListForkByOdyseus/index.html)
 
 ### Extensions help pages
