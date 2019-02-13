@@ -96,8 +96,6 @@ class LocalizedHelpCreator():
         If existent, the content of the CONTRIBUTORS.md (inside the xlet folder) formatted in HTML.
     help_file_path : str
         The path of an xlet HELP.html file.
-    html_assets : object
-        See <class :any:`localized_help_utils.HTMLInlineAssets`>.
     lang_list : list
         The list of languages (.po files) that will be used to create the HELP.html file
         localized content.
@@ -128,7 +126,6 @@ class LocalizedHelpCreator():
         self.xlet_meta = utils.XletMetadata(
             os.path.join(xlet_dir)).xlet_meta
 
-        self.html_assets = utils.HTMLInlineAssets(repo_folder=repo_folder)
         self.compatibility_data = utils.get_compatibility(
             xlet_meta=self.xlet_meta,
             for_readme=False
@@ -277,12 +274,6 @@ class LocalizedHelpCreator():
             title="Help for {xlet_name}".format(xlet_name=self.xlet_meta["name"]),
             # WARNING!!! Insert the inline files (.css and .js) AFTER all string formatting has been done.
             # CSS code interferes with formatting variables. ¬¬
-            js_localizations_handler=self.html_assets.js_localizations_handler if
-            self.html_assets.js_localizations_handler else "",
-            css_bootstrap_theme=self.html_assets.css_bootstrap_theme if
-            self.html_assets.css_bootstrap_theme else "",
-            css_bootstrap_tweaks=self.html_assets.css_bootstrap_tweaks if
-            self.html_assets.css_bootstrap_tweaks else "",
             css_custom=self.get_css_custom(),
             options="\n".join(sorted(self.options, key=options_sort_function)),
             sections="\n".join(self.sections),
@@ -294,8 +285,7 @@ class LocalizedHelpCreator():
         print("Saving file...")
 
         utils.save_file(file_path=self.help_file_path,
-                        data=html_doc,
-                        is_xlet_help_file=True)
+                        data=html_doc)
 
     def _get_language_stats(self):
         """Get language stats.

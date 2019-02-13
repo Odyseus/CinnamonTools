@@ -42,6 +42,7 @@ URLS = {
 
 PATHS = {
     "docs_sources": os.path.join(root_folder, "__app__", "cinnamon_tools_docs"),
+    "docs_built": os.path.join(root_folder, "__app__", "cinnamon_tools_docs", "docs"),
     "domain_storage_file": os.path.join(root_folder, "tmp", "domain_name"),
     "theme_name_storage_file": os.path.join(root_folder, "tmp", "theme_name"),
     "all_xlets_meta_file": os.path.join(root_folder, "tmp", "xlets_metadata.json"),
@@ -82,6 +83,35 @@ _extra_common_files = [{
 }, {
     "source_path": os.path.join(root_folder, "__app__", "data", "python_scripts"),
     "file_name": "helper.py",
+}, {
+    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "js"),
+    "destination_path": "assets/js",
+    "file_name": "localizations-handler.min.js",
+    "depends_on": "HELP.html",
+}, {
+    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
+    "destination_path": "assets/css",
+    "file_name": "bootstrap-tweaks.css",
+    "depends_on": "HELP.html",
+}, {
+    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css", "flatly_bootstrap_theme", "dist"),
+    "destination_path": "assets/css",
+    "file_name": "flatly_bootstrap_theme.min.css",
+    "depends_on": "HELP.html",
+}]
+
+_common_help_assets = [{
+    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "js"),
+    "destination_path": "js",
+    "file_name": "localizations-handler.min.js"
+}, {
+    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
+    "destination_path": "css",
+    "file_name": "bootstrap-tweaks.css"
+}, {
+    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css", "flatly_bootstrap_theme", "dist"),
+    "destination_path": "css",
+    "file_name": "flatly_bootstrap_theme.min.css"
 }]
 
 _readme_list_item_template = "- [{xlet_name}](%s/_static/xlets_help_pages/{xlet_slug}/index.html)" % (
@@ -605,12 +635,22 @@ class XletBuilder():
         self.logger.info("**Copying common xlet files...**")
         for extra in _extra_common_files:
             src = os.path.join(extra["source_path"], extra["file_name"])
-            dst = os.path.join(self._xlet_data["destination"], extra["file_name"])
+            dst = os.path.join(self._xlet_data["destination"], extra.get(
+                "destination_path", ""), extra["file_name"])
+
+            if extra.get("depends_on") is not None:
+                file_to_check = os.path.join(self._xlet_data["destination"], extra["depends_on"])
+
+                if not os.path.exists(file_to_check):
+                    continue
 
             if self._dry_run:
                 self.logger.log_dry_run("**Source:** %s" % src)
                 self.logger.log_dry_run("**Will be copied into:** %s" % dst)
             else:
+                if not os.path.exists(os.path.dirname(dst)):
+                    os.makedirs(os.path.dirname(dst))
+
                 copy2(src, dst)
 
     def _compile_schemas(self):
@@ -1277,6 +1317,78 @@ def generate_docs(generate_api_docs=False,
                                          docs_dest_path_rel_to_root=os.path.join(
                                              "__app__", "data", "man"),
                                          doctree_temp_location_rel_to_sys_temp="CinnamonTools-man-doctrees",
+                                         logger=logger)
+
+    copy_help_pages_to_docs(logger)
+
+
+def copy_help_pages_to_docs(logger):
+    """Copy xlets help pages into built docs.
+
+    Parameters
+    ----------
+    logger : object
+        See <class :any:`LogSystem`>.
+    """
+    logger.info("**Copying xlets help pages into docs folder...**")
+
+    xlets_list = AllXletsMetadata().meta_list
+
+    # NOTE: Copy only once the asset files into the root of the _static folder.
+    for asset in _common_help_assets:
+        src = os.path.join(asset["source_path"], asset["file_name"])
+        dst = os.path.join(PATHS["docs_built"], "_static",
+                           asset["destination_path"], asset["file_name"])
+
+        # NOTE: Be carefull. Do not remove folders, just files.
+        if os.path.exists(dst):
+            os.remove(dst)
+
+        # Shouldn't be needed, but it doesn't hurt...
+        if not os.path.exists(os.path.dirname(dst)):
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+
+        copy2(src, dst)
+
+    for xlet in xlets_list:
+        xlet_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
+        xlet_html_file = os.path.join(xlet_folder, "HELP.html")
+
+        if not os.path.exists(xlet_html_file):
+            continue
+
+        xlet_assets_folder = os.path.join(xlet_folder, "assets")
+        xlet_icon = os.path.join(xlet_folder, "icon.png")
+        dest_path = os.path.join(PATHS["docs_built"], "_static",
+                                 "xlets_help_pages", xlet["slug"])
+        dest_html_file = os.path.join(dest_path, "index.html")
+        dest_icon_file = os.path.join(dest_path, "icon.png")
+        dest_assets_folder = os.path.join(dest_path, "assets")
+
+        # Clean up.
+        if os.path.exists(dest_path):
+            rmtree(dest_path)
+
+        os.makedirs(dest_path, exist_ok=True)
+
+        # Copy new files/folders.
+        if os.path.exists(xlet_assets_folder):
+            copytree(xlet_assets_folder, dest_assets_folder)
+
+        copy2(xlet_html_file, dest_html_file)
+        copy2(xlet_icon, dest_icon_file)
+
+    # NOTE: Since I decided to copy only one copy of each common asset, change the
+    # relative paths in all HTML files with a mass substitution.
+    replacement_data = [
+        ("./assets/css", "../../css"),
+        ("./assets/js", "../../js"),
+    ]
+
+    string_utils.do_string_substitutions(os.path.join(PATHS["docs_built"],
+                                                      "_static", "xlets_help_pages"),
+                                         replacement_data,
+                                         allowed_extensions=(".html"),
                                          logger=logger)
 
 

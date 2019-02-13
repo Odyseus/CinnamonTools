@@ -28,11 +28,17 @@ import time
 
 from datetime import datetime
 from shutil import copy2
+from shutil import copytree
+from shutil import rmtree
 
 from . import app_utils
 from .python_utils import file_utils
 from .python_utils import polib
 from .python_utils.ansi_colors import Ansi
+
+repo_folder = os.path.normpath(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), *([".."] * 2)))
+
 
 _bootstrap_version = "4.1.3"
 
@@ -44,12 +50,10 @@ HTML_DOC = """<!DOCTYPE html>
 <title>{title}</title>
 <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript">
-{js_localizations_handler}
-</script>
+<script type="text/javascript" src="./assets/js/localizations-handler.min.js"></script>
+<link type="text/css" rel="stylesheet" href="./assets/css/flatly_bootstrap_theme.min.css">
+<link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
 <style type="text/css">
-{css_bootstrap_theme}
-{css_bootstrap_tweaks}
 {css_custom}
 </style>
 </head>
@@ -58,7 +62,7 @@ HTML_DOC = """<!DOCTYPE html>
 <noscript>
 <div class="alert alert-warning" role="alert">
 <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
-<p><strong>This page uses JavaScript only to switch between the available languages, display images, smooth scrolling, etc.</strong></p>
+<p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
 <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
 </div>
 <!-- .alert.alert-warning -->
@@ -158,7 +162,6 @@ README_DOC = """{readme_compatibility}
 {readme_content}
 """
 
-
 class XletMetadata():
     """Xlet metadata.
 
@@ -240,52 +243,6 @@ class Translations(object):
         return self._null
 
 
-class HTMLInlineAssets():
-    """HTML inline assets.
-
-    Attributes
-    ----------
-    css_bootstrap_theme : str
-        The content of the CSS Bootstrap theme.
-    css_bootstrap_tweaks : str
-        The content of the CSS with tweaks for the Bootstrap theme.
-    js_localizations_handler : str
-        Localizations handler JavaScript code.
-    """
-
-    def __init__(self, repo_folder):
-        """Initialization.
-
-        Parameters
-        ----------
-        repo_folder : str
-            Path to the repository folder.
-        """
-        self.css_bootstrap_theme = ""
-        self.css_bootstrap_tweaks = ""
-        self.js_localizations_handler = ""
-
-        assets_folder_path = os.path.join(repo_folder, "__app__", "data", "html_assets")
-        path_css_bootstrap_theme = os.path.join(assets_folder_path, "css", "flatly_bootstrap_theme",
-                                                "dist", "flatly_bootstrap_theme.min.css")
-        path_css_bootstrap_tweaks = os.path.join(assets_folder_path, "css", "bootstrap-tweaks.css")
-        path_js_localizations_handler = os.path.join(
-            assets_folder_path, "js", "localizations-handler.min.js")
-
-        # Do the "heavy lifting" first.
-        if os.path.exists(path_css_bootstrap_theme):
-            with open(path_css_bootstrap_theme, "r", encoding="UTF-8") as bootstrap_css:
-                self.css_bootstrap_theme = bootstrap_css.read()
-
-        if os.path.exists(path_css_bootstrap_tweaks):
-            with open(path_css_bootstrap_tweaks, "r", encoding="UTF-8") as bootstrap_css_tweaks:
-                self.css_bootstrap_tweaks = bootstrap_css_tweaks.read()
-
-        if os.path.exists(path_js_localizations_handler):
-            with open(path_js_localizations_handler, "r", encoding="UTF-8") as localizations_handler_js:
-                self.js_localizations_handler = localizations_handler_js.read()
-
-
 def get_time_zone():
     """Get time zone.
 
@@ -360,7 +317,7 @@ def validate_po_file(pofile_path, lang_name, xlet_meta, xlet_slug):
     if xlet_meta:
         do_save = True
         po_file.metadata[
-            "Project-Id-Version"] = "{0} {1}".format(xlet_slug, xlet_meta["version"])
+            "Project-Id-Version"] = "{0}".format(xlet_slug)
 
     # Sanitize language code to be UNIX compliant
     if "-" in po_file.metadata["Language"]:
@@ -396,7 +353,7 @@ def validate_po_file(pofile_path, lang_name, xlet_meta, xlet_slug):
         po_file.save()
 
 
-def save_file(file_path, data, is_xlet_help_file=False):
+def save_file(file_path, data):
     """Save file.
 
     Parameters
@@ -405,9 +362,6 @@ def save_file(file_path, data, is_xlet_help_file=False):
         Path to a file to save data to.
     data : str
         The data to save into a file.
-    is_xlet_help_file : bool, optional
-        If the saved file is the xlet's HELP.html file, copy it into the docs folder
-        for on-line hosting.
     """
     try:
         with open(file_path, "w") as f:
@@ -415,26 +369,6 @@ def save_file(file_path, data, is_xlet_help_file=False):
     except Exception as err:
         print(Ansi.LIGHT_RED(err))
         quit()
-    else:
-        if is_xlet_help_file:
-            xlet_folder = file_utils.get_parent_dir(file_path, 0)
-            xlet_icon = os.path.join(xlet_folder, "icon.png")
-            xlet_slug = os.path.basename(file_utils.get_parent_dir(file_path))
-            dest_path = os.path.join(app_utils.PATHS["docs_sources"], "_static",
-                                     "xlets_help_pages", xlet_slug)
-            dest_html_file = os.path.join(dest_path, "index.html")
-            dest_icon_file = os.path.join(dest_path, "icon.png")
-
-            os.makedirs(dest_path, exist_ok=True)
-
-            if os.path.exists(dest_html_file):
-                os.remove(dest_html_file)
-
-            if os.path.exists(dest_icon_file):
-                os.remove(dest_icon_file)
-
-            copy2(file_path, dest_html_file)
-            copy2(xlet_icon, dest_icon_file)
 
 
 def get_compatibility(xlet_meta=None, for_readme=False):
@@ -590,7 +524,7 @@ def get_bootstrap_badge(context="info", content="", extra_classes="", is_pill=Fa
            is_pill="badge-pill" if is_pill else "")
 
 
-def get_image_container(extra_classes="", alt="", centered=True):
+def get_image_container(extra_classes="", alt="", src="", centered=True):
     """Get image container.
 
     Parameters
@@ -608,8 +542,9 @@ def get_image_container(extra_classes="", alt="", centered=True):
         An <img> element or a container with an <img> element.
     """
     container = '<div class="img-centered-container">%s</div>' if centered else "%s"
-    return container % """<img class="img-fluid {extra_classes}" alt="{alt}">
+    return container % """<img {src} class="img-fluid {extra_classes}" alt="{alt}">
 """.format(alt=alt,
+           src=('src="%s"' % src) if src else "",
            extra_classes=extra_classes)
 
 
