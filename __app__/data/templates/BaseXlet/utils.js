@@ -15,6 +15,9 @@ const {
         GLib,
         St
     },
+    misc: {
+        params: Params
+    },
     ui: {
         main: Main,
         messageTray: MessageTray,
@@ -29,6 +32,10 @@ var NotificationUrgency = {
     HIGH: 2,
     CRITICAL: 3
 };
+
+const GioSSS = Gio.SettingsSchemaSource;
+
+var SETTINGS_SCHEMA = "org.cinnamon.applets." + XletMeta.uuid;
 
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
@@ -511,47 +518,123 @@ function escapeHTML(aStr) {
     return aStr;
 }
 
+function isObject(item) {
+    return (item && typeof item === "object" && !Array.isArray(item));
+}
+
+/**
+ * Safely get values from an Object.
+ *
+ * So one doesn't have to use hasOwnProperty a gazillion times!!!!
+ *
+ * @return {Any/null} [description]
+ */
+function safeGet() {
+    // All arguments passed to the function.
+    let args = Array.prototype.slice.call(arguments);
+    // Extract the first argument (the object).
+    // After this point, args are all the keys to get
+    // a value from the object.
+    let obj = args.shift();
+    let value = null;
+
+    if (!isObject(obj)) {
+        return null;
+    }
+
+    while (args.length) {
+        let key = args.shift();
+
+        if (isObject(obj) && obj.hasOwnProperty(key)) {
+            value = obj = obj[key];
+        } else {
+            value = obj = null;
+            break;
+        }
+    }
+
+    return value;
+}
+
+/**
+ * Example function on how to use safeGet to return a different default
+ * other than null.
+ *
+ * @return {Any} The value of an object property or a default value.
+ */
+function safeGetEllipsis() {
+    let val = safeGet.apply(null, arguments);
+    return val === null ? "..." : val;
+}
+
+function isGetter(obj, prop) {
+    return !!Object.getOwnPropertyDescriptor(obj.prototype, prop)["get"];
+}
+
+function isSetter(obj, prop) {
+    return !!Object.getOwnPropertyDescriptor(obj.prototype, prop)["set"];
+}
+
 /**
  * Benchmark function invocations within a given class or prototype.
  *
- * @param  {Object}  aObject             JavaScript class or prototype to benchmark.
- * @param  {Array}   aMethods            By default, aMethods is a "whitelist". So, only the
- *                                       methods listed in aMethods will be benchmarked.
- * @param  {Boolean} aBlacklistMethods   If true, ALL methods in aObject will be benchmarked,
- *                                       except those listed in aMethods.
- * @param  {Number}  aThreshold          The minimum latency of interest.
+ * @param  {Object}  aObject                    JavaScript class or prototype to benchmark.
+ * @param  {Object}  aParams                    Object containing parameters, all are optional.
+ * @param  {String}  aParams.objectName         Because it's impossible to get the name of a prototype
+ *                                              in JavaScript, force it down its throat. ¬¬
+ * @param  {Array}   aParams.methods            By default, all methods in aObject will be
+ *                                              "proxyfied". aParams.methods should containg the name
+ *                                              of the methods that one wants to debug/benchmark.
+ *                                              aParams.methods acts as a whitelist by default.
+ * @param  {Boolean} aParams.blacklistMethods   If true, ALL methods in aObject will be
+ *                                              debugged/benchmarked, except those listed in aParams.methods.
+ * @param  {Number}  aParams.threshold          The minimum latency of interest.
+ * @param  {Boolean}  aParams.debug              If true, the target method will be executed inside a
+ *                                              try{} catch{} block.
  */
-function benchmarkPrototype(aObject, aMethods = [], aBlacklistMethods = false, aThreshold = 3) {
+function prototypeDebugger(aObject, aParams) {
+    let options = Params.parse(aParams, {
+        objectName: "Object",
+        methods: [],
+        blacklistMethods: false,
+        debug: true,
+        threshold: 3
+    });
     let keys = Object.getOwnPropertyNames(aObject.prototype);
 
-    if (aMethods.length > 0) {
+    if (options.methods.length > 0) {
         keys = keys.filter((aKey) => {
-            return aBlacklistMethods ?
+            return options.blacklistMethods ?
                 // Treat aMethods as a blacklist, so don't include these keys.
-                aMethods.indexOf(aKey) === -1 :
+                options.methods.indexOf(aKey) === -1 :
                 // Keep ONLY the keys in aMethods.
-                aMethods.indexOf(aKey) >= 0;
+                options.methods.indexOf(aKey) >= 0;
         });
     }
 
+    let outpuTemplate = "[%s.%s]: %fms (MAX: %fms AVG: %fms)";
     let times = [];
     let i = keys.length;
 
-    while (i--) {
-        let key = keys[i];
-        let fn = aObject.prototype[key];
-
-        if (typeof fn !== "function") {
-            continue;
-        }
-
-        aObject.prototype[key] = new Proxy(fn, {
-            apply: function(target, thisA, args) { // jshint ignore:line
+    let getHandler = (aKey) => {
+        return {
+            apply: function(aTarget, aThisA, aArgs) { // jshint ignore:line
+                let val;
                 let now = GLib.get_monotonic_time();
-                let val = target.apply(thisA, args);
+
+                if (options.debug) {
+                    try {
+                        val = aTarget.apply(aThisA, aArgs);
+                    } catch (aErr) {
+                        global.logError(aErr);
+                    }
+                } else {
+                    val = aTarget.apply(aThisA, aArgs);
+                }
+
                 let time = GLib.get_monotonic_time() - now;
 
-                if (time >= aThreshold) {
+                if (time >= options.threshold) {
                     times.push(time);
                     let total = 0;
                     let timesLength = times.length;
@@ -565,17 +648,272 @@ function benchmarkPrototype(aObject, aMethods = [], aBlacklistMethods = false, a
                     let avg = ((total / timesLength) / 1000).toFixed(2);
                     time = (time / 1000).toFixed(2);
 
-                    let output = (thisA ? thisA.constructor.name : "PRIVATE") + "." +
-                        key + ": " + time + "ms " +
-                        "(MAX: " + max + "ms AVG: " + avg + "ms)";
-                    global.log(output);
+                    global.log(outpuTemplate.format(
+                        options.objectName,
+                        aKey,
+                        time,
+                        max,
+                        avg
+                    ));
                 }
 
                 return val;
             }
-        });
+        };
+    };
+
+    while (i--) {
+        let key = keys[i];
+
+        /* NOTE: If key is a setter or getter, aObject.prototype[key] will throw.
+         */
+        if (!!Object.getOwnPropertyDescriptor(aObject.prototype, key)["get"] ||
+            !!Object.getOwnPropertyDescriptor(aObject.prototype, key)["set"]) {
+            continue;
+        }
+
+        let fn = aObject.prototype[key];
+
+        if (typeof fn !== "function") {
+            continue;
+        }
+
+        aObject.prototype[key] = new Proxy(fn, getHandler(key));
     }
 }
+
+function DebugManager() {
+    this._init.apply(this, arguments);
+}
+
+DebugManager.prototype = {
+    _init: function() {
+        let schema = SETTINGS_SCHEMA;
+        let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
+        let schemaSource;
+
+        if (schemaDir.query_exists(null)) {
+            schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
+                GioSSS.get_default(),
+                false);
+        } else {
+            schemaSource = GioSSS.get_default();
+        }
+
+        this.schemaObj = schemaSource.lookup(schema, false);
+
+        if (!this.schemaObj) {
+            throw new Error(_("Schema %s could not be found for xlet %s.")
+                .format(schema, XletMeta.uuid) + _("Please check your installation."));
+        }
+
+        this.schema = new Gio.Settings({
+            settings_schema: this.schemaObj
+        });
+
+        this._handlers = [];
+    },
+
+    set verboseLogging(aValue) {
+        this.schema.set_boolean("pref-enable-verbose-logging", aValue);
+    },
+
+    get verboseLogging() {
+        return this.schema.get_boolean("pref-enable-verbose-logging");
+    },
+
+    connect: function(signal, callback) {
+        let handler_id = this.schema.connect(signal, callback);
+        this._handlers.push(handler_id);
+        return handler_id;
+    },
+
+    destroy: function() {
+        // Remove the remaining signals...
+        while (this._handlers.length) {
+            this.disconnect(this._handlers[0]);
+        }
+    },
+
+    disconnect: function(handler_id) {
+        let index = this._handlers.indexOf(handler_id);
+        this.schema.disconnect(handler_id);
+
+        if (index > -1) {
+            this._handlers.splice(index, 1);
+        }
+    }
+};
+
+/**
+ * Logger
+ * Implemented using the functions found in:
+ * http://stackoverflow.com/a/13227808
+ */
+function Logger() {
+    this._init.apply(this, arguments);
+}
+
+Logger.prototype = {
+    _init: function(aDisplayName, aVerbose, aSuperfluousCalls = 3) {
+        this._verbose = aVerbose;
+        this._superfluous = aSuperfluousCalls;
+        this.base_message = "[" + aDisplayName + "::%s]%s";
+    },
+
+    _log: function(aLevel, aMsg, aIsRuntime) {
+        if (typeof(aMsg) === "object") {
+            /* NOTE: Logging function in global can handle objects.
+             */
+            global[aLevel](this.base_message.format(
+                aIsRuntime ? "" : this._getCaller(),
+                this._formatMessage("")
+            ));
+            global[aLevel](aMsg);
+        } else {
+            global[aLevel](this.base_message.format(
+                aIsRuntime ? "" : this._getCaller(),
+                this._formatMessage(aMsg)
+            ));
+        }
+    },
+
+    /**
+     * runtime_error
+     *
+     * Log a message without specifying the caller.
+     *
+     * @param  {String} aMsg The message to log.
+     */
+    runtime_error: function(aMsg) {
+        this._log("logError", aMsg, true);
+    },
+
+    /**
+     * runtime_info
+     *
+     * Log a message without specifying the caller.
+     *
+     * @param  {String} aMsg The message to log.
+     */
+    runtime_info: function(aMsg) {
+        this._log("log", aMsg, true);
+    },
+
+    /**
+     * debug
+     *
+     * Log a message only when verbose logging is enabled.
+     *
+     * @param  {String} aMsg The message to log.
+     */
+    debug: function(aMsg) {
+        if (this.verbose) {
+            this._log("log", aMsg);
+        }
+    },
+
+    /**
+     * error
+     *
+     * Log an error message.
+     *
+     * @param  {String} aMsg The message to log.
+     */
+    error: function(aMsg) {
+        this._log("logError", aMsg);
+    },
+
+    /**
+     * warning
+     *
+     * Log a warning message.
+     *
+     * @param  {String} aMsg The message to log.
+     */
+    warning: function(aMsg) {
+        this._log("logWarning", aMsg);
+    },
+
+    /**
+     * info
+     *
+     * Log an info message.
+     *
+     * @param {String} aMsg - The message to log.
+     */
+    info: function(aMsg) {
+        this._log("log", aMsg);
+    },
+
+    /**
+     * _formatMessage
+     *
+     * It just adds a space at the beginning of a string if the string isn't empty.
+     *
+     * @param  {String} aMsg The message to "format".
+     * @return {String}      The formatted message.
+     */
+    _formatMessage: function(aMsg) {
+        return aMsg ? " " + aMsg : "";
+    },
+
+    /**
+     * [_getCaller description]
+     * @return {String} A string representing the caller function name plus the
+     * file name and line number.
+     */
+    _getCaller: function() {
+        let stack = this._getStack();
+
+        // Remove superfluous function calls on stack
+        stack.shift(); // _getCaller --> _getStack
+        stack.shift(); // debug --> _getCaller
+
+        let caller = stack[0].split("/");
+        // Return only the caller function and the file name and line number.
+        return (caller.shift() + "@" + caller.pop()).replace(/\@+/g, "@");
+    },
+
+    _getStack: function() {
+        // Save original Error.prepareStackTrace
+        let origPrepareStackTrace = Error.prepareStackTrace;
+
+        // Override with function that just returns `stack`
+        Error.prepareStackTrace = function(_, stack) {
+            return stack;
+        };
+
+        // Create a new `Error`, which automatically gets `stack`
+        let err = new Error();
+
+        // Evaluate `err.stack`, which calls our new `Error.prepareStackTrace`
+        let stack = err.stack.split("\n");
+
+        // Restore original `Error.prepareStackTrace`
+        Error.prepareStackTrace = origPrepareStackTrace;
+
+        // Remove superfluous function call on stack
+        // stack.shift(); // getStack --> Error
+        // stack.shift(); // getStack --> Error
+        // stack.shift(); // getStack --> Error
+
+        let i = this._superfluous;
+        while (i--) {
+            stack.shift();
+        }
+
+        return stack;
+    },
+
+    get verbose() {
+        return this._verbose;
+    },
+
+    set verbose(aVal) {
+        this._verbose = aVal;
+    }
+};
 
 /* exported _,
             ngettext,
@@ -585,5 +923,5 @@ function benchmarkPrototype(aObject, aMethods = [], aBlacklistMethods = false, a
             removeSurplusFilesFromDirectory,
             getGLibVersion,
             escapeHTML,
-            benchmarkPrototype
+            prototypeDebugger
  */
