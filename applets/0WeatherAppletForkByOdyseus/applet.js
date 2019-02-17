@@ -321,6 +321,11 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             label: Placeholders.BLANK,
             style_class: CLASS.ERROR_MESSAGE
         });
+
+        this._errorMessage.get_child().set_line_wrap(true);
+        this._errorMessage.get_child().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
+        this._errorMessage.get_child().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
+
         this._connectEnterLeaveEvents(this._errorMessage);
         this._errorMessage.connect("clicked", () => {
             let clipboard = St.Clipboard.get_default();
@@ -462,7 +467,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
         //     style_class: CLASS.FOOTER_BUTTON
         // });
         // errorTest.connect("clicked", () => {
-        //     this.displayErrorMessage("This is an error", "error", false);
+        //     this.displayErrorMessage("This is a very long error message. This is a very long error message. This is a very long error message. This is a very long error message.", "error", false);
         // });
         // let warningTest = new St.Button({
         //     can_focus: true,
@@ -885,7 +890,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
 
             Mainloop.idle_add(() => {
                 this._animateLocationSwitch("show");
-                this._errorBox.hide();
+                hasToUpdate || this._errorBox.hide();
 
                 if (!this.pref_weather_data.hasOwnProperty(this.pref_current_location) ||
                     /* NOTE: If lastCheck is identical in the passed data and the stored data,
@@ -1681,7 +1686,7 @@ function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
 
             for (let name in protos) {
                 $.prototypeDebugger(protos[name], {
-                    objectName: name
+                    objectName: name + aInstance_id
                 });
             }
         } catch (aErr) {

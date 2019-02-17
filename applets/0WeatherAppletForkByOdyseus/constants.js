@@ -170,19 +170,21 @@ var Placeholders = {
 };
 
 var KnownStatusCodes = {
-    2: "CANT_RESOLVE",
-    307: "TEMPORARY_REDIRECT",
-    3: "CANT_RESOLVE_PROXY",
-    400: "BAD_REQUEST",
-    401: "UNAUTHORIZED",
-    402: "PAYMENT_REQUIRED",
-    404: "NOT_FOUND",
-    407: "PROXY_UNAUTHORIZED",
-    408: "REQUEST_TIMEOUT",
-    4: "CANT_CONNECT",
-    500: "INTERNAL_SERVER_ERROR",
-    503: "SERVICE_UNAVAILABLE",
-    5: "CANT_CONNECT_PROXY",
+    2: "(2) " + _("Unable to resolve destination host name"),
+    307: "(307) " + _("Temporary redirect"),
+    3: "(3) " + _("Unable to resolve proxy host name"),
+    400: "(400) " + _("Bad request"),
+    401: "(401) " + _("Unauthorized"),
+    402: "(402) " + _("Payment required"),
+    404: "(404) " + _("Not found"),
+    407: "(407) " + _("Proxy authentication required"),
+    408: "(408) " + _("Request timeout"),
+    4: "(4) " + _("Unable to connect to remote host"),
+    500: "(500) " + _("Internal server error"),
+    503: "(503) " + _("Service unavailable"),
+    5: "(5) " + _("Unable to connect to proxy"),
+    6: "(6) " + _("SSL/TLS negotiation failed"),
+    7: "(7) " + _("A network error occurred, or the other end closed the connection unexpectedly"),
 };
 
 // Error messages.
