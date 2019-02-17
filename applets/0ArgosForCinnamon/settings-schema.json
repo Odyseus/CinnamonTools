@@ -190,6 +190,17 @@
         "description": "Shell argument",
         "tooltip": "The argument used by a shell program that allows to execute a command. In most shells is '-c'."
     },
+    "debugging-header": {
+        "type": "header",
+        "description": "Debugging"
+    },
+    "pref_enable_verbose_logging": {
+        "type": "checkbox",
+        "indent": true,
+        "default": false,
+        "description": "Verbose logging (needs Cinnamon restart)",
+        "tooltip": "Checking this will enable debug level logging."
+    },
     "pref_last_selected_directory": {
         "type": "generic",
         "default": ""

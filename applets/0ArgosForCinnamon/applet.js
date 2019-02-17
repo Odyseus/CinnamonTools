@@ -10,6 +10,7 @@ if (typeof require === "function") {
 }
 
 const _ = $._;
+const DebugManager = new $.DebugManager();
 
 const {
     gi: {
@@ -28,10 +29,14 @@ const {
         main: Main,
         modalDialog: ModalDialog,
         popupMenu: PopupMenu,
-        settings: Settings,
-        tooltips: Tooltips
+        settings: Settings
     }
 } = imports;
+
+const {
+    DefaultAttributes,
+    Placeholders,
+} = $.Constants;
 
 function ArgosForCinnamonApplet() {
     this._init.apply(this, arguments);
@@ -114,74 +119,69 @@ ArgosForCinnamonApplet.prototype = {
             return;
         }
 
-        try {
-            this._processingFile = true;
-            this._timeScriptExecutionStarted = null;
-            this._timeScriptExecutionFinished = null;
-            this._timeOutputProcessingStarted = null;
-            this._timeOutputProcessingFinished = null;
+        this._processingFile = true;
+        this._timeScriptExecutionStarted = null;
+        this._timeScriptExecutionFinished = null;
+        this._timeOutputProcessingStarted = null;
+        this._timeOutputProcessingFinished = null;
 
-            this._setAppletTooltip();
+        this._setAppletTooltip();
 
-            this._script_path = this.pref_file_path;
+        this._script_path = this.pref_file_path;
 
-            if (/^file:\/\//.test(this._script_path)) {
-                this._script_path = this._script_path.substr(7);
-            }
+        if (/^file:\/\//.test(this._script_path)) {
+            this._script_path = this._script_path.substr(7);
+        }
 
-            // Make all checks individually so I can make precise notifications.
-            if (GLib.file_test(this._script_path, GLib.FileTest.EXISTS)) {
-                if (!GLib.file_test(this._script_path, GLib.FileTest.IS_DIR)) {
-                    if (GLib.file_test(this._script_path, GLib.FileTest.IS_EXECUTABLE)) {
-                        this._file = Gio.file_new_for_path(this._script_path);
-                    } else {
-                        this._file = null;
-                        Main.notify(
-                            _(this.metadata.name),
-                            _("Script file is not executable.") + "\n" +
-                            this._script_path + "\n" +
-                            _("The script file can be made executable from this applet context menu.")
-                        );
-                    }
+        // Make all checks individually so I can make precise notifications.
+        if (GLib.file_test(this._script_path, GLib.FileTest.EXISTS)) {
+            if (!GLib.file_test(this._script_path, GLib.FileTest.IS_DIR)) {
+                if (GLib.file_test(this._script_path, GLib.FileTest.IS_EXECUTABLE)) {
+                    this._file = Gio.file_new_for_path(this._script_path);
                 } else {
                     this._file = null;
-                    Main.notify(
-                        _(this.metadata.name),
-                        _("Script file isn't a file, but a directory.") + "\n" +
-                        this._script_path
-                    );
+                    this._notifyMessage([
+                        _("Script file is not executable."),
+                        this._script_path,
+                        _("The script file can be made executable from this applet context menu.")
+                    ]);
                 }
             } else {
                 this._file = null;
-                // Notify only if the path to the script is not set.
-                // Otherwise, it would be ultra annoying. LOL
-                if (this._script_path !== "") {
-                    Main.notify(
-                        _(this.metadata.name),
-                        _("Script file doesn't exists.") + "\n" +
-                        this._script_path
-                    );
-                }
+                this._notifyMessage([
+                    _("Script file isn't a file, but a directory."),
+                    this._script_path
+                ]);
             }
-
-            if (GLib.file_test(this._script_path, GLib.FileTest.EXISTS) &&
-                GLib.file_test(this._script_path, GLib.FileTest.IS_EXECUTABLE) &&
-                !GLib.file_test(this._script_path, GLib.FileTest.IS_DIR)) {
-                this._file = Gio.file_new_for_path(this._script_path);
-            } else {
-                this._file = null;
+        } else {
+            this._file = null;
+            // Notify only if the path to the script is not set.
+            // Otherwise, it would be ultra annoying. LOL
+            if (this._script_path !== "") {
+                this._notifyMessage([
+                    _("Script file doesn't exists."),
+                    this._script_path
+                ]);
             }
-        } finally {
-            if (this._file !== null) {
-                this.update();
-            } else {
-                // If this._file is null, it might be because the script assigned to the applet was
-                // removed, so clean up all remaining data (menu elements, applet text, etc.).
-                this._lineView.setLine("");
-                this.menu.removeAll();
-            }
-            this._processingFile = false;
         }
+
+        if (GLib.file_test(this._script_path, GLib.FileTest.EXISTS) &&
+            GLib.file_test(this._script_path, GLib.FileTest.IS_EXECUTABLE) &&
+            !GLib.file_test(this._script_path, GLib.FileTest.IS_DIR)) {
+            this._file = Gio.file_new_for_path(this._script_path);
+        } else {
+            this._file = null;
+        }
+
+        if (this._file !== null) {
+            this.update();
+        } else {
+            // If this._file is null, it might be because the script assigned to the applet was
+            // removed, so clean up all remaining data (menu elements, applet text, etc.).
+            this._lineView.setLine(DefaultAttributes);
+            this.menu.removeAll();
+        }
+        this._processingFile = false;
     },
 
     update: function() {
@@ -218,7 +218,7 @@ ArgosForCinnamonApplet.prototype = {
             envp.push("ARGOS_VERSION=2");
             envp.push("ARGOS_MENU_OPEN=" + (this.menu.isOpen ? "true" : "false"));
 
-            this._timeScriptExecutionStarted = new Date().getTime();
+            this._timeScriptExecutionStarted = GLib.get_monotonic_time();
             $.spawnWithCallback(GLib.path_get_dirname(this._file.get_path()), [this._file.get_path()],
                 envp, GLib.SpawnFlags.DEFAULT, null,
                 (aStandardOutput) => {
@@ -226,7 +226,7 @@ ArgosForCinnamonApplet.prototype = {
                         return;
                     }
 
-                    this._timeScriptExecutionFinished = new Date().getTime();
+                    this._timeScriptExecutionFinished = GLib.get_monotonic_time();
                     this._processOutput(aStandardOutput.split("\n"));
 
                     let updateInterval = this._getInterval("pref_update_interval");
@@ -249,11 +249,10 @@ ArgosForCinnamonApplet.prototype = {
             // "Unable to execute file 'FileName':"
             let msg = _("Unable to execute file '%s':").format(this._file.get_basename());
             global.logError(msg + " " + aErr);
-            Main.notify(
-                _(this.metadata.name),
-                msg + "\n" +
+            this._notifyMessage([
+                msg,
                 _("Script file not set, cannot be found or it isn't an executable.")
-            );
+            ]);
             this._updateRunning = false;
         }
     },
@@ -273,186 +272,176 @@ ArgosForCinnamonApplet.prototype = {
     },
 
     _processOutput: function(aOutput) {
-        try {
-            this._timeOutputProcessingStarted = new Date().getTime();
-            let buttonLines = [];
-            let dropdownLines = [];
+        this._timeOutputProcessingStarted = GLib.get_monotonic_time();
+        let appletLines = [];
+        let menuLines = [];
 
-            let dropdownMode = false;
-            let i = 0,
-                iLen = aOutput.length;
-            for (; i < iLen; i++) {
-                if (aOutput[i].length === 0) {
-                    continue;
-                }
-
-                let line = $.parseLine(aOutput[i]);
-
-                if (!dropdownMode && line.isSeparator) {
-                    dropdownMode = true;
-                } else if (dropdownMode) {
-                    dropdownLines.push(line);
-                } else {
-                    buttonLines.push(line);
-                }
+        let insertToMenu = false;
+        let i = 0,
+            iLen = aOutput.length;
+        for (; i < iLen; i++) {
+            if (aOutput[i].length === 0) {
+                continue;
             }
 
-            this.menu.removeAll();
+            let line = $.parseLine(aOutput[i]);
 
-            if (this._cycleTimeout > 0) {
-                Mainloop.source_remove(this._cycleTimeout);
-                this._cycleTimeout = 0;
-            }
-
-            this._lineView.actor.set_style("spacing: " + this.pref_applet_spacing + "px;");
-
-            if (buttonLines.length === 0) {
-                if (this.pref_show_script_name) {
-                    this._lineView.setMarkup(GLib.markup_escape_text(this._file.get_basename(), -1));
-                } else {
-                    this._lineView.setLine("");
-                }
-            } else if (buttonLines.length === 1) {
-                this._lineView.setLine(buttonLines[0]);
+            if (!insertToMenu && line.isSeparator) {
+                insertToMenu = true;
+            } else if (insertToMenu) {
+                menuLines.push(line);
             } else {
-                this._lineView.setLine(buttonLines[0]);
-                let i = 0;
-                let rotationInterval = this._getInterval("pref_rotation_interval");
-
-                if (rotationInterval > 0) {
-                    this._cycleTimeout = Mainloop.timeout_add_seconds(rotationInterval, () => {
-                        i++;
-                        this._lineView.setLine(buttonLines[i % buttonLines.length]);
-                        return true;
-                    });
-                }
-
-                let j = 0,
-                    jLen = buttonLines.length;
-                for (; j < jLen; j++) {
-                    if (!buttonLines[j].hasOwnProperty("dropdown") ||
-                        (buttonLines[j].hasOwnProperty("dropdown") &&
-                            buttonLines[j].dropdown !== "false")) {
-                        this.menu.addMenuItem(new $.ArgosMenuItem(this, buttonLines[j]));
-                    }
-                }
+                appletLines.push(line);
             }
-
-            if (this.menu.numMenuItems > 0) {
-                this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-            }
-
-            let menus = [];
-            menus[0] = this.menu;
-            let l = 0,
-                lLen = dropdownLines.length;
-            for (; l < lLen; l++) {
-                let menu;
-
-                if (dropdownLines[l].menuLevel in menus) {
-                    menu = menus[dropdownLines[l].menuLevel];
-                } else {
-                    // TO TRANSLATORS: Full sentence:
-                    // "Invalid menu level for line 'LineWithTheError'"
-                    global.logError(_("Invalid menu level for line '%s'")).format(dropdownLines[l].text);
-                    menu = this.menu;
-                }
-
-                let menuItem = null;
-
-                if (dropdownLines[l].isSeparator) {
-                    // Although not documented, BitBar appears to render additional "---" lines as separators
-                    menuItem = new PopupMenu.PopupSeparatorMenuItem();
-                } else if ((l + 1) < dropdownLines.length &&
-                    dropdownLines[l + 1].menuLevel > dropdownLines[l].menuLevel) {
-                    // GNOME Shell actually supports only a single submenu nesting level
-                    // (deeper levels are rendered, but opening them closes the parent menu).
-                    // Since adding PopupSubMenuMenuItems to submenus does not trigger
-                    // an error or warning, this should be considered a bug in GNOME Shell.
-                    // Once it is fixed, this code will work as expected for nested submenus.
-                    //
-                    // Note by Odyseus:
-                    // The previous comment by the original author of the Argos extension
-                    // is not true for Cinnamon submenus. The problem described is caused
-                    // by the Gnome Shell feature that allows to auto close opened submenus
-                    // when another one is being opened. Cinnamon doesn't have such feature.
-                    //
-                    // As I really like that feature, I add it to all my applets with menus,
-                    // but without breaking the ability to open submenus inside other submenus.
-                    let lineView = new $.ArgosLineView(this, dropdownLines[l]);
-                    menuItem = new $.CustomSubMenuItem(this, lineView.actor, dropdownLines[l].menuLevel);
-                    menus[dropdownLines[l + 1].menuLevel] = menuItem.menu;
-                } else if ((l + 1) < dropdownLines.length &&
-                    dropdownLines[l + 1].menuLevel === dropdownLines[l].menuLevel &&
-                    $.getBoolean(dropdownLines[l + 1], "alternate")) {
-                    menuItem = new $.ArgosMenuItem(this, dropdownLines[l], dropdownLines[l + 1]);
-                    // Skip alternate line
-                    l++;
-                } else {
-                    menuItem = new $.ArgosMenuItem(this, dropdownLines[l]);
-                }
-
-                if (menuItem !== null) {
-                    menu.addMenuItem(menuItem);
-                }
-            }
-        } catch (aErr) {
-            global.logError(aErr);
-        } finally {
-            this._timeOutputProcessingFinished = new Date().getTime();
-            this._setAppletTooltip();
         }
+
+        this.menu.removeAll();
+
+        if (this._cycleTimeout > 0) {
+            Mainloop.source_remove(this._cycleTimeout);
+            this._cycleTimeout = 0;
+        }
+
+        this._lineView.actor.set_style("spacing: " + this.pref_applet_spacing + "px;");
+
+        if (appletLines.length === 0) {
+            let attrs = DefaultAttributes;
+
+            if (this.pref_show_script_name) {
+                attrs.markup = GLib.markup_escape_text(this._file.get_basename(), -1);
+                this._lineView.setMarkup(attrs);
+            } else {
+                this._lineView.setLine(attrs);
+            }
+        } else if (appletLines.length === 1) {
+            this._lineView.setLine(appletLines[0]);
+        } else {
+            this._lineView.setLine(appletLines[0]);
+            let i = 0;
+            let rotationInterval = this._getInterval("pref_rotation_interval");
+
+            if (rotationInterval > 0) {
+                this._cycleTimeout = Mainloop.timeout_add_seconds(rotationInterval, () => {
+                    i++;
+                    this._lineView.setLine(appletLines[i % appletLines.length]);
+                    return true;
+                });
+            }
+
+            let j = 0,
+                jLen = appletLines.length;
+            for (; j < jLen; j++) {
+                if (appletLines[j].dropdown) {
+                    this.menu.addMenuItem(new $.ArgosMenuItem(this, appletLines[j]));
+                }
+            }
+        }
+
+        if (this.menu.numMenuItems > 0) {
+            this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+        }
+
+        let menus = {};
+        menus[0] = this.menu;
+        let l = 0,
+            lLen = menuLines.length;
+        for (; l < lLen; l++) {
+            let menu;
+
+            if (menuLines[l].menuLevel in menus) {
+                menu = menus[menuLines[l].menuLevel];
+            } else {
+                // TO TRANSLATORS: Full sentence:
+                // "Invalid menu level for line 'LineWithTheError'"
+                global.logError(_("Invalid menu level for line '%s'")).format(menuLines[l].text);
+                menu = this.menu;
+            }
+
+            let menuItem = null;
+
+            if ((l + 1) < menuLines.length &&
+                menuLines[l + 1].menuLevel > menuLines[l].menuLevel &&
+                !menuLines[l].isSeparator) {
+                // GNOME Shell actually supports only a single submenu nesting level
+                // (deeper levels are rendered, but opening them closes the parent menu).
+                // Since adding PopupSubMenuMenuItems to submenus does not trigger
+                // an error or warning, this should be considered a bug in GNOME Shell.
+                // Once it is fixed, this code will work as expected for nested submenus.
+                //
+                // Note by Odyseus:
+                // The previous comment by the original author of the Argos extension
+                // is not true for Cinnamon submenus. The problem described is caused
+                // by the Gnome Shell feature that allows to auto close opened submenus
+                // when another one is being opened. Cinnamon doesn't have such feature.
+                //
+                // As I really like that feature, I add it to all my applets with menus,
+                // but without breaking the ability to open submenus inside other submenus.
+                let lineView = new $.ArgosLineView(this, menuLines[l]);
+                menuItem = new $.CustomSubMenuItem(this, lineView.actor, menuLines[l].menuLevel);
+                menus[menuLines[l + 1].menuLevel] = menuItem.menu;
+            } else if ((l + 1) < menuLines.length &&
+                menuLines[l + 1].menuLevel === menuLines[l].menuLevel &&
+                menuLines[l + 1].alternate &&
+                !menuLines[l].isSeparator) {
+                menuItem = new $.ArgosMenuItem(this, menuLines[l], menuLines[l + 1]);
+                // Increment to skip alternate line.
+                l++;
+            } else {
+                if (menuLines[l].isSeparator) {
+                    menuItem = new PopupMenu.PopupSeparatorMenuItem();
+                } else {
+                    menuItem = new $.ArgosMenuItem(this, menuLines[l]);
+                }
+            }
+
+            if (menuItem !== null) {
+                menu.addMenuItem(menuItem);
+            }
+        }
+
+        this._timeOutputProcessingFinished = GLib.get_monotonic_time();
+        this._setAppletTooltip();
     },
 
     _setAppletTooltip: function() {
-        let boldSpan = (aStr) => {
-            return '<span weight="bold">' + $.escapeHTML(aStr) + "</span>";
-        };
-
-        let tt = boldSpan(_(this.metadata.name)) + "\n\n";
-
-        if (this._file) {
-            tt += boldSpan(_("Script file name:")) + " " + $.escapeHTML(this._file.get_basename()) + "\n";
-        } else {
-            tt += boldSpan(_("Script file name:")) + " " + $.escapeHTML(_("No script set")) + "\n";
+        if (!this.tooltip) {
+            this.tooltip = new $.CustomPanelItemTooltip(this, this.orientation);
         }
 
-        tt += boldSpan(_("Execution interval:")) + " " + this.pref_update_interval + " " +
-            $.getUnitPluralForm(this.pref_update_interval_units, this.pref_update_interval) + "\n";
-
-        tt += boldSpan(_("Rotation interval:")) + " " + this.pref_rotation_interval + " " +
-            $.getUnitPluralForm(this.pref_rotation_interval_units, this.pref_rotation_interval) + "\n";
+        let scriptExecTime = null;
+        let outputProcesstime = null;
 
         if (typeof this._timeScriptExecutionStarted === "number" &&
             typeof this._timeScriptExecutionFinished === "number") {
-            let executionTime = (this._timeScriptExecutionFinished -
-                this._timeScriptExecutionStarted);
-            tt += boldSpan(_("Script execution time:")) + " " + executionTime +
-                " %s".format($.getUnitPluralForm("ms", executionTime)) + "\n";
+            let executionTime = ((this._timeScriptExecutionFinished -
+                this._timeScriptExecutionStarted) / 1000).toFixed(2);
+            scriptExecTime = executionTime +
+                " %s".format($.getUnitPluralForm("ms", executionTime));
         }
 
         if (typeof this._timeOutputProcessingStarted === "number" &&
             typeof this._timeOutputProcessingFinished === "number") {
-            let processTime = (this._timeOutputProcessingFinished -
-                this._timeOutputProcessingStarted);
-            tt += boldSpan(_("Output process time:")) + " " + processTime +
-                " %s".format($.getUnitPluralForm("ms", processTime)) + "\n";
+            let processTime = ((this._timeOutputProcessingFinished -
+                this._timeOutputProcessingStarted) / 1000).toFixed(2);
+            outputProcesstime = processTime +
+                " %s".format($.getUnitPluralForm("ms", processTime));
         }
 
-        if (!this.tooltip) {
-            this.tooltip = new Tooltips.PanelItemTooltip(this, "", this.orientation);
-        }
-
-        try {
-            this.tooltip._tooltip.set_style("text-align: left;");
-            this.tooltip._tooltip.get_clutter_text().set_line_wrap(true);
-            this.tooltip._tooltip.get_clutter_text().set_markup(tt);
-        } catch (aErr) {
-            global.logError("Error Tweaking Tooltip: " + aErr);
-            /* If we couldn't tweak the tooltip format this is likely because
-             * the underlying implementation has changed. Don't issue any
-             * failure here */
-        }
+        this.tooltip.set_text({
+            scriptName: (this._file ?
+                $.escapeHTML(this._file.get_basename()) :
+                $.escapeHTML(_("No script set"))),
+            execInterval: this.pref_update_interval + " " +
+                $.getUnitPluralForm(this.pref_update_interval_units, this.pref_update_interval),
+            rotationInterval: this.pref_rotation_interval + " " +
+                $.getUnitPluralForm(this.pref_rotation_interval_units, this.pref_rotation_interval),
+            scriptExecTime: (scriptExecTime === null ?
+                Placeholders.ELLIPSIS :
+                scriptExecTime),
+            outputProcesstime: (outputProcesstime === null ?
+                Placeholders.ELLIPSIS :
+                outputProcesstime)
+        });
     },
 
     onSliderChanged: function(aSlider, aValue, aStopUpdate, aPref) {
@@ -573,10 +562,9 @@ ArgosForCinnamonApplet.prototype = {
         );
         menuItem.connect("activate", () => {
             if (this._file === null) {
-                Main.notify(
-                    _(this.metadata.name),
+                this._notifyMessage([
                     _("Script file not set, cannot be found or it isn't an executable.")
-                );
+                ]);
             } else {
                 // The original Argos extension uses Gio.AppInfo.launch_default_for_uri
                 // to open the script file. I prefer to stay away from non asynchronous functions.
@@ -600,10 +588,9 @@ ArgosForCinnamonApplet.prototype = {
         );
         menuItem.connect("activate", () => {
             if (this._file === null) {
-                Main.notify(
-                    _(this.metadata.name),
+                this._notifyMessage([
                     _("Script file not set, cannot be found or it isn't an executable.")
-                );
+                ]);
             } else {
                 this.update();
             }
@@ -671,7 +658,7 @@ ArgosForCinnamonApplet.prototype = {
                     }
 
                     this.pref_file_path = "";
-                    this._lineView.setLine("");
+                    this._lineView.setLine(DefaultAttributes);
                     this._processFile();
                 }
             ).open(global.get_current_time());
@@ -720,25 +707,22 @@ ArgosForCinnamonApplet.prototype = {
                                 });
                         }
                     } else {
-                        Main.notify(
-                            _(this.metadata.name),
-                            _("Script file is already executable.") + "\n" +
+                        this._notifyMessage([
+                            _("Script file is already executable."),
                             this._script_path
-                        );
+                        ]);
                     }
                 } else {
-                    Main.notify(
-                        _(this.metadata.name),
-                        _("Script file isn't a file, but a directory.") + "\n" +
+                    this._notifyMessage([
+                        _("Script file isn't a file, but a directory."),
                         this._script_path
-                    );
+                    ]);
                 }
             } else {
-                Main.notify(
-                    _(this.metadata.name),
-                    _("Script file doesn't exists.") + "\n" +
+                this._notifyMessage([
+                    _("Script file doesn't exists."),
                     this._script_path
-                );
+                ]);
             }
         });
         subMenu.menu.addMenuItem(menuItem);
@@ -826,7 +810,8 @@ ArgosForCinnamonApplet.prototype = {
             "pref_shell",
             "pref_shell_argument",
             "pref_last_selected_directory",
-            "pref_initial_load_done"
+            "pref_initial_load_done",
+            "pref_enable_verbose_logging"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -842,7 +827,6 @@ ArgosForCinnamonApplet.prototype = {
     },
 
     _setUpdateInterval: function() {
-        global.logError("_setUpdateInterval");
         this.updateIntervalSlider.setValue(this.pref_update_interval / 3600);
         this._syncLabelsWithSlidersValue(this.updateIntervalSlider);
 
@@ -988,6 +972,25 @@ ArgosForCinnamonApplet.prototype = {
         }
     },
 
+    _notifyMessage: function(aMsg, aContext = "info") {
+        let fN;
+        switch (aContext) {
+            case "error":
+            case "warning":
+                fN = Main.criticalNotify;
+                break;
+            default:
+                fN = Main.warningNotify;
+        }
+        let icon = new St.Icon({
+            icon_name: "dialog-" + aContext,
+            icon_type: St.IconType.SYMBOLIC,
+            icon_size: 24
+        });
+
+        fN(_(this.metadata.name), aMsg.join("\n"), icon);
+    },
+
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
         // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
         // settings callback instead of just one as in older versions. The first one is the
@@ -1022,10 +1025,48 @@ ArgosForCinnamonApplet.prototype = {
             case "pref_rotation_interval_units":
                 this._setRotationInterval();
                 break;
+            case "pref_enable_verbose_logging":
+                DebugManager.verboseLogging = this.pref_enable_verbose_logging;
+
+                this._notifyMessage([
+                        _("Debugging toggled"),
+                        _("Remember to restart Cinnamon to fully enable/disable this option.")
+                    ],
+                    "warning"
+                );
+                break;
         }
     }
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
+    if (DebugManager.verboseLogging) {
+        try {
+            let protos = {
+                AltSwitcher: $.AltSwitcher,
+                ArgosForCinnamonApplet: ArgosForCinnamonApplet,
+                ArgosLineView: $.ArgosLineView,
+                ArgosMenuItem: $.ArgosMenuItem,
+                CustomPopupSliderMenuItem: $.CustomPopupSliderMenuItem,
+                CustomSubMenuItem: $.CustomSubMenuItem,
+                CustomTooltip: $.CustomTooltip,
+                UnitSelectorMenuItem: $.UnitSelectorMenuItem,
+                UnitSelectorSubMenuMenuItem: $.UnitSelectorSubMenuMenuItem,
+            };
+
+            for (let name in protos) {
+                $.prototypeDebugger(protos[name], {
+                    objectName: name + aInstance_id,
+                    /* NOTE: _onCapturedEvent is triggered a billion times!
+                     */
+                    methods: ["_onCapturedEvent"],
+                    blacklistMethods: true
+                });
+            }
+        } catch (aErr) {
+            global.logError(aErr);
+        }
+    }
+
     return new ArgosForCinnamonApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

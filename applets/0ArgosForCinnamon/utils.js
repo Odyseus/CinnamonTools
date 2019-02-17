@@ -1,20 +1,3 @@
-let XletMeta,
-    Emojis;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
-} else {
-    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
-}
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    Emojis = require("./emojis.js").Emojis;
-} else {
-    Emojis = imports.ui.appletManager.applets[XletMeta.uuid].emojis.Emojis;
-}
-
 const {
     gettext: Gettext,
     gi: {
@@ -26,6 +9,7 @@ const {
         St
     },
     misc: {
+        params: Params,
         util: Util
     },
     ui: {
@@ -36,29 +20,36 @@ const {
     }
 } = imports;
 
-// KEEP ME: There will always be non retro compatible changes on Cinnamon as long
-// as it keeps being treated as a F***ING web application!!!
-// const CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
-const ANSI_COLORS = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"];
+const GioSSS = Gio.SettingsSchemaSource;
 
-const OrnamentType = {
-    NONE: 0,
-    CHECK: 1,
-    DOT: 2,
-    ICON: 3
-};
+let Emojis;
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    Emojis = require("./emojis.js").Emojis;
+} else {
+    Emojis = imports.ui.appletManager.applets["{{UUID}}"].emojis.Emojis;
+}
 
-const NotificationUrgency = {
-    LOW: 0,
-    NORMAL: 1,
-    HIGH: 2,
-    CRITICAL: 3
-};
+var Constants;
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    Constants = require("./constants.js");
+} else {
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+}
 
-const truthyMap = {
-    "true": true,
-    "1": true
-};
+const XletMeta = Constants.XletMeta;
+
+const {
+    AnsiColors,
+    BooleanAttrs,
+    DebugManagerSchema,
+    DefaultAttributes,
+    NotificationUrgency,
+    OrnamentType,
+    Placeholders,
+    TruthyVals,
+} = Constants;
 
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
@@ -337,10 +328,10 @@ ArgosLineView.prototype = {
 
         this.actor.remove_all_children();
 
-        if (aLine.hasOwnProperty("iconName")) {
+        if (aLine.iconName) {
             let icon = null;
             let iconName = aLine.iconName;
-            let iconSize = aLine.hasOwnProperty("iconSize") ?
+            let iconSize = aLine.iconSize ?
                 aLine.iconSize :
                 this._applet.pref_default_icon_size;
 
@@ -366,7 +357,7 @@ ArgosLineView.prototype = {
                     style_class: "popup-menu-icon",
                     icon_size: iconSize,
                     icon_name: iconName,
-                    icon_type: (getBoolean(aLine, "iconIsSymbolic") ?
+                    icon_type: (aLine.iconIsSymbolic ?
                         St.IconType.SYMBOLIC :
                         St.IconType.FULLCOLOR)
                 });
@@ -377,10 +368,10 @@ ArgosLineView.prototype = {
             }
         }
 
-        if (aLine.hasOwnProperty("image") || aLine.hasOwnProperty("templateImage")) {
-            let image = aLine.hasOwnProperty("image") ?
+        if (aLine.image || aLine.templateImage) {
+            let image = aLine.image ?
                 aLine.image :
-                aLine.hasOwnProperty("templateImage") ?
+                aLine.templateImage ?
                 aLine.templateImage :
                 null;
 
@@ -424,7 +415,7 @@ ArgosLineView.prototype = {
             }
         }
 
-        if (aLine.hasOwnProperty("markup") && aLine.markup.length > 0) {
+        if (aLine.markup.length > 0) {
             let label = new St.Label({
                 y_expand: true,
                 y_align: Clutter.ActorAlign.CENTER
@@ -436,7 +427,7 @@ ArgosLineView.prototype = {
             clutterText.use_markup = true;
             clutterText.text = aLine.markup;
 
-            if (aLine.hasOwnProperty("length")) {
+            if (aLine.length) {
                 let maxLength = parseInt(aLine.length, 10);
                 // "clutterText.text.length" fails for non-BMP Unicode characters
                 let textLength = clutterText.buffer.get_length();
@@ -450,10 +441,8 @@ ArgosLineView.prototype = {
         }
     },
 
-    setMarkup: function(aMarkup) {
-        this.setLine({
-            markup: aMarkup
-        });
+    setMarkup: function(aLine) {
+        this.setLine(aLine);
     }
 };
 
@@ -588,8 +577,8 @@ function ArgosMenuItem() {
 ArgosMenuItem.prototype = {
     __proto__: PopupMenu.PopupBaseMenuItem.prototype,
 
-    _init: function(aApplet, aLine, aAlternateLine) {
-        let hasAction = aLine.hasAction || (typeof aAlternateLine !== "undefined" &&
+    _init: function(aApplet, aLine, aAlternateLine = null) {
+        let hasAction = aLine.hasAction || (aAlternateLine !== null &&
             aAlternateLine.hasAction);
 
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
@@ -605,14 +594,14 @@ ArgosMenuItem.prototype = {
         let lineView = new ArgosLineView(aApplet, aLine);
         lineView.actor.set_style("spacing: " + aApplet.pref_menu_spacing + "em;");
 
-        if (aLine.hasOwnProperty("tooltip")) {
+        if (aLine.tooltip) {
             this.tooltip = new CustomTooltip(
                 this.actor,
                 aLine.tooltip
             );
         }
 
-        if (typeof aAlternateLine === "undefined") {
+        if (aAlternateLine === null) {
             this.addActor(lineView.actor);
         } else {
             let alternateLineView = new ArgosLineView(aApplet, aAlternateLine);
@@ -633,13 +622,13 @@ ArgosMenuItem.prototype = {
                     aLine :
                     altSwitcher.actor.get_child()._delegate.line;
 
-                if (activeLine.hasOwnProperty("href")) {
+                if (activeLine.href) {
                     // On the original extension was:
                     // Gio.AppInfo.launch_default_for_uri(activeLine.href, null);
                     Util.spawn_async(["xdg-open", activeLine.href], null);
                 }
 
-                if (activeLine.hasOwnProperty("eval")) {
+                if (activeLine.eval) {
                     try {
                         eval(activeLine.eval);
                     } catch (aErr) {
@@ -647,25 +636,25 @@ ArgosMenuItem.prototype = {
                     }
                 }
 
-                if (activeLine.hasOwnProperty("command") || activeLine.hasOwnProperty("bash")) {
+                if (activeLine.command || activeLine.bash) {
                     let argv = [];
-                    let shell = activeLine.hasOwnProperty("shell") ?
+                    let shell = activeLine.shell ?
                         activeLine.shell :
                         aApplet.pref_shell ?
                         aApplet.pref_shell :
                         "/bin/bash";
-                    let shell_arg = activeLine.hasOwnProperty("shellArgument") ?
+                    let shellArg = activeLine.shellArgument ?
                         activeLine.shellArgument :
                         aApplet.pref_shell_argument ?
                         aApplet.pref_shell_argument :
                         "-c";
-                    let cmd = activeLine.hasOwnProperty("command") ?
+                    let cmd = activeLine.command ?
                         activeLine.command :
-                        activeLine.hasOwnProperty("bash") ?
+                        activeLine.bash ?
                         activeLine.bash :
                         'echo "Something is screwed up!"';
 
-                    if (getBoolean(activeLine, "terminal")) {
+                    if (activeLine.terminal) {
                         // Run shell immediately after executing the command to keep the terminal window open
                         // (see http://stackoverflow.com/q/3512055)
                         argv = [
@@ -674,13 +663,11 @@ ArgosMenuItem.prototype = {
                         ].concat(
                             // Workaround for the terminal that decided to reinvent the wheel. ¬¬
                             aApplet.pref_terminal_emulator_argument === "--" ?
-                            [shell, shell_arg, cmd + "; exec " + shell] :
-                            [shell + " " + shell_arg + " " + GLib.shell_quote(cmd + "; exec " + shell)]
+                            [shell, shellArg, cmd + "; exec " + shell] :
+                            [shell + " " + shellArg + " " + GLib.shell_quote(cmd + "; exec " + shell)]
                         );
                     } else {
-                        argv = [
-                            shell + " -c " + GLib.shell_quote(cmd)
-                        ];
+                        argv = [shell, shellArg, cmd];
                     }
 
                     let [success, pid] = GLib.spawn_async(null, argv, null,
@@ -688,14 +675,14 @@ ArgosMenuItem.prototype = {
 
                     if (success) {
                         GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, () => {
-                            if (getBoolean(activeLine, "refresh")) {
+                            if (activeLine.refresh) {
                                 aApplet.update();
                             }
                         });
                     }
                 }
 
-                if (getBoolean(activeLine, "refresh")) {
+                if (activeLine.refresh) {
                     aApplet.update();
                 }
 
@@ -840,6 +827,56 @@ function arrowIcon(side) {
     return arrow;
 }
 
+/**
+ * Get a boolean from a string.
+ *
+ * Return true if aVal is identical to "true" or "1". For everything else, return false.
+ *
+ * @param {aVal}  aObj     - The string to check.
+ *
+ * @return {Boolean} Boolean representation of a string.
+ */
+function getBoolean(aVal) {
+    return TruthyVals.has(String(aVal).toLowerCase());
+}
+
+function parseAttributes(aAttrString) {
+    let attrs = {};
+    try {
+        let [_, a] = GLib.shell_parse_argv(aAttrString); // jshint ignore:line
+        let i = a.length;
+        while (i--) {
+            let assignmentIndex = a[i].indexOf("=");
+
+            if (assignmentIndex >= 0) {
+                let key = a[i].substring(0, assignmentIndex).trim();
+                let value = a[i].substring(assignmentIndex + 1).trim();
+
+                if (key.length > 0 && value.length > 0) {
+                    attrs[key] = BooleanAttrs.has(key) ? getBoolean(value) : value;
+                }
+            }
+        }
+
+        if (attrs.bash ||
+            attrs.command ||
+            attrs.href ||
+            attrs.eval ||
+            attrs.refresh) {
+            attrs.hasAction = true;
+        }
+
+        /* NOTE: The parameter true at the end is to not throw when a not used
+         * attribute is added to a parsed line. Those are just ignored.
+         */
+        return Params.parse(attrs, DefaultAttributes, true);
+    } catch (aErr) {
+        global.logError("Unable to parse attributes for line '" + aAttrString + "': " + aErr);
+    }
+
+    return DefaultAttributes;
+}
+
 // Performs (mostly) BitBar-compatible output line parsing
 // (see https://github.com/matryer/bitbar#plugin-api)
 function parseLine(aLineString) {
@@ -848,56 +885,53 @@ function parseLine(aLineString) {
     let separatorIndex = aLineString.indexOf("|");
 
     if (separatorIndex >= 0) {
-        let attributes = [];
-        try {
-            attributes = GLib.shell_parse_argv(aLineString.substring(separatorIndex + 1))[1];
-        } catch (aErr) {
-            global.logError("Unable to parse attributes for line '" + aLineString + "': " + aErr);
-        }
-
-        let i = 0,
-            iLen = attributes.length;
-        for (; i < iLen; i++) {
-            let assignmentIndex = attributes[i].indexOf("=");
-
-            if (assignmentIndex >= 0) {
-                let name = attributes[i].substring(0, assignmentIndex).trim();
-                let value = attributes[i].substring(assignmentIndex + 1).trim();
-
-                if (name.length > 0 && value.length > 0) {
-                    line[name] = value;
-                }
-            }
-        }
-
+        line = parseAttributes(aLineString.substring(separatorIndex + 1));
         line.text = aLineString.substring(0, separatorIndex);
-
     } else {
-        // Line has no attributes
+        line = Params.parse(line, DefaultAttributes, true);
         line.text = aLineString;
-    }
-
-    let leadingDashes = line.text.search(/[^-]/);
-    if (leadingDashes >= 2) {
-        line.menuLevel = Math.floor(leadingDashes / 2);
-        line.text = line.text.substring(line.menuLevel * 2);
-    } else {
-        line.menuLevel = 0;
     }
 
     line.isSeparator = /^-+$/.test(line.text.trim());
 
+    /* NOTE: I'm treating separators separately because I want to be able to
+     * insert separators inside sub-menus. That's why I'm setting menuLevel
+     * to separators too.
+     * I can't use line.text.search(/[^-]/) because it always returns -1
+     * when the string contains only dashes. ¬¬
+     * I'm not sure about BitBar, but the logic in Argos for Gnome Shell
+     * doesn't allow to insert separators inside sub-menus.
+     */
+    if (line.isSeparator) {
+        let dashCount = (line.text.trim().match(/\-/g) || []).length - 3;
+
+        if (dashCount <= 0) {
+            line.menuLevel = 0;
+        } else {
+            line.menuLevel = Math.floor(dashCount / 2);
+        }
+    } else {
+        let leadingDashes = line.text.search(/[^-]/);
+
+        if (leadingDashes >= 2) {
+            line.menuLevel = Math.floor(leadingDashes / 2);
+            line.text = line.text.substring(line.menuLevel * 2);
+        } else {
+            line.menuLevel = 0;
+        }
+    }
+
     let markupAttributes = [];
 
-    if (line.hasOwnProperty("color")) {
+    if (line.color) {
         markupAttributes.push("color='" + GLib.markup_escape_text(line.color, -1) + "'");
     }
 
-    if (line.hasOwnProperty("font")) {
+    if (line.font) {
         markupAttributes.push("font_family='" + GLib.markup_escape_text(line.font, -1) + "'");
     }
 
-    if (line.hasOwnProperty("size")) {
+    if (line.size) {
         let pointSize = parseFloat(line.size);
         // Pango expects numerical sizes in 1024ths of a point
         // (see https://developer.gnome.org/pango/stable/PangoMarkupFormat.html)
@@ -907,22 +941,22 @@ function parseLine(aLineString) {
 
     line.markup = line.text;
 
-    if (getBoolean(line, "unescape", true)) {
+    if (line.unescape) {
         line.markup = GLib.strcompress(line.markup);
     }
 
-    if (getBoolean(line, "emojize", true)) {
+    if (line.emojize) {
         line.markup = line.markup.replace(/:([\w+-]+):/g, (aMatch, aEmojiName) => {
             let emojiName = aEmojiName.toLowerCase();
-            return Emojis.hasOwnProperty(emojiName) ? Emojis[emojiName] : aMatch;
+            return emojiName in Emojis ? Emojis[emojiName] : aMatch;
         });
     }
 
-    if (getBoolean(line, "trim", true)) {
+    if (line.trim) {
         line.markup = line.markup.trim();
     }
 
-    if (getBoolean(line, "useMarkup")) {
+    if (!line.useMarkup) {
         line.markup = GLib.markup_escape_text(line.markup, -1);
         // Restore escaped ESC characters (needed for ANSI sequences)
         line.markup = line.markup.replace("&#x1b;", "\x1b");
@@ -930,16 +964,16 @@ function parseLine(aLineString) {
 
     // Note that while it is possible to format text using a combination of Pango markup
     // and ANSI escape sequences, lines like "<b>ABC \e[1m DEF</b>" lead to unmatched tags
-    if (getBoolean(line, "ansi", true)) {
+    if (line.ansi) {
         line.markup = ansiToMarkup(line.markup);
     }
 
-    if (markupAttributes && markupAttributes.length > 0) {
+    if (markupAttributes.length > 0) {
         line.markup = "<span " + markupAttributes.join(" ") + ">" + line.markup + "</span>";
     }
 
     for (let x in ["bash", "command"]) {
-        if (line.hasOwnProperty(x)) {
+        if (line[x]) {
             // Append BitBar's legacy "paramN" attributes to the bash command
             // (Argos allows placing arguments directly in the command string)
             let i = 1;
@@ -951,17 +985,11 @@ function parseLine(aLineString) {
     }
 
     // Expand ~ to the user's home folder.
-    if (line.hasOwnProperty("href")) {
+    if (line.href) {
         if (/^~\//.test(line.href)) {
             line.href = line.href.replace(/^~\//, "file://" + GLib.get_home_dir() + "/");
         }
     }
-
-    line.hasAction = line.hasOwnProperty("bash") ||
-        line.hasOwnProperty("command") ||
-        line.hasOwnProperty("href") ||
-        line.hasOwnProperty("eval") ||
-        getBoolean(line, "refresh");
 
     return line;
 }
@@ -1006,9 +1034,9 @@ function ansiToMarkup(aText) {
                 } else if (code === 4) {
                     markupAttributes.underline = "single";
                 } else if (30 <= code && code <= 37) {
-                    markupAttributes.color = ANSI_COLORS[code - 30];
+                    markupAttributes.color = AnsiColors[code - 30];
                 } else if (40 <= code && code <= 47) {
-                    markupAttributes.bgcolor = ANSI_COLORS[code - 40];
+                    markupAttributes.bgcolor = AnsiColors[code - 40];
                 }
             }
 
@@ -1308,26 +1336,277 @@ function escapeHTML(aStr) {
 }
 
 /**
- * Get a boolean from the value of an object's property.
+ * Benchmark function invocations within a given class or prototype.
  *
- * @param {Object}  aObj     - The object.
- * @param {String}  aProp    - The property.
- * @param {Boolean} aDefault - Default value in case aObj doesn't have the desired aProp.
- *
- * @return {Boolean} Boolean representation of an object's property value.
+ * @param  {Object}  aObject                    JavaScript class or prototype to benchmark.
+ * @param  {Object}  aParams                    Object containing parameters, all are optional.
+ * @param  {String}  aParams.objectName         Because it's impossible to get the name of a prototype
+ *                                              in JavaScript, force it down its throat. ¬¬
+ * @param  {Array}   aParams.methods            By default, all methods in aObject will be
+ *                                              "proxyfied". aParams.methods should containg the name
+ *                                              of the methods that one wants to debug/benchmark.
+ *                                              aParams.methods acts as a whitelist by default.
+ * @param  {Boolean} aParams.blacklistMethods   If true, ALL methods in aObject will be
+ *                                              debugged/benchmarked, except those listed in aParams.methods.
+ * @param  {Number}  aParams.threshold          The minimum latency of interest.
+ * @param  {Boolean}  aParams.debug              If true, the target method will be executed inside a
+ *                                              try{} catch{} block.
  */
-function getBoolean(aObj, aProp, aDefault = false) {
-    if (aObj.hasOwnProperty(aProp)) {
-        return String(aObj[aProp]).toLowerCase() in truthyMap;
+function prototypeDebugger(aObject, aParams) {
+    let options = Params.parse(aParams, {
+        objectName: "Object",
+        methods: [],
+        blacklistMethods: false,
+        debug: true,
+        threshold: 3
+    });
+    let keys = Object.getOwnPropertyNames(aObject.prototype);
+
+    if (options.methods.length > 0) {
+        keys = keys.filter((aKey) => {
+            return options.blacklistMethods ?
+                // Treat aMethods as a blacklist, so don't include these keys.
+                options.methods.indexOf(aKey) === -1 :
+                // Keep ONLY the keys in aMethods.
+                options.methods.indexOf(aKey) >= 0;
+        });
     }
 
-    return aDefault;
+    let outpuTemplate = "[%s.%s]: %fms (MAX: %fms AVG: %fms)";
+    let times = [];
+    let i = keys.length;
+
+    let getHandler = (aKey) => {
+        return {
+            apply: function(aTarget, aThisA, aArgs) { // jshint ignore:line
+                let val;
+                let now = GLib.get_monotonic_time();
+
+                if (options.debug) {
+                    try {
+                        val = aTarget.apply(aThisA, aArgs);
+                    } catch (aErr) {
+                        global.logError(aErr);
+                    }
+                } else {
+                    val = aTarget.apply(aThisA, aArgs);
+                }
+
+                let time = GLib.get_monotonic_time() - now;
+
+                if (time >= options.threshold) {
+                    times.push(time);
+                    let total = 0;
+                    let timesLength = times.length;
+                    let z = timesLength;
+
+                    while (z--) {
+                        total += times[z];
+                    }
+
+                    let max = (Math.max.apply(null, times) / 1000).toFixed(2);
+                    let avg = ((total / timesLength) / 1000).toFixed(2);
+                    time = (time / 1000).toFixed(2);
+
+                    global.log(outpuTemplate.format(
+                        options.objectName,
+                        aKey,
+                        time,
+                        max,
+                        avg
+                    ));
+                }
+
+                return val;
+            }
+        };
+    };
+
+    while (i--) {
+        let key = keys[i];
+
+        /* NOTE: If key is a setter or getter, aObject.prototype[key] will throw.
+         */
+        if (!!Object.getOwnPropertyDescriptor(aObject.prototype, key)["get"] ||
+            !!Object.getOwnPropertyDescriptor(aObject.prototype, key)["set"]) {
+            continue;
+        }
+
+        let fn = aObject.prototype[key];
+
+        if (typeof fn !== "function") {
+            continue;
+        }
+
+        aObject.prototype[key] = new Proxy(fn, getHandler(key));
+    }
 }
 
-/*
-exported parseLine,
-         spawnWithCallback,
-         informAboutMissingDependencies,
-         escapeHTML,
-         versionCompare
+function DebugManager() {
+    this._init.apply(this, arguments);
+}
+
+DebugManager.prototype = {
+    _init: function() {
+        let schema = DebugManagerSchema;
+        let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
+        let schemaSource;
+
+        if (schemaDir.query_exists(null)) {
+            schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
+                GioSSS.get_default(),
+                false);
+        } else {
+            schemaSource = GioSSS.get_default();
+        }
+
+        this.schemaObj = schemaSource.lookup(schema, false);
+
+        if (!this.schemaObj) {
+            throw new Error(_("Schema %s could not be found for xlet %s.")
+                .format(schema, XletMeta.uuid) + _("Please check your installation."));
+        }
+
+        this.schema = new Gio.Settings({
+            settings_schema: this.schemaObj
+        });
+
+        this._handlers = [];
+    },
+
+    set verboseLogging(aValue) {
+        this.schema.set_boolean("pref-enable-verbose-logging", aValue);
+    },
+
+    get verboseLogging() {
+        return this.schema.get_boolean("pref-enable-verbose-logging");
+    },
+
+    connect: function(signal, callback) {
+        let handler_id = this.schema.connect(signal, callback);
+        this._handlers.push(handler_id);
+        return handler_id;
+    },
+
+    destroy: function() {
+        // Remove the remaining signals...
+        while (this._handlers.length) {
+            this.disconnect(this._handlers[0]);
+        }
+    },
+
+    disconnect: function(handler_id) {
+        let index = this._handlers.indexOf(handler_id);
+        this.schema.disconnect(handler_id);
+
+        if (index > -1) {
+            this._handlers.splice(index, 1);
+        }
+    }
+};
+
+function CustomPanelItemTooltip() {
+    this._init.apply(this, arguments);
+}
+
+CustomPanelItemTooltip.prototype = {
+    __proto__: Tooltips.PanelItemTooltip.prototype,
+    elementIDs: [
+        "scriptName",
+        "execInterval",
+        "rotationInterval",
+        "scriptExecTime",
+        "outputProcesstime",
+    ],
+
+    _init: function(aApplet, aOrientation) {
+        Tooltips.PanelItemTooltip.prototype._init.call(this, aApplet, "", aOrientation);
+
+        // Destroy the original _tooltip, which is a St.Label.
+        this._tooltip.destroy();
+
+        let tooltipBox = new Clutter.GridLayout({
+            orientation: Clutter.Orientation.VERTICAL
+        });
+
+        this._tooltip = new St.Bin({
+            name: "Tooltip"
+        });
+        this._tooltip.get_text = () => {
+            return "I'm a dummy string.";
+        };
+        this._tooltip.show_on_set_parent = false;
+
+        this._tooltip.set_child(new St.Widget({
+            layout_manager: tooltipBox
+        }));
+
+        let ellipsisObj = {
+            text: Placeholders.ELLIPSIS,
+        };
+        let blankObj = {
+            text: Placeholders.BLANK,
+        };
+        let markupTemp = "<b>%s</b>: ";
+
+        this.__scriptNameTitle = new St.Label();
+        this.__scriptNameTitle.clutter_text.set_markup(markupTemp
+            .format(_("Script file name")));
+        this.__scriptNameValue = new St.Label(ellipsisObj);
+
+        this.__execIntervalTitle = new St.Label();
+        this.__execIntervalTitle.clutter_text.set_markup(markupTemp
+            .format(_("Execution interval")));
+        this.__execIntervalValue = new St.Label(ellipsisObj);
+
+        this.__rotationIntervalTitle = new St.Label();
+        this.__rotationIntervalTitle.clutter_text.set_markup(markupTemp
+            .format(_("Rotation interval")));
+        this.__rotationIntervalValue = new St.Label(ellipsisObj);
+
+        this.__scriptExecTimeTitle = new St.Label();
+        this.__scriptExecTimeTitle.clutter_text.set_markup(markupTemp
+            .format(_("Script execution time")));
+        this.__scriptExecTimeValue = new St.Label(ellipsisObj);
+
+        this.__outputProcesstimeTitle = new St.Label();
+        this.__outputProcesstimeTitle.clutter_text.set_markup(markupTemp
+            .format(_("Output process time")));
+        this.__outputProcesstimeValue = new St.Label(ellipsisObj);
+
+        let appletName = new St.Label();
+        appletName.clutter_text.set_markup("<b>%s</b>".format(_(XletMeta.name)));
+        tooltipBox.attach(appletName, 0, 0, 1, 1);
+        tooltipBox.attach(new St.Label(blankObj), 0, 1, 1, 1);
+
+        let i = 0,
+            iLen = this.elementIDs.length;
+        for (; i < iLen; i++) {
+            tooltipBox.attach(
+                this["__" + this.elementIDs[i] + "Title"], 0, i + 2, 1, 1
+            );
+            tooltipBox.attach(new St.Label(blankObj), 1, i + 2, 1, 1);
+            tooltipBox.attach(
+                this["__" + this.elementIDs[i] + "Value"], 2, i + 2, 1, 1
+            );
+        }
+
+        Main.uiGroup.add_actor(this._tooltip);
+    },
+
+    set_text: function(aObj) {
+        let i = 0,
+            iLen = this.elementIDs.length;
+        for (; i < iLen; i++) {
+            this["__" + this.elementIDs[i] + "Value"].set_text(aObj[this.elementIDs[i]]);
+        }
+    }
+};
+
+/* exported parseLine,
+            spawnWithCallback,
+            informAboutMissingDependencies,
+            escapeHTML,
+            prototypeDebugger,
+            versionCompare
  */
