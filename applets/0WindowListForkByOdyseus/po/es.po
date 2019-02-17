@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-12 22:30-0300\n"
+"POT-Creation-Date: 2019-02-17 02:33-0300\n"
 "PO-Revision-Date: 2018-08-25 02:48-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -68,39 +68,39 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: z_create_localized_help.py:30
+#: z_create_localized_help.py:27
 msgid "Description"
 msgstr "Descripción"
 
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:29
 msgid "This applet is a fork of the default Window list applet shipped with Cinnamon."
 msgstr "Este applet está basado en el applet Lista de ventanas predeterminado de Cinnamon."
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:31
 msgid "Differences with the original applet"
 msgstr "Diferencias con el original"
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:33
 msgid "Added option to remove the label from the window list buttons."
 msgstr "Se agregó la opción para eliminar la etiqueta de los botones de lista de ventanas."
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Added option to remove the tooltips from the window list buttons."
 msgstr "Se agregó la opción para eliminar las sugerencias de los botones de lista de ventanas."
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:35
 msgid "Added icons to the window list button's context menu."
 msgstr "Iconos añadidos al menú contextual del botón de lista de ventanas."
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Added option to invert the contex menu items."
 msgstr "Se agregó la opción para invertir los elementos del menú contextual."
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "Added option to hide/move the **Preferences** sub menu."
 msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 
-#: z_create_localized_help.py:45 z_create_localized_help.py:49
+#: z_create_localized_help.py:42 z_create_localized_help.py:46
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 

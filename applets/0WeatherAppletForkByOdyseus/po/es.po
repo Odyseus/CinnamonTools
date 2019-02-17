@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-12 23:29-0300\n"
-"PO-Revision-Date: 2019-02-12 23:29-0300\n"
+"POT-Creation-Date: 2019-02-17 02:33-0300\n"
+"PO-Revision-Date: 2019-02-17 02:38-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Español; Castellano <zodiac_es@yahoo.es>\n"
 "Language: es\n"
@@ -30,7 +30,7 @@ msgstr "Ayuda para %s"
 #. menu_popup.append(self.create_menu_item(_("Export settings to a file"),
 #. self._import_export_settings, True))
 #. menu_popup.append(Gtk.SeparatorMenuItem())
-#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:257 applet.js:1326
+#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:257 applet.js:1331
 msgid "Help"
 msgstr "Ayuda"
 
@@ -75,15 +75,15 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: locationsManager.py:32 z_create_localized_help.py:125 applet.js:944
+#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:949
 msgid "Location name"
 msgstr "Nombre de la ubicación"
 
-#: locationsManager.py:37 z_create_localized_help.py:129
+#: locationsManager.py:37 z_create_localized_help.py:126
 msgid "Location ID"
 msgstr "ID de la ubicación"
 
-#: locationsManager.py:43 z_create_localized_help.py:136
+#: locationsManager.py:43 z_create_localized_help.py:133
 msgid "Language"
 msgstr "Lenguaje"
 
@@ -103,7 +103,7 @@ msgstr "Filas/Cols. de previsión"
 msgid "rows/cols"
 msgstr "files/cols."
 
-#: locationsManager.py:129 z_create_localized_help.py:70 z_create_localized_help.py:148
+#: locationsManager.py:129 z_create_localized_help.py:67 z_create_localized_help.py:145
 msgid "Provider"
 msgstr "Proveedor"
 
@@ -115,194 +115,194 @@ msgstr "Ubicaciones"
 msgid "Credentials"
 msgstr "Credenciales"
 
-#: locationsManager.py:162 z_create_localized_help.py:74 constants.js:219
+#: locationsManager.py:162 z_create_localized_help.py:71 constants.js:221
 msgid "Dark Sky"
 msgstr "Dark Sky"
 
-#: locationsManager.py:174 z_create_localized_help.py:79 constants.js:221
+#: locationsManager.py:174 z_create_localized_help.py:76 constants.js:223
 msgid "OpenWeatherMap"
 msgstr "OpenWeatherMap"
 
-#: locationsManager.py:186 z_create_localized_help.py:84 constants.js:220
+#: locationsManager.py:186 z_create_localized_help.py:81 constants.js:222
 msgid "Yahoo! Weather"
 msgstr "Yahoo! Clima"
 
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:29
 msgid "Description"
 msgstr "Descripción"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:32
 msgid "This applet is a fork of [Weather](https://cinnamon-spices.linuxmint.com/applets/view/17) applet by [mockturtl](https://github.com/mockturtl)."
 msgstr "Este applet es una bifurcación de [Clima](https://cinnamon-spices.linuxmint.com/applets/view/17) applet por [mockturtl](https://github.com/mockturtl)."
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Differences with the original applet"
 msgstr "Diferencias con el applet original"
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Added support for multiple locations."
 msgstr "Agregado soporte para múltiples ubicaciones."
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "Added support for multiple weather providers."
 msgstr "Agregado soporte para múltiples proveedores de clima."
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "This applet caches the weather data used. Which means that weather providers will be contacted only when needed, preventing unnecessary API quota consumption."
 msgstr "Este applet almacena en caché los datos meteorológicos utilizados. Lo que significa que solo se contactará a los proveedores meteorológicos cuando sea necesario, evitando el consumo innecesario de cuotas de API."
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:39
 msgid "The style sheet of this fork is used to accommodate the layout of its elements and it doesn't modify colors."
 msgstr "La hoja de estilo de este applet se utiliza para acomodar el diseño de sus elementos y no modifica los colores."
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "Added detailed tooltip to the applet about the current weather data location."
 msgstr "Agregada información sobre herramientas detallada al applet sobre la ubicación actual de los datos meteorológicos."
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "Menu layout redesigned."
 msgstr "Diseño del menú re-diseñado."
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:42
 msgid "Forecasts can be displayed in one or two rows (or columns if the menu layout is set to vertical)."
 msgstr "Las previsiones se pueden mostrar en una o dos filas (o columnas si el diseño del menú se establece en vertical)."
 
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:43
 msgid "Forecasts can display the name of the day or the full date."
 msgstr "Las previsiones pueden mostrar el nombre del día o la fecha completa."
 
-#: z_create_localized_help.py:47
+#: z_create_localized_help.py:44
 msgid "The date in which the weather data was published is always displayed in the menu."
 msgstr "La fecha en la que se publicaron los datos meteorológicos siempre se muestra en el menú."
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:45
 msgid "More customization options (current weather icon size, forecasts icon size, etc.)."
 msgstr "Más opciones de personalización (tamaño del icono del tiempo actual, tamaño del icono de pronósticos, etc.)."
 
-#: z_create_localized_help.py:58 applet.js:140
+#: z_create_localized_help.py:55 applet.js:140
 msgid "This applet requires valid credentials from any of the weather provider services for it to work."
 msgstr "Este applet requiere credenciales válidas de cualquiera de los servicios proveedores de clima para que funcione."
 
-#: z_create_localized_help.py:59
+#: z_create_localized_help.py:56
 msgid "The credentials cannot be used until they have been activated by the weather providers."
 msgstr "Las credenciales no se pueden usar hasta que hayan sido activadas por los proveedores del clima."
 
-#: z_create_localized_help.py:64
+#: z_create_localized_help.py:61
 msgid "Getting API credentials"
 msgstr "Obteniendo credenciales para las APIs."
 
-#: z_create_localized_help.py:66
+#: z_create_localized_help.py:63
 msgid "Follow the instructions made available by the providers."
 msgstr "Seguir las instrucciones facilitadas por los proveedores."
 
-#: z_create_localized_help.py:68
+#: z_create_localized_help.py:65
 msgid "Weather providers"
 msgstr "Proveedores de clima"
 
-#: z_create_localized_help.py:71
+#: z_create_localized_help.py:68
 msgid "API credentials instructions"
 msgstr "Instrucciones para obtener credenciales para API"
 
-#: z_create_localized_help.py:71
+#: z_create_localized_help.py:68
 msgid "Location finder"
 msgstr "Buscador de ubicaciones"
 
-#: z_create_localized_help.py:75 z_create_localized_help.py:80 z_create_localized_help.py:85
+#: z_create_localized_help.py:72 z_create_localized_help.py:77 z_create_localized_help.py:82
 msgid "Get credentials"
 msgstr "Obtener credenciales"
 
-#: z_create_localized_help.py:76 z_create_localized_help.py:81 z_create_localized_help.py:86
+#: z_create_localized_help.py:73 z_create_localized_help.py:78 z_create_localized_help.py:83
 msgid "Find location"
 msgstr "Buscar ubicación"
 
-#: z_create_localized_help.py:89 z_create_localized_help.py:93
+#: z_create_localized_help.py:86 z_create_localized_help.py:90
 msgid "Menu layout"
 msgstr "Diseño del menú"
 
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:93
 msgid "Current weather condition for the currently selected location."
 msgstr "Condición del tiempo actual para la ubicación seleccionada actualmente."
 
-#: z_create_localized_help.py:97
+#: z_create_localized_help.py:94
 msgid "Forecasts for the currently selected location."
 msgstr "Pronósticos para la ubicación seleccionada actualmente."
 
-#: z_create_localized_help.py:99
+#: z_create_localized_help.py:96
 msgid "The time in which the currently displayed data was published by the weather provider. Clicking it will attempt to retrieve updated weather data."
 msgstr "La hora en que el proveedor del tiempo publicó los datos mostrados actualmente. Al hacer clic en él se intentará obtener datos meteorológicos actualizados."
 
-#: z_create_localized_help.py:100
+#: z_create_localized_help.py:97
 msgid "Button to open the locations selector menu."
 msgstr "Botón para abrir el menú selector de ubicaciones."
 
-#: z_create_localized_help.py:102
+#: z_create_localized_help.py:99
 msgid "Weather provider attribution. When clicked, it opens the weather provider website."
 msgstr "Atribución del proveedor de tiempo. Cuando se hace clic, se abre el sitio web del proveedor de tiempo."
 
-#: z_create_localized_help.py:104 z_create_localized_help.py:121
+#: z_create_localized_help.py:101 z_create_localized_help.py:118
 msgid "Locations manager"
 msgstr "Administrador de ubicaciones"
 
-#: z_create_localized_help.py:107
+#: z_create_localized_help.py:104
 msgid "Highlights"
 msgstr "Destacados"
 
-#: z_create_localized_help.py:110
+#: z_create_localized_help.py:107
 msgid "The locations manager can be accessed from this applet context menu."
 msgstr "Se puede acceder al administrador de ubicaciones desde este menú contextual del applet."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:112
+#: z_create_localized_help.py:109
 msgid "Locations with the exact same *Location ID* and *Provider* are considered duplicated and will be automatically removed when applying changes."
 msgstr "Las ubicaciones con exactamente la misma *ID de ubicación* y *Proveedor* se consideran duplicadas y se eliminarán automáticamente al aplicar los cambios."
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:114
+#: z_create_localized_help.py:111
 msgid "The *Apply changes* button must be pressed for the applet to reflect the changes made in the locations manager."
 msgstr "Se debe presionar el botón *Aplicar cambios* para que el applet refleje los cambios realizados en el administrador de ubicaciones."
 
-#: z_create_localized_help.py:126
+#: z_create_localized_help.py:123
 msgid "This is an informative field and it isn't used to retrieve weather data. It is used to identify the displayed data in the menu and to generate the items inside the locations selector menu."
 msgstr "Este es un campo informativo y no se utiliza para recuperar datos meteorológicos. Se utiliza para identificar los datos mostrados en el menú y para generar los elementos dentro del menú de selección de ubicaciones."
 
-#: z_create_localized_help.py:130
+#: z_create_localized_help.py:127
 msgid "A city/region ID used by the weather service providers to identify a location."
 msgstr "Una identificación de ciudad/región utilizada por los proveedores de servicios meteorológicos para identificar una ubicación."
 
-#: z_create_localized_help.py:132
+#: z_create_localized_help.py:129
 msgid "Dark Sky uses only coordinates."
 msgstr "Dark Sky usa solo coordenadas."
 
-#: z_create_localized_help.py:133
+#: z_create_localized_help.py:130
 msgid "Open Weather Map uses city IDs (the number at the end of a location URL) and coordinates."
 msgstr "OpenWeatherMap usa IDs de ciudad (el número al final de una URL de ubicación) y coordenadas."
 
-#: z_create_localized_help.py:134
+#: z_create_localized_help.py:131
 msgid "Yahoo! Weather uses WOEIDs and coordinates."
 msgstr "Yahoo! Clima usa WOEIDs y coordenadas."
 
-#: z_create_localized_help.py:137
+#: z_create_localized_help.py:134
 msgid "Weather conditions localization. Languages are only used by DarkSky and OpenWeatherMap providers and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available)."
 msgstr "Localización de condiciones climatológicas. Solo los proveedores DarkSky y OpenWeatherMap usan los idiomas y solo afectan el texto de las condiciones meteorológicas. Cualquier otro texto de la UI del applet es localizado por el propio applet (si está disponible)."
 
-#: z_create_localized_help.py:140
+#: z_create_localized_help.py:137
 msgid "Forecast days"
 msgstr "Días de previsión"
 
-#: z_create_localized_help.py:141
+#: z_create_localized_help.py:138
 msgid "The amount of forecasts to display in the menu."
 msgstr "La cantidad de pronósticos a mostrar en el menú."
 
-#: z_create_localized_help.py:144
+#: z_create_localized_help.py:141
 msgid "Forecast rows/columns"
 msgstr "Filas/Columnas de pronóstico"
 
-#: z_create_localized_help.py:145
+#: z_create_localized_help.py:142
 msgid "The amount of rows/cols to display the forecast days in."
 msgstr "La cantidad de files/columnas en las cuales mostrar los pronósticos."
 
-#: z_create_localized_help.py:149
+#: z_create_localized_help.py:146
 msgid "Weather data provider. All weather providers require proper credentials to function."
 msgstr "Proveedor de datos meteorológicos. Todos los proveedores de clima requieren credenciales adecuadas para funcionar."
 
@@ -323,88 +323,88 @@ msgstr "Abrir el administrador de ubicaciones"
 msgid "Copy current location data"
 msgstr "Copiar datos de ubicación actual"
 
-#: applet.js:336
+#: applet.js:341
 msgid "Click to copy error to clipboard."
 msgstr "Haga clic para copiar el error al portapapeles."
 
-#: applet.js:337
+#: applet.js:342
 msgid "Look at the logs for details."
 msgstr "Mirar los registros para más detalles."
 
-#: applet.js:379
+#: applet.js:384
 msgid "Refresh"
 msgstr "Recargar"
 
-#: applet.js:392
+#: applet.js:397
 msgid "Click to refresh weather data"
 msgstr "Hacer clic para actualizar los datos meteorológicos."
 
-#: applet.js:621
+#: applet.js:626
 msgid "No current location set!"
 msgstr "¡No hay ubicación actual establecida!"
 
-#: applet.js:671
+#: applet.js:676
 msgid "Error initializing weather provider!"
 msgstr "¡Error al inicializar el proveedor de clima!"
 
-#: applet.js:734
+#: applet.js:739
 msgid "No weather data available!"
 msgstr "¡No hay datos meteorológicos disponibles!"
 
-#: applet.js:842
+#: applet.js:847
 #, javascript-format
 msgid "Powered by %s"
 msgstr "Energizado por %s"
 
-#: applet.js:998
+#: applet.js:1003
 msgid "Current location"
 msgstr "Ubicación actual"
 
-#: applet.js:1011
+#: applet.js:1016
 msgid "Open location weather details page"
 msgstr "Abrir página de detalles del clima"
 
-#: applet.js:1058
+#: applet.js:1063
 msgid "Temperature"
 msgstr "Temperatura"
 
-#: applet.js:1064
+#: applet.js:1069
 msgid "Humidity"
 msgstr "Humedad"
 
-#: applet.js:1070
+#: applet.js:1075
 msgid "Pressure"
 msgstr "Presión"
 
-#: applet.js:1076
+#: applet.js:1081
 msgid "Wind"
 msgstr "Viento"
 
-#: applet.js:1082
+#: applet.js:1087
 msgid "Wind chill"
 msgstr "Temperatura percibida"
 
-#: applet.js:1088
+#: applet.js:1093
 msgid "Visibility"
 msgstr "Visibilidad"
 
-#: applet.js:1094
+#: applet.js:1099
 msgid "Sunrise"
 msgstr "Amanecer"
 
-#: applet.js:1100
+#: applet.js:1105
 msgid "Sunset"
 msgstr "Puesta del sol"
 
-#: applet.js:1240
+#: applet.js:1245
 msgid "Not available"
 msgstr "No disponible"
 
-#: applet.js:1651
+#: applet.js:1637
 msgid "Debugging toggled"
 msgstr "Depuración activada"
 
-#: applet.js:1652
+#: applet.js:1638
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr "Recordar reiniciar Cinnamon para habilitar/deshabilitar completamente esta opción."
 
@@ -760,52 +760,112 @@ msgstr "Con claros y nubes"
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: constants.js:190
+#: constants.js:173
+msgid "Unable to resolve destination host name"
+msgstr "No se puede resolver el nombre de host de destino"
+
+#: constants.js:174
+msgid "Temporary redirect"
+msgstr "Redireccionamiento temporal"
+
+#: constants.js:175
+msgid "Unable to resolve proxy host name"
+msgstr "No se puede resolver el nombre del servidor proxy"
+
+#: constants.js:176
+msgid "Bad request"
+msgstr "Solicitud incorrecta"
+
+#: constants.js:177
+msgid "Unauthorized"
+msgstr "No autorizado"
+
+#: constants.js:178
+msgid "Payment required"
+msgstr "Pago requerido"
+
+#: constants.js:179
+msgid "Not found"
+msgstr "No encontrado"
+
+#: constants.js:180
+msgid "Proxy authentication required"
+msgstr "Se requiere autenticación proxy"
+
+#: constants.js:181
+msgid "Request timeout"
+msgstr "Agotado el tiempo de espera"
+
+#: constants.js:182
+msgid "Unable to connect to remote host"
+msgstr "No se puede conectar al host remoto"
+
+#: constants.js:183
+msgid "Internal server error"
+msgstr "Error interno del servidor"
+
+#: constants.js:184
+msgid "Service unavailable"
+msgstr "Servicio no disponible"
+
+#: constants.js:185
+msgid "Unable to connect to proxy"
+msgstr "No se puede conectar al proxy"
+
+#: constants.js:186
+msgid "SSL/TLS negotiation failed"
+msgstr "Fallo de negociación SSL/TLS"
+
+#: constants.js:187
+msgid "A network error occurred, or the other end closed the connection unexpectedly"
+msgstr "Se produjo un error en la red, o el otro extremo cerró la conexión inesperadamente"
+
+#: constants.js:192
 msgid "Missing credentials for weather provider!"
 msgstr "¡Faltan credenciales para proveedor de clima!"
 
-#: constants.js:191
+#: constants.js:193
 msgid "Wrong location ID format!"
 msgstr "¡Formato de ID de ubicación incorrecto!"
 
-#: constants.js:192
+#: constants.js:194
 msgid "Selected language not supported by weather provider!"
 msgstr "¡Idioma seleccionado no soportado por el proveedor del tiempo!"
 
-#: constants.js:193
+#: constants.js:195
 #, javascript-format
 msgid "Error getting data! Status code: %s"
 msgstr "¡Error al obtener los datos! Código de estado: %s"
 
-#: constants.js:194
+#: constants.js:196
 msgid "Error parsing weather data."
 msgstr "Error al analizar los datos meteorológicos."
 
-#: constants.js:199
+#: constants.js:201
 msgid "Sunday"
 msgstr "Domingo"
 
-#: constants.js:200
+#: constants.js:202
 msgid "Monday"
 msgstr "Lunes"
 
-#: constants.js:201
+#: constants.js:203
 msgid "Tuesday"
 msgstr "Martes"
 
-#: constants.js:202
+#: constants.js:204
 msgid "Wednesday"
 msgstr "Miércoles"
 
-#: constants.js:203
+#: constants.js:205
 msgid "Thursday"
 msgstr "Jueves"
 
-#: constants.js:204
+#: constants.js:206
 msgid "Friday"
 msgstr "Viernes"
 
-#: constants.js:205
+#: constants.js:207
 msgid "Saturday"
 msgstr "Sábado"
 

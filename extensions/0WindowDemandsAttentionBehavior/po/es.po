@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowDemandsAttentionBehavior\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-12 22:30-0300\n"
+"POT-Creation-Date: 2019-02-17 02:33-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -63,11 +63,11 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: z_create_localized_help.py:30
+#: z_create_localized_help.py:26
 msgid "Description"
 msgstr "Descripción"
 
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:28
 msgid "Extension based on the Gnome Shell extensions [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) and [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut). This extension adds two different behaviors for windows that demand attention. It force them to be activated or a keyboard shortcut can be assigned to activate windows on demand."
 msgstr "Esta extensión está basada en las extensiones para Gnome Shell llamadas [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) y [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut). Esta extensión agrega dos comportamientos diferentes para las ventanas que requieren atención.  Las obliga a activarse o se puede asignar un atajo de teclado para activar ventanas bajo demanda."
 

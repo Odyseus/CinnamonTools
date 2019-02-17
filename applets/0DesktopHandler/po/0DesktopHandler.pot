@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopHandler VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,34 +65,34 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: z_create_localized_help.py:29
+#: z_create_localized_help.py:26
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:29
 msgid "This applet is based on [Smart Panel](https://cinnamon-spices.linuxmint.com/extensions/view/32) extension and [Show Desktop ++](https://cinnamon-spices.linuxmint.com/applets/view/165) applet, both authored by  **mohammad-sn**. I *mixed* both of them into an applet because there is not always room on the panel to perform the actions added by **Smart Panel**. The **Smart Panel** extension can still be installed and activated at the same time than this applet to have even more desktop actions."
 msgstr ""
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:31
 msgid "Features"
 msgstr ""
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:33
 msgid "The applet icon, background color and width can be customized."
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Scroll over applet actions:"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:38 applet.js:783
+#: z_create_localized_help.py:35 applet.js:783
 msgid "Switch between workspaces"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:39 applet.js:784
+#: z_create_localized_help.py:36 applet.js:784
 msgid "Adjust opacity of windows"
 msgstr ""
 
@@ -101,24 +101,24 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "Toggle Show desktop"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:41 applet.js:786
+#: z_create_localized_help.py:38 applet.js:786
 msgid "Switch between windows"
 msgstr ""
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:39
 msgid "Posibility to perform different actions for scrolling up and down."
 msgstr ""
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "Posibility to perform different actions on left and middle click."
 msgstr ""
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "Actions for up/down scroll and/or left/middle clicks."
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:45 applet.js:474 applet.js:767
+#: z_create_localized_help.py:42 applet.js:474 applet.js:767
 msgid "Expo"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:46 applet.js:768
+#: z_create_localized_help.py:43 applet.js:768
 msgid "Overview"
 msgstr ""
 
@@ -142,11 +142,11 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:47 applet.js:769
+#: z_create_localized_help.py:44 applet.js:769
 msgid "Launch App Switcher"
 msgstr ""
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:45
 msgid "Show Desktop"
 msgstr ""
 
@@ -154,7 +154,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:49 applet.js:770
+#: z_create_localized_help.py:46 applet.js:770
 msgid "Run 1st Custom Command"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:50 applet.js:771
+#: z_create_localized_help.py:47 applet.js:771
 msgid "Run 2nd Custom Command"
 msgstr ""
 
@@ -170,7 +170,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:51 applet.js:772
+#: z_create_localized_help.py:48 applet.js:772
 msgid "Run 3rd Custom Command"
 msgstr ""
 
@@ -178,19 +178,19 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:52 applet.js:773
+#: z_create_localized_help.py:49 applet.js:773
 msgid "Run 4rd Custom Command"
 msgstr ""
 
-#: z_create_localized_help.py:53
+#: z_create_localized_help.py:50
 msgid "Posibility to create a windows list menu."
 msgstr ""
 
-#: z_create_localized_help.py:54
+#: z_create_localized_help.py:51
 msgid "Left/Middle/Right click on applet can be configured to open the windows list menu."
 msgstr ""
 
-#: z_create_localized_help.py:55
+#: z_create_localized_help.py:52
 msgid "Desktop peek functionality with configurable levels of opacity."
 msgstr ""
 

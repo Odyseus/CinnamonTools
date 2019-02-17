@@ -4,6 +4,24 @@
 
 ***
 
+- **Date:** Sun, 17 Feb 2019 02:12:37 -0300
+- **Commit:** [8f2938b](https://gitlab.com/Odyseus/CinnamonTools/commit/8f2938b)
+- **Author:** Odyseus
+
+```
+- Fixed commands execution when terminal is set to false.
+- Added the possibility to insert separators inside sub-menus.
+- Redesigned applet tooltip for better readability by using a grid.
+- Added debug mode for troubleshooting.
+- Removing some try{}catch{} blocks. When debug mode is enabled all methods are called with a try{}catch{} block.
+- Implemented the use of GLib.get_monotonic_time() to measure execution times more precisely.
+- Improved lines parsing by using default parameters. This avoids constantly checking for the existence of an option.
+- Cleaned call to log function that was left over.
+
+```
+
+***
+
 - **Date:** Mon, 21 Jan 2019 21:48:00 -0300
 - **Commit:** [2d5dfec](https://gitlab.com/Odyseus/CinnamonTools/commit/2d5dfec)
 - **Author:** Odyseus

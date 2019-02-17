@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ExtensionsManager\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-12 22:30-0300\n"
+"POT-Creation-Date: 2019-02-17 02:33-0300\n"
 "PO-Revision-Date: 2018-08-25 02:49-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -92,35 +92,35 @@ msgstr "Procesar todas las extensiones, pero sólo mostrará posibles errores."
 msgid "Launch the debug process from a virtual terminal."
 msgstr "Iniciar el proceso de depuración desde un terminal virtual."
 
-#: z_create_localized_help.py:31 utils.js:327 utils.js:335
+#: z_create_localized_help.py:28 utils.js:327 utils.js:335
 msgid "Description"
 msgstr "Descripción"
 
-#: z_create_localized_help.py:33
+#: z_create_localized_help.py:30
 msgid "This applet creates a menu with a list of all installed extensions in Cinnamon. From each menu item different tasks can be performed:"
 msgstr "Este applet crea un menú con una lista de todas las extensiones instaladas en Cinnamon.  Desde cada elemento de menú se pueden realizar diferentes tareas:"
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:32
 msgid "Enable/Disable the extension"
 msgstr "Habilitar/Deshabilitar la extensión"
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:33
 msgid "Open the extension's settings page"
 msgstr "Abrir la página de configuración de la extensión"
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Open the extension's Spices page"
 msgstr "Abrir la página de Spices de la extensión"
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:35
 msgid "Open the extension folder"
 msgstr "Abrir la carpeta de la extensión"
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Open its extension.js file"
 msgstr "Abrir el archivo extension.js"
 
-#: z_create_localized_help.py:44 z_create_localized_help.py:48
+#: z_create_localized_help.py:41 z_create_localized_help.py:45
 msgid "Settings window"
 msgstr "Ventana de configuración"
 

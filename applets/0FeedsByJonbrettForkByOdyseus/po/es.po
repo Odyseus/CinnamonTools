@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-12 22:30-0300\n"
+"POT-Creation-Date: 2019-02-17 02:33-0300\n"
 "PO-Revision-Date: 2019-01-17 15:57-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -69,48 +69,48 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: z_create_localized_help.py:30
+#: z_create_localized_help.py:27
 msgid "Description"
 msgstr "Descripción"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:33
+#: z_create_localized_help.py:30
 msgid "This applet is a fork of [Feeds Reader](https://cinnamon-spices.linuxmint.com/applets/view/149) applet by Jason Jackson (a.k.a. jake1164)."
 msgstr "Este applet es una modificación del applet [Feeds Reader](https://cinnamon-spices.linuxmint.com/applets/view/149), por Jason Jackson (también conocido como jake1164)."
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:32
 msgid "Differences with the original applet"
 msgstr "Diferencias con el original"
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Added keyboard shortcut to be able to open/close the menu."
 msgstr "Agregado atajo de teclado para abrir y cerrar el menú."
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:35
 msgid "Added proper keyboard navigation for the menu."
 msgstr "Se agregó una adecuada navegación de teclado para el menú."
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Eliminated the need of a stylesheet.css file. The menu will be styled respecting the currently used Cinnamon theme."
 msgstr "Eliminada la necesidad de un archivo stylesheet.css. El menú será estilizado respetando el tema de Cinnamon actualmente en uso."
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "Feeds will only be updated from their online sources if the last check was made after the refresh interval."
 msgstr "Los feeds solo se actualizarán desde sus fuentes en línea si la última verificación se realizó después del intervalo de actualización."
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "Forced the use of Python 3 in all Python modules/scripts."
 msgstr "Forzado el uso de Python 3 en todos los módulos/archivos de comandos escritos en Python."
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "Dependencies"
 msgstr "Dependencias"
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:42
 msgid "The feedparser Python 3 module is a universal feed parser that handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds."
 msgstr "El módulo feedparser para Python 3 es un analizador de fuentes universal que maneja feeds RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3 y Atom 1.0."
 
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:43
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr "Instalar con `pip` (Cinnamon necesita ser reiniciado luego de instalar feedparser si el applet ya fue colocado en un panel):"
 

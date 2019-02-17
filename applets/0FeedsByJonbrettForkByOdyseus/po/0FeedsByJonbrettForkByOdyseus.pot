@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,48 +65,48 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: z_create_localized_help.py:30
+#: z_create_localized_help.py:27
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:33
+#: z_create_localized_help.py:30
 msgid "This applet is a fork of [Feeds Reader](https://cinnamon-spices.linuxmint.com/applets/view/149) applet by Jason Jackson (a.k.a. jake1164)."
 msgstr ""
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:32
 msgid "Differences with the original applet"
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Added keyboard shortcut to be able to open/close the menu."
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:35
 msgid "Added proper keyboard navigation for the menu."
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Eliminated the need of a stylesheet.css file. The menu will be styled respecting the currently used Cinnamon theme."
 msgstr ""
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "Feeds will only be updated from their online sources if the last check was made after the refresh interval."
 msgstr ""
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "Forced the use of Python 3 in all Python modules/scripts."
 msgstr ""
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "Dependencies"
 msgstr ""
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:42
 msgid "The feedparser Python 3 module is a universal feed parser that handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds."
 msgstr ""
 
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:43
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr ""
 

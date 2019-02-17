@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WallpaperChangerApplet VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -360,78 +360,78 @@ msgstr ""
 msgid "%s applet preferences"
 msgstr ""
 
-#: z_create_localized_help.py:31
+#: z_create_localized_help.py:28
 msgid "Description"
 msgstr ""
 
-#: z_create_localized_help.py:33
+#: z_create_localized_help.py:30
 msgid "Applet based on the gnome-shell extension called [Desk Changer](https://github.com/BigE/desk-changer) by [Eric Gach](https://github.com/BigE). A wallpaper slideshow applet with multiple profiles support."
 msgstr ""
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:32
 msgid "Features"
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Possibility to create and switch between several profiles. A profile is simply a list of images and/or folders containing images that this applet will use to switch the wallpaper."
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:35
 msgid "Possibility to preview the next wallpaper from this applet menu."
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Wallpapers can be switched on demand from the controls found in this applet menu."
 msgstr ""
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "The wallpapers rotation can be alphabetically or random."
 msgstr ""
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "The wallpapers rotation can be defined by an interval in seconds or hourly."
 msgstr ""
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:39
 msgid "Possibility to open the next or current wallpapers from this applet menu."
 msgstr ""
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "Possibility to display a notification every time the wallpaper is switched."
 msgstr ""
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "Configurable hotkeys to switch to next/previous wallpaper."
 msgstr ""
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:42
 msgid "Read the tooltips of each option on this applet settings window for more details."
 msgstr ""
 
-#: z_create_localized_help.py:50
+#: z_create_localized_help.py:47
 msgid "Xlet's settings window"
 msgstr ""
 
-#: z_create_localized_help.py:51
+#: z_create_localized_help.py:48
 msgid "From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."
 msgstr ""
 
-#: z_create_localized_help.py:53
+#: z_create_localized_help.py:50
 msgid "To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:55
+#: z_create_localized_help.py:52
 msgid "Command to install the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:58
+#: z_create_localized_help.py:55
 msgid "Command to uninstall the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:61
+#: z_create_localized_help.py:58
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr ""
 

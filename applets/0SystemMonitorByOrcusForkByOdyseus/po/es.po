@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-12 22:30-0300\n"
+"POT-Creation-Date: 2019-02-17 02:33-0300\n"
 "PO-Revision-Date: 2018-08-25 02:47-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -68,63 +68,63 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: z_create_localized_help.py:29
+#: z_create_localized_help.py:26
 msgid "Description"
 msgstr "Descripción"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:29
 msgid "This applet is a fork of [System Monitor](https://cinnamon-spices.linuxmint.com/applets/view/88) applet by Josef Michálek (a.k.a. Orcus)."
 msgstr "Este applet está basado en el applet [System Monitor](https://cinnamon-spices.linuxmint.com/applets/view/88) por Josef Michálek (también conocido como Orcus)."
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:31
 msgid "Differences with the original applet"
 msgstr "Diferencias con el original"
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:33
 msgid "Added keyboard shortcut to be able to launch a custom command."
 msgstr "Se agregó un atajo de teclado para poder lanzar un comando personalizado."
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Added option to hide the graphs background, not just set it transparent."
 msgstr "Se agregó una opción para ocultar el fondo de los gráficos, no solo configurarlo de forma transparente."
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Dependencies"
 msgstr "Dependencias"
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "The gtop library reads information about processes and the state of the system."
 msgstr "La biblioteca gtop lee información acerca de procesos y el estado del sistema."
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:39
 msgid "Debian based distributions:"
 msgstr "Distribuciones basadas en Debian:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "The package is called **gir1.2-gtop-2.0**."
 msgstr "Distribuciones basadas en Debian: El paquete es llamado **gir1.2-gtop-2.0**."
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:42
 msgid "Archlinux based distributions:"
 msgstr "Distribuciones basadas en Archlinux:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:47
+#: z_create_localized_help.py:44
 msgid "The package is called **libgtop**."
 msgstr "Distribuciones basadas en Archlinux: El paquete es **libgtop**."
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:45
 msgid "Fedora based distributions:"
 msgstr "Distribuciones basadas en Fedora:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:50
+#: z_create_localized_help.py:47
 msgid "The package is called **libgtop2**."
 msgstr "El paquete es llamado **libgtop2**."
 
-#: z_create_localized_help.py:52
+#: z_create_localized_help.py:49
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr "Reiniciar Cinnamon luego de haber instalado los paquetes para que el applet los reconozca."
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMaximusForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-12 22:30-0300\n"
+"POT-Creation-Date: 2019-02-17 02:33-0300\n"
 "PO-Revision-Date: 2018-08-25 02:49-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -67,48 +67,48 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: z_create_localized_help.py:29
+#: z_create_localized_help.py:26
 msgid "Description"
 msgstr "Descripción"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:29
 msgid "This extension is a fork of the [Cinnamon Maximus](https://cinnamon-spices.linuxmint.com/extensions/view/29) extension by Fatih Mete. The main difference with the original is that I removed the blacklist feature in favor of a whitelist feature. I also added a couple of options for troubleshooting and completely removed the top border of undecorated maximized windows."
 msgstr "Esta extensión está basada el la extensión [Cinnamon Maximus](https://cinnamon-spices.linuxmint.com/extensions/view/29) por Fatih Mete. La diferencia principal con la original es que quité la característica de lista negra en favor de una característica de lista blanca.  También he añadido un par de opciones para la solución de problemas y eliminado por completo el borde superior de ventanas maximizadas sin decoraciones."
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:31
 msgid "Dependencies"
 msgstr "Dependencias"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:33
 msgid "The **xprop** and **xwininfo** commands needs to be available on the system."
 msgstr "Los comandos **xprop** y **xwininfo** necesitan estar disponibles en el sistema."
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:35
 msgid "Debian based distributions:"
 msgstr "Distribuciones basadas en Debian:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "These commands are provided by the **x11-utils** package. Linux Mint already has this package installed."
 msgstr "Estos comandos son proporcionados por el paquete **x11-utils**. Linux Mint ya tiene este paquete instalado."
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "Archlinux based distributions:"
 msgstr "Distribuciones basadas en Archlinux:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "These commands are provided by the **xorg-xprop** and **xorg-xwininfo** packages."
 msgstr "Estos comandos son proporcionados por los paquetes **xorg-xprop** y **xorg-xwininfo**."
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "Fedora based distributions:"
 msgstr "Distribuciones basadas en Fedora:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:43
 msgid "These commands are provided by the **xorg-x11-utils** package."
 msgstr "Estos comandos son proporcionados por el paquete **xorg-x11-utils**."
 

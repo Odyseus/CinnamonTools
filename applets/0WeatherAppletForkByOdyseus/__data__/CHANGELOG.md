@@ -4,6 +4,33 @@
 
 ***
 
+- **Date:** Sun, 17 Feb 2019 02:31:28 -0300
+- **Commit:** [c95eefe](https://gitlab.com/Odyseus/CinnamonTools/commit/c95eefe)
+- **Author:** Odyseus
+
+```
+- Improved description of known status codes.
+- Improved the display of error messages in the applet menu.
+- Improved identification of method names when verbose debug mode is enabled.
+- Avoid the hiding of the error box when it shouldn't be hidden.
+
+```
+
+***
+
+- **Date:** Wed, 13 Feb 2019 04:04:10 -0300
+- **Commit:** [5e59cee](https://gitlab.com/Odyseus/CinnamonTools/commit/5e59cee)
+- **Author:** Odyseus
+
+```
+- Corrected the logic of the sanitizeStoredLocations method.
+    - First, this.locationsMap doesn't need deduplication since it's a Map.
+    - And second, I'm iterating over the stored data keys (a location UUID), not its values (the weather data for a location). So there is no need to re-create the UUIDs.
+
+```
+
+***
+
 - **Date:** Tue, 12 Feb 2019 23:33:32 -0300
 - **Commit:** [4fc8ec3](https://gitlab.com/Odyseus/CinnamonTools/commit/4fc8ec3)
 - **Author:** Odyseus

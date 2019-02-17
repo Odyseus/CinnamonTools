@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MultiTranslatorExtension VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -893,167 +893,167 @@ msgstr ""
 msgid "DCONF files"
 msgstr ""
 
-#: z_create_localized_help.py:30
+#: z_create_localized_help.py:27
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:33
+#: z_create_localized_help.py:30
 msgid "The Multi Translator extension is an extension ported from a gnome-shell extension called [Text Translator](https://github.com/gufoe/text-translator) by [gufoe](https://github.com/gufoe). It provides translation of text by different translation providers (currently [Google](https://translate.google.com), [Yandex](https://translate.yandex.net), [Bing](https://www.bing.com/translator), [Apertium](https://www.apertium.org) and [Transltr](http://transltr.org))."
 msgstr ""
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:32
 msgid "Dependencies"
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "If one or more of these dependencies are missing in your system, you will not be able to use this extension."
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "xsel command:"
 msgstr ""
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "XSel is a command-line program for getting and setting the contents of the X selection."
 msgstr ""
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "trans command:"
 msgstr ""
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:39
 msgid "Command provided by the package translate-shell. Is a simple command line interface for several translation providers (Google Translate, Yandex Translate, Bing Translate and Apertium) which allows you to translate strings in your terminal."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "Check translate-shell [dependencies](https://github.com/soimort/translate-shell#dependencies) and [recommended dependencies](https://github.com/soimort/translate-shell#recommended-dependencies)."
 msgstr ""
 
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:43
 msgid "Note:"
 msgstr ""
 
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:43
 msgid "The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x repositories is outdated and broken. It can be installed anyway so it will also install its dependencies. But updating to the latest version should be done as described bellow."
 msgstr ""
 
-#: z_create_localized_help.py:51
+#: z_create_localized_help.py:48
 msgid "How to install latest version of translate-shell"
 msgstr ""
 
-#: z_create_localized_help.py:52
+#: z_create_localized_help.py:49
 msgid "Option 1. Direct Download"
 msgstr ""
 
-#: z_create_localized_help.py:53
+#: z_create_localized_help.py:50
 msgid "This method will only install the trans script into the specified locations."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:56
+#: z_create_localized_help.py:53
 msgid "For the current user only. **~/.local/bin** needs to be in your PATH."
 msgstr ""
 
-#: z_create_localized_help.py:62
+#: z_create_localized_help.py:59
 msgid "For all users without overwriting the installed version."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:70
+#: z_create_localized_help.py:67
 msgid "Option 2. From Git - [More details](https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers)"
 msgstr ""
 
-#: z_create_localized_help.py:71
+#: z_create_localized_help.py:68
 msgid "This method will not just install the trans script but also its man pages. Refer to the link above for more installation details."
 msgstr ""
 
-#: z_create_localized_help.py:80
+#: z_create_localized_help.py:77
 msgid "Extension usage"
 msgstr ""
 
-#: z_create_localized_help.py:81
+#: z_create_localized_help.py:78
 msgid "Once installed and enabled, the following shortcuts will be available."
 msgstr ""
 
-#: z_create_localized_help.py:82
+#: z_create_localized_help.py:79
 msgid "Global shortcuts (configurable from the extension settings)"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:84
+#: z_create_localized_help.py:81
 msgid "**[[Super]] + [[T]]:** Open translator dialog."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:86
+#: z_create_localized_help.py:83
 msgid "**[[Super]] + [[Shift]] + [[T]]:** Open translator dialog and translate text from clipboard."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:88
+#: z_create_localized_help.py:85
 msgid "**[[Super]] + [[Alt]] + [[T]]:** Open translator dialog and translate from primary selection."
 msgstr ""
 
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:87
 msgid "Shortcuts available on the translation dialog"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:92
+#: z_create_localized_help.py:89
 msgid "**[[Ctrl]] + [[Enter]]:** Translate text."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:94
+#: z_create_localized_help.py:91
 msgid "**[[Shift]] + [[Enter]]:** Force text translation. Ignores translation history."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:93
 msgid "**[[Ctrl]] + [[Shift]] + [[C]]:** Copy translated text to clipboard."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:98
+#: z_create_localized_help.py:95
 msgid "**[[Ctrl]] + [[S]]:** Swap languages."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:100
+#: z_create_localized_help.py:97
 msgid "**[[Ctrl]] + [[D]]:** Reset languages to default."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:102
+#: z_create_localized_help.py:99
 msgid "**[[Escape]]:** Close dialog."
 msgstr ""
 
-#: z_create_localized_help.py:104
+#: z_create_localized_help.py:101
 msgid "Xlet's settings window"
 msgstr ""
 
-#: z_create_localized_help.py:105
+#: z_create_localized_help.py:102
 msgid "From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."
 msgstr ""
 
-#: z_create_localized_help.py:107
+#: z_create_localized_help.py:104
 msgid "To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:109
+#: z_create_localized_help.py:106
 msgid "Command to install the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:112
+#: z_create_localized_help.py:109
 msgid "Command to uninstall the settings schema:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:115
+#: z_create_localized_help.py:112
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr ""
 

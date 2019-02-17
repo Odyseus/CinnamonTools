@@ -6,11 +6,8 @@ import sys
 
 
 xlet_dir = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
-
 xlet_slug = os.path.basename(xlet_dir)
-
 repo_folder = os.path.normpath(os.path.join(xlet_dir, *([".."] * 2)))
-
 app_folder = os.path.join(repo_folder, "__app__")
 
 if app_folder not in sys.path:
@@ -24,8 +21,8 @@ from python_modules.localized_help_creator import utils
 
 class Main(LocalizedHelpCreator):
 
-    def __init__(self, xlet_dir, xlet_slug):
-        super().__init__(xlet_dir, xlet_slug)
+    def __init__(self, *args):
+        super().__init__(*args)
 
     def get_content_base(self, for_readme):
         return "\n".join([
@@ -204,7 +201,7 @@ class Main(LocalizedHelpCreator):
             "",
             "| %s | %s | %s |" % (_("Attribute"), _("Value"), _("Description")),
             "| --- | --- | --- |",
-            "| `command` or `bash` | %s | **[(1)](#about-command-bash-attributes-{{lhc_lang_id}})** %s |" % (_("A command to execute"), _(
+            "| `command`, `bash` | %s | **[(1)](#about-command-bash-attributes-{{lhc_lang_id}})** %s |" % (_("A command to execute"), _(
                 "Runs a command using a default shell specified in the options of an instance of Argos for Cinnamon or specified by the `shell` attribute.")),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "| `shell` | %s | %s |" % (_("Path or executable name of a shell program"), _(

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,39 +65,39 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: z_create_localized_help.py:30
+#: z_create_localized_help.py:27
 msgid "Description"
 msgstr ""
 
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:29
 msgid "This applet is a fork of the default Window list applet shipped with Cinnamon."
 msgstr ""
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:31
 msgid "Differences with the original applet"
 msgstr ""
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:33
 msgid "Added option to remove the label from the window list buttons."
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Added option to remove the tooltips from the window list buttons."
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:35
 msgid "Added icons to the window list button's context menu."
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Added option to invert the contex menu items."
 msgstr ""
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "Added option to hide/move the **Preferences** sub menu."
 msgstr ""
 
-#: z_create_localized_help.py:45 z_create_localized_help.py:49
+#: z_create_localized_help.py:42 z_create_localized_help.py:46
 msgid "Inverted menu on top panel"
 msgstr ""
 

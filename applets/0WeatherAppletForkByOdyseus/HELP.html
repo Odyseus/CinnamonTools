@@ -320,6 +320,27 @@ The following sections are available only in English.
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
 <hr>
 <ul>
+<li><strong>Date:</strong> Sun, 17 Feb 2019 02:31:28 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c95eefe">c95eefe</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Improved description of known status codes.
+- Improved the display of error messages in the applet menu.
+- Improved identification of method names when verbose debug mode is enabled.
+- Avoid the hiding of the error box when it shouldn't be hidden.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Wed, 13 Feb 2019 04:04:10 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5e59cee">5e59cee</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Corrected the logic of the sanitizeStoredLocations method.
+    - First, this.locationsMap doesn't need deduplication since it's a Map.
+    - And second, I'm iterating over the stored data keys (a location UUID), not its values (the weather data for a location). So there is no need to re-create the UUIDs.
+</code></pre>
+<hr>
+<ul>
 <li><strong>Date:</strong> Tue, 12 Feb 2019 23:33:32 -0300</li>
 <li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4fc8ec3">4fc8ec3</a></li>
 <li><strong>Author:</strong> Odyseus</li>

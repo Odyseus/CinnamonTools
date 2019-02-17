@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopHandler\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-12 22:30-0300\n"
+"POT-Creation-Date: 2019-02-17 02:33-0300\n"
 "PO-Revision-Date: 2018-08-25 02:48-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -68,34 +68,34 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: z_create_localized_help.py:29
+#: z_create_localized_help.py:26
 msgid "Description"
 msgstr "Descripción"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:29
 msgid "This applet is based on [Smart Panel](https://cinnamon-spices.linuxmint.com/extensions/view/32) extension and [Show Desktop ++](https://cinnamon-spices.linuxmint.com/applets/view/165) applet, both authored by  **mohammad-sn**. I *mixed* both of them into an applet because there is not always room on the panel to perform the actions added by **Smart Panel**. The **Smart Panel** extension can still be installed and activated at the same time than this applet to have even more desktop actions."
 msgstr "Este applet está basado en la extensión [Smart Panel](https://cinnamon-spices.linuxmint.com/extensions/view/32) y en el applet [Show Desktop ++](https://cinnamon-spices.linuxmint.com/applets/view/165), ambos escritos por **mohammad-sn**. Yo *mezclé* ambos en un applet porque no siempre hay espacio en el panel para realizar las acciones agregadas por **Smart Panel**. La extensión **Smart Panel** se puede instalar y activar al mismo tiempo que este applet para tener aún más acciones de escritorio."
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:31
 msgid "Features"
 msgstr "Características"
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:33
 msgid "The applet icon, background color and width can be customized."
 msgstr "El icono, el color de fondo y el ancho del applet se pueden personalizar."
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Scroll over applet actions:"
 msgstr "Acciones al desplazarse sobre el applet:"
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:38 applet.js:783
+#: z_create_localized_help.py:35 applet.js:783
 msgid "Switch between workspaces"
 msgstr "Alternar entre espacios de trabajo"
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:39 applet.js:784
+#: z_create_localized_help.py:36 applet.js:784
 msgid "Adjust opacity of windows"
 msgstr "Ajustar opacidad de ventanas"
 
@@ -104,24 +104,24 @@ msgstr "Ajustar opacidad de ventanas"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "Toggle Show desktop"
 msgstr "Activar Mostrar escritorio"
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:41 applet.js:786
+#: z_create_localized_help.py:38 applet.js:786
 msgid "Switch between windows"
 msgstr "Cambiar entre ventanas"
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:39
 msgid "Posibility to perform different actions for scrolling up and down."
 msgstr "Posibilidad de realizar diferentes acciones al desplazarse hacia arriba y hacia abajo."
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "Posibility to perform different actions on left and middle click."
 msgstr "Posibilidad de realizar diferentes acciones en el clic izquierdo y central."
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "Actions for up/down scroll and/or left/middle clicks."
 msgstr "Acciones para los desplazamientos arriba/abajo y/o los clics izquierdo/central."
 
@@ -129,7 +129,7 @@ msgstr "Acciones para los desplazamientos arriba/abajo y/o los clics izquierdo/c
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:45 applet.js:474 applet.js:767
+#: z_create_localized_help.py:42 applet.js:474 applet.js:767
 msgid "Expo"
 msgstr "Visualizar áreas de trabajo"
 
@@ -137,7 +137,7 @@ msgstr "Visualizar áreas de trabajo"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:46 applet.js:768
+#: z_create_localized_help.py:43 applet.js:768
 msgid "Overview"
 msgstr "Visión general"
 
@@ -145,11 +145,11 @@ msgstr "Visión general"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:47 applet.js:769
+#: z_create_localized_help.py:44 applet.js:769
 msgid "Launch App Switcher"
 msgstr "Lanzar conmutador de aplicaciones"
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:45
 msgid "Show Desktop"
 msgstr "Mostrar Escritorio"
 
@@ -157,7 +157,7 @@ msgstr "Mostrar Escritorio"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:49 applet.js:770
+#: z_create_localized_help.py:46 applet.js:770
 msgid "Run 1st Custom Command"
 msgstr "Ejecutar 1.º comando personalizado"
 
@@ -165,7 +165,7 @@ msgstr "Ejecutar 1.º comando personalizado"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:50 applet.js:771
+#: z_create_localized_help.py:47 applet.js:771
 msgid "Run 2nd Custom Command"
 msgstr "Ejecutar 2.º comando personalizado"
 
@@ -173,7 +173,7 @@ msgstr "Ejecutar 2.º comando personalizado"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:51 applet.js:772
+#: z_create_localized_help.py:48 applet.js:772
 msgid "Run 3rd Custom Command"
 msgstr "Ejecutar 3.º comando personalizado"
 
@@ -181,19 +181,19 @@ msgstr "Ejecutar 3.º comando personalizado"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:52 applet.js:773
+#: z_create_localized_help.py:49 applet.js:773
 msgid "Run 4rd Custom Command"
 msgstr "Ejecutar 4.º comando personalizado"
 
-#: z_create_localized_help.py:53
+#: z_create_localized_help.py:50
 msgid "Posibility to create a windows list menu."
 msgstr "Posibilidad de crear un menú de lista de ventanas."
 
-#: z_create_localized_help.py:54
+#: z_create_localized_help.py:51
 msgid "Left/Middle/Right click on applet can be configured to open the windows list menu."
 msgstr "Clic Izquierdo/Medio/Derecho en el applet se puede configurar para abrir el menú de la lista de ventanas."
 
-#: z_create_localized_help.py:55
+#: z_create_localized_help.py:52
 msgid "Desktop peek functionality with configurable levels of opacity."
 msgstr "Funcionalidad Desktop Peek con niveles configurables de opacidad."
 

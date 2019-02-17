@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,442 +96,442 @@ msgstr ""
 msgid "_OK"
 msgstr ""
 
-#: z_create_localized_help.py:32 z_create_localized_help.py:154 z_create_localized_help.py:185 z_create_localized_help.py:192 z_create_localized_help.py:201 z_create_localized_help.py:235 z_create_localized_help.py:308
+#: z_create_localized_help.py:29 z_create_localized_help.py:151 z_create_localized_help.py:182 z_create_localized_help.py:189 z_create_localized_help.py:198 z_create_localized_help.py:232 z_create_localized_help.py:305
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:32
 msgid "This applet is a fork of [Desktop Capture](https://github.com/rjanja/desktop-capture) applet by Rob Adams (a.k.a. rjanja)."
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Differences with the original applet"
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "The principal differences of this fork with the original applet are in usability and of the kind 'do more with less code'."
 msgstr ""
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "More convenient handling of settings. Most settings can be changed directly from the applet menu or its context menu without the need to constantly open the applet settings window."
 msgstr ""
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:39
 msgid "Keyboard shortcuts are not only available for Cinnamon's built-in features, but for all screenshot/screencast programs."
 msgstr ""
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "Settings are immediately available after changed without the need to restart Cinnamon."
 msgstr ""
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program."
 msgstr ""
 
-#: z_create_localized_help.py:51
+#: z_create_localized_help.py:48
 msgid "Programs support"
 msgstr ""
 
-#: z_create_localized_help.py:53
+#: z_create_localized_help.py:50
 msgid "In addition to Cinnamon's built-in screenshot/screencast tools, this applet also supports third-party programs to take captures. By default, this applet comes with support for several known programs (Shutter, Gnome Screenshot, XWD, ImageMagic, FFmepg, RecordMyDesktop, Byzanz and Kazam)."
 msgstr ""
 
-#: z_create_localized_help.py:56 z_create_localized_help.py:260
+#: z_create_localized_help.py:53 z_create_localized_help.py:257
 msgid "Highlights"
 msgstr ""
 
 #. TO TRANSLATORS: Do not translate the words "camera" and "recorder".
 #. MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:67
+#: z_create_localized_help.py:64
 msgid "Programs are stored inside an applet preference. They are grouped by devices. A device called **camera** that contains programs that take screenshots. And a device called **recorder** that contains programs that capture screencasts."
 msgstr ""
 
-#: z_create_localized_help.py:68
+#: z_create_localized_help.py:65
 msgid "Programs can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent programs, modifying the generated JSON file and importing the modified file again."
 msgstr ""
 
-#: z_create_localized_help.py:69
+#: z_create_localized_help.py:66
 msgid "Commands are exactly that, commands. They are composed of command line arguments , placeholders, and/or flags."
 msgstr ""
 
-#: z_create_localized_help.py:72
+#: z_create_localized_help.py:69
 msgid "Placeholders are strings specifically formatted with double curly braces (`{{PLACEHOLDER_NAME}}`) and can be placed in any part of a string. These strings are replaced with dynamically generated data (an applet preference, screen coordinates, etc.) when a command is executed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:74
+#: z_create_localized_help.py:71
 msgid "Flags are another type of specifically formatted strings surrounded by hashes (`#FLAG_NAME#`) and they always must be placed at the beginning of a string. Flags indicate that an action must be taken before a command is executed."
 msgstr ""
 
-#: z_create_localized_help.py:75
+#: z_create_localized_help.py:72
 msgid "The exported JSON file exemplifies almost all the options, flags and placeholders documented below."
 msgstr ""
 
-#: z_create_localized_help.py:76
+#: z_create_localized_help.py:73
 msgid "The command that will be executed can be previewed before actually executing it by simply right clicking a menu item."
 msgstr ""
 
-#: z_create_localized_help.py:82 z_create_localized_help.py:272
+#: z_create_localized_help.py:79 z_create_localized_help.py:269
 msgid "Warnings"
 msgstr ""
 
-#: z_create_localized_help.py:88
+#: z_create_localized_help.py:85
 msgid "All option names, flags, and placeholders are case sensitive. Command option names are lower cased and use dashes as word separators. Placeholders and flags are upper cased and use low dashes as word separators."
 msgstr ""
 
-#: z_create_localized_help.py:89 z_create_localized_help.py:277
+#: z_create_localized_help.py:86 z_create_localized_help.py:274
 msgid "An imported JSON file will overwrite an existent preference."
 msgstr ""
 
-#: z_create_localized_help.py:90 z_create_localized_help.py:278
+#: z_create_localized_help.py:87 z_create_localized_help.py:275
 msgid "Importing a malformed/invalid JSON file will cancel the import operation without modifying an existent preference."
 msgstr ""
 
-#: z_create_localized_help.py:91
+#: z_create_localized_help.py:88
 msgid "There isn't a mechanism to check if a command is available or not on the system the applet is installed. So, use common sense."
 msgstr ""
 
-#: z_create_localized_help.py:95 z_create_localized_help.py:283
+#: z_create_localized_help.py:92 z_create_localized_help.py:280
 msgid "Basic example"
 msgstr ""
 
-#: z_create_localized_help.py:137
+#: z_create_localized_help.py:134
 msgid "Program/Command name"
 msgstr ""
 
-#: z_create_localized_help.py:138
+#: z_create_localized_help.py:135
 msgid "Name of the program shown on the program selector menu"
 msgstr ""
 
-#: z_create_localized_help.py:139
+#: z_create_localized_help.py:136
 msgid "Argument to include sound in capture"
 msgstr ""
 
-#: z_create_localized_help.py:140
+#: z_create_localized_help.py:137
 msgid "Argument to not include sound in capture"
 msgstr ""
 
-#: z_create_localized_help.py:141
+#: z_create_localized_help.py:138
 msgid "Command to stop recording"
 msgstr ""
 
-#: z_create_localized_help.py:142
+#: z_create_localized_help.py:139
 msgid "This is a separator"
 msgstr ""
 
-#: z_create_localized_help.py:143
+#: z_create_localized_help.py:140
 msgid "Argument to include cursor in capture"
 msgstr ""
 
-#: z_create_localized_help.py:144
+#: z_create_localized_help.py:141
 msgid "Argument to not include cursor in capture"
 msgstr ""
 
 #. TO TRANSLATORS: Do not translate the word "APPEND_1".
-#: z_create_localized_help.py:146
+#: z_create_localized_help.py:143
 msgid "The content here will be used to replace the {{APPEND_1}} placeholder"
 msgstr ""
 
-#: z_create_localized_help.py:147
+#: z_create_localized_help.py:144
 msgid "Menu item label"
 msgstr ""
 
-#: z_create_localized_help.py:148 z_create_localized_help.py:183
+#: z_create_localized_help.py:145 z_create_localized_help.py:180
 msgid "Menu item label flags"
 msgstr ""
 
-#: z_create_localized_help.py:148
+#: z_create_localized_help.py:145
 #, python-format
 msgid "See %s."
 msgstr ""
 
-#: z_create_localized_help.py:149
+#: z_create_localized_help.py:146
 msgid "Command to execute when clicking this menu item"
 msgstr ""
 
-#: z_create_localized_help.py:152
+#: z_create_localized_help.py:149
 msgid "Program options"
 msgstr ""
 
-#: z_create_localized_help.py:154 z_create_localized_help.py:308
+#: z_create_localized_help.py:151 z_create_localized_help.py:305
 msgid "Option"
 msgstr ""
 
-#: z_create_localized_help.py:154 z_create_localized_help.py:201
+#: z_create_localized_help.py:151 z_create_localized_help.py:198
 msgid "Usage"
 msgstr ""
 
-#: z_create_localized_help.py:156 z_create_localized_help.py:158 z_create_localized_help.py:160
+#: z_create_localized_help.py:153 z_create_localized_help.py:155 z_create_localized_help.py:157
 msgid "Mandatory"
 msgstr ""
 
-#: z_create_localized_help.py:157
+#: z_create_localized_help.py:154
 msgid "This option will be used as the program name in the program selector sub-menu."
 msgstr ""
 
-#: z_create_localized_help.py:159
+#: z_create_localized_help.py:156
 msgid "This option contains all the data that will be used to create the menu items for a program."
 msgstr ""
 
-#: z_create_localized_help.py:161 z_create_localized_help.py:166 z_create_localized_help.py:174 z_create_localized_help.py:216 z_create_localized_help.py:228
+#: z_create_localized_help.py:158 z_create_localized_help.py:163 z_create_localized_help.py:171 z_create_localized_help.py:213 z_create_localized_help.py:225
 msgid "Recorder only"
 msgstr ""
 
-#: z_create_localized_help.py:161
+#: z_create_localized_help.py:158
 msgid "The command to stop recording a screencast."
 msgstr ""
 
-#: z_create_localized_help.py:162 z_create_localized_help.py:209
+#: z_create_localized_help.py:159 z_create_localized_help.py:206
 msgid "Camera only"
 msgstr ""
 
-#: z_create_localized_help.py:162 z_create_localized_help.py:166 z_create_localized_help.py:170 z_create_localized_help.py:174 z_create_localized_help.py:178
+#: z_create_localized_help.py:159 z_create_localized_help.py:163 z_create_localized_help.py:167 z_create_localized_help.py:171 z_create_localized_help.py:175
 msgid "Optional"
 msgstr ""
 
 #. TO TRANSLATORS: Do not translate the words "true" and "DELAY".
 #. MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:165
+#: z_create_localized_help.py:162
 msgid "This option is used in combination with the `{{DELAY}}` placeholder. If set to **true**, sets the visibility of the **Capture delay** option inside this applet menu."
 msgstr ""
 
 #. TO TRANSLATORS: Do not translate the word "true".
 #. MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:169
+#: z_create_localized_help.py:166
 msgid "This option, if set to **true**, sets the visibility of the **Frames per second** option inside this applet menu."
 msgstr ""
 
 #. TO TRANSLATORS: Do not translate the words "on", "off", and "CURSOR".
 #. MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:173
+#: z_create_localized_help.py:170
 msgid "This option is used in combination with the `{{CURSOR}}` placeholder. It must contain two keys named **on** and **off** which respectively must contain a comand line argument for enabling/disabling the display of the mouse cursor on the captured file."
 msgstr ""
 
 #. TO TRANSLATORS: Do not translate the words "on", "off", and "SOUND".
 #. MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:177
+#: z_create_localized_help.py:174
 msgid "This option is used in combination with the `{{SOUND}}` placeholder. It must contain two keys named **on** and **off** which respectively must contain a comand line argument for enabling/disabling the inclusion of sound on the captured file."
 msgstr ""
 
-#: z_create_localized_help.py:179
+#: z_create_localized_help.py:176
 msgid "These options are used in combination with the `{{APPEND_1}}` to `{{APPEND_10}}` placeholders. This is done to avoid repeating the same arguments on all menu items commands."
 msgstr ""
 
-#: z_create_localized_help.py:181
+#: z_create_localized_help.py:178
 msgid "Flags"
 msgstr ""
 
-#: z_create_localized_help.py:185 z_create_localized_help.py:192
+#: z_create_localized_help.py:182 z_create_localized_help.py:189
 msgid "Flag"
 msgstr ""
 
-#: z_create_localized_help.py:188
+#: z_create_localized_help.py:185
 msgid "The hash (#) character in front of a menu item label is a flag that inhibits the menu item from changing the state of the applet (the change of the applet icon from normal to recording)."
 msgstr ""
 
-#: z_create_localized_help.py:190
+#: z_create_localized_help.py:187
 msgid "Menu item command flags"
 msgstr ""
 
-#: z_create_localized_help.py:195 z_create_localized_help.py:197 z_create_localized_help.py:233
+#: z_create_localized_help.py:192 z_create_localized_help.py:194 z_create_localized_help.py:230
 msgid "Menu item command interactive placeholders"
 msgstr ""
 
-#: z_create_localized_help.py:195
+#: z_create_localized_help.py:192
 #, python-format
 msgid "This flag will allow the use of this applet area selector helper. See %s"
 msgstr ""
 
-#: z_create_localized_help.py:197
+#: z_create_localized_help.py:194
 #, python-format
 msgid "This flag will allow the use of this applet window selector helper. See %s"
 msgstr ""
 
-#: z_create_localized_help.py:199
+#: z_create_localized_help.py:196
 msgid "Menu item command placeholders"
 msgstr ""
 
-#: z_create_localized_help.py:201 z_create_localized_help.py:235
+#: z_create_localized_help.py:198 z_create_localized_help.py:232
 msgid "Placeholder"
 msgstr ""
 
-#: z_create_localized_help.py:206
+#: z_create_localized_help.py:203
 msgid "Placeholder for the program options `append-1` to `append-10`."
 msgstr ""
 
-#: z_create_localized_help.py:208
+#: z_create_localized_help.py:205
 msgid "The command line argument used to decide if the capture will display the cursor or not."
 msgstr ""
 
-#: z_create_localized_help.py:210
+#: z_create_localized_help.py:207
 msgid "Delay in seconds before taking a screenshot."
 msgstr ""
 
-#: z_create_localized_help.py:211
+#: z_create_localized_help.py:208
 msgid "The directory used as storage for the captures."
 msgstr ""
 
-#: z_create_localized_help.py:213
+#: z_create_localized_help.py:210
 msgid "The file extension that the generated capture will have. It has to be used in pairs (Example: `{{EXT}}png{{EXT}}`)."
 msgstr ""
 
-#: z_create_localized_help.py:215
+#: z_create_localized_help.py:212
 msgid "The file name (no extension included) that the generated capture will have."
 msgstr ""
 
-#: z_create_localized_help.py:217
+#: z_create_localized_help.py:214
 msgid "Frames per second (frame rate)."
 msgstr ""
 
-#: z_create_localized_help.py:219
+#: z_create_localized_help.py:216
 msgid "The directory used to store the screencast captures."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:222
+#: z_create_localized_help.py:219
 msgid "The screen dimensions with format `widthxheight`. Example: `1440x900`"
 msgstr ""
 
-#: z_create_localized_help.py:224
+#: z_create_localized_help.py:221
 msgid "The screen height."
 msgstr ""
 
-#: z_create_localized_help.py:225
+#: z_create_localized_help.py:222
 msgid "The screen width."
 msgstr ""
 
-#: z_create_localized_help.py:227
+#: z_create_localized_help.py:224
 msgid "The directory used to store the screenshot captures."
 msgstr ""
 
-#: z_create_localized_help.py:229
+#: z_create_localized_help.py:226
 msgid "The command line argument used to decide if the capture include sound or not."
 msgstr ""
 
-#: z_create_localized_help.py:237
+#: z_create_localized_help.py:234
 msgid "`x` screen coordinates."
 msgstr ""
 
-#: z_create_localized_help.py:238
+#: z_create_localized_help.py:235
 msgid "`y` screen coordinates."
 msgstr ""
 
-#: z_create_localized_help.py:239
+#: z_create_localized_help.py:236
 msgid "`x` and `y` screen coordinates separated by a comma."
 msgstr ""
 
-#: z_create_localized_help.py:241
+#: z_create_localized_help.py:238
 msgid "It could be either the width of a selected area or the width of a selected window."
 msgstr ""
 
-#: z_create_localized_help.py:243
+#: z_create_localized_help.py:240
 msgid "It could be either the height of a selected area or the height of a selected window."
 msgstr ""
 
-#: z_create_localized_help.py:245
+#: z_create_localized_help.py:242
 msgid "Same as `I_WIDTH`, but with `1` added to its value."
 msgstr ""
 
-#: z_create_localized_help.py:247
+#: z_create_localized_help.py:244
 msgid "Same as `I_HEIGHT`, but with `1` added to its value."
 msgstr ""
 
-#: z_create_localized_help.py:248
+#: z_create_localized_help.py:245
 msgid "The selected window ID."
 msgstr ""
 
-#: z_create_localized_help.py:250
+#: z_create_localized_help.py:247
 msgid "The 'x-window' property of the selected window."
 msgstr ""
 
-#: z_create_localized_help.py:251
+#: z_create_localized_help.py:248
 msgid "The selected window class name."
 msgstr ""
 
-#: z_create_localized_help.py:252
+#: z_create_localized_help.py:249
 msgid "The selected window class title."
 msgstr ""
 
-#: z_create_localized_help.py:254
+#: z_create_localized_help.py:251
 msgid "Cinnamon recorder profiles"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:257
+#: z_create_localized_help.py:254
 msgid "The built-in Cinnamon recorder uses the GStreamer general-purpose multimedia framework ([GStreamer documentation](https://gstreamer.freedesktop.org/documentation/index.html)). It generates a video file with the `webm` extension using the `vp8enc` encoder and the `webmmux` muxer. This applet exposes the use of the Cinnamon recorder through profiles."
 msgstr ""
 
-#: z_create_localized_help.py:265
+#: z_create_localized_help.py:262
 msgid "Profiles are stored inside an applet preference."
 msgstr ""
 
-#: z_create_localized_help.py:266
+#: z_create_localized_help.py:263
 msgid "Profiles can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent profiles, modifying the generated JSON file and importing the modified file again."
 msgstr ""
 
-#: z_create_localized_help.py:279
+#: z_create_localized_help.py:276
 msgid "Like everything coming from Gnome, GStreamer is an always-evolving-never-finished-barely-functional piece of software. With that in mind, when using the wrong combination of encoder/muxer, Cinnamon will miserably crash. So, experiment at your own risk."
 msgstr ""
 
-#: z_create_localized_help.py:285
+#: z_create_localized_help.py:282
 msgid "Below are the two Cinnamon recorder profiles shipped with this applet. The profile named default cannot be modified/deleted."
 msgstr ""
 
-#: z_create_localized_help.py:304
+#: z_create_localized_help.py:301
 msgid "Profile options"
 msgstr ""
 
-#: z_create_localized_help.py:306
+#: z_create_localized_help.py:303
 msgid "All profile options are mandatory."
 msgstr ""
 
-#: z_create_localized_help.py:310
+#: z_create_localized_help.py:307
 msgid "Name of the profile shown on the profile selector menu."
 msgstr ""
 
-#: z_create_localized_help.py:312
+#: z_create_localized_help.py:309
 msgid "Basic description of the profile that will be displayed as a tooltip."
 msgstr ""
 
-#: z_create_localized_help.py:313
+#: z_create_localized_help.py:310
 msgid "The file extension of the generated file."
 msgstr ""
 
-#: z_create_localized_help.py:314
+#: z_create_localized_help.py:311
 msgid "GStreamer pipeline."
 msgstr ""
 
-#: z_create_localized_help.py:316
+#: z_create_localized_help.py:313
 msgid "Keyboard shortcuts"
 msgstr ""
 
-#: z_create_localized_help.py:318
+#: z_create_localized_help.py:315
 msgid "Keyboard shortcuts are tied to specific capture types."
 msgstr ""
 
-#: z_create_localized_help.py:320
+#: z_create_localized_help.py:317
 msgid "Known issues"
 msgstr ""
 
-#: z_create_localized_help.py:323
+#: z_create_localized_help.py:320
 msgid "Cinnamon 3.0.x and its built-in screenshot mechanism"
 msgstr ""
 
-#: z_create_localized_help.py:326 applet.js:1980
+#: z_create_localized_help.py:323 applet.js:1980
 msgid "The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"
 msgstr ""
 
-#: z_create_localized_help.py:329 applet.js:1981
+#: z_create_localized_help.py:326 applet.js:1981
 msgid "Do not use it or Cinnamon will crash!"
 msgstr ""
 
-#: z_create_localized_help.py:332
+#: z_create_localized_help.py:329
 #, python-format
 msgid "It can only be fixed by building from source the cinnamon package for version 3.0.x with the following patch (%s). Or by simply updating to any other newer version of Cinnamon (3.2.x, 3.4.x, etc.)."
 msgstr ""
 
-#: z_create_localized_help.py:335
+#: z_create_localized_help.py:332
 msgid "To permanently dismiss the critical notification displayed when the applet is used under Cinnamon 3.0.x, enable the option found in this applet settings window called \"I read the disclaimer and I'm aware of the consequences\", under the \"Disclaimer\" section."
 msgstr ""
 

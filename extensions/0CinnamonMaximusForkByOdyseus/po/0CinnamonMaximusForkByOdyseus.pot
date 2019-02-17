@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMaximusForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,48 +64,48 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: z_create_localized_help.py:29
+#: z_create_localized_help.py:26
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:29
 msgid "This extension is a fork of the [Cinnamon Maximus](https://cinnamon-spices.linuxmint.com/extensions/view/29) extension by Fatih Mete. The main difference with the original is that I removed the blacklist feature in favor of a whitelist feature. I also added a couple of options for troubleshooting and completely removed the top border of undecorated maximized windows."
 msgstr ""
 
-#: z_create_localized_help.py:34
+#: z_create_localized_help.py:31
 msgid "Dependencies"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:33
 msgid "The **xprop** and **xwininfo** commands needs to be available on the system."
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:35
 msgid "Debian based distributions:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "These commands are provided by the **x11-utils** package. Linux Mint already has this package installed."
 msgstr ""
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "Archlinux based distributions:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "These commands are provided by the **xorg-xprop** and **xorg-xwininfo** packages."
 msgstr ""
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "Fedora based distributions:"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:43
 msgid "These commands are provided by the **xorg-x11-utils** package."
 msgstr ""
 

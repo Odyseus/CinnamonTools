@@ -259,7 +259,7 @@
 </thead>
 <tbody>
 <tr>
-<td><code>command</code> or <code>bash</code></td>
+<td><code>command</code>, <code>bash</code></td>
 <td>El comando a ejecutar</td>
 <td><strong><a href="#about-command-bash-attributes-es">(1)</a></strong> Ejecuta un comando usando una shell por defecto especificada en las opciones de una instancia de Argos para Cinnamon o especificada por el atributo <code>shell</code>.</td>
 </tr>
@@ -590,7 +590,7 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </thead>
 <tbody>
 <tr>
-<td><code>command</code> or <code>bash</code></td>
+<td><code>command</code>, <code>bash</code></td>
 <td>A command to execute</td>
 <td><strong><a href="#about-command-bash-attributes-en">(1)</a></strong> Runs a command using a default shell specified in the options of an instance of Argos for Cinnamon or specified by the <code>shell</code> attribute.</td>
 </tr>
@@ -726,6 +726,21 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Argos for Cinnamon changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sun, 17 Feb 2019 02:12:37 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8f2938b">8f2938b</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Fixed commands execution when terminal is set to false.
+- Added the possibility to insert separators inside sub-menus.
+- Redesigned applet tooltip for better readability by using a grid.
+- Added debug mode for troubleshooting.
+- Removing some try{}catch{} blocks. When debug mode is enabled all methods are called with a try{}catch{} block.
+- Implemented the use of GLib.get_monotonic_time() to measure execution times more precisely.
+- Improved lines parsing by using default parameters. This avoids constantly checking for the existence of an option.
+- Cleaned call to log function that was left over.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Mon, 21 Jan 2019 21:48:00 -0300</li>

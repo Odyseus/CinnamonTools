@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowDemandsAttentionBehavior VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,11 +64,11 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: z_create_localized_help.py:30
+#: z_create_localized_help.py:26
 msgid "Description"
 msgstr ""
 
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:28
 msgid "Extension based on the Gnome Shell extensions [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) and [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut). This extension adds two different behaviors for windows that demand attention. It force them to be activated or a keyboard shortcut can be assigned to activate windows on demand."
 msgstr ""
 

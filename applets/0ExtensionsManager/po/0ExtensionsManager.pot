@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ExtensionsManager VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,35 +89,35 @@ msgstr ""
 msgid "Launch the debug process from a virtual terminal."
 msgstr ""
 
-#: z_create_localized_help.py:31 utils.js:327 utils.js:335
+#: z_create_localized_help.py:28 utils.js:327 utils.js:335
 msgid "Description"
 msgstr ""
 
-#: z_create_localized_help.py:33
+#: z_create_localized_help.py:30
 msgid "This applet creates a menu with a list of all installed extensions in Cinnamon. From each menu item different tasks can be performed:"
 msgstr ""
 
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:32
 msgid "Enable/Disable the extension"
 msgstr ""
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:33
 msgid "Open the extension's settings page"
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Open the extension's Spices page"
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:35
 msgid "Open the extension folder"
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Open its extension.js file"
 msgstr ""
 
-#: z_create_localized_help.py:44 z_create_localized_help.py:48
+#: z_create_localized_help.py:41 z_create_localized_help.py:45
 msgid "Settings window"
 msgstr ""
 

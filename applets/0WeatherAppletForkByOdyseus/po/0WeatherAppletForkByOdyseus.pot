@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-02-13 00:00-0300\n"
+"POT-Creation-Date: 2019-02-17 02:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. menu_popup.append(self.create_menu_item(_("Export settings to a file"),
 #. self._import_export_settings, True))
 #. menu_popup.append(Gtk.SeparatorMenuItem())
-#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:257 applet.js:1326
+#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:257 applet.js:1331
 msgid "Help"
 msgstr ""
 
@@ -72,15 +72,15 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: locationsManager.py:32 z_create_localized_help.py:125 applet.js:944
+#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:949
 msgid "Location name"
 msgstr ""
 
-#: locationsManager.py:37 z_create_localized_help.py:129
+#: locationsManager.py:37 z_create_localized_help.py:126
 msgid "Location ID"
 msgstr ""
 
-#: locationsManager.py:43 z_create_localized_help.py:136
+#: locationsManager.py:43 z_create_localized_help.py:133
 msgid "Language"
 msgstr ""
 
@@ -100,7 +100,7 @@ msgstr ""
 msgid "rows/cols"
 msgstr ""
 
-#: locationsManager.py:129 z_create_localized_help.py:70 z_create_localized_help.py:148
+#: locationsManager.py:129 z_create_localized_help.py:67 z_create_localized_help.py:145
 msgid "Provider"
 msgstr ""
 
@@ -112,194 +112,194 @@ msgstr ""
 msgid "Credentials"
 msgstr ""
 
-#: locationsManager.py:162 z_create_localized_help.py:74 constants.js:219
+#: locationsManager.py:162 z_create_localized_help.py:71 constants.js:221
 msgid "Dark Sky"
 msgstr ""
 
-#: locationsManager.py:174 z_create_localized_help.py:79 constants.js:221
+#: locationsManager.py:174 z_create_localized_help.py:76 constants.js:223
 msgid "OpenWeatherMap"
 msgstr ""
 
-#: locationsManager.py:186 z_create_localized_help.py:84 constants.js:220
+#: locationsManager.py:186 z_create_localized_help.py:81 constants.js:222
 msgid "Yahoo! Weather"
 msgstr ""
 
-#: z_create_localized_help.py:32
+#: z_create_localized_help.py:29
 msgid "Description"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:35
+#: z_create_localized_help.py:32
 msgid "This applet is a fork of [Weather](https://cinnamon-spices.linuxmint.com/applets/view/17) applet by [mockturtl](https://github.com/mockturtl)."
 msgstr ""
 
-#: z_create_localized_help.py:37
+#: z_create_localized_help.py:34
 msgid "Differences with the original applet"
 msgstr ""
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:36
 msgid "Added support for multiple locations."
 msgstr ""
 
-#: z_create_localized_help.py:40
+#: z_create_localized_help.py:37
 msgid "Added support for multiple weather providers."
 msgstr ""
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:38
 msgid "This applet caches the weather data used. Which means that weather providers will be contacted only when needed, preventing unnecessary API quota consumption."
 msgstr ""
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:39
 msgid "The style sheet of this fork is used to accommodate the layout of its elements and it doesn't modify colors."
 msgstr ""
 
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:40
 msgid "Added detailed tooltip to the applet about the current weather data location."
 msgstr ""
 
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:41
 msgid "Menu layout redesigned."
 msgstr ""
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:42
 msgid "Forecasts can be displayed in one or two rows (or columns if the menu layout is set to vertical)."
 msgstr ""
 
-#: z_create_localized_help.py:46
+#: z_create_localized_help.py:43
 msgid "Forecasts can display the name of the day or the full date."
 msgstr ""
 
-#: z_create_localized_help.py:47
+#: z_create_localized_help.py:44
 msgid "The date in which the weather data was published is always displayed in the menu."
 msgstr ""
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:45
 msgid "More customization options (current weather icon size, forecasts icon size, etc.)."
 msgstr ""
 
-#: z_create_localized_help.py:58 applet.js:140
+#: z_create_localized_help.py:55 applet.js:140
 msgid "This applet requires valid credentials from any of the weather provider services for it to work."
 msgstr ""
 
-#: z_create_localized_help.py:59
+#: z_create_localized_help.py:56
 msgid "The credentials cannot be used until they have been activated by the weather providers."
 msgstr ""
 
-#: z_create_localized_help.py:64
+#: z_create_localized_help.py:61
 msgid "Getting API credentials"
 msgstr ""
 
-#: z_create_localized_help.py:66
+#: z_create_localized_help.py:63
 msgid "Follow the instructions made available by the providers."
 msgstr ""
 
-#: z_create_localized_help.py:68
+#: z_create_localized_help.py:65
 msgid "Weather providers"
 msgstr ""
 
-#: z_create_localized_help.py:71
+#: z_create_localized_help.py:68
 msgid "API credentials instructions"
 msgstr ""
 
-#: z_create_localized_help.py:71
+#: z_create_localized_help.py:68
 msgid "Location finder"
 msgstr ""
 
-#: z_create_localized_help.py:75 z_create_localized_help.py:80 z_create_localized_help.py:85
+#: z_create_localized_help.py:72 z_create_localized_help.py:77 z_create_localized_help.py:82
 msgid "Get credentials"
 msgstr ""
 
-#: z_create_localized_help.py:76 z_create_localized_help.py:81 z_create_localized_help.py:86
+#: z_create_localized_help.py:73 z_create_localized_help.py:78 z_create_localized_help.py:83
 msgid "Find location"
 msgstr ""
 
-#: z_create_localized_help.py:89 z_create_localized_help.py:93
+#: z_create_localized_help.py:86 z_create_localized_help.py:90
 msgid "Menu layout"
 msgstr ""
 
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:93
 msgid "Current weather condition for the currently selected location."
 msgstr ""
 
-#: z_create_localized_help.py:97
+#: z_create_localized_help.py:94
 msgid "Forecasts for the currently selected location."
 msgstr ""
 
-#: z_create_localized_help.py:99
+#: z_create_localized_help.py:96
 msgid "The time in which the currently displayed data was published by the weather provider. Clicking it will attempt to retrieve updated weather data."
 msgstr ""
 
-#: z_create_localized_help.py:100
+#: z_create_localized_help.py:97
 msgid "Button to open the locations selector menu."
 msgstr ""
 
-#: z_create_localized_help.py:102
+#: z_create_localized_help.py:99
 msgid "Weather provider attribution. When clicked, it opens the weather provider website."
 msgstr ""
 
-#: z_create_localized_help.py:104 z_create_localized_help.py:121
+#: z_create_localized_help.py:101 z_create_localized_help.py:118
 msgid "Locations manager"
 msgstr ""
 
-#: z_create_localized_help.py:107
+#: z_create_localized_help.py:104
 msgid "Highlights"
 msgstr ""
 
-#: z_create_localized_help.py:110
+#: z_create_localized_help.py:107
 msgid "The locations manager can be accessed from this applet context menu."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:112
+#: z_create_localized_help.py:109
 msgid "Locations with the exact same *Location ID* and *Provider* are considered duplicated and will be automatically removed when applying changes."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:114
+#: z_create_localized_help.py:111
 msgid "The *Apply changes* button must be pressed for the applet to reflect the changes made in the locations manager."
 msgstr ""
 
-#: z_create_localized_help.py:126
+#: z_create_localized_help.py:123
 msgid "This is an informative field and it isn't used to retrieve weather data. It is used to identify the displayed data in the menu and to generate the items inside the locations selector menu."
 msgstr ""
 
-#: z_create_localized_help.py:130
+#: z_create_localized_help.py:127
 msgid "A city/region ID used by the weather service providers to identify a location."
 msgstr ""
 
-#: z_create_localized_help.py:132
+#: z_create_localized_help.py:129
 msgid "Dark Sky uses only coordinates."
 msgstr ""
 
-#: z_create_localized_help.py:133
+#: z_create_localized_help.py:130
 msgid "Open Weather Map uses city IDs (the number at the end of a location URL) and coordinates."
 msgstr ""
 
-#: z_create_localized_help.py:134
+#: z_create_localized_help.py:131
 msgid "Yahoo! Weather uses WOEIDs and coordinates."
 msgstr ""
 
-#: z_create_localized_help.py:137
+#: z_create_localized_help.py:134
 msgid "Weather conditions localization. Languages are only used by DarkSky and OpenWeatherMap providers and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available)."
 msgstr ""
 
-#: z_create_localized_help.py:140
+#: z_create_localized_help.py:137
 msgid "Forecast days"
 msgstr ""
 
-#: z_create_localized_help.py:141
+#: z_create_localized_help.py:138
 msgid "The amount of forecasts to display in the menu."
 msgstr ""
 
-#: z_create_localized_help.py:144
+#: z_create_localized_help.py:141
 msgid "Forecast rows/columns"
 msgstr ""
 
-#: z_create_localized_help.py:145
+#: z_create_localized_help.py:142
 msgid "The amount of rows/cols to display the forecast days in."
 msgstr ""
 
-#: z_create_localized_help.py:149
+#: z_create_localized_help.py:146
 msgid "Weather data provider. All weather providers require proper credentials to function."
 msgstr ""
 
@@ -320,88 +320,88 @@ msgstr ""
 msgid "Copy current location data"
 msgstr ""
 
-#: applet.js:336
+#: applet.js:341
 msgid "Click to copy error to clipboard."
 msgstr ""
 
-#: applet.js:337
+#: applet.js:342
 msgid "Look at the logs for details."
 msgstr ""
 
-#: applet.js:379
+#: applet.js:384
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:392
+#: applet.js:397
 msgid "Click to refresh weather data"
 msgstr ""
 
-#: applet.js:621
+#: applet.js:626
 msgid "No current location set!"
 msgstr ""
 
-#: applet.js:671
+#: applet.js:676
 msgid "Error initializing weather provider!"
 msgstr ""
 
-#: applet.js:734
+#: applet.js:739
 msgid "No weather data available!"
 msgstr ""
 
-#: applet.js:842
+#: applet.js:847
 #, javascript-format
 msgid "Powered by %s"
 msgstr ""
 
-#: applet.js:998
+#: applet.js:1003
 msgid "Current location"
 msgstr ""
 
-#: applet.js:1011
+#: applet.js:1016
 msgid "Open location weather details page"
 msgstr ""
 
-#: applet.js:1058
+#: applet.js:1063
 msgid "Temperature"
 msgstr ""
 
-#: applet.js:1064
+#: applet.js:1069
 msgid "Humidity"
 msgstr ""
 
-#: applet.js:1070
+#: applet.js:1075
 msgid "Pressure"
 msgstr ""
 
-#: applet.js:1076
+#: applet.js:1081
 msgid "Wind"
 msgstr ""
 
-#: applet.js:1082
+#: applet.js:1087
 msgid "Wind chill"
 msgstr ""
 
-#: applet.js:1088
+#: applet.js:1093
 msgid "Visibility"
 msgstr ""
 
-#: applet.js:1094
+#: applet.js:1099
 msgid "Sunrise"
 msgstr ""
 
-#: applet.js:1100
+#: applet.js:1105
 msgid "Sunset"
 msgstr ""
 
-#: applet.js:1240
+#: applet.js:1245
 msgid "Not available"
 msgstr ""
 
-#: applet.js:1651
+#: applet.js:1637
 msgid "Debugging toggled"
 msgstr ""
 
-#: applet.js:1652
+#: applet.js:1638
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr ""
 
@@ -757,52 +757,112 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: constants.js:190
-msgid "Missing credentials for weather provider!"
+#: constants.js:173
+msgid "Unable to resolve destination host name"
 msgstr ""
 
-#: constants.js:191
-msgid "Wrong location ID format!"
+#: constants.js:174
+msgid "Temporary redirect"
+msgstr ""
+
+#: constants.js:175
+msgid "Unable to resolve proxy host name"
+msgstr ""
+
+#: constants.js:176
+msgid "Bad request"
+msgstr ""
+
+#: constants.js:177
+msgid "Unauthorized"
+msgstr ""
+
+#: constants.js:178
+msgid "Payment required"
+msgstr ""
+
+#: constants.js:179
+msgid "Not found"
+msgstr ""
+
+#: constants.js:180
+msgid "Proxy authentication required"
+msgstr ""
+
+#: constants.js:181
+msgid "Request timeout"
+msgstr ""
+
+#: constants.js:182
+msgid "Unable to connect to remote host"
+msgstr ""
+
+#: constants.js:183
+msgid "Internal server error"
+msgstr ""
+
+#: constants.js:184
+msgid "Service unavailable"
+msgstr ""
+
+#: constants.js:185
+msgid "Unable to connect to proxy"
+msgstr ""
+
+#: constants.js:186
+msgid "SSL/TLS negotiation failed"
+msgstr ""
+
+#: constants.js:187
+msgid "A network error occurred, or the other end closed the connection unexpectedly"
 msgstr ""
 
 #: constants.js:192
-msgid "Selected language not supported by weather provider!"
+msgid "Missing credentials for weather provider!"
 msgstr ""
 
 #: constants.js:193
+msgid "Wrong location ID format!"
+msgstr ""
+
+#: constants.js:194
+msgid "Selected language not supported by weather provider!"
+msgstr ""
+
+#: constants.js:195
 #, javascript-format
 msgid "Error getting data! Status code: %s"
 msgstr ""
 
-#: constants.js:194
+#: constants.js:196
 msgid "Error parsing weather data."
 msgstr ""
 
-#: constants.js:199
+#: constants.js:201
 msgid "Sunday"
 msgstr ""
 
-#: constants.js:200
+#: constants.js:202
 msgid "Monday"
 msgstr ""
 
-#: constants.js:201
+#: constants.js:203
 msgid "Tuesday"
 msgstr ""
 
-#: constants.js:202
+#: constants.js:204
 msgid "Wednesday"
 msgstr ""
 
-#: constants.js:203
+#: constants.js:205
 msgid "Thursday"
 msgstr ""
 
-#: constants.js:204
+#: constants.js:206
 msgid "Friday"
 msgstr ""
 
-#: constants.js:205
+#: constants.js:207
 msgid "Saturday"
 msgstr ""
 
