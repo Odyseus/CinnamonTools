@@ -312,13 +312,14 @@ function ArgosLineView() {
 }
 
 ArgosLineView.prototype = {
-    _init: function(aApplet, aLine) {
+    _init: function(aApplet, aLine = null, aMenuItem = null) {
         this._applet = aApplet;
+        this._menuItem = aMenuItem;
 
         this.actor = new St.BoxLayout();
         this.actor._delegate = this;
 
-        if (typeof aLine !== "undefined") {
+        if (aLine !== null) {
             this.setLine(aLine);
         }
     },
@@ -328,11 +329,15 @@ ArgosLineView.prototype = {
 
         this.actor.remove_all_children();
 
-        if (aLine.iconName) {
+        if (this._menuItem !== null && aLine.tooltip) {
+            this._menuItem.tooltip.set_text(aLine.tooltip);
+        }
+
+        if (aLine.iconname) {
             let icon = null;
-            let iconName = aLine.iconName;
-            let iconSize = aLine.iconSize ?
-                aLine.iconSize :
+            let iconName = aLine.iconname;
+            let iconSize = aLine.iconsize ?
+                aLine.iconsize :
                 this._applet.pref_default_icon_size;
 
             // If aLine.iconName is a path to an icon.
@@ -357,7 +362,7 @@ ArgosLineView.prototype = {
                     style_class: "popup-menu-icon",
                     icon_size: iconSize,
                     icon_name: iconName,
-                    icon_type: (aLine.iconIsSymbolic ?
+                    icon_type: (aLine.iconissymbolic ?
                         St.IconType.SYMBOLIC :
                         St.IconType.FULLCOLOR)
                 });
@@ -368,11 +373,11 @@ ArgosLineView.prototype = {
             }
         }
 
-        if (aLine.image || aLine.templateImage) {
+        if (aLine.image || aLine.templateimage) {
             let image = aLine.image ?
                 aLine.image :
-                aLine.templateImage ?
-                aLine.templateImage :
+                aLine.templateimage ?
+                aLine.templateimage :
                 null;
 
             try {
@@ -390,8 +395,8 @@ ArgosLineView.prototype = {
 
                 let aspectRatio = pixbuf.width / pixbuf.height;
 
-                let width = parseInt(aLine.imageWidth, 10);
-                let height = parseInt(aLine.imageHeight, 10);
+                let width = parseInt(aLine.imagewidth, 10);
+                let height = parseInt(aLine.imageheight, 10);
 
                 if (isNaN(width) && isNaN(height)) {
                     width = pixbuf.width;
@@ -457,7 +462,9 @@ function AltSwitcher() {
 }
 
 AltSwitcher.prototype = {
-    _init: function(aStandard, aAlternate) {
+    _init: function(aMenuItem, aStandard, aAlternate) {
+        this._menuItem = aMenuItem;
+
         this._standard = aStandard;
         this._standard.connect("notify::visible", () => this._sync());
 
@@ -517,6 +524,10 @@ AltSwitcher.prototype = {
             // The actors might respond to hover, so
             // sync the pointer to make sure they update.
             global.sync_pointer();
+        }
+
+        if (childToShow !== null) {
+            this._menuItem.tooltip.set_text(childToShow._delegate.line.tooltip);
         }
 
         this.actor.visible = (childToShow !== null);
@@ -588,29 +599,23 @@ ArgosMenuItem.prototype = {
         });
 
         this._applet = aApplet;
+        this.tooltip = new CustomTooltip(this.actor, "");
 
         let altSwitcher = null;
 
-        let lineView = new ArgosLineView(aApplet, aLine);
+        let lineView = new ArgosLineView(aApplet, aLine, this);
         lineView.actor.set_style("spacing: " + aApplet.pref_menu_spacing + "em;");
-
-        if (aLine.tooltip) {
-            this.tooltip = new CustomTooltip(
-                this.actor,
-                aLine.tooltip
-            );
-        }
 
         if (aAlternateLine === null) {
             this.addActor(lineView.actor);
         } else {
-            let alternateLineView = new ArgosLineView(aApplet, aAlternateLine);
+            let alternateLineView = new ArgosLineView(aApplet, aAlternateLine, this);
             alternateLineView.actor.set_style("spacing: " + aApplet.pref_menu_spacing + "em;");
             // The following class and pseudo class are set so the AltSwitcher is styled somewhat
             // the same as the Cinnamon's default.
             alternateLineView.actor.add_style_class_name("popup-alternating-menu-item");
             alternateLineView.actor.add_style_pseudo_class("alternate");
-            altSwitcher = new AltSwitcher(lineView.actor, alternateLineView.actor);
+            altSwitcher = new AltSwitcher(this, lineView.actor, alternateLineView.actor);
             lineView.actor.visible = true;
             alternateLineView.actor.visible = true;
             this.addActor(altSwitcher.actor);
@@ -643,8 +648,8 @@ ArgosMenuItem.prototype = {
                         aApplet.pref_shell ?
                         aApplet.pref_shell :
                         "/bin/bash";
-                    let shellArg = activeLine.shellArgument ?
-                        activeLine.shellArgument :
+                    let shellArg = activeLine.shellargument ?
+                        activeLine.shellargument :
                         aApplet.pref_shell_argument ?
                         aApplet.pref_shell_argument :
                         "-c";
@@ -849,9 +854,14 @@ function parseAttributes(aAttrString) {
             let assignmentIndex = a[i].indexOf("=");
 
             if (assignmentIndex >= 0) {
-                let key = a[i].substring(0, assignmentIndex).trim();
+                let key = a[i].substring(0, assignmentIndex).trim().toLowerCase();
                 let value = a[i].substring(assignmentIndex + 1).trim();
 
+                /* NOTE: Can't check if attribute exists in DefaultAttributes (to avoid
+                 * setting attributes that will not be used) due to the existence
+                 * of paramN feature.
+                 * Adding complex conditions checking will slow down lines parsing.
+                 */
                 if (key.length > 0 && value.length > 0) {
                     attrs[key] = BooleanAttrs.has(key) ? getBoolean(value) : value;
                 }
@@ -956,7 +966,7 @@ function parseLine(aLineString) {
         line.markup = line.markup.trim();
     }
 
-    if (!line.useMarkup) {
+    if (!line.usemarkup) {
         line.markup = GLib.markup_escape_text(line.markup, -1);
         // Restore escaped ESC characters (needed for ANSI sequences)
         line.markup = line.markup.replace("&#x1b;", "\x1b");

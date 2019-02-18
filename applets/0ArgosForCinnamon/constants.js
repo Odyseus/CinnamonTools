@@ -42,9 +42,9 @@ var BooleanAttrs = new Set([
     "alternate",
     "emojize",
     "ansi",
-    "useMarkup",
+    "usemarkup",
     "unescape",
-    "iconIsSymbolic",
+    "iconissymbolic",
 ]);
 
 var TruthyVals = new Set([
@@ -53,15 +53,17 @@ var TruthyVals = new Set([
 ]);
 
 var DefaultAttributes = Object.freeze({
+    // Runtime defined attributes.
     "hasAction": false,
     "isSeparator": false,
     "markup": "",
     "text": "",
-
+    "menuLevel": 0,
+    // User defined attributes.
     "command": "",
     "bash": "",
     "shell": "",
-    "shellArgument": "",
+    "shellargument": "",
     "terminal": false,
     "href": "",
     "eval": "",
@@ -69,22 +71,22 @@ var DefaultAttributes = Object.freeze({
     "color": "",
     "font": "",
     "size": "",
-    "iconName": "",
+    "iconname": "",
     "image": "",
-    "templateImage": "",
-    "imageWidth": "",
-    "imageHeight": "",
+    "templateimage": "",
+    "imagewidth": "",
+    "imageheight": "",
     "length": "",
     "trim": true,
     "dropdown": true,
     "alternate": false,
     "emojize": true,
     "ansi": true,
-    "useMarkup": true,
+    "usemarkup": true,
     "unescape": true,
     "tooltip": "",
-    "iconSize": "",
-    "iconIsSymbolic": false,
+    "iconsize": "",
+    "iconissymbolic": false,
 });
 
 /* exported AnsiColors,
