@@ -27,12 +27,8 @@ import os
 import time
 
 from datetime import datetime
-from shutil import copy2
-from shutil import copytree
-from shutil import rmtree
 
 from . import app_utils
-from .python_utils import file_utils
 from .python_utils import polib
 from .python_utils.ansi_colors import Ansi
 
@@ -40,7 +36,7 @@ repo_folder = os.path.normpath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), *([".."] * 2)))
 
 
-_bootstrap_version = "4.1.3"
+_bootstrap_version = "4.3.1"
 
 HTML_DOC = """<!DOCTYPE html>
 <html>
@@ -81,7 +77,7 @@ HTML_DOC = """<!DOCTYPE html>
             <form class="form-inline">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
-                        <span class="input-group-text text-bold text-font-size-xx-large" for="localization-switch">⊛</span>
+                        <span class="input-group-text" for="localization-switch">🌐</span>
                     </div>
                     <select class="custom-select custom-select-sm text-bold" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
 {options}
@@ -161,6 +157,7 @@ OPTION = """<!-- {endonym} --><option {selected}data-title="{title}" data-xlet-h
 README_DOC = """{readme_compatibility}
 {readme_content}
 """
+
 
 class XletMetadata():
     """Xlet metadata.
