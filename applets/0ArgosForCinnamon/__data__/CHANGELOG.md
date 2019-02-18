@@ -4,6 +4,29 @@
 
 ***
 
+- **Date:** Mon, 18 Feb 2019 01:28:04 -0300
+- **Commit:** [491c8b3](https://gitlab.com/Odyseus/CinnamonTools/commit/491c8b3)
+- **Author:** Odyseus
+
+```
+- Made button lines behavior match that of the described by the documentation (*...all button lines get a dropdown menu item...*). In practice, this applet had the same behavior as the extension is based on; button lines would get a dropdown menu only if there were more than one button line. Argos for Cinnamon now will always create a dropdown item for each button line (respecting the `dropdown` attribute, of course).
+
+```
+
+***
+
+- **Date:** Mon, 18 Feb 2019 00:20:47 -0300
+- **Commit:** [a581b5f](https://gitlab.com/Odyseus/CinnamonTools/commit/a581b5f)
+- **Author:** Odyseus
+
+```
+- Better handling of the `tooltip` attribute. Now a standard item and an alternate item can each have their own tooltips.
+- Made user defined attributes parsing case insensitive. This makes line definitions less strict.
+
+```
+
+***
+
 - **Date:** Sun, 17 Feb 2019 02:12:37 -0300
 - **Commit:** [8f2938b](https://gitlab.com/Odyseus/CinnamonTools/commit/8f2938b)
 - **Author:** Odyseus

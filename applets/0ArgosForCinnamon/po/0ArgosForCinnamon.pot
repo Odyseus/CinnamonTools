@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon VERSION\n"
-"POT-Creation-Date: 2019-02-17 02:54-0300\n"
+"POT-Creation-Date: 2019-02-18 02:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:732 utils.js:1221
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:732 utils.js:1231
 msgid "Help"
 msgstr ""
 
@@ -671,7 +671,7 @@ msgid "Script file is already executable."
 msgstr ""
 
 #. Just in case.
-#: applet.js:736 utils.js:1222
+#: applet.js:736 utils.js:1232
 msgid "Open this applet help file."
 msgstr ""
 
@@ -936,43 +936,43 @@ msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to load image from Base64 representation: ErrorMessage"
-#: utils.js:413
+#: utils.js:418
 #, javascript-format
 msgid "Unable to load image from Base64 representation: %s"
 msgstr ""
 
-#: utils.js:1218
+#: utils.js:1228
 msgid "Check this applet help file for instructions."
 msgstr ""
 
-#: utils.js:1466
+#: utils.js:1476
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr ""
 
-#: utils.js:1467
+#: utils.js:1477
 msgid "Please check your installation."
 msgstr ""
 
-#: utils.js:1554
+#: utils.js:1564
 msgid "Script file name"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval->description
-#: utils.js:1559
+#: utils.js:1569
 msgid "Execution interval"
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval->description
-#: utils.js:1564
+#: utils.js:1574
 msgid "Rotation interval"
 msgstr ""
 
-#: utils.js:1569
+#: utils.js:1579
 msgid "Script execution time"
 msgstr ""
 
-#: utils.js:1574
+#: utils.js:1584
 msgid "Output process time"
 msgstr ""
 
