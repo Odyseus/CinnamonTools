@@ -289,7 +289,6 @@ StScrollView StScrollBar {
 
 .popup-alternating-menu-item:alternate {
   font-weight: bold;
-  color: #464646;
 }
 
 .popup-slider-menu-item,
