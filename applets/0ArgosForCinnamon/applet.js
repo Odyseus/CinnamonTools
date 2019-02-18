@@ -327,13 +327,13 @@ ArgosForCinnamonApplet.prototype = {
                     return true;
                 });
             }
+        }
 
-            let j = 0,
-                jLen = appletLines.length;
-            for (; j < jLen; j++) {
-                if (appletLines[j].dropdown) {
-                    this.menu.addMenuItem(new $.ArgosMenuItem(this, appletLines[j]));
-                }
+        let j = 0,
+            jLen = appletLines.length;
+        for (; j < jLen; j++) {
+            if (appletLines[j].dropdown) {
+                this.menu.addMenuItem(new $.ArgosMenuItem(this, appletLines[j]));
             }
         }
 
