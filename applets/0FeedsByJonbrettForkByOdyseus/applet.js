@@ -54,7 +54,6 @@ FeedsReaderForkByOdyseus.prototype = {
         this._initializeSettings(() => {
             this.logger = new $.Logger("FeedsReader", this.pref_enable_verbose_logging);
             this._expandAppletContextMenu();
-            Gtk.IconTheme.get_default().append_search_path(this.metadata.path + "/icons/");
         }, () => {
             this.open_menu = null;
             this.feed_queue = [];

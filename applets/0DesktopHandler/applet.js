@@ -57,7 +57,7 @@ DesktopHandlerApplet.prototype = {
         this.instance_id = aInstance_id;
 
         this._initializeSettings(() => {
-            Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
+            //
         }, () => {
             this.cwm_settings = new Gio.Settings({
                 schema: "org.cinnamon.desktop.wm.preferences"

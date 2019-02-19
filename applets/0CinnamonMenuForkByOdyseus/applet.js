@@ -58,7 +58,6 @@ CinnamonMenuForkByOdyseus.prototype = {
         this._initializeSettings(() => {
             this.set_applet_tooltip(_("Menu"));
             this._expandAppletContextMenu();
-            Gtk.IconTheme.get_default().append_search_path(this.metadata.path + "/icons/");
         }, () => {
             this._updateGlobalPreferences();
             this.appsys = Cinnamon.AppSystem.get_default();

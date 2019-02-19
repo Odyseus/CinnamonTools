@@ -15,7 +15,6 @@ const {
     gi: {
         Gio,
         GLib,
-        Gtk,
         Pango,
         St
     },
@@ -53,7 +52,6 @@ ExtensionsManagerApplet.prototype = {
         this._initializeSettings(() => {
             this.set_applet_tooltip(_(aMetadata.name));
             this._expandAppletContextMenu();
-            Gtk.IconTheme.get_default().append_search_path(this.metadata.path + "/icons/");
         }, () => {
             this.menuManager = new PopupMenu.PopupMenuManager(this);
             this.spices_data = null;

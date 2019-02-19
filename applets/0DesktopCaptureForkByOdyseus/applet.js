@@ -18,7 +18,6 @@ const {
         Clutter,
         Gio,
         GLib,
-        Gtk,
         Meta,
         St
     },
@@ -57,7 +56,6 @@ DesktopCapture.prototype = {
 
         this._initializeSettings(() => {
             this._expandAppletContextMenu();
-            Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
         }, () => {
             this.logger = new $.Logger("DesktopCapture", this.pref_enable_verbose_logging);
 

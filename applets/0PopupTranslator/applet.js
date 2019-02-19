@@ -17,7 +17,6 @@ const {
         Clutter,
         Gio,
         GLib,
-        Gtk,
         St
     },
     mainloop: Mainloop,
@@ -56,7 +55,6 @@ PopupTranslatorApplet.prototype = {
 
         this._initializeSettings(() => {
             this._expandAppletContextMenu();
-            Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
         }, () => {
             this.menuManager = new PopupMenu.PopupMenuManager(this);
             this.forceTranslation = false;

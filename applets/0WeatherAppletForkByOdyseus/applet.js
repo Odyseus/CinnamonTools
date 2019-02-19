@@ -92,7 +92,6 @@ WeatherAppletForkByOdyseusApplet.prototype = {
 
         this._initializeSettings(() => {
             this._expandAppletContextMenu();
-            Gtk.IconTheme.get_default().append_search_path(this.metadata.path + "/icons/");
             this._initSoupSession();
         }, () => {
             this.prototypeDebuggersAttached = false;

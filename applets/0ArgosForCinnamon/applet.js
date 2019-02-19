@@ -61,7 +61,6 @@ ArgosForCinnamonApplet.prototype = {
 
         this._initializeSettings(() => {
             this._expandAppletContextMenu();
-            Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
         }, () => {
             this._lineView = new $.ArgosLineView(this);
             this.actor.add_actor(this._lineView.actor);

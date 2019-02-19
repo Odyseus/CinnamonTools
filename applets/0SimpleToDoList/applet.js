@@ -14,7 +14,6 @@ const {
         Clutter,
         Gio,
         GLib,
-        Gtk,
         St
     },
     mainloop: Mainloop,
@@ -53,7 +52,6 @@ SimpleToDoListApplet.prototype = {
 
         this._initializeSettings(() => {
             this.logger = new $.Logger("SimpleToDoList", this.pref_enable_verbose_logging);
-            Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
             this._expandAppletContextMenu();
         }, () => {
             this.mainBox = null;
