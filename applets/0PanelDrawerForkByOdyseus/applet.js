@@ -323,6 +323,10 @@ PanelDrawerForkByOdyseusApplet.prototype = {
         if (!this.h) {
             this.doAction(true);
         }
+
+        if (this.settings) {
+            this.settings.finalize();
+        }
     },
 
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
