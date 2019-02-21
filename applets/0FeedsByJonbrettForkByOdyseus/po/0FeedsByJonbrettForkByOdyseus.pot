@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-02-18 02:26-0300\n"
+"POT-Creation-Date: 2019-02-21 10:43-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:302 python/manage_feeds.py:213
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:301 python/manage_feeds.py:213
 msgid "Help"
 msgstr ""
 
@@ -110,35 +110,35 @@ msgstr ""
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr ""
 
-#: applet.js:76
+#: applet.js:75
 msgid "Feed reader"
 msgstr ""
 
-#: applet.js:208
+#: applet.js:207
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:209
+#: applet.js:208
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr ""
 
-#: applet.js:210
+#: applet.js:209
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:269
+#: applet.js:268
 msgid "Mark all read"
 msgstr ""
 
-#: applet.js:282
+#: applet.js:281
 msgid "Reload"
 msgstr ""
 
-#: applet.js:293
+#: applet.js:292
 msgid "Manage feeds"
 msgstr ""
 
-#: applet.js:397
+#: applet.js:396
 msgid "No unread feeds"
 msgstr ""
 

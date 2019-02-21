@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon VERSION\n"
-"POT-Creation-Date: 2019-02-18 02:26-0300\n"
+"POT-Creation-Date: 2019-02-21 10:43-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:732 utils.js:1231
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:731 utils.js:1231
 msgid "Help"
 msgstr ""
 
@@ -537,149 +537,149 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: applet.js:144
+#: applet.js:143
 msgid "Script file is not executable."
 msgstr ""
 
-#: applet.js:146
+#: applet.js:145
 msgid "The script file can be made executable from this applet context menu."
 msgstr ""
 
-#: applet.js:152 applet.js:717
+#: applet.js:151 applet.js:716
 msgid "Script file isn't a file, but a directory."
 msgstr ""
 
-#: applet.js:162 applet.js:723
+#: applet.js:161 applet.js:722
 msgid "Script file doesn't exists."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file 'FileName':"
-#: applet.js:250
+#: applet.js:249
 #, javascript-format
 msgid "Unable to execute file '%s':"
 msgstr ""
 
-#: applet.js:254 applet.js:566 applet.js:592
+#: applet.js:253 applet.js:565 applet.js:591
 msgid "Script file not set, cannot be found or it isn't an executable."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Invalid menu level for line 'LineWithTheError'"
-#: applet.js:356
+#: applet.js:355
 #, javascript-format
 msgid "Invalid menu level for line '%s'"
 msgstr ""
 
-#: applet.js:433
+#: applet.js:432
 msgid "No script set"
 msgstr ""
 
-#: applet.js:495
+#: applet.js:494
 msgid "Execution interval:"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->tooltip
-#: applet.js:503
+#: applet.js:502
 msgid "Choose the time unit for the script execution interval."
 msgstr ""
 
-#: applet.js:516
+#: applet.js:515
 msgid "Set the script execution interval."
 msgstr ""
 
-#: applet.js:526
+#: applet.js:525
 msgid "Choose script"
 msgstr ""
 
-#: applet.js:553
+#: applet.js:552
 msgid "Choose a script file."
 msgstr ""
 
-#: applet.js:559
+#: applet.js:558
 msgid "Edit script"
 msgstr ""
 
-#: applet.js:577
+#: applet.js:576
 msgid "Edit the script file with your prefered text editor."
 msgstr ""
 
-#: applet.js:578
+#: applet.js:577
 msgid "After saving the changes made, the applet will update its data automatically if there is an interval set."
 msgstr ""
 
-#: applet.js:579
+#: applet.js:578
 msgid "Or the update could be done manually with the »Refresh« item on this applet context menu."
 msgstr ""
 
-#: applet.js:585
+#: applet.js:584
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:600
+#: applet.js:599
 msgid "This will re-run on demand the script assigned to this applet for the purpose of updating its output."
 msgstr ""
 
-#: applet.js:601
+#: applet.js:600
 msgid "This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited."
 msgstr ""
 
 #. Extras submenu
-#: applet.js:608
+#: applet.js:607
 msgid "Extras"
 msgstr ""
 
-#: applet.js:616
+#: applet.js:615
 msgid "Rotation interval:"
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval_units->tooltip
-#: applet.js:622
+#: applet.js:621
 msgid "Choose the time unit for the applet text rotation interval."
 msgstr ""
 
-#: applet.js:635
+#: applet.js:634
 msgid "Set the applet text rotation interval."
 msgstr ""
 
-#: applet.js:644
+#: applet.js:643
 msgid "Clear script"
 msgstr ""
 
-#: applet.js:650 applet.js:668
+#: applet.js:649 applet.js:667
 msgid "This operation will remove the current script from this applet leaving it \"blank\"."
 msgstr ""
 
-#: applet.js:651
+#: applet.js:650
 msgid "The current applet settings will be untouched and the actual script file will not be deleted."
 msgstr ""
 
-#: applet.js:652
+#: applet.js:651
 msgid "Do you want to proceed?"
 msgstr ""
 
-#: applet.js:682
+#: applet.js:681
 msgid "Make script executable"
 msgstr ""
 
-#: applet.js:688
+#: applet.js:687
 msgid "Make the script file executable so it can be used by this applet."
 msgstr ""
 
-#: applet.js:711
+#: applet.js:710
 msgid "Script file is already executable."
 msgstr ""
 
 #. Just in case.
-#: applet.js:736 utils.js:1232
+#: applet.js:735 utils.js:1232
 msgid "Open this applet help file."
 msgstr ""
 
-#: applet.js:1032
+#: applet.js:1035
 msgid "Debugging toggled"
 msgstr ""
 
-#: applet.js:1033
+#: applet.js:1036
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr ""
 

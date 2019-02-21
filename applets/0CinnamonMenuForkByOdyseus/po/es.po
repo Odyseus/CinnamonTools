@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-17 02:33-0300\n"
+"POT-Creation-Date: 2019-02-21 10:36-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:308
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:307
 msgid "Help"
 msgstr "Ayuda"
 
@@ -469,43 +469,43 @@ msgstr "Existe una carpeta llamada **icons** dentro dentro del directorio de est
 msgid "Menu"
 msgstr "Menú"
 
-#: applet.js:296
+#: applet.js:295
 msgid "Open the menu editor"
 msgstr "Abrir el editor de menús"
 
-#: applet.js:301
+#: applet.js:300
 msgid "Edit custom launchers"
 msgstr "Editar lanzadores personalizados"
 
-#: applet.js:1436
+#: applet.js:1439
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: applet.js:1462
+#: applet.js:1465
 msgid "Recently Used"
 msgstr "Recientemente Usadas"
 
-#: applet.js:1492
+#: applet.js:1495
 msgid "All Applications"
 msgstr "Todas las aplicaciones"
 
-#: applet.js:1574
+#: applet.js:1577
 msgid "No search results"
 msgstr "No hay resultados de búsqueda"
 
-#: applet.js:1596
+#: applet.js:1599
 msgid "No recent applications"
 msgstr "Sin aplicaciones recientes"
 
-#: applet.js:1604
+#: applet.js:1607
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: applet.js:1774
+#: applet.js:1777
 msgid "Type to search..."
 msgstr "Escriba para buscar..."
 
-#: applet.js:2498 applet.js:2508
+#: applet.js:2501 applet.js:2511
 msgid "Categories"
 msgstr "Categorías"
 

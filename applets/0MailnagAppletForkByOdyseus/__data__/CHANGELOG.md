@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Thu, 21 Feb 2019 10:34:21 -0300
+- **Commit:** [b42c9f7](https://gitlab.com/Odyseus/CinnamonTools/commit/b42c9f7)
+- **Author:** Odyseus
+
+```
+- Added call to finalize settings when applet is removed from panel.
+
+```
+
+***
+
 - **Date:** Tue, 15 Jan 2019 22:37:12 -0300
 - **Commit:** [551bef1](https://gitlab.com/Odyseus/CinnamonTools/commit/551bef1)
 - **Author:** Odyseus

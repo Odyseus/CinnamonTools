@@ -170,6 +170,15 @@
 <li><strong>Filas/Columnas de pronóstico</strong>: La cantidad de files/columnas en las cuales mostrar los pronósticos.</li>
 <li><strong>Proveedor</strong>: Proveedor de datos meteorológicos. Todos los proveedores de clima requieren credenciales adecuadas para funcionar.</li>
 </ul>
+<h2>Tema del menú</h2>
+<ul>
+<li>Este applet soporta temas personalizados para el estilo de su menú.</li>
+<li>El tema predeterminado (que se encuentra en CARPETA_DEL_APPLET/themes/default.css) solo establece un estilo genérico para acomodar los elementos en el menú.</li>
+<li>Para usar un tema personalizado, simplemente configurar la opción <strong>Tema del menú</strong> como <strong>Personalizado</strong> y configurar la opción <strong>Ruta a hoja de estilo personalizada</strong> para que apunte a un archivo de hoja de estilo.</li>
+<li>Para crear un tema personalizado, simplemente hacer una copia del archivo de tema predeterminado en cualquier lugar del sistema de archivos, <strong>excepto</strong> dentro de la carpeta del applet. El archivo de tema predeterminado tiene la lista completa de clases CSS utilizadas por este applet.</li>
+<li>Para que los cambios del tema personalizados se reflejen en el menú mientras se modifica el archivo de tema, se puede reiniciar Cinnamon o se puede volver a cargar el tema Cinnamon.</li>
+<li>Canela proporciona un comando para volver a cargar su tema. Simplemente abrir el cuadro de diálogo <strong>Ejecutar comando</strong> (<kbd>Alt</kbd> + <kbd>F2</kbd>), escribir <strong>rt</strong> y presionar <kbd>Enter</kbd>.</li>
+</ul>
 
 </br>
 
@@ -301,6 +310,15 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <li><strong>Forecast rows/columns</strong>: The amount of rows/cols to display the forecast days in.</li>
 <li><strong>Provider</strong>: Weather data provider. All weather providers require proper credentials to function.</li>
 </ul>
+<h2>Menu theme</h2>
+<ul>
+<li>This applet supports custom themes to style its menu.</li>
+<li>The default theme (found in APPLET_FOLDER/themes/default.css) only sets a generic styling to accommodate the elements in the menu.</li>
+<li>To use a custom theme, just set the <strong>Menu theme</strong> option to <strong>Custom</strong> and set the <strong>Path to custom style sheet</strong> option to point to a style sheet file.</li>
+<li>To create a custom theme, just make a copy of the default theme file anywhere on the file system, <strong>except</strong> inside the applet folder. The default theme file has the complete list of CSS classes used by this applet.</li>
+<li>For the custom theme changes to be reflected on the menu while the theme file is modified, either Cinnamon can be restarted or the Cinnamon theme can be reloaded.</li>
+<li>Cinnamon provides a command to reload its theme. Just open the <strong>Run command</strong> dialog (<kbd>Alt</kbd> + <kbd>F2</kbd>), type <strong>rt</strong> and press <kbd>Enter</kbd>.</li>
+</ul>
 
 </br>
 
@@ -318,6 +336,14 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Weather (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Thu, 21 Feb 2019 10:30:38 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8c41de9">8c41de9</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Added theming support.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Sun, 17 Feb 2019 02:31:28 -0300</li>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-17 02:33-0300\n"
+"POT-Creation-Date: 2019-02-21 10:36-0300\n"
 "PO-Revision-Date: 2019-01-17 15:57-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:302 python/manage_feeds.py:213
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:301 python/manage_feeds.py:213
 msgid "Help"
 msgstr "Ayuda"
 
@@ -114,35 +114,35 @@ msgstr "El módulo feedparser para Python 3 es un analizador de fuentes universa
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr "Instalar con `pip` (Cinnamon necesita ser reiniciado luego de instalar feedparser si el applet ya fue colocado en un panel):"
 
-#: applet.js:76
+#: applet.js:75
 msgid "Feed reader"
 msgstr "Lector de Feeds"
 
-#: applet.js:208
+#: applet.js:207
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:209
+#: applet.js:208
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr "Este applet necesita que el módulo feedparser para Python 3 esté instalado en su sistema para que funcione."
 
-#: applet.js:210
+#: applet.js:209
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
-#: applet.js:269
+#: applet.js:268
 msgid "Mark all read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:282
+#: applet.js:281
 msgid "Reload"
 msgstr "Recargar"
 
-#: applet.js:293
+#: applet.js:292
 msgid "Manage feeds"
 msgstr "Administrar feeds"
 
-#: applet.js:397
+#: applet.js:396
 msgid "No unread feeds"
 msgstr "Sin feeds no leídos."
 

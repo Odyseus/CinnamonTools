@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ExtensionsManager VERSION\n"
-"POT-Creation-Date: 2019-02-18 02:26-0300\n"
+"POT-Creation-Date: 2019-02-21 10:43-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:178
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:176
 msgid "Help"
 msgstr ""
 
@@ -121,56 +121,56 @@ msgstr ""
 msgid "Settings window"
 msgstr ""
 
-#: applet.js:123
+#: applet.js:121
 msgid "Open extensions manager"
 msgstr ""
 
-#: applet.js:136
+#: applet.js:134
 msgid "Disable all extensions"
 msgstr ""
 
-#: applet.js:146
+#: applet.js:144
 msgid "This will disable all active extensions. Are you sure you want to do this?"
 msgstr ""
 
-#: applet.js:155
+#: applet.js:153
 msgid "Refresh extension list"
 msgstr ""
 
-#: applet.js:162
+#: applet.js:160
 msgid "Restart Cinnamon"
 msgstr ""
 
-#: applet.js:169
+#: applet.js:167
 msgid "Debug"
 msgstr ""
 
-#: applet.js:309 applet.js:361
+#: applet.js:307 applet.js:359
 #, javascript-format
 msgid "Source of error: %s"
 msgstr ""
 
-#: applet.js:456
+#: applet.js:454
 msgid "There aren't any extensions installed on your system. Or you may need to refresh the list of extensions from this applet context menu."
 msgstr ""
 
-#: applet.js:529
+#: applet.js:527
 msgid "Enabled extensions"
 msgstr ""
 
-#: applet.js:532
+#: applet.js:530
 msgid "No enabled extensions"
 msgstr ""
 
-#: applet.js:536
+#: applet.js:534
 msgid "Disabled extensions"
 msgstr ""
 
-#: applet.js:538
+#: applet.js:536
 msgid "No disabled extensions"
 msgstr ""
 
-#: applet.js:575
+#: applet.js:573
 #, javascript-format
 msgid "Extension %s is not compatible with current version of cinnamon. Using it may break your system. Load anyway?"
 msgstr ""

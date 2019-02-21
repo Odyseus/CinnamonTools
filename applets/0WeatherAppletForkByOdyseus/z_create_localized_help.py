@@ -146,6 +146,18 @@ class Main(LocalizedHelpCreator):
                 _("Weather data provider. All weather providers require proper credentials to function.")
             ),
             "",
+            "## %s" % _("Menu theme"),
+            "",
+            "- %s" % _("This applet supports custom themes to style its menu."),
+            "- %s" % _("The default theme (found in APPLET_FOLDER/themes/default.css) only sets a generic styling to accommodate the elements in the menu."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("To use a custom theme, just set the **Menu theme** option to **Custom** and set the **Path to custom style sheet** option to point to a style sheet file."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("To create a custom theme, just make a copy of the default theme file anywhere on the file system, **except** inside the applet folder. The default theme file has the complete list of CSS classes used by this applet."),
+            "- %s" % _("For the custom theme changes to be reflected on the menu while the theme file is modified, either Cinnamon can be restarted or the Cinnamon theme can be reloaded."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _(
+                "Cinnamon provides a command to reload its theme. Just open the **Run command** dialog ([[Alt]] + [[F2]]), type **rt** and press [[Enter]]."),
         ])
         ))
 

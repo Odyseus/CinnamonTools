@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Thu, 21 Feb 2019 10:30:38 -0300
+- **Commit:** [8c41de9](https://gitlab.com/Odyseus/CinnamonTools/commit/8c41de9)
+- **Author:** Odyseus
+
+```
+- Added theming support.
+
+```
+
+***
+
 - **Date:** Sun, 17 Feb 2019 02:31:28 -0300
 - **Commit:** [c95eefe](https://gitlab.com/Odyseus/CinnamonTools/commit/c95eefe)
 - **Author:** Odyseus
