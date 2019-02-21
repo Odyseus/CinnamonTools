@@ -198,6 +198,12 @@ MyApplet.prototype = {
         }
     },
 
+    on_applet_removed_from_panel: function() {
+        if (this.settings) {
+            this.settings.finalize();
+        }
+    },
+
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
         /* NOTE: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
          * settings callback instead of just one as in older versions. The first one is the
