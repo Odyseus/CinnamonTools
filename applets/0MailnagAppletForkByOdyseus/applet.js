@@ -692,6 +692,10 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             Gio.bus_unwatch_name(this.busWatcherId);
             this.busWatcherId = 0;
         }
+
+        if (this.settings) {
+            this.settings.finalize();
+        }
     },
 
     _onSettingsChanged: function(aPrefValue, aPrefKey) { // jshint ignore:line
