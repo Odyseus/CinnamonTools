@@ -140,6 +140,22 @@
             "Symbolic": 0
         }
     },
+    "pref_menu_theme": {
+        "type": "combobox",
+        "indent": true,
+        "default": "default",
+        "description": "Menu theme",
+        "options": {
+            "Default": "default",
+            "Custom": "custom"
+        }
+    },
+    "pref_menu_theme_path_custom": {
+        "type": "filechooser",
+        "indent": true,
+        "default": "",
+        "description": "Path to custom style sheet"
+    },
     "header_applet_appearance": {
         "type": "header",
         "description": "Applet Appearance"

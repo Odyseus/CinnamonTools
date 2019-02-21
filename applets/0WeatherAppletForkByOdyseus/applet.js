@@ -28,6 +28,7 @@ const {
     gi: {
         Cinnamon,
         Clutter,
+        Gio,
         Gtk,
         Pango,
         Soup,
@@ -94,6 +95,9 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             this._expandAppletContextMenu();
             this._initSoupSession();
         }, () => {
+            this.theme = null;
+            this.stylesheet = null;
+            this.load_theme_id = 0;
             this.prototypeDebuggersAttached = false;
             this.desktopNotification = null;
             this.weatherProvider = null;
@@ -129,8 +133,8 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             this._updateKeybindings();
             this.createMainContainers();
             this.rebuild();
-
             this._startRefreshWeatherLoop();
+            this._loadTheme();
 
             if (!this.pref_initial_load_done) {
                 this.pref_initial_load_done = true;
@@ -140,6 +144,10 @@ WeatherAppletForkByOdyseusApplet.prototype = {
                     NotificationsUrgency.CRITICAL
                 );
             }
+
+            Main.themeManager.connect("theme-set", () => {
+                this._loadTheme();
+            });
         });
     },
 
@@ -218,6 +226,8 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             "pref_locations_storage",
             "trigger_reload_locations",
             "pref_initial_load_done",
+            "pref_menu_theme",
+            "pref_menu_theme_path_custom",
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -1596,6 +1606,90 @@ WeatherAppletForkByOdyseusApplet.prototype = {
         Util.spawn_async(["xdg-open"].concat(Array.prototype.slice.call(arguments)), null);
     },
 
+    _loadTheme: function(aFullReload) {
+        if (this.load_theme_id > 0) {
+            Mainloop.source_remove(this.load_theme_id);
+            this.load_theme_id = 0;
+        }
+
+        try {
+            this.unloadStylesheet();
+        } catch (aErr) {
+            global.logError(aErr);
+        } finally {
+            this.load_theme_id = Mainloop.timeout_add(300,
+                () => {
+                    // This block doesn't make any sense, but it's what it works.
+                    // So I will leave it as is or else. ¬¬
+                    try {
+                        this.loadStylesheet();
+                    } catch (aErr) {
+                        global.logError(aErr);
+                    } finally {
+                        if (aFullReload) {
+                            Main.themeManager._changeTheme();
+                        }
+                    }
+                }
+            );
+        }
+    },
+
+    loadStylesheet: function() {
+        let themePath = this._getCssPath();
+
+        try {
+            let themeContext = St.ThemeContext.get_for_stage(global.stage);
+            this.theme = themeContext.get_theme();
+        } catch (aErr) {
+            global.logError(_("Error trying to get theme"));
+            global.logError(aErr);
+        }
+
+        try {
+            this.theme.load_stylesheet(themePath);
+            this.stylesheet = themePath;
+        } catch (aErr) {
+            global.logError(_("Stylesheet parse error"));
+            global.logError(aErr);
+        }
+    },
+
+    unloadStylesheet: function() {
+        if (this.theme && this.stylesheet) {
+            try {
+                this.theme.unload_stylesheet(this.stylesheet);
+            } catch (aErr) {
+                global.logError(_("Error unloading stylesheet"));
+                global.logError(aErr);
+            }
+        }
+    },
+
+    _getCssPath: function() {
+        let defaultThemepath = this.metadata.path + "/themes/default.css";
+        let cssPath = this.pref_menu_theme === "custom" ?
+            this.pref_menu_theme_path_custom :
+            defaultThemepath;
+
+        if (/^file:\/\//.test(cssPath)) {
+            cssPath = cssPath.substr(7);
+        }
+
+        try {
+            let cssFile = Gio.file_new_for_path(cssPath);
+
+            if (!cssPath || !cssFile.query_exists(null)) {
+                cssPath = defaultThemepath;
+            }
+        } catch (aErr) {
+            cssPath = defaultThemepath;
+            global.logError(aErr);
+        }
+
+        return cssPath;
+    },
+
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
         /* NOTE: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
          * settings callback instead of just one as in older versions. The first one is the
@@ -1645,6 +1739,10 @@ WeatherAppletForkByOdyseusApplet.prototype = {
                 this.sanitizeStoredLocations();
                 this.refreshAndRebuild();
                 this.locationSelectorMenu.populateMenu();
+                break;
+            case "pref_menu_theme":
+            case "pref_menu_theme_path_custom":
+                this._loadTheme(true);
                 break;
                 /* NOTE: In case that I decide to add some "links" to the locations manager GUI.
                  */
