@@ -510,6 +510,10 @@ CinnamonMenuForkByOdyseus.prototype = {
             Mainloop.source_remove(this._hardRefreshTimeout);
             this._hardRefreshTimeout = 0;
         }
+
+        if (this.settings) {
+            this.settings.finalize();
+        }
     },
 
     _launch_editor: function() {
