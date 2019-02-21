@@ -1176,6 +1176,10 @@ PopupTranslatorApplet.prototype = {
             this.menuManager.removeMenu(this.menu);
             this.menu.destroy();
         }
+
+        if (this.settings) {
+            this.settings.finalize();
+        }
     },
 
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
