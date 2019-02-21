@@ -953,6 +953,10 @@ ArgosForCinnamonApplet.prototype = {
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
         this.menu.removeAll();
+
+        if (this.settings) {
+            this.settings.finalize();
+        }
     },
 
     _updateKeybindings: function() {
