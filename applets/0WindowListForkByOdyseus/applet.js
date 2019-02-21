@@ -192,6 +192,10 @@ WindowListForkByOdyseusApplet.prototype = {
 
     on_applet_removed_from_panel: function() {
         this.signals.disconnectAllSignals();
+
+        if (this.settings) {
+            this.settings.finalize();
+        }
     },
 
     on_applet_instances_changed: function() {
