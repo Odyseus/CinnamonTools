@@ -528,6 +528,10 @@ FeedsReaderForkByOdyseus.prototype = {
             this._destroyMessage(this.feeds[i].reader);
         }
 
+        if (this.settings) {
+            this.settings.finalize();
+        }
+
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
     },
 
