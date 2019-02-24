@@ -150,6 +150,7 @@ Provider.prototype = {
             "curVisibility": $.safeGet(C, "atmosphere", "visibility"),
             "curSunrise": this.formatTime($.safeGet(C, "astronomy", "sunrise")),
             "curSunset": this.formatTime($.safeGet(C, "astronomy", "sunset")),
+            "curMoonPhase": $.getMoonPhase(),
         };
 
         let forecasts = [];

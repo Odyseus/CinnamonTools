@@ -5,7 +5,7 @@
  * require is an absolute garbage!!! &%$·%()/&% WEB DEVELOPERS!!!!
  * NOTE: Do not even think about adding automatic location lookup until
  * I can use async/await (around 2021). By that time, I might have already
- * fed up will all the nonsense that happen in Cinnamon, so why the hell bother!
+ * fed up with all the nonsense that happen in Cinnamon, so why the hell bother!
  */
 
 let $,
@@ -54,7 +54,7 @@ const {
     NotificationsUrgency,
     Placeholders,
     QtyTempUnits,
-    SumaryDetailIDs,
+    SumaryDetailLabels,
     Units: {
         // DISTANCE: DistanceUnits,
         // TEMPERATURE: TempUnits,
@@ -361,20 +361,15 @@ WeatherAppletForkByOdyseusApplet.prototype = {
         });
 
         // Separators.
-        let sep1 = new St.DrawingArea({
-            style_class: CLASS.POPUP_SEPARATOR_MENU_ITEM
-        });
-        let sep2 = new St.DrawingArea({
-            style_class: CLASS.POPUP_SEPARATOR_MENU_ITEM
-        });
-        let allSeps = [sep1, sep2];
-        let s = 0,
-            sLen = allSeps.length;
-        for (; s < sLen; s++) {
-            allSeps[s].width = 200;
-            allSeps[s].connect("repaint",
-                (aArea) => this._onSeparatorAreaRepaint(aArea));
-        }
+        let sep1 = new PopupMenu.PopupSeparatorMenuItem();
+        let sep2 = new PopupMenu.PopupSeparatorMenuItem();
+        /* NOTE: A PopupSeparatorMenuItem is an instance of PopupBaseMenuItem.
+         * PopupBaseMenuItem has the popup-menu-item class that, depending on the
+         * theme used, it adds margins to the separator. Removing the popup-menu-item
+         * class will allow the separator to fill the menu width.
+         */
+        sep1.actor.remove_style_class_name("popup-menu-item");
+        sep2.actor.remove_style_class_name("popup-menu-item");
 
         // Tomorrow's forecast
         this._futureWeather = new St.Bin({
@@ -511,9 +506,9 @@ WeatherAppletForkByOdyseusApplet.prototype = {
 
         mainBox.add_actor(this._errorBox);
         mainBox.add_actor(this._currentWeather);
-        mainBox.add_actor(sep1);
+        mainBox.add_actor(sep1.actor);
         mainBox.add_actor(this._futureWeather);
-        mainBox.add_actor(sep2);
+        mainBox.add_actor(sep2.actor);
         mainBox.add_actor(this.locationSelectorMenu.actor);
         mainBox.add_actor(footerBox);
     },
@@ -587,28 +582,6 @@ WeatherAppletForkByOdyseusApplet.prototype = {
 
     on_applet_clicked: function(event) { // jshint ignore:line
         this.menu.toggle();
-    },
-
-    _onSeparatorAreaRepaint: function(area) {
-        let cr = area.get_context();
-        let themeNode = area.get_theme_node();
-        let [width, height] = area.get_surface_size();
-        let margin = themeNode.get_length("-margin-horizontal");
-        let gradientHeight = themeNode.get_length("-gradient-height");
-        let startColor = themeNode.get_color("-gradient-start");
-        let endColor = themeNode.get_color("-gradient-end");
-        let gradientWidth = (width - margin * 2);
-        let gradientOffset = (height - gradientHeight) / 2;
-        let pattern = new Cairo.LinearGradient(margin, gradientOffset, width - margin, gradientOffset + gradientHeight);
-
-        pattern.addColorStopRGBA(0, startColor.red / 255, startColor.green / 255, startColor.blue / 255, startColor.alpha / 255);
-        pattern.addColorStopRGBA(0.5, endColor.red / 255, endColor.green / 255, endColor.blue / 255, endColor.alpha / 255);
-        pattern.addColorStopRGBA(1, startColor.red / 255, startColor.green / 255, startColor.blue / 255, startColor.alpha / 255);
-        cr.setSource(pattern);
-        cr.rectangle(margin, gradientOffset, gradientWidth, gradientHeight);
-        cr.fill();
-
-        cr.$dispose();
     },
 
     loadJsonAsync: function(aForceRetrieval, aCallback) {
@@ -802,10 +775,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             this._currentWeatherSummary.text = conditionText;
             this._currentWeatherSummary._tooltip.set_text(conditionText);
 
-            let i = 0,
-                iLen = SumaryDetailIDs.length;
-            for (; i < iLen; i++) {
-                let id = SumaryDetailIDs[i];
+            for (let id in SumaryDetailLabels) {
                 let titleActor = this["_" + id + "SummaryTitle"];
                 let valueActor = this["_" + id + "SummaryValue"];
                 let curSummaryValue = currentWeather[id];
@@ -848,6 +818,8 @@ WeatherAppletForkByOdyseusApplet.prototype = {
                             this.convertTo24Hours(curSummaryValue) :
                             curSummaryValue;
                         break;
+                    default:
+                        valueActor.text = curSummaryValue;
                 }
             }
 
@@ -1039,7 +1011,6 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             y_expand: true,
             y_align: Clutter.ActorAlign.CENTER
         });
-        this._currentWeatherSummary.set_style("width:auto;max-width: 450px;");
         this._currentWeatherSummary.get_clutter_text().set_line_wrap(true);
         this._currentWeatherSummary.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
         this._currentWeatherSummary.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
@@ -1068,63 +1039,21 @@ WeatherAppletForkByOdyseusApplet.prototype = {
         };
 
         // Summary details.
-        this._curTemperatureSummaryTitle = new St.Label({
-            text: _("Temperature") + ":",
-            style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
-        });
-        this._curTemperatureSummaryValue = new St.Label(textOb);
+        let index = 0;
+        for (let id in SumaryDetailLabels) {
+            let tProp = "_" + id + "SummaryTitle";
+            let vProp = "_" + id + "SummaryValue";
 
-        this._curHumiditySummaryTitle = new St.Label({
-            text: _("Humidity") + ":",
-            style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
-        });
-        this._curHumiditySummaryValue = new St.Label(textOb);
+            this[tProp] = new St.Label({
+                text: SumaryDetailLabels[id] + ":",
+                style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
+            });
+            this[vProp] = new St.Label(textOb);
 
-        this._curPressureSummaryTitle = new St.Label({
-            text: _("Pressure") + ":",
-            style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
-        });
-        this._curPressureSummaryValue = new St.Label(textOb);
+            summaryGrid.attach(this[tProp], 0, index, 1, 1);
+            summaryGrid.attach(this[vProp], 1, index, 1, 1);
 
-        this._curWindSummaryTitle = new St.Label({
-            text: _("Wind") + ":",
-            style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
-        });
-        this._curWindSummaryValue = new St.Label(textOb);
-
-        this._curWindChillSummaryTitle = new St.Label({
-            text: _("Wind chill") + ":",
-            style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
-        });
-        this._curWindChillSummaryValue = new St.Label(textOb);
-
-        this._curVisibilitySummaryTitle = new St.Label({
-            text: _("Visibility") + ":",
-            style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
-        });
-        this._curVisibilitySummaryValue = new St.Label(textOb);
-
-        this._curSunriseSummaryTitle = new St.Label({
-            text: _("Sunrise") + ":",
-            style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
-        });
-        this._curSunriseSummaryValue = new St.Label(textOb);
-
-        this._curSunsetSummaryTitle = new St.Label({
-            text: _("Sunset") + ":",
-            style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
-        });
-        this._curSunsetSummaryValue = new St.Label(textOb);
-
-        let i = 0,
-            iLen = SumaryDetailIDs.length;
-        for (; i < iLen; i++) {
-            summaryGrid.attach(
-                this["_" + SumaryDetailIDs[i] + "SummaryTitle"], 0, i, 1, 1
-            );
-            summaryGrid.attach(
-                this["_" + SumaryDetailIDs[i] + "SummaryValue"], 1, i, 1, 1
-            );
+            index++;
         }
 
         let box = new St.BoxLayout({
@@ -1258,20 +1187,12 @@ WeatherAppletForkByOdyseusApplet.prototype = {
     weatherIconSafely: function(code) {
         let iconname = this._getConditionData("icon", code);
         for (let i = 0; i < iconname.length; i++) {
-            if (this.hasIcon(iconname[i])) {
+            if (Gtk.IconTheme.get_default().has_icon(iconname[i] +
+                    (this.pref_menu_icon_type === St.IconType.SYMBOLIC ? "-symbolic" : ""))) {
                 return iconname[i];
             }
         }
         return "weather-severe-alert";
-    },
-
-    hasIcon: function(icon) {
-        return Gtk.IconTheme.get_default().has_icon(icon +
-            (this.pref_menu_icon_type === St.IconType.SYMBOLIC ? "-symbolic" : ""));
-    },
-
-    nonempty: function(str) {
-        return (str !== null && str.length > 0);
     },
 
     _onButtonEnterEvent: function(aActor, aEvent) { // jshint ignore:line

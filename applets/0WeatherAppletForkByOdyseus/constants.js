@@ -269,16 +269,17 @@ var CssClasses = {
     WEATHER_MENU: "weather-menu",
 };
 
-var SumaryDetailIDs = [
-    "curTemperature",
-    "curHumidity",
-    "curPressure",
-    "curWind",
-    "curWindChill",
-    "curVisibility",
-    "curSunrise",
-    "curSunset",
-];
+var SumaryDetailLabels = {
+    curTemperature: _("Temperature"),
+    curHumidity: _("Humidity"),
+    curPressure: _("Pressure"),
+    curWind: _("Wind"),
+    curWindChill: _("Wind chill"),
+    curVisibility: _("Visibility"),
+    curSunrise: _("Sunrise"),
+    curSunset: _("Sunset"),
+    curMoonPhase: _("Moon phase"),
+};
 
 var Units = {
     DISTANCE: {
@@ -969,7 +970,7 @@ var DarkSkySupportedLanguages = new Set([
             WeatherProviderDefaultParams,
             WeatherProviderNames,
             QtyTempUnits,
-            SumaryDetailIDs,
+            SumaryDetailLabels,
             Units,
             URLs,
             YahooWeatherConditionData,

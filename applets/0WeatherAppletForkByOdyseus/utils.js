@@ -215,7 +215,6 @@ WeatherProviderBase.prototype = {
 
     _init: function(aApplet, aParams) {
         this._error = null;
-        this.geoIPProvider = null;
         this.locationInfo = [];
         this._method_1 = "GET";
         this._method_2 = "GET";
@@ -844,9 +843,90 @@ DebugManager.prototype = {
     }
 };
 
+// https://github.com/tingletech/moon-phase
+// http://stackoverflow.com/questions/11759992/calculating-jdayjulian-day-in-javascript
+// http://jsfiddle.net/gkyYJ/
+// http://stackoverflow.com/users/965051/adeneo
+Date.prototype.getJulianDate = function() {
+    return ((this / 86400000) - (this.getTimezoneOffset() / 1440) + 2440587.5);
+};
+
+// http://www.ben-daglish.net/moon.shtml
+function moonDay(today) {
+    let GetFrac = (fr) => {
+        return (fr - Math.floor(fr));
+    };
+    let thisJD = today.getJulianDate();
+    let year = today.getFullYear();
+    let degToRad = 3.14159265 / 180;
+    let K0,
+        T,
+        T2,
+        T3,
+        J0,
+        F0,
+        M0,
+        M1,
+        B1,
+        oldJ;
+    K0 = Math.floor((year - 1900) * 12.3685);
+    T = (year - 1899.5) / 100;
+    T2 = T * T;
+    T3 = T * T * T;
+    J0 = 2415020 + 29 * K0;
+    F0 = 0.0001178 * T2 - 0.000000155 * T3 + (0.75933 + 0.53058868 * K0) - (0.000837 * T + 0.000335 * T2);
+    M0 = 360 * (GetFrac(K0 * 0.08084821133)) + 359.2242 - 0.0000333 * T2 - 0.00000347 * T3;
+    M1 = 360 * (GetFrac(K0 * 0.07171366128)) + 306.0253 + 0.0107306 * T2 + 0.00001236 * T3;
+    B1 = 360 * (GetFrac(K0 * 0.08519585128)) + 21.2964 - (0.0016528 * T2) - (0.00000239 * T3);
+    let phase = 0;
+    let jday = 0;
+    while (jday < thisJD) {
+        let F = F0 + 1.530588 * phase;
+        let M5 = (M0 + phase * 29.10535608) * degToRad;
+        let M6 = (M1 + phase * 385.81691806) * degToRad;
+        let B6 = (B1 + phase * 390.67050646) * degToRad;
+        F -= 0.4068 * Math.sin(M6) + (0.1734 - 0.000393 * T) * Math.sin(M5);
+        F += 0.0161 * Math.sin(2 * M6) + 0.0104 * Math.sin(2 * B6);
+        F -= 0.0074 * Math.sin(M5 - M6) - 0.0051 * Math.sin(M5 + M6);
+        F += 0.0021 * Math.sin(2 * M5) + 0.0010 * Math.sin(2 * B6 - M6);
+        F += 0.5 / 1440;
+        oldJ = jday;
+        jday = J0 + 28 * phase + Math.floor(F);
+        phase++;
+    }
+
+    // 29.53059 days per lunar month
+    return (((thisJD - oldJ) / 29.53059));
+}
+
+function getMoonPhase() {
+    let phase = moonDay(new Date());
+
+    if (phase <= 0.0625 || phase > 0.9375) {
+        return _("New Moon");
+    } else if (phase <= 0.1875) {
+        return _("Waxing Crescent");
+    } else if (phase <= 0.3125) {
+        return _("First Quarter");
+    } else if (phase <= 0.4375) {
+        return _("Waxing Gibbous");
+    } else if (phase <= 0.5625) {
+        return _("Full Moon");
+    } else if (phase <= 0.6875) {
+        return _("Waning Gibbous");
+    } else if (phase <= 0.8125) {
+        return _("Third Quarter");
+    } else if (phase <= 0.9375) {
+        return _("Waning Crescent");
+    }
+
+    return _("New Moon");
+}
+
 /* exported escapeHTML,
             OAuth,
             safeGetEll,
             soupPrinter,
+            getMoonPhase,
             prototypeDebugger,
  */

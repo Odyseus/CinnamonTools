@@ -41,6 +41,8 @@
 .weather-current-summary {
     font-size: 1.5em;
     font-weight: bold;
+    /* Max. width used to force word wrapping of long summaries. */
+    max-width: 450px;
 }
 
 .weather-current-summary-box {
@@ -102,6 +104,9 @@
 
 /* DarkSky summaries are kilometric!!! ¬¬ */
 .weather-forecast-summary {
+    /* Max. width used to force ellipsizing of long summaries.
+     * Using word wrapping here will "deform" the current weather layout.
+     */
     max-width: 200px;
 }
 
