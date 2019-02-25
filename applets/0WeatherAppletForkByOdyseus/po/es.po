@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-21 10:36-0300\n"
-"PO-Revision-Date: 2019-02-21 10:43-0300\n"
+"POT-Creation-Date: 2019-02-25 11:58-0300\n"
+"PO-Revision-Date: 2019-02-25 12:04-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Español; Castellano <zodiac_es@yahoo.es>\n"
 "Language: es\n"
@@ -30,7 +30,7 @@ msgstr "Ayuda para %s"
 #. menu_popup.append(self.create_menu_item(_("Export settings to a file"),
 #. self._import_export_settings, True))
 #. menu_popup.append(Gtk.SeparatorMenuItem())
-#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:266 applet.js:1340
+#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:266 applet.js:1261
 msgid "Help"
 msgstr "Ayuda"
 
@@ -75,7 +75,7 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:958
+#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:930
 msgid "Location name"
 msgstr "Nombre de la ubicación"
 
@@ -362,92 +362,60 @@ msgstr "Haga clic para copiar el error al portapapeles."
 msgid "Look at the logs for details."
 msgstr "Mirar los registros para más detalles."
 
-#: applet.js:393
+#: applet.js:388
 msgid "Refresh"
 msgstr "Recargar"
 
-#: applet.js:406
+#: applet.js:401
 msgid "Click to refresh weather data"
 msgstr "Hacer clic para actualizar los datos meteorológicos."
 
-#: applet.js:635
+#: applet.js:608
 msgid "No current location set!"
 msgstr "¡No hay ubicación actual establecida!"
 
-#: applet.js:685
+#: applet.js:658
 msgid "Error initializing weather provider!"
 msgstr "¡Error al inicializar el proveedor de clima!"
 
-#: applet.js:748
+#: applet.js:721
 msgid "No weather data available!"
 msgstr "¡No hay datos meteorológicos disponibles!"
 
-#: applet.js:856
+#: applet.js:828
 #, javascript-format
 msgid "Powered by %s"
 msgstr "Energizado por %s"
 
-#: applet.js:1012
+#: applet.js:984
 msgid "Current location"
 msgstr "Ubicación actual"
 
-#: applet.js:1025
+#: applet.js:997
 msgid "Open location weather details page"
 msgstr "Abrir página de detalles del clima"
 
-#: applet.js:1072
-msgid "Temperature"
-msgstr "Temperatura"
-
-#: applet.js:1078
-msgid "Humidity"
-msgstr "Humedad"
-
-#: applet.js:1084
-msgid "Pressure"
-msgstr "Presión"
-
-#: applet.js:1090
-msgid "Wind"
-msgstr "Viento"
-
-#: applet.js:1096
-msgid "Wind chill"
-msgstr "Temperatura percibida"
-
-#: applet.js:1102
-msgid "Visibility"
-msgstr "Visibilidad"
-
-#: applet.js:1108
-msgid "Sunrise"
-msgstr "Amanecer"
-
-#: applet.js:1114
-msgid "Sunset"
-msgstr "Puesta del sol"
-
-#: applet.js:1254
+#: applet.js:1183
 msgid "Not available"
 msgstr "No disponible"
 
-#: applet.js:1645
+#: applet.js:1566
 msgid "Error trying to get theme"
 msgstr "Error al intentar obtener el tema"
 
-#: applet.js:1653
+#: applet.js:1574
 msgid "Stylesheet parse error"
 msgstr "Error de análisis de hoja de estilo"
 
-#: applet.js:1663
+#: applet.js:1584
 msgid "Error unloading stylesheet"
 msgstr "Error al descargar la hoja de estilos"
 
-#: applet.js:1730
+#: applet.js:1651
 msgid "Debugging toggled"
 msgstr "Depuración activada"
 
-#: applet.js:1731
+#: applet.js:1652
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr "Recordar reiniciar Cinnamon para habilitar/deshabilitar completamente esta opción."
 
@@ -912,6 +880,42 @@ msgstr "Viernes"
 msgid "Saturday"
 msgstr "Sábado"
 
+#: constants.js:273
+msgid "Temperature"
+msgstr "Temperatura"
+
+#: constants.js:274
+msgid "Humidity"
+msgstr "Humedad"
+
+#: constants.js:275
+msgid "Pressure"
+msgstr "Presión"
+
+#: constants.js:276
+msgid "Wind"
+msgstr "Viento"
+
+#: constants.js:277
+msgid "Wind chill"
+msgstr "Temperatura percibida"
+
+#: constants.js:278
+msgid "Visibility"
+msgstr "Visibilidad"
+
+#: constants.js:279
+msgid "Sunrise"
+msgstr "Amanecer"
+
+#: constants.js:280
+msgid "Sunset"
+msgstr "Puesta del sol"
+
+#: constants.js:281
+msgid "Moon phase"
+msgstr "Fase lunar"
+
 #: python/widgets.py:104
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
@@ -1002,50 +1006,82 @@ msgstr "Agregar nueva entrada"
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: utils.js:394
+#: utils.js:393
 msgid "E"
 msgstr "E"
 
-#: utils.js:394
+#: utils.js:393
 msgid "N"
 msgstr "N"
 
-#: utils.js:394
+#: utils.js:393
 msgid "NE"
 msgstr "NE"
 
-#: utils.js:394
+#: utils.js:393
 msgid "NW"
 msgstr "NO"
 
-#: utils.js:394
+#: utils.js:393
 msgid "S"
 msgstr "S"
 
-#: utils.js:394
+#: utils.js:393
 msgid "SE"
 msgstr "SE"
 
-#: utils.js:394
+#: utils.js:393
 msgid "SW"
 msgstr "SO"
 
-#: utils.js:394
+#: utils.js:393
 msgid "W"
 msgstr "O"
 
-#: utils.js:567
+#: utils.js:566
 msgid "Displayed weather data doesn't belong to any currently configured location!"
 msgstr "¡Los datos meteorológicos mostrados no pertenecen a ninguna ubicación configurada actualmente!"
 
-#: utils.js:805
+#: utils.js:804
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr "No se pudo encontrar el esquema %s para el xlet %s."
 
-#: utils.js:806
+#: utils.js:805
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
+
+#: utils.js:906 utils.js:923
+msgid "New Moon"
+msgstr "Luna Nueva"
+
+#: utils.js:908
+msgid "Waxing Crescent"
+msgstr "Lúnula Creciente"
+
+#: utils.js:910
+msgid "First Quarter"
+msgstr "Cuarto Creciente"
+
+#: utils.js:912
+msgid "Waxing Gibbous"
+msgstr "Gibosa Creciente"
+
+#: utils.js:914
+msgid "Full Moon"
+msgstr "Luna Llena"
+
+#: utils.js:916
+msgid "Waning Gibbous"
+msgstr "Gibosa Menguante"
+
+#: utils.js:918
+msgid "Third Quarter"
+msgstr "Cuarto Menguante"
+
+#: utils.js:920
+msgid "Waning Crescent"
+msgstr "Lúnula Creciente"
 
 #: weather_providers/DarkSky.js:98 weather_providers/OpenWeatherMap.js:126 weather_providers/SKEL.js:119 weather_providers/YahooWeather.js:130
 msgid "Coordinates"

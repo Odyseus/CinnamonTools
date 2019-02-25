@@ -4,6 +4,22 @@
 
 ***
 
+- **Date:** Sun, 24 Feb 2019 18:36:21 -0300
+- **Commit:** [a9f994a](https://gitlab.com/Odyseus/CinnamonTools/commit/a9f994a)
+- **Author:** Odyseus
+
+```
+- Added moon phase to current condition details. Since none of the weather services provide such information, a JavaScript function is used to calculate the moon phases.
+- Changed the method of creating the current weather details. Instead of creating them "by hand", use a loop.
+- Removed custom separator used in the menu in favor of using PopupSeparatorMenuItem.
+- Removed hard-coded max. width for the current weather condition. It is now defined in the CSS theme, so it can be modified with a custom theme.
+- Removed unused function and property.
+- Removed call to function in favor of in-line declaration.
+
+```
+
+***
+
 - **Date:** Thu, 21 Feb 2019 10:30:38 -0300
 - **Commit:** [8c41de9](https://gitlab.com/Odyseus/CinnamonTools/commit/8c41de9)
 - **Author:** Odyseus

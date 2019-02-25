@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-02-21 10:43-0300\n"
+"POT-Creation-Date: 2019-02-25 12:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. menu_popup.append(self.create_menu_item(_("Export settings to a file"),
 #. self._import_export_settings, True))
 #. menu_popup.append(Gtk.SeparatorMenuItem())
-#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:266 applet.js:1340
+#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:266 applet.js:1261
 msgid "Help"
 msgstr ""
 
@@ -72,7 +72,7 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:958
+#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:930
 msgid "Location name"
 msgstr ""
 
@@ -359,92 +359,60 @@ msgstr ""
 msgid "Look at the logs for details."
 msgstr ""
 
-#: applet.js:393
+#: applet.js:388
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:406
+#: applet.js:401
 msgid "Click to refresh weather data"
 msgstr ""
 
-#: applet.js:635
+#: applet.js:608
 msgid "No current location set!"
 msgstr ""
 
-#: applet.js:685
+#: applet.js:658
 msgid "Error initializing weather provider!"
 msgstr ""
 
-#: applet.js:748
+#: applet.js:721
 msgid "No weather data available!"
 msgstr ""
 
-#: applet.js:856
+#: applet.js:828
 #, javascript-format
 msgid "Powered by %s"
 msgstr ""
 
-#: applet.js:1012
+#: applet.js:984
 msgid "Current location"
 msgstr ""
 
-#: applet.js:1025
+#: applet.js:997
 msgid "Open location weather details page"
 msgstr ""
 
-#: applet.js:1072
-msgid "Temperature"
-msgstr ""
-
-#: applet.js:1078
-msgid "Humidity"
-msgstr ""
-
-#: applet.js:1084
-msgid "Pressure"
-msgstr ""
-
-#: applet.js:1090
-msgid "Wind"
-msgstr ""
-
-#: applet.js:1096
-msgid "Wind chill"
-msgstr ""
-
-#: applet.js:1102
-msgid "Visibility"
-msgstr ""
-
-#: applet.js:1108
-msgid "Sunrise"
-msgstr ""
-
-#: applet.js:1114
-msgid "Sunset"
-msgstr ""
-
-#: applet.js:1254
+#: applet.js:1183
 msgid "Not available"
 msgstr ""
 
-#: applet.js:1645
+#: applet.js:1566
 msgid "Error trying to get theme"
 msgstr ""
 
-#: applet.js:1653
+#: applet.js:1574
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: applet.js:1663
+#: applet.js:1584
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: applet.js:1730
+#: applet.js:1651
 msgid "Debugging toggled"
 msgstr ""
 
-#: applet.js:1731
+#: applet.js:1652
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr ""
 
@@ -909,6 +877,42 @@ msgstr ""
 msgid "Saturday"
 msgstr ""
 
+#: constants.js:273
+msgid "Temperature"
+msgstr ""
+
+#: constants.js:274
+msgid "Humidity"
+msgstr ""
+
+#: constants.js:275
+msgid "Pressure"
+msgstr ""
+
+#: constants.js:276
+msgid "Wind"
+msgstr ""
+
+#: constants.js:277
+msgid "Wind chill"
+msgstr ""
+
+#: constants.js:278
+msgid "Visibility"
+msgstr ""
+
+#: constants.js:279
+msgid "Sunrise"
+msgstr ""
+
+#: constants.js:280
+msgid "Sunset"
+msgstr ""
+
+#: constants.js:281
+msgid "Moon phase"
+msgstr ""
+
 #: python/widgets.py:104
 msgid "Select or enter file to export to"
 msgstr ""
@@ -999,49 +1003,81 @@ msgstr ""
 msgid "Edit entry"
 msgstr ""
 
-#: utils.js:394
+#: utils.js:393
 msgid "E"
 msgstr ""
 
-#: utils.js:394
+#: utils.js:393
 msgid "N"
 msgstr ""
 
-#: utils.js:394
+#: utils.js:393
 msgid "NE"
 msgstr ""
 
-#: utils.js:394
+#: utils.js:393
 msgid "NW"
 msgstr ""
 
-#: utils.js:394
+#: utils.js:393
 msgid "S"
 msgstr ""
 
-#: utils.js:394
+#: utils.js:393
 msgid "SE"
 msgstr ""
 
-#: utils.js:394
+#: utils.js:393
 msgid "SW"
 msgstr ""
 
-#: utils.js:394
+#: utils.js:393
 msgid "W"
 msgstr ""
 
-#: utils.js:567
+#: utils.js:566
 msgid "Displayed weather data doesn't belong to any currently configured location!"
 msgstr ""
 
-#: utils.js:805
+#: utils.js:804
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr ""
 
-#: utils.js:806
+#: utils.js:805
 msgid "Please check your installation."
+msgstr ""
+
+#: utils.js:906 utils.js:923
+msgid "New Moon"
+msgstr ""
+
+#: utils.js:908
+msgid "Waxing Crescent"
+msgstr ""
+
+#: utils.js:910
+msgid "First Quarter"
+msgstr ""
+
+#: utils.js:912
+msgid "Waxing Gibbous"
+msgstr ""
+
+#: utils.js:914
+msgid "Full Moon"
+msgstr ""
+
+#: utils.js:916
+msgid "Waning Gibbous"
+msgstr ""
+
+#: utils.js:918
+msgid "Third Quarter"
+msgstr ""
+
+#: utils.js:920
+msgid "Waning Crescent"
 msgstr ""
 
 #: weather_providers/DarkSky.js:98 weather_providers/OpenWeatherMap.js:126 weather_providers/SKEL.js:119 weather_providers/YahooWeather.js:130

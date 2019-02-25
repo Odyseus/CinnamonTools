@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PopupTranslator VERSION\n"
-"POT-Creation-Date: 2019-02-21 10:43-0300\n"
+"POT-Creation-Date: 2019-02-25 12:04-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
