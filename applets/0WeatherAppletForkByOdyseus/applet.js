@@ -24,7 +24,6 @@ const _ = $._;
 const DebugManager = new $.DebugManager();
 
 const {
-    cairo: Cairo,
     gi: {
         Cinnamon,
         Clutter,
@@ -95,6 +94,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             this._expandAppletContextMenu();
             this._initSoupSession();
         }, () => {
+            this.forceMenuReload = false;
             this.theme = null;
             this.stylesheet = null;
             this.load_theme_id = 0;
@@ -132,6 +132,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             this.updateLocationsMap();
             this._updateKeybindings();
             this.createMainContainers();
+            this.appendIconThemePath();
             this.rebuild();
             this._startRefreshWeatherLoop();
             this._loadTheme();
@@ -228,6 +229,8 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             "pref_initial_load_done",
             "pref_menu_theme",
             "pref_menu_theme_path_custom",
+            "pref_icon_theme",
+            "pref_icon_theme_path_custom",
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -554,6 +557,55 @@ WeatherAppletForkByOdyseusApplet.prototype = {
         this.refreshWeather();
     },
 
+    appendIconThemePath: function() {
+        let defaultSearchPath = Gtk.IconTheme.get_default().get_search_path();
+        let builtInIconThemePath = this.metadata.path + "/themes/icons";
+        let customIconThemePath = this.pref_icon_theme_path_custom;
+        let pathToAppend = null;
+
+        if (/^file:\/\//.test(customIconThemePath)) {
+            customIconThemePath = customIconThemePath.substr(7);
+        }
+
+        let allPaths = [builtInIconThemePath, customIconThemePath];
+
+        for (let i = allPaths.length - 1; i >= 0; i--) {
+            if (defaultSearchPath.indexOf(allPaths[i]) !== -1) {
+                defaultSearchPath.splice(defaultSearchPath.indexOf(allPaths[i]), 1);
+            }
+        }
+
+        switch (this.pref_icon_theme) {
+            case "built-in":
+                pathToAppend = builtInIconThemePath;
+                break;
+            case "custom":
+                /* WARNING: An empty string passed to Gio.file_new_for_path will
+                 * return the user's home directory. ¬¬
+                 */
+                let iconDir = Gio.file_new_for_path(customIconThemePath);
+
+                if (customIconThemePath && iconDir.query_exists(null)) {
+                    pathToAppend = customIconThemePath;
+                } else {
+                    let msg = _("Selected path for custom icon theme doesn't exist!");
+                    this.displayErrorMessage(msg);
+                    global.logError(msg);
+                }
+                break;
+            default:
+                pathToAppend = null;
+                this.forceMenuReload = true;
+                break;
+        }
+
+        if (pathToAppend !== null) {
+            this.forceMenuReload = true;
+            defaultSearchPath.push(pathToAppend);
+            Gtk.IconTheme.get_default().set_search_path(defaultSearchPath);
+        }
+    },
+
     refreshAndRebuild: function(aForceRetrieval = false) {
         this._refreshButton._refDate = null;
         this.rebuild();
@@ -727,7 +779,8 @@ WeatherAppletForkByOdyseusApplet.prototype = {
              * to the lastCheck property in aWeatherData, halt execution. This is
              * done so the menu isn't unnecessarily repopulated with the exact same data.
              */
-            if (this._refreshButton._refDate !== null &&
+            if (!this.forceMenuReload &&
+                this._refreshButton._refDate !== null &&
                 aWeatherData.hasOwnProperty("lastCheck") &&
                 this._refreshButton._refDate === aWeatherData.lastCheck) {
                 return false;
@@ -904,6 +957,8 @@ WeatherAppletForkByOdyseusApplet.prototype = {
                 }
             });
 
+            this.forceMenuReload = false;
+
             return true;
         });
     },
@@ -1048,6 +1103,7 @@ WeatherAppletForkByOdyseusApplet.prototype = {
                 text: SumaryDetailLabels[id] + ":",
                 style_class: CLASS.CURRENT_SUMMARY_DETAILS_TITLE
             });
+
             this[vProp] = new St.Label(textOb);
 
             summaryGrid.attach(this[tProp], 0, index, 1, 1);
@@ -1185,6 +1241,10 @@ WeatherAppletForkByOdyseusApplet.prototype = {
     },
 
     weatherIconSafely: function(code) {
+        if (this.pref_icon_theme !== "system") {
+            return "wi-" + code;
+        }
+
         let iconname = this._getConditionData("icon", code);
         for (let i = 0; i < iconname.length; i++) {
             if (Gtk.IconTheme.get_default().has_icon(iconname[i] +
@@ -1642,6 +1702,13 @@ WeatherAppletForkByOdyseusApplet.prototype = {
             case "pref_forecasts_icon_size":
             case "pref_applet_icon_type":
             case "pref_menu_icon_type":
+            case "pref_icon_theme":
+            case "pref_icon_theme_path_custom":
+                if (pref_key === "pref_icon_theme_path_custom" ||
+                    pref_key === "pref_icon_theme") {
+                    this.appendIconThemePath();
+                }
+
                 this.refreshIcons();
                 break;
             case "pref_enable_verbose_logging":
