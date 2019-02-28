@@ -762,7 +762,7 @@ Logger.prototype = {
     },
 
     _log: function(aLevel, aMsg, aIsRuntime) {
-        if (typeof(aMsg) === "object") {
+        if (typeof aMsg === "object") {
             /* NOTE: Logging function in global can handle objects.
              */
             global[aLevel](this.base_message.format(
