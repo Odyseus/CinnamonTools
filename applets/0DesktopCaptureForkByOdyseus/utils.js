@@ -748,7 +748,7 @@ Logger.prototype = {
     },
 
     _log: function(aLevel, aMsg, aIsRuntime) {
-        if (typeof(aMsg) === "object") {
+        if (typeof aMsg === "object") {
             global[aLevel](this.base_message.format(
                 aIsRuntime ? "" : this._getCaller(),
                 this._formatMessage("")
