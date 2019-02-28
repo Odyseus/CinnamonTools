@@ -397,24 +397,3 @@ msgid ""
 msgstr ""
 "Con esta opción activada, un submenú previamente abierto será automáticamente cerrado.\n"
 "Sólo funciona con submenúes creados en el primer nivel del menú principal. Submenúes dentro de otros submenúes no serán afectados."
-
-#~ msgid "Compatibility"
-#~ msgstr "Compatibilidad"
-
-#~ msgid "Do not install on any other version of Cinnamon."
-#~ msgstr "No instalar en ninguna otra versión de Cinnamon."
-
-#~ msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-#~ msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
-
-#~ msgid "IMPORTANT!!!"
-#~ msgstr "¡IMPORTANTE!"
-
-#~ msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-#~ msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#~ msgid "Settings window"
-#~ msgstr "Ventana de configuración"
-
-#~ msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
-#~ msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."

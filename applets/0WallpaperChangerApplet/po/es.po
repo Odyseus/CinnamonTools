@@ -566,33 +566,3 @@ msgstr "Ver el archivo de ayuda de este xlet."
 #. metadata.json->description
 msgid "Cinnamon wallpaper slideshow applet with multiple profiles support."
 msgstr "Diapositivas de fondos de pantalla para Cinnamon con soporte para múltiples perfiles."
-
-#~ msgid "Compatibility"
-#~ msgstr "Compatibilidad"
-
-#~ msgid "Do not install on any other version of Cinnamon."
-#~ msgstr "No instalar en ninguna otra versión de Cinnamon."
-
-#~ msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-#~ msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
-
-#~ msgid "IMPORTANT!!!"
-#~ msgstr "¡IMPORTANTE!"
-
-#~ msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-#~ msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#~ msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
-#~ msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."
-
-#~ msgid "Please enter your password to install the required settings schema for %s"
-#~ msgstr "Por favor, introduzca su contraseña para instalar el esquema de configuración necesario para %s"
-
-#~ msgid "Could not install the settings schema for %s.  You will have to perform this step yourself."
-#~ msgstr "No se ha podido instalar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo."
-
-#~ msgid "Please enter your password to remove the settings schema for %s"
-#~ msgstr "Por favor, introduzca su contraseña para eliminar el esquema de configuración para %s"
-
-#~ msgid "Could not remove the settings schema for %s.  You will have to perform this step yourself.  This is not a critical error."
-#~ msgstr "No se pudo eliminar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo. Esto no es un error crítico."

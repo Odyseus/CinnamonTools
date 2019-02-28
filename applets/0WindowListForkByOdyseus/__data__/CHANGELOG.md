@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Thu, 28 Feb 2019 20:06:55 -0300
+- **Commit:** [0ddf56b](https://gitlab.com/Odyseus/CinnamonTools/commit/0ddf56b)
+- **Author:** Odyseus
+
+```
+- Updated CONTRIBUTORS.md file to properly give credit.
+
+```
+
+***
+
 - **Date:** Thu, 21 Feb 2019 10:33:10 -0300
 - **Commit:** [0f5d82f](https://gitlab.com/Odyseus/CinnamonTools/commit/0f5d82f)
 - **Author:** Odyseus

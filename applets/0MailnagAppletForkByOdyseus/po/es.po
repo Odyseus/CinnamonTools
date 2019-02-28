@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-12 22:30-0300\n"
-"PO-Revision-Date: 2018-08-25 02:48-0300\n"
+"POT-Creation-Date: 2019-02-28 20:08-0300\n"
+"PO-Revision-Date: 2019-02-28 20:14-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -87,48 +87,102 @@ msgstr ""
 "Cinnamon, las localizaciones se pueden instalar ejecutando el archivo "
 "llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: applet.js:431
-#, javascript-format
-msgid "You have %d new mails!"
-msgstr "¡Tienes %d correos nuevos!"
+#: applet.js:83
+msgid "Configure Mailnag"
+msgstr "Configurar Mailnag"
 
-#: applet.js:432 applet.js:469
+#: applet.js:210
+msgid "Mailnag daemon stopped working!"
+msgstr "¡El demonio Mailnag dejó de funcionar!"
+
+#: applet.js:212
+msgid "Mailnag daemon isn't running! Do you have it installed?"
+msgstr "¡El demonio de Mailnag no se está ejecutando! ¿Lo tiene instalado?"
+
+#: applet.js:433
+#, javascript-format
+msgid "You have %d new mail!"
+msgid_plural "You have %d new mails!"
+msgstr[0] "¡Tienes %d correo nuevo!"
+msgstr[1] "¡Tienes %d correos nuevos!"
+
+#: applet.js:435 applet.js:472
 msgid "Mark All Read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:441
+#: applet.js:444
 msgid "You have new mail!"
 msgstr "¡Tienes nuevo correo!"
 
-#: applet.js:443
+#: applet.js:446
 msgid "Mark Read"
 msgstr "Marcar como leído"
 
-#: applet.js:505 applet.js:552
+#: applet.js:508 applet.js:556
 msgid "No unread mails."
 msgstr "Sin mensajes no leídos."
 
-#: applet.js:533
+#: applet.js:536
 msgid "Mailnag daemon is not running!"
 msgstr "El demonio Mailnag no se está ejecutando!"
 
-#: applet.js:543
+#: applet.js:546
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr "¡Tienes un correo de %s!"
 
-#: applet.js:549
+#: applet.js:552
 #, javascript-format
-msgid "You have %d unread mails!"
-msgstr "¡Tienes %d correos sin leer!"
+msgid "You have %d unread mail!"
+msgid_plural "You have %d unread mails!"
+msgstr[0] "¡Tienes %d correo sin leer!"
+msgstr[1] "¡Tienes %d correos sin leer!"
 
-#: applet.js:562
+#: applet.js:566
 msgid "Click to see error!"
-msgstr "Hacer clic para ver el error!"
+msgstr "¡Hacer clic para ver el error!"
 
-#: applet.js:563
+#: applet.js:567
 msgid "Error"
 msgstr "Error"
+
+#. 86400 = Amount of seconds in 24 hours.
+#. today
+#. <1 minute
+#: utils.js:157
+msgid "just now"
+msgstr "hace poco"
+
+#: utils.js:160
+#, javascript-format
+msgid "%d minute ago"
+msgid_plural "%d minutes ago"
+msgstr[0] "hace %d minuto"
+msgstr[1] "hace %d minutos"
+
+#: utils.js:163
+#, javascript-format
+msgid "%d hour ago"
+msgid_plural "%d hours ago"
+msgstr[0] "hace %d hora"
+msgstr[1] "hace %d horas"
+
+#: utils.js:167
+msgid "yesterday"
+msgstr "ayer"
+
+#: utils.js:169
+#, javascript-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "hace %d día"
+msgstr[1] "hace %d días"
+
+#: utils.js:172
+msgid "d% week ago"
+msgid_plural "%d weeks ago"
+msgstr[0] "hace %d semana"
+msgstr[1] "hace %d semanas"
 
 #. metadata.json->description
 msgid "Mailnag mail notifier applet"
@@ -202,34 +256,3 @@ msgid ""
 msgstr ""
 "Ingresar el comando para iniciar su cliente de correo aquí. También puede "
 "ingresar una dirección web que comienza con 'http'."
-
-#~ msgid "Compatibility"
-#~ msgstr "Compatibilidad"
-
-#~ msgid "Do not install on any other version of Cinnamon."
-#~ msgstr "No instalar en ninguna otra versión de Cinnamon."
-
-#~ msgid ""
-#~ "If this xlet was installed manually and not trough Cinnamon Settings, "
-#~ "localizations can be installed by executing the script called **helper."
-#~ "py** from a terminal opened inside the xlet's folder."
-#~ msgstr ""
-#~ "Si este xlet se instaló manualmente y no a través de Configuración de "
-#~ "Cinnamon, las localizaciones se pueden instalar ejecutando el archivo "
-#~ "llamado **helper.py** desde una terminal abierta dentro de la carpeta del "
-#~ "xlet."
-
-#~ msgid "IMPORTANT!!!"
-#~ msgstr "¡IMPORTANTE!"
-
-#~ msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-#~ msgstr ""
-#~ "Localización de applets/desklets/extensiones (también conocidos como "
-#~ "xlets)"
-
-#~ msgid ""
-#~ "If this xlet has no locale available for your language, you could create "
-#~ "it by following the following instructions."
-#~ msgstr ""
-#~ "Si este xlet no está disponible en su idioma, la localización puede ser "
-#~ "creada siguiendo las siguientes instrucciones."

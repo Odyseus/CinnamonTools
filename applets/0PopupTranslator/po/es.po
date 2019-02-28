@@ -682,24 +682,3 @@ msgstr "Indentar los datos del historial de traducciones"
 #. settings-schema.json->pref_loggin_save_history_indented->tooltip
 msgid "It allows to save the translation history data with indentation."
 msgstr "Permite guardar los datos del historial de traducción con sangría."
-
-#~ msgid "Compatibility"
-#~ msgstr "Compatibilidad"
-
-#~ msgid "Do not install on any other version of Cinnamon."
-#~ msgstr "No instalar en ninguna otra versión de Cinnamon."
-
-#~ msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-#~ msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
-
-#~ msgid "Python 3"
-#~ msgstr "Python 3"
-
-#~ msgid "IMPORTANT!!!"
-#~ msgstr "¡IMPORTANTE!"
-
-#~ msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-#~ msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#~ msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
-#~ msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."

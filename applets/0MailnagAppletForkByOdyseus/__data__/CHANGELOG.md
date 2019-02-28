@@ -4,6 +4,23 @@
 
 ***
 
+- **Date:** Thu, 28 Feb 2019 20:04:03 -0300
+- **Commit:** [77f6913](https://gitlab.com/Odyseus/CinnamonTools/commit/77f6913)
+- **Author:** Odyseus
+
+```
+- Exposed to translation several strings that weren't before.
+- Correctly handle plural of translatable strings.
+- Fixed bug that displayed incorrect amount of hours for received e-mails.
+- Avoided the constant calculation of integers inside the `formatDatetime` function. For example, instead of storing the result of `24 * 60 * 60` in a constant that will be used once, just directly use the `86400` integer.
+- Added missing CONTRIBUTORS.md file to properly give credit.
+- *Strictified* comparisons.
+- Switched to a little more precise way of checking if an object is an object.
+
+```
+
+***
+
 - **Date:** Thu, 21 Feb 2019 10:34:21 -0300
 - **Commit:** [b42c9f7](https://gitlab.com/Odyseus/CinnamonTools/commit/b42c9f7)
 - **Author:** Odyseus

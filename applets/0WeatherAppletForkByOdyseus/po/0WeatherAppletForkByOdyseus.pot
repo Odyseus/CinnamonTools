@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-02-25 12:05-0300\n"
+"POT-Creation-Date: 2019-02-28 21:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. menu_popup.append(self.create_menu_item(_("Export settings to a file"),
 #. self._import_export_settings, True))
 #. menu_popup.append(Gtk.SeparatorMenuItem())
-#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:266 applet.js:1261
+#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:269 applet.js:1321
 msgid "Help"
 msgstr ""
 
@@ -72,7 +72,7 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:930
+#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:985
 msgid "Location name"
 msgstr ""
 
@@ -177,7 +177,7 @@ msgstr ""
 msgid "More customization options (current weather icon size, forecasts icon size, etc.)."
 msgstr ""
 
-#: z_create_localized_help.py:55 applet.js:143
+#: z_create_localized_help.py:55 applet.js:144
 msgid "This applet requires valid credentials from any of the weather provider services for it to work."
 msgstr ""
 
@@ -334,85 +334,171 @@ msgstr ""
 msgid "Cinnamon provides a command to reload its theme. Just open the **Run command** dialog ([[Alt]] + [[F2]]), type **rt** and press [[Enter]]."
 msgstr ""
 
-#: applet.js:88
+#. settings-schema.json->pref_icon_theme->description
+#: z_create_localized_help.py:162
+msgid "Icon theme"
+msgstr ""
+
+#: z_create_localized_help.py:164
+msgid "This applet supports custom icon themes."
+msgstr ""
+
+#: z_create_localized_help.py:165
+msgid "This applet comes with the possibility to choose 3 icon themes and they are named as follows."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#. settings-schema.json->pref_icon_theme->options
+#: z_create_localized_help.py:167
+msgid "System"
+msgstr ""
+
+#: z_create_localized_help.py:168
+msgid "The applet will use the icons provided by the currently selected icon theme for the system."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#. settings-schema.json->pref_icon_theme->options
+#: z_create_localized_help.py:170
+msgid "Built-in"
+msgstr ""
+
+#: z_create_localized_help.py:171
+msgid "The icons used are the ones found in APPLET_FOLDER/themes/icons."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:173
+msgid "Custom"
+msgstr ""
+
+#: z_create_localized_help.py:174
+msgid "The icons used are the ones found in the path defined in the **Path to custom icon theme** option."
+msgstr ""
+
+#: z_create_localized_help.py:175
+msgid "An icon theme is just a folder that contains specifically named icon files."
+msgstr ""
+
+#: z_create_localized_help.py:176
+msgid "The built-in icon theme is a monochrome theme and is found in APPLET_FOLDER/themes/icons."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:178
+msgid "The built-in icon theme can be used as full color or symbolic icons (applet settings **Menu icon type** and **Applet icon type**). The difference is that, if used as a full color theme, the icons will be black no matter if the Cinnamon theme selected has light or dark backgrounds for menus. On the other hand, if it is used as symbolic icons, the color of the icons will be set by the selected Cinnamon theme. Additionally, symbolic icons can be colorized through the custom CSS theme (applet setting **Menu theme**) by styling the `weather-forecast-icon` and `weather-current-icon` classes."
+msgstr ""
+
+#: z_create_localized_help.py:179
+msgid "To create a custom icon theme, the built-in icon theme can be used as a base."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:181
+msgid "The built-in icon theme is composed of 36 *real images*, the rest of icons are symbolic links to these *real images*."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:183
+msgid "Inside the built-in icon theme is a script called **z_symlinkify.bash** that can be used to create an icon theme from scratch. This script also contains the list of *real images* that are used to create the symbolic links."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:185
+msgid "A custom icon theme can contain only full colored icons, only symbolic icons or both. The **Menu icon type** and **Applet icon type** applet settings should be set accordingly to the icon type used by the custom theme."
+msgstr ""
+
+#: z_create_localized_help.py:186
+msgid "A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them."
+msgstr ""
+
+#: z_create_localized_help.py:187
+msgid "A custom icon theme should contain 232 icons to support both full color and symbolic icons. Or half of that (116) to support one or the other."
+msgstr ""
+
+#: applet.js:87
 msgid "Click to open"
 msgstr ""
 
-#: applet.js:142
+#: applet.js:143
 msgid "Read the help page"
 msgstr ""
 
 #. settings-schema.json->locations_manager_button->description
-#: applet.js:246
+#: applet.js:249
 msgid "Open locations manager"
 msgstr ""
 
-#: applet.js:253
+#: applet.js:256
 msgid "Copy current location data"
 msgstr ""
 
-#: applet.js:350
+#: applet.js:353
 msgid "Click to copy error to clipboard."
 msgstr ""
 
-#: applet.js:351
+#: applet.js:354
 msgid "Look at the logs for details."
 msgstr ""
 
-#: applet.js:388
+#: applet.js:391
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:401
+#: applet.js:404
 msgid "Click to refresh weather data"
 msgstr ""
 
-#: applet.js:608
+#: applet.js:591
+msgid "Selected path for custom icon theme doesn't exist!"
+msgstr ""
+
+#: applet.js:660
 msgid "No current location set!"
 msgstr ""
 
-#: applet.js:658
+#: applet.js:710
 msgid "Error initializing weather provider!"
 msgstr ""
 
-#: applet.js:721
+#: applet.js:773
 msgid "No weather data available!"
 msgstr ""
 
-#: applet.js:828
+#: applet.js:881
 #, javascript-format
 msgid "Powered by %s"
 msgstr ""
 
-#: applet.js:984
+#: applet.js:1039
 msgid "Current location"
 msgstr ""
 
-#: applet.js:997
+#: applet.js:1052
 msgid "Open location weather details page"
 msgstr ""
 
-#: applet.js:1183
+#: applet.js:1239
 msgid "Not available"
 msgstr ""
 
-#: applet.js:1566
+#: applet.js:1626
 msgid "Error trying to get theme"
 msgstr ""
 
-#: applet.js:1574
+#: applet.js:1634
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: applet.js:1584
+#: applet.js:1644
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: applet.js:1651
+#: applet.js:1718
 msgid "Debugging toggled"
 msgstr ""
 
-#: applet.js:1652
+#: applet.js:1719
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr ""
 
@@ -1222,6 +1308,14 @@ msgstr ""
 
 #. settings-schema.json->pref_menu_orientation->options
 msgid "Vertical"
+msgstr ""
+
+#. settings-schema.json->header_general_appearance->description
+msgid "General Appearance"
+msgstr ""
+
+#. settings-schema.json->pref_icon_theme_path_custom->description
+msgid "Path to custom icon theme"
 msgstr ""
 
 #. settings-schema.json->header_menu_appearance->description

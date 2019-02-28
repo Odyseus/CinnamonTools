@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-25 11:58-0300\n"
-"PO-Revision-Date: 2019-02-25 12:04-0300\n"
+"POT-Creation-Date: 2019-02-28 20:28-0300\n"
+"PO-Revision-Date: 2019-02-28 20:29-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Español; Castellano <zodiac_es@yahoo.es>\n"
 "Language: es\n"
@@ -30,7 +30,7 @@ msgstr "Ayuda para %s"
 #. menu_popup.append(self.create_menu_item(_("Export settings to a file"),
 #. self._import_export_settings, True))
 #. menu_popup.append(Gtk.SeparatorMenuItem())
-#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:266 applet.js:1261
+#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:269 applet.js:1321
 msgid "Help"
 msgstr "Ayuda"
 
@@ -75,7 +75,7 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:930
+#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:985
 msgid "Location name"
 msgstr "Nombre de la ubicación"
 
@@ -180,7 +180,7 @@ msgstr "La fecha en la que se publicaron los datos meteorológicos siempre se mu
 msgid "More customization options (current weather icon size, forecasts icon size, etc.)."
 msgstr "Más opciones de personalización (tamaño del icono del tiempo actual, tamaño del icono de pronósticos, etc.)."
 
-#: z_create_localized_help.py:55 applet.js:143
+#: z_create_localized_help.py:55 applet.js:144
 msgid "This applet requires valid credentials from any of the weather provider services for it to work."
 msgstr "Este applet requiere credenciales válidas de cualquiera de los servicios proveedores de clima para que funcione."
 
@@ -337,85 +337,171 @@ msgstr "Para que los cambios del tema personalizados se reflejen en el menú mie
 msgid "Cinnamon provides a command to reload its theme. Just open the **Run command** dialog ([[Alt]] + [[F2]]), type **rt** and press [[Enter]]."
 msgstr "Canela proporciona un comando para volver a cargar su tema. Simplemente abrir el cuadro de diálogo **Ejecutar comando** ([[Alt]] + [[F2]]), escribir **rt** y presionar [[Enter]]."
 
-#: applet.js:88
+#. settings-schema.json->pref_icon_theme->description
+#: z_create_localized_help.py:162
+msgid "Icon theme"
+msgstr "Tema de ícono"
+
+#: z_create_localized_help.py:164
+msgid "This applet supports custom icon themes."
+msgstr "Este applet soporta temas de iconos personalizados."
+
+#: z_create_localized_help.py:165
+msgid "This applet comes with the possibility to choose 3 icon themes and they are named as follows."
+msgstr "Este applet viene con la posibilidad de elegir 3 temas de iconos y son nombrados de la siguiente manera."
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#. settings-schema.json->pref_icon_theme->options
+#: z_create_localized_help.py:167
+msgid "System"
+msgstr "Systema"
+
+#: z_create_localized_help.py:168
+msgid "The applet will use the icons provided by the currently selected icon theme for the system."
+msgstr "El applet utilizará los iconos proporcionados por el tema de íconos seleccionado actualmente para el sistema."
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#. settings-schema.json->pref_icon_theme->options
+#: z_create_localized_help.py:170
+msgid "Built-in"
+msgstr "Incorporado"
+
+#: z_create_localized_help.py:171
+msgid "The icons used are the ones found in APPLET_FOLDER/themes/icons."
+msgstr "Los iconos utilizados son los que se encuentran en CARPETA_DEL_APPLET/themes/icons."
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:173
+msgid "Custom"
+msgstr "Personalizado"
+
+#: z_create_localized_help.py:174
+msgid "The icons used are the ones found in the path defined in the **Path to custom icon theme** option."
+msgstr "Los iconos utilizados son los que se encuentran en la ruta definida en la opción **Ruta al tema de ícono personalizado**."
+
+#: z_create_localized_help.py:175
+msgid "An icon theme is just a folder that contains specifically named icon files."
+msgstr "Un tema de iconos es solo una carpeta que contiene archivos de iconos específicamente nombrados."
+
+#: z_create_localized_help.py:176
+msgid "The built-in icon theme is a monochrome theme and is found in APPLET_FOLDER/themes/icons."
+msgstr "El tema del icono incorporado es un tema monocromático y se encuentra en CARPETA_DEL_APPLET/themes/icons."
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:178
+msgid "The built-in icon theme can be used as full color or symbolic icons (applet settings **Menu icon type** and **Applet icon type**). The difference is that, if used as a full color theme, the icons will be black no matter if the Cinnamon theme selected has light or dark backgrounds for menus. On the other hand, if it is used as symbolic icons, the color of the icons will be set by the selected Cinnamon theme. Additionally, symbolic icons can be colorized through the custom CSS theme (applet setting **Menu theme**) by styling the `weather-forecast-icon` and `weather-current-icon` classes."
+msgstr "El tema del icono incorporado se puede usar como iconos a todo color o simbólicos (configuración del applet **Tipo de icono del menú** y **Tipo de icono del applet**). La diferencia es que, si se utiliza como un tema a todo color, los iconos serán de color negro, sin importar si el tema de Cinnamon seleccionado tiene fondos claros u oscuros para los menús. Por otro lado, si se usa como iconos simbólicos, el color de los iconos se establecerá según el tema de Cinnamon seleccionado. Además, los iconos simbólicos se pueden colorear a través del tema CSS personalizado (configuración del applet **Tema del menú**) al aplicar un estilo a las clases `weather-forecast-icon` y`weather-current-icon`."
+
+#: z_create_localized_help.py:179
+msgid "To create a custom icon theme, the built-in icon theme can be used as a base."
+msgstr "Para crear un tema de icono personalizado, el tema de icono incorporado se puede utilizar como base."
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:181
+msgid "The built-in icon theme is composed of 36 *real images*, the rest of icons are symbolic links to these *real images*."
+msgstr "El tema de los iconos integrado está compuesto por 36 *imágenes reales*, el resto de iconos son enlaces simbólicos a estas *imágenes reales*."
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:183
+msgid "Inside the built-in icon theme is a script called **z_symlinkify.bash** that can be used to create an icon theme from scratch. This script also contains the list of *real images* that are used to create the symbolic links."
+msgstr "Dentro del tema de iconos integrado hay un script llamado **z_symlinkify.bash** que se puede usar para crear un tema de iconos desde cero. Este script también contiene la lista de *imágenes reales* que se utilizan para crear los enlaces simbólicos."
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:185
+msgid "A custom icon theme can contain only full colored icons, only symbolic icons or both. The **Menu icon type** and **Applet icon type** applet settings should be set accordingly to the icon type used by the custom theme."
+msgstr "Un tema de ícono personalizado puede contener solo íconos a todo color, solo íconos simbólicos o ambos. La configuración del applet del **Tipo de ícono del menú** y **Tipo de ícono del applet** se debe establecer de acuerdo con el tipo de ícono usado por el tema personalizado."
+
+#: z_create_localized_help.py:186
+msgid "A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them."
+msgstr "Un tema de icono personalizado puede contener imágenes SVG o PNG; aunque las imágenes SVG son preferibles debido a su capacidad de escalar a cualquier tamaño de icono establecido en esta configuración de applet sin perder calidad. Se podrían usar otros tipos de imágenes, pero no los probé."
+
+#: z_create_localized_help.py:187
+msgid "A custom icon theme should contain 232 icons to support both full color and symbolic icons. Or half of that (116) to support one or the other."
+msgstr "Un tema de ícono personalizado debe contener 232 íconos para soportar íconos a todo color y simbólicos. O la mitad de eso (116) para soportar a uno u otro."
+
+#: applet.js:87
 msgid "Click to open"
 msgstr "Click para abrir"
 
-#: applet.js:142
+#: applet.js:143
 msgid "Read the help page"
 msgstr "Leer la página de ayuda"
 
 #. settings-schema.json->locations_manager_button->description
-#: applet.js:246
+#: applet.js:249
 msgid "Open locations manager"
 msgstr "Abrir el administrador de ubicaciones"
 
-#: applet.js:253
+#: applet.js:256
 msgid "Copy current location data"
 msgstr "Copiar datos de ubicación actual"
 
-#: applet.js:350
+#: applet.js:353
 msgid "Click to copy error to clipboard."
 msgstr "Haga clic para copiar el error al portapapeles."
 
-#: applet.js:351
+#: applet.js:354
 msgid "Look at the logs for details."
 msgstr "Mirar los registros para más detalles."
 
-#: applet.js:388
+#: applet.js:391
 msgid "Refresh"
 msgstr "Recargar"
 
-#: applet.js:401
+#: applet.js:404
 msgid "Click to refresh weather data"
 msgstr "Hacer clic para actualizar los datos meteorológicos."
 
-#: applet.js:608
+#: applet.js:591
+msgid "Selected path for custom icon theme doesn't exist!"
+msgstr "¡La ruta seleccionada para el tema de icono personalizado no existe!"
+
+#: applet.js:660
 msgid "No current location set!"
 msgstr "¡No hay ubicación actual establecida!"
 
-#: applet.js:658
+#: applet.js:710
 msgid "Error initializing weather provider!"
 msgstr "¡Error al inicializar el proveedor de clima!"
 
-#: applet.js:721
+#: applet.js:773
 msgid "No weather data available!"
 msgstr "¡No hay datos meteorológicos disponibles!"
 
-#: applet.js:828
+#: applet.js:881
 #, javascript-format
 msgid "Powered by %s"
 msgstr "Energizado por %s"
 
-#: applet.js:984
+#: applet.js:1039
 msgid "Current location"
 msgstr "Ubicación actual"
 
-#: applet.js:997
+#: applet.js:1052
 msgid "Open location weather details page"
 msgstr "Abrir página de detalles del clima"
 
-#: applet.js:1183
+#: applet.js:1239
 msgid "Not available"
 msgstr "No disponible"
 
-#: applet.js:1566
+#: applet.js:1626
 msgid "Error trying to get theme"
 msgstr "Error al intentar obtener el tema"
 
-#: applet.js:1574
+#: applet.js:1634
 msgid "Stylesheet parse error"
 msgstr "Error de análisis de hoja de estilo"
 
-#: applet.js:1584
+#: applet.js:1644
 msgid "Error unloading stylesheet"
 msgstr "Error al descargar la hoja de estilos"
 
-#: applet.js:1651
+#: applet.js:1718
 msgid "Debugging toggled"
 msgstr "Depuración activada"
 
-#: applet.js:1652
+#: applet.js:1719
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr "Recordar reiniciar Cinnamon para habilitar/deshabilitar completamente esta opción."
 
@@ -1227,6 +1313,14 @@ msgstr "Horizontal"
 msgid "Vertical"
 msgstr "Vertical"
 
+#. settings-schema.json->header_general_appearance->description
+msgid "General Appearance"
+msgstr "Apariencia General"
+
+#. settings-schema.json->pref_icon_theme_path_custom->description
+msgid "Path to custom icon theme"
+msgstr "Ruta al tema de ícono personalizado"
+
 #. settings-schema.json->header_menu_appearance->description
 msgid "Menu Appearance"
 msgstr "Apariencia del menú"
@@ -1305,165 +1399,3 @@ msgstr "Registro detallado (Cinnamon necesita ser reiniciado)"
 #. settings-schema.json->pref_enable_verbose_logging->tooltip
 msgid "Checking this will enable debug level logging."
 msgstr "Habilitar el registro de nivel de depuración."
-
-#~ msgid "Weather locations"
-#~ msgstr "Ubicaciones"
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "Loading current weather ..."
-#~ msgstr "Cargando el tiempo actual..."
-
-#~ msgid "Loading future weather ..."
-#~ msgstr "Cargando pronóstico del tiempo..."
-
-#~ msgid "Loading ..."
-#~ msgstr "Cargando..."
-
-#~ msgid "Temperature:"
-#~ msgstr "Temperatura:"
-
-#~ msgid "Humidity:"
-#~ msgstr "Humedad:"
-
-#~ msgid "Pressure:"
-#~ msgstr "Presión:"
-
-#~ msgid "Wind:"
-#~ msgstr "Viento:"
-
-#~ msgid "Wind Chill:"
-#~ msgstr "Temperatura percibida:"
-
-#~ msgid "View your local weather forecast"
-#~ msgstr "Ver el pronóstico del tiempo local"
-
-#~ msgid "Get WOEID (Where On Earth IDentification)"
-#~ msgstr "Obtener WOEID (Where On Earth IDentification)"
-
-#~ msgid "http://woeid.rosselliot.co.nz/"
-#~ msgstr "http://woeid.rosselliot.co.nz/"
-
-#~ msgid "WOEID"
-#~ msgstr "WOEID"
-
-#~ msgid "Where On Earth IDentification"
-#~ msgstr "Where On Earth IDentification"
-
-#~ msgid "celsius"
-#~ msgstr "Celsius"
-
-#~ msgid "fahrenheit"
-#~ msgstr "Fahrenheit"
-
-#~ msgid "kph"
-#~ msgstr "Km/h"
-
-#~ msgid "mph"
-#~ msgstr "mph"
-
-#~ msgid "m/s"
-#~ msgstr "m/s"
-
-#~ msgid "knots"
-#~ msgstr "nudos"
-
-#~ msgid "mbar"
-#~ msgstr "mbar"
-
-#~ msgid "in Hg"
-#~ msgstr "inHg"
-
-#~ msgid "mm Hg"
-#~ msgstr "mmHg"
-
-#~ msgid "psi"
-#~ msgstr "psi"
-
-#~ msgid "at"
-#~ msgstr "at"
-
-#~ msgid "atm"
-#~ msgstr "atm"
-
-#~ msgid "Pa"
-#~ msgstr "Pa"
-
-#~ msgid "kPa"
-#~ msgstr "kPa"
-
-#~ msgid "Vertical orientation"
-#~ msgstr "Orientación vertical"
-
-#~ msgid "Show sunrise / sunset times"
-#~ msgstr "Mostrar horas amanecer/puesta del sol"
-
-#~ msgid "Display time in 24 hour format"
-#~ msgstr "Visualizar hora en formato de 24 horas"
-
-#~ msgid "Forecast length"
-#~ msgstr "Cobertura del pronóstico"
-
-#~ msgid "Translate condition"
-#~ msgstr "Traducir condición climática"
-
-#~ msgid "Symbolic icons"
-#~ msgstr "Iconos simbólicos"
-
-#~ msgid "Show the weather condition (e.g., \"Windy\", \"Clear\") in the panel"
-#~ msgstr "Mostrar condición climática (por ejemplo \"ventoso\", \"despejado\") en el panel"
-
-#~ msgid "Override location label"
-#~ msgstr "Sobreescribir nombre de ubicación"
-
-#~ msgid "Update interval"
-#~ msgstr "Intervalo de actualización"
-
-#~ msgid "Compatibility"
-#~ msgstr "Compatibilidad"
-
-#~ msgid "Do not install on any other version of Cinnamon."
-#~ msgstr "No instalar en ninguna otra versión de Cinnamon."
-
-#~ msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-#~ msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
-
-#~ msgid "IMPORTANT!!!"
-#~ msgstr "¡IMPORTANTE!"
-
-#~ msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-#~ msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#~ msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
-#~ msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."
-
-#~ msgid "Settings"
-#~ msgstr "Ajustes"
-
-#~ msgid "Set the keybinding to call the menu"
-#~ msgstr "Elige una atajo de teclado para abrir el menú"
-
-#~ msgid "Get WOEID"
-#~ msgstr "Obtener WOEID"
-
-#~ msgid "Where On Earth ID"
-#~ msgstr "Identificador de lugares en La Tierra (Where On Earth ID)"
-
-#~ msgid "Settings for weather@mockturtl"
-#~ msgstr "Ajustes de weather@mockturtl"
-
-#~ msgid "Weather"
-#~ msgstr "Clima"
-
-#~ msgid "Show 5-day forecast"
-#~ msgstr "Mostrar pronóstico de 5 días"
-
-#~ msgid "Please wait"
-#~ msgstr "Espere un momento"
-
-#~ msgid "Today"
-#~ msgstr "Hoy"
-
-#~ msgid "Tomorrow"
-#~ msgstr "Mañana"

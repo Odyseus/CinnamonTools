@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Thu, 28 Feb 2019 20:03:45 -0300
+- **Commit:** [ee49e70](https://gitlab.com/Odyseus/CinnamonTools/commit/ee49e70)
+- **Author:** Odyseus
+
+```
+- Switched to a little more precise way of checking if an object is an object.
+
+```
+
+***
+
 - **Date:** Mon, 21 Jan 2019 21:52:17 -0300
 - **Commit:** [a1b18e7](https://gitlab.com/Odyseus/CinnamonTools/commit/a1b18e7)
 - **Author:** Odyseus

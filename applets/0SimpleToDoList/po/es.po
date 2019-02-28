@@ -698,30 +698,3 @@ msgstr "Registro detallado"
 #. settings-schema.json->pref_enable_verbose_logging->tooltip
 msgid "Checking this will enable debug level logging."
 msgstr "Habilitar el registro de nivel de depuración."
-
-#~ msgid "Compatibility"
-#~ msgstr "Compatibilidad"
-
-#~ msgid "Do not install on any other version of Cinnamon."
-#~ msgstr "No instalar en ninguna otra versión de Cinnamon."
-
-#~ msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-#~ msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
-
-#~ msgid "IMPORTANT!!!"
-#~ msgstr "¡IMPORTANTE!"
-
-#~ msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-#~ msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#~ msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
-#~ msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."
-
-#~ msgid "Avoid accidental deletions"
-#~ msgstr "Evitar borrados accidentales"
-
-#~ msgid "Enable logging"
-#~ msgstr "Habilitar el registro"
-
-#~ msgid "It enables the ability to log the output of several functions used by the applet."
-#~ msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por el applet."

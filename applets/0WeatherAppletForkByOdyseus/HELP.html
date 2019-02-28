@@ -179,6 +179,25 @@
 <li>Para que los cambios del tema personalizados se reflejen en el menú mientras se modifica el archivo de tema, se puede reiniciar Cinnamon o se puede volver a cargar el tema Cinnamon.</li>
 <li>Canela proporciona un comando para volver a cargar su tema. Simplemente abrir el cuadro de diálogo <strong>Ejecutar comando</strong> (<kbd>Alt</kbd> + <kbd>F2</kbd>), escribir <strong>rt</strong> y presionar <kbd>Enter</kbd>.</li>
 </ul>
+<h2>Tema de ícono</h2>
+<ul>
+<li>Este applet soporta temas de iconos personalizados.</li>
+<li>Este applet viene con la posibilidad de elegir 3 temas de iconos y son nombrados de la siguiente manera.<ul>
+<li><strong>Systema</strong>: El applet utilizará los iconos proporcionados por el tema de íconos seleccionado actualmente para el sistema.</li>
+<li><strong>Incorporado</strong>: Los iconos utilizados son los que se encuentran en CARPETA_DEL_APPLET/themes/icons.</li>
+<li><strong>Personalizado</strong>: Los iconos utilizados son los que se encuentran en la ruta definida en la opción <strong>Ruta al tema de ícono personalizado</strong>.</li>
+</ul>
+</li>
+<li>Un tema de iconos es solo una carpeta que contiene archivos de iconos específicamente nombrados.</li>
+<li>El tema del icono incorporado es un tema monocromático y se encuentra en CARPETA_DEL_APPLET/themes/icons.</li>
+<li>El tema del icono incorporado se puede usar como iconos a todo color o simbólicos (configuración del applet <strong>Tipo de icono del menú</strong> y <strong>Tipo de icono del applet</strong>). La diferencia es que, si se utiliza como un tema a todo color, los iconos serán de color negro, sin importar si el tema de Cinnamon seleccionado tiene fondos claros u oscuros para los menús. Por otro lado, si se usa como iconos simbólicos, el color de los iconos se establecerá según el tema de Cinnamon seleccionado. Además, los iconos simbólicos se pueden colorear a través del tema CSS personalizado (configuración del applet <strong>Tema del menú</strong>) al aplicar un estilo a las clases <code>weather-forecast-icon</code> y<code>weather-current-icon</code>.</li>
+<li>Para crear un tema de icono personalizado, el tema de icono incorporado se puede utilizar como base.</li>
+<li>El tema de los iconos integrado está compuesto por 36 <em>imágenes reales</em>, el resto de iconos son enlaces simbólicos a estas <em>imágenes reales</em>.</li>
+<li>Dentro del tema de iconos integrado hay un script llamado <strong>z_symlinkify.bash</strong> que se puede usar para crear un tema de iconos desde cero. Este script también contiene la lista de <em>imágenes reales</em> que se utilizan para crear los enlaces simbólicos.</li>
+<li>Un tema de ícono personalizado puede contener solo íconos a todo color, solo íconos simbólicos o ambos. La configuración del applet del <strong>Tipo de ícono del menú</strong> y <strong>Tipo de ícono del applet</strong> se debe establecer de acuerdo con el tipo de ícono usado por el tema personalizado.</li>
+<li>Un tema de icono personalizado puede contener imágenes SVG o PNG; aunque las imágenes SVG son preferibles debido a su capacidad de escalar a cualquier tamaño de icono establecido en esta configuración de applet sin perder calidad. Se podrían usar otros tipos de imágenes, pero no los probé.</li>
+<li>Un tema de ícono personalizado debe contener 232 íconos para soportar íconos a todo color y simbólicos. O la mitad de eso (116) para soportar a uno u otro.</li>
+</ul>
 
 </br>
 
@@ -319,6 +338,25 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <li>For the custom theme changes to be reflected on the menu while the theme file is modified, either Cinnamon can be restarted or the Cinnamon theme can be reloaded.</li>
 <li>Cinnamon provides a command to reload its theme. Just open the <strong>Run command</strong> dialog (<kbd>Alt</kbd> + <kbd>F2</kbd>), type <strong>rt</strong> and press <kbd>Enter</kbd>.</li>
 </ul>
+<h2>Icon theme</h2>
+<ul>
+<li>This applet supports custom icon themes.</li>
+<li>This applet comes with the possibility to choose 3 icon themes and they are named as follows.<ul>
+<li><strong>System</strong>: The applet will use the icons provided by the currently selected icon theme for the system.</li>
+<li><strong>Built-in</strong>: The icons used are the ones found in APPLET_FOLDER/themes/icons.</li>
+<li><strong>Custom</strong>: The icons used are the ones found in the path defined in the <strong>Path to custom icon theme</strong> option.</li>
+</ul>
+</li>
+<li>An icon theme is just a folder that contains specifically named icon files.</li>
+<li>The built-in icon theme is a monochrome theme and is found in APPLET_FOLDER/themes/icons.</li>
+<li>The built-in icon theme can be used as full color or symbolic icons (applet settings <strong>Menu icon type</strong> and <strong>Applet icon type</strong>). The difference is that, if used as a full color theme, the icons will be black no matter if the Cinnamon theme selected has light or dark backgrounds for menus. On the other hand, if it is used as symbolic icons, the color of the icons will be set by the selected Cinnamon theme. Additionally, symbolic icons can be colorized through the custom CSS theme (applet setting <strong>Menu theme</strong>) by styling the <code>weather-forecast-icon</code> and <code>weather-current-icon</code> classes.</li>
+<li>To create a custom icon theme, the built-in icon theme can be used as a base.</li>
+<li>The built-in icon theme is composed of 36 <em>real images</em>, the rest of icons are symbolic links to these <em>real images</em>.</li>
+<li>Inside the built-in icon theme is a script called <strong>z_symlinkify.bash</strong> that can be used to create an icon theme from scratch. This script also contains the list of <em>real images</em> that are used to create the symbolic links.</li>
+<li>A custom icon theme can contain only full colored icons, only symbolic icons or both. The <strong>Menu icon type</strong> and <strong>Applet icon type</strong> applet settings should be set accordingly to the icon type used by the custom theme.</li>
+<li>A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them.</li>
+<li>A custom icon theme should contain 232 icons to support both full color and symbolic icons. Or half of that (116) to support one or the other.</li>
+</ul>
 
 </br>
 
@@ -331,11 +369,33 @@ The following sections are available only in English.
 
 </div> <!-- .container.boxed -->
 <span id="xlet-contributors">
+<div class="container boxed my-3 py-3">
+<h2>Contributors/Mentions</h2>
+<ul>
+<li><strong><a href="https://github.com/mockturtl">mockturtl</a>:</strong> Original author of the Wather applet for Cinnamon.</li>
+<li><strong><a href="https://github.com/Gr3q">Attila Greguss</a>:</strong> Current mantainer of the Wather applet for Cinnamon.</li>
+<li>The built-in icon theme uses <a href="https://github.com/erikflowers/weather-icons">Weather Icons</a>.</li>
+</ul>
+
+</div> <!-- .container.boxed -->
 
 <span id="xlet-changelog">
 <div class="container boxed my-3 py-3">
 <h2>Weather (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Thu, 28 Feb 2019 20:06:14 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c510888">c510888</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Removed unused icons from the icons folder.
+- Added missing CONTRIBUTORS.md file to properly give credit.
+- Added the possibility to select an icon theme. One can select from 3 different icon themes.
+    - System: the system icon theme is used.
+    - Built-in: the icon theme provided by this applet is used.
+    - Custom: an icon theme created by the user is used.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Sun, 24 Feb 2019 18:36:21 -0300</li>

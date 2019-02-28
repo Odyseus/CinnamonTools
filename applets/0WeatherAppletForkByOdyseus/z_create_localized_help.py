@@ -158,6 +158,33 @@ class Main(LocalizedHelpCreator):
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _(
                 "Cinnamon provides a command to reload its theme. Just open the **Run command** dialog ([[Alt]] + [[F2]]), type **rt** and press [[Enter]]."),
+            "",
+            "## %s" % _("Icon theme"),
+            "",
+            "- %s" % _("This applet supports custom icon themes."),
+            "- %s" % _("This applet comes with the possibility to choose 3 icon themes and they are named as follows."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "    - **%s**: %s" % (_("System"),
+                                  _("The applet will use the icons provided by the currently selected icon theme for the system.")),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "    - **%s**: %s" % (_("Built-in"),
+                                  _("The icons used are the ones found in APPLET_FOLDER/themes/icons.")),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "    - **%s**: %s" % (_("Custom"), _(
+                "The icons used are the ones found in the path defined in the **Path to custom icon theme** option.")),
+            "- %s" % _("An icon theme is just a folder that contains specifically named icon files."),
+            "- %s" % _("The built-in icon theme is a monochrome theme and is found in APPLET_FOLDER/themes/icons."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("The built-in icon theme can be used as full color or symbolic icons (applet settings **Menu icon type** and **Applet icon type**). The difference is that, if used as a full color theme, the icons will be black no matter if the Cinnamon theme selected has light or dark backgrounds for menus. On the other hand, if it is used as symbolic icons, the color of the icons will be set by the selected Cinnamon theme. Additionally, symbolic icons can be colorized through the custom CSS theme (applet setting **Menu theme**) by styling the `weather-forecast-icon` and `weather-current-icon` classes."),
+            "- %s" % _("To create a custom icon theme, the built-in icon theme can be used as a base."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("The built-in icon theme is composed of 36 *real images*, the rest of icons are symbolic links to these *real images*."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("Inside the built-in icon theme is a script called **z_symlinkify.bash** that can be used to create an icon theme from scratch. This script also contains the list of *real images* that are used to create the symbolic links."),
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            "- %s" % _("A custom icon theme can contain only full colored icons, only symbolic icons or both. The **Menu icon type** and **Applet icon type** applet settings should be set accordingly to the icon type used by the custom theme."),
+            "- %s" % _("A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them."),
+            "- %s" % _("A custom icon theme should contain 232 icons to support both full color and symbolic icons. Or half of that (116) to support one or the other."),
         ])
         ))
 

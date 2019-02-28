@@ -4,6 +4,22 @@
 
 ***
 
+- **Date:** Thu, 28 Feb 2019 20:06:14 -0300
+- **Commit:** [c510888](https://gitlab.com/Odyseus/CinnamonTools/commit/c510888)
+- **Author:** Odyseus
+
+```
+- Removed unused icons from the icons folder.
+- Added missing CONTRIBUTORS.md file to properly give credit.
+- Added the possibility to select an icon theme. One can select from 3 different icon themes.
+    - System: the system icon theme is used.
+    - Built-in: the icon theme provided by this applet is used.
+    - Custom: an icon theme created by the user is used.
+
+```
+
+***
+
 - **Date:** Sun, 24 Feb 2019 18:36:21 -0300
 - **Commit:** [a9f994a](https://gitlab.com/Odyseus/CinnamonTools/commit/a9f994a)
 - **Author:** Odyseus
