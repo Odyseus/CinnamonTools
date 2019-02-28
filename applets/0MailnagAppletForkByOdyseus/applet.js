@@ -8,6 +8,7 @@ if (typeof require === "function") {
 }
 
 const _ = $._;
+const ngettext = $.ngettext;
 
 const {
     gi: {
@@ -79,7 +80,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
         this._initializeSettings(() => {
             this._applet_context_menu.addCommandlineAction(
-                "Configure Mailnag", "mailnag-config");
+                _("Configure Mailnag"), "mailnag-config");
         }, () => {
             this.set_applet_icon_symbolic_name("mail-read");
             this.set_applet_tooltip("?");
@@ -96,6 +97,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             this.menuManager.addMenu(this.menu);
 
             this.mailnagWasRunning = false;
+            this.mailnag = null;
 
             this._notificationSource = new $.NotificationSource();
             if (Main.messageTray) {
@@ -205,9 +207,9 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         // TODO: delete any notifications currently alive
 
         if (this.mailnagWasRunning) {
-            this.showError("Mailnag daemon stopped working!");
+            this.showError(_("Mailnag daemon stopped working!"));
         } else {
-            this.showError("Mailnag daemon isn't running! Do you have it installed?");
+            this.showError(_("Mailnag daemon isn't running! Do you have it installed?"));
         }
     },
 
@@ -371,7 +373,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
         this.accountMenus[account] = accmenu;
 
-        if (this.orientation == St.Side.TOP) {
+        if (this.orientation === St.Side.TOP) {
             this.menu.addMenuItem(accmenu, 0);
         } else {
             this.menu.addMenuItem(accmenu);
@@ -410,7 +412,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             }
             accmenu.add(mailItem);
         } else {
-            if (this.orientation == St.Side.TOP) {
+            if (this.orientation === St.Side.TOP) {
                 this.menu.addMenuItem(mailItem, 0); // add to top of menu
             } else {
                 this.menu.addMenuItem(mailItem); // add to bottom of menu
@@ -428,7 +430,8 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         let markButtonLabel = "";
 
         if (mails.length > 1) {
-            ntfTitle = _("You have %d new mails!").format(mails.length);
+            ntfTitle = ngettext("You have %d new mail!", "You have %d new mails!", mails.length)
+                .format(mails.length);
             markButtonLabel = _("Mark All Read");
 
             let i = 0,
@@ -452,7 +455,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         notification.setTransient(true);
         notification.addButton("mark-read", markButtonLabel);
         notification.connect("action-invoked", (source, action) => {
-            if (action == "mark-read") {
+            if (action === "mark-read") {
                 this.markMailsRead(mails);
                 source.destroy();
             }
@@ -462,7 +465,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
     showMarkAllRead: function() {
         try {
-            if (typeof this._markAllRead === "object") {
+            if (this.hasOwnProperty("_markAllRead") && typeof this._markAllRead === "object") {
                 this.removeMarkAllRead();
             }
 
@@ -471,7 +474,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
             this._markAllRead.connect("activate", () => this.markAllRead());
 
-            if (this.orientation == St.Side.TOP) {
+            if (this.orientation === St.Side.TOP) {
                 this.menu.addMenuItem(this._separator);
                 this.menu.addMenuItem(this._markAllRead);
             } else {
@@ -485,7 +488,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
     removeMarkAllRead: function() {
         try {
-            if (typeof this._markAllRead === "object") {
+            if (this.hasOwnProperty("_markAllRead") && typeof this._markAllRead === "object") {
                 this._markAllRead.destroy();
                 this._separator.destroy();
                 delete this._markAllRead;
@@ -512,7 +515,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
     // makes sure "no unread mail" is not shown
     removeNoUnread: function() {
         try {
-            if (typeof this._noUnreadItem === "object") {
+            if (this.hasOwnProperty("_noUnreadItem") && typeof this._noUnreadItem === "object") {
                 this._noUnreadItem.destroy();
                 delete this._noUnreadItem;
             }
@@ -528,14 +531,14 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
     showMailCount: function() {
         // display '?' if mailnag proxy is not present
-        if (typeof this.mailnag !== "object") {
+        if (!this.mailnag || typeof this.mailnag !== "object") {
             this.set_applet_label("?");
             this.set_applet_tooltip(_("Mailnag daemon is not running!"));
         } else {
             let num = Object.keys(this.menuItems).length;
             this.set_applet_label(num.toString());
             if (num > 0) {
-                if (num == 1) {
+                if (num === 1) {
                     let s = "";
 
                     for (let mi in this.menuItems) {
@@ -546,7 +549,8 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
                     this.set_applet_tooltip(s);
                 } else {
-                    this.set_applet_tooltip(_("You have %d unread mails!").format(num));
+                    this.set_applet_tooltip(ngettext("You have %d unread mail!",
+                        "You have %d unread mails!", num).format(num));
                 }
             } else {
                 this.set_applet_tooltip(_("No unread mails."));
@@ -651,7 +655,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
     },
 
     _onButtonPressEvent: function(actor, event) {
-        if (event.get_button() == 2) { // 2: middle button
+        if (event.get_button() === 2) { // 2: middle button
             switch (this.pref_middle_click_behavior) {
                 case "mark_read":
                     this.markAllRead();

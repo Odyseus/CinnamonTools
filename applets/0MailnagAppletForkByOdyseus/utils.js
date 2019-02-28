@@ -41,6 +41,38 @@ function _(aStr) {
     return Gettext.gettext(aStr);
 }
 
+/**
+ * Return the localized translation of a string, based on the xlet domain or the
+ * current global domain (Cinnamon's), but consider plural forms. If a translation
+ * is found, apply the plural formula to aN, and return the resulting message
+ * (some languages have more than two plural forms). If no translation is found,
+ * return singular if aN is 1; return plural otherwise.
+ *
+ * This function "overrides" the ngettext() function globally defined by Cinnamon.
+ *
+ * @param {String}  aSingular - The singular string being translated.
+ * @param {String}  aPlural   - The plural string being translated.
+ * @param {Integer} aN        - The number (e.g. item count) to determine the translation for
+ * the respective grammatical number.
+ *
+ * @return {String} The translated string.
+ */
+function ngettext(aSingular, aPlural, aN) {
+    let customTrans = Gettext.dngettext(XletMeta.uuid, aSingular, aPlural, aN);
+
+    if (aN === 1) {
+        if (customTrans !== aSingular) {
+            return customTrans;
+        }
+    } else {
+        if (customTrans !== aPlural) {
+            return customTrans;
+        }
+    }
+
+    return Gettext.ngettext(aSingular, aPlural, aN);
+}
+
 function MailItem() {
     this._init.apply(this, arguments);
 }
@@ -117,30 +149,27 @@ MailItem.prototype = {
 
     // formats datetime relative to now
     formatDatetime: function(datetime) {
-        let now = new Date();
-        const sec_24h = 24 * 60 * 60; // 24h * 60 min * 60 sec
-        let time_diff = (now.getTime() - datetime.getTime()) / 1e3;
-        let days_diff = Math.floor(time_diff / sec_24h);
+        let time_diff = (new Date().getTime() - datetime.getTime()) / 1000;
+        let days_diff = Math.floor(time_diff / 86400); // 86400 = Amount of seconds in 24 hours.
 
         if (days_diff === 0) { // today
             if (time_diff < 60) { // <1 minute
-                return "just now";
-            } else if (time_diff < 120) { // <2 minute
-                return "1 minute ago";
-            } else if (time_diff < 60 * 60) { // <1 hour
-                return Math.floor(time_diff / 60) + " minutes ago";
-            } else if (time_diff < 2 * 60 * 60) { // <2 hours
-                return "1 hour ago";
+                return _("just now");
+            } else if (time_diff < 3600) { // <1 hour
+                let m = Math.floor(time_diff / 60);
+                return ngettext("%d minute ago", "%d minutes ago", m).format(m);
             } else {
-                return Math.floor(time_diff / 60 * 60) + " hours ago";
+                let h = Math.floor(time_diff / 3600);
+                return ngettext("%d hour ago", "%d hours ago", h).format(h);
             }
         } else { // before today
-            if (days_diff == 1) {
-                return "yesterday";
+            if (days_diff === 1) {
+                return _("yesterday");
             } else if (days_diff < 7) {
-                return days_diff + " days ago";
+                return ngettext("%d day ago", "%d days ago", days_diff).format(days_diff);
             } else if (days_diff < 30) {
-                return Math.ceil(days_diff / 7) + " weeks ago";
+                let w = Math.ceil(days_diff / 7);
+                return ngettext("d% week ago", "%d weeks ago", w).format(w);
             } else {
                 return datetime.toLocaleDateString();
             }
@@ -163,7 +192,7 @@ AccountMenu.prototype = {
     },
 
     add: function(mailMenuItem) {
-        if (this._orientation == St.Side.TOP) {
+        if (this._orientation === St.Side.TOP) {
             this.menu.addMenuItem(mailMenuItem, 0); // add to top of menu
         } else {
             this.menu.addMenuItem(mailMenuItem); // add to bottom of menu
@@ -191,7 +220,3 @@ NotificationSource.prototype = {
         });
     }
 };
-
-/*
-exported _
- */
