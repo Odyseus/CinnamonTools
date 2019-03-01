@@ -75,6 +75,7 @@ Applet's help pages can be accessed from an applet context menu (item named **He
 - [Desktop Handler](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0DesktopHandler/index.html)
 - [Extensions Manager](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0ExtensionsManager/index.html)
 - [Feeds Reader (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0FeedsByJonbrettForkByOdyseus/index.html)
+- [Mailnag (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0MailnagAppletForkByOdyseus/index.html)
 - [Popup Translator](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0PopupTranslator/index.html)
 - [Quick Menu](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0QuickMenu/index.html)
 - [Simple ToDo List](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0SimpleToDoList/index.html)
