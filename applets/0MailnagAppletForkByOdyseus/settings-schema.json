@@ -1,4 +1,9 @@
 {
+    "pref_overlay_key": {
+        "type": "keybinding",
+        "default": "",
+        "description": "Keyboard shortcut to open and close the menu."
+    },
     "pref_notifications_enabled": {
         "type": "checkbox",
         "default": false,

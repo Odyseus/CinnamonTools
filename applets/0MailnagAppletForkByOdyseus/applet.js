@@ -28,36 +28,6 @@ const {
     }
 } = imports;
 
-const dbus_name = "mailnag.MailnagService";
-const dbus_path = "/mailnag/MailnagService";
-
-const dbus_xml = '<node name="/mailnag/MailnagService">\
-    <interface name="mailnag.MailnagService">\
-        <signal name="MailsRemoved">\
-            <arg type="aa{sv}" name="remaining_mails" />\
-        </signal>\
-        <signal name="MailsAdded">\
-            <arg type="aa{sv}" name="new_mails" />\
-            <arg type="aa{sv}" name="all_mails" />\
-        </signal>\
-        <method name="GetMailCount">\
-            <arg direction="out" type="u" />\
-        </method>\
-        <method name="MarkMailAsRead">\
-            <arg direction="in"  type="s" name="mail_id" />\
-        </method>\
-        <method name="Shutdown">\
-        </method>\
-        <method name="GetMails">\
-            <arg direction="out" type="aa{sv}" />\
-        </method>\
-        <method name="CheckForMails">\
-        </method>\
-    </interface>\
-</node>';
-
-const MailnagProxy = Gio.DBusProxy.makeProxyWrapper(dbus_xml);
-
 function MailnagAppletForkByOdyseusApplet() {
     this._init.apply(this, arguments);
 }
@@ -77,10 +47,10 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         this.metadata = aMetadata;
         this.orientation = aOrientation;
         this.instance_id = aInstance_id;
+        this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         this._initializeSettings(() => {
-            this._applet_context_menu.addCommandlineAction(
-                _("Configure Mailnag"), "mailnag-config");
+            this._expandAppletContextMenu();
         }, () => {
             this.set_applet_icon_symbolic_name("mail-read");
             this.set_applet_tooltip("?");
@@ -95,6 +65,8 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             this.menuManager = new PopupMenu.PopupMenuManager(this);
             this.menu = new Applet.AppletPopupMenu(this, this.orientation);
             this.menuManager.addMenu(this.menu);
+            this.menu.connect("open-state-changed",
+                (aMenu, aOpen) => this._onMenuOpenStateChanged(aMenu, aOpen));
 
             this.mailnagWasRunning = false;
             this.mailnag = null;
@@ -104,9 +76,11 @@ MailnagAppletForkByOdyseusApplet.prototype = {
                 Main.messageTray.add(this._notificationSource);
             }
 
+            this._updateKeybindings();
+
             // watch bus
             this.busWatcherId = Gio.bus_watch_name(
-                Gio.BusType.SESSION, dbus_name, Gio.BusNameOwnerFlags.NONE,
+                Gio.BusType.SESSION, $.DBUS_NAME, Gio.BusNameOwnerFlags.NONE,
                 () => this.onBusAppeared(), () => this.onBusVanished());
         });
     },
@@ -159,6 +133,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             BIDIRECTIONAL: 3
         };
         let prefKeysArray = [
+            "pref_overlay_key",
             "pref_notifications_enabled",
             "pref_launch_client_on_click",
             "pref_client",
@@ -178,10 +153,30 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         }
     },
 
+    _expandAppletContextMenu: function() {
+        let menuItem = new Applet.MenuItem(
+            _("Configure Mailnag daemon"),
+            "system-run-symbolic",
+            () => {
+                Util.spawn_async(["mailnag-config"], null);
+            }
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
+
+        menuItem = new Applet.MenuItem(
+            _("Help"),
+            "dialog-information",
+            () => {
+                Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
+            }
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
+    },
+
     // called on applet startup (even though mailnag bus already exists)
     onBusAppeared: function() {
         let bus = Gio.bus_get_sync(Gio.BusType.SESSION, null);
-        this.mailnag = new MailnagProxy(bus, dbus_name, dbus_path);
+        this.mailnag = new $.MailnagProxy(bus, $.DBUS_NAME, $.DBUS_PATH);
 
         // connect mailnag signals
         this._onMailsAddedId = this.mailnag.connectSignal("MailsAdded",
@@ -358,7 +353,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         let mi = new $.MailItem(mail.id, mail.sender, mail.sender_address, mail.subject, mail.datetime, mail.account);
         mi.markReadButton.connect("clicked",
             () => this.markMailRead(mail.id));
-        mi.connect("activate", () => this.launchClient());
+        mi.connect("activate", () => this.launchClient(true));
         this.menuItems[mail.id] = mi;
 
         return mi;
@@ -397,11 +392,23 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         }
     },
 
+    _onMenuOpenStateChanged: function(aMenu, aOpen) {
+        if (aOpen) {
+            Mainloop.idle_add(() => {
+                for (let id in this.menuItems) {
+                    if (this.menuItems.hasOwnProperty(id)) {
+                        this.menuItems[id].updateTimeDisplay();
+                    }
+                }
+            });
+        }
+    },
+
     // Adds a MailItem to the menu. If `account` is defined it's added
     // to its 'account menu'. An 'account menu' is created if it
     // doesn't exist.
     addMailMenuItem: function(mailItem) {
-        if (mailItem.account) {
+        if (mailItem.hasOwnProperty("account") && mailItem.account) {
             let accmenu;
             if (mailItem.account in this.accountMenus) {
                 accmenu = this.accountMenus[mailItem.account];
@@ -522,7 +529,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             this.set_applet_label("?");
             this.set_applet_tooltip(_("Mailnag daemon is not running!"));
         } else {
-            let num = Object.keys(this.menuItems).length;
+            let num = this.currentMailCount();
             this.set_applet_label(num.toString());
             if (num > 0) {
                 if (num === 1) {
@@ -569,32 +576,33 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         // switch the focus to `menu` from `menuItem` to prevent menu from closing
         this.menu.actor.grab_key_focus();
 
-        // update account menu if there is one
-        let account = this.menuItems[id].account;
-        if (account) {
-            let accountMenu = this.accountMenus[account];
-            delete accountMenu.menuItems[id];
-            if (Object.keys(accountMenu.menuItems).length === 0) {
-                // remove account menu as well
-                accountMenu.destroy();
-                delete this.accountMenus[account];
-            }
-        }
+        if (id in this.menuItems && this.menuItems[id].hasOwnProperty("account")) {
+            // update account menu if there is one
+            let account = this.menuItems[id].account;
+            if (account && account in this.accountMenus) {
+                let accountMenu = this.accountMenus[account];
+                delete accountMenu.menuItems[id];
 
-        // remove menu item
-        this.menuItems[id].destroy();
-        delete this.menuItems[id];
+                if (Object.keys(accountMenu.menuItems).length === 0) {
+                    // remove account menu as well
+                    accountMenu.destroy();
+                    delete this.accountMenus[account];
+                }
+            }
+
+            // remove menu item
+            this.menuItems[id].destroy();
+            delete this.menuItems[id];
+        }
 
         // handle other visual updates
-        if (Object.keys(this.menuItems).length === 0) {
+        if (this.currentMailCount() === 0) {
             this.showNoUnread();
             this.menu.close();
-        }
-        this.showMailCount();
-
-        if (this.currentMailCount() === 0) {
             this.removeMarkAllRead();
         }
+
+        this.showMailCount();
 
         // TODO: destroy the notification as well if any
     },
@@ -618,8 +626,8 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         }
     },
 
-    launchClient: function() {
-        if (!this.pref_launch_client_on_click) {
+    launchClient: function(aFromMenuItem = false) {
+        if (aFromMenuItem && !this.pref_launch_client_on_click) {
             return;
         }
 
@@ -633,14 +641,6 @@ MailnagAppletForkByOdyseusApplet.prototype = {
     },
 
     on_applet_clicked: function(event) { // jshint ignore:line
-        if (!this.menu.isOpen) {
-            for (let id in this.menuItems) {
-                if (this.menuItems.hasOwnProperty(id)) {
-                    this.menuItems[id].updateTimeDisplay();
-                }
-            }
-        }
-
         this.menu.toggle();
     },
 
@@ -667,6 +667,8 @@ MailnagAppletForkByOdyseusApplet.prototype = {
     },
 
     on_applet_removed_from_panel: function() {
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
+
         // TODO: remove all notifications
         if (this._onMailsAddedId > 0) {
             this.mailnag.disconnectSignal(this._onMailsAddedId);
@@ -688,15 +690,37 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         }
     },
 
+    _updateKeybindings: function() {
+        Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
+
+        if (this.pref_overlay_key !== "") {
+            Main.keybindingManager.addHotKey(
+                this.menu_keybinding_name,
+                this.pref_overlay_key,
+                () => {
+                    if (!Main.overview.visible && !Main.expo.visible) {
+                        this.on_applet_clicked();
+                    }
+                }
+            );
+        }
+    },
+
     _onSettingsChanged: function(aPrefValue, aPrefKey) { // jshint ignore:line
-        // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
-        // settings callback instead of just one as in older versions. The first one is the
-        // setting value and the second one is the user data. To workaround this nonsense,
-        // check if the second argument is undefined to decide which
-        // argument to use as the pref key depending on the Cinnamon version.
+        /* NOTE: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
+         * settings callback instead of just one as in older versions. The first one is the
+         * setting value and the second one is the user data. To workaround this nonsense,
+         * check if the second argument is undefined to decide which
+         * argument to use as the pref key depending on the Cinnamon version.
+         */
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         // Remove the following variable and directly use the second argument.
-        // let pref_key = aPrefKey || aPrefValue;
+        let pref_key = aPrefKey || aPrefValue;
+        switch (pref_key) {
+            case "pref_overlay_key":
+                this._updateKeybindings();
+                break;
+        }
     }
 };
 
