@@ -337,22 +337,19 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         remainingMails = this.fromDbusMailList(remainingMails);
 
         // make a list of remaining ids
-        let ids = [];
+        let ids = new Set();
         let i = 0,
             iLen = remainingMails.length;
-        let j = 0,
-            jLen = this.menuItems.length;
 
         for (; i < iLen; i++) {
-            ids.push(remainingMails[i].id);
+            ids.add(remainingMails[i].id);
         }
 
         // remove menu item if its id isn't in the list
-        for (; j < jLen; j++) {
-            let mi = this.menuItems[j];
-
-            if (ids.indexOf(mi.id) < 0) {
-                this.removeMailMenuItem(mi.id);
+        for (let id in this.menuItems) {
+            if (this.menuItems.hasOwnProperty(id) &&
+                !ids.has(id)) {
+                this.removeMailMenuItem(id);
             }
         }
     },
@@ -363,6 +360,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             () => this.markMailRead(mail.id));
         mi.connect("activate", () => this.launchClient());
         this.menuItems[mail.id] = mi;
+
         return mi;
     },
 
@@ -464,65 +462,54 @@ MailnagAppletForkByOdyseusApplet.prototype = {
     },
 
     showMarkAllRead: function() {
-        try {
-            if (this.hasOwnProperty("_markAllRead") && typeof this._markAllRead === "object") {
-                this.removeMarkAllRead();
-            }
+        this.removeMarkAllRead();
 
-            this._markAllRead = new PopupMenu.PopupMenuItem(_("Mark All Read"));
-            this._separator = new PopupMenu.PopupSeparatorMenuItem();
+        this._markAllRead = new PopupMenu.PopupMenuItem(_("Mark All Read"));
+        this._separator = new PopupMenu.PopupSeparatorMenuItem();
 
-            this._markAllRead.connect("activate", () => this.markAllRead());
+        this._markAllRead.connect("activate", () => this.markAllRead());
 
-            if (this.orientation === St.Side.TOP) {
-                this.menu.addMenuItem(this._separator);
-                this.menu.addMenuItem(this._markAllRead);
-            } else {
-                this.menu.addMenuItem(this._markAllRead, 0);
-                this.menu.addMenuItem(this._separator, 1);
-            }
-        } catch (aErr) {
-            global.logError(aErr);
+        if (this.orientation === St.Side.TOP) {
+            this.menu.addMenuItem(this._separator);
+            this.menu.addMenuItem(this._markAllRead);
+        } else {
+            this.menu.addMenuItem(this._markAllRead, 0);
+            this.menu.addMenuItem(this._separator, 1);
         }
     },
 
     removeMarkAllRead: function() {
-        try {
-            if (this.hasOwnProperty("_markAllRead") && typeof this._markAllRead === "object") {
-                this._markAllRead.destroy();
-                this._separator.destroy();
-                delete this._markAllRead;
-                delete this._separator;
-            }
-        } catch (aErr) {
-            global.logError(aErr);
+        if (this.hasOwnProperty("_markAllRead") &&
+            this._markAllRead instanceof PopupMenu.PopupMenuItem) {
+            this._markAllRead.destroy();
+            delete this._markAllRead;
+        }
+
+        if (this.hasOwnProperty("_separator") &&
+            this._separator instanceof PopupMenu.PopupSeparatorMenuItem) {
+            this._separator.destroy();
+            delete this._separator;
         }
     },
 
     // removes all items from menu and adds a message
     showNoUnread: function() {
-        try {
-            this.menu.removeAll();
-            this.accountMenus = {};
-            this.menuItems = {};
-            this._noUnreadItem = this.menu.addAction(_("No unread mails."));
-            this.set_applet_icon_symbolic_name("mail-read");
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        this.menu.removeAll();
+        this.accountMenus = {};
+        this.menuItems = {};
+        this._noUnreadItem = this.menu.addAction(_("No unread mails."));
+        this.set_applet_icon_symbolic_name("mail-read");
     },
 
     // makes sure "no unread mail" is not shown
     removeNoUnread: function() {
-        try {
-            if (this.hasOwnProperty("_noUnreadItem") && typeof this._noUnreadItem === "object") {
-                this._noUnreadItem.destroy();
-                delete this._noUnreadItem;
-            }
-            this.set_applet_icon_symbolic_name("mail-unread");
-        } catch (aErr) {
-            global.logError(aErr);
+        if (this.hasOwnProperty("_noUnreadItem") &&
+            this._noUnreadItem instanceof PopupMenu.PopupMenuItem) {
+            this._noUnreadItem.destroy();
+            delete this._noUnreadItem;
         }
+
+        this.set_applet_icon_symbolic_name("mail-unread");
     },
 
     currentMailCount: function() {
@@ -541,9 +528,9 @@ MailnagAppletForkByOdyseusApplet.prototype = {
                 if (num === 1) {
                     let s = "";
 
-                    for (let mi in this.menuItems) {
-                        if (this.menuItems.hasOwnProperty(mi)) {
-                            s = _("You have a mail from %s!").format(this.menuItems[mi].sender);
+                    for (let id in this.menuItems) {
+                        if (this.menuItems.hasOwnProperty(id)) {
+                            s = _("You have a mail from %s!").format(this.menuItems[id].sender);
                         }
                     }
 
@@ -624,9 +611,9 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
     // mark all currently displayed mail as read
     markAllRead: function() {
-        for (let mi in this.menuItems) {
-            if (this.menuItems.hasOwnProperty(mi)) {
-                this.markMailRead(this.menuItems[mi].id);
+        for (let id in this.menuItems) {
+            if (this.menuItems.hasOwnProperty(id)) {
+                this.markMailRead(id);
             }
         }
     },
@@ -636,18 +623,21 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             return;
         }
 
-        if (this.pref_client.startsWith("http")) { // client is a web page
-            Util.spawnCommandLine("xdg-open " + this.pref_client);
-        } else { // client is a command
-            Util.spawnCommandLine(this.pref_client);
-        }
         this.menu.close();
+
+        if (this.pref_client.startsWith("http")) { // client is a web page
+            Util.spawn_async("xdg-open " + this.pref_client, null);
+        } else { // client is a command
+            Util.spawn_async(this.pref_client, null);
+        }
     },
 
     on_applet_clicked: function(event) { // jshint ignore:line
         if (!this.menu.isOpen) {
-            for (let i = this.menuItems.length - 1; i >= 0; i--) {
-                this.menuItems[i].updateTimeDisplay();
+            for (let id in this.menuItems) {
+                if (this.menuItems.hasOwnProperty(id)) {
+                    this.menuItems[id].updateTimeDisplay();
+                }
             }
         }
 
@@ -673,11 +663,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
     on_orientation_changed: function(orientation) {
         this.orientation = orientation;
-        try {
-            this.loadMails();
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        this.loadMails();
     },
 
     on_applet_removed_from_panel: function() {

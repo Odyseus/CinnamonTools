@@ -93,50 +93,46 @@ MailItem.prototype = {
         }
         this.sender = sender;
 
-        try {
-            this._sender_label = new St.Label({
-                text: sender,
-                style_class: "mailnag-sender-label"
-            });
-            this._subject_label = new St.Label({
-                text: subject,
-                style_class: "mailnag-subject-label"
-            });
-            this._datetime_label = new St.Label({
-                text: this.formatDatetime(datetime),
-                style_class: "popup-inactive-menu-item"
-            });
+        this._sender_label = new St.Label({
+            text: sender,
+            style_class: "mailnag-sender-label"
+        });
+        this._subject_label = new St.Label({
+            text: subject,
+            style_class: "mailnag-subject-label"
+        });
+        this._datetime_label = new St.Label({
+            text: this.formatDatetime(datetime),
+            style_class: "popup-inactive-menu-item"
+        });
 
-            // mark read icon
-            let markReadIcon = new St.Icon({
-                icon_name: "edit-delete",
-                icon_type: St.IconType.SYMBOLIC,
-                style_class: "popup-menu-icon"
-            });
-            this.markReadButton = new St.Button({
-                child: markReadIcon,
-                style_class: "mailnag-mark-read-button"
-            });
+        // mark read icon
+        let markReadIcon = new St.Icon({
+            icon_name: "edit-delete",
+            icon_type: St.IconType.SYMBOLIC,
+            style_class: "popup-menu-icon"
+        });
+        this.markReadButton = new St.Button({
+            child: markReadIcon,
+            style_class: "mailnag-mark-read-button"
+        });
 
-            // setup layout
-            this._vBox = new St.BoxLayout({
-                vertical: true
-            });
+        // setup layout
+        this._vBox = new St.BoxLayout({
+            vertical: true
+        });
 
-            this._vBox.add(this._sender_label);
-            this._vBox.add(this._subject_label);
+        this._vBox.add(this._sender_label);
+        this._vBox.add(this._subject_label);
 
-            this.addActor(this._vBox, {
-                expand: true
-            });
-            this.addActor(this._datetime_label);
-            this.addActor(this.markReadButton, {
-                expand: false,
-                align: St.Align.END
-            });
-        } catch (aErr) {
-            global.logError(aErr);
-        }
+        this.addActor(this._vBox, {
+            expand: true
+        });
+        this.addActor(this._datetime_label);
+        this.addActor(this.markReadButton, {
+            expand: false,
+            align: St.Align.END
+        });
     },
 
     activate: function(event, keepMenu) { // jshint ignore:line
