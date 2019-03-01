@@ -5,27 +5,26 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-28 20:08-0300\n"
-"PO-Revision-Date: 2019-02-28 20:14-0300\n"
+"Project-Id-Version: 0MailnagAppletForkByOdyseus\n"
+"Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
+"POT-Creation-Date: 2019-03-01 20:22-0300\n"
+"PO-Revision-Date: 2019-03-01 20:26-0300\n"
 "Last-Translator: Odyseus\n"
-"Language-Team: \n"
+"Language-Team: Spanish\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
 "X-Generator: Poedit 1.8.7.1\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:247
-#: ../../__app__/python_modules/localized_help_creator.py:321
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:167
 msgid "Help"
 msgstr "Ayuda"
 
@@ -50,135 +49,155 @@ msgid "Warning"
 msgstr "Advertencia"
 
 #: ../../__app__/python_modules/localized_help_creator.py:389
-msgid ""
-"Never delete any of the files found inside this xlet folder. It might break "
-"this xlet functionality."
-msgstr ""
-"Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de "
-"este xlet. Podría romper la funcionalidad del xlet."
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
+#. metadata.json->comments
 #: ../../__app__/python_modules/localized_help_creator.py:391
-msgid ""
-"Bug reports, feature requests and contributions should be done on this "
-"xlet's repository linked next."
-msgstr ""
-"Los reportes de fallos, peticiones de características y contribuciones deben "
-"hacerse en el repositorio de este xlet vinculado a continuación."
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
 #: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
 #: ../../__app__/python_modules/localized_help_creator.py:410
-msgid ""
-"If this xlet was installed from Cinnamon Settings, all of this xlet's "
-"localizations were automatically installed."
-msgstr ""
-"Si este xlet se instaló desde Configuración de Cinnamon, todas las "
-"localizaciones de este xlet se instalaron automáticamente."
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
 #: ../../__app__/python_modules/localized_help_creator.py:411
-msgid ""
-"If this xlet was installed manually and not trough Cinnamon Settings, "
-"localizations can be installed by executing the script called helper.py from "
-"a terminal opened inside the xlet's folder."
-msgstr ""
-"Si este xlet se instaló manualmente y no a través de Configuración de "
-"Cinnamon, las localizaciones se pueden instalar ejecutando el archivo "
-"llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: applet.js:83
-msgid "Configure Mailnag"
-msgstr "Configurar Mailnag"
+#: z_create_localized_help.py:27
+msgid "Description"
+msgstr "Descripción"
 
-#: applet.js:210
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:30
+msgid "This applet is a fork of [Mailnag](https://cinnamon-spices.linuxmint.com/applets/view/244) applet by [Hasan Yavuz](https://github.com/hyOzd) (a.k.a. hyOzd)."
+msgstr "Este applet es una modificación del applet [Mailnag](https://cinnamon-spices.linuxmint.com/applets/view/244), por [Hasan Yavuz](https://github.com/hyOzd) (también conocido como hyOzd)."
+
+#: z_create_localized_help.py:32
+msgid "Differences with the original applet"
+msgstr "Diferencias con el applet original"
+
+#: z_create_localized_help.py:34
+msgid "Added keyboard shortcut to be able to open/close the menu."
+msgstr "Agregado atajo de teclado para abrir y cerrar el menú."
+
+#: z_create_localized_help.py:35
+msgid "Added option to keep just one sub-menu open."
+msgstr "Agregada opción para mantener un solo sub-menú abierto en todo momento."
+
+#: z_create_localized_help.py:36
+msgid "Removed obsolete code. Mostly features that doesn't exist anymore in modern JavaScript."
+msgstr "Eliminado código obsoleto. Principalmente características que ya no existen en JavaScript moderno."
+
+#: z_create_localized_help.py:38
+msgid "Dependencies"
+msgstr "Dependencias"
+
+#: z_create_localized_help.py:41
+msgid "Mailnag is a daemon program that checks POP3 and IMAP servers for new mail."
+msgstr "Mailnag es un programa demonio que comprueba servidores POP3 e IMAP por correo nuevo."
+
+#: z_create_localized_help.py:42
+msgid "Cinnamon needs to be restarted after installing Mailnag if the applet was already placed in a panel"
+msgstr "Cinnamon necesita ser reiniciado luego de instalar Mailnag si el applet ya fue colocado en un panel."
+
+#: applet.js:158
+msgid "Configure Mailnag daemon"
+msgstr "Configurar el demonio Mailnag"
+
+#: applet.js:205
 msgid "Mailnag daemon stopped working!"
 msgstr "¡El demonio Mailnag dejó de funcionar!"
 
-#: applet.js:212
+#: applet.js:207
 msgid "Mailnag daemon isn't running! Do you have it installed?"
 msgstr "¡El demonio de Mailnag no se está ejecutando! ¿Lo tiene instalado?"
 
-#: applet.js:433
+#: applet.js:438
 #, javascript-format
 msgid "You have %d new mail!"
 msgid_plural "You have %d new mails!"
 msgstr[0] "¡Tienes %d correo nuevo!"
 msgstr[1] "¡Tienes %d correos nuevos!"
 
-#: applet.js:435 applet.js:472
+#: applet.js:440 applet.js:474
 msgid "Mark All Read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:444
+#: applet.js:449
 msgid "You have new mail!"
 msgstr "¡Tienes nuevo correo!"
 
-#: applet.js:446
+#: applet.js:451
 msgid "Mark Read"
 msgstr "Marcar como leído"
 
-#: applet.js:508 applet.js:556
+#: applet.js:507 applet.js:550
 msgid "No unread mails."
 msgstr "Sin mensajes no leídos."
 
-#: applet.js:536
+#: applet.js:530
 msgid "Mailnag daemon is not running!"
 msgstr "El demonio Mailnag no se está ejecutando!"
 
-#: applet.js:546
+#: applet.js:540
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr "¡Tienes un correo de %s!"
 
-#: applet.js:552
+#: applet.js:546
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] "¡Tienes %d correo sin leer!"
 msgstr[1] "¡Tienes %d correos sin leer!"
 
-#: applet.js:566
+#: applet.js:560
 msgid "Click to see error!"
 msgstr "¡Hacer clic para ver el error!"
 
-#: applet.js:567
+#: applet.js:561
 msgid "Error"
 msgstr "Error"
 
 #. 86400 = Amount of seconds in 24 hours.
 #. today
 #. <1 minute
-#: utils.js:157
+#: utils.js:183
 msgid "just now"
 msgstr "hace poco"
 
-#: utils.js:160
+#: utils.js:186
 #, javascript-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
 msgstr[0] "hace %d minuto"
 msgstr[1] "hace %d minutos"
 
-#: utils.js:163
+#: utils.js:189
 #, javascript-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
 msgstr[0] "hace %d hora"
 msgstr[1] "hace %d horas"
 
-#: utils.js:167
+#: utils.js:193
 msgid "yesterday"
 msgstr "ayer"
 
-#: utils.js:169
+#: utils.js:195
 #, javascript-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "hace %d día"
 msgstr[1] "hace %d días"
 
-#: utils.js:172
+#: utils.js:198
 msgid "d% week ago"
 msgid_plural "%d weeks ago"
 msgstr[0] "hace %d semana"
@@ -188,22 +207,25 @@ msgstr[1] "hace %d semanas"
 msgid "Mailnag mail notifier applet"
 msgstr "Applet notificador de correo basado en Mailnag."
 
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr "Ver el archivo de ayuda de este xlet."
+
 #. metadata.json->name
 msgid "Mailnag (Fork By Odyseus)"
 msgstr "Mailnag (Modificado por Odyseus)"
+
+#. settings-schema.json->pref_overlay_key->description
+msgid "Keyboard shortcut to open and close the menu."
+msgstr "Atajo de teclado para abrir o cerrar el menú"
 
 #. settings-schema.json->pref_notifications_enabled->description
 msgid "Show notifications"
 msgstr "Mostrar Notificaciones"
 
 #. settings-schema.json->pref_notifications_enabled->tooltip
-msgid ""
-"Enables display of mail arrived notifications by applet. Make sure you "
-"disable mailnag notification plugin, otherwise you will have duplicates."
-msgstr ""
-"Permite la visualización de notificaciones al recibir correo. Asegúrese de "
-"desactivar el complemento de notificación mailnag; de lo contrario, tendrá "
-"duplicados."
+msgid "Enables display of mail arrived notifications by applet. Make sure you disable mailnag notification plugin, otherwise you will have duplicates."
+msgstr "Permite la visualización de notificaciones al recibir correo. Asegúrese de desactivar el complemento de notificación mailnag; de lo contrario, tendrá duplicados."
 
 #. settings-schema.json->pref_launch_client_on_click->description
 msgid "Launch mail client on click"
@@ -211,19 +233,15 @@ msgstr "Iniciar el cliente de correo al hacer clic"
 
 #. settings-schema.json->pref_launch_client_on_click->tooltip
 msgid "Mail client is launched when clicked on a menu item."
-msgstr ""
-"El cliente de correo se iniciará cuando se hace clic en un elemento del menú."
+msgstr "El cliente de correo se iniciará cuando se hace clic en un elemento del menú."
 
 #. settings-schema.json->pref_keep_one_menu_open->description
 msgid "Keep just one sub menu open"
 msgstr "Mantener un solo menú abierto en todo momento"
 
 #. settings-schema.json->pref_keep_one_menu_open->tooltip
-msgid ""
-"When enabled, the previously opened sub menu will be automatically closed."
-msgstr ""
-"Con esta opción habilitada, un submenú previamente abierto será "
-"automáticamente cerrado."
+msgid "When enabled, the previously opened sub menu will be automatically closed."
+msgstr "Con esta opción habilitada, un submenú previamente abierto será automáticamente cerrado."
 
 #. settings-schema.json->pref_middle_click_behavior->description
 msgid "On middle click:"
@@ -250,9 +268,8 @@ msgid "Mail client to launch (or webpage)"
 msgstr "Cliente de correo para iniciar (o página web)"
 
 #. settings-schema.json->pref_client->tooltip
-msgid ""
-"Enter the command to launch your mail client here. You can also enter a web "
-"address that starts with 'http'."
-msgstr ""
-"Ingresar el comando para iniciar su cliente de correo aquí. También puede "
-"ingresar una dirección web que comienza con 'http'."
+msgid "Enter the command to launch your mail client here. You can also enter a web address that starts with 'http'."
+msgstr "Ingresar el comando para iniciar su cliente de correo aquí. También puede ingresar una dirección web que comienza con 'http'."
+
+#~ msgid "Configure Mailnag"
+#~ msgstr "Configurar Mailnag"

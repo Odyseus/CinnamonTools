@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-02-28 21:33-0300\n"
+"POT-Creation-Date: 2019-03-01 20:29-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:167
 msgid "Help"
 msgstr ""
 
@@ -48,6 +48,7 @@ msgstr ""
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
+#. metadata.json->comments
 #: ../../__app__/python_modules/localized_help_creator.py:391
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
@@ -64,98 +65,135 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: applet.js:83
-msgid "Configure Mailnag"
+#: z_create_localized_help.py:27
+msgid "Description"
 msgstr ""
 
-#: applet.js:210
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:30
+msgid "This applet is a fork of [Mailnag](https://cinnamon-spices.linuxmint.com/applets/view/244) applet by [Hasan Yavuz](https://github.com/hyOzd) (a.k.a. hyOzd)."
+msgstr ""
+
+#: z_create_localized_help.py:32
+msgid "Differences with the original applet"
+msgstr ""
+
+#: z_create_localized_help.py:34
+msgid "Added keyboard shortcut to be able to open/close the menu."
+msgstr ""
+
+#: z_create_localized_help.py:35
+msgid "Added option to keep just one sub-menu open."
+msgstr ""
+
+#: z_create_localized_help.py:36
+msgid "Removed obsolete code. Mostly features that doesn't exist anymore in modern JavaScript."
+msgstr ""
+
+#: z_create_localized_help.py:38
+msgid "Dependencies"
+msgstr ""
+
+#: z_create_localized_help.py:41
+msgid "Mailnag is a daemon program that checks POP3 and IMAP servers for new mail."
+msgstr ""
+
+#: z_create_localized_help.py:42
+msgid "Cinnamon needs to be restarted after installing Mailnag if the applet was already placed in a panel"
+msgstr ""
+
+#: applet.js:158
+msgid "Configure Mailnag daemon"
+msgstr ""
+
+#: applet.js:205
 msgid "Mailnag daemon stopped working!"
 msgstr ""
 
-#: applet.js:212
+#: applet.js:207
 msgid "Mailnag daemon isn't running! Do you have it installed?"
 msgstr ""
 
-#: applet.js:433
+#: applet.js:438
 #, javascript-format
 msgid "You have %d new mail!"
 msgid_plural "You have %d new mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:435 applet.js:472
+#: applet.js:440 applet.js:474
 msgid "Mark All Read"
 msgstr ""
 
-#: applet.js:444
+#: applet.js:449
 msgid "You have new mail!"
 msgstr ""
 
-#: applet.js:446
+#: applet.js:451
 msgid "Mark Read"
 msgstr ""
 
-#: applet.js:508 applet.js:556
+#: applet.js:507 applet.js:550
 msgid "No unread mails."
 msgstr ""
 
-#: applet.js:536
+#: applet.js:530
 msgid "Mailnag daemon is not running!"
 msgstr ""
 
-#: applet.js:546
+#: applet.js:540
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr ""
 
-#: applet.js:552
+#: applet.js:546
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:566
+#: applet.js:560
 msgid "Click to see error!"
 msgstr ""
 
-#: applet.js:567
+#: applet.js:561
 msgid "Error"
 msgstr ""
 
 #. 86400 = Amount of seconds in 24 hours.
 #. today
 #. <1 minute
-#: utils.js:157
+#: utils.js:183
 msgid "just now"
 msgstr ""
 
-#: utils.js:160
+#: utils.js:186
 #, javascript-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:163
+#: utils.js:189
 #, javascript-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:167
+#: utils.js:193
 msgid "yesterday"
 msgstr ""
 
-#: utils.js:169
+#: utils.js:195
 #, javascript-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:172
+#: utils.js:198
 msgid "d% week ago"
 msgid_plural "%d weeks ago"
 msgstr[0] ""
@@ -165,8 +203,16 @@ msgstr[1] ""
 msgid "Mailnag mail notifier applet"
 msgstr ""
 
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr ""
+
 #. metadata.json->name
 msgid "Mailnag (Fork By Odyseus)"
+msgstr ""
+
+#. settings-schema.json->pref_overlay_key->description
+msgid "Keyboard shortcut to open and close the menu."
 msgstr ""
 
 #. settings-schema.json->pref_notifications_enabled->description

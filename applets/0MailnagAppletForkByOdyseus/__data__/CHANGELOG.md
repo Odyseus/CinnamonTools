@@ -4,6 +4,36 @@
 
 ***
 
+- **Date:** Fri, 1 Mar 2019 19:50:01 -0300
+- **Commit:** [beff53e](https://gitlab.com/Odyseus/CinnamonTools/commit/beff53e)
+- **Author:** Odyseus
+
+```
+- Added keyboard shortcut to open/close menu.
+- Fixed mail client not launching on middle click on applet when the option **Launch mail client on click** was disabled.
+- Moved some variables *out of the way* into the utils.js module.
+- Moved the function call to update timestamps into the menu open/close event so it is triggered when the menu is opened and not just when the applet is clicked.
+- Added some *failsafes* when dealing with objects' properties.
+- Expanded applet context menu.
+- Changed applet icon.
+
+```
+
+***
+
+- **Date:** Fri, 1 Mar 2019 06:43:08 -0300
+- **Commit:** [e827cf5](https://gitlab.com/Odyseus/CinnamonTools/commit/e827cf5)
+- **Author:** Odyseus
+
+```
+- Fixed the mess that I made when I replaced the now defunct `for each` loops. In some places I was using *common* `for` loops to iterate over objects instead of `for...in` loops. This effectively fixes the update of the e-mail's time of arrival when the applet is clicked to open the menu.
+- Added to the metadata.json file some missing fields.
+- Removed several `try{}catch{}` blocks.
+
+```
+
+***
+
 - **Date:** Thu, 28 Feb 2019 20:04:03 -0300
 - **Commit:** [77f6913](https://gitlab.com/Odyseus/CinnamonTools/commit/77f6913)
 - **Author:** Odyseus
