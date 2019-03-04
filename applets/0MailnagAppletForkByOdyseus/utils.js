@@ -48,6 +48,13 @@ const dbus_xml = '<node name="/mailnag/MailnagService">\
 var MailnagProxy = Gio.DBusProxy.makeProxyWrapper(dbus_xml);
 var DBUS_NAME = "mailnag.MailnagService";
 var DBUS_PATH = "/mailnag/MailnagService";
+var NotificationMode = {
+    DISABLED: 0,
+    SUMMARY_EXPANDED: 1,
+    SUMMARY_COMPACT: 2,
+    SUMMARY_COMPRESSED: 3,
+    SUMMARY_CUSTOM: 4
+};
 
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
 
@@ -234,20 +241,48 @@ function NotificationSource() {
 
 NotificationSource.prototype = {
     __proto__: MessageTray.Source.prototype,
+
     _init: function() {
-        MessageTray.Source.prototype._init.call(this, "Mailnag");
+        MessageTray.Source.prototype._init.call(this, _(XletMeta.name));
         this._setSummaryIcon(this.createNotificationIcon());
     },
 
     createNotificationIcon: function() {
         return new St.Icon({
-            icon_name: "mail-unread",
-            icon_size: this.ICON_SIZE
+            gicon: Gio.icon_new_for_string(XletMeta.path + "/icon.png"),
+            icon_size: 24
         });
+    },
+
+    open: function() {
+        this.destroy();
     }
 };
 
+function escapeHTML(aStr) {
+    aStr = String(aStr)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+    return aStr;
+}
+
+function ellipsize(aString, aMaxLen) {
+    if (aMaxLen < 3) {
+        aMaxLen = 3;
+    }
+
+    return (aString.length > aMaxLen) ?
+        aString.substr(0, aMaxLen - 1) + "\u2026" :
+        aString;
+}
+
 /* exported DBUS_NAME,
             DBUS_PATH,
-            MailnagProxy
+            NotificationMode,
+            MailnagProxy,
+            escapeHTML,
+            ellipsize
  */

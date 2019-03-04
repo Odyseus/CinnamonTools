@@ -1,32 +1,19 @@
 {
+    "applet_header": {
+        "type": "header",
+        "description": "Applet Settings"
+    },
     "pref_overlay_key": {
         "type": "keybinding",
+        "indent": true,
         "default": "",
-        "description": "Keyboard shortcut to open and close the menu."
-    },
-    "pref_notifications_enabled": {
-        "type": "checkbox",
-        "default": false,
-        "description": "Show notifications",
-        "tooltip": "Enables display of mail arrived notifications by applet. Make sure you disable mailnag notification plugin, otherwise you will have duplicates."
-    },
-
-    "pref_launch_client_on_click": {
-        "type": "checkbox",
-        "default": false,
-        "description": "Launch mail client on click",
-        "tooltip": "Mail client is launched when clicked on a menu item."
-    },
-    "pref_keep_one_menu_open": {
-        "type": "checkbox",
-        "default": true,
-        "description": "Keep just one sub menu open",
-        "tooltip": "When enabled, the previously opened sub menu will be automatically closed."
+        "description": "Keyboard shortcut to open and close the menu"
     },
     "pref_middle_click_behavior": {
         "type": "combobox",
-        "default": "mark_read",
-        "description": "On middle click:",
+        "indent": true,
+        "default": "do_nothing",
+        "description": "Middle click on applet action",
         "tooltip": "What to do when middle clicked on applet icon",
         "options": {
             "Mark all read": "mark_read",
@@ -34,11 +21,93 @@
             "Do nothing": "do_nothing"
         }
     },
-
     "pref_client": {
         "type": "entry",
-        "default": "thunderbird",
+        "indent": true,
+        "default": "",
         "description": "Mail client to launch (or webpage)",
         "tooltip": "Enter the command to launch your mail client here. You can also enter a web address that starts with 'http'."
+    },
+    "menu_header": {
+        "type": "header",
+        "description": "Menu Settings"
+    },
+    "pref_launch_client_on_click": {
+        "type": "checkbox",
+        "indent": true,
+        "default": false,
+        "description": "Launch mail client on click",
+        "tooltip": "Mail client is launched when clicked on a menu item."
+    },
+    "pref_keep_one_menu_open": {
+        "type": "checkbox",
+        "indent": true,
+        "default": true,
+        "description": "Keep just one sub menu open",
+        "tooltip": "When enabled, the previously opened sub menu will be automatically closed."
+    },
+    "notifications_header": {
+        "type": "header",
+        "description": "Notifications Settings"
+    },
+    "pref_notification_mode": {
+        "type": "combobox",
+        "indent": true,
+        "default": 2,
+        "description": "Notification mode",
+        "options": {
+            "Disabled": 0,
+            "Detailed summary (expanded)": 1,
+            "Detailed summary (compact)": 2,
+            "Detailed summary (compressed)": 3,
+            "Custom summary": 4
+        }
+    },
+    "pref_notification_max_mails": {
+        "type": "spinbutton",
+        "indent": true,
+        "indent": true,
+        "default": 10,
+        "min": 5,
+        "max": 50,
+        "units": "mails",
+        "step": 1,
+        "description": "Maximum mails to show",
+        "tooltip": "The amount of mails to show in the detailed summary."
+    },
+    "pref_notification_sender_max_chars": {
+        "type": "spinbutton",
+        "indent": true,
+        "default": 20,
+        "min": 10,
+        "max": 200,
+        "units": "characters",
+        "step": 1,
+        "description": "Sender's truncation point",
+        "tooltip": "The amount of characters at which the text in the detailed summary is truncated."
+    },
+    "pref_notification_subject_max_chars": {
+        "type": "spinbutton",
+        "indent": true,
+        "default": 100,
+        "min": 10,
+        "max": 200,
+        "units": "characters",
+        "step": 1,
+        "description": "Subject's truncation point",
+        "tooltip": "The amount of characters at which the text in the detailed summary is truncated."
+    },
+    "pref_notification_custom_template": {
+        "type": "textview",
+        "indent": true,
+        "height": 100,
+        "default": "<b>From:</b> {{sender}}\n<b>To:</b> {{account}}\n<b>Subject:</b> {{subject}}\n\n",
+        "description": "Custom summary template",
+        "tooltip": "A template string used to represent each mail in the notification body. The template can contain some basic Pango markup (like <b>, <i>, and <u> tags, everything else is filtered out by Cinnamon) and must contain at least one of the following placeholders:\n\n{{sender}}: The mail sender name or address.\n{{subject}}: The subject of the received mail.\n{{account}}: The receiving account name as specified in Mailnag's options."
+    },
+    "notification_test_button": {
+        "type": "button",
+        "description": "Test notifications",
+        "callback": "_testNotifications"
     }
 }

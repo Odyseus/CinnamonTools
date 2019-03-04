@@ -28,11 +28,11 @@ const {
     }
 } = imports;
 
-function MailnagAppletForkByOdyseusApplet() {
+function MailnagForkByOdyseusApplet() {
     this._init.apply(this, arguments);
 }
 
-MailnagAppletForkByOdyseusApplet.prototype = {
+MailnagForkByOdyseusApplet.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -71,10 +71,13 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             this.mailnagWasRunning = false;
             this.mailnag = null;
 
-            this._notificationSource = new $.NotificationSource();
-            if (Main.messageTray) {
-                Main.messageTray.add(this._notificationSource);
-            }
+            this._notificationSource = null;
+            this.notification = null;
+            this._notiticationParams = {
+                titleMarkup: true,
+                bannerMarkup: true,
+                bodyMarkup: true
+            };
 
             this._updateKeybindings();
 
@@ -134,7 +137,11 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         };
         let prefKeysArray = [
             "pref_overlay_key",
-            "pref_notifications_enabled",
+            "pref_notification_mode",
+            "pref_notification_custom_template",
+            "pref_notification_max_mails",
+            "pref_notification_sender_max_chars",
+            "pref_notification_subject_max_chars",
             "pref_launch_client_on_click",
             "pref_client",
             "pref_middle_click_behavior",
@@ -199,7 +206,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             delete this.mailnag;
         }
 
-        // TODO: delete any notifications currently alive
+        this._destroyNotification();
 
         if (this.mailnagWasRunning) {
             this.showError(_("Mailnag daemon stopped working!"));
@@ -237,7 +244,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             }
             this.showMailCount();
         } catch (aErr) {
-            // TODO: show error messsage in menu
+            // TODO: show error message in menu
             global.logError(aErr);
         }
     },
@@ -245,9 +252,9 @@ MailnagAppletForkByOdyseusApplet.prototype = {
     getMails: function() {
         try {
             let mails = this.mailnag.GetMailsSync();
-            return this.fromDbusMailList(mails);
+            return this.fromDbusMailList(mails).new;
         } catch (aErr) {
-            // TODO: show error messsage in menu
+            // TODO: show error message in menu
             global.logError(aErr);
         }
 
@@ -256,42 +263,54 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 
     // converts the mail list returned from dbus to a list of dictionaries
     fromDbusMailList: function(dbusList) {
-        let mails = dbusList[0];
-        let r = [];
+        let mList = {
+            new: [],
+            all: []
+        };
 
-        let i = 0,
-            iLen = mails.length;
+        for (let m in mList) {
+            let idx = m === "new" ? 0 : 1;
+            let mails = dbusList[idx];
+            let r = mList[m];
 
-        for (; i < iLen; i++) {
-            let mail = mails[i];
-            let [sender, size1] = mail["sender_name"].get_string(); // jshint ignore:line
-            let [sender_address, size2] = mail["sender_addr"].get_string(); // jshint ignore:line
-            let [subject, size3] = mail["subject"].get_string(); // jshint ignore:line
-            let [mail_id, size4] = mail["id"].get_string(); // jshint ignore:line
-            let datetime = new Date(mail["datetime"].get_int32() * 1000); // sec to ms
-            let account = "";
-
-            try {
-                let [accountx, size5] = mail["account_name"].get_string(); // jshint ignore:line
-                account = accountx;
-
-                // make mail id unique in case same mail appears in multiple accounts (in case of mail forwarding)
-                mail_id += "_" + account;
-            } catch (e) {
-                // ignored
+            if (!mails) {
+                continue;
             }
 
-            r.push({
-                id: mail_id,
-                sender: sender,
-                datetime: datetime,
-                sender_address: sender_address,
-                subject: subject,
-                account: account
-            });
+            let i = 0,
+                iLen = mails.length;
+
+            for (; i < iLen; i++) {
+                let mail = mails[i];
+                let [sender, size1] = mail["sender_name"].get_string(); // jshint ignore:line
+                let [sender_address, size2] = mail["sender_addr"].get_string(); // jshint ignore:line
+                let [subject, size3] = mail["subject"].get_string(); // jshint ignore:line
+                let [mail_id, size4] = mail["id"].get_string(); // jshint ignore:line
+                let datetime = new Date(mail["datetime"].get_int32() * 1000); // sec to ms
+                let account = "";
+
+                try {
+                    let [accountx, size5] = mail["account_name"].get_string(); // jshint ignore:line
+                    account = accountx;
+
+                    // make mail id unique in case same mail appears in multiple accounts (in case of mail forwarding)
+                    mail_id += "_" + account;
+                } catch (e) {
+                    // ignored
+                }
+
+                r.push({
+                    id: mail_id,
+                    sender: sender,
+                    datetime: datetime,
+                    sender_address: sender_address,
+                    subject: subject,
+                    account: account
+                });
+            }
         }
 
-        return r;
+        return mList;
     },
 
     sortMails: function(mails) {
@@ -302,10 +321,12 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         return mails;
     },
 
-    onMailsAdded: function(source, t, newMails) {
+    onMailsAdded: function(source, t, aDBusMailList) {
         this.removeNoUnread();
 
-        newMails = this.fromDbusMailList(newMails);
+        let mails = this.fromDbusMailList(aDBusMailList);
+        let newMails = mails.new;
+        let allMails = mails.all;
         newMails = this.sortMails(newMails);
 
         if (this.currentMailCount() + newMails.length > 0) {
@@ -320,16 +341,17 @@ MailnagAppletForkByOdyseusApplet.prototype = {
             this.addMailMenuItem(mi);
         }
 
-        this.notify(newMails);
         this.showMailCount();
 
         if (this.currentMailCount() > 0) {
             this.showMarkAllRead();
         }
+
+        Mainloop.idle_add(() => this.notify(newMails, allMails));
     },
 
     onMailsRemoved: function(source, t, remainingMails) {
-        remainingMails = this.fromDbusMailList(remainingMails);
+        remainingMails = this.fromDbusMailList(remainingMails).new;
 
         // make a list of remaining ids
         let ids = new Set();
@@ -425,47 +447,193 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         }
     },
 
-    notify: function(mails) {
-        if (!this.pref_notifications_enabled) {
+    notify: function(aNewMails, aAllMails, aTest = false) {
+        if (this.pref_notification_mode === $.NotificationMode.DISABLED) {
             return;
         }
 
-        let ntfTitle = "";
-        let ntfBody = "";
-        let markButtonLabel = "";
+        this._ensureNotificationSource();
 
-        if (mails.length > 1) {
-            ntfTitle = ngettext("You have %d new mail!", "You have %d new mails!", mails.length)
-                .format(mails.length);
-            markButtonLabel = _("Mark All Read");
-
-            let i = 0,
-                iLen = mails.length;
-
-            for (; i < iLen; i++) {
-                ntfBody += mails[i].subject + "\n";
-            }
-        } else {
-            ntfTitle = _("You have new mail!");
-            ntfBody = mails[0].subject;
-            markButtonLabel = _("Mark Read");
+        /* NOTE: Mailnag uses a Python list comprehension to concatenate the newMails
+         * and allMails lists. The way that it is done in Python code cannot be done
+         * in JavaScript (without writing a million lines of code).
+         * Creating a Set of mail IDs seems to be working the same way as in the Python side.
+         * Keep an eye on it for now.
+         */
+        let newMailsIDs = new Set(aNewMails.map((m) => {
+            return m.id;
+        }));
+        let mails = aNewMails.concat(aAllMails.filter((m) => {
+            return !newMailsIDs.has(m.id);
+        }));
+        let mailCount = mails.length;
+        let title = $.escapeHTML(ngettext("You have %d new mail!", "You have %d new mails!", mailCount)
+            .format(mailCount));
+        let body = "";
+        let markReadButtonLabel = mailCount > 1 ?
+            _("Mark All Read") :
+            _("Mark Read");
+        let mailsToShow = mailCount <= this.pref_notification_max_mails ?
+            mailCount :
+            this.pref_notification_max_mails;
+        let msgTemplate;
+        switch (this.pref_notification_mode) {
+            case $.NotificationMode.SUMMARY_EXPANDED:
+                msgTemplate = "%s\n<i>%s</i>\n\n";
+                break;
+            case $.NotificationMode.SUMMARY_COMPACT:
+                msgTemplate = "<b>%s:</b>\n%s\n";
+                break;
+            case $.NotificationMode.SUMMARY_COMPRESSED:
+                msgTemplate = "%s - <i>%s</i>\n";
+                break;
+            case $.NotificationMode.SUMMARY_CUSTOM:
+                msgTemplate = this.pref_notification_custom_template;
+                break;
         }
 
-        let notification = new MessageTray.Notification(
-            this._notificationSource,
-            "Mailnag", ntfTitle, {
-                body: ntfBody
+        let c = 0;
+        for (; c < mailsToShow; c++) {
+            /* NOTE: I stumbled upon mails that contain new lines in the mails subject. ¬¬
+             * So, eradicate them! And since I don't like surprises, eradicate them
+             * from the sender and the account to.
+             */
+            let sender = $.ellipsize(mails[c].sender || mails[c].sender_address,
+                    this.pref_notification_sender_max_chars)
+                .replace(/\s+/g, " ");
+            let account = $.ellipsize(mails[c].account,
+                    this.pref_notification_sender_max_chars)
+                .replace(/\s+/g, " ");
+            let subject = $.ellipsize(mails[c].subject,
+                    this.pref_notification_subject_max_chars)
+                .replace(/\s+/g, " ");
+
+            if (this.pref_notification_mode === $.NotificationMode.SUMMARY_CUSTOM) {
+                /* NOTE: Since the format function added by CJS is very limited (it doesn't
+                 * support keyword arguments), I had to improvise and implement placeholders.
+                 */
+                body += msgTemplate
+                    .replace("{{sender}}", sender)
+                    .replace("{{account}}", account)
+                    .replace("{{subject}}", subject);
+            } else {
+                let from = this.pref_notification_mode === $.NotificationMode.SUMMARY_COMPRESSED ?
+                    sender :
+                    sender + " \u27A4 " + account;
+
+                body += msgTemplate.format(
+                    $.escapeHTML(from),
+                    $.escapeHTML(subject)
+                );
             }
-        );
-        notification.setTransient(true);
-        notification.addButton("mark-read", markButtonLabel);
-        notification.connect("action-invoked", (source, action) => {
-            if (action === "mark-read") {
-                this.markMailsRead(mails);
-                source.destroy();
+        }
+
+        if (mailCount > this.pref_notification_max_mails) {
+            let additionalMailsCount = mailCount - this.pref_notification_max_mails;
+            body += "<i>%s</i>".format(
+                $.escapeHTML(
+                    ngettext("(and %d more)", "(and %d more)", additionalMailsCount)
+                    .format(additionalMailsCount)
+                )
+                /* NOTE: I'm not sure if the previous ngettext call is needed.
+                 * It doesn't hurt to use it, so keep it.
+                 * And in case that I'm asking, this comment is bellow the code
+                 * so gettext doesn't capture it.
+                 */
+            );
+        }
+
+        body = body.trim();
+
+        if (this._notificationSource && !this.notification) {
+            this.notification = new MessageTray.Notification(
+                this._notificationSource,
+                " ",
+                " ",
+                this._notiticationParams
+            );
+            this.notification.addButton("mark-read", markReadButtonLabel);
+
+            if (this.pref_client) {
+                this.notification.addButton("open-client", _("Open Mail client"));
             }
-        });
-        this._notificationSource.notify(notification);
+
+            this.notification.setTransient(false);
+            this.notification.setResident(true);
+            this.notification.setUrgency(MessageTray.Urgency.HIGH);
+            this.notification.connect("destroy", () => {
+                this.notification = null;
+            });
+            this.notification.connect("action-invoked", (aSource, aAction) => {
+                switch (aAction) {
+                    case "mark-read":
+                        /* NOTE: Do not trigger markMailsRead since the mails displayed in a
+                         * test notification are just dummy text, not real mails.
+                         */
+                        aTest || this.markMailsRead(mails);
+                        aSource.destroy();
+                        break;
+                    case "open-client":
+                        this.launchClient();
+                        break;
+                }
+            });
+        }
+
+        if (this.notification) {
+            /* NOTE: Use of a try{}catch{} block because there could be errors
+             * thrown by the custom template.
+             */
+            try {
+                this.notification.update(
+                    title,
+                    body,
+                    this._notiticationParams
+                );
+
+                this._notificationSource.notify(this.notification);
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+        }
+    },
+
+    _ensureNotificationSource: function() {
+        if (!this._notificationSource) {
+            this._notificationSource = new $.NotificationSource();
+            this._notificationSource.connect("destroy", () => {
+                this._notificationSource = null;
+            });
+
+            if (Main.messageTray) {
+                Main.messageTray.add(this._notificationSource);
+            }
+        }
+    },
+
+    _destroyNotification: function() {
+        /* NOTE: The notification source is also destroyed when the notification is destroyed.
+         */
+        this.notification && this.notification.destroy();
+    },
+
+    _testNotifications: function() {
+        let mails = [];
+
+        let i = 0,
+            iLen = 10;
+        for (; i < iLen; i++) {
+            mails.push({
+                id: i + "_account_name",
+                sender: "Sender name " + i,
+                datetime: new Date().getTime(),
+                sender_address: "Sender address " + i,
+                subject: "Lorem ipsum dolor sit amet, alterum accusam \nadversarium qui in.",
+                account: "Account name " + i
+            });
+        }
+
+        this.notify(mails, [], true);
     },
 
     showMarkAllRead: function() {
@@ -505,6 +673,7 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         this.accountMenus = {};
         this.menuItems = {};
         this._noUnreadItem = this.menu.addAction(_("No unread mails."));
+        this._noUnreadItem.actor.reactive = false;
         this.set_applet_icon_symbolic_name("mail-read");
     },
 
@@ -605,6 +774,13 @@ MailnagAppletForkByOdyseusApplet.prototype = {
         this.showMailCount();
 
         // TODO: destroy the notification as well if any
+        /* NOTE: Destroying the notification doesn't seem right when removing
+         * a mail from the menu that may or may not be present on the notification.
+         * Furthermore, removing an specific mail from the notification isn't
+         * possible at all, since the displayed mails in a notification come from
+         * the MailsAdded daemon signal, and this removeMailMenuItem function
+         * just handles actors in the applet menu.
+         */
     },
 
     // marks a list of mails as read
@@ -669,7 +845,8 @@ MailnagAppletForkByOdyseusApplet.prototype = {
     on_applet_removed_from_panel: function() {
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
-        // TODO: remove all notifications
+        this._destroyNotification();
+
         if (this._onMailsAddedId > 0) {
             this.mailnag.disconnectSignal(this._onMailsAddedId);
             this._onMailsAddedId = 0;
@@ -725,5 +902,5 @@ MailnagAppletForkByOdyseusApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new MailnagAppletForkByOdyseusApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new MailnagForkByOdyseusApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }
