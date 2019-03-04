@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Mon, 4 Mar 2019 08:56:33 -0300
+- **Commit:** [9559623](https://gitlab.com/Odyseus/CinnamonTools/commit/9559623)
+- **Author:** Odyseus
+
+```
+- Improved notification system. Now it is possible to choose different layouts for the notification and with more configuration options.
+- Set the *No unread mails* item non reactive. Simply because it shouldn't be.
+
+```
+
+***
+
 - **Date:** Fri, 1 Mar 2019 19:50:01 -0300
 - **Commit:** [beff53e](https://gitlab.com/Odyseus/CinnamonTools/commit/beff53e)
 - **Author:** Odyseus

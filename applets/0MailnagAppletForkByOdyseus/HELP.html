@@ -92,11 +92,22 @@
 <li>Agregado atajo de teclado para abrir y cerrar el menú.</li>
 <li>Agregada opción para mantener un solo sub-menú abierto en todo momento.</li>
 <li>Eliminado código obsoleto. Principalmente características que ya no existen en JavaScript moderno.</li>
+<li>Agregadas más opciones de notificación que se complementan con las opciones existentes en Mailnag.</li>
 </ul>
 <h2>Dependencias</h2>
 <ul>
 <li><strong>mailnag:</strong> Mailnag es un programa demonio que comprueba servidores POP3 e IMAP por correo nuevo.
+Instrucciones detalladas de instalación pueden ser encontradas <a href="https://github.com/pulb/mailnag">en el repositorio de Mailnag</a>.
 Cinnamon necesita ser reiniciado luego de instalar Mailnag si el applet ya fue colocado en un panel.</li>
+</ul>
+<h2>Uso del applet</h2>
+<ul>
+<li>Para configurar Mailnag, ejecutar su programa de configuración desde el menú de aplicaciones, desde el menú contextual de este applet, o ejecutando el comando <code>mailnag-config</code>.</li>
+<li>Cuentas de correo electrónico pueden ser agregadas desde el programa de configuración de Mailnag o automáticamente detectadas al instalar <a href="https://github.com/pulb/mailnag-goa-plugin">el complemento de Mailnag Cuentas en Línea de GNOME (GOA)</a>.</li>
+<li>El complemento de Mailnag llamado <strong>Servicio DBus</strong> necesita estar habilitado para que este applet pueda usar el demonio.</li>
+<li>Mailnag se puede configurar al editar su archivo de configuración en <strong>~/.config/mailnag/mailnag.cfg</strong>.</li>
+<li>Se recomienda instalar el paquete de dependencia opcional de Mailnag <code>gir1.2-gnomekeyring-1.0</code> (o como se llame el paquete en una distribución dada) para que Mailnag use el anillo de claves para almacenar las contraseñas.</li>
+<li>El complemento <strong>Notificaciones LibNotify</strong> de Mailnag no puede agregar acciones de notificación como marcar correos como leídos o abrir el cliente de correo directamente desde la notificación. Estas funciones solo están disponibles para Gnome (una limitación en el propio complemento). Este applet implementa sus propias notificaciones configurables para evitar dichas limitaciones. No hace falta decir que si uno elige usar las notificaciones proporcionadas por este applet, el complemento <strong>Notificaciones LibNotify</strong> debe estar deshabilitado para evitar recibir notificaciones duplicadas.</li>
 </ul>
 
 
@@ -152,11 +163,22 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <li>Added keyboard shortcut to be able to open/close the menu.</li>
 <li>Added option to keep just one sub-menu open.</li>
 <li>Removed obsolete code. Mostly features that doesn't exist anymore in modern JavaScript.</li>
+<li>Added more notification options that complements with the options existing in Mailnag's.</li>
 </ul>
 <h2>Dependencies</h2>
 <ul>
 <li><strong>mailnag:</strong> Mailnag is a daemon program that checks POP3 and IMAP servers for new mail.
-Cinnamon needs to be restarted after installing Mailnag if the applet was already placed in a panel</li>
+Detailed installation instructions can be found on <a href="https://github.com/pulb/mailnag">Mailnag's repository</a>.
+Cinnamon needs to be restarted after installing Mailnag if the applet was already placed in a panel.</li>
+</ul>
+<h2>Usage</h2>
+<ul>
+<li>To configure Mailnag, launch its configuration program found in the applications menu, or from this applet context menu or by running the <code>mailnag-config</code> command.</li>
+<li>E-mail accounts can be directly added through Mailnag's configuration program or automatically detected by installing <a href="https://github.com/pulb/mailnag-goa-plugin">Mailnag GNOME Online Accounts plugin</a>.</li>
+<li>The Mailnag plug-in called <strong>DBus Service</strong> needs to be enabled for this applet to be able to use the daemon.</li>
+<li>Mailnag can be configured further by editing its configuration file at <strong>~/.config/mailnag/mailnag.cfg</strong>.</li>
+<li>It is recommended to install the Mailnag's optional dependency package <code>gir1.2-gnomekeyring-1.0</code> (or whatever the package is called in a given distribution) so Mailnag uses the keyring to store passwords.</li>
+<li>The Mailnag's <strong>LibNotify Notifications</strong> plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass such limitations. Needless to say, if one choses to use the notifications provided by this applet, the <strong>LibNotify Notifications</strong> plug-in must be disabled to avoid receiving duplicated notifications.</li>
 </ul>
 
 
@@ -184,6 +206,15 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Mailnag (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 4 Mar 2019 08:56:33 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/9559623">9559623</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Improved notification system. Now it is possible to choose different layouts for the notification and with more configuration options.
+- Set the *No unread mails* item non reactive. Simply because it shouldn't be.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Fri, 1 Mar 2019 19:50:01 -0300</li>

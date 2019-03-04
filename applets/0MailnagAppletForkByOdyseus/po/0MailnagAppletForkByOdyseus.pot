@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-03-01 20:29-0300\n"
+"POT-Creation-Date: 2019-03-04 09:15-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:167
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:174
 msgid "Help"
 msgstr ""
 
@@ -90,110 +90,159 @@ msgstr ""
 msgid "Removed obsolete code. Mostly features that doesn't exist anymore in modern JavaScript."
 msgstr ""
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:37
+msgid "Added more notification options that complements with the options existing in Mailnag's."
+msgstr ""
+
+#: z_create_localized_help.py:39
 msgid "Dependencies"
 msgstr ""
 
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:42
 msgid "Mailnag is a daemon program that checks POP3 and IMAP servers for new mail."
 msgstr ""
 
-#: z_create_localized_help.py:42
-msgid "Cinnamon needs to be restarted after installing Mailnag if the applet was already placed in a panel"
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:44
+msgid "Detailed installation instructions can be found on [Mailnag's repository](https://github.com/pulb/mailnag)."
 msgstr ""
 
-#: applet.js:158
+#: z_create_localized_help.py:45
+msgid "Cinnamon needs to be restarted after installing Mailnag if the applet was already placed in a panel."
+msgstr ""
+
+#: z_create_localized_help.py:47
+msgid "Usage"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:50
+msgid "To configure Mailnag, launch its configuration program found in the applications menu, or from this applet context menu or by running the `mailnag-config` command."
+msgstr ""
+
+#: z_create_localized_help.py:53
+msgid "E-mail accounts can be directly added through Mailnag's configuration program or automatically detected by installing [Mailnag GNOME Online Accounts plugin](https://github.com/pulb/mailnag-goa-plugin)."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:55
+msgid "The Mailnag plug-in called **DBus Service** needs to be enabled for this applet to be able to use the daemon."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:57
+msgid "Mailnag can be configured further by editing its configuration file at **~/.config/mailnag/mailnag.cfg**."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:59
+msgid "It is recommended to install the Mailnag's optional dependency package `gir1.2-gnomekeyring-1.0` (or whatever the package is called in a given distribution) so Mailnag uses the keyring to store passwords."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:61
+msgid "The Mailnag's **LibNotify Notifications** plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass such limitations. Needless to say, if one choses to use the notifications provided by this applet, the **LibNotify Notifications** plug-in must be disabled to avoid receiving duplicated notifications."
+msgstr ""
+
+#: applet.js:165
 msgid "Configure Mailnag daemon"
 msgstr ""
 
-#: applet.js:205
+#: applet.js:212
 msgid "Mailnag daemon stopped working!"
 msgstr ""
 
-#: applet.js:207
+#: applet.js:214
 msgid "Mailnag daemon isn't running! Do you have it installed?"
 msgstr ""
 
-#: applet.js:438
+#: applet.js:470
 #, javascript-format
 msgid "You have %d new mail!"
 msgid_plural "You have %d new mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:440 applet.js:474
+#: applet.js:474 applet.js:642
 msgid "Mark All Read"
 msgstr ""
 
-#: applet.js:449
-msgid "You have new mail!"
-msgstr ""
-
-#: applet.js:451
+#: applet.js:475
 msgid "Mark Read"
 msgstr ""
 
-#: applet.js:507 applet.js:550
+#: applet.js:535
+#, javascript-format
+msgid "(and %d more)"
+msgid_plural "(and %d more)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: applet.js:558
+msgid "Open Mail client"
+msgstr ""
+
+#: applet.js:675 applet.js:719
 msgid "No unread mails."
 msgstr ""
 
-#: applet.js:530
+#: applet.js:699
 msgid "Mailnag daemon is not running!"
 msgstr ""
 
-#: applet.js:540
+#: applet.js:709
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr ""
 
-#: applet.js:546
+#: applet.js:715
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:560
+#: applet.js:729
 msgid "Click to see error!"
 msgstr ""
 
-#: applet.js:561
+#: applet.js:730
 msgid "Error"
 msgstr ""
 
 #. 86400 = Amount of seconds in 24 hours.
 #. today
 #. <1 minute
-#: utils.js:183
+#: utils.js:190
 msgid "just now"
 msgstr ""
 
-#: utils.js:186
+#: utils.js:193
 #, javascript-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:189
+#: utils.js:196
 #, javascript-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:193
+#: utils.js:200
 msgid "yesterday"
 msgstr ""
 
-#: utils.js:195
+#: utils.js:202
 #, javascript-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:198
+#: utils.js:205
 msgid "d% week ago"
 msgid_plural "%d weeks ago"
 msgstr[0] ""
@@ -211,36 +260,16 @@ msgstr ""
 msgid "Mailnag (Fork By Odyseus)"
 msgstr ""
 
+#. settings-schema.json->applet_header->description
+msgid "Applet Settings"
+msgstr ""
+
 #. settings-schema.json->pref_overlay_key->description
-msgid "Keyboard shortcut to open and close the menu."
-msgstr ""
-
-#. settings-schema.json->pref_notifications_enabled->description
-msgid "Show notifications"
-msgstr ""
-
-#. settings-schema.json->pref_notifications_enabled->tooltip
-msgid "Enables display of mail arrived notifications by applet. Make sure you disable mailnag notification plugin, otherwise you will have duplicates."
-msgstr ""
-
-#. settings-schema.json->pref_launch_client_on_click->description
-msgid "Launch mail client on click"
-msgstr ""
-
-#. settings-schema.json->pref_launch_client_on_click->tooltip
-msgid "Mail client is launched when clicked on a menu item."
-msgstr ""
-
-#. settings-schema.json->pref_keep_one_menu_open->description
-msgid "Keep just one sub menu open"
-msgstr ""
-
-#. settings-schema.json->pref_keep_one_menu_open->tooltip
-msgid "When enabled, the previously opened sub menu will be automatically closed."
+msgid "Keyboard shortcut to open and close the menu"
 msgstr ""
 
 #. settings-schema.json->pref_middle_click_behavior->description
-msgid "On middle click:"
+msgid "Middle click on applet action"
 msgstr ""
 
 #. settings-schema.json->pref_middle_click_behavior->tooltip
@@ -265,4 +294,99 @@ msgstr ""
 
 #. settings-schema.json->pref_client->tooltip
 msgid "Enter the command to launch your mail client here. You can also enter a web address that starts with 'http'."
+msgstr ""
+
+#. settings-schema.json->menu_header->description
+msgid "Menu Settings"
+msgstr ""
+
+#. settings-schema.json->pref_launch_client_on_click->description
+msgid "Launch mail client on click"
+msgstr ""
+
+#. settings-schema.json->pref_launch_client_on_click->tooltip
+msgid "Mail client is launched when clicked on a menu item."
+msgstr ""
+
+#. settings-schema.json->pref_keep_one_menu_open->description
+msgid "Keep just one sub menu open"
+msgstr ""
+
+#. settings-schema.json->pref_keep_one_menu_open->tooltip
+msgid "When enabled, the previously opened sub menu will be automatically closed."
+msgstr ""
+
+#. settings-schema.json->notifications_header->description
+msgid "Notifications Settings"
+msgstr ""
+
+#. settings-schema.json->pref_notification_mode->description
+msgid "Notification mode"
+msgstr ""
+
+#. settings-schema.json->pref_notification_mode->options
+msgid "Disabled"
+msgstr ""
+
+#. settings-schema.json->pref_notification_mode->options
+msgid "Detailed summary (expanded)"
+msgstr ""
+
+#. settings-schema.json->pref_notification_mode->options
+msgid "Detailed summary (compact)"
+msgstr ""
+
+#. settings-schema.json->pref_notification_mode->options
+msgid "Detailed summary (compressed)"
+msgstr ""
+
+#. settings-schema.json->pref_notification_mode->options
+msgid "Custom summary"
+msgstr ""
+
+#. settings-schema.json->pref_notification_max_mails->units
+msgid "mails"
+msgstr ""
+
+#. settings-schema.json->pref_notification_max_mails->description
+msgid "Maximum mails to show"
+msgstr ""
+
+#. settings-schema.json->pref_notification_max_mails->tooltip
+msgid "The amount of mails to show in the detailed summary."
+msgstr ""
+
+#. settings-schema.json->pref_notification_sender_max_chars->units
+#. settings-schema.json->pref_notification_subject_max_chars->units
+msgid "characters"
+msgstr ""
+
+#. settings-schema.json->pref_notification_sender_max_chars->description
+msgid "Sender's truncation point"
+msgstr ""
+
+#. settings-schema.json->pref_notification_sender_max_chars->tooltip
+#. settings-schema.json->pref_notification_subject_max_chars->tooltip
+msgid "The amount of characters at which the text in the detailed summary is truncated."
+msgstr ""
+
+#. settings-schema.json->pref_notification_subject_max_chars->description
+msgid "Subject's truncation point"
+msgstr ""
+
+#. settings-schema.json->pref_notification_custom_template->description
+msgid "Custom summary template"
+msgstr ""
+
+#. settings-schema.json->pref_notification_custom_template->tooltip
+msgid ""
+"A template string used to represent each mail in the notification body. The template can contain some basic Pango markup (like <b>, <i>, and <u> tags, everything else is filtered out by Cinnamon) and must contain at least one of the following placeholders:\n"
+"\n"
+"{{sender}}: The mail sender name or address.\n"
+"{{subject}}: The subject of the received mail.\n"
+"{{account}}: The receiving account name as specified in Mailnag's options."
+msgstr ""
+
+#. settings-schema.json->notification_test_button->description
+msgid "Test notifications"
 msgstr ""
