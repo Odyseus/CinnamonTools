@@ -56,7 +56,7 @@ QuickMenu.prototype = {
 
             this.directory_last = this.pref_directory;
 
-            this._onSettingsCustomTooltip();
+            this.set_applet_tooltip(this.pref_customtooltip);
 
             this.main_folder_monitor = null;
             this.monitor_id = 0;
@@ -67,6 +67,7 @@ QuickMenu.prototype = {
             this._updateIconAndLabel();
             this.dealWithFolderMonitor();
             this._updateMenu(true);
+            this._updateKeybinding();
         });
     },
 
@@ -79,6 +80,12 @@ QuickMenu.prototype = {
             return;
         }
 
+        /* NOTE: Monitoring the directory is very limited. It doesn't monitor files
+         * recursively and it doesn't even monitor file changes inside sub-folders.
+         * The only solution would be to add a monitor per file,
+         * which I will never even consider doing. Tha is way the Auto-update menu
+         * option is disabled by default, it's totally useless.
+         */
         if (this.directory_last && GLib.file_test(this.directory_last, GLib.FileTest.IS_DIR)) {
             this.main_folder_monitor = Gio.file_new_for_path(this.directory_last)
                 .monitor_directory(Gio.FileMonitorFlags.NONE, null);
@@ -90,16 +97,17 @@ QuickMenu.prototype = {
     },
 
     _onMainFolderChanged: function(aMonitor, aFileObj, aN, aEventType) {
-        if (this.folder_changed_id > 0) {
-            Mainloop.source_remove(this.folder_changed_id);
-            this.folder_changed_id = null;
-        }
-
-        if (aEventType &&
-            (aEventType === Gio.FileMonitorEvent.DELETED ||
-                aEventType === Gio.FileMonitorEvent.RENAMED ||
-                aEventType === Gio.FileMonitorEvent.CREATED ||
-                aEventType === Gio.FileMonitorEvent.MOVED)) {
+        if (aEventType === Gio.FileMonitorEvent.DELETED ||
+            aEventType === Gio.FileMonitorEvent.RENAMED ||
+            aEventType === Gio.FileMonitorEvent.ATTRIBUTE_CHANGED ||
+            aEventType === Gio.FileMonitorEvent.CHANGES_DONE_HINT ||
+            aEventType === Gio.FileMonitorEvent.CREATED ||
+            aEventType === Gio.FileMonitorEvent.MOVED ||
+            aEventType === Gio.FileMonitorEvent.MOVED_OUT) {
+            if (this.folder_changed_id > 0) {
+                Mainloop.source_remove(this.folder_changed_id);
+                this.folder_changed_id = null;
+            }
 
             this.folder_changed_id = Mainloop.timeout_add(1000,
                 () => this._updateMenu());
@@ -468,23 +476,6 @@ QuickMenu.prototype = {
         }
     },
 
-    _onSettingsAutoupdate: function() {
-        this.dealWithFolderMonitor();
-        this._updateMenu();
-    },
-
-    _onSettingsDirectory: function() {
-        if (this.pref_directory !== this.directory_last) {
-            this.directory_last = this.pref_directory;
-            this.dealWithFolderMonitor();
-            this._updateMenu();
-        }
-    },
-
-    _onSettingsCustomTooltip: function() {
-        this.set_applet_tooltip(this.pref_customtooltip);
-    },
-
     _updateIconAndLabel: function() {
         let icon = this.pref_customicon;
         let setIcon = (aIcon, aIsPath) => {
@@ -592,7 +583,11 @@ QuickMenu.prototype = {
         let pref_key = aPrefKey || aPrefValue;
         switch (pref_key) {
             case "pref_directory":
-                this._onSettingsDirectory();
+                if (this.pref_directory !== this.directory_last) {
+                    this.directory_last = this.pref_directory;
+                    this.dealWithFolderMonitor();
+                    this._updateMenu();
+                }
                 break;
             case "pref_auto_close_opened_sub_menus":
             case "pref_ignore_sub_folders":
@@ -616,10 +611,11 @@ QuickMenu.prototype = {
                 this._updateIconAndLabel();
                 break;
             case "pref_autoupdate":
-                this._onSettingsAutoupdate();
+                this.dealWithFolderMonitor();
+                this._updateMenu();
                 break;
             case "pref_customtooltip":
-                this._onSettingsCustomTooltip();
+                this.set_applet_tooltip(this.pref_customtooltip);
                 break;
             case "pref_hotkey":
                 this._updateKeybinding();

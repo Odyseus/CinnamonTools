@@ -156,7 +156,7 @@
     "pref_auto_close_opened_sub_menus": {
         "type": "checkbox",
         "default": false,
-        "description": "Auto-hide opened sub-menus (EXPERIMENTAL/BUGGY)",
-        "tooltip": "If enabled, the previously opened sub-menu will be automatically closed.\nIt will only work with sub-menus created at the first level. Sub-menus inside other sub-menus are not affected."
+        "description": "Keep just one sub menu open",
+        "tooltip": "When enabled, the previously opened sub menu will be automatically closed."
     }
 }
