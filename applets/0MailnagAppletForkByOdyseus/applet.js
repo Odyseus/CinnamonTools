@@ -28,11 +28,11 @@ const {
     }
 } = imports;
 
-function MailnagForkByOdyseusApplet() {
+function Mailnag() {
     this._init.apply(this, arguments);
 }
 
-MailnagForkByOdyseusApplet.prototype = {
+Mailnag.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -722,7 +722,7 @@ MailnagForkByOdyseusApplet.prototype = {
     },
 
     showError: function(message) {
-        global.logError("MailnagApplet ERROR: " + message);
+        global.logError("Mailnag applet ERROR: " + message);
 
         this.menu.removeAll();
         this.set_applet_label("!!");
@@ -902,5 +902,5 @@ MailnagForkByOdyseusApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new MailnagForkByOdyseusApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new Mailnag(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

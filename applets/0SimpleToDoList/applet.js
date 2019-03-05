@@ -29,11 +29,11 @@ const {
     }
 } = imports;
 
-function SimpleToDoListApplet() {
+function SimpleToDoList() {
     this._init.apply(this, arguments);
 }
 
-SimpleToDoListApplet.prototype = {
+SimpleToDoList.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -1110,5 +1110,5 @@ SimpleToDoListApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new SimpleToDoListApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new SimpleToDoList(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

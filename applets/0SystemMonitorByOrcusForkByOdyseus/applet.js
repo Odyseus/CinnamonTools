@@ -26,11 +26,11 @@ const {
     }
 } = imports;
 
-function SystemMonitorByOrcusForkByOdyseusApplet() {
+function SystemMonitor() {
     this._init.apply(this, arguments);
 }
 
-SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
+SystemMonitor.prototype = {
     __proto__: Applet.IconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -545,5 +545,5 @@ SystemMonitorByOrcusForkByOdyseusApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new SystemMonitorByOrcusForkByOdyseusApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new SystemMonitor(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

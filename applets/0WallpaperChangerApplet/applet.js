@@ -28,11 +28,11 @@ const {
     }
 } = imports;
 
-function WallpaperChangerApplet() {
+function WallpaperChanger() {
     this._init.apply(this, arguments);
 }
 
-WallpaperChangerApplet.prototype = {
+WallpaperChanger.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     appletActivationAllowed: true,
@@ -392,5 +392,5 @@ WallpaperChangerApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new WallpaperChangerApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new WallpaperChanger(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

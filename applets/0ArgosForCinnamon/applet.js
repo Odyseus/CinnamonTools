@@ -38,11 +38,11 @@ const {
     Placeholders,
 } = $.Constants;
 
-function ArgosForCinnamonApplet() {
+function Argos() {
     this._init.apply(this, arguments);
 }
 
-ArgosForCinnamonApplet.prototype = {
+Argos.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -1047,7 +1047,7 @@ function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
         try {
             let protos = {
                 AltSwitcher: $.AltSwitcher,
-                ArgosForCinnamonApplet: ArgosForCinnamonApplet,
+                Argos: Argos,
                 ArgosLineView: $.ArgosLineView,
                 ArgosMenuItem: $.ArgosMenuItem,
                 CustomPopupSliderMenuItem: $.CustomPopupSliderMenuItem,
@@ -1071,5 +1071,5 @@ function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
         }
     }
 
-    return new ArgosForCinnamonApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new Argos(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

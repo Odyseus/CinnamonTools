@@ -25,11 +25,11 @@ const {
     }
 } = imports;
 
-function PanelDrawerForkByOdyseusApplet() {
+function PanelDrawer() {
     this._init.apply(this, arguments);
 }
 
-PanelDrawerForkByOdyseusApplet.prototype = {
+PanelDrawer.prototype = {
     __proto__: Applet.IconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -356,5 +356,5 @@ PanelDrawerForkByOdyseusApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new PanelDrawerForkByOdyseusApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new PanelDrawer(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

@@ -36,11 +36,11 @@ const {
     }
 } = imports;
 
-function DesktopHandlerApplet() {
+function DesktopHandler() {
     this._init.apply(this, arguments);
 }
 
-DesktopHandlerApplet.prototype = {
+DesktopHandler.prototype = {
     __proto__: Applet.IconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -1251,5 +1251,5 @@ DesktopHandlerApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new DesktopHandlerApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new DesktopHandler(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

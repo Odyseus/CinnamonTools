@@ -28,11 +28,11 @@ const {
     }
 } = imports;
 
-function WindowListForkByOdyseusApplet() {
+function WindowList() {
     this._init.apply(this, arguments);
 }
 
-WindowListForkByOdyseusApplet.prototype = {
+WindowList.prototype = {
     __proto__: Applet.Applet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -594,5 +594,5 @@ WindowListForkByOdyseusApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new WindowListForkByOdyseusApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new WindowList(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

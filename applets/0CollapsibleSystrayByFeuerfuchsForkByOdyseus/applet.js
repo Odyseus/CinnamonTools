@@ -34,11 +34,11 @@ const APPLET_DIRECTION = {
     VERTICAL: 1
 };
 
-function CollapsibleSystrayApplet() {
+function CollapsibleSystray() {
     this._init.apply(this, arguments);
 }
 
-CollapsibleSystrayApplet.prototype = {
+CollapsibleSystray.prototype = {
     __proto__: $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype,
 
     _init: function(metadata, orientation, panel_height, instance_id) {
@@ -891,5 +891,5 @@ CollapsibleSystrayApplet.prototype = {
 };
 
 function main(metadata, orientation, panel_height, instance_id) {
-    return new CollapsibleSystrayApplet(metadata, orientation, panel_height, instance_id);
+    return new CollapsibleSystray(metadata, orientation, panel_height, instance_id);
 }

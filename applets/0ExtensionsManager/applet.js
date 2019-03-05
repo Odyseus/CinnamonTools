@@ -30,11 +30,11 @@ const {
     }
 } = imports;
 
-function ExtensionsManagerApplet() {
+function ExtensionsManager() {
     this._init.apply(this, arguments);
 }
 
-ExtensionsManagerApplet.prototype = {
+ExtensionsManager.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -698,5 +698,5 @@ ExtensionsManagerApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new ExtensionsManagerApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new ExtensionsManager(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

@@ -28,11 +28,11 @@ const {
     }
 } = imports;
 
-function QuickMenuApplet() {
+function QuickMenu() {
     this._init.apply(this, arguments);
 }
 
-QuickMenuApplet.prototype = {
+QuickMenu.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -629,5 +629,5 @@ QuickMenuApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new QuickMenuApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new QuickMenu(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

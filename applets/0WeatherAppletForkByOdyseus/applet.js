@@ -62,11 +62,11 @@ const {
     },
 } = $.Constants;
 
-function WeatherAppletForkByOdyseusApplet() {
+function Weather() {
     this._init.apply(this, arguments);
 }
 
-WeatherAppletForkByOdyseusApplet.prototype = {
+Weather.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -1764,7 +1764,7 @@ function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
                 CustomTooltip: $.CustomTooltip,
                 LocationSelectorMenu: $.LocationSelectorMenu,
                 LocationSelectorMenuItem: $.LocationSelectorMenuItem,
-                WeatherAppletForkByOdyseusApplet: WeatherAppletForkByOdyseusApplet,
+                Weather: Weather,
                 WeatherMessageTraySource: $.WeatherMessageTraySource,
                 WeatherProviderBase: $.WeatherProviderBase,
             };
@@ -1779,5 +1779,5 @@ function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
         }
     }
 
-    return new WeatherAppletForkByOdyseusApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new Weather(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }

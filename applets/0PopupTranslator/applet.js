@@ -32,11 +32,11 @@ const {
     }
 } = imports;
 
-function PopupTranslatorApplet() {
+function PopupTranslator() {
     this._init.apply(this, arguments);
 }
 
-PopupTranslatorApplet.prototype = {
+PopupTranslator.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
@@ -1230,5 +1230,5 @@ PopupTranslatorApplet.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new PopupTranslatorApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new PopupTranslator(aMetadata, aOrientation, aPanel_height, aInstance_id);
 }
