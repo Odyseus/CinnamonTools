@@ -303,8 +303,20 @@ AppMenuButton.prototype = {
             (actor, forWidth, alloc) => {
                 this._getPreferredHeight(actor, forWidth, alloc);
             });
-        this.actor.connect("allocate",
-            (actor, box, flags) => this._allocate(actor, box, flags));
+
+        /* NOTE: The _allocate function is too complex and has too much differences
+         * for me to use conditions to make it work right in all versions of Cinnamon.
+         * So, use two different functions and move on.
+         */
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 3.8.x+
+        if (versionCompare(CINNAMON_VERSION, "3.8.0") >= 0) {
+            this.actor.connect("allocate",
+                (actor, box, flags) => this._allocate_NEW(actor, box, flags));
+        } else {
+            this.actor.connect("allocate",
+                (actor, box, flags) => this._allocate_OLD(actor, box, flags));
+        }
 
         this.progressOverlay = new St.Widget({
             style_class: "progress",
@@ -396,7 +408,9 @@ AppMenuButton.prototype = {
         this.window_signals.connect(this.metaWindow, "notify::title", this.setDisplayTitle, this);
         this.window_signals.connect(this.metaWindow, "notify::minimized", this.setDisplayTitle, this);
         this.window_signals.connect(this.metaWindow, "notify::tile-type", this.setDisplayTitle, this);
-        this.window_signals.connect(this.metaWindow, "notify::icon", this.setIcon, this);
+        this.window_signals.connect(this.metaWindow, (versionCompare(CINNAMON_VERSION, "4.0.6") >= 0 ?
+            "icon-changed" :
+            "notify::icon"), this.setIcon, this);
         this.window_signals.connect(this.metaWindow, "notify::appears-focused", this.onFocus, this);
         this.window_signals.connect(this.metaWindow, "unmanaged", this.onUnmanaged, this);
     },
@@ -660,7 +674,7 @@ AppMenuButton.prototype = {
         if (!this._hasFocus()) {
             Main.activateWindow(this.metaWindow, global.get_current_time());
             this.actor.add_style_pseudo_class("focus");
-        } else if (!fromDrag) {
+        } else if (!fromDrag && this._applet.pref_left_click_minimize) {
             this.metaWindow.minimize();
             this.actor.remove_style_pseudo_class("focus");
         }
@@ -734,7 +748,68 @@ AppMenuButton.prototype = {
         }
     },
 
-    _allocate: function(actor, box, flags) {
+    _allocate_NEW: function(actor, box, flags) {
+        let allocWidth = box.x2 - box.x1;
+        let allocHeight = box.y2 - box.y1;
+
+        let childBox = new Clutter.ActorBox();
+
+        let [minWidth, minHeight, naturalWidth, naturalHeight] = this._iconBox.get_preferred_size();
+
+        let direction = this.actor.get_text_direction();
+        let spacing = Math.floor(this.actor.get_theme_node().get_length("spacing"));
+        let yPadding = Math.floor(Math.max(0, allocHeight - naturalHeight) / 2);
+
+        childBox.y1 = box.y1 + yPadding;
+        childBox.y2 = childBox.y1 + Math.min(naturalHeight, allocHeight);
+
+        if (this.labelVisible) {
+            if (direction === Clutter.TextDirection.LTR) {
+                childBox.x1 = box.x1;
+            } else {
+                childBox.x1 = Math.max(box.x1, box.x2 - naturalWidth);
+            }
+            childBox.x2 = Math.min(childBox.x1 + naturalWidth, box.x2);
+        } else {
+            childBox.x1 = box.x1 + Math.floor(Math.max(0, allocWidth - naturalWidth) / 2);
+            childBox.x2 = Math.min(childBox.x1 + naturalWidth, box.x2);
+        }
+        this._iconBox.allocate(childBox, flags);
+
+        if (this.labelVisible) {
+            [minWidth, minHeight, naturalWidth, naturalHeight] = this._label.get_preferred_size();
+
+            yPadding = Math.floor(Math.max(0, allocHeight - naturalHeight) / 2);
+            childBox.y1 = box.y1 + yPadding;
+            childBox.y2 = childBox.y1 + Math.min(naturalHeight, allocHeight);
+            if (direction === Clutter.TextDirection.LTR) {
+                // Reuse the values from the previous allocation
+                childBox.x1 = Math.min(childBox.x2 + spacing, box.x2);
+                childBox.x2 = box.x2;
+            } else {
+                childBox.x2 = Math.max(childBox.x1 - spacing, box.x1);
+                childBox.x1 = box.x1;
+            }
+
+            this._label.allocate(childBox, flags);
+        }
+
+        if (!this.progressOverlay.visible) {
+            return;
+        }
+
+        childBox.x1 = 0;
+        childBox.y1 = 0;
+        childBox.x2 = this.actor.width;
+        childBox.y2 = this.actor.height;
+
+        this.progressOverlay.allocate(childBox, flags);
+
+        let clip_width = Math.max((this.actor.width) * (this._progress / 100.0), 1.0);
+        this.progressOverlay.set_clip(0, 0, clip_width, this.actor.height);
+    },
+
+    _allocate_OLD: function(actor, box, flags) {
         let allocWidth = box.x2 - box.x1;
         let allocHeight = box.y2 - box.y1;
 
@@ -838,12 +913,18 @@ AppMenuButton.prototype = {
         let tracker = Cinnamon.WindowTracker.get_default();
         let app = tracker.get_window_app(this.metaWindow);
 
-        if (this._legacyScaleMode && this.labelVisible) {
-            this.iconSize = Math.round(this._applet._panelHeight * ICON_HEIGHT_FACTOR / global.ui_scale);
-        } else if (!this.labelVisible) {
-            this.iconSize = Math.round(this._applet._panelHeight * VERTICAL_ICON_HEIGHT_FACTOR / global.ui_scale);
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.0.x+
+        if (versionCompare(CINNAMON_VERSION, "4.0.0") >= 0) {
+            this.icon_size = this._applet.icon_size;
         } else {
-            this.iconSize = HORIZONTAL_ICON_SIZE;
+            if (this._legacyScaleMode && this.labelVisible) {
+                this.icon_size = Math.round(this._applet._panelHeight * ICON_HEIGHT_FACTOR / global.ui_scale);
+            } else if (!this.labelVisible) {
+                this.icon_size = Math.round(this._applet._panelHeight * VERTICAL_ICON_HEIGHT_FACTOR / global.ui_scale);
+            } else {
+                this.icon_size = HORIZONTAL_ICON_SIZE;
+            }
         }
 
         // Mark for deletion on EOL. Cinnamon 3.6.x+
@@ -852,12 +933,12 @@ AppMenuButton.prototype = {
 
         let icon = app ?
             useLegacyFunction ?
-            app.create_icon_texture(this.iconSize) :
-            app.create_icon_texture_for_window(this.iconSize, this.metaWindow) :
+            app.create_icon_texture(this.icon_size) :
+            app.create_icon_texture_for_window(this.icon_size, this.metaWindow) :
             new St.Icon({
                 icon_name: "application-default-icon",
                 icon_type: St.IconType.FULLCOLOR,
-                icon_size: this.iconSize
+                icon_size: this.icon_size
             });
 
         let old_child = this._iconBox.get_child();

@@ -20,6 +20,11 @@
         "default": false,
         "description": "Reverse the direction of mouse-wheel scrolling in the window list"
     },
+    "pref_left_click_minimize": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Left click to minimize window"
+    },
     "pref_middle_click_close": {
         "type": "checkbox",
         "default": true,
@@ -82,7 +87,6 @@
     },
     "pref_sub_menu_placement": {
         "type": "combobox",
-        "indent": true,
         "default": 1,
         "description": "Where to display the \"Preferences\" sub-menu?",
         "tooltip": "If the option \"Invert context menu items order\" is enabled, the \"Top of menu\" will actually be the \"Bottom of menu\" and vice versa.",

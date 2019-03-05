@@ -52,6 +52,13 @@ WindowList.prototype = {
         this.actor.set_track_hover(false);
         this.actor.set_style_class_name("window-list-box");
         this.orientation = aOrientation;
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.0.x+
+        if ($.versionCompare($.CINNAMON_VERSION, "4.0.0") >= 0) {
+            this.icon_size = this.getPanelIconSize(St.IconType.FULLCOLOR);
+        }
+
         this.appletEnabled = false;
 
         // A layout manager is used to cater for vertical panels as well as horizontal
@@ -82,7 +89,7 @@ WindowList.prototype = {
         this._monitorWatchList = [];
 
         this._initializeSettings(() => {
-            this.signals.connect(global.screen, "window-added", this._onWindowAddedAsync, this);
+            this.signals.connect(global.screen, "window-added", this._onWindowAdded, this);
             this.signals.connect(global.screen, "window-monitor-changed", this._onWindowMonitorChanged, this);
             this.signals.connect(global.screen, "window-workspace-changed", this._onWindowWorkspaceChanged, this);
 
@@ -158,6 +165,7 @@ WindowList.prototype = {
             "pref_enable_alerts",
             "pref_enable_scrolling",
             "pref_reverse_scrolling",
+            "pref_left_click_minimize",
             "pref_middle_click_close",
             "pref_buttons_use_entire_space",
             "pref_window_preview",
@@ -203,6 +211,20 @@ WindowList.prototype = {
     },
 
     on_panel_height_changed: function() {
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.0.x+
+        if ($.versionCompare($.CINNAMON_VERSION, "4.0.0") >= 0) {
+            this.icon_size = this.getPanelIconSize(St.IconType.FULLCOLOR);
+        }
+
+        this._refreshAllItems();
+    },
+
+    on_panel_icon_size_changed: function(size) {
+        /* NOTE: This function only exists in Cinnamon 4.0.x+.
+         * No need to check Cinnamon version here.
+         */
+        this.icon_size = size;
         this._refreshAllItems();
     },
 
@@ -273,13 +295,6 @@ WindowList.prototype = {
         this.manager.set_spacing(spacing * global.ui_scale);
     },
 
-    _onWindowAddedAsync: function(screen, metaWindow, monitor) {
-        Mainloop.timeout_add(20,
-            () => {
-                this._onWindowAdded(screen, metaWindow, monitor);
-            });
-    },
-
     _onWindowAdded: function(screen, metaWindow, monitor) { // jshint ignore:line
         if (this._shouldAdd(metaWindow)) {
             this._addWindow(metaWindow, false);
@@ -287,6 +302,12 @@ WindowList.prototype = {
     },
 
     _onWindowMonitorChanged: function(screen, metaWindow, monitor) { // jshint ignore:line
+        let windowActor = metaWindow.get_compositor_private();
+
+        if (!windowActor || (!windowActor.visible && !metaWindow.minimized)) {
+            return;
+        }
+
         if (this._shouldAdd(metaWindow)) {
             this._addWindow(metaWindow, false);
         } else {
@@ -305,7 +326,7 @@ WindowList.prototype = {
     _onWindowSkipTaskbarChanged: function(screen, metaWindow) {
         let window = this._windows.find(win => (win.metaWindow == metaWindow));
 
-        if (window && !Main.isInteresting(metaWindow)) {
+        if (window && window.is_skip_taskbar()) {
             this._removeWindow(metaWindow);
             return;
         }
@@ -473,6 +494,7 @@ WindowList.prototype = {
 
     _shouldAdd: function(metaWindow) {
         return Main.isInteresting(metaWindow) &&
+            !metaWindow.is_skip_taskbar() &&
             this._monitorWatchList.indexOf(metaWindow.get_monitor()) != -1;
     },
 
