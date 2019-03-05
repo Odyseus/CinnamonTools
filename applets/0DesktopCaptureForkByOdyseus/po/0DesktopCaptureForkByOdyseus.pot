@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-03-04 09:15-0300\n"
+"POT-Creation-Date: 2019-03-05 10:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,7 +129,7 @@ msgstr ""
 msgid "The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program."
 msgstr ""
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:48 applet.js:174
 msgid "Programs support"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgstr ""
 msgid "The selected window class title."
 msgstr ""
 
-#: z_create_localized_help.py:251
+#: z_create_localized_help.py:251 applet.js:181
 msgid "Cinnamon recorder profiles"
 msgstr ""
 
@@ -543,10 +543,6 @@ msgstr ""
 msgid "Open screencasts folder"
 msgstr ""
 
-#: applet.js:174
-msgid "Programs Support"
-msgstr ""
-
 #: applet.js:175
 msgid "Export programs"
 msgstr ""
@@ -561,10 +557,6 @@ msgstr ""
 
 #: applet.js:178
 msgid "Remove all programs"
-msgstr ""
-
-#: applet.js:181
-msgid "Cinnamon Recorder Profiles"
 msgstr ""
 
 #: applet.js:182
@@ -596,7 +588,7 @@ msgid "Choose recorder"
 msgstr ""
 
 #: applet.js:719
-msgid "Latest Capture"
+msgid "Latest capture"
 msgstr ""
 
 #: applet.js:751
@@ -698,11 +690,11 @@ msgid "Image data copied to clipboard."
 msgstr ""
 
 #: applet.js:1331
-msgid "Save folder doesn't exist!"
+msgid "Selected storage folder doesn't exist!"
 msgstr ""
 
 #: applet.js:1339
-msgid "Path to save folder is not a directory!"
+msgid "Selected storage folder is not a directory!"
 msgstr ""
 
 #: applet.js:1359
@@ -831,7 +823,7 @@ msgid "Delete captured file from file system."
 msgstr ""
 
 #: utils.js:2596
-msgid "Copy Data"
+msgid "Copy data"
 msgstr ""
 
 #: utils.js:2597
@@ -839,7 +831,7 @@ msgid "Copy image data to clipboard."
 msgstr ""
 
 #: utils.js:2601
-msgid "Copy Path"
+msgid "Copy path"
 msgstr ""
 
 #: utils.js:2602
@@ -1000,7 +992,7 @@ msgid "File path"
 msgstr ""
 
 #. settings-schema.json->pref_copy_to_clipboard->options
-msgid "Image Data"
+msgid "Image data"
 msgstr ""
 
 #. settings-schema.json->pref_copy_to_clipboard->description
@@ -1177,8 +1169,7 @@ msgid "Overlay theme"
 msgstr ""
 
 #. settings-schema.json->pref_theme_selector->tooltip
-#. settings-schema.json->pref_disclaimer_read->tooltip
-msgid "If you read the help page for this applet (Known issues), you know what this is about."
+msgid "These themes are used to style the Cinnamon helpers overlay (area selector, window selector, etc.). The built-in themes can be found in APPLET_FOLDER/themes and can be used as a base to create a custom theme."
 msgstr ""
 
 #. settings-schema.json->pref_theme_custom->description
@@ -1191,6 +1182,10 @@ msgstr ""
 
 #. settings-schema.json->pref_disclaimer_read->description
 msgid "I read the disclaimer and I'm aware of the consequences"
+msgstr ""
+
+#. settings-schema.json->pref_disclaimer_read->tooltip
+msgid "If you read the help page for this applet (Known issues), you know what this is about."
 msgstr ""
 
 #. settings-schema.json->debugging-header->description

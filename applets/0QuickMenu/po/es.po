@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0QuickMenu\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-17 02:33-0300\n"
-"PO-Revision-Date: 2018-08-25 02:48-0300\n"
+"POT-Creation-Date: 2019-03-05 03:17-0300\n"
+"PO-Revision-Date: 2019-03-05 03:19-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:551
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:542
 msgid "Help"
 msgstr "Ayuda"
 
@@ -172,28 +172,28 @@ msgstr "El *lenguaje* JSON es muy estricto. Asegurarse de utilizar SOLAMENTE com
 
 #. NOTE: This string could be left blank because it's a default string,
 #. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:239
+#: applet.js:247
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
 
-#: applet.js:533
+#: applet.js:524
 msgid "Update menu"
 msgstr "Actualizar menú"
 
-#: applet.js:538
+#: applet.js:529
 msgid "Scan the main folder to re-create the menu."
 msgstr "Escanear la carpeta principal para re-crear el menú."
 
-#: applet.js:541
+#: applet.js:532
 msgid "Open folder"
 msgstr "Abrir carpeta"
 
-#: applet.js:547
+#: applet.js:538
 msgid "Open the main folder."
 msgstr "Abrir la carpeta principal."
 
-#: applet.js:557
+#: applet.js:548
 msgid "Open the help file."
 msgstr "Abrir el archivo de ayuda."
 
@@ -387,13 +387,19 @@ msgid "If enabled, the sub folders found inside the main folder will be ignored 
 msgstr "Con esta opción activada, subcarpetas encontradas dentro de la carpeta principal no van a ser usadas para crear submenúes."
 
 #. settings-schema.json->pref_auto_close_opened_sub_menus->description
-msgid "Auto-hide opened sub-menus (EXPERIMENTAL/BUGGY)"
-msgstr "Auto-ocultar submenúes abiertos (EXPERIMENTAL)"
+msgid "Keep just one sub menu open"
+msgstr "Mantener un solo submenú abierto en todo momento"
 
 #. settings-schema.json->pref_auto_close_opened_sub_menus->tooltip
-msgid ""
-"If enabled, the previously opened sub-menu will be automatically closed.\n"
-"It will only work with sub-menus created at the first level. Sub-menus inside other sub-menus are not affected."
-msgstr ""
-"Con esta opción activada, un submenú previamente abierto será automáticamente cerrado.\n"
-"Sólo funciona con submenúes creados en el primer nivel del menú principal. Submenúes dentro de otros submenúes no serán afectados."
+msgid "When enabled, the previously opened sub menu will be automatically closed."
+msgstr "Con esta opción habilitada, un submenú previamente abierto será automáticamente cerrado."
+
+#~ msgid "Auto-hide opened sub-menus (EXPERIMENTAL/BUGGY)"
+#~ msgstr "Auto-ocultar submenúes abiertos (EXPERIMENTAL)"
+
+#~ msgid ""
+#~ "If enabled, the previously opened sub-menu will be automatically closed.\n"
+#~ "It will only work with sub-menus created at the first level. Sub-menus inside other sub-menus are not affected."
+#~ msgstr ""
+#~ "Con esta opción activada, un submenú previamente abierto será automáticamente cerrado.\n"
+#~ "Sólo funciona con submenúes creados en el primer nivel del menú principal. Submenúes dentro de otros submenúes no serán afectados."

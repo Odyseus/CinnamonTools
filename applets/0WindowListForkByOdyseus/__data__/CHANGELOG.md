@@ -4,6 +4,21 @@
 
 ***
 
+- **Date:** Tue, 5 Mar 2019 03:16:33 -0300
+- **Commit:** [beeb461](https://gitlab.com/Odyseus/CinnamonTools/commit/beeb461)
+- **Author:** Odyseus
+
+```
+- Back-ported fixes and features from upstream.
+    - Correct handling of icon sizes.
+    - Added option to disable window minimization on left click. ¬¬
+    - Fixed icons not appearing for some applications.
+    - Ensure minimized window button menus update on monitor change.
+
+```
+
+***
+
 - **Date:** Thu, 28 Feb 2019 20:06:55 -0300
 - **Commit:** [0ddf56b](https://gitlab.com/Odyseus/CinnamonTools/commit/0ddf56b)
 - **Author:** Odyseus

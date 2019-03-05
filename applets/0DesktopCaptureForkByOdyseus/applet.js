@@ -171,14 +171,14 @@ DesktopCapture.prototype = {
 
             switch (pref.name) {
                 case "pref_program_support":
-                    subMLabel = _("Programs Support");
+                    subMLabel = _("Programs support");
                     exportLabel = _("Export programs");
                     importLabel = _("Import programs");
                     resetLabel = _("Reset programs");
                     removeLabel = _("Remove all programs");
                     break;
                 case "pref_cinn_rec_profiles":
-                    subMLabel = _("Cinnamon Recorder Profiles");
+                    subMLabel = _("Cinnamon recorder profiles");
                     exportLabel = _("Export profiles");
                     importLabel = _("Import profiles");
                     resetLabel = _("Reset profiles");
@@ -716,7 +716,7 @@ DesktopCapture.prototype = {
 
                 this[device + "Section"] = new $.CustomPopupMenuSection();
 
-                let lastCaptureSubMenu = new PopupMenu.PopupSubMenuMenuItem(_("Latest Capture"));
+                let lastCaptureSubMenu = new PopupMenu.PopupSubMenuMenuItem(_("Latest capture"));
                 this[device + "LastCaptureContent"] = new $.LastCaptureContainer(this, {
                     device: device
                 });
@@ -1328,7 +1328,7 @@ DesktopCapture.prototype = {
         let msg = this.criticalBaseMessage;
 
         if (!folder.query_exists(null)) {
-            msg.push(_("Save folder doesn't exist!"));
+            msg.push(_("Selected storage folder doesn't exist!"));
             msg.push(folder.get_path());
             $.notify(msg, "error");
             return false;
@@ -1336,7 +1336,7 @@ DesktopCapture.prototype = {
             let fileType = folder.query_file_type(Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
             // Don't restrict to only directories, just exclude normal files
             if (fileType === Gio.FileType.REGULAR) {
-                msg.push(_("Path to save folder is not a directory!"));
+                msg.push(_("Selected storage folder is not a directory!"));
                 msg.push(folder.get_path());
                 $.notify(msg, "error");
                 return false;

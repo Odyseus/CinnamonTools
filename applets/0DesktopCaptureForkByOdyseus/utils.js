@@ -2593,12 +2593,12 @@ LastCaptureContainer.prototype = {
                 action: "delete-file",
             },
             copyDataButton: {
-                label: _("Copy Data"),
+                label: _("Copy data"),
                 tooltip: _("Copy image data to clipboard."),
                 action: "copy-image-data",
             },
             copyPathButton: {
-                label: _("Copy Path"),
+                label: _("Copy path"),
                 tooltip: _("Copy image path to clipboard."),
                 action: "copy-image-path",
             }

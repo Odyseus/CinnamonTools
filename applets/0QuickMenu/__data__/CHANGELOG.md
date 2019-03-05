@@ -4,6 +4,19 @@
 
 ***
 
+- **Date:** Tue, 5 Mar 2019 03:03:43 -0300
+- **Commit:** [35839a0](https://gitlab.com/Odyseus/CinnamonTools/commit/35839a0)
+- **Author:** Odyseus
+
+```
+- Fixed keybinding to open/close the menu not being registered on applet initialization.
+- Improved the *Auto-update menu* option by adding more Gio.FileMonitorEvent checks. Still not very useful, but it's better than nothing.
+- Removed unnecessary function definitions.
+
+```
+
+***
+
 - **Date:** Tue, 15 Jan 2019 22:36:44 -0300
 - **Commit:** [07f567c](https://gitlab.com/Odyseus/CinnamonTools/commit/07f567c)
 - **Author:** Odyseus

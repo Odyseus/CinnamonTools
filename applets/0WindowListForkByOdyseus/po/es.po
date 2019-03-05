@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-17 02:33-0300\n"
-"PO-Revision-Date: 2018-08-25 02:48-0300\n"
+"POT-Creation-Date: 2019-03-05 03:17-0300\n"
+"PO-Revision-Date: 2019-03-05 03:18-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1078
+#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1159
 msgid "Help"
 msgstr "Ayuda"
 
@@ -104,73 +104,73 @@ msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 
-#: utils.js:930
+#: utils.js:1011
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: utils.js:944
+#: utils.js:1025
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: utils.js:955
+#: utils.js:1036
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: utils.js:966
+#: utils.js:1047
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: utils.js:972
+#: utils.js:1053
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: utils.js:978
+#: utils.js:1059
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: utils.js:1008
+#: utils.js:1089
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: utils.js:1018
+#: utils.js:1099
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: utils.js:1033
+#: utils.js:1114
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: utils.js:1041
+#: utils.js:1122
 msgid "Restore"
 msgstr "Restaurar"
 
-#: utils.js:1046
+#: utils.js:1127
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: utils.js:1054
+#: utils.js:1135
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: utils.js:1059
+#: utils.js:1140
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: utils.js:1066
+#: utils.js:1147
 msgid "Close"
 msgstr "Cerrar"
 
-#: utils.js:1085
+#: utils.js:1166
 msgid "About..."
 msgstr "Acerca de..."
 
-#: utils.js:1090
+#: utils.js:1171
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: utils.js:1106
+#: utils.js:1187
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
@@ -202,6 +202,10 @@ msgstr "Activar el desplazamiento del ratón en la lista de ventanas"
 #. settings-schema.json->pref_reverse_scrolling->description
 msgid "Reverse the direction of mouse-wheel scrolling in the window list"
 msgstr "Invertir la dirección de desplazamiento del ratón en la lista de ventanas"
+
+#. settings-schema.json->pref_left_click_minimize->description
+msgid "Left click to minimize window"
+msgstr "Minimizar ventana con botón izquierdo del ratón"
 
 #. settings-schema.json->pref_middle_click_close->description
 msgid "Middle click to close window"

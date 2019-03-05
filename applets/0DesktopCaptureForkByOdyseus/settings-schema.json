@@ -57,7 +57,7 @@
         "options": {
             "Off": 0,
             "File path": 1,
-            "Image Data": 2
+            "Image data": 2
         },
         "description": "Copy to clipboard",
         "tooltip": "Whether to copy the file path or image data of screenshots to clipboard after capture."
@@ -254,7 +254,7 @@
             "Custom overlay": "custom"
         },
         "description": "Overlay theme",
-        "tooltip": "If you read the help page for this applet (Known issues), you know what this is about."
+        "tooltip": "These themes are used to style the Cinnamon helpers overlay (area selector, window selector, etc.). The built-in themes can be found in APPLET_FOLDER/themes and can be used as a base to create a custom theme."
     },
     "pref_theme_custom": {
         "type": "filechooser",
