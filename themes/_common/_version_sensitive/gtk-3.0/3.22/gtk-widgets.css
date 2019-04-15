@@ -428,12 +428,12 @@ combobox arrow {
 decoration {
     border-width: 0;
     border-radius: 6px 6px 0 0;
-    box-shadow: 0 2px 8px 3px alpha(black, 0.5), 0 0 0 1px darker(@theme_bg_color);    /* this is used for the resize cursor area */
-    margin: 10px;
+    box-shadow: "@csd_shadow@";
+    margin: 10px;    /* this is used for the resize cursor area */
 }
 
 decoration:backdrop {
-    box-shadow: 0 2px 8px 3px transparent, 0 2px 5px 3px alpha(black, 0.3), 0 0 0 1px darker(@theme_bg_color);
+    box-shadow: "@csd_backdrop_shadow@";
 }
 
 .maximized decoration,
@@ -1914,87 +1914,89 @@ scrollbar.overlay-indicator:not(.dragging):not(.hovering) button {
 /********************
  * scrolled windows *
  ********************/
+
 /*
 overshoot.top {
-    background-image: -gtk-gradient(radial, center top, 0, center top, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
-    background-size: 100% 60%;
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
+background-image: -gtk-gradient(radial, center top, 0, center top, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
+background-size: 100% 60%;
+background-repeat: no-repeat;
+background-position: center top;
+background-color: transparent;
+border: none;
+box-shadow: none;
 }
 
 overshoot.bottom {
-    background-image: -gtk-gradient(radial, center bottom, 0, center bottom, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
-    background-size: 100% 60%;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
+background-image: -gtk-gradient(radial, center bottom, 0, center bottom, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
+background-size: 100% 60%;
+background-repeat: no-repeat;
+background-position: center bottom;
+background-color: transparent;
+border: none;
+box-shadow: none;
 }
 
 overshoot.left {
-    background-image: -gtk-gradient(radial, left center, 0, left center, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
-    background-size: 60% 100%;
-    background-repeat: no-repeat;
-    background-position: left center;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
+background-image: -gtk-gradient(radial, left center, 0, left center, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
+background-size: 60% 100%;
+background-repeat: no-repeat;
+background-position: left center;
+background-color: transparent;
+border: none;
+box-shadow: none;
 }
 
 overshoot.right {
-    background-image: -gtk-gradient(radial, right center, 0, right center, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
-    background-size: 60% 100%;
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
+background-image: -gtk-gradient(radial, right center, 0, right center, 0.6, from(alpha(@theme_selected_bg_color, 0.2)), to(alpha(@theme_selected_bg_color, 0)));
+background-size: 60% 100%;
+background-repeat: no-repeat;
+background-position: right center;
+background-color: transparent;
+border: none;
+box-shadow: none;
 }
 
 undershoot.top {
-    background-color: transparent;
-    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
-    padding-top: 1px;
-    background-size: 10px 1px;
-    background-repeat: repeat-x;
-    background-origin: content-box;
-    background-position: center top;
+background-color: transparent;
+background-image: linear-gradient(to left, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
+padding-top: 1px;
+background-size: 10px 1px;
+background-repeat: repeat-x;
+background-origin: content-box;
+background-position: center top;
 }
 
 undershoot.bottom {
-    background-color: transparent;
-    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
-    padding-bottom: 1px;
-    background-size: 10px 1px;
-    background-repeat: repeat-x;
-    background-origin: content-box;
-    background-position: center bottom;
+background-color: transparent;
+background-image: linear-gradient(to left, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
+padding-bottom: 1px;
+background-size: 10px 1px;
+background-repeat: repeat-x;
+background-origin: content-box;
+background-position: center bottom;
 }
 
 undershoot.left {
-    background-color: transparent;
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
-    padding-left: 1px;
-    background-size: 1px 10px;
-    background-repeat: repeat-y;
-    background-origin: content-box;
-    background-position: left center;
+background-color: transparent;
+background-image: linear-gradient(to top, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
+padding-left: 1px;
+background-size: 1px 10px;
+background-repeat: repeat-y;
+background-origin: content-box;
+background-position: left center;
 }
 
 undershoot.right {
-    background-color: transparent;
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
-    padding-right: 1px;
-    background-size: 1px 10px;
-    background-repeat: repeat-y;
-    background-origin: content-box;
-    background-position: right center;
+background-color: transparent;
+background-image: linear-gradient(to top, rgba(255, 255, 255, 0.2) 50%, rgba(0, 0, 0, 0.2) 50%);
+padding-right: 1px;
+background-size: 1px 10px;
+background-repeat: repeat-y;
+background-origin: content-box;
+background-position: right center;
 }
 */
+
 /**************
  * separators *
  **************/
@@ -2266,30 +2268,32 @@ statusbar {
 /**********
  * switch *
  **********/
+
 /*
 switch {
-    font-weight: bold;
-    font-size: smaller;
-    min-width: 52px;
-    min-height: 24px;
+font-weight: bold;
+font-size: smaller;
+min-width: 52px;
+min-height: 24px;
 }
 
 switch {
-    color: @button_fg;
-    text-shadow: 0 1px @button_text_shadow;
+color: @button_fg;
+text-shadow: 0 1px @button_text_shadow;
 }
 
 switch:checked {
-    color: @theme_selected_fg_color;
-    text-shadow: 1px 1px alpha(black, 0.2);
+color: @theme_selected_fg_color;
+text-shadow: 1px 1px alpha(black, 0.2);
 }
 
 switch:disabled,
 switch:disabled:checked {
-    color: @insensitive_fg_color;
-    text-shadow: none;
+color: @insensitive_fg_color;
+text-shadow: none;
 }
 */
+
 /*******************
  * symbolic images *
  *******************/
