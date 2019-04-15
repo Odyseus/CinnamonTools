@@ -399,7 +399,7 @@ Date.prototype.toCustomISOString = function() {
 /**
  * Save data to a file asynchronously whether the file exists or not.
  *
- * @param {String}   aData     - The data save to the file.
+ * @param {String}   aData     - The data to save to the file.
  * @param {Gio.File} aFile     - The Gio.File object of the file to save to.
  * @param {Function} aCallback - The function to call after the save operation finishes.
  */
