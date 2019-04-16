@@ -213,7 +213,7 @@ class XletsHelperCore():
 
             if file_utils.is_real_file(xlet_config_file):
                 from runpy import run_path
-                extra_settings = run_path(self._config_file)["settings"]
+                extra_settings = run_path(xlet_config_file)["settings"]
                 extra_paths = extra_settings.get("make_pot_additional_files")
 
                 if extra_paths is not None:
