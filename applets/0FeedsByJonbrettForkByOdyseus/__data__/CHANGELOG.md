@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Mon, 15 Apr 2019 22:00:51 -0300
+- **Commit:** [3c3afc3](https://gitlab.com/Odyseus/CinnamonTools/commit/3c3afc3)
+- **Author:** Odyseus
+
+```
+- Implemented a tooltip for feed items that automatically positions itself above the cursor when there is no room on the screen to display the tooltip.
+- Added clean up of new lines on the tooltip's text.
+
+```
+
+***
+
 - **Date:** Thu, 21 Feb 2019 10:34:36 -0300
 - **Commit:** [245db25](https://gitlab.com/Odyseus/CinnamonTools/commit/245db25)
 - **Author:** Odyseus

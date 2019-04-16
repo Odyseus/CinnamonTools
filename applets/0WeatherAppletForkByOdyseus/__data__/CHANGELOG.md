@@ -4,6 +4,32 @@
 
 ***
 
+- **Date:** Tue, 16 Apr 2019 02:57:35 -0300
+- **Commit:** [ef59ee2](https://gitlab.com/Odyseus/CinnamonTools/commit/ef59ee2)
+- **Author:** Odyseus
+
+```
+- Removed leftover call to log function.
+
+```
+
+***
+
+- **Date:** Mon, 15 Apr 2019 22:45:45 -0300
+- **Commit:** [41e1d57](https://gitlab.com/Odyseus/CinnamonTools/commit/41e1d57)
+- **Author:** Odyseus
+
+```
+- Added WeatherBit weather provider.
+- Added option to display the moon phases abbreviated. This is just a workaround to avoid the moon phase's long text to move the entire current weather information off center. Until I figure out a better way this will have to do.
+- Modified the locations manager GUI to use a centralized framework.
+- Added weather provider info to the list of languages in the locations manager to easily identify which provider supports which languages.
+- Added a script to assist in the creation of the languages menu.
+
+```
+
+***
+
 - **Date:** Thu, 28 Feb 2019 20:06:14 -0300
 - **Commit:** [c510888](https://gitlab.com/Odyseus/CinnamonTools/commit/c510888)
 - **Author:** Odyseus

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-03-05 10:05-0300\n"
+"POT-Creation-Date: 2019-04-16 14:20-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,20 +15,159 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:328
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:331 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:675 ../../__app__/data/python_modules/xlets_settings/__init__.py:707
+msgid "_Cancel"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:332
+msgid "_Open"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:335
+msgid "Image files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:361
+msgid "Add new item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:366
+msgid "Remove selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:374
+msgid "Edit selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:387
+msgid "Move selected item up"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:395
+msgid "Move selected item down"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:404
+msgid "Export data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:412
+msgid "Import data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:420
+msgid "Apply changes"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:529
+msgid "Item removal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:532
+msgid "Are you sure that you want to remove this item?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:533
+msgid "Note"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:534
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
+msgid "Choose how to add the imported data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:618
+msgid "_Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:619
+msgid "_Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:637
+msgid "Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:638
+msgid "replace the current data with the imported data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:639
+msgid "Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:640
+msgid "add the imported data to the current data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:694
+msgid "Add new entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
+msgid "Edit entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:676 ../../__app__/data/python_modules/xlets_settings/__init__.py:708
+msgid "_Save"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:302
+#, python-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:521
+msgid "Import from a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:525
+msgid "Export to a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:529
+msgid "Reset to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:539 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:271 applet.js:1323
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
+#, python-format
+msgid "Momentarily highlight the %s on your desktop"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+msgid "Select or enter file to export to"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681 ../../__app__/data/python_modules/xlets_settings/__init__.py:712
+msgid "JSON files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:704
+msgid "Select a JSON file to import"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:736
+msgid "Trying to reset all settings!!!"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:738
+msgid "Reset all settings to their default values?"
+msgstr ""
+
 #: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
-msgstr ""
-
-#. menu_popup.append(self.create_menu_item(_("Reset settings to defaults"),
-#. self._restore_default_values))
-#. menu_popup.append(self.create_menu_item(_("Import settings from a file"),
-#. self._import_export_settings, False))
-#. menu_popup.append(self.create_menu_item(_("Export settings to a file"),
-#. self._import_export_settings, True))
-#. menu_popup.append(Gtk.SeparatorMenuItem())
-#: ../../__app__/python_modules/localized_help_creator.py:318 locationsManager.py:311 applet.js:269 applet.js:1321
-msgid "Help"
 msgstr ""
 
 #: ../../__app__/python_modules/localized_help_creator.py:319
@@ -72,56 +211,96 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: locationsManager.py:32 z_create_localized_help.py:122 applet.js:985
+#: locationsManager.py:17
+msgid "Language legends"
+msgstr ""
+
+#: locationsManager.py:18
+msgid "Language supported by DarkSky."
+msgstr ""
+
+#: locationsManager.py:19
+msgid "Language supported by OpenWeatherMap."
+msgstr ""
+
+#: locationsManager.py:20
+msgid "Language supported by WeatherBit."
+msgstr ""
+
+#: locationsManager.py:25 z_create_localized_help.py:129 applet.js:987 weather_providers/WeatherBit.js:122
 msgid "Location name"
 msgstr ""
 
-#: locationsManager.py:37 z_create_localized_help.py:126
+#: locationsManager.py:29 z_create_localized_help.py:133
 msgid "Location ID"
 msgstr ""
 
-#: locationsManager.py:43 z_create_localized_help.py:133
+#: locationsManager.py:34 z_create_localized_help.py:140
 msgid "Language"
 msgstr ""
 
-#: locationsManager.py:109
+#: locationsManager.py:96
 msgid "Fore. days"
 msgstr ""
 
-#: locationsManager.py:116
+#: locationsManager.py:103
 msgid "days"
 msgstr ""
 
-#: locationsManager.py:119
+#: locationsManager.py:106
 msgid "Fore. rows/cols"
 msgstr ""
 
-#: locationsManager.py:126
+#: locationsManager.py:113
 msgid "rows/cols"
 msgstr ""
 
-#: locationsManager.py:129 z_create_localized_help.py:67 z_create_localized_help.py:145
+#: locationsManager.py:116 z_create_localized_help.py:67 z_create_localized_help.py:152
 msgid "Provider"
 msgstr ""
 
-#: locationsManager.py:140 locationsManager.py:142
+#: locationsManager.py:128 locationsManager.py:130
 msgid "Locations"
 msgstr ""
 
-#: locationsManager.py:160
+#: locationsManager.py:150
 msgid "Credentials"
 msgstr ""
 
-#: locationsManager.py:162 z_create_localized_help.py:71 constants.js:221
+#: locationsManager.py:152 z_create_localized_help.py:71 constants.js:224
 msgid "Dark Sky"
 msgstr ""
 
-#: locationsManager.py:174 z_create_localized_help.py:76 constants.js:223
+#: locationsManager.py:163 z_create_localized_help.py:76 constants.js:226
 msgid "OpenWeatherMap"
 msgstr ""
 
-#: locationsManager.py:186 z_create_localized_help.py:81 constants.js:222
+#: locationsManager.py:169 locationsManager.py:180
+msgid "API Key"
+msgstr ""
+
+#: locationsManager.py:174 z_create_localized_help.py:81 constants.js:227
+msgid "WeatherBit"
+msgstr ""
+
+#: locationsManager.py:185 z_create_localized_help.py:86 constants.js:225
 msgid "Yahoo! Weather"
+msgstr ""
+
+#: locationsManager.py:191
+msgid "App ID"
+msgstr ""
+
+#: locationsManager.py:199
+msgid "Client ID (Consumer Key)"
+msgstr ""
+
+#: locationsManager.py:207
+msgid "Client Secret (Consumer Secret)"
+msgstr ""
+
+#: locationsManager.py:235 z_create_localized_help.py:108 z_create_localized_help.py:125
+msgid "Locations manager"
 msgstr ""
 
 #: z_create_localized_help.py:29
@@ -205,214 +384,214 @@ msgstr ""
 msgid "Location finder"
 msgstr ""
 
-#: z_create_localized_help.py:72 z_create_localized_help.py:77 z_create_localized_help.py:82
+#: z_create_localized_help.py:72 z_create_localized_help.py:77 z_create_localized_help.py:82 z_create_localized_help.py:87
 msgid "Get credentials"
 msgstr ""
 
-#: z_create_localized_help.py:73 z_create_localized_help.py:78 z_create_localized_help.py:83
+#: z_create_localized_help.py:73 z_create_localized_help.py:78 z_create_localized_help.py:83 z_create_localized_help.py:88
 msgid "Find location"
 msgstr ""
 
-#: z_create_localized_help.py:86 z_create_localized_help.py:90
+#: z_create_localized_help.py:91
+msgid "WeatherBit uses the same city IDs returned by OpenWeatherMap's location finder in addition to coordinates."
+msgstr ""
+
+#: z_create_localized_help.py:93 z_create_localized_help.py:97
 msgid "Menu layout"
 msgstr ""
 
-#: z_create_localized_help.py:93
+#: z_create_localized_help.py:100
 msgid "Current weather condition for the currently selected location."
 msgstr ""
 
-#: z_create_localized_help.py:94
+#: z_create_localized_help.py:101
 msgid "Forecasts for the currently selected location."
 msgstr ""
 
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:103
 msgid "The time in which the currently displayed data was published by the weather provider. Clicking it will attempt to retrieve updated weather data."
 msgstr ""
 
-#: z_create_localized_help.py:97
+#: z_create_localized_help.py:104
 msgid "Button to open the locations selector menu."
 msgstr ""
 
-#: z_create_localized_help.py:99
+#: z_create_localized_help.py:106
 msgid "Weather provider attribution. When clicked, it opens the weather provider website."
 msgstr ""
 
-#: z_create_localized_help.py:101 z_create_localized_help.py:118
-msgid "Locations manager"
-msgstr ""
-
-#: z_create_localized_help.py:104
+#: z_create_localized_help.py:111
 msgid "Highlights"
 msgstr ""
 
-#: z_create_localized_help.py:107
+#: z_create_localized_help.py:114
 msgid "The locations manager can be accessed from this applet context menu."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:109
+#: z_create_localized_help.py:116
 msgid "Locations with the exact same *Location ID* and *Provider* are considered duplicated and will be automatically removed when applying changes."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:111
+#: z_create_localized_help.py:118
 msgid "The *Apply changes* button must be pressed for the applet to reflect the changes made in the locations manager."
 msgstr ""
 
-#: z_create_localized_help.py:123
+#: z_create_localized_help.py:130
 msgid "This is an informative field and it isn't used to retrieve weather data. It is used to identify the displayed data in the menu and to generate the items inside the locations selector menu."
 msgstr ""
 
-#: z_create_localized_help.py:127
+#: z_create_localized_help.py:134
 msgid "A city/region ID used by the weather service providers to identify a location."
 msgstr ""
 
-#: z_create_localized_help.py:129
+#: z_create_localized_help.py:136
 msgid "Dark Sky uses only coordinates."
 msgstr ""
 
-#: z_create_localized_help.py:130
+#: z_create_localized_help.py:137
 msgid "Open Weather Map uses city IDs (the number at the end of a location URL) and coordinates."
 msgstr ""
 
-#: z_create_localized_help.py:131
+#: z_create_localized_help.py:138
 msgid "Yahoo! Weather uses WOEIDs and coordinates."
 msgstr ""
 
-#: z_create_localized_help.py:134
+#: z_create_localized_help.py:141
 msgid "Weather conditions localization. Languages are only used by DarkSky and OpenWeatherMap providers and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available)."
 msgstr ""
 
-#: z_create_localized_help.py:137
+#: z_create_localized_help.py:144
 msgid "Forecast days"
 msgstr ""
 
-#: z_create_localized_help.py:138
+#: z_create_localized_help.py:145
 msgid "The amount of forecasts to display in the menu."
 msgstr ""
 
-#: z_create_localized_help.py:141
+#: z_create_localized_help.py:148
 msgid "Forecast rows/columns"
 msgstr ""
 
-#: z_create_localized_help.py:142
+#: z_create_localized_help.py:149
 msgid "The amount of rows/cols to display the forecast days in."
 msgstr ""
 
-#: z_create_localized_help.py:146
+#: z_create_localized_help.py:153
 msgid "Weather data provider. All weather providers require proper credentials to function."
 msgstr ""
 
 #. settings-schema.json->pref_menu_theme->description
-#: z_create_localized_help.py:149
+#: z_create_localized_help.py:156
 msgid "Menu theme"
 msgstr ""
 
-#: z_create_localized_help.py:151
+#: z_create_localized_help.py:158
 msgid "This applet supports custom themes to style its menu."
 msgstr ""
 
-#: z_create_localized_help.py:152
+#: z_create_localized_help.py:159
 msgid "The default theme (found in APPLET_FOLDER/themes/default.css) only sets a generic styling to accommodate the elements in the menu."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:154
+#: z_create_localized_help.py:161
 msgid "To use a custom theme, just set the **Menu theme** option to **Custom** and set the **Path to custom style sheet** option to point to a style sheet file."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:156
+#: z_create_localized_help.py:163
 msgid "To create a custom theme, just make a copy of the default theme file anywhere on the file system, **except** inside the applet folder. The default theme file has the complete list of CSS classes used by this applet."
 msgstr ""
 
-#: z_create_localized_help.py:157
+#: z_create_localized_help.py:164
 msgid "For the custom theme changes to be reflected on the menu while the theme file is modified, either Cinnamon can be restarted or the Cinnamon theme can be reloaded."
 msgstr ""
 
-#: z_create_localized_help.py:160
+#: z_create_localized_help.py:167
 msgid "Cinnamon provides a command to reload its theme. Just open the **Run command** dialog ([[Alt]] + [[F2]]), type **rt** and press [[Enter]]."
 msgstr ""
 
 #. settings-schema.json->pref_icon_theme->description
-#: z_create_localized_help.py:162
+#: z_create_localized_help.py:169
 msgid "Icon theme"
 msgstr ""
 
-#: z_create_localized_help.py:164
+#: z_create_localized_help.py:171
 msgid "This applet supports custom icon themes."
 msgstr ""
 
-#: z_create_localized_help.py:165
+#: z_create_localized_help.py:172
 msgid "This applet comes with the possibility to choose 3 icon themes and they are named as follows."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #. settings-schema.json->pref_icon_theme->options
-#: z_create_localized_help.py:167
+#: z_create_localized_help.py:174
 msgid "System"
 msgstr ""
 
-#: z_create_localized_help.py:168
+#: z_create_localized_help.py:175
 msgid "The applet will use the icons provided by the currently selected icon theme for the system."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
 #. settings-schema.json->pref_icon_theme->options
-#: z_create_localized_help.py:170
+#: z_create_localized_help.py:177
 msgid "Built-in"
 msgstr ""
 
-#: z_create_localized_help.py:171
+#: z_create_localized_help.py:178
 msgid "The icons used are the ones found in APPLET_FOLDER/themes/icons."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:173
+#: z_create_localized_help.py:180
 msgid "Custom"
 msgstr ""
 
-#: z_create_localized_help.py:174
+#: z_create_localized_help.py:181
 msgid "The icons used are the ones found in the path defined in the **Path to custom icon theme** option."
 msgstr ""
 
-#: z_create_localized_help.py:175
+#: z_create_localized_help.py:182
 msgid "An icon theme is just a folder that contains specifically named icon files."
 msgstr ""
 
-#: z_create_localized_help.py:176
+#: z_create_localized_help.py:183
 msgid "The built-in icon theme is a monochrome theme and is found in APPLET_FOLDER/themes/icons."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:178
+#: z_create_localized_help.py:185
 msgid "The built-in icon theme can be used as full color or symbolic icons (applet settings **Menu icon type** and **Applet icon type**). The difference is that, if used as a full color theme, the icons will be black no matter if the Cinnamon theme selected has light or dark backgrounds for menus. On the other hand, if it is used as symbolic icons, the color of the icons will be set by the selected Cinnamon theme. Additionally, symbolic icons can be colorized through the custom CSS theme (applet setting **Menu theme**) by styling the `weather-forecast-icon` and `weather-current-icon` classes."
 msgstr ""
 
-#: z_create_localized_help.py:179
+#: z_create_localized_help.py:186
 msgid "To create a custom icon theme, the built-in icon theme can be used as a base."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:181
+#: z_create_localized_help.py:188
 msgid "The built-in icon theme is composed of 36 *real images*, the rest of icons are symbolic links to these *real images*."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:183
+#: z_create_localized_help.py:190
 msgid "Inside the built-in icon theme is a script called **z_symlinkify.bash** that can be used to create an icon theme from scratch. This script also contains the list of *real images* that are used to create the symbolic links."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:185
+#: z_create_localized_help.py:192
 msgid "A custom icon theme can contain only full colored icons, only symbolic icons or both. The **Menu icon type** and **Applet icon type** applet settings should be set accordingly to the icon type used by the custom theme."
 msgstr ""
 
-#: z_create_localized_help.py:186
+#: z_create_localized_help.py:193
 msgid "A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them."
 msgstr ""
 
-#: z_create_localized_help.py:187
+#: z_create_localized_help.py:194
 msgid "A custom icon theme should contain 232 icons to support both full color and symbolic icons. Or half of that (116) to support one or the other."
 msgstr ""
 
@@ -425,80 +604,80 @@ msgid "Read the help page"
 msgstr ""
 
 #. settings-schema.json->locations_manager_button->description
-#: applet.js:249
+#: applet.js:251
 msgid "Open locations manager"
 msgstr ""
 
-#: applet.js:256
+#: applet.js:258
 msgid "Copy current location data"
 msgstr ""
 
-#: applet.js:353
+#: applet.js:355
 msgid "Click to copy error to clipboard."
 msgstr ""
 
-#: applet.js:354
+#: applet.js:356
 msgid "Look at the logs for details."
 msgstr ""
 
-#: applet.js:391
+#: applet.js:393
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:404
+#: applet.js:406
 msgid "Click to refresh weather data"
 msgstr ""
 
-#: applet.js:591
+#: applet.js:593
 msgid "Selected path for custom icon theme doesn't exist!"
 msgstr ""
 
-#: applet.js:660
+#: applet.js:662
 msgid "No current location set!"
 msgstr ""
 
-#: applet.js:710
+#: applet.js:712
 msgid "Error initializing weather provider!"
 msgstr ""
 
-#: applet.js:773
+#: applet.js:775
 msgid "No weather data available!"
 msgstr ""
 
-#: applet.js:881
+#: applet.js:883
 #, javascript-format
 msgid "Powered by %s"
 msgstr ""
 
-#: applet.js:1039
+#: applet.js:1041
 msgid "Current location"
 msgstr ""
 
-#: applet.js:1052
+#: applet.js:1054
 msgid "Open location weather details page"
 msgstr ""
 
-#: applet.js:1239
+#: applet.js:1241
 msgid "Not available"
 msgstr ""
 
-#: applet.js:1626
+#: applet.js:1633
 msgid "Error trying to get theme"
 msgstr ""
 
-#: applet.js:1634
+#: applet.js:1641
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: applet.js:1644
+#: applet.js:1651
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: applet.js:1718
+#: applet.js:1725
 msgid "Debugging toggled"
 msgstr ""
 
-#: applet.js:1719
+#: applet.js:1726
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr ""
 
@@ -850,243 +1029,161 @@ msgstr ""
 msgid "Overcast clouds"
 msgstr ""
 
-#: constants.js:169
+#: constants.js:139
+msgid "Thunderstorm with Hail"
+msgstr ""
+
+#: constants.js:140
+msgid "Freezing Fog"
+msgstr ""
+
+#: constants.js:172
 msgid "Loading..."
 msgstr ""
 
-#: constants.js:173
+#: constants.js:176
 msgid "Unable to resolve destination host name"
 msgstr ""
 
-#: constants.js:174
+#: constants.js:177
 msgid "Temporary redirect"
 msgstr ""
 
-#: constants.js:175
+#: constants.js:178
 msgid "Unable to resolve proxy host name"
 msgstr ""
 
-#: constants.js:176
+#: constants.js:179
 msgid "Bad request"
 msgstr ""
 
-#: constants.js:177
+#: constants.js:180
 msgid "Unauthorized"
 msgstr ""
 
-#: constants.js:178
+#: constants.js:181
 msgid "Payment required"
 msgstr ""
 
-#: constants.js:179
+#: constants.js:182
 msgid "Not found"
 msgstr ""
 
-#: constants.js:180
+#: constants.js:183
 msgid "Proxy authentication required"
 msgstr ""
 
-#: constants.js:181
+#: constants.js:184
 msgid "Request timeout"
 msgstr ""
 
-#: constants.js:182
+#: constants.js:185
 msgid "Unable to connect to remote host"
 msgstr ""
 
-#: constants.js:183
+#: constants.js:186
 msgid "Internal server error"
 msgstr ""
 
-#: constants.js:184
+#: constants.js:187
 msgid "Service unavailable"
 msgstr ""
 
-#: constants.js:185
+#: constants.js:188
 msgid "Unable to connect to proxy"
 msgstr ""
 
-#: constants.js:186
+#: constants.js:189
 msgid "SSL/TLS negotiation failed"
 msgstr ""
 
-#: constants.js:187
+#: constants.js:190
 msgid "A network error occurred, or the other end closed the connection unexpectedly"
 msgstr ""
 
-#: constants.js:192
+#: constants.js:195
 msgid "Missing credentials for weather provider!"
 msgstr ""
 
-#: constants.js:193
+#: constants.js:196
 msgid "Wrong location ID format!"
 msgstr ""
 
-#: constants.js:194
+#: constants.js:197
 msgid "Selected language not supported by weather provider!"
 msgstr ""
 
-#: constants.js:195
+#: constants.js:198
 #, javascript-format
 msgid "Error getting data! Status code: %s"
 msgstr ""
 
-#: constants.js:196
+#: constants.js:199
 msgid "Error parsing weather data."
 msgstr ""
 
-#: constants.js:201
+#: constants.js:204
 msgid "Sunday"
 msgstr ""
 
-#: constants.js:202
+#: constants.js:205
 msgid "Monday"
 msgstr ""
 
-#: constants.js:203
+#: constants.js:206
 msgid "Tuesday"
 msgstr ""
 
-#: constants.js:204
+#: constants.js:207
 msgid "Wednesday"
 msgstr ""
 
-#: constants.js:205
+#: constants.js:208
 msgid "Thursday"
 msgstr ""
 
-#: constants.js:206
+#: constants.js:209
 msgid "Friday"
 msgstr ""
 
-#: constants.js:207
+#: constants.js:210
 msgid "Saturday"
 msgstr ""
 
-#: constants.js:273
+#: constants.js:277
 msgid "Temperature"
 msgstr ""
 
-#: constants.js:274
+#: constants.js:278
 msgid "Humidity"
 msgstr ""
 
-#: constants.js:275
+#: constants.js:279
 msgid "Pressure"
 msgstr ""
 
-#: constants.js:276
+#: constants.js:280
 msgid "Wind"
 msgstr ""
 
-#: constants.js:277
+#: constants.js:281
 msgid "Wind chill"
 msgstr ""
 
-#: constants.js:278
+#: constants.js:282
 msgid "Visibility"
 msgstr ""
 
-#: constants.js:279
+#: constants.js:283
 msgid "Sunrise"
 msgstr ""
 
-#: constants.js:280
+#: constants.js:284
 msgid "Sunset"
 msgstr ""
 
-#: constants.js:281
+#: constants.js:285
 msgid "Moon phase"
-msgstr ""
-
-#: python/widgets.py:104
-msgid "Select or enter file to export to"
-msgstr ""
-
-#. TO TRANSLATORS: Could be left blank.
-#: python/widgets.py:106 python/widgets.py:112 python/widgets.py:388 python/widgets.py:1161
-msgid "_Cancel"
-msgstr ""
-
-#: python/widgets.py:107 python/widgets.py:1162
-msgid "_Save"
-msgstr ""
-
-#: python/widgets.py:110
-msgid "Select a file to import"
-msgstr ""
-
-#. TO TRANSLATORS: Could be left blank.
-#: python/widgets.py:114 python/widgets.py:389
-msgid "_Open"
-msgstr ""
-
-#: python/widgets.py:129
-msgid "JSON files"
-msgstr ""
-
-#: python/widgets.py:385
-msgid "Choose an Icon"
-msgstr ""
-
-#: python/widgets.py:392
-msgid "Image files"
-msgstr ""
-
-#: python/widgets.py:889
-msgid "Add new item"
-msgstr ""
-
-#: python/widgets.py:894
-msgid "Remove selected item"
-msgstr ""
-
-#: python/widgets.py:902
-msgid "Edit selected item"
-msgstr ""
-
-#: python/widgets.py:915
-msgid "Move selected item up"
-msgstr ""
-
-#: python/widgets.py:923
-msgid "Move selected item down"
-msgstr ""
-
-#: python/widgets.py:932
-msgid "Export data"
-msgstr ""
-
-#: python/widgets.py:940
-msgid "Import data"
-msgstr ""
-
-#: python/widgets.py:948
-msgid "Apply changes"
-msgstr ""
-
-#: python/widgets.py:1047
-msgid "Item removal"
-msgstr ""
-
-#: python/widgets.py:1050
-msgid "Are you sure that you want to remove this item?"
-msgstr ""
-
-#: python/widgets.py:1051
-msgid "Note"
-msgstr ""
-
-#: python/widgets.py:1052
-msgid "Press and hold Control key to remove items without confirmation."
-msgstr ""
-
-#: python/widgets.py:1154
-msgid "Add new entry"
-msgstr ""
-
-#: python/widgets.py:1156
-msgid "Edit entry"
 msgstr ""
 
 #: utils.js:393
@@ -1139,11 +1236,23 @@ msgid "New Moon"
 msgstr ""
 
 #: utils.js:908
+msgid "Wax. Cres."
+msgstr ""
+
+#: utils.js:908
 msgid "Waxing Crescent"
 msgstr ""
 
 #: utils.js:910
+msgid "1st Qtr"
+msgstr ""
+
+#: utils.js:910
 msgid "First Quarter"
+msgstr ""
+
+#: utils.js:912
+msgid "Wax. Gib."
 msgstr ""
 
 #: utils.js:912
@@ -1155,7 +1264,15 @@ msgid "Full Moon"
 msgstr ""
 
 #: utils.js:916
+msgid "Wan. Gib."
+msgstr ""
+
+#: utils.js:916
 msgid "Waning Gibbous"
+msgstr ""
+
+#: utils.js:918
+msgid "3rd Qtr"
 msgstr ""
 
 #: utils.js:918
@@ -1163,18 +1280,22 @@ msgid "Third Quarter"
 msgstr ""
 
 #: utils.js:920
+msgid "Wan. Cres."
+msgstr ""
+
+#: utils.js:920
 msgid "Waning Crescent"
 msgstr ""
 
-#: weather_providers/DarkSky.js:98 weather_providers/OpenWeatherMap.js:126 weather_providers/SKEL.js:119 weather_providers/YahooWeather.js:130
+#: weather_providers/DarkSky.js:98 weather_providers/OpenWeatherMap.js:127 weather_providers/SKEL.js:119 weather_providers/WeatherBit.js:123 weather_providers/YahooWeather.js:130
 msgid "Coordinates"
 msgstr ""
 
-#: weather_providers/DarkSky.js:101 weather_providers/SKEL.js:122 weather_providers/YahooWeather.js:133
+#: weather_providers/DarkSky.js:101 weather_providers/SKEL.js:122 weather_providers/WeatherBit.js:126 weather_providers/YahooWeather.js:133
 msgid "Time zone"
 msgstr ""
 
-#: weather_providers/OpenWeatherMap.js:125 weather_providers/SKEL.js:118 weather_providers/YahooWeather.js:129
+#: weather_providers/OpenWeatherMap.js:126 weather_providers/SKEL.js:118 weather_providers/YahooWeather.js:129
 msgid "City ID"
 msgstr ""
 
@@ -1320,6 +1441,14 @@ msgstr ""
 
 #. settings-schema.json->header_menu_appearance->description
 msgid "Menu Appearance"
+msgstr ""
+
+#. settings-schema.json->pref_abbreviated_moon_phases->description
+msgid "Abbreviate the name of the moon phases"
+msgstr ""
+
+#. settings-schema.json->pref_abbreviated_moon_phases->tooltip
+msgid "It takes effect after the weather data is refreshed."
 msgstr ""
 
 #. settings-schema.json->pref_temperature_high_first->description

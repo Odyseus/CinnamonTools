@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-03-05 10:05-0300\n"
+"POT-Creation-Date: 2019-04-16 14:20-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -333,56 +333,56 @@ msgstr ""
 msgid "Profile name used by an instance of this applet."
 msgstr ""
 
-#: utils.js:275
+#: utils.js:276
 msgid "Right Click to open feed"
 msgstr ""
 
 #. Only one page of items to read, no need to display mark all posts option.
-#: utils.js:345
+#: utils.js:346
 msgid "Mark All Posts Read"
 msgstr ""
 
-#: utils.js:353
+#: utils.js:354
 #, javascript-format
 msgid "Mark Next %d Posts Read"
 msgstr ""
 
-#: utils.js:359
+#: utils.js:360
 msgid "Update feed URL"
 msgstr ""
 
-#: utils.js:444 utils.js:450
+#: utils.js:445 utils.js:451
 msgid "Published"
 msgstr ""
 
-#: utils.js:513
+#: utils.js:514
 msgid "Mark Post Read"
 msgstr ""
 
-#: utils.js:551
+#: utils.js:552
 msgid "d"
 msgstr ""
 
-#: utils.js:553 utils.js:555
+#: utils.js:554 utils.js:556
 msgid "h"
 msgstr ""
 
-#: utils.js:555
+#: utils.js:556
 #, javascript-format
 msgid "(<1%s) "
 msgstr ""
 
 #. Invalid feed detected, throw and log error.
-#: utils.js:831
+#: utils.js:832
 msgid "Invalid feed url"
 msgstr ""
 
-#: utils.js:912
+#: utils.js:913
 #, javascript-format
 msgid "%d unread items!"
 msgstr ""
 
-#: utils.js:1059 utils.js:1075
+#: utils.js:1060 utils.js:1076
 msgid "Loading feed"
 msgstr ""
 

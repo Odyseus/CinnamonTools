@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Mon, 15 Apr 2019 21:56:22 -0300
+- **Commit:** [6a35b28](https://gitlab.com/Odyseus/CinnamonTools/commit/6a35b28)
+- **Author:** Odyseus
+
+```
+- Fixed error on a plural localization template caused by a typo.
+- Added notification to inform about possible errors that might be caused by the custom notifications template.
+
+```
+
+***
+
 - **Date:** Mon, 4 Mar 2019 08:56:33 -0300
 - **Commit:** [9559623](https://gitlab.com/Odyseus/CinnamonTools/commit/9559623)
 - **Author:** Odyseus

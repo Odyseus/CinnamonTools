@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-03-04 09:01-0300\n"
-"PO-Revision-Date: 2019-03-04 09:14-0300\n"
+"POT-Creation-Date: 2019-04-16 00:07-0300\n"
+"PO-Revision-Date: 2019-04-16 00:38-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -167,7 +167,7 @@ msgid_plural "You have %d new mails!"
 msgstr[0] "¡Tienes %d correo nuevo!"
 msgstr[1] "¡Tienes %d correos nuevos!"
 
-#: applet.js:474 applet.js:642
+#: applet.js:474 applet.js:654
 msgid "Mark All Read"
 msgstr "Marcar todo como leído"
 
@@ -186,31 +186,31 @@ msgstr[1] "(y %d más)"
 msgid "Open Mail client"
 msgstr "Abrir cliente de correo"
 
-#: applet.js:675 applet.js:719
+#: applet.js:687 applet.js:731
 msgid "No unread mails."
 msgstr "Sin mensajes no leídos."
 
-#: applet.js:699
+#: applet.js:711
 msgid "Mailnag daemon is not running!"
 msgstr "El demonio Mailnag no se está ejecutando!"
 
-#: applet.js:709
+#: applet.js:721
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr "¡Tienes un correo de %s!"
 
-#: applet.js:715
+#: applet.js:727
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] "¡Tienes %d correo sin leer!"
 msgstr[1] "¡Tienes %d correos sin leer!"
 
-#: applet.js:729
+#: applet.js:741
 msgid "Click to see error!"
 msgstr "¡Hacer clic para ver el error!"
 
-#: applet.js:730
+#: applet.js:742
 msgid "Error"
 msgstr "Error"
 
@@ -247,7 +247,8 @@ msgstr[0] "hace %d día"
 msgstr[1] "hace %d días"
 
 #: utils.js:205
-msgid "d% week ago"
+#, javascript-format
+msgid "%d week ago"
 msgid_plural "%d weeks ago"
 msgstr[0] "hace %d semana"
 msgstr[1] "hace %d semanas"
@@ -399,6 +400,11 @@ msgstr ""
 #. settings-schema.json->notification_test_button->description
 msgid "Test notifications"
 msgstr "Notificaciones de prueba"
+
+#~ msgid "d% week ago"
+#~ msgid_plural "%d weeks ago"
+#~ msgstr[0] "hace %d semana"
+#~ msgstr[1] "hace %d semanas"
 
 #~ msgid "The Mailnag's **LibNotify Notifications** plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass suck limitations. Needless to say, if one choses to use the notifications provided by this applet, the **LibNotify Notifications** plug-in must be disabled to avoid receiving duplicated notifications."
 #~ msgstr "El complemento **Notificaciones LibNotify** de Mailnag no puede agregar acciones de notificación como marcar correos como leídos o abrir el cliente de correo directamente desde la notificación. Estas funciones solo están disponibles para Gnome (una limitación en el propio complemento). Este applet implementa sus propias notificaciones configurables para evitar dichas limitaciones. No hace falta decir que si uno elige usar las notificaciones proporcionadas por este applet, el complemento **Notificaciones LibNotify** debe estar deshabilitado para evitar recibir notificaciones duplicadas."

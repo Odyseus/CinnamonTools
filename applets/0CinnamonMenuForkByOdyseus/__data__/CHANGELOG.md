@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Mon, 15 Apr 2019 22:46:55 -0300
+- **Commit:** [b1bf6ae](https://gitlab.com/Odyseus/CinnamonTools/commit/b1bf6ae)
+- **Author:** Odyseus
+
+```
+- Modified the custom launchers manager GUI to use a centralized framework.
+
+```
+
+***
+
 - **Date:** Thu, 28 Feb 2019 20:02:22 -0300
 - **Commit:** [b01f23c](https://gitlab.com/Odyseus/CinnamonTools/commit/b01f23c)
 - **Author:** Odyseus

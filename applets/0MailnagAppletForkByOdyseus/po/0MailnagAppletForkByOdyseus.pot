@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-03-05 10:05-0300\n"
+"POT-Creation-Date: 2019-04-16 14:20-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -163,7 +163,7 @@ msgid_plural "You have %d new mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:474 applet.js:642
+#: applet.js:474 applet.js:654
 msgid "Mark All Read"
 msgstr ""
 
@@ -182,31 +182,31 @@ msgstr[1] ""
 msgid "Open Mail client"
 msgstr ""
 
-#: applet.js:675 applet.js:719
+#: applet.js:687 applet.js:731
 msgid "No unread mails."
 msgstr ""
 
-#: applet.js:699
+#: applet.js:711
 msgid "Mailnag daemon is not running!"
 msgstr ""
 
-#: applet.js:709
+#: applet.js:721
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr ""
 
-#: applet.js:715
+#: applet.js:727
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:729
+#: applet.js:741
 msgid "Click to see error!"
 msgstr ""
 
-#: applet.js:730
+#: applet.js:742
 msgid "Error"
 msgstr ""
 
@@ -243,7 +243,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: utils.js:205
-msgid "d% week ago"
+#, javascript-format
+msgid "%d week ago"
 msgid_plural "%d weeks ago"
 msgstr[0] ""
 msgstr[1] ""

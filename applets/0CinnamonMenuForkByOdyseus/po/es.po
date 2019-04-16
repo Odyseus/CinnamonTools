@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-21 10:36-0300\n"
+"POT-Creation-Date: 2019-04-16 00:07-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -14,14 +14,160 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:328
+msgid "Choose an Icon"
+msgstr "Elegir un ícono"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:331 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:675 ../../__app__/data/python_modules/xlets_settings/__init__.py:707
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:332
+msgid "_Open"
+msgstr "_Abrir"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:335
+msgid "Image files"
+msgstr "Archivos de imagen"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:361
+msgid "Add new item"
+msgstr "Agregar nueva entrada"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:366
+msgid "Remove selected item"
+msgstr "Eliminar ítem seleccionado"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:374
+msgid "Edit selected item"
+msgstr "Editar ítem seleccionado"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:387
+msgid "Move selected item up"
+msgstr "Mover ítem seleccionado hacia arriba"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:395
+msgid "Move selected item down"
+msgstr "Mover ítem seleccionado hacia abajo"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:404
+msgid "Export data"
+msgstr "Exportar datos"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:412
+msgid "Import data"
+msgstr "Importar datos"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:420
+msgid "Apply changes"
+msgstr "Aplicar cambios"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:529
+msgid "Item removal"
+msgstr "Eliminación de ítem"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:532
+msgid "Are you sure that you want to remove this item?"
+msgstr "¿Está seguro de que desea remover este ítem?"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:533
+msgid "Note"
+msgstr "Nota"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:534
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
+msgid "Choose how to add the imported data"
+msgstr "Elegir cómo agregar los datos importados"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:618
+msgid "_Overwrite"
+msgstr "_Sobrescribir"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:619
+msgid "_Append"
+msgstr "_Adjuntar"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:637
+msgid "Overwrite"
+msgstr "Sobrescribir"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:638
+msgid "replace the current data with the imported data."
+msgstr "reemplazar los datos actuales con los datos importados."
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:639
+msgid "Append"
+msgstr "Adjuntar"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:640
+msgid "add the imported data to the current data."
+msgstr "agregar los datos importados a los datos actuales."
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:694
+msgid "Add new entry"
+msgstr "Agregar nueva entrada"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
+msgid "Edit entry"
+msgstr "Editar entrada"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:676 ../../__app__/data/python_modules/xlets_settings/__init__.py:708
+msgid "_Save"
+msgstr "_Guardar"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:302
+#, python-format
+msgid "Settings for %s"
+msgstr "Preferencias para %s"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:521
+msgid "Import from a file"
+msgstr "Importar desde un archivo"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:525
+msgid "Export to a file"
+msgstr "Exportar hacia un archivo"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:529
+msgid "Reset to defaults"
+msgstr "Restablecer a los valores predeterminados"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:539 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:312
+msgid "Help"
+msgstr "Ayuda"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
+#, python-format
+msgid "Momentarily highlight the %s on your desktop"
+msgstr "Resaltar momentáneamente el %s en el escritorio"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+msgid "Select or enter file to export to"
+msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681 ../../__app__/data/python_modules/xlets_settings/__init__.py:712
+msgid "JSON files"
+msgstr "Archivos JSON"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:704
+msgid "Select a JSON file to import"
+msgstr "Seleccionar un archivo JSON para importar"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:736
+msgid "Trying to reset all settings!!!"
+msgstr "¡Intentando restablecer todos los ajustes!"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:738
+msgid "Reset all settings to their default values?"
+msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
+
 #: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
-
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:307
-msgid "Help"
-msgstr "Ayuda"
 
 #: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Contributors"
@@ -64,124 +210,38 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: appletHelper.py:33
+#: customLaunchersManager.py:17
 msgid "Enabled"
 msgstr "Habilitado"
 
 #. settings-schema.json->pref_custom_icon_for_applet->description
-#: appletHelper.py:37
+#: customLaunchersManager.py:21
 msgid "Icon"
 msgstr "Ícono:"
 
-#: appletHelper.py:41
+#: customLaunchersManager.py:25
 msgid "Title"
 msgstr "Título"
 
-#: appletHelper.py:45
+#: customLaunchersManager.py:29
 msgid "Command"
 msgstr "Comando"
 
-#: appletHelper.py:49 z_create_localized_help.py:28
+#: customLaunchersManager.py:33 z_create_localized_help.py:28
 msgid "Description"
 msgstr "Descripción"
 
-#: appletHelper.py:171
-msgid "Choose an Icon"
-msgstr "Elegir un ícono"
-
-#. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:174 appletHelper.py:340 appletHelper.py:346 appletHelper.py:680
-msgid "_Cancel"
-msgstr "_Cancelar"
-
-#. TO TRANSLATORS: Could be left blank.
-#: appletHelper.py:175 appletHelper.py:348
-msgid "_Open"
-msgstr "_Abrir"
-
-#: appletHelper.py:178
-msgid "Image files"
-msgstr "Archivos de imagen"
-
-#: appletHelper.py:338
-msgid "Select or enter file to export to"
-msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
-
-#: appletHelper.py:341 appletHelper.py:681
-msgid "_Save"
-msgstr "_Guardar"
-
-#: appletHelper.py:344
-msgid "Select a file to import"
-msgstr "Seleccionar un archivo para importar"
-
-#: appletHelper.py:363
-msgid "JSON files"
-msgstr "Archivos JSON"
-
-#: appletHelper.py:455
-msgid "Add new launcher"
-msgstr "Agregar un nuevo lanzador"
-
-#: appletHelper.py:460
-msgid "Remove selected launcher"
-msgstr "Eliminar lanzador seleccionado"
-
-#: appletHelper.py:468
-msgid "Edit selected launcher"
-msgstr "Editar lanzador seleccionado"
-
-#: appletHelper.py:474
-msgid "Move selected launcher up"
-msgstr "Mover lanzador seleccionado hacia arriba"
-
-#: appletHelper.py:480
-msgid "Move selected launcher down"
-msgstr "Mover lanzador seleccionado hacia abajo"
-
-#: appletHelper.py:486
-msgid "Export launchers"
-msgstr "Exportar lanzadores"
-
-#: appletHelper.py:491
-msgid "Import launchers"
-msgstr "Importar lanzadores"
-
-#: appletHelper.py:496
-msgid "Apply changes"
-msgstr "Aplicar cambios"
-
-#: appletHelper.py:581
-msgid "Custom launcher removal"
-msgstr "Eliminación de lanzador personalizado"
-
-#: appletHelper.py:584
-msgid "Are you sure that you want to remove this custom launcher?"
-msgstr "¿Está seguro de que desea remover este lanzador personalizado?"
-
-#: appletHelper.py:585
-msgid "Note"
-msgstr "Nota"
-
-#: appletHelper.py:586
-msgid "Press and hold Control key to remove items without confirmation."
-msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
-
-#: appletHelper.py:673
-msgid "Add new entry"
-msgstr "Agregar nueva entrada"
-
-#: appletHelper.py:675
-msgid "Edit entry"
-msgstr "Editar entrada"
-
-#: appletHelper.py:727
+#: customLaunchersManager.py:38
 msgid "Mandatory fields"
 msgstr "Campos obligatorios"
 
-#: appletHelper.py:938
+#: customLaunchersManager.py:42 customLaunchersManager.py:44
 msgid "Custom launchers"
 msgstr "Lanzadores personalizados"
+
+#: customLaunchersManager.py:87
+msgid "Custom launchers manager"
+msgstr "Gestor de lanzadores personalizados"
 
 #: z_create_localized_help.py:30
 msgid "This applet is a custom version of the default Cinnamon Menu applet, but more customizable and without things irrelevant to searching/launching applications."
@@ -477,35 +537,35 @@ msgstr "Abrir el editor de menús"
 msgid "Edit custom launchers"
 msgstr "Editar lanzadores personalizados"
 
-#: applet.js:1439
+#: applet.js:1444
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: applet.js:1465
+#: applet.js:1470
 msgid "Recently Used"
 msgstr "Recientemente Usadas"
 
-#: applet.js:1495
+#: applet.js:1500
 msgid "All Applications"
 msgstr "Todas las aplicaciones"
 
-#: applet.js:1577
+#: applet.js:1582
 msgid "No search results"
 msgstr "No hay resultados de búsqueda"
 
-#: applet.js:1599
+#: applet.js:1604
 msgid "No recent applications"
 msgstr "Sin aplicaciones recientes"
 
-#: applet.js:1607
+#: applet.js:1612
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: applet.js:1777
+#: applet.js:1782
 msgid "Type to search..."
 msgstr "Escriba para buscar..."
 
-#: applet.js:2501 applet.js:2511
+#: applet.js:2506 applet.js:2516
 msgid "Categories"
 msgstr "Categorías"
 
@@ -1045,3 +1105,33 @@ msgstr "Espaciado personalizado para la caja de entrada de búsqueda"
 #. settings-schema.json->padding_5_header->description
 msgid "Search box padding"
 msgstr "Espaciado personalizado para la caja de búsqueda"
+
+#~ msgid "Select a file to import"
+#~ msgstr "Seleccionar un archivo para importar"
+
+#~ msgid "Add new launcher"
+#~ msgstr "Agregar un nuevo lanzador"
+
+#~ msgid "Remove selected launcher"
+#~ msgstr "Eliminar lanzador seleccionado"
+
+#~ msgid "Edit selected launcher"
+#~ msgstr "Editar lanzador seleccionado"
+
+#~ msgid "Move selected launcher up"
+#~ msgstr "Mover lanzador seleccionado hacia arriba"
+
+#~ msgid "Move selected launcher down"
+#~ msgstr "Mover lanzador seleccionado hacia abajo"
+
+#~ msgid "Export launchers"
+#~ msgstr "Exportar lanzadores"
+
+#~ msgid "Import launchers"
+#~ msgstr "Importar lanzadores"
+
+#~ msgid "Custom launcher removal"
+#~ msgstr "Eliminación de lanzador personalizado"
+
+#~ msgid "Are you sure that you want to remove this custom launcher?"
+#~ msgstr "¿Está seguro de que desea remover este lanzador personalizado?"

@@ -132,12 +132,18 @@
 <td><a href="https://openweathermap.org/find">Buscar ubicación</a></td>
 </tr>
 <tr>
+<td>WeatherBit</td>
+<td><a href="https://www.weatherbit.io/pricing">Obtener credenciales</a></td>
+<td><a href="https://openweathermap.org/find">Buscar ubicación</a></td>
+</tr>
+<tr>
 <td>Yahoo! Clima</td>
 <td><a href="https://developer.yahoo.com/weather">Obtener credenciales</a></td>
-<td><a href="http://woeid.rosselliot.co.nz">Buscar ubicación</a></td>
+<td><a href="http://woeid.rosselliot.co.nz">Buscar ubicación</a> <strong>(*)</strong></td>
 </tr>
 </tbody>
 </table>
+<p><strong>(*)</strong> WeatherBit usa las mismas ID de ciudad que devuelve el buscador de ubicación de OpenWeatherMap además de las coordenadas.</p>
 <h2>Diseño del menú</h2>
 <div class="img-centered-container"><img src="assets/images/menu-layout.png" class="img-fluid " alt="Diseño del menú">
 </div><ol>
@@ -291,12 +297,18 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <td><a href="https://openweathermap.org/find">Find location</a></td>
 </tr>
 <tr>
+<td>WeatherBit</td>
+<td><a href="https://www.weatherbit.io/pricing">Get credentials</a></td>
+<td><a href="https://openweathermap.org/find">Find location</a></td>
+</tr>
+<tr>
 <td>Yahoo! Weather</td>
 <td><a href="https://developer.yahoo.com/weather">Get credentials</a></td>
-<td><a href="http://woeid.rosselliot.co.nz">Find location</a></td>
+<td><a href="http://woeid.rosselliot.co.nz">Find location</a> <strong>(*)</strong></td>
 </tr>
 </tbody>
 </table>
+<p><strong>(*)</strong> WeatherBit uses the same city IDs returned by OpenWeatherMap's location finder in addition to coordinates.</p>
 <h2>Menu layout</h2>
 <div class="img-centered-container"><img src="assets/images/menu-layout.png" class="img-fluid " alt="Menu layout">
 </div><ol>
@@ -383,6 +395,26 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Weather (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 16 Apr 2019 02:57:35 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ef59ee2">ef59ee2</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Removed leftover call to log function.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 15 Apr 2019 22:45:45 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/41e1d57">41e1d57</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Added WeatherBit weather provider.
+- Added option to display the moon phases abbreviated. This is just a workaround to avoid the moon phase's long text to move the entire current weather information off center. Until I figure out a better way this will have to do.
+- Modified the locations manager GUI to use a centralized framework.
+- Added weather provider info to the list of languages in the locations manager to easily identify which provider supports which languages.
+- Added a script to assist in the creation of the languages menu.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Thu, 28 Feb 2019 20:06:14 -0300</li>
