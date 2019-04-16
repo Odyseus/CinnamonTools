@@ -22,6 +22,7 @@ const {
     },
     signals: Signals,
     ui: {
+        main: Main,
         messageTray: MessageTray,
         popupMenu: PopupMenu,
         tooltips: Tooltips
@@ -429,7 +430,7 @@ FeedMenuItem.prototype = {
             expand: true
         });
 
-        this.tooltip = new Tooltips.Tooltip(this.actor, "");
+        this.tooltip = new CustomTooltip(this.actor, "");
         this.tooltip._tooltip.set_style("text-align: left;max-width: %spx;"
             .format(this.parent.tooltip_max_width));
         this.tooltip._tooltip.get_clutter_text().set_line_wrap(true);
@@ -1186,7 +1187,9 @@ FeedReader.prototype = {
         let re2 = new RegExp(esc_close, "g");
         ret = ret.replace(re1, "<").replace(re2, ">");
 
-        return ret;
+        let cleanedRet = ret.replace(/[\r\n]+/g, "\n");
+
+        return cleanedRet;
     }
 };
 Signals.addSignalMethods(FeedReader.prototype);
@@ -1337,6 +1340,56 @@ function saveToFileAsync(aData, aFile, aCallback) {
                 });
         });
 }
+
+/**
+ * An instance of Tooltips.Tooltip that positions the tooltip above the
+ * mouse cursor if the tooltip is to big to fit the screen.
+ *
+ * This is only useful for tooltips close the the bottom of the screen.
+ * Top panel users will surely be screwed if a tooltip is bigger than the
+ * screen height. LOL
+ */
+function CustomTooltip() {
+    this._init.apply(this, arguments);
+}
+
+CustomTooltip.prototype = {
+    __proto__: Tooltips.Tooltip.prototype,
+
+    _init: function(aActor, aTitle) {
+        Tooltips.Tooltip.prototype._init.call(this, aActor, aTitle);
+
+        this.desktop_settings = new Gio.Settings({
+            schema_id: "org.cinnamon.desktop.interface"
+        });
+    },
+
+    show: function() {
+        if (this._tooltip.get_text() == "" || !this.mousePosition)
+            return;
+
+        let tooltipWidth = this._tooltip.get_allocation_box().x2 - this._tooltip.get_allocation_box().x1;
+        let tooltipHeight = this._tooltip.get_height();
+
+        let monitor = Main.layoutManager.findMonitorForActor(this.item);
+
+        let cursorSize = this.desktop_settings.get_int("cursor-size");
+        let tooltipTop = this.mousePosition[1] + Math.round(cursorSize / 1.5);
+        let tooltipLeft = this.mousePosition[0] + Math.round(cursorSize / 2);
+        tooltipLeft = Math.max(tooltipLeft, monitor.x);
+        tooltipLeft = Math.min(tooltipLeft, monitor.x + monitor.width - tooltipWidth);
+
+        if (tooltipTop + tooltipHeight > monitor.height) {
+            tooltipTop = tooltipTop - tooltipHeight - Math.round(cursorSize);
+        }
+
+        this._tooltip.set_position(tooltipLeft, tooltipTop);
+
+        this._tooltip.show();
+        this._tooltip.raise_top();
+        this.visible = true;
+    }
+};
 
 /* exported escapeHTML
  */
