@@ -300,7 +300,12 @@ CinnamonMenuForkByOdyseus.prototype = {
         menuItem = new PopupMenu.PopupIconMenuItem(_("Edit custom launchers"),
             "preferences-other", St.IconType.SYMBOLIC);
         menuItem.connect("activate", () => {
-            Util.spawn_async([this.metadata.path + "/appletHelper.py", this.instance_id], null);
+            Util.spawn_async([
+                this.metadata.path + "/customLaunchersManager.py",
+                "--xlet-type=applet",
+                "--xlet-instance-id=" + this.instance_id,
+                "--xlet-uuid=" + this.metadata.uuid
+            ], null);
         });
         this._applet_context_menu.addMenuItem(menuItem);
 
