@@ -202,7 +202,7 @@ MailItem.prototype = {
                 return ngettext("%d day ago", "%d days ago", days_diff).format(days_diff);
             } else if (days_diff < 30) {
                 let w = Math.ceil(days_diff / 7);
-                return ngettext("d% week ago", "%d weeks ago", w).format(w);
+                return ngettext("%d week ago", "%d weeks ago", w).format(w);
             } else {
                 return datetime.toLocaleDateString();
             }

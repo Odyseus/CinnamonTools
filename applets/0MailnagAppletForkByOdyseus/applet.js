@@ -582,7 +582,8 @@ Mailnag.prototype = {
 
         if (this.notification) {
             /* NOTE: Use of a try{}catch{} block because there could be errors
-             * thrown by the custom template.
+             * thrown by the custom template. And use Main.criticalNotify() and not
+             * this.notification to avoid possible infinite loops.
              */
             try {
                 this.notification.update(
@@ -593,6 +594,17 @@ Mailnag.prototype = {
 
                 this._notificationSource.notify(this.notification);
             } catch (aErr) {
+                let icon = new St.Icon({
+                    icon_name: "dialog-error",
+                    icon_type: St.IconType.SYMBOLIC,
+                    icon_size: 24
+                });
+
+                Main.criticalNotify(
+                    $.escapeHTML(_(this.metadata.name)),
+                    $.escapeHTML(aErr),
+                    icon
+                );
                 global.logError(aErr);
             }
         }
