@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>Help for Desktop Effects Applier</title>
+<link rel="shortcut icon" type="image/x-icon" href="./icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="./assets/js/localizations-handler.min.js"></script>
+<link type="text/css" rel="stylesheet" href="./assets/css/flatly_bootstrap_theme.min.css">
+<link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
+<style type="text/css">
+
+</style>
+</head>
+
+<body>
+<noscript>
+<div class="alert alert-warning" role="alert">
+<p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
+<p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
+<p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
+</div>
+<!-- .alert.alert-warning -->
+</noscript>
+<div id="mainarea">
+    <nav class="text-bold py-0 py-md-0 navbar navbar-expand-sm navbar-light fixed-top bg-light" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <!-- The preventDefault() calls are to avoid changing the address in the address bar. -->
+                    <li><a id="nav-xlet-help" class="navbar-brand" onclick="event.preventDefault();" href="#xlet-help">Help</a></li>
+                    <li><a id="nav-xlet-contributors" class="navbar-brand" onclick="event.preventDefault();" href="#xlet-contributors">Contributors</a></li>
+                    <li><a id="nav-xlet-changelog" class="navbar-brand" onclick="event.preventDefault();" href="#xlet-changelog">Changelog</a></li>
+                </ul>
+            </div>
+            <form class="form-inline">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" for="localization-switch">🌐</span>
+                    </div>
+                    <select class="custom-select custom-select-sm text-bold" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
+<!-- English --><option selected data-title="Help for Desktop Effects Applier" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
+<!-- Español --><option data-title="Ayuda para Desktop Effects Applier" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish) (63%)</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </nav>
+<span id="xlet-help">
+<div class="container boxed my-3 py-3">
+
+<div id="es" class="localization-content" hidden="true">
+<h1>Ayuda para Desktop Effects Applier</h1>
+
+<div class="card text-bold my-3 border-warning shadow-sm">
+    <div class="card-header bg-warning text-white">Advertencia</div>
+    <div class="card-body text-warning "><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
+</div>
+<div class="card text-bold my-3 border-success shadow-sm">
+    <div class="card-header bg-success text-white">Compatibilidad con Cinnamon</div>
+    <div class="card-body text-success text-font-size-x-large"><span class="badge  badge-success shadow-sm text-monospace">v3.0</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.2</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.4</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.6</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.8</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.0</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.2</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.4</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.6</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.8</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.0</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.2</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.4</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.6</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.8</span>
+<span class="badge  badge-success shadow-sm text-monospace">v6.0</span>
+</div>
+</div>
+<div class="card text-bold my-3 border-info shadow-sm">
+    <div class="card-header bg-info text-white">Localización de xlets</div>
+    <div class="card-body text-info "><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
+
+<p>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet.</p>
+</div>
+</div>
+
+<h2>Características</h2>
+<ul>
+<li>All effects are applied through keyboard shortcuts.</li>
+<li>All effects applied to windows are inherited by their <em>clones</em>. That is, the thumbnails of the windows displayed in <kbd>Alt</kbd> + <kbd>Tab</kbd> window switchers, Expo, etc. See <strong>Known issues and limitations</strong>.</li>
+<li></li>
+</ul>
+<h2>Known issues and limitations</h2>
+<ul>
+<li>All effects applied by this extension are transient. Which means that, whenever a window is closed, Cinnamon is restarted or the system is restarted, all effects will be removed/destroyed.</li>
+<li>Thumbnails of windows in the classic application switcher will not inherit the effect of the real windows. This is a limitation of my own; I simply couldn't find the way of doing it.</li>
+<li></li>
+</ul>
+
+</br>
+
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+Las siguientes secciones están disponibles sólo en Inglés.
+</div>
+
+</div> <!-- .localization-content -->
+
+
+<div id="en" class="localization-content" >
+<h1>Help for Desktop Effects Applier</h1>
+
+<div class="card text-bold my-3 border-warning shadow-sm">
+    <div class="card-header bg-warning text-white">Warning</div>
+    <div class="card-body text-warning "><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
+<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
+</div>
+<div class="card text-bold my-3 border-success shadow-sm">
+    <div class="card-header bg-success text-white">Cinnamon compatibility</div>
+    <div class="card-body text-success text-font-size-x-large"><span class="badge  badge-success shadow-sm text-monospace">v3.0</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.2</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.4</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.6</span>
+<span class="badge  badge-success shadow-sm text-monospace">v3.8</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.0</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.2</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.4</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.6</span>
+<span class="badge  badge-info shadow-sm text-monospace">v4.8</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.0</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.2</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.4</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.6</span>
+<span class="badge  badge-warning shadow-sm text-monospace">v5.8</span>
+<span class="badge  badge-success shadow-sm text-monospace">v6.0</span>
+</div>
+</div>
+<div class="card text-bold my-3 border-info shadow-sm">
+    <div class="card-header bg-info text-white">Xlets localization</div>
+    <div class="card-body text-info "><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
+
+<p>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder.</p>
+</div>
+</div>
+
+<h2>Features</h2>
+<ul>
+<li>All effects are applied through keyboard shortcuts.</li>
+<li>All effects applied to windows are inherited by their <em>clones</em>. That is, the thumbnails of the windows displayed in <kbd>Alt</kbd> + <kbd>Tab</kbd> window switchers, Expo, etc. See <strong>Known issues and limitations</strong>.</li>
+<li></li>
+</ul>
+<h2>Known issues and limitations</h2>
+<ul>
+<li>All effects applied by this extension are transient. Which means that, whenever a window is closed, Cinnamon is restarted or the system is restarted, all effects will be removed/destroyed.</li>
+<li>Thumbnails of windows in the classic application switcher will not inherit the effect of the real windows. This is a limitation of my own; I simply couldn't find the way of doing it.</li>
+<li></li>
+</ul>
+
+</br>
+
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+The following sections are available only in English.
+</div>
+
+</div> <!-- .localization-content -->
+
+</div> <!-- .container.boxed -->
+<span id="xlet-contributors">
+<div class="container boxed my-3 py-3">
+<h2>Contributors/Mentions</h2>
+<ul>
+<li><strong><a href="https://github.com/maiself">Mai Lavelle</a>:</strong> Author of the Gnome Shell extension called <a href="https://github.com/maiself/gnome-shell-extension-invert-color">Invert Window Color</a>.</li>
+<li><strong><a href="https://github.com/rnbdsh">Marcus Vogel</a>:</strong> Author of the Cinnamon extension called <a href="https://cinnamon-spices.linuxmint.com/extensions/view/45">Negate Window</a>.</li>
+<li><strong><a href="https://github.com/laerne">laerne</a>:</strong> Author of the Gnome Shell extension called <a href="https://github.com/laerne/desaturate_all">Desaturate All</a>.</li>
+</ul>
+
+</div> <!-- .container.boxed -->
+
+<span id="xlet-changelog">
+<div class="container boxed my-3 py-3">
+<h2>Desktop Effects Applier changelog</h2>
+<h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+
+</div> <!-- .container.boxed -->
+
+</div> <!-- #mainarea -->
+<!--Footer-->
+<footer class="page-footer text-bold bg-light pt-4 mt-4">
+    <!--Footer Links-->
+    <div class="container-fluid text-left">
+        <ul class="list-unstyled">
+            <li>
+                <p>Page created with <a href="https://getbootstrap.com"><b>Bootstrap</b></a> v4.3.1.</p>
+            </li>
+            <li>
+                <p><a href="https://gitlab.com/Odyseus/flatly_bootstrap_theme"><b>Boostrap theme</b></a> based on <a href="https://bootswatch.com"><b>Bootswatch</b></a>'s <a href="https://bootswatch.com/flatly"><b>Flatly theme</b></a>.</p>
+            </li>
+            <li>
+                <p><a href="https://github.com/julienetie/smooth-scroll"><b>Smooth Scroll plugin</b></a> provided by <a href="https://github.com/julienetie"><b>Julien Etienne</b></a>.</p>
+            </li>
+        </ul>
+    </div>
+    <!--/.Footer Links-->
+    <!--Copyright-->
+    <div class="text-center py-3">
+        <div class="container-fluid">
+            © 2016-2019 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
+        </div>
+    </div>
+    <!--/.Copyright-->
+</footer>
+<!--/.Footer-->
+<script type="text/javascript">toggleLocalizationVisibility(null);
+
+</script>
+</body>
+</html>

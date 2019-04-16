@@ -1,0 +1,479 @@
+# This is a template file for translating the 0DesktopEffectsExtension package.
+# Copyright (C) 2019
+# This file is distributed under the same license as the 0DesktopEffectsExtension package.
+# FIRST_AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0DesktopEffectsApplierExtension\n"
+"Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
+"POT-Creation-Date: 2019-04-16 14:17-0300\n"
+"PO-Revision-Date: 2019-03-17 02:52-0300\n"
+"Last-Translator: Odyseus\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:328
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:331 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:675 ../../__app__/data/python_modules/xlets_settings/__init__.py:707
+msgid "_Cancel"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:332
+msgid "_Open"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:335
+msgid "Image files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:361
+msgid "Add new item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:366
+msgid "Remove selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:374
+msgid "Edit selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:387
+msgid "Move selected item up"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:395
+msgid "Move selected item down"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:404
+msgid "Export data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:412
+msgid "Import data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:420
+msgid "Apply changes"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:529
+msgid "Item removal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:532
+msgid "Are you sure that you want to remove this item?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:533
+msgid "Note"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:534
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
+msgid "Choose how to add the imported data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:618
+msgid "_Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:619
+msgid "_Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:637
+msgid "Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:638
+msgid "replace the current data with the imported data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:639
+msgid "Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:640
+msgid "add the imported data to the current data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:694
+msgid "Add new entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
+msgid "Edit entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:676 ../../__app__/data/python_modules/xlets_settings/__init__.py:708
+msgid "_Save"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:302 utils.js:193
+#, python-format, javascript-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:521
+msgid "Import from a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:525
+msgid "Export to a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:529
+msgid "Reset to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:539 ../../__app__/python_modules/localized_help_creator.py:318 extension.js:227
+msgid "Help"
+msgstr "Ayuda"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
+#, python-format
+msgid "Momentarily highlight the %s on your desktop"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+msgid "Select or enter file to export to"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681 ../../__app__/data/python_modules/xlets_settings/__init__.py:712
+msgid "JSON files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:704
+msgid "Select a JSON file to import"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:736
+msgid "Trying to reset all settings!!!"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:738
+msgid "Reset all settings to their default values?"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
+#, python-format
+msgid "Help for %s"
+msgstr "Ayuda para %s"
+
+#: ../../__app__/python_modules/localized_help_creator.py:319
+msgid "Contributors"
+msgstr "Colaboradores"
+
+#: ../../__app__/python_modules/localized_help_creator.py:320
+msgid "Changelog"
+msgstr "Registro de cambios"
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "The following sections are available only in English."
+msgstr "Las siguientes secciones están disponibles sólo en Inglés."
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Cinnamon compatibility"
+msgstr "Compatibilidad con Cinnamon"
+
+#: ../../__app__/python_modules/localized_help_creator.py:386
+msgid "Warning"
+msgstr "Advertencia"
+
+#: ../../__app__/python_modules/localized_help_creator.py:389
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
+
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:391
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
+
+#: ../../__app__/python_modules/localized_help_creator.py:407
+msgid "Xlets localization"
+msgstr "Localización de xlets"
+
+#: ../../__app__/python_modules/localized_help_creator.py:410
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
+
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
+msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
+
+#: settings.py:18
+msgid "Triggers"
+msgstr ""
+
+#: settings.py:20
+msgid "Keyboard shortcuts that will apply an effect to the entire screen or to specific windows."
+msgstr ""
+
+#: settings.py:25
+msgid "Signals connections"
+msgstr ""
+
+#: settings.py:26
+msgid "When set to a value grater than zero, the `height`, `width`, `mouseX` and `mouseY` uniform values defined on a shader file will be updated every X milliseconds. X being the value set in this option."
+msgstr ""
+
+#: settings.py:27
+msgid "When enabled, the `height` and `width` uniform values defined on a shader file will be updated every time an actor (a window or the screen) changes its size."
+msgstr ""
+
+#: settings.py:31
+msgid "Desaturation levels"
+msgstr ""
+
+#: settings.py:32
+msgid "The desaturation factor, with 0.0 being 'do not desaturate' and 1.0 being 'fully desaturate."
+msgstr ""
+
+#: settings.py:36 settings.py:41
+msgid "Color levels"
+msgstr ""
+
+#: settings.py:37
+msgid "Color component of the change in contrast where 0.0 designates no change."
+msgstr ""
+
+#: settings.py:42
+msgid "Color component of the change in brightness where 0.0 designates no change."
+msgstr ""
+
+#: settings.py:46
+msgid "All windows"
+msgstr ""
+
+#: settings.py:47
+msgid "All non-minimized windows"
+msgstr ""
+
+#: settings.py:48
+msgid "All windows (current workspace)"
+msgstr ""
+
+#: settings.py:49
+msgid "All non-minimized windows (current workspace)"
+msgstr ""
+
+#. "all_windows_current_monitor": _("All windows (current monitor)"),
+#. "all_non_minimized_windows_current_monitor": _("All non-minimized windows (current monitor)"),
+#: settings.py:52
+msgid "Focused window"
+msgstr ""
+
+#: settings.py:53
+msgid "Screen"
+msgstr ""
+
+#: settings.py:58
+msgid "Trigger 1"
+msgstr ""
+
+#: settings.py:64
+msgid "Trigger 2"
+msgstr ""
+
+#: settings.py:70
+msgid "Trigger 3"
+msgstr ""
+
+#: settings.py:76
+msgid "Trigger 4"
+msgstr ""
+
+#: settings.py:82
+msgid "Trigger 5"
+msgstr ""
+
+#: settings.py:90
+msgid "Shader"
+msgstr ""
+
+#: settings.py:101
+msgid "Connect 'new-frame' signal"
+msgstr ""
+
+#: settings.py:112
+msgid "Connect 'size-changed' signal"
+msgstr ""
+
+#: settings.py:118
+msgid "Desaturation level"
+msgstr ""
+
+#: settings.py:129
+msgid "Color"
+msgstr ""
+
+#: settings.py:137 settings.py:166
+msgid "Red level"
+msgstr ""
+
+#: settings.py:146 settings.py:175
+msgid "Green level"
+msgstr ""
+
+#: settings.py:155 settings.py:184
+msgid "Blue level"
+msgstr ""
+
+#: settings.py:196
+msgid "Action"
+msgstr ""
+
+#: settings.py:207
+msgid "Keybinding"
+msgstr ""
+
+#: settings.py:214
+msgid "Shaders"
+msgstr ""
+
+#: settings.py:217
+msgid "Shader effects"
+msgstr ""
+
+#: settings.py:245
+msgid "Desaturation"
+msgstr ""
+
+#: settings.py:248
+msgid "Desaturation effects"
+msgstr ""
+
+#: settings.py:266
+msgid "Colors"
+msgstr ""
+
+#: settings.py:269
+msgid "Color effects"
+msgstr ""
+
+#: settings.py:287
+msgid "Contrast"
+msgstr ""
+
+#: settings.py:290
+msgid "Contrast effects"
+msgstr ""
+
+#: settings.py:308
+msgid "Brightness"
+msgstr ""
+
+#: settings.py:311
+msgid "Brightness effects"
+msgstr ""
+
+#: settings.py:330
+msgid "Other"
+msgstr ""
+
+#: settings.py:333
+msgid "Global keybindings"
+msgstr ""
+
+#: settings.py:346
+msgid "Settings page shortcut"
+msgstr ""
+
+#: settings.py:352
+msgid "Create shortcut on desktop"
+msgstr ""
+
+#: settings.py:353
+msgid "Create a .desktop file to launch this extension settings from the desktop."
+msgstr ""
+
+#: settings.py:361
+msgid "Create shortcut on ~/.local/share/applications"
+msgstr ""
+
+#: settings.py:362
+msgid "Create a .desktop file to launch this extension settings from the applications menu."
+msgstr ""
+
+#: z_create_localized_help.py:29
+msgid "Features"
+msgstr "Características"
+
+#: z_create_localized_help.py:31
+msgid "All effects are applied through keyboard shortcuts."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:33
+msgid "All effects applied to windows are inherited by their *clones*. That is, the thumbnails of the windows displayed in [[Alt]] + [[Tab]] window switchers, Expo, etc."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:35
+msgid "See **Known issues and limitations**."
+msgstr ""
+
+#: z_create_localized_help.py:37
+msgid "Known issues and limitations"
+msgstr ""
+
+#: z_create_localized_help.py:39
+msgid "All effects applied by this extension are transient. Which means that, whenever a window is closed, Cinnamon is restarted or the system is restarted, all effects will be removed/destroyed."
+msgstr ""
+
+#: z_create_localized_help.py:40
+msgid "Thumbnails of windows in the classic application switcher will not inherit the effect of the real windows. This is a limitation of my own; I simply couldn't find the way of doing it."
+msgstr ""
+
+#: extension.js:80
+msgid "Read this extension help page for usage instructions."
+msgstr ""
+
+#. metadata.json->name
+msgid "Desktop Effects Applier"
+msgstr ""
+
+#. metadata.json->description
+msgid "Apply effects to windows/screen (OpenGL shaders, colors, brightness, contrast and desaturation)."
+msgstr ""
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr "Ver el archivo de ayuda de este xlet."
+
+#. settings-schema.json->info_label_1->description
+msgid "If you are seeing this window, you are using a Cinnamon version with a design flaw."
+msgstr ""
+
+#. settings-schema.json->info_label_2->description
+msgid "This window isn't this extension \"real\" configuration window."
+msgstr ""
+
+#. settings-schema.json->info_label_3->description
+msgid "If on Cinnamon 3.0.x, the button below will not work."
+msgstr ""
+
+#. settings-schema.json->info_label_4->description
+msgid "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
+msgstr ""
+
+#. settings-schema.json->settings_button->description
+msgid "Open the \"real\" preference window"
+msgstr ""
+
+#~ msgid "Keyboard shortcuts"
+#~ msgstr "Atajos de teclado"
