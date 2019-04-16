@@ -1,0 +1,7028 @@
+# This is a template file for translating the 0ColorBlindnessAssistant package.
+# Copyright (C) 20192019
+# This file is distributed under the same license as the 0ColorBlindnessAssistant package.
+# Odyseus <EMAIL@ADDRESS>, 20192019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0ColorBlindnessAssistant VERSION\n"
+"POT-Creation-Date: 2019-04-16 14:17-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:328
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:331 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:675 ../../__app__/data/python_modules/xlets_settings/__init__.py:707
+msgid "_Cancel"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:332
+msgid "_Open"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:335
+msgid "Image files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:361
+msgid "Add new item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:366
+msgid "Remove selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:374
+msgid "Edit selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:387
+msgid "Move selected item up"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:395
+msgid "Move selected item down"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:404
+msgid "Export data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:412
+msgid "Import data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:420
+msgid "Apply changes"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:529
+msgid "Item removal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:532
+msgid "Are you sure that you want to remove this item?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:533
+msgid "Note"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:534
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
+msgid "Choose how to add the imported data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:618
+msgid "_Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:619
+msgid "_Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:637
+msgid "Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:638
+msgid "replace the current data with the imported data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:639
+msgid "Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:640
+msgid "add the imported data to the current data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:694
+msgid "Add new entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
+msgid "Edit entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:676 ../../__app__/data/python_modules/xlets_settings/__init__.py:708
+msgid "_Save"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:302 utils.js:508
+#, python-format, javascript-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:521
+msgid "Import from a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:525
+msgid "Export to a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:529
+msgid "Reset to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:539 ../../__app__/python_modules/localized_help_creator.py:318
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
+#, python-format
+msgid "Momentarily highlight the %s on your desktop"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+msgid "Select or enter file to export to"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681 ../../__app__/data/python_modules/xlets_settings/__init__.py:712
+msgid "JSON files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:704
+msgid "Select a JSON file to import"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:736
+msgid "Trying to reset all settings!!!"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:738
+msgid "Reset all settings to their default values?"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:319
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:320
+msgid "Changelog"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:356
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:370
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:386
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:389
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#. metadata.json->comments
+#: ../../__app__/python_modules/localized_help_creator.py:391
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:407
+msgid "Xlets localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:410
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: settings.py:17
+msgid "Acromatopsia (rod monochromatism)"
+msgstr ""
+
+#: settings.py:18 settings.py:22
+msgid "Total or almost total color blindness."
+msgstr ""
+
+#: settings.py:21
+msgid "Acromatopsia (blue-cone monochromatism)"
+msgstr ""
+
+#: settings.py:25
+msgid "Deuteranopia"
+msgstr ""
+
+#: settings.py:26
+msgid "Green color deficiency."
+msgstr ""
+
+#: settings.py:29
+msgid "Protanopia"
+msgstr ""
+
+#: settings.py:30
+msgid "Red color deficiency."
+msgstr ""
+
+#: settings.py:33
+msgid "Tritanopia"
+msgstr ""
+
+#: settings.py:34
+msgid "Blue color deficiency."
+msgstr ""
+
+#: settings.py:40
+msgid "Effect"
+msgstr ""
+
+#: settings.py:44
+msgid "Acromatopsia simulation"
+msgstr ""
+
+#: settings.py:45
+msgid "Blue-cone monochromacy simulation"
+msgstr ""
+
+#: settings.py:46
+msgid "Deuteranopia compensation"
+msgstr ""
+
+#: settings.py:47
+msgid "Deuteranopia simulation"
+msgstr ""
+
+#: settings.py:48
+msgid "Protanopia compensation"
+msgstr ""
+
+#: settings.py:49
+msgid "Protanopia simulation"
+msgstr ""
+
+#: settings.py:50
+msgid "Tritanopia compensation"
+msgstr ""
+
+#: settings.py:51
+msgid "Tritanopia simulation"
+msgstr ""
+
+#: settings.py:55
+msgid "Actor"
+msgstr ""
+
+#: settings.py:59
+msgid "Focused window"
+msgstr ""
+
+#: settings.py:60
+msgid "Screen"
+msgstr ""
+
+#: settings.py:64
+msgid "Color space"
+msgstr ""
+
+#: settings.py:68
+msgid "sRGB"
+msgstr ""
+
+#: settings.py:69
+msgid "CIE RGB"
+msgstr ""
+
+#: settings.py:73
+msgid "Keybinding"
+msgstr ""
+
+#: settings.py:80 settings.py:82
+msgid "Effects"
+msgstr ""
+
+#: settings.py:101
+msgid "Other"
+msgstr ""
+
+#: settings.py:103
+msgid "Color inspector"
+msgstr ""
+
+#: settings.py:109
+msgid "Color inspector keybinding"
+msgstr ""
+
+#: settings.py:118
+msgid "Always copy color information to clipboard"
+msgstr ""
+
+#: settings.py:123
+msgid "Daltonizer"
+msgstr ""
+
+#: settings.py:129
+msgid "Daltonizer wizard keybinding"
+msgstr ""
+
+#: settings.py:135
+msgid "Settings page shortcut"
+msgstr ""
+
+#: settings.py:141
+msgid "Create shortcut on desktop"
+msgstr ""
+
+#: settings.py:142
+msgid "Create a .desktop file to launch this extension settings from the desktop."
+msgstr ""
+
+#: settings.py:150
+msgid "Create shortcut on ~/.local/share/applications"
+msgstr ""
+
+#: settings.py:151
+msgid "Create a .desktop file to launch this extension settings from the applications menu."
+msgstr ""
+
+#: z_create_localized_help.py:26
+msgid "Description"
+msgstr ""
+
+#: z_create_localized_help.py:28
+msgid "Color Blindness Assistant is a Cinnamon extension that provides tools to assist users with color vision deficiency (CVD)."
+msgstr ""
+
+#: z_create_localized_help.py:30
+msgid "Features"
+msgstr ""
+
+#: z_create_localized_help.py:32
+msgid "This extension provides mainly of three features."
+msgstr ""
+
+#: z_create_localized_help.py:34
+msgid "Color blindness compensation"
+msgstr ""
+
+#: z_create_localized_help.py:35
+msgid "A user can apply an effect (specific to her/his pathology) that will (might) help her/him to better differentiate colors."
+msgstr ""
+
+#: z_create_localized_help.py:36
+msgid "Color blindness simulation"
+msgstr ""
+
+#: z_create_localized_help.py:37
+msgid "A developer can apply an effect that will show her/him how a person with color vision deficiency will (might) see certain color combinations."
+msgstr ""
+
+#: z_create_localized_help.py:38
+msgid "Color naming"
+msgstr ""
+
+#: z_create_localized_help.py:39
+msgid "This feature is useful for knowing the name of the color that's immediately under the cursor."
+msgstr ""
+
+#: constants.js:68
+msgid "Input Color"
+msgstr ""
+
+#: constants.js:69
+msgid "Detected Color"
+msgstr ""
+
+#: constants.js:70
+msgid "Hue"
+msgstr ""
+
+#: constants.js:196 constants.js:199
+msgid "Invalid Color"
+msgstr ""
+
+#: constants.js:282 constants.js:306 constants.js:313 constants.js:327 constants.js:359 constants.js:379 constants.js:409 constants.js:419 constants.js:439 constants.js:446 constants.js:457 constants.js:460 constants.js:465 constants.js:468 constants.js:469 constants.js:481 constants.js:485 constants.js:489 constants.js:493 constants.js:502 constants.js:503 constants.js:507 constants.js:513 constants.js:517 constants.js:519 constants.js:528 constants.js:529 constants.js:531 constants.js:533 constants.js:535 constants.js:536 constants.js:543 constants.js:546 constants.js:558 constants.js:564 constants.js:570 constants.js:581 constants.js:598 constants.js:599 constants.js:604 constants.js:614 constants.js:620 constants.js:623 constants.js:633 constants.js:634 constants.js:637 constants.js:639 constants.js:640 constants.js:641 constants.js:655 constants.js:657 constants.js:661 constants.js:662 constants.js:663 constants.js:670 constants.js:672 constants.js:678 constants.js:690 constants.js:703 constants.js:705 constants.js:723 constants.js:730 constants.js:747 constants.js:772 constants.js:787 constants.js:804 constants.js:807 constants.js:813 constants.js:818 constants.js:831 constants.js:833 constants.js:836 constants.js:841 constants.js:853 constants.js:854 constants.js:858 constants.js:861 constants.js:867 constants.js:881 constants.js:943 constants.js:972 constants.js:988 constants.js:994 constants.js:1002 constants.js:1003 constants.js:1012 constants.js:1014 constants.js:1040 constants.js:1041 constants.js:1062 constants.js:1070 constants.js:1085 constants.js:1086 constants.js:1101 constants.js:1122 constants.js:1134 constants.js:1140 constants.js:1166 constants.js:1183 constants.js:1186 constants.js:1187 constants.js:1193 constants.js:1201 constants.js:1203 constants.js:1205 constants.js:1210 constants.js:1211 constants.js:1212 constants.js:1216 constants.js:1224 constants.js:1243 constants.js:1245 constants.js:1246 constants.js:1247 constants.js:1248 constants.js:1273 constants.js:1297 constants.js:1300 constants.js:1315 constants.js:1316 constants.js:1320 constants.js:1340 constants.js:1349 constants.js:1357 constants.js:1364 constants.js:1366 constants.js:1371 constants.js:1379 constants.js:1410 constants.js:1411 constants.js:1412 constants.js:1413 constants.js:1414 constants.js:1418 constants.js:1423 constants.js:1429 constants.js:1430 constants.js:1431 constants.js:1432 constants.js:1437 constants.js:1444 constants.js:1457 constants.js:1465 constants.js:1483 constants.js:1492 constants.js:1493 constants.js:1495 constants.js:1496 constants.js:1498 constants.js:1500 constants.js:1501 constants.js:1504 constants.js:1510 constants.js:1529 constants.js:1534 constants.js:1536 constants.js:1537 constants.js:1538 constants.js:1541 constants.js:1544 constants.js:1546 constants.js:1548 constants.js:1553 constants.js:1554 constants.js:1564 constants.js:1579 constants.js:1580 constants.js:1586 constants.js:1590 constants.js:1592 constants.js:1607 constants.js:1628 constants.js:1632 constants.js:1634 constants.js:1645 constants.js:1664 constants.js:1665 constants.js:1678 constants.js:1697 constants.js:1712 constants.js:1714 constants.js:1716 constants.js:1728 constants.js:1735 constants.js:1737 constants.js:1745 constants.js:1751 constants.js:1763 constants.js:1770 constants.js:1774 constants.js:1786 constants.js:1789 constants.js:1792 constants.js:1812 constants.js:1820 constants.js:1825 constants.js:1827 constants.js:1832 constants.js:1834 constants.js:1839 constants.js:1846 constants.js:1847 constants.js:1851 constants.js:1859 constants.js:1872 constants.js:1874 constants.js:1878 constants.js:1895 constants.js:1896 constants.js:1902 constants.js:1904 constants.js:1920
+msgid "Red"
+msgstr ""
+
+#: constants.js:283 constants.js:304 constants.js:322 constants.js:329 constants.js:352 constants.js:399 constants.js:400 constants.js:445 constants.js:453 constants.js:455 constants.js:456 constants.js:461 constants.js:462 constants.js:486 constants.js:492 constants.js:494 constants.js:510 constants.js:522 constants.js:537 constants.js:567 constants.js:577 constants.js:586 constants.js:594 constants.js:603 constants.js:635 constants.js:638 constants.js:652 constants.js:675 constants.js:676 constants.js:691 constants.js:700 constants.js:707 constants.js:714 constants.js:720 constants.js:740 constants.js:763 constants.js:779 constants.js:810 constants.js:814 constants.js:824 constants.js:830 constants.js:835 constants.js:837 constants.js:838 constants.js:895 constants.js:897 constants.js:935 constants.js:965 constants.js:970 constants.js:990 constants.js:1017 constants.js:1019 constants.js:1032 constants.js:1038 constants.js:1053 constants.js:1058 constants.js:1072 constants.js:1095 constants.js:1102 constants.js:1144 constants.js:1152 constants.js:1165 constants.js:1167 constants.js:1168 constants.js:1169 constants.js:1190 constants.js:1214 constants.js:1284 constants.js:1286 constants.js:1293 constants.js:1326 constants.js:1332 constants.js:1333 constants.js:1334 constants.js:1335 constants.js:1345 constants.js:1350 constants.js:1376 constants.js:1392 constants.js:1394 constants.js:1398 constants.js:1416 constants.js:1433 constants.js:1435 constants.js:1440 constants.js:1449 constants.js:1454 constants.js:1462 constants.js:1466 constants.js:1469 constants.js:1487 constants.js:1497 constants.js:1499 constants.js:1502 constants.js:1511 constants.js:1518 constants.js:1526 constants.js:1532 constants.js:1535 constants.js:1539 constants.js:1555 constants.js:1558 constants.js:1577 constants.js:1582 constants.js:1587 constants.js:1602 constants.js:1617 constants.js:1655 constants.js:1668 constants.js:1710 constants.js:1715 constants.js:1717 constants.js:1718 constants.js:1731 constants.js:1733 constants.js:1741 constants.js:1743 constants.js:1756 constants.js:1761 constants.js:1765 constants.js:1771 constants.js:1787 constants.js:1797 constants.js:1800 constants.js:1806 constants.js:1817 constants.js:1842 constants.js:1857 constants.js:1862 constants.js:1870 constants.js:1871 constants.js:1876 constants.js:1881 constants.js:1882 constants.js:1918 constants.js:1925
+msgid "Orange"
+msgstr ""
+
+#: constants.js:284 constants.js:299 constants.js:301 constants.js:303 constants.js:308 constants.js:310 constants.js:315 constants.js:324 constants.js:325 constants.js:330 constants.js:339 constants.js:343 constants.js:348 constants.js:368 constants.js:371 constants.js:372 constants.js:381 constants.js:386 constants.js:390 constants.js:394 constants.js:415 constants.js:417 constants.js:458 constants.js:466 constants.js:473 constants.js:474 constants.js:475 constants.js:483 constants.js:484 constants.js:497 constants.js:498 constants.js:500 constants.js:501 constants.js:515 constants.js:518 constants.js:521 constants.js:525 constants.js:538 constants.js:560 constants.js:562 constants.js:563 constants.js:568 constants.js:572 constants.js:578 constants.js:579 constants.js:589 constants.js:606 constants.js:609 constants.js:618 constants.js:645 constants.js:648 constants.js:649 constants.js:658 constants.js:666 constants.js:667 constants.js:671 constants.js:682 constants.js:685 constants.js:693 constants.js:697 constants.js:739 constants.js:748 constants.js:756 constants.js:757 constants.js:758 constants.js:761 constants.js:765 constants.js:768 constants.js:783 constants.js:800 constants.js:803 constants.js:822 constants.js:832 constants.js:839 constants.js:847 constants.js:849 constants.js:869 constants.js:877 constants.js:878 constants.js:879 constants.js:888 constants.js:889 constants.js:892 constants.js:894 constants.js:896 constants.js:899 constants.js:901 constants.js:902 constants.js:903 constants.js:904 constants.js:905 constants.js:906 constants.js:914 constants.js:915 constants.js:916 constants.js:921 constants.js:940 constants.js:953 constants.js:958 constants.js:959 constants.js:960 constants.js:961 constants.js:962 constants.js:967 constants.js:977 constants.js:982 constants.js:991 constants.js:1000 constants.js:1001 constants.js:1005 constants.js:1009 constants.js:1026 constants.js:1064 constants.js:1073 constants.js:1074 constants.js:1078 constants.js:1079 constants.js:1089 constants.js:1090 constants.js:1091 constants.js:1097 constants.js:1098 constants.js:1109 constants.js:1110 constants.js:1141 constants.js:1153 constants.js:1154 constants.js:1164 constants.js:1174 constants.js:1180 constants.js:1194 constants.js:1208 constants.js:1213 constants.js:1225 constants.js:1244 constants.js:1258 constants.js:1267 constants.js:1272 constants.js:1274 constants.js:1278 constants.js:1295 constants.js:1303 constants.js:1306 constants.js:1308 constants.js:1313 constants.js:1317 constants.js:1324 constants.js:1328 constants.js:1336 constants.js:1338 constants.js:1351 constants.js:1359 constants.js:1377 constants.js:1378 constants.js:1381 constants.js:1390 constants.js:1393 constants.js:1395 constants.js:1397 constants.js:1399 constants.js:1400 constants.js:1417 constants.js:1436 constants.js:1438 constants.js:1441 constants.js:1453 constants.js:1470 constants.js:1475 constants.js:1477 constants.js:1484 constants.js:1506 constants.js:1522 constants.js:1533 constants.js:1543 constants.js:1559 constants.js:1561 constants.js:1565 constants.js:1576 constants.js:1583 constants.js:1595 constants.js:1599 constants.js:1614 constants.js:1637 constants.js:1647 constants.js:1663 constants.js:1666 constants.js:1674 constants.js:1680 constants.js:1693 constants.js:1698 constants.js:1701 constants.js:1711 constants.js:1713 constants.js:1719 constants.js:1727 constants.js:1732 constants.js:1734 constants.js:1736 constants.js:1742 constants.js:1754 constants.js:1757 constants.js:1762 constants.js:1767 constants.js:1807 constants.js:1811 constants.js:1813 constants.js:1819 constants.js:1823 constants.js:1833 constants.js:1854 constants.js:1875 constants.js:1880 constants.js:1903 constants.js:1911 constants.js:1915 constants.js:1917 constants.js:1919 constants.js:1921 constants.js:1922 constants.js:1930
+msgid "Yellow"
+msgstr ""
+
+#: constants.js:285 constants.js:296 constants.js:297 constants.js:314 constants.js:320 constants.js:326 constants.js:328 constants.js:333 constants.js:338 constants.js:341 constants.js:342 constants.js:349 constants.js:350 constants.js:356 constants.js:357 constants.js:358 constants.js:360 constants.js:364 constants.js:369 constants.js:370 constants.js:376 constants.js:383 constants.js:385 constants.js:388 constants.js:391 constants.js:397 constants.js:398 constants.js:402 constants.js:403 constants.js:425 constants.js:427 constants.js:430 constants.js:432 constants.js:433 constants.js:434 constants.js:450 constants.js:459 constants.js:463 constants.js:470 constants.js:480 constants.js:482 constants.js:491 constants.js:504 constants.js:505 constants.js:512 constants.js:516 constants.js:523 constants.js:526 constants.js:527 constants.js:530 constants.js:532 constants.js:540 constants.js:549 constants.js:550 constants.js:551 constants.js:553 constants.js:559 constants.js:571 constants.js:573 constants.js:576 constants.js:585 constants.js:587 constants.js:588 constants.js:590 constants.js:593 constants.js:595 constants.js:601 constants.js:602 constants.js:607 constants.js:612 constants.js:616 constants.js:626 constants.js:627 constants.js:630 constants.js:632 constants.js:642 constants.js:643 constants.js:646 constants.js:656 constants.js:659 constants.js:669 constants.js:673 constants.js:674 constants.js:677 constants.js:680 constants.js:681 constants.js:692 constants.js:695 constants.js:696 constants.js:699 constants.js:702 constants.js:708 constants.js:709 constants.js:712 constants.js:719 constants.js:721 constants.js:722 constants.js:726 constants.js:731 constants.js:733 constants.js:735 constants.js:743 constants.js:746 constants.js:750 constants.js:760 constants.js:766 constants.js:767 constants.js:778 constants.js:780 constants.js:781 constants.js:782 constants.js:786 constants.js:790 constants.js:793 constants.js:794 constants.js:795 constants.js:801 constants.js:802 constants.js:805 constants.js:806 constants.js:808 constants.js:809 constants.js:816 constants.js:819 constants.js:820 constants.js:823 constants.js:825 constants.js:826 constants.js:827 constants.js:834 constants.js:840 constants.js:843 constants.js:846 constants.js:850 constants.js:852 constants.js:860 constants.js:862 constants.js:863 constants.js:864 constants.js:865 constants.js:868 constants.js:871 constants.js:874 constants.js:880 constants.js:886 constants.js:887 constants.js:891 constants.js:893 constants.js:900 constants.js:908 constants.js:909 constants.js:910 constants.js:911 constants.js:917 constants.js:918 constants.js:919 constants.js:923 constants.js:924 constants.js:925 constants.js:926 constants.js:927 constants.js:928 constants.js:929 constants.js:930 constants.js:932 constants.js:933 constants.js:934 constants.js:938 constants.js:942 constants.js:945 constants.js:947 constants.js:948 constants.js:952 constants.js:956 constants.js:964 constants.js:966 constants.js:979 constants.js:980 constants.js:981 constants.js:983 constants.js:985 constants.js:987 constants.js:993 constants.js:997 constants.js:1006 constants.js:1007 constants.js:1010 constants.js:1011 constants.js:1013 constants.js:1025 constants.js:1031 constants.js:1033 constants.js:1037 constants.js:1039 constants.js:1043 constants.js:1044 constants.js:1046 constants.js:1050 constants.js:1051 constants.js:1052 constants.js:1055 constants.js:1056 constants.js:1057 constants.js:1060 constants.js:1061 constants.js:1063 constants.js:1065 constants.js:1067 constants.js:1071 constants.js:1075 constants.js:1076 constants.js:1077 constants.js:1080 constants.js:1087 constants.js:1092 constants.js:1099 constants.js:1103 constants.js:1115 constants.js:1116 constants.js:1117 constants.js:1118 constants.js:1119 constants.js:1125 constants.js:1126 constants.js:1127 constants.js:1129 constants.js:1130 constants.js:1137 constants.js:1139 constants.js:1145 constants.js:1149 constants.js:1157 constants.js:1158 constants.js:1160 constants.js:1170 constants.js:1171 constants.js:1172 constants.js:1177 constants.js:1197 constants.js:1199 constants.js:1221 constants.js:1223 constants.js:1228 constants.js:1229 constants.js:1231 constants.js:1232 constants.js:1235 constants.js:1236 constants.js:1237 constants.js:1253 constants.js:1255 constants.js:1256 constants.js:1262 constants.js:1263 constants.js:1264 constants.js:1275 constants.js:1277 constants.js:1279 constants.js:1283 constants.js:1289 constants.js:1291 constants.js:1298 constants.js:1305 constants.js:1309 constants.js:1310 constants.js:1312 constants.js:1321 constants.js:1322 constants.js:1323 constants.js:1325 constants.js:1329 constants.js:1331 constants.js:1341 constants.js:1343 constants.js:1347 constants.js:1354 constants.js:1360 constants.js:1361 constants.js:1365 constants.js:1372 constants.js:1373 constants.js:1375 constants.js:1380 constants.js:1382 constants.js:1384 constants.js:1385 constants.js:1386 constants.js:1387 constants.js:1402 constants.js:1405 constants.js:1408 constants.js:1419 constants.js:1421 constants.js:1424 constants.js:1426 constants.js:1427 constants.js:1428 constants.js:1439 constants.js:1442 constants.js:1445 constants.js:1451 constants.js:1460 constants.js:1461 constants.js:1467 constants.js:1468 constants.js:1476 constants.js:1482 constants.js:1485 constants.js:1486 constants.js:1488 constants.js:1505 constants.js:1515 constants.js:1516 constants.js:1519 constants.js:1520 constants.js:1528 constants.js:1550 constants.js:1560 constants.js:1563 constants.js:1569 constants.js:1585 constants.js:1589 constants.js:1594 constants.js:1600 constants.js:1601 constants.js:1604 constants.js:1605 constants.js:1606 constants.js:1612 constants.js:1618 constants.js:1619 constants.js:1622 constants.js:1623 constants.js:1624 constants.js:1626 constants.js:1627 constants.js:1636 constants.js:1643 constants.js:1644 constants.js:1646 constants.js:1648 constants.js:1659 constants.js:1660 constants.js:1673 constants.js:1675 constants.js:1682 constants.js:1683 constants.js:1684 constants.js:1685 constants.js:1687 constants.js:1694 constants.js:1703 constants.js:1706 constants.js:1707 constants.js:1708 constants.js:1720 constants.js:1721 constants.js:1722 constants.js:1723 constants.js:1725 constants.js:1739 constants.js:1744 constants.js:1746 constants.js:1753 constants.js:1755 constants.js:1764 constants.js:1773 constants.js:1775 constants.js:1777 constants.js:1785 constants.js:1793 constants.js:1794 constants.js:1796 constants.js:1798 constants.js:1802 constants.js:1816 constants.js:1818 constants.js:1838 constants.js:1844 constants.js:1853 constants.js:1855 constants.js:1864 constants.js:1866 constants.js:1867 constants.js:1868 constants.js:1869 constants.js:1885 constants.js:1888 constants.js:1890 constants.js:1893 constants.js:1897 constants.js:1898 constants.js:1899 constants.js:1900 constants.js:1907 constants.js:1910 constants.js:1914 constants.js:1916 constants.js:1924 constants.js:1932
+msgid "Green"
+msgstr ""
+
+#: constants.js:286 constants.js:300 constants.js:305 constants.js:307 constants.js:321 constants.js:331 constants.js:335 constants.js:336 constants.js:344 constants.js:345 constants.js:346 constants.js:351 constants.js:361 constants.js:362 constants.js:363 constants.js:366 constants.js:374 constants.js:377 constants.js:384 constants.js:387 constants.js:392 constants.js:393 constants.js:406 constants.js:407 constants.js:408 constants.js:418 constants.js:420 constants.js:421 constants.js:422 constants.js:424 constants.js:436 constants.js:437 constants.js:438 constants.js:444 constants.js:448 constants.js:449 constants.js:467 constants.js:488 constants.js:506 constants.js:511 constants.js:539 constants.js:542 constants.js:544 constants.js:552 constants.js:556 constants.js:557 constants.js:561 constants.js:565 constants.js:569 constants.js:575 constants.js:583 constants.js:610 constants.js:613 constants.js:624 constants.js:625 constants.js:647 constants.js:650 constants.js:651 constants.js:679 constants.js:686 constants.js:687 constants.js:689 constants.js:710 constants.js:715 constants.js:732 constants.js:738 constants.js:749 constants.js:769 constants.js:771 constants.js:775 constants.js:785 constants.js:788 constants.js:792 constants.js:799 constants.js:829 constants.js:848 constants.js:851 constants.js:857 constants.js:870 constants.js:883 constants.js:890 constants.js:912 constants.js:913 constants.js:931 constants.js:941 constants.js:944 constants.js:950 constants.js:957 constants.js:969 constants.js:971 constants.js:973 constants.js:986 constants.js:992 constants.js:999 constants.js:1018 constants.js:1020 constants.js:1035 constants.js:1042 constants.js:1047 constants.js:1059 constants.js:1082 constants.js:1093 constants.js:1094 constants.js:1096 constants.js:1104 constants.js:1105 constants.js:1107 constants.js:1121 constants.js:1128 constants.js:1131 constants.js:1138 constants.js:1142 constants.js:1143 constants.js:1146 constants.js:1159 constants.js:1163 constants.js:1175 constants.js:1182 constants.js:1189 constants.js:1191 constants.js:1192 constants.js:1198 constants.js:1200 constants.js:1218 constants.js:1219 constants.js:1220 constants.js:1230 constants.js:1238 constants.js:1239 constants.js:1259 constants.js:1281 constants.js:1282 constants.js:1285 constants.js:1288 constants.js:1294 constants.js:1301 constants.js:1304 constants.js:1327 constants.js:1339 constants.js:1346 constants.js:1348 constants.js:1352 constants.js:1358 constants.js:1367 constants.js:1370 constants.js:1388 constants.js:1401 constants.js:1403 constants.js:1406 constants.js:1407 constants.js:1422 constants.js:1446 constants.js:1450 constants.js:1452 constants.js:1456 constants.js:1463 constants.js:1489 constants.js:1507 constants.js:1508 constants.js:1509 constants.js:1512 constants.js:1514 constants.js:1517 constants.js:1521 constants.js:1523 constants.js:1525 constants.js:1545 constants.js:1562 constants.js:1570 constants.js:1571 constants.js:1581 constants.js:1584 constants.js:1597 constants.js:1608 constants.js:1621 constants.js:1630 constants.js:1649 constants.js:1650 constants.js:1653 constants.js:1654 constants.js:1667 constants.js:1679 constants.js:1681 constants.js:1688 constants.js:1690 constants.js:1695 constants.js:1700 constants.js:1705 constants.js:1709 constants.js:1740 constants.js:1747 constants.js:1752 constants.js:1758 constants.js:1759 constants.js:1790 constants.js:1791 constants.js:1795 constants.js:1801 constants.js:1814 constants.js:1815 constants.js:1826 constants.js:1835 constants.js:1845 constants.js:1852 constants.js:1863 constants.js:1873 constants.js:1886 constants.js:1892 constants.js:1906 constants.js:1927
+msgid "Blue"
+msgstr ""
+
+#: constants.js:287 constants.js:298 constants.js:317 constants.js:318 constants.js:319 constants.js:373 constants.js:389 constants.js:413 constants.js:414 constants.js:423 constants.js:426 constants.js:428 constants.js:429 constants.js:431 constants.js:435 constants.js:447 constants.js:452 constants.js:499 constants.js:547 constants.js:555 constants.js:574 constants.js:580 constants.js:592 constants.js:605 constants.js:622 constants.js:636 constants.js:653 constants.js:683 constants.js:698 constants.js:701 constants.js:704 constants.js:716 constants.js:725 constants.js:727 constants.js:728 constants.js:729 constants.js:737 constants.js:751 constants.js:770 constants.js:784 constants.js:789 constants.js:791 constants.js:796 constants.js:815 constants.js:828 constants.js:844 constants.js:856 constants.js:866 constants.js:885 constants.js:920 constants.js:949 constants.js:955 constants.js:963 constants.js:976 constants.js:995 constants.js:998 constants.js:1004 constants.js:1016 constants.js:1028 constants.js:1030 constants.js:1034 constants.js:1068 constants.js:1069 constants.js:1081 constants.js:1083 constants.js:1111 constants.js:1112 constants.js:1113 constants.js:1132 constants.js:1133 constants.js:1136 constants.js:1148 constants.js:1162 constants.js:1173 constants.js:1179 constants.js:1185 constants.js:1188 constants.js:1195 constants.js:1196 constants.js:1204 constants.js:1206 constants.js:1215 constants.js:1233 constants.js:1241 constants.js:1242 constants.js:1254 constants.js:1257 constants.js:1266 constants.js:1269 constants.js:1271 constants.js:1287 constants.js:1319 constants.js:1337 constants.js:1355 constants.js:1362 constants.js:1383 constants.js:1389 constants.js:1404 constants.js:1409 constants.js:1443 constants.js:1447 constants.js:1458 constants.js:1459 constants.js:1464 constants.js:1471 constants.js:1472 constants.js:1473 constants.js:1503 constants.js:1513 constants.js:1540 constants.js:1547 constants.js:1549 constants.js:1566 constants.js:1588 constants.js:1591 constants.js:1610 constants.js:1613 constants.js:1633 constants.js:1656 constants.js:1661 constants.js:1702 constants.js:1704 constants.js:1768 constants.js:1779 constants.js:1783 constants.js:1784 constants.js:1788 constants.js:1799 constants.js:1804 constants.js:1821 constants.js:1824 constants.js:1828 constants.js:1829 constants.js:1836 constants.js:1843 constants.js:1848 constants.js:1849 constants.js:1850 constants.js:1858 constants.js:1860 constants.js:1901 constants.js:1905
+msgid "Violet"
+msgstr ""
+
+#: constants.js:288 constants.js:295 constants.js:309 constants.js:316 constants.js:353 constants.js:354 constants.js:355 constants.js:365 constants.js:378 constants.js:380 constants.js:382 constants.js:395 constants.js:396 constants.js:405 constants.js:416 constants.js:441 constants.js:454 constants.js:471 constants.js:472 constants.js:476 constants.js:477 constants.js:478 constants.js:479 constants.js:490 constants.js:495 constants.js:496 constants.js:508 constants.js:509 constants.js:514 constants.js:524 constants.js:534 constants.js:541 constants.js:548 constants.js:554 constants.js:582 constants.js:591 constants.js:596 constants.js:600 constants.js:608 constants.js:611 constants.js:615 constants.js:619 constants.js:621 constants.js:631 constants.js:644 constants.js:660 constants.js:664 constants.js:668 constants.js:684 constants.js:688 constants.js:706 constants.js:713 constants.js:717 constants.js:724 constants.js:734 constants.js:741 constants.js:752 constants.js:753 constants.js:754 constants.js:755 constants.js:777 constants.js:811 constants.js:812 constants.js:821 constants.js:873 constants.js:898 constants.js:954 constants.js:968 constants.js:974 constants.js:978 constants.js:1008 constants.js:1015 constants.js:1021 constants.js:1024 constants.js:1029 constants.js:1036 constants.js:1048 constants.js:1054 constants.js:1088 constants.js:1108 constants.js:1123 constants.js:1124 constants.js:1135 constants.js:1147 constants.js:1151 constants.js:1155 constants.js:1161 constants.js:1176 constants.js:1178 constants.js:1181 constants.js:1202 constants.js:1222 constants.js:1227 constants.js:1249 constants.js:1250 constants.js:1260 constants.js:1268 constants.js:1270 constants.js:1280 constants.js:1296 constants.js:1307 constants.js:1311 constants.js:1330 constants.js:1353 constants.js:1356 constants.js:1363 constants.js:1396 constants.js:1415 constants.js:1420 constants.js:1425 constants.js:1455 constants.js:1479 constants.js:1481 constants.js:1490 constants.js:1491 constants.js:1494 constants.js:1524 constants.js:1527 constants.js:1530 constants.js:1542 constants.js:1551 constants.js:1552 constants.js:1556 constants.js:1557 constants.js:1568 constants.js:1572 constants.js:1573 constants.js:1574 constants.js:1575 constants.js:1578 constants.js:1596 constants.js:1609 constants.js:1615 constants.js:1616 constants.js:1629 constants.js:1638 constants.js:1639 constants.js:1652 constants.js:1669 constants.js:1670 constants.js:1671 constants.js:1672 constants.js:1676 constants.js:1677 constants.js:1689 constants.js:1738 constants.js:1760 constants.js:1766 constants.js:1776 constants.js:1780 constants.js:1781 constants.js:1782 constants.js:1808 constants.js:1830 constants.js:1831 constants.js:1840 constants.js:1879 constants.js:1908 constants.js:1909 constants.js:1913 constants.js:1923 constants.js:1928 constants.js:1931
+msgid "Brown"
+msgstr ""
+
+#: constants.js:289 constants.js:401
+msgid "Black"
+msgstr ""
+
+#: constants.js:290 constants.js:302 constants.js:311 constants.js:312 constants.js:332 constants.js:334 constants.js:337 constants.js:340 constants.js:347 constants.js:367 constants.js:375 constants.js:404 constants.js:410 constants.js:411 constants.js:412 constants.js:440 constants.js:442 constants.js:443 constants.js:451 constants.js:464 constants.js:487 constants.js:520 constants.js:545 constants.js:566 constants.js:584 constants.js:597 constants.js:617 constants.js:628 constants.js:629 constants.js:694 constants.js:711 constants.js:718 constants.js:736 constants.js:742 constants.js:744 constants.js:745 constants.js:759 constants.js:762 constants.js:764 constants.js:773 constants.js:774 constants.js:776 constants.js:797 constants.js:798 constants.js:817 constants.js:845 constants.js:855 constants.js:859 constants.js:872 constants.js:876 constants.js:882 constants.js:907 constants.js:922 constants.js:936 constants.js:937 constants.js:939 constants.js:946 constants.js:951 constants.js:975 constants.js:984 constants.js:989 constants.js:1022 constants.js:1023 constants.js:1045 constants.js:1049 constants.js:1066 constants.js:1084 constants.js:1100 constants.js:1106 constants.js:1114 constants.js:1156 constants.js:1184 constants.js:1207 constants.js:1209 constants.js:1217 constants.js:1226 constants.js:1240 constants.js:1251 constants.js:1252 constants.js:1261 constants.js:1265 constants.js:1276 constants.js:1290 constants.js:1292 constants.js:1299 constants.js:1302 constants.js:1314 constants.js:1342 constants.js:1344 constants.js:1368 constants.js:1369 constants.js:1374 constants.js:1391 constants.js:1434 constants.js:1448 constants.js:1474 constants.js:1480 constants.js:1531 constants.js:1567 constants.js:1593 constants.js:1598 constants.js:1603 constants.js:1620 constants.js:1625 constants.js:1631 constants.js:1635 constants.js:1640 constants.js:1641 constants.js:1642 constants.js:1651 constants.js:1658 constants.js:1662 constants.js:1686 constants.js:1691 constants.js:1692 constants.js:1696 constants.js:1699 constants.js:1724 constants.js:1726 constants.js:1729 constants.js:1730 constants.js:1748 constants.js:1749 constants.js:1750 constants.js:1769 constants.js:1772 constants.js:1778 constants.js:1803 constants.js:1805 constants.js:1809 constants.js:1810 constants.js:1822 constants.js:1837 constants.js:1841 constants.js:1856 constants.js:1861 constants.js:1865 constants.js:1877 constants.js:1883 constants.js:1887 constants.js:1889 constants.js:1894 constants.js:1912 constants.js:1926 constants.js:1929 constants.js:1933
+msgid "Grey"
+msgstr ""
+
+#: constants.js:291 constants.js:323 constants.js:654 constants.js:665 constants.js:842 constants.js:875 constants.js:884 constants.js:996 constants.js:1027 constants.js:1120 constants.js:1150 constants.js:1234 constants.js:1318 constants.js:1478 constants.js:1611 constants.js:1657 constants.js:1884 constants.js:1891
+msgid "White"
+msgstr ""
+
+#: constants.js:295
+msgid "Acadia"
+msgstr ""
+
+#: constants.js:296
+msgid "Acapulco"
+msgstr ""
+
+#: constants.js:297
+msgid "Aero Blue"
+msgstr ""
+
+#: constants.js:298
+msgid "Affair"
+msgstr ""
+
+#: constants.js:299
+msgid "Afghan Tan"
+msgstr ""
+
+#: constants.js:300
+msgid "Air Force Blue"
+msgstr ""
+
+#: constants.js:301
+msgid "Akaroa"
+msgstr ""
+
+#: constants.js:302
+msgid "Alabaster"
+msgstr ""
+
+#: constants.js:303
+msgid "Albescent White"
+msgstr ""
+
+#: constants.js:304
+msgid "Alert Tan"
+msgstr ""
+
+#: constants.js:305
+msgid "Alice Blue"
+msgstr ""
+
+#: constants.js:306
+msgid "Alizarin"
+msgstr ""
+
+#: constants.js:307
+msgid "Allports"
+msgstr ""
+
+#: constants.js:308
+msgid "Almond"
+msgstr ""
+
+#: constants.js:309
+msgid "Almond Frost"
+msgstr ""
+
+#: constants.js:310
+msgid "Alpine"
+msgstr ""
+
+#: constants.js:311
+msgid "Alto"
+msgstr ""
+
+#: constants.js:312
+msgid "Aluminium"
+msgstr ""
+
+#: constants.js:313
+msgid "Amaranth"
+msgstr ""
+
+#: constants.js:314
+msgid "Amazon"
+msgstr ""
+
+#: constants.js:315
+msgid "Amber"
+msgstr ""
+
+#: constants.js:316
+msgid "Americano"
+msgstr ""
+
+#: constants.js:317
+msgid "Amethyst"
+msgstr ""
+
+#: constants.js:318
+msgid "Amethyst Smoke"
+msgstr ""
+
+#: constants.js:319
+msgid "Amour"
+msgstr ""
+
+#: constants.js:320
+msgid "Amulet"
+msgstr ""
+
+#: constants.js:321
+msgid "Anakiwa"
+msgstr ""
+
+#: constants.js:322
+msgid "Antique Brass"
+msgstr ""
+
+#: constants.js:323
+msgid "Antique White"
+msgstr ""
+
+#: constants.js:324
+msgid "Anzac"
+msgstr ""
+
+#: constants.js:325
+msgid "Apache"
+msgstr ""
+
+#: constants.js:326
+msgid "Apple"
+msgstr ""
+
+#: constants.js:327
+msgid "Apple Blossom"
+msgstr ""
+
+#: constants.js:328
+msgid "Apple Green"
+msgstr ""
+
+#: constants.js:329
+msgid "Apricot"
+msgstr ""
+
+#: constants.js:330
+msgid "Apricot White"
+msgstr ""
+
+#: constants.js:331
+msgid "Aqua"
+msgstr ""
+
+#: constants.js:332
+msgid "Aqua Haze"
+msgstr ""
+
+#: constants.js:333
+msgid "Aqua Spring"
+msgstr ""
+
+#: constants.js:334
+msgid "Aqua Squeeze"
+msgstr ""
+
+#: constants.js:335
+msgid "Aquamarine"
+msgstr ""
+
+#: constants.js:336
+msgid "Arapawa"
+msgstr ""
+
+#: constants.js:337
+msgid "Armadillo"
+msgstr ""
+
+#: constants.js:338
+msgid "Army green"
+msgstr ""
+
+#: constants.js:339
+msgid "Arrowtown"
+msgstr ""
+
+#: constants.js:340
+msgid "Arsenic"
+msgstr ""
+
+#: constants.js:341
+msgid "Ash"
+msgstr ""
+
+#: constants.js:342
+msgid "Asparagus"
+msgstr ""
+
+#: constants.js:343
+msgid "Astra"
+msgstr ""
+
+#: constants.js:344
+msgid "Astral"
+msgstr ""
+
+#: constants.js:345
+msgid "Astronaut"
+msgstr ""
+
+#: constants.js:346
+msgid "Astronaut Blue"
+msgstr ""
+
+#: constants.js:347
+msgid "Athens Grey"
+msgstr ""
+
+#: constants.js:348
+msgid "Aths Special"
+msgstr ""
+
+#: constants.js:349
+msgid "Atlantis"
+msgstr ""
+
+#: constants.js:350
+msgid "Atoll"
+msgstr ""
+
+#: constants.js:351
+msgid "Atomic"
+msgstr ""
+
+#: constants.js:352
+msgid "Atomic Tangerine"
+msgstr ""
+
+#: constants.js:353
+msgid "Au Chico"
+msgstr ""
+
+#: constants.js:354
+msgid "Aubergine"
+msgstr ""
+
+#: constants.js:355
+msgid "Auburn"
+msgstr ""
+
+#: constants.js:356
+msgid "Australian Mint"
+msgstr ""
+
+#: constants.js:357
+msgid "Avocado"
+msgstr ""
+
+#: constants.js:358
+msgid "Axolotl"
+msgstr ""
+
+#: constants.js:359
+msgid "Azalea"
+msgstr ""
+
+#: constants.js:360
+msgid "Aztec"
+msgstr ""
+
+#: constants.js:361
+msgid "Azure"
+msgstr ""
+
+#: constants.js:362
+msgid "Baby Blue"
+msgstr ""
+
+#: constants.js:363
+msgid "Bahama Blue"
+msgstr ""
+
+#: constants.js:364
+msgid "Bahia"
+msgstr ""
+
+#: constants.js:365
+msgid "Baker's Chocolate"
+msgstr ""
+
+#: constants.js:366
+msgid "Bali Hai"
+msgstr ""
+
+#: constants.js:367
+msgid "Baltic Sea"
+msgstr ""
+
+#: constants.js:368
+msgid "Banana Mania"
+msgstr ""
+
+#: constants.js:369
+msgid "Bandicoot"
+msgstr ""
+
+#: constants.js:370
+msgid "Barberry"
+msgstr ""
+
+#: constants.js:371
+msgid "Barley Corn"
+msgstr ""
+
+#: constants.js:372
+msgid "Barley White"
+msgstr ""
+
+#: constants.js:373
+msgid "Barossa"
+msgstr ""
+
+#: constants.js:374
+msgid "Bastille"
+msgstr ""
+
+#: constants.js:375
+msgid "Battleship Grey"
+msgstr ""
+
+#: constants.js:376
+msgid "Bay Leaf"
+msgstr ""
+
+#: constants.js:377
+msgid "Bay Of Many"
+msgstr ""
+
+#: constants.js:378
+msgid "Bazaar"
+msgstr ""
+
+#: constants.js:379
+msgid "Beauty Bush"
+msgstr ""
+
+#: constants.js:380
+msgid "Beaver"
+msgstr ""
+
+#: constants.js:381
+msgid "Beeswax"
+msgstr ""
+
+#: constants.js:382
+msgid "Beige"
+msgstr ""
+
+#: constants.js:383
+msgid "Bermuda"
+msgstr ""
+
+#: constants.js:384
+msgid "Bermuda Grey"
+msgstr ""
+
+#: constants.js:385
+msgid "Beryl Green"
+msgstr ""
+
+#: constants.js:386
+msgid "Bianca"
+msgstr ""
+
+#: constants.js:387
+msgid "Big Stone"
+msgstr ""
+
+#: constants.js:388
+msgid "Bilbao"
+msgstr ""
+
+#: constants.js:389
+msgid "Biloba Flower"
+msgstr ""
+
+#: constants.js:390
+msgid "Birch"
+msgstr ""
+
+#: constants.js:391
+msgid "Bird Flower"
+msgstr ""
+
+#: constants.js:392
+msgid "Biscay"
+msgstr ""
+
+#: constants.js:393
+msgid "Bismark"
+msgstr ""
+
+#: constants.js:394
+msgid "Bison Hide"
+msgstr ""
+
+#: constants.js:395
+msgid "Bisque"
+msgstr ""
+
+#: constants.js:396
+msgid "Bistre"
+msgstr ""
+
+#: constants.js:397
+msgid "Bitter"
+msgstr ""
+
+#: constants.js:398
+msgid "Bitter Lemon"
+msgstr ""
+
+#: constants.js:399
+msgid "Bittersweet"
+msgstr ""
+
+#: constants.js:400
+msgid "Bizarre"
+msgstr ""
+
+#: constants.js:402
+msgid "Black Bean"
+msgstr ""
+
+#: constants.js:403
+msgid "Black Forest"
+msgstr ""
+
+#: constants.js:404
+msgid "Black Haze"
+msgstr ""
+
+#: constants.js:405
+msgid "Black Magic"
+msgstr ""
+
+#: constants.js:406
+msgid "Black Marlin"
+msgstr ""
+
+#: constants.js:407
+msgid "Black Pearl"
+msgstr ""
+
+#: constants.js:408
+msgid "Black Rock"
+msgstr ""
+
+#: constants.js:409
+msgid "Black Rose"
+msgstr ""
+
+#: constants.js:410
+msgid "Black Russian"
+msgstr ""
+
+#: constants.js:411
+msgid "Black Squeeze"
+msgstr ""
+
+#: constants.js:412
+msgid "Black White"
+msgstr ""
+
+#: constants.js:413
+msgid "Blackberry"
+msgstr ""
+
+#: constants.js:414
+msgid "Blackcurrant"
+msgstr ""
+
+#: constants.js:415
+msgid "Blanc"
+msgstr ""
+
+#: constants.js:416
+msgid "Blanched Almond"
+msgstr ""
+
+#: constants.js:417
+msgid "Bleach White"
+msgstr ""
+
+#: constants.js:418
+msgid "Blizzard Blue"
+msgstr ""
+
+#: constants.js:419
+msgid "Blossom"
+msgstr ""
+
+#: constants.js:421
+msgid "Blue Bayoux"
+msgstr ""
+
+#: constants.js:422
+msgid "Blue Bell"
+msgstr ""
+
+#: constants.js:423
+msgid "Blue Chalk"
+msgstr ""
+
+#: constants.js:424
+msgid "Blue Charcoal"
+msgstr ""
+
+#: constants.js:425
+msgid "Blue Chill"
+msgstr ""
+
+#: constants.js:426
+msgid "Blue Diamond"
+msgstr ""
+
+#: constants.js:427
+msgid "Blue Dianne"
+msgstr ""
+
+#: constants.js:428
+msgid "Blue Gem"
+msgstr ""
+
+#: constants.js:429
+msgid "Blue Haze"
+msgstr ""
+
+#: constants.js:430
+msgid "Blue Lagoon"
+msgstr ""
+
+#: constants.js:431
+msgid "Blue Marguerite"
+msgstr ""
+
+#: constants.js:432
+msgid "Blue Romance"
+msgstr ""
+
+#: constants.js:433
+msgid "Blue Smoke"
+msgstr ""
+
+#: constants.js:434
+msgid "Blue Stone"
+msgstr ""
+
+#: constants.js:435
+msgid "Blue Violet"
+msgstr ""
+
+#: constants.js:436
+msgid "Blue Whale"
+msgstr ""
+
+#: constants.js:437
+msgid "Blue Zodiac"
+msgstr ""
+
+#: constants.js:438
+msgid "Blumine"
+msgstr ""
+
+#: constants.js:439
+msgid "Blush"
+msgstr ""
+
+#: constants.js:440
+msgid "Bokara Grey"
+msgstr ""
+
+#: constants.js:441
+msgid "Bole"
+msgstr ""
+
+#: constants.js:442
+msgid "Bombay"
+msgstr ""
+
+#: constants.js:443
+msgid "Bon Jour"
+msgstr ""
+
+#: constants.js:444
+msgid "Bondi Blue"
+msgstr ""
+
+#: constants.js:445
+msgid "Bone"
+msgstr ""
+
+#: constants.js:446
+msgid "Bordeaux"
+msgstr ""
+
+#: constants.js:447
+msgid "Bossanova"
+msgstr ""
+
+#: constants.js:448
+msgid "Boston Blue"
+msgstr ""
+
+#: constants.js:449
+msgid "Botticelli"
+msgstr ""
+
+#: constants.js:450
+msgid "Bottle Green"
+msgstr ""
+
+#: constants.js:451
+msgid "Boulder"
+msgstr ""
+
+#: constants.js:452
+msgid "Bouquet"
+msgstr ""
+
+#: constants.js:453
+msgid "Bourbon"
+msgstr ""
+
+#: constants.js:454
+msgid "Bracken"
+msgstr ""
+
+#: constants.js:455
+msgid "Brandy"
+msgstr ""
+
+#: constants.js:456
+msgid "Brandy Punch"
+msgstr ""
+
+#: constants.js:457
+msgid "Brandy Rose"
+msgstr ""
+
+#: constants.js:458
+msgid "Brass"
+msgstr ""
+
+#: constants.js:459
+msgid "Breaker Bay"
+msgstr ""
+
+#: constants.js:460
+msgid "Brick Red"
+msgstr ""
+
+#: constants.js:461
+msgid "Bridal Heath"
+msgstr ""
+
+#: constants.js:462
+msgid "Bridesmaid"
+msgstr ""
+
+#: constants.js:463
+msgid "Bright Green"
+msgstr ""
+
+#: constants.js:464
+msgid "Bright Grey"
+msgstr ""
+
+#: constants.js:465
+msgid "Bright Red"
+msgstr ""
+
+#: constants.js:466
+msgid "Bright Sun"
+msgstr ""
+
+#: constants.js:467
+msgid "Bright Turquoise"
+msgstr ""
+
+#: constants.js:468
+msgid "Brilliant Rose"
+msgstr ""
+
+#: constants.js:469
+msgid "Brink Pink"
+msgstr ""
+
+#: constants.js:470
+msgid "British Racing Green"
+msgstr ""
+
+#: constants.js:471
+msgid "Bronco"
+msgstr ""
+
+#: constants.js:472
+msgid "Bronze"
+msgstr ""
+
+#: constants.js:473
+msgid "Bronze Olive"
+msgstr ""
+
+#: constants.js:474
+msgid "Bronzetone"
+msgstr ""
+
+#: constants.js:475
+msgid "Broom"
+msgstr ""
+
+#: constants.js:477
+msgid "Brown Bramble"
+msgstr ""
+
+#: constants.js:478
+msgid "Brown Derby"
+msgstr ""
+
+#: constants.js:479
+msgid "Brown Pod"
+msgstr ""
+
+#: constants.js:480
+msgid "Bubbles"
+msgstr ""
+
+#: constants.js:481
+msgid "Buccaneer"
+msgstr ""
+
+#: constants.js:482
+msgid "Bud"
+msgstr ""
+
+#: constants.js:483
+msgid "Buddha Gold"
+msgstr ""
+
+#: constants.js:484
+msgid "Buff"
+msgstr ""
+
+#: constants.js:485
+msgid "Bulgarian Rose"
+msgstr ""
+
+#: constants.js:486
+msgid "Bull Shot"
+msgstr ""
+
+#: constants.js:487
+msgid "Bunker"
+msgstr ""
+
+#: constants.js:488
+msgid "Bunting"
+msgstr ""
+
+#: constants.js:489
+msgid "Burgundy"
+msgstr ""
+
+#: constants.js:490
+msgid "Burly Wood"
+msgstr ""
+
+#: constants.js:491
+msgid "Burnham"
+msgstr ""
+
+#: constants.js:492
+msgid "Burning Sand"
+msgstr ""
+
+#: constants.js:493
+msgid "Burnt Crimson"
+msgstr ""
+
+#: constants.js:494
+msgid "Burnt Orange"
+msgstr ""
+
+#: constants.js:495
+msgid "Burnt Sienna"
+msgstr ""
+
+#: constants.js:496
+msgid "Burnt Umber"
+msgstr ""
+
+#: constants.js:497
+msgid "Buttercup"
+msgstr ""
+
+#: constants.js:498
+msgid "Buttered Rum"
+msgstr ""
+
+#: constants.js:499
+msgid "Butterfly Bush"
+msgstr ""
+
+#: constants.js:500
+msgid "Buttermilk"
+msgstr ""
+
+#: constants.js:501
+msgid "Buttery White"
+msgstr ""
+
+#: constants.js:502
+msgid "Cab Sav"
+msgstr ""
+
+#: constants.js:503
+msgid "Cabaret"
+msgstr ""
+
+#: constants.js:504
+msgid "Cabbage Pont"
+msgstr ""
+
+#: constants.js:505
+msgid "Cactus"
+msgstr ""
+
+#: constants.js:506
+msgid "Cadet Blue"
+msgstr ""
+
+#: constants.js:507
+msgid "Cadillac"
+msgstr ""
+
+#: constants.js:508
+msgid "Cafe Royale"
+msgstr ""
+
+#: constants.js:509
+msgid "Calico"
+msgstr ""
+
+#: constants.js:510
+msgid "California"
+msgstr ""
+
+#: constants.js:511
+msgid "Calypso"
+msgstr ""
+
+#: constants.js:512
+msgid "Camarone"
+msgstr ""
+
+#: constants.js:513
+msgid "Camelot"
+msgstr ""
+
+#: constants.js:514
+msgid "Cameo"
+msgstr ""
+
+#: constants.js:515
+msgid "Camouflage"
+msgstr ""
+
+#: constants.js:516
+msgid "Camouflage Green"
+msgstr ""
+
+#: constants.js:517
+msgid "Can Can"
+msgstr ""
+
+#: constants.js:518
+msgid "Canary"
+msgstr ""
+
+#: constants.js:519
+msgid "Cannon Pink"
+msgstr ""
+
+#: constants.js:520
+msgid "Cape Cod"
+msgstr ""
+
+#: constants.js:521
+msgid "Cape Honey"
+msgstr ""
+
+#: constants.js:522
+msgid "Cape Palliser"
+msgstr ""
+
+#: constants.js:523
+msgid "Caper"
+msgstr ""
+
+#: constants.js:524
+msgid "Caput Mortuum"
+msgstr ""
+
+#: constants.js:525
+msgid "Caramel"
+msgstr ""
+
+#: constants.js:526
+msgid "Cararra"
+msgstr ""
+
+#: constants.js:527
+msgid "Cardin Green"
+msgstr ""
+
+#: constants.js:528
+msgid "Cardinal"
+msgstr ""
+
+#: constants.js:529
+msgid "Careys Pink"
+msgstr ""
+
+#: constants.js:530
+msgid "Caribbean Green"
+msgstr ""
+
+#: constants.js:531
+msgid "Carissma"
+msgstr ""
+
+#: constants.js:532
+msgid "Carla"
+msgstr ""
+
+#: constants.js:533
+msgid "Carmine"
+msgstr ""
+
+#: constants.js:534
+msgid "Carnaby Tan"
+msgstr ""
+
+#: constants.js:535
+msgid "Carnation Pink"
+msgstr ""
+
+#: constants.js:536
+msgid "Carousel Pink"
+msgstr ""
+
+#: constants.js:537
+msgid "Carrot Orange"
+msgstr ""
+
+#: constants.js:538
+msgid "Casablanca"
+msgstr ""
+
+#: constants.js:539
+msgid "Casal"
+msgstr ""
+
+#: constants.js:540
+msgid "Cascade"
+msgstr ""
+
+#: constants.js:541
+msgid "Cashmere"
+msgstr ""
+
+#: constants.js:542
+msgid "Casper"
+msgstr ""
+
+#: constants.js:543
+msgid "Castro"
+msgstr ""
+
+#: constants.js:544
+msgid "Catalina Blue"
+msgstr ""
+
+#: constants.js:545
+msgid "Catskill White"
+msgstr ""
+
+#: constants.js:546
+msgid "Cavern Pink"
+msgstr ""
+
+#: constants.js:547
+msgid "Ce Soir"
+msgstr ""
+
+#: constants.js:548
+msgid "Cedar"
+msgstr ""
+
+#: constants.js:549
+msgid "Celadon"
+msgstr ""
+
+#: constants.js:550
+msgid "Celery"
+msgstr ""
+
+#: constants.js:551
+msgid "Celeste"
+msgstr ""
+
+#: constants.js:552
+msgid "Cello"
+msgstr ""
+
+#: constants.js:553
+msgid "Celtic"
+msgstr ""
+
+#: constants.js:554
+msgid "Cement"
+msgstr ""
+
+#: constants.js:555
+msgid "Cerise"
+msgstr ""
+
+#: constants.js:556
+msgid "Cerulean"
+msgstr ""
+
+#: constants.js:557
+msgid "Cerulean Blue"
+msgstr ""
+
+#: constants.js:558
+msgid "Chablis"
+msgstr ""
+
+#: constants.js:559
+msgid "Chalet Green"
+msgstr ""
+
+#: constants.js:560
+msgid "Chalky"
+msgstr ""
+
+#: constants.js:561
+msgid "Chambray"
+msgstr ""
+
+#: constants.js:562
+msgid "Chamois"
+msgstr ""
+
+#: constants.js:563
+msgid "Champagne"
+msgstr ""
+
+#: constants.js:564
+msgid "Chantilly"
+msgstr ""
+
+#: constants.js:565
+msgid "Charade"
+msgstr ""
+
+#: constants.js:566
+msgid "Charcoal"
+msgstr ""
+
+#: constants.js:567
+msgid "Chardon"
+msgstr ""
+
+#: constants.js:568
+msgid "Chardonnay"
+msgstr ""
+
+#: constants.js:569
+msgid "Charlotte"
+msgstr ""
+
+#: constants.js:570
+msgid "Charm"
+msgstr ""
+
+#: constants.js:571
+msgid "Chartreuse"
+msgstr ""
+
+#: constants.js:572
+msgid "Chartreuse Yellow"
+msgstr ""
+
+#: constants.js:573
+msgid "Chateau Green"
+msgstr ""
+
+#: constants.js:574
+msgid "Chatelle"
+msgstr ""
+
+#: constants.js:575
+msgid "Chathams Blue"
+msgstr ""
+
+#: constants.js:576
+msgid "Chelsea Cucumber"
+msgstr ""
+
+#: constants.js:577
+msgid "Chelsea Gem"
+msgstr ""
+
+#: constants.js:578
+msgid "Chenin"
+msgstr ""
+
+#: constants.js:579
+msgid "Cherokee"
+msgstr ""
+
+#: constants.js:580
+msgid "Cherry Pie"
+msgstr ""
+
+#: constants.js:581
+msgid "Cherub"
+msgstr ""
+
+#: constants.js:582
+msgid "Chestnut"
+msgstr ""
+
+#: constants.js:583
+msgid "Chetwode Blue"
+msgstr ""
+
+#: constants.js:584
+msgid "Chicago"
+msgstr ""
+
+#: constants.js:585
+msgid "Chiffon"
+msgstr ""
+
+#: constants.js:586
+msgid "Chilean Fire"
+msgstr ""
+
+#: constants.js:587
+msgid "Chilean Heath"
+msgstr ""
+
+#: constants.js:588
+msgid "China Ivory"
+msgstr ""
+
+#: constants.js:589
+msgid "Chino"
+msgstr ""
+
+#: constants.js:590
+msgid "Chinook"
+msgstr ""
+
+#: constants.js:591
+msgid "Chocolate"
+msgstr ""
+
+#: constants.js:592
+msgid "Christalle"
+msgstr ""
+
+#: constants.js:593
+msgid "Christi"
+msgstr ""
+
+#: constants.js:594
+msgid "Christine"
+msgstr ""
+
+#: constants.js:595
+msgid "Chrome White"
+msgstr ""
+
+#: constants.js:596
+msgid "Cigar"
+msgstr ""
+
+#: constants.js:597
+msgid "Cinder"
+msgstr ""
+
+#: constants.js:598
+msgid "Cinderella"
+msgstr ""
+
+#: constants.js:599
+msgid "Cinnabar"
+msgstr ""
+
+#: constants.js:600
+msgid "Cioccolato"
+msgstr ""
+
+#: constants.js:601
+msgid "Citron"
+msgstr ""
+
+#: constants.js:602
+msgid "Citrus"
+msgstr ""
+
+#: constants.js:603
+msgid "Clam Shell"
+msgstr ""
+
+#: constants.js:604
+msgid "Claret"
+msgstr ""
+
+#: constants.js:605
+msgid "Classic Rose"
+msgstr ""
+
+#: constants.js:606
+msgid "Clay Creek"
+msgstr ""
+
+#: constants.js:607
+msgid "Clear Day"
+msgstr ""
+
+#: constants.js:608
+msgid "Clinker"
+msgstr ""
+
+#: constants.js:609
+msgid "Cloud"
+msgstr ""
+
+#: constants.js:610
+msgid "Cloud Burst"
+msgstr ""
+
+#: constants.js:611
+msgid "Cloudy"
+msgstr ""
+
+#: constants.js:612
+msgid "Clover"
+msgstr ""
+
+#: constants.js:613
+msgid "Cobalt"
+msgstr ""
+
+#: constants.js:614
+msgid "Cocoa Bean"
+msgstr ""
+
+#: constants.js:615
+msgid "Cocoa Brown"
+msgstr ""
+
+#: constants.js:616
+msgid "Coconut Cream"
+msgstr ""
+
+#: constants.js:617
+msgid "Cod Grey"
+msgstr ""
+
+#: constants.js:618
+msgid "Coffee"
+msgstr ""
+
+#: constants.js:619
+msgid "Coffee Bean"
+msgstr ""
+
+#: constants.js:620
+msgid "Cognac"
+msgstr ""
+
+#: constants.js:621
+msgid "Cola"
+msgstr ""
+
+#: constants.js:622
+msgid "Cold Purple"
+msgstr ""
+
+#: constants.js:623
+msgid "Cold Turkey"
+msgstr ""
+
+#: constants.js:624
+msgid "Columbia Blue"
+msgstr ""
+
+#: constants.js:625
+msgid "Comet"
+msgstr ""
+
+#: constants.js:626
+msgid "Como"
+msgstr ""
+
+#: constants.js:627
+msgid "Conch"
+msgstr ""
+
+#: constants.js:628
+msgid "Concord"
+msgstr ""
+
+#: constants.js:629
+msgid "Concrete"
+msgstr ""
+
+#: constants.js:630
+msgid "Confetti"
+msgstr ""
+
+#: constants.js:631
+msgid "Congo Brown"
+msgstr ""
+
+#: constants.js:632
+msgid "Conifer"
+msgstr ""
+
+#: constants.js:633
+msgid "Contessa"
+msgstr ""
+
+#: constants.js:634
+msgid "Copper"
+msgstr ""
+
+#: constants.js:635
+msgid "Copper Canyon"
+msgstr ""
+
+#: constants.js:636
+msgid "Copper Rose"
+msgstr ""
+
+#: constants.js:637
+msgid "Copper Rust"
+msgstr ""
+
+#: constants.js:638
+msgid "Coral"
+msgstr ""
+
+#: constants.js:639
+msgid "Coral Candy"
+msgstr ""
+
+#: constants.js:640
+msgid "Coral Red"
+msgstr ""
+
+#: constants.js:641
+msgid "Coral Tree"
+msgstr ""
+
+#: constants.js:642
+msgid "Corduroy"
+msgstr ""
+
+#: constants.js:643
+msgid "Coriander"
+msgstr ""
+
+#: constants.js:644
+msgid "Cork"
+msgstr ""
+
+#: constants.js:645
+msgid "Corn"
+msgstr ""
+
+#: constants.js:646
+msgid "Corn Field"
+msgstr ""
+
+#: constants.js:647
+msgid "Corn Flower Blue"
+msgstr ""
+
+#: constants.js:648
+msgid "Corn Harvest"
+msgstr ""
+
+#: constants.js:649
+msgid "Corn Silk"
+msgstr ""
+
+#: constants.js:650
+msgid "Cornflower"
+msgstr ""
+
+#: constants.js:651
+msgid "Cornflower Blue"
+msgstr ""
+
+#: constants.js:652
+msgid "Corvette"
+msgstr ""
+
+#: constants.js:653
+msgid "Cosmic"
+msgstr ""
+
+#: constants.js:654
+msgid "Cosmic Latte"
+msgstr ""
+
+#: constants.js:655
+msgid "Cosmos"
+msgstr ""
+
+#: constants.js:656
+msgid "Costa Del Sol"
+msgstr ""
+
+#: constants.js:657
+msgid "Cotton Candy"
+msgstr ""
+
+#: constants.js:658
+msgid "Cotton Seed"
+msgstr ""
+
+#: constants.js:659
+msgid "County Green"
+msgstr ""
+
+#: constants.js:660
+msgid "Cowboy"
+msgstr ""
+
+#: constants.js:661
+msgid "Crab Apple"
+msgstr ""
+
+#: constants.js:662
+msgid "Crail"
+msgstr ""
+
+#: constants.js:663
+msgid "Cranberry"
+msgstr ""
+
+#: constants.js:664
+msgid "Crater Brown"
+msgstr ""
+
+#: constants.js:665
+msgid "Cream"
+msgstr ""
+
+#: constants.js:666
+msgid "Cream Brulee"
+msgstr ""
+
+#: constants.js:667
+msgid "Cream Can"
+msgstr ""
+
+#: constants.js:668
+msgid "Creole"
+msgstr ""
+
+#: constants.js:669
+msgid "Crete"
+msgstr ""
+
+#: constants.js:670
+msgid "Crimson"
+msgstr ""
+
+#: constants.js:671
+msgid "Crocodile"
+msgstr ""
+
+#: constants.js:672
+msgid "Crown Of Thorns"
+msgstr ""
+
+#: constants.js:673
+msgid "Cruise"
+msgstr ""
+
+#: constants.js:674
+msgid "Crusoe"
+msgstr ""
+
+#: constants.js:675
+msgid "Crusta"
+msgstr ""
+
+#: constants.js:676
+msgid "Cumin"
+msgstr ""
+
+#: constants.js:677
+msgid "Cumulus"
+msgstr ""
+
+#: constants.js:678
+msgid "Cupid"
+msgstr ""
+
+#: constants.js:679
+msgid "Curious Blue"
+msgstr ""
+
+#: constants.js:680
+msgid "Cutty Sark"
+msgstr ""
+
+#: constants.js:681
+msgid "Cyprus"
+msgstr ""
+
+#: constants.js:682
+msgid "Dairy Cream"
+msgstr ""
+
+#: constants.js:683
+msgid "Daisy Bush"
+msgstr ""
+
+#: constants.js:684
+msgid "Dallas"
+msgstr ""
+
+#: constants.js:685
+msgid "Dandelion"
+msgstr ""
+
+#: constants.js:686
+msgid "Danube"
+msgstr ""
+
+#: constants.js:687
+msgid "Dark Blue"
+msgstr ""
+
+#: constants.js:688
+msgid "Dark Brown"
+msgstr ""
+
+#: constants.js:689
+msgid "Dark Cerulean"
+msgstr ""
+
+#: constants.js:690
+msgid "Dark Chestnut"
+msgstr ""
+
+#: constants.js:691
+msgid "Dark Coral"
+msgstr ""
+
+#: constants.js:692
+msgid "Dark Cyan"
+msgstr ""
+
+#: constants.js:693
+msgid "Dark Goldenrod"
+msgstr ""
+
+#: constants.js:694
+msgid "Dark Gray"
+msgstr ""
+
+#: constants.js:695
+msgid "Dark Green"
+msgstr ""
+
+#: constants.js:696
+msgid "Dark Green Copper"
+msgstr ""
+
+#: constants.js:697
+msgid "Dark Khaki"
+msgstr ""
+
+#: constants.js:698
+msgid "Dark Magenta"
+msgstr ""
+
+#: constants.js:699
+msgid "Dark Olive Green"
+msgstr ""
+
+#: constants.js:700
+msgid "Dark Orange"
+msgstr ""
+
+#: constants.js:701
+msgid "Dark Orchid"
+msgstr ""
+
+#: constants.js:702
+msgid "Dark Pastel Green"
+msgstr ""
+
+#: constants.js:703
+msgid "Dark Pink"
+msgstr ""
+
+#: constants.js:704
+msgid "Dark Purple"
+msgstr ""
+
+#: constants.js:705
+msgid "Dark Red"
+msgstr ""
+
+#: constants.js:706
+msgid "Dark Rum"
+msgstr ""
+
+#: constants.js:707
+msgid "Dark Salmon"
+msgstr ""
+
+#: constants.js:708
+msgid "Dark Sea Green"
+msgstr ""
+
+#: constants.js:709
+msgid "Dark Slate"
+msgstr ""
+
+#: constants.js:710
+msgid "Dark Slate Blue"
+msgstr ""
+
+#: constants.js:711
+msgid "Dark Slate Grey"
+msgstr ""
+
+#: constants.js:712
+msgid "Dark Spring Green"
+msgstr ""
+
+#: constants.js:713
+msgid "Dark Tan"
+msgstr ""
+
+#: constants.js:714
+msgid "Dark Tangerine"
+msgstr ""
+
+#: constants.js:715
+msgid "Dark Turquoise"
+msgstr ""
+
+#: constants.js:716
+msgid "Dark Violet"
+msgstr ""
+
+#: constants.js:717
+msgid "Dark Wood"
+msgstr ""
+
+#: constants.js:718
+msgid "Davy's Grey"
+msgstr ""
+
+#: constants.js:719
+msgid "Dawn"
+msgstr ""
+
+#: constants.js:720
+msgid "Dawn Pink"
+msgstr ""
+
+#: constants.js:721
+msgid "De York"
+msgstr ""
+
+#: constants.js:722
+msgid "Deco"
+msgstr ""
+
+#: constants.js:723
+msgid "Deep Blush"
+msgstr ""
+
+#: constants.js:724
+msgid "Deep Bronze"
+msgstr ""
+
+#: constants.js:725
+msgid "Deep Cerise"
+msgstr ""
+
+#: constants.js:726
+msgid "Deep Fir"
+msgstr ""
+
+#: constants.js:727
+msgid "Deep Koamaru"
+msgstr ""
+
+#: constants.js:728
+msgid "Deep Lilac"
+msgstr ""
+
+#: constants.js:729
+msgid "Deep Magenta"
+msgstr ""
+
+#: constants.js:730
+msgid "Deep Pink"
+msgstr ""
+
+#: constants.js:731
+msgid "Deep Sea"
+msgstr ""
+
+#: constants.js:732
+msgid "Deep Sky Blue"
+msgstr ""
+
+#: constants.js:733
+msgid "Deep Teal"
+msgstr ""
+
+#: constants.js:734
+msgid "Del Rio"
+msgstr ""
+
+#: constants.js:735
+msgid "Dell"
+msgstr ""
+
+#: constants.js:736
+msgid "Delta"
+msgstr ""
+
+#: constants.js:737
+msgid "Deluge"
+msgstr ""
+
+#: constants.js:738
+msgid "Denim"
+msgstr ""
+
+#: constants.js:739
+msgid "Derby"
+msgstr ""
+
+#: constants.js:740
+msgid "Desert"
+msgstr ""
+
+#: constants.js:741
+msgid "Desert Sand"
+msgstr ""
+
+#: constants.js:742
+msgid "Desert Storm"
+msgstr ""
+
+#: constants.js:743
+msgid "Dew"
+msgstr ""
+
+#: constants.js:744
+msgid "Diesel"
+msgstr ""
+
+#: constants.js:745
+msgid "Dim Gray"
+msgstr ""
+
+#: constants.js:746
+msgid "Dingley"
+msgstr ""
+
+#: constants.js:747
+msgid "Disco"
+msgstr ""
+
+#: constants.js:748
+msgid "Dixie"
+msgstr ""
+
+#: constants.js:749
+msgid "Dodger Blue"
+msgstr ""
+
+#: constants.js:750
+msgid "Dolly"
+msgstr ""
+
+#: constants.js:751
+msgid "Dolphin"
+msgstr ""
+
+#: constants.js:752
+msgid "Domino"
+msgstr ""
+
+#: constants.js:753
+msgid "Don Juan"
+msgstr ""
+
+#: constants.js:754
+msgid "Donkey Brown"
+msgstr ""
+
+#: constants.js:755
+msgid "Dorado"
+msgstr ""
+
+#: constants.js:756
+msgid "Double Colonial White"
+msgstr ""
+
+#: constants.js:757
+msgid "Double Pearl Lusta"
+msgstr ""
+
+#: constants.js:758
+msgid "Double Spanish White"
+msgstr ""
+
+#: constants.js:759
+msgid "Dove Grey"
+msgstr ""
+
+#: constants.js:760
+msgid "Downy"
+msgstr ""
+
+#: constants.js:761
+msgid "Drover"
+msgstr ""
+
+#: constants.js:762
+msgid "Dune"
+msgstr ""
+
+#: constants.js:763
+msgid "Dust Storm"
+msgstr ""
+
+#: constants.js:764
+msgid "Dusty Grey"
+msgstr ""
+
+#: constants.js:765
+msgid "Dutch White"
+msgstr ""
+
+#: constants.js:766
+msgid "Eagle"
+msgstr ""
+
+#: constants.js:767
+msgid "Earls Green"
+msgstr ""
+
+#: constants.js:768
+msgid "Early Dawn"
+msgstr ""
+
+#: constants.js:769
+msgid "East Bay"
+msgstr ""
+
+#: constants.js:770
+msgid "East Side"
+msgstr ""
+
+#: constants.js:771
+msgid "Eastern Blue"
+msgstr ""
+
+#: constants.js:772
+msgid "Ebb"
+msgstr ""
+
+#: constants.js:773
+msgid "Ebony"
+msgstr ""
+
+#: constants.js:774
+msgid "Ebony Clay"
+msgstr ""
+
+#: constants.js:775
+msgid "Echo Blue"
+msgstr ""
+
+#: constants.js:776
+msgid "Eclipse"
+msgstr ""
+
+#: constants.js:777
+msgid "Ecru"
+msgstr ""
+
+#: constants.js:778
+msgid "Ecru White"
+msgstr ""
+
+#: constants.js:779
+msgid "Ecstasy"
+msgstr ""
+
+#: constants.js:780
+msgid "Eden"
+msgstr ""
+
+#: constants.js:781
+msgid "Edgewater"
+msgstr ""
+
+#: constants.js:782
+msgid "Edward"
+msgstr ""
+
+#: constants.js:783
+msgid "Egg Sour"
+msgstr ""
+
+#: constants.js:784
+msgid "Eggplant"
+msgstr ""
+
+#: constants.js:785
+msgid "Egyptian Blue"
+msgstr ""
+
+#: constants.js:786
+msgid "El Paso"
+msgstr ""
+
+#: constants.js:787
+msgid "El Salva"
+msgstr ""
+
+#: constants.js:788
+msgid "Electric Blue"
+msgstr ""
+
+#: constants.js:789
+msgid "Electric Indigo"
+msgstr ""
+
+#: constants.js:790
+msgid "Electric Lime"
+msgstr ""
+
+#: constants.js:791
+msgid "Electric Purple"
+msgstr ""
+
+#: constants.js:792
+msgid "Elephant"
+msgstr ""
+
+#: constants.js:793
+msgid "Elf Green"
+msgstr ""
+
+#: constants.js:794
+msgid "Elm"
+msgstr ""
+
+#: constants.js:795
+msgid "Emerald"
+msgstr ""
+
+#: constants.js:796
+msgid "Eminence"
+msgstr ""
+
+#: constants.js:797
+msgid "Emperor"
+msgstr ""
+
+#: constants.js:798
+msgid "Empress"
+msgstr ""
+
+#: constants.js:799
+msgid "Endeavour"
+msgstr ""
+
+#: constants.js:800
+msgid "Energy Yellow"
+msgstr ""
+
+#: constants.js:801
+msgid "English Holly"
+msgstr ""
+
+#: constants.js:802
+msgid "Envy"
+msgstr ""
+
+#: constants.js:803
+msgid "Equator"
+msgstr ""
+
+#: constants.js:804
+msgid "Espresso"
+msgstr ""
+
+#: constants.js:805
+msgid "Eternity"
+msgstr ""
+
+#: constants.js:806
+msgid "Eucalyptus"
+msgstr ""
+
+#: constants.js:807
+msgid "Eunry"
+msgstr ""
+
+#: constants.js:808
+msgid "Evening Sea"
+msgstr ""
+
+#: constants.js:809
+msgid "Everglade"
+msgstr ""
+
+#: constants.js:810
+msgid "Fair Pink"
+msgstr ""
+
+#: constants.js:811
+msgid "Falcon"
+msgstr ""
+
+#: constants.js:812
+msgid "Fallow"
+msgstr ""
+
+#: constants.js:813
+msgid "Falu Red"
+msgstr ""
+
+#: constants.js:814
+msgid "Fantasy"
+msgstr ""
+
+#: constants.js:815
+msgid "Fedora"
+msgstr ""
+
+#: constants.js:816
+msgid "Feijoa"
+msgstr ""
+
+#: constants.js:817
+msgid "Feldgrau"
+msgstr ""
+
+#: constants.js:818
+msgid "Feldspar"
+msgstr ""
+
+#: constants.js:819
+msgid "Fern"
+msgstr ""
+
+#: constants.js:820
+msgid "Fern Green"
+msgstr ""
+
+#: constants.js:821
+msgid "Ferra"
+msgstr ""
+
+#: constants.js:822
+msgid "Festival"
+msgstr ""
+
+#: constants.js:823
+msgid "Feta"
+msgstr ""
+
+#: constants.js:824
+msgid "Fiery Orange"
+msgstr ""
+
+#: constants.js:825
+msgid "Fiji Green"
+msgstr ""
+
+#: constants.js:826
+msgid "Finch"
+msgstr ""
+
+#: constants.js:827
+msgid "Finlandia"
+msgstr ""
+
+#: constants.js:828
+msgid "Finn"
+msgstr ""
+
+#: constants.js:829
+msgid "Fiord"
+msgstr ""
+
+#: constants.js:830
+msgid "Fire"
+msgstr ""
+
+#: constants.js:831
+msgid "Fire Brick"
+msgstr ""
+
+#: constants.js:832
+msgid "Fire Bush"
+msgstr ""
+
+#: constants.js:833
+msgid "Fire Engine Red"
+msgstr ""
+
+#: constants.js:834
+msgid "Firefly"
+msgstr ""
+
+#: constants.js:835
+msgid "Flame Pea"
+msgstr ""
+
+#: constants.js:836
+msgid "Flame Red"
+msgstr ""
+
+#: constants.js:837
+msgid "Flamenco"
+msgstr ""
+
+#: constants.js:838
+msgid "Flamingo"
+msgstr ""
+
+#: constants.js:839
+msgid "Flax"
+msgstr ""
+
+#: constants.js:840
+msgid "Flint"
+msgstr ""
+
+#: constants.js:841
+msgid "Flirt"
+msgstr ""
+
+#: constants.js:842
+msgid "Floral White"
+msgstr ""
+
+#: constants.js:843
+msgid "Foam"
+msgstr ""
+
+#: constants.js:844
+msgid "Fog"
+msgstr ""
+
+#: constants.js:845
+msgid "Foggy Grey"
+msgstr ""
+
+#: constants.js:846
+msgid "Forest Green"
+msgstr ""
+
+#: constants.js:847
+msgid "Forget Me Not"
+msgstr ""
+
+#: constants.js:848
+msgid "Fountain Blue"
+msgstr ""
+
+#: constants.js:849
+msgid "Frangipani"
+msgstr ""
+
+#: constants.js:850
+msgid "Free Speech Aquamarine"
+msgstr ""
+
+#: constants.js:851
+msgid "Free Speech Blue"
+msgstr ""
+
+#: constants.js:852
+msgid "Free Speech Green"
+msgstr ""
+
+#: constants.js:853
+msgid "Free Speech Magenta"
+msgstr ""
+
+#: constants.js:854
+msgid "Free Speech Red"
+msgstr ""
+
+#: constants.js:855
+msgid "French Grey"
+msgstr ""
+
+#: constants.js:856
+msgid "French Lilac"
+msgstr ""
+
+#: constants.js:857
+msgid "French Pass"
+msgstr ""
+
+#: constants.js:858
+msgid "French Rose"
+msgstr ""
+
+#: constants.js:859
+msgid "Friar Grey"
+msgstr ""
+
+#: constants.js:860
+msgid "Fringy Flower"
+msgstr ""
+
+#: constants.js:861
+msgid "Froly"
+msgstr ""
+
+#: constants.js:862
+msgid "Frost"
+msgstr ""
+
+#: constants.js:863
+msgid "Frosted Mint"
+msgstr ""
+
+#: constants.js:864
+msgid "Frostee"
+msgstr ""
+
+#: constants.js:865
+msgid "Fruit Salad"
+msgstr ""
+
+#: constants.js:866
+msgid "Fuchsia"
+msgstr ""
+
+#: constants.js:867
+msgid "Fuchsia Pink"
+msgstr ""
+
+#: constants.js:868
+msgid "Fuego"
+msgstr ""
+
+#: constants.js:869
+msgid "Fuel Yellow"
+msgstr ""
+
+#: constants.js:870
+msgid "Fun Blue"
+msgstr ""
+
+#: constants.js:871
+msgid "Fun Green"
+msgstr ""
+
+#: constants.js:872
+msgid "Fuscous Grey"
+msgstr ""
+
+#: constants.js:873
+msgid "Fuzzy Wuzzy Brown"
+msgstr ""
+
+#: constants.js:874
+msgid "Gable Green"
+msgstr ""
+
+#: constants.js:875
+msgid "Gainsboro"
+msgstr ""
+
+#: constants.js:876
+msgid "Gallery"
+msgstr ""
+
+#: constants.js:877
+msgid "Galliano"
+msgstr ""
+
+#: constants.js:878
+msgid "Gamboge"
+msgstr ""
+
+#: constants.js:879
+msgid "Geebung"
+msgstr ""
+
+#: constants.js:880
+msgid "Genoa"
+msgstr ""
+
+#: constants.js:881
+msgid "Geraldine"
+msgstr ""
+
+#: constants.js:882
+msgid "Geyser"
+msgstr ""
+
+#: constants.js:883
+msgid "Ghost"
+msgstr ""
+
+#: constants.js:884
+msgid "Ghost White"
+msgstr ""
+
+#: constants.js:885
+msgid "Gigas"
+msgstr ""
+
+#: constants.js:886
+msgid "Gimblet"
+msgstr ""
+
+#: constants.js:887
+msgid "Gin"
+msgstr ""
+
+#: constants.js:888
+msgid "Gin Fizz"
+msgstr ""
+
+#: constants.js:889
+msgid "Givry"
+msgstr ""
+
+#: constants.js:890
+msgid "Glacier"
+msgstr ""
+
+#: constants.js:891
+msgid "Glade Green"
+msgstr ""
+
+#: constants.js:892
+msgid "Go Ben"
+msgstr ""
+
+#: constants.js:893
+msgid "Goblin"
+msgstr ""
+
+#: constants.js:894
+msgid "Gold"
+msgstr ""
+
+#: constants.js:895
+msgid "Gold Drop"
+msgstr ""
+
+#: constants.js:896
+msgid "Gold Tips"
+msgstr ""
+
+#: constants.js:897
+msgid "Golden Bell"
+msgstr ""
+
+#: constants.js:898
+msgid "Golden Brown"
+msgstr ""
+
+#: constants.js:899
+msgid "Golden Dream"
+msgstr ""
+
+#: constants.js:900
+msgid "Golden Fizz"
+msgstr ""
+
+#: constants.js:901
+msgid "Golden Glow"
+msgstr ""
+
+#: constants.js:902
+msgid "Golden Poppy"
+msgstr ""
+
+#: constants.js:903
+msgid "Golden Sand"
+msgstr ""
+
+#: constants.js:904
+msgid "Golden Tainoi"
+msgstr ""
+
+#: constants.js:905
+msgid "Golden Yellow"
+msgstr ""
+
+#: constants.js:906
+msgid "Goldenrod"
+msgstr ""
+
+#: constants.js:907
+msgid "Gondola"
+msgstr ""
+
+#: constants.js:908
+msgid "Gordons Green"
+msgstr ""
+
+#: constants.js:909
+msgid "Gorse"
+msgstr ""
+
+#: constants.js:910
+msgid "Gossamer"
+msgstr ""
+
+#: constants.js:911
+msgid "Gossip"
+msgstr ""
+
+#: constants.js:912
+msgid "Gothic"
+msgstr ""
+
+#: constants.js:913
+msgid "Governor Bay"
+msgstr ""
+
+#: constants.js:914
+msgid "Grain Brown"
+msgstr ""
+
+#: constants.js:915
+msgid "Grandis"
+msgstr ""
+
+#: constants.js:916
+msgid "Granite Green"
+msgstr ""
+
+#: constants.js:917
+msgid "Granny Apple"
+msgstr ""
+
+#: constants.js:918
+msgid "Granny Smith"
+msgstr ""
+
+#: constants.js:919
+msgid "Granny Smith Apple"
+msgstr ""
+
+#: constants.js:920
+msgid "Grape"
+msgstr ""
+
+#: constants.js:921
+msgid "Graphite"
+msgstr ""
+
+#: constants.js:922
+msgid "Gravel"
+msgstr ""
+
+#: constants.js:924
+msgid "Green House"
+msgstr ""
+
+#: constants.js:925
+msgid "Green Kelp"
+msgstr ""
+
+#: constants.js:926
+msgid "Green Leaf"
+msgstr ""
+
+#: constants.js:927
+msgid "Green Mist"
+msgstr ""
+
+#: constants.js:928
+msgid "Green Pea"
+msgstr ""
+
+#: constants.js:929
+msgid "Green Smoke"
+msgstr ""
+
+#: constants.js:930
+msgid "Green Spring"
+msgstr ""
+
+#: constants.js:931
+msgid "Green Vogue"
+msgstr ""
+
+#: constants.js:932
+msgid "Green Waterloo"
+msgstr ""
+
+#: constants.js:933
+msgid "Green White"
+msgstr ""
+
+#: constants.js:934
+msgid "Green Yellow"
+msgstr ""
+
+#: constants.js:935
+msgid "Grenadier"
+msgstr ""
+
+#: constants.js:937
+msgid "Grey Chateau"
+msgstr ""
+
+#: constants.js:938
+msgid "Grey Nickel"
+msgstr ""
+
+#: constants.js:939
+msgid "Grey Nurse"
+msgstr ""
+
+#: constants.js:940
+msgid "Grey Olive"
+msgstr ""
+
+#: constants.js:941
+msgid "Grey Suit"
+msgstr ""
+
+#: constants.js:942
+msgid "Grey-Asparagus"
+msgstr ""
+
+#: constants.js:943
+msgid "Guardsman Red"
+msgstr ""
+
+#: constants.js:944
+msgid "Gulf Blue"
+msgstr ""
+
+#: constants.js:945
+msgid "Gulf Stream"
+msgstr ""
+
+#: constants.js:946
+msgid "Gull Grey"
+msgstr ""
+
+#: constants.js:947
+msgid "Gum Leaf"
+msgstr ""
+
+#: constants.js:948
+msgid "Gumbo"
+msgstr ""
+
+#: constants.js:949
+msgid "Gun Powder"
+msgstr ""
+
+#: constants.js:950
+msgid "Gunmetal"
+msgstr ""
+
+#: constants.js:951
+msgid "Gunsmoke"
+msgstr ""
+
+#: constants.js:952
+msgid "Gurkha"
+msgstr ""
+
+#: constants.js:953
+msgid "Hacienda"
+msgstr ""
+
+#: constants.js:954
+msgid "Hairy Heath"
+msgstr ""
+
+#: constants.js:955
+msgid "Haiti"
+msgstr ""
+
+#: constants.js:956
+msgid "Half And Half"
+msgstr ""
+
+#: constants.js:957
+msgid "Half Baked"
+msgstr ""
+
+#: constants.js:958
+msgid "Half Colonial White"
+msgstr ""
+
+#: constants.js:959
+msgid "Half Dutch White"
+msgstr ""
+
+#: constants.js:960
+msgid "Half Pearl Lusta"
+msgstr ""
+
+#: constants.js:961
+msgid "Half Spanish White"
+msgstr ""
+
+#: constants.js:962
+msgid "Hampton"
+msgstr ""
+
+#: constants.js:963
+msgid "Han Purple"
+msgstr ""
+
+#: constants.js:964
+msgid "Harlequin"
+msgstr ""
+
+#: constants.js:965
+msgid "Harley Davidson Orange"
+msgstr ""
+
+#: constants.js:966
+msgid "Harp"
+msgstr ""
+
+#: constants.js:967
+msgid "Harvest Gold"
+msgstr ""
+
+#: constants.js:968
+msgid "Havana"
+msgstr ""
+
+#: constants.js:969
+msgid "Havelock Blue"
+msgstr ""
+
+#: constants.js:970
+msgid "Hawaiian Tan"
+msgstr ""
+
+#: constants.js:971
+msgid "Hawkes Blue"
+msgstr ""
+
+#: constants.js:972
+msgid "Heath"
+msgstr ""
+
+#: constants.js:973
+msgid "Heather"
+msgstr ""
+
+#: constants.js:974
+msgid "Heathered Grey"
+msgstr ""
+
+#: constants.js:975
+msgid "Heavy Metal"
+msgstr ""
+
+#: constants.js:976
+msgid "Heliotrope"
+msgstr ""
+
+#: constants.js:977
+msgid "Hemlock"
+msgstr ""
+
+#: constants.js:978
+msgid "Hemp"
+msgstr ""
+
+#: constants.js:979
+msgid "Highball"
+msgstr ""
+
+#: constants.js:980
+msgid "Highland"
+msgstr ""
+
+#: constants.js:981
+msgid "Hillary"
+msgstr ""
+
+#: constants.js:982
+msgid "Himalaya"
+msgstr ""
+
+#: constants.js:983
+msgid "Hint Of Green"
+msgstr ""
+
+#: constants.js:984
+msgid "Hint Of Red"
+msgstr ""
+
+#: constants.js:985
+msgid "Hint Of Yellow"
+msgstr ""
+
+#: constants.js:986
+msgid "Hippie Blue"
+msgstr ""
+
+#: constants.js:987
+msgid "Hippie Green"
+msgstr ""
+
+#: constants.js:988
+msgid "Hippie Pink"
+msgstr ""
+
+#: constants.js:989
+msgid "Hit Grey"
+msgstr ""
+
+#: constants.js:990
+msgid "Hit Pink"
+msgstr ""
+
+#: constants.js:991
+msgid "Hokey Pokey"
+msgstr ""
+
+#: constants.js:992
+msgid "Hoki"
+msgstr ""
+
+#: constants.js:993
+msgid "Holly"
+msgstr ""
+
+#: constants.js:994
+msgid "Hollywood Cerise"
+msgstr ""
+
+#: constants.js:995
+msgid "Honey Flower"
+msgstr ""
+
+#: constants.js:996
+msgid "Honeydew"
+msgstr ""
+
+#: constants.js:997
+msgid "Honeysuckle"
+msgstr ""
+
+#: constants.js:998
+msgid "Hopbush"
+msgstr ""
+
+#: constants.js:999
+msgid "Horizon"
+msgstr ""
+
+#: constants.js:1000
+msgid "Horses Neck"
+msgstr ""
+
+#: constants.js:1001
+msgid "Hot Curry"
+msgstr ""
+
+#: constants.js:1002
+msgid "Hot Magenta"
+msgstr ""
+
+#: constants.js:1003
+msgid "Hot Pink"
+msgstr ""
+
+#: constants.js:1004
+msgid "Hot Purple"
+msgstr ""
+
+#: constants.js:1005
+msgid "Hot Toddy"
+msgstr ""
+
+#: constants.js:1006
+msgid "Humming Bird"
+msgstr ""
+
+#: constants.js:1007
+msgid "Hunter Green"
+msgstr ""
+
+#: constants.js:1008
+msgid "Hurricane"
+msgstr ""
+
+#: constants.js:1009
+msgid "Husk"
+msgstr ""
+
+#: constants.js:1010
+msgid "Ice Cold"
+msgstr ""
+
+#: constants.js:1011
+msgid "Iceberg"
+msgstr ""
+
+#: constants.js:1012
+msgid "Illusion"
+msgstr ""
+
+#: constants.js:1013
+msgid "Inch Worm"
+msgstr ""
+
+#: constants.js:1014
+msgid "Indian Red"
+msgstr ""
+
+#: constants.js:1015
+msgid "Indian Tan"
+msgstr ""
+
+#: constants.js:1016
+msgid "Indigo"
+msgstr ""
+
+#: constants.js:1017
+msgid "Indochine"
+msgstr ""
+
+#: constants.js:1018
+msgid "International Klein Blue"
+msgstr ""
+
+#: constants.js:1019
+msgid "International Orange"
+msgstr ""
+
+#: constants.js:1020
+msgid "Iris Blue"
+msgstr ""
+
+#: constants.js:1021
+msgid "Irish Coffee"
+msgstr ""
+
+#: constants.js:1022
+msgid "Iron"
+msgstr ""
+
+#: constants.js:1023
+msgid "Ironside Grey"
+msgstr ""
+
+#: constants.js:1024
+msgid "Ironstone"
+msgstr ""
+
+#: constants.js:1025
+msgid "Islamic Green"
+msgstr ""
+
+#: constants.js:1026
+msgid "Island Spice"
+msgstr ""
+
+#: constants.js:1027
+msgid "Ivory"
+msgstr ""
+
+#: constants.js:1028
+msgid "Jacarta"
+msgstr ""
+
+#: constants.js:1029
+msgid "Jacko Bean"
+msgstr ""
+
+#: constants.js:1030
+msgid "Jacksons Purple"
+msgstr ""
+
+#: constants.js:1031
+msgid "Jade"
+msgstr ""
+
+#: constants.js:1032
+msgid "Jaffa"
+msgstr ""
+
+#: constants.js:1033
+msgid "Jagged Ice"
+msgstr ""
+
+#: constants.js:1034
+msgid "Jagger"
+msgstr ""
+
+#: constants.js:1035
+msgid "Jaguar"
+msgstr ""
+
+#: constants.js:1036
+msgid "Jambalaya"
+msgstr ""
+
+#: constants.js:1037
+msgid "Japanese Laurel"
+msgstr ""
+
+#: constants.js:1038
+msgid "Japonica"
+msgstr ""
+
+#: constants.js:1039
+msgid "Java"
+msgstr ""
+
+#: constants.js:1040
+msgid "Jazz"
+msgstr ""
+
+#: constants.js:1041
+msgid "Jazzberry Jam"
+msgstr ""
+
+#: constants.js:1042
+msgid "Jelly Bean"
+msgstr ""
+
+#: constants.js:1043
+msgid "Jet Stream"
+msgstr ""
+
+#: constants.js:1044
+msgid "Jewel"
+msgstr ""
+
+#: constants.js:1045
+msgid "Jon"
+msgstr ""
+
+#: constants.js:1046
+msgid "Jonquil"
+msgstr ""
+
+#: constants.js:1047
+msgid "Jordy Blue"
+msgstr ""
+
+#: constants.js:1048
+msgid "Judge Grey"
+msgstr ""
+
+#: constants.js:1049
+msgid "Jumbo"
+msgstr ""
+
+#: constants.js:1050
+msgid "Jungle Green"
+msgstr ""
+
+#: constants.js:1051
+msgid "Jungle Mist"
+msgstr ""
+
+#: constants.js:1052
+msgid "Juniper"
+msgstr ""
+
+#: constants.js:1053
+msgid "Just Right"
+msgstr ""
+
+#: constants.js:1054
+msgid "Kabul"
+msgstr ""
+
+#: constants.js:1055
+msgid "Kaitoke Green"
+msgstr ""
+
+#: constants.js:1056
+msgid "Kangaroo"
+msgstr ""
+
+#: constants.js:1057
+msgid "Karaka"
+msgstr ""
+
+#: constants.js:1058
+msgid "Karry"
+msgstr ""
+
+#: constants.js:1059
+msgid "Kashmir Blue"
+msgstr ""
+
+#: constants.js:1060
+msgid "Kelly Green"
+msgstr ""
+
+#: constants.js:1061
+msgid "Kelp"
+msgstr ""
+
+#: constants.js:1062
+msgid "Kenyan Copper"
+msgstr ""
+
+#: constants.js:1063
+msgid "Keppel"
+msgstr ""
+
+#: constants.js:1064
+msgid "Khaki"
+msgstr ""
+
+#: constants.js:1065
+msgid "Kidnapper"
+msgstr ""
+
+#: constants.js:1066
+msgid "Kilamanjaro"
+msgstr ""
+
+#: constants.js:1067
+msgid "Killarney"
+msgstr ""
+
+#: constants.js:1068
+msgid "Kimberly"
+msgstr ""
+
+#: constants.js:1069
+msgid "Kingfisher Daisy"
+msgstr ""
+
+#: constants.js:1070
+msgid "Kobi"
+msgstr ""
+
+#: constants.js:1071
+msgid "Kokoda"
+msgstr ""
+
+#: constants.js:1072
+msgid "Korma"
+msgstr ""
+
+#: constants.js:1073
+msgid "Koromiko"
+msgstr ""
+
+#: constants.js:1074
+msgid "Kournikova"
+msgstr ""
+
+#: constants.js:1075
+msgid "La Palma"
+msgstr ""
+
+#: constants.js:1076
+msgid "La Rioja"
+msgstr ""
+
+#: constants.js:1077
+msgid "Las Palmas"
+msgstr ""
+
+#: constants.js:1078
+msgid "Laser"
+msgstr ""
+
+#: constants.js:1079
+msgid "Laser Lemon"
+msgstr ""
+
+#: constants.js:1080
+msgid "Laurel"
+msgstr ""
+
+#: constants.js:1081
+msgid "Lavender"
+msgstr ""
+
+#: constants.js:1082
+msgid "Lavender Blue"
+msgstr ""
+
+#: constants.js:1083
+msgid "Lavender Blush"
+msgstr ""
+
+#: constants.js:1084
+msgid "Lavender Grey"
+msgstr ""
+
+#: constants.js:1085
+msgid "Lavender Pink"
+msgstr ""
+
+#: constants.js:1086
+msgid "Lavender Rose"
+msgstr ""
+
+#: constants.js:1087
+msgid "Lawn Green"
+msgstr ""
+
+#: constants.js:1088
+msgid "Leather"
+msgstr ""
+
+#: constants.js:1089
+msgid "Lemon"
+msgstr ""
+
+#: constants.js:1090
+msgid "Lemon Chiffon"
+msgstr ""
+
+#: constants.js:1091
+msgid "Lemon Ginger"
+msgstr ""
+
+#: constants.js:1092
+msgid "Lemon Grass"
+msgstr ""
+
+#: constants.js:1093
+msgid "Licorice"
+msgstr ""
+
+#: constants.js:1094
+msgid "Light Blue"
+msgstr ""
+
+#: constants.js:1095
+msgid "Light Coral"
+msgstr ""
+
+#: constants.js:1096
+msgid "Light Cyan"
+msgstr ""
+
+#: constants.js:1097
+msgid "Light Goldenrod"
+msgstr ""
+
+#: constants.js:1098
+msgid "Light Goldenrod Yellow"
+msgstr ""
+
+#: constants.js:1099
+msgid "Light Green"
+msgstr ""
+
+#: constants.js:1100
+msgid "Light Grey"
+msgstr ""
+
+#: constants.js:1101
+msgid "Light Pink"
+msgstr ""
+
+#: constants.js:1102
+msgid "Light Salmon"
+msgstr ""
+
+#: constants.js:1103
+msgid "Light Sea Green"
+msgstr ""
+
+#: constants.js:1104
+msgid "Light Sky Blue"
+msgstr ""
+
+#: constants.js:1105
+msgid "Light Slate Blue"
+msgstr ""
+
+#: constants.js:1106
+msgid "Light Slate Grey"
+msgstr ""
+
+#: constants.js:1107
+msgid "Light Steel Blue"
+msgstr ""
+
+#: constants.js:1108
+msgid "Light Wood"
+msgstr ""
+
+#: constants.js:1109
+msgid "Light Yellow"
+msgstr ""
+
+#: constants.js:1110
+msgid "Lightning Yellow"
+msgstr ""
+
+#: constants.js:1111
+msgid "Lilac"
+msgstr ""
+
+#: constants.js:1112
+msgid "Lilac Bush"
+msgstr ""
+
+#: constants.js:1113
+msgid "Lily"
+msgstr ""
+
+#: constants.js:1114
+msgid "Lily White"
+msgstr ""
+
+#: constants.js:1115
+msgid "Lima"
+msgstr ""
+
+#: constants.js:1116
+msgid "Lime"
+msgstr ""
+
+#: constants.js:1117
+msgid "Lime Green"
+msgstr ""
+
+#: constants.js:1118
+msgid "Limeade"
+msgstr ""
+
+#: constants.js:1119
+msgid "Limerick"
+msgstr ""
+
+#: constants.js:1120
+msgid "Linen"
+msgstr ""
+
+#: constants.js:1121
+msgid "Link Water"
+msgstr ""
+
+#: constants.js:1122
+msgid "Lipstick"
+msgstr ""
+
+#: constants.js:1123
+msgid "Liver"
+msgstr ""
+
+#: constants.js:1124
+msgid "Livid Brown"
+msgstr ""
+
+#: constants.js:1125
+msgid "Loafer"
+msgstr ""
+
+#: constants.js:1126
+msgid "Loblolly"
+msgstr ""
+
+#: constants.js:1127
+msgid "Lochinvar"
+msgstr ""
+
+#: constants.js:1128
+msgid "Lochmara"
+msgstr ""
+
+#: constants.js:1129
+msgid "Locust"
+msgstr ""
+
+#: constants.js:1130
+msgid "Log Cabin"
+msgstr ""
+
+#: constants.js:1131
+msgid "Logan"
+msgstr ""
+
+#: constants.js:1132
+msgid "Lola"
+msgstr ""
+
+#: constants.js:1133
+msgid "London Hue"
+msgstr ""
+
+#: constants.js:1134
+msgid "Lonestar"
+msgstr ""
+
+#: constants.js:1135
+msgid "Lotus"
+msgstr ""
+
+#: constants.js:1136
+msgid "Loulou"
+msgstr ""
+
+#: constants.js:1137
+msgid "Lucky"
+msgstr ""
+
+#: constants.js:1138
+msgid "Lucky Point"
+msgstr ""
+
+#: constants.js:1139
+msgid "Lunar Green"
+msgstr ""
+
+#: constants.js:1140
+msgid "Lusty"
+msgstr ""
+
+#: constants.js:1141
+msgid "Luxor Gold"
+msgstr ""
+
+#: constants.js:1142
+msgid "Lynch"
+msgstr ""
+
+#: constants.js:1143
+msgid "Mabel"
+msgstr ""
+
+#: constants.js:1144
+msgid "Macaroni And Cheese"
+msgstr ""
+
+#: constants.js:1145
+msgid "Madang"
+msgstr ""
+
+#: constants.js:1146
+msgid "Madison"
+msgstr ""
+
+#: constants.js:1147
+msgid "Madras"
+msgstr ""
+
+#: constants.js:1148
+msgid "Magenta"
+msgstr ""
+
+#: constants.js:1149
+msgid "Magic Mint"
+msgstr ""
+
+#: constants.js:1150
+msgid "Magnolia"
+msgstr ""
+
+#: constants.js:1151
+msgid "Mahogany"
+msgstr ""
+
+#: constants.js:1152
+msgid "Mai Tai"
+msgstr ""
+
+#: constants.js:1153
+msgid "Maire"
+msgstr ""
+
+#: constants.js:1154
+msgid "Maize"
+msgstr ""
+
+#: constants.js:1155
+msgid "Makara"
+msgstr ""
+
+#: constants.js:1156
+msgid "Mako"
+msgstr ""
+
+#: constants.js:1157
+msgid "Malachite"
+msgstr ""
+
+#: constants.js:1158
+msgid "Malachite Green"
+msgstr ""
+
+#: constants.js:1159
+msgid "Malibu"
+msgstr ""
+
+#: constants.js:1160
+msgid "Mallard"
+msgstr ""
+
+#: constants.js:1161
+msgid "Malta"
+msgstr ""
+
+#: constants.js:1162
+msgid "Mamba"
+msgstr ""
+
+#: constants.js:1163
+msgid "Manatee"
+msgstr ""
+
+#: constants.js:1164
+msgid "Mandalay"
+msgstr ""
+
+#: constants.js:1165
+msgid "Mandarian Orange"
+msgstr ""
+
+#: constants.js:1166
+msgid "Mandy"
+msgstr ""
+
+#: constants.js:1167
+msgid "Mandys Pink"
+msgstr ""
+
+#: constants.js:1168
+msgid "Mango Tango"
+msgstr ""
+
+#: constants.js:1169
+msgid "Manhattan"
+msgstr ""
+
+#: constants.js:1170
+msgid "Mantis"
+msgstr ""
+
+#: constants.js:1171
+msgid "Mantle"
+msgstr ""
+
+#: constants.js:1172
+msgid "Manz"
+msgstr ""
+
+#: constants.js:1173
+msgid "Mardi Gras"
+msgstr ""
+
+#: constants.js:1174
+msgid "Marigold"
+msgstr ""
+
+#: constants.js:1175
+msgid "Mariner"
+msgstr ""
+
+#: constants.js:1176
+msgid "Maroon"
+msgstr ""
+
+#: constants.js:1177
+msgid "Marshland"
+msgstr ""
+
+#: constants.js:1178
+msgid "Martini"
+msgstr ""
+
+#: constants.js:1179
+msgid "Martinique"
+msgstr ""
+
+#: constants.js:1180
+msgid "Marzipan"
+msgstr ""
+
+#: constants.js:1181
+msgid "Masala"
+msgstr ""
+
+#: constants.js:1182
+msgid "Matisse"
+msgstr ""
+
+#: constants.js:1183
+msgid "Matrix"
+msgstr ""
+
+#: constants.js:1184
+msgid "Matterhorn"
+msgstr ""
+
+#: constants.js:1185
+msgid "Mauve"
+msgstr ""
+
+#: constants.js:1186
+msgid "Mauve Taupe"
+msgstr ""
+
+#: constants.js:1187
+msgid "Mauvelous"
+msgstr ""
+
+#: constants.js:1188
+msgid "Maverick"
+msgstr ""
+
+#: constants.js:1189
+msgid "Maya Blue"
+msgstr ""
+
+#: constants.js:1190
+msgid "McKenzie"
+msgstr ""
+
+#: constants.js:1191
+msgid "Medium Aquamarine"
+msgstr ""
+
+#: constants.js:1192
+msgid "Medium Blue"
+msgstr ""
+
+#: constants.js:1193
+msgid "Medium Carmine"
+msgstr ""
+
+#: constants.js:1194
+msgid "Medium Goldenrod"
+msgstr ""
+
+#: constants.js:1195
+msgid "Medium Orchid"
+msgstr ""
+
+#: constants.js:1196
+msgid "Medium Purple"
+msgstr ""
+
+#: constants.js:1197
+msgid "Medium Sea Green"
+msgstr ""
+
+#: constants.js:1198
+msgid "Medium Slate Blue"
+msgstr ""
+
+#: constants.js:1199
+msgid "Medium Spring Green"
+msgstr ""
+
+#: constants.js:1200
+msgid "Medium Turquoise"
+msgstr ""
+
+#: constants.js:1201
+msgid "Medium Violet Red"
+msgstr ""
+
+#: constants.js:1202
+msgid "Medium Wood"
+msgstr ""
+
+#: constants.js:1203
+msgid "Melanie"
+msgstr ""
+
+#: constants.js:1204
+msgid "Melanzane"
+msgstr ""
+
+#: constants.js:1205
+msgid "Melon"
+msgstr ""
+
+#: constants.js:1206
+msgid "Melrose"
+msgstr ""
+
+#: constants.js:1207
+msgid "Mercury"
+msgstr ""
+
+#: constants.js:1208
+msgid "Merino"
+msgstr ""
+
+#: constants.js:1209
+msgid "Merlin"
+msgstr ""
+
+#: constants.js:1210
+msgid "Merlot"
+msgstr ""
+
+#: constants.js:1211
+msgid "Metallic Bronze"
+msgstr ""
+
+#: constants.js:1212
+msgid "Metallic Copper"
+msgstr ""
+
+#: constants.js:1213
+msgid "Metallic Gold"
+msgstr ""
+
+#: constants.js:1214
+msgid "Meteor"
+msgstr ""
+
+#: constants.js:1215
+msgid "Meteorite"
+msgstr ""
+
+#: constants.js:1216
+msgid "Mexican Red"
+msgstr ""
+
+#: constants.js:1217
+msgid "Mid Grey"
+msgstr ""
+
+#: constants.js:1218
+msgid "Midnight"
+msgstr ""
+
+#: constants.js:1219
+msgid "Midnight Blue"
+msgstr ""
+
+#: constants.js:1220
+msgid "Midnight Express"
+msgstr ""
+
+#: constants.js:1221
+msgid "Midnight Moss"
+msgstr ""
+
+#: constants.js:1222
+msgid "Mikado"
+msgstr ""
+
+#: constants.js:1223
+msgid "Milan"
+msgstr ""
+
+#: constants.js:1224
+msgid "Milano Red"
+msgstr ""
+
+#: constants.js:1225
+msgid "Milk Punch"
+msgstr ""
+
+#: constants.js:1226
+msgid "Milk White"
+msgstr ""
+
+#: constants.js:1227
+msgid "Millbrook"
+msgstr ""
+
+#: constants.js:1228
+msgid "Mimosa"
+msgstr ""
+
+#: constants.js:1229
+msgid "Mindaro"
+msgstr ""
+
+#: constants.js:1230
+msgid "Mine Shaft"
+msgstr ""
+
+#: constants.js:1231
+msgid "Mineral Green"
+msgstr ""
+
+#: constants.js:1232
+msgid "Ming"
+msgstr ""
+
+#: constants.js:1233
+msgid "Minsk"
+msgstr ""
+
+#: constants.js:1234
+msgid "Mint Cream"
+msgstr ""
+
+#: constants.js:1235
+msgid "Mint Green"
+msgstr ""
+
+#: constants.js:1236
+msgid "Mint Julep"
+msgstr ""
+
+#: constants.js:1237
+msgid "Mint Tulip"
+msgstr ""
+
+#: constants.js:1238
+msgid "Mirage"
+msgstr ""
+
+#: constants.js:1239
+msgid "Mischka"
+msgstr ""
+
+#: constants.js:1240
+msgid "Mist Grey"
+msgstr ""
+
+#: constants.js:1241
+msgid "Misty Rose"
+msgstr ""
+
+#: constants.js:1242
+msgid "Mobster"
+msgstr ""
+
+#: constants.js:1243
+msgid "Moccaccino"
+msgstr ""
+
+#: constants.js:1244
+msgid "Moccasin"
+msgstr ""
+
+#: constants.js:1245
+msgid "Mocha"
+msgstr ""
+
+#: constants.js:1246
+msgid "Mojo"
+msgstr ""
+
+#: constants.js:1247
+msgid "Mona Lisa"
+msgstr ""
+
+#: constants.js:1248
+msgid "Monarch"
+msgstr ""
+
+#: constants.js:1249
+msgid "Mondo"
+msgstr ""
+
+#: constants.js:1250
+msgid "Mongoose"
+msgstr ""
+
+#: constants.js:1251
+msgid "Monsoon"
+msgstr ""
+
+#: constants.js:1252
+msgid "Montana"
+msgstr ""
+
+#: constants.js:1253
+msgid "Monte Carlo"
+msgstr ""
+
+#: constants.js:1254
+msgid "Moody Blue"
+msgstr ""
+
+#: constants.js:1255
+msgid "Moon Glow"
+msgstr ""
+
+#: constants.js:1256
+msgid "Moon Mist"
+msgstr ""
+
+#: constants.js:1257
+msgid "Moon Raker"
+msgstr ""
+
+#: constants.js:1258
+msgid "Moon Yellow"
+msgstr ""
+
+#: constants.js:1259
+msgid "Morning Glory"
+msgstr ""
+
+#: constants.js:1260
+msgid "Morocco Brown"
+msgstr ""
+
+#: constants.js:1261
+msgid "Mortar"
+msgstr ""
+
+#: constants.js:1262
+msgid "Mosque"
+msgstr ""
+
+#: constants.js:1263
+msgid "Moss Green"
+msgstr ""
+
+#: constants.js:1264
+msgid "Mountain Meadow"
+msgstr ""
+
+#: constants.js:1265
+msgid "Mountain Mist"
+msgstr ""
+
+#: constants.js:1266
+msgid "Mountbatten Pink"
+msgstr ""
+
+#: constants.js:1267
+msgid "Muddy Waters"
+msgstr ""
+
+#: constants.js:1268
+msgid "Muesli"
+msgstr ""
+
+#: constants.js:1269
+msgid "Mulberry"
+msgstr ""
+
+#: constants.js:1270
+msgid "Mule Fawn"
+msgstr ""
+
+#: constants.js:1271
+msgid "Mulled Wine"
+msgstr ""
+
+#: constants.js:1272
+msgid "Mustard"
+msgstr ""
+
+#: constants.js:1273
+msgid "My Pink"
+msgstr ""
+
+#: constants.js:1274
+msgid "My Sin"
+msgstr ""
+
+#: constants.js:1275
+msgid "Myrtle"
+msgstr ""
+
+#: constants.js:1276
+msgid "Mystic"
+msgstr ""
+
+#: constants.js:1277
+msgid "Nandor"
+msgstr ""
+
+#: constants.js:1278
+msgid "Napa"
+msgstr ""
+
+#: constants.js:1279
+msgid "Narvik"
+msgstr ""
+
+#: constants.js:1280
+msgid "Navajo White"
+msgstr ""
+
+#: constants.js:1281
+msgid "Navy"
+msgstr ""
+
+#: constants.js:1282
+msgid "Navy Blue"
+msgstr ""
+
+#: constants.js:1283
+msgid "Nebula"
+msgstr ""
+
+#: constants.js:1284
+msgid "Negroni"
+msgstr ""
+
+#: constants.js:1285
+msgid "Neon Blue"
+msgstr ""
+
+#: constants.js:1286
+msgid "Neon Carrot"
+msgstr ""
+
+#: constants.js:1287
+msgid "Neon Pink"
+msgstr ""
+
+#: constants.js:1288
+msgid "Nepal"
+msgstr ""
+
+#: constants.js:1289
+msgid "Neptune"
+msgstr ""
+
+#: constants.js:1290
+msgid "Nero"
+msgstr ""
+
+#: constants.js:1291
+msgid "Neutral Green"
+msgstr ""
+
+#: constants.js:1292
+msgid "Nevada"
+msgstr ""
+
+#: constants.js:1293
+msgid "New Amber"
+msgstr ""
+
+#: constants.js:1294
+msgid "New Midnight Blue"
+msgstr ""
+
+#: constants.js:1295
+msgid "New Orleans"
+msgstr ""
+
+#: constants.js:1296
+msgid "New Tan"
+msgstr ""
+
+#: constants.js:1297
+msgid "New York Pink"
+msgstr ""
+
+#: constants.js:1298
+msgid "Niagara"
+msgstr ""
+
+#: constants.js:1299
+msgid "Night Rider"
+msgstr ""
+
+#: constants.js:1300
+msgid "Night Shadz"
+msgstr ""
+
+#: constants.js:1301
+msgid "Nile Blue"
+msgstr ""
+
+#: constants.js:1302
+msgid "Nobel"
+msgstr ""
+
+#: constants.js:1303
+msgid "Nomad"
+msgstr ""
+
+#: constants.js:1304
+msgid "Nordic"
+msgstr ""
+
+#: constants.js:1305
+msgid "Norway"
+msgstr ""
+
+#: constants.js:1306
+msgid "Nugget"
+msgstr ""
+
+#: constants.js:1307
+msgid "Nutmeg"
+msgstr ""
+
+#: constants.js:1308
+msgid "Oasis"
+msgstr ""
+
+#: constants.js:1309
+msgid "Observatory"
+msgstr ""
+
+#: constants.js:1310
+msgid "Ocean Green"
+msgstr ""
+
+#: constants.js:1311
+msgid "Ochre"
+msgstr ""
+
+#: constants.js:1312
+msgid "Off Green"
+msgstr ""
+
+#: constants.js:1313
+msgid "Off Yellow"
+msgstr ""
+
+#: constants.js:1314
+msgid "Oil"
+msgstr ""
+
+#: constants.js:1315
+msgid "Old Brick"
+msgstr ""
+
+#: constants.js:1316
+msgid "Old Copper"
+msgstr ""
+
+#: constants.js:1317
+msgid "Old Gold"
+msgstr ""
+
+#: constants.js:1318
+msgid "Old Lace"
+msgstr ""
+
+#: constants.js:1319
+msgid "Old Lavender"
+msgstr ""
+
+#: constants.js:1320
+msgid "Old Rose"
+msgstr ""
+
+#: constants.js:1321
+msgid "Olive"
+msgstr ""
+
+#: constants.js:1322
+msgid "Olive Drab"
+msgstr ""
+
+#: constants.js:1323
+msgid "Olive Green"
+msgstr ""
+
+#: constants.js:1324
+msgid "Olive Haze"
+msgstr ""
+
+#: constants.js:1325
+msgid "Olivetone"
+msgstr ""
+
+#: constants.js:1326
+msgid "Olivine"
+msgstr ""
+
+#: constants.js:1327
+msgid "Onahau"
+msgstr ""
+
+#: constants.js:1328
+msgid "Onion"
+msgstr ""
+
+#: constants.js:1329
+msgid "Opal"
+msgstr ""
+
+#: constants.js:1330
+msgid "Opium"
+msgstr ""
+
+#: constants.js:1331
+msgid "Oracle"
+msgstr ""
+
+#: constants.js:1333
+msgid "Orange Peel"
+msgstr ""
+
+#: constants.js:1334
+msgid "Orange Red"
+msgstr ""
+
+#: constants.js:1335
+msgid "Orange Roughy"
+msgstr ""
+
+#: constants.js:1336
+msgid "Orange White"
+msgstr ""
+
+#: constants.js:1337
+msgid "Orchid"
+msgstr ""
+
+#: constants.js:1338
+msgid "Orchid White"
+msgstr ""
+
+#: constants.js:1339
+msgid "Orient"
+msgstr ""
+
+#: constants.js:1340
+msgid "Oriental Pink"
+msgstr ""
+
+#: constants.js:1341
+msgid "Orinoco"
+msgstr ""
+
+#: constants.js:1342
+msgid "Oslo Grey"
+msgstr ""
+
+#: constants.js:1343
+msgid "Ottoman"
+msgstr ""
+
+#: constants.js:1344
+msgid "Outer Space"
+msgstr ""
+
+#: constants.js:1345
+msgid "Outrageous Orange"
+msgstr ""
+
+#: constants.js:1346
+msgid "Oxford Blue"
+msgstr ""
+
+#: constants.js:1347
+msgid "Oxley"
+msgstr ""
+
+#: constants.js:1348
+msgid "Oyster Bay"
+msgstr ""
+
+#: constants.js:1349
+msgid "Oyster Pink"
+msgstr ""
+
+#: constants.js:1350
+msgid "Paarl"
+msgstr ""
+
+#: constants.js:1351
+msgid "Pablo"
+msgstr ""
+
+#: constants.js:1352
+msgid "Pacific Blue"
+msgstr ""
+
+#: constants.js:1353
+msgid "Paco"
+msgstr ""
+
+#: constants.js:1354
+msgid "Padua"
+msgstr ""
+
+#: constants.js:1355
+msgid "Palatinate Purple"
+msgstr ""
+
+#: constants.js:1356
+msgid "Pale Brown"
+msgstr ""
+
+#: constants.js:1357
+msgid "Pale Chestnut"
+msgstr ""
+
+#: constants.js:1358
+msgid "Pale Cornflower Blue"
+msgstr ""
+
+#: constants.js:1359
+msgid "Pale Goldenrod"
+msgstr ""
+
+#: constants.js:1360
+msgid "Pale Green"
+msgstr ""
+
+#: constants.js:1361
+msgid "Pale Leaf"
+msgstr ""
+
+#: constants.js:1362
+msgid "Pale Magenta"
+msgstr ""
+
+#: constants.js:1363
+msgid "Pale Oyster"
+msgstr ""
+
+#: constants.js:1364
+msgid "Pale Pink"
+msgstr ""
+
+#: constants.js:1365
+msgid "Pale Prim"
+msgstr ""
+
+#: constants.js:1366
+msgid "Pale Rose"
+msgstr ""
+
+#: constants.js:1367
+msgid "Pale Sky"
+msgstr ""
+
+#: constants.js:1368
+msgid "Pale Slate"
+msgstr ""
+
+#: constants.js:1369
+msgid "Pale Taupe"
+msgstr ""
+
+#: constants.js:1370
+msgid "Pale Turquoise"
+msgstr ""
+
+#: constants.js:1371
+msgid "Pale Violet Red"
+msgstr ""
+
+#: constants.js:1372
+msgid "Palm Green"
+msgstr ""
+
+#: constants.js:1373
+msgid "Palm Leaf"
+msgstr ""
+
+#: constants.js:1374
+msgid "Pampas"
+msgstr ""
+
+#: constants.js:1375
+msgid "Panache"
+msgstr ""
+
+#: constants.js:1376
+msgid "Pancho"
+msgstr ""
+
+#: constants.js:1377
+msgid "Panda"
+msgstr ""
+
+#: constants.js:1378
+msgid "Papaya Whip"
+msgstr ""
+
+#: constants.js:1379
+msgid "Paprika"
+msgstr ""
+
+#: constants.js:1380
+msgid "Paradiso"
+msgstr ""
+
+#: constants.js:1381
+msgid "Parchment"
+msgstr ""
+
+#: constants.js:1382
+msgid "Paris Daisy"
+msgstr ""
+
+#: constants.js:1383
+msgid "Paris M"
+msgstr ""
+
+#: constants.js:1384
+msgid "Paris White"
+msgstr ""
+
+#: constants.js:1385
+msgid "Parsley"
+msgstr ""
+
+#: constants.js:1386
+msgid "Pastel Green"
+msgstr ""
+
+#: constants.js:1387
+msgid "Patina"
+msgstr ""
+
+#: constants.js:1388
+msgid "Pattens Blue"
+msgstr ""
+
+#: constants.js:1389
+msgid "Paua"
+msgstr ""
+
+#: constants.js:1390
+msgid "Pavlova"
+msgstr ""
+
+#: constants.js:1391
+msgid "Payne's Grey"
+msgstr ""
+
+#: constants.js:1392
+msgid "Peach"
+msgstr ""
+
+#: constants.js:1393
+msgid "Peach Puff"
+msgstr ""
+
+#: constants.js:1394
+msgid "Peach-Orange"
+msgstr ""
+
+#: constants.js:1395
+msgid "Peach-Yellow"
+msgstr ""
+
+#: constants.js:1396
+msgid "Peanut"
+msgstr ""
+
+#: constants.js:1397
+msgid "Pear"
+msgstr ""
+
+#: constants.js:1398
+msgid "Pearl Bush"
+msgstr ""
+
+#: constants.js:1399
+msgid "Pearl Lusta"
+msgstr ""
+
+#: constants.js:1400
+msgid "Peat"
+msgstr ""
+
+#: constants.js:1401
+msgid "Pelorous"
+msgstr ""
+
+#: constants.js:1402
+msgid "Peppermint"
+msgstr ""
+
+#: constants.js:1403
+msgid "Perano"
+msgstr ""
+
+#: constants.js:1404
+msgid "Perfume"
+msgstr ""
+
+#: constants.js:1405
+msgid "Periglacial Blue"
+msgstr ""
+
+#: constants.js:1406
+msgid "Periwinkle"
+msgstr ""
+
+#: constants.js:1407
+msgid "Persian Blue"
+msgstr ""
+
+#: constants.js:1408
+msgid "Persian Green"
+msgstr ""
+
+#: constants.js:1409
+msgid "Persian Indigo"
+msgstr ""
+
+#: constants.js:1410
+msgid "Persian Pink"
+msgstr ""
+
+#: constants.js:1411
+msgid "Persian Plum"
+msgstr ""
+
+#: constants.js:1412
+msgid "Persian Red"
+msgstr ""
+
+#: constants.js:1413
+msgid "Persian Rose"
+msgstr ""
+
+#: constants.js:1414
+msgid "Persimmon"
+msgstr ""
+
+#: constants.js:1415
+msgid "Peru"
+msgstr ""
+
+#: constants.js:1416
+msgid "Peru Tan"
+msgstr ""
+
+#: constants.js:1417
+msgid "Pesto"
+msgstr ""
+
+#: constants.js:1418
+msgid "Petite Orchid"
+msgstr ""
+
+#: constants.js:1419
+msgid "Pewter"
+msgstr ""
+
+#: constants.js:1420
+msgid "Pharlap"
+msgstr ""
+
+#: constants.js:1421
+msgid "Picasso"
+msgstr ""
+
+#: constants.js:1422
+msgid "Picton Blue"
+msgstr ""
+
+#: constants.js:1423
+msgid "Pig Pink"
+msgstr ""
+
+#: constants.js:1424
+msgid "Pigment Green"
+msgstr ""
+
+#: constants.js:1425
+msgid "Pine Cone"
+msgstr ""
+
+#: constants.js:1426
+msgid "Pine Glade"
+msgstr ""
+
+#: constants.js:1427
+msgid "Pine Green"
+msgstr ""
+
+#: constants.js:1428
+msgid "Pine Tree"
+msgstr ""
+
+#: constants.js:1429
+msgid "Pink"
+msgstr ""
+
+#: constants.js:1430
+msgid "Pink Flamingo"
+msgstr ""
+
+#: constants.js:1431
+msgid "Pink Flare"
+msgstr ""
+
+#: constants.js:1432
+msgid "Pink Lace"
+msgstr ""
+
+#: constants.js:1433
+msgid "Pink Lady"
+msgstr ""
+
+#: constants.js:1434
+msgid "Pink Swan"
+msgstr ""
+
+#: constants.js:1435
+msgid "Piper"
+msgstr ""
+
+#: constants.js:1436
+msgid "Pipi"
+msgstr ""
+
+#: constants.js:1437
+msgid "Pippin"
+msgstr ""
+
+#: constants.js:1438
+msgid "Pirate Gold"
+msgstr ""
+
+#: constants.js:1439
+msgid "Pixie Green"
+msgstr ""
+
+#: constants.js:1440
+msgid "Pizazz"
+msgstr ""
+
+#: constants.js:1441
+msgid "Pizza"
+msgstr ""
+
+#: constants.js:1442
+msgid "Plantation"
+msgstr ""
+
+#: constants.js:1443
+msgid "Plum"
+msgstr ""
+
+#: constants.js:1444
+msgid "Pohutukawa"
+msgstr ""
+
+#: constants.js:1445
+msgid "Polar"
+msgstr ""
+
+#: constants.js:1446
+msgid "Polo Blue"
+msgstr ""
+
+#: constants.js:1447
+msgid "Pompadour"
+msgstr ""
+
+#: constants.js:1448
+msgid "Porcelain"
+msgstr ""
+
+#: constants.js:1449
+msgid "Porsche"
+msgstr ""
+
+#: constants.js:1450
+msgid "Port Gore"
+msgstr ""
+
+#: constants.js:1451
+msgid "Portafino"
+msgstr ""
+
+#: constants.js:1452
+msgid "Portage"
+msgstr ""
+
+#: constants.js:1453
+msgid "Portica"
+msgstr ""
+
+#: constants.js:1454
+msgid "Pot Pourri"
+msgstr ""
+
+#: constants.js:1455
+msgid "Potters Clay"
+msgstr ""
+
+#: constants.js:1456
+msgid "Powder Blue"
+msgstr ""
+
+#: constants.js:1457
+msgid "Prairie Sand"
+msgstr ""
+
+#: constants.js:1458
+msgid "Prelude"
+msgstr ""
+
+#: constants.js:1459
+msgid "Prim"
+msgstr ""
+
+#: constants.js:1460
+msgid "Primrose"
+msgstr ""
+
+#: constants.js:1461
+msgid "Promenade"
+msgstr ""
+
+#: constants.js:1462
+msgid "Provincial Pink"
+msgstr ""
+
+#: constants.js:1463
+msgid "Prussian Blue"
+msgstr ""
+
+#: constants.js:1464
+msgid "Psychedelic Purple"
+msgstr ""
+
+#: constants.js:1465
+msgid "Puce"
+msgstr ""
+
+#: constants.js:1466
+msgid "Pueblo"
+msgstr ""
+
+#: constants.js:1467
+msgid "Puerto Rico"
+msgstr ""
+
+#: constants.js:1468
+msgid "Pumice"
+msgstr ""
+
+#: constants.js:1469
+msgid "Pumpkin"
+msgstr ""
+
+#: constants.js:1470
+msgid "Punga"
+msgstr ""
+
+#: constants.js:1471
+msgid "Purple"
+msgstr ""
+
+#: constants.js:1472
+msgid "Purple Heart"
+msgstr ""
+
+#: constants.js:1473
+msgid "Purple Mountain's Majesty"
+msgstr ""
+
+#: constants.js:1474
+msgid "Purple Taupe"
+msgstr ""
+
+#: constants.js:1475
+msgid "Putty"
+msgstr ""
+
+#: constants.js:1476
+msgid "Quarter Pearl Lusta"
+msgstr ""
+
+#: constants.js:1477
+msgid "Quarter Spanish White"
+msgstr ""
+
+#: constants.js:1478
+msgid "Quartz"
+msgstr ""
+
+#: constants.js:1479
+msgid "Quicksand"
+msgstr ""
+
+#: constants.js:1480
+msgid "Quill Grey"
+msgstr ""
+
+#: constants.js:1481
+msgid "Quincy"
+msgstr ""
+
+#: constants.js:1482
+msgid "Racing Green"
+msgstr ""
+
+#: constants.js:1483
+msgid "Radical Red"
+msgstr ""
+
+#: constants.js:1484
+msgid "Raffia"
+msgstr ""
+
+#: constants.js:1485
+msgid "Rain Forest"
+msgstr ""
+
+#: constants.js:1486
+msgid "Rainee"
+msgstr ""
+
+#: constants.js:1487
+msgid "Rajah"
+msgstr ""
+
+#: constants.js:1488
+msgid "Rangoon Green"
+msgstr ""
+
+#: constants.js:1489
+msgid "Raven"
+msgstr ""
+
+#: constants.js:1490
+msgid "Raw Sienna"
+msgstr ""
+
+#: constants.js:1491
+msgid "Raw Umber"
+msgstr ""
+
+#: constants.js:1492
+msgid "Razzle Dazzle Rose"
+msgstr ""
+
+#: constants.js:1493
+msgid "Razzmatazz"
+msgstr ""
+
+#: constants.js:1494
+msgid "Rebel"
+msgstr ""
+
+#: constants.js:1496
+msgid "Red Berry"
+msgstr ""
+
+#: constants.js:1497
+msgid "Red Damask"
+msgstr ""
+
+#: constants.js:1498
+msgid "Red Devil"
+msgstr ""
+
+#: constants.js:1499
+msgid "Red Orange"
+msgstr ""
+
+#: constants.js:1500
+msgid "Red Oxide"
+msgstr ""
+
+#: constants.js:1501
+msgid "Red Robin"
+msgstr ""
+
+#: constants.js:1502
+msgid "Red Stage"
+msgstr ""
+
+#: constants.js:1503
+msgid "Medium Red Violet"
+msgstr ""
+
+#: constants.js:1504
+msgid "Redwood"
+msgstr ""
+
+#: constants.js:1505
+msgid "Reef"
+msgstr ""
+
+#: constants.js:1506
+msgid "Reef Gold"
+msgstr ""
+
+#: constants.js:1507
+msgid "Regal Blue"
+msgstr ""
+
+#: constants.js:1508
+msgid "Regent Grey"
+msgstr ""
+
+#: constants.js:1509
+msgid "Regent St Blue"
+msgstr ""
+
+#: constants.js:1510
+msgid "Remy"
+msgstr ""
+
+#: constants.js:1511
+msgid "Reno Sand"
+msgstr ""
+
+#: constants.js:1512
+msgid "Resolution Blue"
+msgstr ""
+
+#: constants.js:1513
+msgid "Revolver"
+msgstr ""
+
+#: constants.js:1514
+msgid "Rhino"
+msgstr ""
+
+#: constants.js:1515
+msgid "Rice Cake"
+msgstr ""
+
+#: constants.js:1516
+msgid "Rice Flower"
+msgstr ""
+
+#: constants.js:1517
+msgid "Rich Blue"
+msgstr ""
+
+#: constants.js:1518
+msgid "Rich Gold"
+msgstr ""
+
+#: constants.js:1519
+msgid "Rio Grande"
+msgstr ""
+
+#: constants.js:1520
+msgid "Riptide"
+msgstr ""
+
+#: constants.js:1521
+msgid "River Bed"
+msgstr ""
+
+#: constants.js:1522
+msgid "Rob Roy"
+msgstr ""
+
+#: constants.js:1523
+msgid "Robin's Egg Blue"
+msgstr ""
+
+#: constants.js:1524
+msgid "Rock"
+msgstr ""
+
+#: constants.js:1525
+msgid "Rock Blue"
+msgstr ""
+
+#: constants.js:1526
+msgid "Rock Spray"
+msgstr ""
+
+#: constants.js:1527
+msgid "Rodeo Dust"
+msgstr ""
+
+#: constants.js:1528
+msgid "Rolling Stone"
+msgstr ""
+
+#: constants.js:1529
+msgid "Roman"
+msgstr ""
+
+#: constants.js:1530
+msgid "Roman Coffee"
+msgstr ""
+
+#: constants.js:1531
+msgid "Romance"
+msgstr ""
+
+#: constants.js:1532
+msgid "Romantic"
+msgstr ""
+
+#: constants.js:1533
+msgid "Ronchi"
+msgstr ""
+
+#: constants.js:1534
+msgid "Roof Terracotta"
+msgstr ""
+
+#: constants.js:1535
+msgid "Rope"
+msgstr ""
+
+#: constants.js:1536
+msgid "Rose"
+msgstr ""
+
+#: constants.js:1537
+msgid "Rose Bud"
+msgstr ""
+
+#: constants.js:1538
+msgid "Rose Bud Cherry"
+msgstr ""
+
+#: constants.js:1539
+msgid "Rose Of Sharon"
+msgstr ""
+
+#: constants.js:1540
+msgid "Rose Taupe"
+msgstr ""
+
+#: constants.js:1541
+msgid "Rose White"
+msgstr ""
+
+#: constants.js:1542
+msgid "Rosy Brown"
+msgstr ""
+
+#: constants.js:1543
+msgid "Roti"
+msgstr ""
+
+#: constants.js:1544
+msgid "Rouge"
+msgstr ""
+
+#: constants.js:1545
+msgid "Royal Blue"
+msgstr ""
+
+#: constants.js:1546
+msgid "Royal Heath"
+msgstr ""
+
+#: constants.js:1547
+msgid "Royal Purple"
+msgstr ""
+
+#: constants.js:1548
+msgid "Ruby"
+msgstr ""
+
+#: constants.js:1549
+msgid "Rum"
+msgstr ""
+
+#: constants.js:1550
+msgid "Rum Swizzle"
+msgstr ""
+
+#: constants.js:1551
+msgid "Russet"
+msgstr ""
+
+#: constants.js:1552
+msgid "Russett"
+msgstr ""
+
+#: constants.js:1553
+msgid "Rust"
+msgstr ""
+
+#: constants.js:1554
+msgid "Rustic Red"
+msgstr ""
+
+#: constants.js:1555
+msgid "Rusty Nail"
+msgstr ""
+
+#: constants.js:1556
+msgid "Saddle"
+msgstr ""
+
+#: constants.js:1557
+msgid "Saddle Brown"
+msgstr ""
+
+#: constants.js:1558
+msgid "Safety Orange"
+msgstr ""
+
+#: constants.js:1559
+msgid "Saffron"
+msgstr ""
+
+#: constants.js:1560
+msgid "Sage"
+msgstr ""
+
+#: constants.js:1561
+msgid "Sahara"
+msgstr ""
+
+#: constants.js:1562
+msgid "Sail"
+msgstr ""
+
+#: constants.js:1563
+msgid "Salem"
+msgstr ""
+
+#: constants.js:1564
+msgid "Salmon"
+msgstr ""
+
+#: constants.js:1565
+msgid "Salomie"
+msgstr ""
+
+#: constants.js:1566
+msgid "Salt Box"
+msgstr ""
+
+#: constants.js:1567
+msgid "Saltpan"
+msgstr ""
+
+#: constants.js:1568
+msgid "Sambuca"
+msgstr ""
+
+#: constants.js:1569
+msgid "San Felix"
+msgstr ""
+
+#: constants.js:1570
+msgid "San Juan"
+msgstr ""
+
+#: constants.js:1571
+msgid "San Marino"
+msgstr ""
+
+#: constants.js:1572
+msgid "Sand Dune"
+msgstr ""
+
+#: constants.js:1573
+msgid "Sandal"
+msgstr ""
+
+#: constants.js:1574
+msgid "Sandrift"
+msgstr ""
+
+#: constants.js:1575
+msgid "Sandstone"
+msgstr ""
+
+#: constants.js:1576
+msgid "Sandwisp"
+msgstr ""
+
+#: constants.js:1577
+msgid "Sandy Beach"
+msgstr ""
+
+#: constants.js:1578
+msgid "Sandy Brown"
+msgstr ""
+
+#: constants.js:1579
+msgid "Sangria"
+msgstr ""
+
+#: constants.js:1580
+msgid "Sanguine Brown"
+msgstr ""
+
+#: constants.js:1581
+msgid "Santas Grey"
+msgstr ""
+
+#: constants.js:1582
+msgid "Sante Fe"
+msgstr ""
+
+#: constants.js:1583
+msgid "Sapling"
+msgstr ""
+
+#: constants.js:1584
+msgid "Sapphire"
+msgstr ""
+
+#: constants.js:1585
+msgid "Saratoga"
+msgstr ""
+
+#: constants.js:1586
+msgid "Sauvignon"
+msgstr ""
+
+#: constants.js:1587
+msgid "Sazerac"
+msgstr ""
+
+#: constants.js:1588
+msgid "Scampi"
+msgstr ""
+
+#: constants.js:1589
+msgid "Scandal"
+msgstr ""
+
+#: constants.js:1590
+msgid "Scarlet"
+msgstr ""
+
+#: constants.js:1591
+msgid "Scarlet Gum"
+msgstr ""
+
+#: constants.js:1592
+msgid "Scarlett"
+msgstr ""
+
+#: constants.js:1593
+msgid "Scarpa Flow"
+msgstr ""
+
+#: constants.js:1594
+msgid "Schist"
+msgstr ""
+
+#: constants.js:1595
+msgid "School Bus Yellow"
+msgstr ""
+
+#: constants.js:1596
+msgid "Schooner"
+msgstr ""
+
+#: constants.js:1597
+msgid "Scooter"
+msgstr ""
+
+#: constants.js:1598
+msgid "Scorpion"
+msgstr ""
+
+#: constants.js:1599
+msgid "Scotch Mist"
+msgstr ""
+
+#: constants.js:1600
+msgid "Screamin' Green"
+msgstr ""
+
+#: constants.js:1601
+msgid "Scrub"
+msgstr ""
+
+#: constants.js:1602
+msgid "Sea Buckthorn"
+msgstr ""
+
+#: constants.js:1603
+msgid "Sea Fog"
+msgstr ""
+
+#: constants.js:1604
+msgid "Sea Green"
+msgstr ""
+
+#: constants.js:1605
+msgid "Sea Mist"
+msgstr ""
+
+#: constants.js:1606
+msgid "Sea Nymph"
+msgstr ""
+
+#: constants.js:1607
+msgid "Sea Pink"
+msgstr ""
+
+#: constants.js:1608
+msgid "Seagull"
+msgstr ""
+
+#: constants.js:1609
+msgid "Seal Brown"
+msgstr ""
+
+#: constants.js:1610
+msgid "Seance"
+msgstr ""
+
+#: constants.js:1611
+msgid "Seashell"
+msgstr ""
+
+#: constants.js:1612
+msgid "Seaweed"
+msgstr ""
+
+#: constants.js:1613
+msgid "Selago"
+msgstr ""
+
+#: constants.js:1614
+msgid "Selective Yellow"
+msgstr ""
+
+#: constants.js:1615
+msgid "Semi-Sweet Chocolate"
+msgstr ""
+
+#: constants.js:1616
+msgid "Sepia"
+msgstr ""
+
+#: constants.js:1617
+msgid "Serenade"
+msgstr ""
+
+#: constants.js:1618
+msgid "Shadow"
+msgstr ""
+
+#: constants.js:1619
+msgid "Shadow Green"
+msgstr ""
+
+#: constants.js:1620
+msgid "Shady Lady"
+msgstr ""
+
+#: constants.js:1621
+msgid "Shakespeare"
+msgstr ""
+
+#: constants.js:1622
+msgid "Shalimar"
+msgstr ""
+
+#: constants.js:1623
+msgid "Shamrock"
+msgstr ""
+
+#: constants.js:1624
+msgid "Shamrock Green"
+msgstr ""
+
+#: constants.js:1625
+msgid "Shark"
+msgstr ""
+
+#: constants.js:1626
+msgid "Sherpa Blue"
+msgstr ""
+
+#: constants.js:1627
+msgid "Sherwood Green"
+msgstr ""
+
+#: constants.js:1628
+msgid "Shilo"
+msgstr ""
+
+#: constants.js:1629
+msgid "Shingle Fawn"
+msgstr ""
+
+#: constants.js:1630
+msgid "Ship Cove"
+msgstr ""
+
+#: constants.js:1631
+msgid "Ship Grey"
+msgstr ""
+
+#: constants.js:1632
+msgid "Shiraz"
+msgstr ""
+
+#: constants.js:1633
+msgid "Shocking"
+msgstr ""
+
+#: constants.js:1634
+msgid "Shocking Pink"
+msgstr ""
+
+#: constants.js:1635
+msgid "Shuttle Grey"
+msgstr ""
+
+#: constants.js:1636
+msgid "Siam"
+msgstr ""
+
+#: constants.js:1637
+msgid "Sidecar"
+msgstr ""
+
+#: constants.js:1638
+msgid "Sienna"
+msgstr ""
+
+#: constants.js:1639
+msgid "Silk"
+msgstr ""
+
+#: constants.js:1640
+msgid "Silver"
+msgstr ""
+
+#: constants.js:1641
+msgid "Silver Chalice"
+msgstr ""
+
+#: constants.js:1642
+msgid "Silver Sand"
+msgstr ""
+
+#: constants.js:1643
+msgid "Silver Tree"
+msgstr ""
+
+#: constants.js:1644
+msgid "Sinbad"
+msgstr ""
+
+#: constants.js:1645
+msgid "Siren"
+msgstr ""
+
+#: constants.js:1646
+msgid "Sirocco"
+msgstr ""
+
+#: constants.js:1647
+msgid "Sisal"
+msgstr ""
+
+#: constants.js:1648
+msgid "Skeptic"
+msgstr ""
+
+#: constants.js:1649
+msgid "Sky Blue"
+msgstr ""
+
+#: constants.js:1650
+msgid "Slate Blue"
+msgstr ""
+
+#: constants.js:1651
+msgid "Slate Grey"
+msgstr ""
+
+#: constants.js:1652
+msgid "Slugger"
+msgstr ""
+
+#: constants.js:1653
+msgid "Smalt"
+msgstr ""
+
+#: constants.js:1654
+msgid "Smalt Blue"
+msgstr ""
+
+#: constants.js:1655
+msgid "Smoke Tree"
+msgstr ""
+
+#: constants.js:1656
+msgid "Smoky"
+msgstr ""
+
+#: constants.js:1657
+msgid "Snow"
+msgstr ""
+
+#: constants.js:1658
+msgid "Snow Drift"
+msgstr ""
+
+#: constants.js:1659
+msgid "Snow Flurry"
+msgstr ""
+
+#: constants.js:1660
+msgid "Snowy Mint"
+msgstr ""
+
+#: constants.js:1661
+msgid "Snuff"
+msgstr ""
+
+#: constants.js:1662
+msgid "Soapstone"
+msgstr ""
+
+#: constants.js:1663
+msgid "Soft Amber"
+msgstr ""
+
+#: constants.js:1664
+msgid "Soft Peach"
+msgstr ""
+
+#: constants.js:1665
+msgid "Solid Pink"
+msgstr ""
+
+#: constants.js:1666
+msgid "Solitaire"
+msgstr ""
+
+#: constants.js:1667
+msgid "Solitude"
+msgstr ""
+
+#: constants.js:1668
+msgid "Sorbus"
+msgstr ""
+
+#: constants.js:1669
+msgid "Sorrell Brown"
+msgstr ""
+
+#: constants.js:1670
+msgid "Sour Dough"
+msgstr ""
+
+#: constants.js:1671
+msgid "Soya Bean"
+msgstr ""
+
+#: constants.js:1672
+msgid "Space Shuttle"
+msgstr ""
+
+#: constants.js:1673
+msgid "Spanish Green"
+msgstr ""
+
+#: constants.js:1674
+msgid "Spanish White"
+msgstr ""
+
+#: constants.js:1675
+msgid "Spectra"
+msgstr ""
+
+#: constants.js:1676
+msgid "Spice"
+msgstr ""
+
+#: constants.js:1677
+msgid "Spicy Mix"
+msgstr ""
+
+#: constants.js:1678
+msgid "Spicy Pink"
+msgstr ""
+
+#: constants.js:1679
+msgid "Spindle"
+msgstr ""
+
+#: constants.js:1680
+msgid "Splash"
+msgstr ""
+
+#: constants.js:1681
+msgid "Spray"
+msgstr ""
+
+#: constants.js:1682
+msgid "Spring Bud"
+msgstr ""
+
+#: constants.js:1683
+msgid "Spring Green"
+msgstr ""
+
+#: constants.js:1684
+msgid "Spring Rain"
+msgstr ""
+
+#: constants.js:1685
+msgid "Spring Sun"
+msgstr ""
+
+#: constants.js:1686
+msgid "Spring Wood"
+msgstr ""
+
+#: constants.js:1687
+msgid "Sprout"
+msgstr ""
+
+#: constants.js:1688
+msgid "Spun Pearl"
+msgstr ""
+
+#: constants.js:1689
+msgid "Squirrel"
+msgstr ""
+
+#: constants.js:1690
+msgid "St Tropaz"
+msgstr ""
+
+#: constants.js:1691
+msgid "Stack"
+msgstr ""
+
+#: constants.js:1692
+msgid "Star Dust"
+msgstr ""
+
+#: constants.js:1693
+msgid "Stark White"
+msgstr ""
+
+#: constants.js:1694
+msgid "Starship"
+msgstr ""
+
+#: constants.js:1695
+msgid "Steel Blue"
+msgstr ""
+
+#: constants.js:1696
+msgid "Steel Grey"
+msgstr ""
+
+#: constants.js:1697
+msgid "Stiletto"
+msgstr ""
+
+#: constants.js:1698
+msgid "Stonewall"
+msgstr ""
+
+#: constants.js:1699
+msgid "Storm Dust"
+msgstr ""
+
+#: constants.js:1700
+msgid "Storm Grey"
+msgstr ""
+
+#: constants.js:1701
+msgid "Straw"
+msgstr ""
+
+#: constants.js:1702
+msgid "Strikemaster"
+msgstr ""
+
+#: constants.js:1703
+msgid "Stromboli"
+msgstr ""
+
+#: constants.js:1704
+msgid "Studio"
+msgstr ""
+
+#: constants.js:1705
+msgid "Submarine"
+msgstr ""
+
+#: constants.js:1706
+msgid "Sugar Cane"
+msgstr ""
+
+#: constants.js:1707
+msgid "Sulu"
+msgstr ""
+
+#: constants.js:1708
+msgid "Summer Green"
+msgstr ""
+
+#: constants.js:1709
+msgid "Summer Sky"
+msgstr ""
+
+#: constants.js:1710
+msgid "Sun"
+msgstr ""
+
+#: constants.js:1711
+msgid "Sundance"
+msgstr ""
+
+#: constants.js:1712
+msgid "Sundown"
+msgstr ""
+
+#: constants.js:1713
+msgid "Sunflower"
+msgstr ""
+
+#: constants.js:1714
+msgid "Sunglo"
+msgstr ""
+
+#: constants.js:1715
+msgid "Sunglow"
+msgstr ""
+
+#: constants.js:1716
+msgid "Sunset"
+msgstr ""
+
+#: constants.js:1717
+msgid "Sunset Orange"
+msgstr ""
+
+#: constants.js:1718
+msgid "Sunshade"
+msgstr ""
+
+#: constants.js:1719
+msgid "Supernova"
+msgstr ""
+
+#: constants.js:1720
+msgid "Surf"
+msgstr ""
+
+#: constants.js:1721
+msgid "Surf Crest"
+msgstr ""
+
+#: constants.js:1722
+msgid "Surfie Green"
+msgstr ""
+
+#: constants.js:1723
+msgid "Sushi"
+msgstr ""
+
+#: constants.js:1724
+msgid "Suva Grey"
+msgstr ""
+
+#: constants.js:1725
+msgid "Swamp"
+msgstr ""
+
+#: constants.js:1726
+msgid "Swans Down"
+msgstr ""
+
+#: constants.js:1727
+msgid "Sweet Corn"
+msgstr ""
+
+#: constants.js:1728
+msgid "Sweet Pink"
+msgstr ""
+
+#: constants.js:1729
+msgid "Swirl"
+msgstr ""
+
+#: constants.js:1730
+msgid "Swiss Coffee"
+msgstr ""
+
+#: constants.js:1731
+msgid "Tacao"
+msgstr ""
+
+#: constants.js:1732
+msgid "Tacha"
+msgstr ""
+
+#: constants.js:1733
+msgid "Tahiti Gold"
+msgstr ""
+
+#: constants.js:1734
+msgid "Tahuna Sands"
+msgstr ""
+
+#: constants.js:1735
+msgid "Tall Poppy"
+msgstr ""
+
+#: constants.js:1736
+msgid "Tallow"
+msgstr ""
+
+#: constants.js:1737
+msgid "Tamarillo"
+msgstr ""
+
+#: constants.js:1738
+msgid "Tan"
+msgstr ""
+
+#: constants.js:1739
+msgid "Tana"
+msgstr ""
+
+#: constants.js:1740
+msgid "Tangaroa"
+msgstr ""
+
+#: constants.js:1741
+msgid "Tangerine"
+msgstr ""
+
+#: constants.js:1742
+msgid "Tangerine Yellow"
+msgstr ""
+
+#: constants.js:1743
+msgid "Tango"
+msgstr ""
+
+#: constants.js:1744
+msgid "Tapa"
+msgstr ""
+
+#: constants.js:1745
+msgid "Tapestry"
+msgstr ""
+
+#: constants.js:1746
+msgid "Tara"
+msgstr ""
+
+#: constants.js:1747
+msgid "Tarawera"
+msgstr ""
+
+#: constants.js:1748
+msgid "Tasman"
+msgstr ""
+
+#: constants.js:1749
+msgid "Taupe"
+msgstr ""
+
+#: constants.js:1750
+msgid "Taupe Grey"
+msgstr ""
+
+#: constants.js:1751
+msgid "Tawny Port"
+msgstr ""
+
+#: constants.js:1752
+msgid "Tax Break"
+msgstr ""
+
+#: constants.js:1753
+msgid "Te Papa Green"
+msgstr ""
+
+#: constants.js:1754
+msgid "Tea"
+msgstr ""
+
+#: constants.js:1755
+msgid "Tea Green"
+msgstr ""
+
+#: constants.js:1756
+msgid "Tea Rose"
+msgstr ""
+
+#: constants.js:1757
+msgid "Teak"
+msgstr ""
+
+#: constants.js:1758
+msgid "Teal"
+msgstr ""
+
+#: constants.js:1759
+msgid "Teal Blue"
+msgstr ""
+
+#: constants.js:1760
+msgid "Temptress"
+msgstr ""
+
+#: constants.js:1761
+msgid "Tenne (Tawny)"
+msgstr ""
+
+#: constants.js:1762
+msgid "Tequila"
+msgstr ""
+
+#: constants.js:1763
+msgid "Terra Cotta"
+msgstr ""
+
+#: constants.js:1764
+msgid "Texas"
+msgstr ""
+
+#: constants.js:1765
+msgid "Texas Rose"
+msgstr ""
+
+#: constants.js:1766
+msgid "Thatch"
+msgstr ""
+
+#: constants.js:1767
+msgid "Thatch Green"
+msgstr ""
+
+#: constants.js:1768
+msgid "Thistle"
+msgstr ""
+
+#: constants.js:1769
+msgid "Thunder"
+msgstr ""
+
+#: constants.js:1770
+msgid "Thunderbird"
+msgstr ""
+
+#: constants.js:1771
+msgid "Tia Maria"
+msgstr ""
+
+#: constants.js:1772
+msgid "Tiara"
+msgstr ""
+
+#: constants.js:1773
+msgid "Tiber"
+msgstr ""
+
+#: constants.js:1774
+msgid "Tickle Me Pink"
+msgstr ""
+
+#: constants.js:1775
+msgid "Tidal"
+msgstr ""
+
+#: constants.js:1776
+msgid "Tide"
+msgstr ""
+
+#: constants.js:1777
+msgid "Timber Green"
+msgstr ""
+
+#: constants.js:1778
+msgid "Timberwolf"
+msgstr ""
+
+#: constants.js:1779
+msgid "Titan White"
+msgstr ""
+
+#: constants.js:1780
+msgid "Toast"
+msgstr ""
+
+#: constants.js:1781
+msgid "Tobacco Brown"
+msgstr ""
+
+#: constants.js:1782
+msgid "Tobago"
+msgstr ""
+
+#: constants.js:1783
+msgid "Toledo"
+msgstr ""
+
+#: constants.js:1784
+msgid "Tolopea"
+msgstr ""
+
+#: constants.js:1785
+msgid "Tom Thumb"
+msgstr ""
+
+#: constants.js:1786
+msgid "Tomato"
+msgstr ""
+
+#: constants.js:1787
+msgid "Tonys Pink"
+msgstr ""
+
+#: constants.js:1788
+msgid "Topaz"
+msgstr ""
+
+#: constants.js:1789
+msgid "Torch Red"
+msgstr ""
+
+#: constants.js:1790
+msgid "Torea Bay"
+msgstr ""
+
+#: constants.js:1791
+msgid "Tory Blue"
+msgstr ""
+
+#: constants.js:1792
+msgid "Tosca"
+msgstr ""
+
+#: constants.js:1793
+msgid "Tower Grey"
+msgstr ""
+
+#: constants.js:1794
+msgid "Tradewind"
+msgstr ""
+
+#: constants.js:1795
+msgid "Tranquil"
+msgstr ""
+
+#: constants.js:1796
+msgid "Travertine"
+msgstr ""
+
+#: constants.js:1797
+msgid "Tree Poppy"
+msgstr ""
+
+#: constants.js:1798
+msgid "Trendy Green"
+msgstr ""
+
+#: constants.js:1799
+msgid "Trendy Pink"
+msgstr ""
+
+#: constants.js:1800
+msgid "Trinidad"
+msgstr ""
+
+#: constants.js:1801
+msgid "Tropical Blue"
+msgstr ""
+
+#: constants.js:1802
+msgid "Tropical Rain Forest"
+msgstr ""
+
+#: constants.js:1803
+msgid "Trout"
+msgstr ""
+
+#: constants.js:1804
+msgid "True V"
+msgstr ""
+
+#: constants.js:1805
+msgid "Tuatara"
+msgstr ""
+
+#: constants.js:1806
+msgid "Tuft Bush"
+msgstr ""
+
+#: constants.js:1807
+msgid "Tulip Tree"
+msgstr ""
+
+#: constants.js:1808
+msgid "Tumbleweed"
+msgstr ""
+
+#: constants.js:1809
+msgid "Tuna"
+msgstr ""
+
+#: constants.js:1810
+msgid "Tundora"
+msgstr ""
+
+#: constants.js:1811
+msgid "Turbo"
+msgstr ""
+
+#: constants.js:1812
+msgid "Turkish Rose"
+msgstr ""
+
+#: constants.js:1813
+msgid "Turmeric"
+msgstr ""
+
+#: constants.js:1814
+msgid "Turquoise"
+msgstr ""
+
+#: constants.js:1815
+msgid "Turquoise Blue"
+msgstr ""
+
+#: constants.js:1816
+msgid "Turtle Green"
+msgstr ""
+
+#: constants.js:1817
+msgid "Tuscany"
+msgstr ""
+
+#: constants.js:1818
+msgid "Tusk"
+msgstr ""
+
+#: constants.js:1819
+msgid "Tussock"
+msgstr ""
+
+#: constants.js:1820
+msgid "Tutu"
+msgstr ""
+
+#: constants.js:1821
+msgid "Twilight"
+msgstr ""
+
+#: constants.js:1822
+msgid "Twilight Blue"
+msgstr ""
+
+#: constants.js:1823
+msgid "Twine"
+msgstr ""
+
+#: constants.js:1824
+msgid "Tyrian Purple"
+msgstr ""
+
+#: constants.js:1825
+msgid "Ultra Pink"
+msgstr ""
+
+#: constants.js:1826
+msgid "Ultramarine"
+msgstr ""
+
+#: constants.js:1827
+msgid "Valencia"
+msgstr ""
+
+#: constants.js:1828
+msgid "Valentino"
+msgstr ""
+
+#: constants.js:1829
+msgid "Valhalla"
+msgstr ""
+
+#: constants.js:1830
+msgid "Van Cleef"
+msgstr ""
+
+#: constants.js:1831
+msgid "Vanilla"
+msgstr ""
+
+#: constants.js:1832
+msgid "Vanilla Ice"
+msgstr ""
+
+#: constants.js:1833
+msgid "Varden"
+msgstr ""
+
+#: constants.js:1834
+msgid "Venetian Red"
+msgstr ""
+
+#: constants.js:1835
+msgid "Venice Blue"
+msgstr ""
+
+#: constants.js:1836
+msgid "Venus"
+msgstr ""
+
+#: constants.js:1837
+msgid "Verdigris"
+msgstr ""
+
+#: constants.js:1838
+msgid "Verdun Green"
+msgstr ""
+
+#: constants.js:1839
+msgid "Vermilion"
+msgstr ""
+
+#: constants.js:1840
+msgid "Very Dark Brown"
+msgstr ""
+
+#: constants.js:1841
+msgid "Very Light Grey"
+msgstr ""
+
+#: constants.js:1842
+msgid "Vesuvius"
+msgstr ""
+
+#: constants.js:1843
+msgid "Victoria"
+msgstr ""
+
+#: constants.js:1844
+msgid "Vida Loca"
+msgstr ""
+
+#: constants.js:1845
+msgid "Viking"
+msgstr ""
+
+#: constants.js:1846
+msgid "Vin Rouge"
+msgstr ""
+
+#: constants.js:1847
+msgid "Viola"
+msgstr ""
+
+#: constants.js:1848
+msgid "Violent Violet"
+msgstr ""
+
+#: constants.js:1850
+msgid "Violet Blue"
+msgstr ""
+
+#: constants.js:1851
+msgid "Violet Red"
+msgstr ""
+
+#: constants.js:1852
+msgid "Viridian"
+msgstr ""
+
+#: constants.js:1853
+msgid "Viridian Green"
+msgstr ""
+
+#: constants.js:1854
+msgid "Vis Vis"
+msgstr ""
+
+#: constants.js:1855
+msgid "Vista Blue"
+msgstr ""
+
+#: constants.js:1856
+msgid "Vista White"
+msgstr ""
+
+#: constants.js:1857
+msgid "Vivid Tangerine"
+msgstr ""
+
+#: constants.js:1858
+msgid "Vivid Violet"
+msgstr ""
+
+#: constants.js:1859
+msgid "Volcano"
+msgstr ""
+
+#: constants.js:1860
+msgid "Voodoo"
+msgstr ""
+
+#: constants.js:1861
+msgid "Vulcan"
+msgstr ""
+
+#: constants.js:1862
+msgid "Wafer"
+msgstr ""
+
+#: constants.js:1863
+msgid "Waikawa Grey"
+msgstr ""
+
+#: constants.js:1864
+msgid "Waiouru"
+msgstr ""
+
+#: constants.js:1865
+msgid "Wan White"
+msgstr ""
+
+#: constants.js:1866
+msgid "Wasabi"
+msgstr ""
+
+#: constants.js:1867
+msgid "Water Leaf"
+msgstr ""
+
+#: constants.js:1868
+msgid "Watercourse"
+msgstr ""
+
+#: constants.js:1869
+msgid "Wattle"
+msgstr ""
+
+#: constants.js:1870
+msgid "Watusi"
+msgstr ""
+
+#: constants.js:1871
+msgid "Wax Flower"
+msgstr ""
+
+#: constants.js:1872
+msgid "We Peep"
+msgstr ""
+
+#: constants.js:1873
+msgid "Wedgewood"
+msgstr ""
+
+#: constants.js:1874
+msgid "Well Read"
+msgstr ""
+
+#: constants.js:1875
+msgid "West Coast"
+msgstr ""
+
+#: constants.js:1876
+msgid "West Side"
+msgstr ""
+
+#: constants.js:1877
+msgid "Westar"
+msgstr ""
+
+#: constants.js:1878
+msgid "Wewak"
+msgstr ""
+
+#: constants.js:1879
+msgid "Wheat"
+msgstr ""
+
+#: constants.js:1880
+msgid "Wheatfield"
+msgstr ""
+
+#: constants.js:1881
+msgid "Whiskey"
+msgstr ""
+
+#: constants.js:1882
+msgid "Whiskey Sour"
+msgstr ""
+
+#: constants.js:1883
+msgid "Whisper"
+msgstr ""
+
+#: constants.js:1885
+msgid "White Ice"
+msgstr ""
+
+#: constants.js:1886
+msgid "White Lilac"
+msgstr ""
+
+#: constants.js:1887
+msgid "White Linen"
+msgstr ""
+
+#: constants.js:1888
+msgid "White Nectar"
+msgstr ""
+
+#: constants.js:1889
+msgid "White Pointer"
+msgstr ""
+
+#: constants.js:1890
+msgid "White Rock"
+msgstr ""
+
+#: constants.js:1891
+msgid "White Smoke"
+msgstr ""
+
+#: constants.js:1892
+msgid "Wild Blue Yonder"
+msgstr ""
+
+#: constants.js:1893
+msgid "Wild Rice"
+msgstr ""
+
+#: constants.js:1894
+msgid "Wild Sand"
+msgstr ""
+
+#: constants.js:1895
+msgid "Wild Strawberry"
+msgstr ""
+
+#: constants.js:1896
+msgid "Wild Watermelon"
+msgstr ""
+
+#: constants.js:1897
+msgid "Wild Willow"
+msgstr ""
+
+#: constants.js:1898
+msgid "William"
+msgstr ""
+
+#: constants.js:1899
+msgid "Willow Brook"
+msgstr ""
+
+#: constants.js:1900
+msgid "Willow Grove"
+msgstr ""
+
+#: constants.js:1901
+msgid "Windsor"
+msgstr ""
+
+#: constants.js:1902
+msgid "Wine Berry"
+msgstr ""
+
+#: constants.js:1903
+msgid "Winter Hazel"
+msgstr ""
+
+#: constants.js:1904
+msgid "Wisp Pink"
+msgstr ""
+
+#: constants.js:1905
+msgid "Wisteria"
+msgstr ""
+
+#: constants.js:1906
+msgid "Wistful"
+msgstr ""
+
+#: constants.js:1907
+msgid "Witch Haze"
+msgstr ""
+
+#: constants.js:1908
+msgid "Wood Bark"
+msgstr ""
+
+#: constants.js:1909
+msgid "Woodburn"
+msgstr ""
+
+#: constants.js:1910
+msgid "Woodland"
+msgstr ""
+
+#: constants.js:1911
+msgid "Woodrush"
+msgstr ""
+
+#: constants.js:1912
+msgid "Woodsmoke"
+msgstr ""
+
+#: constants.js:1913
+msgid "Woody Brown"
+msgstr ""
+
+#: constants.js:1914
+msgid "Xanadu"
+msgstr ""
+
+#: constants.js:1916
+msgid "Yellow Green"
+msgstr ""
+
+#: constants.js:1917
+msgid "Yellow Metal"
+msgstr ""
+
+#: constants.js:1918
+msgid "Yellow Orange"
+msgstr ""
+
+#: constants.js:1919
+msgid "Yellow Sea"
+msgstr ""
+
+#: constants.js:1920
+msgid "Your Pink"
+msgstr ""
+
+#: constants.js:1921
+msgid "Yukon Gold"
+msgstr ""
+
+#: constants.js:1922
+msgid "Yuma"
+msgstr ""
+
+#: constants.js:1923
+msgid "Zambezi"
+msgstr ""
+
+#: constants.js:1924
+msgid "Zanah"
+msgstr ""
+
+#: constants.js:1925
+msgid "Zest"
+msgstr ""
+
+#: constants.js:1926
+msgid "Zeus"
+msgstr ""
+
+#: constants.js:1927
+msgid "Ziggurat"
+msgstr ""
+
+#: constants.js:1928
+msgid "Zinnwaldite"
+msgstr ""
+
+#: constants.js:1929
+msgid "Zircon"
+msgstr ""
+
+#: constants.js:1930
+msgid "Zombie"
+msgstr ""
+
+#: constants.js:1931
+msgid "Zorba"
+msgstr ""
+
+#: constants.js:1932
+msgid "Zuccini"
+msgstr ""
+
+#: constants.js:1933
+msgid "Zumthor"
+msgstr ""
+
+#: utils.js:141
+msgid "No matches"
+msgstr ""
+
+#: utils.js:150
+msgid "Press Escape or click to exit"
+msgstr ""
+
+#: utils.js:242
+msgid "Press Pause or Control to disable event pass through"
+msgstr ""
+
+#: utils.js:244
+msgid "Press Pause or Control to enable event pass through"
+msgstr ""
+
+#: utils.js:327
+msgid "Exact Match"
+msgstr ""
+
+#: utils.js:328
+msgid "Approximation"
+msgstr ""
+
+#. metadata.json->name
+msgid "Color Blindness Assistant"
+msgstr ""
+
+#. metadata.json->description
+msgid "Tools to assist users with color vision deficiency (CVD)."
+msgstr ""
+
+#. metadata.json->contributors
+msgid "See this xlet help file."
+msgstr ""
+
+#. settings-schema.json->info_label_1->description
+msgid "If you are seeing this window, you are using a Cinnamon version with a design flaw."
+msgstr ""
+
+#. settings-schema.json->info_label_2->description
+msgid "This window isn't this extension \"real\" configuration window."
+msgstr ""
+
+#. settings-schema.json->info_label_3->description
+msgid "If on Cinnamon 3.0.x, the button below will not work."
+msgstr ""
+
+#. settings-schema.json->info_label_4->description
+msgid "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
+msgstr ""
+
+#. settings-schema.json->settings_button->description
+msgid "Open the \"real\" preference window"
+msgstr ""

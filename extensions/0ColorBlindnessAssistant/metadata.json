@@ -1,0 +1,28 @@
+{
+    "uuid": "{{UUID}}",
+    "external-configuration-app": "settings.py",
+    "name": "Color Blindness Assistant",
+    "description": "Tools to assist users with color vision deficiency (CVD).",
+    "contributors": "See this xlet help file.",
+    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
+    "website": "{{REPO_URL}}",
+    "url": "{{REPO_URL}}",
+    "cinnamon-version": [
+        "3.0",
+        "3.2",
+        "3.4",
+        "3.6",
+        "3.8",
+        "4.0",
+        "4.2",
+        "4.4",
+        "4.6",
+        "4.8",
+        "5.0",
+        "5.2",
+        "5.4",
+        "5.6",
+        "5.8",
+        "6.0"
+    ]
+}

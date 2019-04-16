@@ -1,0 +1,59 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "If you are seeing this window, you are using a Cinnamon version with a design flaw."
+    },
+    "info_label_2": {
+        "type": "label",
+        "description": "This window isn't this extension \"real\" configuration window."
+    },
+    "info_label_3": {
+        "type": "label",
+        "description": "Click the following button to open the \"real\" configuration window."
+    },
+    "info_label_3": {
+        "type": "label",
+        "description": "If on Cinnamon 3.0.x, the button below will not work."
+    },
+    "info_label_4": {
+        "type": "label",
+        "description": "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "openSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "pref_effects_list": {
+        "type": "generic",
+        "default": []
+    },
+    "pref_daltonizer_wizard_kb": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_color_inspector_kb": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_color_inspector_always_copy_to_clipboard": {
+        "type": "generic",
+        "default": true
+    },
+    "trigger_effects_list": {
+        "type": "generic",
+        "default": false
+    },
+    "trigger_settings_shortcut_creation_desktop": {
+        "type": "generic",
+        "default": false
+    },
+    "trigger_settings_shortcut_creation_xdg": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_imp_exp_last_selected_directory": {
+        "type": "generic",
+        "default": ""
+    }
+}

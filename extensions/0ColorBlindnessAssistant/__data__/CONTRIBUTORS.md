@@ -1,0 +1,13 @@
+## Contributors/Mentions
+
+- **[Colblindor](https://www.color-blindness.com):** Web site that provides basic information about CVD (color vision deficiency) and some assistive tools.
+- **[Chirag Mehta](http://chir.ag/projects/ntc):** Creator of the Name that Color JavaScript library.
+- **[Marco Lizza](https://github.com/MarcoLizza):** Author of several OpenGL shaders, [one of which](https://github.com/MarcoLizza/love-workouts/blob/master/anaglyph-3d/assets/shaders/colour-blindness.glsl) I used to base the shader used by this extension.
+
+
+## References
+
+- [Color Blindness Simulation Research](https://ixora.io/projects/colorblindness/color-blindness-simulation-research/).
+- [Real-time Image Correction for Colorblind Users](https://tylerdavidhoward.com/thesis/).
+- [Intelligent modification for the daltonization process of digitized paintings](http://biecoll.ub.uni-bielefeld.de/volltexte/2007/52/pdf/ICVS2007-6.pdf).
+- [An Adaptive Fuzzy-Based System toSimulate, Quantify and Compensate ColorBlindness](https://arxiv.org/pdf/1711.10662.pdf).
