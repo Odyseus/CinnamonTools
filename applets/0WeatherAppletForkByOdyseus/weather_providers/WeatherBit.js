@@ -71,8 +71,6 @@ Provider.prototype = {
             return;
         }
 
-        global.logError(options.languageID);
-
         if (!WeatherBitSupportedLanguages.has(options.languageID)) {
             this._error = ErrorMessages.NOT_SUPPORTED_LANGUAGE +
                 "[%s]".format(options.languageID);
