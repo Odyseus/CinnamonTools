@@ -2,6 +2,15 @@
 # -*- coding: utf-8 -*-
 
 settings = {
+    "make_pot_additional_files": [
+        "../../__app__/data/python_modules/xlets_settings/__init__.py",
+        "../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py",
+        "../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py"
+    ],
+    "extra_files": [{
+        "source": "__app__/data/python_modules/xlets_settings",
+        "destination": "python_modules/xlets_settings"
+    }],
     "symlinks": {
         "themes/icons": [
             # Yahoo! Weather
@@ -206,6 +215,17 @@ settings = {
             ("wi-731.svg", "wi-751.svg"),
             ("wi-762.svg", "wi-762-symbolic.svg"),
             ("wi-771.svg", "wi-771-symbolic.svg"),
+
+            # WeatherBit
+            # NOTE: Most of WeatherBit's codes are exactly the same as OpenWeatherMap's.
+            # Hurra!!
+            ("wi-5.svg", "wi-610-symbolic.svg"),
+            ("wi-5.svg", "wi-610.svg"),
+            ("wi-233.svg", "wi-233-symbolic.svg"),
+            ("wi-13.svg", "wi-623.svg"),
+            ("wi-13.svg", "wi-623-symbolic.svg"),
+            ("wi-701.svg", "wi-700.svg"),
+            ("wi-701.svg", "wi-700-symbolic.svg"),
         ]
     }
 }

@@ -135,6 +135,9 @@ const Conditions = {
     SCATTERED_CLOUDS: _("Scattered clouds"),
     BROKEN_CLOUDS: _("Broken clouds"),
     OVERCAST_CLOUDS: _("Overcast clouds"),
+
+    THUNDERSTORM_WITH_HAIL: _("Thunderstorm with Hail"),
+    FREEZING_FOG: _("Freezing Fog"),
 };
 
 var URLs = {
@@ -220,7 +223,8 @@ var DayNamesByIndex = {
 var WeatherProviderNames = {
     DarkSky: _("Dark Sky"),
     YahooWeather: _("Yahoo! Weather"),
-    OpenWeatherMap: _("OpenWeatherMap")
+    OpenWeatherMap: _("OpenWeatherMap"),
+    WeatherBit: _("WeatherBit"),
 };
 
 // Icons.
@@ -831,6 +835,76 @@ var OpenWeatherMapConditionData = {
     }
 };
 
+/* WeatherBit codes.
+ *
+ * Exactly the same as OpenWeatherMap.
+ *
+ * 200     Thunderstorm with light rain
+ * 201     Thunderstorm with rain
+ * 202     Thunderstorm with heavy rain
+ * 230     Thunderstorm with light drizzle
+ * 231     Thunderstorm with drizzle
+ * 232     Thunderstorm with heavy drizzle
+ * 300     Light Drizzle
+ * 301     Drizzle
+ * 302     Heavy Drizzle
+ * 500     Light Rain
+ * 501     Moderate Rain
+ * 502     Heavy Rain
+ * 511     Freezing rain
+ * 520     Light shower rain
+ * 521     Shower rain
+ * 522     Heavy shower rain
+ * 600     Light snow
+ * 601     Snow
+ * 602     Heavy Snow
+ * 611     Sleet
+ * 612     Heavy sleet
+ * 621     Snow shower
+ * 622     Heavy snow shower
+ * 711     Smoke
+ * 721     Haze
+ * 731     Sand/dust
+ * 741     Fog
+ * 800     Clear sky
+ * 801     Few clouds
+ * 802     Scattered clouds
+ * 803     Broken clouds
+ * 804     Overcast clouds
+ * 900     Unknown Precipitation
+ *
+ * Different from OpenWeatherMap.
+ *
+ * 233     Thunderstorm with Hail
+ * 610     Mix snow/rain
+ * 623     Flurries
+ * 700     Mist
+ * 751     Freezing Fog
+ */
+var WeatherBitConditionData = JSON.parse(JSON.stringify(OpenWeatherMapConditionData));
+WeatherBitConditionData[233] = {
+    icon: [Icons.STORM],
+    name: Conditions.THUNDERSTORM_WITH_HAIL
+};
+WeatherBitConditionData[610] = {
+    icon: [Icons.SNOW_RAIN, Icons.SNOW],
+    name: Conditions.MIXED_RAIN_AND_SNOW
+};
+WeatherBitConditionData[623] = {
+    icon: [Icons.SNOW],
+    name: Conditions.SNOW_FLURRIES
+};
+WeatherBitConditionData[700] = {
+    icon: [Icons.FOG],
+    name: Conditions.MIST
+};
+/* NOTE: This one overrides the one from OpenWeatherMap.
+ */
+WeatherBitConditionData[751] = {
+    icon: [Icons.FOG],
+    name: Conditions.FREEZING_FOG
+};
+
 var DarkSkyConditionData = {
     "clear-day": {
         icon: [Icons.CLEAR]
@@ -955,6 +1029,44 @@ var DarkSkySupportedLanguages = new Set([
     "zh-tw",
 ]);
 
+var WeatherBitSupportedLanguages = new Set([
+    "ar",
+    "az",
+    "be",
+    "bg",
+    "bs",
+    "ca",
+    "cz",
+    "da",
+    "de",
+    "el",
+    "en",
+    "et",
+    "fi",
+    "fr",
+    "hr",
+    "hu",
+    "id",
+    "is",
+    "it",
+    "kw",
+    "lt",
+    "nb",
+    "nl",
+    "pl",
+    "pt",
+    "ro",
+    "ru",
+    "sk",
+    "sl",
+    "sr",
+    "sv",
+    "tr",
+    "uk",
+    "zh",
+    "zh-tw"
+]);
+
 /* exported CssClasses,
             DarkSkyConditionData,
             DarkSkySupportedLanguages,
@@ -964,7 +1076,9 @@ var DarkSkySupportedLanguages = new Set([
             KnownStatusCodes,
             NotificationsUrgency,
             OpenWeatherMapConditionData,
+            WeatherBitConditionData,
             OpenWeatherMapSupportedLanguages,
+            WeatherBitSupportedLanguages,
             OrnamentType,
             Placeholders,
             WeatherProviderDefaultParams,

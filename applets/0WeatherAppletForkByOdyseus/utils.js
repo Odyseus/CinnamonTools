@@ -899,25 +899,25 @@ function moonDay(today) {
     return (((thisJD - oldJ) / 29.53059));
 }
 
-function getMoonPhase() {
+function getMoonPhase(aAbbreviated = false) {
     let phase = moonDay(new Date());
 
     if (phase <= 0.0625 || phase > 0.9375) {
-        return _("New Moon");
+        return aAbbreviated ? _("New Moon") : _("New Moon");
     } else if (phase <= 0.1875) {
-        return _("Waxing Crescent");
+        return aAbbreviated ? _("Wax. Cres.") : _("Waxing Crescent");
     } else if (phase <= 0.3125) {
-        return _("First Quarter");
+        return aAbbreviated ? _("1st Qtr") : _("First Quarter");
     } else if (phase <= 0.4375) {
-        return _("Waxing Gibbous");
+        return aAbbreviated ? _("Wax. Gib.") : _("Waxing Gibbous");
     } else if (phase <= 0.5625) {
-        return _("Full Moon");
+        return aAbbreviated ? _("Full Moon") : _("Full Moon");
     } else if (phase <= 0.6875) {
-        return _("Waning Gibbous");
+        return aAbbreviated ? _("Wan. Gib.") : _("Waning Gibbous");
     } else if (phase <= 0.8125) {
-        return _("Third Quarter");
+        return aAbbreviated ? _("3rd Qtr") : _("Third Quarter");
     } else if (phase <= 0.9375) {
-        return _("Waning Crescent");
+        return aAbbreviated ? _("Wan. Cres.") : _("Waning Crescent");
     }
 
     return _("New Moon");

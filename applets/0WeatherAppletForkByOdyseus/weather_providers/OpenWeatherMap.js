@@ -101,6 +101,7 @@ Provider.prototype = {
             APPID: appID,
             mode: "json",
             units: "metric",
+            lang: options.languageID,
         };
 
         if (cityID) {
@@ -148,7 +149,7 @@ Provider.prototype = {
             "curVisibility": null,
             "curSunrise": this.formatTime($.safeGet(C, "sys", "sunrise")),
             "curSunset": this.formatTime($.safeGet(C, "sys", "sunset")),
-            "curMoonPhase": $.getMoonPhase(),
+            "curMoonPhase": $.getMoonPhase(this.applet.pref_abbreviated_moon_phases),
         };
 
         let forecasts = [];

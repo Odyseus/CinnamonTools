@@ -78,10 +78,17 @@ class Main(LocalizedHelpCreator):
                 _("Find location"), "https://openweathermap.org/find",
             ),
             "| %s | [%s](%s) | [%s](%s) |" % (
+                _("WeatherBit"),
+                _("Get credentials"), "https://www.weatherbit.io/pricing",
+                _("Find location"), "https://openweathermap.org/find",
+            ),
+            "| %s | [%s](%s) | [%s](%s) **(*)** |" % (
                 _("Yahoo! Weather"),
                 _("Get credentials"), "https://developer.yahoo.com/weather",
                 _("Find location"), "http://woeid.rosselliot.co.nz",
             ),
+            "",
+            "**(*)** %s" % _("WeatherBit uses the same city IDs returned by OpenWeatherMap's location finder in addition to coordinates."),
             "",
             "## %s" % _("Menu layout"),
             "",

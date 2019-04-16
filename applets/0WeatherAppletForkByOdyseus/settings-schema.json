@@ -114,6 +114,13 @@
         "type": "header",
         "description": "Menu Appearance"
     },
+    "pref_abbreviated_moon_phases": {
+        "type": "checkbox",
+        "indent": true,
+        "default": true,
+        "description": "Abbreviate the name of the moon phases",
+        "tooltip": "It takes effect after the weather data is refreshed."
+    },
     "pref_temperature_high_first": {
         "type": "checkbox",
         "indent": true,
@@ -220,6 +227,10 @@
         "default": ""
     },
     "pref_open_weather_map_credential_app_id": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_weatherbit_credential_app_id": {
         "type": "generic",
         "default": ""
     },

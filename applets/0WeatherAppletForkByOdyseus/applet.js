@@ -221,6 +221,7 @@ Weather.prototype = {
             "pref_enable_verbose_logging",
             "pref_darksky_credential_app_id",
             "pref_open_weather_map_credential_app_id",
+            "pref_weatherbit_credential_app_id",
             "pref_yahoo_credential_app_id",
             "pref_yahoo_credential_client_id",
             "pref_yahoo_credential_client_secret",
@@ -231,6 +232,7 @@ Weather.prototype = {
             "pref_menu_theme_path_custom",
             "pref_icon_theme",
             "pref_icon_theme_path_custom",
+            "pref_abbreviated_moon_phases",
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -1576,7 +1578,12 @@ Weather.prototype = {
     },
 
     _openLocationsManager: function() {
-        Util.spawn_async([this.metadata.path + "/locationsManager.py", this.instance_id], null);
+        Util.spawn_async([
+            this.metadata.path + "/locationsManager.py",
+            "--xlet-type=applet",
+            "--xlet-instance-id=" + this.instance_id,
+            "--xlet-uuid=" + this.metadata.uuid
+        ], null);
     },
 
     _openHelpPage: function() {
