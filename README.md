@@ -88,6 +88,8 @@ Applet's help pages can be accessed from an applet context menu (item named **He
 
 - [Cinnamon Maximus (Fork by Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0CinnamonMaximusForkByOdyseus/index.html)
 - [Cinnamon Tweaks](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0CinnamonTweaks/index.html)
+- [Color Blindness Assistant](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0ColorBlindnessAssistant/index.html)
+- [Desktop Effects Applier](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0DesktopEffectsApplierExtension/index.html)
 - [Multi Translator](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0MultiTranslatorExtension/index.html)
 - [Window demands attention behavior](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WindowDemandsAttentionBehavior/index.html)
 
