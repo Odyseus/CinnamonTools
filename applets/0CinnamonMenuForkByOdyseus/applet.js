@@ -23,6 +23,7 @@ const {
     },
     mainloop: Mainloop,
     misc: {
+        signalManager: SignalManager,
         util: Util
     },
     ui: {
@@ -59,6 +60,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.set_applet_tooltip(_("Menu"));
             this._expandAppletContextMenu();
         }, () => {
+            this.sigMan = new SignalManager.SignalManager(null);
             this._updateGlobalPreferences();
             this.appsys = Cinnamon.AppSystem.get_default();
             this.menuManager = new PopupMenu.PopupMenuManager(this);
@@ -76,8 +78,6 @@ CinnamonMenuForkByOdyseus.prototype = {
             this._hardRefreshTimeout = 0;
             this._appSysChangedId = 0;
             this._searchingTimeout = 0;
-            this._updateRecentAppsId = 0;
-            this._updateRecentAppsOnFavChangedId = 0;
             this._toggleContextMenuId = 0;
 
             // Condition needed for retro-compatibility.
@@ -138,10 +138,8 @@ CinnamonMenuForkByOdyseus.prototype = {
              * using this._hardRefreshAll will rebuild the entire menu from scratch.
              * (When the scalpel doesn't cut it, use the freaking sledgehammer!!!)
              */
-            Main.themeManager.connect("theme-set",
-                () => this.onAppSysChanged());
-            this.appsys.connect("installed-changed",
-                () => this.onAppSysChanged());
+            this.sigMan.connect(Main.themeManager, "theme-set", this.onAppSysChanged.bind(this));
+            this.sigMan.connect(this.appsys, "installed-changed", this.onAppSysChanged.bind(this));
 
             this._setupRecentAppsManager();
             this._updateActivateOnHover();
@@ -318,19 +316,22 @@ CinnamonMenuForkByOdyseus.prototype = {
     },
 
     _setupRecentAppsManager: function() {
-        if (this.recentAppsManager && this._updateRecentAppsId > 0) {
-            this.recentAppsManager.disconnect(this._updateRecentAppsId);
-        }
+        this.sigMan.disconnect(
+            "changed::pref-recently-used-applications",
+            this.recentAppsManager
+        );
 
-        if (this._updateRecentAppsOnFavChangedId > 0) {
-            AppFavorites.getAppFavorites().disconnect(this._updateRecentAppsOnFavChangedId);
-        }
+        this.sigMan.disconnect(
+            "changed",
+            AppFavorites.getAppFavorites()
+        );
 
         if (this.pref_recently_used_apps_enabled && !this.recentAppsManager) {
             this.recentAppsManager = new $.RecentAppsManager(this);
-            this._updateRecentAppsId = this.recentAppsManager.connect(
+            this.sigMan.connect(
+                this.recentAppsManager,
                 "changed::pref-recently-used-applications",
-                () => this._refreshRecentApps()
+                this._refreshRecentApps.bind(this)
             );
 
             /* NOTE: When adding a favorite from the applications listed inside the
@@ -340,15 +341,17 @@ CinnamonMenuForkByOdyseus.prototype = {
              * of recent apps. category. WOW Isn't this micro-managing!?
              */
             if (this.pref_recently_used_apps_ignore_favorites) {
-                this._updateRecentAppsOnFavChangedId = AppFavorites
-                    .getAppFavorites().connect("changed",
-                        () => {
-                            this.recentAppsManager.filterAndStore();
+                this.sigMan.connect(
+                    AppFavorites.getAppFavorites(),
+                    "changed",
+                    function() {
+                        this.recentAppsManager.filterAndStore();
 
-                            if (this.lastSelectedCategory === this.recentAppsCatName) {
-                                this._displayButtons(this.lastSelectedCategory);
-                            }
-                        });
+                        if (this.lastSelectedCategory === this.recentAppsCatName) {
+                            this._displayButtons(this.lastSelectedCategory);
+                        }
+                    }.bind(this)
+                );
             }
         }
 
@@ -503,22 +506,14 @@ CinnamonMenuForkByOdyseus.prototype = {
     on_applet_removed_from_panel: function() {
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
-        if (this.recentAppsManager && this._updateRecentAppsId > 0) {
-            this.recentAppsManager.disconnect(this._updateRecentAppsId);
-        }
-
-        if (this._updateRecentAppsOnFavChangedId > 0) {
-            AppFavorites.getAppFavorites().disconnect(this._updateRecentAppsOnFavChangedId);
-        }
+        this.sigMan.disconnectAllSignals();
 
         if (this._hardRefreshTimeout) {
             Mainloop.source_remove(this._hardRefreshTimeout);
             this._hardRefreshTimeout = 0;
         }
 
-        if (this.settings) {
-            this.settings.finalize();
-        }
+        this.settings && this.settings.finalize();
     },
 
     _launch_editor: function() {
@@ -725,6 +720,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             }
 
             this.contextMenu.toggle();
+            this._toggleContextMenuId = 0;
         });
     },
 

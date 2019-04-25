@@ -190,7 +190,8 @@ SimpleMenuItem.prototype = {
             accessible_role: Atk.Role.MENU_ITEM
         });
 
-        this._signals.connect(this.actor, "destroy", () => this.destroy(true));
+        this._signals.connect(this.actor, "destroy",
+            () => this.destroy(true).bind(this));
 
         this.actor._delegate = this;
         this.applet = aApplet;
@@ -204,15 +205,15 @@ SimpleMenuItem.prototype = {
 
         if (params.reactive) {
             this._signals.connect(this.actor, "enter-event",
-                () => aApplet._buttonEnterEvent(this));
+                () => aApplet._buttonEnterEvent(this).bind(aApplet));
             this._signals.connect(this.actor, "leave-event",
-                () => aApplet._buttonLeaveEvent(this));
+                () => aApplet._buttonLeaveEvent(this).bind(aApplet));
 
             if (params.activatable || params.withMenu) {
                 this._signals.connect(this.actor, "button-release-event",
-                    (aActor, aEvent) => this._onButtonReleaseEvent(aActor, aEvent));
+                    this._onButtonReleaseEvent.bind(this));
                 this._signals.connect(this.actor, "key-press-event",
-                    (aActor, aEvent) => this._onKeyPressEvent(aActor, aEvent));
+                    this._onKeyPressEvent.bind(this));
             }
         }
     },
