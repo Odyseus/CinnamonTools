@@ -585,7 +585,15 @@ class SpinButton(SettingsWidget):
         self.attach(self.label, 0, 0, 1, 1)
         self.attach(self.content_widget, 1, 0, 1, 1)
 
-        range = self.get_range()
+        # NOTE: The original implementation calls get_range to get the min and max values
+        # defined in the settings-schema.json file. Since I mostly use generic settings, I don't
+        # specify any properties in the settings-schema.json file for spinbuttons. Due to
+        # this, calling get_range raises an exception. In this case, just use the mini and maxi
+        # parameters and move on.
+        try:
+            range = self.get_range()
+        except Exception:
+            range = [mini, maxi]
 
         if mini is None or maxi is None:
             mini = range[0]

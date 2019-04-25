@@ -381,7 +381,7 @@ def json_settings_factory(subclass):
                     kwargs["options"] = []
 
                     for value, label in properties[prop].items():
-                        kwargs["options"].append((label, value))
+                        kwargs["options"].append((value, label))
             super().__init__(**kwargs)
             self.attach_backend()
 
