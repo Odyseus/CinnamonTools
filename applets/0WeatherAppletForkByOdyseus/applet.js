@@ -35,6 +35,7 @@ const {
     },
     mainloop: Mainloop,
     misc: {
+        signalManager: SignalManager,
         util: Util
     },
     ui: {
@@ -94,6 +95,7 @@ Weather.prototype = {
             this._expandAppletContextMenu();
             this._initSoupSession();
         }, () => {
+            this.sigMan = new SignalManager.SignalManager(null);
             this.forceMenuReload = false;
             this.theme = null;
             this.stylesheet = null;
@@ -146,9 +148,7 @@ Weather.prototype = {
                 );
             }
 
-            Main.themeManager.connect("theme-set", () => {
-                this._loadTheme();
-            });
+            this.sigMan.connect(Main.themeManager, "theme-set", this._loadTheme.bind(this));
         });
     },
 
@@ -632,6 +632,10 @@ Weather.prototype = {
 
     on_applet_removed_from_panel: function(event) { // jshint ignore:line
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
+
+        this.sigMan.disconnectAllSignals();
+
+        this.settings && this.settings.finalize();
     },
 
     on_applet_clicked: function(event) { // jshint ignore:line
