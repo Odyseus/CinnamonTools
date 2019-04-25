@@ -1,0 +1,114 @@
+/* Color inspector IDs and classes.
+ *
+ * IDs:
+ * ColorInspectorBanner
+ *
+ * Classes:
+ * cba-box
+ *     modal-dialog
+ * cba-info-box
+ * cba-header
+ * cba-footer
+ * cba-info-feedback
+ * cba-info-value
+ * cba-info-title
+ */
+
+/* This ID has the cba-box and modal-dialog classes set. */
+#ColorInspectorBanner {
+    padding: 10px;
+}
+
+#ColorInspectorBanner .cba-header {
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 0 10px 10px 10px;
+}
+
+#ColorInspectorBanner .cba-info-title {
+    padding: 0 10px 0 10px;
+    font-weight: bold;
+}
+
+#ColorInspectorBanner .cba-info-feedback {
+    width: 15px;
+    max-width: 15px;
+    min-width: 15px;
+    padding: 0 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+#ColorInspectorBanner .cba-info-value {
+    font-family: monospace;
+    padding: 0 10px 0 10px;
+}
+
+#ColorInspectorBanner .cba-footer {
+    font-size: 0.9em;
+    font-style: italic;
+    text-align: center;
+    padding-top: 5px;
+}
+
+/* Daltonizer IDs and classes.
+ *
+ * IDs:
+ * Daltonizer
+ *
+ * Classes:
+ * cba-check-button
+ *     modal-dialog-button
+ * cba-title-box
+ * cba-title-box-label
+ * cba-title-box-app-icon
+ * cba-title-box-close-icon
+ * cba-title-box-close-button
+ * cba-box
+ *     modal-dialog
+ * cba-section
+ *     cba-effect-names
+ *     cba-actors
+ *     cba-color-spaces
+ * cba-section-title
+ *     cba-effect-names
+ *     cba-actors
+ *     cba-color-spaces
+ */
+
+/* This ID has the cba-box and modal-dialog classes set. */
+#Daltonizer {
+    /* To avoid huge size due to possible very long window titles. */
+    max-width: 500px;
+    padding: 10px;
+}
+
+#Daltonizer .cba-title-box-close-button,
+#Daltonizer .cba-title-box-app-icon {
+    width: 24px;
+    height: 24px;
+}
+
+#Daltonizer .cba-section-title,
+#Daltonizer .cba-title-box-label {
+    font-weight: bold;
+    padding: 0.5em;
+    text-align: center;
+}
+
+#Daltonizer .cba-section-title {
+    font-size: 1em;
+}
+
+#Daltonizer .cba-title-box-label {
+    font-size: 1.1em;
+}
+
+#Daltonizer .cba-check-button {
+    /* Since these buttons' containers are set to be homogeneous, short button
+       labels can force the display of ellipsis in buttons with long labels.
+       Setting a minimum width for the buttons will help minimize the risk of this.
+    */
+    min-width: 150px;
+}
+

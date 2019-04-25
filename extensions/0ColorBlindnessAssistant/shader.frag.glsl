@@ -1,9 +1,15 @@
 // This shader is based on code authored by Marco Lizza.
 // https://github.com/MarcoLizza/love-workouts/blob/master/anaglyph-3d/assets/shaders/colour-blindness.glsl
 
-#extension GL_OES_standard_derivatives : enable
-
-precision highp float;
+// NOTE: I'm forced to set a precision for floats because the shader linter that
+// I'm using (Clang) forces me to. Otherwise it will stop linting at the first float declaration.
+// And I'm forced to use the GL_ES condition because depending on video driver,
+// OpenGL version, muffin version, Cinnamon version, or whatever other garbage with no sense of
+// stability whatsoever will cause the shader to fail to compile if the precision is directly set.
+// ¬¬
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
 
@@ -12,6 +18,8 @@ uniform int _type;        // 1 Protanope.
                           // 3 Tritanope.
                           // 4 Acromatopsia (rod monochromacy).
                           // 5 Acromatopsia (blue-cone monochromacy).
+                          // I couldn't make boolean uniform value work on
+                          // conditions. WTF!!! ¬¬
 uniform int _use_cie_rgb; // 0 (false), 1 (true).
 uniform int _compensate;  // 0 (false), 1 (true).
 

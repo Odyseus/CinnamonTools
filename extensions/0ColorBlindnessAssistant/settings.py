@@ -41,8 +41,8 @@ EFFECTS_COLUMNS = [{
     "default": "acromatopsia_simulation",
     "type": "string",
     "options": {
-        "acromatopsia_simulation": _("Acromatopsia simulation"),
-        "blue_cone_monochromacy_simulation": _("Blue-cone monochromacy simulation"),
+        "acromatopsia_rod_simulation": _("Acromatopsia (rod) simulation"),
+        "acromatopsia_blue_cone_simulation": _("Acromatopsia (blue cone) simulation"),
         "deuteranopia_compensation": _("Deuteranopia compensation"),
         "deuteranopia_simulation": _("Deuteranopia simulation"),
         "protanopia_compensation": _("Protanopia compensation"),
@@ -76,6 +76,88 @@ EFFECTS_COLUMNS = [{
 }]
 
 
+TOOLS_TAB = {
+    "page-title": _("Tools"),
+    "sections": [{
+        "section-title": _("Color inspector"),
+        "widgets": [{
+            "widget-type": "keybinding",
+            "args": {
+                "pref_key": "pref_color_inspector_kb",
+                "properties": {
+                    "description": _("Color inspector keybinding"),
+                    "num-bind": 1
+                }
+            }
+        }, {
+            "widget-type": "switch",
+            "args": {
+                "pref_key": "pref_color_inspector_always_copy_to_clipboard",
+                "properties": {
+                    "description": _("Always copy color information to clipboard"),
+                }
+            }
+        }, {
+            "widget-type": "spinbutton",
+            "args": {
+                "pref_key": "pref_color_inspector_animation_time",
+                "properties": {
+                    "description": _("Color inspector animation time"),
+                    "units": _("milliseconds"),
+                    "default": 200,
+                    "max": 500,
+                    "min": 0,
+                    "step": 50,
+                    "page": 100
+                }
+            }
+        }]
+    }, {
+        "section-title": _("Daltonizer"),
+        "widgets": [{
+            "widget-type": "keybinding",
+            "args": {
+                "pref_key": "pref_daltonizer_wizard_kb",
+                "properties": {
+                    "description": _("Daltonizer wizard keybinding"),
+                    "num-bind": 1
+                }
+            }
+        }, {
+            "widget-type": "spinbutton",
+            "args": {
+                "pref_key": "pref_daltonizer_animation_time",
+                "properties": {
+                    "description": _("Daltonizer animation time"),
+                    "units": _("milliseconds"),
+                    "default": 200,
+                    "max": 500,
+                    "min": 0,
+                    "step": 50,
+                    "page": 100
+                }
+            }
+        }, {
+            "widget-type": "switch",
+            "args": {
+                "pref_key": "pref_daltonizer_show_actors_box",
+                "properties": {
+                    "description": _("Display actor selection section")
+                }
+            }
+        }, {
+            "widget-type": "switch",
+            "args": {
+                "pref_key": "pref_daltonizer_show_colorspaces_box",
+                "properties": {
+                    "description": _("Display color space selection section")
+                }
+            }
+        }]
+    }]
+}
+
+
 EFFECTS_TAB = {
     "page-title": _("Effects"),
     "sections": [{
@@ -100,38 +182,6 @@ EFFECTS_TAB = {
 OTHER_TAB = {
     "page-title": _("Other"),
     "sections": [{
-        "section-title": _("Color inspector"),
-        "widgets": [{
-            "widget-type": "keybinding",
-            "args": {
-                "pref_key": "pref_color_inspector_kb",
-                "properties": {
-                    "description": _("Color inspector keybinding"),
-                    "num-bind": 1
-                }
-            }
-        }, {
-            "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_color_inspector_always_copy_to_clipboard",
-                "properties": {
-                    "description": _("Always copy color information to clipboard"),
-                }
-            }
-        }]
-    }, {
-        "section-title": _("Daltonizer"),
-        "widgets": [{
-            "widget-type": "keybinding",
-            "args": {
-                "pref_key": "pref_daltonizer_wizard_kb",
-                "properties": {
-                    "description": _("Daltonizer wizard keybinding"),
-                    "num-bind": 1
-                }
-            }
-        }]
-    }, {
         "section-title": _("Settings page shortcut"),
         "widgets": [{
             "widget-type": "button",
@@ -152,11 +202,35 @@ OTHER_TAB = {
                 }
             }
         }]
+    }, {
+        "section-title": _("GUI themes"),
+        "widgets": [{
+            "widget-type": "combobox",
+            "args": {
+                "pref_key": "pref_theme",
+                "properties": {
+                    "description": _("Theme"),
+                    "options": {
+                        "default": _("Default"),
+                        "custom": _("Custom")
+                    }
+                }
+            }
+        }, {
+            "widget-type": "filechooser",
+            "args": {
+                "pref_key": "pref_theme_path_custom",
+                "properties": {
+                    "description": _("Custom theme path")
+                }
+            }
+        }]
     }]
 }
 
 
 PAGES_OBJECT = [
+    TOOLS_TAB,
     EFFECTS_TAB,
     OTHER_TAB,
 ]
@@ -176,7 +250,7 @@ if __name__ == "__main__":
         xlet_instance_id=args.xlet_instance_id or None,
         xlet_uuid=args.xlet_uuid or "{{UUID}}",
         pages_definition=PAGES_OBJECT,
-        win_initial_width=750,
-        win_initial_height=450,
+        win_initial_width=800,
+        win_initial_height=470,
     )
     app.run()

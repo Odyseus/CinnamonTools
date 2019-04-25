@@ -1,9 +1,18 @@
-let $;
+let $,
+    constants,
+    colorInspector,
+    daltonizer;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    constants = require("./constants.js");
+    colorInspector = require("./colorInspector.js");
+    daltonizer = require("./daltonizer.js");
     $ = require("./utils.js");
 } else {
+    constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    colorInspector = imports.ui.extensionSystem.extensions["{{UUID}}"].colorInspector;
+    daltonizer = imports.ui.extensionSystem.extensions["{{UUID}}"].daltonizer;
     $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
 }
 
@@ -11,17 +20,30 @@ const {
     gi: {
         Clutter,
         Gio,
-        Meta
+        Meta,
+        St
     },
     mainloop: Mainloop,
     misc: {
-        params: Params
+        params: Params,
+        signalManager: SignalManager,
+        util: Util
     },
     ui: {
         main: Main,
+        messageTray: MessageTray,
         settings: Settings
     }
 } = imports;
+
+var {
+    _,
+    NotificationsUrgency,
+    ShaderEffectTypeMap,
+    ShaderColorSpaceMap,
+    EFFECT_PROP_NAME,
+    EFFECT_DEFAULT_PARAMS
+} = constants;
 
 let xletMeta = null;
 let assistant = null;
@@ -39,22 +61,37 @@ ColorBlindnessAssistant.prototype = {
 
     _init: function() {
         this._initializeSettings(() => {
+            this.sigMan = new SignalManager.SignalManager(null);
+            this.theme = null;
+            this.stylesheet = null;
+            this.load_theme_id = 0;
             this._allEffects = {};
             this._allEffectsIDs = [];
             this._shaderSource = "";
+            this._daltonizer = null;
             this._colorInspector = null;
             this.registeredEffectKeybindings = [];
             this.registeredGlobalKeybindings = [];
-
-            // if (!this.pref_usage_notified) {
-            //     this._notifyMessage(
-            //         _("Read this extension help page for usage instructions."),
-            //         $.NotificationsUrgency.CRITICAL
-            //     );
-            //     this.pref_usage_notified = true;
-            // }
+            this._notificationSource = null;
+            this.desktopNotification = null;
+            this._notificationParams = {
+                titleMarkup: true,
+                bannerMarkup: true,
+                bodyMarkup: true,
+                clear: true
+            };
         }, () => {
-            //
+            if (!this.pref_usage_notified) {
+                this._notifyMessage(
+                    _("Read this extension help page for usage instructions."),
+                    NotificationsUrgency.CRITICAL
+                );
+                this.pref_usage_notified = true;
+            }
+
+            this._loadTheme();
+
+            this.sigMan.connect(Main.themeManager, "theme-set", this._loadTheme.bind(this));
         });
     },
 
@@ -105,10 +142,17 @@ ColorBlindnessAssistant.prototype = {
             BIDIRECTIONAL: 3
         };
         let prefKeysArray = [
+            "pref_usage_notified",
             "pref_effects_list",
             "pref_daltonizer_wizard_kb",
+            "pref_daltonizer_animation_time",
+            "pref_daltonizer_show_actors_box",
+            "pref_daltonizer_show_colorspaces_box",
             "pref_color_inspector_kb",
+            "pref_color_inspector_animation_time",
             "pref_color_inspector_always_copy_to_clipboard",
+            "pref_theme",
+            "pref_theme_path_custom",
             "trigger_effects_list",
             "trigger_settings_shortcut_creation_desktop",
             "trigger_settings_shortcut_creation_xdg",
@@ -148,8 +192,8 @@ ColorBlindnessAssistant.prototype = {
         let i = effectsList.length;
         while (i--) {
             let e = effectsList[i];
-            e["id"] = "%s_%s_%s".format(e["base_name"], e["actor"], e["color_space"]);
-            this._allEffects[e.id] = Params.parse(e, $.EFFECT_DEFAULT_PARAMS, true);
+            e["id"] = "%s:%s:%s".format(e["base_name"], e["actor"], e["color_space"]);
+            this._allEffects[e.id] = Params.parse(e, EFFECT_DEFAULT_PARAMS, true);
         }
 
         /* NOTE: Objects suck!!! Since I'm constantly iterating through the effects,
@@ -180,19 +224,27 @@ ColorBlindnessAssistant.prototype = {
             return;
         }
 
-        if (actor.hasOwnProperty($.EFFECT_PROP_NAME) &&
-            actor[$.EFFECT_PROP_NAME] !== aEffectDef.id &&
+        if (actor.hasOwnProperty(EFFECT_PROP_NAME) &&
+            actor[EFFECT_PROP_NAME] !== aEffectDef.id &&
             actor.get_effect(this._effect_id)) {
             actor.remove_effect_by_name(this._effect_id);
+            actor[EFFECT_PROP_NAME] = null;
+            delete actor[EFFECT_PROP_NAME];
+        }
+
+        /* NOTE: The base_name "none" is used by the daltonizer wizard.
+         */
+        if (aEffectDef.base_name === "none") {
+            return;
         }
 
         if (actor.get_effect(this._effect_id)) {
             actor.remove_effect_by_name(this._effect_id);
-            actor[$.EFFECT_PROP_NAME] = null;
-            delete actor[$.EFFECT_PROP_NAME];
+            actor[EFFECT_PROP_NAME] = null;
+            delete actor[EFFECT_PROP_NAME];
         } else {
             actor.add_effect_with_name(this._effect_id, this._getEffect(aEffectDef));
-            actor[$.EFFECT_PROP_NAME] = aEffectDef.id;
+            actor[EFFECT_PROP_NAME] = aEffectDef.id;
         }
     },
 
@@ -202,10 +254,13 @@ ColorBlindnessAssistant.prototype = {
             shader_type: Clutter.ShaderType.FRAGMENT_SHADER
         });
 
+        /* NOTE: I can't make boolean uniforms to work inside the shader file. WTH!?
+         * So, I use integers and move on.
+         */
         effect.set_shader_source(this._shaderSource);
         effect.set_uniform_value("tex", 0);
-        effect.set_uniform_value("_type", $.EffectTypeMap[aEffectDef.base_name]);
-        effect.set_uniform_value("_use_cie_rgb", $.ColorSpaceMap[aEffectDef.color_space]);
+        effect.set_uniform_value("_type", ShaderEffectTypeMap[aEffectDef.base_name]);
+        effect.set_uniform_value("_use_cie_rgb", ShaderColorSpaceMap[aEffectDef.color_space]);
         effect.set_uniform_value("_compensate", compensate ? 1 : 0);
 
         return effect;
@@ -235,16 +290,43 @@ ColorBlindnessAssistant.prototype = {
         }
     },
 
-    startColorInspector: function() {
-        if (this._colorInspector !== null) {
-            this._colorInspector.abort();
-            this._colorInspector = null;
+    toggleColorInspector: function() {
+        if (this._daltonizer !== null && this._daltonizer.daltonizerActive) {
+            this._daltonizer.hideUI();
         }
 
-        this._colorInspector = new $.ColorInspector({
-            copyInfoToClipboard: this.pref_color_inspector_always_copy_to_clipboard
-        });
-        this._colorInspector.inspect();
+        if (this._colorInspector === null) {
+            this._colorInspector = new colorInspector.ColorInspector(
+                this._notifyMessage.bind(this),
+                this.pref_color_inspector_always_copy_to_clipboard,
+                this.pref_color_inspector_animation_time / 1000
+            );
+            this._colorInspector.initUI();
+        }
+
+        this._colorInspector.toggleUI();
+    },
+
+    toggleDaltonizer: function() {
+        if (this._colorInspector !== null && this._colorInspector.inspectorActive) {
+            this._colorInspector.hideUI();
+        }
+
+        if (this._daltonizer === null) {
+            this._daltonizer = new daltonizer.Daltonizer(
+                this._toggleEffect.bind(this),
+                this.pref_daltonizer_animation_time / 1000,
+                this.pref_daltonizer_show_actors_box,
+                this.pref_daltonizer_show_colorspaces_box
+            );
+            this._daltonizer.initUI();
+        }
+
+        if (this._colorInspector !== null && this._colorInspector.inspectorActive) {
+            this._colorInspector.hideUI();
+        }
+
+        this._daltonizer.toggleUI();
     },
 
     _registerGlobalKeybindings: function() {
@@ -258,10 +340,10 @@ ColorBlindnessAssistant.prototype = {
                 () => {
                     switch (aKbProp) {
                         case "pref_daltonizer_wizard_kb":
-                            //
+                            this.toggleDaltonizer();
                             break;
                         case "pref_color_inspector_kb":
-                            this.startColorInspector();
+                            this.toggleColorInspector();
                             break;
                     }
                 }
@@ -316,6 +398,85 @@ ColorBlindnessAssistant.prototype = {
         }
     },
 
+    _ensureNotificationSource: function() {
+        if (!this._notificationSource) {
+            this._notificationSource = new $.MessageTraySource();
+            this._notificationSource.connect("destroy", () => {
+                this._notificationSource = null;
+            });
+
+            if (Main.messageTray) {
+                Main.messageTray.add(this._notificationSource);
+            }
+        }
+    },
+
+    _notifyMessage: function(aMessage, aUrgency = NotificationsUrgency.NORMAL, aButtons = []) {
+        this._ensureNotificationSource();
+
+        let body = "";
+
+        body += aMessage + "\n";
+
+        body = body.trim();
+
+        if (this._notificationSource && !this.desktopNotification) {
+            this.desktopNotification = new MessageTray.Notification(
+                this._notificationSource,
+                " ",
+                " ",
+                this._notificationParams
+            );
+            this.desktopNotification.setUrgency(aUrgency);
+            this.desktopNotification.setTransient(false);
+            this.desktopNotification.setResident(true);
+            this.desktopNotification.connect("destroy", () => {
+                this.desktopNotification = null;
+            });
+            this.desktopNotification.connect("action-invoked", (aSource, aAction) => {
+                switch (aAction) {
+                    case "dialog-information":
+                        this.openHelpPage();
+                        break;
+                }
+            });
+
+            this.desktopNotification.addButton("dialog-information", _("Help"));
+        }
+
+        if (body) {
+            this.desktopNotification.update(
+                $.escapeHTML(_(xletMeta.name)),
+                body,
+                this._desktopNotificationParams
+            );
+
+            /* FIXME: Buttons should be removed before adding more.
+             * It should remove all buttons, if any, and leave the default ones
+             * (like the "Help" button).
+             */
+            for (let i = aButtons.length - 1; i >= 0; i--) {
+                this.desktopNotification.addButton(aButtons[i].action, aButtons[i].label);
+            }
+
+            this._notificationSource.notify(this.desktopNotification);
+        } else {
+            this.desktopNotification && this.desktopNotification.destroy();
+        }
+    },
+
+    openExtensionSettings: function() {
+        Util.spawn_async([xletMeta.path + "/settings.py"], null);
+    },
+
+    openHelpPage: function() {
+        this._xdgOpen(xletMeta.path + "/HELP.html");
+    },
+
+    _xdgOpen: function() {
+        Util.spawn_async(["xdg-open"].concat(Array.prototype.slice.call(arguments)), null);
+    },
+
     enable: function(aFromInit = false) {
         /* NOTE: aFromInit is used to only perform certain calls when the
          * extension is initialized.
@@ -331,9 +492,102 @@ ColorBlindnessAssistant.prototype = {
         this._removeKeybindings("Global");
 
         if (this._colorInspector !== null) {
-            this._colorInspector.abort();
+            this._colorInspector.destroyUI();
             this._colorInspector = null;
         }
+
+        if (this._daltonizer !== null) {
+            this._daltonizer.destroyUI();
+            this._daltonizer = null;
+        }
+
+        this.sigMan.disconnectAllSignals();
+    },
+
+    _loadTheme: function(aFullReload) {
+        if (this.load_theme_id > 0) {
+            Mainloop.source_remove(this.load_theme_id);
+            this.load_theme_id = 0;
+        }
+
+        try {
+            this.unloadStylesheet();
+        } catch (aErr) {
+            global.logError(aErr);
+        } finally {
+            this.load_theme_id = Mainloop.timeout_add(300,
+                () => {
+                    // This block doesn't make any sense, but it's what it works.
+                    // So I will leave it as is or else. ¬¬
+                    try {
+                        this.loadStylesheet();
+                    } catch (aErr) {
+                        global.logError(aErr);
+                    } finally {
+                        if (aFullReload) {
+                            Main.themeManager._changeTheme();
+                        }
+
+                        this.load_theme_id = 0;
+                    }
+                }
+            );
+        }
+    },
+
+    loadStylesheet: function() {
+        let themePath = this._getCssPath();
+
+        try {
+            let themeContext = St.ThemeContext.get_for_stage(global.stage);
+            this.theme = themeContext.get_theme();
+        } catch (aErr) {
+            global.logError(_("Error trying to get theme"));
+            global.logError(aErr);
+        }
+
+        try {
+            this.theme.load_stylesheet(themePath);
+            this.stylesheet = themePath;
+        } catch (aErr) {
+            global.logError(_("Stylesheet parse error"));
+            global.logError(aErr);
+        }
+    },
+
+    unloadStylesheet: function() {
+        if (this.theme && this.stylesheet) {
+            try {
+                this.theme.unload_stylesheet(this.stylesheet);
+            } catch (aErr) {
+                global.logError(_("Error unloading stylesheet"));
+                global.logError(aErr);
+            }
+        }
+    },
+
+    _getCssPath: function() {
+        let defaultThemepath = xletMeta.path + "/themes/default.css";
+        let cssPath = this.pref_theme === "custom" ?
+            this.pref_theme_path_custom :
+            defaultThemepath;
+
+        if (/^file:\/\//.test(cssPath)) {
+            cssPath = cssPath.substr(7);
+        }
+
+        try {
+            let cssFile = Gio.file_new_for_path(cssPath);
+
+            if (!cssPath || !cssFile.query_exists(null)) {
+                cssPath = defaultThemepath;
+            }
+        } catch (aErr) {
+            cssPath = defaultThemepath;
+            global.logError(aErr);
+        }
+
+        return cssPath;
     },
 
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
@@ -373,6 +627,26 @@ ColorBlindnessAssistant.prototype = {
                     "desktop" : "xdg";
                 $.generateSettingsDesktopFile(where);
                 break;
+            case "pref_daltonizer_animation_time":
+            case "pref_daltonizer_show_actors_box":
+            case "pref_daltonizer_show_colorspaces_box":
+                if (this._daltonizer !== null) {
+                    this._daltonizer.animationTime = this.pref_daltonizer_animation_time / 1000;
+                    this._daltonizer.showActorsBox = this.pref_daltonizer_show_actors_box;
+                    this._daltonizer.showColorspacesBox = this.pref_daltonizer_show_colorspaces_box;
+                }
+                break;
+            case "pref_color_inspector_animation_time":
+            case "pref_color_inspector_always_copy_to_clipboard":
+                if (this._colorInspector !== null) {
+                    this._colorInspector.animationTime = this.pref_color_inspector_animation_time / 1000;
+                    this._colorInspector.copyInfoToClipboard = this.pref_color_inspector_always_copy_to_clipboard;
+                }
+                break;
+            case "pref_theme":
+            case "pref_theme_path_custom":
+                this._loadTheme(true);
+                break;
         }
     }
 };
@@ -385,6 +659,13 @@ function enable() {
     try {
         assistant = new ColorBlindnessAssistant();
         assistant.enable(true);
+
+        /* NOTE: Object needed to be able to trigger callbacks when pressing
+         * buttons in the settings window. Cinnamon 3.0.x, we are screwed.
+         */
+        return {
+            openSettings: assistant.openExtensionSettings
+        };
     } catch (aErr) {
         global.logError(aErr);
     }
