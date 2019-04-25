@@ -23,6 +23,7 @@ const {
     },
     mainloop: Mainloop,
     misc: {
+        signalManager: SignalManager,
         util: Util
     },
     ui: {
@@ -58,6 +59,7 @@ DesktopCapture.prototype = {
             this._expandAppletContextMenu();
         }, () => {
             this.logger = new $.Logger("DesktopCapture", this.pref_enable_verbose_logging);
+            this.sigMan = new SignalManager.SignalManager(null);
 
             this.appletHelper = this.metadata.path + "/appletHelper.py";
             this.cinnamonRecorder = null;
@@ -107,12 +109,12 @@ DesktopCapture.prototype = {
             this._setupCinnamonRecorderProfiles();
 
             // When monitors are connected or disconnected, redraw the menu
-            Main.layoutManager.connect("monitors-changed", () => {
+            this.sigMan.connect(Main.layoutManager, "monitors-changed", function() {
                 if (this.pref_camera_program === "cinnamon") {
                     this.drawMenu();
                 }
-            });
-            Main.themeManager.connect("theme-set", () => this.loadTheme());
+            }.bind(this));
+            this.sigMan.connect(Main.themeManager, "theme-set", this.loadTheme.bind(this));
 
             this._disclaimerRead();
         });
@@ -2020,6 +2022,8 @@ DesktopCapture.prototype = {
     on_applet_removed_from_panel: function() {
         this.logger.debug("");
 
+        this.sigMan.disconnectAllSignals();
+
         if (this._draw_menu_id > 0) {
             Mainloop.source_remove(this._draw_menu_id);
             this._draw_menu_id = 0;
@@ -2030,7 +2034,7 @@ DesktopCapture.prototype = {
             this._register_key_bindings_id = 0;
         }
 
-        this.settings.finalize();
+        this.settings && this.settings.finalize();
     },
 
     _onSettingsChanged: function(aPrefValue, aPrefKey) { // jshint ignore:line
