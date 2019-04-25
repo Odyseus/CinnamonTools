@@ -20,6 +20,7 @@ const {
     },
     mainloop: Mainloop,
     misc: {
+        signalManager: SignalManager,
         util: Util
     },
     ui: {
@@ -36,6 +37,7 @@ function TranslatorExtension() {
 TranslatorExtension.prototype = {
     _init: function() {
         try {
+            this.sigMan = new SignalManager.SignalManager(null);
             this._dialog = new $.TranslatorDialog(this);
             this._dialog.dialog_layout.connect("key-press-event",
                 (aActor, aEvent) => this._on_key_press_event(aActor, aEvent));
@@ -52,15 +54,15 @@ TranslatorExtension.prototype = {
             this._set_current_languages();
 
             this._init_most_used();
-            this._bind_settings();
 
-            Main.themeManager.connect("theme-set", () => {
+            this.sigMan.connect(Main.themeManager, "theme-set", function() {
                 try {
                     this.unloadStylesheet();
                 } finally {
                     this.loadStylesheet(this.stylesheet);
                 }
-            });
+            }.bind(this));
+            this.sigMan.connect(Settings, "changed", this._onSettingsChanged.bind(this));
 
             this._current_source_lang = null;
             this._current_target_lang = null;
@@ -81,28 +83,6 @@ TranslatorExtension.prototype = {
         } catch (aErr) {
             global.logError(aErr);
         }
-    },
-
-    _bind_settings: function() {
-        $.CONNECTION_IDS.settings_bindings = Settings.connect(
-            "changed",
-            (aObj, aPref) => {
-                switch (aPref) {
-                    case "show-most-used":
-                        this._init_most_used();
-                        break;
-                    case "dialog-theme":
-                    case "dialog-theme-custom":
-                        this._loadTheme(true);
-                        break;
-                    case "open-translator-dialog-keybinding":
-                    case "translate-from-clipboard-keybinding":
-                    case "translate-from-selection-keybinding":
-                        this._remove_keybindings(true);
-                        break;
-                }
-            }
-        );
     },
 
     _init_most_used: function() {
@@ -954,18 +934,6 @@ TranslatorExtension.prototype = {
         if (Settings.enable_shortcuts) {
             this._add_keybindings();
         }
-
-        $.CONNECTION_IDS.enable_shortcuts = Settings.connect("changed::enable-shortcuts",
-            () => {
-                let enable = Settings.enable_shortcuts;
-
-                if (enable) {
-                    this._add_keybindings();
-                } else {
-                    this._remove_keybindings();
-                }
-            }
-        );
     },
 
     disable: function() {
@@ -977,13 +945,7 @@ TranslatorExtension.prototype = {
         this._target_language_chooser.destroy();
         this._remove_keybindings();
 
-        if ($.CONNECTION_IDS.enable_shortcuts > 0) {
-            Settings.disconnect($.CONNECTION_IDS.enable_shortcuts);
-        }
-
-        if ($.CONNECTION_IDS.settings_bindings > 0) {
-            Settings.disconnect($.CONNECTION_IDS.settings_bindings);
-        }
+        this.sigMan.disconnectAllSignals();
     },
 
     _loadTheme: function(aFullReload) {
@@ -1180,6 +1142,30 @@ TranslatorExtension.prototype = {
 
     get current_source_lang() {
         return this._current_source_lang;
+    },
+
+    _onSettingsChanged: function(aObj, aPref) {
+        switch (aPref) {
+            case "enable-shortcuts":
+                if (Settings.enable_shortcuts) {
+                    this._add_keybindings();
+                } else {
+                    this._remove_keybindings();
+                }
+                break;
+            case "show-most-used":
+                this._init_most_used();
+                break;
+            case "dialog-theme":
+            case "dialog-theme-custom":
+                this._loadTheme(true);
+                break;
+            case "open-translator-dialog-keybinding":
+            case "translate-from-clipboard-keybinding":
+            case "translate-from-selection-keybinding":
+                this._remove_keybindings(true);
+                break;
+        }
     }
 };
 

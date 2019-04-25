@@ -169,10 +169,6 @@ var LOAD_THEME_DELAY = 1000; // milliseconds
 var TIMEOUT_IDS = {
     load_theme_id: 0
 };
-var CONNECTION_IDS = {
-    enable_shortcuts: 0,
-    settings_bindings: 0
-};
 var State = {
     OPENED: 0,
     CLOSED: 1,
@@ -4044,7 +4040,6 @@ exported STATS_TYPE_SOURCE,
          exec,
          LOAD_THEME_DELAY,
          TIMEOUT_IDS,
-         CONNECTION_IDS,
          State,
          asyncLoop,
          replaceAll,
