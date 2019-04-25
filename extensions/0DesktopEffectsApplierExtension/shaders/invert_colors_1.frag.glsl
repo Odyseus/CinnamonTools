@@ -1,4 +1,7 @@
 // Source: https://github.com/maiself/gnome-shell-extension-invert-color
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
 

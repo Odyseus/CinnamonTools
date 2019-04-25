@@ -1,5 +1,9 @@
-// Source: http://blog.noblemaster.com/2013/10/26/opengl-shader-to-correct-and-simulate-color-blindness-experimental/
+// Source:
+// http://blog.noblemaster.com/2013/10/26/opengl-shader-to-correct-and-simulate-color-blindness-experimental/
 // Source: https://tylerdavidhoward.com/thesis/
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
 

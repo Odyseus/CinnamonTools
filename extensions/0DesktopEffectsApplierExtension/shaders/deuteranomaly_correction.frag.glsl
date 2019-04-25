@@ -1,4 +1,7 @@
 // Source: https://github.com/empijei/ColorFix
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
 

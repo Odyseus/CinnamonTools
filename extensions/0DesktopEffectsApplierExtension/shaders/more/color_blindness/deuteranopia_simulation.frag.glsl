@@ -1,9 +1,13 @@
+#ifdef GL_ES
+precision mediump float;
+#endif
+
 uniform sampler2D tex;
 
 // Deuteranopia
-vec3 blindVisionR = vec3(0.43f, 0.72f, -0.15f);
-vec3 blindVisionG = vec3(0.34f, 0.57f, 0.09f);
-vec3 blindVisionB = vec3(-0.02f, 0.03f, 1.00f);
+vec3 blindVisionR = vec3(0.43, 0.72, -0.15);
+vec3 blindVisionG = vec3(0.34, 0.57, 0.09);
+vec3 blindVisionB = vec3(-0.02, 0.03, 1.00);
 
 void main() {
     vec4 texColor = texture2D(tex, cogl_tex_coord_in[0].xy);

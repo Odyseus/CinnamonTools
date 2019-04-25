@@ -8,10 +8,9 @@
 
 // Licensed and released under Creative Commons 3.0 Attribution
 // https://creativecommons.org/licenses/by/3.0/
-
-#extension GL_OES_standard_derivatives : enable
-
-precision highp float;
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
 
@@ -21,7 +20,6 @@ uniform sampler2D tex;
 // Playing with this value tweaks how dim or bright the resulting image is
 #define LUMINANCE_PRESERVATION 0.75
 #define EPSILON 1e-10
-
 
 float saturate(float v) {
     return clamp(v, 0.0, 1.0);

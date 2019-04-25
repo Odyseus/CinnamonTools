@@ -1,9 +1,13 @@
+#ifdef GL_ES
+precision mediump float;
+#endif
+
 uniform sampler2D tex;
 
 // Deuteranopia
-vec3 blindVisionR = vec3(0.43f, 0.72f, -0.15f);
-vec3 blindVisionG = vec3(0.34f, 0.57f, 0.09f);
-vec3 blindVisionB = vec3(-0.02f, 0.03f, 1.00f);
+vec3 blindVisionR = vec3(0.43, 0.72, -0.15);
+vec3 blindVisionG = vec3(0.34, 0.57, 0.09);
+vec3 blindVisionB = vec3(-0.02, 0.03, 1.00);
 
 void main() {
     vec4 texColor = texture2D(tex, cogl_tex_coord_in[0].xy);
@@ -18,11 +22,11 @@ void main() {
     simulation = (texColor - simulation);
 
     // Shift colors towards visible spectrum (apply simulation modifications).
-    vec4 correction = vec4(                                                    //
-        (simulation.r * 1.0f),                                                 //
-        (simulation.r * 0.7f) + (simulation.g * 1.0f) + (simulation.b * 0.7f), //
-        (simulation.b * 1.0f),                                                 //
-        1.0f                                                                   //
+    vec4 correction = vec4(                                                 //
+        (simulation.r * 1.0),                                               //
+        (simulation.r * 0.7) + (simulation.g * 1.0) + (simulation.b * 0.7), //
+        (simulation.b * 1.0),                                               //
+        1.0                                                                 //
     );
 
     // Add compensation to original values

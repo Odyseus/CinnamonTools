@@ -1,7 +1,10 @@
 // Source: https://github.com/BRX420/ALGEBRA/tree/master/SFML-2.5.1/examples/shader/resources
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
-uniform float     pixel_threshold = 0.0001;
+const float       pixel_threshold = 0.0001;
 
 void main() {
     float factor   = 1.0 / (pixel_threshold + 0.001);

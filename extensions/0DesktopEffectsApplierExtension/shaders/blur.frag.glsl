@@ -1,7 +1,11 @@
 // Source: https://github.com/BRX420/ALGEBRA/tree/master/SFML-2.5.1/examples/shader/resources
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
-uniform float     blur_radius = 0.0005;
+
+const float blur_radius = 0.0005;
 
 void main() {
     vec2 offx = vec2(blur_radius, 0.0);

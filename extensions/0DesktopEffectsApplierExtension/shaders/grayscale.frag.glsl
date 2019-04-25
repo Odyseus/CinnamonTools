@@ -1,4 +1,7 @@
 // Source: https://github.com/IGJoshua/ghoti-engine/tree/master/resources/shaders
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
 

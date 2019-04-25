@@ -1,5 +1,8 @@
 // Source: https://github.com/ErwanDouaille/gse-shader
 // NOTE: Requires Clutter.Timeline new-frame connection.
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform int height;
 uniform int width;

@@ -1,12 +1,3 @@
-let XletMeta;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
-} else {
-    XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
-}
-
 let $,
     EffectsApplier,
     EffectsStoragePropName;
@@ -215,17 +206,21 @@ DesktopEffectsApplier.prototype = {
                         break;
                 }
             });
+
+            this.desktopNotification.addButton("dialog-information", _("Help"));
         }
 
         if (body) {
             this.desktopNotification.update(
-                $.escapeHTML(_(XletMeta.name)),
+                $.escapeHTML(_(xletMeta.name)),
                 body,
                 this._desktopNotificationParams
             );
 
-            this.desktopNotification.addButton("dialog-information", _("Help"));
-
+            /* FIXME: Buttons should be removed before adding more.
+             * It should remove all buttons, if any, and leave the default ones
+             * (like the "Help" button).
+             */
             for (let i = aButtons.length - 1; i >= 0; i--) {
                 this.desktopNotification.addButton(aButtons[i].action, aButtons[i].label);
             }
@@ -710,7 +705,7 @@ DesktopEffectsApplier.prototype = {
     },
 
     openHelpPage: function() {
-        this._xdgOpen(XletMeta.path + "/HELP.html");
+        this._xdgOpen(xletMeta.path + "/HELP.html");
     },
 
     _xdgOpen: function() {

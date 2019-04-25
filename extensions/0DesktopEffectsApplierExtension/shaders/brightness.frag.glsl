@@ -1,11 +1,15 @@
 // Source: https://github.com/ErwanDouaille/gse-shader
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
 uniform int       height;
 uniform int       width;
 uniform int       mouseX;
 uniform int       mouseY;
-uniform float     brightness_level = 0.6;
+
+const float brightness_level = 0.6;
 
 void main() {
     float value = brightness_level;

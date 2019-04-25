@@ -1,7 +1,10 @@
 // Source: https://github.com/PlanetCentauri/ColorblindFilter
 
 #extension GL_OES_standard_derivatives : enable
+
+#ifdef GL_ES
 precision mediump float;
+#endif
 
 uniform sampler2D tex;
 

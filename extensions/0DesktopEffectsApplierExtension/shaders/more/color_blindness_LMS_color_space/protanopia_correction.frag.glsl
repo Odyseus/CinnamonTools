@@ -1,23 +1,23 @@
-#extension GL_OES_standard_derivatives : enable
-
-precision highp float;
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 uniform sampler2D tex;
 
 vec3 rgb2lms(vec3 colourRGB) {
     // RGB to LMS matrix conversion
-    float l = (17.8824f * colourRGB.r) + (43.5161f * colourRGB.g) + (4.11935f * colourRGB.b);
-    float m = (3.45565f * colourRGB.r) + (27.1554f * colourRGB.g) + (3.86714f * colourRGB.b);
-    float s = (0.0299566f * colourRGB.r) + (0.184309f * colourRGB.g) + (1.46709f * colourRGB.b);
+    float l = (17.8824 * colourRGB.r) + (43.5161 * colourRGB.g) + (4.11935 * colourRGB.b);
+    float m = (3.45565 * colourRGB.r) + (27.1554 * colourRGB.g) + (3.86714 * colourRGB.b);
+    float s = (0.0299566 * colourRGB.r) + (0.184309 * colourRGB.g) + (1.46709 * colourRGB.b);
 
     return vec3(l, m, s);
 }
 
 vec3 lms2rgb(float l, float m, float s) {
     // LMS to RGB matrix conversion
-    float r = (0.0809444479f * l) + (-0.130504409f * m) + (0.116721066f * s);
+    float r = (0.0809444479 * l) + (-0.130504409 * m) + (0.116721066 * s);
     float g = (-0.0102485335 * l) + (0.0540193266 * m) + (-0.113614708 * s);
-    float b = (-0.000365296938f * l) + (-0.00412161469f * m) + (0.693511405f * s);
+    float b = (-0.000365296938 * l) + (-0.00412161469 * m) + (0.693511405 * s);
 
     return vec3(r, g, b);
 }
@@ -30,9 +30,9 @@ vec4 daltonize(vec4 in_c) {
     float S   = lms.z;
 
     // Simulate protanopia - reds are greatly reduced (1% men)
-    float l = (0.0f * L) + (2.02344 * M) + (-2.52581 * S);
-    float m = (0.0f * L) + (1.0f * M) + (0.0f * S);
-    float s = (0.0f * L) + (0.0f * M) + (1.0f * S);
+    float l = (0.0 * L) + (2.02344 * M) + (-2.52581 * S);
+    float m = (0.0 * L) + (1.0 * M) + (0.0 * S);
+    float s = (0.0 * L) + (0.0 * M) + (1.0 * S);
 
     // LMS to RGB matrix conversion
     vec3 colourRGB = clamp(lms2rgb(l, m, s), 0.0, 1.0);
@@ -47,11 +47,11 @@ vec4 daltonize_correct(vec4 in_c) {
     vec4 diff = (in_c - sim_c);
 
     // Shift colors towards visible spectrum (apply error modifications)
-    vec4 shifted_c = vec4(                   //
-        0.0f,                                //
-        (diff.r * 0.7f) + (diff.g * 1.0f), //
-        (diff.r * 0.7f) + (diff.b * 1.0f), //
-        in_c.a                               //
+    vec4 shifted_c = vec4(               //
+        0.0,                             //
+        (diff.r * 0.7) + (diff.g * 1.0), //
+        (diff.r * 0.7) + (diff.b * 1.0), //
+        in_c.a                           //
     );
 
     // Add compensation to original values
