@@ -70,7 +70,9 @@ WindowPreview.prototype = {
         this._applet = item._applet;
         this.uiScale = St.ThemeContext.get_for_stage(global.stage).scale_factor;
         this.thumbScale = previewScale;
-        this.muffinWindow = metaWindow.get_compositor_private();
+        this.metaWindow = metaWindow;
+        this.muffinWindow = null;
+
         this._sizeChangedId = null;
         this.thumbnail = null;
 
@@ -179,7 +181,7 @@ WindowPreview.prototype = {
 
     hide: function() {
         if (this._sizeChangedId != null) {
-            this.muffinWindow.disconnect(this._sizeChangedId);
+            this.muffinWindow && this.muffinWindow.disconnect(this._sizeChangedId);
             this._sizeChangedId = null;
         }
         if (this.thumbnail) {
@@ -238,7 +240,7 @@ WindowPreview.prototype = {
 
     _destroy: function() {
         if (this._sizeChangedId != null) {
-            this.muffinWindow.disconnect(this._sizeChangedId);
+            this.muffinWindow && this.muffinWindow.disconnect(this._sizeChangedId);
             this.sizeChangedId = null;
         }
         if (this.thumbnail) {

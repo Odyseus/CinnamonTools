@@ -350,8 +350,9 @@ WindowList.prototype = {
     },
 
     _onPreviewChanged: function() {
-        for (let window of this._windows)
+        for (let window of this._windows) {
             window.onPreviewChanged();
+        }
     },
 
     _onWindowDemandsAttention: function(display, window) {
