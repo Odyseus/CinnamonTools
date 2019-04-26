@@ -222,8 +222,8 @@ DaltonizerWizard.prototype = {
      */
     _effects: [
         "none",
-        "acromatopsia_rod_simulation",
-        "acromatopsia_blue_cone_simulation",
+        "acromatopia_rod_simulation",
+        "acromatopia_blue_cone_simulation",
         "deuteranopia_compensation",
         "protanopia_compensation",
         "tritanopia_compensation",
@@ -561,7 +561,7 @@ WindowTracker.prototype = {
             }
 
             if (actor && actor.hasOwnProperty(EFFECT_PROP_NAME)) {
-                this.daltonizer.setEffectIdDef(actor[EFFECT_PROP_NAME]);
+                this.daltonizer.setEffectIdDef(actor[EFFECT_PROP_NAME].id);
             } else {
                 this.daltonizer.setEffectIdDef(null);
             }
@@ -588,6 +588,18 @@ WindowTracker.prototype = {
         return Main.layoutManager.currentMonitor;
     }
 };
+
+/* TODO: Make the daltonizer work with the effect definition, not the effect ID.
+ * I gave it a try and I found more problems than solutions.
+ * - The toggling of the effect time went so slow that when enabling an effect
+ *     and then quickly disabling it, it would get stuck. I have no idea why!
+ * - Another problem was that when the daltonizer was closed with the keybinding
+ *     that opened it, the WindowTracker connections stored in its signal manager
+ *     would not get cleared. This caused the call to the daltonizer's moveUI
+ *     method be triggered a trillion times per second! JEESH!!!
+ * HINT: Could it be related to something called "circular references"? Too
+ * advanced a concept for me to even start thinking about it.
+ */
 
 function Daltonizer() {
     this._init.apply(this, arguments);
@@ -717,7 +729,7 @@ Daltonizer.prototype = {
         }
 
         if (actor && actor.hasOwnProperty(EFFECT_PROP_NAME)) {
-            this.setEffectIdDef(actor[EFFECT_PROP_NAME]);
+            this.setEffectIdDef(actor[EFFECT_PROP_NAME].id);
         } else {
             this.setEffectIdDef(null);
         }
@@ -760,11 +772,11 @@ Daltonizer.prototype = {
         return this._effectIdDef;
     },
 
-    setEffectIdDef: function(aEffectProperty = null) {
-        if (aEffectProperty === null) {
+    setEffectIdDef: function(aEffectID = null) {
+        if (aEffectID === null) {
             this._effectIdDef = this.defaultEffectIdDef;
         } else {
-            let [base_name, actor, color_space] = aEffectProperty.split(":");
+            let [base_name, actor, color_space] = aEffectID.split(":");
             this._effectIdDef["base_name"] = base_name;
             this._effectIdDef["actor"] = actor;
             this._effectIdDef["color_space"] = color_space;

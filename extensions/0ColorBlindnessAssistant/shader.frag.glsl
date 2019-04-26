@@ -16,8 +16,8 @@ uniform sampler2D tex;
 uniform int _type;        // 1 Protanope.
                           // 2 Deuteranope.
                           // 3 Tritanope.
-                          // 4 Acromatopsia (rod monochromacy).
-                          // 5 Acromatopsia (blue-cone monochromacy).
+                          // 4 Acromatopia (rod monochromacy).
+                          // 5 Acromatopia (blue-cone monochromacy).
                           // I couldn't make boolean uniform value work on
                           // conditions. WTF!!! ¬¬
 uniform int _use_cie_rgb; // 0 (false), 1 (true).
@@ -136,9 +136,9 @@ vec3 daltonize(vec3 color) {
         m = mat3(1.0, 0.95130920, 0.0, 0.0, 0.0, 0.0, 0.0, 0.04866992, 1.0);
     } else if (_type == 3) { // Tritanope - blues are greatly reduced.
         m = mat3(1.0, 0.0, -0.86744736, 0.0, 1.0, 1.86727089, 0.0, 0.0, 0.0);
-    } else if (_type == 4) { // Acromatopsia (Rod Monochromacy).
+    } else if (_type == 4) { // Acromatopia (Rod Monochromacy).
         m = mat3(0.212656, 0.212656, 0.212656, 0.715158, 0.715158, 0.715158, 0.072186, 0.072186, 0.072186);
-    } else if (_type == 5) { // Blue-cone monochromacy.
+    } else if (_type == 5) { // Acromatopia (Blue-cone monochromacy).
         m = mat3(0.01775, 0.01775, 0.01775, 0.10945, 0.10945, 0.10945, 0.87262, 0.87262, 0.87262);
     }
 

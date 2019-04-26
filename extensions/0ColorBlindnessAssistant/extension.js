@@ -36,7 +36,7 @@ const {
     }
 } = imports;
 
-var {
+const {
     _,
     NotificationsUrgency,
     ShaderEffectTypeMap,
@@ -62,6 +62,10 @@ ColorBlindnessAssistant.prototype = {
     _init: function() {
         this._initializeSettings(() => {
             this.sigMan = new SignalManager.SignalManager(null);
+            this.workspaceInjection = null;
+            this.appSwitcher3DInjection = null;
+            this.expoThumbnailInjection = null;
+            this.timelineSwitcherInjection = null;
             this.theme = null;
             this.stylesheet = null;
             this.load_theme_id = 0;
@@ -153,6 +157,7 @@ ColorBlindnessAssistant.prototype = {
             "pref_color_inspector_always_copy_to_clipboard",
             "pref_theme",
             "pref_theme_path_custom",
+            "pref_apply_cinnamon_injections",
             "trigger_effects_list",
             "trigger_settings_shortcut_creation_desktop",
             "trigger_settings_shortcut_creation_xdg",
@@ -204,7 +209,6 @@ ColorBlindnessAssistant.prototype = {
 
     _toggleEffect: function(aEffectDef) {
         let actor = null;
-
         switch (aEffectDef.actor) {
             case "focused_window":
                 let focusedWindow = global.display.focus_window;
@@ -225,7 +229,7 @@ ColorBlindnessAssistant.prototype = {
         }
 
         if (actor.hasOwnProperty(EFFECT_PROP_NAME) &&
-            actor[EFFECT_PROP_NAME] !== aEffectDef.id &&
+            actor[EFFECT_PROP_NAME].id !== aEffectDef.id &&
             actor.get_effect(this._effect_id)) {
             actor.remove_effect_by_name(this._effect_id);
             actor[EFFECT_PROP_NAME] = null;
@@ -244,7 +248,7 @@ ColorBlindnessAssistant.prototype = {
             delete actor[EFFECT_PROP_NAME];
         } else {
             actor.add_effect_with_name(this._effect_id, this._getEffect(aEffectDef));
-            actor[EFFECT_PROP_NAME] = aEffectDef.id;
+            actor[EFFECT_PROP_NAME] = aEffectDef;
         }
     },
 
@@ -320,10 +324,6 @@ ColorBlindnessAssistant.prototype = {
                 this.pref_daltonizer_show_colorspaces_box
             );
             this._daltonizer.initUI();
-        }
-
-        if (this._colorInspector !== null && this._colorInspector.inspectorActive) {
-            this._colorInspector.hideUI();
         }
 
         this._daltonizer.toggleUI();
@@ -477,33 +477,6 @@ ColorBlindnessAssistant.prototype = {
         Util.spawn_async(["xdg-open"].concat(Array.prototype.slice.call(arguments)), null);
     },
 
-    enable: function(aFromInit = false) {
-        /* NOTE: aFromInit is used to only perform certain calls when the
-         * extension is initialized.
-         */
-        aFromInit && this._loadShaderFileAsync();
-        this._updateEffectsMap();
-        this._registerEffectKeybindings();
-        this._registerGlobalKeybindings();
-    },
-
-    disable: function() {
-        this._removeKeybindings("Effect");
-        this._removeKeybindings("Global");
-
-        if (this._colorInspector !== null) {
-            this._colorInspector.destroyUI();
-            this._colorInspector = null;
-        }
-
-        if (this._daltonizer !== null) {
-            this._daltonizer.destroyUI();
-            this._daltonizer = null;
-        }
-
-        this.sigMan.disconnectAllSignals();
-    },
-
     _loadTheme: function(aFullReload) {
         if (this.load_theme_id > 0) {
             Mainloop.source_remove(this.load_theme_id);
@@ -590,6 +563,196 @@ ColorBlindnessAssistant.prototype = {
         return cssPath;
     },
 
+    _applyCinnamonInjections: function() {
+        let extScope = this;
+        /* NOTE: Use try{}catch{} blocks inside all injections code because it isn't
+         * a question IF it will break in the future but WHEN will be broken.
+         * Heck! Even the injection mechanism might break due to the incessant new
+         * "features" added to the worse programming language in existence!
+         */
+
+        /* NOTE: This injection affects Scale mode (all windows displayed in "exposé").
+         */
+        if (!this.workspaceInjection) {
+            this.workspaceInjection = $.injectAfter(
+                imports.ui.workspace.WindowClone.prototype,
+                "_init",
+                function(realWindow, myContainer) { // jshint ignore:line
+                    try {
+                        if (this.realWindow.get_effect(extScope._effect_id) &&
+                            this.realWindow.hasOwnProperty(EFFECT_PROP_NAME)) {
+                            this.actor.add_effect_with_name(
+                                extScope._effect_id,
+                                extScope._getEffect(this.realWindow[EFFECT_PROP_NAME])
+                            );
+                        } else {
+                            this.actor.remove_effect_by_name(extScope._effect_id);
+                        }
+                    } catch (aErr) {
+                        global.logError(aErr);
+                    }
+                }
+            );
+        }
+
+        /* NOTE: This injection affects Coverflow (3D).
+         */
+        if (!this.appSwitcher3DInjection) {
+            this.appSwitcher3DInjection = $.injectAfter(
+                imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
+                "_adaptClones",
+                function() {
+                    try {
+                        let i = this._previews.length;
+                        while (i--) {
+                            let preview = this._previews[i];
+                            let winActor = preview.metaWindow.get_compositor_private();
+
+                            if (winActor.get_effect(extScope._effect_id) &&
+                                winActor.hasOwnProperty(EFFECT_PROP_NAME)) {
+                                preview.add_effect_with_name(
+                                    extScope._effect_id,
+                                    extScope._getEffect(winActor[EFFECT_PROP_NAME])
+                                );
+                            } else {
+                                preview.remove_effect_by_name(extScope._effect_id);
+                            }
+                        }
+                    } catch (aErr) {
+                        global.logError(aErr);
+                    }
+                }
+            );
+        }
+
+        /* NOTE: This injection affects Expo mode (the preview of all workspaces).
+         */
+        if (!this.expoThumbnailInjection) {
+            this.expoThumbnailInjection = $.injectAfter(
+                imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
+                "syncStacking",
+                function() {
+                    try {
+                        let i = this.windows.length;
+                        while (i--) {
+                            let clone = this.windows[i];
+                            let winActor = clone.metaWindow.get_compositor_private();
+
+                            if (winActor.get_effect(extScope._effect_id) &&
+                                winActor.hasOwnProperty(EFFECT_PROP_NAME)) {
+                                clone.actor.add_effect_with_name(
+                                    extScope._effect_id,
+                                    extScope._getEffect(winActor[EFFECT_PROP_NAME])
+                                );
+                            } else {
+                                clone.actor.remove_effect_by_name(extScope._effect_id);
+                            }
+                        }
+                    } catch (aErr) {
+                        global.logError(aErr);
+                    }
+                }
+            );
+        }
+
+        /* NOTE: This injection affects Timeline (3D).
+         */
+        if (!this.timelineSwitcherInjection) {
+            this.timelineSwitcherInjection = $.injectAfter(
+                imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
+                "_adaptClones",
+                function() {
+                    try {
+                        let i = this._previews.length;
+                        while (i--) {
+                            let clone = this._previews[i];
+                            let winActor = clone.metaWindow.get_compositor_private();
+
+                            if (winActor.get_effect(extScope._effect_id) &&
+                                winActor.hasOwnProperty(EFFECT_PROP_NAME)) {
+                                clone.add_effect_with_name(
+                                    extScope._effect_id,
+                                    extScope._getEffect(winActor[EFFECT_PROP_NAME])
+                                );
+                            } else {
+                                clone.remove_effect_by_name(extScope._effect_id);
+                            }
+                        }
+                    } catch (aErr) {
+                        global.logError(aErr);
+                    }
+                }
+            );
+        }
+    },
+
+    _removeCinnamonInjections: function() {
+        if (this.workspaceInjection) {
+            $.removeInjection(
+                imports.ui.workspace.WindowClone.prototype,
+                "_init",
+                this.workspaceInjection
+            );
+            this.workspaceInjection = null;
+        }
+
+        if (this.appSwitcher3DInjection) {
+            $.removeInjection(
+                imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
+                "_adaptClones",
+                this.appSwitcher3DInjection
+            );
+            this.appSwitcher3DInjection = null;
+        }
+
+        if (this.expoThumbnailInjection) {
+            $.removeInjection(
+                imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
+                "syncStacking",
+                this.expoThumbnailInjection
+            );
+            this.expoThumbnailInjection = null;
+        }
+
+        if (this.timelineSwitcherInjection) {
+            $.removeInjection(
+                imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
+                "_adaptClones",
+                this.timelineSwitcherInjection
+            );
+            this.timelineSwitcherInjection = null;
+        }
+    },
+
+    enable: function(aFromInit = false) {
+        /* NOTE: aFromInit is used to only perform certain calls when the
+         * extension is initialized.
+         */
+        aFromInit && this._loadShaderFileAsync();
+        this._updateEffectsMap();
+        this._registerEffectKeybindings();
+        this._registerGlobalKeybindings();
+        this.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
+    },
+
+    disable: function() {
+        this._removeKeybindings("Effect");
+        this._removeKeybindings("Global");
+        this._removeCinnamonInjections();
+
+        if (this._colorInspector !== null) {
+            this._colorInspector.destroyUI();
+            this._colorInspector = null;
+        }
+
+        if (this._daltonizer !== null) {
+            this._daltonizer.destroyUI();
+            this._daltonizer = null;
+        }
+
+        this.sigMan.disconnectAllSignals();
+    },
+
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
         /* NOTE: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
          * settings callback instead of just one as in older versions. The first one is the
@@ -646,6 +809,15 @@ ColorBlindnessAssistant.prototype = {
             case "pref_theme":
             case "pref_theme_path_custom":
                 this._loadTheme(true);
+                break;
+            case "pref_apply_cinnamon_injections":
+                try {
+                    this._removeCinnamonInjections();
+                } finally {
+                    Mainloop.idle_add(() => {
+                        this.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
+                    });
+                }
                 break;
         }
     }

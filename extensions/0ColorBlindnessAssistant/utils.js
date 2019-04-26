@@ -127,6 +127,25 @@ function escapeHTML(aStr) {
     return aStr;
 }
 
+function injectAfter(aParent, aName, aFunc) {
+    let origin = aParent[aName];
+    aParent[aName] = function() {
+        let ret;
+        ret = origin.apply(this, arguments);
+        if (ret === undefined) {
+            ret = aFunc.apply(this, arguments);
+        }
+        return ret;
+    };
+    return origin;
+}
+
+function removeInjection(aProto, aName, aOriginal) {
+    aProto[aName] = aOriginal;
+}
+
 /* exported generateSettingsDesktopFile,
-            escapeHTML
+            escapeHTML,
+            injectAfter,
+            removeInjection
 */

@@ -68,6 +68,10 @@
         "type": "generic",
         "default": ""
     },
+    "pref_apply_cinnamon_injections": {
+        "type": "generic",
+        "default": true
+    },
     "trigger_effects_list": {
         "type": "generic",
         "default": false

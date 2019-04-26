@@ -68,8 +68,8 @@ NoDisplay=false\n\
 ";
 
 var ShaderEffectTypeMap = {
-    acromatopsia_rod_simulation: 4,
-    acromatopsia_blue_cone_simulation: 5,
+    acromatopia_rod_simulation: 4,
+    acromatopia_blue_cone_simulation: 5,
     deuteranopia_compensation: 2,
     deuteranopia_simulation: 2,
     protanopia_compensation: 1,
@@ -95,8 +95,8 @@ var DaltonizerWizardLabels = {
     screen: _("Screen"),
     srgb: "sRGB",
     cie: "CIE",
-    acromatopsia_rod_simulation: _("Acrom. (R) sim."),
-    acromatopsia_blue_cone_simulation: _("Acrom. (BC) sim."),
+    acromatopia_rod_simulation: _("Acrom. (R) sim."),
+    acromatopia_blue_cone_simulation: _("Acrom. (BC) sim."),
     deuteranopia_compensation: _("Deuteran comp."),
     protanopia_compensation: _("Protan comp."),
     tritanopia_compensation: _("Tritan comp."),
@@ -111,8 +111,8 @@ var DaltonizerWizardTooltips = {
     screen: _("Screen"),
     srgb: _("Standard RGB"),
     cie: "CIE RGB",
-    acromatopsia_rod_simulation: _("Acromatopsia (rod) simulation"),
-    acromatopsia_blue_cone_simulation: _("Acromatopsia (blue cone) simulation"),
+    acromatopia_rod_simulation: _("Acromatopia (rod) simulation"),
+    acromatopia_blue_cone_simulation: _("Acromatopia (blue cone) simulation"),
     deuteranopia_compensation: _("Deuteranopia compensation"),
     protanopia_compensation: _("Protanopia compensation"),
     tritanopia_compensation: _("Tritanopia compensation"),
