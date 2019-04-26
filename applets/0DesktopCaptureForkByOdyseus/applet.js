@@ -1003,6 +1003,12 @@ DesktopCapture.prototype = {
                             this.stopAnyRecorder();
                         }
                     );
+
+                    this._storeNewKeybinding(
+                        aDevice,
+                        "stop_toggle",
+                        () => this.stopAnyRecorder()
+                    );
                 }
             }
 
