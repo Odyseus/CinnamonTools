@@ -17,6 +17,7 @@ from gi.repository import Gtk
 from .KeybindingWidgets import ButtonKeybinding
 from .common import BaseGrid
 from .common import _
+from .common import display_message_dialog
 
 __all__ = [
     "Button",
@@ -62,7 +63,7 @@ CAN_BACKEND = [
 
 
 class SectionContainer(Gtk.Frame):
-    def __init__(self, title):
+    def __init__(self, title, section_info={}):
         super().__init__()
         self.set_shadow_type(Gtk.ShadowType.IN)
 
@@ -82,6 +83,32 @@ class SectionContainer(Gtk.Frame):
         title_holder = Gtk.ToolItem()
         title_holder.add(label)
         toolbar.add(title_holder)
+
+        if section_info:
+            dummy = BaseGrid()
+            dummy.set_property("hexpand", True)
+            dummy.set_property("vexpand", False)
+            dummy_holder = Gtk.ToolItem()
+            dummy_holder.set_expand(True)
+            dummy_holder.add(dummy)
+            toolbar.add(dummy_holder)
+            # Using set_image on button adds an un-removable padding.
+            # Setting the image as argument doesn't. ¬¬
+            button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                ("dialog-%s-symbolic" % section_info.get("context", "information")),
+                Gtk.IconSize.BUTTON
+            ))
+            button.get_style_context().add_class("cinnamon-xlet-settings-section-information-button")
+            button.set_relief(Gtk.ReliefStyle.NONE)
+            button.set_always_show_image(True)
+            button.set_tooltip_text(_("Information related to this specific section"))
+            button.connect("clicked", display_message_dialog,
+                           title, section_info.get("message", ""),
+                           section_info.get("context", "information"))
+            button_holder = Gtk.ToolItem()
+            button_holder.add(button)
+            toolbar.add(button_holder)
+
         self.box.attach(toolbar, 0, 0, 2, 1)
 
         self.need_separator = False

@@ -245,5 +245,28 @@ def generate_options_from_paths(opts, xlet_settings):
     return options
 
 
+def display_message_dialog(widget, title, message, context="information"):
+    if context == "warning":
+        message_type = Gtk.MessageType.WARNING
+    elif context == "error":
+        message_type = Gtk.MessageType.ERROR
+    else:
+        message_type = Gtk.MessageType.INFO
+
+    dialog = Gtk.MessageDialog(transient_for=widget.get_toplevel(),
+                               title=title,
+                               modal=True,
+                               message_type=message_type,
+                               buttons=Gtk.ButtonsType.OK)
+
+    if isinstance(message, list):
+        message = "\n".join(message)
+
+    dialog.set_markup(message)
+    dialog.show_all()
+    dialog.run()
+    dialog.destroy()
+
+
 if __name__ == "__main__":
     pass

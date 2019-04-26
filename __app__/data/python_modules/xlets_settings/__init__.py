@@ -120,7 +120,10 @@ class SettingsBox(BaseGrid):
                 if not section_def.get("compatible", True):
                     continue
 
-                section_container = SectionContainer(section_def["section-title"])  # noqa
+                section_container = SectionContainer(  # noqa
+                    section_def.get("section-title", ""),
+                    section_def.get("section-info", {}),
+                )
                 section_widgets = section_def["widgets"]
 
                 for i in range(0, len(section_widgets)):
@@ -200,6 +203,10 @@ class MainApplication(Gtk.Application):
     ----------
     application_base_id : str
         A base application ID that will be used to generate the real application ID.
+    application_title : str
+        A custom application title.
+    current_selected_tab : str
+        The name of the currently selected stack.
     display_settings_handling : bool
         Whether to display settings handler item in the header bar menu.
     help_file_path : str
@@ -287,6 +294,30 @@ class MainApplication(Gtk.Application):
             application_id=self._get_application_id(),
             flags=Gio.ApplicationFlags.FLAGS_NONE,
         )
+
+        self.load_css()
+
+    def load_css(self):
+        """Summary
+        """
+        css_provider = Gtk.CssProvider()
+        # css_provider.load_from_path(
+        #     os.path.join(XLET_DIR, "stylesheet.css"))
+        # Loading from data so I don't have to deal with a style sheet file
+        # with just a couple of lines of code.
+        css_provider.load_from_data(str.encode(
+            """
+            .cinnamon-xlet-settings-section-information-button:hover,
+            .cinnamon-xlet-settings-section-information-button {
+                padding: 0;
+            }
+            """
+        ))
+
+        screen = Gdk.Screen.get_default()
+        context = Gtk.StyleContext()
+        context.add_provider_for_screen(screen, css_provider,
+                                        Gtk.STYLE_PROVIDER_PRIORITY_USER)
 
     def _get_application_title(self):
         """Get application title.
@@ -767,6 +798,8 @@ class MainApplication(Gtk.Application):
 
         Parameters
         ----------
+        stack : object
+            The stack from which to get the its name.
         *args
             Arguments.
         """
