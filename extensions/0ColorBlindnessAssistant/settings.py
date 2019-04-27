@@ -85,7 +85,7 @@ TOOLS_TAB = {
             "args": {
                 "pref_key": "pref_color_inspector_kb",
                 "properties": {
-                    "description": _("Color inspector keybinding"),
+                    "description": _("Keybinding"),
                     "num-bind": 1
                 }
             }
@@ -102,7 +102,7 @@ TOOLS_TAB = {
             "args": {
                 "pref_key": "pref_color_inspector_animation_time",
                 "properties": {
-                    "description": _("Color inspector animation time"),
+                    "description": _("UI animation time"),
                     "units": _("milliseconds"),
                     "default": 200,
                     "max": 500,
@@ -119,7 +119,7 @@ TOOLS_TAB = {
             "args": {
                 "pref_key": "pref_daltonizer_wizard_kb",
                 "properties": {
-                    "description": _("Daltonizer wizard keybinding"),
+                    "description": _("Keybinding"),
                     "num-bind": 1
                 }
             }
@@ -128,7 +128,7 @@ TOOLS_TAB = {
             "args": {
                 "pref_key": "pref_daltonizer_animation_time",
                 "properties": {
-                    "description": _("Daltonizer animation time"),
+                    "description": _("UI animation time"),
                     "units": _("milliseconds"),
                     "default": 200,
                     "max": 500,
@@ -182,7 +182,7 @@ EFFECTS_TAB = {
 OTHER_TAB = {
     "page-title": _("Other"),
     "sections": [{
-        "section-title": _("Settings page shortcut"),
+        "section-title": _("Settings shortcut"),
         "section-info": {
             "context": "warning",
             "message": cgi.escape(_("Generated .desktop files will not be automatically deleted when this extension is disabled/uninstalled."))
@@ -207,7 +207,7 @@ OTHER_TAB = {
             }
         }]
     }, {
-        "section-title": _("GUIs theme"),
+        "section-title": _("GUI theme"),
         "widgets": [{
             "widget-type": "combobox",
             "args": {
