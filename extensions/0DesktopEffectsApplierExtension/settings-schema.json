@@ -5,7 +5,7 @@
     },
     "info_label_2": {
         "type": "label",
-        "description": "This window isn't this extension \"real\" configuration window."
+        "description": "This window isn't this extension's \"real\" configuration window."
     },
     "info_label_3": {
         "type": "label",
