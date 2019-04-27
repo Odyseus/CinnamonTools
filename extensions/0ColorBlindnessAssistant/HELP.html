@@ -41,7 +41,7 @@
                     </div>
                     <select class="custom-select custom-select-sm text-bold" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
 <!-- English --><option selected data-title="Help for Color Blindness Assistant" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Help for Color Blindness Assistant" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="es">Español (Spanish) (0%)</option>
+<!-- Español --><option data-title="Ayuda para Asistente de Ceguera al Color" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
                     </select>
                 </div>
             </form>
@@ -51,15 +51,15 @@
 <div class="container boxed my-3 py-3">
 
 <div id="es" class="localization-content" hidden="true">
-<h1>Help for Color Blindness Assistant</h1>
+<h1>Ayuda para Asistente de Ceguera al Color</h1>
 
 <div class="card text-bold my-3 border-warning shadow-sm">
-    <div class="card-header bg-warning text-white">Warning</div>
-    <div class="card-body text-warning "><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
-<p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
+    <div class="card-header bg-warning text-white">Advertencia</div>
+    <div class="card-body text-warning "><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
+<p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
 <div class="card text-bold my-3 border-success shadow-sm">
-    <div class="card-header bg-success text-white">Cinnamon compatibility</div>
+    <div class="card-header bg-success text-white">Compatibilidad con Cinnamon</div>
     <div class="card-body text-success text-font-size-x-large"><span class="badge  badge-success shadow-sm text-monospace">v3.0</span>
 <span class="badge  badge-success shadow-sm text-monospace">v3.2</span>
 <span class="badge  badge-success shadow-sm text-monospace">v3.4</span>
@@ -79,28 +79,95 @@
 </div>
 </div>
 <div class="card text-bold my-3 border-info shadow-sm">
-    <div class="card-header bg-info text-white">Xlets localization</div>
-    <div class="card-body text-info "><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
+    <div class="card-header bg-info text-white">Localización de xlets</div>
+    <div class="card-body text-info "><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
 
-<p>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder.</p>
+<p>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet.</p>
 </div>
 </div>
-<h2>Description</h2>
-<p>Color Blindness Assistant is a Cinnamon extension that provides tools to assist users with color vision deficiency (CVD).</p>
-<h2>Features</h2>
-<p>This extension provides mainly of three features.</p>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading">Descargo de responsabilidad</h4>
+<p>No poseo ningún conocimiento certificado sobre la deficiencia de visión del color ni la ciencia del color. Esta extensión se proporciona con la esperanza de que pueda ser útil para personas con una patología por deficiencia de visión del color. Los algoritmos utilizados para calcular los efectos de simulación/compensación para las diferentes patologías se basan en investigaciones científicas, tesis y publicaciones de blog que he encontrado. Ver <strong><a href="#xlet-contributors">Referencias</a></strong>.</p>
+
+</div><h2>Descripción</h2>
+<p>Asistente de ceguera al color es una extensión para Cinnamon que provee herramientas para asistir a usuarios  con deficiencia de visión del color.</p>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading">Referencias básicas</h4>
 <ul>
-<li><strong>Color blindness compensation</strong>: A user can apply an effect (specific to her/his pathology) that will (might) help her/him to better differentiate colors.</li>
-<li><strong>Color blindness simulation</strong>: A developer can apply an effect that will show her/him how a person with color vision deficiency will (might) see certain color combinations.</li>
-<li><strong>Color naming</strong>: This feature is useful for knowing the name of the color that's immediately under the cursor.</li>
+<li><strong>Acromatopía (monocromatismo de varilla)</strong>: Ceguera total o casi total del color.</li>
+<li><strong>Acromatopía (monocromatismo de cono azul)</strong>: Ceguera total o casi total del color.</li>
+<li><strong>Deuteranopía</strong>: Deficiencia de color verde.</li>
+<li><strong>Protanopía</strong>: Deficiencia de color rojo.</li>
+<li><strong>Tritanopía</strong>: Deficiencia de color azul.</li>
 </ul>
 
+</div><h2>Características</h2>
+<p>Esta extensión provee tres características principales:</p>
+<ul>
+<li><strong>Compensación de la ceguera al color</strong>: Un usuario puede aplicar un efecto (específico a su patología) que le ayude a diferenciar mejor los colores.</li>
+<li><strong>Simulación de ceguera al color</strong>: Un desarrollador puede aplicar un efecto que le mostrará cómo una persona con deficiencia de visión del color ve ciertas combinaciones de colores.</li>
+<li><strong>Nombre de color</strong>: Esta función es útil para saber el nombre del color que está inmediatamente debajo del cursor.</li>
+</ul>
+
+<h2>Uso</h2>
+<ul>
+<li>Las funciones de esta extensión son accesibles en su totalidad a través de atajos de teclado.</li>
+<li>Al menos dos atajos de teclado deben configurarse para usar todas las funciones proporcionadas por esta extensión. Uno para abrir el inspector de color y otro para abrir el daltonizador.</li>
+<li>Se pueden configurar atajos de teclado adicionales para aplicar efectos específicos a la pantalla o la ventana enfocada.</li>
+<li>Las miniaturas de ventanas generadas por los conmutadores <kbd>Alt</kbd> + <kbd>Tab</kbd> y las vistas previas del área de trabajo heredarán el efecto de las ventanas reales. Ver <strong><a href="#known-issues-es">Problemas conocidos</a></strong>.</li>
+</ul>
+<h2>Descripción de herramientas</h2>
+<h3>Inspector de color</h3>
+<p>El corazón de esta herramienta es una biblioteca de JavaScript llamada <strong>Nombra ese color</strong> que viene con una lista de más de 1600 nombres de colores. La siguiente información es mostrada por esta herramienta:</p>
+<ul>
+<li><strong>Nombre de color</strong>: Podría ser una aproximación del color de entrada o una coincidencia exacta.</li>
+<li><strong>Color de Entrada</strong>: La representación hexadecimal y RGB del color que está inmediatamente debajo del cursor del mouse.</li>
+<li><strong>Color Detectado</strong>: La representación hexadecimal y RGB del color detectado por la biblioteca <strong>Nombra ese color</strong> según el color de entrada.</li>
+<li><strong>Matiz</strong>: El nombre y la representación hexadecimal del tono de color de entrada.</li>
+</ul>
+<div class="img-centered-container"><img src="assets/images/color-inspector-exact-match.png" class="img-fluid " alt="Ejemplo de color exacto.">
+</div>
+</br>
+<div class="img-centered-container"><img src="assets/images/color-inspector-approximation.png" class="img-fluid " alt="Ejemplo de color aproximado.">
+</div><h3>Daltonizador</h3>
+<p>Daltonizador es una herramienta que permite aplicar un efecto sobre la marcha en una ventana enfocada o en la pantalla. Un efecto puede simular una deficiencia de visión del color o compensarlo. La interfaz de usuario del daltonizador se compone de las siguientes secciones:</p>
+<ul>
+<li><strong>Nombre de Efecto</strong>: El efecto a aplicar al actor actualmente enfocado.</li>
+<li><strong>Actor</strong>: El actor (ventana enfocada o pantalla) al cual aplicar un efecto. <strong>(*)</strong></li>
+<li><strong>Espacio de Color</strong>: El espacio de color utilizado para realizar los cálculos de efectos. <strong>(*)</strong></li>
+</ul>
+<p><strong>(*)</strong> Las secciones <strong>Actor</strong> y <strong>Espacio de Color</strong> podrían ocultarse desde la ventana de configuración de esta extensión por los siguientes motivos:</p>
+<ol>
+<li>El mecanismo de selección de actor es automático. Uno podría simplemente usar el applet <strong>Mostrar escritorio</strong> para ocultar todas las ventanas y el daltonizador apuntará a la pantalla para aplicar un efecto. Y después de aplicar un efecto, se podría usar nuevamente el applet <strong>Mostrar escritorio</strong> para mostrar todas las ventanas.</li>
+<li>Como lo entiendo (como dije, no soy un experto), el espacio de color utilizado para hacer los cálculos depende de la tecnología utilizada por el monitor/dispositivo de visualización. Si un usuario no necesita cambiar al espacio de color CIE, esta sección podría ser ocultada ya que el espacio de color sRGB es el espacio de color utilizado de forma predeterminada.</li>
+</ol>
+<div class="img-centered-container"><img src="assets/images/daltonizer-example.png" class="img-fluid " alt="Ejemplo de daltonizador.">
+</div><h2>Tema de interfaz</h2>
+<ul>
+<li>Esta extensión soporta temas personalizados para estilizar sus interfaces (el inspector de color y el daltonizador).</li>
+<li>El tema predeterminado (que se encuentra en CARPETA_DE_LA_EXTENSIÓN/themes/default.css) solo establece un estilo genérico para acomodar los elementos en las interfaces.</li>
+<li>Para usar un tema personalizado, simplemente configurar la opción <strong>Tema</strong> como <strong>Personalizado</strong> y configurar la opción <strong>Ruta a hoja de estilo personalizada</strong> para que apunte a un archivo de hoja de estilo.</li>
+<li>Para crear un tema personalizado, simplemente hacer una copia del archivo de tema predeterminado en cualquier lugar del sistema de archivos, <strong>excepto</strong> dentro de la carpeta de la extensión. El archivo de tema predeterminado tiene la lista completa de clases CSS y IDs utilizadas por esta extensión.</li>
+<li>Para que los cambios del tema personalizados se reflejen mientras se modifica el archivo de tema, se puede reiniciar Cinnamon o se puede volver a cargar el tema Cinnamon.</li>
+<li>Canela proporciona un comando para volver a cargar su tema. Simplemente abrir el cuadro de diálogo <strong>Ejecutar comando</strong> (<kbd>Alt</kbd> + <kbd>F2</kbd>), escribir <strong>rt</strong> y presionar <kbd>Enter</kbd>.</li>
+</ul>
+<p><span id="known-issues-es"></span></p>
+<h2>Problemas conocidos</h2>
+<ul>
+<li>Las miniaturas de ventanas en el conmutador de aplicaciones clásico no heredarán el efecto de las ventanas reales. Esta es una limitación mía; Simplemente no pude encontrar la manera de hacerlo.</li>
+<li>Las miniaturas de ventanas generadas por applets/extensiones/desklets (de terceros o que vienen por defecto con Cinnamon) no heredarán el efecto de las ventanas reales. Esto sería demasiado para mí, el desarrollador de esta extensión, para cumplir (si es posible en absoluto).</li>
+<li>Las ventanas cuyas decoraciones se quitaron pueden volverse invisibles cuando se intenta aplicar algún efecto. No pude encontrar una solución para esto (aparte de restaurar estas decoraciones de ventanas, eso es).</li>
+</ul>
+<h2>Limitaciones</h2>
+<ul>
+<li>Todos los efectos aplicados por esta extensión son transitorios. Lo que significa que, siempre que se cierre una ventana, se reinicie Cinnamon o se reinicie el sistema, todos los efectos se eliminarán/destruirán.</li>
+</ul>
 
 </br>
 
 <div class="alert alert-info text-bold shadow-sm" role="alert">
 
-The following sections are available only in English.
+Las siguientes secciones están disponibles sólo en Inglés.
 </div>
 
 </div> <!-- .localization-content -->
@@ -141,16 +208,83 @@ The following sections are available only in English.
 <p>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder.</p>
 </div>
 </div>
-<h2>Description</h2>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading">Disclaimer</h4>
+<p>I don't possess any certified knowledge about color vision deficiency nor the science of color. This extension is provided with the hope that it might be useful to persons with a color vision deficiency pathology. The algorithms used to calculate the simulation/compensation effects for the different pathologies are based on scientific researches, theses and blog posts that I came across. See <strong><a href="#xlet-contributors">References</a></strong>.</p>
+
+</div><h2>Description</h2>
 <p>Color Blindness Assistant is a Cinnamon extension that provides tools to assist users with color vision deficiency (CVD).</p>
-<h2>Features</h2>
-<p>This extension provides mainly of three features.</p>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading">Basic references</h4>
+<ul>
+<li><strong>Acromatopia (rod monochromatism)</strong>: Total or almost total color blindness.</li>
+<li><strong>Acromatopia (blue-cone monochromatism)</strong>: Total or almost total color blindness.</li>
+<li><strong>Deuteranopia</strong>: Green color deficiency.</li>
+<li><strong>Protanopia</strong>: Red color deficiency.</li>
+<li><strong>Tritanopia</strong>: Blue color deficiency.</li>
+</ul>
+
+</div><h2>Features</h2>
+<p>This extension provides mainly three features.</p>
 <ul>
 <li><strong>Color blindness compensation</strong>: A user can apply an effect (specific to her/his pathology) that will (might) help her/him to better differentiate colors.</li>
 <li><strong>Color blindness simulation</strong>: A developer can apply an effect that will show her/him how a person with color vision deficiency will (might) see certain color combinations.</li>
 <li><strong>Color naming</strong>: This feature is useful for knowing the name of the color that's immediately under the cursor.</li>
 </ul>
 
+<h2>Usage</h2>
+<ul>
+<li>This extension features are accessible entirely through keyboard shortcuts.</li>
+<li>At least two keyboard shortcuts need to be configured to use all features provided by this extension. One to open the color inspector and one to open the daltonizer.</li>
+<li>Additional keyboard shortcuts can be configured to apply specific effects to the screen or the focused window.</li>
+<li>Window thumbnails generated by the <kbd>Alt</kbd> + <kbd>Tab</kbd> switchers and workspace previews will inherit the effect of the real windows. See <strong><a href="#known-issues-en">Known issues</a></strong>.</li>
+</ul>
+<h2>Tools description</h2>
+<h3>Color inspector</h3>
+<p>The heart of this tool is a JavaScript library called <strong>Name that color</strong> that comes with a list of more than 1600 color names. The following information is displayed by this tool:</p>
+<ul>
+<li><strong>Color name</strong>: It could be an approximation of the input color or an exact match.</li>
+<li><strong>Input Color</strong>: The hexadecimal and RGB representation of the color that's immediately under the mouse cursor.</li>
+<li><strong>Detected Color</strong>: The hexadecimal and RGB representation of the color detected by the <strong>Name that color</strong> library based on the input color.</li>
+<li><strong>Hue</strong>: The name and hexadecimal representation of the input color hue.</li>
+</ul>
+<div class="img-centered-container"><img src="assets/images/color-inspector-exact-match.png" class="img-fluid " alt="Exact color match example.">
+</div>
+</br>
+<div class="img-centered-container"><img src="assets/images/color-inspector-approximation.png" class="img-fluid " alt="Color approximation example.">
+</div><h3>Daltonizer</h3>
+<p>Daltonizer is a tool that allows to apply an effect on-the-fly to a focused window or the screen. An effect can simulate a color vision deficiency or compensate it. The daltonizer UI is composed of the following sections:</p>
+<ul>
+<li><strong>Effect Name</strong>: The effect to apply to the currently focused actor.</li>
+<li><strong>Actor</strong>: The actor (focused window or screen) to which to apply an effect. <strong>(*)</strong></li>
+<li><strong>Color Space</strong>: The color space used to perform the effects calculations. <strong>(*)</strong></li>
+</ul>
+<p><strong>(*)</strong> The <strong>Actor</strong> and <strong>Color Space</strong> sections could be hidden from this extension settings window for the following reasons:</p>
+<ol>
+<li>The actor selection mechanism is automatic. One could simply use the <strong>Show desktop</strong> applet to hide all windows and the daltonizer will target the screen to apply an effect. And after applying an effect, one could use again the <strong>Show desktop</strong> applet to display all windows.</li>
+<li>As I understand it (like I said, I'm no expert), the color space used to make the calculations depends on the technology used by the monitor/display device. If a user doesn't need to change to the CIE color space, this section could be hidden since the sRGB color space is the color space used by default.</li>
+</ol>
+<div class="img-centered-container"><img src="assets/images/daltonizer-example.png" class="img-fluid " alt="Daltonizer example.">
+</div><h2>GUI theme</h2>
+<ul>
+<li>This extension supports custom themes to style its GUIs (the color inspector and the daltonizer).</li>
+<li>The default theme (found in EXTENSION_FOLDER/themes/default.css) only sets a generic styling to accommodate the elements in the GUIs.</li>
+<li>To use a custom theme, just set the <strong>Theme</strong> option to <strong>Custom</strong> and set the <strong>Custom theme path</strong> option to point to a style sheet file.</li>
+<li>To create a custom theme, just make a copy of the default theme file anywhere on the file system, <strong>except</strong> inside the extension folder. The default theme file has the complete list of CSS classes and IDs used by this extension.</li>
+<li>For the custom theme changes to be reflected while the theme file is modified, either Cinnamon can be restarted or the Cinnamon theme can be reloaded.</li>
+<li>Cinnamon provides a command to reload its theme. Just open the <strong>Run command</strong> dialog (<kbd>Alt</kbd> + <kbd>F2</kbd>), type <strong>rt</strong> and press <kbd>Enter</kbd>.</li>
+</ul>
+<p><span id="known-issues-en"></span></p>
+<h2>Known issues</h2>
+<ul>
+<li>Thumbnails of windows in the classic application switcher will not inherit the effect of the real windows. This is a limitation of my own; I simply couldn't find the way of doing it.</li>
+<li>Thumbnails of windows generated by applets/extensions/desklets (from third-parties or that come by default with Cinnamon) will not inherit the effect of the real windows. This would be too much of an undertaking for me, the developer of this extension, to accomplish (if possible at all).</li>
+<li>Windows whose decorations were removed might become invisible when trying to apply any effect. I couldn't find a fix or workaround for this (other than restoring back these windows decorations, that is).</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li>All effects applied by this extension are transient. Which means that, whenever a window is closed, Cinnamon is restarted or the system is restarted, all effects will be removed/destroyed.</li>
+</ul>
 
 </br>
 
@@ -169,13 +303,18 @@ The following sections are available only in English.
 <li><strong><a href="https://www.color-blindness.com">Colblindor</a>:</strong> Web site that provides basic information about CVD (color vision deficiency) and some assistive tools.</li>
 <li><strong><a href="http://chir.ag/projects/ntc">Chirag Mehta</a>:</strong> Creator of the Name that Color JavaScript library.</li>
 <li><strong><a href="https://github.com/MarcoLizza">Marco Lizza</a>:</strong> Author of several OpenGL shaders, <a href="https://github.com/MarcoLizza/love-workouts/blob/master/anaglyph-3d/assets/shaders/colour-blindness.glsl">one of which</a> I used to base the shader used by this extension.</li>
+<li><strong><a href="https://github.com/shuairan">shuairan</a>:</strong> Author of the <a href="https://github.com/shuairan/gTile">gTile</a> Cinnamon extension. I based the daltonizer and color inspector UIs on this extension code (It would have taken me a million years to do it on my own! LOL).</li>
 </ul>
 <h2>References</h2>
 <ul>
+<li><a href="https://www.aao.org/eye-health/diseases/what-is-color-blindness/">What is color blindness?</a>. <a href="https://www.aao.org/salud-ocular/enfermedades/daltonismo">¿Qué es el daltonismo?</a>.</li>
+<li><a href="https://www.color-blindness.com/types-of-color-blindness/">Types of color blindness</a>.</li>
 <li><a href="https://ixora.io/projects/colorblindness/color-blindness-simulation-research/">Color Blindness Simulation Research</a>.</li>
 <li><a href="https://tylerdavidhoward.com/thesis/">Real-time Image Correction for Colorblind Users</a>.</li>
 <li><a href="http://biecoll.ub.uni-bielefeld.de/volltexte/2007/52/pdf/ICVS2007-6.pdf">Intelligent modification for the daltonization process of digitized paintings</a>.</li>
 <li><a href="https://arxiv.org/pdf/1711.10662.pdf">An Adaptive Fuzzy-Based System toSimulate, Quantify and Compensate ColorBlindness</a>.</li>
+<li><a href="https://web.archive.org/web/20180423000949/http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html">RGB/XYZ Matrices</a>.</li>
+<li><a href="http://blog.noblemaster.com/2013/10/26/opengl-shader-to-correct-and-simulate-color-blindness-experimental/">OpenGL Shader to Correct and Simulate Color Blindness (Experimental)</a>.</li>
 </ul>
 
 </div> <!-- .container.boxed -->
@@ -184,6 +323,40 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Color Blindness Assistant changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 27 Apr 2019 15:02:34 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e52ab8d">e52ab8d</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Some grammar corrections.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Fri, 26 Apr 2019 14:05:46 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/d8a4c21">d8a4c21</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Added inheritance of windows effects into their clones.
+- Renamed all occurrences of "acromatopsia" to "acromatopia". Since I'm naming all the other pathologies with their synonyms ending with "pia", lets keep it homogeneous.
+- Changed the way an effect is stored "inside" an actor. Instead of storing the effect ID as a string, store the effect definition as an object. This allows me to have direct access to the effect definition without constantly having to reconstruct the definition from the effect ID and vice versa.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Thu, 25 Apr 2019 02:06:00 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/d60d6ed">d60d6ed</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Implemented *wizard* to apply effects on-the-fly (I call it daltonizer). Now one can assign just one keyboard shortcut to invoke the *wizard* to be able to apply any effect to a focused window or the screen.
+- Redesigned the color inspector. I used the same technique that I used in the daltonizer *wizard* that allows me to use animations when the color inspector banner is moved about the screen.
+- Moved the Name that color library and the color inspector into their own files.
+- Corrected the shader file after performing tests inside a virtual machine. It seems that the shader language is susceptible to certain combination of software versions and/or hardware.
+- Reorganized the settings window.
+- Added option to configure the animation time of the color inspector banner.
+- Added notification that informs when the color information retrieved by the color inspector is copied to the clipboard.
+- Corrected some import errors that prevented the effects to be applied.
+- Implemented themes for the daltonizer and color inspector GUIs. The default theme is *theme agnostic*. This means that the currently in use Cinnamon theme is used to apply some basic styling. The rest of the style sheet used by this extension just changes font styling and elements sizes.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Tue, 16 Apr 2019 14:19:55 -0300</li>

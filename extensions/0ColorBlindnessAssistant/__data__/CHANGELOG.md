@@ -4,6 +4,49 @@
 
 ***
 
+- **Date:** Sat, 27 Apr 2019 15:02:34 -0300
+- **Commit:** [e52ab8d](https://gitlab.com/Odyseus/CinnamonTools/commit/e52ab8d)
+- **Author:** Odyseus
+
+```
+- Some grammar corrections.
+
+```
+
+***
+
+- **Date:** Fri, 26 Apr 2019 14:05:46 -0300
+- **Commit:** [d8a4c21](https://gitlab.com/Odyseus/CinnamonTools/commit/d8a4c21)
+- **Author:** Odyseus
+
+```
+- Added inheritance of windows effects into their clones.
+- Renamed all occurrences of "acromatopsia" to "acromatopia". Since I'm naming all the other pathologies with their synonyms ending with "pia", lets keep it homogeneous.
+- Changed the way an effect is stored "inside" an actor. Instead of storing the effect ID as a string, store the effect definition as an object. This allows me to have direct access to the effect definition without constantly having to reconstruct the definition from the effect ID and vice versa.
+
+```
+
+***
+
+- **Date:** Thu, 25 Apr 2019 02:06:00 -0300
+- **Commit:** [d60d6ed](https://gitlab.com/Odyseus/CinnamonTools/commit/d60d6ed)
+- **Author:** Odyseus
+
+```
+- Implemented *wizard* to apply effects on-the-fly (I call it daltonizer). Now one can assign just one keyboard shortcut to invoke the *wizard* to be able to apply any effect to a focused window or the screen.
+- Redesigned the color inspector. I used the same technique that I used in the daltonizer *wizard* that allows me to use animations when the color inspector banner is moved about the screen.
+- Moved the Name that color library and the color inspector into their own files.
+- Corrected the shader file after performing tests inside a virtual machine. It seems that the shader language is susceptible to certain combination of software versions and/or hardware.
+- Reorganized the settings window.
+- Added option to configure the animation time of the color inspector banner.
+- Added notification that informs when the color information retrieved by the color inspector is copied to the clipboard.
+- Corrected some import errors that prevented the effects to be applied.
+- Implemented themes for the daltonizer and color inspector GUIs. The default theme is *theme agnostic*. This means that the currently in use Cinnamon theme is used to apply some basic styling. The rest of the style sheet used by this extension just changes font styling and elements sizes.
+
+```
+
+***
+
 - **Date:** Tue, 16 Apr 2019 14:19:55 -0300
 - **Commit:** [56e7d49](https://gitlab.com/Odyseus/CinnamonTools/commit/56e7d49)
 - **Author:** Odyseus

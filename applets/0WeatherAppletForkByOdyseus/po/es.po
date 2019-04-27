@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-04-16 14:15-0300\n"
-"PO-Revision-Date: 2019-04-16 00:35-0300\n"
+"POT-Creation-Date: 2019-04-26 14:06-0300\n"
+"PO-Revision-Date: 2019-04-26 14:08-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Español; Castellano <zodiac_es@yahoo.es>\n"
 "Language: es\n"
@@ -18,19 +18,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:328
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:104
+msgid "Information related to this specific section"
+msgstr "Información relacionada con esta sección específica."
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:355
 msgid "Choose an Icon"
 msgstr "Elegir un ícono"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:331 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:675 ../../__app__/data/python_modules/xlets_settings/__init__.py:707
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:358 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:706 ../../__app__/data/python_modules/xlets_settings/__init__.py:738
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:332
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:359
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:335
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:362
 msgid "Image files"
 msgstr "Archivos de imagen"
 
@@ -118,53 +122,53 @@ msgstr "Agregar nueva entrada"
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:676 ../../__app__/data/python_modules/xlets_settings/__init__.py:708
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:707 ../../__app__/data/python_modules/xlets_settings/__init__.py:739
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:302
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:333
 #, python-format
 msgid "Settings for %s"
 msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:521
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:552
 msgid "Import from a file"
 msgstr "Importar desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:525
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:556
 msgid "Export to a file"
 msgstr "Exportar hacia un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:529
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
 msgid "Reset to defaults"
 msgstr "Restablecer a los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:539 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:271 applet.js:1323
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:570 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:271 applet.js:1327
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:591
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:703
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681 ../../__app__/data/python_modules/xlets_settings/__init__.py:712
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:712 ../../__app__/data/python_modules/xlets_settings/__init__.py:743
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:704
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:735
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:736
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:767
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:738
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:769
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
@@ -230,7 +234,7 @@ msgstr "Idioma soportado por OpenWeatherMap."
 msgid "Language supported by WeatherBit."
 msgstr "Idioma soportado por WeatherBit."
 
-#: locationsManager.py:25 z_create_localized_help.py:129 applet.js:987 weather_providers/WeatherBit.js:122
+#: locationsManager.py:25 z_create_localized_help.py:129 applet.js:991 weather_providers/WeatherBit.js:122
 msgid "Location name"
 msgstr "Nombre de la ubicación"
 
@@ -359,7 +363,7 @@ msgstr "La fecha en la que se publicaron los datos meteorológicos siempre se mu
 msgid "More customization options (current weather icon size, forecasts icon size, etc.)."
 msgstr "Más opciones de personalización (tamaño del icono del tiempo actual, tamaño del icono de pronósticos, etc.)."
 
-#: z_create_localized_help.py:55 applet.js:144
+#: z_create_localized_help.py:55 applet.js:146
 msgid "This applet requires valid credentials from any of the weather provider services for it to work."
 msgstr "Este applet requiere credenciales válidas de cualquiera de los servicios proveedores de clima para que funcione."
 
@@ -598,11 +602,11 @@ msgstr "Un tema de icono personalizado puede contener imágenes SVG o PNG; aunqu
 msgid "A custom icon theme should contain 232 icons to support both full color and symbolic icons. Or half of that (116) to support one or the other."
 msgstr "Un tema de ícono personalizado debe contener 232 íconos para soportar íconos a todo color y simbólicos. O la mitad de eso (116) para soportar a uno u otro."
 
-#: applet.js:87
+#: applet.js:88
 msgid "Click to open"
 msgstr "Click para abrir"
 
-#: applet.js:143
+#: applet.js:145
 msgid "Read the help page"
 msgstr "Leer la página de ayuda"
 
@@ -635,52 +639,52 @@ msgstr "Hacer clic para actualizar los datos meteorológicos."
 msgid "Selected path for custom icon theme doesn't exist!"
 msgstr "¡La ruta seleccionada para el tema de icono personalizado no existe!"
 
-#: applet.js:662
+#: applet.js:666
 msgid "No current location set!"
 msgstr "¡No hay ubicación actual establecida!"
 
-#: applet.js:712
+#: applet.js:716
 msgid "Error initializing weather provider!"
 msgstr "¡Error al inicializar el proveedor de clima!"
 
-#: applet.js:775
+#: applet.js:779
 msgid "No weather data available!"
 msgstr "¡No hay datos meteorológicos disponibles!"
 
-#: applet.js:883
+#: applet.js:887
 #, javascript-format
 msgid "Powered by %s"
 msgstr "Energizado por %s"
 
-#: applet.js:1041
+#: applet.js:1045
 msgid "Current location"
 msgstr "Ubicación actual"
 
-#: applet.js:1054
+#: applet.js:1058
 msgid "Open location weather details page"
 msgstr "Abrir página de detalles del clima"
 
-#: applet.js:1241
+#: applet.js:1245
 msgid "Not available"
 msgstr "No disponible"
 
-#: applet.js:1633
+#: applet.js:1637
 msgid "Error trying to get theme"
 msgstr "Error al intentar obtener el tema"
 
-#: applet.js:1641
+#: applet.js:1645
 msgid "Stylesheet parse error"
 msgstr "Error de análisis de hoja de estilo"
 
-#: applet.js:1651
+#: applet.js:1655
 msgid "Error unloading stylesheet"
 msgstr "Error al descargar la hoja de estilos"
 
-#: applet.js:1725
+#: applet.js:1729
 msgid "Debugging toggled"
 msgstr "Depuración activada"
 
-#: applet.js:1726
+#: applet.js:1730
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr "Recordar reiniciar Cinnamon para habilitar/deshabilitar completamente esta opción."
 

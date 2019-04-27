@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Fri, 26 Apr 2019 02:51:04 -0300
+- **Commit:** [ad6f29a](https://gitlab.com/Odyseus/CinnamonTools/commit/ad6f29a)
+- **Author:** Odyseus
+
+```
+- Fixed windows thumbnails not showing up due to upstream fix that caused more problems than solutions.
+
+```
+
+***
+
 - **Date:** Tue, 5 Mar 2019 03:16:33 -0300
 - **Commit:** [beeb461](https://gitlab.com/Odyseus/CinnamonTools/commit/beeb461)
 - **Author:** Odyseus

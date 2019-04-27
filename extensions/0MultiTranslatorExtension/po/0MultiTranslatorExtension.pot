@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MultiTranslatorExtension VERSION\n"
-"POT-Creation-Date: 2019-04-16 14:20-0300\n"
+"POT-Creation-Date: 2019-04-27 15:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 settings.py:1367 utils.js:3638
+#: ../../__app__/python_modules/localized_help_creator.py:318 settings.py:1367 utils.js:3634
 msgid "Help"
 msgstr ""
 
@@ -106,431 +106,431 @@ msgstr ""
 msgid "Multi Translator"
 msgstr ""
 
-#: settings.py:41 utils.js:227
+#: settings.py:41 utils.js:223
 msgid "Detect language"
 msgstr ""
 
-#: settings.py:42 utils.js:228
+#: settings.py:42 utils.js:224
 msgid "Afrikaans"
 msgstr ""
 
-#: settings.py:43 utils.js:229
+#: settings.py:43 utils.js:225
 msgid "Amharic"
 msgstr ""
 
-#: settings.py:44 utils.js:230
+#: settings.py:44 utils.js:226
 msgid "Arabic"
 msgstr ""
 
-#: settings.py:45 utils.js:231
+#: settings.py:45 utils.js:227
 msgid "Azerbaijani"
 msgstr ""
 
-#: settings.py:46 utils.js:232
+#: settings.py:46 utils.js:228
 msgid "Belarusian"
 msgstr ""
 
-#: settings.py:47 utils.js:233
+#: settings.py:47 utils.js:229
 msgid "Bulgarian"
 msgstr ""
 
-#: settings.py:48 utils.js:234
+#: settings.py:48 utils.js:230
 msgid "Bengali"
 msgstr ""
 
-#: settings.py:49 utils.js:235
+#: settings.py:49 utils.js:231
 msgid "Bosnian (Y)"
 msgstr ""
 
-#: settings.py:50 utils.js:236
+#: settings.py:50 utils.js:232
 msgid "Catalan"
 msgstr ""
 
-#: settings.py:51 utils.js:237
+#: settings.py:51 utils.js:233
 msgid "Chichewa"
 msgstr ""
 
-#: settings.py:52 utils.js:238
+#: settings.py:52 utils.js:234
 msgid "Corsican"
 msgstr ""
 
-#: settings.py:53 utils.js:239
+#: settings.py:53 utils.js:235
 msgid "Czech"
 msgstr ""
 
-#: settings.py:54 utils.js:240
+#: settings.py:54 utils.js:236
 msgid "Welsh"
 msgstr ""
 
-#: settings.py:55 utils.js:241
+#: settings.py:55 utils.js:237
 msgid "Danish"
 msgstr ""
 
-#: settings.py:56 utils.js:242
+#: settings.py:56 utils.js:238
 msgid "German"
 msgstr ""
 
-#: settings.py:57 utils.js:243
+#: settings.py:57 utils.js:239
 msgid "Greek"
 msgstr ""
 
-#: settings.py:58 utils.js:244
+#: settings.py:58 utils.js:240
 msgid "English"
 msgstr ""
 
-#: settings.py:59 utils.js:245
+#: settings.py:59 utils.js:241
 msgid "Esperanto"
 msgstr ""
 
-#: settings.py:60 utils.js:246
+#: settings.py:60 utils.js:242
 msgid "Spanish"
 msgstr ""
 
-#: settings.py:61 utils.js:247
+#: settings.py:61 utils.js:243
 msgid "Estonian"
 msgstr ""
 
-#: settings.py:62 utils.js:248
+#: settings.py:62 utils.js:244
 msgid "Basque"
 msgstr ""
 
-#: settings.py:63 utils.js:249
+#: settings.py:63 utils.js:245
 msgid "Persian"
 msgstr ""
 
-#: settings.py:64 utils.js:250
+#: settings.py:64 utils.js:246
 msgid "Finnish"
 msgstr ""
 
-#: settings.py:65 utils.js:251
+#: settings.py:65 utils.js:247
 msgid "French"
 msgstr ""
 
-#: settings.py:66 utils.js:252
+#: settings.py:66 utils.js:248
 msgid "Frisian"
 msgstr ""
 
-#: settings.py:67 utils.js:253
+#: settings.py:67 utils.js:249
 msgid "Irish"
 msgstr ""
 
-#: settings.py:68 utils.js:254
+#: settings.py:68 utils.js:250
 msgid "Scots Gaelic"
 msgstr ""
 
-#: settings.py:69 utils.js:255
+#: settings.py:69 utils.js:251
 msgid "Galician"
 msgstr ""
 
-#: settings.py:70 utils.js:256
+#: settings.py:70 utils.js:252
 msgid "Gujarati"
 msgstr ""
 
-#: settings.py:71 utils.js:257
+#: settings.py:71 utils.js:253
 msgid "Hausa"
 msgstr ""
 
-#: settings.py:72 utils.js:258
+#: settings.py:72 utils.js:254
 msgid "Hawaiian"
 msgstr ""
 
-#: settings.py:73 utils.js:259
+#: settings.py:73 utils.js:255
 msgid "Hebrew (Y)"
 msgstr ""
 
-#: settings.py:74 utils.js:260
+#: settings.py:74 utils.js:256
 msgid "Hindi"
 msgstr ""
 
-#: settings.py:75 utils.js:261
+#: settings.py:75 utils.js:257
 msgid "Hmong"
 msgstr ""
 
-#: settings.py:76 utils.js:262
+#: settings.py:76 utils.js:258
 msgid "Croatian"
 msgstr ""
 
-#: settings.py:77 utils.js:263
+#: settings.py:77 utils.js:259
 msgid "Haitian Creole"
 msgstr ""
 
-#: settings.py:78 utils.js:264
+#: settings.py:78 utils.js:260
 msgid "Hungarian"
 msgstr ""
 
-#: settings.py:79 utils.js:265
+#: settings.py:79 utils.js:261
 msgid "Armenian"
 msgstr ""
 
-#: settings.py:80 utils.js:266
+#: settings.py:80 utils.js:262
 msgid "Indonesian"
 msgstr ""
 
-#: settings.py:81 utils.js:267
+#: settings.py:81 utils.js:263
 msgid "Igbo"
 msgstr ""
 
-#: settings.py:82 utils.js:268
+#: settings.py:82 utils.js:264
 msgid "Icelandic"
 msgstr ""
 
-#: settings.py:83 utils.js:269
+#: settings.py:83 utils.js:265
 msgid "Italian"
 msgstr ""
 
-#: settings.py:84 utils.js:270
+#: settings.py:84 utils.js:266
 msgid "Hebrew"
 msgstr ""
 
-#: settings.py:85 utils.js:271
+#: settings.py:85 utils.js:267
 msgid "Japanese"
 msgstr ""
 
-#: settings.py:86 utils.js:272
+#: settings.py:86 utils.js:268
 msgid "Javanese"
 msgstr ""
 
-#: settings.py:87 utils.js:273
+#: settings.py:87 utils.js:269
 msgid "Georgian"
 msgstr ""
 
-#: settings.py:88 utils.js:274
+#: settings.py:88 utils.js:270
 msgid "Kazakh"
 msgstr ""
 
-#: settings.py:89 utils.js:275
+#: settings.py:89 utils.js:271
 msgid "Khmer"
 msgstr ""
 
-#: settings.py:90 utils.js:276
+#: settings.py:90 utils.js:272
 msgid "Kannada"
 msgstr ""
 
-#: settings.py:91 utils.js:277
+#: settings.py:91 utils.js:273
 msgid "Korean"
 msgstr ""
 
-#: settings.py:92 utils.js:278
+#: settings.py:92 utils.js:274
 msgid "Kurdish (Kurmanji)"
 msgstr ""
 
-#: settings.py:93 utils.js:279
+#: settings.py:93 utils.js:275
 msgid "Kyrgyz"
 msgstr ""
 
-#: settings.py:94 utils.js:280
+#: settings.py:94 utils.js:276
 msgid "Latin"
 msgstr ""
 
-#: settings.py:95 utils.js:281
+#: settings.py:95 utils.js:277
 msgid "Luxembourgish"
 msgstr ""
 
-#: settings.py:96 utils.js:282
+#: settings.py:96 utils.js:278
 msgid "Lao"
 msgstr ""
 
-#: settings.py:97 utils.js:283
+#: settings.py:97 utils.js:279
 msgid "Lithuanian"
 msgstr ""
 
-#: settings.py:98 utils.js:284
+#: settings.py:98 utils.js:280
 msgid "Latvian"
 msgstr ""
 
-#: settings.py:99 utils.js:285
+#: settings.py:99 utils.js:281
 msgid "Malagasy"
 msgstr ""
 
-#: settings.py:100 utils.js:286
+#: settings.py:100 utils.js:282
 msgid "Maori"
 msgstr ""
 
-#: settings.py:101 utils.js:287
+#: settings.py:101 utils.js:283
 msgid "Macedonian"
 msgstr ""
 
-#: settings.py:102 utils.js:288
+#: settings.py:102 utils.js:284
 msgid "Malayalam"
 msgstr ""
 
-#: settings.py:103 utils.js:289
+#: settings.py:103 utils.js:285
 msgid "Mongolian"
 msgstr ""
 
-#: settings.py:104 utils.js:290
+#: settings.py:104 utils.js:286
 msgid "Marathi"
 msgstr ""
 
-#: settings.py:105 utils.js:291
+#: settings.py:105 utils.js:287
 msgid "Malay"
 msgstr ""
 
-#: settings.py:106 utils.js:292
+#: settings.py:106 utils.js:288
 msgid "Maltese"
 msgstr ""
 
-#: settings.py:107 utils.js:293
+#: settings.py:107 utils.js:289
 msgid "Myanmar (Burmese)"
 msgstr ""
 
-#: settings.py:108 utils.js:294
+#: settings.py:108 utils.js:290
 msgid "Nepali"
 msgstr ""
 
-#: settings.py:109 utils.js:295
+#: settings.py:109 utils.js:291
 msgid "Dutch"
 msgstr ""
 
-#: settings.py:110 utils.js:296
+#: settings.py:110 utils.js:292
 msgid "Norwegian"
 msgstr ""
 
-#: settings.py:111 utils.js:297
+#: settings.py:111 utils.js:293
 msgid "Cebuano"
 msgstr ""
 
-#: settings.py:112 utils.js:298
+#: settings.py:112 utils.js:294
 msgid "Punjabi"
 msgstr ""
 
-#: settings.py:113 utils.js:299
+#: settings.py:113 utils.js:295
 msgid "Polish"
 msgstr ""
 
-#: settings.py:114 utils.js:300
+#: settings.py:114 utils.js:296
 msgid "Pashto"
 msgstr ""
 
-#: settings.py:115 utils.js:301
+#: settings.py:115 utils.js:297
 msgid "Portuguese"
 msgstr ""
 
-#: settings.py:116 utils.js:302
+#: settings.py:116 utils.js:298
 msgid "Romanian"
 msgstr ""
 
-#: settings.py:117 utils.js:303
+#: settings.py:117 utils.js:299
 msgid "Russian"
 msgstr ""
 
-#: settings.py:118 utils.js:304
+#: settings.py:118 utils.js:300
 msgid "Sindhi"
 msgstr ""
 
-#: settings.py:119 utils.js:305
+#: settings.py:119 utils.js:301
 msgid "Sinhala"
 msgstr ""
 
-#: settings.py:120 utils.js:306
+#: settings.py:120 utils.js:302
 msgid "Slovak"
 msgstr ""
 
-#: settings.py:121 utils.js:307
+#: settings.py:121 utils.js:303
 msgid "Slovenian"
 msgstr ""
 
-#: settings.py:122 utils.js:308
+#: settings.py:122 utils.js:304
 msgid "Samoan"
 msgstr ""
 
-#: settings.py:123 utils.js:309
+#: settings.py:123 utils.js:305
 msgid "Shona"
 msgstr ""
 
-#: settings.py:124 utils.js:310
+#: settings.py:124 utils.js:306
 msgid "Somali"
 msgstr ""
 
-#: settings.py:125 utils.js:311
+#: settings.py:125 utils.js:307
 msgid "Albanian"
 msgstr ""
 
-#: settings.py:126 utils.js:312
+#: settings.py:126 utils.js:308
 msgid "Serbian"
 msgstr ""
 
-#: settings.py:127 utils.js:313
+#: settings.py:127 utils.js:309
 msgid "Sesotho"
 msgstr ""
 
-#: settings.py:128 utils.js:314
+#: settings.py:128 utils.js:310
 msgid "Sundanese"
 msgstr ""
 
-#: settings.py:129 utils.js:315
+#: settings.py:129 utils.js:311
 msgid "Swedish"
 msgstr ""
 
-#: settings.py:130 utils.js:316
+#: settings.py:130 utils.js:312
 msgid "Swahili"
 msgstr ""
 
-#: settings.py:131 utils.js:317
+#: settings.py:131 utils.js:313
 msgid "Tamil"
 msgstr ""
 
-#: settings.py:132 utils.js:318
+#: settings.py:132 utils.js:314
 msgid "Telugu"
 msgstr ""
 
-#: settings.py:133 utils.js:319
+#: settings.py:133 utils.js:315
 msgid "Tajik"
 msgstr ""
 
-#: settings.py:134 utils.js:320
+#: settings.py:134 utils.js:316
 msgid "Thai"
 msgstr ""
 
-#: settings.py:135 utils.js:321
+#: settings.py:135 utils.js:317
 msgid "Filipino"
 msgstr ""
 
-#: settings.py:136 utils.js:322
+#: settings.py:136 utils.js:318
 msgid "Turkish"
 msgstr ""
 
-#: settings.py:137 utils.js:323
+#: settings.py:137 utils.js:319
 msgid "Ukrainian"
 msgstr ""
 
-#: settings.py:138 utils.js:324
+#: settings.py:138 utils.js:320
 msgid "Urdu"
 msgstr ""
 
-#: settings.py:139 utils.js:325
+#: settings.py:139 utils.js:321
 msgid "Uzbek"
 msgstr ""
 
-#: settings.py:140 utils.js:326
+#: settings.py:140 utils.js:322
 msgid "Vietnamese"
 msgstr ""
 
-#: settings.py:141 utils.js:327
+#: settings.py:141 utils.js:323
 msgid "Xhosa"
 msgstr ""
 
-#: settings.py:142 utils.js:328
+#: settings.py:142 utils.js:324
 msgid "Yiddish"
 msgstr ""
 
-#: settings.py:143 utils.js:329
+#: settings.py:143 utils.js:325
 msgid "Yoruba"
 msgstr ""
 
-#: settings.py:144 utils.js:330
+#: settings.py:144 utils.js:326
 msgid "Chinese (Y)"
 msgstr ""
 
-#: settings.py:145 utils.js:331
+#: settings.py:145 utils.js:327
 msgid "Chinese Simplified"
 msgstr ""
 
-#: settings.py:146 utils.js:332
+#: settings.py:146 utils.js:328
 msgid "Chinese Traditional"
 msgstr ""
 
-#: settings.py:147 utils.js:333
+#: settings.py:147 utils.js:329
 msgid "Zulu"
 msgstr ""
 
@@ -554,7 +554,7 @@ msgstr ""
 msgid "Providers marked with (*) require translate-shell package to work."
 msgstr ""
 
-#: settings.py:167 utils.js:3738
+#: settings.py:167 utils.js:3734
 msgid "See the extended help of this extension for more information."
 msgstr ""
 
@@ -682,7 +682,7 @@ msgstr ""
 msgid "What percentage of screen height should the translation dialog fill."
 msgstr ""
 
-#: settings.py:314 extension.js:1160 extension.js:1163 utils.js:2864
+#: settings.py:314 extension.js:1122 extension.js:1125 utils.js:2860
 msgid "History"
 msgstr ""
 
@@ -1057,116 +1057,116 @@ msgstr ""
 msgid "To import/export settings, the **dconf** command needs to be available on the system."
 msgstr ""
 
-#: extension.js:167 extension.js:434
+#: extension.js:147 extension.js:414
 msgid "Choose source language"
 msgstr ""
 
-#: extension.js:175 extension.js:464
+#: extension.js:155 extension.js:444
 msgid "Choose target language"
 msgstr ""
 
-#: extension.js:225
+#: extension.js:205
 msgid "There is nothing to copy."
 msgstr ""
 
-#: extension.js:240
+#: extension.js:220
 msgid "Translated text copied to clipboard."
 msgstr ""
 
-#: extension.js:290
+#: extension.js:270
 #, javascript-format
 msgid "Go to %s's website"
 msgstr ""
 
-#: extension.js:292
+#: extension.js:272
 #, javascript-format
 msgid "Service provided by %s"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "»From« source language to target language with service provider."
-#: extension.js:406 extension.js:429
+#: extension.js:386 extension.js:409
 msgid "From"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "From source language »to« target language with service provider."
-#: extension.js:414 extension.js:459
+#: extension.js:394 extension.js:439
 msgid "to"
 msgstr ""
 
-#: extension.js:489
+#: extension.js:469
 msgid "Swap languages"
 msgstr ""
 
-#: extension.js:513
+#: extension.js:493
 msgid "Choose translation provider"
 msgstr ""
 
-#: extension.js:569
+#: extension.js:549
 msgid "Go!"
 msgstr ""
 
-#: extension.js:570
+#: extension.js:550
 msgid "Translate text (<Ctrl> + <Enter>)"
 msgstr ""
 
-#: extension.js:587
+#: extension.js:567
 msgid "Main menu"
 msgstr ""
 
-#: extension.js:601
+#: extension.js:581
 msgid "Preferences"
 msgstr ""
 
-#: extension.js:609
+#: extension.js:589
 msgid "Translation history"
 msgstr ""
 
-#: extension.js:617
+#: extension.js:597
 msgid "Check dependencies"
 msgstr ""
 
 #. Just in case.
-#: extension.js:625 utils.js:3639
+#: extension.js:605 utils.js:3635
 msgid "Extended help"
 msgstr ""
 
-#: extension.js:661
+#: extension.js:641
 msgid "Quick help"
 msgstr ""
 
-#: extension.js:676
+#: extension.js:656
 msgid "Quit"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "From source language to target language »with« service provider."
-#: extension.js:703
+#: extension.js:683
 msgid "with"
 msgstr ""
 
-#: extension.js:772
+#: extension.js:752
 msgid "Translating..."
 msgstr ""
 
-#: extension.js:830
+#: extension.js:810
 msgid "Clipboard is empty."
 msgstr ""
 
-#: extension.js:1034
+#: extension.js:996
 msgid "Error trying to get theme"
 msgstr ""
 
-#: extension.js:1042
+#: extension.js:1004
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: extension.js:1052
+#: extension.js:1014
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: translation_providers/google_translation_provider.js:86 translation_providers/transltr_translation_provider.js:76 translation_providers/yandex_translation_provider.js:282 utils.js:2378
+#: translation_providers/google_translation_provider.js:86 translation_providers/transltr_translation_provider.js:76 translation_providers/yandex_translation_provider.js:282 utils.js:2374
 msgid "Error"
 msgstr ""
 
@@ -1202,118 +1202,118 @@ msgstr ""
 msgid "No Yandex API keys were found!!!"
 msgstr ""
 
-#: translation_providers/yandex_translation_provider.js:346 utils.js:3617 utils.js:3634
+#: translation_providers/yandex_translation_provider.js:346 utils.js:3613 utils.js:3630
 msgid "Check this extension help file for instructions."
 msgstr ""
 
-#: utils.js:465
+#: utils.js:461
 #, javascript-format
 msgid "Schema %s could not be found for extension %s."
 msgstr ""
 
-#: utils.js:466
+#: utils.js:462
 msgid "Please check your installation."
 msgstr ""
 
-#: utils.js:988
+#: utils.js:984
 msgid "Icon and label are both false."
 msgstr ""
 
-#: utils.js:1393
+#: utils.js:1389
 msgid "Shortcuts"
 msgstr ""
 
-#: utils.js:1395
+#: utils.js:1391
 msgid "Open translator dialog."
 msgstr ""
 
-#: utils.js:1397
+#: utils.js:1393
 msgid "Open translator dialog and translate text from clipboard."
 msgstr ""
 
-#: utils.js:1399
+#: utils.js:1395
 msgid "Open translator dialog and translate from primary selection."
 msgstr ""
 
-#: utils.js:1401
+#: utils.js:1397
 msgid "Translate text."
 msgstr ""
 
-#: utils.js:1403
+#: utils.js:1399
 msgid "Force text translation. Ignores translation history."
 msgstr ""
 
-#: utils.js:1405
+#: utils.js:1401
 msgid "Copy translated text to clipboard."
 msgstr ""
 
-#: utils.js:1407
+#: utils.js:1403
 msgid "Swap languages."
 msgstr ""
 
-#: utils.js:1409
+#: utils.js:1405
 msgid "Reset languages to default."
 msgstr ""
 
-#: utils.js:1411
+#: utils.js:1407
 msgid "Close dialog."
 msgstr ""
 
-#: utils.js:1556
+#: utils.js:1552
 msgid "Type to search..."
 msgstr ""
 
-#: utils.js:1771
+#: utils.js:1767
 msgid "Most used languages​​."
 msgstr ""
 
-#: utils.js:2253
+#: utils.js:2249
 #, javascript-format
 msgid "Can't load preferences for %s"
 msgstr ""
 
 #. jshint ignore:line
-#: utils.js:2436 utils.js:2440
+#: utils.js:2432 utils.js:2436
 msgid "Not implemented"
 msgstr ""
 
-#: utils.js:3422
+#: utils.js:3418
 msgid "Error executing translate-shell"
 msgstr ""
 
-#: utils.js:3615 utils.js:3632
+#: utils.js:3611 utils.js:3628
 msgid "Unmet dependencies found!!!"
 msgstr ""
 
-#: utils.js:3618
+#: utils.js:3614
 msgid "It can be accessed from the translation dialog main menu."
 msgstr ""
 
-#: utils.js:3623
+#: utils.js:3619
 msgid "All dependencies seem to be met."
 msgstr ""
 
-#: utils.js:3635
+#: utils.js:3631
 msgid "This information has also been logged into the ~/.cinnamon/glass.log file."
 msgstr ""
 
-#: utils.js:3679
+#: utils.js:3675
 msgid "Press <Esc> to close"
 msgstr ""
 
-#: utils.js:3734
+#: utils.js:3730
 msgid "This translation provider doesn't require translate-shell to work."
 msgstr ""
 
-#: utils.js:3737
+#: utils.js:3733
 msgid "This translation provider requires translate-shell to work."
 msgstr ""
 
-#: utils.js:3961
+#: utils.js:3957
 msgid "Error while parsing data"
 msgstr ""
 
-#: utils.js:3993
+#: utils.js:3989
 msgid "Error while translating, check your internet connection"
 msgstr ""
 

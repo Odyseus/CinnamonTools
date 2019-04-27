@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Thu, 25 Apr 2019 02:06:28 -0300
+- **Commit:** [5ddbc74](https://gitlab.com/Odyseus/CinnamonTools/commit/5ddbc74)
+- **Author:** Odyseus
+
+```
+- Added a signal manager to manage signal connections that weren't managed.
+- Added settings finalization on applet removal.
+
+```
+
+***
+
 - **Date:** Tue, 16 Apr 2019 02:57:35 -0300
 - **Commit:** [ef59ee2](https://gitlab.com/Odyseus/CinnamonTools/commit/ef59ee2)
 - **Author:** Odyseus

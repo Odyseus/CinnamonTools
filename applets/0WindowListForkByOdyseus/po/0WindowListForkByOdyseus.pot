@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-04-16 14:20-0300\n"
+"POT-Creation-Date: 2019-04-27 15:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1159
+#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1161
 msgid "Help"
 msgstr ""
 
@@ -101,73 +101,73 @@ msgstr ""
 msgid "Inverted menu on top panel"
 msgstr ""
 
-#: utils.js:1011
+#: utils.js:1013
 msgid "Preferences"
 msgstr ""
 
-#: utils.js:1025
+#: utils.js:1027
 msgid "Move to the other monitor"
 msgstr ""
 
-#: utils.js:1036
+#: utils.js:1038
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr ""
 
-#: utils.js:1047
+#: utils.js:1049
 msgid "Only on this workspace"
 msgstr ""
 
-#: utils.js:1053
+#: utils.js:1055
 msgid "Visible on all workspaces"
 msgstr ""
 
-#: utils.js:1059
+#: utils.js:1061
 msgid "Move to another workspace"
 msgstr ""
 
 #. Close all/others
-#: utils.js:1089
+#: utils.js:1091
 msgid "Close all"
 msgstr ""
 
-#: utils.js:1099
+#: utils.js:1101
 msgid "Close others"
 msgstr ""
 
-#: utils.js:1114
+#: utils.js:1116
 msgid "Restore to full opacity"
 msgstr ""
 
-#: utils.js:1122
+#: utils.js:1124
 msgid "Restore"
 msgstr ""
 
-#: utils.js:1127
+#: utils.js:1129
 msgid "Minimize"
 msgstr ""
 
-#: utils.js:1135
+#: utils.js:1137
 msgid "Unmaximize"
 msgstr ""
 
-#: utils.js:1140
+#: utils.js:1142
 msgid "Maximize"
 msgstr ""
 
-#: utils.js:1147
+#: utils.js:1149
 msgid "Close"
 msgstr ""
 
-#: utils.js:1166
+#: utils.js:1168
 msgid "About..."
 msgstr ""
 
-#: utils.js:1171
+#: utils.js:1173
 msgid "Configure..."
 msgstr ""
 
-#: utils.js:1187
+#: utils.js:1189
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""

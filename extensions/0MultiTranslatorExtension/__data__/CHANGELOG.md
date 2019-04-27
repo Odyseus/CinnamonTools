@@ -4,6 +4,27 @@
 
 ***
 
+- **Date:** Thu, 25 Apr 2019 02:00:16 -0300
+- **Commit:** [f07f501](https://gitlab.com/Odyseus/CinnamonTools/commit/f07f501)
+- **Author:** Odyseus
+
+```
+- Added a signal manager to manage existent signal connections and to handle some signals that weren't managed.
+
+TODO
+
+- Re-write it to use the xlets settings framework and Cinnamon's native settings instead of gsettings.
+- Fix the super annoying mismatch of GUI behavior between Cinnamon versions. Specifically the misalignment of the grid elements inside the translator dialog.
+- Correct a lot of the nonsense that I added when I initially ported this extension from its original. After three years, it is likely that I have learned something. LOL
+    - The **enable-shortcuts** setting is useless. Just register the keybindings that were set; just like I have been doing in all my other xlets.
+    - Implement the theme loading method that I have been using in all of my other xlets.
+    - Re-implement the way **loggin-enabled** works. Maybe implement `prototypeDebugger` but not before I figure out how to toggle its state without using a gsetting. ¬¬
+    - Redesign the default theme so it uses classes present on Cinnamon's theme.
+
+```
+
+***
+
 - **Date:** Thu, 17 Jan 2019 14:18:16 -0300
 - **Commit:** [f06a50e](https://gitlab.com/Odyseus/CinnamonTools/commit/f06a50e)
 - **Author:** Odyseus

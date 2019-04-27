@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-04-16 00:07-0300\n"
+"POT-Creation-Date: 2019-04-26 14:06-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -14,19 +14,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:328
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:104
+msgid "Information related to this specific section"
+msgstr "Información relacionada con esta sección específica."
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:355
 msgid "Choose an Icon"
 msgstr "Elegir un ícono"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:331 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:675 ../../__app__/data/python_modules/xlets_settings/__init__.py:707
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:358 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:706 ../../__app__/data/python_modules/xlets_settings/__init__.py:738
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:332
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:359
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:335
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:362
 msgid "Image files"
 msgstr "Archivos de imagen"
 
@@ -114,53 +118,53 @@ msgstr "Agregar nueva entrada"
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:676 ../../__app__/data/python_modules/xlets_settings/__init__.py:708
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:707 ../../__app__/data/python_modules/xlets_settings/__init__.py:739
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:302
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:333
 #, python-format
 msgid "Settings for %s"
 msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:521
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:552
 msgid "Import from a file"
 msgstr "Importar desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:525
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:556
 msgid "Export to a file"
 msgstr "Exportar hacia un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:529
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
 msgid "Reset to defaults"
 msgstr "Restablecer a los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:539 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:312
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:570 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:310
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:591
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:703
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681 ../../__app__/data/python_modules/xlets_settings/__init__.py:712
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:712 ../../__app__/data/python_modules/xlets_settings/__init__.py:743
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:704
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:735
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:736
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:767
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:738
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:769
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
@@ -525,144 +529,144 @@ msgstr "Simplemente establezca el ejecutable de terminal de su elección en la v
 msgid "There is a folder named **icons** inside this applet directory. It contains several symbolic icons (most of them are from the Faenza icon theme) and each icon can be used directly by name (on a custom launcher, for example)."
 msgstr "Existe una carpeta llamada **icons** dentro dentro del directorio de este applet. Dicha carpeta contiene varios íconos simbólicos (la mayoría proviene del tema Faenza) y cada ícono puede ser usado directamente por nombre (en un lanzador personalizado, por ejemplo)."
 
-#: applet.js:59
+#: applet.js:60
 msgid "Menu"
 msgstr "Menú"
 
-#: applet.js:295
+#: applet.js:293
 msgid "Open the menu editor"
 msgstr "Abrir el editor de menús"
 
-#: applet.js:300
+#: applet.js:298
 msgid "Edit custom launchers"
 msgstr "Editar lanzadores personalizados"
 
-#: applet.js:1444
+#: applet.js:1440
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: applet.js:1470
+#: applet.js:1466
 msgid "Recently Used"
 msgstr "Recientemente Usadas"
 
-#: applet.js:1500
+#: applet.js:1496
 msgid "All Applications"
 msgstr "Todas las aplicaciones"
 
-#: applet.js:1582
+#: applet.js:1578
 msgid "No search results"
 msgstr "No hay resultados de búsqueda"
 
-#: applet.js:1604
+#: applet.js:1600
 msgid "No recent applications"
 msgstr "Sin aplicaciones recientes"
 
-#: applet.js:1612
+#: applet.js:1608
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: applet.js:1782
+#: applet.js:1778
 msgid "Type to search..."
 msgstr "Escriba para buscar..."
 
-#: applet.js:2506 applet.js:2516
+#: applet.js:2502 applet.js:2512
 msgid "Categories"
 msgstr "Categorías"
 
-#: utils.js:637
+#: utils.js:638
 msgid "Add to panel"
 msgstr "Añadir al panel"
 
-#: utils.js:641
+#: utils.js:642
 msgid "Add this application to the Panel launchers applet."
 msgstr "Agregar esta aplicación a los Lanzadores del panel."
 
-#: utils.js:648
+#: utils.js:649
 msgid "Add to desktop"
 msgstr "Añadir al escritorio"
 
-#: utils.js:652
+#: utils.js:653
 msgid "Add this application to the Desktop."
 msgstr "Agregar un acceso directo a esta aplicación en el Escritorio."
 
-#: utils.js:660
+#: utils.js:661
 msgid "Remove from favorites"
 msgstr "Quitar de favoritos"
 
-#: utils.js:664
+#: utils.js:665
 msgid "Remove application from your favorites."
 msgstr "Quitar aplicación de favoritos."
 
-#: utils.js:669
+#: utils.js:670
 msgid "Add to favorites"
 msgstr "Añadir a favoritos"
 
-#: utils.js:673
+#: utils.js:674
 msgid "Add application to your favorites."
 msgstr "Añadir esta aplicación a los favoritos."
 
-#: utils.js:681
+#: utils.js:682
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: utils.js:685
+#: utils.js:686
 msgid "Uninstall application from your system."
 msgstr "Desinstalar aplicación de su sistema."
 
-#: utils.js:692
+#: utils.js:693
 msgid "Run with NVIDIA GPU"
 msgstr "Ejecutar con GPU NVIDIA"
 
-#: utils.js:696
+#: utils.js:697
 msgid "Run application through optirun command (Bumblebee)."
 msgstr "Ejecutar aplicación a través del comando optirun (Bumblebee)."
 
-#: utils.js:703
+#: utils.js:704
 msgid "Run as root"
 msgstr "Ejecutar como root"
 
-#: utils.js:707
+#: utils.js:708
 msgid "Run application as root."
 msgstr "Ejecutar esta aplicación como root."
 
-#: utils.js:714
+#: utils.js:715
 msgid "Edit .desktop file"
 msgstr "Editar archivo .desktop"
 
-#: utils.js:718
+#: utils.js:719
 msgid "Edit this application .desktop file with a text editor."
 msgstr "Editar el archivo .desktop de esta aplicación con un editor de textos."
 
-#: utils.js:725
+#: utils.js:726
 msgid "Open .desktop file folder"
 msgstr "Abrir carpeta del archivo .desktop"
 
-#: utils.js:729
+#: utils.js:730
 msgid "Open the folder containg this application .desktop file."
 msgstr "Abrir la carpeta que contiene el archivo .desktop de esta aplicación."
 
-#: utils.js:736
+#: utils.js:737
 msgid "Run from terminal"
 msgstr "Ejecutar desde terminal"
 
-#: utils.js:740
+#: utils.js:741
 msgid "Run application from a terminal."
 msgstr "Ejecutar aplicación desde una terminal."
 
-#: utils.js:747
+#: utils.js:748
 msgid "Run from terminal as root"
 msgstr "Ejecutar desde terminal como root"
 
-#: utils.js:751
+#: utils.js:752
 msgid "Run application from a terminal as root."
 msgstr "Ejecutar aplicación desde una terminal como root."
 
-#: utils.js:1024
+#: utils.js:1025
 #, javascript-format
 msgid "Schema %s could not be found for xlet %s."
 msgstr "No se pudo encontrar el esquema %s para el xlet %s."
 
-#: utils.js:1025
+#: utils.js:1026
 msgid "Please check your installation."
 msgstr "Compruebe su instalación."
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-04-16 14:20-0300\n"
+"POT-Creation-Date: 2019-04-27 15:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,19 +15,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:328
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:104
+msgid "Information related to this specific section"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:355
 msgid "Choose an Icon"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:331 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:675 ../../__app__/data/python_modules/xlets_settings/__init__.py:707
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:358 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:706 ../../__app__/data/python_modules/xlets_settings/__init__.py:738
 msgid "_Cancel"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:332
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:359
 msgid "_Open"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:335
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:362
 msgid "Image files"
 msgstr ""
 
@@ -115,53 +119,53 @@ msgstr ""
 msgid "Edit entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:676 ../../__app__/data/python_modules/xlets_settings/__init__.py:708
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:707 ../../__app__/data/python_modules/xlets_settings/__init__.py:739
 msgid "_Save"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:302
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:333
 #, python-format
 msgid "Settings for %s"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:521
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:552
 msgid "Import from a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:525
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:556
 msgid "Export to a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:529
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
 msgid "Reset to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:539 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:271 applet.js:1323
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:570 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:271 applet.js:1327
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:591
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:703
 msgid "Select or enter file to export to"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681 ../../__app__/data/python_modules/xlets_settings/__init__.py:712
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:712 ../../__app__/data/python_modules/xlets_settings/__init__.py:743
 msgid "JSON files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:704
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:735
 msgid "Select a JSON file to import"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:736
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:767
 msgid "Trying to reset all settings!!!"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:738
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:769
 msgid "Reset all settings to their default values?"
 msgstr ""
 
@@ -227,7 +231,7 @@ msgstr ""
 msgid "Language supported by WeatherBit."
 msgstr ""
 
-#: locationsManager.py:25 z_create_localized_help.py:129 applet.js:987 weather_providers/WeatherBit.js:122
+#: locationsManager.py:25 z_create_localized_help.py:129 applet.js:991 weather_providers/WeatherBit.js:122
 msgid "Location name"
 msgstr ""
 
@@ -356,7 +360,7 @@ msgstr ""
 msgid "More customization options (current weather icon size, forecasts icon size, etc.)."
 msgstr ""
 
-#: z_create_localized_help.py:55 applet.js:144
+#: z_create_localized_help.py:55 applet.js:146
 msgid "This applet requires valid credentials from any of the weather provider services for it to work."
 msgstr ""
 
@@ -595,11 +599,11 @@ msgstr ""
 msgid "A custom icon theme should contain 232 icons to support both full color and symbolic icons. Or half of that (116) to support one or the other."
 msgstr ""
 
-#: applet.js:87
+#: applet.js:88
 msgid "Click to open"
 msgstr ""
 
-#: applet.js:143
+#: applet.js:145
 msgid "Read the help page"
 msgstr ""
 
@@ -632,52 +636,52 @@ msgstr ""
 msgid "Selected path for custom icon theme doesn't exist!"
 msgstr ""
 
-#: applet.js:662
+#: applet.js:666
 msgid "No current location set!"
 msgstr ""
 
-#: applet.js:712
+#: applet.js:716
 msgid "Error initializing weather provider!"
 msgstr ""
 
-#: applet.js:775
+#: applet.js:779
 msgid "No weather data available!"
 msgstr ""
 
-#: applet.js:883
+#: applet.js:887
 #, javascript-format
 msgid "Powered by %s"
 msgstr ""
 
-#: applet.js:1041
+#: applet.js:1045
 msgid "Current location"
 msgstr ""
 
-#: applet.js:1054
+#: applet.js:1058
 msgid "Open location weather details page"
 msgstr ""
 
-#: applet.js:1241
+#: applet.js:1245
 msgid "Not available"
 msgstr ""
 
-#: applet.js:1633
+#: applet.js:1637
 msgid "Error trying to get theme"
 msgstr ""
 
-#: applet.js:1641
+#: applet.js:1645
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: applet.js:1651
+#: applet.js:1655
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: applet.js:1725
+#: applet.js:1729
 msgid "Debugging toggled"
 msgstr ""
 
-#: applet.js:1726
+#: applet.js:1730
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr ""
 

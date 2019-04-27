@@ -4,6 +4,28 @@
 
 ***
 
+- **Date:** Fri, 26 Apr 2019 13:51:39 -0300
+- **Commit:** [5501d72](https://gitlab.com/Odyseus/CinnamonTools/commit/5501d72)
+- **Author:** Odyseus
+
+```
+- Added missing call to keybinding registration when the recorder device is set to any other than Cinnamon's.
+
+```
+
+***
+
+- **Date:** Thu, 25 Apr 2019 02:06:50 -0300
+- **Commit:** [373d11e](https://gitlab.com/Odyseus/CinnamonTools/commit/373d11e)
+- **Author:** Odyseus
+
+```
+- Added a signal manager to manage signal connections that weren't managed.
+
+```
+
+***
+
 - **Date:** Thu, 28 Feb 2019 20:03:45 -0300
 - **Commit:** [ee49e70](https://gitlab.com/Odyseus/CinnamonTools/commit/ee49e70)
 - **Author:** Odyseus

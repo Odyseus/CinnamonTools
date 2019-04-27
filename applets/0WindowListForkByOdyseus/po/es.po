@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-03-05 03:17-0300\n"
+"POT-Creation-Date: 2019-04-26 14:06-0300\n"
 "PO-Revision-Date: 2019-03-05 03:18-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1159
+#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1161
 msgid "Help"
 msgstr "Ayuda"
 
@@ -104,73 +104,73 @@ msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 
-#: utils.js:1011
+#: utils.js:1013
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: utils.js:1025
+#: utils.js:1027
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: utils.js:1036
+#: utils.js:1038
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: utils.js:1047
+#: utils.js:1049
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: utils.js:1053
+#: utils.js:1055
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: utils.js:1059
+#: utils.js:1061
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: utils.js:1089
+#: utils.js:1091
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: utils.js:1099
+#: utils.js:1101
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: utils.js:1114
+#: utils.js:1116
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: utils.js:1122
+#: utils.js:1124
 msgid "Restore"
 msgstr "Restaurar"
 
-#: utils.js:1127
+#: utils.js:1129
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: utils.js:1135
+#: utils.js:1137
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: utils.js:1140
+#: utils.js:1142
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: utils.js:1147
+#: utils.js:1149
 msgid "Close"
 msgstr "Cerrar"
 
-#: utils.js:1166
+#: utils.js:1168
 msgid "About..."
 msgstr "Acerca de..."
 
-#: utils.js:1171
+#: utils.js:1173
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: utils.js:1187
+#: utils.js:1189
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"

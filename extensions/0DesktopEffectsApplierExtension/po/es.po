@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopEffectsApplierExtension\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-04-16 14:17-0300\n"
-"PO-Revision-Date: 2019-03-17 02:52-0300\n"
+"POT-Creation-Date: 2019-04-27 15:00-0300\n"
+"PO-Revision-Date: 2019-04-27 14:54-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -19,155 +19,159 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:328
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:104
+msgid "Information related to this specific section"
+msgstr "Información relacionada con esta sección específica."
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:355
 msgid "Choose an Icon"
-msgstr ""
+msgstr "Elegir un ícono"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:331 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:675 ../../__app__/data/python_modules/xlets_settings/__init__.py:707
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:358 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:617 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/__init__.py:706 ../../__app__/data/python_modules/xlets_settings/__init__.py:738
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancelar"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:332
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:359
 msgid "_Open"
-msgstr ""
+msgstr "_Abrir"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:335
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:362
 msgid "Image files"
-msgstr ""
+msgstr "Archivos de imagen"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:361
 msgid "Add new item"
-msgstr ""
+msgstr "Agregar nueva entrada"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:366
 msgid "Remove selected item"
-msgstr ""
+msgstr "Eliminar ítem seleccionado"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:374
 msgid "Edit selected item"
-msgstr ""
+msgstr "Editar ítem seleccionado"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:387
 msgid "Move selected item up"
-msgstr ""
+msgstr "Mover ítem seleccionado hacia arriba"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:395
 msgid "Move selected item down"
-msgstr ""
+msgstr "Mover ítem seleccionado hacia abajo"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:404
 msgid "Export data"
-msgstr ""
+msgstr "Exportar datos"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:412
 msgid "Import data"
-msgstr ""
+msgstr "Importar datos"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:420
 msgid "Apply changes"
-msgstr ""
+msgstr "Aplicar cambios"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:529
 msgid "Item removal"
-msgstr ""
+msgstr "Eliminación de ítem"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:532
 msgid "Are you sure that you want to remove this item?"
-msgstr ""
+msgstr "¿Está seguro de que desea remover este ítem?"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:533
 msgid "Note"
-msgstr ""
+msgstr "Nota"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:534
 msgid "Press and hold Control key to remove items without confirmation."
-msgstr ""
+msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
 msgid "Choose how to add the imported data"
-msgstr ""
+msgstr "Elegir cómo agregar los datos importados"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:618
 msgid "_Overwrite"
-msgstr ""
+msgstr "_Sobrescribir"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:619
 msgid "_Append"
-msgstr ""
+msgstr "_Adjuntar"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:637
 msgid "Overwrite"
-msgstr ""
+msgstr "Sobrescribir"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:638
 msgid "replace the current data with the imported data."
-msgstr ""
+msgstr "reemplazar los datos actuales con los datos importados."
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:639
 msgid "Append"
-msgstr ""
+msgstr "Adjuntar"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:640
 msgid "add the imported data to the current data."
-msgstr ""
+msgstr "agregar los datos importados a los datos actuales."
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:694
 msgid "Add new entry"
-msgstr ""
+msgstr "Agregar nueva entrada"
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
 msgid "Edit entry"
-msgstr ""
+msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:676 ../../__app__/data/python_modules/xlets_settings/__init__.py:708
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:703 ../../__app__/data/python_modules/xlets_settings/__init__.py:707 ../../__app__/data/python_modules/xlets_settings/__init__.py:739
 msgid "_Save"
-msgstr ""
+msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:302 utils.js:193
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:333 utils.js:193
 #, python-format, javascript-format
 msgid "Settings for %s"
-msgstr ""
+msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:521
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:552
 msgid "Import from a file"
-msgstr ""
+msgstr "Importar desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:525
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:556
 msgid "Export to a file"
-msgstr ""
+msgstr "Exportar hacia un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:529
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
 msgid "Reset to defaults"
-msgstr ""
+msgstr "Restablecer a los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:539 ../../__app__/python_modules/localized_help_creator.py:318 extension.js:227
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:570 ../../__app__/python_modules/localized_help_creator.py:318 extension.js:210
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:560
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:591
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
-msgstr ""
+msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:703
 msgid "Select or enter file to export to"
-msgstr ""
+msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681 ../../__app__/data/python_modules/xlets_settings/__init__.py:712
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:712 ../../__app__/data/python_modules/xlets_settings/__init__.py:743
 msgid "JSON files"
-msgstr ""
+msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:704
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:735
 msgid "Select a JSON file to import"
-msgstr ""
+msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:736
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:767
 msgid "Trying to reset all settings!!!"
-msgstr ""
+msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:738
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:769
 msgid "Reset all settings to their default values?"
-msgstr ""
+msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
 #: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
@@ -439,7 +443,7 @@ msgstr ""
 msgid "Thumbnails of windows in the classic application switcher will not inherit the effect of the real windows. This is a limitation of my own; I simply couldn't find the way of doing it."
 msgstr ""
 
-#: extension.js:80
+#: extension.js:71
 msgid "Read this extension help page for usage instructions."
 msgstr ""
 
@@ -457,23 +461,26 @@ msgstr "Ver el archivo de ayuda de este xlet."
 
 #. settings-schema.json->info_label_1->description
 msgid "If you are seeing this window, you are using a Cinnamon version with a design flaw."
-msgstr ""
+msgstr "Si se está viendo esta ventana, se está utilizando una versión de Cinnamon con un defecto de diseño."
 
 #. settings-schema.json->info_label_2->description
-msgid "This window isn't this extension \"real\" configuration window."
+msgid "This window isn't this extension's \"real\" configuration window."
 msgstr ""
 
 #. settings-schema.json->info_label_3->description
 msgid "If on Cinnamon 3.0.x, the button below will not work."
-msgstr ""
+msgstr "Si se está en Cinnamon 3.0.x, el botón de abajo no funcionará."
 
 #. settings-schema.json->info_label_4->description
 msgid "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
-msgstr ""
+msgstr "Leer el archivo HELP.html (que se encuentra dentro de la carpeta de la extensión) para obtener instrucciones sobre cómo superar estas limitaciones."
 
 #. settings-schema.json->settings_button->description
 msgid "Open the \"real\" preference window"
-msgstr ""
+msgstr "Abrir la ventana \"real\" de preferencias"
+
+#~ msgid "This window isn't this extension \"real\" configuration window."
+#~ msgstr "Esta no es la ventana de configuración \"real\" de esta extensión."
 
 #~ msgid "Keyboard shortcuts"
 #~ msgstr "Atajos de teclado"

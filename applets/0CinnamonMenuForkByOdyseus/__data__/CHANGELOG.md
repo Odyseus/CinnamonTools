@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Thu, 25 Apr 2019 02:07:06 -0300
+- **Commit:** [b50f17d](https://gitlab.com/Odyseus/CinnamonTools/commit/b50f17d)
+- **Author:** Odyseus
+
+```
+- Added a signal manager to manage existent signal connections and to handle some signals that weren't managed.
+- Added proper binding to several signals.
+
+```
+
+***
+
 - **Date:** Mon, 15 Apr 2019 22:46:55 -0300
 - **Commit:** [b1bf6ae](https://gitlab.com/Odyseus/CinnamonTools/commit/b1bf6ae)
 - **Author:** Odyseus
