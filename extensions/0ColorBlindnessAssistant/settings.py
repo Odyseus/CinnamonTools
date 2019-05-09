@@ -38,7 +38,7 @@ INFO_LABELS = [
 EFFECTS_COLUMNS = [{
     "id": "base_name",
     "title": _("Effect"),
-    "default": "acromatopia_simulation",
+    "default": "acromatopia_rod_simulation",
     "type": "string",
     "options": {
         "acromatopia_rod_simulation": _("Acromatopia (rod) simulation"),
@@ -129,6 +129,7 @@ TOOLS_TAB = {
                 "pref_key": "pref_daltonizer_animation_time",
                 "properties": {
                     "description": _("UI animation time"),
+                    "tooltip": _("Set to zero to disable animations."),
                     "units": _("milliseconds"),
                     "default": 200,
                     "max": 500,

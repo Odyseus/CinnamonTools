@@ -181,6 +181,7 @@ DaltonizerTitleBox.prototype = {
 
         this._closeButton.connect("button-release-event",
             () => this._onCloseButtonClicked());
+        this._closeButton.tooltip = new CustomTooltip(this._closeButton, _("Close daltonizer"));
 
         this.actor.add(this._iconBin);
         this.actor.add(this._label, {
@@ -224,11 +225,11 @@ DaltonizerWizard.prototype = {
         "none",
         "acromatopia_rod_simulation",
         "acromatopia_blue_cone_simulation",
-        "deuteranopia_compensation",
         "protanopia_compensation",
+        "deuteranopia_compensation",
         "tritanopia_compensation",
-        "deuteranopia_simulation",
         "protanopia_simulation",
+        "deuteranopia_simulation",
         "tritanopia_simulation"
     ],
 
@@ -282,6 +283,11 @@ DaltonizerWizard.prototype = {
         this.colorSpacesBox = new St.Table(sectionOnj);
         this.colorSpacesBox.add_style_class_name("cba-color-spaces");
 
+        this.additionalInfoText = new St.Label({
+            text: _("Press Escape or the close button to exit"),
+            style_class: "cba-footer"
+        });
+
         this.actor.add(this.titleBox.actor, {
             x_fill: true
         });
@@ -293,6 +299,9 @@ DaltonizerWizard.prototype = {
         });
         this.actor.add(this.colorSpacesBox, {
             x_fill: false
+        });
+        this.actor.add(this.additionalInfoText, {
+            x_fill: true
         });
 
         this._populateUI();
@@ -474,6 +483,7 @@ DaltonizerWizard.prototype = {
         this.effectNamesBox.destroy();
         this.actorsBox.destroy();
         this.colorSpacesBox.destroy();
+        this.additionalInfoText.destroy();
         this.actor.destroy();
         this.title = null;
     }

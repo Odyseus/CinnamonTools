@@ -95,7 +95,9 @@ ColorBlindnessAssistant.prototype = {
 
             this._loadTheme();
 
-            this.sigMan.connect(Main.themeManager, "theme-set", this._loadTheme.bind(this));
+            this.sigMan.connect(Main.themeManager, "theme-set", function() {
+                this._loadTheme(false);
+            }.bind(this));
         });
     },
 
@@ -193,6 +195,8 @@ ColorBlindnessAssistant.prototype = {
         delete this._allEffects;
         this._allEffects = {};
 
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Replace JSON trick with Object.assign().
         let effectsList = JSON.parse(JSON.stringify(this.pref_effects_list));
         let i = effectsList.length;
         while (i--) {
@@ -490,19 +494,20 @@ ColorBlindnessAssistant.prototype = {
         } finally {
             this.load_theme_id = Mainloop.timeout_add(300,
                 () => {
-                    // This block doesn't make any sense, but it's what it works.
-                    // So I will leave it as is or else. ¬¬
                     try {
-                        this.loadStylesheet();
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    } finally {
+                        /* NOTE: Without calling Main.themeManager._changeTheme() this xlet stylesheet
+                         * doesn't reload correctly. ¬¬
+                         */
                         if (aFullReload) {
                             Main.themeManager._changeTheme();
                         }
 
-                        this.load_theme_id = 0;
+                        this.loadStylesheet();
+                    } catch (aErr) {
+                        global.logError(aErr);
                     }
+
+                    this.load_theme_id = 0;
                 }
             );
         }
@@ -535,6 +540,9 @@ ColorBlindnessAssistant.prototype = {
             } catch (aErr) {
                 global.logError(_("Error unloading stylesheet"));
                 global.logError(aErr);
+            } finally {
+                this.theme = null;
+                this.stylesheet = null;
             }
         }
     },
@@ -736,6 +744,7 @@ ColorBlindnessAssistant.prototype = {
     },
 
     disable: function() {
+        this.unloadStylesheet();
         this._removeKeybindings("Effect");
         this._removeKeybindings("Global");
         this._removeCinnamonInjections();
@@ -808,6 +817,11 @@ ColorBlindnessAssistant.prototype = {
                 break;
             case "pref_theme":
             case "pref_theme_path_custom":
+                if (pref_key === "pref_theme_path_custom" &&
+                    this.pref_theme !== "custom") {
+                    return;
+                }
+
                 this._loadTheme(true);
                 break;
             case "pref_apply_cinnamon_injections":
