@@ -138,8 +138,12 @@ CinnamonMenuForkByOdyseus.prototype = {
              * using this._hardRefreshAll will rebuild the entire menu from scratch.
              * (When the scalpel doesn't cut it, use the freaking sledgehammer!!!)
              */
-            this.sigMan.connect(Main.themeManager, "theme-set", this.onAppSysChanged.bind(this));
-            this.sigMan.connect(this.appsys, "installed-changed", this.onAppSysChanged.bind(this));
+            this.sigMan.connect(Main.themeManager, "theme-set", function() {
+                this.onAppSysChanged();
+            }.bind(this));
+            this.sigMan.connect(this.appsys, "installed-changed", function() {
+                this.onAppSysChanged();
+            }.bind(this));
 
             this._setupRecentAppsManager();
             this._updateActivateOnHover();
@@ -331,7 +335,9 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.sigMan.connect(
                 this.recentAppsManager,
                 "changed::pref-recently-used-applications",
-                this._refreshRecentApps.bind(this)
+                function() {
+                    this._refreshRecentApps();
+                }.bind(this)
             );
 
             /* NOTE: When adding a favorite from the applications listed inside the
