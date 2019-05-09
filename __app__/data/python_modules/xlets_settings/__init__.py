@@ -33,6 +33,8 @@ from .common import HOME
 from .common import _
 from .common import compare_version
 
+module_path = os.path.dirname(os.path.abspath(__file__))
+
 CINNAMON_VERSION = check_output(
     ["cinnamon", "--version"]
 ).decode("utf-8").splitlines()[0].split(" ")[1]
@@ -181,7 +183,7 @@ class SettingsBox(BaseGrid):
         else:
             self.stack_switcher = None
 
-        self.attach(stack, 0, 0, 1, 1)
+        self.add(stack)
 
         self.show_all()
 
@@ -477,7 +479,7 @@ class MainApplication(Gtk.Application):
         """
         self.window = Gtk.ApplicationWindow(application=self,
                                             title=self._get_application_title())
-
+        self.window.set_type_hint(Gdk.WindowTypeHint.NORMAL)
         # NOTE: Always use set_default_size(). Otherwise, when exiting maximized
         # state, the window will be resized to its minimum size instead of its
         # previous size.
@@ -491,7 +493,10 @@ class MainApplication(Gtk.Application):
         else:
             self.window.set_position(Gtk.WindowPosition.CENTER)
 
-        icon_path = os.path.join(self.xlet_dir, "icon.png")
+        icon_path = os.path.join(self.xlet_dir, "icon.svg")
+
+        if not os.path.isfile(icon_path):
+            icon_path = os.path.join(self.xlet_dir, "icon.png")
 
         if os.path.isfile(icon_path):
             self.window.set_icon_from_file(icon_path)
@@ -663,10 +668,7 @@ class MainApplication(Gtk.Application):
                   (self.xlet_type, self.xlet_uuid))
             quit()
 
-        icons_folder = os.path.join(self.xlet_dir, "icons")
-
-        if os.path.isdir(icons_folder):
-            Gtk.IconTheme.get_default().append_search_path(icons_folder)
+        Gtk.IconTheme.get_default().append_search_path(os.path.join(module_path, "icons"))
 
         self.help_file_path = os.path.join(self.xlet_dir, "HELP.html")
         self.xlet_help_file_exists = os.path.isfile(self.help_file_path)

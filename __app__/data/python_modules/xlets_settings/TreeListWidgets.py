@@ -153,10 +153,11 @@ def list_edit_factory(options, xlet_settings):
 class List(SettingsWidget):
     bind_dir = None
 
-    def __init__(self, label=None, columns=None, dialog_info_labels=None, height=200,
+    def __init__(self, label=None, columns=None, immutable=None, dialog_info_labels=None, height=200,
                  move_buttons=True, dialog_width=450, apply_and_quit=False):
         super().__init__()
         self.columns = columns
+        self.immutable = immutable
         self.dialog_info_labels = dialog_info_labels
         self.move_buttons = move_buttons
         self.dialog_width = dialog_width
@@ -165,6 +166,13 @@ class List(SettingsWidget):
         self.set_vexpand(True)
         self.timer = None
         self.app_window = None
+
+        self.add_button = None
+        self.remove_button = None
+        self.edit_button = None
+        self.move_up_button = None
+        self.move_down_button = None
+        self.export_button = None
 
         if label is not None:
             self.label = Gtk.Label(label)
@@ -356,18 +364,27 @@ class List(SettingsWidget):
         buttons_box.set_halign(Gtk.Align.CENTER)
         button_holder.add(buttons_box)
 
-        self.add_button = Gtk.ToolButton(None, None)
-        self.add_button.set_icon_name("list-add-symbolic")
-        self.add_button.set_tooltip_text(_("Add new item"))
-        self.add_button.connect("clicked", self.add_item)
+        button_position = 0
 
-        self.remove_button = Gtk.ToolButton(None, None)
-        self.remove_button.set_icon_name("list-remove-symbolic")
-        self.remove_button.set_tooltip_text(_("Remove selected item"))
-        # NOTE: Using button-release-event to be able to catch events.
-        # clicked event doesn't pass the event. ¬¬
-        self.remove_button.connect("button-release-event", self.remove_item_cb)
-        self.remove_button.set_sensitive(False)
+        if self.immutable is None:
+            self.add_button = Gtk.ToolButton(None, None)
+            self.add_button.set_icon_name("list-add-symbolic")
+            self.add_button.set_tooltip_text(_("Add new item"))
+            self.add_button.connect("clicked", self.add_item)
+
+            buttons_box.attach(self.add_button, button_position, 0, 1, 1)
+            button_position += 1
+
+            self.remove_button = Gtk.ToolButton(None, None)
+            self.remove_button.set_icon_name("list-remove-symbolic")
+            self.remove_button.set_tooltip_text(_("Remove selected item"))
+            # NOTE: Using button-release-event to be able to catch events.
+            # clicked event doesn't pass the event. ¬¬
+            self.remove_button.connect("button-release-event", self.remove_item_cb)
+            self.remove_button.set_sensitive(False)
+
+            buttons_box.attach(self.remove_button, button_position, 0, 1, 1)
+            button_position += 1
 
         self.edit_button = Gtk.ToolButton(None, None)
         self.edit_button.set_icon_name("view-list-symbolic")
@@ -375,11 +392,8 @@ class List(SettingsWidget):
         self.edit_button.connect("clicked", self.edit_item)
         self.edit_button.set_sensitive(False)
 
-        buttons_box.attach(self.add_button, 0, 0, 1, 1)
-        buttons_box.attach(self.remove_button, 1, 0, 1, 1)
-        buttons_box.attach(self.edit_button, 2, 0, 1, 1)
-
-        last_position = 3
+        buttons_box.attach(self.edit_button, button_position, 0, 1, 1)
+        button_position += 1
 
         if self.move_buttons:
             self.move_up_button = Gtk.ToolButton(None, None)
@@ -387,39 +401,49 @@ class List(SettingsWidget):
             self.move_up_button.set_tooltip_text(_("Move selected item up"))
             self.move_up_button.connect("clicked", self.move_item_up)
             self.move_up_button.set_sensitive(False)
-            buttons_box.attach(self.move_up_button, last_position, 0, 1, 1)
-            last_position += 1
+            buttons_box.attach(self.move_up_button, button_position, 0, 1, 1)
+            button_position += 1
 
             self.move_down_button = Gtk.ToolButton(None, None)
             self.move_down_button.set_icon_name("go-down-symbolic")
             self.move_down_button.set_tooltip_text(_("Move selected item down"))
             self.move_down_button.connect("clicked", self.move_item_down)
             self.move_down_button.set_sensitive(False)
-            buttons_box.attach(self.move_down_button, last_position, 0, 1, 1)
-            last_position += 1
+            buttons_box.attach(self.move_down_button, button_position, 0, 1, 1)
+            button_position += 1
 
         if self.imp_exp_path_key:
             self.export_button = Gtk.ToolButton(None, None)
-            self.export_button.set_icon_name("custom-export-data-symbolic")
+
+            if Gtk.IconTheme.get_default().has_icon("document-export-symbolic"):
+                self.export_button.set_icon_name("document-export-symbolic")
+            else:
+                self.export_button.set_icon_name("custom-export-data-symbolic")
+
             self.export_button.set_tooltip_text(_("Export data"))
             self.export_button.connect("clicked", self.export_data)
             self.export_button.set_sensitive(False)
-            buttons_box.attach(self.export_button, last_position, 0, 1, 1)
-            last_position += 1
+            buttons_box.attach(self.export_button, button_position, 0, 1, 1)
+            button_position += 1
 
             import_button = Gtk.ToolButton(None, None)
-            import_button.set_icon_name("custom-import-data-symbolic")
+
+            if Gtk.IconTheme.get_default().has_icon("document-import-symbolic"):
+                import_button.set_icon_name("document-import-symbolic")
+            else:
+                import_button.set_icon_name("custom-import-data-symbolic")
+
             import_button.set_tooltip_text(_("Import data"))
             import_button.connect("clicked", self.import_data)
-            buttons_box.attach(import_button, last_position, 0, 1, 1)
-            last_position += 1
+            buttons_box.attach(import_button, button_position, 0, 1, 1)
+            button_position += 1
 
         if self.apply_key:
             apply_button = Gtk.ToolButton(None, None)
             apply_button.set_icon_name("document-save-symbolic")
             apply_button.set_tooltip_text(_("Apply changes"))
             apply_button.connect("clicked", self.apply_changes)
-            buttons_box.attach(apply_button, last_position, 0, 1, 1)
+            buttons_box.attach(apply_button, button_position, 0, 1, 1)
 
         self.content_widget.get_selection().connect("changed", self.update_button_sensitivity)
         self.content_widget.set_activate_on_single_click(False)
@@ -456,6 +480,9 @@ class List(SettingsWidget):
             return False
 
     def key_press_cb(self, widget, event):
+        if self.immutable is not None:
+            return False
+
         state = event.get_state() & Gdk.ModifierType.CONTROL_MASK
         ctrl = state == Gdk.ModifierType.CONTROL_MASK
         symbol, keyval = event.get_keyval()
@@ -483,11 +510,16 @@ class List(SettingsWidget):
 
     def update_button_sensitivity(self, *args):
         model, selected = self.content_widget.get_selection().get_selected()
+
+        if self.remove_button is not None:
+            if selected is None:
+                self.remove_button.set_sensitive(False)
+            else:
+                self.remove_button.set_sensitive(True)
+
         if selected is None:
-            self.remove_button.set_sensitive(False)
             self.edit_button.set_sensitive(False)
         else:
-            self.remove_button.set_sensitive(True)
             self.edit_button.set_sensitive(True)
 
         if self.move_buttons:
@@ -501,7 +533,7 @@ class List(SettingsWidget):
             else:
                 self.move_down_button.set_sensitive(True)
 
-        if self.imp_exp_path_key:
+        if self.export_button is not None:
             if len(self.settings.get_value(self.pref_key)) == 0:
                 self.export_button.set_sensitive(False)
             else:
@@ -734,6 +766,10 @@ class List(SettingsWidget):
 
             widget = list_edit_factory(self.columns[i], self.settings)
             widget.set_border_width(5)
+
+            if self.immutable is not None:
+                widget.set_sensitive(self.columns[i]["id"]
+                                     not in self.immutable.get("read_only_keys", []))
 
             if isinstance(widget, (Switch, ColorChooser)):
                 settings_box.connect("row-activated", widget.clicked)

@@ -64,6 +64,15 @@ JSON_SETTINGS_PROPERTIES_MAP = {
     "dialog-info-labels": "dialog_info_labels",
     # NOTE: Wheter to be able to specify opacity on ColorChooser widgets.
     "use-alpha": "use_alpha",
+    # NOTE: For "list" widgets.
+    # A dict that can be empty and accepts one key called `read_only_keys`. A list of
+    # column IDs whose created widgets should be set as unsensitive.
+    # An immutable list widget has a fixed ammount of items.
+    # Items cannot be added nor removed but they do can be edited.
+    "immutable": "immutable",
+    # NOTE: For "textview" widgets. Wheter the Tab key inserts a tab character (accept-tabs = true)
+    # or the keyboard focus is moved (accept-tabs = false).
+    "accept-tabs": "accept_tabs",
 }
 
 
@@ -279,6 +288,7 @@ class JSONSettingsRevealer(Gtk.Revealer):
         self.dep_key = None
         self.op = None
         self.value = None
+
         for op in OPERATIONS:
             if op in dep_key:
                 self.op = op

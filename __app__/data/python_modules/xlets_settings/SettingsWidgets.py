@@ -125,6 +125,14 @@ class SectionContainer(Gtk.Frame):
         if isinstance(widget, (Switch, ColorChooser)):
             list_box.connect("row-activated", widget.clicked)
 
+        # NOTE: I was forced to use this condition because it was impossible for
+        # the content of the TextView to be edited. It was necessary to triple
+        # click it to gain access to it or being focused with keyboard navigation.
+        # With this callback set to the list_box, the TextView content can directly
+        # be accessed with a single click.
+        if isinstance(widget, TextView):
+            list_box.connect("row-activated", widget.focus_the_retarded_text_view)
+
         list_box.add(row)
 
         self.box.attach(list_box, col_pos, row_pos, col_span, row_span)
@@ -133,13 +141,12 @@ class SectionContainer(Gtk.Frame):
 
     def add_reveal_row(self, widget, col_pos, row_pos, col_span, row_span,
                        schema=None, key=None, values=None, check_func=None, revealer=None):
-        vbox = BaseGrid()
-
-        if self.need_separator:
-            vbox.add(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
-
         list_box = Gtk.ListBox()
         list_box.set_selection_mode(Gtk.SelectionMode.NONE)
+
+        if self.need_separator:
+            list_box.add(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
+
         row = Gtk.ListBoxRow(can_focus=False)
         row.add(widget)
 
@@ -147,14 +154,13 @@ class SectionContainer(Gtk.Frame):
             list_box.connect("row-activated", widget.clicked)
 
         list_box.add(row)
-        vbox.add(list_box)
 
         # FIXME: Handle only JSONSettingsRevealer for now.
         # if revealer is None:
         #     revealer = SettingsRevealer(schema, key, values, check_func)
 
         widget.revealer = revealer
-        revealer.add(vbox)
+        revealer.add(list_box)
         self.box.attach(revealer, col_pos, row_pos, col_span, row_span)
 
         self.need_separator = True
@@ -163,6 +169,7 @@ class SectionContainer(Gtk.Frame):
 
 
 class SettingsRevealer(Gtk.Revealer):
+    # NOTE: Not used for now
     def __init__(self, schema=None, key=None, values=None, check_func=None):
         # Gtk.Revealer.__init__(self)
         super().__init__()
@@ -417,9 +424,8 @@ class TextView(SettingsWidget):
     bind_prop = "text"
     bind_dir = Gio.SettingsBindFlags.DEFAULT
 
-    def __init__(self, label, height=200, dep_key=None, tooltip=""):
+    def __init__(self, label, height=200, accept_tabs=False, dep_key=None, tooltip=""):
         super().__init__(dep_key=dep_key)
-
         self.set_spacing(5, 5)
 
         self.label = Gtk.Label.new(label)
@@ -431,6 +437,7 @@ class TextView(SettingsWidget):
                                        vscrollbar_policy=Gtk.PolicyType.AUTOMATIC)
         self.scrolledwindow.set_shadow_type(type=Gtk.ShadowType.ETCHED_IN)
         self.content_widget = Gtk.TextView()
+        self.content_widget.set_accepts_tab(accept_tabs)
         self.content_widget.set_border_width(3)
         self.content_widget.set_hexpand(True)
         self.content_widget.set_wrap_mode(wrap_mode=Gtk.WrapMode.NONE)
@@ -439,7 +446,10 @@ class TextView(SettingsWidget):
         self.attach(self.label, 0, 0, 1, 1)
         self.attach(self.scrolledwindow, 0, 1, 1, 1)
         self.scrolledwindow.add(self.content_widget)
-        self._value_changed_timer = None
+
+    def focus_the_retarded_text_view(self, *args):
+        self.content_widget.grab_focus()
+        return False
 
 
 class Switch(SettingsWidget):
