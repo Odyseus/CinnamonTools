@@ -881,6 +881,8 @@ var OpenWeatherMapConditionData = {
  * 700     Mist
  * 751     Freezing Fog
  */
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+// Replace JSON trick with Object.assign().
 var WeatherBitConditionData = JSON.parse(JSON.stringify(OpenWeatherMapConditionData));
 WeatherBitConditionData[233] = {
     icon: [Icons.STORM],

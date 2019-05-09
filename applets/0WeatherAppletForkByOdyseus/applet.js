@@ -148,7 +148,9 @@ Weather.prototype = {
                 );
             }
 
-            this.sigMan.connect(Main.themeManager, "theme-set", this._loadTheme.bind(this));
+            this.sigMan.connect(Main.themeManager, "theme-set", function() {
+                this._loadTheme(false);
+            }.bind(this));
         });
     },
 
@@ -439,7 +441,7 @@ Weather.prototype = {
             child: new St.Icon({
                 icon_type: St.IconType.SYMBOLIC,
                 icon_size: 12,
-                icon_name: "weather-applet-hamburger-menu"
+                icon_name: "open-menu"
             }),
             style_class: CLASS.FOOTER_BUTTON
         });
@@ -631,6 +633,8 @@ Weather.prototype = {
     },
 
     on_applet_removed_from_panel: function(event) { // jshint ignore:line
+        this.unloadStylesheet();
+
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
         this.sigMan.disconnectAllSignals();
@@ -938,6 +942,8 @@ Weather.prototype = {
                      * So, don't store it back.
                      */
                     this.pref_weather_data[this.pref_current_location].lastCheck !== aWeatherData.lastCheck) {
+                    // Mark for deletion on EOL. Cinnamon 3.6.x+
+                    // Replace JSON trick with Object.assign().
                     let storedWeatherData = JSON.parse(JSON.stringify(this.pref_weather_data));
                     storedWeatherData[this.pref_current_location] = aWeatherData;
                     this.pref_weather_data = storedWeatherData;
@@ -1537,6 +1543,8 @@ Weather.prototype = {
     },
 
     sortLocations: function(aLocationsObj) {
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Replace JSON trick with Object.assign().
         return JSON.parse(JSON.stringify(aLocationsObj)).sort((a, b) => {
             return a.locationName.localeCompare(b.locationName);
         });
@@ -1571,6 +1579,8 @@ Weather.prototype = {
     },
 
     sanitizeStoredLocations: function() {
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Replace JSON trick with Object.assign().
         // Remove cached data of locations that don't exist anymore.
         let cachedLocationKeys = Object.keys(JSON.parse(JSON.stringify(this.pref_weather_data)));
         let i = cachedLocationKeys.length;
@@ -1598,7 +1608,7 @@ Weather.prototype = {
         Util.spawn_async(["xdg-open"].concat(Array.prototype.slice.call(arguments)), null);
     },
 
-    _loadTheme: function(aFullReload) {
+    _loadTheme: function(aFullReload = false) {
         if (this.load_theme_id > 0) {
             Mainloop.source_remove(this.load_theme_id);
             this.load_theme_id = 0;
@@ -1609,18 +1619,19 @@ Weather.prototype = {
         } catch (aErr) {
             global.logError(aErr);
         } finally {
-            this.load_theme_id = Mainloop.timeout_add(300,
+            this.load_theme_id = Mainloop.timeout_add(1000,
                 () => {
-                    // This block doesn't make any sense, but it's what it works.
-                    // So I will leave it as is or else. ¬¬
                     try {
-                        this.loadStylesheet();
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    } finally {
+                        /* NOTE: Without calling Main.loadTheme() this xlet stylesheet
+                         * doesn't reload correctly. ¬¬
+                         */
                         if (aFullReload) {
                             Main.themeManager._changeTheme();
                         }
+
+                        this.loadStylesheet();
+                    } catch (aErr) {
+                        global.logError(aErr);
                     }
                 }
             );
@@ -1654,6 +1665,9 @@ Weather.prototype = {
             } catch (aErr) {
                 global.logError(_("Error unloading stylesheet"));
                 global.logError(aErr);
+            } finally {
+                this.theme = null;
+                this.stylesheet = null;
             }
         }
     },
@@ -1741,6 +1755,11 @@ Weather.prototype = {
                 break;
             case "pref_menu_theme":
             case "pref_menu_theme_path_custom":
+                if (pref_key === "pref_menu_theme_path_custom" &&
+                    this.pref_menu_theme !== "custom") {
+                    return;
+                }
+
                 this._loadTheme(true);
                 break;
                 /* NOTE: In case that I decide to add some "links" to the locations manager GUI.
