@@ -14,6 +14,7 @@ const {
         Clutter,
         Gio,
         GLib,
+        Gtk,
         St
     },
     mainloop: Mainloop,
@@ -159,6 +160,8 @@ SimpleToDoList.prototype = {
             }
         } finally {
             if (!this.pref_initial_load) {
+                // Mark for deletion on EOL. Cinnamon 3.6.x+
+                // Replace JSON trick with Object.assign().
                 // This bit me hard. Luckily, I found the solution very quickly.
                 this._create_section("", JSON.parse(JSON.stringify($.DefaultExampleTasks)));
                 this.pref_initial_load = true;
@@ -461,6 +464,8 @@ SimpleToDoList.prototype = {
                 this._buildUI();
 
                 if (this.pref_initial_load) {
+                    // Mark for deletion on EOL. Cinnamon 3.6.x+
+                    // Replace JSON trick with Object.assign().
                     this._create_section("", JSON.parse(JSON.stringify($.DefaultExampleTasks)));
                 }
             }
@@ -890,9 +895,13 @@ SimpleToDoList.prototype = {
         this._applet_context_menu.addMenuItem(menuItem);
 
         // Export tasks
+        let iconName = Gtk.IconTheme.get_default().has_icon("document-export-symbolic") ?
+            "document-export" :
+            "simple-todo-list-export-tasks";
+
         menuItem = new PopupMenu.PopupIconMenuItem(
             _("Export tasks"),
-            "simple-todo-list-export-tasks",
+            iconName,
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
         menuItem.connect("activate",
@@ -905,9 +914,13 @@ SimpleToDoList.prototype = {
         this._applet_context_menu.addMenuItem(menuItem);
 
         // Import tasks
+        iconName = Gtk.IconTheme.get_default().has_icon("document-import-symbolic") ?
+            "document-import" :
+            "simple-todo-list-import-tasks";
+
         menuItem = new PopupMenu.PopupIconMenuItem(
             _("Import tasks"),
-            "simple-todo-list-import-tasks",
+            iconName,
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
         menuItem.connect("activate", () => this._importTasks());
@@ -929,6 +942,8 @@ SimpleToDoList.prototype = {
         menuItem._icon.icon_size = 14;
         menuItem.connect("activate", () => {
             try {
+                // Mark for deletion on EOL. Cinnamon 3.6.x+
+                // Replace JSON trick with Object.assign().
                 // This bit me hard. Luckily, I found the solution very quickly.
                 this._create_section("", JSON.parse(JSON.stringify($.DefaultExampleTasks)));
             } finally {
