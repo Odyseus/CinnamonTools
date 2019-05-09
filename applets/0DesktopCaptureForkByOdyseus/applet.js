@@ -83,6 +83,7 @@ DesktopCapture.prototype = {
             this._cinnamonRecorderProfiles = {};
             this._cameraRedoMenuItem = null;
             this._recorderRedoMenuItem = null;
+            this.load_theme_id = 0;
 
             if (this.pref_recorder_program === "cinnamon") {
                 this.cinnamonRecorder = new Cinnamon.Recorder({
@@ -104,7 +105,7 @@ DesktopCapture.prototype = {
 
             this.set_applet_tooltip(_(this.metadata.description));
 
-            this.loadTheme();
+            this._loadTheme();
             this._setupProgramSupport();
             this._setupCinnamonRecorderProfiles();
 
@@ -114,7 +115,9 @@ DesktopCapture.prototype = {
                     this.drawMenu();
                 }
             }.bind(this));
-            this.sigMan.connect(Main.themeManager, "theme-set", this.loadTheme.bind(this));
+            this.sigMan.connect(Main.themeManager, "theme-set", function() {
+                this._loadTheme(false);
+            }.bind(this));
 
             this._disclaimerRead();
         });
@@ -344,66 +347,107 @@ DesktopCapture.prototype = {
         }
     },
 
-    loadTheme: function(aFullReload) {
+    _loadTheme: function(aFullReload = false) {
         this.logger.debug("");
 
-        let globalTheme;
-
-        try {
-            globalTheme = St.ThemeContext.get_for_stage(global.stage).get_theme();
-        } catch (aErr) {
-            globalTheme = null;
+        if (this.load_theme_id > 0) {
+            Mainloop.source_remove(this.load_theme_id);
+            this.load_theme_id = 0;
         }
 
-        if (globalTheme) {
-            if (this.oldStylesheetPath) {
-                try {
-                    globalTheme.unload_stylesheet(this.oldStylesheetPath);
-                } catch (aErr) {
-                    this.logger.warning("Failing unloading stylesheet");
-                    this.logger.warning(aErr);
-                }
-            }
+        try {
+            this.unloadStylesheet();
+        } catch (aErr) {
+            global.logError(aErr);
+        } finally {
+            this.load_theme_id = Mainloop.timeout_add(1000,
+                () => {
+                    try {
+                        /* NOTE: Without calling Main.themeManager._changeTheme() this xlet stylesheet
+                         * doesn't reload correctly. ¬¬
+                         */
+                        if (aFullReload) {
+                            Main.themeManager._changeTheme();
+                        }
 
+                        this.loadStylesheet();
+                    } catch (aErr) {
+                        global.logError(aErr);
+                    }
+
+                    this.load_theme_id = 0;
+                }
+            );
+        }
+    },
+
+    loadStylesheet: function() {
+        this.stylesheet = this._getCssPath();
+
+        try {
+            let themeContext = St.ThemeContext.get_for_stage(global.stage);
+            this.theme = themeContext.get_theme();
+        } catch (aErr) {
+            global.logError(_("Error trying to get theme"));
+            global.logError(aErr);
+        }
+
+        try {
+            this.theme.load_stylesheet(this.stylesheet);
+        } catch (aErr) {
+            global.logError(_("Stylesheet parse error"));
+            global.logError(aErr);
+        }
+    },
+
+    unloadStylesheet: function() {
+        if (this.theme && this.stylesheet) {
             try {
-                let cssPath = this.getCssPath();
-
-                if (!cssPath) {
-                    throw _("No stylesheet found");
-                }
-
-                globalTheme.load_stylesheet(cssPath);
-                this.oldStylesheetPath = cssPath;
+                this.theme.unload_stylesheet(this.stylesheet);
             } catch (aErr) {
-                this.logger.warning("Error loading stylesheet");
-                this.logger.warning(aErr);
+                global.logError(_("Error unloading stylesheet"));
+                global.logError(aErr);
             } finally {
-                if (aFullReload) {
-                    Main.themeManager._changeTheme();
-                }
+                this.theme = null;
+                this.stylesheet = null;
             }
         }
     },
 
-    getCssPath: function() {
-        this.logger.debug("");
+    _getCssPath: function() {
+        let defaultThemepath = this.metadata.path + "/themes/light-overlay.css";
+        let cssPath;
 
         switch (this.pref_theme_selector) {
             case "light":
-                return this.metadata.path + "/themes/light-overlay.css";
+                cssPath = this.metadata.path + "/themes/light-overlay.css";
+                break;
             case "dark":
-                return this.metadata.path + "/themes/dark-overlay.css";
+                cssPath = this.metadata.path + "/themes/dark-overlay.css";
+                break;
             case "custom":
-                if (!this.pref_theme_custom) {
-                    return null;
-                }
-
-                return /^file:\/\//.test(this.pref_theme_custom) ?
-                    this.pref_theme_custom.substr(7) :
-                    this.pref_theme_custom;
+                cssPath = this.pref_theme_custom;
+                break;
         }
 
-        return "";
+        if (/^file:\/\//.test(cssPath)) {
+            cssPath = cssPath.substr(7);
+        }
+
+        try {
+            let cssFile = Gio.file_new_for_path(cssPath);
+
+            if (!cssPath || !cssFile.query_exists(null)) {
+                global.logError("CSS theme file not found. Loading default...");
+                cssPath = defaultThemepath;
+            }
+        } catch (aErr) {
+            global.logError("Error loading CSS theme file. Loading default...");
+            cssPath = defaultThemepath;
+            global.logError(aErr);
+        }
+
+        return cssPath;
     },
 
     _setAppletIcon: function(aRecording) {
@@ -541,6 +585,8 @@ DesktopCapture.prototype = {
         let prefcinnamonRecorderProfilesCopy = JSON.parse(
             JSON.stringify(this.pref_cinn_rec_profiles));
 
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Replace JSON trick with Object.assign().
         this.cinnamonRecorderProfiles = $.mergeRecursive($.CinnamonRecorderProfilesBase,
             JSON.parse(JSON.stringify(prefcinnamonRecorderProfilesCopy)));
 
@@ -555,6 +601,8 @@ DesktopCapture.prototype = {
     _setupProgramSupport: function() {
         this.logger.debug("");
 
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Replace JSON trick with Object.assign().
         // Clone the original object before doing possible modifications.
         // It is to avoid triggering the pref callback.
         // JSON back and forth conversion because Object.assign isn't available
@@ -576,6 +624,8 @@ DesktopCapture.prototype = {
             this.pref_program_support = prefProgramSupportCopy;
         }
 
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Replace JSON trick with Object.assign().
         // Use all this nonsense until the "geniuses" at Mozilla finally decide
         // on a unique and standard way for deep merging objects.
         this.programSupport = $.mergeRecursive($.ProgramSupportBase,
@@ -1071,6 +1121,8 @@ DesktopCapture.prototype = {
             this._registerKeyBindings();
         });
 
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Replace JSON trick with Object.assign().
         this[aDevice + "LastCaptureContent"].fileData =
             // Clean up the useless save function bound to the setting property.
             JSON.parse(JSON.stringify(this["pref_last_" + aDevice + "_capture"]));
@@ -2060,7 +2112,7 @@ DesktopCapture.prototype = {
                     return;
                 }
 
-                this.loadTheme(true);
+                this._loadTheme(true);
                 break;
             case "pref_enable_verbose_logging":
                 this.logger.runtime_info("Logging changed to " +
