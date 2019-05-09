@@ -1924,6 +1924,8 @@ LanguagesStats.prototype = {
                 break;
             }
 
+            // Mark for deletion on EOL. Cinnamon 3.6.x+
+            // Replace JSON trick with Object.assign().
             let clone = JSON.parse(JSON.stringify(this._storage[filtered[i]]));
             result.push(clone);
         }

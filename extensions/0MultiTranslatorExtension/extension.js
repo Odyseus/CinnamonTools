@@ -56,11 +56,7 @@ TranslatorExtension.prototype = {
             this._init_most_used();
 
             this.sigMan.connect(Main.themeManager, "theme-set", function() {
-                try {
-                    this.unloadStylesheet();
-                } finally {
-                    this.loadStylesheet(this.stylesheet);
-                }
+                this._loadTheme(false);
             }.bind(this));
             this.sigMan.connect(Settings, "changed", this._onSettingsChanged.bind(this));
 
@@ -948,7 +944,7 @@ TranslatorExtension.prototype = {
         this.sigMan.disconnectAllSignals();
     },
 
-    _loadTheme: function(aFullReload) {
+    _loadTheme: function(aFullReload = false) {
         this._remove_timeouts("load_theme_id");
         let newTheme;
 
@@ -970,16 +966,17 @@ TranslatorExtension.prototype = {
             $.TIMEOUT_IDS.load_theme_id = Mainloop.timeout_add(
                 $.LOAD_THEME_DELAY,
                 () => {
-                    // This block doesn't make any sense, but it's what it works.
-                    // So I will leave it as is or else. ¬¬
                     try {
-                        this.loadStylesheet(newTheme);
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    } finally {
+                        /* NOTE: Without calling Main.themeManager._changeTheme() this xlet stylesheet
+                         * doesn't reload correctly. ¬¬
+                         */
                         if (aFullReload) {
                             Main.themeManager._changeTheme();
                         }
+
+                        this.loadStylesheet(newTheme);
+                    } catch (aErr) {
+                        global.logError(aErr);
                     }
 
                     $.TIMEOUT_IDS.load_theme_id = 0;
@@ -1013,6 +1010,9 @@ TranslatorExtension.prototype = {
             } catch (aErr) {
                 global.logError(_("Error unloading stylesheet"));
                 global.logError(aErr);
+            } finally {
+                this.theme = null;
+                this.stylesheet = null;
             }
         }
     },
