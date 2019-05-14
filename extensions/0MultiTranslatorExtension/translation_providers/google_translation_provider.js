@@ -1,22 +1,19 @@
-let $;
+let $,
+    constants;
+
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
+    constants = require("./constants.js");
 } else {
     $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
+    constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
 }
-const _ = $._;
 
-const PROVIDER_NAME = "Google.Translate";
-const PROVIDER_LIMIT = 4200;
-const PROVIDER_URL = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=%s&tl=%s&dt=t&q=%s";
-const PROVIDER_HEADERS = {
-    "user-agent": "Mozilla/5.0",
-    "Referer": "https://translate.google.com/",
-    "Content-Type": "application/x-www-form-urlencoded"
-};
-
-var NEEDS_EXTENSION_OBJECT = false;
+const {
+    _,
+    Languages
+} = constants;
 
 function Translator() {
     this._init.apply(this, arguments);
@@ -28,36 +25,40 @@ Translator.prototype = {
     _init: function(aExtension) {
         $.TranslationProviderBase.prototype._init.call(
             this,
-            PROVIDER_NAME,
-            PROVIDER_LIMIT,
-            PROVIDER_URL,
-            PROVIDER_HEADERS
+            aExtension, {
+                name: "Google.Translate",
+                url: "https://translate.googleapis.com/translate_a/single?client=gtx&sl=%s&tl=%s&dt=t&q=%s",
+                headers: {
+                    "user-agent": "Mozilla/5.0",
+                    "Referer": "https://translate.google.com/",
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            }
         );
-        this._extension = aExtension;
     },
 
-    get_pairs: function(language) { // jshint ignore:line
+    getPairs: function(language) { // jshint ignore:line
         let temp = {};
 
-        for (let key in $.LANGUAGES_LIST) {
+        for (let key in Languages) {
             if (key === "auto") {
                 continue;
             }
 
-            temp[key] = $.LANGUAGES_LIST[key];
+            temp[key] = Languages[key];
         }
 
         return temp;
     },
 
-    parse_response: function(response_data) {
+    parseResponse: function(aResponseData) {
         let result = {},
             json,
             transText,
             detectedLang;
 
         try {
-            json = JSON.parse(response_data.replace(/,+/g, ","));
+            json = JSON.parse(aResponseData.replace(/,+/g, ","));
 
             if (json[0].length > 1) {
                 let i = 0,
@@ -69,25 +70,23 @@ Translator.prototype = {
                 transText = json[0][0][0];
             }
 
-            if (this._current_source_lang === "auto") {
+            if (this._extension.current_source_lang === "auto") {
                 detectedLang = result[1] ? result[1] : "?";
             } else {
-                detectedLang = this._current_source_lang;
+                detectedLang = this._extension.current_source_lang;
             }
 
             result = {
-                error: false,
                 detectedLang: detectedLang,
                 message: transText
             };
         } catch (aErr) {
             global.logError("%s %s: %s".format(
-                this.name,
+                this.params.name,
                 _("Error"),
                 JSON.stringify(aErr, null, "\t")
             ));
             result = {
-                error: true,
                 message: _("Can't translate text, please try later.")
             };
         }
@@ -95,6 +94,3 @@ Translator.prototype = {
         return result;
     }
 };
-
-/* exported NEEDS_EXTENSION_OBJECT
- */

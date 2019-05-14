@@ -4,7 +4,7 @@
     "uuid": "{{UUID}}",
     "contributors": "See this xlet help file.",
     "url": "{{REPO_URL}}",
-    "description": "Translation of text by different translation providers (currently Google, Yandex, Bing and Apertium).",
+    "description": "Translation of text by different translation providers (currently Google, Yandex, Bing, and Apertium).",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
     "cinnamon-version": [
         "3.0",
@@ -24,6 +24,5 @@
         "5.8",
         "6.0"
     ],
-    "schema-file": "schemas/org.cinnamon.extensions.{{UUID}}.gschema.xml",
     "name": "Multi Translator"
 }

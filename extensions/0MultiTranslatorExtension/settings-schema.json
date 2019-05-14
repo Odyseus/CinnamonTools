@@ -1,0 +1,191 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "If you are seeing this window, you are using a Cinnamon version with a design flaw."
+    },
+    "info_label_2": {
+        "type": "label",
+        "description": "This window isn't this extension's \"real\" configuration window."
+    },
+    "info_label_3": {
+        "type": "label",
+        "description": "Click the following button to open the \"real\" configuration window."
+    },
+    "info_label_3": {
+        "type": "label",
+        "description": "If on Cinnamon 3.0.x, the button below will not work."
+    },
+    "info_label_4": {
+        "type": "label",
+        "description": "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "openSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "pref_open_translator_dialog_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_translate_from_clipboard_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_translate_from_selection_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_default_translator": {
+        "type": "generic",
+        "default": "Google.TranslateTS"
+    },
+    "pref_translators_prefs": {
+        "type": "generic",
+        "default": {}
+    },
+    "pref_translators_prefs_defaults_control": {
+        "type": "generic",
+        "default": 0
+    },
+    "pref_ui_animation_time": {
+        "type": "generic",
+        "default": 200
+    },
+    "trigger_translators_prefs_defaults": {
+        "type": "generic",
+        "default": false
+    },
+    "trigger_date_format_syntax_info": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_translators_prefs_defaults": {
+        "type": "generic",
+        "default": [{
+            "provider_name": "Apertium.TS",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Bing.TranslatorTS",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Google.TranslateTS",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Google.Translate",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Transltr",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Yandex.Translate",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Yandex.TranslateTS",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }]
+    },
+    "pref_languages_stats": {
+        "type": "generic",
+        "default": {}
+    },
+    "pref_last_translator": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_remember_last_translator": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_auto_translate_when_switching_language": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_show_most_used": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_sync_entries_scrolling": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_width_percents": {
+        "type": "generic",
+        "default": 80
+    },
+    "pref_height_percents": {
+        "type": "generic",
+        "default": 60
+    },
+    "pref_font_size": {
+        "type": "generic",
+        "default": 1.20
+    },
+    "pref_dialog_theme": {
+        "type": "generic",
+        "default": "default"
+    },
+    "pref_dialog_theme_custom": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_history_enabled": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_history_timestamp": {
+        "type": "generic",
+        "default": "custom"
+    },
+    "pref_history_timestamp_custom": {
+        "type": "generic",
+        "default": "%Y-%m-%d %H:%M:%S"
+    },
+    "pref_history_width_to_trigger_word_wrap": {
+        "type": "generic",
+        "default": 300
+    },
+    "pref_yandex_api_keys": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_logging_level": {
+        "type": "generic",
+        "default": 0
+    },
+    "pref_debugger_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_loggin_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_loggin_save_history_indented": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_keep_source_entry_text_selected": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_all_dependencies_met": {
+        "type": "generic",
+        "default": false
+    }
+
+}

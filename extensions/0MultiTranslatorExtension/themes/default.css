@@ -1,226 +1,241 @@
-.translator-box {
-    background-color: rgba(63, 63, 63, 0.95);
-    padding: 20px;
-    color: #ccc;
-    font-family: "Noto Sans", "sans-serif";
-    border-radius: 4px;
-    border: 1px solid #8b8b8b;
+/* Multi Translator IDs and classes.
+ *
+ * IDs:
+ * MultiTranslatorDialog
+ *     mt-translator-dialog
+ * MultiTranslatorHelp
+ *     mt-help-dialog
+ * MultiTranslatorSourceChooser
+ *     mt-language-chooser-dialog
+ * MultiTranslatorTargetChooser
+ *     mt-language-chooser-dialog
+ *
+ * All IDs have the modal-dialog class set.
+ *
+ * Classes:
+ * mt-actionbar
+ * mt-button-icon
+ * mt-buttonsbar
+ * mt-buttonsbar-button
+ *     mt-close-button
+ *     mt-main-menu-button
+ *     mt-provider-selector-button
+ *     mt-quick-help-button
+ *     mt-source-language-button
+ *         modal-dialog-button
+ *     mt-source-language-label
+ *     mt-swap-languages-button
+ *     mt-target-language-button
+ *         modal-dialog-button
+ *     mt-target-language-label
+ *     mt-translate-button
+ * mt-buttonsbar-label
+ * mt-chars-counter-box
+ * mt-chars-counter-text-current
+ * mt-chars-counter-text-max
+ * mt-chars-counter-text-separator
+ * mt-entry
+ * mt-entry-box
+ *     mt-source-entry-box
+ *     mt-target-entry-box
+ * mt-error
+ * mt-help-text
+ * mt-language-chooser-button
+ * mt-language-chooser-languages
+ * mt-language-chooser-search-entry
+ * mt-language-chooser-search-entry-placeholder
+ * mt-language-chooser-title
+ * mt-listen-button
+ * mt-most-used-box
+ * mt-most-used-button
+ * mt-most-used-label
+ * mt-provider-button
+ * mt-source-bottombar-left
+ * mt-source-bottombar-right
+ * mt-source-topbar
+ * mt-infobar
+ * mt-infobar-message-error
+ * mt-infobar-message-info
+ * mt-infobar-message-success
+ * mt-target-bottombar-left
+ * mt-target-bottombar-right
+ * mt-target-topbar
+ */
+
+/*********************/
+/* Translator dialog */
+/*********************/
+/* Since the not() CSS directive doesn't seem to be supported, override the
+   color for the modal-dialog-button class with inherit.
+*/
+#MultiTranslatorDialog .mt-buttonsbar-button.modal-dialog-button:hover {
+    color: inherit;
 }
 
-.translator-source-text-box,
-.translator-target-text-box {
-    background: #4c4c4c;
-    border: 1px solid #8b8b8b;
-    overflow: hidden;
-    margin: 0;
-    padding: 3px;
-}
-
-.translator-source-text-box {
-    margin-right: 10px
-}
-
-.translator-target-text-box {
-    margin-left: 10px
-}
-
-.translator-entry {
-    caret-color: #a8a8a8;
-    caret-size: 2px;
-    selected-color: black;
-    background: transparent;
-    color: #fff;
-}
-
-.translator-statusbar-box {
-    font-size: 14px;
-    color: #ccc;
-}
-
-.translator-providerbar-box {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.translator-buttons-bar-box {
-}
-
-.translator-buttons-bar-icon {
-    color: #ccc;
-    icon-size: 18px;
+#MultiTranslatorDialog .mt-buttonsbar {
     padding: 4px;
 }
 
-.translator-buttons-bar-icon:hover,
-.translator-buttons-bar-icon:active {
-    color: #fff;
-}
-
-.translator-top-bar-box {
-}
-
-.translator-top-bar-button {
-    font-size: 18px;
+#MultiTranslatorDialog .mt-buttonsbar .mt-source-language-label,
+#MultiTranslatorDialog .mt-buttonsbar .mt-target-language-label {
+    font-size: 1.2em;
     font-weight: bold;
 }
 
-.translator-top-bar-button-reactive {
-    color: #ccc;
-    font-size: 18px;
+#MultiTranslatorDialog .mt-provider-button {
+    font-size: 0.8em;
     font-weight: bold;
 }
 
-.translator-top-bar-button-reactive:hover,
-.translator-top-bar-button-reactive:active {
-    color: #fff;
+#MultiTranslatorDialog .modal-dialog-button {
+    padding: 0 6px;
 }
 
-.translator-top-bar-go-button {
-    font-size: 18px;
+#MultiTranslatorDialog .mt-most-used-box .mt-most-used-label,
+#MultiTranslatorDialog .mt-most-used-box .mt-most-used-button {
+    /* Invisible border to conteract the border that I add when the button is active. */
+    border: 1px solid transparent;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+
+    font-size: 0.8em;
+    padding: 0 4px;
+}
+
+#MultiTranslatorDialog .mt-most-used-box .mt-most-used-label,
+#MultiTranslatorDialog .mt-most-used-box .mt-most-used-button:hover {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+#MultiTranslatorDialog .mt-most-used-box .mt-most-used-button:active {
+    /* text-decoration: underline doesn't work. JEEEESSSSSHHHHH */
+
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+}
+
+#MultiTranslatorDialog .mt-actionbar {
+    spacing: 0.5em;
+    padding: 0;
+}
+
+#MultiTranslatorDialog .mt-actionbar StButton {
+    padding: 0;
+}
+
+#MultiTranslatorDialog .mt-chars-counter-text-max {
     font-weight: bold;
-    padding: 0 10px;
-    border: 1px solid #8b8b8b;
 }
 
-.translator-top-bar-go-button:hover,
-.translator-top-bar-go-button:active {
-    color: #fff;
+#MultiTranslatorDialog .mt-infobar {
+    font-size: 1.2em;
 }
 
-.translator-dialog-menu-button {
-    font-size: 18px;
-    padding-top: 2px;
-    color: #ccc;
+#MultiTranslatorDialog .mt-infobar-message-error,
+#MultiTranslatorDialog .mt-chars-counter-text-current.mt-error {
+    color: red;
+    font-weight: bold;
 }
 
-.translator-dialog-menu-button:hover,
-.translator-dialog-menu-button:active {
-    color: #fff;
+#MultiTranslatorDialog .mt-infobar-message-success {
+    color: green;
 }
 
-.translator-dialog-menu-toggle-button {
-    padding-top: 2px;
-    color: #ccc;
+#MultiTranslatorDialog .mt-spinner {
+    font-weight: bold;
 }
 
-.translator-dialog-menu-toggle-button:hover,
-.translator-dialog-menu-toggle-button:active {
-    color: #fff;
+/*********************/
+/* Language choosers */
+/*********************/
+
+#MultiTranslatorSourceChooser .mt-language-chooser-button,
+#MultiTranslatorTargetChooser .mt-language-chooser-button {
+    border: 1px solid transparent;
 }
 
-.translator-language-chooser {
-    background-color: rgba(63, 63, 63, 0.95);
-    padding: 20px;
+#MultiTranslatorSourceChooser .mt-language-chooser-search-entry-placeholder,
+#MultiTranslatorTargetChooser .mt-language-chooser-search-entry-placeholder {
+    font-style: italic;
+}
+
+#MultiTranslatorSourceChooser .mt-language-chooser-search-entry-icon,
+#MultiTranslatorTargetChooser .mt-language-chooser-search-entry-icon {
+    icon-size: 1em;
+}
+
+/***************/
+/* Help dialog */
+/***************/
+
+#MultiTranslatorHelp .mt-help-dialog-info-shortcut {
+    font-weight: bold;
+}
+
+/***************/
+/* All dialogs */
+/***************/
+
+#MultiTranslatorDialog,
+#MultiTranslatorHelp,
+#MultiTranslatorSourceChooser,
+#MultiTranslatorTargetChooser {
+    padding: 10px;
+}
+
+#MultiTranslatorDialog .mt-button-icon,
+#MultiTranslatorHelp .mt-button-icon,
+#MultiTranslatorSourceChooser .mt-button-icon,
+#MultiTranslatorTargetChooser .mt-button-icon {
+    icon-size: 1.2em;
+    padding: 4px;
+}
+
+#MultiTranslatorDialog .mt-buttonsbar-button:hover,
+#MultiTranslatorHelp .mt-buttonsbar-button:hover,
+#MultiTranslatorSourceChooser .mt-buttonsbar-button:hover,
+#MultiTranslatorTargetChooser .mt-buttonsbar-button:hover {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+#MultiTranslatorHelp .mt-base-dialog-title,
+#MultiTranslatorSourceChooser .mt-base-dialog-title,
+#MultiTranslatorTargetChooser .mt-base-dialog-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#MultiTranslatorHelp .mt-base-dialog-scroll,
+#MultiTranslatorSourceChooser .mt-base-dialog-scroll,
+#MultiTranslatorTargetChooser .mt-base-dialog-scroll,
+#MultiTranslatorSourceChooser .mt-language-chooser-button:checked,
+#MultiTranslatorSourceChooser .mt-language-chooser-button:hover,
+#MultiTranslatorTargetChooser .mt-language-chooser-button:checked,
+#MultiTranslatorTargetChooser .mt-language-chooser-button:hover {
+    border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 4px;
-    border: 1px solid #8b8b8b;
 }
 
-.translator-language-chooser-box {
-    border: 1px solid #8b8b8b;
-    margin: 10px 0;
+#MultiTranslatorHelp .mt-base-dialog-title,
+#MultiTranslatorHelp .mt-base-dialog-close-button,
+#MultiTranslatorHelp .mt-base-dialog-scroll,
+#MultiTranslatorSourceChooser .mt-base-dialog-title,
+#MultiTranslatorSourceChooser .mt-base-dialog-close-button,
+#MultiTranslatorSourceChooser .mt-base-dialog-scroll,
+#MultiTranslatorTargetChooser .mt-base-dialog-title,
+#MultiTranslatorTargetChooser .mt-base-dialog-close-button,
+#MultiTranslatorTargetChooser .mt-base-dialog-scroll {
+    padding: 0.5em 0;
 }
 
-.translator-language-chooser-title {
-    color: #ccc;
-    font-size: 17px;
-    font-weight: bold;
-}
-
-.translator-language-chooser-entry {
-    size: 10px;
-    color: #ccc;
-    padding: 3px;
-    width: 150px;
-    background-color: rgba(63, 63, 63, 0.95);
-    caret-color: rgb(0, 0, 0);
-    caret-size: 2px;
-    selected-color: white;
-}
-
-.translator-language-chooser-entry-placeholder {
-    color: #ccc;
-}
-
-.translator-language-chooser-button {
-    padding: 3px;
-    font-size: 16px;
-    color: #ccc;
-}
-
-.translator-language-chooser-button:hover {
-    color: #fff;
-}
-
-.translator-language-chooser-button:active {
-    font-weight: bold;
-    color: #fff;
-}
-
-.translator-chars-counter-box {
-    font-size: 14px;
-    padding-bottom: 8px;
-}
-
-.translator-chars-counter-text {
-    padding-bottom: 8px;
-}
-
-.translator-help-box {
-    background-color: rgba(63, 63, 63, 0.95);
-    border: 1px solid #8b8b8b;
-    margin: 10px 0;
-}
-
-.translator-help-text {
-    font-size: 15px;
-    padding: 15px;
-    color: #ccc;
-}
-
-.translator-popup-escape-label {
-    padding-left: 10px;
-    padding-top: 5px;
-    size: 5px;
-    font-style: italic;
-    color: grey;
-}
-
-.translator-langs-buttons-label {
-    padding-left: 10px;
-    padding-bottom: 5px;
-    font-style: italic;
-    color: rgb(160, 160, 160);
-    font-size: 15px;
-}
-
-.translator-langs-buttons-box {
-    padding-left: 10px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-}
-
-.translator-lang-button-box {
-    padding: 0 5px;
-}
-
-.translator-lang-button {
-    font-size: 14px;
-    color: #ccc;
-}
-
-.translator-lang-button:hover,
-.translator-lang-button:active {
-    color: #fff;
-}
-
-.listen-button {
-    margin-top: 10px;
-    color: #ccc;
-}
-
-.listen-button:hover {
-    color: #fff;
-}
-
-.listen-button:active {
+#MultiTranslatorHelp .mt-base-dialog-scroll,
+#MultiTranslatorSourceChooser .mt-base-dialog-scroll,
+#MultiTranslatorTargetChooser .mt-base-dialog-scroll,
+#MultiTranslatorHelp .mt-base-dialog,
+#MultiTranslatorSourceChooser .mt-base-dialog,
+#MultiTranslatorTargetChooser .mt-base-dialog {
+    padding: 0.5em;
 }

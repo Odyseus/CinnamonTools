@@ -1,23 +1,22 @@
-let $;
+let $,
+    constants;
+
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
+    constants = require("./constants.js");
 } else {
     $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
+    constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
 }
-const _ = $._;
+
 const Main = imports.ui.main;
 
-var NEEDS_EXTENSION_OBJECT = true;
-
-const PROVIDER_NAME = "Yandex.Translate";
-const PROVIDER_LIMIT = 9800;
-const PROVIDER_URL = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=%s&lang=%s&text=%s&format=plain&options=1";
-const PROVIDER_HEADERS = {
-    "user-agent": "Mozilla/5.0",
-    "Referer": "https://translate.yandex.net/",
-    "Content-Type": "application/x-www-form-urlencoded"
-};
+const {
+    _,
+    Languages,
+    Settings
+} = constants;
 
 const LANGUAGE_PAIRS = [
     "auto-az",
@@ -224,15 +223,22 @@ Translator.prototype = {
     _init: function(aExtension) {
         $.TranslationProviderBase.prototype._init.call(
             this,
-            PROVIDER_NAME,
-            PROVIDER_LIMIT,
-            PROVIDER_URL,
-            PROVIDER_HEADERS
+            aExtension, {
+                name: "Yandex.Translate",
+                char_limit: 9800,
+                url: "https://translate.yandex.net/api/v1.5/tr.json/translate?key=%s&lang=%s&text=%s&format=plain&options=1",
+                headers: {
+                    "user-agent": "Mozilla/5.0",
+                    "Referer": "https://translate.yandex.net/",
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            }
         );
-        this._extension = aExtension;
+
+        this._APIKey = "";
     },
 
-    get_languages: function() {
+    getLanguages: function() {
         let temp = {};
 
         try {
@@ -240,7 +246,7 @@ Translator.prototype = {
                 iLen = LANGUAGE_PAIRS.length;
             for (; i < iLen; i++) {
                 let [lang_code, target_lang_code] = LANGUAGE_PAIRS[i].split("-"); // jshint ignore:line
-                let lang_name = this.get_language_name(lang_code);
+                let lang_name = this.getLanguageName(lang_code);
 
                 if (temp[lang_code]) {
                     continue;
@@ -253,7 +259,7 @@ Translator.prototype = {
         }
     },
 
-    get_pairs: function(language) {
+    getPairs: function(language) {
         let temp = {};
 
         try {
@@ -263,7 +269,7 @@ Translator.prototype = {
                 let [source_lang_code, target_lang_code] = LANGUAGE_PAIRS[i].split("-");
 
                 if (source_lang_code.toLowerCase() == language.toLowerCase()) {
-                    temp[target_lang_code] = $.LANGUAGES_LIST[target_lang_code];
+                    temp[target_lang_code] = Languages[target_lang_code];
                 }
             }
         } finally {
@@ -271,19 +277,18 @@ Translator.prototype = {
         }
     },
 
-    parse_response: function(response_data) {
+    parseResponse: function(aResponseData) {
         let json;
 
         try {
-            json = JSON.parse(response_data);
+            json = JSON.parse(aResponseData);
         } catch (aErr) {
             global.logError("%s %s: %s".format(
-                this.name,
+                this.params.name,
                 _("Error"),
                 JSON.stringify(aErr, null, "\t")
             ));
             return {
-                error: true,
                 message: _("Can't translate text, please try later.")
             };
         }
@@ -292,8 +297,7 @@ Translator.prototype = {
 
         if (json.code == 200) {
             result = {
-                error: false,
-                message: $.escape_html(json.text.join(" "))
+                message: $.escapeHTML(json.text.join(" "))
             };
         } else {
             let errorMessage;
@@ -323,7 +327,6 @@ Translator.prototype = {
             }
 
             result = {
-                error: true,
                 message: errorMessage
             };
         }
@@ -332,12 +335,9 @@ Translator.prototype = {
     },
 
     get YandexAPIKey() {
-        let APIKeys = this._extension.settings.yandex_api_keys.split("\n")
+        let APIKeys = Settings.pref_yandex_api_keys.split("\n")
             .filter((aKey) => { // Filter possible empty elements.
-                if (aKey !== "") {
-                    return true;
-                }
-                return false;
+                return !!aKey;
             });
 
         if (APIKeys.length === 0) {
@@ -353,6 +353,3 @@ Translator.prototype = {
         return this._APIKey;
     }
 };
-
-/* exported NEEDS_EXTENSION_OBJECT
- */

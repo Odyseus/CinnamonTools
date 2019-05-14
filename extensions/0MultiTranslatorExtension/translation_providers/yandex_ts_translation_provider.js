@@ -1,12 +1,11 @@
 let $;
+
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
 } else {
     $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
 }
-
-var NEEDS_EXTENSION_OBJECT = false;
 
 function Translator() {
     this._init.apply(this, arguments);
@@ -16,11 +15,12 @@ Translator.prototype = {
     __proto__: $.TranslateShellBaseTranslator.prototype,
 
     _init: function(aExtension) {
-        this.engine_name = "yandex";
-        this.provider_name = "Yandex.TranslateTS";
-        $.TranslateShellBaseTranslator.prototype._init.call(this, aExtension);
+        $.TranslateShellBaseTranslator.prototype._init.call(
+            this,
+            aExtension, {
+                name: "Yandex.TranslateTS",
+                ts_engine_name: "yandex"
+            }
+        );
     }
 };
-
-/* exported NEEDS_EXTENSION_OBJECT
- */
