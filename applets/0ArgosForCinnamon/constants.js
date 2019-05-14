@@ -20,6 +20,12 @@ var Placeholders = {
     ELLIPSIS: "...",
 };
 
+var LoggingLevel = {
+    NORMAL: 0,
+    VERBOSE: 1,
+    VERY_VERBOSE: 2
+};
+
 var OrnamentType = {
     NONE: 0,
     CHECK: 1,
@@ -95,6 +101,7 @@ var DefaultAttributes = Object.freeze({
             NotificationUrgency,
             BooleanAttrs,
             Placeholders,
+            LoggingLevel,
             TruthyVals,
             DefaultAttributes,
  */

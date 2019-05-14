@@ -1,3 +1,23 @@
+let XletMeta,
+    Emojis,
+    Constants;
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof __meta === "object") {
+    XletMeta = __meta;
+} else {
+    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
+}
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    Emojis = require("./emojis.js").Emojis;
+    Constants = require("./constants.js");
+} else {
+    Emojis = imports.ui.appletManager.applets["{{UUID}}"].emojis.Emojis;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+}
+
 const {
     gettext: Gettext,
     gi: {
@@ -21,24 +41,6 @@ const {
 } = imports;
 
 const GioSSS = Gio.SettingsSchemaSource;
-
-let Emojis;
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    Emojis = require("./emojis.js").Emojis;
-} else {
-    Emojis = imports.ui.appletManager.applets["{{UUID}}"].emojis.Emojis;
-}
-
-var Constants;
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    Constants = require("./constants.js");
-} else {
-    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
-}
-
-const XletMeta = Constants.XletMeta;
 
 const {
     AnsiColors,
@@ -121,6 +123,79 @@ function getUnitPluralForm(aUnit, aN) {
 
     return "";
 }
+
+function DebugManager() {
+    this._init.apply(this, arguments);
+}
+
+DebugManager.prototype = {
+    _init: function() {
+        let schema = DebugManagerSchema;
+        let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
+        let schemaSource;
+
+        if (schemaDir.query_exists(null)) {
+            schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
+                GioSSS.get_default(),
+                false);
+        } else {
+            schemaSource = GioSSS.get_default();
+        }
+
+        this.schemaObj = schemaSource.lookup(schema, false);
+
+        if (!this.schemaObj) {
+            throw new Error(_("Schema %s could not be found for xlet %s.")
+                .format(schema, XletMeta.uuid) + _("Please check your installation."));
+        }
+
+        this.schema = new Gio.Settings({
+            settings_schema: this.schemaObj
+        });
+
+        this._handlers = [];
+    },
+
+    set debugger_enabled(aValue) {
+        this.schema.set_boolean("pref-debugger-enabled", aValue);
+    },
+
+    get debugger_enabled() {
+        return this.schema.get_boolean("pref-debugger-enabled");
+    },
+
+    set logging_level(aValue) {
+        this.schema.set_int("pref-logging-level", aValue);
+    },
+
+    get logging_level() {
+        return this.schema.get_int("pref-logging-level");
+    },
+
+    connect: function(signal, callback) {
+        let handler_id = this.schema.connect(signal, callback);
+        this._handlers.push(handler_id);
+        return handler_id;
+    },
+
+    destroy: function() {
+        // Remove the remaining signals...
+        while (this._handlers.length) {
+            this.disconnect(this._handlers[0]);
+        }
+    },
+
+    disconnect: function(handler_id) {
+        let index = this._handlers.indexOf(handler_id);
+        this.schema.disconnect(handler_id);
+
+        if (index > -1) {
+            this._handlers.splice(index, 1);
+        }
+    }
+};
+
+var Debugger = new DebugManager();
 
 const SLIDER_SCALE = 0.00025;
 
@@ -1452,68 +1527,6 @@ function prototypeDebugger(aObject, aParams) {
     }
 }
 
-function DebugManager() {
-    this._init.apply(this, arguments);
-}
-
-DebugManager.prototype = {
-    _init: function() {
-        let schema = DebugManagerSchema;
-        let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
-        let schemaSource;
-
-        if (schemaDir.query_exists(null)) {
-            schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
-                GioSSS.get_default(),
-                false);
-        } else {
-            schemaSource = GioSSS.get_default();
-        }
-
-        this.schemaObj = schemaSource.lookup(schema, false);
-
-        if (!this.schemaObj) {
-            throw new Error(_("Schema %s could not be found for xlet %s.")
-                .format(schema, XletMeta.uuid) + _("Please check your installation."));
-        }
-
-        this.schema = new Gio.Settings({
-            settings_schema: this.schemaObj
-        });
-
-        this._handlers = [];
-    },
-
-    set verboseLogging(aValue) {
-        this.schema.set_boolean("pref-enable-verbose-logging", aValue);
-    },
-
-    get verboseLogging() {
-        return this.schema.get_boolean("pref-enable-verbose-logging");
-    },
-
-    connect: function(signal, callback) {
-        let handler_id = this.schema.connect(signal, callback);
-        this._handlers.push(handler_id);
-        return handler_id;
-    },
-
-    destroy: function() {
-        // Remove the remaining signals...
-        while (this._handlers.length) {
-            this.disconnect(this._handlers[0]);
-        }
-    },
-
-    disconnect: function(handler_id) {
-        let index = this._handlers.indexOf(handler_id);
-        this.schema.disconnect(handler_id);
-
-        if (index > -1) {
-            this._handlers.splice(index, 1);
-        }
-    }
-};
 
 function CustomPanelItemTooltip() {
     this._init.apply(this, arguments);
@@ -1614,6 +1627,7 @@ CustomPanelItemTooltip.prototype = {
 };
 
 /* exported parseLine,
+            Debugger,
             spawnWithCallback,
             informAboutMissingDependencies,
             escapeHTML,

@@ -1,16 +1,14 @@
-const AppletUUID = "{{UUID}}";
-
-let $;
+let $,
+    Constants;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
+    Constants = require("./constants.js");
 } else {
-    $ = imports.ui.appletManager.applets[AppletUUID].utils;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
 }
-
-const _ = $._;
-const DebugManager = new $.DebugManager();
 
 const {
     gi: {
@@ -33,10 +31,13 @@ const {
     }
 } = imports;
 
+const _ = $._;
+
 const {
     DefaultAttributes,
+    LoggingLevel,
     Placeholders,
-} = $.Constants;
+} = Constants;
 
 function Argos() {
     this._init.apply(this, arguments);
@@ -810,7 +811,8 @@ Argos.prototype = {
             "pref_shell_argument",
             "pref_last_selected_directory",
             "pref_initial_load_done",
-            "pref_enable_verbose_logging"
+            "pref_logging_level",
+            "pref_debugger_enabled",
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -1028,12 +1030,14 @@ Argos.prototype = {
             case "pref_rotation_interval_units":
                 this._setRotationInterval();
                 break;
-            case "pref_enable_verbose_logging":
-                DebugManager.verboseLogging = this.pref_enable_verbose_logging;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
 
                 this._notifyMessage([
-                        _("Debugging toggled"),
-                        _("Remember to restart Cinnamon to fully enable/disable this option.")
+                        _(this.metadata.name),
+                        _("Remember to restart Cinnamon to fully enable/disable this option."),
                     ],
                     "warning"
                 );
@@ -1043,7 +1047,8 @@ Argos.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    if (DebugManager.verboseLogging) {
+    if ($.Debugger.logging_level === LoggingLevel.VERY_VERBOSE ||
+        $.Debugger.debugger_enabled) {
         try {
             let protos = {
                 AltSwitcher: $.AltSwitcher,
@@ -1063,7 +1068,9 @@ function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
                     /* NOTE: _onCapturedEvent is triggered a billion times!
                      */
                     methods: ["_onCapturedEvent"],
-                    blacklistMethods: true
+                    blacklistMethods: true,
+                    verbose: $.Debugger.logging_level === LoggingLevel.VERY_VERBOSE,
+                    debug: $.Debugger.debugger_enabled
                 });
             }
         } catch (aErr) {
