@@ -27,6 +27,7 @@ from .SettingsWidgets import Switch
 from .SettingsWidgets import _
 from .common import BaseGrid
 from .common import generate_options_from_paths
+from .common import sort_combo_options
 # from SettingsWidgets import SoundFileChooser
 
 WIDGET_VARIABLE_TYPE_MAP = {
@@ -87,9 +88,11 @@ def secondary_widget_factory(widget_def, xlet_settings):
         options_list = widget_def["options"]
 
         if isinstance(options_list, dict):
-            kwargs["options"] = sorted([(a, b) for a, b in options_list.items()])
+            kwargs["options"] = [(a, b) for a, b in options_list.items()]
         else:
             kwargs["options"] = zip(options_list, options_list)
+
+        kwargs["options"] = sort_combo_options(kwargs["options"])
     else:
         widget_type = WIDGET_CLASS_TYPE_MAP[widget_def["type"]]
 

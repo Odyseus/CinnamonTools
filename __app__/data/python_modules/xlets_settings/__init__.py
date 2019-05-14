@@ -44,21 +44,22 @@ proxy = None
 XLET_SETTINGS_WIDGETS = {
     # NOTE: Custom simplified widget.
     "button": "JSONSettingsButton",
+    "colorchooser": "JSONSettingsColorChooser",
     "combobox": "JSONSettingsComboBox",
     "entry": "JSONSettingsEntry",
+    "filechooser": "JSONSettingsFileChooser",
     "iconfilechooser": "JSONSettingsIconChooser",
+    "keybinding": "JSONSettingsKeybinding",
+    "keybinding-with-options": "JSONSettingsKeybindingWithOptions",
     "list": "JSONSettingsList",
+    "spinbutton": "JSONSettingsSpinButton",
     "switch": "JSONSettingsSwitch",
-    "colorchooser": "JSONSettingsColorChooser",
+    "textview": "JSONSettingsTextView",
     # "datechooser": "JSONSettingsDateChooser",
     # "effect": "JSONSettingsEffectChooser",
-    "filechooser": "JSONSettingsFileChooser",
     # "fontchooser": "JSONSettingsFontButton",
-    "keybinding": "JSONSettingsKeybinding",
     # "scale": "JSONSettingsRange",
     # "soundfilechooser": "JSONSettingsSoundFileChooser",
-    "spinbutton": "JSONSettingsSpinButton",
-    "textview": "JSONSettingsTextView",
     # "tween": "JSONSettingsTweenChooser",
 }
 
@@ -105,20 +106,27 @@ class SettingsBox(BaseGrid):
         page_count = 0
 
         for page_def in pages_definition:
-            # Possibility to hide entire pages
+            # NOTE: Possibility to hide entire pages depending on a condition defined in
+            # the widgets definition file.
             if not page_def.get("compatible", True):
                 continue
 
+            page_scrolled_window = Gtk.ScrolledWindow(hadjustment=None, vadjustment=None)
+            page_scrolled_window.set_policy(hscrollbar_policy=Gtk.PolicyType.NEVER,
+                                            vscrollbar_policy=Gtk.PolicyType.AUTOMATIC)
+            page_scrolled_window.set_shadow_type(type=Gtk.ShadowType.ETCHED_IN)
             page = BaseGrid()
             page.set_spacing(15, 15)
             page.set_property("expand", True)
             page.set_property("margin", 15)
             page.set_border_width(0)
+            page_scrolled_window.add(page)
 
             section_count = 0
 
             for section_def in page_def["sections"]:
-                # Possibility to hide entire sections
+                # NOTE: Possibility to hide entire sections depending on a condition defined in
+                # the widgets definition file.
                 if not section_def.get("compatible", True):
                     continue
 
@@ -131,7 +139,8 @@ class SettingsBox(BaseGrid):
                 for i in range(0, len(section_widgets)):
                     widget_def = section_widgets[i]
 
-                    # Possibility to hide individual widgets
+                    # NOTE: Possibility to hide individual widgets depending on a condition defined in
+                    # the widgets definition file.
                     if not widget_def.get("compatible", True):
                         continue
 
@@ -170,10 +179,11 @@ class SettingsBox(BaseGrid):
                 section_count += 1
 
             page_count += 1
-            stack.add_titled(page, "stack_id_%s" % str(page_count), page_def["page-title"])
+            stack.add_titled(page_scrolled_window, "stack_id_%d" %
+                             page_count, page_def["page-title"])
 
             if page_def.get("page-icon"):
-                stack.child_set_property(page, "icon-name", page_def["page-icon"])
+                stack.child_set_property(page_scrolled_window, "icon-name", page_def["page-icon"])
 
         if create_stack_switcher:
             self.stack_switcher = Gtk.StackSwitcher()
@@ -545,7 +555,6 @@ class MainApplication(Gtk.Application):
         main_box = BaseGrid()
         main_box.set_spacing(0, 0)
         main_box.set_property("margin", 0)
-        self.window.add(main_box)
 
         if self.xlet_help_file_exists or self.display_settings_handling:
             add_separator = False
@@ -603,14 +612,9 @@ class MainApplication(Gtk.Application):
         # can align these elements together inside a header bar. NONE!!!).
         header.pack_end(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL))
 
-        main_boxscrolledwindow = Gtk.ScrolledWindow(hadjustment=None, vadjustment=None)
-        main_boxscrolledwindow.set_policy(hscrollbar_policy=Gtk.PolicyType.NEVER,
-                                          vscrollbar_policy=Gtk.PolicyType.AUTOMATIC)
-        main_boxscrolledwindow.set_shadow_type(type=Gtk.ShadowType.ETCHED_IN)
-        main_boxscrolledwindow.add(settings_box)
+        main_box.add(settings_box)
 
-        main_box.add(main_boxscrolledwindow)
-
+        self.window.add(main_box)
         self.window.show_all()
         self.window.connect("destroy", self.on_quit)
         self.window.connect("size-allocate", self.on_size_allocate_cb)
@@ -668,7 +672,14 @@ class MainApplication(Gtk.Application):
                   (self.xlet_type, self.xlet_uuid))
             quit()
 
+        # NOTE: Append the "icons" folder found in the framework.
         Gtk.IconTheme.get_default().append_search_path(os.path.join(module_path, "icons"))
+
+        # NOTE: If exists, append the "icons" folder found in the xlet. Some xlets
+        # settings windows might want to add icons that are shipped with them.
+        # For use in the stack switcher for example.
+        if os.path.isdir(os.path.join(self.xlet_dir, "icons")):
+            Gtk.IconTheme.get_default().append_search_path(os.path.join(self.xlet_dir, "icons"))
 
         self.help_file_path = os.path.join(self.xlet_dir, "HELP.html")
         self.xlet_help_file_exists = os.path.isfile(self.help_file_path)

@@ -12,6 +12,7 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk
 from gi.repository import Gtk
 from itertools import chain
+from operator import itemgetter
 
 HOME = os.path.expanduser("~")
 
@@ -178,15 +179,12 @@ def import_export(parent, type, last_dir):
     if type == "export":
         mode = Gtk.FileChooserAction.SAVE
         string = _("Select or enter file to export to")
-        # TO TRANSLATORS: Could be left blank.
         btns = (_("_Cancel"), Gtk.ResponseType.CANCEL,
                 _("_Save"), Gtk.ResponseType.ACCEPT)
     elif type == "import":
         mode = Gtk.FileChooserAction.OPEN
         string = _("Select a file to import")
-        # TO TRANSLATORS: Could be left blank.
         btns = (_("_Cancel"), Gtk.ResponseType.CANCEL,
-                # TO TRANSLATORS: Could be left blank.
                 _("_Open"), Gtk.ResponseType.OK)
 
     dialog = Gtk.FileChooserDialog(transient_for=parent.get_toplevel(),
@@ -266,6 +264,37 @@ def display_message_dialog(widget, title, message, context="information"):
     dialog.show_all()
     dialog.run()
     dialog.destroy()
+
+
+def sort_combo_options(options, first_option=""):
+    """Sort ComboBox widget options.
+
+    If the list of tuples was built from a dictionary, the list needs to be
+    sorted by the item at index 1 of each tuple. If the list of tuples was
+    built from a list, both items in each tuple are identical, so sort also
+    by index 1.
+
+    Parameters
+    ----------
+    options : list
+        A list of tuples of two elements representing the options used to build
+        a ComboBox widget and its derivatives.
+
+    Returns
+    -------
+    list
+        The sorted list.
+    """
+    only_first = []
+
+    if first_option:
+        for i, opt in enumerate(options):
+            if options[i][0] == first_option:
+                only_first.append(opt)
+                del options[i]
+                break
+
+    return only_first + sorted(options, key=itemgetter(1))
 
 
 if __name__ == "__main__":

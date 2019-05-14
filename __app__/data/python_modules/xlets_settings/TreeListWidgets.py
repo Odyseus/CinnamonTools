@@ -29,50 +29,73 @@ from .common import BaseGrid
 from .common import contrast_rgba_color
 from .common import generate_options_from_paths
 from .common import import_export
+from .common import sort_combo_options
 # from SettingsWidgets import SoundFileChooser
 
 LIST_VARIABLE_TYPE_MAP = {
+    # switch
     "boolean": bool,
-    "file": str,
-    "float": float,
-    "icon": str,
-    "integer": int,
-    "keybinding": str,
-    "keybinding-with-options": str,
-    "sound": str,
-    "string": str,
-    "multistring": str,
+    # colorchooser
     "color": str,
+    # filechooser
+    "file": str,
+    # spinbutton
+    "float": float,
+    # iconfilechooser
+    "icon": str,
+    # spinbutton
+    "integer": int,
+    # keybinding
+    "keybinding": str,
+    # keybinding-with-options
+    "keybinding-with-options": str,
+    # textview
+    "multistring": str,
+    # soundfilechooser
+    "sound": str,
+    # entry
+    "string": str,
 }
 
 LIST_CLASS_TYPE_MAP = {
     "boolean": Switch,
-    "icon": IconChooser,
-    "string": Entry,
-    "multistring": TextView,
+    "color": ColorChooser,
     "file": FileChooser,
     "float": SpinButton,
+    "icon": IconChooser,
     "integer": SpinButton,
     "keybinding": Keybinding,
     "keybinding-with-options": KeybindingWithOptions,
+    "multistring": TextView,
+    "string": Entry,
     # "sound": SoundFileChooser,
-    "color": ColorChooser,
 }
 
 LIST_PROPERTIES_MAP = {
+    # entry and iconfilechooser: If true, expand the widget to all available space.
     "expand-width": "expand_width",
+    # spinbutton: Maximum value.
     "max": "maxi",
+    # spinbutton: Minimum value.
     "min": "mini",
+    # filechooser: If true, enable folder selection of the file chooser. If false,
+    # enable file selection.
     "select-dir": "dir_select",
+    # spinbutton: Adjustment amount.
     "step": "step",
+    # spinbutton: How many digits to handle.
     "digits": "digits",
+    # spinbutton: Adjustment amount when using the Page Up/Down keys.
     "page": "page",
+    # list: The title for a column.
     "title": "label",
+    # spinbutton: Unit type description.
     "units": "units",
+    # All widgets.
     "tooltip": "tooltip",
-    # NOTE: Expose the number of keybindings to create for a "keybinding" widget.
+    # keybinding: Expose the number of keybindings to create.
     "num-bind": "num_bind",
-    # NOTE: Wheter to be able to specify opacity on ColorChooser widgets.
+    # colorchooser: Whether to be able to specify opacity.
     "use-alpha": "use_alpha",
 }
 
@@ -97,9 +120,11 @@ def list_edit_factory(options, xlet_settings):
         # NOTE: Sort both types of options. Otherwise, items will appear in
         # different order every single time the widget is re-built.
         if isinstance(options_list, dict):
-            kwargs["options"] = sorted([(a, b) for a, b in options_list.items()])
+            kwargs["options"] = [(a, b) for a, b in options_list.items()]
         else:
-            kwargs["options"] = sorted(zip(options_list, options_list), key=lambda x: x[0])
+            kwargs["options"] = zip(options_list, options_list)
+
+        kwargs["options"] = sort_combo_options(kwargs["options"], options.get("first-option", ""))
     else:
         widget_type = LIST_CLASS_TYPE_MAP[options["type"]]
 
@@ -690,17 +715,17 @@ class List(SettingsWidget):
                 raw_data = data_file.read()
 
             try:
-                exported_data = json.loads(raw_data, encoding="UTF-8")
+                imported_data = json.loads(raw_data, encoding="UTF-8")
             except Exception:
                 raise Exception("Failed to parse settings JSON data for file %s" % filepath)
 
             existent_data = self.settings.get_value(self.pref_key)
 
-            if isinstance(existent_data, list) and isinstance(exported_data, list):
+            if isinstance(existent_data, list) and isinstance(imported_data, list):
                 if override_existent_data:
-                    self.settings.set_value(self.pref_key, exported_data)
+                    self.settings.set_value(self.pref_key, imported_data)
                 else:
-                    self.settings.set_value(self.pref_key, existent_data + exported_data)
+                    self.settings.set_value(self.pref_key, existent_data + imported_data)
 
                 self.on_setting_changed()
             else:
@@ -767,7 +792,7 @@ class List(SettingsWidget):
             widget = list_edit_factory(self.columns[i], self.settings)
             widget.set_border_width(5)
 
-            if self.immutable is not None:
+            if isinstance(self.immutable, dict):
                 widget.set_sensitive(self.columns[i]["id"]
                                      not in self.immutable.get("read_only_keys", []))
 

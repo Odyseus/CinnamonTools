@@ -428,8 +428,8 @@ class TextView(SettingsWidget):
         super().__init__(dep_key=dep_key)
         self.set_spacing(5, 5)
 
-        self.label = Gtk.Label.new(label)
-        self.label.set_halign(Gtk.Align.CENTER)
+        self.label = SettingsLabel(label)
+        self.label.set_alignment(0.5, 0.5)
 
         self.scrolledwindow = Gtk.ScrolledWindow(hadjustment=None, vadjustment=None)
         self.scrolledwindow.set_size_request(width=-1, height=height)
@@ -446,6 +446,8 @@ class TextView(SettingsWidget):
         self.attach(self.label, 0, 0, 1, 1)
         self.attach(self.scrolledwindow, 0, 1, 1, 1)
         self.scrolledwindow.add(self.content_widget)
+
+        self.set_tooltip_text(tooltip)
 
     def focus_the_retarded_text_view(self, *args):
         self.content_widget.grab_focus()
@@ -530,7 +532,7 @@ class ComboBox(SettingsWidget):
         self.model = Gtk.ListStore(var_type, str)
 
         for option in options:
-            self.option_map[option[0]] = self.model.append([option[0], option[1]])
+            self.option_map[var_type(option[0])] = self.model.append([var_type(option[0]), option[1]])
 
         self.content_widget.set_model(self.model)
         self.content_widget.set_id_column(0)
@@ -818,7 +820,7 @@ class KeybindingWithOptions(SettingsWidget):
         self.model = Gtk.ListStore(var_type, str)
 
         for option in options:
-            self.option_map[option[0]] = self.model.append([option[0], option[1]])
+            self.option_map[var_type(option[0])] = self.model.append([var_type(option[0]), option[1]])
 
         self.combo_button.set_model(self.model)
         self.combo_button.set_id_column(0)

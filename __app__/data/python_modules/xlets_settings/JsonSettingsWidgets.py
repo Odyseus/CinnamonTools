@@ -30,49 +30,68 @@ from gi.repository import Gtk
 from .SettingsWidgets import *  # noqa
 from .TreeListWidgets import List  # noqa
 from .common import BaseGrid
+from .common import sort_combo_options
 
 
 CAN_BACKEND.append("List")  # noqa
 
 JSON_SETTINGS_PROPERTIES_MAP = {
+    # All widgets.
     "description": "label",
+    # spinbutton: Minimum value.
     "min": "mini",
+    # spinbutton: Maximum value.
     "max": "maxi",
+    # spinbutton: Adjustment amount.
     "step": "step",
+    # spinbutton: Adjustment amount when using the Page Up/Down keys.
     "page": "page",
+    # spinbutton: How many digits to handle.
     "digits": "digits",
+    # spinbutton: Unit type description.
     "units": "units",
+    # scale: Show value on the widget.
     "show-value": "show_value",
+    # filechooser: If true, enable folder selection of the file chooser. If false,
+    # enable file selection.
     "select-dir": "dir_select",
+    # textview: The height of the textview.
     "height": "height",
+    # All widgets.
     "tooltip": "tooltip",
+    # possible: List of effect name.
     "possible": "possible",
+    # entry and iconfilechooser: If true, expand the widget to all available space.
     "expand-width": "expand_width",
+    # list: Columns definition.
     "columns": "columns",
+    # soundfilechooser: If True, only wav and ogg sound files will be filtered in
+    # the file chooser dialog. If set to False, all sound files will be displayed.
     "event-sounds": "event_sounds",
-    # NOTE: Wether to display or not the the Up/Down buttons in a "list" widget.
+    # list: Whether to display or not the the Up/Down buttons.
     "move-buttons": "move_buttons",
-    # NOTE: For "list" widgets. The default width of the Edit entry dialog.
+    # list: The default width of the Edit entry dialog.
     "dialog-width": "dialog_width",
-    # NOTE: For "list" widgets. Whether to close the settions window after applying.
+    # list: Whether to close the settings window after applying.
     "apply-and-quit": "apply_and_quit",
-    # NOTE: Expose the number of keybindings to create for a "keybinding" widget.
+    # keybinding: Expose the number of keybindings to create.
     "num-bind": "num_bind",
-    # NOTE: Wether to use markup in "label" widgets.
+    # label: Whether to use markup.
     "use-markup": "use_markup",
-    # NOTE: An array of strings to be added as labels to the add/edit entry for "list" widgets.
+    # list: An array of strings to be added as labels to the add/edit entry.
     "dialog-info-labels": "dialog_info_labels",
-    # NOTE: Wheter to be able to specify opacity on ColorChooser widgets.
+    # colorchooser: Whether to be able to specify opacity.
     "use-alpha": "use_alpha",
-    # NOTE: For "list" widgets.
-    # A dict that can be empty and accepts one key called `read_only_keys`. A list of
-    # column IDs whose created widgets should be set as unsensitive.
-    # An immutable list widget has a fixed ammount of items.
+    # list: A dictionary that can be empty and accepts one key called `read_only_keys`.
+    # A list of column IDs whose created widgets should be set as nonsensitive.
+    # An immutable list widget has a fixed amount of items.
     # Items cannot be added nor removed but they do can be edited.
     "immutable": "immutable",
-    # NOTE: For "textview" widgets. Wheter the Tab key inserts a tab character (accept-tabs = true)
+    # textview: Whether the Tab key inserts a tab character (accept-tabs = true)
     # or the keyboard focus is moved (accept-tabs = false).
     "accept-tabs": "accept_tabs",
+    # combobox: Explicit value type to convert an option key to.
+    "valtype": "valtype",
 }
 
 
@@ -388,10 +407,17 @@ def json_settings_factory(subclass):
                 if prop in JSON_SETTINGS_PROPERTIES_MAP:
                     kwargs[JSON_SETTINGS_PROPERTIES_MAP[prop]] = properties[prop]
                 elif prop == "options":
-                    kwargs["options"] = []
+                    options_list = properties[prop]
 
-                    for value, label in properties[prop].items():
-                        kwargs["options"].append((value, label))
+                    # NOTE: Sort both types of options. Otherwise, items will appear in
+                    # different order every single time the widget is re-built.
+                    if isinstance(options_list, dict):
+                        kwargs["options"] = [(a, b) for a, b in options_list.items()]
+                    else:
+                        kwargs["options"] = zip(options_list, options_list)
+
+                    kwargs["options"] = sort_combo_options(kwargs["options"], properties.get("first-option", ""))
+
             super().__init__(**kwargs)
             self.attach_backend()
 
