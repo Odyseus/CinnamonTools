@@ -9,11 +9,17 @@ Applets/Extensions/Themes for the [Cinnamon desktop environment](https://github.
 
 **Bug reports, feature requests and contributions must be done in GitLab [![GitLabLogo][GitLabLogo]](https://gitlab.com/Odyseus/CinnamonTools)**. Repository mirrors: [![GitHubLogo][GitHubLogo]](https://github.com/Odyseus/CinnamonTools ) [![BitBucketLogo][BitBucketLogo]](https://bitbucket.org/Odyseus/CinnamonTools )
 
+## Dependencies
+
+The application used in this repository to build xlets and several other tasks requires Python 3.5+ to be available in `/usr/bin/python3`. All xlets that are shipped with Python scripts to perform different tasks have the exact same requirement.
+
+Additionally, each xlet can depend on certain commands to be available on PATH or packages to be installed on a system. These dependencies are listed in each xlet help pages. See [Xlets help pages](#xlets-help-pages).
+
 ## Building xlets
 
 All xlets in this repository aren't directly usable, they need to be *built*. The same principle applies to the themes in this repository (they need to be *built*).
 
-The **app.py** script found at the root of the repository is the *application* that takes care of the xlet building process. It has to be run from a terminal opened inside the repository's folder. This Python *application* has no external dependencies other than Python 3.5+.
+The **app.py** script found at the root of the repository is the *application* that takes care of the xlet building process. It has to be run from a terminal opened inside the repository's folder.
 
 ### Examples
 
@@ -73,25 +79,20 @@ Applet's help pages can be accessed from an applet context menu (item named **He
 - [Cinnamon Menu (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0CinnamonMenuForkByOdyseus/index.html)
 - [Desktop Capture (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0DesktopCaptureForkByOdyseus/index.html)
 - [Desktop Handler](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0DesktopHandler/index.html)
-- [Extensions Manager](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0ExtensionsManager/index.html)
 - [Feeds Reader (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0FeedsByJonbrettForkByOdyseus/index.html)
 - [Mailnag (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0MailnagAppletForkByOdyseus/index.html)
-- [Popup Translator](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0PopupTranslator/index.html)
 - [Quick Menu](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0QuickMenu/index.html)
 - [Simple ToDo List](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0SimpleToDoList/index.html)
 - [System Monitor (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0SystemMonitorByOrcusForkByOdyseus/index.html)
-- [Wallpaper Changer](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WallpaperChangerApplet/index.html)
 - [Weather (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WeatherAppletForkByOdyseus/index.html)
 - [Window list (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WindowListForkByOdyseus/index.html)
 
 ### Extensions help pages
 
-- [Cinnamon Maximus (Fork by Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0CinnamonMaximusForkByOdyseus/index.html)
 - [Cinnamon Tweaks](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0CinnamonTweaks/index.html)
 - [Color Blindness Assistant](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0ColorBlindnessAssistant/index.html)
 - [Desktop Effects Applier](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0DesktopEffectsApplierExtension/index.html)
 - [Multi Translator](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0MultiTranslatorExtension/index.html)
-- [Window demands attention behavior](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0WindowDemandsAttentionBehavior/index.html)
 
 ## [Documentation](https://odyseus.gitlab.io/cinnamon_tools_docs)
 

@@ -9,11 +9,17 @@ Applets/Extensions/Themes for the [Cinnamon desktop environment](https://github.
 
 **Bug reports, feature requests and contributions must be done in GitLab [![GitLabLogo][GitLabLogo]]({repo_url})**. Repository mirrors: [![GitHubLogo][GitHubLogo]](https://github.com/Odyseus/CinnamonTools ) [![BitBucketLogo][BitBucketLogo]](https://bitbucket.org/Odyseus/CinnamonTools )
 
+## Dependencies
+
+The application used in this repository to build xlets and several other tasks requires Python 3.5+ to be available in `/usr/bin/python3`. All xlets that are shipped with Python scripts to perform different tasks have the exact same requirement.
+
+Additionally, each xlet can depend on certain commands to be available on PATH or packages to be installed on a system. These dependencies are listed in each xlet help pages. See [Xlets help pages](#xlets-help-pages).
+
 ## Building xlets
 
 All xlets in this repository aren't directly usable, they need to be *built*. The same principle applies to the themes in this repository (they need to be *built*).
 
-The **app.py** script found at the root of the repository is the *application* that takes care of the xlet building process. It has to be run from a terminal opened inside the repository's folder. This Python *application* has no external dependencies other than Python 3.5+.
+The **app.py** script found at the root of the repository is the *application* that takes care of the xlet building process. It has to be run from a terminal opened inside the repository's folder.
 
 ### Examples
 
