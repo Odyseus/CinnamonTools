@@ -1,7 +1,7 @@
-/* FIXME: The quantities and sha1 libraries are a stric mode nightmare.
+/* FIXME: The quantities and sha1 libraries are a strict mode nightmare.
  * Try to tweak them to make them not vomit millions of useless warnings.
  * Or "simply" look for other libraries. ¬¬
- * I barelly find out of this because Cinnamon's import mechanism using
+ * I barely find out of this because Cinnamon's import mechanism using
  * require is an absolute garbage!!! &%$·%()/&% WEB DEVELOPERS!!!!
  * NOTE: Do not even think about adding automatic location lookup until
  * I can use async/await (around 2021). By that time, I might have already
@@ -9,19 +9,19 @@
  */
 
 let $,
+    Constants,
     Qty;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
+    Constants = require("./constants.js");
     Qty = require("./lib/quantities.js").Qty;
 } else {
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
     Qty = imports.ui.appletManager.applets["{{UUID}}"].lib.quantities.Qty;
 }
-
-const _ = $._;
-const DebugManager = new $.DebugManager();
 
 const {
     gi: {
@@ -49,6 +49,8 @@ const {
 } = imports;
 
 const {
+    _,
+    LoggingLevel,
     CssClasses: CLASS,
     Icons,
     NotificationsUrgency,
@@ -61,7 +63,7 @@ const {
         // WIND_SPEED: WindSpeedUnits,
         PRESSURE: PressureUnits
     },
-} = $.Constants;
+} = Constants;
 
 function Weather() {
     this._init.apply(this, arguments);
@@ -100,7 +102,6 @@ Weather.prototype = {
             this.theme = null;
             this.stylesheet = null;
             this.load_theme_id = 0;
-            this.prototypeDebuggersAttached = false;
             this.desktopNotification = null;
             this.weatherProvider = null;
             this.locationsMap = null;
@@ -119,6 +120,7 @@ Weather.prototype = {
 
             this.menuManager = new PopupMenu.PopupMenuManager(this);
             this.menu = new Applet.AppletPopupMenu(this, this.orientation);
+            this.menu.actor.set_name("WeatherApplet");
             this.menuManager.addMenu(this.menu);
             this.menu.connect("open-state-changed", () => {
                 this.locationSelectorMenu.isOpen &&
@@ -150,6 +152,10 @@ Weather.prototype = {
 
             this.sigMan.connect(Main.themeManager, "theme-set", function() {
                 this._loadTheme(false);
+            }.bind(this));
+
+            this.sigMan.connect(this, "orientation-changed", function() {
+                this._seekAndDetroyConfigureContext();
             }.bind(this));
         });
     },
@@ -220,7 +226,8 @@ Weather.prototype = {
             "pref_distance_unit",
             "pref_current_location",
             "pref_weather_data",
-            "pref_enable_verbose_logging",
+            "pref_logging_level",
+            "pref_debugger_enabled",
             "pref_darksky_credential_app_id",
             "pref_open_weather_map_credential_app_id",
             "pref_weatherbit_credential_app_id",
@@ -234,7 +241,6 @@ Weather.prototype = {
             "pref_menu_theme_path_custom",
             "pref_icon_theme",
             "pref_icon_theme_path_custom",
-            "pref_abbreviated_moon_phases",
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -250,14 +256,7 @@ Weather.prototype = {
     },
 
     _expandAppletContextMenu: function() {
-        let menuItem = new PopupMenu.PopupIconMenuItem(_("Open locations manager"),
-            "edit-copy", St.IconType.SYMBOLIC);
-        menuItem.connect("activate", () => {
-            this._openLocationsManager();
-        });
-        this._applet_context_menu.addMenuItem(menuItem);
-
-        menuItem = new PopupMenu.PopupIconMenuItem(_("Copy current location data"),
+        let menuItem = new PopupMenu.PopupIconMenuItem(_("Copy current location data"),
             "edit-copy", St.IconType.SYMBOLIC);
         menuItem.connect("activate", () => {
             let clipboard = St.Clipboard.get_default();
@@ -276,6 +275,39 @@ Weather.prototype = {
             this._openHelpPage();
         });
         this._applet_context_menu.addMenuItem(menuItem);
+
+        this._seekAndDetroyConfigureContext();
+    },
+
+    _seekAndDetroyConfigureContext: function() {
+        let menuItem = new PopupMenu.PopupIconMenuItem(_("Configure..."),
+            "system-run", St.IconType.SYMBOLIC);
+        menuItem.connect("activate", () => {
+            this._openSettings();
+        });
+
+        Mainloop.timeout_add_seconds(5, () => {
+            try {
+                let children = this._applet_context_menu._getMenuItems();
+                let i = children.length;
+                while (i--) {
+                    if (this.hasOwnProperty("context_menu_item_configure") &&
+                        children[i] === this.context_menu_item_configure) {
+                        children[i].destroy();
+                        this.context_menu_item_configure = menuItem;
+                        this._applet_context_menu.addMenuItem(
+                            this.context_menu_item_configure,
+                            i
+                        );
+                        break;
+                    }
+                }
+            } catch (aErr) {
+                global.logError(aErr);
+            }
+
+            return false;
+        });
     },
 
     _initSoupSession: function() {
@@ -293,14 +325,17 @@ Weather.prototype = {
                 new Soup.ProxyResolverDefault()
             );
         } catch (aErr) {
-            this.pref_enable_verbose_logging && global.logError(aErr);
+            if ($.Debugger.logging_level !== LoggingLevel.NORMAL) {
+                global.logError(aErr);
+            }
+
             this._httpSession = new Soup.Session();
         }
 
         this._httpSession.user_agent = "Mozilla/5.0";
         this._httpSession.timeout = 10;
 
-        if (this.pref_enable_verbose_logging) {
+        if ($.Debugger.logging_level !== LoggingLevel.NORMAL) {
             const SoupLogger = Soup.Logger.new(Soup.LoggerLogLevel.HEADERS |
                 Soup.LoggerLogLevel.BODY, -1);
 
@@ -640,6 +675,8 @@ Weather.prototype = {
         this.sigMan.disconnectAllSignals();
 
         this.settings && this.settings.finalize();
+
+        $.Debugger.destroy();
     },
 
     on_applet_clicked: function(event) { // jshint ignore:line
@@ -697,9 +734,12 @@ Weather.prototype = {
                         .weather_providers[providerID].Provider;
                 }
 
-                if (this.pref_enable_verbose_logging) {
+                if ($.Debugger.logging_level === LoggingLevel.VERY_VERBOSE ||
+                    $.Debugger.debugger_enabled) {
                     $.prototypeDebugger(provider, {
-                        objectName: providerID + ".Provider"
+                        objectName: providerID + ".Provider",
+                        verbose: $.Debugger.logging_level === LoggingLevel.VERY_VERBOSE,
+                        debug: $.Debugger.debugger_enabled
                     });
                     weatherProvider = new provider(this, currentLocation || {});
                 } else {
@@ -1027,12 +1067,24 @@ Weather.prototype = {
     rebuildCurrentWeatherUi: function() {
         this.destroyCurrentWeather();
 
+        let leftBox = new St.BoxLayout({
+            vertical: true,
+            x_align: Clutter.ActorAlign.END,
+            x_expand: true,
+            style_class: CLASS.CURRENT_ICON_BOX
+        });
+
         let midleBox = new St.BoxLayout({
             vertical: true,
+            x_align: Clutter.ActorAlign.CENTER,
+            x_expand: true,
             style_class: CLASS.CURRENT_SUMMARY_BOX
         });
 
-        let rightBox = new St.Bin({
+        let rightBox = new St.BoxLayout({
+            vertical: true,
+            x_align: Clutter.ActorAlign.START,
+            x_expand: true,
             style_class: CLASS.CURRENT_SUMMARY_DETAILS_BOX
         });
 
@@ -1042,6 +1094,10 @@ Weather.prototype = {
             icon_size: this.pref_current_weather_icon_size,
             icon_name: Icons.REFRESH_ICON,
             style_class: CLASS.CURRENT_ICON
+        });
+        leftBox.add(this._currentWeatherIcon, {
+            y_fill: true,
+            expand: true
         });
 
         // The link to the details page.
@@ -1088,17 +1144,22 @@ Weather.prototype = {
             y_fill: true,
             y_align: St.Align.MIDDLE,
             x_align: St.Align.MIDDLE,
-            x_fill: true,
             expand: true
         });
 
         let summaryGrid = new Clutter.GridLayout({
             orientation: Clutter.Orientation.VERTICAL
         });
+        summaryGrid.set_column_homogeneous(true);
 
-        rightBox.set_child(new St.Widget({
+        let summaryBox = new St.Widget({
             layout_manager: summaryGrid
-        }));
+        });
+
+        rightBox.add(summaryBox, {
+            y_fill: true,
+            expand: true
+        });
 
         let textOb = {
             text: Placeholders.LOADING,
@@ -1124,13 +1185,20 @@ Weather.prototype = {
             index++;
         }
 
-        let box = new St.BoxLayout({
-            style_class: CLASS.CURRENT_ICON_BOX
+        let grid = new Clutter.GridLayout({
+            orientation: Clutter.Orientation.HORIZONTAL
         });
-        box.add_actor(this._currentWeatherIcon);
-        box.add_actor(midleBox);
-        box.add_actor(rightBox);
-        this._currentWeather.set_child(box);
+        grid.set_column_homogeneous(true);
+
+        let table = new St.Widget({
+            layout_manager: grid
+        });
+
+        grid.attach(leftBox, 0, 1, 1, 1);
+        grid.attach(midleBox, 1, 1, 1, 1);
+        grid.attach(rightBox, 2, 1, 1, 1);
+
+        this._currentWeather.set_child(table);
     },
 
     rebuildFutureWeatherUi: function() {
@@ -1147,6 +1215,7 @@ Weather.prototype = {
         this._forecastBox = new Clutter.GridLayout({
             orientation: this.pref_menu_orientation === "vertical" ? 1 : 0
         });
+        this._forecastBox.set_column_homogeneous(true);
 
         let table = new St.Widget({
             layout_manager: this._forecastBox
@@ -1234,7 +1303,7 @@ Weather.prototype = {
     },
 
     _getConditionData: function(aType, aCode) {
-        let providerData = $.Constants[this.weatherProvider.providerID + "ConditionData"];
+        let providerData = Constants[this.weatherProvider.providerID + "ConditionData"];
 
         if (aCode !== null && aCode !== Placeholders.ELLIPSIS &&
             aCode in providerData) {
@@ -1591,9 +1660,9 @@ Weather.prototype = {
         }
     },
 
-    _openLocationsManager: function() {
+    _openSettings: function() {
         Util.spawn_async([
-            this.metadata.path + "/locationsManager.py",
+            this.metadata.path + "/settings.py",
             "--xlet-type=applet",
             "--xlet-instance-id=" + this.instance_id,
             "--xlet-uuid=" + this.metadata.uuid
@@ -1736,11 +1805,13 @@ Weather.prototype = {
 
                 this.refreshIcons();
                 break;
-            case "pref_enable_verbose_logging":
-                DebugManager.verboseLogging = this.pref_enable_verbose_logging;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
 
                 this._notifyMessage(
-                    _("Debugging toggled"),
+                    _(this.metadata.name),
                     _("Remember to restart Cinnamon to fully enable/disable this option."),
                     NotificationsUrgency.CRITICAL
                 );
@@ -1762,32 +1833,16 @@ Weather.prototype = {
 
                 this._loadTheme(true);
                 break;
-                /* NOTE: In case that I decide to add some "links" to the locations manager GUI.
-                 */
-                // case "trigger_woeid_lookup":
-                //     this._xdgOpen(URLs.YAHOO_WOEID);
-                //     break;
-                // case "trigger_yahoo_api_instructions":
-                //     this._xdgOpen(URLs.YAHOO_API_INSTRUCTIONS);
-                //     break;
-                // case "trigger_open_weather_map_finder":
-                //     this._xdgOpen(URLs.OPEN_WEATHER_MAP_FIND);
-                //     break;
-                // case "trigger_open_weather_map_api_instructions":
-                //     this._xdgOpen(URLs.OPEN_WEATHER_MAP_API_INSTRUCTIONS);
-                //     break;
-                // case "trigger_darksky_find":
-                //     this._xdgOpen(URLs.DARK_SKY_API_FIND);
-                //     break;
-                // case "trigger_darksky_api_instructions":
-                //     this._xdgOpen(URLs.DARK_SKY_API_INSTRUCTIONS);
-                //     break;
         }
     }
 };
 
 function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    if (DebugManager.verboseLogging) {
+    /* NOTE: I have to attach the debugger here for prototypes from other modules
+     * because this is the only place where the instance ID can be accessed. ¬¬
+     */
+    if ($.Debugger.logging_level === LoggingLevel.VERY_VERBOSE ||
+        $.Debugger.debugger_enabled) {
         try {
             let protos = {
                 CustomPanelTooltip: $.CustomPanelTooltip,
@@ -1801,7 +1856,9 @@ function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
 
             for (let name in protos) {
                 $.prototypeDebugger(protos[name], {
-                    objectName: name + aInstance_id
+                    objectName: name + aInstance_id,
+                    verbose: $.Debugger.logging_level === LoggingLevel.VERY_VERBOSE,
+                    debug: $.Debugger.debugger_enabled
                 });
             }
         } catch (aErr) {

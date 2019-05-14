@@ -1,5 +1,7 @@
-/* List of valid classes.
+/* List of IDs:
+ * WeatherApplet
  *
+ * List of classes:
  * popup-separator-menu-item
  * weather-current
  * weather-current-icon
@@ -24,105 +26,84 @@
  * weather-menu
  */
 
-.weather-current {
+#WeatherApplet .weather-current {
     padding-bottom: 10px;
 }
 
-.weather-current-icon {
-    padding: 0 30px;
-}
-
-/*.weather-current-iconbox {}*/
-
-.weather-current-location-button {
+#WeatherApplet .weather-current-location-button {
     font-size: 1.2em;
 }
 
-.weather-current-summary {
+#WeatherApplet .weather-current-summary {
     font-size: 1.5em;
     font-weight: bold;
     /* Max. width used to force word wrapping of long summaries. */
     max-width: 450px;
 }
 
-.weather-current-summary-box {
+#WeatherApplet .weather-current-summary-box {
     padding: 15px;
 }
 
-.weather-current-summary-details-box {
-    padding: 0 30px;
-}
-
-.weather-current-summary-details-title {
+#WeatherApplet .weather-current-summary-details-title {
     padding: 0 5px;
     font-weight: bold;
 }
 
-/*.weather-current-summary-details-value {}*/
-
-/*.weather-error-box:error {}*/
-
-.weather-error-message {
+#WeatherApplet .weather-error-message {
     padding: 0 10px;
     font-weight: bold;
 }
 
-.weather-error-message:error {
+#WeatherApplet .weather-error-message:error {
     background-color: red;
     color: black;
 }
 
-.weather-error-message:warning {
+#WeatherApplet .weather-error-message:warning {
     background-color: yellow;
     color: black;
 }
 
-.weather-footer-box {
+#WeatherApplet .weather-footer-box {
     padding: 10px 5px 0 5px;
 }
 
-.weather-footer-button {
+#WeatherApplet .weather-footer-button {
     font-weight: bold;
     padding: 0 10px;
 }
 
-/*.weather-forecast {}*/
-/*.weather-forecast-box {}*/
-
-.weather-forecast-data-box {
+#WeatherApplet .weather-forecast-data-box {
     padding: 10px 15px 10px 0;
 }
 
-.weather-forecast-day {
+#WeatherApplet .weather-forecast-day {
     padding-left: 0;
     font-weight: bold;
 }
 
-.weather-forecast-icon {
+#WeatherApplet .weather-forecast-icon {
     padding: 0 15px;
 }
 
 /* DarkSky summaries are kilometric!!! ¬¬ */
-.weather-forecast-summary {
+#WeatherApplet .weather-forecast-summary {
     /* Max. width used to force ellipsizing of long summaries.
      * Using word wrapping here will "deform" the current weather layout.
      */
     max-width: 200px;
 }
 
-/*.weather-forecast-temperature {}*/
-
-.weather-footer-button:active,
-.weather-footer-button:focus,
-.weather-footer-button:hover,
-.weather-footer-button:selected,
-.weather-current-location-button:active,
-.weather-current-location-button:focus,
-.weather-current-location-button:hover,
-.weather-current-location-button:selected {
+#WeatherApplet .weather-footer-button:active,
+#WeatherApplet .weather-footer-button:focus,
+#WeatherApplet .weather-footer-button:hover,
+#WeatherApplet .weather-footer-button:selected,
+#WeatherApplet .weather-current-location-button:active,
+#WeatherApplet .weather-current-location-button:focus,
+#WeatherApplet .weather-current-location-button:hover,
+#WeatherApplet .weather-current-location-button:selected {
     background-gradient-direction: vertical;
     background-gradient-start: rgba(255, 255, 255, 0.4);
     background-gradient-end: rgba(255, 255, 255, 0.2);
 }
-
-/*.weather-menu {}*/

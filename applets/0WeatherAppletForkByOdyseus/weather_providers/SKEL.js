@@ -1,16 +1,17 @@
 let $,
-    SHA1;
+    SHA1,
+    Constants;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
     SHA1 = require("./lib/sha1.js");
+    Constants = require("./constants.js");
 } else {
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
     SHA1 = imports.ui.appletManager.applets["{{UUID}}"].lib.sha1;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
 }
-
-const _ = $._;
 
 const {
     misc: {
@@ -19,12 +20,13 @@ const {
 } = imports;
 
 const {
+    _,
     DayNamesByAbbr,
     Ellipsis,
     ErrorMessages,
     WeatherProviderNames,
     WeatherProviderDefaultParams
-} = $.Constants;
+} = Constants;
 
 function Provider() {
     this._init.apply(this, arguments);
@@ -139,7 +141,7 @@ Provider.prototype = {
             "curVisibility": $.safeGet(C, "atmosphere", "visibility"),
             "curSunrise": this.formatTime($.safeGet(C, "astronomy", "sunrise")),
             "curSunset": this.formatTime($.safeGet(C, "astronomy", "sunset")),
-            "curMoonPhase": $.getMoonPhase(this.applet.pref_abbreviated_moon_phases),
+            "curMoonPhase": $.getMoonPhase(),
         };
 
         let forecasts = [];

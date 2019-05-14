@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="{{UUID}}">
     <schema path="/org/cinnamon/applets/{{UUID}}/" id="org.cinnamon.applets.{{UUID}}">
-        <key type="b" name="pref-enable-verbose-logging">
+        <key type="b" name="pref-debugger-enabled">
             <default>false</default>
+        </key>
+        <key type="i" name="pref-logging-level">
+            <default>0</default>
         </key>
     </schema>
 </schemalist>

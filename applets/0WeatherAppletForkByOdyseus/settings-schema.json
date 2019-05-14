@@ -1,226 +1,103 @@
 {
+    "info_label_1": {
+        "type": "label",
+        "description": "If you are seeing this window, you are using a Cinnamon version with a design flaw."
+    },
+    "info_label_2": {
+        "type": "label",
+        "description": "This window isn't this applet's \"real\" configuration window."
+    },
+    "info_label_3": {
+        "type": "label",
+        "description": "Open this applet settings from its context menu."
+    },
     "pref_overlay_key": {
-        "type": "keybinding",
-        "indent": true,
-        "description": "Keyboard shortcut to open and close the menu",
+        "type": "generic",
         "default": ""
     },
-    "locations_manager_button": {
-        "type": "button",
-        "description": "Open locations manager",
-        "callback": "_openLocationsManager"
-    },
     "pref_refresh_interval": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 60,
-        "min": 30,
-        "max": 1440,
-        "units": "minutes",
-        "step": 5,
-        "description": "Update weather data interval"
-    },
-    "header_units": {
-        "type": "header",
-        "description": "Units"
+        "type": "generic",
+        "default": 60
     },
     "pref_temperature_unit": {
-        "type": "combobox",
-        "indent": true,
-        "default": "celsius",
-        "description": "Temperature unit",
-        "options": {
-            "Celsius": "celsius",
-            "Fahrenheit": "fahrenheit",
-            "Kelvin": "kelvin"
-        }
+        "type": "generic",
+        "default": "celsius"
     },
     "pref_distance_unit": {
-        "type": "combobox",
-        "indent": true,
-        "default": "km",
-        "description": "Distance unit",
-        "options": {
-            "Kilometers": "km",
-            "Meters": "m",
-            "Miles": "mile"
-        }
+        "type": "generic",
+        "default": "km"
     },
     "pref_wind_speed_unit": {
-        "type": "combobox",
-        "indent": true,
-        "default": "kph",
-        "description": "Wind speed unit",
-        "options": {
-            "Kilometers per hour": "kph",
-            "Knots": "knot",
-            "Meters per second": "m/s",
-            "Miles per hour": "mph"
-        }
+        "type": "generic",
+        "default": "kph"
     },
     "pref_pressure_unit": {
-        "type": "combobox",
-        "indent": true,
-        "default": "kPa",
-        "description": "Atmospheric pressure unit",
-        "options": {
-            "Atmospheres": "atm",
-            "Hectopascals": "hPa",
-            "Inches mercury": "inHg",
-            "Kilopascals": "kPa",
-            "Millibars": "mbar",
-            "Millimeters mercury": "mmHg",
-            "Pascals": "Pa",
-            "Pounds per square inch": "psi"
-        }
-    },
-    "header_menu_layout": {
-        "type": "header",
-        "description": "Menu Layout"
+        "type": "generic",
+        "default": "kPa"
     },
     "pref_menu_orientation": {
-        "type": "combobox",
-        "indent": true,
-        "default": "horizontal",
-        "description": "Menu orientation",
-        "options": {
-            "Horizontal": "horizontal",
-            "Vertical": "vertical"
-        }
-    },
-    "header_general_appearance": {
-        "type": "header",
-        "description": "General Appearance"
+        "type": "generic",
+        "default": "horizontal"
     },
     "pref_icon_theme": {
-        "type": "combobox",
-        "indent": true,
-        "default": "built-in",
-        "description": "Icon theme",
-        "options": {
-            "System": "system",
-            "Built-in": "built-in",
-            "Custom": "custom"
-        }
+        "type": "generic",
+        "default": "built-in"
     },
     "pref_icon_theme_path_custom": {
-        "type": "filechooser",
-        "indent": true,
-        "select-dir": true,
-        "default": "",
-        "description": "Path to custom icon theme"
-    },
-    "header_menu_appearance": {
-        "type": "header",
-        "description": "Menu Appearance"
-    },
-    "pref_abbreviated_moon_phases": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Abbreviate the name of the moon phases",
-        "tooltip": "It takes effect after the weather data is refreshed."
+        "type": "generic",
+        "default": ""
     },
     "pref_temperature_high_first": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show high temperature first in forecast"
+        "type": "generic",
+        "default": false
     },
     "pref_forecats_display_dates": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Display forecast dates"
+        "type": "generic",
+        "default": true
     },
     "pref_show_common_sense_hours": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Display time in 24 hours format"
+        "type": "generic",
+        "default": true
     },
     "pref_current_weather_icon_size": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 96,
-        "min": 16,
-        "max": 128,
-        "units": "pixels",
-        "step": 2,
-        "description": "Current weather icon size"
+        "type": "generic",
+        "default": 128
     },
     "pref_forecasts_icon_size": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 48,
-        "min": 16,
-        "max": 128,
-        "units": "pixels",
-        "step": 2,
-        "description": "Forecasts icon size"
+        "type": "generic",
+        "default": 48
     },
     "pref_menu_icon_type": {
-        "type": "combobox",
-        "indent": true,
-        "default": 0,
-        "description": "Menu icon type",
-        "options": {
-            "Full color": 1,
-            "Symbolic": 0
-        }
+        "type": "generic",
+        "default": 0
     },
     "pref_menu_theme": {
-        "type": "combobox",
-        "indent": true,
-        "default": "default",
-        "description": "Menu theme",
-        "options": {
-            "Default": "default",
-            "Custom": "custom"
-        }
+        "type": "generic",
+        "default": "default"
     },
     "pref_menu_theme_path_custom": {
-        "type": "filechooser",
-        "indent": true,
-        "default": "",
-        "description": "Path to custom style sheet"
-    },
-    "header_applet_appearance": {
-        "type": "header",
-        "description": "Applet Appearance"
+        "type": "generic",
+        "default": ""
     },
     "pref_show_current_temperature_in_panel": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Display current temperature in panel"
+        "type": "generic",
+        "default": true
     },
     "pref_show_current_condition_in_panel": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Display weather condition in panel"
+        "type": "generic",
+        "default": false
     },
     "pref_applet_icon_type": {
-        "type": "combobox",
-        "indent": true,
-        "default": 0,
-        "description": "Applet icon type",
-        "options": {
-            "Full color": 1,
-            "Symbolic": 0
-        }
+        "type": "generic",
+        "default": "0"
     },
-    "debugging-header": {
-        "type": "header",
-        "description": "Debugging"
+    "pref_logging_level": {
+        "type": "generic",
+        "default": 0
     },
-    "pref_enable_verbose_logging": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Verbose logging (needs Cinnamon restart)",
-        "tooltip": "Checking this will enable debug level logging."
+    "pref_debugger_enabled": {
+        "type": "generic",
+        "default": false
     },
     "pref_imp_exp_last_selected_directory": {
         "type": "generic",

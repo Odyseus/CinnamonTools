@@ -1,10 +1,3 @@
-const {
-    gettext: Gettext,
-    gi: {
-        GLib
-    }
-} = imports;
-
 var XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
@@ -14,16 +7,14 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
+const {
+    gettext: Gettext,
+    gi: {
+        GLib
+    }
+} = imports;
+
 Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
-
-var DebugManagerSchema = "org.cinnamon.applets." + XletMeta.uuid;
-
-var NotificationsUrgency = {
-    LOW: 0,
-    NORMAL: 1,
-    HIGH: 2,
-    CRITICAL: 3
-};
 
 /**
  * Return the localized translation of a string, based on the xlet domain or
@@ -45,6 +36,19 @@ function _(aStr) {
     return Gettext.gettext(aStr);
 }
 
+var DebugManagerSchema = "org.cinnamon.applets." + XletMeta.uuid;
+
+var NotificationsUrgency = {
+    LOW: 0,
+    NORMAL: 1,
+    HIGH: 2,
+    CRITICAL: 3
+};
+var LoggingLevel = {
+    NORMAL: 0,
+    VERBOSE: 1,
+    VERY_VERBOSE: 2
+};
 // Conditions.
 const Conditions = {
     BLOWING_SNOW: _("Blowing snow"),
@@ -1077,6 +1081,7 @@ var WeatherBitSupportedLanguages = new Set([
             ErrorMessages,
             KnownStatusCodes,
             NotificationsUrgency,
+            LoggingLevel,
             OpenWeatherMapConditionData,
             WeatherBitConditionData,
             OpenWeatherMapSupportedLanguages,

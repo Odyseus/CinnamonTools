@@ -1,3 +1,20 @@
+var XletMeta,
+    Constants;
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof __meta === "object") {
+    XletMeta = __meta;
+} else {
+    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
+}
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    Constants = require("./constants.js");
+} else {
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+}
+
 const {
     gi: {
         Gio,
@@ -19,17 +36,8 @@ const {
 
 const GioSSS = Gio.SettingsSchemaSource;
 
-var Constants;
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    Constants = require("./constants.js");
-} else {
-    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
-}
-
-const XletMeta = Constants.XletMeta;
-
 const {
+    _,
     DebugManagerSchema,
     ErrorMessages,
     KnownStatusCodes,
@@ -38,7 +46,78 @@ const {
     WeatherProviderNames,
 } = Constants;
 
-var _ = Constants._;
+function DebugManager() {
+    this._init.apply(this, arguments);
+}
+
+DebugManager.prototype = {
+    _init: function() {
+        let schema = DebugManagerSchema;
+        let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
+        let schemaSource;
+
+        if (schemaDir.query_exists(null)) {
+            schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
+                GioSSS.get_default(),
+                false);
+        } else {
+            schemaSource = GioSSS.get_default();
+        }
+
+        this.schemaObj = schemaSource.lookup(schema, false);
+
+        if (!this.schemaObj) {
+            throw new Error(_("Schema %s could not be found for xlet %s.")
+                .format(schema, XletMeta.uuid) + _("Please check your installation."));
+        }
+
+        this.schema = new Gio.Settings({
+            settings_schema: this.schemaObj
+        });
+
+        this._handlers = [];
+    },
+
+    set debugger_enabled(aValue) {
+        this.schema.set_boolean("pref-debugger-enabled", aValue);
+    },
+
+    get debugger_enabled() {
+        return this.schema.get_boolean("pref-debugger-enabled");
+    },
+
+    set logging_level(aValue) {
+        this.schema.set_int("pref-logging-level", aValue);
+    },
+
+    get logging_level() {
+        return this.schema.get_int("pref-logging-level");
+    },
+
+    connect: function(signal, callback) {
+        let handler_id = this.schema.connect(signal, callback);
+        this._handlers.push(handler_id);
+        return handler_id;
+    },
+
+    destroy: function() {
+        // Remove the remaining signals...
+        while (this._handlers.length) {
+            this.disconnect(this._handlers[0]);
+        }
+    },
+
+    disconnect: function(handler_id) {
+        let index = this._handlers.indexOf(handler_id);
+        this.schema.disconnect(handler_id);
+
+        if (index > -1) {
+            this._handlers.splice(index, 1);
+        }
+    }
+};
+
+var Debugger = new DebugManager();
 
 var OAuth = {
     nonce_CHARS: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz",
@@ -696,6 +775,7 @@ function prototypeDebugger(aObject, aParams) {
         methods: [],
         blacklistMethods: false,
         debug: true,
+        verbose: true,
         threshold: 3
     });
     let keys = Object.getOwnPropertyNames(aObject.prototype);
@@ -718,7 +798,11 @@ function prototypeDebugger(aObject, aParams) {
         return {
             apply: function(aTarget, aThisA, aArgs) { // jshint ignore:line
                 let val;
-                let now = GLib.get_monotonic_time();
+                let now;
+
+                if (options.verbose) {
+                    now = GLib.get_monotonic_time();
+                }
 
                 if (options.debug) {
                     try {
@@ -730,29 +814,31 @@ function prototypeDebugger(aObject, aParams) {
                     val = aTarget.apply(aThisA, aArgs);
                 }
 
-                let time = GLib.get_monotonic_time() - now;
+                if (options.verbose) {
+                    let time = GLib.get_monotonic_time() - now;
 
-                if (time >= options.threshold) {
-                    times.push(time);
-                    let total = 0;
-                    let timesLength = times.length;
-                    let z = timesLength;
+                    if (time >= options.threshold) {
+                        times.push(time);
+                        let total = 0;
+                        let timesLength = times.length;
+                        let z = timesLength;
 
-                    while (z--) {
-                        total += times[z];
+                        while (z--) {
+                            total += times[z];
+                        }
+
+                        let max = (Math.max.apply(null, times) / 1000).toFixed(2);
+                        let avg = ((total / timesLength) / 1000).toFixed(2);
+                        time = (time / 1000).toFixed(2);
+
+                        global.log(outpuTemplate.format(
+                            options.objectName,
+                            aKey,
+                            time,
+                            max,
+                            avg
+                        ));
                     }
-
-                    let max = (Math.max.apply(null, times) / 1000).toFixed(2);
-                    let avg = ((total / timesLength) / 1000).toFixed(2);
-                    time = (time / 1000).toFixed(2);
-
-                    global.log(outpuTemplate.format(
-                        options.objectName,
-                        aKey,
-                        time,
-                        max,
-                        avg
-                    ));
                 }
 
                 return val;
@@ -779,69 +865,6 @@ function prototypeDebugger(aObject, aParams) {
         aObject.prototype[key] = new Proxy(fn, getHandler(key));
     }
 }
-
-function DebugManager() {
-    this._init.apply(this, arguments);
-}
-
-DebugManager.prototype = {
-    _init: function() {
-        let schema = DebugManagerSchema;
-        let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
-        let schemaSource;
-
-        if (schemaDir.query_exists(null)) {
-            schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
-                GioSSS.get_default(),
-                false);
-        } else {
-            schemaSource = GioSSS.get_default();
-        }
-
-        this.schemaObj = schemaSource.lookup(schema, false);
-
-        if (!this.schemaObj) {
-            throw new Error(_("Schema %s could not be found for xlet %s.")
-                .format(schema, XletMeta.uuid) + _("Please check your installation."));
-        }
-
-        this.schema = new Gio.Settings({
-            settings_schema: this.schemaObj
-        });
-
-        this._handlers = [];
-    },
-
-    set verboseLogging(aValue) {
-        this.schema.set_boolean("pref-enable-verbose-logging", aValue);
-    },
-
-    get verboseLogging() {
-        return this.schema.get_boolean("pref-enable-verbose-logging");
-    },
-
-    connect: function(signal, callback) {
-        let handler_id = this.schema.connect(signal, callback);
-        this._handlers.push(handler_id);
-        return handler_id;
-    },
-
-    destroy: function() {
-        // Remove the remaining signals...
-        while (this._handlers.length) {
-            this.disconnect(this._handlers[0]);
-        }
-    },
-
-    disconnect: function(handler_id) {
-        let index = this._handlers.indexOf(handler_id);
-        this.schema.disconnect(handler_id);
-
-        if (index > -1) {
-            this._handlers.splice(index, 1);
-        }
-    }
-};
 
 // https://github.com/tingletech/moon-phase
 // http://stackoverflow.com/questions/11759992/calculating-jdayjulian-day-in-javascript
@@ -899,31 +922,32 @@ function moonDay(today) {
     return (((thisJD - oldJ) / 29.53059));
 }
 
-function getMoonPhase(aAbbreviated = false) {
+function getMoonPhase() {
     let phase = moonDay(new Date());
 
     if (phase <= 0.0625 || phase > 0.9375) {
-        return aAbbreviated ? _("New Moon") : _("New Moon");
+        return _("New Moon");
     } else if (phase <= 0.1875) {
-        return aAbbreviated ? _("Wax. Cres.") : _("Waxing Crescent");
+        return _("Waxing Crescent");
     } else if (phase <= 0.3125) {
-        return aAbbreviated ? _("1st Qtr") : _("First Quarter");
+        return _("First Quarter");
     } else if (phase <= 0.4375) {
-        return aAbbreviated ? _("Wax. Gib.") : _("Waxing Gibbous");
+        return _("Waxing Gibbous");
     } else if (phase <= 0.5625) {
-        return aAbbreviated ? _("Full Moon") : _("Full Moon");
+        return _("Full Moon");
     } else if (phase <= 0.6875) {
-        return aAbbreviated ? _("Wan. Gib.") : _("Waning Gibbous");
+        return _("Waning Gibbous");
     } else if (phase <= 0.8125) {
-        return aAbbreviated ? _("3rd Qtr") : _("Third Quarter");
+        return _("Third Quarter");
     } else if (phase <= 0.9375) {
-        return aAbbreviated ? _("Wan. Cres.") : _("Waning Crescent");
+        return _("Waning Crescent");
     }
 
     return _("New Moon");
 }
 
 /* exported escapeHTML,
+            Debugger,
             OAuth,
             safeGetEll,
             soupPrinter,
