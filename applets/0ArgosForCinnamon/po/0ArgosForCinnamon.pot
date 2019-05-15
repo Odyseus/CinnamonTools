@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon VERSION\n"
-"POT-Creation-Date: 2019-04-27 15:03-0300\n"
+"POT-Creation-Date: 2019-05-16 10:17-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:731 utils.js:1231
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:732 utils.js:1306
 msgid "Help"
 msgstr ""
 
@@ -537,149 +537,145 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: applet.js:143
+#: applet.js:144
 msgid "Script file is not executable."
 msgstr ""
 
-#: applet.js:145
+#: applet.js:146
 msgid "The script file can be made executable from this applet context menu."
 msgstr ""
 
-#: applet.js:151 applet.js:716
+#: applet.js:152 applet.js:717
 msgid "Script file isn't a file, but a directory."
 msgstr ""
 
-#: applet.js:161 applet.js:722
+#: applet.js:162 applet.js:723
 msgid "Script file doesn't exists."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file 'FileName':"
-#: applet.js:249
+#: applet.js:250
 #, javascript-format
 msgid "Unable to execute file '%s':"
 msgstr ""
 
-#: applet.js:253 applet.js:565 applet.js:591
+#: applet.js:254 applet.js:566 applet.js:592
 msgid "Script file not set, cannot be found or it isn't an executable."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Invalid menu level for line 'LineWithTheError'"
-#: applet.js:355
+#: applet.js:356
 #, javascript-format
 msgid "Invalid menu level for line '%s'"
 msgstr ""
 
-#: applet.js:432
+#: applet.js:433
 msgid "No script set"
 msgstr ""
 
-#: applet.js:494
+#: applet.js:495
 msgid "Execution interval:"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->tooltip
-#: applet.js:502
+#: applet.js:503
 msgid "Choose the time unit for the script execution interval."
 msgstr ""
 
-#: applet.js:515
+#: applet.js:516
 msgid "Set the script execution interval."
 msgstr ""
 
-#: applet.js:525
+#: applet.js:526
 msgid "Choose script"
 msgstr ""
 
-#: applet.js:552
+#: applet.js:553
 msgid "Choose a script file."
 msgstr ""
 
-#: applet.js:558
+#: applet.js:559
 msgid "Edit script"
 msgstr ""
 
-#: applet.js:576
+#: applet.js:577
 msgid "Edit the script file with your prefered text editor."
 msgstr ""
 
-#: applet.js:577
+#: applet.js:578
 msgid "After saving the changes made, the applet will update its data automatically if there is an interval set."
 msgstr ""
 
-#: applet.js:578
+#: applet.js:579
 msgid "Or the update could be done manually with the »Refresh« item on this applet context menu."
 msgstr ""
 
-#: applet.js:584
+#: applet.js:585
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:599
+#: applet.js:600
 msgid "This will re-run on demand the script assigned to this applet for the purpose of updating its output."
 msgstr ""
 
-#: applet.js:600
+#: applet.js:601
 msgid "This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited."
 msgstr ""
 
 #. Extras submenu
-#: applet.js:607
+#: applet.js:608
 msgid "Extras"
 msgstr ""
 
-#: applet.js:615
+#: applet.js:616
 msgid "Rotation interval:"
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval_units->tooltip
-#: applet.js:621
+#: applet.js:622
 msgid "Choose the time unit for the applet text rotation interval."
 msgstr ""
 
-#: applet.js:634
+#: applet.js:635
 msgid "Set the applet text rotation interval."
 msgstr ""
 
-#: applet.js:643
+#: applet.js:644
 msgid "Clear script"
 msgstr ""
 
-#: applet.js:649 applet.js:667
+#: applet.js:650 applet.js:668
 msgid "This operation will remove the current script from this applet leaving it \"blank\"."
 msgstr ""
 
-#: applet.js:650
+#: applet.js:651
 msgid "The current applet settings will be untouched and the actual script file will not be deleted."
 msgstr ""
 
-#: applet.js:651
+#: applet.js:652
 msgid "Do you want to proceed?"
 msgstr ""
 
-#: applet.js:681
+#: applet.js:682
 msgid "Make script executable"
 msgstr ""
 
-#: applet.js:687
+#: applet.js:688
 msgid "Make the script file executable so it can be used by this applet."
 msgstr ""
 
-#: applet.js:710
+#: applet.js:711
 msgid "Script file is already executable."
 msgstr ""
 
 #. Just in case.
-#: applet.js:735 utils.js:1232
+#: applet.js:736 utils.js:1307
 msgid "Open this applet help file."
 msgstr ""
 
-#: applet.js:1035
-msgid "Debugging toggled"
-msgstr ""
-
-#: applet.js:1036
+#: applet.js:1040
 msgid "Remember to restart Cinnamon to fully enable/disable this option."
 msgstr ""
 
@@ -880,99 +876,99 @@ msgstr ""
 msgid "Error underline"
 msgstr ""
 
-#: utils.js:111
+#: utils.js:113
 msgid "millisecond"
 msgid_plural "milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:113
+#: utils.js:115
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:115
+#: utils.js:117
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:117
+#: utils.js:119
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:119
+#: utils.js:121
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
+#: utils.js:148
+#, javascript-format
+msgid "Schema %s could not be found for xlet %s."
+msgstr ""
+
+#: utils.js:149
+msgid "Please check your installation."
+msgstr ""
+
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:129
+#: utils.js:204
 msgid "Seconds"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:132
+#: utils.js:207
 msgid "Minutes"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:135
+#: utils.js:210
 msgid "Hours"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:138
+#: utils.js:213
 msgid "Days"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to load image from Base64 representation: ErrorMessage"
-#: utils.js:418
+#: utils.js:493
 #, javascript-format
 msgid "Unable to load image from Base64 representation: %s"
 msgstr ""
 
-#: utils.js:1228
+#: utils.js:1303
 msgid "Check this applet help file for instructions."
 msgstr ""
 
-#: utils.js:1476
-#, javascript-format
-msgid "Schema %s could not be found for xlet %s."
-msgstr ""
-
-#: utils.js:1477
-msgid "Please check your installation."
-msgstr ""
-
-#: utils.js:1564
+#: utils.js:1577
 msgid "Script file name"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval->description
-#: utils.js:1569
+#: utils.js:1582
 msgid "Execution interval"
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval->description
-#: utils.js:1574
+#: utils.js:1587
 msgid "Rotation interval"
 msgstr ""
 
-#: utils.js:1579
+#: utils.js:1592
 msgid "Script execution time"
 msgstr ""
 
-#: utils.js:1584
+#: utils.js:1597
 msgid "Output process time"
 msgstr ""
 
@@ -1142,10 +1138,39 @@ msgstr ""
 msgid "Debugging"
 msgstr ""
 
-#. settings-schema.json->pref_enable_verbose_logging->description
-msgid "Verbose logging (needs Cinnamon restart)"
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
 msgstr ""
 
-#. settings-schema.json->pref_enable_verbose_logging->tooltip
-msgid "Checking this will enable debug level logging."
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""

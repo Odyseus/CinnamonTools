@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Thu, 9 May 2019 05:16:44 -0300
+- **Commit:** [61ea514](https://gitlab.com/Odyseus/CinnamonTools/commit/61ea514)
+- **Author:** Odyseus
+
+```
+- Corrected infinite loop caused by the use of an absolutely retarded language.
+- Removed unnecessary icons.
+
+```
+
+***
+
 - **Date:** Thu, 25 Apr 2019 02:07:06 -0300
 - **Commit:** [b50f17d](https://gitlab.com/Odyseus/CinnamonTools/commit/b50f17d)
 - **Author:** Odyseus

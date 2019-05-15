@@ -4,6 +4,50 @@
 
 ***
 
+- **Date:** Tue, 14 May 2019 14:33:20 -0300
+- **Commit:** [eb77bca](https://gitlab.com/Odyseus/CinnamonTools/commit/eb77bca)
+- **Author:** Odyseus
+
+```
+WARNING 1: If a user is already using this extension prior to this update, it is recommended to build this extension with a different domain name than the one installed. This update is a complete re-write of the extension and uses a different settings system, so existent settings will be ignored.
+
+WARNING 2: An existent translation history will be compatible with the updated extension, but the existent history will have to be *sanitized*. If installing this new version of the extension with a new domain, the translation history of the previous version can also be imported into the new extension.
+
+- Removed Transltr engine. It seems that it ceased to exist.
+- Removed custom icons in favor of using the ones available on a system.
+
+- Better handling of source text with HTML markup (and by *better* I mean *less worse* LOL).
+- Better debugging and logging mechanism.
+
+- Removed all themes. Now the default theme is *theme agnostic*. This means that, when using the default theme, the UI will adapt to the currently used Cinnamon theme. Custom themes can still be created and used.
+- The translator dialog has been redesigned to better adapt to any screen size.
+- Added more keyboard shortcuts to interact with the translation dialog. There is still no traditional keyboard navigation between the UI elements (and never will be; I would have to write 500 lines of code just to make it barely useful), but almost all actions can be performed with a keyboard shortcut. I'm still working on improving it. The final goal would be to make all features accessible using the keyboard.
+
+- The history mechanism is optional now (but enabled by default).
+- The translation history can now be imported/exported/cleared from the history window.
+- Translation history window changes:
+    - Added advanced search capabilities (the history can be searched/filtered).
+    - All columns can be sorted.
+    - The window size and maximized state are remembered after closing the window.
+    - The time stamps displayed will always respect the formatting set in the extension settings.
+    - Eradicated the use of markup because I fed up of dealing with nonsense. This has the side effect of making the history loading, filtering and sorting a little bit faster (at least in appearance).
+    - Added grid lines to the history tree.
+
+```
+
+***
+
+- **Date:** Thu, 9 May 2019 05:30:30 -0300
+- **Commit:** [d5eab7d](https://gitlab.com/Odyseus/CinnamonTools/commit/d5eab7d)
+- **Author:** Odyseus
+
+```
+- Restructured theme loading mechanism.
+
+```
+
+***
+
 - **Date:** Thu, 25 Apr 2019 02:00:16 -0300
 - **Commit:** [f07f501](https://gitlab.com/Odyseus/CinnamonTools/commit/f07f501)
 - **Author:** Odyseus

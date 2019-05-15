@@ -157,7 +157,7 @@
 <div class="alert alert-info text-bold shadow-sm" role="alert">
 <h4 class="alert-heading">Destacados</h4>
 <ul>
-<li>Se puede acceder al administrador de ubicaciones desde este menú contextual del applet.</li>
+<li>Se puede acceder al administrador de ubicaciones desde la ventana de configuración de este applet.</li>
 <li>Las ubicaciones con exactamente la misma <em>ID de ubicación</em> y <em>Proveedor</em> se consideran duplicadas y se eliminarán automáticamente al aplicar los cambios.</li>
 <li>Se debe presionar el botón <em>Aplicar cambios</em> para que el applet refleje los cambios realizados en el administrador de ubicaciones.</li>
 </ul>
@@ -202,7 +202,7 @@
 <li>Dentro del tema de iconos integrado hay un script llamado <strong>z_symlinkify.bash</strong> que se puede usar para crear un tema de iconos desde cero. Este script también contiene la lista de <em>imágenes reales</em> que se utilizan para crear los enlaces simbólicos.</li>
 <li>Un tema de ícono personalizado puede contener solo íconos a todo color, solo íconos simbólicos o ambos. La configuración del applet del <strong>Tipo de ícono del menú</strong> y <strong>Tipo de ícono del applet</strong> se debe establecer de acuerdo con el tipo de ícono usado por el tema personalizado.</li>
 <li>Un tema de icono personalizado puede contener imágenes SVG o PNG; aunque las imágenes SVG son preferibles debido a su capacidad de escalar a cualquier tamaño de icono establecido en esta configuración de applet sin perder calidad. Se podrían usar otros tipos de imágenes, pero no los probé.</li>
-<li>Un tema de ícono personalizado debe contener 232 íconos para soportar íconos a todo color y simbólicos. O la mitad de eso (116) para soportar a uno u otro.</li>
+<li>Un tema de ícono personalizado debe contener 240 íconos para soportar íconos a todo color y simbólicos. O la mitad de eso (120) para soportar a uno u otro.</li>
 </ul>
 
 </br>
@@ -322,7 +322,7 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <div class="alert alert-info text-bold shadow-sm" role="alert">
 <h4 class="alert-heading">Highlights</h4>
 <ul>
-<li>The locations manager can be accessed from this applet context menu.</li>
+<li>The locations manager can be accessed from this applet settings window.</li>
 <li>Locations with the exact same <em>Location ID</em> and <em>Provider</em> are considered duplicated and will be automatically removed when applying changes.</li>
 <li>The <em>Apply changes</em> button must be pressed for the applet to reflect the changes made in the locations manager.</li>
 </ul>
@@ -367,7 +367,7 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <li>Inside the built-in icon theme is a script called <strong>z_symlinkify.bash</strong> that can be used to create an icon theme from scratch. This script also contains the list of <em>real images</em> that are used to create the symbolic links.</li>
 <li>A custom icon theme can contain only full colored icons, only symbolic icons or both. The <strong>Menu icon type</strong> and <strong>Applet icon type</strong> applet settings should be set accordingly to the icon type used by the custom theme.</li>
 <li>A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them.</li>
-<li>A custom icon theme should contain 232 icons to support both full color and symbolic icons. Or half of that (116) to support one or the other.</li>
+<li>A custom icon theme should contain 240 icons to support both full color and symbolic icons. Or half of that (120) to support one or the other.</li>
 </ul>
 
 </br>
@@ -395,6 +395,32 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Weather (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 14 May 2019 14:29:06 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/9762324">9762324</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>WARNING: Before updating to this version of the applet, make sure to backup the list of locations using the locations manager. There is a very slim chance that the current settings will prevent the settings window to open. In that case, the current settings will have to be completely reseted (by deleting the folder ~/.cinnamon/configs/0WeatherAppletForkByOdyseus@your.domain.com). I tried to make sure that this could not happen, but better safe than sorry.
+
+- Finally fixed asymmetry issues inside the applet menu elements. Everything is beautifully symmetric now.
+- Removed option to abbreviate the name of the moon phases since it was just a workaround that is not needed anymore.
+- Changed the *chained module imports* approach for a *direct module import* approach. This is to avoid errors caused by the garbage that is the implementation of `require()`.
+- Added the ID (name) WeatherApplet to the applet menu and updated the default theme (default.css) to use the ID. This was added to minimize possible conflicts with xlets that might use the same class names and it doesn't break custom themes in use.
+- Changed default current weather icon size to 128 and maximum icon size to 512.
+- Implemented the use of a custom framework to handle the applet settings since I was already using the framework to create the locations manager window.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Thu, 9 May 2019 05:22:15 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0f06d1d">0f06d1d</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Prefer the icons provided by the currently used theme instead of the custom icons shipped with the xlet.
+- Corrected infinite loop caused by the use of an absolutely retarded language.
+- Restructured theme loading mechanism.
+- Removed unnecessary icons.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Thu, 25 Apr 2019 02:06:28 -0300</li>

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-04-27 15:03-0300\n"
+"POT-Creation-Date: 2019-05-16 10:17-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:231
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:234
 msgid "Help"
 msgstr ""
 
@@ -129,7 +129,7 @@ msgstr ""
 msgid "The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program."
 msgstr ""
 
-#: z_create_localized_help.py:48 applet.js:176
+#: z_create_localized_help.py:48 applet.js:179
 msgid "Programs support"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgstr ""
 msgid "The selected window class title."
 msgstr ""
 
-#: z_create_localized_help.py:251 applet.js:183
+#: z_create_localized_help.py:251 applet.js:186
 msgid "Cinnamon recorder profiles"
 msgstr ""
 
@@ -518,11 +518,11 @@ msgstr ""
 msgid "Cinnamon 3.0.x and its built-in screenshot mechanism"
 msgstr ""
 
-#: z_create_localized_help.py:323 applet.js:1986
+#: z_create_localized_help.py:323 applet.js:2038
 msgid "The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"
 msgstr ""
 
-#: z_create_localized_help.py:326 applet.js:1987
+#: z_create_localized_help.py:326 applet.js:2039
 msgid "Do not use it or Cinnamon will crash!"
 msgstr ""
 
@@ -535,205 +535,213 @@ msgstr ""
 msgid "To permanently dismiss the critical notification displayed when the applet is used under Cinnamon 3.0.x, enable the option found in this applet settings window called \"I read the disclaimer and I'm aware of the consequences\", under the \"Disclaimer\" section."
 msgstr ""
 
-#: applet.js:125
+#: applet.js:128
 msgid "Open screenshots folder"
 msgstr ""
 
-#: applet.js:135
+#: applet.js:138
 msgid "Open screencasts folder"
 msgstr ""
 
-#: applet.js:177
+#: applet.js:180
 msgid "Export programs"
 msgstr ""
 
-#: applet.js:178
+#: applet.js:181
 msgid "Import programs"
 msgstr ""
 
-#: applet.js:179
+#: applet.js:182
 msgid "Reset programs"
 msgstr ""
 
-#: applet.js:180
+#: applet.js:183
 msgid "Remove all programs"
 msgstr ""
 
-#: applet.js:184
+#: applet.js:187
 msgid "Export profiles"
 msgstr ""
 
-#: applet.js:185
+#: applet.js:188
 msgid "Import profiles"
 msgstr ""
 
-#: applet.js:186
+#: applet.js:189
 msgid "Reset profiles"
 msgstr ""
 
-#: applet.js:187
+#: applet.js:190
 msgid "Remove all profiles"
 msgstr ""
 
-#: applet.js:372
-msgid "No stylesheet found"
+#: applet.js:391
+msgid "Error trying to get theme"
 msgstr ""
 
-#: applet.js:715
+#: applet.js:398
+msgid "Stylesheet parse error"
+msgstr ""
+
+#: applet.js:408
+msgid "Error unloading stylesheet"
+msgstr ""
+
+#: applet.js:765
 msgid "Choose camera"
 msgstr ""
 
-#: applet.js:716
+#: applet.js:766
 msgid "Choose recorder"
 msgstr ""
 
-#: applet.js:721
+#: applet.js:771
 msgid "Latest capture"
 msgstr ""
 
-#: applet.js:753
+#: applet.js:803
 msgid "Screencast"
 msgstr ""
 
-#: applet.js:753
+#: applet.js:803
 msgid "Screenshot"
 msgstr ""
 
-#: applet.js:764
+#: applet.js:814
 msgid "Assign a title to your program!!!"
 msgstr ""
 
-#: applet.js:768 utils.js:55
+#: applet.js:818 utils.js:55
 msgid "Disabled"
 msgstr ""
 
-#: applet.js:839
+#: applet.js:889
 msgid "Include cursor"
 msgstr ""
 
-#: applet.js:846
+#: applet.js:896
 msgid "Whether to include mouse cursor in screenshot."
 msgstr ""
 
-#: applet.js:860
+#: applet.js:910
 #, javascript-format
 msgid "Monitor %d"
 msgstr ""
 
-#: applet.js:873
+#: applet.js:923
 msgid "Auto copy image"
 msgstr ""
 
-#: applet.js:889 applet.js:985
+#: applet.js:939 applet.js:1035
 msgid "Repeat last"
 msgstr ""
 
-#: applet.js:906
+#: applet.js:956
 msgid "Capture delay"
 msgstr ""
 
 #. TO TRANSLATORS:
 #. sec. = abbreviation of "second"
 #. secs. = abbreviation of "seconds"
-#: applet.js:920
+#: applet.js:970
 msgid "sec."
 msgid_plural "secs."
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:928
+#: applet.js:978
 msgid "How many seconds to wait before taking a screenshot."
 msgstr ""
 
-#: applet.js:940 utils.js:526
+#: applet.js:990 utils.js:526
 msgid "Profile"
 msgstr ""
 
-#: applet.js:949
+#: applet.js:999
 msgid "Choose Cinnamon recorder profile"
 msgstr ""
 
-#: applet.js:955 applet.js:1328
+#: applet.js:1005 applet.js:1380
 msgid "Start recording"
 msgstr ""
 
-#: applet.js:968
+#: applet.js:1018
 msgid "Record sound"
 msgstr ""
 
-#: applet.js:975
+#: applet.js:1025
 msgid "Whether to record sound."
 msgstr ""
 
-#: applet.js:1001 applet.js:1325
+#: applet.js:1051 applet.js:1377
 msgid "Stop recording"
 msgstr ""
 
-#: applet.js:1018 applet.js:1037
+#: applet.js:1068 applet.js:1087
 msgid "Frames per second"
 msgstr ""
 
-#: applet.js:1029
+#: applet.js:1079
 msgid "FPS"
 msgstr ""
 
-#: applet.js:1050
+#: applet.js:1100
 msgid "Device options"
 msgstr ""
 
-#: applet.js:1251 utils.js:2755
+#: applet.js:1303 utils.js:2755
 msgid "File path copied to clipboard."
 msgstr ""
 
-#: applet.js:1255 utils.js:2751
+#: applet.js:1307 utils.js:2751
 msgid "Image data copied to clipboard."
 msgstr ""
 
-#: applet.js:1339
+#: applet.js:1391
 msgid "Selected storage folder doesn't exist!"
 msgstr ""
 
-#: applet.js:1347
+#: applet.js:1399
 msgid "Selected storage folder is not a directory!"
 msgstr ""
 
-#: applet.js:1367
+#: applet.js:1419
 msgid "File cannot be created!"
 msgstr ""
 
-#: applet.js:1611 applet.js:1673
+#: applet.js:1663 applet.js:1725
 msgid "Displaying command that will be executed"
 msgstr ""
 
-#: applet.js:1708
+#: applet.js:1760
 msgid "Command exited with error status"
 msgstr ""
 
-#: applet.js:1861
+#: applet.js:1913
 msgid "Possibly malformed JSON file."
 msgstr ""
 
-#: applet.js:1862
+#: applet.js:1914
 msgid "Check the logs."
 msgstr ""
 
-#: applet.js:1922
+#: applet.js:1974
 msgid "Do you really want to reset this preference to its default value?"
 msgstr ""
 
-#: applet.js:1963
+#: applet.js:2015
 msgid "Do you really want to empty this preference?"
 msgstr ""
 
-#: applet.js:1988
+#: applet.js:2040
 msgid "Read this applet help page (Known issues) for more details on the matter."
 msgstr ""
 
-#: applet.js:1989
+#: applet.js:2041
 msgid "You will keep seeing this notification until you follow the instructions found on the help page."
 msgstr ""
 
-#: applet.js:2000
+#: applet.js:2052
 msgid "Operation aborted!"
 msgstr ""
 

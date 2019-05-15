@@ -111,7 +111,7 @@ class Main(LocalizedHelpCreator):
                 heading=_("Highlights"),
                 content=md(
                     "\n".join([
-                        "- %s" % _("The locations manager can be accessed from this applet context menu."),
+                        "- %s" % _("The locations manager can be accessed from this applet settings window."),
                         # TO TRANSLATORS: MARKDOWN string. Respect formatting.
                         "- %s" % _("Locations with the exact same *Location ID* and *Provider* are considered duplicated and will be automatically removed when applying changes."),
                         # TO TRANSLATORS: MARKDOWN string. Respect formatting.
@@ -191,7 +191,7 @@ class Main(LocalizedHelpCreator):
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _("A custom icon theme can contain only full colored icons, only symbolic icons or both. The **Menu icon type** and **Applet icon type** applet settings should be set accordingly to the icon type used by the custom theme."),
             "- %s" % _("A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them."),
-            "- %s" % _("A custom icon theme should contain 232 icons to support both full color and symbolic icons. Or half of that (116) to support one or the other."),
+            "- %s" % _("A custom icon theme should contain 240 icons to support both full color and symbolic icons. Or half of that (120) to support one or the other."),
         ])
         ))
 

@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Thu, 9 May 2019 05:20:31 -0300
+- **Commit:** [e7bca0b](https://gitlab.com/Odyseus/CinnamonTools/commit/e7bca0b)
+- **Author:** Odyseus
+
+```
+- Prefer the icons provided by the currently used theme instead of the custom icons shipped with the xlet.
+
+```
+
+***
+
 - **Date:** Thu, 17 Jan 2019 14:16:29 -0300
 - **Commit:** [6da6e7e](https://gitlab.com/Odyseus/CinnamonTools/commit/6da6e7e)
 - **Author:** Odyseus

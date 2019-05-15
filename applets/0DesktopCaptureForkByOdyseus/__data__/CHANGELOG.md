@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Thu, 9 May 2019 05:18:37 -0300
+- **Commit:** [dd42032](https://gitlab.com/Odyseus/CinnamonTools/commit/dd42032)
+- **Author:** Odyseus
+
+```
+- Corrected infinite loop caused by the use of an absolutely retarded language.
+- Restructured theme loading mechanism.
+
+```
+
+***
+
 - **Date:** Fri, 26 Apr 2019 13:51:39 -0300
 - **Commit:** [5501d72](https://gitlab.com/Odyseus/CinnamonTools/commit/5501d72)
 - **Author:** Odyseus

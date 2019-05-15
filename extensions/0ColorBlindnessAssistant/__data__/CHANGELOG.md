@@ -4,6 +4,19 @@
 
 ***
 
+- **Date:** Thu, 9 May 2019 05:28:14 -0300
+- **Commit:** [f65a2e0](https://gitlab.com/Odyseus/CinnamonTools/commit/f65a2e0)
+- **Author:** Odyseus
+
+```
+- Removed unnecessary icons.
+- Corrected infinite loop caused by the use of an absolutely retarded language.
+- Restructured theme loading mechanism.
+
+```
+
+***
+
 - **Date:** Sat, 27 Apr 2019 15:02:34 -0300
 - **Commit:** [e52ab8d](https://gitlab.com/Odyseus/CinnamonTools/commit/e52ab8d)
 - **Author:** Odyseus

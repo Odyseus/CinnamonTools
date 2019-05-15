@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Tue, 14 May 2019 14:39:50 -0300
+- **Commit:** [8630083](https://gitlab.com/Odyseus/CinnamonTools/commit/8630083)
+- **Author:** Odyseus
+
+```
+- Changed the *chained module imports* approach for a *direct module import* approach. This is to avoid errors caused by the garbage that is the implementation of `require()`.
+- Better debugging and logging mechanism. Now the debugger is separated from the verbose logging, allowing to see the debugger messages without having to scroll through a million lines of text.
+
+```
+
+***
+
 - **Date:** Thu, 21 Feb 2019 10:35:40 -0300
 - **Commit:** [77f404a](https://gitlab.com/Odyseus/CinnamonTools/commit/77f404a)
 - **Author:** Odyseus

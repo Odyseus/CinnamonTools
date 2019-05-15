@@ -4,6 +4,38 @@
 
 ***
 
+- **Date:** Tue, 14 May 2019 14:29:06 -0300
+- **Commit:** [9762324](https://gitlab.com/Odyseus/CinnamonTools/commit/9762324)
+- **Author:** Odyseus
+
+```
+WARNING: Before updating to this version of the applet, make sure to backup the list of locations using the locations manager. There is a very slim chance that the current settings will prevent the settings window to open. In that case, the current settings will have to be completely reseted (by deleting the folder ~/.cinnamon/configs/0WeatherAppletForkByOdyseus@your.domain.com). I tried to make sure that this could not happen, but better safe than sorry.
+
+- Finally fixed asymmetry issues inside the applet menu elements. Everything is beautifully symmetric now.
+- Removed option to abbreviate the name of the moon phases since it was just a workaround that is not needed anymore.
+- Changed the *chained module imports* approach for a *direct module import* approach. This is to avoid errors caused by the garbage that is the implementation of `require()`.
+- Added the ID (name) WeatherApplet to the applet menu and updated the default theme (default.css) to use the ID. This was added to minimize possible conflicts with xlets that might use the same class names and it doesn't break custom themes in use.
+- Changed default current weather icon size to 128 and maximum icon size to 512.
+- Implemented the use of a custom framework to handle the applet settings since I was already using the framework to create the locations manager window.
+
+```
+
+***
+
+- **Date:** Thu, 9 May 2019 05:22:15 -0300
+- **Commit:** [0f06d1d](https://gitlab.com/Odyseus/CinnamonTools/commit/0f06d1d)
+- **Author:** Odyseus
+
+```
+- Prefer the icons provided by the currently used theme instead of the custom icons shipped with the xlet.
+- Corrected infinite loop caused by the use of an absolutely retarded language.
+- Restructured theme loading mechanism.
+- Removed unnecessary icons.
+
+```
+
+***
+
 - **Date:** Thu, 25 Apr 2019 02:06:28 -0300
 - **Commit:** [5ddbc74](https://gitlab.com/Odyseus/CinnamonTools/commit/5ddbc74)
 - **Author:** Odyseus

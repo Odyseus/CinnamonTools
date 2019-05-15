@@ -41,7 +41,7 @@
                     </div>
                     <select class="custom-select custom-select-sm text-bold" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
 <!-- English --><option selected data-title="Help for Multi Translator" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Multi Traductor" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
+<!-- Español --><option data-title="Ayuda para Multi Traductor" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish) (91%)</option>
                     </select>
                 </div>
             </form>
@@ -86,18 +86,22 @@
 </div>
 </div>
 <h2>Descripción</h2>
-<p>La extensión Multi Traductor está basada en una extensión para gnome-shell llamada <a href="https://github.com/gufoe/text-translator">Text Translator</a> por <a href="https://github.com/gufoe">gufoe</a>. Proporciona traducción de texto por diferentes proveedores de traducción (actualmente <a href="https://translate.google.com">Google</a>, <a href="https://translate.yandex.net">Yandex</a>, <a href="https://www.bing.com/translator">Bing</a>, <a href="https://www.apertium.org">Apertium</a> and <a href="http://transltr.org">Transltr</a>).</p>
+<p>La extensión Multi Traductor está basada en una extensión para gnome-shell llamada <a href="https://github.com/gufoe/text-translator">Text Translator</a> por <a href="https://github.com/gufoe">gufoe</a>. Proporciona traducción de texto por diferentes proveedores de traducción (actualmente <a href="https://translate.google.com">Google</a>, <a href="https://translate.yandex.net">Yandex</a>, <a href="https://www.bing.com/translator">Bing</a>, and <a href="https://www.apertium.org">Apertium</a>).</p>
 <h2>Dependencias</h2>
-<p><strong>Si una o más de estas dependencias faltan en su sistema, no podrá utilizar esta extensión.</strong></p>
-<ul>
-<li>Comando xsel XSel es un programa de la consola para obtener y asignar los contenidos de una selección en X.</li>
-<li>Comando trans: Comando proporcionado por <strong>translate-shell</strong>. Es una simple interfaz de línea de comandos para varios proveedores de traducción (Google Translate, Yandex Translate, Bing Translate and Apertium) que permite traducir cadenas de texto desde la terminal.<ul>
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
+
+Si una o más de estas dependencias faltan en su sistema, no podrá utilizar esta extensión.
+</div><ul>
+<li><strong>Comando xsel</strong>: XSel es un programa de la consola para obtener y asignar los contenidos de una selección en X.</li>
+<li><strong>Comando trans</strong>: Comando proporcionado por <strong>translate-shell</strong>. Es una simple interfaz de línea de comandos para varios proveedores de traducción (Google Translate, Yandex Translate, Bing Translate and Apertium) que permite traducir cadenas de texto desde la terminal.<ul>
 <li>Comprobar <a href="https://github.com/soimort/translate-shell#dependencies">dependencias</a> y <a href="https://github.com/soimort/translate-shell#recommended-dependencies">dependencias recomendadas</a> de translate-shell.</li>
 </ul>
 </li>
 </ul>
-<p><strong>Nota:</strong> El paquete <strong>translate-shell</strong> disponible en los repositorios de Ubuntu 16.04.x/Linux Mint 18.x es anticuado y roto. Puede ser instalado de todas maneras así también se instalan sus dependencias. Pero actualizar el script a su última versión debe hacerse como se describe a continuación.</p>
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
 
+El paquete **translate-shell** disponible en los repositorios de Ubuntu 16.04.x/Linux Mint 18.x es anticuado y roto. Puede ser instalado de todas maneras así también se instalan sus dependencias. Pero actualizar el script a su última versión debe hacerse como se describe a continuación.
+</div>
 <h2>Cómo instalar la última versión de translate-shell</h2>
 <h3>Opción 1. Descarga directa</h3>
 <p>Este método sólo instalará el script <strong>trans</strong> en la ubicación especificada.</p>
@@ -116,30 +120,63 @@ $ sudo make install
 </code></pre>
 <h2>Uso de la extensión</h2>
 <p>Una vez instalada y activada, los siguientes atajos de teclado estarán disponibles.</p>
-<h3>Atajos globales (Configurable desde las preferencias de la extensión)</h3>
+<h3>Atajos de teclado globales</h3>
+<p>These shortcuts are empty by default and need to be configured from the extension settings window.</p>
+<ol>
+<li>Abrir diálogo del traductor.</li>
+<li>Abra el diálogo del traductor y traducir el texto desde el portapapeles.</li>
+<li>Abrir diálogo de traductor y traducir la selección primaria.</li>
+</ol>
+<h3>Atajos de teclado disponibles en el diálogo de traducción</h3>
 <ul>
-<li><strong><kbd>Súper</kbd> + <kbd>T</kbd>:</strong> Abre el diálogo de traducción.</li>
-<li><strong><kbd>Súper</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd>:</strong> Abre el diálogo de traducción y traduce el texto desde el porta papeles.</li>
-<li><strong><kbd>Súper</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>:</strong> Abre el diálogo de traducción y traduce el texto desde la selección primaria.</li>
+<li><strong><kbd>F1</kbd></strong>: Mostrar diálogo de ayuda.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>Entrar</kbd></strong>: Traducir texto.</li>
+<li><strong><kbd>Mayús.</kbd> + <kbd>Entrar</kbd></strong>: Forzar la traducción del texto. Ignora el historial de traducción.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>Mayús.</kbd> + <kbd>C</kbd></strong>: Copiar el texto traducido al portapapeles.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>S</kbd></strong>: Cambiar idiomas.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>R</kbd></strong>: Restablecer los idiomas predeterminados.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>P</kbd></strong>: Menú selector de proveedores.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>M</kbd></strong>: Menú principal.</li>
+<li><strong><kbd>Escape</kbd></strong>: Cerrar diálogo.</li>
 </ul>
-<h3>Atajos disponibles en el diálogo de traducción</h3>
-<ul>
-<li><strong><kbd>Ctrl</kbd> + <kbd>Enter</kbd>:</strong> Traduce el texto.</li>
-<li><strong><kbd>Shift</kbd> + <kbd>Enter</kbd>:</strong> Fuerza la traducción de texto. Ignora el historial de traducción.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>:</strong> Copia el texto traducido al porta papeles.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>S</kbd>:</strong> Cambia idiomas.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>D</kbd>:</strong> Restablece los idiomas predeterminados.</li>
-<li><strong><kbd>Escape</kbd>:</strong> Cierra el diálogo.</li>
-</ul>
-<h2>Ventana de preferencias del xlet</h2>
-<p>Desde la ventana de preferencias de este xlet, todas las opciones pueden ser importadas, exportadas y/o restablecidas a sus valores por defecto.</p>
-<ul>
-<li>Para poder realizar cualquiera de estas tareas, el esquema de las preferencias necesita estar instalado en el sistema. Esto es realizado automáticamente cuando el xlet es instalado desde el administrador de xlets de Cinnamon. Pero si el xlet fue instalado manualmente, el esquema de las preferencias necesita ser instalado manualmente. Esto se logra simplemente con ir a la carpeta del xlet y ejecutar el siguiente comando:<ul>
-<li>Comando para instalar el esquema de preferencias: <code>./settings.py install-schema</code></li>
-<li>Comando para desinstalar el esquema de preferencias: <code>./settings.py remove-schema</code></li>
+<h2>Historial de traducción</h2>
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
+
+¡NUNCA editar el archivo de historial de traducción manualmente! Utilizar siempre la ventana de historial de traducción para importar/exportar/restablecer el historial.
+</div><div class="img-centered-container"><img src="assets/images/translation-history.png" class="img-fluid " alt="Ventana de historial de traducción.">
+</div><ul>
+<li>El objetivo principal del historial de traducción es evitar o, al menos, minimizar los posibles abusos al utilizar un servicio de un proveedor de traducción.<ul>
+<li>Si el servicio de Google Translate es "abusado", Google puede bloquear temporalmente su IP. O lo que es peor, podrían cambiar el mecanismo de traducción haciendo inútil esta extensión y obligándome a actualizar su código.</li>
+<li>Si se "abusa" del servicio de traducción de Yandex, usted está "desperdiciando" su cuota de claves API y se bloquearán (temporal o permanentemente).</li>
 </ul>
 </li>
-<li>Para importar/exportar preferencias, el comando <strong>dconf</strong> necesita estar disponible en el sistema.</li>
+<li>Se puede acceder al historial de traducción desde el menú principal que se encuentra en el diálogo de traducción.</li>
+</ul>
+<h2>Tema de la interfaz</h2>
+<div class="img-centered-container"><img src="assets/images/translation-dialog.png" class="img-fluid " alt="Diálogo de traducción.">
+</div><ul>
+<li>Esta extensión admite temas personalizados para personalizar su interfaz (el cuadro de diálogo de traducción).</li>
+<li>El tema predeterminado (que se encuentra en CARPETA_DE_LA_EXTENSIÓN/themes/default.css) solo establece un estilo genérico para acomodar los elementos en la interfaz.</li>
+<li>Para usar un tema personalizado, simplemente configurar la opción <strong>Tema del diálogo</strong> como <strong>Personalizado</strong> y configurar la opción <strong>Ruta a hoja de estilo personalizada</strong> para que apunte a un archivo de hoja de estilo.</li>
+<li>Para crear un tema personalizado, simplemente hacer una copia del archivo de tema predeterminado en cualquier lugar del sistema de archivos, <strong>excepto</strong> dentro de la carpeta de la extensión. El archivo de tema predeterminado tiene la lista completa de clases CSS y IDs utilizadas por esta extensión.</li>
+<li>Para que los cambios del tema personalizados se reflejen mientras se modifica el archivo de tema, se puede reiniciar Cinnamon o se puede volver a cargar el tema Cinnamon.</li>
+<li>Canela proporciona un comando para volver a cargar su tema. Simplemente abrir el cuadro de diálogo <strong>Ejecutar comando</strong> (<kbd>Alt</kbd> + <kbd>F2</kbd>), escribir <strong>rt</strong> y presionar <kbd>Enter</kbd>.</li>
+</ul>
+<h2>¿Cómo obtener llaves de API para Yandex translator?</h2>
+<ul>
+<li>Visitar uno de los enlaces siguientes y registrar una cuenta de Yandex (o usar uno de los servicios sociales disponibles).<ul>
+<li>Inglés: <a href="https://tech.yandex.com/keys/get/?service=trnsl">https://tech.yandex.com/keys/get/?service=trnsl</a></li>
+<li>Ruso: <a href="https://tech.yandex.ru/keys/get/?service=trnsl">https://tech.yandex.ru/keys/get/?service=trnsl</a></li>
+</ul>
+</li>
+<li>Una vez que se haya realizado la creación exitosa de una cuenta de Yandex, los enlaces provistos pueden ser visitados varias veces para obtener varias llaves de API. <strong>¡NO ABUSAR!</strong></li>
+<li>Una vez que se tengan varias llaves de API, ellas pueden ser agregadas a la ventana de configuración de Traductor Emergente (una llave de API por linea).</li>
+</ul>
+<h3>Notas importantes sobre llaves de API Yandex</h3>
+<ul>
+<li>Las llaves de API son guardadas en una preferencia. Mantener las llaves de API respaldadas en el caso de que la preferencias de Traductor Emergente sean reiniciadas.</li>
+<li><strong>¡NUNCA hacer públicas las llaves de API!</strong> El sólo propósito de tomarse la molestia de obtener sus propias claves API es que el único el "consumir sus límites" es usted y nadie más.</li>
+<li>Con cada llave de API Yandex uno puede traducir <strong>HASTA</strong> 1.000.000 (1 millón) de caracteres por día <strong>PERO NO MÁS</strong> de 10.000.000 (10 millones) por mes.</li>
 </ul>
 
 </br>
@@ -188,18 +225,22 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </div>
 </div>
 <h2>Description</h2>
-<p>The Multi Translator extension is an extension ported from a gnome-shell extension called <a href="https://github.com/gufoe/text-translator">Text Translator</a> by <a href="https://github.com/gufoe">gufoe</a>. It provides translation of text by different translation providers (currently <a href="https://translate.google.com">Google</a>, <a href="https://translate.yandex.net">Yandex</a>, <a href="https://www.bing.com/translator">Bing</a>, <a href="https://www.apertium.org">Apertium</a> and <a href="http://transltr.org">Transltr</a>).</p>
+<p>The Multi Translator extension is an extension ported from a gnome-shell extension called <a href="https://github.com/gufoe/text-translator">Text Translator</a> by <a href="https://github.com/gufoe">gufoe</a>. It provides translation of text by different translation providers (currently <a href="https://translate.google.com">Google</a>, <a href="https://translate.yandex.net">Yandex</a>, <a href="https://www.bing.com/translator">Bing</a>, and <a href="https://www.apertium.org">Apertium</a>).</p>
 <h2>Dependencies</h2>
-<p><strong>If one or more of these dependencies are missing in your system, you will not be able to use this extension.</strong></p>
-<ul>
-<li>xsel command: XSel is a command-line program for getting and setting the contents of the X selection.</li>
-<li>trans command: Command provided by the package translate-shell. Is a simple command line interface for several translation providers (Google Translate, Yandex Translate, Bing Translate and Apertium) which allows you to translate strings in your terminal.<ul>
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
+
+If one or more of these dependencies are missing in your system, you will not be able to use this extension.
+</div><ul>
+<li><strong>xsel command</strong>: XSel is a command-line program for getting and setting the contents of the X selection.</li>
+<li><strong>trans command</strong>: Command provided by the package translate-shell. Is a simple command line interface for several translation providers (Google Translate, Yandex Translate, Bing Translate and Apertium) which allows you to translate strings in your terminal.<ul>
 <li>Check translate-shell <a href="https://github.com/soimort/translate-shell#dependencies">dependencies</a> and <a href="https://github.com/soimort/translate-shell#recommended-dependencies">recommended dependencies</a>.</li>
 </ul>
 </li>
 </ul>
-<p><strong>Note:</strong> The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x repositories is outdated and broken. It can be installed anyway so it will also install its dependencies. But updating to the latest version should be done as described bellow.</p>
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
 
+The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x repositories is outdated and broken. It can be installed anyway so it will also install its dependencies. But updating to the latest version should be done as described bellow.
+</div>
 <h2>How to install latest version of translate-shell</h2>
 <h3>Option 1. Direct Download</h3>
 <p>This method will only install the trans script into the specified locations.</p>
@@ -218,30 +259,63 @@ $ sudo make install
 </code></pre>
 <h2>Extension usage</h2>
 <p>Once installed and enabled, the following shortcuts will be available.</p>
-<h3>Global shortcuts (configurable from the extension settings)</h3>
+<h3>Global keyboard shortcuts</h3>
+<p>These shortcuts are empty by default and need to be configured from the extension settings window.</p>
+<ol>
+<li>Open translator dialog.</li>
+<li>Open translator dialog and translate text from clipboard.</li>
+<li>Open translator dialog and translate from primary selection.</li>
+</ol>
+<h3>Keyboard shortcuts available on the translation dialog</h3>
 <ul>
-<li><strong><kbd>Super</kbd> + <kbd>T</kbd>:</strong> Open translator dialog.</li>
-<li><strong><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd>:</strong> Open translator dialog and translate text from clipboard.</li>
-<li><strong><kbd>Super</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>:</strong> Open translator dialog and translate from primary selection.</li>
+<li><strong><kbd>F1</kbd></strong>: Show help dialog.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>Enter</kbd></strong>: Translate text.</li>
+<li><strong><kbd>Shift</kbd> + <kbd>Enter</kbd></strong>: Force text translation. Ignores translation history.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd></strong>: Copy translated text to clipboard.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>S</kbd></strong>: Swap languages.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>R</kbd></strong>: Reset languages to default.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>P</kbd></strong>: Provider selector menu.</li>
+<li><strong><kbd>Ctrl</kbd> + <kbd>M</kbd></strong>: Main menu.</li>
+<li><strong><kbd>Escape</kbd></strong>: Close dialog.</li>
 </ul>
-<h3>Shortcuts available on the translation dialog</h3>
-<ul>
-<li><strong><kbd>Ctrl</kbd> + <kbd>Enter</kbd>:</strong> Translate text.</li>
-<li><strong><kbd>Shift</kbd> + <kbd>Enter</kbd>:</strong> Force text translation. Ignores translation history.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>:</strong> Copy translated text to clipboard.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>S</kbd>:</strong> Swap languages.</li>
-<li><strong><kbd>Ctrl</kbd> + <kbd>D</kbd>:</strong> Reset languages to default.</li>
-<li><strong><kbd>Escape</kbd>:</strong> Close dialog.</li>
-</ul>
-<h2>Xlet's settings window</h2>
-<p>From this xlet settings window, all options can be imported, exported and/or reseted to their defaults.</p>
-<ul>
-<li>To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:<ul>
-<li>Command to install the settings schema: <code>./settings.py install-schema</code></li>
-<li>Command to uninstall the settings schema: <code>./settings.py remove-schema</code></li>
+<h2>Translation history</h2>
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
+
+NEVER edit the translation history file manually!!! Always use the translation history window to import/export/clear the history.
+</div><div class="img-centered-container"><img src="assets/images/translation-history.png" class="img-fluid " alt="Translation history window.">
+</div><ul>
+<li>The main purpose of the translation history is to avoid or at the very least minimize possible abuses while using a translation provider service.<ul>
+<li>If the Google Translate service is "abused", Google may block temporarily your IP. Or what is worse, they could change the translation mechanism making this extension useless and forcing me to update its code.</li>
+<li>If the Yandex Translate service is "abused", you are "wasting" your API keys quota and they will be blocked (temporarily or permanently).</li>
 </ul>
 </li>
-<li>To import/export settings, the <strong>dconf</strong> command needs to be available on the system.</li>
+<li>The translation history can be accessed from the main menu found in the translation dialog.</li>
+</ul>
+<h2>GUI theme</h2>
+<div class="img-centered-container"><img src="assets/images/translation-dialog.png" class="img-fluid " alt="Translation dialog.">
+</div><ul>
+<li>This extension supports custom themes to style its GUI (the translation dialog).</li>
+<li>The default theme (found in EXTENSION_FOLDER/themes/default.css) only sets a generic styling to accommodate the elements in the GUI.</li>
+<li>To use a custom theme, just set the <strong>Dialog theme</strong> option to <strong>Custom</strong> and set the <strong>Custom theme path</strong> option to point to a style sheet file.</li>
+<li>To create a custom theme, just make a copy of the default theme file anywhere on the file system, <strong>except</strong> inside the extension folder. The default theme file has the complete list of CSS classes and IDs used by this extension.</li>
+<li>For the custom theme changes to be reflected while the theme file is modified, either Cinnamon can be restarted or the Cinnamon theme can be reloaded.</li>
+<li>Cinnamon provides a command to reload its theme. Just open the <strong>Run command</strong> dialog (<kbd>Alt</kbd> + <kbd>F2</kbd>), type <strong>rt</strong> and press <kbd>Enter</kbd>.</li>
+</ul>
+<h2>How to get Yandex translator API keys</h2>
+<ul>
+<li>Visit one of the following links and register a Yandex account (or use one of the available social services).<ul>
+<li>English: <a href="https://tech.yandex.com/keys/get/?service=trnsl">https://tech.yandex.com/keys/get/?service=trnsl</a></li>
+<li>Russian: <a href="https://tech.yandex.ru/keys/get/?service=trnsl">https://tech.yandex.ru/keys/get/?service=trnsl</a></li>
+</ul>
+</li>
+<li>Once you successfully finish creating your Yandex account, you can visit the link provided several times to create several API keys. <strong>DO NOT ABUSE!!!</strong></li>
+<li>Once you have several API keys, you can add them to Multi Translator's settings window (one API key per line).</li>
+</ul>
+<h3>Important notes about Yandex API keys</h3>
+<ul>
+<li>The API keys will be stored into a preference. Keep your API keys backed up in case you reset Multi Translator's preferences.</li>
+<li><strong>NEVER make your API keys public!!!</strong> The whole purpose of going to the trouble of getting your own API keys is that the only one "consuming their limits" is you and nobody else.</li>
+<li>With each Yandex translator API key you can translate <strong>UP TO</strong> 1.000.000 (1 million) characters per day <strong>BUT NOT MORE</strong> than 10.000.000 (10 millions) per month.</li>
 </ul>
 
 </br>
@@ -269,6 +343,44 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Multi Translator changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 14 May 2019 14:33:20 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/eb77bca">eb77bca</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>WARNING 1: If a user is already using this extension prior to this update, it is recommended to build this extension with a different domain name than the one installed. This update is a complete re-write of the extension and uses a different settings system, so existent settings will be ignored.
+
+WARNING 2: An existent translation history will be compatible with the updated extension, but the existent history will have to be *sanitized*. If installing this new version of the extension with a new domain, the translation history of the previous version can also be imported into the new extension.
+
+- Removed Transltr engine. It seems that it ceased to exist.
+- Removed custom icons in favor of using the ones available on a system.
+
+- Better handling of source text with HTML markup (and by *better* I mean *less worse* LOL).
+- Better debugging and logging mechanism.
+
+- Removed all themes. Now the default theme is *theme agnostic*. This means that, when using the default theme, the UI will adapt to the currently used Cinnamon theme. Custom themes can still be created and used.
+- The translator dialog has been redesigned to better adapt to any screen size.
+- Added more keyboard shortcuts to interact with the translation dialog. There is still no traditional keyboard navigation between the UI elements (and never will be; I would have to write 500 lines of code just to make it barely useful), but almost all actions can be performed with a keyboard shortcut. I'm still working on improving it. The final goal would be to make all features accessible using the keyboard.
+
+- The history mechanism is optional now (but enabled by default).
+- The translation history can now be imported/exported/cleared from the history window.
+- Translation history window changes:
+    - Added advanced search capabilities (the history can be searched/filtered).
+    - All columns can be sorted.
+    - The window size and maximized state are remembered after closing the window.
+    - The time stamps displayed will always respect the formatting set in the extension settings.
+    - Eradicated the use of markup because I fed up of dealing with nonsense. This has the side effect of making the history loading, filtering and sorting a little bit faster (at least in appearance).
+    - Added grid lines to the history tree.
+</code></pre>
+<hr>
+<ul>
+<li><strong>Date:</strong> Thu, 9 May 2019 05:30:30 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/d5eab7d">d5eab7d</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Restructured theme loading mechanism.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Thu, 25 Apr 2019 02:00:16 -0300</li>
