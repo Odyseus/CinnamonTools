@@ -98,6 +98,8 @@ Applet's help pages can be accessed from an applet context menu (item named **He
 
 The documentation of this repository is mainly a development documentation, but it also documents the xlets/themes building processes.
 
+The documentation also has a Cinnamon tips & tricks section which describes some basic concepts and how to recover from an unresponsive Cinnamon session, amonst other things.
+
 ## Redistribution
 
 Anyone is free to redistribute any of the xlets in this repository as long as the following points are respected:
