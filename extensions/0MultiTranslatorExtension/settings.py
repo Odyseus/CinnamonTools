@@ -174,7 +174,6 @@ GLOBAL_TAB = {
                         "Bing.TranslatorTS": "%s (*)" % _("Bing Translator"),
                         "Google.Translate": _("Google Translate"),
                         "Google.TranslateTS": "%s (*)" % _("Google Translate"),
-                        "Transltr": "Transltr",
                         "Yandex.Translate": _("Yandex Translate"),
                         "Yandex.TranslateTS": "%s (*)" % _("Yandex Translate"),
                     }

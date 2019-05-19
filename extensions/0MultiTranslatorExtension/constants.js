@@ -72,7 +72,7 @@ const BOUND_SETTINGS_ARRAY = [
     "pref_debugger_enabled",
     "pref_loggin_save_history_indented",
     "pref_keep_source_entry_text_selected",
-    "pref_all_dependencies_met"
+    "pref_informed_about_dependencies"
 ];
 
 /* NOTE: Future me, ULTRA-VERY-IMPORTANT!!!
@@ -195,11 +195,6 @@ var DEFAULT_ENGINES = [{
     "default_target": "en",
     "remember_last_lang": true
 }, {
-    "provider_name": "Transltr",
-    "default_source": "auto",
-    "default_target": "en",
-    "remember_last_lang": true
-}, {
     "provider_name": "Yandex.Translate",
     "default_source": "auto",
     "default_target": "en",
@@ -314,16 +309,14 @@ var ProviderData = {
         "Bing.TranslatorTS": "https://www.bing.com/translator/",
         "Google.Translate": "https://translate.google.com",
         "Google.TranslateTS": "https://translate.google.com",
-        "Transltr": "http://transltr.org",
         "Yandex.Translate": "https://translate.yandex.net",
         "Yandex.TranslateTS": "https://translate.yandex.net"
     },
     display_name: {
-        "Apertium.TS": "Apertium",
-        "Bing.TranslatorTS": "Bing Translator",
-        "Google.Translate": "Google Translate",
-        "Google.TranslateTS": "Google Translate",
-        "Transltr": "Transltr",
+        "Apertium.TS": _("Apertium"),
+        "Bing.TranslatorTS": _("Bing Translator"),
+        "Google.Translate": _("Google Translate"),
+        "Google.TranslateTS": _("Google Translate"),
         "Yandex.Translate": "Yandex.Translate",
         "Yandex.TranslateTS": "Yandex.Translate"
     },
@@ -332,7 +325,6 @@ var ProviderData = {
         "Bing.TranslatorTS": "multi-translator-bing-translator",
         "Google.Translate": "multi-translator-google-translate",
         "Google.TranslateTS": "multi-translator-google-translate",
-        "Transltr": "multi-translator-generic-translator",
         "Yandex.Translate": "multi-translator-yandex-translate",
         "Yandex.TranslateTS": "multi-translator-yandex-translate"
     }
@@ -340,6 +332,7 @@ var ProviderData = {
 
 var Languages = {
     "auto": _("Detect language"),
+    "?": _("Unknown"),
     "af": _("Afrikaans"),
     "am": _("Amharic"),
     "ar": _("Arabic"),

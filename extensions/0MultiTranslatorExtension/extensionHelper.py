@@ -32,12 +32,6 @@ def main():
             msg += "# %s\n" % _("xsel command not found!!!")
 
         try:
-            subprocess.check_call(["xdg-open", "--version"])
-        except OSError:
-            # TO TRANSLATORS: "xdg-open" is a command, do not translate.
-            msg += "# %s\n" % _("xdg-open command not found!!!")
-
-        try:
             subprocess.check_call(["trans", "-V"])
         except OSError:
             # TO TRANSLATORS: "trans" is a command and "PATH" is an

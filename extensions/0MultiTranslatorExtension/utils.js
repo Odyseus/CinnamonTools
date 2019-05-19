@@ -205,41 +205,6 @@ function escapeRegExp(str) {
     return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 }
 
-function _exec(aCommand, aCallback) {
-    let out_reader;
-
-    try {
-        let [res, pid, in_fd, out_fd, err_fd] = GLib.spawn_async_with_pipes( // jshint ignore:line
-            null, aCommand, null, GLib.SpawnFlags.SEARCH_PATH, null);
-        out_reader = new Gio.DataInputStream({
-            base_stream: new Gio.UnixInputStream({
-                fd: out_fd
-            })
-        });
-    } catch (aErr) {
-        aCallback("%s (%s):\n%s".format(
-            _("Error executing command"),
-            aCommand.join(" "),
-            String(aErr)
-        ));
-        return;
-    }
-
-    let output = "";
-
-    function _SocketRead(source_object, res) {
-        const [chunk, length] = out_reader.read_upto_finish(res); // jshint ignore:line
-
-        if (chunk !== null) {
-            output += chunk + "\n";
-            out_reader.read_line_async(null, null, _SocketRead);
-        } else {
-            aCallback(output);
-        }
-    }
-    out_reader.read_line_async(null, null, _SocketRead);
-}
-
 function getKeyByValue(aObj, aValue) {
     for (let key in aObj) {
         if (aObj.hasOwnProperty(key) && aObj[key] === aValue) {
@@ -341,20 +306,25 @@ function versionCompare(v1, v2, options) {
 }
 
 function getSelection(aCallback) {
-    Util.spawn_async(["xsel", "-o"], (aResutl) => {
-        // Remove possible "illegal" characters.
-        let str = aResutl;
-        // Replace line breaks and duplicated white spaces with a single space.
-        str = (str.replace(/\s+/g, " ")).trim();
+    spawnWithCallback(
+        null, ["xsel", "-o"],
+        null,
+        GLib.SpawnFlags.SEARCH_PATH,
+        null,
+        (aStandardOutput) => {
+            // Remove possible "illegal" characters.
+            let str = aStandardOutput;
+            // Replace line breaks and duplicated white spaces with a single space.
+            str = (str.replace(/\s+/g, " ")).trim();
 
-        aCallback(str);
+            aCallback(str);
 
-        if (Settings.pref_logging_level !== LoggingLevel.NORMAL) {
-            global.log("\ngetSelection()>str:\n" + str);
+            if (Settings.pref_logging_level !== LoggingLevel.NORMAL) {
+                global.log("\ngetSelection()>str:\n" + str);
+            }
         }
-    });
+    );
 }
-
 
 function checkDependencies() {
     Util.spawn_async([
@@ -379,14 +349,15 @@ function checkDependencies() {
                     "# " + _("Unmet dependencies found!!!") + "\n" +
                     res + "\n" +
                     "# " + _("Check this extension help file for instructions.") + "\n" +
-                    "# " + _("It can be accessed from the translation dialog main menu.")
+                    "# " + _("It can be accessed from the translation dialog main menu.") + "\n" +
+                    "# " + _("You will not see this notification again.")
                 );
                 informAboutMissingDependencies(res);
-                Settings.pref_all_dependencies_met = false;
             } else {
                 Main.notify(_(XletMeta.name), _("All dependencies seem to be met."));
-                Settings.pref_all_dependencies_met = true;
             }
+
+            Settings.pref_informed_about_dependencies = true;
         });
 }
 
@@ -716,28 +687,21 @@ TranslationProviderBase.prototype = {
         );
     },
 
-    makeUrl: function(aSourceLang, aTargetLang, aText) {
+    makeUrl: function(aSourceLangCode, aTargetLangCode, aText) {
         let result = "";
 
         switch (this.name) {
-            case "Transltr":
-                result = this.params.url.format(
-                    encodeURIComponent(aText),
-                    aTargetLang,
-                    (aSourceLang === "auto" ? "" : "&from=" + aSourceLang)
-                );
-                break;
             case "Google.Translate":
                 result = this.params.url.format(
-                    aSourceLang,
-                    aTargetLang,
+                    aSourceLangCode,
+                    aTargetLangCode,
                     encodeURIComponent(aText)
                 );
                 break;
             case "Yandex.Translate":
                 result = this.params.url.format(
                     this.YandexAPIKey,
-                    (aSourceLang === "auto" ? "" : aSourceLang + "-") + aTargetLang,
+                    (aSourceLangCode === "auto" ? "" : aSourceLangCode + "-") + aTargetLangCode,
                     encodeURIComponent(aText)
                 );
                 break;
@@ -746,7 +710,7 @@ TranslationProviderBase.prototype = {
             default:
                 result = "";
                 // result = this.params.url.format(
-                //     (aSourceLang === "auto" ? "" : aSourceLang + "-") + aTargetLang,
+                //     (aSourceLangCode === "auto" ? "" : aSourceLangCode + "-") + aTargetLangCode,
                 //     encodeURIComponent(aText)
                 // );
                 break;
@@ -767,19 +731,28 @@ TranslationProviderBase.prototype = {
         throw new Error(_("Not implemented"));
     },
 
-    parseResponse: function(aHelperSourceData) { // jshint ignore:line
+    parseResponse: function(aResponseData, aText, aSourceLangCode, aTargetLangCode) { // jshint ignore:line
+        /* NOTE: Each translator instance uses different arguments.
+         * aResponseData: Is the data returned by the HTTP request.
+         * aText: Is the text that needs to be translated.
+         * aSourceLangCode: The source language code.
+         * aTargetLangCode: The target language code.
+         * aText, aSourceLangCode and aTargetLangCode are passed so in engines that are
+         * a nightmare to parse (like Google Translate and its indecipherable response) one
+         * doesn't have to hunt down data that already is known.
+         */
         throw new Error(_("Not implemented"));
     },
 
-    translate: function(aSourceLang, aTargetLang, aText, aCallback) {
+    translate: function(aSourceLangCode, aTargetLangCode, aText, aCallback) {
         if (isBlank(aText)) {
             aCallback(false);
             return;
         }
 
-        let url = this.makeUrl(aSourceLang, aTargetLang, aText);
-        this._getDataAsync(url, (aResult) => {
-            let data = this.parseResponse(aResult);
+        let url = this.makeUrl(aSourceLangCode, aTargetLangCode, aText);
+        this._getDataAsync(url, (aResponseData) => {
+            let data = this.parseResponse(aResponseData, aText, aSourceLangCode, aTargetLangCode);
             aCallback(data);
         });
     },
@@ -792,10 +765,6 @@ TranslationProviderBase.prototype = {
         return this.params.char_limit * this.params.max_queries;
     }
 };
-
-/**
- * END translation_provider_base.js
- */
 
 function TranslateShellBaseTranslator() {
     this._init.apply(this, arguments);
@@ -860,7 +829,7 @@ TranslateShellBaseTranslator.prototype = {
         return temp;
     },
 
-    parseResponse: function(aData) {
+    parseResponse: function(aStandardOutput) {
         /* NOTE: Reference extracted from translate-shell.
          *  AnsiCode["reset"]         = AnsiCode[0] = "\33[0m"
          *  AnsiCode["bold"]          = "\33[1m"
@@ -917,16 +886,16 @@ TranslateShellBaseTranslator.prototype = {
         };
         try {
             for (let hex in stuff) {
-                aData = replaceAll(aData, hex, stuff[hex]);
+                aStandardOutput = replaceAll(aStandardOutput, hex, stuff[hex]);
             }
 
-            return aData;
+            return aStandardOutput;
         } catch (aErr) {
             return "%s:\n%s\n%s:\n%s".format(
                 _("Error while parsing data"),
                 String(aErr),
                 _("Data"),
-                aData
+                aStandardOutput
             );
         }
     },
@@ -957,11 +926,17 @@ TranslateShellBaseTranslator.prototype = {
             options.push(proxy);
         }
 
-        _exec(command.concat(options).concat(subjects), (aData) => {
-            aData = this.parseResponse(aData);
+        spawnWithCallback(
+            null, command.concat(options).concat(subjects),
+            null,
+            GLib.SpawnFlags.SEARCH_PATH,
+            null,
+            (aStandardOutput) => {
+                aStandardOutput = this.parseResponse(aStandardOutput);
 
-            aCallback(aData);
-        });
+                aCallback(aStandardOutput);
+            }
+        );
     },
 
     translate: function(aSourceLang, aTargetLang, aText, aDisplayTranslationCallback) {
@@ -1164,6 +1139,84 @@ if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE || Settings.pref_d
     }
 }
 
+// Combines the benefits of spawn sync (easy retrieval of output)
+// with those of spawn_async (non-blocking execution).
+// Based on https://github.com/optimisme/gjs-examples/blob/master/assets/spawn.js.
+function spawnWithCallback(aWorkingDirectory, aArgv, aEnvp, aFlags, aChildSetup, aCallback) {
+    let success, pid, stdinFile, stdoutFile, stderrFile;
+
+    try {
+        [success, pid, stdinFile, stdoutFile, stderrFile] = // jshint ignore:line
+        GLib.spawn_async_with_pipes(aWorkingDirectory, aArgv, aEnvp, aFlags, aChildSetup);
+    } catch (aErr) {
+        global.logError(aErr);
+        Main.criticalNotify(
+            _(XletMeta.name),
+            String(aErr).split("\n")[0]
+        );
+    }
+
+    if (!success) {
+        return;
+    }
+
+    GLib.close(stdinFile);
+
+    let standardOutput = "";
+
+    let stdoutStream = new Gio.DataInputStream({
+        base_stream: new Gio.UnixInputStream({
+            fd: stdoutFile
+        })
+    });
+
+    readStream(stdoutStream, (aOutput) => {
+        if (aOutput === null) {
+            stdoutStream.close(null);
+            aCallback(standardOutput);
+        } else {
+            standardOutput += aOutput;
+        }
+    });
+
+    let standardError = "";
+
+    let stderrStream = new Gio.DataInputStream({
+        base_stream: new Gio.UnixInputStream({
+            fd: stderrFile
+        })
+    });
+
+    readStream(stderrStream, (aError) => {
+        if (aError === null) {
+            stderrStream.close(null);
+
+            if (standardError) {
+                global.logError(standardError);
+                Main.criticalNotify(
+                    _(XletMeta.name),
+                    String(standardError).split("\n")[0]
+                );
+            }
+        } else {
+            standardError += aError;
+        }
+    });
+}
+
+function readStream(aStream, aCallback) {
+    aStream.read_line_async(GLib.PRIORITY_LOW, null, (aSource, aResult) => {
+        let [line] = aSource.read_line_finish(aResult);
+
+        if (line === null) {
+            aCallback(null);
+        } else {
+            aCallback(String(line) + "\n");
+            readStream(aSource, aCallback);
+        }
+    });
+}
+
 /* exported getUnichar,
             xdgOpen,
             getKeybindingDisplayName,
@@ -1172,4 +1225,5 @@ if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE || Settings.pref_d
             versionCompare,
             getSelection,
             checkDependencies,
+            spawnWithCallback,
 */

@@ -1640,7 +1640,7 @@ EntryBase.prototype = {
 
         /* NOTE: This is completely useless. When the context menu opens, the selected
          * text in an entry unselects and it cannot be copied with the Copy context item.
-         * I thought that I had screwed up something, context menus do not work on anything
+         * I thought that I had screwed up something, but context menus do not work on anything
          * in Cinnamon. The paste item do work.
          */
         CinnamonEntry.addContextMenu(this._entry);
@@ -1718,28 +1718,6 @@ EntryBase.prototype = {
             }
 
             return Clutter.EVENT_STOP;
-        } else if (
-            control_mask && code === Clutter.KEY_7
-        ) { // Ctrl + V - Append  clipboard content into active entry.
-            let clipboard = St.Clipboard.get_default();
-            let clipCallback = (clipboard, text) => {
-                if (!$.isBlank(text)) {
-                    this._clutter_text.delete_selection();
-                    this._clutter_text.set_text(
-                        this._clutter_text.text + text
-                    );
-
-                    return Clutter.EVENT_STOP;
-                }
-
-                return Clutter.EVENT_PROPAGATE;
-            };
-
-            if (St.ClipboardType) {
-                clipboard.get_text(St.ClipboardType.CLIPBOARD, clipCallback);
-            } else {
-                clipboard.get_text(clipCallback);
-            }
         } else if (
             (shift_mask || control_mask) &&
             (symbol === Clutter.Return || symbol === Clutter.KP_Enter)

@@ -38,7 +38,7 @@
     },
     "pref_default_translator": {
         "type": "generic",
-        "default": "Google.TranslateTS"
+        "default": "Google.Translate"
     },
     "pref_translators_prefs": {
         "type": "generic",
@@ -79,11 +79,6 @@
             "remember_last_lang": true
         }, {
             "provider_name": "Google.Translate",
-            "default_source": "auto",
-            "default_target": "en",
-            "remember_last_lang": true
-        }, {
-            "provider_name": "Transltr",
             "default_source": "auto",
             "default_target": "en",
             "remember_last_lang": true
@@ -183,7 +178,7 @@
         "type": "generic",
         "default": true
     },
-    "pref_all_dependencies_met": {
+    "pref_informed_about_dependencies": {
         "type": "generic",
         "default": false
     }

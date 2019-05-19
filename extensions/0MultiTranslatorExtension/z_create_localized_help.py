@@ -33,17 +33,24 @@ class Main(LocalizedHelpCreator):
             "## %s" % _("Dependencies"),
             "",
             utils.get_bootstrap_alert(
-                context="warning",
-                content=_(
-                    "If one or more of these dependencies are missing in your system, you will not be able to use this extension.")
+                context="info",
+                heading=_("All dependencies are optional"),
+                content=md("\n".join([
+                    "- %s" % _("If the xsel command is missing, one cannot directly perform translations from selected text."),
+                    "- %s" % _("If the trans command is missing, one cannot use translation engines that make use of translate-shell."),
+                ]))
             ),
             "",
+            # TO TRANSLATORS: Do not translate the word "xsel".
             "- **%s**: %s" % (_("xsel command"),
                               _("XSel is a command-line program for getting and setting the contents of the X selection.")),
+            # TO TRANSLATORS: Do not translate the word "trans".
             "- **%s**: %s" % (_("trans command"),
                               _("Command provided by the package translate-shell. Is a simple command line interface for several translation providers (Google Translate, Yandex Translate, Bing Translate and Apertium) which allows you to translate strings in your terminal.")),
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "    - %s" % _("Check translate-shell [dependencies](https://github.com/soimort/translate-shell#dependencies) and [recommended dependencies](https://github.com/soimort/translate-shell#recommended-dependencies)."),
+            "    - [%s](https://github.com/soimort/translate-shell#dependencies)" % _(
+                "Check translate-shell dependencies."),
+            "    - [%s](https://github.com/soimort/translate-shell#recommended-dependencies)" % _(
+                "Check translate-shell recommended dependencies."),
             "",
             utils.get_bootstrap_alert(
                 context="warning",
@@ -54,8 +61,8 @@ class Main(LocalizedHelpCreator):
 
     def get_content_extra(self):
         return md("{}".format("\n".join([
-            "## %s" % _("How to install latest version of translate-shell"),
-            "### %s" % _("Option 1. Direct Download"),
+            "### %s" % _("How to install latest version of translate-shell"),
+            "#### %s" % _("Option 1. Direct Download"),
             _("This method will only install the trans script into the specified locations."),
             "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
@@ -71,7 +78,7 @@ $ wget -O ~/.local/bin/trans git.io/trans && chmod ugo+rx ~/.local/bin/trans
 $ sudo wget -O /usr/local/bin/trans git.io/trans && sudo chmod ugo+rx /usr/local/bin/trans
 ```""",
             "",
-            "### %s" %
+            "#### %s" %
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Option 2. From Git - [More details](https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers)"),
             _("This method will not just install the trans script but also its man pages. Refer to the link above for more installation details."),

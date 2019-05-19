@@ -79,7 +79,7 @@ MultiTranslator.prototype = {
             this._ensureHistoryFileExists();
         }
 
-        if (!Settings.pref_all_dependencies_met) {
+        if (!Settings.pref_informed_about_dependencies) {
             $.checkDependencies();
         }
     },
@@ -469,6 +469,7 @@ MultiTranslator.prototype = {
         }
 
         this.transDialog.close();
+
         Util.spawn_async([
             XletMeta.path + "/translatorHistory.py",
             "--gui",
@@ -759,15 +760,21 @@ MultiTranslator.prototype = {
             return;
         }
 
-        Util.spawn_async([
-            XletMeta.path + "/extensionHelper.py",
-            /* NOTE: Without explicitly using String the aHTML argument isn't
-             * recognized as a string or as a single argument. ¬¬
-             */
-            "--strip-markup=" + String(aHTML)
-        ], (aTextCleaned) => {
-            aCallback(String(aTextCleaned).trim());
-        });
+        $.spawnWithCallback(
+            null, [
+                XletMeta.path + "/extensionHelper.py",
+                /* NOTE: Without explicitly using String the aHTML argument isn't
+                 * recognized as a string or as a single argument. ¬¬
+                 */
+                "--strip-markup=" + String(aHTML)
+            ],
+            null,
+            GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+            null,
+            (aTextCleaned) => {
+                aCallback(String(aTextCleaned).trim());
+            }
+        );
     },
 
     _translate: function(aActor, aEvent) {
@@ -934,7 +941,6 @@ MultiTranslator.prototype = {
          */
         try {
             switch (this.providersManager.current.name) {
-                case "Transltr":
                 case "Google.Translate":
                     return aResult.detectedLang;
                 case "Google.TranslateTS":

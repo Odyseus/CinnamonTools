@@ -1,13 +1,13 @@
 let $,
-    constants;
+    Constants;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
-    constants = require("./constants.js");
+    Constants = require("./constants.js");
 } else {
     $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
-    constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
 }
 
 const Main = imports.ui.main;
@@ -16,7 +16,7 @@ const {
     _,
     Languages,
     Settings
-} = constants;
+} = Constants;
 
 const LANGUAGE_PAIRS = [
     "auto-az",
@@ -286,8 +286,10 @@ Translator.prototype = {
             global.logError("%s %s: %s".format(
                 this.params.name,
                 _("Error"),
-                JSON.stringify(aErr, null, "\t")
+                String(aErr)
             ));
+            global.logError(JSON.stringify(aResponseData, null, "\t"));
+
             return {
                 message: _("Can't translate text, please try later.")
             };

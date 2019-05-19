@@ -47,6 +47,7 @@ equal = 0
 
 LANGUAGES_LIST = {
     "auto": _("Detect language"),
+    "?": _("Unknown"),
     "af": _("Afrikaans"),
     "am": _("Amharic"),
     "ar": _("Arabic"),
@@ -810,9 +811,9 @@ if __name__ == "__main__":
 
     if args.gui:
         global TIMESTAMP_FORMAT
-        TIMESTAMP_FORMAT = args.timestamp_format
+        TIMESTAMP_FORMAT = args.timestamp_format or "%Y-%m-%d %H:%M:%S"
         global WORD_WRAP
-        WORD_WRAP = args.word_wrap
+        WORD_WRAP = args.word_wrap or 300
         app = HistoryApplication()
         app.run()
     elif args.sanitize:
