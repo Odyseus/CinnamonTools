@@ -272,7 +272,7 @@ GLOBAL_TAB = {
 TRANSLATORS_TAB = {
     "page-title": _("Translators"),
     "sections": [{
-        "section-title": _("Translation dialog appearance"),
+        "section-title": _("Translators default preferences"),
         "widgets": [{
             "widget-type": "list",
             "args": {
@@ -286,6 +286,12 @@ TRANSLATORS_TAB = {
                     "height": 300,
                     "move-buttons": False
                 }
+            }
+        }, {
+            "widget-type": "label",
+            "args": {
+                "label": "<b>%s</b>" % cgi.escape(_("Translators whose names are suffixed with TS require translate-shell package")),
+                "use_markup": True
             }
         }]
     }]

@@ -1194,8 +1194,8 @@ MultiTranslator.prototype = {
     _checkTranslatorPrefsVersion: function() {
         if (Number(Settings.pref_translators_prefs_defaults_control) !== C.DEFAULT_ENGINES_CONTROL) {
             let currentDefaults = JSON.parse(JSON.stringify(Settings.pref_translators_prefs_defaults));
-            let removedEngines = [];
             let newEngines = [];
+            let defaultsNeedUpdate = false;
 
             // Find engines that need to be added and store them.
             let n = C.DEFAULT_ENGINES.length;
@@ -1205,20 +1205,30 @@ MultiTranslator.prototype = {
 
                 if (eng === null) {
                     newEngines.push($.getEngineByName(id, C.DEFAULT_ENGINES));
+                    defaultsNeedUpdate = true;
                 }
             }
 
-            // Find engines that need to be removed and store them.
+            // Find engines that doesn't exist anymore and remove them.
             let o = currentDefaults.length;
             while (o--) {
                 let id = currentDefaults[o]["provider_name"];
                 let eng = $.getEngineByName(id, C.DEFAULT_ENGINES);
 
                 if (eng === null) {
-                    removedEngines.push($.getEngineByName(id, currentDefaults));
+                    currentDefaults.splice(o, 1);
+                    defaultsNeedUpdate = true;
                 }
             }
 
+            if (defaultsNeedUpdate) {
+                currentDefaults = (currentDefaults.concat(newEngines)).sort((a, b) => {
+                    return a.provider_name.localeCompare(b.provider_name);
+                });
+                Settings.pref_translators_prefs_defaults = currentDefaults;
+            }
+
+            Settings.pref_translators_prefs_defaults_control = C.DEFAULT_ENGINES_CONTROL;
         }
     },
 

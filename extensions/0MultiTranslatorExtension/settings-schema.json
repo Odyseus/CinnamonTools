@@ -46,7 +46,7 @@
     },
     "pref_translators_prefs_defaults_control": {
         "type": "generic",
-        "default": 0
+        "default": 1
     },
     "pref_ui_animation_time": {
         "type": "generic",

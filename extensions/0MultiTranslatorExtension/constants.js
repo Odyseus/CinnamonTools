@@ -169,7 +169,7 @@ var HISTORY_FILE_VERSION = 2;
 // NOTE: Keep in sync with pref_translators_prefs_defaults_control.
 // Increment by 1 every time that I add/remove an engine.
 // Always overwrite the preference with the value of this variable.
-var DEFAULT_ENGINES_CONTROL = 0;
+var DEFAULT_ENGINES_CONTROL = 1;
 
 // NOTE: Keep in sync with pref_translators_prefs_defaults.
 // Add/remove engines.
