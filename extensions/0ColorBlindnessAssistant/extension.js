@@ -1,18 +1,18 @@
 let $,
-    constants,
-    colorInspector,
-    daltonizer;
+    Constants,
+    Colorinspector,
+    Daltonizer;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
-    constants = require("./constants.js");
-    colorInspector = require("./colorInspector.js");
-    daltonizer = require("./daltonizer.js");
+    Constants = require("./constants.js");
+    Colorinspector = require("./colorInspector.js");
+    Daltonizer = require("./daltonizer.js");
     $ = require("./utils.js");
 } else {
-    constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-    colorInspector = imports.ui.extensionSystem.extensions["{{UUID}}"].colorInspector;
-    daltonizer = imports.ui.extensionSystem.extensions["{{UUID}}"].daltonizer;
+    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    Colorinspector = imports.ui.extensionSystem.extensions["{{UUID}}"].colorInspector;
+    Daltonizer = imports.ui.extensionSystem.extensions["{{UUID}}"].daltonizer;
     $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
 }
 
@@ -43,7 +43,7 @@ const {
     ShaderColorSpaceMap,
     EFFECT_PROP_NAME,
     EFFECT_DEFAULT_PARAMS
-} = constants;
+} = Constants;
 
 let xletMeta = null;
 let assistant = null;
@@ -304,7 +304,7 @@ ColorBlindnessAssistant.prototype = {
         }
 
         if (this._colorInspector === null) {
-            this._colorInspector = new colorInspector.ColorInspector(
+            this._colorInspector = new Colorinspector.ColorInspector(
                 this._notifyMessage.bind(this),
                 this.pref_color_inspector_always_copy_to_clipboard,
                 this.pref_color_inspector_animation_time / 1000
@@ -321,7 +321,7 @@ ColorBlindnessAssistant.prototype = {
         }
 
         if (this._daltonizer === null) {
-            this._daltonizer = new daltonizer.Daltonizer(
+            this._daltonizer = new Daltonizer.Daltonizer(
                 this._toggleEffect.bind(this),
                 this.pref_daltonizer_animation_time / 1000,
                 this.pref_daltonizer_show_actors_box,

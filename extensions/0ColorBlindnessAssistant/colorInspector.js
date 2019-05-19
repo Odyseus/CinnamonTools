@@ -1,13 +1,13 @@
-let constants,
-    nameThatColor;
+let Constants,
+    NameThatColor;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
-    constants = require("./constants.js");
-    nameThatColor = require("./nameThatColor.js");
+    Constants = require("./constants.js");
+    NameThatColor = require("./nameThatColor.js");
 } else {
-    constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-    nameThatColor = imports.ui.extensionSystem.extensions["{{UUID}}"].nameThatColor;
+    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    NameThatColor = imports.ui.extensionSystem.extensions["{{UUID}}"].nameThatColor;
 }
 
 const {
@@ -31,18 +31,18 @@ const {
     _,
     ColorInspectorInfoBannerLabels,
     ELLIPSIS,
-} = constants;
+} = Constants;
 
 const {
-    NameThatColor
-} = nameThatColor;
+    NameThatColor: NTC
+} = NameThatColor;
 
 /* NOTE: NameThatColor library initialization.
  * Initialized here and not where NameThatColor is declared just because I
  * already import and use Mainloop in this file.
  */
 Mainloop.idle_add(() => {
-    NameThatColor.init();
+    NTC.init();
 });
 
 function getCurrentMonitor() {
@@ -478,7 +478,7 @@ ColorInspector.prototype = {
         this._yMouse = yMouse;
         let pixel = this.getPixelAt(xMouse, yMouse);
         let inputRGB = "rgb(%s, %s, %s)".format(pixel[0], pixel[1], pixel[2]);
-        let colorInfo = NameThatColor.name(rgb2hex(
+        let colorInfo = NTC.name(rgb2hex(
             pixel[0],
             pixel[1],
             pixel[2]

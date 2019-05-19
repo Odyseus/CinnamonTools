@@ -1,5 +1,5 @@
 let XletMeta,
-    constants;
+    Constants;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -10,9 +10,9 @@ if (typeof __meta === "object") {
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
-    constants = require("./constants.js");
+    Constants = require("./constants.js");
 } else {
-    constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
 }
 
 const {
@@ -20,7 +20,7 @@ const {
     EFFECT_PROP_NAME,
     DaltonizerWizardLabels,
     DaltonizerWizardTooltips
-} = constants;
+} = Constants;
 
 const {
     gi: {
