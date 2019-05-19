@@ -1,5 +1,6 @@
 {
     "description": "View your local weather forecast.",
+    "external-configuration-app": "settings.py",
     "website": "{{REPO_URL}}",
     "contributors": "See this xlet help file.",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
