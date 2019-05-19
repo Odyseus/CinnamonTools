@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Sat, 18 May 2019 22:29:33 -0300
+- **Commit:** [581cbbe](https://gitlab.com/Odyseus/CinnamonTools/commit/581cbbe)
+- **Author:** Odyseus
+
+```
+- Removed unused file.
+- Added "external-configuration-app" option to the metadata.json file to minimize probability of opening the "fake" settings window.
+
+```
+
+***
+
 - **Date:** Tue, 14 May 2019 14:29:06 -0300
 - **Commit:** [9762324](https://gitlab.com/Odyseus/CinnamonTools/commit/9762324)
 - **Author:** Odyseus

@@ -88,13 +88,18 @@
 <h2>Descripción</h2>
 <p>La extensión Multi Traductor está basada en una extensión para gnome-shell llamada <a href="https://github.com/gufoe/text-translator">Text Translator</a> por <a href="https://github.com/gufoe">gufoe</a>. Proporciona traducción de texto por diferentes proveedores de traducción (actualmente <a href="https://translate.google.com">Google</a>, <a href="https://translate.yandex.net">Yandex</a>, <a href="https://www.bing.com/translator">Bing</a>, and <a href="https://www.apertium.org">Apertium</a>).</p>
 <h2>Dependencias</h2>
-<div class="alert alert-warning text-bold shadow-sm" role="alert">
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading">Todas las dependencias son opcionales</h4>
+<ul>
+<li>Si el comando xsel no está disponible, uno no puede realizar directamente las traducciones del texto seleccionado.</li>
+<li>Si el comando trans no está disponible, no se pueden usar motores de traducción que hagan uso de translate-shell.</li>
+</ul>
 
-Si una o más de estas dependencias faltan en su sistema, no podrá utilizar esta extensión.
 </div><ul>
 <li><strong>Comando xsel</strong>: XSel es un programa de la consola para obtener y asignar los contenidos de una selección en X.</li>
 <li><strong>Comando trans</strong>: Comando proporcionado por <strong>translate-shell</strong>. Es una simple interfaz de línea de comandos para varios proveedores de traducción (Google Translate, Yandex Translate, Bing Translate and Apertium) que permite traducir cadenas de texto desde la terminal.<ul>
-<li>Comprobar <a href="https://github.com/soimort/translate-shell#dependencies">dependencias</a> y <a href="https://github.com/soimort/translate-shell#recommended-dependencies">dependencias recomendadas</a> de translate-shell.</li>
+<li><a href="https://github.com/soimort/translate-shell#dependencies">Comprobar dependencias de translate-shell.</a></li>
+<li><a href="https://github.com/soimort/translate-shell#recommended-dependencies">Comprobar dependencias recomendadas de translate-shell.</a></li>
 </ul>
 </li>
 </ul>
@@ -102,8 +107,8 @@ Si una o más de estas dependencias faltan en su sistema, no podrá utilizar est
 
 El paquete **translate-shell** disponible en los repositorios de Ubuntu 16.04.x/Linux Mint 18.x es anticuado y roto. Puede ser instalado de todas maneras así también se instalan sus dependencias. Pero actualizar el script a su última versión debe hacerse como se describe a continuación.
 </div>
-<h2>Cómo instalar la última versión de translate-shell</h2>
-<h3>Opción 1. Descarga directa</h3>
+<h3>Cómo instalar la última versión de translate-shell</h3>
+<h4>Opción 1. Descarga directa</h4>
 <p>Este método sólo instalará el script <strong>trans</strong> en la ubicación especificada.</p>
 <p>Sólo para el usuario actual. <strong>~/.local/bin</strong> necesita estar en su PATH.</p>
 <pre><code class="lang-shell">$ wget -O ~/.local/bin/trans git.io/trans &amp;&amp; chmod ugo+rx ~/.local/bin/trans
@@ -111,7 +116,7 @@ El paquete **translate-shell** disponible en los repositorios de Ubuntu 16.04.x/
 <p>Para todos los usuarios sin sobre-escribir la versión instalada.</p>
 <pre><code class="lang-shell">$ sudo wget -O /usr/local/bin/trans git.io/trans &amp;&amp; sudo chmod ugo+rx /usr/local/bin/trans
 </code></pre>
-<h3>Opción 2. Desde Git - <a href="https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers">Más detalles</a></h3>
+<h4>Opción 2. Desde Git - <a href="https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers">Más detalles</a></h4>
 <p>Este método no sólo instalará el script <strong>trans</strong>, sino también sus páginas man. Consultar el enlace anterior para obtener más detalles sobre la instalación.</p>
 <pre><code class="lang-shell">$ git clone https://github.com/soimort/translate-shell
 $ cd translate-shell
@@ -227,13 +232,18 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <h2>Description</h2>
 <p>The Multi Translator extension is an extension ported from a gnome-shell extension called <a href="https://github.com/gufoe/text-translator">Text Translator</a> by <a href="https://github.com/gufoe">gufoe</a>. It provides translation of text by different translation providers (currently <a href="https://translate.google.com">Google</a>, <a href="https://translate.yandex.net">Yandex</a>, <a href="https://www.bing.com/translator">Bing</a>, and <a href="https://www.apertium.org">Apertium</a>).</p>
 <h2>Dependencies</h2>
-<div class="alert alert-warning text-bold shadow-sm" role="alert">
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+<h4 class="alert-heading">All dependencies are optional</h4>
+<ul>
+<li>If the xsel command is missing, one cannot directly perform translations from selected text.</li>
+<li>If the trans command is missing, one cannot use translation engines that make use of translate-shell.</li>
+</ul>
 
-If one or more of these dependencies are missing in your system, you will not be able to use this extension.
 </div><ul>
 <li><strong>xsel command</strong>: XSel is a command-line program for getting and setting the contents of the X selection.</li>
 <li><strong>trans command</strong>: Command provided by the package translate-shell. Is a simple command line interface for several translation providers (Google Translate, Yandex Translate, Bing Translate and Apertium) which allows you to translate strings in your terminal.<ul>
-<li>Check translate-shell <a href="https://github.com/soimort/translate-shell#dependencies">dependencies</a> and <a href="https://github.com/soimort/translate-shell#recommended-dependencies">recommended dependencies</a>.</li>
+<li><a href="https://github.com/soimort/translate-shell#dependencies">Check translate-shell dependencies.</a></li>
+<li><a href="https://github.com/soimort/translate-shell#recommended-dependencies">Check translate-shell recommended dependencies.</a></li>
 </ul>
 </li>
 </ul>
@@ -241,8 +251,8 @@ If one or more of these dependencies are missing in your system, you will not be
 
 The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x repositories is outdated and broken. It can be installed anyway so it will also install its dependencies. But updating to the latest version should be done as described bellow.
 </div>
-<h2>How to install latest version of translate-shell</h2>
-<h3>Option 1. Direct Download</h3>
+<h3>How to install latest version of translate-shell</h3>
+<h4>Option 1. Direct Download</h4>
 <p>This method will only install the trans script into the specified locations.</p>
 <p>For the current user only. <strong>~/.local/bin</strong> needs to be in your PATH.</p>
 <pre><code class="lang-shell">$ wget -O ~/.local/bin/trans git.io/trans &amp;&amp; chmod ugo+rx ~/.local/bin/trans
@@ -250,7 +260,7 @@ The translate-shell package available on Ubuntu 16.04.x/Linux Mint 18.x reposito
 <p>For all users without overwriting the installed version.</p>
 <pre><code class="lang-shell">$ sudo wget -O /usr/local/bin/trans git.io/trans &amp;&amp; sudo chmod ugo+rx /usr/local/bin/trans
 </code></pre>
-<h3>Option 2. From Git - <a href="https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers">More details</a></h3>
+<h4>Option 2. From Git - <a href="https://github.com/soimort/translate-shell/blob/develop/README.md#option-3-from-git-recommended-for-seasoned-hackers">More details</a></h4>
 <p>This method will not just install the trans script but also its man pages. Refer to the link above for more installation details.</p>
 <pre><code class="lang-shell">$ git clone https://github.com/soimort/translate-shell
 $ cd translate-shell
@@ -343,6 +353,23 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Multi Translator changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 18 May 2019 22:22:01 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/38eed82">38eed82</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- Fixed inability to open the translation history window caused by a typo.
+- Made it possible to launch the translation history from terminal with a minimal number or arguments (./translatorHistory.py --gui) for debugging purposes.
+- Removed Ctrl + V shortcut from the translation dialog. First, it was causing to paste twice the content of the clipboard (an error on my part). And second, the implementation was such that, when there was selected text in an entry, Ctrl + V would replace the selected text. But if there was no selected text, the content of the clipboard was inserted at the end of the entry content. As it was, it wasn't possible to paste text into cursor position, so I removed the shortcut completely. I left the Ctrl + C custom shortcut because in its current implementation it is useful (if there is a selection in the entry, copy it, else copy all the entry content).
+- Made all dependencies on external programs optional instead of mandatory. This makes possible to use the extension without the need to install external programs that one might not need/want to install.
+- Switched from using Util.spawn_async() in favor of using a function that allowed me to catch execution errors of possibly non existent programs. This was needed since I made all dependencies optional.
+- Changed the default translation engine to Google Translate (the one that doesn't use translate-shell). This was done so the first time that the extension is installed, the extension is functional without the need to install external packages.
+- Removed the check for the xdg-open command as a dependency. Cinnamon itself uses the xdg-open command in several places.
+- Cleaned up left over files that aren't needed anymore since the extension was rewritten.
+- Cleaned up all remnants of the removed Transltr engine.
+- Homogenization of imports names.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Tue, 14 May 2019 14:33:20 -0300</li>

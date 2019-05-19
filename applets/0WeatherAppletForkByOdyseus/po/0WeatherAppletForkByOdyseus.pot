@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-16 14:59-0300\n"
+"POT-Creation-Date: 2019-05-18 23:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -215,96 +215,20 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: locationsManager.py:17 settings.py:17
+#: settings.py:17
 msgid "Language legends"
 msgstr ""
 
-#: locationsManager.py:18 settings.py:18
+#: settings.py:18
 msgid "Language supported by DarkSky."
 msgstr ""
 
-#: locationsManager.py:19 settings.py:19
+#: settings.py:19
 msgid "Language supported by OpenWeatherMap."
 msgstr ""
 
-#: locationsManager.py:20 settings.py:20
+#: settings.py:20
 msgid "Language supported by WeatherBit."
-msgstr ""
-
-#: locationsManager.py:25 settings.py:34 z_create_localized_help.py:129 applet.js:1037 weather_providers/WeatherBit.js:124
-msgid "Location name"
-msgstr ""
-
-#: locationsManager.py:29 settings.py:38 z_create_localized_help.py:133
-msgid "Location ID"
-msgstr ""
-
-#: locationsManager.py:34 settings.py:43 z_create_localized_help.py:140
-msgid "Language"
-msgstr ""
-
-#: locationsManager.py:96 settings.py:105
-msgid "Fore. days"
-msgstr ""
-
-#: locationsManager.py:103 settings.py:112
-msgid "days"
-msgstr ""
-
-#: locationsManager.py:106 settings.py:115
-msgid "Fore. rows/cols"
-msgstr ""
-
-#: locationsManager.py:113 settings.py:122
-msgid "rows/cols"
-msgstr ""
-
-#: locationsManager.py:116 settings.py:125 z_create_localized_help.py:67 z_create_localized_help.py:152
-msgid "Provider"
-msgstr ""
-
-#: locationsManager.py:128 locationsManager.py:130 settings.py:256
-msgid "Locations"
-msgstr ""
-
-#: locationsManager.py:150 settings.py:437
-msgid "Credentials"
-msgstr ""
-
-#: locationsManager.py:152 settings.py:439 z_create_localized_help.py:71 constants.js:228
-msgid "Dark Sky"
-msgstr ""
-
-#: locationsManager.py:163 settings.py:450 z_create_localized_help.py:76 constants.js:230
-msgid "OpenWeatherMap"
-msgstr ""
-
-#: locationsManager.py:169 locationsManager.py:180 settings.py:456 settings.py:467
-msgid "API Key"
-msgstr ""
-
-#: locationsManager.py:174 settings.py:461 z_create_localized_help.py:81 constants.js:231
-msgid "WeatherBit"
-msgstr ""
-
-#: locationsManager.py:185 settings.py:472 z_create_localized_help.py:86 constants.js:229
-msgid "Yahoo! Weather"
-msgstr ""
-
-#: locationsManager.py:191 settings.py:478
-msgid "App ID"
-msgstr ""
-
-#: locationsManager.py:199 settings.py:486
-msgid "Client ID (Consumer Key)"
-msgstr ""
-
-#: locationsManager.py:207 settings.py:494
-msgid "Client Secret (Consumer Secret)"
-msgstr ""
-
-#: locationsManager.py:235 settings.py:258 z_create_localized_help.py:108 z_create_localized_help.py:125
-msgid "Locations manager"
 msgstr ""
 
 #: settings.py:24
@@ -333,6 +257,38 @@ msgstr ""
 
 #: settings.py:29
 msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#: settings.py:34 z_create_localized_help.py:129 applet.js:1037 weather_providers/WeatherBit.js:124
+msgid "Location name"
+msgstr ""
+
+#: settings.py:38 z_create_localized_help.py:133
+msgid "Location ID"
+msgstr ""
+
+#: settings.py:43 z_create_localized_help.py:140
+msgid "Language"
+msgstr ""
+
+#: settings.py:105
+msgid "Fore. days"
+msgstr ""
+
+#: settings.py:112
+msgid "days"
+msgstr ""
+
+#: settings.py:115
+msgid "Fore. rows/cols"
+msgstr ""
+
+#: settings.py:122
+msgid "rows/cols"
+msgstr ""
+
+#: settings.py:125 z_create_localized_help.py:67 z_create_localized_help.py:152
+msgid "Provider"
 msgstr ""
 
 #: settings.py:137 settings.py:139
@@ -447,6 +403,14 @@ msgstr ""
 msgid "Requires Cinnamon restart to enable/disable"
 msgstr ""
 
+#: settings.py:256
+msgid "Locations"
+msgstr ""
+
+#: settings.py:258 z_create_localized_help.py:108 z_create_localized_help.py:125
+msgid "Locations manager"
+msgstr ""
+
 #: settings.py:278
 msgid "Appearance"
 msgstr ""
@@ -556,6 +520,42 @@ msgstr ""
 
 #: settings.py:428
 msgid "Display weather condition in panel"
+msgstr ""
+
+#: settings.py:437
+msgid "Credentials"
+msgstr ""
+
+#: settings.py:439 z_create_localized_help.py:71 constants.js:228
+msgid "Dark Sky"
+msgstr ""
+
+#: settings.py:450 z_create_localized_help.py:76 constants.js:230
+msgid "OpenWeatherMap"
+msgstr ""
+
+#: settings.py:456 settings.py:467
+msgid "API Key"
+msgstr ""
+
+#: settings.py:461 z_create_localized_help.py:81 constants.js:231
+msgid "WeatherBit"
+msgstr ""
+
+#: settings.py:472 z_create_localized_help.py:86 constants.js:229
+msgid "Yahoo! Weather"
+msgstr ""
+
+#: settings.py:478
+msgid "App ID"
+msgstr ""
+
+#: settings.py:486
+msgid "Client ID (Consumer Key)"
+msgstr ""
+
+#: settings.py:494
+msgid "Client Secret (Consumer Secret)"
 msgstr ""
 
 #: z_create_localized_help.py:29

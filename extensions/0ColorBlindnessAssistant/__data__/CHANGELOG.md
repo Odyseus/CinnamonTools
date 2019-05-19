@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Sat, 18 May 2019 22:27:24 -0300
+- **Commit:** [25640a0](https://gitlab.com/Odyseus/CinnamonTools/commit/25640a0)
+- **Author:** Odyseus
+
+```
+- Homogenization of imports names.
+
+```
+
+***
+
 - **Date:** Thu, 9 May 2019 05:28:14 -0300
 - **Commit:** [f65a2e0](https://gitlab.com/Odyseus/CinnamonTools/commit/f65a2e0)
 - **Author:** Odyseus

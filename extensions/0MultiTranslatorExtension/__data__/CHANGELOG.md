@@ -4,6 +4,26 @@
 
 ***
 
+- **Date:** Sat, 18 May 2019 22:22:01 -0300
+- **Commit:** [38eed82](https://gitlab.com/Odyseus/CinnamonTools/commit/38eed82)
+- **Author:** Odyseus
+
+```
+- Fixed inability to open the translation history window caused by a typo.
+- Made it possible to launch the translation history from terminal with a minimal number or arguments (./translatorHistory.py --gui) for debugging purposes.
+- Removed Ctrl + V shortcut from the translation dialog. First, it was causing to paste twice the content of the clipboard (an error on my part). And second, the implementation was such that, when there was selected text in an entry, Ctrl + V would replace the selected text. But if there was no selected text, the content of the clipboard was inserted at the end of the entry content. As it was, it wasn't possible to paste text into cursor position, so I removed the shortcut completely. I left the Ctrl + C custom shortcut because in its current implementation it is useful (if there is a selection in the entry, copy it, else copy all the entry content).
+- Made all dependencies on external programs optional instead of mandatory. This makes possible to use the extension without the need to install external programs that one might not need/want to install.
+- Switched from using Util.spawn_async() in favor of using a function that allowed me to catch execution errors of possibly non existent programs. This was needed since I made all dependencies optional.
+- Changed the default translation engine to Google Translate (the one that doesn't use translate-shell). This was done so the first time that the extension is installed, the extension is functional without the need to install external packages.
+- Removed the check for the xdg-open command as a dependency. Cinnamon itself uses the xdg-open command in several places.
+- Cleaned up left over files that aren't needed anymore since the extension was rewritten.
+- Cleaned up all remnants of the removed Transltr engine.
+- Homogenization of imports names.
+
+```
+
+***
+
 - **Date:** Tue, 14 May 2019 14:33:20 -0300
 - **Commit:** [eb77bca](https://gitlab.com/Odyseus/CinnamonTools/commit/eb77bca)
 - **Author:** Odyseus
