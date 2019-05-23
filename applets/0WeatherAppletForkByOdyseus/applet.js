@@ -10,17 +10,32 @@
 
 let $,
     Constants,
-    Qty;
+    GlobalConstants,
+    GlobalUtils,
+    DebugManager,
+    CustomTooltips,
+    Qty,
+    DesktopNotificationsUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
+    GlobalConstants = require("./globalConstants.js");
+    GlobalUtils = require("./globalUtils.js");
     Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    CustomTooltips = require("./customTooltips.js");
     Qty = require("./lib/quantities.js").Qty;
+    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
 } else {
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
+    GlobalConstants = imports.ui.appletManager.applets["{{UUID}}"].globalConstants;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
     Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
     Qty = imports.ui.appletManager.applets["{{UUID}}"].lib.quantities.Qty;
+    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
 }
 
 const {
@@ -41,7 +56,6 @@ const {
     ui: {
         applet: Applet,
         main: Main,
-        messageTray: MessageTray,
         popupMenu: PopupMenu,
         settings: Settings,
         tweener: Tweener
@@ -49,11 +63,8 @@ const {
 } = imports;
 
 const {
-    _,
-    LoggingLevel,
     CssClasses: CLASS,
     Icons,
-    NotificationsUrgency,
     Placeholders,
     QtyTempUnits,
     SumaryDetailLabels,
@@ -62,8 +73,33 @@ const {
         // TEMPERATURE: TempUnits,
         // WIND_SPEED: WindSpeedUnits,
         PRESSURE: PressureUnits
-    },
+    }
 } = Constants;
+
+const {
+    UNICODE_SYMBOLS
+} = GlobalConstants;
+
+const {
+    _,
+    escapeHTML,
+    CINNAMON_VERSION,
+    versionCompare
+} = GlobalUtils;
+
+const {
+    CustomPanelTooltip,
+    InteligentTooltip
+} = CustomTooltips;
+
+const {
+    LoggingLevel,
+    prototypeDebugger
+} = DebugManager;
+
+const {
+    NotificationUrgency
+} = DesktopNotificationsUtils;
 
 function Weather() {
     this._init.apply(this, arguments);
@@ -72,8 +108,8 @@ function Weather() {
 Weather.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -82,12 +118,12 @@ Weather.prototype = {
         }
 
         this.metadata = aMetadata;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
         this.orientation = aOrientation;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         try {
-            this.tooltip = new $.CustomPanelTooltip(this, _("Click to open"), this.orientation);
+            this.tooltip = new CustomPanelTooltip(this, _("Click to open"), this.orientation);
         } catch (aErr) {
             this.tooltip = null;
             global.logError("Error while initializing tooltip: " + aErr.message);
@@ -102,18 +138,10 @@ Weather.prototype = {
             this.theme = null;
             this.stylesheet = null;
             this.load_theme_id = 0;
-            this.desktopNotification = null;
             this.weatherProvider = null;
             this.locationsMap = null;
             this._forecast = [];
             this._locationInfo = [];
-            this._notificationSource = null;
-            this._notificationParams = {
-                titleMarkup: true,
-                bannerMarkup: true,
-                bodyMarkup: true,
-                clear: true
-            };
 
             this.set_applet_icon_name(Icons.REFRESH_ICON);
             this.set_applet_label(Placeholders.ELLIPSIS);
@@ -143,10 +171,11 @@ Weather.prototype = {
 
             if (!this.pref_initial_load_done) {
                 this.pref_initial_load_done = true;
-                this._notifyMessage(
-                    _("Read the help page"),
-                    _("This applet requires valid credentials from any of the weather provider services for it to work."),
-                    NotificationsUrgency.CRITICAL
+                $.Notification.notify([
+                        escapeHTML(_("Read the help page")),
+                        escapeHTML(_("This applet requires valid credentials from any of the weather provider services for it to work."))
+                    ],
+                    NotificationUrgency.CRITICAL
                 );
             }
 
@@ -182,6 +211,8 @@ Weather.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -240,7 +271,7 @@ Weather.prototype = {
             "pref_menu_theme",
             "pref_menu_theme_path_custom",
             "pref_icon_theme",
-            "pref_icon_theme_path_custom",
+            "pref_icon_theme_path_custom"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -280,34 +311,36 @@ Weather.prototype = {
     },
 
     _seekAndDetroyConfigureContext: function() {
-        let menuItem = new PopupMenu.PopupIconMenuItem(_("Configure..."),
-            "system-run", St.IconType.SYMBOLIC);
-        menuItem.connect("activate", () => {
-            this._openSettings();
-        });
+        if (versionCompare(CINNAMON_VERSION, "3.6.0") < 0) {
+            let menuItem = new PopupMenu.PopupIconMenuItem(_("Configure..."),
+                "system-run", St.IconType.SYMBOLIC);
+            menuItem.connect("activate", () => {
+                this._openSettings();
+            });
 
-        Mainloop.timeout_add_seconds(5, () => {
-            try {
-                let children = this._applet_context_menu._getMenuItems();
-                let i = children.length;
-                while (i--) {
-                    if (this.hasOwnProperty("context_menu_item_configure") &&
-                        children[i] === this.context_menu_item_configure) {
-                        children[i].destroy();
-                        this.context_menu_item_configure = menuItem;
-                        this._applet_context_menu.addMenuItem(
-                            this.context_menu_item_configure,
-                            i
-                        );
-                        break;
+            Mainloop.timeout_add_seconds(5, () => {
+                try {
+                    let children = this._applet_context_menu._getMenuItems();
+                    let i = children.length;
+                    while (i--) {
+                        if (this.hasOwnProperty("context_menu_item_configure") &&
+                            children[i] === this.context_menu_item_configure) {
+                            children[i].destroy();
+                            this.context_menu_item_configure = menuItem;
+                            this._applet_context_menu.addMenuItem(
+                                this.context_menu_item_configure,
+                                i
+                            );
+                            break;
+                        }
                     }
+                } catch (aErr) {
+                    global.logError(aErr);
                 }
-            } catch (aErr) {
-                global.logError(aErr);
-            }
 
-            return false;
-        });
+                return false;
+            });
+        }
     },
 
     _initSoupSession: function() {
@@ -387,7 +420,7 @@ Weather.prototype = {
                 clipboard.set_text(this._errorMessage.label);
             }
         });
-        this._errorMessage._tooltip = new $.CustomTooltip(
+        this._errorMessage._tooltip = new InteligentTooltip(
             this._errorMessage,
             _("Click to copy error to clipboard.") + "\n" +
             _("Look at the logs for details.") +
@@ -438,7 +471,7 @@ Weather.prototype = {
                 });
             });
         this._connectEnterLeaveEvents(this._refreshButton);
-        this._refreshButton._tooltip = new $.CustomTooltip(
+        this._refreshButton._tooltip = new InteligentTooltip(
             this._refreshButton,
             _("Click to refresh weather data")
         );
@@ -559,7 +592,7 @@ Weather.prototype = {
         let params = {
             opacity: aAction === "show" ? 255 : 0,
             transition: aAction === "show" ? "easeInQuad" : "easeOutQuad",
-            time: 0.2,
+            time: 0.2
         };
 
         Tweener.removeTweens(this._currentWeather);
@@ -720,7 +753,7 @@ Weather.prototype = {
             let {
                 locationName,
                 locationID,
-                providerID,
+                providerID
             } = currentLocation;
 
             try {
@@ -736,7 +769,7 @@ Weather.prototype = {
 
                 if ($.Debugger.logging_level === LoggingLevel.VERY_VERBOSE ||
                     $.Debugger.debugger_enabled) {
-                    $.prototypeDebugger(provider, {
+                    prototypeDebugger(provider, {
                         objectName: providerID + ".Provider",
                         verbose: $.Debugger.logging_level === LoggingLevel.VERY_VERBOSE,
                         debug: $.Debugger.debugger_enabled
@@ -796,7 +829,7 @@ Weather.prototype = {
         this._ensureProvider();
 
         if (this.weatherProvider === null) {
-            return false;
+            return;
         }
 
         this.loadJsonAsync(aForceRetrieval, (aWeatherData) => {
@@ -1007,6 +1040,8 @@ Weather.prototype = {
                 } else {
                     this.set_applet_label("");
                 }
+
+                return false;
             });
 
             this.forceMenuReload = false;
@@ -1039,8 +1074,8 @@ Weather.prototype = {
 
         return locationInfo.map((aEl) => {
             if (aAsMarkup) {
-                return "<b>" + $.escapeHTML(aEl[0]) + "</b>" + ": " +
-                    $.escapeHTML((aEl[1] + "").trim());
+                return "<b>" + escapeHTML(aEl[0]) + "</b>" + ": " +
+                    escapeHTML((aEl[1] + "").trim());
             }
 
             return aEl[0] + ": " + (aEl[1] + "").trim();
@@ -1115,7 +1150,7 @@ Weather.prototype = {
             }
         });
         this._connectEnterLeaveEvents(this._currentWeatherLocation);
-        this._currentWeatherLocation._tooltip = new $.CustomTooltip(
+        this._currentWeatherLocation._tooltip = new InteligentTooltip(
             this._currentWeatherLocation,
             _("Open location weather details page")
         );
@@ -1137,7 +1172,7 @@ Weather.prototype = {
         this._currentWeatherSummary.get_clutter_text().set_line_wrap(true);
         this._currentWeatherSummary.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
         this._currentWeatherSummary.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
-        this._currentWeatherSummary._tooltip = new $.CustomTooltip(this._currentWeatherSummary, "");
+        this._currentWeatherSummary._tooltip = new InteligentTooltip(this._currentWeatherSummary, "");
 
         midleBox.add_actor(this._currentWeatherLocation);
         midleBox.add(this._currentWeatherSummary, {
@@ -1205,7 +1240,7 @@ Weather.prototype = {
         this._ensureProvider();
 
         if (this.weatherProvider === null) {
-            return false;
+            return;
         }
 
         this.destroyFutureWeather();
@@ -1246,7 +1281,7 @@ Weather.prototype = {
                 style_class: CLASS.FORECAST_DAY,
                 reactive: true
             });
-            forecastWeather.Day._tooltip = new $.CustomTooltip(forecastWeather.Day, "");
+            forecastWeather.Day._tooltip = new InteligentTooltip(forecastWeather.Day, "");
 
             // Set reactive to trigger tooltips.
             forecastWeather.Summary = new St.Label({
@@ -1254,7 +1289,7 @@ Weather.prototype = {
                 style_class: CLASS.FORECAST_SUMMARY,
                 reactive: true
             });
-            forecastWeather.Summary._tooltip = new $.CustomTooltip(forecastWeather.Summary, "");
+            forecastWeather.Summary._tooltip = new InteligentTooltip(forecastWeather.Summary, "");
 
             forecastWeather.Temperature = new St.Label({
                 text: Placeholders.LOADING,
@@ -1290,16 +1325,7 @@ Weather.prototype = {
     },
 
     unitToUnicode: function() {
-        switch (this.pref_temperature_unit) {
-            case "celsius":
-                return "\u2103";
-            case "fahrenheit":
-                return "\u2109";
-            case "kelvin":
-                return "°K";
-        }
-
-        return "";
+        return UNICODE_SYMBOLS[this.pref_temperature_unit];
     },
 
     _getConditionData: function(aType, aCode) {
@@ -1319,6 +1345,8 @@ Weather.prototype = {
             case "name":
                 return _("Not available");
         }
+
+        return _("Not available");
     },
 
     weatherIconSafely: function(code) {
@@ -1343,72 +1371,6 @@ Weather.prototype = {
 
     _onButtonLeaveEvent: function(aActor, aEvent) { // jshint ignore:line
         global.unset_cursor();
-    },
-
-    _ensureNotificationSource: function() {
-        if (!this._notificationSource) {
-            this._notificationSource = new $.WeatherMessageTraySource();
-            this._notificationSource.connect("destroy", () => {
-                this._notificationSource = null;
-            });
-
-            if (Main.messageTray) {
-                Main.messageTray.add(this._notificationSource);
-            }
-        }
-    },
-
-    _notifyMessage: function(aTitle, aMessage, aUrgency = NotificationsUrgency.NORMAL, aButtons = []) {
-        this._ensureNotificationSource();
-
-        let body = "";
-
-        body += "<b>" + $.escapeHTML(aTitle) + "</b>\n";
-        body += aMessage + "\n";
-
-        body = body.trim();
-
-        if (this._notificationSource && !this.desktopNotification) {
-            this.desktopNotification = new MessageTray.Notification(
-                this._notificationSource,
-                $.escapeHTML(_(this.metadata.name)),
-                body,
-                this._desktopNotificationParams
-            );
-            this.desktopNotification.setUrgency(aUrgency);
-            this.desktopNotification.setTransient(false);
-            this.desktopNotification.setResident(true);
-            this.desktopNotification.connect("destroy", () => {
-                this.desktopNotification = null;
-            });
-            this.desktopNotification.connect("action-invoked", (aSource, aAction) => {
-                switch (aAction) {
-                    case "dialog-information":
-                        this._openHelpPage();
-                        break;
-                }
-            });
-
-            this._notificationSource.notify(this.desktopNotification);
-        }
-
-        if (body) {
-            this.desktopNotification.update(
-                _(this.metadata.name),
-                body,
-                this._notificationParams
-            );
-
-            this.desktopNotification.addButton("dialog-information", _("Help"));
-
-            for (let i = aButtons.length - 1; i >= 0; i--) {
-                this.desktopNotification.addButton(aButtons[i].action, aButtons[i].label);
-            }
-
-            this._notificationSource.notify(this.desktopNotification);
-        } else {
-            this.desktopNotification && this.desktopNotification.destroy();
-        }
     },
 
     convertTo24Hours: function(aTimeStr) {
@@ -1467,7 +1429,7 @@ Weather.prototype = {
             global.logWarning(aErr);
         }
 
-        return "\u26A0" + aVal;
+        return UNICODE_SYMBOLS.warning + aVal;
     },
 
     /**
@@ -1537,7 +1499,7 @@ Weather.prototype = {
             global.logWarning(aErr);
         }
 
-        return "\u26A0" + aVal;
+        return UNICODE_SYMBOLS.warning + aVal;
     },
 
     /**
@@ -1566,7 +1528,7 @@ Weather.prototype = {
             global.logWarning(aErr);
         }
 
-        return "\u26A0" + aVal;
+        return UNICODE_SYMBOLS.warning + aVal;
     },
 
     distanceUnitsFormatter: function(aVal) {
@@ -1584,7 +1546,7 @@ Weather.prototype = {
             global.logWarning(aErr);
         }
 
-        return "\u26A0" + aVal;
+        return UNICODE_SYMBOLS.warning + aVal;
     },
 
     _ensureProvider: function() {
@@ -1809,15 +1771,7 @@ Weather.prototype = {
             case "pref_debugger_enabled":
                 $.Debugger.logging_level = this.pref_logging_level;
                 $.Debugger.debugger_enabled = this.pref_debugger_enabled;
-
-                this._notifyMessage(
-                    _(this.metadata.name),
-                    _("Remember to restart Cinnamon to fully enable/disable this option."),
-                    NotificationsUrgency.CRITICAL
-                );
                 break;
-                /* NOTE: Settings toggled from the Locations Manager GUI.
-                 */
             case "trigger_reload_locations":
                 this.updateLocationsMap();
                 this.sanitizeStoredLocations();
@@ -1837,34 +1791,12 @@ Weather.prototype = {
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    /* NOTE: I have to attach the debugger here for prototypes from other modules
-     * because this is the only place where the instance ID can be accessed. ¬¬
-     */
-    if ($.Debugger.logging_level === LoggingLevel.VERY_VERBOSE ||
-        $.Debugger.debugger_enabled) {
-        try {
-            let protos = {
-                CustomPanelTooltip: $.CustomPanelTooltip,
-                CustomTooltip: $.CustomTooltip,
-                LocationSelectorMenu: $.LocationSelectorMenu,
-                LocationSelectorMenuItem: $.LocationSelectorMenuItem,
-                Weather: Weather,
-                WeatherMessageTraySource: $.WeatherMessageTraySource,
-                WeatherProviderBase: $.WeatherProviderBase,
-            };
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        CustomPanelTooltip: CustomPanelTooltip,
+        InteligentTooltip: InteligentTooltip,
+        Weather: Weather
+    });
 
-            for (let name in protos) {
-                $.prototypeDebugger(protos[name], {
-                    objectName: name + aInstance_id,
-                    verbose: $.Debugger.logging_level === LoggingLevel.VERY_VERBOSE,
-                    debug: $.Debugger.debugger_enabled
-                });
-            }
-        } catch (aErr) {
-            global.logError(aErr);
-        }
-    }
-
-    return new Weather(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new Weather(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }

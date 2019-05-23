@@ -55,7 +55,7 @@ Provider.prototype = {
             // Unit returned by API call.
             windSpeedUnit: "kph",
             // Unit returned by API call.
-            distanceUnit: "km",
+            distanceUnit: "km"
         });
 
         let {
@@ -66,7 +66,7 @@ Provider.prototype = {
 
         let {
             // Name of the preference/s that will store the API credentials.
-            pref_credential_app_id: appID,
+            pref_credential_app_id: appID
         } = aApplet;
 
         // If one of more of the credential fields are missing,
@@ -103,7 +103,7 @@ Provider.prototype = {
          */
         this._query_url_1 = $.OAuth.addToURL(baseURL, query);
         this._headers_1 = {
-            "Header-Key": "Header-Value",
+            "Header-Key": "Header-Value"
         };
         this._weather_details_url = cityID ?
             "https://www.yahoo.com/news/weather/country/state/city-%s" :
@@ -141,7 +141,7 @@ Provider.prototype = {
             "curVisibility": $.safeGet(C, "atmosphere", "visibility"),
             "curSunrise": this.formatTime($.safeGet(C, "astronomy", "sunrise")),
             "curSunset": this.formatTime($.safeGet(C, "astronomy", "sunset")),
-            "curMoonPhase": $.getMoonPhase(),
+            "curMoonPhase": $.getMoonPhase()
         };
 
         let forecasts = [];

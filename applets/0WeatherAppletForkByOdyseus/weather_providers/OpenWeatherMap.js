@@ -48,7 +48,7 @@ Provider.prototype = {
             tempUnit: "celsius",
             pressureUnit: "hPa",
             windSpeedUnit: "m/s",
-            distanceUnit: "km",
+            distanceUnit: "km"
         });
 
         this._twoHTTPRequests = true;
@@ -60,7 +60,7 @@ Provider.prototype = {
         } = this._processLocationID();
 
         let {
-            pref_open_weather_map_credential_app_id: appID,
+            pref_open_weather_map_credential_app_id: appID
         } = aApplet;
 
         if (!appID) {
@@ -75,7 +75,7 @@ Provider.prototype = {
 
         if (!OpenWeatherMapSupportedLanguages.has(options.languageID)) {
             this._error = ErrorMessages.NOT_SUPPORTED_LANGUAGE +
-             "[%s]".format(options.languageID);
+                "[%s]".format(options.languageID);
             return;
         }
 
@@ -84,7 +84,7 @@ Provider.prototype = {
             APPID: appID,
             mode: "json",
             units: "metric",
-            lang: options.languageID,
+            lang: options.languageID
         };
 
         if (cityID) {
@@ -103,7 +103,7 @@ Provider.prototype = {
             APPID: appID,
             mode: "json",
             units: "metric",
-            lang: options.languageID,
+            lang: options.languageID
         };
 
         if (cityID) {
@@ -128,7 +128,7 @@ Provider.prototype = {
             [_("City ID"), $.safeGetEll(C, "id")],
             [_("Coordinates"), $.safeGetEll(C, "coord", "lat") + "," +
                 $.safeGetEll(C, "coord", "lon")
-            ],
+            ]
         ];
 
         let w = $.safeGet(C, "weather");
@@ -151,7 +151,7 @@ Provider.prototype = {
             "curVisibility": null,
             "curSunrise": this.formatTime($.safeGet(C, "sys", "sunrise")),
             "curSunset": this.formatTime($.safeGet(C, "sys", "sunset")),
-            "curMoonPhase": $.getMoonPhase(),
+            "curMoonPhase": $.getMoonPhase()
         };
 
         let forecasts = [];

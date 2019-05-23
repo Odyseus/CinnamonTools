@@ -1,5 +1,8 @@
 var XletMeta,
-    Constants;
+    Constants,
+    GlobalUtils,
+    DebugManager,
+    DesktopNotificationsUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -10,114 +13,72 @@ if (typeof __meta === "object") {
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
     Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
 } else {
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
     Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
 }
 
 const {
     gi: {
-        Gio,
-        GLib,
-        Pango,
-        Soup,
-        St
+        Soup
     },
     misc: {
         params: Params
     },
     ui: {
-        messageTray: MessageTray,
         popupMenu: PopupMenu,
-        tooltips: Tooltips,
         tweener: Tweener
     }
 } = imports;
 
-const GioSSS = Gio.SettingsSchemaSource;
-
 const {
-    _,
-    DebugManagerSchema,
     ErrorMessages,
     KnownStatusCodes,
     OrnamentType,
     Placeholders,
-    WeatherProviderNames,
+    WeatherProviderNames
 } = Constants;
 
-function DebugManager() {
-    this._init.apply(this, arguments);
-}
+const {
+    _,
+    isObject,
+    escapeHTML,
+    xdgOpen
+} = GlobalUtils;
 
-DebugManager.prototype = {
-    _init: function() {
-        let schema = DebugManagerSchema;
-        let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
-        let schemaSource;
+const {
+    CustomNotification
+} = DesktopNotificationsUtils;
 
-        if (schemaDir.query_exists(null)) {
-            schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
-                GioSSS.get_default(),
-                false);
-        } else {
-            schemaSource = GioSSS.get_default();
-        }
+var Debugger = new DebugManager.DebugManager();
 
-        this.schemaObj = schemaSource.lookup(schema, false);
+DebugManager.wrapPrototypes(Debugger, {
+    CustomNotification: CustomNotification,
+    LocationSelectorMenu: LocationSelectorMenu,
+    LocationSelectorMenuItem: LocationSelectorMenuItem,
+    WeatherProviderBase: WeatherProviderBase
+});
 
-        if (!this.schemaObj) {
-            throw new Error(_("Schema %s could not be found for xlet %s.")
-                .format(schema, XletMeta.uuid) + _("Please check your installation."));
-        }
-
-        this.schema = new Gio.Settings({
-            settings_schema: this.schemaObj
-        });
-
-        this._handlers = [];
-    },
-
-    set debugger_enabled(aValue) {
-        this.schema.set_boolean("pref-debugger-enabled", aValue);
-    },
-
-    get debugger_enabled() {
-        return this.schema.get_boolean("pref-debugger-enabled");
-    },
-
-    set logging_level(aValue) {
-        this.schema.set_int("pref-logging-level", aValue);
-    },
-
-    get logging_level() {
-        return this.schema.get_int("pref-logging-level");
-    },
-
-    connect: function(signal, callback) {
-        let handler_id = this.schema.connect(signal, callback);
-        this._handlers.push(handler_id);
-        return handler_id;
-    },
-
-    destroy: function() {
-        // Remove the remaining signals...
-        while (this._handlers.length) {
-            this.disconnect(this._handlers[0]);
-        }
-    },
-
-    disconnect: function(handler_id) {
-        let index = this._handlers.indexOf(handler_id);
-        this.schema.disconnect(handler_id);
-
-        if (index > -1) {
-            this._handlers.splice(index, 1);
+var Notification = new CustomNotification({
+    title: escapeHTML(_(XletMeta.name)),
+    defaultButtons: [{
+        action: "dialog-information",
+        label: escapeHTML(_("Help"))
+    }],
+    actionInvokedCallback: (aSource, aAction) => {
+        switch (aAction) {
+            case "dialog-information":
+                xdgOpen(XletMeta.path + "/HELP.html");
+                break;
         }
     }
-};
-
-var Debugger = new DebugManager();
+});
 
 var OAuth = {
     nonce_CHARS: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz",
@@ -319,7 +280,7 @@ WeatherProviderBase.prototype = {
             tempUnit: "",
             pressureUnit: "",
             windSpeedUnit: "",
-            distanceUnit: "",
+            distanceUnit: ""
         });
 
         this.uuid = params.locationID + ":" + params.providerID;
@@ -477,11 +438,11 @@ WeatherProviderBase.prototype = {
         let date = new Date(aSeconds * 1000);
         let hours = date.getHours();
         let minutes = date.getMinutes();
-        let ampm = hours >= 12 ? 'pm' : 'am';
+        let ampm = hours >= 12 ? "pm" : "am";
         hours = hours % 12 || 12;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
 
-        return hours + ':' + minutes + ' ' + ampm;
+        return hours + ":" + minutes + " " + ampm;
     },
 
     _normalizeMinutes: function(timeStr) {
@@ -502,70 +463,6 @@ WeatherProviderBase.prototype = {
 
     get weather_details_url() {
         return this._weather_details_url;
-    }
-};
-
-function CustomPanelTooltip() {
-    this._init.apply(this, arguments);
-}
-
-CustomPanelTooltip.prototype = {
-    __proto__: Tooltips.PanelItemTooltip.prototype,
-
-    _init: function(panelItem, initTitle, orientation) {
-        Tooltips.PanelItemTooltip.prototype._init.call(this, panelItem, initTitle, orientation);
-        this._tooltip.set_style("text-align:left;");
-    },
-
-    set_text: function(text) {
-        this._tooltip.get_clutter_text().set_markup(text);
-    }
-};
-
-function CustomTooltip() {
-    this._init.apply(this, arguments);
-}
-
-CustomTooltip.prototype = {
-    __proto__: Tooltips.Tooltip.prototype,
-
-    _init: function(aActor, aText) {
-        Tooltips.Tooltip.prototype._init.call(this, aActor, aText);
-
-        this._tooltip.set_style("text-align: left;width:auto;max-width: 450px;");
-        this._tooltip.get_clutter_text().set_line_wrap(true);
-        this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
-        this._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
-
-        aActor.connect("destroy", () => this.destroy());
-    },
-
-    destroy: function() {
-        Tooltips.Tooltip.prototype.destroy.call(this);
-    }
-};
-
-function WeatherMessageTraySource() {
-    this._init.apply(this, arguments);
-}
-
-WeatherMessageTraySource.prototype = {
-    __proto__: MessageTray.Source.prototype,
-
-    _init: function() {
-        MessageTray.Source.prototype._init.call(this, _(XletMeta.name));
-        this._setSummaryIcon(this.createNotificationIcon());
-    },
-
-    createNotificationIcon: function() {
-        return new St.Icon({
-            gicon: Gio.icon_new_for_string(XletMeta.path + "/icon.png"),
-            icon_size: 24
-        });
-    },
-
-    open: function() {
-        this.destroy();
     }
 };
 
@@ -699,20 +596,6 @@ LocationSelectorMenu.prototype = {
     }
 };
 
-function escapeHTML(aStr) {
-    aStr = String(aStr)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
-    return aStr;
-}
-
-function isObject(item) {
-    return (item && typeof item === "object" && !Array.isArray(item));
-}
-
 /**
  * Safely get values from an Object.
  *
@@ -750,120 +633,6 @@ function safeGet() {
 function safeGetEll() {
     let val = safeGet.apply(null, arguments);
     return val === null ? Placeholders.ELLIPSIS : val;
-}
-
-/**
- * Benchmark function invocations within a given class or prototype.
- *
- * @param  {Object}  aObject                    JavaScript class or prototype to benchmark.
- * @param  {Object}  aParams                    Object containing parameters, all are optional.
- * @param  {String}  aParams.objectName         Because it's impossible to get the name of a prototype
- *                                              in JavaScript, force it down its throat. ¬¬
- * @param  {Array}   aParams.methods            By default, all methods in aObject will be
- *                                              "proxyfied". aParams.methods should containg the name
- *                                              of the methods that one wants to debug/benchmark.
- *                                              aParams.methods acts as a whitelist by default.
- * @param  {Boolean} aParams.blacklistMethods   If true, ALL methods in aObject will be
- *                                              debugged/benchmarked, except those listed in aParams.methods.
- * @param  {Number}  aParams.threshold          The minimum latency of interest.
- * @param  {Boolean}  aParams.debug              If true, the target method will be executed inside a
- *                                              try{} catch{} block.
- */
-function prototypeDebugger(aObject, aParams) {
-    let options = Params.parse(aParams, {
-        objectName: "Object",
-        methods: [],
-        blacklistMethods: false,
-        debug: true,
-        verbose: true,
-        threshold: 3
-    });
-    let keys = Object.getOwnPropertyNames(aObject.prototype);
-
-    if (options.methods.length > 0) {
-        keys = keys.filter((aKey) => {
-            return options.blacklistMethods ?
-                // Treat aMethods as a blacklist, so don't include these keys.
-                options.methods.indexOf(aKey) === -1 :
-                // Keep ONLY the keys in aMethods.
-                options.methods.indexOf(aKey) >= 0;
-        });
-    }
-
-    let outpuTemplate = "[%s.%s]: %fms (MAX: %fms AVG: %fms)";
-    let times = [];
-    let i = keys.length;
-
-    let getHandler = (aKey) => {
-        return {
-            apply: function(aTarget, aThisA, aArgs) { // jshint ignore:line
-                let val;
-                let now;
-
-                if (options.verbose) {
-                    now = GLib.get_monotonic_time();
-                }
-
-                if (options.debug) {
-                    try {
-                        val = aTarget.apply(aThisA, aArgs);
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    }
-                } else {
-                    val = aTarget.apply(aThisA, aArgs);
-                }
-
-                if (options.verbose) {
-                    let time = GLib.get_monotonic_time() - now;
-
-                    if (time >= options.threshold) {
-                        times.push(time);
-                        let total = 0;
-                        let timesLength = times.length;
-                        let z = timesLength;
-
-                        while (z--) {
-                            total += times[z];
-                        }
-
-                        let max = (Math.max.apply(null, times) / 1000).toFixed(2);
-                        let avg = ((total / timesLength) / 1000).toFixed(2);
-                        time = (time / 1000).toFixed(2);
-
-                        global.log(outpuTemplate.format(
-                            options.objectName,
-                            aKey,
-                            time,
-                            max,
-                            avg
-                        ));
-                    }
-                }
-
-                return val;
-            }
-        };
-    };
-
-    while (i--) {
-        let key = keys[i];
-
-        /* NOTE: If key is a setter or getter, aObject.prototype[key] will throw.
-         */
-        if (!!Object.getOwnPropertyDescriptor(aObject.prototype, key)["get"] ||
-            !!Object.getOwnPropertyDescriptor(aObject.prototype, key)["set"]) {
-            continue;
-        }
-
-        let fn = aObject.prototype[key];
-
-        if (typeof fn !== "function") {
-            continue;
-        }
-
-        aObject.prototype[key] = new Proxy(fn, getHandler(key));
-    }
 }
 
 // https://github.com/tingletech/moon-phase
@@ -946,11 +715,9 @@ function getMoonPhase() {
     return _("New Moon");
 }
 
-/* exported escapeHTML,
-            Debugger,
-            OAuth,
+/* exported OAuth,
             safeGetEll,
             soupPrinter,
             getMoonPhase,
-            prototypeDebugger,
+            Notification
  */

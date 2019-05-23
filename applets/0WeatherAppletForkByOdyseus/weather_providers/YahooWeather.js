@@ -50,7 +50,7 @@ Provider.prototype = {
             tempUnit: "celsius",
             pressureUnit: "mbar",
             windSpeedUnit: "kph",
-            distanceUnit: "km",
+            distanceUnit: "km"
         });
 
         let {
@@ -152,7 +152,7 @@ Provider.prototype = {
             "curVisibility": $.safeGet(C, "atmosphere", "visibility"),
             "curSunrise": this.formatTime($.safeGet(C, "astronomy", "sunrise")),
             "curSunset": this.formatTime($.safeGet(C, "astronomy", "sunset")),
-            "curMoonPhase": $.getMoonPhase(),
+            "curMoonPhase": $.getMoonPhase()
         };
 
         let forecasts = [];

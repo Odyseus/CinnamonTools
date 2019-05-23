@@ -1,54 +1,16 @@
-var XletMeta;
+let GlobalUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
+if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
 } else {
-    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
 }
 
 const {
-    gettext: Gettext,
-    gi: {
-        GLib
-    }
-} = imports;
+    _
+} = GlobalUtils;
 
-Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
-
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
-
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
-
-    return Gettext.gettext(aStr);
-}
-
-var DebugManagerSchema = "org.cinnamon.applets." + XletMeta.uuid;
-
-var NotificationsUrgency = {
-    LOW: 0,
-    NORMAL: 1,
-    HIGH: 2,
-    CRITICAL: 3
-};
-var LoggingLevel = {
-    NORMAL: 0,
-    VERBOSE: 1,
-    VERY_VERBOSE: 2
-};
 // Conditions.
 const Conditions = {
     BLOWING_SNOW: _("Blowing snow"),
@@ -141,7 +103,7 @@ const Conditions = {
     OVERCAST_CLOUDS: _("Overcast clouds"),
 
     THUNDERSTORM_WITH_HAIL: _("Thunderstorm with Hail"),
-    FREEZING_FOG: _("Freezing Fog"),
+    FREEZING_FOG: _("Freezing Fog")
 };
 
 var URLs = {
@@ -150,7 +112,7 @@ var URLs = {
     OPEN_WEATHER_MAP_FIND: "https://openweathermap.org/find",
     OPEN_WEATHER_MAP_API_INSTRUCTIONS: "https://openweathermap.org/appid",
     DARK_SKY_API_FIND: "https://darksky.net/forecast",
-    DARK_SKY_API_INSTRUCTIONS: "https://darksky.net/dev",
+    DARK_SKY_API_INSTRUCTIONS: "https://darksky.net/dev"
 };
 
 var OrnamentType = {
@@ -191,7 +153,7 @@ var KnownStatusCodes = {
     503: "(503) " + _("Service unavailable"),
     5: "(5) " + _("Unable to connect to proxy"),
     6: "(6) " + _("SSL/TLS negotiation failed"),
-    7: "(7) " + _("A network error occurred, or the other end closed the connection unexpectedly"),
+    7: "(7) " + _("A network error occurred, or the other end closed the connection unexpectedly")
 };
 
 // Error messages.
@@ -228,7 +190,7 @@ var WeatherProviderNames = {
     DarkSky: _("Dark Sky"),
     YahooWeather: _("Yahoo! Weather"),
     OpenWeatherMap: _("OpenWeatherMap"),
-    WeatherBit: _("WeatherBit"),
+    WeatherBit: _("WeatherBit")
 };
 
 // Icons.
@@ -248,7 +210,7 @@ var Icons = {
     SHOWERS_SCATTERED: "weather-showers-scattered",
     SNOW: "weather-snow",
     SNOW_RAIN: "weather-snow-rain",
-    STORM: "weather-storm",
+    STORM: "weather-storm"
 };
 
 // CSS classes.
@@ -274,7 +236,7 @@ var CssClasses = {
     FORECAST_SUMMARY: "weather-forecast-summary",
     FORECAST_TEMPERATURE: "weather-forecast-temperature",
     POPUP_SEPARATOR_MENU_ITEM: "popup-separator-menu-item",
-    WEATHER_MENU: "weather-menu",
+    WEATHER_MENU: "weather-menu"
 };
 
 var SumaryDetailLabels = {
@@ -286,7 +248,7 @@ var SumaryDetailLabels = {
     curVisibility: _("Visibility"),
     curSunrise: _("Sunrise"),
     curSunset: _("Sunset"),
-    curMoonPhase: _("Moon phase"),
+    curMoonPhase: _("Moon phase")
 };
 
 var Units = {
@@ -563,7 +525,7 @@ var YahooWeatherConditionData = {
     47: {
         icon: [Icons.STORM],
         name: Conditions.ISOLATED_THUNDERSHOWERS
-    },
+    }
 };
 
 var OpenWeatherMapConditionData = {
@@ -950,7 +912,7 @@ var DarkSkyConditionData = {
     },
     "wind": {
         icon: [Icons.FEW_CLOUDS]
-    },
+    }
 };
 
 var OpenWeatherMapSupportedLanguages = new Set([
@@ -986,7 +948,7 @@ var OpenWeatherMapSupportedLanguages = new Set([
     "ua",
     "vi",
     "zh_cn",
-    "zh_tw",
+    "zh_tw"
 ]);
 
 var DarkSkySupportedLanguages = new Set([
@@ -1032,7 +994,7 @@ var DarkSkySupportedLanguages = new Set([
     "uk",
     "x-pig-latin",
     "zh",
-    "zh-tw",
+    "zh-tw"
 ]);
 
 var WeatherBitSupportedLanguages = new Set([
@@ -1080,7 +1042,7 @@ var WeatherBitSupportedLanguages = new Set([
             DebugManagerSchema,
             ErrorMessages,
             KnownStatusCodes,
-            NotificationsUrgency,
+            UNICODE_SYMBOLS,
             LoggingLevel,
             OpenWeatherMapConditionData,
             WeatherBitConditionData,

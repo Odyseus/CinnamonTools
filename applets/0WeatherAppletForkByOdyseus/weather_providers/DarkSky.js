@@ -47,7 +47,7 @@ Provider.prototype = {
             tempUnit: "celsius",
             pressureUnit: "hPa",
             windSpeedUnit: "kph",
-            distanceUnit: "km",
+            distanceUnit: "km"
         });
 
         let {
@@ -57,7 +57,7 @@ Provider.prototype = {
         } = this._processLocationID();
 
         let {
-            pref_darksky_credential_app_id: appID,
+            pref_darksky_credential_app_id: appID
         } = aApplet;
 
         if (!appID) {
@@ -122,7 +122,7 @@ Provider.prototype = {
             "curVisibility": $.safeGet(C, "visibility"),
             "curSunrise": this.formatTime($.safeGet(F[0], "sunriseTime")),
             "curSunset": this.formatTime($.safeGet(F[0], "sunsetTime")),
-            "curMoonPhase": $.getMoonPhase(),
+            "curMoonPhase": $.getMoonPhase()
         };
 
         let forecasts = [];

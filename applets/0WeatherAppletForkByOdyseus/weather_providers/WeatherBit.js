@@ -48,7 +48,7 @@ Provider.prototype = {
             tempUnit: "celsius",
             pressureUnit: "mbar",
             windSpeedUnit: "m/s",
-            distanceUnit: "km",
+            distanceUnit: "km"
         });
 
         this._twoHTTPRequests = true;
@@ -60,7 +60,7 @@ Provider.prototype = {
         } = this._processLocationID();
 
         let {
-            pref_weatherbit_credential_app_id: appID,
+            pref_weatherbit_credential_app_id: appID
         } = aApplet;
 
         if (!appID) {
@@ -83,7 +83,7 @@ Provider.prototype = {
         let query_1 = {
             key: appID,
             units: "M",
-            lang: options.languageID,
+            lang: options.languageID
         };
 
         if (cityID) {
@@ -101,7 +101,7 @@ Provider.prototype = {
         let query_2 = {
             key: appID,
             units: "M",
-            lang: options.languageID,
+            lang: options.languageID
         };
 
         if (cityID) {
@@ -147,7 +147,7 @@ Provider.prototype = {
              */
             "curSunrise": this.formatTime($.safeGet(J, "sunrise")),
             "curSunset": this.formatTime($.safeGet(J, "sunset")),
-            "curMoonPhase": $.getMoonPhase(),
+            "curMoonPhase": $.getMoonPhase()
         };
 
         let forecasts = [];
