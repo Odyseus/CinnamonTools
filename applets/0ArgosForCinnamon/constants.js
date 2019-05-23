@@ -1,29 +1,22 @@
-var XletMeta;
+let GlobalUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
+if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
 } else {
-    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
 }
 
-// KEEP ME: There will always be non retro compatible changes on Cinnamon as long
-// as it keeps being treated as a F***ING web application!!!
-// var CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
-var AnsiColors = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"];
+const {
+    _
+} = GlobalUtils;
 
-var DebugManagerSchema = "org.cinnamon.applets." + XletMeta.uuid;
+var AnsiColors = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"];
 
 // Placeholder strings.
 var Placeholders = {
     BLANK: "   ",
-    ELLIPSIS: "...",
-};
-
-var LoggingLevel = {
-    NORMAL: 0,
-    VERBOSE: 1,
-    VERY_VERBOSE: 2
+    ELLIPSIS: "..."
 };
 
 var OrnamentType = {
@@ -31,13 +24,6 @@ var OrnamentType = {
     CHECK: 1,
     DOT: 2,
     ICON: 3
-};
-
-var NotificationUrgency = {
-    LOW: 0,
-    NORMAL: 1,
-    HIGH: 2,
-    CRITICAL: 3
 };
 
 var BooleanAttrs = new Set([
@@ -50,7 +36,7 @@ var BooleanAttrs = new Set([
     "ansi",
     "usemarkup",
     "unescape",
-    "iconissymbolic",
+    "iconissymbolic"
 ]);
 
 var TruthyVals = new Set([
@@ -92,16 +78,32 @@ var DefaultAttributes = Object.freeze({
     "unescape": true,
     "tooltip": "",
     "iconsize": "",
-    "iconissymbolic": false,
+    "iconissymbolic": false
 });
 
+var SLIDER_SCALE = 0.00025;
+
+var UNITS_MAP = {
+    s: {
+        capital: _("Seconds")
+    },
+    m: {
+        capital: _("Minutes")
+    },
+    h: {
+        capital: _("Hours")
+    },
+    d: {
+        capital: _("Days")
+    }
+};
+
 /* exported AnsiColors,
-            DebugManagerSchema,
+            SLIDER_SCALE,
+            UNITS_MAP,
             OrnamentType,
-            NotificationUrgency,
             BooleanAttrs,
             Placeholders,
-            LoggingLevel,
             TruthyVals,
             DefaultAttributes,
  */

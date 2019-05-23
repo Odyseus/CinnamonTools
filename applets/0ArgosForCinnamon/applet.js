@@ -1,13 +1,25 @@
-let $,
-    Constants;
+let GlobalUtils,
+    Constants,
+    DebugManager,
+    CustomTooltips,
+    SpawnUtils,
+    $;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
-    $ = require("./utils.js");
+    GlobalUtils = require("./globalUtils.js");
     Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    CustomTooltips = require("./customTooltips.js");
+    SpawnUtils = require("./spawnUtils.js");
+    $ = require("./utils.js");
 } else {
-    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
     Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
+    SpawnUtils = imports.ui.appletManager.applets["{{UUID}}"].spawnUtils;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
 
 const {
@@ -31,13 +43,21 @@ const {
     }
 } = imports;
 
-const _ = $._;
-
 const {
     DefaultAttributes,
-    LoggingLevel,
-    Placeholders,
+    Placeholders
 } = Constants;
+
+const {
+    _,
+    escapeHTML
+} = GlobalUtils;
+
+const {
+    InteligentTooltip
+} = CustomTooltips;
+
+const OutputReader = new SpawnUtils.SpawnReader();
 
 function Argos() {
     this._init.apply(this, arguments);
@@ -46,8 +66,8 @@ function Argos() {
 Argos.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -56,7 +76,7 @@ Argos.prototype = {
         }
 
         this.metadata = aMetadata;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
         this.orientation = aOrientation;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
@@ -140,17 +160,17 @@ Argos.prototype = {
                     this._file = Gio.file_new_for_path(this._script_path);
                 } else {
                     this._file = null;
-                    this._notifyMessage([
-                        _("Script file is not executable."),
-                        this._script_path,
-                        _("The script file can be made executable from this applet context menu.")
+                    $.Notification.notify([
+                        escapeHTML(_("Script file is not executable.")),
+                        escapeHTML(this._script_path),
+                        escapeHTML(_("The script file can be made executable from this applet context menu."))
                     ]);
                 }
             } else {
                 this._file = null;
-                this._notifyMessage([
-                    _("Script file isn't a file, but a directory."),
-                    this._script_path
+                $.Notification.notify([
+                    escapeHTML(_("Script file isn't a file, but a directory.")),
+                    escapeHTML(this._script_path)
                 ]);
             }
         } else {
@@ -158,9 +178,9 @@ Argos.prototype = {
             // Notify only if the path to the script is not set.
             // Otherwise, it would be ultra annoying. LOL
             if (this._script_path !== "") {
-                this._notifyMessage([
-                    _("Script file doesn't exists."),
-                    this._script_path
+                $.Notification.notify([
+                    escapeHTML(_("Script file doesn't exists.")),
+                    escapeHTML(this._script_path)
                 ]);
             }
         }
@@ -219,7 +239,7 @@ Argos.prototype = {
             envp.push("ARGOS_MENU_OPEN=" + (this.menu.isOpen ? "true" : "false"));
 
             this._timeScriptExecutionStarted = GLib.get_monotonic_time();
-            $.spawnWithCallback(GLib.path_get_dirname(this._file.get_path()), [this._file.get_path()],
+            OutputReader.spawn(GLib.path_get_dirname(this._file.get_path()), [this._file.get_path()],
                 envp, GLib.SpawnFlags.DEFAULT, null,
                 (aStandardOutput) => {
                     if (this._isDestroyed) {
@@ -249,9 +269,9 @@ Argos.prototype = {
             // "Unable to execute file 'FileName':"
             let msg = _("Unable to execute file '%s':").format(this._file.get_basename());
             global.logError(msg + " " + aErr);
-            this._notifyMessage([
-                msg,
-                _("Script file not set, cannot be found or it isn't an executable.")
+            $.Notification.notify([
+                escapeHTML(msg),
+                escapeHTML(_("Script file not set, cannot be found or it isn't an executable."))
             ]);
             this._updateRunning = false;
         }
@@ -429,8 +449,8 @@ Argos.prototype = {
 
         this.tooltip.set_text({
             scriptName: (this._file ?
-                $.escapeHTML(this._file.get_basename()) :
-                $.escapeHTML(_("No script set"))),
+                escapeHTML(this._file.get_basename()) :
+                escapeHTML(_("No script set"))),
             execInterval: this.pref_update_interval + " " +
                 $.getUnitPluralForm(this.pref_update_interval_units, this.pref_update_interval),
             rotationInterval: this.pref_rotation_interval + " " +
@@ -498,7 +518,7 @@ Argos.prototype = {
         );
         this.updateIntervalLabel.menu.connect("open-state-changed",
             (aMenu, aOpen) => this._contextSubMenuOpenStateChanged(aMenu, aOpen));
-        this.updateIntervalLabel.tooltip = new $.CustomTooltip(
+        this.updateIntervalLabel.tooltip = new InteligentTooltip(
             this.updateIntervalLabel.actor,
             _("Choose the time unit for the script execution interval.")
         );
@@ -511,7 +531,7 @@ Argos.prototype = {
             (aSlider, aValue) => this.onSliderChanged(aSlider, aValue, false, "pref_update_interval"));
         this.updateIntervalSlider.connect("drag-begin", (aSlider) => this.onSliderGrabbed(aSlider));
         this.updateIntervalSlider.connect("drag-end", (aSlider) => this.onSliderReleased(aSlider));
-        this.updateIntervalSlider.tooltip = new $.CustomTooltip(
+        this.updateIntervalSlider.tooltip = new InteligentTooltip(
             this.updateIntervalSlider.actor,
             _("Set the script execution interval.")
         );
@@ -548,7 +568,7 @@ Argos.prototype = {
                     this._processFile();
                 });
         });
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _("Choose a script file.")
         );
@@ -562,9 +582,9 @@ Argos.prototype = {
         );
         menuItem.connect("activate", () => {
             if (this._file === null) {
-                this._notifyMessage([
-                    _("Script file not set, cannot be found or it isn't an executable.")
-                ]);
+                $.Notification.notify(
+                    escapeHTML(_("Script file not set, cannot be found or it isn't an executable."))
+                );
             } else {
                 // The original Argos extension uses Gio.AppInfo.launch_default_for_uri
                 // to open the script file. I prefer to stay away from non asynchronous functions.
@@ -572,7 +592,7 @@ Argos.prototype = {
                 Util.spawn_async(["xdg-open", this._file.get_path()], null);
             }
         });
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _("Edit the script file with your prefered text editor.") + "\n" +
             _("After saving the changes made, the applet will update its data automatically if there is an interval set.") + "\n" +
@@ -588,14 +608,14 @@ Argos.prototype = {
         );
         menuItem.connect("activate", () => {
             if (this._file === null) {
-                this._notifyMessage([
-                    _("Script file not set, cannot be found or it isn't an executable.")
-                ]);
+                $.Notification.notify(
+                    escapeHTML(_("Script file not set, cannot be found or it isn't an executable."))
+                );
             } else {
                 this.update();
             }
         });
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _("This will re-run on demand the script assigned to this applet for the purpose of updating its output.") + "\n" +
             _("This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited.")
@@ -617,7 +637,7 @@ Argos.prototype = {
             "pref_rotation_interval_units",
             "pref_rotation_interval"
         );
-        this.rotationIntervalLabel.tooltip = new $.CustomTooltip(
+        this.rotationIntervalLabel.tooltip = new InteligentTooltip(
             this.rotationIntervalLabel.actor,
             _("Choose the time unit for the applet text rotation interval.")
         );
@@ -630,7 +650,7 @@ Argos.prototype = {
             (aSlider, aValue) => this.onSliderChanged(aSlider, aValue, false, "pref_rotation_interval"));
         this.rotationIntervalSlider.connect("drag-begin", (aSlider) => this.onSliderGrabbed(aSlider));
         this.rotationIntervalSlider.connect("drag-end", (aSlider) => this.onSliderReleased(aSlider));
-        this.rotationIntervalSlider.tooltip = new $.CustomTooltip(
+        this.rotationIntervalSlider.tooltip = new InteligentTooltip(
             this.rotationIntervalSlider.actor,
             _("Set the applet text rotation interval.")
         );
@@ -663,7 +683,7 @@ Argos.prototype = {
                 }
             ).open(global.get_current_time());
         });
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _('This operation will remove the current script from this applet leaving it "blank".')
         );
@@ -683,7 +703,7 @@ Argos.prototype = {
             iconName,
             St.IconType.SYMBOLIC
         );
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _("Make the script file executable so it can be used by this applet.")
         );
@@ -707,21 +727,21 @@ Argos.prototype = {
                                 });
                         }
                     } else {
-                        this._notifyMessage([
-                            _("Script file is already executable."),
-                            this._script_path
+                        $.Notification.notify([
+                            escapeHTML(_("Script file is already executable.")),
+                            escapeHTML(this._script_path)
                         ]);
                     }
                 } else {
-                    this._notifyMessage([
-                        _("Script file isn't a file, but a directory."),
-                        this._script_path
+                    $.Notification.notify([
+                        escapeHTML(_("Script file isn't a file, but a directory.")),
+                        escapeHTML(this._script_path)
                     ]);
                 }
             } else {
-                this._notifyMessage([
-                    _("Script file doesn't exists."),
-                    this._script_path
+                $.Notification.notify([
+                    escapeHTML(_("Script file doesn't exists.")),
+                    escapeHTML(this._script_path)
                 ]);
             }
         });
@@ -733,7 +753,7 @@ Argos.prototype = {
             "dialog-information",
             St.IconType.SYMBOLIC
         );
-        menuItem.tooltip = new $.CustomTooltip(menuItem.actor, _("Open this applet help file."));
+        menuItem.tooltip = new InteligentTooltip(menuItem.actor, _("Open this applet help file."));
         menuItem.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
         });
@@ -764,6 +784,8 @@ Argos.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -812,7 +834,7 @@ Argos.prototype = {
             "pref_last_selected_directory",
             "pref_initial_load_done",
             "pref_logging_level",
-            "pref_debugger_enabled",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -977,25 +999,6 @@ Argos.prototype = {
         }
     },
 
-    _notifyMessage: function(aMsg, aContext = "info") {
-        let fN;
-        switch (aContext) {
-            case "error":
-            case "warning":
-                fN = Main.criticalNotify;
-                break;
-            default:
-                fN = Main.warningNotify;
-        }
-        let icon = new St.Icon({
-            icon_name: "dialog-" + aContext,
-            icon_type: St.IconType.SYMBOLIC,
-            icon_size: 24
-        });
-
-        fN(_(this.metadata.name), aMsg.join("\n"), icon);
-    },
-
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
         // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
         // settings callback instead of just one as in older versions. The first one is the
@@ -1034,49 +1037,16 @@ Argos.prototype = {
             case "pref_debugger_enabled":
                 $.Debugger.logging_level = this.pref_logging_level;
                 $.Debugger.debugger_enabled = this.pref_debugger_enabled;
-
-                this._notifyMessage([
-                        _(this.metadata.name),
-                        _("Remember to restart Cinnamon to fully enable/disable this option."),
-                    ],
-                    "warning"
-                );
                 break;
         }
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    if ($.Debugger.logging_level === LoggingLevel.VERY_VERBOSE ||
-        $.Debugger.debugger_enabled) {
-        try {
-            let protos = {
-                AltSwitcher: $.AltSwitcher,
-                Argos: Argos,
-                ArgosLineView: $.ArgosLineView,
-                ArgosMenuItem: $.ArgosMenuItem,
-                CustomPopupSliderMenuItem: $.CustomPopupSliderMenuItem,
-                CustomSubMenuItem: $.CustomSubMenuItem,
-                CustomTooltip: $.CustomTooltip,
-                UnitSelectorMenuItem: $.UnitSelectorMenuItem,
-                UnitSelectorSubMenuMenuItem: $.UnitSelectorSubMenuMenuItem,
-            };
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        Argos: Argos,
+        InteligentTooltip: InteligentTooltip
+    });
 
-            for (let name in protos) {
-                $.prototypeDebugger(protos[name], {
-                    objectName: name + aInstance_id,
-                    /* NOTE: _onCapturedEvent is triggered a billion times!
-                     */
-                    methods: ["_onCapturedEvent"],
-                    blacklistMethods: true,
-                    verbose: $.Debugger.logging_level === LoggingLevel.VERY_VERBOSE,
-                    debug: $.Debugger.debugger_enabled
-                });
-            }
-        } catch (aErr) {
-            global.logError(aErr);
-        }
-    }
-
-    return new Argos(aMetadata, aOrientation, aPanel_height, aInstance_id);
+    return new Argos(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }

@@ -1570,9 +1570,8 @@ var Emojis = {
     "zero": "0️⃣",
     "zimbabwe": "🇿🇼",
     "zipper_mouth_face": "🤐",
-    "zzz": "💤",
+    "zzz": "💤"
 };
 
-
 /* exported Emojis
-*/
+ */
