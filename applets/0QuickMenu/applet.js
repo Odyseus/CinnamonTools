@@ -1,13 +1,17 @@
-let $;
+let $,
+    GlobalUtils,
+    DebugManager;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
     $ = require("./utils.js");
 } else {
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
-
-const _ = $._;
 
 const {
     gi: {
@@ -28,6 +32,10 @@ const {
     }
 } = imports;
 
+const {
+    _
+} = GlobalUtils;
+
 function QuickMenu() {
     this._init.apply(this, arguments);
 }
@@ -35,8 +43,8 @@ function QuickMenu() {
 QuickMenu.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -46,7 +54,7 @@ QuickMenu.prototype = {
 
         this.metadata = aMetadata;
         this.orientation = aOrientation;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         this._initializeSettings(() => {
@@ -152,6 +160,8 @@ QuickMenu.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -199,7 +209,9 @@ QuickMenu.prototype = {
             "pref_style_for_sub_menus",
             "pref_style_for_menu_items",
             "pref_sub_menu_icon_size",
-            "pref_menu_item_icon_size"
+            "pref_menu_item_icon_size",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -302,7 +314,9 @@ QuickMenu.prototype = {
                 if (iconsForSubMenusFile.query_exists(null)) {
                     iconsForSubMenusFile.load_contents_async(null,
                         (aFile, aResponce) => {
-                            let success, contents, tag;
+                            let success,
+                                contents,
+                                tag;
 
                             try {
                                 [success, contents, tag] = aFile.load_contents_finish(aResponce);
@@ -620,10 +634,19 @@ QuickMenu.prototype = {
             case "pref_hotkey":
                 this._updateKeybinding();
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new QuickMenu(aMetadata, aOrientation, aPanel_height, aInstance_id);
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        QuickMenu: QuickMenu
+    });
+
+    return new QuickMenu(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }

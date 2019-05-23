@@ -1,11 +1,19 @@
-const AppletUUID = "{{UUID}}";
+let GlobalConstants,
+    DebugManager;
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    GlobalConstants = require("./globalConstants.js");
+    DebugManager = require("./debugManager.js");
+} else {
+    GlobalConstants = imports.ui.appletManager.applets["{{UUID}}"].globalConstants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+}
 
 const {
-    gettext: Gettext,
     gi: {
         Clutter,
         Gio,
-        GLib,
         Gtk,
         Pango,
         St
@@ -18,27 +26,11 @@ const {
     }
 } = imports;
 
-Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
+var Debugger = new DebugManager.DebugManager();
 
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(AppletUUID, aStr);
-
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
-
-    return Gettext.gettext(aStr);
-}
+const {
+    UNICODE_SYMBOLS
+} = GlobalConstants;
 
 // Redefine a PopupSubMenuMenuItem to get a colored image to the left side
 function CustomSubMenuMenuItem() {
@@ -69,15 +61,11 @@ CustomSubMenuMenuItem.prototype = {
 
         this.addActor(this.label);
 
-        if (this.actor.get_direction() == St.TextDirection.RTL) {
-            this._triangle = new St.Label({
-                text: "\u25C2"
-            });
-        } else {
-            this._triangle = new St.Label({
-                text: "\u25B8"
-            });
-        }
+        this._triangle = new St.Label({
+            text: (this.actor.get_direction() === St.TextDirection.RTL ?
+                UNICODE_SYMBOLS.black_left_pointing_small_triangle :
+                UNICODE_SYMBOLS.black_right_pointing_small_triangle)
+        });
 
         this.addActor(this._triangle, {
             align: St.Align.END
@@ -264,6 +252,7 @@ FileMenuItem.prototype = {
     }
 };
 
-/*
-exported _
- */
+DebugManager.wrapPrototypes(Debugger, {
+    CustomSubMenuMenuItem: CustomSubMenuMenuItem,
+    FileMenuItem: FileMenuItem
+});
