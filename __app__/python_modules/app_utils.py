@@ -49,6 +49,16 @@ PATHS = {
     "theme_latest_build_data_file": os.path.join(root_folder, "tmp", "theme_latest_default_data.json")
 }
 
+XLET_SYSTEM = {
+    "applet": "appletManager",
+    "extension": "extensionSystem",
+}
+
+XLET_META = {
+    "applet": "appletMeta",
+    "extension": "extensionMeta",
+}
+
 _missing_theme_or_domain_name_msg = """**{capital}NameNotSet:**
 
 The command line option **--{lower}-name=<name>** should be used to define a {lower}
@@ -579,6 +589,8 @@ class XletBuilder():
         self._config_file = os.path.join(xlet_data["source"], "z_config.py")
         self._replacement_data = [
             ("{{UUID}}", xlet_data.get("uuid", "")),
+            ("{{XLET_SYSTEM}}", XLET_SYSTEM[xlet_data.get("type", "")]),
+            ("{{XLET_META}}", XLET_META[xlet_data.get("type", "")]),
             ("{{REPO_URL}}", URLS["repo"]),
             ("{{XLET_TYPE}}", xlet_data.get("type", "")),
             # Yes, include the escaped double quotes to keep the template file without errors.
@@ -896,8 +908,8 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         "cinnamon_font_size": "9pt",
         "cinnamon_font_family": '"Noto Sans", sans, Sans-Serif',
         "gtk3_version": "1",
-        "gtk3_csd_shadow": "0 2px 8px 3px alpha(black, 0.5), 0 0 0 1px darker(@theme_bg_color)",
-        "gtk3_csd_backdrop_shadow": "0 2px 8px 3px transparent, 0 2px 5px 3px alpha(black, 0.3), 0 0 0 1px darker(@theme_bg_color)",
+        "gtk3_csd_shadow": "0 2px 5px 0 alpha(black, 0.3), 0 0 0 1px darker(@theme_bg_color)",
+        "gtk3_csd_backdrop_shadow": "0 2px 5px 0 alpha(black, 0.1), 0 0 0 1px darker(@theme_bg_color)",
     }
 
     interactive = True
