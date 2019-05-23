@@ -1,16 +1,26 @@
-const AppletUUID = "{{UUID}}";
-
-let $;
+let $,
+    GlobalUtils,
+    DebugManager,
+    Constants,
+    CustomTooltips,
+    CustomFileUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    CustomTooltips = require("./customTooltips.js");
+    CustomFileUtils = require("./customFileUtils.js");
     $ = require("./utils.js");
 } else {
-    $ = imports.ui.appletManager.applets[AppletUUID].utils;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
+    CustomFileUtils = imports.ui.appletManager.applets["{{UUID}}"].customFileUtils;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
-
-const _ = $._;
-const ngettext = $.ngettext;
 
 const {
     gi: {
@@ -34,6 +44,38 @@ const {
     }
 } = imports;
 
+const {
+    _,
+    CINNAMON_VERSION,
+    ngettext,
+    xdgOpen,
+    escapeHTML,
+    isObject,
+    versionCompare,
+    deepMergeObjects,
+    tokensReplacer
+} = GlobalUtils;
+
+const {
+    InteligentTooltip
+} = CustomTooltips;
+
+const {
+    saveToFileAsync
+} = CustomFileUtils;
+
+const {
+    SelectionType,
+    KeybindingSupport,
+    Devices,
+    PROGRAMS_SUPPORT_EMPTY,
+    CinnamonRecorderProfilesBase,
+    ProgramSupportBase,
+    SelectionTypeStr,
+    ClipboardCopyType,
+    InteractiveCallouts
+} = Constants;
+
 function DesktopCapture() {
     this._init.apply(this, arguments);
 }
@@ -41,8 +83,8 @@ function DesktopCapture() {
 DesktopCapture.prototype = {
     __proto__: Applet.IconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -51,14 +93,13 @@ DesktopCapture.prototype = {
         }
 
         this.metadata = aMetadata;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
         this.orientation = aOrientation;
         this._keybinding_base = this.metadata.uuid + "-" + this.instance_id;
 
         this._initializeSettings(() => {
             this._expandAppletContextMenu();
         }, () => {
-            this.logger = new $.Logger("DesktopCapture", this.pref_enable_verbose_logging);
             this.sigMan = new SignalManager.SignalManager(null);
 
             this.appletHelper = this.metadata.path + "/appletHelper.py";
@@ -163,7 +204,7 @@ DesktopCapture.prototype = {
 
         for (let pref of [{
                 name: "pref_program_support",
-                empty_value: $.PROGRAMS_SUPPORT_EMPTY
+                empty_value: PROGRAMS_SUPPORT_EMPTY
             }, {
                 name: "pref_cinn_rec_profiles",
                 empty_value: {}
@@ -262,6 +303,8 @@ DesktopCapture.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -320,7 +363,6 @@ DesktopCapture.prototype = {
             "pref_key_recorder_stop_toggle",
             "pref_record_sound",
             "pref_disclaimer_read",
-            "pref_enable_verbose_logging",
             "pref_theme_selector",
             "pref_theme_custom",
             "pref_program_support",
@@ -331,7 +373,9 @@ DesktopCapture.prototype = {
             "pref_imp_exp_last_selected_directory",
             "pref_display_device_options_in_sub_menu",
             "pref_last_camera_capture",
-            "pref_last_recorder_capture"
+            "pref_last_recorder_capture",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -348,8 +392,6 @@ DesktopCapture.prototype = {
     },
 
     _loadTheme: function(aFullReload = false) {
-        this.logger.debug("");
-
         if (this.load_theme_id > 0) {
             Mainloop.source_remove(this.load_theme_id);
             this.load_theme_id = 0;
@@ -451,8 +493,6 @@ DesktopCapture.prototype = {
     },
 
     _setAppletIcon: function(aRecording) {
-        this.logger.debug("");
-
         let icon = (aRecording ?
                 this.pref_custom_icon_for_applet_recording :
                 this.pref_custom_icon_for_applet) ||
@@ -482,8 +522,6 @@ DesktopCapture.prototype = {
     },
 
     stopAnyRecorder: function() {
-        this.logger.debug("");
-
         let device = "recorder";
 
         if (this.getDeviceProgram(device) === "cinnamon") {
@@ -495,8 +533,6 @@ DesktopCapture.prototype = {
     },
 
     _storeNewKeybinding: function(aDevice, aLabel, aCallback) {
-        this.logger.debug("");
-
         if (!this._newKeybindingsStorage.hasOwnProperty(aDevice)) {
             this._newKeybindingsStorage[aDevice] = [];
         }
@@ -504,8 +540,8 @@ DesktopCapture.prototype = {
         // aLabel can be a property in KeybindingSupport or directly the pref.
         // name suffix. One case of this is when registering the keybinding
         // for Cinnamon's recorder or the stop recorder keybinding.
-        let keyPrefNameSuffix = $.KeybindingSupport[aDevice].hasOwnProperty(aLabel) ?
-            $.KeybindingSupport[aDevice][aLabel] : aLabel;
+        let keyPrefNameSuffix = KeybindingSupport[aDevice].hasOwnProperty(aLabel) ?
+            KeybindingSupport[aDevice][aLabel] : aLabel;
         let keyPrefName = "pref_key_" + aDevice + "_" + keyPrefNameSuffix;
 
         // Check if keyPrefName is a property of the applet (the actual pref. name)
@@ -521,8 +557,6 @@ DesktopCapture.prototype = {
     },
 
     _registerKeyBindings: function() {
-        this.logger.debug("");
-
         this._removeKeybindings(() => {
             // Define function outside loop.
             let keyFn = (aKey) => {
@@ -531,7 +565,7 @@ DesktopCapture.prototype = {
                 };
             };
 
-            for (let device of $.Devices) {
+            for (let device of Devices) {
                 // If the device is disabled, do not bother storing keybindings.
                 if (!this.hasDevice(device)) {
                     continue;
@@ -564,8 +598,6 @@ DesktopCapture.prototype = {
     },
 
     _removeKeybindings: function(aCallback) {
-        this.logger.debug("");
-
         try {
             for (let keybindingName of this._oldKeybindingsNames) {
                 Main.keybindingManager.removeHotKey(keybindingName);
@@ -580,14 +612,12 @@ DesktopCapture.prototype = {
     },
 
     _setupCinnamonRecorderProfiles: function() {
-        this.logger.debug("");
-
         let prefcinnamonRecorderProfilesCopy = JSON.parse(
             JSON.stringify(this.pref_cinn_rec_profiles));
 
         // Mark for deletion on EOL. Cinnamon 3.6.x+
         // Replace JSON trick with Object.assign().
-        this.cinnamonRecorderProfiles = $.mergeRecursive($.CinnamonRecorderProfilesBase,
+        this.cinnamonRecorderProfiles = deepMergeObjects(CinnamonRecorderProfilesBase,
             JSON.parse(JSON.stringify(prefcinnamonRecorderProfilesCopy)));
 
         if (!this.cinnamonRecorderProfiles
@@ -599,8 +629,6 @@ DesktopCapture.prototype = {
     },
 
     _setupProgramSupport: function() {
-        this.logger.debug("");
-
         // Mark for deletion on EOL. Cinnamon 3.6.x+
         // Replace JSON trick with Object.assign().
         // Clone the original object before doing possible modifications.
@@ -613,7 +641,7 @@ DesktopCapture.prototype = {
         // has "disabled" or "cinnamon", remove them.
         // Those two shouldn't be overriden/removed/modified.
         for (let prop of ["disabled", "cinnamon"]) {
-            for (let device of $.Devices) {
+            for (let device of Devices) {
                 if (prefProgramSupportCopy[device].hasOwnProperty(prop)) {
                     delete prefProgramSupportCopy[device][prop];
                 }
@@ -628,7 +656,7 @@ DesktopCapture.prototype = {
         // Replace JSON trick with Object.assign().
         // Use all this nonsense until the "geniuses" at Mozilla finally decide
         // on a unique and standard way for deep merging objects.
-        this.programSupport = $.mergeRecursive($.ProgramSupportBase,
+        this.programSupport = deepMergeObjects(ProgramSupportBase,
             JSON.parse(JSON.stringify(prefProgramSupportCopy)));
 
         // If the new modified programSupport doesn't contain the currently
@@ -638,7 +666,7 @@ DesktopCapture.prototype = {
         // program for a device.
         // Doing it AFTER programSupport has been generated so is checked with
         // "disabled" and "cinnamon" in it.
-        for (let device of $.Devices) {
+        for (let device of Devices) {
             if (!this.programSupport[device]
                 .hasOwnProperty(this["pref_" + device + "_program"])) {
                 this["pref_" + device + "_program"] = "cinnamon";
@@ -649,8 +677,6 @@ DesktopCapture.prototype = {
     },
 
     _setupSaveDirs: function() {
-        this.logger.debug("");
-
         let prefMap = {
             pref_camera_save_dir: "_cameraSaveDir",
             pref_recorder_save_dir: "_recorderSaveDir"
@@ -677,8 +703,6 @@ DesktopCapture.prototype = {
     },
 
     _onMenuKeyRelease: function(actor, event) {
-        this.logger.debug("");
-
         let symbol = event.get_key_symbol();
 
         if (symbol === Clutter.Shift_L) {
@@ -689,8 +713,6 @@ DesktopCapture.prototype = {
     },
 
     _onMenuKeyPress: function(actor, event) {
-        this.logger.debug("");
-
         let symbol = event.get_key_symbol();
 
         if (symbol === Clutter.Shift_L) {
@@ -701,8 +723,6 @@ DesktopCapture.prototype = {
     },
 
     _doRunHandler: function(aURI) {
-        this.logger.debug("");
-
         let uri = /^file:\/\//.test(aURI) ?
             aURI :
             "file://" + aURI;
@@ -711,14 +731,12 @@ DesktopCapture.prototype = {
         // If so, try to use xdg-open.
         if (!Gio.app_info_launch_default_for_uri(uri,
                 new Gio.AppLaunchContext())) {
-            this.logger.runtime_info("Spawning xdg-open " + uri);
-            Util.spawn_async(["xdg-open", uri], null);
+            $.runtimeInfo("Spawning xdg-open " + uri);
+            xdgOpen(uri);
         }
     },
 
     drawMenu: function() {
-        this.logger.debug("");
-
         this._setAppletIcon();
         this._newKeybindingsStorage = {};
 
@@ -744,7 +762,7 @@ DesktopCapture.prototype = {
                 };
             };
 
-            for (let device of $.Devices) {
+            for (let device of Devices) {
                 this[device + "Header"] = new $.ProgramSelectorSubMenuItem(
                     this, {
                         item_label: " ",
@@ -759,7 +777,7 @@ DesktopCapture.prototype = {
                         }
                     }
                 );
-                this[device + "Header"].tooltip = new $.CustomTooltip(
+                this[device + "Header"].tooltip = new InteligentTooltip(
                     this[device + "Header"].actor,
                     (device === "camera" ?
                         _("Choose camera") :
@@ -795,8 +813,6 @@ DesktopCapture.prototype = {
     },
 
     _rebuildDeviceSection: function(aDevice) {
-        this.logger.debug("");
-
         this.lastCapture[aDevice] = null;
         let sectionHeader = this[aDevice + "Header"];
         let section = this[aDevice + "Section"];
@@ -830,7 +846,7 @@ DesktopCapture.prototype = {
                 if (aDev === "camera") {
                     return (aE) => {
                         return this.runCinnamonCamera(
-                            $.SelectionType[aCmdOrAction], aE);
+                            SelectionType[aCmdOrAction], aE);
                     };
                 } else {
                     return () => this.toggleCinnamonRecorder();
@@ -868,13 +884,13 @@ DesktopCapture.prototype = {
                 section.addAction(
                     _(label),
                     itemFn(aDevice, cmdOrAct, !flaged && aDevice === "recorder"),
-                    (label in $.KeybindingSupport[aDevice]) ?
+                    (label in KeybindingSupport[aDevice]) ?
                     this["pref_key_" + aDevice + "_" +
-                        $.KeybindingSupport[aDevice][label]] :
+                        KeybindingSupport[aDevice][label]] :
                     ""
                 );
 
-                if (label in $.KeybindingSupport[aDevice]) {
+                if (label in KeybindingSupport[aDevice]) {
                     this._storeNewKeybinding(
                         aDevice,
                         label,
@@ -891,7 +907,7 @@ DesktopCapture.prototype = {
                     style_class: "bin"
                 }
             );
-            includeCursorSwitch.tooltip = new $.CustomTooltip(
+            includeCursorSwitch.tooltip = new InteligentTooltip(
                 includeCursorSwitch.actor,
                 _("Whether to include mouse cursor in screenshot.")
             );
@@ -910,7 +926,7 @@ DesktopCapture.prototype = {
                             section.addAction(_("Monitor %d").format(aMonitorIndex + 1),
                                 (aE) => {
                                     return this.runCinnamonCamera(
-                                        $.SelectionType.MONITOR, aE, aMonitorIndex);
+                                        SelectionType.MONITOR, aE, aMonitorIndex);
                                 }, "pref_key_" + aDevice + "_monitor_" + aMonitorIndex);
                         }
                     }, this);
@@ -973,7 +989,7 @@ DesktopCapture.prototype = {
                         slider_value_min: 0,
                         slider_value_max: 10
                     });
-                timerSlider.tooltip = new $.CustomTooltip(
+                timerSlider.tooltip = new InteligentTooltip(
                     timerSlider.actor,
                     _("How many seconds to wait before taking a screenshot.")
                 );
@@ -994,7 +1010,7 @@ DesktopCapture.prototype = {
                             item_style_class: "desktop-capture-cinnamon-recorder-profile-submenu-label"
                         }
                     );
-                    profileSelector.tooltip = new $.CustomTooltip(
+                    profileSelector.tooltip = new InteligentTooltip(
                         profileSelector.actor,
                         _("Choose Cinnamon recorder profile")
                     );
@@ -1020,7 +1036,7 @@ DesktopCapture.prototype = {
                             style_class: "bin"
                         }
                     );
-                    soundSwitch.tooltip = new $.CustomTooltip(
+                    soundSwitch.tooltip = new InteligentTooltip(
                         soundSwitch.actor,
                         _("Whether to record sound.")
                     );
@@ -1082,7 +1098,7 @@ DesktopCapture.prototype = {
                         slider_value_min: 10,
                         slider_value_max: 120
                     });
-                fpsSlider.tooltip = new $.CustomTooltip(
+                fpsSlider.tooltip = new InteligentTooltip(
                     fpsSlider.actor,
                     _("Frames per second")
                 );
@@ -1131,8 +1147,6 @@ DesktopCapture.prototype = {
     },
 
     getFilenameForDevice: function(aDevice, aType) {
-        this.logger.debug("");
-
         let date = new Date();
         let prefix = this["pref_" + aDevice + "_save_prefix"];
 
@@ -1142,32 +1156,24 @@ DesktopCapture.prototype = {
             prefix = prefix.replace("%TYPE", "");
         }
 
-        return $.replaceTokens(
-            [
-                "%Y",
-                "%M",
-                "%D",
-                "%H",
-                "%I",
-                "%S",
-                "%m",
-                aDevice === "camera" ? "%TYPE" : null
-            ], [
-                date.getFullYear(),
-                $.padNum(date.getMonth() + 1),
-                $.padNum(date.getDate()),
-                $.padNum(date.getHours()),
-                $.padNum(date.getMinutes()),
-                $.padNum(date.getSeconds()),
-                $.padNum(date.getMilliseconds()),
-                aDevice === "camera" ? $.SelectionTypeStr[aType] : null
-            ],
-            prefix);
+        let replacements = {
+            "%Y": date.getFullYear(),
+            "%M": String(date.getMonth() + 1).padStart(2, "0"),
+            "%D": String(date.getDate()).padStart(2, "0"),
+            "%H": String(date.getHours()).padStart(2, "0"),
+            "%I": String(date.getMinutes()).padStart(2, "0"),
+            "%S": String(date.getSeconds()).padStart(2, "0"),
+            "%m": String(date.getMilliseconds()).padStart(2, "0")
+        };
+
+        if (aDevice === "camera") {
+            replacements["%TYPE"] = SelectionTypeStr[aType];
+        }
+
+        return tokensReplacer(prefix, replacements);
     },
 
     repeatLastCapture: function(aDevice) {
-        this.logger.debug("");
-
         let lastCapture = this.lastCapture[aDevice];
 
         if (lastCapture) {
@@ -1178,7 +1184,7 @@ DesktopCapture.prototype = {
                         lastCapture.device);
                 } catch (aErr) {
                     newFilename = false;
-                    this.logger.error(aErr);
+                    global.logError(aErr);
                 }
 
                 if (!newFilename) {
@@ -1192,7 +1198,7 @@ DesktopCapture.prototype = {
                     newFilename
                 );
 
-                this.logger.runtime_info("Running again command: " + cmd);
+                $.runtimeInfo("Running again command: " + cmd);
 
                 this.TryExec({
                     command: cmd,
@@ -1211,7 +1217,7 @@ DesktopCapture.prototype = {
                         this.getFilenameForDevice("camera", lastCapture.selectionType), "png");
                 } catch (aErr) {
                     newFilename = false;
-                    this.logger.error(aErr);
+                    global.logError(aErr);
                 }
 
                 if (!newFilename) {
@@ -1222,17 +1228,17 @@ DesktopCapture.prototype = {
 
                 this.closeMainMenu();
                 let camera = new $.ScreenshotHelper(null, null,
-                    lastCapture.options, this.logger);
+                    lastCapture.options);
 
                 // Timeout to not worry about closing menu animation.
                 Mainloop.timeout_add(200, () => {
                     switch (lastCapture.selectionType) {
-                        case $.SelectionType.WINDOW:
+                        case SelectionType.WINDOW:
                             camera.screenshotWindow(
                                 lastCapture.window,
                                 lastCapture.options);
                             break;
-                        case $.SelectionType.AREA:
+                        case SelectionType.AREA:
                             camera.screenshotArea(
                                 lastCapture.x,
                                 lastCapture.y,
@@ -1240,7 +1246,7 @@ DesktopCapture.prototype = {
                                 lastCapture.height,
                                 lastCapture.options);
                             break;
-                        case $.SelectionType.CINNAMON:
+                        case SelectionType.CINNAMON:
                             camera.screenshotCinnamon(
                                 lastCapture.actor,
                                 lastCapture.stageX,
@@ -1258,8 +1264,6 @@ DesktopCapture.prototype = {
     },
 
     cinnamonCameraComplete: function(screenshot) {
-        this.logger.debug("");
-
         screenshot.uploaded = false;
         screenshot.json = null;
         screenshot.extraActionMessage = "";
@@ -1268,7 +1272,7 @@ DesktopCapture.prototype = {
 
         // All programs/devices support redo item, but Cinnamon's needs "special treatment".
         if (this.getDeviceProgram("camera") === "cinnamon") {
-            if (this.lastCapture["camera"].selectionType !== $.SelectionType.SCREEN) {
+            if (this.lastCapture["camera"].selectionType !== SelectionType.SCREEN) {
                 this._cameraRedoMenuItem.actor.show();
             } else {
                 this._cameraRedoMenuItem.actor.hide();
@@ -1289,7 +1293,7 @@ DesktopCapture.prototype = {
 
         if (aDevice === "camera") {
             let copyToClipboard = this.pref_auto_copy_data ?
-                $.ClipboardCopyType.IMAGE_DATA :
+                ClipboardCopyType.IMAGE_DATA :
                 this.pref_copy_to_clipboard;
 
             if (this.pref_auto_copy_data && this.pref_auto_copy_data_auto_off) {
@@ -1298,11 +1302,11 @@ DesktopCapture.prototype = {
             }
 
             switch (copyToClipboard) {
-                case $.ClipboardCopyType.IMAGE_PATH:
+                case ClipboardCopyType.IMAGE_PATH:
                     $.setClipboardText(aFilePath);
                     $.notify([_("File path copied to clipboard.")]);
                     break;
-                case $.ClipboardCopyType.IMAGE_DATA:
+                case ClipboardCopyType.IMAGE_DATA:
                     $.Exec(this.appletHelper + " copy_image_data " + aFilePath);
                     $.notify([_("Image data copied to clipboard.")]);
                     break;
@@ -1311,14 +1315,12 @@ DesktopCapture.prototype = {
     },
 
     runCinnamonCamera: function(aType, aEvent, aMonitorIndex) {
-        this.logger.debug("");
-
         if (!this._disclaimerRead()) {
             return false;
         }
 
-        if (aType === $.SelectionType.REPEAT) {
-            this.logger.runtime_info("We shouldn't have reached runCinnamonCamera.");
+        if (aType === SelectionType.REPEAT) {
+            $.runtimeInfo("We shouldn't have reached runCinnamonCamera.");
             return false;
         }
 
@@ -1328,7 +1330,7 @@ DesktopCapture.prototype = {
                 this.getFilenameForDevice("camera", aType), "png");
         } catch (aErr) {
             filename = false;
-            this.logger.error(aErr);
+            global.logError(aErr);
         }
 
         if (!filename) {
@@ -1350,7 +1352,7 @@ DesktopCapture.prototype = {
                     timerDuration: this.pref_timer_delay,
                     filename: filename,
                     monitorIndex: aMonitorIndex
-                }, this.logger
+                }
             );
 
             return false;
@@ -1364,14 +1366,10 @@ DesktopCapture.prototype = {
     },
 
     closeMainMenu: function() {
-        this.logger.debug("");
-
         this.menu.close(true);
     },
 
     _updateCinnamonRecorderStatus: function() {
-        this.logger.debug("");
-
         if (this.cinnamonRecorder.is_recording()) {
             this._setAppletIcon(true);
             this._cinnamonRecorderItem.label.set_text(_("Stop recording"));
@@ -1382,8 +1380,6 @@ DesktopCapture.prototype = {
     },
 
     _checkSaveFolder: function(aFolderPath) {
-        this.logger.debug("");
-
         let folder = Gio.file_new_for_path(aFolderPath);
         let msg = this.criticalBaseMessage;
 
@@ -1407,8 +1403,6 @@ DesktopCapture.prototype = {
     },
 
     _getCreateFilePath: function(folderPath, fileName, fileExtension) {
-        this.logger.debug("");
-
         if (!this._checkSaveFolder(folderPath)) {
             return false;
         }
@@ -1427,7 +1421,7 @@ DesktopCapture.prototype = {
                 return false;
             }
         } catch (aErr) {
-            this.logger.error(aErr);
+            global.logError(aErr);
             $.notify(msg, "error");
             return false;
         }
@@ -1436,8 +1430,6 @@ DesktopCapture.prototype = {
     },
 
     toggleCinnamonRecorder: function() {
-        this.logger.debug("");
-
         if (this.cinnamonRecorder.is_recording()) {
             this.cinnamonRecorder.pause();
             Meta.enable_unredirect_for_screen(global.screen);
@@ -1453,26 +1445,26 @@ DesktopCapture.prototype = {
                 );
             } catch (aErr) {
                 file_path = false;
-                this.logger.error(aErr);
+                global.logError(aErr);
             }
 
             if (!file_path) {
-                this.logger.runtime_info("No file name.");
+                $.runtimeInfo("No file name.");
                 return false;
             }
 
             this.cinnamonRecorder.set_filename(file_path);
-            this.logger.runtime_info("Capturing screencast to " + file_path);
+            $.runtimeInfo("Capturing screencast to " + file_path);
 
             this.cinnamonRecorder.set_framerate(this.pref_recorder_fps);
 
             let pipeline = this.cinnamonRecorderProfiles[this.pref_cinn_rec_current_profile]["pipeline"];
 
             if (!pipeline.match(/^\s*$/)) {
-                this.logger.runtime_info("Pipeline is " + pipeline);
+                $.runtimeInfo("Pipeline is " + pipeline);
                 this.cinnamonRecorder.set_pipeline(pipeline);
             } else {
-                this.logger.runtime_info("Pipeline is Cinnamon's default");
+                $.runtimeInfo("Pipeline is Cinnamon's default");
                 this.cinnamonRecorder.set_pipeline(null);
             }
 
@@ -1499,55 +1491,39 @@ DesktopCapture.prototype = {
     },
 
     get_cinnamon_recorder_property: function(aProfile, aProperty) {
-        this.logger.debug("");
-
         if (this.cinnamonRecorderProfiles.hasOwnProperty(aProfile) &&
             this.cinnamonRecorderProfiles[aProfile].hasOwnProperty(aProperty)) {
             return this.cinnamonRecorderProfiles[aProfile][aProperty];
         }
 
-        return $.CinnamonRecorderProfilesBase["default"][aProperty];
+        return CinnamonRecorderProfilesBase["default"][aProperty];
     },
 
     getDevicePrograms: function(aDevice) {
-        this.logger.debug("");
-
         return this.programSupport[aDevice];
     },
 
     getDeviceProperties: function(aDevice) {
-        this.logger.debug("");
-
         return this.programSupport[aDevice][this.getDeviceProgram(aDevice)];
     },
 
     getDeviceProgram: function(aDevice) {
-        this.logger.debug("");
-
         return this["pref_" + aDevice + "_program"];
     },
 
     getDeviceProperty: function(aDevice, aProperty) {
-        this.logger.debug("");
-
         return this.getDeviceProperties(aDevice)[aProperty];
     },
 
     hasDeviceProperty: function(aDevice, aProperty) {
-        this.logger.debug("");
-
         return this.getDeviceProperties(aDevice).hasOwnProperty(aProperty);
     },
 
     hasDevice: function(aDevice) {
-        this.logger.debug("");
-
         return this["pref_" + aDevice + "_program"] !== "disabled";
     },
 
     _applyCommandReplacements: function(aCmd, aDevice) {
-        this.logger.debug("");
-
         let cursor = "",
             sound = "";
 
@@ -1623,18 +1599,16 @@ DesktopCapture.prototype = {
     },
 
     runCommand: function(aCmd, aDevice, aIsRecording, aUseScreenshotHelper, aEvent) {
-        this.logger.debug("");
-
         let cmdObj = this._applyCommandReplacements(aCmd, aDevice);
         let cmd = cmdObj.command;
 
         let helperMode = null;
-        for (let k in $.InteractiveCallouts) {
+        for (let k in InteractiveCallouts) {
             if (cmd.indexOf(k) !== -1) {
                 if (aUseScreenshotHelper) {
-                    helperMode = $.InteractiveCallouts[k];
-                    this.logger.runtime_info('Using screenshot helper from capture mode "' +
-                        $.SelectionTypeStr[helperMode] + '"');
+                    helperMode = InteractiveCallouts[k];
+                    $.runtimeInfo('Using screenshot helper from capture mode "' +
+                        SelectionTypeStr[helperMode] + '"');
                 }
 
                 cmd = cmd.replace(k, "");
@@ -1657,17 +1631,17 @@ DesktopCapture.prototype = {
                         is_recording: aIsRecording
                     }), {
                         selectionHelper: true
-                    }, this.logger);
+                    });
             } else {
                 if (aEvent && aEvent.get_button() === 3) {
                     this.displayDialogMessage(_("Displaying command that will be executed") +
-                        ":\n\n" + '<span font_desc="monospace 10">' + $.escapeHTML(cmd) + "</span>",
+                        ":\n\n" + '<span font_desc="monospace 10">' + escapeHTML(cmd) + "</span>",
                         "info");
                     return false;
                 }
 
                 this["_" + aDevice + "RedoMenuItem"].actor.hide();
-                this.logger.runtime_info("Running command: " + cmd);
+                $.runtimeInfo("Running command: " + cmd);
                 this.TryExec({
                     command: cmd,
                     current_file_path: cmdObj.current_file_path,
@@ -1690,8 +1664,6 @@ DesktopCapture.prototype = {
     },
 
     runCommandInteractively: function(aParams) {
-        this.logger.debug("");
-
         let niceHeight = aParams.vars["height"] % 2 === 0 ?
             aParams.vars["height"] :
             aParams.vars["height"] + 1,
@@ -1723,12 +1695,12 @@ DesktopCapture.prototype = {
 
         if (aParams.event && aParams.event.get_button() === 3) {
             this.displayDialogMessage(_("Displaying command that will be executed") +
-                ":\n\n" + '<span font_desc="monospace 10">' + $.escapeHTML(aParams.command) + "</span>",
+                ":\n\n" + '<span font_desc="monospace 10">' + escapeHTML(aParams.command) + "</span>",
                 "info");
             return false;
         }
 
-        this.logger.runtime_info("Interactively running command: " + aParams.command);
+        $.runtimeInfo("Interactively running command: " + aParams.command);
 
         this.TryExec({
             command: aParams.command,
@@ -1747,30 +1719,24 @@ DesktopCapture.prototype = {
     },
 
     onProcessSpawned: function(aParams) {
-        this.logger.debug("");
-
         aParams.is_recording && this._setAppletIcon(true);
     },
 
     onProcessError: function(aParams) {
-        this.logger.debug("");
-
         this._setAppletIcon();
 
         this.displayDialogMessage(_("Command exited with error status") +
-            ":\n\n" + '<span font_desc="monospace 10">' + $.escapeHTML(aParams.command) + "</span>",
+            ":\n\n" + '<span font_desc="monospace 10">' + escapeHTML(aParams.command) + "</span>",
             "error");
-        aParams.stdout && this.logger.runtime_error(aParams.stdout);
-        aParams.stderr && this.logger.runtime_error(aParams.stderr);
+        aParams.stdout && $.runtimeError(aParams.stdout);
+        aParams.stderr && $.runtimeError(aParams.stderr);
     },
 
     onProcessComplete: function(aParams) {
-        this.logger.debug("");
-
-        this.logger.runtime_info("Process exited with status " + aParams.status);
+        $.runtimeInfo("Process exited with status " + aParams.status);
 
         if (aParams.status > 0) {
-            this.logger.runtime_error(aParams.stdout);
+            $.runtimeError(aParams.stdout);
             this.onProcessError({
                 command: aParams.command,
                 stdout: aParams.stdout,
@@ -1816,8 +1782,6 @@ DesktopCapture.prototype = {
      * @param {String} aMsg   - The message.
      */
     displayDialogMessage: function(aMsg, aLevel) {
-        this.logger.debug("");
-
         let msg = {
             title: _(this.metadata.name),
             message: aMsg
@@ -1827,8 +1791,6 @@ DesktopCapture.prototype = {
     },
 
     Exec: function(cmd) {
-        this.logger.debug("");
-
         this.closeMainMenu();
 
         // Timeout to not worry about closing menu animation.
@@ -1839,11 +1801,7 @@ DesktopCapture.prototype = {
     },
 
     TryExec: function(aParams) {
-        this.logger.debug("");
-
         this.closeMainMenu();
-
-        aParams["logger"] = this.logger;
 
         // Timeout to not worry about closing menu animation.
         return Mainloop.timeout_add(200,
@@ -1854,8 +1812,6 @@ DesktopCapture.prototype = {
     },
 
     _exportJSONData: function(aPref) {
-        this.logger.debug("");
-
         Util.spawn_async([
                 this.appletHelper,
                 "export",
@@ -1871,14 +1827,12 @@ DesktopCapture.prototype = {
                 let rawData = JSON.stringify(this[aPref], null, 4);
                 let file = Gio.file_new_for_path(path);
                 this.pref_imp_exp_last_selected_directory = path;
-                $.saveToFileAsync(rawData, file);
+                saveToFileAsync(rawData, file);
             }
         );
     },
 
     _importJSONData: function(aPref) {
-        this.logger.debug("");
-
         Util.spawn_async([
                 this.appletHelper,
                 "import",
@@ -1901,14 +1855,14 @@ DesktopCapture.prototype = {
                     try {
                         rawData = aFile.load_contents_finish(aResponce)[1];
                     } catch (aErr) {
-                        this.logger.error(aErr.message);
+                        global.logError(aErr);
                         return;
                     }
 
                     try {
                         jsonData = JSON.parse(rawData);
                     } catch (aErr) {
-                        this.logger.error(aErr);
+                        global.logError(aErr);
                         $.notify([
                             _("Possibly malformed JSON file."),
                             _("Check the logs."),
@@ -1933,8 +1887,8 @@ DesktopCapture.prototype = {
 
     _handleImportedPrograms: function(aJSONData) {
         try {
-            if ($.isObject(aJSONData)) {
-                for (let device of $.Devices) {
+            if (isObject(aJSONData)) {
+                for (let device of Devices) {
                     if (!aJSONData.hasOwnProperty(device)) {
                         aJSONData[device] = {};
                     }
@@ -1942,11 +1896,11 @@ DesktopCapture.prototype = {
 
                 this.pref_program_support = aJSONData;
             } else {
-                this.pref_program_support = $.PROGRAMS_SUPPORT_EMPTY;
+                this.pref_program_support = PROGRAMS_SUPPORT_EMPTY;
             }
         } catch (aErr) {
-            this.logger.warning(aErr);
-            this.pref_program_support = $.PROGRAMS_SUPPORT_EMPTY;
+            global.logError(aErr);
+            this.pref_program_support = PROGRAMS_SUPPORT_EMPTY;
         } finally {
             this._setupProgramSupport();
         }
@@ -1954,13 +1908,13 @@ DesktopCapture.prototype = {
 
     _handleImportedCinnamonRecorderProfiles: function(aJSONData) {
         try {
-            if ($.isObject(aJSONData)) {
+            if (isObject(aJSONData)) {
                 this.pref_cinn_rec_profiles = aJSONData;
             } else {
                 this.pref_cinn_rec_profiles = {};
             }
         } catch (aErr) {
-            this.logger.warning(aErr);
+            global.logError(aErr);
             this.pref_cinn_rec_profiles = {};
         } finally {
             this._setupCinnamonRecorderProfiles();
@@ -1968,8 +1922,6 @@ DesktopCapture.prototype = {
     },
 
     _resetPrefToDefault: function(aPref) {
-        this.logger.debug("");
-
         $.askForConfirmation({
             message: _("Do you really want to reset this preference to its default value?"),
             pref_name: aPref
@@ -2009,8 +1961,6 @@ DesktopCapture.prototype = {
     },
 
     _clearPref: function(aPref, aPrefEmptyVal) {
-        this.logger.debug("");
-
         $.askForConfirmation({
             message: _("Do you really want to empty this preference?"),
             pref_name: aPref,
@@ -2033,7 +1983,7 @@ DesktopCapture.prototype = {
 
     _disclaimerRead: function() {
         if (!this.pref_disclaimer_read &&
-            $.versionCompare($.CinnamonVersion, "3.0.99") <= 0) {
+            versionCompare(CINNAMON_VERSION, "3.0.99") <= 0) {
             let msg = [
                 _("The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"),
                 _("Do not use it or Cinnamon will crash!"),
@@ -2072,14 +2022,10 @@ DesktopCapture.prototype = {
     },
 
     on_applet_clicked: function() {
-        this.logger.debug("");
-
         this.menu.toggle();
     },
 
     on_applet_removed_from_panel: function() {
-        this.logger.debug("");
-
         this.sigMan.disconnectAllSignals();
 
         if (this._draw_menu_id > 0) {
@@ -2114,11 +2060,6 @@ DesktopCapture.prototype = {
 
                 this._loadTheme(true);
                 break;
-            case "pref_enable_verbose_logging":
-                this.logger.runtime_info("Logging changed to " +
-                    (this.pref_enable_verbose_logging ? "debug" : "info"));
-                this.logger.verbose = this.pref_enable_verbose_logging;
-                break;
             case "pref_custom_icon_for_applet":
             case "pref_custom_icon_for_applet_recording":
                 this._setAppletIcon();
@@ -2143,10 +2084,20 @@ DesktopCapture.prototype = {
             case "pref_display_device_options_in_sub_menu":
                 this.drawMenu();
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     }
 };
 
-function main(metadata, orientation, panelHeight, instanceId) {
-    return new DesktopCapture(metadata, orientation, panelHeight, instanceId);
+function main(aMetadata, aOrientation, aPanelheight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        DesktopCapture: DesktopCapture,
+        InteligentTooltip: InteligentTooltip
+    });
+
+    return new DesktopCapture(aMetadata, aOrientation, aPanelheight, aInstanceId);
 }

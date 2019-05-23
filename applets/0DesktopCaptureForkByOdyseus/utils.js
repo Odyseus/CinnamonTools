@@ -1,4 +1,9 @@
-let XletMeta;
+let XletMeta,
+    GlobalConstants,
+    GlobalUtils,
+    Constants,
+    DebugManager,
+    CustomTooltips;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -7,15 +12,28 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    GlobalConstants = require("./globalConstants.js");
+    GlobalUtils = require("./globalUtils.js");
+    Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    CustomTooltips = require("./customTooltips.js");
+} else {
+    GlobalConstants = imports.ui.appletManager.applets["{{UUID}}"].globalConstants;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
+}
+
 const {
-    gettext: Gettext,
     gi: {
         Cinnamon,
         Clutter,
         Gio,
         GLib,
         Meta,
-        Pango,
         St
     },
     mainloop: Mainloop,
@@ -27,179 +45,46 @@ const {
         flashspot: Flashspot,
         main: Main,
         popupMenu: PopupMenu,
-        tooltips: Tooltips,
         tweener: Tweener
     }
 } = imports;
 
-const SOUND_ID = 1;
-const HANDLE_SIZE = 10;
-const HANDLE_NAMES = [
-    "handleNw",
-    "handleN",
-    "handleNe",
-    "handleW",
-    "handleE",
-    "handleSw",
-    "handleS",
-    "handleSe"
-];
-const BORDER_NAMES = [
-    "border1",
-    "border2",
-    "border3",
-    "border4"
-];
-// Just a dummy variable for gettext to detect and extract translatable strings.
-const TRANSLATABLE_STRINGS = [
-    _("Disabled"),
-    _("Area"),
-    _("Cinnamon UI"),
-    _("Current Window"),
-    _("Monitor"),
-    _("Screen"),
-    _("Tooltip"),
-    _("Window Menu"),
-    _("Window Section"),
-    _("Window")
-];
+const {
+    UNICODE_SYMBOLS
+} = GlobalConstants;
 
-var Devices = ["camera", "recorder"];
-var CinnamonVersion = GLib.getenv("CINNAMON_VERSION");
-var ClipboardCopyType = {
-    OFF: 0,
-    IMAGE_PATH: 1,
-    IMAGE_DATA: 2
-};
-var KeybindingSupport = {
-    "camera": {
-        "Area": "area",
-        "Cinnamon UI": "cinnamon_ui",
-        "Monitor 0": "monitor_0",
-        "Monitor 1": "monitor_1",
-        "Monitor 2": "monitor_2",
-        "Repeat last": "repeat",
-        "Screen": "screen",
-        "Window": "window"
-    },
-    "recorder": {
+const {
+    _,
+    getKeybindingDisplayName,
+    tokensReplacer
+} = GlobalUtils;
 
-    }
-};
-var PROGRAMS_SUPPORT_EMPTY = {
-    camera: {},
-    recorder: {}
-};
-var SelectionType = {
-    ALL_WORKSPACES: 0,
-    /* @todo */
-    SCREEN: 1,
-    MONITOR: 2,
-    WINDOW: 3,
-    AREA: 4,
-    CINNAMON: 5,
-    REPEAT: 6
-};
-var InteractiveCallouts = {
-    "#INTERACTIVE_AREA_HELPER#": SelectionType.AREA,
-    "#INTERACTIVE_WINDOW_HELPER#": SelectionType.WINDOW
-};
-var SelectionTypeStr = {
-    0: "workspaces",
-    1: "screen",
-    2: "monitor",
-    3: "window",
-    4: "area",
-    5: "cinnamon",
-    6: "repeat"
-};
-var ProgramSupportBase = {
-    "camera": {
-        "disabled": {
-            "title": "Disabled"
-        },
-        "cinnamon": {
-            "title": "Cinnamon",
-            "cursor": true,
-            "timer": true,
-            "menuitems": {
-                "Window": "WINDOW",
-                "Area": "AREA",
-                "Cinnamon UI": "CINNAMON",
-                "Screen": "SCREEN"
-            }
-        }
-    },
-    "recorder": {
-        "disabled": {
-            "title": "Disabled"
-        },
-        "cinnamon": {
-            "title": "Cinnamon",
-            "fps": true,
-            "menuitems": {}
-        }
-    }
-};
-var CinnamonRecorderProfilesBase = {
-    "default": {
-        "title": "Default",
-        "description": "Encoder: On2 VP8\nMuxer: WebM\nFile extension: webm",
-        "file-extension": "webm",
-        "pipeline": "vp8enc min_quantizer=13 max_quantizer=13 cpu-used=5 deadline=1000000 threads=%T ! queue ! webmmux"
-    }
-};
+const {
+    InteligentTooltip
+} = CustomTooltips;
 
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
+const {
+    SOUND_ID,
+    SelectionType,
+    BORDER_NAMES,
+    HANDLE_NAMES,
+    HANDLE_SIZE,
+    SelectionTypeStr
+} = Constants;
 
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
+const {
+    LoggingLevel
+} = DebugManager;
 
-    return Gettext.gettext(aStr);
+var Debugger = new DebugManager.DebugManager();
+
+function runtimeInfo(aMsg) {
+    Debugger.logging_level !== LoggingLevel.NORMAL && aMsg &&
+        global.log("[DesktopCapture] " + aMsg);
 }
 
-/**
- * Return the localized translation of a string, based on the xlet domain or the
- * current global domain (Cinnamon's), but consider plural forms. If a translation
- * is found, apply the plural formula to aN, and return the resulting message
- * (some languages have more than two plural forms). If no translation is found,
- * return singular if aN is 1; return plural otherwise.
- *
- * This function "overrides" the ngettext() function globally defined by Cinnamon.
- *
- * @param {String}  aSingular - The singular string being translated.
- * @param {String}  aPlural   - The plural string being translated.
- * @param {Integer} aN        - The number (e.g. item count) to determine the translation for
- * the respective grammatical number.
- *
- * @return {String} The translated string.
- */
-function ngettext(aSingular, aPlural, aN) {
-    let customTrans = Gettext.dngettext(XletMeta.uuid, aSingular, aPlural, aN);
-
-    if (aN === 1) {
-        if (customTrans !== aSingular) {
-            return customTrans;
-        }
-    } else {
-        if (customTrans !== aPlural) {
-            return customTrans;
-        }
-    }
-
-    return Gettext.ngettext(aSingular, aPlural, aN);
+function runtimeError(aMsg) {
+    aMsg && global.logError("[DesktopCapture] " + aMsg);
 }
 
 function CustomPopupMenuSection() {
@@ -228,15 +113,17 @@ function extendMenuItem(aMenuItem, aDetailText, aCustomclass) {
             x_align: St.Align.END
         });
         let label = new St.Label();
-        let keybinding = cleanupKeybindingString(aDetailText);
+        let keybinding = aDetailText;
 
         if (keybinding.indexOf("::") !== -1) {
             let parts = keybinding.split("::");
 
             if (parts[1].length !== 0) {
-                keybinding = parts.join("|");
+                keybinding = parts.map((aKB) => {
+                    return getKeybindingDisplayName(aKB);
+                }).join("|");
             } else {
-                keybinding = parts[0];
+                keybinding = getKeybindingDisplayName(parts[0]);
             }
         }
 
@@ -302,7 +189,7 @@ RadioSelectorMenuItem.prototype = {
         this.setOrnament(2); // 2 = OrnamentType.DOT
 
         if (params.item_tooltip) {
-            this.tooltip = new CustomTooltip(
+            this.tooltip = new InteligentTooltip(
                 this.actor,
                 _(params.item_tooltip)
             );
@@ -693,214 +580,12 @@ CustomPopupSliderMenuItem.prototype = {
     }
 };
 
-/*
-A custom tooltip with the following features:
-- Text aligned to the left.
-- Line wrap set to true.
-- A max width of 450 pixels to force the line wrap.
-*/
-function CustomTooltip() {
-    this._init.apply(this, arguments);
-}
-
-CustomTooltip.prototype = {
-    __proto__: Tooltips.Tooltip.prototype,
-
-    _init: function(aActor, aText) {
-        Tooltips.Tooltip.prototype._init.call(this, aActor, " ");
-
-        this._tooltip.set_style("text-align: left;width:auto;max-width: 450px;");
-        this._tooltip.get_clutter_text().set_line_wrap(true);
-        this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
-        this._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
-
-        aActor.connect("destroy", () => this.destroy());
-
-        this.setMarkup(aText);
-    },
-
-    setMarkup: function(aMarkup) {
-        try {
-            this._tooltip.get_clutter_text().set_markup(aMarkup);
-        } catch (aErr) {
-            this._tooltip.get_clutter_text().set_text(aMarkup);
-        }
-    },
-
-    destroy: function() {
-        Tooltips.Tooltip.prototype.destroy.call(this);
-    }
-};
-
-/**
- * Logger
- * Implemented using the functions found in:
- * http://stackoverflow.com/a/13227808
- */
-function Logger() {
-    this._init.apply(this, arguments);
-}
-
-Logger.prototype = {
-    _init: function(aDisplayName, aVerbose) {
-        this._verbose = aVerbose;
-        this.base_message = "[" + aDisplayName + "::%s]%s";
-    },
-
-    _log: function(aLevel, aMsg, aIsRuntime) {
-        if (typeof aMsg === "object") {
-            global[aLevel](this.base_message.format(
-                aIsRuntime ? "" : this._getCaller(),
-                this._formatMessage("")
-            ));
-            global[aLevel](aMsg);
-        } else {
-            global[aLevel](this.base_message.format(
-                aIsRuntime ? "" : this._getCaller(),
-                this._formatMessage(aMsg)
-            ));
-        }
-    },
-
-    /**
-     * runtime_error
-     *
-     * Log a message without specifying the caller.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    runtime_error: function(aMsg) {
-        this._log("logError", aMsg, true);
-    },
-
-    /**
-     * runtime_info
-     *
-     * Log a message without specifying the caller.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    runtime_info: function(aMsg) {
-        this._log("log", aMsg, true);
-    },
-
-    /**
-     * debug
-     *
-     * Log a message only when verbose logging is enabled.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    debug: function(aMsg) {
-        if (this.verbose) {
-            this._log("log", aMsg);
-        }
-    },
-
-    /**
-     * error
-     *
-     * Log an error message.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    error: function(aMsg) {
-        this._log("logError", aMsg);
-    },
-
-    /**
-     * warning
-     *
-     * Log a warning message.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    warning: function(aMsg) {
-        this._log("logWarning", aMsg);
-    },
-
-    /**
-     * info
-     *
-     * Log an info message.
-     *
-     * @param {String} aMsg - The message to log.
-     */
-    info: function(aMsg) {
-        this._log("log", aMsg);
-    },
-
-    /**
-     * _formatMessage
-     *
-     * It just adds a space at the beginning of a string if the string isn't empty.
-     *
-     * @param  {String} aMsg The message to "format".
-     * @return {String}      The formatted message.
-     */
-    _formatMessage: function(aMsg) {
-        return aMsg ? " " + aMsg : "";
-    },
-
-    /**
-     * [_getCaller description]
-     * @return {String} A string representing the caller function name plus the
-     * file name and line number.
-     */
-    _getCaller: function() {
-        let stack = this._getStack();
-
-        // Remove superfluous function calls on stack
-        stack.shift(); // _getCaller --> _getStack
-        stack.shift(); // debug --> _getCaller
-
-        let caller = stack[0].split("/");
-        // Return only the caller function and the file name and line number.
-        return (caller.shift() + "@" + caller.pop()).replace(/\@+/g, "@");
-    },
-
-    _getStack: function() {
-        // Save original Error.prepareStackTrace
-        let origPrepareStackTrace = Error.prepareStackTrace;
-
-        // Override with function that just returns `stack`
-        Error.prepareStackTrace = function(_, stack) {
-            return stack;
-        };
-
-        // Create a new `Error`, which automatically gets `stack`
-        let err = new Error();
-
-        // Evaluate `err.stack`, which calls our new `Error.prepareStackTrace`
-        let stack = err.stack.split("\n");
-
-        // Restore original `Error.prepareStackTrace`
-        Error.prepareStackTrace = origPrepareStackTrace;
-
-        // Remove superfluous function call on stack
-        stack.shift(); // getStack --> Error
-        stack.shift(); // getStack --> Error
-
-        return stack;
-    },
-
-    get verbose() {
-        return this._verbose;
-    },
-
-    set verbose(aVal) {
-        this._verbose = aVal;
-    }
-};
-
 function ScreenshotHelper() {
     this._init.apply(this, arguments);
 }
 
 ScreenshotHelper.prototype = {
-    _init: function(selectionType, callback, params, logger) {
-        this.logger = logger;
-
+    _init: function(selectionType, callback, params) {
         this._capturedEventId = null;
         this._selectionType = selectionType;
         this._callback = callback;
@@ -928,7 +613,7 @@ ScreenshotHelper.prototype = {
             selectionHelper: false
         });
 
-        this.logger.runtime_info("Initializing screenshot tool");
+        runtimeInfo("Initializing screenshot tool");
 
         if (selectionType !== null) {
             this.runCaptureMode(selectionType);
@@ -936,15 +621,11 @@ ScreenshotHelper.prototype = {
     },
 
     playSound: function(effect) {
-        this.logger.debug("");
-
         global.cancel_sound(SOUND_ID);
         global.play_theme_sound(SOUND_ID, effect);
     },
 
     runCaptureMode: function(mode) {
-        this.logger.debug("");
-
         this._selectionType = mode;
 
         if (mode === SelectionType.WINDOW) {
@@ -961,20 +642,14 @@ ScreenshotHelper.prototype = {
     },
 
     getModifier: function(symbol) {
-        this.logger.debug("");
-
         return this._modifiers[symbol] || false;
     },
 
     setModifier: function(symbol, value) {
-        this.logger.debug("");
-
         this._modifiers[symbol] = value;
     },
 
     captureTimer: function(options, onFinished, onInterval) {
-        this.logger.debug("");
-
         let timeoutId;
 
         if (options.useTimer && options.timerDuration > 0) {
@@ -1022,8 +697,6 @@ ScreenshotHelper.prototype = {
     },
 
     _setTimer: function(timeout) {
-        this.logger.debug("");
-
         if (timeout === 0) {
             if (this._timer) {
                 Main.uiGroup.remove_actor(this._timer);
@@ -1061,8 +734,6 @@ ScreenshotHelper.prototype = {
     },
 
     _fadeOutTimer: function() {
-        this.logger.debug("");
-
         this._timer.opacity = 255;
         this._timer.scale_x = 1.0;
         this._timer.scale_y = 1.0;
@@ -1078,8 +749,6 @@ ScreenshotHelper.prototype = {
     },
 
     flash: function(x, y, width, height) {
-        this.logger.debug("");
-
         let flashspot = new Flashspot.Flashspot({
             x: x,
             y: y,
@@ -1091,20 +760,14 @@ ScreenshotHelper.prototype = {
     },
 
     selectScreen: function() {
-        this.logger.debug("");
-
         this.captureTimer(this._params, () => this.screenshotScreen());
     },
 
     selectMonitor: function() {
-        this.logger.debug("");
-
         this.captureTimer(this._params, () => this.screenshotMonitor());
     },
 
     selectCinnamon: function() {
-        this.logger.debug("");
-
         this._modal = true;
         this._target = null;
         this._pointerTarget = null;
@@ -1135,8 +798,6 @@ ScreenshotHelper.prototype = {
     },
 
     _updateCinnamon: function(event) {
-        this.logger.debug("");
-
         let [stageX, stageY] = event.get_coords();
         let target = global.stage.get_actor_at_pos(Clutter.PickMode.REACTIVE,
             stageX,
@@ -1162,14 +823,10 @@ ScreenshotHelper.prototype = {
     },
 
     _onDestroy: function() {
-        this.logger.debug("");
-
         this.reset();
     },
 
     selectArea: function() {
-        this.logger.debug("");
-
         this._modal = true;
         this._mouseDown = false;
         this._isMoving = false;
@@ -1250,14 +907,10 @@ ScreenshotHelper.prototype = {
     },
 
     instructionsShowing: function() {
-        this.logger.debug("");
-
         return this.instructionsContainer && this.instructionsContainer !== null;
     },
 
     maybeHideInstructions: function() {
-        this.logger.debug("");
-
         if (this._selectionType === SelectionType.CINNAMON) {
             let [x, y, mask] = global.get_pointer(); // jshint ignore:line
 
@@ -1268,8 +921,6 @@ ScreenshotHelper.prototype = {
     },
 
     hideInstructions: function() {
-        this.logger.debug("");
-
         if (this.instructionsShowing()) {
             Main.uiGroup.remove_actor(this.instructionsContainer);
             this.instructionsContainer.destroy();
@@ -1281,8 +932,6 @@ ScreenshotHelper.prototype = {
     },
 
     showInstructions: function(cssExtra) {
-        this.logger.debug("");
-
         let [x, y, mask] = global.get_pointer(); // jshint ignore:line
         this._initX = x;
         this._initY = y;
@@ -1351,8 +1000,6 @@ ScreenshotHelper.prototype = {
     },
 
     initializeShadow: function() {
-        this.logger.debug("");
-
         this.shadowContainer = new St.Group({
             reactive: false,
             style_class: "desktop-capture-shadow-container"
@@ -1388,8 +1035,6 @@ ScreenshotHelper.prototype = {
     },
 
     selectWindow: function() {
-        this.logger.debug("");
-
         this._modal = true;
         this._mouseDown = false;
         this._outlineBackground = null;
@@ -1419,39 +1064,24 @@ ScreenshotHelper.prototype = {
     },
 
     getFilename: function(options) {
-        this.logger.debug("");
-
         let date = new Date();
-        return replaceTokens(
-            ["%Y",
-                "%M",
-                "%D",
-                "%H",
-                "%I",
-                "%S",
-                "%m",
-                "%TYPE"
-            ], [date.getFullYear(),
-                padNum(date.getMonth() + 1),
-                padNum(date.getDate()),
-                padNum(date.getHours()),
-                padNum(date.getMinutes()),
-                padNum(date.getSeconds()),
-                padNum(date.getMilliseconds()),
-                this.getSelectionTypeStr(this._selectionType)
-            ],
-            options["filename"]);
+        return tokensReplacer(options["filename"], {
+            "%Y": date.getFullYear(),
+            "%M": String(date.getMonth() + 1).padStart(2, "0"),
+            "%D": String(date.getDate()).padStart(2, "0"),
+            "%H": String(date.getHours()).padStart(2, "0"),
+            "%I": String(date.getMinutes()).padStart(2, "0"),
+            "%S": String(date.getSeconds()).padStart(2, "0"),
+            "%m": String(date.getMilliseconds()).padStart(2, "0"),
+            "%TYPE": this.getSelectionTypeStr(this._selectionType)
+        });
     },
 
     getSelectionTypeStr: function() {
-        this.logger.debug("");
-
         return SelectionTypeStr[this._selectionType];
     },
 
     getParams: function(options) {
-        this.logger.debug("");
-
         if (options) {
             return Params.parse(this._params, options);
         }
@@ -1460,11 +1090,8 @@ ScreenshotHelper.prototype = {
     },
 
     screenshotScreen: function(options) {
-        this.logger.debug("");
-
         let opts = this.getParams(options);
         let filename = this.getFilename(opts);
-
         let screenshot = new Cinnamon.Screenshot();
         screenshot.screenshot(opts.includeCursor, filename,
             () => {
@@ -1478,8 +1105,6 @@ ScreenshotHelper.prototype = {
     },
 
     screenshotMonitor: function(options) {
-        this.logger.debug("");
-
         let opts = this.getParams(options);
         let filename = this.getFilename(opts);
 
@@ -1511,10 +1136,8 @@ ScreenshotHelper.prototype = {
     },
 
     screenshotCinnamon: function(actor, stageX, stageY, options) {
-        this.logger.debug("");
-
         if (actor.get_paint_visibility() === false) {
-            this.logger.runtime_info("Actor is not visible. Cancelling screenshot to prevent empty output.");
+            runtimeInfo("Actor is not visible. Cancelling screenshot to prevent empty output.");
             this.reset();
             return false;
         }
@@ -1566,8 +1189,6 @@ ScreenshotHelper.prototype = {
     },
 
     screenshotArea: function(x, y, width, height, options) {
-        this.logger.debug("");
-
         this.reset();
 
         let opts = this.getParams(options);
@@ -1604,8 +1225,6 @@ ScreenshotHelper.prototype = {
     },
 
     screenshotWindow: function(window, options) {
-        this.logger.debug("");
-
         if (!window.get_meta_window().has_focus()) {
             let tracker = Cinnamon.WindowTracker.get_default();
             let focusEventId = tracker.connect("notify::focus-app", () => {
@@ -1683,8 +1302,6 @@ ScreenshotHelper.prototype = {
     },
 
     runCallback: function(screenshot) {
-        this.logger.debug("");
-
         screenshot.selectionType = this._selectionType;
         screenshot.selectionTypeVerbose = this.getSelectionTypeStr(this._selectionType);
 
@@ -1718,15 +1335,11 @@ ScreenshotHelper.prototype = {
     },
 
     abort: function() {
-        this.logger.debug("");
-
         this.reset();
         return true;
     },
 
     reset: function() {
-        this.logger.debug("");
-
         // Mode-specific resets
         if (this._selectionType === SelectionType.WINDOW) {
             if (this._windowSelected) {
@@ -1785,8 +1398,6 @@ ScreenshotHelper.prototype = {
     },
 
     drawBorders: function(width, height) {
-        this.logger.debug("");
-
         for (let borderName of BORDER_NAMES) {
             let m = this._calcBorderMeasures(borderName, width, height);
             this[borderName].set_clip(0, 0, m.clip_w, m.clip_h);
@@ -1802,8 +1413,6 @@ ScreenshotHelper.prototype = {
     },
 
     drawShadows: function(x, y, width, height) {
-        this.logger.debug("");
-
         this.coverLeft.set_position(0, 0);
         this.coverLeft.set_size(x, this._screenHeight);
 
@@ -1818,8 +1427,6 @@ ScreenshotHelper.prototype = {
     },
 
     redrawAreaSelection: function(x, y) {
-        this.logger.debug("");
-
         let width = Math.abs(this._xEnd - this._xStart);
         let height = Math.abs(this._yEnd - this._yStart);
 
@@ -1840,8 +1447,6 @@ ScreenshotHelper.prototype = {
     },
 
     _onCapturedEvent: function(actor, aEvent) {
-        this.logger.debug("");
-
         let eventType = aEvent.type();
         let symbol = aEvent.get_key_symbol();
 
@@ -1849,7 +1454,7 @@ ScreenshotHelper.prototype = {
             this.hideInstructions();
 
             if (symbol === Clutter.Escape) {
-                this.logger.runtime_info("Aborting screenshot.");
+                runtimeInfo("Aborting screenshot.");
                 this.abort();
                 return true;
             } else if (symbol === Clutter.Shift_L) {
@@ -1860,7 +1465,7 @@ ScreenshotHelper.prototype = {
                         symbol === Clutter.KEY_KP_Enter)) {
                     let [x, y] = this.container.get_position();
                     let [w, h] = this.container.get_size();
-                    this.logger.runtime_info("Selection area is " + x + "," + y + " - " + w + " x " + h);
+                    runtimeInfo("Selection area is " + x + "," + y + " - " + w + " x " + h);
                     this.screenshotArea(x, y, w, h);
                     return true;
                 } else if (this._selectionMade) {
@@ -2197,7 +1802,7 @@ ScreenshotHelper.prototype = {
                             global.set_cursor(Cinnamon.Cursor.CROSSHAIR);
                     }
                 } catch (aErr) {
-                    this.logger.warning(aErr);
+                    global.logError(aErr);
                     global.set_cursor(Cinnamon.Cursor.CROSSHAIR);
                 }
             } else {
@@ -2209,8 +1814,6 @@ ScreenshotHelper.prototype = {
     },
 
     clearActorOutline: function() {
-        this.logger.debug("");
-
         if (this._lightbox) {
             this._lightbox.hide();
         }
@@ -2223,8 +1826,6 @@ ScreenshotHelper.prototype = {
     },
 
     showActorOutline: function(actor) {
-        this.logger.debug("");
-
         // Create the actor that will serve as background for the clone.
         let frameClass = "desktop-capture-capture-outline-frame";
         let ag = actor.get_allocation_geometry();
@@ -2261,8 +1862,6 @@ ScreenshotHelper.prototype = {
     },
 
     clearWindowOutline: function() {
-        this.logger.debug("");
-
         if (this._lightbox) {
             this._lightbox.hide();
         }
@@ -2281,8 +1880,6 @@ ScreenshotHelper.prototype = {
     },
 
     showWindowOutline: function(window) {
-        this.logger.debug("");
-
         if (this._outlineBackground) {
             this.clearWindowOutline();
         }
@@ -2395,7 +1992,7 @@ ScreenshotHelper.prototype = {
             y_align: St.Align.END
         });
 
-        let sizeInfo = or.width + " \u00D7 " + or.height;
+        let sizeInfo = or.width + " " + UNICODE_SYMBOLS.multiplication_sign + " " + or.height;
         let title = new St.Label({
             text: metaWindow.get_title(),
             style_class: "desktop-capture-overlay-label-title"
@@ -2498,41 +2095,30 @@ ScreenshotHelper.prototype = {
 
         switch (aElName) {
             case "handleNw":
-                // pos.x = -(HANDLE_SIZE / 2);
-                // pos.y = - HANDLE_SIZE;
                 break;
             case "handleN":
                 pos.x = aWidth / 2 - (HANDLE_SIZE / 2);
-                // pos.y = -(HANDLE_SIZE / 2);
                 break;
             case "handleNe":
                 pos.x = aWidth - HANDLE_SIZE;
-                // pos.y = -(HANDLE_SIZE / 2);
                 break;
             case "handleW":
-                // pos.x = -(HANDLE_SIZE / 2);
                 pos.y = aHeight / 2 - (HANDLE_SIZE / 2);
                 break;
             case "handleE":
-                // pos.x = aWidth - (HANDLE_SIZE / 2);
                 pos.x = aWidth - HANDLE_SIZE;
                 pos.y = aHeight / 2 - (HANDLE_SIZE / 2);
                 break;
             case "handleSw":
-                // pos.x = -(HANDLE_SIZE / 2);
-                // pos.y = aHeight - (HANDLE_SIZE / 2);
                 pos.y = aHeight - HANDLE_SIZE;
                 break;
             case "handleS":
                 pos.x = aWidth / 2 - (HANDLE_SIZE / 2);
-                // pos.y = aHeight - (HANDLE_SIZE / 2);
                 pos.y = aHeight - HANDLE_SIZE;
                 break;
             case "handleSe":
                 pos.x = aWidth - HANDLE_SIZE;
-                // pos.x = aWidth - (HANDLE_SIZE / 2);
                 pos.y = aHeight - HANDLE_SIZE;
-                // pos.y = aHeight - (HANDLE_SIZE / 2);
                 break;
         }
 
@@ -2590,17 +2176,17 @@ LastCaptureContainer.prototype = {
             delButton: {
                 label: _("Delete"),
                 tooltip: _("Delete captured file from file system."),
-                action: "delete-file",
+                action: "delete-file"
             },
             copyDataButton: {
                 label: _("Copy data"),
                 tooltip: _("Copy image data to clipboard."),
-                action: "copy-image-data",
+                action: "copy-image-data"
             },
             copyPathButton: {
                 label: _("Copy path"),
                 tooltip: _("Copy image path to clipboard."),
-                action: "copy-image-path",
+                action: "copy-image-path"
             }
         };
 
@@ -2674,7 +2260,7 @@ LastCaptureContainer.prototype = {
             tooltip_text: "",
             activation_signal: "clicked",
             add_hover_events: false,
-            action: "",
+            action: ""
         });
 
         this[params.self_actor].connect(params.activation_signal,
@@ -2690,7 +2276,7 @@ LastCaptureContainer.prototype = {
         }
 
         if (params.tooltip_text) {
-            this[params.self_actor].tooltip = new CustomTooltip(
+            this[params.self_actor].tooltip = new InteligentTooltip(
                 this[params.self_actor], params.tooltip_text);
         }
     },
@@ -2865,214 +2451,6 @@ function setClipboardText(aText) {
     }
 }
 
-function escapeHTML(aStr) {
-    aStr = String(aStr)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
-    return aStr;
-}
-
-function padNum(num) {
-    return (num < 10 ? "0" + num : num);
-}
-
-function replaceTokens(aTokens, aReplacements, aSubject) {
-    if (aTokens.length === aReplacements.length) {
-        let i,
-            t,
-            p,
-            r;
-        for (i = 0; i < aTokens.length; i++) {
-            t = aTokens[i];
-            r = aReplacements[i];
-
-            if (t === null || r === null) {
-                continue;
-            }
-
-            while ((p = aSubject.indexOf(t)) !== -1) {
-                aSubject = aSubject.replace(t, r);
-            }
-        }
-    }
-
-    return aSubject;
-}
-
-/* https://stackoverflow.com/a/34749873 */
-function isObject(item) {
-    return (item && typeof item === "object" && !Array.isArray(item));
-}
-
-/* Like always, StackOverflow to the rescue. https://stackoverflow.com/a/16178864
-   The only function that I could find that does a proper object merge.
-   This will do until object spread can be used. ¬¬ */
-// Mark for deletion on EOL. Cinnamon 3.8.x+
-// When the "geniuses" at Mozilla stop playing at being serious software developers.
-function mergeRecursive() {
-    let dst = {},
-        src,
-        p,
-        args = [].splice.call(arguments, 0);
-
-    while (args.length > 0) {
-        src = args.splice(0, 1)[0];
-        if (isObject(src)) {
-            for (p in src) {
-                if (src.hasOwnProperty(p)) {
-                    if (isObject(src[p])) {
-                        dst[p] = mergeRecursive(dst[p] || {}, src[p]);
-                    } else {
-                        dst[p] = src[p];
-                    }
-                }
-            }
-        }
-    }
-
-    return dst;
-}
-
-function saveToFileAsync(aData, aFile, aCallback) {
-    let data = new GLib.Bytes(aData);
-
-    aFile.replace_async(null, false, Gio.FileCreateFlags.REPLACE_DESTINATION,
-        GLib.PRIORITY_DEFAULT, null,
-        (aObj, aResponse) => {
-            let stream = aObj.replace_finish(aResponse);
-
-            stream.write_bytes_async(data, GLib.PRIORITY_DEFAULT,
-                null,
-                (aW_obj, aW_res) => {
-
-                    aW_obj.write_bytes_finish(aW_res);
-                    stream.close(null);
-
-                    if (aCallback && typeof aCallback === "function") {
-                        aCallback();
-                    }
-                });
-        });
-}
-
-function cleanupKeybindingString(aKeybinding) {
-    // Worry about common modifier keys, f*ck the rest.
-    // I'm not a freaking fortune teller.
-    // And always assume that a modifier key is used as part of
-    // a key combination, not used alone.
-    return replaceTokens([
-        "<Primary>",
-        "<Control>",
-        "Control_L",
-        "Control_R",
-        "<Shift>",
-        "Shift_L",
-        "Shift_R",
-        "<Alt>",
-        "Alt_L",
-        "Alt_R",
-        "<Super>",
-        "Super_L",
-        "Super_R"
-    ], [
-        _("Ctrl") + "+",
-        _("Ctrl") + "+",
-        _("Ctrl L") + "+",
-        _("Ctrl R") + "+",
-        _("Shift") + "+",
-        _("Shift L") + "+",
-        _("Shift R") + "+",
-        _("Alt") + "+",
-        _("Alt L") + "+",
-        _("Alt R") + "+",
-        _("Super") + "+",
-        _("Super L") + "+",
-        _("Super R") + "+"
-    ], aKeybinding);
-}
-
-/**
- * Compares two software version numbers (e.g. "1.7.1" or "1.2b").
- *
- * This function was born in http://stackoverflow.com/a/6832721.
- *
- * @param {string} v1 The first version to be compared.
- * @param {string} v2 The second version to be compared.
- * @param {object} [options] Optional flags that affect comparison behavior:
- * <ul>
- *     <li>
- *         <tt>lexicographical: true</tt> compares each part of the version strings lexicographically instead of
- *         naturally; this allows suffixes such as "b" or "dev" but will cause "1.10" to be considered smaller than
- *         "1.2".
- *     </li>
- *     <li>
- *         <tt>zeroExtend: true</tt> changes the result if one version string has less parts than the other. In
- *         this case the shorter string will be padded with "zero" parts instead of being considered smaller.
- *     </li>
- * </ul>
- * @returns {number|NaN}
- * <ul>
- *    <li>0 if the versions are equal</li>
- *    <li>a negative integer iff v1 < v2</li>
- *    <li>a positive integer iff v1 > v2</li>
- *    <li>NaN if either version string is in the wrong format</li>
- * </ul>
- *
- * @copyright by Jon Papaioannou (["john", "papaioannou"].join(".") + "@gmail.com")
- * @license This function is in the public domain. Do what you want with it, no strings attached.
- */
-function versionCompare(v1, v2, options) {
-    let lexicographical = options && options.lexicographical,
-        zeroExtend = options && options.zeroExtend,
-        v1parts = v1.split("."),
-        v2parts = v2.split(".");
-
-    function isValidPart(x) {
-        return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
-    }
-
-    if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
-        return NaN;
-    }
-
-    if (zeroExtend) {
-        while (v1parts.length < v2parts.length) {
-            v1parts.push("0");
-        }
-        while (v2parts.length < v1parts.length) {
-            v2parts.push("0");
-        }
-    }
-
-    if (!lexicographical) {
-        v1parts = v1parts.map(Number);
-        v2parts = v2parts.map(Number);
-    }
-
-    for (let i = 0; i < v1parts.length; ++i) {
-        if (v2parts.length == i) {
-            return 1;
-        }
-
-        if (v1parts[i] == v2parts[i]) {
-            continue;
-        } else if (v1parts[i] > v2parts[i]) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-
-    if (v1parts.length != v2parts.length) {
-        return -1;
-    }
-
-    return 0;
-}
-
 function notify(aMsg, aLevel = "info") {
     let iconName,
         fnName;
@@ -3115,7 +2493,6 @@ function Exec(cmd) {
     return true;
 }
 
-// function TryExec(aCmd, aIsRecording, aOnStart, aOnFailure, aOnComplete, aLogger) {
 function TryExec(aParams) {
     let p;
 
@@ -3129,8 +2506,7 @@ function TryExec(aParams) {
         on_complete: null,
         current_file_name: "",
         current_file_path: false,
-        current_file_extension: false,
-        logger: null,
+        current_file_extension: false
     });
 
     let success,
@@ -3139,7 +2515,6 @@ function TryExec(aParams) {
         in_fd,
         out_fd,
         err_fd;
-
     [success, argv] = GLib.shell_parse_argv(p.command);
 
     try {
@@ -3150,7 +2525,7 @@ function TryExec(aParams) {
             GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD,
             null);
     } catch (e) {
-        typeof p.logger === "function" && p.logger.error("Failure creating process");
+        runtimeError("Failure creating process");
         typeof p.on_failure === "function" && p.on_failure({
             command: p.command,
             stderr: err_fd,
@@ -3166,7 +2541,7 @@ function TryExec(aParams) {
             })
         });
         // Wait for answer
-        typeof p.logger === "function" && p.logger.info("Spawned process with pid=" + pid);
+        runtimeInfo("Spawned process with pid=" + pid);
         typeof p.on_start === "function" && p.on_start({
             is_recording: p.is_recording
         });
@@ -3193,7 +2568,7 @@ function TryExec(aParams) {
                 });
             });
     } else {
-        typeof p.logger === "function" && p.logger.error("Failed to spawn process");
+        runtimeError("Failed to spawn process");
         typeof p.on_failure === "function" && p.on_failure({
             command: p.command,
             stderr: err_fd,
@@ -3204,20 +2579,20 @@ function TryExec(aParams) {
     return true;
 }
 
-/* exported askForConfirmation,
-            CinnamonRecorderProfilesBase,
-            CinnamonVersion,
-            ClipboardCopyType,
-            Devices,
-            escapeHTML,
-            Exec,
-            InteractiveCallouts,
-            KeybindingSupport,
-            mergeRecursive,
-            ngettext,
-            PROGRAMS_SUPPORT_EMPTY,
-            ProgramSupportBase,
-            saveToFileAsync,
-            TRANSLATABLE_STRINGS,
-            versionCompare,
+DebugManager.wrapPrototypes(Debugger, {
+    CinnamonRecorderProfileItem: CinnamonRecorderProfileItem,
+    CinnamonRecorderProfileSelector: CinnamonRecorderProfileSelector,
+    CustomPopupMenuSection: CustomPopupMenuSection,
+    CustomPopupSliderMenuItem: CustomPopupSliderMenuItem,
+    CustomSwitchMenuItem: CustomSwitchMenuItem,
+    InteligentTooltip: InteligentTooltip,
+    LastCaptureContainer: LastCaptureContainer,
+    ProgramSelectorMenuItem: ProgramSelectorMenuItem,
+    ProgramSelectorSubMenuItem: ProgramSelectorSubMenuItem,
+    RadioSelectorMenuItem: RadioSelectorMenuItem,
+    RadioSelectorSubMenuItem: RadioSelectorSubMenuItem,
+    ScreenshotHelper: ScreenshotHelper
+});
+
+/* exported Exec
  */
