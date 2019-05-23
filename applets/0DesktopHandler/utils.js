@@ -1,11 +1,16 @@
-const AppletUUID = "{{UUID}}";
+let DebugManager;
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    DebugManager = require("./debugManager.js");
+} else {
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+}
 
 const {
-    gettext: Gettext,
     gi: {
         Cinnamon,
         Clutter,
-        GLib,
         St
     },
     mainloop: Mainloop,
@@ -22,27 +27,7 @@ const {
     }
 } = imports;
 
-Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
-
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(AppletUUID, aStr);
-
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
-
-    return Gettext.gettext(aStr);
-}
+var Debugger = new DebugManager.DebugManager();
 
 /**
  * #MenuItem
@@ -390,6 +375,10 @@ ConfirmationDialog.prototype = {
     }
 };
 
-/*
-exported _
- */
+DebugManager.wrapPrototypes(Debugger, {
+    ConfirmationDialog: ConfirmationDialog,
+    MenuItem: MenuItem,
+    MyClassicSwitcher: MyClassicSwitcher,
+    MyCoverflowSwitcher: MyCoverflowSwitcher,
+    MyTimelineSwitcher: MyTimelineSwitcher
+});

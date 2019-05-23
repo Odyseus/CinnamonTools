@@ -1,15 +1,20 @@
-const AppletUUID = "{{UUID}}";
-
-let $;
+let $,
+    DebugManager,
+    CustomDialogs,
+    GlobalUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
+    CustomDialogs = require("./customDialogs.js");
     $ = require("./utils.js");
 } else {
-    $ = imports.ui.appletManager.applets[AppletUUID].utils;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    CustomDialogs = imports.ui.appletManager.applets["{{UUID}}"].customDialogs;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
-
-const _ = $._;
 
 const {
     gi: {
@@ -36,6 +41,10 @@ const {
     }
 } = imports;
 
+const {
+    _
+} = GlobalUtils;
+
 function DesktopHandler() {
     this._init.apply(this, arguments);
 }
@@ -43,8 +52,8 @@ function DesktopHandler() {
 DesktopHandler.prototype = {
     __proto__: Applet.IconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -54,7 +63,7 @@ DesktopHandler.prototype = {
 
         this.metadata = aMetadata;
         this.orientation = aOrientation;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
 
         this._initializeSettings(() => {
             //
@@ -105,6 +114,8 @@ DesktopHandler.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -165,7 +176,9 @@ DesktopHandler.prototype = {
             "pref_peek_opacity",
             "pref_opacify_desktop_icons",
             "pref_opacify_desklets",
-            "pref_blur_effect_enabled"
+            "pref_blur_effect_enabled",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -293,7 +306,8 @@ DesktopHandler.prototype = {
 
                     aItem.destroy();
                     delete allwins[allwins.indexOf(aMetaWindow)];
-                    aSticky || delete aWindows[aWindows.indexOf(aMetaWindow)];
+                    aSticky ||
+                        delete aWindows[aWindows.indexOf(aMetaWindow)];
                     aMetaWindow.delete(global.get_current_time());
 
                     // Fallback in case there wasn't an item to focus on.
@@ -543,8 +557,6 @@ DesktopHandler.prototype = {
         }
 
         if (this.pref_show_context_menu_about || aRestore) {
-            // NOTE: This string could be left blank because it's a default string,
-            // so it's already translated by Cinnamon. It's up to the translators.
             this.context_menu_item_about = new PopupMenu.PopupIconMenuItem(_("About..."),
                 "dialog-question",
                 St.IconType.SYMBOLIC);
@@ -553,8 +565,6 @@ DesktopHandler.prototype = {
         }
 
         if (this.pref_show_context_menu_configure || aRestore) {
-            // NOTE: This string could be left blank because it's a default string,
-            // so it's already translated by Cinnamon. It's up to the translators.
             this.context_menu_item_configure = new PopupMenu.PopupIconMenuItem(_("Configure..."),
                 "system-run",
                 St.IconType.SYMBOLIC);
@@ -567,20 +577,23 @@ DesktopHandler.prototype = {
         }
 
         if (this.pref_show_context_menu_remove || aRestore) {
-            // NOTE: This string could be left blank because it's a default string,
-            // so it's already translated by Cinnamon. It's up to the translators.
             this.context_menu_item_remove = new PopupMenu.PopupIconMenuItem(_("Remove '%s'")
                 .format(_(this.metadata.name)),
                 "edit-delete",
                 St.IconType.SYMBOLIC);
             this.context_menu_item_remove.connect("activate", () => {
-                new $.ConfirmationDialog(() => {
+                let dialog = new CustomDialogs.ConfirmDialog({
+                    dialogName: "DesktopHandlerDialog",
+                    headline: _(this.metadata.name),
+                    description: _("Are you sure that you want to remove '%s' from your panel?")
+                        .format(_(this.metadata.name)),
+                    cancelLabel: _("Cancel"),
+                    okLabel: _("OK"),
+                    callback: () => {
                         Main.AppletManager._removeAppletFromPanel(this.metadata.uuid, this.instance_id);
-                    },
-                    _(this.metadata.name),
-                    _("Are you sure that you want to remove '%s' from your panel?")
-                    .format(_(this.metadata.name)),
-                    _("Cancel"), _("OK")).open();
+                    }
+                });
+                dialog.open();
             });
             this._applet_context_menu.addMenuItem(this.context_menu_item_remove);
         }
@@ -1246,10 +1259,19 @@ DesktopHandler.prototype = {
             case "pref_peek_desktop_enabled":
                 this._handleDesktopPeek();
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new DesktopHandler(aMetadata, aOrientation, aPanel_height, aInstance_id);
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        DesktopHandler: DesktopHandler
+    });
+
+    return new DesktopHandler(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }

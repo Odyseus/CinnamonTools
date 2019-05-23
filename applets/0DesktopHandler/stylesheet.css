@@ -1,16 +1,16 @@
-.confirm-dialog-main-layout {
+#DesktopHandlerDialog .confirm-dialog-main-layout {
     spacing: 24px;
 }
 
-.confirm-dialog-message-layout {
+#DesktopHandlerDialog .confirm-dialog-message-layout {
     spacing: 16px;
 }
 
-.confirm-dialog-headline {
+#DesktopHandlerDialog .confirm-dialog-headline {
     font-size: 1.1em;
     font-weight: bold;
 }
 
-.confirm-dialog-description {
-  font-size: 1em;
+#DesktopHandlerDialog .confirm-dialog-description {
+    font-size: 1em;
 }
