@@ -1,37 +1,26 @@
-const AppletUUID = "{{UUID}}";
+let GlobalUtils,
+    DebugManager;
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
+} else {
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+}
 
 const {
-    gettext: Gettext,
     gi: {
-        Gio,
-        GLib
-    },
-    ui: {
-        tooltips: Tooltips
+        Gio
     }
 } = imports;
 
-Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
+const {
+    _
+} = GlobalUtils;
 
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(AppletUUID, aStr);
-
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
-
-    return Gettext.gettext(aStr);
-}
+var Debugger = new DebugManager.DebugManager();
 
 var GTop;
 
@@ -209,7 +198,7 @@ NetData.prototype = {
 };
 
 function LoadAvgData() {
-    return this._init();
+    this._init();
 }
 
 LoadAvgData.prototype = {
@@ -420,39 +409,19 @@ Graph.prototype = {
     }
 };
 
-function CustomTooltip() {
-    this._init.apply(this, arguments);
-}
-
-CustomTooltip.prototype = {
-    __proto__: Tooltips.PanelItemTooltip.prototype,
-
-    _init: function(panelItem, initTitle, orientation) {
-        Tooltips.PanelItemTooltip.prototype._init.call(this, panelItem, initTitle, orientation);
-        this._tooltip.set_style("text-align:left;");
-    },
-
-    set_text: function(text) {
-        this._tooltip.get_clutter_text().set_markup(text);
-    }
-};
-
 function colorToArray(c) {
     c = c.match(/\((.*)\)/)[1].split(",").map(Number);
     c = [c[0] / 255, c[1] / 255, c[2] / 255, 3 in c ? c[3] : 1];
     return c;
 }
 
-function escapeHTML(aStr) {
-    aStr = String(aStr)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
-    return aStr;
-}
+DebugManager.wrapPrototypes(Debugger, {
+    CpuData: CpuData,
+    LoadAvgData: LoadAvgData,
+    MemData: MemData,
+    NetData: NetData,
+    SwapData: SwapData
+});
 
-/* exported escapeHTML,
-            colorToArray
+/* exported colorToArray
  */

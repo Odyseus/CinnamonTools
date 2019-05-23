@@ -1,13 +1,20 @@
-let $;
+let GlobalUtils,
+    DebugManager,
+    CustomTooltips,
+    $;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
+    CustomTooltips = require("./customTooltips.js");
     $ = require("./utils.js");
 } else {
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
-
-const _ = $._;
 
 const {
     gi: {
@@ -26,6 +33,15 @@ const {
     }
 } = imports;
 
+const {
+    _,
+    escapeHTML
+} = GlobalUtils;
+
+const {
+    CustomPanelTooltip
+} = CustomTooltips;
+
 function SystemMonitor() {
     this._init.apply(this, arguments);
 }
@@ -33,8 +49,8 @@ function SystemMonitor() {
 SystemMonitor.prototype = {
     __proto__: Applet.IconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -45,11 +61,11 @@ SystemMonitor.prototype = {
         this.update_id = 0;
         this.orientation = aOrientation;
         this.metadata = aMetadata;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
         this.command_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         try {
-            this.tooltip = new $.CustomTooltip(this, "", this.orientation);
+            this.tooltip = new CustomPanelTooltip(this, "", this.orientation);
         } catch (aErr) {
             global.logError("Error while initializing tooltip: " + aErr.message);
         }
@@ -110,6 +126,8 @@ SystemMonitor.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -174,7 +192,9 @@ SystemMonitor.prototype = {
             "pref_load_enabled",
             "pref_load_override_graph_width",
             "pref_load_graph_width",
-            "pref_load_color_0"
+            "pref_load_color_0",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -211,7 +231,7 @@ SystemMonitor.prototype = {
 
         if (this.tooltip) {
             try {
-                this.tooltip.set_text('<span color="red"><b>' + $.escapeHTML(tt) + "</b></span>");
+                this.tooltip.set_text('<span color="red"><b>' + escapeHTML(tt) + "</b></span>");
             } catch (aErr) {
                 global.logError(aErr);
                 global.logError(_(this.metadata.name) + ": " + aErr.message);
@@ -264,8 +284,8 @@ SystemMonitor.prototype = {
                 }
                 let text = this.graphs[i].provider.getText();
                 if (this.tooltip) {
-                    tooltip = tooltip + "<b>" + $.escapeHTML(text[0]) + ":</b> " +
-                        $.escapeHTML(text[1]);
+                    tooltip = tooltip + "<b>" + escapeHTML(text[0]) + ":</b> " +
+                        escapeHTML(text[1]);
                 } else {
                     tooltip = tooltip + text[0] + " " + text[1];
                 }
@@ -540,10 +560,20 @@ SystemMonitor.prototype = {
             case "pref_overlay_key":
                 this._updateKeybindings();
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new SystemMonitor(aMetadata, aOrientation, aPanel_height, aInstance_id);
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        CustomPanelTooltip: CustomPanelTooltip,
+        SystemMonitor: SystemMonitor
+    });
+
+    return new SystemMonitor(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }
