@@ -1,11 +1,19 @@
-const AppletUUID = "{{UUID}}";
+let GlobalUtils,
+    DebugManager;
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
+} else {
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+}
 
 const {
-    gettext: Gettext,
     gi: {
         Clutter,
         Gio,
-        GLib,
         St
     },
     mainloop: Mainloop,
@@ -19,36 +27,20 @@ const {
     }
 } = imports;
 
+const {
+    CINNAMON_VERSION,
+    versionCompare
+} = GlobalUtils;
+
+var Debugger = new DebugManager.DebugManager();
+
 const ICON_SCALE_FACTOR = 0.8; // for custom panel heights, 20 (default icon size) / 25 (default panel height)
 const DEFAULT_ICON_SIZE = 20;
 const DEFAULT_PANEL_HEIGHT = Applet.DEFAULT_PANEL_HEIGHT;
 const PANEL_SYMBOLIC_ICON_DEFAULT_HEIGHT = Applet.PANEL_SYMBOLIC_ICON_DEFAULT_HEIGHT;
-const CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
 const CINN_3_2_PLUS = versionCompare(CINNAMON_VERSION, "3.2.0") >= 0;
 const CINN_3_4_PLUS = versionCompare(CINNAMON_VERSION, "3.4.0") >= 0;
 const CINN_4_0_PLUS = versionCompare(CINNAMON_VERSION, "4.0.0") >= 0;
-
-Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
-
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(AppletUUID, aStr);
-
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
-
-    return Gettext.gettext(aStr);
-}
 
 function CSCollapseBtn() {
     this._init.apply(this, arguments);
@@ -651,85 +643,9 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
 
 };
 
-/**
- * Compares two software version numbers (e.g. "1.7.1" or "1.2b").
- *
- * This function was born in http://stackoverflow.com/a/6832721.
- *
- * @param {string} v1 The first version to be compared.
- * @param {string} v2 The second version to be compared.
- * @param {object} [options] Optional flags that affect comparison behavior:
- * <ul>
- *     <li>
- *         <tt>lexicographical: true</tt> compares each part of the version strings lexicographically instead of
- *         naturally; this allows suffixes such as "b" or "dev" but will cause "1.10" to be considered smaller than
- *         "1.2".
- *     </li>
- *     <li>
- *         <tt>zeroExtend: true</tt> changes the result if one version string has less parts than the other. In
- *         this case the shorter string will be padded with "zero" parts instead of being considered smaller.
- *     </li>
- * </ul>
- * @returns {number|NaN}
- * <ul>
- *    <li>0 if the versions are equal</li>
- *    <li>a negative integer iff v1 < v2</li>
- *    <li>a positive integer iff v1 > v2</li>
- *    <li>NaN if either version string is in the wrong format</li>
- * </ul>
- *
- * @copyright by Jon Papaioannou (["john", "papaioannou"].join(".") + "@gmail.com")
- * @license This function is in the public domain. Do what you want with it, no strings attached.
- */
-function versionCompare(v1, v2, options) {
-    let lexicographical = options && options.lexicographical,
-        zeroExtend = options && options.zeroExtend,
-        v1parts = v1.split("."),
-        v2parts = v2.split(".");
-
-    function isValidPart(x) {
-        return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
-    }
-
-    if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
-        return NaN;
-    }
-
-    if (zeroExtend) {
-        while (v1parts.length < v2parts.length) {
-            v1parts.push("0");
-        }
-        while (v2parts.length < v1parts.length) {
-            v2parts.push("0");
-        }
-    }
-
-    if (!lexicographical) {
-        v1parts = v1parts.map(Number);
-        v2parts = v2parts.map(Number);
-    }
-
-    for (let i = 0; i < v1parts.length; ++i) {
-        if (v2parts.length === i) {
-            return 1;
-        }
-
-        if (v1parts[i] === v2parts[i]) {
-            continue;
-        } else if (v1parts[i] > v2parts[i]) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-
-    if (v1parts.length !== v2parts.length) {
-        return -1;
-    }
-
-    return 0;
-}
-
-/*
-exported _
- */
+DebugManager.wrapPrototypes(Debugger, {
+    CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet: CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet,
+    CSCollapseBtn: CSCollapseBtn,
+    CSRemovableSwitchMenuItem: CSRemovableSwitchMenuItem,
+    IndicatorMenuFactory: IndicatorMenuFactory
+});

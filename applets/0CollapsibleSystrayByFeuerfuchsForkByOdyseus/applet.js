@@ -1,13 +1,17 @@
-let $;
+let GlobalUtils,
+    DebugManager,
+    $;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
     $ = require("./utils.js");
 } else {
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
-
-const _ = $._;
 
 const {
     gi: {
@@ -23,6 +27,10 @@ const {
         tweener: Tweener
     }
 } = imports;
+
+const {
+    _
+} = GlobalUtils;
 
 const MENU = {
     ACTIVE_APPLICATIONS: true,
@@ -41,10 +49,10 @@ function CollapsibleSystray() {
 CollapsibleSystray.prototype = {
     __proto__: $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype,
 
-    _init: function(metadata, orientation, panel_height, instance_id) {
-        this.metadata = metadata;
-        this.instance_id = instance_id;
-        this._direction = (orientation === St.Side.TOP || orientation === St.Side.BOTTOM) ? APPLET_DIRECTION.HORIZONTAL : APPLET_DIRECTION.VERTICAL;
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        this.metadata = aMetadata;
+        this.instance_id = aInstanceId;
+        this._direction = (aOrientation === St.Side.TOP || aOrientation === St.Side.BOTTOM) ? APPLET_DIRECTION.HORIZONTAL : APPLET_DIRECTION.VERTICAL;
 
         this._initializeSettings(() => {
             // Expand/collapse button
@@ -71,10 +79,10 @@ CollapsibleSystray.prototype = {
 
             $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype._init.call(
                 this,
-                metadata,
-                orientation,
-                panel_height,
-                instance_id
+                aMetadata,
+                aOrientation,
+                aPanelHeight,
+                aInstanceId
             );
 
             this.actor.add_style_class_name("ff-collapsible-systray");
@@ -183,6 +191,8 @@ CollapsibleSystray.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -220,7 +230,9 @@ CollapsibleSystray.prototype = {
             "pref_collapse_on_leave",
             "pref_collapse_on_leave_delay",
             "pref_no_hover_for_tray_icons",
-            "pref_sort_icons"
+            "pref_sort_icons",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -612,6 +624,11 @@ CollapsibleSystray.prototype = {
             case "pref_tray_icon_padding":
                 this._updateTrayIconPadding();
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     },
 
@@ -890,6 +907,10 @@ CollapsibleSystray.prototype = {
     }
 };
 
-function main(metadata, orientation, panel_height, instance_id) {
-    return new CollapsibleSystray(metadata, orientation, panel_height, instance_id);
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        CollapsibleSystray: CollapsibleSystray
+    });
+
+    return new CollapsibleSystray(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }
