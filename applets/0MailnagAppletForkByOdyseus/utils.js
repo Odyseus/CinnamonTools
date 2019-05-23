@@ -1,4 +1,8 @@
-let XletMeta;
+let XletMeta,
+    GlobalConstants,
+    GlobalUtils,
+    Constants,
+    DebugManager;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -7,108 +11,38 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    GlobalConstants = require("./globalConstants.js");
+    GlobalUtils = require("./globalUtils.js");
+    Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+} else {
+    GlobalConstants = imports.ui.appletManager.applets["{{UUID}}"].globalConstants;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+}
+
 const {
-    gettext: Gettext,
     gi: {
-        Gio,
-        GLib,
         St
     },
     ui: {
-        messageTray: MessageTray,
         popupMenu: PopupMenu
     }
 } = imports;
 
-const dbus_xml = '<node name="/mailnag/MailnagService">\
-    <interface name="mailnag.MailnagService">\
-        <signal name="MailsRemoved">\
-            <arg type="aa{sv}" name="remaining_mails" />\
-        </signal>\
-        <signal name="MailsAdded">\
-            <arg type="aa{sv}" name="new_mails" />\
-            <arg type="aa{sv}" name="all_mails" />\
-        </signal>\
-        <method name="GetMailCount">\
-            <arg direction="out" type="u" />\
-        </method>\
-        <method name="MarkMailAsRead">\
-            <arg direction="in"  type="s" name="mail_id" />\
-        </method>\
-        <method name="Shutdown">\
-        </method>\
-        <method name="GetMails">\
-            <arg direction="out" type="aa{sv}" />\
-        </method>\
-        <method name="CheckForMails">\
-        </method>\
-    </interface>\
-</node>';
+const {
+    UNICODE_SYMBOLS
+} = GlobalConstants;
 
-var MailnagProxy = Gio.DBusProxy.makeProxyWrapper(dbus_xml);
-var DBUS_NAME = "mailnag.MailnagService";
-var DBUS_PATH = "/mailnag/MailnagService";
-var NotificationMode = {
-    DISABLED: 0,
-    SUMMARY_EXPANDED: 1,
-    SUMMARY_COMPACT: 2,
-    SUMMARY_COMPRESSED: 3,
-    SUMMARY_CUSTOM: 4
-};
+const {
+    _,
+    ngettext
+} = GlobalUtils;
 
-Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
-
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
-
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
-
-    return Gettext.gettext(aStr);
-}
-
-/**
- * Return the localized translation of a string, based on the xlet domain or the
- * current global domain (Cinnamon's), but consider plural forms. If a translation
- * is found, apply the plural formula to aN, and return the resulting message
- * (some languages have more than two plural forms). If no translation is found,
- * return singular if aN is 1; return plural otherwise.
- *
- * This function "overrides" the ngettext() function globally defined by Cinnamon.
- *
- * @param {String}  aSingular - The singular string being translated.
- * @param {String}  aPlural   - The plural string being translated.
- * @param {Integer} aN        - The number (e.g. item count) to determine the translation for
- * the respective grammatical number.
- *
- * @return {String} The translated string.
- */
-function ngettext(aSingular, aPlural, aN) {
-    let customTrans = Gettext.dngettext(XletMeta.uuid, aSingular, aPlural, aN);
-
-    if (aN === 1) {
-        if (customTrans !== aSingular) {
-            return customTrans;
-        }
-    } else {
-        if (customTrans !== aPlural) {
-            return customTrans;
-        }
-    }
-
-    return Gettext.ngettext(aSingular, aPlural, aN);
-}
+var Debugger = new DebugManager.DebugManager();
 
 function MailItem() {
     this._init.apply(this, arguments);
@@ -235,54 +169,20 @@ AccountMenu.prototype = {
     }
 };
 
-function NotificationSource() {
-    this._init.apply(this, arguments);
-}
-
-NotificationSource.prototype = {
-    __proto__: MessageTray.Source.prototype,
-
-    _init: function() {
-        MessageTray.Source.prototype._init.call(this, _(XletMeta.name));
-        this._setSummaryIcon(this.createNotificationIcon());
-    },
-
-    createNotificationIcon: function() {
-        return new St.Icon({
-            gicon: Gio.icon_new_for_string(XletMeta.path + "/icon.png"),
-            icon_size: 24
-        });
-    },
-
-    open: function() {
-        this.destroy();
-    }
-};
-
-function escapeHTML(aStr) {
-    aStr = String(aStr)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
-    return aStr;
-}
-
 function ellipsize(aString, aMaxLen) {
     if (aMaxLen < 3) {
         aMaxLen = 3;
     }
 
     return (aString.length > aMaxLen) ?
-        aString.substr(0, aMaxLen - 1) + "\u2026" :
+        aString.substr(0, aMaxLen - 1) + UNICODE_SYMBOLS.horizontal_ellipsis :
         aString;
 }
 
-/* exported DBUS_NAME,
-            DBUS_PATH,
-            NotificationMode,
-            MailnagProxy,
-            escapeHTML,
-            ellipsize
+DebugManager.wrapPrototypes(Debugger, {
+    AccountMenu: AccountMenu,
+    MailItem: MailItem,
+});
+
+/* exported ellipsize
  */

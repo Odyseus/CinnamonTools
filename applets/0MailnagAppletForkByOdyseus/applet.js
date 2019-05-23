@@ -1,14 +1,26 @@
-let $;
+let $,
+    GlobalConstants,
+    GlobalUtils,
+    Constants,
+    DebugManager,
+    DesktopNotificationsUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalConstants = require("./globalConstants.js");
+    GlobalUtils = require("./globalUtils.js");
+    Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
     $ = require("./utils.js");
 } else {
+    GlobalConstants = imports.ui.appletManager.applets["{{UUID}}"].globalConstants;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
-
-const _ = $._;
-const ngettext = $.ngettext;
 
 const {
     gi: {
@@ -28,6 +40,27 @@ const {
     }
 } = imports;
 
+const {
+    UNICODE_SYMBOLS
+} = GlobalConstants;
+
+const {
+    _,
+    ngettext,
+    escapeHTML
+} = GlobalUtils;
+
+const {
+    MailnagProxy,
+    DBUS_NAME,
+    DBUS_PATH,
+    NotificationMode
+} = Constants;
+
+const {
+    CustomNotificationSource
+} = DesktopNotificationsUtils;
+
 function Mailnag() {
     this._init.apply(this, arguments);
 }
@@ -35,8 +68,8 @@ function Mailnag() {
 Mailnag.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -46,7 +79,7 @@ Mailnag.prototype = {
 
         this.metadata = aMetadata;
         this.orientation = aOrientation;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         this._initializeSettings(() => {
@@ -83,7 +116,7 @@ Mailnag.prototype = {
 
             // watch bus
             this.busWatcherId = Gio.bus_watch_name(
-                Gio.BusType.SESSION, $.DBUS_NAME, Gio.BusNameOwnerFlags.NONE,
+                Gio.BusType.SESSION, DBUS_NAME, Gio.BusNameOwnerFlags.NONE,
                 () => this.onBusAppeared(), () => this.onBusVanished());
         });
     },
@@ -110,6 +143,8 @@ Mailnag.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -145,7 +180,9 @@ Mailnag.prototype = {
             "pref_launch_client_on_click",
             "pref_client",
             "pref_middle_click_behavior",
-            "pref_keep_one_menu_open"
+            "pref_keep_one_menu_open",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -183,7 +220,7 @@ Mailnag.prototype = {
     // called on applet startup (even though mailnag bus already exists)
     onBusAppeared: function() {
         let bus = Gio.bus_get_sync(Gio.BusType.SESSION, null);
-        this.mailnag = new $.MailnagProxy(bus, $.DBUS_NAME, $.DBUS_PATH);
+        this.mailnag = new MailnagProxy(bus, DBUS_NAME, DBUS_PATH);
 
         // connect mailnag signals
         this._onMailsAddedId = this.mailnag.connectSignal("MailsAdded",
@@ -347,7 +384,11 @@ Mailnag.prototype = {
             this.showMarkAllRead();
         }
 
-        Mainloop.idle_add(() => this.notify(newMails, allMails));
+        Mainloop.idle_add(() => {
+            this.notify(newMails, allMails);
+
+            return false;
+        });
     },
 
     onMailsRemoved: function(source, t, remainingMails) {
@@ -422,6 +463,8 @@ Mailnag.prototype = {
                         this.menuItems[id].updateTimeDisplay();
                     }
                 }
+
+                return false;
             });
         }
     },
@@ -448,7 +491,7 @@ Mailnag.prototype = {
     },
 
     notify: function(aNewMails, aAllMails, aTest = false) {
-        if (this.pref_notification_mode === $.NotificationMode.DISABLED) {
+        if (this.pref_notification_mode === NotificationMode.DISABLED) {
             return;
         }
 
@@ -467,7 +510,7 @@ Mailnag.prototype = {
             return !newMailsIDs.has(m.id);
         }));
         let mailCount = mails.length;
-        let title = $.escapeHTML(ngettext("You have %d new mail!", "You have %d new mails!", mailCount)
+        let title = escapeHTML(ngettext("You have %d new mail!", "You have %d new mails!", mailCount)
             .format(mailCount));
         let body = "";
         let markReadButtonLabel = mailCount > 1 ?
@@ -478,16 +521,16 @@ Mailnag.prototype = {
             this.pref_notification_max_mails;
         let msgTemplate;
         switch (this.pref_notification_mode) {
-            case $.NotificationMode.SUMMARY_EXPANDED:
+            case NotificationMode.SUMMARY_EXPANDED:
                 msgTemplate = "%s\n<i>%s</i>\n\n";
                 break;
-            case $.NotificationMode.SUMMARY_COMPACT:
+            case NotificationMode.SUMMARY_COMPACT:
                 msgTemplate = "<b>%s:</b>\n%s\n";
                 break;
-            case $.NotificationMode.SUMMARY_COMPRESSED:
+            case NotificationMode.SUMMARY_COMPRESSED:
                 msgTemplate = "%s - <i>%s</i>\n";
                 break;
-            case $.NotificationMode.SUMMARY_CUSTOM:
+            case NotificationMode.SUMMARY_CUSTOM:
                 msgTemplate = this.pref_notification_custom_template;
                 break;
         }
@@ -508,7 +551,7 @@ Mailnag.prototype = {
                     this.pref_notification_subject_max_chars)
                 .replace(/\s+/g, " ");
 
-            if (this.pref_notification_mode === $.NotificationMode.SUMMARY_CUSTOM) {
+            if (this.pref_notification_mode === NotificationMode.SUMMARY_CUSTOM) {
                 /* NOTE: Since the format function added by CJS is very limited (it doesn't
                  * support keyword arguments), I had to improvise and implement placeholders.
                  */
@@ -517,13 +560,13 @@ Mailnag.prototype = {
                     .replace("{{account}}", account)
                     .replace("{{subject}}", subject);
             } else {
-                let from = this.pref_notification_mode === $.NotificationMode.SUMMARY_COMPRESSED ?
+                let from = this.pref_notification_mode === NotificationMode.SUMMARY_COMPRESSED ?
                     sender :
-                    sender + " \u27A4 " + account;
+                    sender + " " + UNICODE_SYMBOLS.black_rightwards_arrowhead + " " + account;
 
                 body += msgTemplate.format(
-                    $.escapeHTML(from),
-                    $.escapeHTML(subject)
+                    escapeHTML(from),
+                    escapeHTML(subject)
                 );
             }
         }
@@ -531,7 +574,7 @@ Mailnag.prototype = {
         if (mailCount > this.pref_notification_max_mails) {
             let additionalMailsCount = mailCount - this.pref_notification_max_mails;
             body += "<i>%s</i>".format(
-                $.escapeHTML(
+                escapeHTML(
                     ngettext("(and %d more)", "(and %d more)", additionalMailsCount)
                     .format(additionalMailsCount)
                 )
@@ -601,8 +644,8 @@ Mailnag.prototype = {
                 });
 
                 Main.criticalNotify(
-                    $.escapeHTML(_(this.metadata.name)),
-                    $.escapeHTML(aErr),
+                    escapeHTML(_(this.metadata.name)),
+                    escapeHTML(aErr),
                     icon
                 );
                 global.logError(aErr);
@@ -612,7 +655,9 @@ Mailnag.prototype = {
 
     _ensureNotificationSource: function() {
         if (!this._notificationSource) {
-            this._notificationSource = new $.NotificationSource();
+            this._notificationSource = new CustomNotificationSource(
+                escapeHTML(_(this.metadata.name))
+            );
             this._notificationSource.connect("destroy", () => {
                 this._notificationSource = null;
             });
@@ -909,10 +954,20 @@ Mailnag.prototype = {
             case "pref_overlay_key":
                 this._updateKeybindings();
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new Mailnag(aMetadata, aOrientation, aPanel_height, aInstance_id);
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        CustomNotificationSource: CustomNotificationSource,
+        Mailnag: Mailnag
+    });
+
+    return new Mailnag(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }
