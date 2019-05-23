@@ -1,12 +1,16 @@
-const AppletUUID = "{{UUID}}";
-
-let $;
+let $,
+    GlobalUtils,
+    DebugManager;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
 } else {
-    $ = imports.ui.appletManager.applets[AppletUUID].utils;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
 }
 
 const {
@@ -28,6 +32,11 @@ const {
     }
 } = imports;
 
+const {
+    CINNAMON_VERSION,
+    versionCompare
+} = GlobalUtils;
+
 function WindowList() {
     this._init.apply(this, arguments);
 }
@@ -35,8 +44,8 @@ function WindowList() {
 WindowList.prototype = {
     __proto__: Applet.Applet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.Applet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.Applet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         this.signals = new SignalManager.SignalManager(null);
 
@@ -47,7 +56,7 @@ WindowList.prototype = {
         }
 
         this.metadata = aMetadata;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
 
         this.actor.set_track_hover(false);
         this.actor.set_style_class_name("window-list-box");
@@ -55,7 +64,7 @@ WindowList.prototype = {
 
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 4.0.x+
-        if ($.versionCompare($.CINNAMON_VERSION, "4.0.0") >= 0) {
+        if (versionCompare(CINNAMON_VERSION, "4.0.0") >= 0) {
             this.icon_size = this.getPanelIconSize(St.IconType.FULLCOLOR);
         }
 
@@ -95,7 +104,7 @@ WindowList.prototype = {
 
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
-            if ($.versionCompare($.CINNAMON_VERSION, "3.2.0") >= 0) {
+            if (versionCompare(CINNAMON_VERSION, "3.2.0") >= 0) {
                 this.signals.connect(global.screen, "window-skip-taskbar-changed", this._onWindowSkipTaskbarChanged, this);
             }
 
@@ -135,6 +144,8 @@ WindowList.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -174,7 +185,9 @@ WindowList.prototype = {
             "pref_hide_tooltips",
             "pref_hide_labels",
             "pref_invert_menu_items_order",
-            "pref_sub_menu_placement"
+            "pref_sub_menu_placement",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -213,7 +226,7 @@ WindowList.prototype = {
     on_panel_height_changed: function() {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 4.0.x+
-        if ($.versionCompare($.CINNAMON_VERSION, "4.0.0") >= 0) {
+        if (versionCompare(CINNAMON_VERSION, "4.0.0") >= 0) {
             this.icon_size = this.getPanelIconSize(St.IconType.FULLCOLOR);
         }
 
@@ -612,10 +625,19 @@ WindowList.prototype = {
             case "pref_hide_labels":
                 this._onLabelsHidden();
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new WindowList(aMetadata, aOrientation, aPanel_height, aInstance_id);
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        WindowList: WindowList
+    });
+
+    return new WindowList(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }
