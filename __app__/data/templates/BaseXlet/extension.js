@@ -1,27 +1,25 @@
-let $;
+let XletMeta = null,
+    GlobalUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
-    $ = require("./utils.js");
+    GlobalUtils = require("./globalUtils.js");
 } else {
-    $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
+    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
 }
 
-const _ = $._;
+const {
+    _
+} = GlobalUtils;
 
-let xletMeta = null;
-
-// Called when extension is loaded
 function init(aXletMeta) {
-    xletMeta = aXletMeta;
+    XletMeta = aXletMeta;
 }
 
-// Called when extension is loaded
 function enable() {
     //
 }
 
-// Called when extension gets disabled
 function disable() {
     //
 }

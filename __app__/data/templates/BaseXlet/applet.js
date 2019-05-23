@@ -1,18 +1,25 @@
-let $;
+let $,
+    GlobalUtils,
+    DebugManager;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
 } else {
-    $ = imports.ui.$$XLET_MANAGER$$.$$XLET_TYPE$$s["{{UUID}}"].utils;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
 }
 
-const _ = $._;
+const {
+    _
+} = GlobalUtils;
 
 const {
     gi: {
         GLib,
-        Gtk,
         St
     },
     mainloop: Mainloop,
@@ -26,15 +33,15 @@ const {
     }
 } = imports;
 
-function MyApplet(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    this._init(aMetadata, aOrientation, aPanel_height, aInstance_id);
+function MyApplet() {
+    this._init.apply(this, arguments);
 }
 
 MyApplet.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -44,7 +51,7 @@ MyApplet.prototype = {
 
         this.metadata = aMetadata;
         this.orientation = aOrientation;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
 
         this._initializeSettings(() => {
             /* NOTE: Direct function calls.
@@ -55,8 +62,6 @@ MyApplet.prototype = {
              */
             // Add new items to the applet context menu or override the default ones.
             this._expandAppletContextMenu();
-            // To be able to use icons stored inside a folder called "icons" by name.
-            Gtk.IconTheme.get_default().append_search_path(aMetadata.path + "/icons/");
         }, () => {
             /* NOTE: Idle function calls.
              * All these function calls are performed inside a Mainloop.idle_add() call.
@@ -87,6 +92,8 @@ MyApplet.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -114,7 +121,9 @@ MyApplet.prototype = {
         };
         let prefKeysArray = [
             "pref_custom_icon_for_applet",
-            "pref_custom_label_for_applet"
+            "pref_custom_label_for_applet",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -219,10 +228,19 @@ MyApplet.prototype = {
             case "pref_custom_label_for_applet":
                 this._updateIconAndLabel();
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new MyApplet(aMetadata, aOrientation, aPanel_height, aInstance_id);
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        MyApplet: MyApplet
+    });
+
+    return new MyApplet(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }
