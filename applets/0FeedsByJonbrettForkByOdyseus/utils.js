@@ -1,4 +1,9 @@
-let XletMeta;
+let XletMeta,
+    GlobalUtils,
+    Constants,
+    DebugManager,
+    CustomTooltips,
+    CustomFileUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -7,12 +12,25 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    CustomTooltips = require("./customTooltips.js");
+    CustomFileUtils = require("./customFileUtils.js");
+} else {
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
+    CustomFileUtils = imports.ui.appletManager.applets["{{UUID}}"].customFileUtils;
+}
+
 const {
-    gettext: Gettext,
     gi: {
         Clutter,
         Gio,
-        GLib,
         Pango,
         Soup,
         St
@@ -22,94 +40,45 @@ const {
     },
     signals: Signals,
     ui: {
-        main: Main,
-        messageTray: MessageTray,
         popupMenu: PopupMenu,
         tooltips: Tooltips
     }
 } = imports;
 
-var DataStorage = GLib.get_home_dir() + "/.cinnamon/" + XletMeta.uuid + "-Storage";
+const {
+    _,
+    escapeUnescapeReplacer,
+    escapeHTML
+} = GlobalUtils;
 
-const MIN_MENU_WIDTH = 400;
-const FEED_LOCAL_DATA_FILE = DataStorage + "/%s.json";
+const {
+    saveToFileAsync
+} = CustomFileUtils;
 
-Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
+const {
+    InteligentTooltip
+} = CustomTooltips;
 
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
+const {
+    MIN_MENU_WIDTH,
+    FEED_LOCAL_DATA_FILE,
+    DataStorage
+} = Constants;
 
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
+const {
+    LoggingLevel
+} = DebugManager;
 
-    return Gettext.gettext(aStr);
+var Debugger = new DebugManager.DebugManager();
+
+function runtimeInfo(aMsg) {
+    Debugger.logging_level !== LoggingLevel.NORMAL && aMsg &&
+        global.log("[FeedReader] " + aMsg);
 }
 
-var escapeUnescapeReplacer = {
-    escapeHash: {
-        _: (input) => {
-            let ret = escapeUnescapeReplacer.escapeHash[input];
-            if (!ret) {
-                if (input.length - 1) {
-                    ret = String.fromCharCode(parseInt(input.substring(input.length - 3 ? 2 : 1), 16));
-                } else {
-                    let code = input.charCodeAt(0);
-                    ret = code < 256 ? "%" + (0 + code.toString(16)).slice(-2).toUpperCase() : "%u" + ("000" + code.toString(16)).slice(-4).toUpperCase();
-                }
-                escapeUnescapeReplacer.escapeHash[ret] = input;
-                escapeUnescapeReplacer.escapeHash[input] = ret;
-            }
-            return ret;
-        }
-    },
-
-    escape: (aStr) => {
-        return aStr.toString().replace(/[^\w @\*\-\+\.\/]/g, (aChar) => {
-            return escapeUnescapeReplacer.escapeHash._(aChar);
-        });
-    },
-
-    unescape: (aStr) => {
-        return aStr.toString().replace(/%(u[\da-f]{4}|[\da-f]{2})/gi, (aSeq) => {
-            return escapeUnescapeReplacer.escapeHash._(aSeq);
-        });
-    }
-};
-
-function FeedMessageTraySource() {
-    this._init.apply(this, arguments);
+function runtimeError(aMsg) {
+    aMsg && global.logError("[FeedReader] " + aMsg);
 }
-
-FeedMessageTraySource.prototype = {
-    __proto__: MessageTray.Source.prototype,
-
-    _init: function() {
-        MessageTray.Source.prototype._init.call(this, _(XletMeta.name));
-        this._setSummaryIcon(this.createNotificationIcon());
-    },
-
-    createNotificationIcon: function() {
-        return new St.Icon({
-            gicon: Gio.icon_new_for_string(XletMeta.path + "/icon.png"),
-            icon_size: 24
-        });
-    },
-
-    open: function() {
-        this.destroy();
-    }
-};
 
 /* Menu item for displaying the feed title*/
 function FeedSubMenuItem() {
@@ -168,19 +137,17 @@ FeedSubMenuItem.prototype = {
 
         this.menu = new PopupMenu.PopupSubMenu(this.actor, this._triangle);
 
-        this.logger = params.logger;
         this.max_items = params.max_items;
         this.show_feed_image = params.show_feed_image; // TODO: Not implemented.
         this.show_read_items = params.show_read_items;
         this.description_max_length = params.description_max_length;
         this.tooltip_max_width = params.tooltip_max_width;
         this.unread_count = 0;
-        this.logger.debug("Loading FeedReader url: " + aURL);
+        runtimeInfo("Loading url: " + aURL);
         this.custom_title = params.custom_title;
 
         this.reader = new FeedReader(
             this,
-            this.logger,
             this.feed_id,
             aURL,
             this.notify, {
@@ -199,7 +166,7 @@ FeedSubMenuItem.prototype = {
         );
 
         this.reader.connect("items-loaded", () => {
-            this.logger.debug("items-loaded Event Fired for reader");
+            runtimeInfo("items-loaded Event Fired for reader");
             // Title needs to be set on items-loaded event
             this.rssTitle = this.custom_title ? this.custom_title : this.reader.title;
             this._title.set_text(this.rssTitle);
@@ -236,7 +203,6 @@ FeedSubMenuItem.prototype = {
     },
 
     update: function() {
-        this.logger.debug("");
         this.menu.removeAll();
         this.menuItemCount = 0;
         let msg = "Finding first " +
@@ -245,7 +211,7 @@ FeedSubMenuItem.prototype = {
             this.reader.items.length +
             " total items";
 
-        this.logger.debug(msg);
+        runtimeInfo(msg);
         let menu_items = 0;
         this.unread_count = 0;
 
@@ -258,7 +224,7 @@ FeedSubMenuItem.prototype = {
                 this.unread_count++;
             }
 
-            let item = new FeedMenuItem(this, this.reader.items[i], this.title_length, this.logger);
+            let item = new FeedMenuItem(this, this.reader.items[i], this.title_length);
             item.connect("item-read", () => {
                 this.update();
             });
@@ -270,8 +236,8 @@ FeedSubMenuItem.prototype = {
         // Add the menu items and close the menu?
         this._add_submenu();
 
-        this.logger.debug("Items Loaded: " + menu_items);
-        this.logger.debug("Link: " + this.reader.url);
+        runtimeInfo("Items Loaded: " + menu_items);
+        runtimeInfo("Link: " + this.reader.url);
 
         let tooltipText = "<b>%s:</b> \n".format(escapeHTML(_("Right Click to open feed"))) +
             escapeHTML(this.reader.url);
@@ -298,7 +264,7 @@ FeedSubMenuItem.prototype = {
     },
 
     _onButtonReleaseEvent: function(actor, event) {
-        this.logger.debug("Button Released Event: " + event.get_button());
+        runtimeInfo("Button Released Event: " + event.get_button());
 
         if (event.get_button() == 3) {
             // Right click, open feed url
@@ -326,14 +292,14 @@ FeedSubMenuItem.prototype = {
     },
 
     open_menu: function() {
-        this.logger.debug("Feed id:" + this.feed_id);
+        runtimeInfo("Feed id:" + this.feed_id);
 
         this.menu.open(true);
         this._applet.open_menu = this;
     },
 
     close_menu: function() {
-        this.logger.debug("Feed id:" + this.feed_id);
+        runtimeInfo("Feed id:" + this.feed_id);
         this.menu.close(false);
     },
 
@@ -381,13 +347,12 @@ function FeedMenuItem() {
 FeedMenuItem.prototype = {
     __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
 
-    _init: function(parent, item, width, logger, params) { // jshint ignore:line
+    _init: function(parent, item, width) {
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
             hover: false
         });
         this._item_menu_count = 0;
         this.parent = parent;
-        this.logger = logger;
         this.show_action_items = false;
 
         this.menu = new PopupMenu.PopupSubMenu(this.actor);
@@ -430,7 +395,7 @@ FeedMenuItem.prototype = {
             expand: true
         });
 
-        this.tooltip = new CustomTooltip(this.actor, "");
+        this.tooltip = new InteligentTooltip(this.actor, "");
         this.tooltip._tooltip.set_style("text-align: left;max-width: %spx;"
             .format(this.parent.tooltip_max_width));
         this.tooltip._tooltip.get_clutter_text().set_line_wrap(true);
@@ -445,7 +410,7 @@ FeedMenuItem.prototype = {
                 "<b>%s</b>: ".format(_("Published")) + item.published + "\n\n" +
                 item.description);
         } catch (aErr) {
-            this.logger.warning("Error Tweaking Tooltip: " + aErr);
+            runtimeError("Error Tweaking Tooltip: " + aErr);
 
             let description = item.title + "\n" +
                 "%s: ".format(_("Published")) + item.published + "\n\n" +
@@ -464,7 +429,7 @@ FeedMenuItem.prototype = {
     },
 
     _onButtonReleaseEvent: function(actor, event) {
-        this.logger.debug("Button Released Event: " + event.get_button());
+        runtimeInfo("Button Released Event: " + event.get_button());
 
         if (event.get_button() == 1) {
             this.activate(event);
@@ -473,7 +438,7 @@ FeedMenuItem.prototype = {
 
         // Is this feed expanded?
         if (event.get_button() == 3) {
-            this.logger.debug("Show Submenu");
+            runtimeInfo("Show Submenu");
             this.toggleContextMenu();
             // this.open_menu();
             return true;
@@ -489,7 +454,6 @@ FeedMenuItem.prototype = {
 
     mark_read: function() {
         /* Marks the item read without opening it. */
-        this.logger.debug("mark_read");
         this.item.mark_read();
         this._icon_name = this.parent._applet.pref_feed_icon;
         this.icon.set_icon_name(this._icon_name);
@@ -506,8 +470,6 @@ FeedMenuItem.prototype = {
     },
 
     _open_context_menu: function() {
-        this.logger.debug("");
-
         if (this._item_menu_count == 0) {
             // No submenu item(s), add the item(s)
             let menu_item;
@@ -520,15 +482,12 @@ FeedMenuItem.prototype = {
     },
 
     _close_context_menu: function() {
-        this.logger.debug("");
         // no need to remove, just close the menu.
 
         this.menu.close();
     },
 
     toggleContextMenu: function() {
-        this.logger.debug("");
-
         if (!this.menu.isOpen) {
             this._open_context_menu();
         } else {
@@ -556,7 +515,7 @@ FeedMenuItem.prototype = {
                 return _("(<1%s) ".format(_("h")));
             }
         } catch (aErr) {
-            this.logger.error(aErr);
+            global.logError(aErr);
             return "";
         }
     },
@@ -583,7 +542,6 @@ FeedContextMenuItem.prototype = {
         });
 
         this._source_item = feed_display_menu_item;
-        this.logger = feed_display_menu_item.logger;
         this._action = action;
         this.label = new St.Label({
             text: label
@@ -596,29 +554,26 @@ FeedContextMenuItem.prototype = {
     },
 
     activate: function(event) { // jshint ignore:line
-        this.logger.debug("");
-
         switch (this._action) {
             case "mark_all_read":
-                this.logger.debug("Marking all items read");
+                runtimeInfo("Marking all items read");
                 try {
                     this._source_item.reader.mark_all_items_read();
                     this._source_item.update();
                     // All items have been marked so we know we are opening a new feed menu.
                     this._source_item._applet.toggle_feeds(null);
                 } catch (aErr) {
-                    this.logger.error("Error: " + aErr);
+                    global.logError(aErr);
                 }
                 break;
             case "mark_next_read":
-                this.logger.debug("Marking next " + this._source_item.max_items + " items read");
+                runtimeInfo("Marking next " + this._source_item.max_items + " items read");
                 try {
                     this._source_item.reader.mark_next_items_read(this._source_item.max_items);
                     this._source_item.update();
                     this._source_item._applet.toggle_feeds(this._source_item, true);
-
                 } catch (aErr) {
-                    this.logger.error("error: " + aErr);
+                    global.logError(aErr);
                 }
 
                 break;
@@ -627,7 +582,7 @@ FeedContextMenuItem.prototype = {
                     let redirected_url = this._source_item.reader.redirected_url;
                     let current_url = this._source_item.reader.url;
 
-                    this.logger.debug("Updating feed to point to: " + redirected_url);
+                    runtimeInfo("Updating feed to point to: " + redirected_url);
 
                     // Update the feed, no GUI is shown
 
@@ -640,18 +595,18 @@ FeedContextMenuItem.prototype = {
                 }
                 break;
             case "mark_post_read":
-                this.logger.debug("Marking item 'read'");
+                runtimeInfo("Marking item 'read'");
                 this._source_item.mark_read();
                 break;
 
                 // TODO: Not implemented.
                 // case "delete_all_items":
-                //     this.logger.debug("Marking all items 'deleted'");
+                //     runtimeInfo("Marking all items 'deleted'");
                 //     break;
 
                 // TODO: Not implemented.
                 // case "delete_post":
-                //     this.logger.debug("Deleting item");
+                //     runtimeInfo("Deleting item");
                 //     break;
         }
     },
@@ -719,9 +674,8 @@ function FeedReader() {
 }
 
 FeedReader.prototype = {
-    _init: function(parent, logger, id, url, notify, callbacks) {
+    _init: function(parent, id, url, notify, callbacks) {
         this.parent = parent;
-        this.logger = logger;
         this.id = id;
         this.item_status = [];
         this.url = url;
@@ -742,7 +696,7 @@ FeedReader.prototype = {
             Soup.Session.prototype.add_feature.call(this.session,
                 new Soup.ProxyResolverDefault());
         } catch (aErr) {
-            this.logger.error(aErr);
+            global.logError(aErr);
             throw "Failed to create HTTP session: " + aErr;
         }
 
@@ -770,20 +724,17 @@ FeedReader.prototype = {
     },
 
     download_feed: function() {
-        this.logger.debug("");
-
         if (this._shouldUpdate() || this.parent._applet.force_download) {
-            this.logger.debug("Processing newly downloaded feed.");
+            runtimeInfo("Processing newly downloaded feed.");
             Util.spawn_async([XletMeta.path + "/python/get_feed.py", this.url],
                 (response, aLocal) => this.process_feed(response, aLocal));
         } else {
-            this.logger.debug("Processing locally stored feed.");
+            runtimeInfo("Processing locally stored feed.");
             this.process_feed_locally();
         }
     },
 
     process_feed_locally: function() {
-        this.logger.debug("");
         this.entries_file.load_contents_async(null, (aFile, aResponce) => {
             let success,
                 contents = "",
@@ -792,21 +743,24 @@ FeedReader.prototype = {
             try {
                 [success, contents, tag] = aFile.load_contents_finish(aResponce);
             } catch (aErr) {
-                this.logger.warning(aErr);
+                global.logError(aErr);
             }
 
             try {
+                /* NOTE: The original authors were right on the money!
+                 * Do not even think about removing the escape/unescape processes.
+                 * That thing bit me right in the arse!!!
+                 */
                 this.process_feed(escapeUnescapeReplacer.unescape(contents), true);
             } catch (aErr) {
                 /* Invalid file contents */
-                this.logger.error("Failed to read feed data file for " + this.url + ":" + aErr);
+                runtimeError("Failed to read feed data file for " + this.url + ":" + aErr);
             }
         });
     },
 
     process_feed: function(response, aLocal) {
-        this.logger.debug("");
-        this.logger.debug(response);
+        runtimeInfo(response);
 
         if (response.trim() === "feedparser_error") {
             this.parent._applet._informMissingDependency();
@@ -820,6 +774,10 @@ FeedReader.prototype = {
 
         // If response is the data coming from the on-line source, save it for later be used locally.
         if (!aLocal) {
+            /* NOTE: The original authors were right on the money!
+             * Do not even think about removing the escape/unescape processes.
+             * That thing bit me right in the arse!!!
+             */
             saveToFileAsync(escapeUnescapeReplacer.escape(response), this.entries_file);
         }
 
@@ -834,13 +792,13 @@ FeedReader.prototype = {
             }
 
             this.title = info.title;
-            this.logger.debug("Processing feed: " + info.title);
+            runtimeInfo("Processing feed: " + info.title);
 
             // Check if feed has a permanent redirect
             if (!aLocal && info.redirected_url != undefined) {
                 this.is_redirected = true;
                 this.redirected_url = info.redirected_url;
-                this.logger.debug("Feed has been redirected to: " + info.redirected_url + "(Please update feed)");
+                runtimeInfo("Feed has been redirected to: " + info.redirected_url + "(Please update feed)");
                 // eventually need to address this more forcefully
             }
 
@@ -894,12 +852,12 @@ FeedReader.prototype = {
                 }
             }
         } catch (aErr) {
-            this.logger.error(aErr);
+            global.logError(aErr);
         }
 
         /* Were there any new items? */
         if (unread_items.length > 0) {
-            this.logger.debug("Fetched " + unread_items.length + " new items from " + this.url);
+            runtimeInfo("Fetched " + unread_items.length + " new items from " + this.url);
             try {
                 this.items = new_items;
                 // Update the saved items so we can keep track of new and unread items.
@@ -907,7 +865,7 @@ FeedReader.prototype = {
                 this.callbacks.onUpdate();
 
                 if (!this.notify) {
-                    this.logger.debug("Item level notifications disabled");
+                    runtimeInfo("Item level notifications disabled");
                 } else {
                     if (this.parent._applet.pref_unified_notifications || unread_items.length > 1) {
                         this.callbacks.onNewItem(this, this.title, _("%d unread items!".format(unread_items.length)));
@@ -916,7 +874,7 @@ FeedReader.prototype = {
                     }
                 }
             } catch (aErr) {
-                this.logger.error(aErr);
+                global.logError(aErr);
             }
         }
 
@@ -939,12 +897,10 @@ FeedReader.prototype = {
         this.callbacks.onDownloaded();
         // this.emit('')
 
-        this.logger.debug("Processing Items took: " + time + " ms");
+        runtimeInfo("Processing Items took: " + time + " ms");
     },
 
     mark_all_items_read: function() {
-        this.logger.debug("");
-
         let i = this.items.length;
         while (i--) {
             this.items[i].mark_read(false);
@@ -957,7 +913,7 @@ FeedReader.prototype = {
     },
 
     mark_next_items_read: function(number) {
-        this.logger.debug("Number of items marked as read:" + number);
+        runtimeInfo("Number of items marked as read:" + number);
 
         // Mark next unread n items read
         let marked = 0;
@@ -979,19 +935,16 @@ FeedReader.prototype = {
     },
 
     on_item_read: function() {
-        this.logger.debug("");
         // TODO: Switch to be an event
         this.callbacks.onItemRead(this);
         this.save_items();
     },
 
     on_item_deleted: function() {
-        this.logger.debug("");
         this.save_items();
     },
 
     save_items: function() {
-        this.logger.debug("");
         try {
             let dir = Gio.file_parse_name(DataStorage);
             if (!dir.query_exists(null)) {
@@ -1004,7 +957,7 @@ FeedReader.prototype = {
              * later */
             // Filename is now the uuid created when a feed is added to the list.
             let filename = DataStorage + "/" + this.id;
-            this.logger.debug("Saving feed data to: " + filename);
+            runtimeInfo("Saving feed data to: " + filename);
 
             let file = Gio.file_parse_name(filename);
 
@@ -1027,6 +980,10 @@ FeedReader.prototype = {
                 "item_list": item_list
             };
 
+            /* NOTE: The original authors were right on the money!
+             * Do not even think about removing the escape/unescape processes.
+             * That thing bit me right in the arse!!!
+             */
             let output = escapeUnescapeReplacer.escape(JSON.stringify(data));
             saveToFileAsync(output, file);
         } catch (aErr) {
@@ -1039,8 +996,6 @@ FeedReader.prototype = {
      * data and thus without a network connection we will not get the title information.
      */
     load_items: function() {
-        this.logger.debug("");
-
         let file = Gio.file_new_for_path(DataStorage + "/" + this.id);
 
         file.load_contents_async(null, (aFile, aResponce) => {
@@ -1051,12 +1006,12 @@ FeedReader.prototype = {
             try {
                 [success, contents, tag] = aFile.load_contents_finish(aResponce);
             } catch (aErr) {
-                this.logger.warning(aErr);
+                global.logError(aErr);
             }
 
             if (!contents) {
                 this.item_status = [];
-                this.logger.debug("Number Loaded: 0");
+                runtimeInfo("Number Loaded: 0");
                 this.title = _("Loading feed");
                 this.emit("items-loaded");
                 return;
@@ -1065,7 +1020,7 @@ FeedReader.prototype = {
             try {
                 /* NOTE: The original authors were right on the money!
                  * Do not even think about removing the escape/unescape processes.
-                 * That thing bite me right in the arse!!!
+                 * That thing bit me right in the arse!!!
                  */
                 let data = JSON.parse(escapeUnescapeReplacer.unescape(contents));
 
@@ -1082,13 +1037,13 @@ FeedReader.prototype = {
                         this.item_status = [];
                     }
 
-                    this.logger.debug("Number Loaded: " + this.item_status.length);
+                    runtimeInfo("Number Loaded: " + this.item_status.length);
                     this.emit("items-loaded");
                 } else {
                     global.logError("Invalid data file for " + this.url);
                 }
             } catch (aErr) {
-                this.logger.error("Failed to read feed data file for " + this.url + ":" + aErr);
+                runtimeError("Failed to read feed data file for " + this.url + ":" + aErr);
             }
         });
     },
@@ -1124,7 +1079,7 @@ FeedReader.prototype = {
     },
 
     on_error: function(msg, details) {
-        this.logger.debug("FeedReader (" + this.url + "): " + msg);
+        runtimeInfo("FeedReader (" + this.url + "): " + msg);
         this.error = true;
         this.error_messsage = msg;
         this.error_details = details;
@@ -1194,202 +1149,10 @@ FeedReader.prototype = {
 };
 Signals.addSignalMethods(FeedReader.prototype);
 
-/**
- * Logger
- * Implemented using the functions found in:
- * http://stackoverflow.com/a/13227808
- */
-function Logger() {
-    this._init.apply(this, arguments);
-}
-
-Logger.prototype = {
-    _init: function(aDisplayName, aVerbose) {
-        this.verbose = aVerbose;
-        this.base_message = "[" + aDisplayName + "::%s]%s";
-    },
-
-    /**
-     * debug
-     *
-     * Log a message only when verbose logging is enabled.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    debug: function(aMsg) {
-        if (this.verbose) {
-            global.log(this.base_message.format(this._getCaller(), this._formatMessage(aMsg)));
-        }
-    },
-
-    /**
-     * error
-     *
-     * Log an error message.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    error: function(aMsg) {
-        global.logError(this.base_message.format(this._getCaller(), this._formatMessage(aMsg)));
-    },
-
-    /**
-     * warning
-     *
-     * Log a warning message.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    warning: function(aMsg) {
-        global.logWarning(this.base_message.format(this._getCaller(), this._formatMessage(aMsg)));
-    },
-
-    /**
-     * info
-     *
-     * Log an info message.
-     *
-     * @param {String} aMsg - The message to log.
-     */
-    info: function(aMsg) {
-        global.log(this.base_message.format(this._getCaller(), this._formatMessage(aMsg)));
-    },
-
-    /**
-     * _formatMessage
-     *
-     * It just adds a space at the beginning of a string if the string isn't empty.
-     *
-     * @param  {String} aMsg The message to "format".
-     * @return {String}      The formatted message.
-     */
-    _formatMessage: function(aMsg) {
-        return aMsg ? " " + aMsg : "";
-    },
-
-    /**
-     * [_getCaller description]
-     * @return {String} A string representing the caller function name plus the
-     * file name and line number.
-     */
-    _getCaller: function() {
-        let stack = this._getStack();
-
-        // Remove superfluous function calls on stack
-        stack.shift(); // _getCaller --> _getStack
-        stack.shift(); // debug --> _getCaller
-
-        let caller = stack[0].split("/");
-        // Return only the caller function and the file name and line number.
-        return (caller.shift() + "@" + caller.pop()).replace(/\@+/g, "@");
-    },
-
-    _getStack: function() {
-        // Save original Error.prepareStackTrace
-        let origPrepareStackTrace = Error.prepareStackTrace;
-
-        // Override with function that just returns `stack`
-        Error.prepareStackTrace = (_, stack) => {
-            return stack;
-        };
-
-        // Create a new `Error`, which automatically gets `stack`
-        let err = new Error();
-
-        // Evaluate `err.stack`, which calls our new `Error.prepareStackTrace`
-        let stack = err.stack.split("\n");
-
-        // Restore original `Error.prepareStackTrace`
-        Error.prepareStackTrace = origPrepareStackTrace;
-
-        // Remove superfluous function call on stack
-        stack.shift(); // getStack --> Error
-
-        return stack;
-    }
-};
-
-function escapeHTML(aStr) {
-    aStr = String(aStr)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
-    return aStr;
-}
-
-function saveToFileAsync(aData, aFile, aCallback) {
-    let data = new GLib.Bytes(aData);
-
-    aFile.replace_async(null, false, Gio.FileCreateFlags.REPLACE_DESTINATION,
-        GLib.PRIORITY_DEFAULT, null,
-        (aObj, aResponse) => {
-            let stream = aObj.replace_finish(aResponse);
-
-            stream.write_bytes_async(data, GLib.PRIORITY_DEFAULT,
-                null,
-                (aW_obj, aW_res) => {
-
-                    aW_obj.write_bytes_finish(aW_res);
-                    stream.close(null);
-
-                    if (aCallback && typeof aCallback === "function") {
-                        aCallback();
-                    }
-                });
-        });
-}
-
-/**
- * An instance of Tooltips.Tooltip that positions the tooltip above the
- * mouse cursor if the tooltip is to big to fit the screen.
- *
- * This is only useful for tooltips close the the bottom of the screen.
- * Top panel users will surely be screwed if a tooltip is bigger than the
- * screen height. LOL
- */
-function CustomTooltip() {
-    this._init.apply(this, arguments);
-}
-
-CustomTooltip.prototype = {
-    __proto__: Tooltips.Tooltip.prototype,
-
-    _init: function(aActor, aTitle) {
-        Tooltips.Tooltip.prototype._init.call(this, aActor, aTitle);
-
-        this.desktop_settings = new Gio.Settings({
-            schema_id: "org.cinnamon.desktop.interface"
-        });
-    },
-
-    show: function() {
-        if (this._tooltip.get_text() == "" || !this.mousePosition)
-            return;
-
-        let tooltipWidth = this._tooltip.get_allocation_box().x2 - this._tooltip.get_allocation_box().x1;
-        let tooltipHeight = this._tooltip.get_height();
-
-        let monitor = Main.layoutManager.findMonitorForActor(this.item);
-
-        let cursorSize = this.desktop_settings.get_int("cursor-size");
-        let tooltipTop = this.mousePosition[1] + Math.round(cursorSize / 1.5);
-        let tooltipLeft = this.mousePosition[0] + Math.round(cursorSize / 2);
-        tooltipLeft = Math.max(tooltipLeft, monitor.x);
-        tooltipLeft = Math.min(tooltipLeft, monitor.x + monitor.width - tooltipWidth);
-
-        if (tooltipTop + tooltipHeight > monitor.height) {
-            tooltipTop = tooltipTop - tooltipHeight - Math.round(cursorSize);
-        }
-
-        this._tooltip.set_position(tooltipLeft, tooltipTop);
-
-        this._tooltip.show();
-        this._tooltip.raise_top();
-        this.visible = true;
-    }
-};
-
-/* exported escapeHTML
- */
+DebugManager.wrapPrototypes(Debugger, {
+    FeedDataItem: FeedDataItem,
+    FeedMenuItem: FeedMenuItem,
+    FeedReader: FeedReader,
+    FeedSubMenuItem: FeedSubMenuItem,
+    InteligentTooltip: InteligentTooltip
+});

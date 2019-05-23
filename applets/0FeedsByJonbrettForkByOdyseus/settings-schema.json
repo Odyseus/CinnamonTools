@@ -83,6 +83,31 @@
         "description": "Verbose logging",
         "tooltip": "Checking this will enable debug level logging."
     },
+    "debugging-header": {
+        "type": "header",
+        "description": "Debugging"
+    },
+    "pref_logging_level": {
+        "type": "combobox",
+        "default": 0,
+        "description": "Logging level (*)",
+        "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additinally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
+        "options": {
+            "Normal": 0,
+            "Verbose": 1,
+            "Very verbose": 2
+        }
+    },
+    "pref_debugger_enabled": {
+        "type": "checkbox",
+        "description": "Enable debugger (*)",
+        "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
+        "default": false
+    },
+    "label": {
+        "type": "label",
+        "description": "(*) Requires Cinnamon restart to enable/disable"
+    },
     "pref_profile_name": {
         "type": "generic",
         "default": "Default",
