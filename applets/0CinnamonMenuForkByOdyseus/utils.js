@@ -1,15 +1,30 @@
-const XletUUID = "{{UUID}}";
-let XletMeta;
+let XletMeta,
+    GlobalUtils,
+    Constants,
+    DebugManager,
+    CustomTooltips;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
     XletMeta = __meta;
 } else {
-    XletMeta = imports.ui.appletManager.appletMeta[XletUUID];
+    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
+}
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    CustomTooltips = require("./customTooltips.js");
+} else {
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
 }
 
 const {
-    gettext: Gettext,
     gi: {
         Atk,
         Clutter,
@@ -27,70 +42,27 @@ const {
     ui: {
         appFavorites: AppFavorites,
         main: Main,
-        popupMenu: PopupMenu,
-        tooltips: Tooltips
+        popupMenu: PopupMenu
     }
 } = imports;
 
 const GioSSS = Gio.SettingsSchemaSource;
-
 const USER_DESKTOP_PATH = FileUtils.getUserDesktopDir();
 
-/**
- * SimpleMenuItem default parameters.
- */
-const SMI_DEFAULT_PARAMS = Object.freeze({
-    name: "",
-    description: "",
-    type: "none",
-    styleClass: "popup-menu-item",
-    reactive: true,
-    activatable: true,
-    withMenu: false
-});
+const {
+    SMI_DEFAULT_PARAMS,
+    GSETTINGS_SCHEMA
+} = Constants;
 
-var SETTINGS_SCHEMA = "org.cinnamon.applets." + XletUUID;
-var SEARCH_PRIORITY = {
-    HIGH: -99999,
-    MEDIUM: 0,
-    LOW: 50000,
-    VERY_LOW: 99999
-};
-var SEARCH_DATA = [{
-    "context": "description",
-    "priority": SEARCH_PRIORITY.VERY_LOW
-}, {
-    "context": "keywords",
-    "priority": SEARCH_PRIORITY.MEDIUM
-}, {
-    "context": "generic_name",
-    "priority": SEARCH_PRIORITY.HIGH
-}, {
-    "context": "name",
-    "priority": SEARCH_PRIORITY.HIGH
-}];
+const {
+    _
+} = GlobalUtils;
 
-Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
+const {
+    InteligentTooltip
+} = CustomTooltips;
 
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
-
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
-
-    return Gettext.gettext(aStr);
-}
+var Debugger = new DebugManager.DebugManager(GSETTINGS_SCHEMA);
 
 /* VisibleChildIterator takes a container (boxlayout, etc.)
  * and creates an array of its visible children and their index
@@ -205,9 +177,9 @@ SimpleMenuItem.prototype = {
 
         if (params.reactive) {
             this._signals.connect(this.actor, "enter-event",
-                () => aApplet._buttonEnterEvent(this).bind(aApplet));
+                () => aApplet._buttonEnterEvent(this));
             this._signals.connect(this.actor, "leave-event",
-                () => aApplet._buttonLeaveEvent(this).bind(aApplet));
+                () => aApplet._buttonLeaveEvent(this));
 
             if (params.activatable || params.withMenu) {
                 this._signals.connect(this.actor, "button-release-event",
@@ -345,7 +317,7 @@ ApplicationContextMenuItem.prototype = {
         }
 
         this.addActor(this.label);
-        this._tooltip = new CustomTooltip(this.actor, "");
+        this._tooltip = new InteligentTooltip(this.actor, "");
     },
 
     activate: function(event) { // jshint ignore:line
@@ -777,7 +749,7 @@ ApplicationButton.prototype = {
         }
 
         this.addLabel(this.name);
-        this.tooltip = new CustomTooltip(this.actor, "");
+        this.tooltip = new InteligentTooltip(this.actor, "");
     },
 
     get_app_id: function() {
@@ -828,7 +800,7 @@ DummyApplicationButton.prototype = {
         }
 
         this.addLabel(this.name);
-        this.tooltip = new CustomTooltip(this.actor, "");
+        this.tooltip = new InteligentTooltip(this.actor, "");
     },
 
     populateItem: function(aApp) {
@@ -939,7 +911,7 @@ CustomCommandButton.prototype = {
             this.app.icon.search("-symbolic") !== -1
         );
 
-        this.tooltip = new CustomTooltip(this.actor, "");
+        this.tooltip = new InteligentTooltip(this.actor, "");
     },
 
     activate: function(event) { // jshint ignore:line
@@ -976,29 +948,6 @@ CustomCommandButton.prototype = {
     }
 };
 
-function CustomTooltip() {
-    this._init.apply(this, arguments);
-}
-
-CustomTooltip.prototype = {
-    __proto__: Tooltips.Tooltip.prototype,
-
-    _init: function(aActor, aText) {
-        Tooltips.Tooltip.prototype._init.call(this, aActor, aText);
-
-        this._tooltip.set_style("text-align: left;width:auto;max-width: 450px;");
-        this._tooltip.get_clutter_text().set_line_wrap(true);
-        this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
-        this._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
-
-        aActor.connect("destroy", () => this.destroy());
-    },
-
-    destroy: function() {
-        Tooltips.Tooltip.prototype.destroy.call(this);
-    }
-};
-
 function RecentAppsManager() {
     this._init.apply(this, arguments);
 }
@@ -1007,7 +956,6 @@ RecentAppsManager.prototype = {
     _init: function(aApplet) {
         this.applet = aApplet;
 
-        let schema = SETTINGS_SCHEMA;
         let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
         let schemaSource;
 
@@ -1019,11 +967,11 @@ RecentAppsManager.prototype = {
             schemaSource = GioSSS.get_default();
         }
 
-        this.schemaObj = schemaSource.lookup(schema, false);
+        this.schemaObj = schemaSource.lookup(GSETTINGS_SCHEMA, false);
 
         if (!this.schemaObj) {
-            throw new Error(_("Schema %s could not be found for xlet %s.")
-                .format(schema, XletUUID) + _("Please check your installation."));
+            throw new Error("Schema %s could not be found for xlet %s."
+                .format(GSETTINGS_SCHEMA, XletMeta.uuid) + "Please check your installation.");
         }
 
         this.schema = new Gio.Settings({
@@ -1110,17 +1058,16 @@ RecentAppsManager.prototype = {
     }
 };
 
-function escapeHTML(aStr) {
-    aStr = String(aStr)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
-    return aStr;
-}
-
-/* exported escapeHTML,
-            SEARCH_PRIORITY,
-            SEARCH_DATA
- */
+DebugManager.wrapPrototypes(Debugger, {
+    ApplicationButton: ApplicationButton,
+    ApplicationContextMenuItem: ApplicationContextMenuItem,
+    CategoriesApplicationsBox: CategoriesApplicationsBox,
+    CategoryButton: CategoryButton,
+    CustomCommandButton: CustomCommandButton,
+    DummyApplicationButton: DummyApplicationButton,
+    GenericApplicationButton: GenericApplicationButton,
+    InteligentTooltip: InteligentTooltip,
+    RecentAppsManager: RecentAppsManager,
+    SimpleMenuItem: SimpleMenuItem,
+    VisibleChildIterator: VisibleChildIterator
+});

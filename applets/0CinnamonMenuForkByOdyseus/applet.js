@@ -1,13 +1,20 @@
-let $;
+let $,
+    GlobalUtils,
+    DebugManager,
+    Constants;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
     $ = require("./utils.js");
 } else {
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
-
-const _ = $._;
 
 const {
     gi: {
@@ -34,6 +41,16 @@ const {
         settings: Settings
     }
 } = imports;
+
+const {
+    SEARCH_PRIORITY,
+    SEARCH_DATA
+} = Constants;
+
+const {
+    _,
+    escapeHTML
+} = GlobalUtils;
 
 function CinnamonMenuForkByOdyseus() {
     this._init.apply(this, arguments);
@@ -186,6 +203,8 @@ CinnamonMenuForkByOdyseus.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -278,7 +297,9 @@ CinnamonMenuForkByOdyseus.prototype = {
             "pref_recently_used_apps_max_amount",
             "pref_hard_refresh_menu",
             "pref_max_search_results",
-            "pref_imp_exp_last_selected_directory"
+            "pref_imp_exp_last_selected_directory",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -1688,6 +1709,8 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.catBoxIter.reloadVisible();
             this.appBoxIter.reloadVisible();
             this._refreshRecentApps();
+
+            return false;
         });
     },
 
@@ -1904,7 +1927,11 @@ CinnamonMenuForkByOdyseus.prototype = {
         this.catBoxIter = new $.VisibleChildIterator(this.categoriesBox);
         this.categoriesBox._vis_iter = this.catBoxIter;
 
-        Mainloop.idle_add(() => this._clearAllSelections());
+        Mainloop.idle_add(() => {
+            this._clearAllSelections();
+
+            return false;
+        });
 
         this.menu.actor.connect("allocation-changed",
             (box, flags, data) => this._on_allocation_changed(box, flags, data));
@@ -2334,7 +2361,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                 allHaystacksResult.priority = allHaystacksResult.priority / matchCount;
 
                 if (this.pref_strict_search_results &&
-                    allHaystacksResult.priority >= $.SEARCH_PRIORITY.VERY_LOW) {
+                    allHaystacksResult.priority >= SEARCH_PRIORITY.VERY_LOW) {
                     continue;
                 }
 
@@ -2396,9 +2423,9 @@ CinnamonMenuForkByOdyseus.prototype = {
         Mainloop.idle_add(() => {
             let haystacks = [];
 
-            let s = $.SEARCH_DATA.length;
+            let s = SEARCH_DATA.length;
             while (s--) {
-                let context = $.SEARCH_DATA[s].context;
+                let context = SEARCH_DATA[s].context;
 
                 let haystack = [];
 
@@ -2466,7 +2493,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                 haystacks.push({
                     data: haystack.map(this._normalizeHaystack),
                     context: context,
-                    priority: $.SEARCH_DATA[s].priority
+                    priority: SEARCH_DATA[s].priority
                 });
             }
 
@@ -2482,6 +2509,8 @@ CinnamonMenuForkByOdyseus.prototype = {
                 categories: aCategories,
                 haystacks: haystacks
             });
+
+            return false;
         });
     },
 
@@ -2502,11 +2531,11 @@ CinnamonMenuForkByOdyseus.prototype = {
                 // an ampersand character without intending to start an entity - escape ampersand
                 // as &amp;
                 aEl.tooltip._tooltip.get_clutter_text().set_markup(
-                    (aTitle ? '<span weight="bold">' + $.escapeHTML(aTitle) + "</span>" : "") +
-                    (aDescription ? "\n" + $.escapeHTML(aDescription) : "") +
+                    (aTitle ? '<span weight="bold">' + escapeHTML(aTitle) + "</span>" : "") +
+                    (aDescription ? "\n" + escapeHTML(aDescription) : "") +
                     (aCategories.length > 0 ?
-                        "\n\n" + '<span weight="bold">' + $.escapeHTML(_("Categories")) + "</span>" +
-                        ": " + $.escapeHTML(aCategories.join(" - ")) :
+                        "\n\n" + '<span weight="bold">' + escapeHTML(_("Categories")) + "</span>" +
+                        ": " + escapeHTML(aCategories.join(" - ")) :
                         "")
                 );
             } catch (aErr) {
@@ -2579,10 +2608,19 @@ CinnamonMenuForkByOdyseus.prototype = {
             case "pref_hide_applications_list_scrollbar":
                 this.applicationsScrollBox.get_vscroll_bar().visible = !this.pref_hide_applications_list_scrollbar;
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     }
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceID) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        CinnamonMenu: CinnamonMenuForkByOdyseus
+    });
+
     return new CinnamonMenuForkByOdyseus(aMetadata, aOrientation, aPanelHeight, aInstanceID);
 }
