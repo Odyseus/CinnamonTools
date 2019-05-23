@@ -1,11 +1,23 @@
-const AppletUUID = "{{UUID}}";
+let Constants,
+    GlobalUtils,
+    DebugManager,
+    CustomTooltips;
 
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    GlobalUtils = require("./globalUtils.js");
+    CustomTooltips = require("./customTooltips.js");
+} else {
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
+}
 const {
-    gettext: Gettext,
     gi: {
         Clutter,
-        Gio,
-        GLib,
         Gtk,
         Meta,
         Pango,
@@ -13,68 +25,32 @@ const {
     },
     ui: {
         dnd: DND,
-        popupMenu: PopupMenu,
-        tooltips: Tooltips
+        popupMenu: PopupMenu
     }
 } = imports;
 
-const OrnamentType = {
-    NONE: 0,
-    CHECK: 1,
-    DOT: 2,
-    ICON: 3
-};
+const {
+    _
+} = GlobalUtils;
 
-Gettext.bindtextdomain(AppletUUID, GLib.get_home_dir() + "/.local/share/locale");
+const {
+    InteligentTooltip
+} = CustomTooltips;
 
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(AppletUUID, aStr);
+const {
+    OrnamentType
+} = Constants;
 
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
+const {
+    LoggingLevel
+} = DebugManager;
 
-    return Gettext.gettext(aStr);
+var Debugger = new DebugManager.DebugManager();
+
+function runtimeInfo(aMsg) {
+    Debugger.logging_level !== LoggingLevel.NORMAL && aMsg &&
+        global.log("[DesktopCapture] " + aMsg);
 }
-
-// This is used to create an example tasks list.
-// I chose to do this so the example can be localized.
-var DefaultExampleTasks = {
-    "name": _("Tasks list - Some examples"),
-    "sort-tasks-alphabetically": true,
-    "sort-tasks-by-completed": true,
-    "display-remove-task-buttons": true,
-    "keep-completed-tasks-hidden": false,
-    "tasks": [{
-        "name": _('Tasks can be "tagged" by simply writing "@tagname" as part of the task text. For now, there are 5 priority tags available.'),
-        "completed": false
-    }, {
-        "name": _("This is a @critical priority task"),
-        "completed": false
-    }, {
-        "name": _("This is a @high priority task"),
-        "completed": false
-    }, {
-        "name": _("This is a @medium priority task"),
-        "completed": false
-    }, {
-        "name": _("This is a @today priority task"),
-        "completed": false
-    }, {
-        "name": _("This is a @low priority task"),
-        "completed": false
-    }]
-};
 
 function TaskItem() {
     this._init.apply(this, arguments);
@@ -91,7 +67,6 @@ TaskItem.prototype = {
         });
 
         this._applet = aApplet;
-        this.logger = this._applet.logger;
         this._moved = false;
         this.task = aTask;
         this.isMovable = !aInitialOptions.sort_tasks_alphabetically &&
@@ -200,8 +175,6 @@ TaskItem.prototype = {
     },
 
     _setTaskStyle: function() {
-        this.logger.debug("");
-
         let backgroundColor = null;
         let color = null;
         // TO TRANSLATORS: This is a priority tag.
@@ -293,8 +266,6 @@ TaskItem.prototype = {
     },
 
     _onStyleChanged: function(aActor) {
-        this.logger.debug("");
-
         if (this._applet.pref_task_set_custom_spacing !== 0) {
             this._spacing = this._applet.pref_task_set_custom_spacing;
         } else {
@@ -303,8 +274,6 @@ TaskItem.prototype = {
     },
 
     _navigateEntries: function(aDirection) {
-        this.logger.debug("");
-
         if (aDirection === "up") {
             let prev = this.actor.get_previous_sibling();
 
@@ -364,8 +333,6 @@ TaskItem.prototype = {
     },
 
     _onKeyPressEvent: function(aActor, aEvent) {
-        this.logger.debug("");
-
         let symbol = aEvent.get_key_symbol();
 
         // Insert: Jump to the "New task..." entry.
@@ -380,7 +347,7 @@ TaskItem.prototype = {
         // the new task entry creator.
         // The cursor needs to be inside the task that one wishes to delete.
         if ((this.altKey || this.shiftKey) && symbol === Clutter.Delete) {
-            this.logger.debug("'remove_task_signal' signal emitted");
+            runtimeInfo("'remove_task_signal' signal emitted");
             this.emit("remove_task_signal", this.task);
             this._navigateEntries(this.shiftKey ? "up" : "down");
             this.destroy();
@@ -420,8 +387,6 @@ TaskItem.prototype = {
     },
 
     _moveItem: function(aDirection) {
-        this.logger.debug("");
-
         let dir = aDirection === 1 ? "down" : "up";
         let dummy;
 
@@ -449,10 +414,10 @@ TaskItem.prototype = {
 
         let children = this._delegated_section.tasksContainer.box.get_children();
         let taskCurPos = children.indexOf(this.actor);
-        this.log_ && debug("taskCurPos = " + taskCurPos);
+        runtimeInfo("taskCurPos = " + taskCurPos);
 
         let taskNewPos = taskCurPos + aDirection;
-        this.log_ && debug("taskNewPos = " + taskNewPos);
+        runtimeInfo("taskNewPos = " + taskNewPos);
 
         if (taskNewPos !== taskCurPos) {
             dummy._delegate._label.grab_key_focus();
@@ -473,8 +438,6 @@ TaskItem.prototype = {
     },
 
     destroy: function() {
-        this.logger.debug("");
-
         for (let i = this.connections.length - 1; i >= 0; i--) {
             // Just in case. See TasksListItem.destroy()
             try {
@@ -494,20 +457,16 @@ TaskItem.prototype = {
     },
 
     _emit_delete: function() {
-        this.logger.debug("");
-
         if (this._applet.pref_use_fail_safe && !this.ctrlKey) {
             return;
         } else {
-            this.logger.debug("'remove_task_signal' signal emitted");
+            runtimeInfo("'remove_task_signal' signal emitted");
             this.emit("remove_task_signal", this.task);
             this.destroy();
         }
     },
 
     _setCheckedState: function() {
-        this.logger.debug("");
-
         let completed = this.checked;
 
         // Return if completed state wasn't changed.
@@ -519,10 +478,10 @@ TaskItem.prototype = {
 
         this._ornament.child._delegate.setToggleState(completed);
 
-        this.logger.debug("Set task completed state " + this.task.name + " to " + completed);
+        runtimeInfo("Set task completed state " + this.task.name + " to " + completed);
 
         this.task.completed = completed;
-        this.logger.debug("'completed_state_changed' signal emitted");
+        runtimeInfo("'completed_state_changed' signal emitted");
         this.emit("completed_state_changed");
 
         this._delegated_section._set_text();
@@ -534,8 +493,6 @@ TaskItem.prototype = {
     },
 
     _rename: function() {
-        this.logger.debug("");
-
         // Rename the task and notify the ToDo list so it is updated.
         let name = this._label.get_text();
 
@@ -544,7 +501,7 @@ TaskItem.prototype = {
             return;
         }
 
-        this.logger.debug("Rename task " + this.task.name + " to " + name);
+        runtimeInfo("Rename task " + this.task.name + " to " + name);
 
         this.task.name = name;
 
@@ -556,7 +513,7 @@ TaskItem.prototype = {
 
         this._applet.request_rebuild = true;
 
-        this.logger.debug("'name_changed' signal emitted");
+        runtimeInfo("'name_changed' signal emitted");
         this.emit("name_changed");
     },
 
@@ -596,7 +553,6 @@ NewTaskEntry.prototype = {
         });
 
         this._applet = aApplet;
-        this.logger = aApplet.logger;
         this.connections = [];
 
         // Add a text entry in the BaseMenuItem layout
@@ -612,7 +568,7 @@ NewTaskEntry.prototype = {
         this.newTask.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
 
         this.opt_btn = new ReactiveButton("system-run");
-        this.opt_btn.actor.tooltip = new CustomTooltip(this.opt_btn.actor, _("Tasks list options"));
+        this.opt_btn.actor.tooltip = new InteligentTooltip(this.opt_btn.actor, _("Tasks list options"));
 
         this.addActor(this.opt_btn.actor, {
             align: St.Align.START,
@@ -642,8 +598,6 @@ NewTaskEntry.prototype = {
     // This function was the only thing that I could come up with to overcome the absolutely
     // retarded behavior of a sub-menu item inside another sub-menu item.
     toggleMenu: function() { // jshint ignore:line
-        this.logger.debug("");
-
         this.newTask.grab_key_focus();
 
         let children = this.menu._getMenuItems();
@@ -660,8 +614,6 @@ NewTaskEntry.prototype = {
     },
 
     _buildMenu: function() {
-        this.logger.debug("");
-
         let contextMenu = new PopupMenu.PopupMenuSection();
         contextMenu.actor.set_style_class_name("popup-sub-menu");
 
@@ -683,7 +635,7 @@ NewTaskEntry.prototype = {
             _("Sort tasks alphabetically"),
             section["sort-tasks-alphabetically"]
         );
-        sortAlphaSwitch.tooltip = new CustomTooltip(
+        sortAlphaSwitch.tooltip = new InteligentTooltip(
             sortAlphaSwitch.actor,
             _("Takes effect after closing and re-opening the main menu.")
         );
@@ -693,7 +645,7 @@ NewTaskEntry.prototype = {
             _("Sort tasks by completed state"),
             section["sort-tasks-by-completed"]
         );
-        sortCompletedSwitch.tooltip = new CustomTooltip(
+        sortCompletedSwitch.tooltip = new InteligentTooltip(
             sortCompletedSwitch.actor,
             _("Takes effect after closing and re-opening the main menu.")
         );
@@ -703,7 +655,7 @@ NewTaskEntry.prototype = {
             _("Display remove tasks buttons"),
             section["display-remove-task-buttons"]
         );
-        showRemoveTaskSwitch.tooltip = new CustomTooltip(
+        showRemoveTaskSwitch.tooltip = new InteligentTooltip(
             showRemoveTaskSwitch.actor,
             _("Takes effect immediately.")
         );
@@ -713,7 +665,7 @@ NewTaskEntry.prototype = {
             _("Keep completed tasks hidden"),
             section["keep-completed-tasks-hidden"]
         );
-        keepCompletedHiddenSwitch.tooltip = new CustomTooltip(
+        keepCompletedHiddenSwitch.tooltip = new InteligentTooltip(
             keepCompletedHiddenSwitch.actor,
             _("Takes effect immediately.")
         );
@@ -761,8 +713,6 @@ NewTaskEntry.prototype = {
     },
 
     _toggleSwitch: function(aActor, aEvent, aOption) {
-        this.logger.debug("");
-
         this._delegated_section.section[aOption] = !this._delegated_section.section[aOption];
         aActor.setToggleState(this._delegated_section.section[aOption]);
 
@@ -778,8 +728,6 @@ NewTaskEntry.prototype = {
     },
 
     destroy: function() {
-        this.logger.debug("");
-
         for (let i = this.connections.length - 1; i >= 0; i--) {
             // Just in case. See TasksListItem.destroy()
             try {
@@ -799,8 +747,6 @@ NewTaskEntry.prototype = {
     },
 
     _onKeyPressEvent: function(aEntry, aEvent) {
-        this.logger.debug("");
-
         let symbol = aEvent.get_key_symbol();
 
         // Ctrl + Spacebar: Opens/Closes the tasks list options menu.
@@ -812,7 +758,7 @@ NewTaskEntry.prototype = {
         if ((!this.altKey && !this.shiftKey) &&
             (symbol == Clutter.KEY_Return ||
                 symbol == Clutter.KEY_KP_Enter)) {
-            this.logger.debug("'new_task' signal emitted");
+            runtimeInfo("'new_task' signal emitted");
             this.emit("new_task", aEntry.get_text());
             aEntry.set_text("");
             this._delegated_section._scrollToItem(this);
@@ -883,8 +829,6 @@ TasksContainer.prototype = {
     },
 
     handleDragOver: function(aSource, aActor, aX, aY, aTime) { // jshint ignore:line
-        this.logger.debug("");
-
         try {
             let task = aSource.task;
             let taskPos = this._delegated_section.tasks.indexOf(task);
@@ -950,8 +894,6 @@ TasksContainer.prototype = {
     },
 
     acceptDrop: function(aSource, aActor, aX, aY, aTime) { // jshint ignore:line
-        this.logger.debug("");
-
         try {
             let task = aSource.task;
 
@@ -988,8 +930,6 @@ TasksContainer.prototype = {
     },
 
     _clearDragPlaceholder: function() {
-        this.logger.debug("");
-
         if (this._dragPlaceholder) {
             this._dragPlaceholder.animateOutAndDestroy();
             this._dragPlaceholder = null;
@@ -1011,12 +951,11 @@ TasksListItem.prototype = {
         });
 
         this._applet = aApplet;
-        this.logger = this._applet.logger;
         this.section = aSection;
         this.id = aSection.id;
         this.name = aSection.name;
         this.tasks = aSection.tasks;
-        this.logger.debug("Got section with name: " + this.name);
+        runtimeInfo("Got section with name: " + this.name);
 
         this.n_tasks = 0;
         this.connections = [];
@@ -1103,8 +1042,6 @@ TasksListItem.prototype = {
     },
 
     _setSectionStyle: function() {
-        this.logger.debug("");
-
         let baseStyle = (this._applet.pref_section_set_bold ?
                 "font-weight: bold !important;" :
                 "") +
@@ -1141,8 +1078,6 @@ TasksListItem.prototype = {
     },
 
     _onButtonReleaseEvent: function(aActor, aEvent) { // jshint ignore:line
-        this.logger.debug("");
-
         // Always force the focus on the section entry. Otherwise, if the focus is inside
         // an entry inside an opened sub-menu, and then the sub-menu is closed, the
         // closing of the sub-menu will force the closing of the applet's main menu.
@@ -1159,8 +1094,6 @@ TasksListItem.prototype = {
     // Taken from the default Cinnamon menu applet.
     // Works beautifully!!!
     _scrollToItem: function(aItem) {
-        this.logger.debug("");
-
         let current_scroll_value = this.menu.actor.get_vscroll_bar().get_adjustment().get_value();
         let box_height = this.menu.actor.get_allocation_box().y2 -
             this.menu.actor.get_allocation_box().y1;
@@ -1180,8 +1113,6 @@ TasksListItem.prototype = {
     },
 
     _setTasksElementsVisibility: function() {
-        this.logger.debug("");
-
         let children = this.tasksContainer.box.get_children();
         let i = 0,
             iLen = children.length;
@@ -1214,8 +1145,6 @@ TasksListItem.prototype = {
     },
 
     _onKeyFocusIn: function() {
-        this.logger.debug("");
-
         let _ct = this._label.get_clutter_text();
         this._label.grab_key_focus();
 
@@ -1226,8 +1155,6 @@ TasksListItem.prototype = {
     },
 
     _onKeyPressEvent: function(aActor, aEvent) {
-        this.logger.debug("");
-
         let symbol = aEvent.get_key_symbol();
         let cursor = this._label.get_clutter_text().get_cursor_position();
 
@@ -1285,7 +1212,7 @@ TasksListItem.prototype = {
                 this._applet.menu.actor.navigate_focus(this.actor, Gtk.DirectionType.UP, false);
                 this.menu.close(this._applet.pref_animate_menu);
             } finally {
-                this.logger.debug("'remove_section_signal' signal emitted");
+                runtimeInfo("'remove_section_signal' signal emitted");
                 this.emit("remove_section_signal", this);
             }
             return false;
@@ -1305,8 +1232,6 @@ TasksListItem.prototype = {
     },
 
     _draw_section: function() {
-        this.logger.debug("");
-
         this._clear();
 
         this.tasksContainer = new TasksContainer();
@@ -1349,8 +1274,6 @@ TasksListItem.prototype = {
     },
 
     destroy: function() {
-        this.logger.debug("");
-
         this.menu.close(this._applet.pref_animate_menu);
 
         // Clean up all the connection
@@ -1376,12 +1299,10 @@ TasksListItem.prototype = {
 
         this.actor.destroy();
 
-        this.logger.debug("Section clean-up done");
+        runtimeInfo("Section clean-up done");
     },
 
     _add_task: function(aI) {
-        this.logger.debug("");
-
         // Create a task item and set its callback
         let taskItem = new TaskItem(this._applet, this.section.tasks[aI], {
             sort_tasks_alphabetically: this.section["sort-tasks-alphabetically"],
@@ -1421,8 +1342,6 @@ TasksListItem.prototype = {
     },
 
     _create_task: function(aItem, aText) {
-        this.logger.debug("");
-
         // Create a new task to add in the ToDo list and displays it while
         // updating the counters of our widget.
 
@@ -1441,14 +1360,12 @@ TasksListItem.prototype = {
         this._add_task(id);
         this._set_text();
 
-        this.logger.debug("'task_count_changed' signal emitted");
+        runtimeInfo("'task_count_changed' signal emitted");
         this.emit("task_count_changed", -1);
         this._saveTasks();
     },
 
     _remove_task: function(aActor, aTask) {
-        this.logger.debug("");
-
         // Remove task from the section
         let id = this.section.tasks.indexOf(aTask);
         this.section.tasks.splice(id, 1);
@@ -1466,14 +1383,12 @@ TasksListItem.prototype = {
 
         // Set section title
         this._set_text();
-        this.logger.debug("'task_count_changed' signal emitted");
+        runtimeInfo("'task_count_changed' signal emitted");
         this.emit("task_count_changed", 1);
         this._saveTasks();
     },
 
     _rename: function(aTaskItem) {
-        this.logger.debug("");
-
         // Update number of completed tasks inside this tasks list.
         if (aTaskItem && aTaskItem.task) {
             if (aTaskItem.task.completed) {
@@ -1507,8 +1422,6 @@ TasksListItem.prototype = {
     },
 
     _clear: function() {
-        this.logger.debug("");
-
         let item = null;
         let items = this.menu._getMenuItems();
         let i = 0,
@@ -1524,27 +1437,21 @@ TasksListItem.prototype = {
     },
 
     _supr_call: function() {
-        this.logger.debug("");
-
         if (this._applet.pref_use_fail_safe && !this.ctrlKey) {
             return;
         } else {
-            this.logger.debug("'remove_section_signal' signal emitted");
+            runtimeInfo("'remove_section_signal' signal emitted");
             this.emit("remove_section_signal", this);
         }
     },
 
     _set_text: function() {
-        this.logger.debug("");
-
         // Set the label text with the amount of tasks and how many are completed
         this._label.set_text(this.section.name);
         this._counter.set_text(this.n_completed + "/" + this.n_tasks);
     },
 
     _saveTasks: function() {
-        this.logger.debug("");
-
         try {
             // This might not be needed anymore, since I now store all task items
             // inside their own menu section. But I will keep it just in case.
@@ -1559,14 +1466,12 @@ TasksListItem.prototype = {
                 }
             }
         } finally {
-            this.logger.debug("'save_signal' signal emitted");
+            runtimeInfo("'save_signal' signal emitted");
             this.emit("save_signal", false);
         }
     },
 
     _subMenuOpenStateChanged: function(aMenu, aOpen) {
-        this.logger.debug("");
-
         if (aOpen && this._applet.pref_keep_one_menu_open) {
             let menu = this._applet.todosSec;
 
@@ -1599,35 +1504,12 @@ TasksListItem.prototype = {
     }
 };
 
-function CustomTooltip() {
-    this._init.apply(this, arguments);
-}
-
-CustomTooltip.prototype = {
-    __proto__: Tooltips.Tooltip.prototype,
-
-    _init: function(aActor, aText) {
-        Tooltips.Tooltip.prototype._init.call(this, aActor, aText);
-
-        this._tooltip.set_style("text-align: left;width:auto;max-width: 450px;");
-        this._tooltip.get_clutter_text().set_line_wrap(true);
-        this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
-        this._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
-
-        aActor.connect("destroy", () => this.destroy());
-    },
-
-    destroy: function() {
-        Tooltips.Tooltip.prototype.destroy.call(this);
-    }
-};
-
 function RemoveTaskButtonTooltip() {
     this._init.apply(this, arguments);
 }
 
 RemoveTaskButtonTooltip.prototype = {
-    __proto__: CustomTooltip.prototype,
+    __proto__: InteligentTooltip.prototype,
 
     _init: function(aActor, aObj) {
         // TO TRANSLATORS: Full sentence.
@@ -1638,7 +1520,7 @@ RemoveTaskButtonTooltip.prototype = {
             tt += " " + _("(Hold Ctrl key)");
         }
 
-        CustomTooltip.prototype._init.call(this, aActor, tt);
+        InteligentTooltip.prototype._init.call(this, aActor, tt);
     }
 };
 
@@ -1706,52 +1588,6 @@ function arrayMove(array, old_index, new_index) {
     // return this; // for testing purposes
 }
 
-function debug(message) {
-    let caller = getCaller();
-    let output = "[" + AppletUUID + "/" + caller.split("/").pop() + "] " + message;
-    global.log(output);
-}
-
-/**
- * Implemented the two functions below using tweaked code from:
- * http://stackoverflow.com/a/13227808
- */
-
-function getCaller() {
-    let stack = getStack();
-
-    // Remove superfluous function calls on stack
-    stack.shift(); // getCaller --> getStack
-    stack.shift(); // debug --> getCaller
-
-    // Return caller's caller
-    return stack[0];
-}
-
-function getStack() {
-    // Save original Error.prepareStackTrace
-    let origPrepareStackTrace = Error.prepareStackTrace;
-
-    // Override with function that just returns `stack`
-    Error.prepareStackTrace = function(_, stack) {
-        return stack;
-    };
-
-    // Create a new `Error`, which automatically gets `stack`
-    let err = new Error();
-
-    // Evaluate `err.stack`, which calls our new `Error.prepareStackTrace`
-    let stack = err.stack.split("\n");
-
-    // Restore original `Error.prepareStackTrace`
-    Error.prepareStackTrace = origPrepareStackTrace;
-
-    // Remove superfluous function call on stack
-    stack.shift(); // getStack --> Error
-
-    return stack;
-}
-
 Date.prototype.toCustomISOString = function() {
     var tzo = -this.getTimezoneOffset(),
         dif = tzo >= 0 ? "+" : "-",
@@ -1770,214 +1606,12 @@ Date.prototype.toCustomISOString = function() {
         "." + pad(tzo % 60);
 };
 
-function saveToFileAsync(aData, aFile, aCallback) {
-    let data = new GLib.Bytes(aData);
-
-    aFile.replace_async(null, false, Gio.FileCreateFlags.REPLACE_DESTINATION,
-        GLib.PRIORITY_DEFAULT, null,
-        (aObj, aResponse) => {
-            let stream = aObj.replace_finish(aResponse);
-
-            stream.write_bytes_async(data, GLib.PRIORITY_DEFAULT,
-                null,
-                (aW_obj, aW_res) => {
-
-                    aW_obj.write_bytes_finish(aW_res);
-                    stream.close(null);
-
-                    if (aCallback && typeof aCallback === "function") {
-                        aCallback();
-                    }
-                });
-        });
-}
-
-function listDirAsync(aFileObj, aCallback) {
-    let allFiles = [];
-    aFileObj.enumerate_children_async(Gio.FILE_ATTRIBUTE_STANDARD_NAME,
-        Gio.FileQueryInfoFlags.NONE,
-        GLib.PRIORITY_LOW, null,
-        (aFileObj_a, aResponse_a) => {
-            let enumerator = aFileObj_a.enumerate_children_finish(aResponse_a);
-
-            function onNextFileComplete(aFileObj_b, aResponse_b) {
-                let files = aFileObj_b.next_files_finish(aResponse_b);
-
-                if (files.length) {
-                    allFiles = allFiles.concat(files);
-                    enumerator.next_files_async(100, GLib.PRIORITY_LOW, null, onNextFileComplete);
-                } else {
-                    enumerator.close(null);
-
-                    if (aCallback && typeof aCallback === "function") {
-                        aCallback(allFiles);
-                    }
-                }
-            }
-            enumerator.next_files_async(100, GLib.PRIORITY_LOW, null, onNextFileComplete);
-        });
-}
-
-function removeSurplusFilesFromDirectory(aDirPath, aMaxFilesToKeep) {
-    try {
-        listDirAsync(Gio.file_new_for_path(aDirPath), (aAllFiles) => {
-            // Generate file paths from Gio.FileInfo objects.
-            let allFilesPaths = aAllFiles.map((aFile) => {
-                return aDirPath + "/" + aFile.get_name();
-            });
-
-            // Sort paths in ascending order.
-            allFilesPaths.sort((a, b) => {
-                return a - b;
-            });
-
-            // Slice from the list the files to keep.
-            let pathsToBeRemoved = allFilesPaths.slice(0, -aMaxFilesToKeep);
-
-            // Proceed with removal.
-            for (let path of pathsToBeRemoved) {
-                try {
-                    Gio.file_new_for_path(path).delete_async(GLib.PRIORITY_LOW, null, null);
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
-            }
-        });
-    } catch (aErr) {
-        global.logError(aErr);
-    }
-}
-
-function getGLibVersion() {
-    return "%s.%s.%s".format(GLib.MAJOR_VERSION, GLib.MINOR_VERSION, GLib.MICRO_VERSION);
-}
-
-/**
- * Logger
- * Implemented using the functions found in:
- * http://stackoverflow.com/a/13227808
- */
-function Logger() {
-    this._init.apply(this, arguments);
-}
-
-Logger.prototype = {
-    _init: function(aDisplayName, aVerbose) {
-        this._verbose = aVerbose;
-        this.base_message = "[" + aDisplayName + "::%s]%s";
-    },
-
-    /**
-     * debug
-     *
-     * Log a message only when verbose logging is enabled.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    debug: function(aMsg) {
-        if (this.verbose) {
-            global.log(this.base_message.format(this._getCaller(), this._formatMessage(aMsg)));
-        }
-    },
-
-    /**
-     * error
-     *
-     * Log an error message.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    error: function(aMsg) {
-        global.logError(this.base_message.format(this._getCaller(), this._formatMessage(aMsg)));
-    },
-
-    /**
-     * warning
-     *
-     * Log a warning message.
-     *
-     * @param  {String} aMsg The message to log.
-     */
-    warning: function(aMsg) {
-        global.logWarning(this.base_message.format(this._getCaller(), this._formatMessage(aMsg)));
-    },
-
-    /**
-     * info
-     *
-     * Log an info message.
-     *
-     * @param {String} aMsg - The message to log.
-     */
-    info: function(aMsg) {
-        global.log(this.base_message.format(this._getCaller(), this._formatMessage(aMsg)));
-    },
-
-    /**
-     * _formatMessage
-     *
-     * It just adds a space at the beginning of a string if the string isn't empty.
-     *
-     * @param  {String} aMsg The message to "format".
-     * @return {String}      The formatted message.
-     */
-    _formatMessage: function(aMsg) {
-        return aMsg ? " " + aMsg : "";
-    },
-
-    /**
-     * [_getCaller description]
-     * @return {String} A string representing the caller function name plus the
-     * file name and line number.
-     */
-    _getCaller: function() {
-        let stack = this._getStack();
-
-        // Remove superfluous function calls on stack
-        stack.shift(); // _getCaller --> _getStack
-        stack.shift(); // debug --> _getCaller
-
-        let caller = stack[0].split("/");
-        // Return only the caller function and the file name and line number.
-        return (caller.shift() + "@" + caller.pop()).replace(/\@+/g, "@");
-    },
-
-    _getStack: function() {
-        // Save original Error.prepareStackTrace
-        let origPrepareStackTrace = Error.prepareStackTrace;
-
-        // Override with function that just returns `stack`
-        Error.prepareStackTrace = (_, stack) => {
-            return stack;
-        };
-
-        // Create a new `Error`, which automatically gets `stack`
-        let err = new Error();
-
-        // Evaluate `err.stack`, which calls our new `Error.prepareStackTrace`
-        let stack = err.stack.split("\n");
-
-        // Restore original `Error.prepareStackTrace`
-        Error.prepareStackTrace = origPrepareStackTrace;
-
-        // Remove superfluous function call on stack
-        stack.shift(); // getStack --> Error
-
-        return stack;
-    },
-
-    get verbose() {
-        return this._verbose;
-    },
-
-    set verbose(aVal) {
-        this._verbose = aVal;
-    }
-};
-/*
-exported DefaultExampleTasks,
-         saveToFileAsync,
-         listDirAsync,
-         removeSurplusFilesFromDirectory,
-         getGLibVersion
- */
+DebugManager.wrapPrototypes(Debugger, {
+    InteligentTooltip: InteligentTooltip,
+    NewTaskEntry: NewTaskEntry,
+    ReactiveButton: ReactiveButton,
+    RemoveTaskButtonTooltip: RemoveTaskButtonTooltip,
+    TaskItem: TaskItem,
+    TasksContainer: TasksContainer,
+    TasksListItem: TasksListItem
+});

@@ -1,13 +1,26 @@
-let $;
+let $,
+    Constants,
+    GlobalUtils,
+    DebugManager,
+    CustomTooltips,
+    CustomFileUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
+    GlobalUtils = require("./globalUtils.js");
+    CustomTooltips = require("./customTooltips.js");
+    CustomFileUtils = require("./customFileUtils.js");
     $ = require("./utils.js");
 } else {
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
+    CustomFileUtils = imports.ui.appletManager.applets["{{UUID}}"].customFileUtils;
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
-
-const _ = $._;
 
 const {
     gi: {
@@ -30,6 +43,23 @@ const {
     }
 } = imports;
 
+const {
+    DefaultExampleTasks
+} = Constants;
+
+const {
+    _
+} = GlobalUtils;
+
+const {
+    saveToFileAsync,
+    removeSurplusFilesFromDirectory
+} = CustomFileUtils;
+
+const {
+    InteligentTooltip
+} = CustomTooltips;
+
 function SimpleToDoList() {
     this._init.apply(this, arguments);
 }
@@ -37,8 +67,8 @@ function SimpleToDoList() {
 SimpleToDoList.prototype = {
     __proto__: Applet.TextIconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -47,12 +77,11 @@ SimpleToDoList.prototype = {
         }
 
         this.metadata = aMetadata;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
         this.orientation = aOrientation;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
 
         this._initializeSettings(() => {
-            this.logger = new $.Logger("SimpleToDoList", this.pref_enable_verbose_logging);
             this._expandAppletContextMenu();
         }, () => {
             this.mainBox = null;
@@ -65,7 +94,7 @@ SimpleToDoList.prototype = {
             this._save_tasks_id = 0;
             this._auto_backup_id = 0;
 
-            this.logger.debug("Creating menus");
+            $.runtimeInfo("Creating menus");
             this.menuManager = new PopupMenu.PopupMenuManager(this);
             this.menu = new Applet.AppletPopupMenu(this, aOrientation);
             this.menu.connect("open-state-changed",
@@ -80,8 +109,6 @@ SimpleToDoList.prototype = {
     },
 
     _buildUI: function() {
-        this.logger.debug("");
-
         if (this._build_ui_id > 0) {
             Mainloop.source_remove(this._build_ui_id);
             this._build_ui_id = 0;
@@ -142,8 +169,6 @@ SimpleToDoList.prototype = {
 
     // Populate UI with the section items
     _populate_ui: function() {
-        this.logger.debug("");
-
         try {
             this._clear();
             this.n_total_tasks = 0;
@@ -163,7 +188,7 @@ SimpleToDoList.prototype = {
                 // Mark for deletion on EOL. Cinnamon 3.6.x+
                 // Replace JSON trick with Object.assign().
                 // This bit me hard. Luckily, I found the solution very quickly.
-                this._create_section("", JSON.parse(JSON.stringify($.DefaultExampleTasks)));
+                this._create_section("", JSON.parse(JSON.stringify(DefaultExampleTasks)));
                 this.pref_initial_load = true;
             }
 
@@ -177,8 +202,6 @@ SimpleToDoList.prototype = {
     },
 
     _add_section: function(aSection) {
-        this.logger.debug("");
-
         let item = new $.TasksListItem(this, aSection);
 
         this.todosSec.addMenuItem(item);
@@ -194,8 +217,6 @@ SimpleToDoList.prototype = {
     },
 
     _update_counter: function(aItem, aDiff) {
-        this.logger.debug("");
-
         this.n_total_tasks -= aDiff;
 
         if (this.pref_show_tasks_counter_on_applet) {
@@ -204,8 +225,6 @@ SimpleToDoList.prototype = {
     },
 
     _clear: function() {
-        this.logger.debug("");
-
         Array.prototype.slice.call(this.todosSec._getMenuItems()).forEach((aSection) => {
             aSection._clear();
         });
@@ -214,8 +233,6 @@ SimpleToDoList.prototype = {
     },
 
     _create_section: function(aText, aSection) {
-        this.logger.debug("");
-
         let id = this.next_id;
         let section;
 
@@ -248,8 +265,6 @@ SimpleToDoList.prototype = {
     },
 
     _remove_section: function(aActor, aSection) {
-        this.logger.debug("");
-
         // Remove the section from the internal database and synchronize it with the setting.
         this.sections = this.sections.filter((aSec) => {
             return aSec["id"] !== aSection.id;
@@ -262,8 +277,6 @@ SimpleToDoList.prototype = {
     },
 
     _saveTasks: function(aCallback) {
-        this.logger.debug("");
-
         if (this.pref_section_keep_alphabetic_order) {
             this.sections = this.sections.sort((a, b) => {
                 return a["name"].localeCompare(b["name"]);
@@ -286,12 +299,12 @@ SimpleToDoList.prototype = {
 
         if (this.pref_autobackups_enabled && this._backups_storage_path) {
             this._auto_backup_id = Mainloop.timeout_add(500, () => {
-                this.logger.debug("Generating backup...");
+                $.runtimeInfo("Generating backup...");
 
                 let backupFile = Gio.File.new_for_path(this._backups_storage_path + "/" +
                     new Date().toCustomISOString() + ".json");
 
-                $.saveToFileAsync(sections, backupFile, () => {
+                saveToFileAsync(sections, backupFile, () => {
                     this._auto_backup_id = 0;
                 });
 
@@ -299,7 +312,7 @@ SimpleToDoList.prototype = {
 
                 if (now - this.pref_last_backup_cleanup > 3600) {
                     this.pref_last_backup_cleanup = now;
-                    $.removeSurplusFilesFromDirectory(this._backups_storage_path,
+                    removeSurplusFilesFromDirectory(this._backups_storage_path,
                         this.pref_autobackups_max_files_to_keep);
                 }
 
@@ -308,10 +321,10 @@ SimpleToDoList.prototype = {
         }
 
         this._save_tasks_id = Mainloop.timeout_add(500, () => {
-            this.logger.debug("Saving tasks...");
+            $.runtimeInfo("Saving tasks...");
 
             try {
-                $.saveToFileAsync(sections, this._tasks_list_file, () => {
+                saveToFileAsync(sections, this._tasks_list_file, () => {
                     if (aCallback && typeof aCallback === "function") {
                         aCallback();
                     }
@@ -329,8 +342,6 @@ SimpleToDoList.prototype = {
     },
 
     _load: function() {
-        this.logger.debug("");
-
         try {
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -360,7 +371,8 @@ SimpleToDoList.prototype = {
             if (this._tasks_list_file.query_exists(null)) {
                 this._tasks_list_file.load_contents_async(null,
                     (aFile, aResponce) => {
-                        let success, contents = "[]",
+                        let success,
+                            contents = "[]",
                             tag;
 
                         try {
@@ -466,15 +478,13 @@ SimpleToDoList.prototype = {
                 if (this.pref_initial_load) {
                     // Mark for deletion on EOL. Cinnamon 3.6.x+
                     // Replace JSON trick with Object.assign().
-                    this._create_section("", JSON.parse(JSON.stringify($.DefaultExampleTasks)));
+                    this._create_section("", JSON.parse(JSON.stringify(DefaultExampleTasks)));
                 }
             }
         }
     },
 
     _toggleMenu: function() {
-        this.logger.debug("");
-
         if (this.menu.isOpen) {
             this.menu.close(this.pref_animate_menu);
         } else {
@@ -484,8 +494,6 @@ SimpleToDoList.prototype = {
     },
 
     _onOpenStateChanged: function(aMenu, aOpen) {
-        this.logger.debug("");
-
         if (aOpen) {
             let i = 0;
             let items = this.todosSec._getMenuItems();
@@ -503,8 +511,6 @@ SimpleToDoList.prototype = {
     },
 
     _rebuildRequested: function() {
-        this.logger.debug("");
-
         // Async needed. Otherwise, the UI is built before the tasks are saved.
         this._saveTasks(() => {
             this._load();
@@ -534,6 +540,8 @@ SimpleToDoList.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -595,14 +603,15 @@ SimpleToDoList.prototype = {
             "pref_tasks_priorities_today_foreground",
             "pref_tasks_priorities_low_background",
             "pref_tasks_priorities_low_foreground",
-            "pref_enable_verbose_logging",
             "pref_autobackups_enabled",
             "pref_autobackups_max_files_to_keep",
             "pref_last_backup_cleanup",
             "pref_initial_load",
             "pref_imp_exp_last_selected_directory",
             "pref_save_last_selected_directory",
-            "pref_storage_dirs_created"
+            "pref_storage_dirs_created",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -618,8 +627,6 @@ SimpleToDoList.prototype = {
     },
 
     _updateKeybindings: function() {
-        this.logger.debug("");
-
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
 
         if (this.pref_overlay_key !== "") {
@@ -636,8 +643,6 @@ SimpleToDoList.prototype = {
     },
 
     _updateIconAndLabel: function() {
-        this.logger.debug("");
-
         let icon = this.pref_custom_icon_for_applet;
         let setIcon = (aIcon, aIsPath) => {
             if (aIcon.search("-symbolic") !== -1) {
@@ -672,8 +677,6 @@ SimpleToDoList.prototype = {
     },
 
     _updateLabel: function() {
-        this.logger.debug("");
-
         if (this._update_label_id > 0) {
             Mainloop.source_remove(this._update_label_id);
             this._update_label_id = 0;
@@ -728,8 +731,6 @@ SimpleToDoList.prototype = {
     },
 
     _importTasks: function() {
-        this.logger.debug("");
-
         Util.spawn_async([this.metadata.path + "/appletHelper.py",
                 "import",
                 this.pref_imp_exp_last_selected_directory
@@ -746,7 +747,9 @@ SimpleToDoList.prototype = {
                 let file = Gio.file_new_for_path(path);
                 this.pref_imp_exp_last_selected_directory = path;
                 file.load_contents_async(null, (aFile, aResponce) => {
-                    let success, contents, tag;
+                    let success,
+                        contents,
+                        tag;
 
                     try {
                         [success, contents, tag] = aFile.load_contents_finish(aResponce);
@@ -788,8 +791,6 @@ SimpleToDoList.prototype = {
     },
 
     _exportTasks: function(aActor, aEvent, aSection) {
-        this.logger.debug("");
-
         Util.spawn_async([this.metadata.path + "/appletHelper.py",
                 "export",
                 this.pref_imp_exp_last_selected_directory
@@ -814,13 +815,11 @@ SimpleToDoList.prototype = {
                 let rawData = JSON.stringify(sectionsContainer, null, 4);
                 let file = Gio.file_new_for_path(path);
                 this.pref_imp_exp_last_selected_directory = path;
-                $.saveToFileAsync(rawData, file);
+                saveToFileAsync(rawData, file);
             });
     },
 
     _saveAsTODOFile: function(aActor, aEvent, aSection) {
-        this.logger.debug("");
-
         Util.spawn_async([this.metadata.path + "/appletHelper.py",
                 "save",
                 this.pref_save_last_selected_directory
@@ -870,14 +869,12 @@ SimpleToDoList.prototype = {
                         }
                     }
                 } finally {
-                    $.saveToFileAsync(rawData, file);
+                    saveToFileAsync(rawData, file);
                 }
             });
     },
 
     _expandAppletContextMenu: function() {
-        this.logger.debug("");
-
         let menuItem;
 
         // Save as TODO
@@ -888,7 +885,7 @@ SimpleToDoList.prototype = {
         menuItem._icon.icon_size = 14;
         menuItem.connect("activate",
             (aActor, aEvent) => this._saveAsTODOFile(aActor, aEvent));
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _("Save all current tasks lists as a TODO file.")
         );
@@ -906,7 +903,7 @@ SimpleToDoList.prototype = {
         menuItem._icon.icon_size = 14;
         menuItem.connect("activate",
             (aActor, aEvent) => this._exportTasks(aActor, aEvent));
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _("Export all current tasks lists into a JSON file.") + "\n\n" +
             _("JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet.")
@@ -924,7 +921,7 @@ SimpleToDoList.prototype = {
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
         menuItem.connect("activate", () => this._importTasks());
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _("Import tasks lists from a previously exported JSON file into this applet.") + "\n\n" +
             _("JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet.")
@@ -945,12 +942,12 @@ SimpleToDoList.prototype = {
                 // Mark for deletion on EOL. Cinnamon 3.6.x+
                 // Replace JSON trick with Object.assign().
                 // This bit me hard. Luckily, I found the solution very quickly.
-                this._create_section("", JSON.parse(JSON.stringify($.DefaultExampleTasks)));
+                this._create_section("", JSON.parse(JSON.stringify(DefaultExampleTasks)));
             } finally {
                 this._buildUI();
             }
         });
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _("Restore the example tasks list that were present when the applet was first loaded.")
         );
@@ -969,12 +966,12 @@ SimpleToDoList.prototype = {
                 _("This operation cannot be reverted!!!") + "\n",
                 () => {
                     this.sections = [];
-                    $.saveToFileAsync("[]", this._tasks_list_file, () => this._load());
+                    saveToFileAsync("[]", this._tasks_list_file, () => this._load());
                 }
             );
             confirmDialog.open(global.get_current_time());
         });
-        menuItem.tooltip = new $.CustomTooltip(
+        menuItem.tooltip = new InteligentTooltip(
             menuItem.actor,
             _("Remove all currently loaded tasks lists from this applet.") + "\n\n" +
             _("WARNING!!!") + " " + _("This operation cannot be reverted!!!")
@@ -990,7 +987,7 @@ SimpleToDoList.prototype = {
             "dialog-information",
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
-        menuItem.tooltip = new $.CustomTooltip(menuItem.actor, _("Open this applet help file."));
+        menuItem.tooltip = new InteligentTooltip(menuItem.actor, _("Open this applet help file."));
         menuItem.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
         });
@@ -998,8 +995,6 @@ SimpleToDoList.prototype = {
     },
 
     updateLabelVisibility: function() {
-        this.logger.debug("");
-
         this._update_label_id = 0;
 
         // Condition needed for retro-compatibility.
@@ -1020,14 +1015,10 @@ SimpleToDoList.prototype = {
     },
 
     on_applet_clicked: function() {
-        this.logger.debug("");
-
         this._toggleMenu();
     },
 
     on_applet_removed_from_panel: function() {
-        this.logger.debug("");
-
         if (this._build_ui_id > 0) {
             Mainloop.source_remove(this._build_ui_id);
             this._build_ui_id = 0;
@@ -1054,8 +1045,6 @@ SimpleToDoList.prototype = {
     },
 
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
-        this.logger.debug("");
-
         // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
         // settings callback instead of just one as in older versions. The first one is the
         // setting value and the second one is the user data. To workaround this nonsense,
@@ -1065,10 +1054,6 @@ SimpleToDoList.prototype = {
         // Remove the following variable and directly use the second argument.
         let pref_key = aPrefKey || aPrefValue;
         switch (pref_key) {
-            case "pref_enable_verbose_logging":
-                this.logger.info("Logging changed to " + (this.pref_enable_verbose_logging ? "debug" : "info"));
-                this.logger.verbose = this.pref_enable_verbose_logging;
-                break;
             case "pref_custom_icon_for_applet":
             case "pref_custom_label_for_applet":
                 this._updateIconAndLabel();
@@ -1112,6 +1097,11 @@ SimpleToDoList.prototype = {
                 this._force_storage_dirs_creation = true;
                 this._load();
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     },
 
@@ -1124,6 +1114,11 @@ SimpleToDoList.prototype = {
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new SimpleToDoList(aMetadata, aOrientation, aPanel_height, aInstance_id);
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes($.Debugger, {
+        InteligentTooltip: InteligentTooltip,
+        SimpleToDoList: SimpleToDoList
+    });
+
+    return new SimpleToDoList(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }

@@ -332,16 +332,33 @@
         "description": "Maximum backup files to keep",
         "tooltip": "The directory where the backup files are stored is cleaned periodically. Only the most recent backup files are kept.\nBackups cleanup frequency:\n\n* Every time the applet is initialized, regardless of when was the last time a cleanup operation was performed.\n* Every time that this applet's tasks list are modified, but only if the last cleanup operation was performed at least in the last 60 minutes."
     },
-    "head12": {
+    "debugging-header": {
         "type": "header",
         "description": "Debugging"
     },
-    "pref_enable_verbose_logging": {
+    "pref_logging_level": {
+        "type": "combobox",
+        "indent": true,
+        "default": 0,
+        "description": "Logging level (*)",
+        "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additinally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
+        "options": {
+            "Normal": 0,
+            "Verbose": 1,
+            "Very verbose": 2
+        }
+    },
+    "pref_debugger_enabled": {
         "type": "checkbox",
         "indent": true,
-        "default": false,
-        "description": "Verbose logging",
-        "tooltip": "Checking this will enable debug level logging."
+        "description": "Enable debugger (*)",
+        "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
+        "default": false
+    },
+    "label": {
+        "type": "label",
+        "indent": true,
+        "description": "(*) Requires Cinnamon restart to enable/disable"
     },
     "pref_initial_load": {
         "type": "generic",
