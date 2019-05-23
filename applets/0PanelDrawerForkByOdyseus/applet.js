@@ -1,13 +1,14 @@
-let $;
+let GlobalUtils,
+    DebugManager;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
-    $ = require("./utils.js");
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
 } else {
-    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
+    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
 }
-
-const _ = $._;
 
 const {
     gi: {
@@ -25,6 +26,12 @@ const {
     }
 } = imports;
 
+const {
+    _
+} = GlobalUtils;
+
+var Debugger = new DebugManager.DebugManager();
+
 function PanelDrawer() {
     this._init.apply(this, arguments);
 }
@@ -32,8 +39,8 @@ function PanelDrawer() {
 PanelDrawer.prototype = {
     __proto__: Applet.IconApplet.prototype,
 
-    _init: function(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanel_height, aInstance_id);
+    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
@@ -42,7 +49,7 @@ PanelDrawer.prototype = {
         }
 
         this.metadata = aMetadata;
-        this.instance_id = aInstance_id;
+        this.instance_id = aInstanceId;
         this.orientation = aOrientation;
 
         this._initializeSettings(() => {
@@ -146,6 +153,8 @@ PanelDrawer.prototype = {
                 } catch (aErr) {
                     global.logError(aErr);
                 }
+
+                return false;
             });
         };
 
@@ -179,7 +188,9 @@ PanelDrawer.prototype = {
             "hide_time",
             "hover_time",
             "autohide_rs",
-            "autohide_rs_time"
+            "autohide_rs_time",
+            "pref_logging_level",
+            "pref_debugger_enabled"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -296,12 +307,20 @@ PanelDrawer.prototype = {
         let p = _children.indexOf(this.actor);
         for (let i = 0; i < p; i++) {
             postpone = postpone || _children[i].hover;
-            if (_children[i]._applet._menuManager) {
+            let hasAppletObject = _children[i].hasOwnProperty("_applet");
+
+            if (hasAppletObject &&
+                _children[i]._applet.hasOwnProperty("_menuManager") &&
+                _children[i]._applet._menuManager) {
                 postpone = postpone || _children[i]._applet._menuManager._activeMenu;
             }
-            if (_children[i]._applet.menuManager) {
+
+            if (hasAppletObject &&
+                _children[i]._applet.hasOwnProperty("menuManager") &&
+                _children[i]._applet.menuManager) {
                 postpone = postpone || _children[i]._applet.menuManager._activeMenu;
             }
+
             if (postpone) {
                 break;
             }
@@ -312,11 +331,11 @@ PanelDrawer.prototype = {
                 () => {
                     this.autodo(updalreadyH);
                     return false;
-                });
+                }
+            );
         } else if (this.h && !global.settings.get_boolean("panel-edit-mode")) {
             this.doAction(updalreadyH);
         }
-
     },
 
     on_applet_removed_from_panel: function() {
@@ -351,10 +370,19 @@ PanelDrawer.prototype = {
                     this.autodo(true);
                 }
                 break;
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
+                Debugger.logging_level = this.pref_logging_level;
+                Debugger.debugger_enabled = this.pref_debugger_enabled;
+                break;
         }
     }
 };
 
-function main(aMetadata, aOrientation, aPanel_height, aInstance_id) {
-    return new PanelDrawer(aMetadata, aOrientation, aPanel_height, aInstance_id);
+function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+    DebugManager.wrapPrototypes(Debugger, {
+        PanelDrawer: PanelDrawer
+    });
+
+    return new PanelDrawer(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 }
