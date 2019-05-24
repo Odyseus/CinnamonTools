@@ -1,12 +1,15 @@
 let $,
+    GlobalUtils,
     Constants;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
+    GlobalUtils = require("./globalUtils.js");
     Constants = require("./constants.js");
 } else {
     $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
+    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
     Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
 }
 
@@ -15,13 +18,17 @@ const {
     Languages
 } = Constants;
 
+const {
+    escapeHTML
+} = GlobalUtils;
+
 const LABELS = {
     definitions: _("Definitions"),
     synonyms: _("Synonyms"),
     examples: _("Examples"),
     seeAlso: _("See also"),
     didYouMean: _("Did you mean:"),
-    showingTransFor: _("Showing translation for:"),
+    showingTransFor: _("Showing translation for:")
 };
 
 const RESPONSE_INDEX_MAP = {
@@ -35,7 +42,7 @@ const RESPONSE_INDEX_MAP = {
     definitions: 12,
     synonyms: 11,
     examples: 13,
-    seeAlso: 14,
+    seeAlso: 14
 };
 
 const DATA_LIST = [
@@ -49,7 +56,7 @@ const DATA_LIST = [
     "definitions",
     "synonyms",
     "examples",
-    "seeAlso",
+    "seeAlso"
 ];
 
 function Translator() {
@@ -151,7 +158,7 @@ Translator.prototype = {
                     let originalLanguage = aResponse[RESPONSE_INDEX_MAP.originalLanguage] ||
                         aExtraData.sourceLangCode;
                     let confidence = aResponse[RESPONSE_INDEX_MAP.confidence];
-                    fragment += $.escapeHTML("[ %s -> %s ] %s%\n\n".format(
+                    fragment += escapeHTML("[ %s -> %s ] %s%\n\n".format(
                         (originalLanguage in Languages) ?
                         Languages[originalLanguage] :
                         originalLanguage,

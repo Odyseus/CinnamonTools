@@ -1,5 +1,8 @@
 let XletMeta,
     Constants,
+    DebugManager,
+    GlobalUtils,
+    CustomTooltips,
     $;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
@@ -11,10 +14,16 @@ if (typeof __meta === "object") {
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
     Constants = require("./constants.js");
+    CustomTooltips = require("./customTooltips.js");
     $ = require("./utils.js");
 } else {
+    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
     Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    CustomTooltips = imports.ui.extensionSystem.extensions["{{UUID}}"].customTooltips;
     $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
 }
 
@@ -54,12 +63,27 @@ const {
     SPINNER_PARAMS,
     Icons,
     ProviderData,
-    CINNAMON_VERSION,
     DialogState,
-    LoggingLevel,
     MagicKeys,
     Settings
 } = Constants;
+
+const {
+    CINNAMON_VERSION,
+    escapeHTML,
+    isBlank,
+    getKeybindingDisplayName,
+    versionCompare
+} = GlobalUtils;
+
+const {
+    InteligentTooltip
+} = CustomTooltips;
+
+const {
+    LoggingLevel,
+    prototypeDebugger
+} = DebugManager;
 
 let Gst;
 
@@ -364,7 +388,7 @@ ButtonsBarButton.prototype = {
             });
         }
 
-        if (!$.isBlank(this.params.icon_name)) {
+        if (!isBlank(this.params.icon_name)) {
             this._icon = new St.Icon({
                 icon_name: this.params.icon_name,
                 style_class: this.params.icon_style_class,
@@ -379,7 +403,7 @@ ButtonsBarButton.prototype = {
             });
         }
 
-        if (!$.isBlank(this.params.label)) {
+        if (!isBlank(this.params.label)) {
             this._label = new St.Label({
                 text: this.params.label
             });
@@ -858,7 +882,7 @@ InfoDialogBase.prototype = {
         }
 
         this._close_button = new ButtonsBarButton({
-            tooltip: $.escapeHTML(_("Close")) + " (<b>%s</b>)".format($.escapeHTML(_("Escape"))),
+            tooltip: escapeHTML(_("Close")) + " (<b>%s</b>)".format(escapeHTML(_("Escape"))),
             icon_name: Icons.close,
             callback: () => this.close(),
             button_style_class: "mt-base-dialog-close-button"
@@ -1042,15 +1066,15 @@ HelpDialog.prototype = {
          * keybindings register function.
          */
         this.openDiagLabel.text = (Settings.pref_open_translator_dialog_keybinding ?
-            $.getKeybindingDisplayName(Settings.pref_open_translator_dialog_keybinding).split("+").join(" + ") :
+            getKeybindingDisplayName(Settings.pref_open_translator_dialog_keybinding).split("+").join(" + ") :
             _("Keybinding not assigned"));
 
         this.transFromClipLabel.text = (Settings.pref_translate_from_clipboard_keybinding ?
-            $.getKeybindingDisplayName(Settings.pref_translate_from_clipboard_keybinding).split("+").join(" + ") :
+            getKeybindingDisplayName(Settings.pref_translate_from_clipboard_keybinding).split("+").join(" + ") :
             _("Keybinding not assigned"));
 
         this.transFromSelLabel.text = (Settings.pref_translate_from_selection_keybinding ?
-            $.getKeybindingDisplayName(Settings.pref_translate_from_selection_keybinding).split("+").join(" + ") :
+            getKeybindingDisplayName(Settings.pref_translate_from_selection_keybinding).split("+").join(" + ") :
             _("Keybinding not assigned"));
     },
 
@@ -1123,7 +1147,7 @@ LanguageChooser.prototype = {
 
         this._grid_layout.attach(this._search_entry, 0, 2, 2, 1);
 
-        this.set_languages(this.params.languages);
+        this.set_languages(this._languages);
 
         this._info_grid_layout.set_column_homogeneous(true);
     },
@@ -1171,7 +1195,7 @@ LanguageChooser.prototype = {
             let lang_code = key;
             let search_text = this._search_entry.get_text().toLowerCase();
 
-            if (!$.startsWith(lang_name.toLowerCase(), search_text)) {
+            if (!lang_name.toLowerCase().startsWith(search_text)) {
                 continue;
             }
 
@@ -1204,12 +1228,12 @@ LanguageChooser.prototype = {
         return button;
     },
 
-    show_languages: function(aSelectedLangCode, aLangsList) {
+    show_languages: function(aSelectedLangCode, aLangsList = null) {
         let row = 0;
         let column = 0;
         let languages = this._languages;
 
-        if (!$.isBlank(aLangsList)) {
+        if (aLangsList !== null) {
             languages = aLangsList;
         }
 
@@ -1303,7 +1327,7 @@ MostUsedLangsBox.prototype = {
             for (; i < iLen; i++) {
                 let button = new ButtonsBarButton({
                     label: this._langs[i].lang_name,
-                    tooltip: $.escapeHTML(this._lang_type === "source" ?
+                    tooltip: escapeHTML(this._lang_type === "source" ?
                         _("Set source language") :
                         _("Set target language")),
                     info_bar: this._extension.transDialog.info_bar,
@@ -1547,7 +1571,7 @@ InfoBar.prototype = {
     add_message: function(aParams) {
         let params = Params.parse(aParams, STATUS_BAR_MESSAGE_PARAMS);
 
-        if ($.isBlank(params.message)) {
+        if (isBlank(params.message)) {
             return false;
         }
 
@@ -1705,7 +1729,7 @@ EntryBase.prototype = {
             let selection = this._clutter_text.get_selection();
             let text;
 
-            if (!$.isBlank(selection)) {
+            if (!isBlank(selection)) {
                 text = selection;
             } else {
                 text = this._clutter_text.text;
@@ -1976,7 +2000,7 @@ TranslatorDialog.prototype = {
 
         this._provider_button = new ButtonsBarButton({
             label: "DUMMY",
-            tooltip: $.escapeHTML(_("Go to provider's website")),
+            tooltip: escapeHTML(_("Go to provider's website")),
             button_style_class: "mt-provider-button",
             info_bar: this._info_bar,
             callback: () => {
@@ -1990,7 +2014,7 @@ TranslatorDialog.prototype = {
 
         this._listen_source_button = new ButtonsBarButton({
             icon_name: Icons.listen,
-            tooltip: $.escapeHTML(_("Listen")),
+            tooltip: escapeHTML(_("Listen")),
             button_style_class: "mt-listen-button",
             info_bar: this._info_bar,
             callback: () => {
@@ -2014,7 +2038,7 @@ TranslatorDialog.prototype = {
 
         this._listen_target_button = new ButtonsBarButton({
             icon_name: Icons.listen,
-            tooltip: $.escapeHTML(_("Listen")),
+            tooltip: escapeHTML(_("Listen")),
             button_style_class: "mt-listen-button",
             info_bar: this._info_bar,
             callback: () => {
@@ -2374,7 +2398,7 @@ DialogPopup.prototype = {
         this._transDialog = aTransDialog;
 
         // Mark for deletion on EOL. Cinnamon 3.2.x+
-        if ($.versionCompare(CINNAMON_VERSION, "3.2") < 0) {
+        if (versionCompare(CINNAMON_VERSION, "3.2") < 0) {
             PopupMenu.PopupMenu.prototype._init.call(this, this._button.actor, 0.5, aPopupSide);
         } else {
             PopupMenu.PopupMenu.prototype._init.call(this, this._button.actor, aPopupSide);
@@ -2436,7 +2460,7 @@ DialogPopup.prototype = {
                     _("See the extended help of this extension for more information.");
             }
 
-            item.tooltip = new $.CustomTooltip(item.actor, tt_text);
+            item.tooltip = new InteligentTooltip(item.actor, tt_text);
         }
 
         this.addMenuItem(item);
@@ -2486,7 +2510,7 @@ Spinner.prototype = {
             label: "0",
             button_style_class: "mt-spinner",
             track_hover: false,
-            reactive: false,
+            reactive: false
         });
         this.spinner.connect("destroy", () => this._onDestroy());
         this.spinner.hide();
@@ -2567,16 +2591,17 @@ if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE || Settings.pref_d
             InfoBar: InfoBar,
             InfoBarMessage: InfoBarMessage,
             InfoDialogBase: InfoDialogBase,
+            InteligentTooltip: InteligentTooltip,
             LanguageChooser: LanguageChooser,
             MostUsedLangsBox: MostUsedLangsBox,
             SourceEntry: SourceEntry,
             Spinner: Spinner,
             TargetEntry: TargetEntry,
-            TranslatorDialog: TranslatorDialog,
+            TranslatorDialog: TranslatorDialog
         };
 
         for (let name in protos) {
-            $.prototypeDebugger(protos[name], {
+            prototypeDebugger(protos[name], {
                 objectName: name,
                 verbose: Settings.pref_logging_level == LoggingLevel.VERY_VERBOSE,
                 debug: Settings.pref_debugger_enabled

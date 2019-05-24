@@ -166,10 +166,6 @@
         "type": "generic",
         "default": false
     },
-    "pref_loggin_enabled": {
-        "type": "generic",
-        "default": false
-    },
     "pref_loggin_save_history_indented": {
         "type": "generic",
         "default": false
@@ -181,6 +177,9 @@
     "pref_informed_about_dependencies": {
         "type": "generic",
         "default": false
+    },
+    "pref_desktop_file_generated": {
+        "type": "generic",
+        "default": false
     }
-
 }

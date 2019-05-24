@@ -1,11 +1,18 @@
 let translator = null,
     XletMeta,
     C,
+    G,
+    D,
     UI,
+    SpawnUtils,
+    CustomFileUtils,
     $,
     // constants.js
     _,
-    Settings;
+    Settings,
+    // globalUtils.js
+    OutputReader,
+    DesktopNotificationsUtils;
 
 const {
     gi: {
@@ -60,6 +67,9 @@ MultiTranslator.prototype = {
         this._translation_history = null;
         this._sourceLanguageChooser = null;
         this._targetLanguageChooser = null;
+        this._settingsDesktopFileName = "org.Cinnamon.Extensions.MultiTranslator.Settings";
+        this._settingsDesktopFilePath = GLib.get_home_dir() +
+            "/.local/share/applications/%s.desktop".format(this._settingsDesktopFileName);
     },
 
     enable: function() {
@@ -82,9 +92,17 @@ MultiTranslator.prototype = {
         if (!Settings.pref_informed_about_dependencies) {
             $.checkDependencies();
         }
+
+        this._generateSettingsDesktopFile();
     },
 
     disable: function() {
+        /* NOTE: Set pref_desktop_file_generated to false so it forces the re-generation
+         * of the desktop file (if it's needed) the next time the extension is enabled.
+         */
+        Settings.pref_desktop_file_generated = false;
+
+        this._removeSettingsDesktopFile();
         this.transDialog.close();
         this.unloadStylesheet();
         this._removeKeybindings();
@@ -241,7 +259,7 @@ MultiTranslator.prototype = {
     },
 
     _removeTimeouts: function(aTimeoutKey = false) {
-        if (!$.isBlank(aTimeoutKey)) {
+        if (!G.isBlank(aTimeoutKey)) {
             if (this._timeout_ids.hasOwnProperty(aTimeoutKey) &&
                 this._timeout_ids[aTimeoutKey] > 0) {
                 Mainloop.source_remove(this._timeout_ids[aTimeoutKey]);
@@ -271,9 +289,9 @@ MultiTranslator.prototype = {
         } else if (controlShift && code === Clutter.KEY_6) { // Ctrl + Shift + C - Copy translated text to clipboard.
             let text = this.transDialog.target_entry.text;
 
-            if ($.isBlank(text)) {
+            if (G.isBlank(text)) {
                 this.transDialog.info_bar.add_message({
-                    message: $.escapeHTML(_("There is nothing to copy")),
+                    message: G.escapeHTML(_("There is nothing to copy")),
                     type: C.StatusbarMessageType.ERROR
                 });
             } else {
@@ -286,7 +304,7 @@ MultiTranslator.prototype = {
                 }
 
                 this.transDialog.info_bar.add_message({
-                    message: $.escapeHTML(_("Translated text copied to clipboard"))
+                    message: G.escapeHTML(_("Translated text copied to clipboard"))
                 });
             }
         } else if (control && (code === Clutter.exclam || code === Clutter.KEY_exclam)) { // Ctrl + M - Open main menu.
@@ -306,7 +324,7 @@ MultiTranslator.prototype = {
         } else if (symbol === Clutter.KEY_F1) { // F1 - Open quick help dialog.
             this._showHelpDialog();
         } else {
-            if (Settings.pref_logging_level !== C.LoggingLevel.NORMAL) {
+            if (Settings.pref_logging_level !== D.LoggingLevel.NORMAL) {
                 global.log(JSON.stringify({
                     state: state,
                     symbol: symbol,
@@ -385,7 +403,7 @@ MultiTranslator.prototype = {
 
         if (source === "auto") {
             this.transDialog.info_bar.add_message({
-                message: $.escapeHTML(_("Languages cannot be swapped")),
+                message: G.escapeHTML(_("Languages cannot be swapped")),
                 type: C.StatusbarMessageType.ERROR
             });
 
@@ -507,8 +525,8 @@ MultiTranslator.prototype = {
         this.preferencesMenuButton = new UI.ButtonsBarButton({
             icon_name: C.Icons.menu,
             tooltip: "%s (<b>%s + M</b>)".format(
-                $.escapeHTML(_("Main menu")),
-                $.escapeHTML(_("Ctrl"))
+                G.escapeHTML(_("Main menu")),
+                G.escapeHTML(_("Ctrl"))
             ),
             button_style_class: "mt-main-menu-button",
             info_bar: this.transDialog.info_bar,
@@ -559,7 +577,7 @@ MultiTranslator.prototype = {
                         this.preferencesMenuButtonPopup.add_item({
                             label: items[i][0],
                             callback: items[i][1],
-                            icon_name: items[i][2],
+                            icon_name: items[i][2]
                         });
                     }
 
@@ -581,8 +599,8 @@ MultiTranslator.prototype = {
             this.transProvidersButton = new UI.ButtonsBarButton({
                 icon_name: C.Icons.providers,
                 tooltip: "%s (<b>%s + P</b>)".format(
-                    $.escapeHTML(_("Provider selector menu")),
-                    $.escapeHTML(_("Ctrl"))
+                    G.escapeHTML(_("Provider selector menu")),
+                    G.escapeHTML(_("Ctrl"))
                 ),
                 button_style_class: "mt-provider-selector-button",
                 info_bar: this.transDialog.info_bar,
@@ -661,7 +679,7 @@ MultiTranslator.prototype = {
             label: this.providersManager.current.getLanguageName(
                 this._current_source_lang || ""
             ) || "?",
-            tooltip: $.escapeHTML(_("Choose source language")),
+            tooltip: G.escapeHTML(_("Choose source language")),
             button_style_class: "mt-source-language-button",
             add_default_style_class: true,
             info_bar: this.transDialog.info_bar,
@@ -690,8 +708,8 @@ MultiTranslator.prototype = {
 
         this.transDialog.action_bar_1.add_button(new UI.ButtonsBarButton({
             icon_name: C.Icons.swap,
-            tooltip: $.escapeHTML(_("Swap languages")) +
-                " (<b>%s + S</b>)".format($.escapeHTML(_("Ctrl"))),
+            tooltip: G.escapeHTML(_("Swap languages")) +
+                " (<b>%s + S</b>)".format(G.escapeHTML(_("Ctrl"))),
             button_style_class: "mt-swap-languages-button",
             info_bar: this.transDialog.info_bar,
             callback: () => this._swapLanguages()
@@ -699,8 +717,8 @@ MultiTranslator.prototype = {
 
         this.transDialog.action_bar_1.add_button(new UI.ButtonsBarButton({
             icon_name: C.Icons.translate,
-            tooltip: $.escapeHTML(_("Translate text")) +
-                " (<b>%s + %s</b>)".format($.escapeHTML(_("Ctrl")), $.escapeHTML(_("Enter"))),
+            tooltip: G.escapeHTML(_("Translate text")) +
+                " (<b>%s + %s</b>)".format(G.escapeHTML(_("Ctrl")), G.escapeHTML(_("Enter"))),
             button_style_class: "mt-translate-button",
             info_bar: this.transDialog.info_bar,
             callback: (aActor, aEvent) => this._translate(aActor, aEvent)
@@ -710,7 +728,7 @@ MultiTranslator.prototype = {
 
         this.transDialog.action_bar_2.add_button(new UI.ButtonsBarButton({
             icon_name: C.Icons.help,
-            tooltip: $.escapeHTML(_("Quick help")) +
+            tooltip: G.escapeHTML(_("Quick help")) +
                 " (<b>F1</b>)",
             button_style_class: "mt-quick-help-button",
             info_bar: this.transDialog.info_bar,
@@ -719,8 +737,8 @@ MultiTranslator.prototype = {
 
         this.transDialog.action_bar_2.add_button(new UI.ButtonsBarButton({
             icon_name: C.Icons.shutdown,
-            tooltip: $.escapeHTML(_("Quit")) +
-                " (<b>%s</b>)".format($.escapeHTML(_("Escape"))),
+            tooltip: G.escapeHTML(_("Quit")) +
+                " (<b>%s</b>)".format(G.escapeHTML(_("Escape"))),
             button_style_class: "mt-quit-button",
             info_bar: this.transDialog.info_bar,
             callback: () => this.transDialog.close()
@@ -732,7 +750,7 @@ MultiTranslator.prototype = {
             label: this.providersManager.current.getLanguageName(
                 this._current_target_lang || ""
             ) || "?",
-            tooltip: $.escapeHTML(_("Choose target language")),
+            tooltip: G.escapeHTML(_("Choose target language")),
             button_style_class: "mt-target-language-button",
             add_default_style_class: true,
             info_bar: this.transDialog.info_bar,
@@ -751,16 +769,16 @@ MultiTranslator.prototype = {
     },
 
     _html2text: function(aHTML, aCallback) {
-        if ($.isBlank(String(aHTML).trim())) {
+        if (G.isBlank(String(aHTML))) {
             this.transDialog.info_bar.add_message({
-                message: $.escapeHTML(_("Nothing to translate")),
+                message: G.escapeHTML(_("Nothing to translate")),
                 timeout: 2000
             });
 
             return;
         }
 
-        $.spawnWithCallback(
+        OutputReader.spawn(
             null, [
                 XletMeta.path + "/extensionHelper.py",
                 /* NOTE: Without explicitly using String the aHTML argument isn't
@@ -794,9 +812,9 @@ MultiTranslator.prototype = {
          * Node and use a Node module with a trillion lines of code just to parse HTML.
          */
         this._html2text(this.transDialog.source_entry.text, (aSourceCleaned) => {
-            if ($.isBlank(aSourceCleaned)) {
+            if (G.isBlank(aSourceCleaned)) {
                 this.transDialog.info_bar.add_message({
-                    message: $.escapeHTML(_("Nothing to translate")),
+                    message: G.escapeHTML(_("Nothing to translate")),
                     timeout: 2000
                 });
 
@@ -819,7 +837,7 @@ MultiTranslator.prototype = {
 
                     this.forceTranslation = shift_mask;
                 } catch (aErr) {
-                    if (Settings.pref_logging_level !== C.LoggingLevel.NORMAL) {
+                    if (Settings.pref_logging_level !== D.LoggingLevel.NORMAL) {
                         global.logError(aErr);
                     }
 
@@ -895,9 +913,9 @@ MultiTranslator.prototype = {
 
     _translateSelection: function() {
         $.getSelection((aSelection) => {
-            if ($.isBlank(aSelection)) {
+            if (G.isBlank(aSelection)) {
                 this.transDialog.info_bar.add_message({
-                    message: $.escapeHTML(_("Selection is empty or xsel was not able to grab it")),
+                    message: G.escapeHTML(_("Selection is empty or xsel was not able to grab it")),
                     type: C.StatusbarMessageType.ERROR
                 });
             }
@@ -906,16 +924,20 @@ MultiTranslator.prototype = {
             this.open();
             /* NOTE: Using Mainloop.idle_add to avoid jerky animations.
              */
-            Mainloop.idle_add(() => this._translate());
+            Mainloop.idle_add(() => {
+                this._translate();
+
+                return false;
+            });
         });
     },
 
     _translateFromClipboard: function() {
         let clipboard = St.Clipboard.get_default();
         let clipCallback = (aClipboard, aText) => {
-            if ($.isBlank(aText)) {
+            if (G.isBlank(aText)) {
                 this.transDialog.info_bar.add_message({
-                    message: $.escapeHTML(_("Clipboard is empty")),
+                    message: G.escapeHTML(_("Clipboard is empty")),
                     type: C.StatusbarMessageType.ERROR
                 });
             }
@@ -924,7 +946,11 @@ MultiTranslator.prototype = {
             this.open();
             /* NOTE: Using Mainloop.idle_add to avoid jerky animations.
              */
-            Mainloop.idle_add(() => this._translate());
+            Mainloop.idle_add(() => {
+                this._translate();
+
+                return false;
+            });
         };
 
         if (St.ClipboardType) {
@@ -1124,24 +1150,22 @@ MultiTranslator.prototype = {
                     this._translation_history = JSON.parse(contents);
 
                     if (this._translation_history["__version__"] !== C.HISTORY_FILE_VERSION) {
-                        $.customNotify(
-                            _(XletMeta.name),
-                            $.escapeHTML(_("The translation history requires sanitation.")) + "\n" +
-                            $.escapeHTML(_("The sanitation can be performed from the translation history window.")) + "\n" +
-                            $.escapeHTML(_("Check this extension help file for more details.")),
-                            "dialog-warning",
-                            C.NotificationUrgency.CRITICAL
+                        $.Notification.notify([
+                                G.escapeHTML(_("The translation history requires sanitation.")),
+                                G.escapeHTML(_("The sanitation can be performed from the translation history window.")),
+                                G.escapeHTML(_("Check this extension help file for more details."))
+                            ],
+                            DesktopNotificationsUtils.NotificationUrgency.CRITICAL
                         );
                     }
                 } catch (aErr) {
                     this._translation_history = null;
                     global.logError(aErr);
-                    $.customNotify(
-                        _(XletMeta.name),
-                        $.escapeHTML(_("Something might have gone wrong parsing the translation history.")) + "\n" +
-                        $.escapeHTML(String(aErr)),
-                        "dialog-error",
-                        C.NotificationUrgency.CRITICAL
+                    $.Notification.notify([
+                            G.escapeHTML(_("Something might have gone wrong parsing the translation history.")),
+                            G.escapeHTML(String(aErr))
+                        ],
+                        DesktopNotificationsUtils.NotificationUrgency.CRITICAL
                     );
                 }
             });
@@ -1179,12 +1203,12 @@ MultiTranslator.prototype = {
 
         let historyEntry = this.transHistory[this._current_target_lang][aSourceText];
 
-        if (Settings.pref_logging_level !== C.LoggingLevel.NORMAL) {
+        if (Settings.pref_logging_level !== D.LoggingLevel.NORMAL) {
             global.log("\n_displayHistory()>historyEntry:\n" + JSON.stringify(historyEntry));
         }
 
         try {
-            this.transDialog.target_entry.markup = "%s".format("[" + $.escapeHTML(_("History")) + "]\n" + historyEntry["tT"]);
+            this.transDialog.target_entry.markup = "%s".format("[" + G.escapeHTML(_("History")) + "]\n" + historyEntry["tT"]);
         } catch (aErr) {
             global.logError(aErr);
             this.transDialog.target_entry.text = "[" + _("History") + "]\n" + historyEntry["tT"];
@@ -1309,17 +1333,50 @@ MultiTranslator.prototype = {
     },
 
     openDateFormatSyntaxInfo: function() {
-        $.xdgOpen("https://docs.python.org/3/library/time.html#time.strftime");
+        G.xdgOpen("https://docs.python.org/3/library/time.html#time.strftime");
     },
 
     openHelpPage: function() {
         this.transDialog.close();
-        $.xdgOpen(XletMeta.path + "/HELP.html");
+        G.xdgOpen(XletMeta.path + "/HELP.html");
     },
 
     openExtensionSettings: function() {
         this.transDialog.close();
         Util.spawn_async([XletMeta.path + "/settings.py"], null);
+    },
+
+    _generateSettingsDesktopFile: function() {
+        if (G.versionCompare(G.CINNAMON_VERSION, "3.6.0") < 0 &&
+            !Settings.pref_desktop_file_generated) {
+            CustomFileUtils.generateDesktopFile({
+                fileName: this._settingsDesktopFileName,
+                dataName: _(XletMeta.name),
+                dataComment: _("Settings for %s").format(_(XletMeta.name)),
+                dataExec: XletMeta.path + "/settings.py",
+                dataIcon: XletMeta.path + "/icon.svg"
+            });
+
+            $.Notification.notify([
+                G.escapeHTML(_("A shortcut to open this extension settings has been generated.")),
+                G.escapeHTML(_("Search for it on your applications menu.")),
+                G.escapeHTML(_("Read this extension help page for more details."))
+            ]);
+
+            Settings.pref_desktop_file_generated = true;
+        }
+    },
+
+    _removeSettingsDesktopFile: function() {
+        try {
+            let desktopFile = Gio.file_new_for_path(this._settingsDesktopFilePath);
+
+            if (desktopFile.query_exists(null)) {
+                desktopFile.delete_async(GLib.PRIORITY_LOW, null, null);
+            }
+        } catch (aErr) {
+            global.logError(aErr);
+        }
     }
 };
 
@@ -1337,30 +1394,41 @@ function init(aXletMeta) {
 
     // Mark for deletion on EOL. Cinnamon 3.6.x+
     if (typeof require === "function") {
+        G = require("./globalUtils.js");
+        D = require("./debugManager.js");
         C = require("./constants.js");
         UI = require("./ui.js");
+        SpawnUtils = require("./spawnUtils.js");
+        CustomFileUtils = require("./customFileUtils.js");
         $ = require("./utils.js");
+        DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
     } else {
+        G = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
+        D = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
         C = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
         UI = imports.ui.extensionSystem.extensions["{{UUID}}"].ui;
+        SpawnUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].spawnUtils;
+        CustomFileUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].customFileUtils;
         $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
+        DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
     }
 
-    _ = C._;
+    _ = G._;
     Settings = C.Settings;
+    OutputReader = new SpawnUtils.SpawnReader();
 }
 
 function enable() {
-    if (Settings.pref_logging_level === C.LoggingLevel.VERY_VERBOSE || Settings.pref_debugger_enabled) {
+    if (Settings.pref_logging_level === D.LoggingLevel.VERY_VERBOSE || Settings.pref_debugger_enabled) {
         try {
             let protos = {
                 MultiTranslator: MultiTranslator
             };
 
             for (let name in protos) {
-                $.prototypeDebugger(protos[name], {
+                D.prototypeDebugger(protos[name], {
                     objectName: name,
-                    verbose: Settings.pref_logging_level === C.LoggingLevel.VERY_VERBOSE,
+                    verbose: Settings.pref_logging_level === D.LoggingLevel.VERY_VERBOSE,
                     debug: Settings.pref_debugger_enabled
                 });
             }
@@ -1376,6 +1444,8 @@ function enable() {
          */
         Mainloop.idle_add(() => {
             translator.enable();
+
+            return false;
         });
 
         /* NOTE: Object needed to be able to trigger callbacks when pressing
@@ -1387,6 +1457,8 @@ function enable() {
     } catch (aErr) {
         global.logError(aErr);
     }
+
+    return null;
 }
 
 function disable() {

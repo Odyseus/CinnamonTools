@@ -1,4 +1,5 @@
-let XletMeta;
+let XletMeta,
+    GlobalUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -7,11 +8,14 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+} else {
+    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
+}
+
 const {
-    gettext: Gettext,
-    gi: {
-        GLib
-    },
     ui: {
         settings: {
             ExtensionSettings
@@ -19,27 +23,9 @@ const {
     }
 } = imports;
 
-Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
-
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
-
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
-
-    return Gettext.gettext(aStr);
-}
+const {
+    _
+} = GlobalUtils;
 
 const BOUND_SETTINGS_ARRAY = [
     "pref_ui_animation_time",
@@ -72,7 +58,8 @@ const BOUND_SETTINGS_ARRAY = [
     "pref_debugger_enabled",
     "pref_loggin_save_history_indented",
     "pref_keep_source_entry_text_selected",
-    "pref_informed_about_dependencies"
+    "pref_informed_about_dependencies",
+    "pref_desktop_file_generated"
 ];
 
 /* NOTE: Future me, ULTRA-VERY-IMPORTANT!!!
@@ -158,10 +145,63 @@ MultiTranslatorSettings.prototype = {
 
 var Settings = new MultiTranslatorSettings();
 
+var TRANS_SHELL_REPLACEMENT_DATA = {
+    /* NOTE: Reference extracted from translate-shell.
+     *  AnsiCode["reset"]         = AnsiCode[0] = "\33[0m"
+     *  AnsiCode["bold"]          = "\33[1m"
+     *  AnsiCode["underline"]     = "\33[4m"
+     *  AnsiCode["negative"]      = "\33[7m"
+     *  AnsiCode["no bold"]       = "\33[22m"
+     *  AnsiCode["no underline"]  = "\33[24m"
+     *  AnsiCode["positive"]      = "\33[27m"
+     *  AnsiCode["black"]         = "\33[30m"
+     *  AnsiCode["red"]           = "\33[31m"
+     *  AnsiCode["green"]         = "\33[32m"
+     *  AnsiCode["yellow"]        = "\33[33m"
+     *  AnsiCode["blue"]          = "\33[34m"
+     *  AnsiCode["magenta"]       = "\33[35m"
+     *  AnsiCode["cyan"]          = "\33[36m"
+     *  AnsiCode["gray"]          = "\33[37m"
+     *  AnsiCode["default"]       = "\33[39m"
+     *  AnsiCode["dark gray"]     = "\33[90m"
+     *  AnsiCode["light red"]     = "\33[91m"
+     *  AnsiCode["light green"]   = "\33[92m"
+     *  AnsiCode["light yellow"]  = "\33[93m"
+     *  AnsiCode["light blue"]    = "\33[94m"
+     *  AnsiCode["light magenta"] = "\33[95m"
+     *  AnsiCode["light cyan"]    = "\33[96m"
+     *  AnsiCode["white"]         = "\33[97m"
+     */
+    // Clean up all escape sequences.
+    "\x1B[1m": "<b>",
+    "\x1B[22m": "</b>",
+    "\x1B[4m": "<u>",
+    "\x1B[24m": "</u>",
+    "\x1B[7m": "",
+    "\x1B[27m": "",
+    "\x1B[30m": "",
+    "\x1B[31m": "",
+    "\x1B[32m": "",
+    "\x1B[33m": "",
+    "\x1B[34m": "",
+    "\x1B[35m": "",
+    "\x1B[36m": "",
+    "\x1B[37m": "",
+    "\x1B[39m": "",
+    "\x1B[90m": "",
+    "\x1B[91m": "",
+    "\x1B[92m": "",
+    "\x1B[93m": "",
+    "\x1B[94m": "",
+    "\x1B[95m": "",
+    "\x1B[96m": "",
+    "\x1B[97m": "",
+    // Just in case.
+    "[\r\n]+": "\n"
+};
 var TTS_URI = "https://translate.google.com/translate_tts?client=tw-ob&ie=UTF-8&total=1&idx=0&textlen=%d&q=%s&tl=%s";
 var TTS_TEXT_MAX_LEN = 100;
 var LNG_CHOOSER_COLUMNS = 4;
-var CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
 /* NOTE: Keep in sync with translatorHistory.py:
  */
 var HISTORY_FILE_VERSION = 2;
@@ -220,24 +260,13 @@ var KnownStatusCodes = {
     503: "(503) " + _("Service unavailable"),
     5: "(5) " + _("Unable to connect to proxy"),
     6: "(6) " + _("SSL/TLS negotiation failed"),
-    7: "(7) " + _("A network error occurred, or the other end closed the connection unexpectedly"),
+    7: "(7) " + _("A network error occurred, or the other end closed the connection unexpectedly")
 };
 var STATS_TYPE_SOURCE = "source";
 var STATS_TYPE_TARGET = "target";
-var LoggingLevel = {
-    NORMAL: 0,
-    VERBOSE: 1,
-    VERY_VERBOSE: 2
-};
 var MagicKeys = {
     CYRILLIC_CONTROL: 8196,
     CYRILLIC_SHIFT: 8192
-};
-var NotificationUrgency = {
-    LOW: 0,
-    NORMAL: 1,
-    HIGH: 2,
-    CRITICAL: 3
 };
 var STATUS_BAR_MAX_MESSAGE_LENGTH = 100;
 var StatusbarMessageType = {
@@ -300,7 +329,7 @@ var Icons = {
     find: "edit-find-symbolic",
     swap: "multi-translator-swap-language-symbolic",
     translate: "multi-translator-translate-symbolic",
-    providers: "multi-translator-providers-symbolic",
+    providers: "multi-translator-providers-symbolic"
 };
 
 var ProviderData = {
@@ -551,6 +580,7 @@ var Endonyms = {
 
 /* exported TTS_URI,
             Settings,
+            TRANS_SHELL_REPLACEMENT_DATA,
             KnownStatusCodes,
             TTS_TEXT_MAX_LEN,
             LNG_CHOOSER_COLUMNS,
@@ -558,12 +588,10 @@ var Endonyms = {
             DEFAULT_ENGINES_CONTROL,
             DEFAULT_ENGINES,
             HISTORY_FILE_VERSION,
-            CINNAMON_VERSION,
             STATS_TYPE_SOURCE,
             STATS_TYPE_TARGET,
             LoggingLevel,
             MagicKeys,
-            NotificationUrgency,
             StatusbarMessageType,
             STATUS_BAR_MESSAGE_PARAMS,
             DIALOG_POPUP_ITEM_PARAMS,

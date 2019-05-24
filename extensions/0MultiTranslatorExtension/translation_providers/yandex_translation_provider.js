@@ -1,12 +1,15 @@
 let $,
+    GlobalUtils,
     Constants;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     $ = require("./utils.js");
+    GlobalUtils = require("./globalUtils.js");
     Constants = require("./constants.js");
 } else {
     $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
+    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
     Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
 }
 
@@ -17,6 +20,10 @@ const {
     Languages,
     Settings
 } = Constants;
+
+const {
+    escapeHTML
+} = GlobalUtils;
 
 const LANGUAGE_PAIRS = [
     "auto-az",
@@ -299,7 +306,7 @@ Translator.prototype = {
 
         if (json.code == 200) {
             result = {
-                message: $.escapeHTML(json.text.join(" "))
+                message: escapeHTML(json.text.join(" "))
             };
         } else {
             let errorMessage;

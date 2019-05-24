@@ -1,5 +1,9 @@
 let XletMeta,
-    Constants;
+    GlobalUtils,
+    DebugManager,
+    Constants,
+    SpawnUtils,
+    DesktopNotificationsUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -10,9 +14,17 @@ if (typeof __meta === "object") {
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
     Constants = require("./constants.js");
+    SpawnUtils = require("./spawnUtils.js");
+    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
 } else {
+    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
     Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    SpawnUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].spawnUtils;
+    DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
 }
 
 const {
@@ -20,35 +32,45 @@ const {
         Clutter,
         Gio,
         GLib,
-        Gtk,
-        Pango,
-        Soup,
-        St
+        Soup
     },
     misc: {
         util: Util,
         params: Params
     },
-    signals: Signals,
-    ui: {
-        main: Main,
-        messageTray: MessageTray,
-        tooltips: Tooltips
-    }
+    signals: Signals
 } = imports;
 
 const _httpSession = new Soup.SessionAsync();
 
 const {
-    _,
-    NotificationUrgency,
     Languages,
     DEFAULT_ENGINES,
     KnownStatusCodes,
-    LoggingLevel,
     TRANSLATION_PROVIDER_PARAMS,
+    TRANS_SHELL_REPLACEMENT_DATA,
     Settings
 } = Constants;
+
+const {
+    _,
+    xdgOpen,
+    escapeHTML,
+    isBlank,
+    tokensReplacer
+} = GlobalUtils;
+
+const {
+    LoggingLevel,
+    prototypeDebugger
+} = DebugManager;
+
+const {
+    CustomNotification,
+    NotificationUrgency
+} = DesktopNotificationsUtils;
+
+const OutputReader = new SpawnUtils.SpawnReader();
 
 let Gst;
 
@@ -57,6 +79,28 @@ try {
     Gst = imports.gi.Gst;
 } catch (aErr) {
     global.logError(aErr);
+}
+
+if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE || Settings.pref_debugger_enabled) {
+    try {
+        let protos = {
+            CustomNotification: CustomNotification,
+            LanguagesStats: LanguagesStats,
+            TranslateShellBaseTranslator: TranslateShellBaseTranslator,
+            TranslationProviderBase: TranslationProviderBase,
+            ProvidersManager: ProvidersManager
+        };
+
+        for (let name in protos) {
+            prototypeDebugger(protos[name], {
+                objectName: name,
+                verbose: Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE,
+                debug: Settings.pref_debugger_enabled
+            });
+        }
+    } catch (aErr) {
+        global.logError(aErr);
+    }
 }
 
 Soup.Session.prototype.add_feature.call(
@@ -84,23 +128,20 @@ const ProxySettingsHTTP = new Gio.Settings({
     schema_id: "org.gnome.system.proxy.http"
 });
 
-function xdgOpen() {
-    Util.spawn_async(["xdg-open"].concat(Array.prototype.slice.call(arguments)), null);
-}
-
-function getKeybindingDisplayName(aAccelString) {
-    let text = "";
-
-    if (aAccelString) {
-        let [key, codes, mods] = Gtk.accelerator_parse_with_keycode(aAccelString);
-
-        if (codes !== null && codes.length > 0) {
-            text = Gtk.accelerator_get_label_with_keycode(null, key, codes[0], mods);
+var Notification = new CustomNotification({
+    title: escapeHTML(_(XletMeta.name)),
+    defaultButtons: [{
+        action: "dialog-information",
+        label: escapeHTML(_("Help"))
+    }],
+    actionInvokedCallback: (aSource, aAction) => {
+        switch (aAction) {
+            case "dialog-information":
+                xdgOpen(XletMeta.path + "/HELP.html");
+                break;
         }
     }
-
-    return text;
-}
+});
 
 function soupPrinter(aLog, aLevel = null, aDirection = null, aData = null) {
     if (aLevel && aDirection && aData) {
@@ -112,26 +153,6 @@ function getUIAnimationTime() {
     return Settings.pref_ui_animation_time === 0 ?
         0.01 :
         Settings.pref_ui_animation_time / 1000;
-}
-
-function isBlank(str) {
-    return (!str || /^\s*$/.test(str));
-}
-
-function startsWith(str1, str2) {
-    return str1.slice(0, str2.length) === str2;
-}
-
-function endsWith(str1, str2) {
-    return str1.slice(-str2.length) === str2;
-}
-
-function escapeHTML(aStr) {
-    return aStr.replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
 }
 
 function getFilesInDir(path) {
@@ -193,18 +214,6 @@ var asyncLoop = function(o) {
     loop(); // init
 };
 
-function replaceAll(str, find, replace) {
-    try {
-        return str.replace(new RegExp(escapeRegExp(find), "g"), replace);
-    } catch (aErr) {
-        return aErr;
-    }
-}
-
-function escapeRegExp(str) {
-    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-}
-
 function getKeyByValue(aObj, aValue) {
     for (let key in aObj) {
         if (aObj.hasOwnProperty(key) && aObj[key] === aValue) {
@@ -226,87 +235,8 @@ function getEngineByName(aName, aEngines) {
     return null;
 }
 
-/**
- * Compares two software version numbers (e.g. "1.7.1" or "1.2b").
- *
- * This function was born in http://stackoverflow.com/a/6832721.
- *
- * @param {string} v1 The first version to be compared.
- * @param {string} v2 The second version to be compared.
- * @param {object} [options] Optional flags that affect comparison behavior:
- * <ul>
- *     <li>
- *         <tt>lexicographical: true</tt> compares each part of the version strings lexicographically instead of
- *         naturally; this allows suffixes such as "b" or "dev" but will cause "1.10" to be considered smaller than
- *         "1.2".
- *     </li>
- *     <li>
- *         <tt>zeroExtend: true</tt> changes the result if one version string has less parts than the other. In
- *         this case the shorter string will be padded with "zero" parts instead of being considered smaller.
- *     </li>
- * </ul>
- * @returns {number|NaN}
- * <ul>
- *    <li>0 if the versions are equal</li>
- *    <li>a negative integer iff v1 < v2</li>
- *    <li>a positive integer iff v1 > v2</li>
- *    <li>NaN if either version string is in the wrong format</li>
- * </ul>
- *
- * @copyright by Jon Papaioannou (["john", "papaioannou"].join(".") + "@gmail.com")
- * @license This function is in the public domain. Do what you want with it, no strings attached.
- */
-function versionCompare(v1, v2, options) {
-    let lexicographical = options && options.lexicographical,
-        zeroExtend = options && options.zeroExtend,
-        v1parts = v1.split("."),
-        v2parts = v2.split(".");
-
-    function isValidPart(x) {
-        return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
-    }
-
-    if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
-        return NaN;
-    }
-
-    if (zeroExtend) {
-        while (v1parts.length < v2parts.length) {
-            v1parts.push("0");
-        }
-        while (v2parts.length < v1parts.length) {
-            v2parts.push("0");
-        }
-    }
-
-    if (!lexicographical) {
-        v1parts = v1parts.map(Number);
-        v2parts = v2parts.map(Number);
-    }
-
-    for (let i = 0; i < v1parts.length; ++i) {
-        if (v2parts.length === i) {
-            return 1;
-        }
-
-        if (v1parts[i] === v2parts[i]) {
-            continue;
-        } else if (v1parts[i] > v2parts[i]) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-
-    if (v1parts.length !== v2parts.length) {
-        return -1;
-    }
-
-    return 0;
-}
-
 function getSelection(aCallback) {
-    spawnWithCallback(
+    OutputReader.spawn(
         null, ["xsel", "-o"],
         null,
         GLib.SpawnFlags.SEARCH_PATH,
@@ -354,7 +284,7 @@ function checkDependencies() {
                 );
                 informAboutMissingDependencies(res);
             } else {
-                Main.notify(_(XletMeta.name), _("All dependencies seem to be met."));
+                Notification.notify(escapeHTML(_("All dependencies seem to be met.")));
             }
 
             Settings.pref_informed_about_dependencies = true;
@@ -362,50 +292,14 @@ function checkDependencies() {
 }
 
 function informAboutMissingDependencies(aRes) {
-    customNotify(
-        _(XletMeta.name),
-        escapeHTML(_("Unmet dependencies found!!!")) + "\n" +
-        "<b>" + escapeHTML(aRes) + "</b>" + "\n\n" +
-        escapeHTML(_("Check this extension help file for instructions.")) + "\n" +
-        escapeHTML(_("This information has also been logged into the ~/.cinnamon/glass.log or ~/.xsession-errors files.")),
-        "dialog-warning",
+    Notification.notify([
+            escapeHTML(_("Unmet dependencies found!!!")),
+            "<b>" + escapeHTML(aRes) + "</b>",
+            escapeHTML(_("Check this extension help file for instructions.")),
+            escapeHTML(_("This information has also been logged into the ~/.cinnamon/glass.log or ~/.xsession-errors files."))
+        ],
         NotificationUrgency.CRITICAL
     );
-}
-
-function customNotify(aTitle, aBody, aIconName = "dialog-info", aUrgency = NotificationUrgency.NORMAL, aButtons = []) {
-    let icon = new St.Icon({
-        icon_name: aIconName,
-        icon_type: St.IconType.SYMBOLIC,
-        icon_size: 24
-    });
-    let source = new MessageTray.SystemNotificationSource();
-    Main.messageTray.add(source);
-    let notification = new MessageTray.Notification(source, escapeHTML(aTitle), aBody, {
-        icon: icon,
-        bodyMarkup: true,
-        titleMarkup: true,
-        bannerMarkup: true
-    });
-
-    notification.setUrgency(aUrgency);
-    notification.setTransient(false);
-    notification.setResident(true);
-    notification.connect("action-invoked", (aSource, aAction) => {
-        switch (aAction) {
-            case "dialog-information":
-                xdgOpen(XletMeta.path + "/HELP.html");
-                break;
-        }
-    });
-
-    notification.addButton("dialog-information", _("Help"));
-
-    for (let i = aButtons.length - 1; i >= 0; i--) {
-        notification.addButton(aButtons[i].action, aButtons[i].label);
-    }
-
-    source.notify(notification);
 }
 
 function ProvidersManager() {
@@ -435,7 +329,7 @@ ProvidersManager.prototype = {
         for (; i < iLen; i++) {
             let file_name = files_list[i];
 
-            if (!endsWith(file_name, "_translation_provider.js")) {
+            if (!file_name.endsWith("_translation_provider.js")) {
                 continue;
             }
 
@@ -594,7 +488,7 @@ LanguagesStats.prototype = {
             if (this._storage[key].count <= 3) {
                 return false;
             }
-            return startsWith(key, key_string);
+            return key.startsWith(key_string);
         });
         filtered.sort((a, b) => {
             return this._storage[b].count > this._storage[a].count;
@@ -830,66 +724,8 @@ TranslateShellBaseTranslator.prototype = {
     },
 
     parseResponse: function(aStandardOutput) {
-        /* NOTE: Reference extracted from translate-shell.
-         *  AnsiCode["reset"]         = AnsiCode[0] = "\33[0m"
-         *  AnsiCode["bold"]          = "\33[1m"
-         *  AnsiCode["underline"]     = "\33[4m"
-         *  AnsiCode["negative"]      = "\33[7m"
-         *  AnsiCode["no bold"]       = "\33[22m"
-         *  AnsiCode["no underline"]  = "\33[24m"
-         *  AnsiCode["positive"]      = "\33[27m"
-         *  AnsiCode["black"]         = "\33[30m"
-         *  AnsiCode["red"]           = "\33[31m"
-         *  AnsiCode["green"]         = "\33[32m"
-         *  AnsiCode["yellow"]        = "\33[33m"
-         *  AnsiCode["blue"]          = "\33[34m"
-         *  AnsiCode["magenta"]       = "\33[35m"
-         *  AnsiCode["cyan"]          = "\33[36m"
-         *  AnsiCode["gray"]          = "\33[37m"
-         *  AnsiCode["default"]       = "\33[39m"
-         *  AnsiCode["dark gray"]     = "\33[90m"
-         *  AnsiCode["light red"]     = "\33[91m"
-         *  AnsiCode["light green"]   = "\33[92m"
-         *  AnsiCode["light yellow"]  = "\33[93m"
-         *  AnsiCode["light blue"]    = "\33[94m"
-         *  AnsiCode["light magenta"] = "\33[95m"
-         *  AnsiCode["light cyan"]    = "\33[96m"
-         *  AnsiCode["white"]         = "\33[97m"
-         */
-        let stuff = {
-            // Clean up all escape sequences.
-            "\x1B[1m": "<b>",
-            "\x1B[22m": "</b>",
-            "\x1B[4m": "<u>",
-            "\x1B[24m": "</u>",
-            "\x1B[7m": "",
-            "\x1B[27m": "",
-            "\x1B[30m": "",
-            "\x1B[31m": "",
-            "\x1B[32m": "",
-            "\x1B[33m": "",
-            "\x1B[34m": "",
-            "\x1B[35m": "",
-            "\x1B[36m": "",
-            "\x1B[37m": "",
-            "\x1B[39m": "",
-            "\x1B[90m": "",
-            "\x1B[91m": "",
-            "\x1B[92m": "",
-            "\x1B[93m": "",
-            "\x1B[94m": "",
-            "\x1B[95m": "",
-            "\x1B[96m": "",
-            "\x1B[97m": "",
-            // Just in case.
-            "[\r\n]+": "\n",
-        };
         try {
-            for (let hex in stuff) {
-                aStandardOutput = replaceAll(aStandardOutput, hex, stuff[hex]);
-            }
-
-            return aStandardOutput;
+            return tokensReplacer(aStandardOutput, TRANS_SHELL_REPLACEMENT_DATA);
         } catch (aErr) {
             return "%s:\n%s\n%s:\n%s".format(
                 _("Error while parsing data"),
@@ -926,7 +762,7 @@ TranslateShellBaseTranslator.prototype = {
             options.push(proxy);
         }
 
-        spawnWithCallback(
+        OutputReader.spawn(
             null, command.concat(options).concat(subjects),
             null,
             GLib.SpawnFlags.SEARCH_PATH,
@@ -980,250 +816,9 @@ TranslateShellBaseTranslator.prototype = {
     }
 };
 
-function CustomTooltip() {
-    this._init.apply(this, arguments);
-}
-
-CustomTooltip.prototype = {
-    __proto__: Tooltips.Tooltip.prototype,
-
-    _init: function(aActor, aText) {
-        Tooltips.Tooltip.prototype._init.call(this, aActor, aText);
-
-        this._tooltip.set_style("text-align: left;width:auto;max-width: 450px;");
-        this._tooltip.get_clutter_text().set_line_wrap(true);
-        this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
-        this._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
-
-        aActor.connect("destroy", () => this.destroy());
-    },
-
-    destroy: function() {
-        Tooltips.Tooltip.prototype.destroy.call(this);
-    }
-};
-
-/**
- * Benchmark function invocations within a given class or prototype.
- *
- * @param  {Object}  aObject                    JavaScript class or prototype to benchmark.
- * @param  {Object}  aParams                    Object containing parameters, all are optional.
- * @param  {String}  aParams.objectName         Because it's impossible to get the name of a prototype
- *                                              in JavaScript, force it down its throat. ¬¬
- * @param  {Array}   aParams.methods            By default, all methods in aObject will be
- *                                              "proxyfied". aParams.methods should containg the name
- *                                              of the methods that one wants to debug/benchmark.
- *                                              aParams.methods acts as a whitelist by default.
- * @param  {Boolean} aParams.blacklistMethods   If true, ALL methods in aObject will be
- *                                              debugged/benchmarked, except those listed in aParams.methods.
- * @param  {Number}  aParams.threshold          The minimum latency of interest.
- * @param  {Boolean}  aParams.debug              If true, the target method will be executed inside a
- *                                              try{} catch{} block.
- */
-function prototypeDebugger(aObject, aParams) {
-    let options = Params.parse(aParams, {
-        objectName: "Object",
-        methods: [],
-        blacklistMethods: false,
-        debug: true,
-        verbose: true,
-        threshold: 3
-    });
-    let keys = Object.getOwnPropertyNames(aObject.prototype);
-
-    if (options.methods.length > 0) {
-        keys = keys.filter((aKey) => {
-            return options.blacklistMethods ?
-                // Treat aMethods as a blacklist, so don't include these keys.
-                options.methods.indexOf(aKey) === -1 :
-                // Keep ONLY the keys in aMethods.
-                options.methods.indexOf(aKey) >= 0;
-        });
-    }
-
-    let outpuTemplate = "[%s.%s]: %fms (MAX: %fms AVG: %fms)";
-    let times = [];
-    let i = keys.length;
-
-    let getHandler = (aKey) => {
-        return {
-            apply: function(aTarget, aThisA, aArgs) { // jshint ignore:line
-                let val;
-                let now;
-
-                if (options.verbose) {
-                    now = GLib.get_monotonic_time();
-                }
-
-                if (options.debug) {
-                    try {
-                        val = aTarget.apply(aThisA, aArgs);
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    }
-                } else {
-                    val = aTarget.apply(aThisA, aArgs);
-                }
-
-                if (options.verbose) {
-                    let time = GLib.get_monotonic_time() - now;
-
-                    if (time >= options.threshold) {
-                        times.push(time);
-                        let total = 0;
-                        let timesLength = times.length;
-                        let z = timesLength;
-
-                        while (z--) {
-                            total += times[z];
-                        }
-
-                        let max = (Math.max.apply(null, times) / 1000).toFixed(2);
-                        let avg = ((total / timesLength) / 1000).toFixed(2);
-                        time = (time / 1000).toFixed(2);
-
-                        global.log(outpuTemplate.format(
-                            options.objectName,
-                            aKey,
-                            time,
-                            max,
-                            avg
-                        ));
-                    }
-                }
-
-                return val;
-            }
-        };
-    };
-
-    while (i--) {
-        let key = keys[i];
-
-        /* NOTE: If key is a setter or getter, aObject.prototype[key] will throw.
-         */
-        if (!!Object.getOwnPropertyDescriptor(aObject.prototype, key)["get"] ||
-            !!Object.getOwnPropertyDescriptor(aObject.prototype, key)["set"]) {
-            continue;
-        }
-
-        let fn = aObject.prototype[key];
-
-        if (typeof fn !== "function") {
-            continue;
-        }
-
-        aObject.prototype[key] = new Proxy(fn, getHandler(key));
-    }
-}
-
-if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE || Settings.pref_debugger_enabled) {
-    try {
-        let protos = {
-            CustomTooltip: CustomTooltip,
-            LanguagesStats: LanguagesStats,
-            TranslateShellBaseTranslator: TranslateShellBaseTranslator,
-            TranslationProviderBase: TranslationProviderBase,
-            ProvidersManager: ProvidersManager
-        };
-
-        for (let name in protos) {
-            prototypeDebugger(protos[name], {
-                objectName: name,
-                verbose: Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE,
-                debug: Settings.pref_debugger_enabled
-            });
-        }
-    } catch (aErr) {
-        global.logError(aErr);
-    }
-}
-
-// Combines the benefits of spawn sync (easy retrieval of output)
-// with those of spawn_async (non-blocking execution).
-// Based on https://github.com/optimisme/gjs-examples/blob/master/assets/spawn.js.
-function spawnWithCallback(aWorkingDirectory, aArgv, aEnvp, aFlags, aChildSetup, aCallback) {
-    let success, pid, stdinFile, stdoutFile, stderrFile;
-
-    try {
-        [success, pid, stdinFile, stdoutFile, stderrFile] = // jshint ignore:line
-        GLib.spawn_async_with_pipes(aWorkingDirectory, aArgv, aEnvp, aFlags, aChildSetup);
-    } catch (aErr) {
-        global.logError(aErr);
-        Main.criticalNotify(
-            _(XletMeta.name),
-            String(aErr).split("\n")[0]
-        );
-    }
-
-    if (!success) {
-        return;
-    }
-
-    GLib.close(stdinFile);
-
-    let standardOutput = "";
-
-    let stdoutStream = new Gio.DataInputStream({
-        base_stream: new Gio.UnixInputStream({
-            fd: stdoutFile
-        })
-    });
-
-    readStream(stdoutStream, (aOutput) => {
-        if (aOutput === null) {
-            stdoutStream.close(null);
-            aCallback(standardOutput);
-        } else {
-            standardOutput += aOutput;
-        }
-    });
-
-    let standardError = "";
-
-    let stderrStream = new Gio.DataInputStream({
-        base_stream: new Gio.UnixInputStream({
-            fd: stderrFile
-        })
-    });
-
-    readStream(stderrStream, (aError) => {
-        if (aError === null) {
-            stderrStream.close(null);
-
-            if (standardError) {
-                global.logError(standardError);
-                Main.criticalNotify(
-                    _(XletMeta.name),
-                    String(standardError).split("\n")[0]
-                );
-            }
-        } else {
-            standardError += aError;
-        }
-    });
-}
-
-function readStream(aStream, aCallback) {
-    aStream.read_line_async(GLib.PRIORITY_LOW, null, (aSource, aResult) => {
-        let [line] = aSource.read_line_finish(aResult);
-
-        if (line === null) {
-            aCallback(null);
-        } else {
-            aCallback(String(line) + "\n");
-            readStream(aSource, aCallback);
-        }
-    });
-}
-
 /* exported getUnichar,
-            xdgOpen,
-            getKeybindingDisplayName,
             getUIAnimationTime,
             getKeyByValue,
-            versionCompare,
             getSelection,
             checkDependencies,
-            spawnWithCallback,
 */
