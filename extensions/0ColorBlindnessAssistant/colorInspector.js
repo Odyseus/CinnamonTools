@@ -1,12 +1,21 @@
-let Constants,
+let $,
+    GlobalUtils,
+    Constants,
+    DebugManager,
     NameThatColor;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    $ = require("./utils.js");
+    GlobalUtils = require("./globalUtils.js");
     Constants = require("./constants.js");
+    DebugManager = require("./debugManager.js");
     NameThatColor = require("./nameThatColor.js");
 } else {
+    $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
+    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
     Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
     NameThatColor = imports.ui.extensionSystem.extensions["{{UUID}}"].nameThatColor;
 }
 
@@ -28,10 +37,20 @@ const {
 } = imports;
 
 const {
-    _,
     ColorInspectorInfoBannerLabels,
     ELLIPSIS,
+    Settings
 } = Constants;
+
+const {
+    _,
+    escapeHTML
+} = GlobalUtils;
+
+const {
+    LoggingLevel,
+    prototypeDebugger
+} = DebugManager;
 
 const {
     NameThatColor: NTC
@@ -43,10 +62,18 @@ const {
  */
 Mainloop.idle_add(() => {
     NTC.init();
+
+    return false;
 });
 
 function getCurrentMonitor() {
     return Main.layoutManager.currentMonitor;
+}
+
+// <3 https://stackoverflow.com/a/19765382
+function rgb2hex(red, green, blue) {
+    var rgb = blue | (green << 8) | (red << 16);
+    return "#" + (0x1000000 + rgb).toString(16).slice(1);
 }
 
 function ColorInspectorBanner() {
@@ -69,7 +96,7 @@ ColorInspectorBanner.prototype = {
         this.actor = new St.BoxLayout({
             name: "ColorInspectorBanner",
             style_class: "cba-box",
-            vertical: true,
+            vertical: true
         });
         this.actor.add_style_class_name("modal-dialog");
 
@@ -259,10 +286,9 @@ function ColorInspector() {
 }
 
 ColorInspector.prototype = {
-    _init: function(aNotifyMessageCallback, aCopyInfoToClipboard, aAnimationTime) {
+    _init: function(aCopyInfoToClipboard, aAnimationTime) {
         this.sigMan = new SignalManager.SignalManager(null);
         this.banner = new ColorInspectorBanner(this);
-        this._notifyMessage = aNotifyMessageCallback;
         this.copyInfoToClipboard = aCopyInfoToClipboard;
         this.animationTime = aAnimationTime;
         this.passThroughEvents = false;
@@ -307,7 +333,7 @@ ColorInspector.prototype = {
             y: posY,
             transition: "easeOutQuad",
             onComplete: Main.layoutManager._chrome.updateRegions,
-            onCompleteScope: Main.layoutManager._chrome,
+            onCompleteScope: Main.layoutManager._chrome
         });
     },
 
@@ -354,7 +380,8 @@ ColorInspector.prototype = {
         let primary = getCurrentMonitor();
         let xHalf = primary.width / 2;
         let yHalf = primary.height / 2;
-        let posX, posY;
+        let posX,
+            posY;
         /* NOTE: The extraDistance is to separate the banner from the mouse cursor.
          * This way, the banner is close enough to the mouse cursor so to not keep it to
          * far away from sight, and at the same time the banner is far enough so the
@@ -542,12 +569,28 @@ ColorInspector.prototype = {
             clipboard.set_text(colorInfo);
         }
 
-        this._notifyMessage(_("Color information copied to clipboard."));
+        $.Notification.notify(
+            escapeHTML(_("Color information copied to clipboard."))
+        );
     }
 };
 
-// <3 https://stackoverflow.com/a/19765382
-function rgb2hex(red, green, blue) {
-    var rgb = blue | (green << 8) | (red << 16);
-    return "#" + (0x1000000 + rgb).toString(16).slice(1);
+if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE ||
+    Settings.pref_debugger_enabled) {
+    try {
+        let protos = {
+            ColorInspectorBanner: ColorInspectorBanner,
+            ColorInspector: ColorInspector
+        };
+
+        for (let name in protos) {
+            prototypeDebugger(protos[name], {
+                objectName: name,
+                verbose: Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE,
+                debug: Settings.pref_debugger_enabled
+            });
+        }
+    } catch (aErr) {
+        global.logError(aErr);
+    }
 }

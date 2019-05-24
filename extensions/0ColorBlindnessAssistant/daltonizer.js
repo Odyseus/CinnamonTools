@@ -1,5 +1,8 @@
 let XletMeta,
-    Constants;
+    GlobalUtils,
+    DebugManager,
+    Constants,
+    CustomTooltips;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -10,22 +13,20 @@ if (typeof __meta === "object") {
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
     Constants = require("./constants.js");
+    CustomTooltips = require("./customTooltips.js");
 } else {
+    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
     Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    CustomTooltips = imports.ui.extensionSystem.extensions["{{UUID}}"].customTooltips;
 }
-
-const {
-    _,
-    EFFECT_PROP_NAME,
-    DaltonizerWizardLabels,
-    DaltonizerWizardTooltips
-} = Constants;
 
 const {
     gi: {
         Cinnamon,
-        Pango,
         St
     },
     mainloop: Mainloop,
@@ -35,33 +36,29 @@ const {
     signals: Signals,
     ui: {
         main: Main,
-        tooltips: Tooltips,
         tweener: Tweener
     }
 } = imports;
 
-function CustomTooltip() {
-    this._init.apply(this, arguments);
-}
+const {
+    Settings,
+    EFFECT_PROP_NAME,
+    DaltonizerWizardLabels,
+    DaltonizerWizardTooltips
+} = Constants;
 
-CustomTooltip.prototype = {
-    __proto__: Tooltips.Tooltip.prototype,
+const {
+    _
+} = GlobalUtils;
 
-    _init: function(aActor, aText) {
-        Tooltips.Tooltip.prototype._init.call(this, aActor, aText);
+const {
+    InteligentTooltip
+} = CustomTooltips;
 
-        this._tooltip.set_style("text-align: left;width:auto;max-width: 450px;");
-        this._tooltip.get_clutter_text().set_line_wrap(true);
-        this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
-        this._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
-
-        aActor.connect("destroy", () => this.destroy());
-    },
-
-    destroy: function() {
-        Tooltips.Tooltip.prototype.destroy.call(this);
-    }
-};
+const {
+    LoggingLevel,
+    prototypeDebugger
+} = DebugManager;
 
 function CheckButton() {
     this._init.apply(this, arguments);
@@ -83,7 +80,7 @@ CheckButton.prototype = {
 
         this.actor.add_style_class_name("modal-dialog-button");
         this.actor.connect("button-press-event", () => this._onButtonPress());
-        this.tooltip = new CustomTooltip(this.actor, DaltonizerWizardTooltips[aCheckPropertyValue]);
+        this.tooltip = new InteligentTooltip(this.actor, DaltonizerWizardTooltips[aCheckPropertyValue]);
     },
 
     updateCheckedState: function(aActor, aCheckProp) {
@@ -181,7 +178,7 @@ DaltonizerTitleBox.prototype = {
 
         this._closeButton.connect("button-release-event",
             () => this._onCloseButtonClicked());
-        this._closeButton.tooltip = new CustomTooltip(this._closeButton, _("Close daltonizer"));
+        this._closeButton.tooltip = new InteligentTooltip(this._closeButton, _("Close daltonizer"));
 
         this.actor.add(this._iconBin);
         this.actor.add(this._label, {
@@ -682,7 +679,6 @@ Daltonizer.prototype = {
                 pos_x = window.get_outer_rect().width / 2 + window.get_outer_rect().x;
                 pos_y = window.get_outer_rect().height / 2 + window.get_outer_rect().y;
             }
-
             [pos_x, pos_y] = this._calcFinalPosition(pos_x, pos_y);
 
             if (window.get_monitor() === currentMonitor.index) {
@@ -743,7 +739,6 @@ Daltonizer.prototype = {
         } else {
             this.setEffectIdDef(null);
         }
-
         [pos_x, pos_y] = this._calcFinalPosition(pos_x, pos_y);
 
         this.wizard.set_position(pos_x, pos_y);
@@ -803,5 +798,30 @@ Daltonizer.prototype = {
             actor: "focused_window",
             color_space: "srgb"
         };
-    },
+    }
 };
+
+if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE ||
+    Settings.pref_debugger_enabled) {
+    try {
+        let protos = {
+            CheckButton: CheckButton,
+            CheckGroup: CheckGroup,
+            Daltonizer: Daltonizer,
+            DaltonizerTitleBox: DaltonizerTitleBox,
+            DaltonizerWizard: DaltonizerWizard,
+            InteligentTooltip: InteligentTooltip,
+            WindowTracker: WindowTracker
+        };
+
+        for (let name in protos) {
+            prototypeDebugger(protos[name], {
+                objectName: name,
+                verbose: Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE,
+                debug: Settings.pref_debugger_enabled
+            });
+        }
+    } catch (aErr) {
+        global.logError(aErr);
+    }
+}

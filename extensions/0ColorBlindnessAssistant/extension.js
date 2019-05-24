@@ -1,25 +1,21 @@
-let $,
-    Constants,
+let XletMeta,
+    assistant,
+    _,
+    $,
+    G,
+    D,
+    C,
     Colorinspector,
-    Daltonizer;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    Constants = require("./constants.js");
-    Colorinspector = require("./colorInspector.js");
-    Daltonizer = require("./daltonizer.js");
-    $ = require("./utils.js");
-} else {
-    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-    Colorinspector = imports.ui.extensionSystem.extensions["{{UUID}}"].colorInspector;
-    Daltonizer = imports.ui.extensionSystem.extensions["{{UUID}}"].daltonizer;
-    $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
-}
+    Daltonizer,
+    CustomFileUtils,
+    Settings,
+    DesktopNotificationsUtils;
 
 const {
     gi: {
         Clutter,
         Gio,
+        GLib,
         Meta,
         St
     },
@@ -30,23 +26,9 @@ const {
         util: Util
     },
     ui: {
-        main: Main,
-        messageTray: MessageTray,
-        settings: Settings
+        main: Main
     }
 } = imports;
-
-const {
-    _,
-    NotificationsUrgency,
-    ShaderEffectTypeMap,
-    ShaderColorSpaceMap,
-    EFFECT_PROP_NAME,
-    EFFECT_DEFAULT_PARAMS
-} = Constants;
-
-let xletMeta = null;
-let assistant = null;
 
 function ColorBlindnessAssistant() {
     this._init.apply(this, arguments);
@@ -56,126 +38,38 @@ ColorBlindnessAssistant.prototype = {
     _effect_id: "color_blindness_assistant_effect",
     _global_kbs: [
         "pref_daltonizer_wizard_kb",
-        "pref_color_inspector_kb",
+        "pref_color_inspector_kb"
     ],
 
     _init: function() {
-        this._initializeSettings(() => {
-            this.sigMan = new SignalManager.SignalManager(null);
-            this.workspaceInjection = null;
-            this.appSwitcher3DInjection = null;
-            this.expoThumbnailInjection = null;
-            this.timelineSwitcherInjection = null;
-            this.theme = null;
-            this.stylesheet = null;
-            this.load_theme_id = 0;
-            this._allEffects = {};
-            this._allEffectsIDs = [];
-            this._shaderSource = "";
-            this._daltonizer = null;
-            this._colorInspector = null;
-            this.registeredEffectKeybindings = [];
-            this.registeredGlobalKeybindings = [];
-            this._notificationSource = null;
-            this.desktopNotification = null;
-            this._notificationParams = {
-                titleMarkup: true,
-                bannerMarkup: true,
-                bodyMarkup: true,
-                clear: true
-            };
-        }, () => {
-            if (!this.pref_usage_notified) {
-                this._notifyMessage(
-                    _("Read this extension help page for usage instructions."),
-                    NotificationsUrgency.CRITICAL
-                );
-                this.pref_usage_notified = true;
-            }
+        this.sigMan = new SignalManager.SignalManager(null);
+        this._settingsDesktopFileName = "org.Cinnamon.Extensions.ColorBlindnessAssistant.Settings";
+        this._settingsDesktopFilePath = GLib.get_home_dir() +
+            "/.local/share/applications/%s.desktop".format(this._settingsDesktopFileName);
+        this.workspaceInjection = null;
+        this.appSwitcher3DInjection = null;
+        this.expoThumbnailInjection = null;
+        this.timelineSwitcherInjection = null;
+        this.theme = null;
+        this.stylesheet = null;
+        this.load_theme_id = 0;
+        this._allEffects = {};
+        this._allEffectsIDs = [];
+        this._shaderSource = "";
+        this._daltonizer = null;
+        this._colorInspector = null;
+        this.registeredEffectKeybindings = [];
+        this.registeredGlobalKeybindings = [];
 
-            this._loadTheme();
-
-            this.sigMan.connect(Main.themeManager, "theme-set", function() {
-                this._loadTheme(false);
-            }.bind(this));
-        });
-    },
-
-    _initializeSettings: function(aDirectCallback, aIdleCallback) {
-        this.settings = new Settings.ExtensionSettings(
-            this,
-            xletMeta.uuid,
-            false // Asynchronous settings initialization.
-        );
-
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
-
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
+        if (!Settings.pref_usage_notified) {
+            $.Notification.notify(
+                G.escapeHTML(_("Read this extension help page for usage instructions.")),
+                DesktopNotificationsUtils.NotificationUrgency.CRITICAL
+            );
+            Settings.pref_usage_notified = true;
         }
-    },
 
-    _bindSettings: function() {
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        let bD = {
-            IN: 1,
-            OUT: 2,
-            BIDIRECTIONAL: 3
-        };
-        let prefKeysArray = [
-            "pref_usage_notified",
-            "pref_effects_list",
-            "pref_daltonizer_wizard_kb",
-            "pref_daltonizer_animation_time",
-            "pref_daltonizer_show_actors_box",
-            "pref_daltonizer_show_colorspaces_box",
-            "pref_color_inspector_kb",
-            "pref_color_inspector_animation_time",
-            "pref_color_inspector_always_copy_to_clipboard",
-            "pref_theme",
-            "pref_theme_path_custom",
-            "pref_apply_cinnamon_injections",
-            "trigger_effects_list",
-            "trigger_settings_shortcut_creation_desktop",
-            "trigger_settings_shortcut_creation_xdg",
-            "pref_imp_exp_last_selected_directory",
-        ];
-        let newBinding = typeof this.settings.bind === "function";
-        for (let pref_key of prefKeysArray) {
-            // Condition needed for retro-compatibility.
-            // Mark for deletion on EOL. Cinnamon 3.2.x+
-            // Abandon this.settings.bindProperty and keep this.settings.bind.
-            if (newBinding) {
-                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
-            } else {
-                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
-            }
-        }
+        this._loadTheme();
     },
 
     get fxMap() {
@@ -197,12 +91,12 @@ ColorBlindnessAssistant.prototype = {
 
         // Mark for deletion on EOL. Cinnamon 3.6.x+
         // Replace JSON trick with Object.assign().
-        let effectsList = JSON.parse(JSON.stringify(this.pref_effects_list));
+        let effectsList = JSON.parse(JSON.stringify(Settings.pref_effects_list));
         let i = effectsList.length;
         while (i--) {
             let e = effectsList[i];
             e["id"] = "%s:%s:%s".format(e["base_name"], e["actor"], e["color_space"]);
-            this._allEffects[e.id] = Params.parse(e, EFFECT_DEFAULT_PARAMS, true);
+            this._allEffects[e.id] = Params.parse(e, C.EFFECT_DEFAULT_PARAMS, true);
         }
 
         /* NOTE: Objects suck!!! Since I'm constantly iterating through the effects,
@@ -232,12 +126,12 @@ ColorBlindnessAssistant.prototype = {
             return;
         }
 
-        if (actor.hasOwnProperty(EFFECT_PROP_NAME) &&
-            actor[EFFECT_PROP_NAME].id !== aEffectDef.id &&
+        if (actor.hasOwnProperty(C.EFFECT_PROP_NAME) &&
+            actor[C.EFFECT_PROP_NAME].id !== aEffectDef.id &&
             actor.get_effect(this._effect_id)) {
             actor.remove_effect_by_name(this._effect_id);
-            actor[EFFECT_PROP_NAME] = null;
-            delete actor[EFFECT_PROP_NAME];
+            actor[C.EFFECT_PROP_NAME] = null;
+            delete actor[C.EFFECT_PROP_NAME];
         }
 
         /* NOTE: The base_name "none" is used by the daltonizer wizard.
@@ -248,11 +142,11 @@ ColorBlindnessAssistant.prototype = {
 
         if (actor.get_effect(this._effect_id)) {
             actor.remove_effect_by_name(this._effect_id);
-            actor[EFFECT_PROP_NAME] = null;
-            delete actor[EFFECT_PROP_NAME];
+            actor[C.EFFECT_PROP_NAME] = null;
+            delete actor[C.EFFECT_PROP_NAME];
         } else {
             actor.add_effect_with_name(this._effect_id, this._getEffect(aEffectDef));
-            actor[EFFECT_PROP_NAME] = aEffectDef;
+            actor[C.EFFECT_PROP_NAME] = aEffectDef;
         }
     },
 
@@ -267,8 +161,8 @@ ColorBlindnessAssistant.prototype = {
          */
         effect.set_shader_source(this._shaderSource);
         effect.set_uniform_value("tex", 0);
-        effect.set_uniform_value("_type", ShaderEffectTypeMap[aEffectDef.base_name]);
-        effect.set_uniform_value("_use_cie_rgb", ShaderColorSpaceMap[aEffectDef.color_space]);
+        effect.set_uniform_value("_type", C.ShaderEffectTypeMap[aEffectDef.base_name]);
+        effect.set_uniform_value("_use_cie_rgb", C.ShaderColorSpaceMap[aEffectDef.color_space]);
         effect.set_uniform_value("_compensate", compensate ? 1 : 0);
 
         return effect;
@@ -278,7 +172,7 @@ ColorBlindnessAssistant.prototype = {
         this._removeKeybindings("Effect");
 
         let registerKb = (aEffectDef) => {
-            let kbName = xletMeta.uuid + aEffectDef.id;
+            let kbName = XletMeta.uuid + aEffectDef.id;
             Main.keybindingManager.addHotKey(
                 kbName,
                 aEffectDef.keybinding,
@@ -305,9 +199,8 @@ ColorBlindnessAssistant.prototype = {
 
         if (this._colorInspector === null) {
             this._colorInspector = new Colorinspector.ColorInspector(
-                this._notifyMessage.bind(this),
-                this.pref_color_inspector_always_copy_to_clipboard,
-                this.pref_color_inspector_animation_time / 1000
+                Settings.pref_color_inspector_always_copy_to_clipboard,
+                Settings.pref_color_inspector_animation_time / 1000
             );
             this._colorInspector.initUI();
         }
@@ -323,9 +216,9 @@ ColorBlindnessAssistant.prototype = {
         if (this._daltonizer === null) {
             this._daltonizer = new Daltonizer.Daltonizer(
                 this._toggleEffect.bind(this),
-                this.pref_daltonizer_animation_time / 1000,
-                this.pref_daltonizer_show_actors_box,
-                this.pref_daltonizer_show_colorspaces_box
+                Settings.pref_daltonizer_animation_time / 1000,
+                Settings.pref_daltonizer_show_actors_box,
+                Settings.pref_daltonizer_show_colorspaces_box
             );
             this._daltonizer.initUI();
         }
@@ -337,10 +230,10 @@ ColorBlindnessAssistant.prototype = {
         this._removeKeybindings("Global");
 
         let registerKb = (aKbProp) => {
-            let kbName = xletMeta.uuid + "Global" + aKbProp;
+            let kbName = XletMeta.uuid + "Global" + aKbProp;
             Main.keybindingManager.addHotKey(
                 kbName,
-                this[aKbProp],
+                Settings[aKbProp],
                 () => {
                     switch (aKbProp) {
                         case "pref_daltonizer_wizard_kb":
@@ -358,7 +251,7 @@ ColorBlindnessAssistant.prototype = {
 
         let i = this._global_kbs.length;
         while (i--) {
-            if (this[this._global_kbs[i]]) {
+            if (Settings[this._global_kbs[i]]) {
                 registerKb(this._global_kbs[i]);
             }
         }
@@ -376,12 +269,13 @@ ColorBlindnessAssistant.prototype = {
     },
 
     _loadShaderFileAsync: function() {
-        let shaderFile = Gio.file_new_for_path(xletMeta.path + "/shader.frag.glsl");
+        let shaderFile = Gio.file_new_for_path(XletMeta.path + "/shader.frag.glsl");
 
         if (shaderFile && shaderFile.query_exists(null)) {
             shaderFile.load_contents_async(null,
                 (aFile, aResponce) => {
-                    let success, contents = "",
+                    let success,
+                        contents = "",
                         tag;
 
                     try {
@@ -402,83 +296,12 @@ ColorBlindnessAssistant.prototype = {
         }
     },
 
-    _ensureNotificationSource: function() {
-        if (!this._notificationSource) {
-            this._notificationSource = new $.MessageTraySource();
-            this._notificationSource.connect("destroy", () => {
-                this._notificationSource = null;
-            });
-
-            if (Main.messageTray) {
-                Main.messageTray.add(this._notificationSource);
-            }
-        }
-    },
-
-    _notifyMessage: function(aMessage, aUrgency = NotificationsUrgency.NORMAL, aButtons = []) {
-        this._ensureNotificationSource();
-
-        let body = "";
-
-        body += aMessage + "\n";
-
-        body = body.trim();
-
-        if (this._notificationSource && !this.desktopNotification) {
-            this.desktopNotification = new MessageTray.Notification(
-                this._notificationSource,
-                " ",
-                " ",
-                this._notificationParams
-            );
-            this.desktopNotification.setUrgency(aUrgency);
-            this.desktopNotification.setTransient(false);
-            this.desktopNotification.setResident(true);
-            this.desktopNotification.connect("destroy", () => {
-                this.desktopNotification = null;
-            });
-            this.desktopNotification.connect("action-invoked", (aSource, aAction) => {
-                switch (aAction) {
-                    case "dialog-information":
-                        this.openHelpPage();
-                        break;
-                }
-            });
-
-            this.desktopNotification.addButton("dialog-information", _("Help"));
-        }
-
-        if (body) {
-            this.desktopNotification.update(
-                $.escapeHTML(_(xletMeta.name)),
-                body,
-                this._desktopNotificationParams
-            );
-
-            /* FIXME: Buttons should be removed before adding more.
-             * It should remove all buttons, if any, and leave the default ones
-             * (like the "Help" button).
-             */
-            for (let i = aButtons.length - 1; i >= 0; i--) {
-                this.desktopNotification.addButton(aButtons[i].action, aButtons[i].label);
-            }
-
-            this._notificationSource.notify(this.desktopNotification);
-        } else {
-            this.desktopNotification && this.desktopNotification.destroy();
-        }
-    },
-
     openExtensionSettings: function() {
-        Util.spawn_async([xletMeta.path + "/settings.py"], null);
+        Util.spawn_async([XletMeta.path + "/settings.py"], null);
     },
 
     openHelpPage: function() {
-        this._xdgOpen(xletMeta.path + "/HELP.html");
-    },
-
-    _xdgOpen: function() {
-        Util.spawn_async(["xdg-open"].concat(Array.prototype.slice.call(arguments)), null);
+        G.xdgOpen(XletMeta.path + "/HELP.html");
     },
 
     _loadTheme: function(aFullReload) {
@@ -548,9 +371,9 @@ ColorBlindnessAssistant.prototype = {
     },
 
     _getCssPath: function() {
-        let defaultThemepath = xletMeta.path + "/themes/default.css";
-        let cssPath = this.pref_theme === "custom" ?
-            this.pref_theme_path_custom :
+        let defaultThemepath = XletMeta.path + "/themes/default.css";
+        let cssPath = Settings.pref_theme === "custom" ?
+            Settings.pref_theme_path_custom :
             defaultThemepath;
 
         if (/^file:\/\//.test(cssPath)) {
@@ -582,16 +405,16 @@ ColorBlindnessAssistant.prototype = {
         /* NOTE: This injection affects Scale mode (all windows displayed in "exposé").
          */
         if (!this.workspaceInjection) {
-            this.workspaceInjection = $.injectAfter(
+            this.workspaceInjection = G.injectAfter(
                 imports.ui.workspace.WindowClone.prototype,
                 "_init",
                 function(realWindow, myContainer) { // jshint ignore:line
                     try {
                         if (this.realWindow.get_effect(extScope._effect_id) &&
-                            this.realWindow.hasOwnProperty(EFFECT_PROP_NAME)) {
+                            this.realWindow.hasOwnProperty(C.EFFECT_PROP_NAME)) {
                             this.actor.add_effect_with_name(
                                 extScope._effect_id,
-                                extScope._getEffect(this.realWindow[EFFECT_PROP_NAME])
+                                extScope._getEffect(this.realWindow[C.EFFECT_PROP_NAME])
                             );
                         } else {
                             this.actor.remove_effect_by_name(extScope._effect_id);
@@ -606,7 +429,7 @@ ColorBlindnessAssistant.prototype = {
         /* NOTE: This injection affects Coverflow (3D).
          */
         if (!this.appSwitcher3DInjection) {
-            this.appSwitcher3DInjection = $.injectAfter(
+            this.appSwitcher3DInjection = G.injectAfter(
                 imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
                 "_adaptClones",
                 function() {
@@ -617,10 +440,10 @@ ColorBlindnessAssistant.prototype = {
                             let winActor = preview.metaWindow.get_compositor_private();
 
                             if (winActor.get_effect(extScope._effect_id) &&
-                                winActor.hasOwnProperty(EFFECT_PROP_NAME)) {
+                                winActor.hasOwnProperty(C.EFFECT_PROP_NAME)) {
                                 preview.add_effect_with_name(
                                     extScope._effect_id,
-                                    extScope._getEffect(winActor[EFFECT_PROP_NAME])
+                                    extScope._getEffect(winActor[C.EFFECT_PROP_NAME])
                                 );
                             } else {
                                 preview.remove_effect_by_name(extScope._effect_id);
@@ -636,7 +459,7 @@ ColorBlindnessAssistant.prototype = {
         /* NOTE: This injection affects Expo mode (the preview of all workspaces).
          */
         if (!this.expoThumbnailInjection) {
-            this.expoThumbnailInjection = $.injectAfter(
+            this.expoThumbnailInjection = G.injectAfter(
                 imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
                 "syncStacking",
                 function() {
@@ -647,10 +470,10 @@ ColorBlindnessAssistant.prototype = {
                             let winActor = clone.metaWindow.get_compositor_private();
 
                             if (winActor.get_effect(extScope._effect_id) &&
-                                winActor.hasOwnProperty(EFFECT_PROP_NAME)) {
+                                winActor.hasOwnProperty(C.EFFECT_PROP_NAME)) {
                                 clone.actor.add_effect_with_name(
                                     extScope._effect_id,
-                                    extScope._getEffect(winActor[EFFECT_PROP_NAME])
+                                    extScope._getEffect(winActor[C.EFFECT_PROP_NAME])
                                 );
                             } else {
                                 clone.actor.remove_effect_by_name(extScope._effect_id);
@@ -666,7 +489,7 @@ ColorBlindnessAssistant.prototype = {
         /* NOTE: This injection affects Timeline (3D).
          */
         if (!this.timelineSwitcherInjection) {
-            this.timelineSwitcherInjection = $.injectAfter(
+            this.timelineSwitcherInjection = G.injectAfter(
                 imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
                 "_adaptClones",
                 function() {
@@ -677,10 +500,10 @@ ColorBlindnessAssistant.prototype = {
                             let winActor = clone.metaWindow.get_compositor_private();
 
                             if (winActor.get_effect(extScope._effect_id) &&
-                                winActor.hasOwnProperty(EFFECT_PROP_NAME)) {
+                                winActor.hasOwnProperty(C.EFFECT_PROP_NAME)) {
                                 clone.add_effect_with_name(
                                     extScope._effect_id,
-                                    extScope._getEffect(winActor[EFFECT_PROP_NAME])
+                                    extScope._getEffect(winActor[C.EFFECT_PROP_NAME])
                                 );
                             } else {
                                 clone.remove_effect_by_name(extScope._effect_id);
@@ -696,7 +519,7 @@ ColorBlindnessAssistant.prototype = {
 
     _removeCinnamonInjections: function() {
         if (this.workspaceInjection) {
-            $.removeInjection(
+            G.removeInjection(
                 imports.ui.workspace.WindowClone.prototype,
                 "_init",
                 this.workspaceInjection
@@ -705,7 +528,7 @@ ColorBlindnessAssistant.prototype = {
         }
 
         if (this.appSwitcher3DInjection) {
-            $.removeInjection(
+            G.removeInjection(
                 imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
                 "_adaptClones",
                 this.appSwitcher3DInjection
@@ -714,7 +537,7 @@ ColorBlindnessAssistant.prototype = {
         }
 
         if (this.expoThumbnailInjection) {
-            $.removeInjection(
+            G.removeInjection(
                 imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
                 "syncStacking",
                 this.expoThumbnailInjection
@@ -723,7 +546,7 @@ ColorBlindnessAssistant.prototype = {
         }
 
         if (this.timelineSwitcherInjection) {
-            $.removeInjection(
+            G.removeInjection(
                 imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
                 "_adaptClones",
                 this.timelineSwitcherInjection
@@ -740,10 +563,18 @@ ColorBlindnessAssistant.prototype = {
         this._updateEffectsMap();
         this._registerEffectKeybindings();
         this._registerGlobalKeybindings();
-        this.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
+        Settings.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
+        this._connectSignals();
+        this._generateSettingsDesktopFile();
     },
 
     disable: function() {
+        /* NOTE: Set pref_desktop_file_generated to false so it forces the re-generation
+         * of the desktop file (if it's needed) the next time the extension is enabled.
+         */
+        Settings.pref_desktop_file_generated = false;
+
+        this._removeSettingsDesktopFile();
         this.unloadStylesheet();
         this._removeKeybindings("Effect");
         this._removeKeybindings("Global");
@@ -760,88 +591,183 @@ ColorBlindnessAssistant.prototype = {
         }
 
         this.sigMan.disconnectAllSignals();
+        Settings.destroy();
     },
 
-    _onSettingsChanged: function(aPrefValue, aPrefKey) {
-        /* NOTE: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
-         * settings callback instead of just one as in older versions. The first one is the
-         * setting value and the second one is the user data. To workaround this nonsense,
-         * check if the second argument is undefined to decide which
-         * argument to use as the pref key depending on the Cinnamon version.
-         */
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        // Remove the following variable and directly use the second argument.
-        let pref_key = aPrefKey || aPrefValue;
-        switch (pref_key) {
-            case "pref_daltonizer_wizard_kb":
-            case "pref_color_inspector_kb":
-                this._registerGlobalKeybindings();
-                break;
-            case "trigger_effects_list":
-                /* NOTE: "Partially" disable the extension and re-enable it.
-                 * A "partial" disable doesn't remove Cinnamon's injections/overrides
-                 * and does a "soft removal" of effects.
-                 * This allows to easily add back the already applied effects and the
-                 * Cinnamon overrides don't need to be removed and re-applied since they
-                 * use dynamic data.
-                 */
-                try {
-                    this.disable(true);
-                } finally {
-                    Mainloop.idle_add(() => {
-                        this.enable();
-                    });
-                }
-                break;
-            case "trigger_settings_shortcut_creation_desktop":
-            case "trigger_settings_shortcut_creation_xdg":
-                let where = pref_key === "trigger_settings_shortcut_creation_desktop" ?
-                    "desktop" : "xdg";
-                $.generateSettingsDesktopFile(where);
-                break;
-            case "pref_daltonizer_animation_time":
-            case "pref_daltonizer_show_actors_box":
-            case "pref_daltonizer_show_colorspaces_box":
+    _connectSignals: function() {
+        this.sigMan.connect(Main.themeManager, "theme-set", function() {
+            this._loadTheme(false);
+        }.bind(this));
+
+        let cS = (aPref, aCallback) => {
+            Settings.connect(
+                "changed::" + aPref,
+                aCallback
+            );
+        };
+
+        cS("pref_daltonizer_wizard_kb", this._registerGlobalKeybindings.bind(this));
+        cS("pref_color_inspector_kb", this._registerGlobalKeybindings.bind(this));
+        cS("trigger_effects_list", function() {
+            /* NOTE: "Partially" disable the extension and re-enable it.
+             * A "partial" disable doesn't remove Cinnamon's injections/overrides
+             * and does a "soft removal" of effects.
+             * This allows to easily add back the already applied effects and the
+             * Cinnamon overrides don't need to be removed and re-applied since they
+             * use dynamic data.
+             */
+            try {
+                this.disable(true);
+            } finally {
+                Mainloop.idle_add(() => {
+                    this.enable();
+
+                    return false;
+                });
+            }
+        }.bind(this));
+
+        let cb1 = () => {
+            return function() {
                 if (this._daltonizer !== null) {
-                    this._daltonizer.animationTime = this.pref_daltonizer_animation_time / 1000;
-                    this._daltonizer.showActorsBox = this.pref_daltonizer_show_actors_box;
-                    this._daltonizer.showColorspacesBox = this.pref_daltonizer_show_colorspaces_box;
+                    this._daltonizer.animationTime = Settings.pref_daltonizer_animation_time / 1000;
+                    this._daltonizer.showActorsBox = Settings.pref_daltonizer_show_actors_box;
+                    this._daltonizer.showColorspacesBox = Settings.pref_daltonizer_show_colorspaces_box;
                 }
-                break;
-            case "pref_color_inspector_animation_time":
-            case "pref_color_inspector_always_copy_to_clipboard":
+            }.bind(this);
+        };
+        cS("pref_daltonizer_animation_time", cb1());
+        cS("pref_daltonizer_show_actors_box", cb1());
+        cS("pref_daltonizer_show_colorspaces_box", cb1());
+
+        let cb2 = () => {
+            return function() {
                 if (this._colorInspector !== null) {
-                    this._colorInspector.animationTime = this.pref_color_inspector_animation_time / 1000;
-                    this._colorInspector.copyInfoToClipboard = this.pref_color_inspector_always_copy_to_clipboard;
+                    this._colorInspector.animationTime = Settings.pref_color_inspector_animation_time / 1000;
+                    this._colorInspector.copyInfoToClipboard = Settings.pref_color_inspector_always_copy_to_clipboard;
                 }
-                break;
-            case "pref_theme":
-            case "pref_theme_path_custom":
-                if (pref_key === "pref_theme_path_custom" &&
-                    this.pref_theme !== "custom") {
+            }.bind(this);
+        };
+        cS("pref_color_inspector_animation_time", cb2());
+        cS("pref_color_inspector_always_copy_to_clipboard", cb2());
+
+        let cb4 = (aPrefKey) => {
+            return function() {
+                if (aPrefKey === "pref_theme_path_custom" &&
+                    Settings.pref_theme !== "custom") {
                     return;
                 }
 
                 this._loadTheme(true);
-                break;
-            case "pref_apply_cinnamon_injections":
-                try {
-                    this._removeCinnamonInjections();
-                } finally {
-                    Mainloop.idle_add(() => {
-                        this.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
-                    });
-                }
-                break;
+            }.bind(this);
+        };
+        cS("pref_theme", cb4("pref_theme"));
+        cS("pref_theme_path_custom", cb4("pref_theme_path_custom"));
+
+        cS("pref_apply_cinnamon_injections", function() {
+            try {
+                this._removeCinnamonInjections();
+            } finally {
+                Mainloop.idle_add(() => {
+                    Settings.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
+
+                    return false;
+                });
+            }
+        }.bind(this));
+    },
+
+    _generateSettingsDesktopFile: function() {
+        if (G.versionCompare(G.CINNAMON_VERSION, "3.6.0") < 0 &&
+            !Settings.pref_desktop_file_generated) {
+            CustomFileUtils.generateDesktopFile({
+                fileName: this._settingsDesktopFileName,
+                dataName: _(XletMeta.name),
+                dataComment: _("Settings for %s").format(_(XletMeta.name)),
+                dataExec: XletMeta.path + "/settings.py",
+                dataIcon: XletMeta.path + "/icon.svg"
+            });
+
+            $.Notification.notify([
+                G.escapeHTML(_("A shortcut to open this extension settings has been generated.")),
+                G.escapeHTML(_("Search for it on your applications menu.")),
+                G.escapeHTML(_("Read this extension help page for more details."))
+            ]);
+
+            Settings.pref_desktop_file_generated = true;
+        }
+    },
+
+    _removeSettingsDesktopFile: function() {
+        try {
+            let desktopFile = Gio.file_new_for_path(this._settingsDesktopFilePath);
+
+            if (desktopFile.query_exists(null)) {
+                desktopFile.delete_async(GLib.PRIORITY_LOW, null, null);
+            }
+        } catch (aErr) {
+            global.logError(aErr);
         }
     }
 };
 
 function init(aXletMeta) {
-    xletMeta = aXletMeta;
+    XletMeta = aXletMeta;
+
+    /* NOTE: I have to initialize the modules and all its exported variables
+     * at this stage because the stupid asynchronicity of newer versions of Cinnamon.
+     * Since I'm using Cinnamon's native settings system declared and instantiated
+     * in the constants.js module (so I can use it globally from all modules and without
+     * the need to pass the settings object through a trillion other objects),
+     * attempting to initialize the settings outside init() fails because the stupid
+     * extension isn't loaded yet. ¬¬
+     */
+
+    // Mark for deletion on EOL. Cinnamon 3.6.x+
+    if (typeof require === "function") {
+        G = require("./globalUtils.js");
+        D = require("./debugManager.js");
+        C = require("./constants.js");
+        Colorinspector = require("./colorInspector.js");
+        Daltonizer = require("./daltonizer.js");
+        CustomFileUtils = require("./customFileUtils.js");
+        $ = require("./utils.js");
+        DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
+    } else {
+        G = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
+        D = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
+        C = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+        Colorinspector = imports.ui.extensionSystem.extensions["{{UUID}}"].colorInspector;
+        Daltonizer = imports.ui.extensionSystem.extensions["{{UUID}}"].daltonizer;
+        CustomFileUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].customFileUtils;
+        $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
+        DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
+    }
+
+    _ = G._;
+    Settings = C.Settings;
 }
 
 function enable() {
+    if (Settings.pref_logging_level === D.LoggingLevel.VERY_VERBOSE ||
+        Settings.pref_debugger_enabled) {
+        try {
+            let protos = {
+                ColorBlindnessAssistant: ColorBlindnessAssistant
+            };
+
+            for (let name in protos) {
+                D.prototypeDebugger(protos[name], {
+                    objectName: name,
+                    verbose: Settings.pref_logging_level === D.LoggingLevel.VERY_VERBOSE,
+                    debug: Settings.pref_debugger_enabled
+                });
+            }
+        } catch (aErr) {
+            global.logError(aErr);
+        }
+    }
+
     try {
         assistant = new ColorBlindnessAssistant();
         assistant.enable(true);
@@ -855,6 +781,8 @@ function enable() {
     } catch (aErr) {
         global.logError(aErr);
     }
+
+    return null;
 }
 
 function disable() {
