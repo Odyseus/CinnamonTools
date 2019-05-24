@@ -4,6 +4,20 @@
 
 ***
 
+- **Date:** Thu, 23 May 2019 02:14:57 -0300
+- **Commit:** [1335515](https://gitlab.com/Odyseus/CinnamonTools/commit/1335515)
+- **Author:** Odyseus
+
+```
+- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
+- JavaScript code homogenization.
+- Implemented debugger.
+- Fixed error caused by erroneous binding.
+
+```
+
+***
+
 - **Date:** Thu, 9 May 2019 05:16:44 -0300
 - **Commit:** [61ea514](https://gitlab.com/Odyseus/CinnamonTools/commit/61ea514)
 - **Author:** Odyseus

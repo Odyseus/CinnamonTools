@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-02-17 02:33-0300\n"
-"PO-Revision-Date: 2018-08-25 02:47-0300\n"
+"POT-Creation-Date: 2019-05-23 15:29-0300\n"
+"PO-Revision-Date: 2019-05-23 15:41-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:194
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:214
 msgid "Help"
 msgstr "Ayuda"
 
@@ -128,51 +128,51 @@ msgstr "El paquete es llamado **libgtop2**."
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr "Reiniciar Cinnamon luego de haber instalado los paquetes para que el applet los reconozca."
 
-#: applet.js:205
+#: applet.js:225
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:206
+#: applet.js:226
 msgid "This applet needs the GTop library installed on your system for it  to work."
 msgstr "Este applet necesita la biblioteca GTop instalada en su sistema para que funcione."
 
-#: applet.js:207
+#: applet.js:227
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
-#: applet.js:421
+#: applet.js:441
 msgid "Command not set!"
 msgstr "¡Comando no establecido!"
 
-#: applet.js:422
+#: applet.js:442
 msgid "Set a custom command from this applet settings window."
 msgstr "Establecer un comando personalizado desde la ventana de configuración de este applet."
 
-#: utils.js:89
+#: utils.js:78
 msgid "CPU"
 msgstr "CPU"
 
-#: utils.js:115 utils.js:141
+#: utils.js:104 utils.js:130
 msgid "MB"
 msgstr "MB"
 
-#: utils.js:120
+#: utils.js:109
 msgid "Memory"
 msgstr "Memoria"
 
-#: utils.js:146
+#: utils.js:135
 msgid "Swap"
 msgstr "Swap"
 
-#: utils.js:191
+#: utils.js:180
 msgid "KB/s"
 msgstr "KB/s"
 
-#: utils.js:196
+#: utils.js:185
 msgid "Network D/U"
 msgstr "Red D/S"
 
-#: utils.js:234
+#: utils.js:223
 msgid "Load average"
 msgstr "Promedio de carga"
 
@@ -355,3 +355,49 @@ msgstr "Gráfico de carga"
 #. settings-schema.json->pref_load_color_0->description
 msgid "Color"
 msgstr "Color"
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr "Configuración de depuración"
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr "Nivel de registro (*)"
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+"Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
+"\n"
+"Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
+"Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+"Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr "Normal"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr "Detallado"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr "Muy detallado"
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr "Habilitar depurador (*)"
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
+msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"

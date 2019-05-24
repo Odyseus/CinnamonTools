@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopHandler VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:537
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:551
 msgid "Help"
 msgstr ""
 
@@ -87,12 +87,12 @@ msgid "Scroll over applet actions:"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:35 applet.js:783
+#: z_create_localized_help.py:35 applet.js:796
 msgid "Switch between workspaces"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:36 applet.js:784
+#: z_create_localized_help.py:36 applet.js:797
 msgid "Adjust opacity of windows"
 msgstr ""
 
@@ -106,7 +106,7 @@ msgid "Toggle Show desktop"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:38 applet.js:786
+#: z_create_localized_help.py:38 applet.js:799
 msgid "Switch between windows"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:42 applet.js:474 applet.js:767
+#: z_create_localized_help.py:42 applet.js:488 applet.js:780
 msgid "Expo"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:43 applet.js:768
+#: z_create_localized_help.py:43 applet.js:781
 msgid "Overview"
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:44 applet.js:769
+#: z_create_localized_help.py:44 applet.js:782
 msgid "Launch App Switcher"
 msgstr ""
 
@@ -154,7 +154,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:46 applet.js:770
+#: z_create_localized_help.py:46 applet.js:783
 msgid "Run 1st Custom Command"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:47 applet.js:771
+#: z_create_localized_help.py:47 applet.js:784
 msgid "Run 2nd Custom Command"
 msgstr ""
 
@@ -170,7 +170,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:48 applet.js:772
+#: z_create_localized_help.py:48 applet.js:785
 msgid "Run 3rd Custom Command"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:49 applet.js:773
+#: z_create_localized_help.py:49 applet.js:786
 msgid "Run 4rd Custom Command"
 msgstr ""
 
@@ -194,51 +194,45 @@ msgstr ""
 msgid "Desktop peek functionality with configurable levels of opacity."
 msgstr ""
 
-#: applet.js:376 applet.js:442
+#: applet.js:390 applet.js:456
 msgid "Close window"
 msgstr ""
 
-#: applet.js:411
+#: applet.js:425
 msgid "Close all windows from this wrokspace"
 msgstr ""
 
-#: applet.js:461
+#: applet.js:475
 msgid "No open windows"
 msgstr ""
 
-#: applet.js:483
+#: applet.js:497
 msgid "Close all windows from all workspaces"
 msgstr ""
 
-#. NOTE: This string could be left blank because it's a default string,
-#. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:548
+#: applet.js:560
 msgid "About..."
 msgstr ""
 
-#. NOTE: This string could be left blank because it's a default string,
-#. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:558
+#: applet.js:568
 msgid "Configure..."
 msgstr ""
 
-#. NOTE: This string could be left blank because it's a default string,
-#. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:572
+#: applet.js:580
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""
 
-#: applet.js:581
+#: applet.js:588
 #, javascript-format
 msgid "Are you sure that you want to remove '%s' from your panel?"
 msgstr ""
 
-#: applet.js:583
+#: applet.js:590
 msgid "Cancel"
 msgstr ""
 
-#: applet.js:583
+#: applet.js:591
 msgid "OK"
 msgstr ""
 
@@ -247,82 +241,82 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: applet.js:774
+#: applet.js:787
 msgid "None"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:775
+#: applet.js:788
 msgid "Icons only"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:776
+#: applet.js:789
 msgid "Thumbnails only"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:777
+#: applet.js:790
 msgid "Icons and thumbnails"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:778
+#: applet.js:791
 msgid "Icons and window preview"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:779
+#: applet.js:792
 msgid "Window preview (no icons)"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:780
+#: applet.js:793
 msgid "Coverflow (3D)"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:781
+#: applet.js:794
 msgid "Timeline (3D)"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:782
+#: applet.js:795
 msgid "System default"
 msgstr ""
 
-#: applet.js:785
+#: applet.js:798
 msgid "Toggle show desktop"
 msgstr ""
 
-#: applet.js:787
+#: applet.js:800
 msgid "Open windows list menu"
 msgstr ""
 
-#: applet.js:805
+#: applet.js:818
 msgid "Scroll Up"
 msgstr ""
 
-#: applet.js:806
+#: applet.js:819
 msgid "Scroll Down"
 msgstr ""
 
-#: applet.js:808
+#: applet.js:821
 msgid "Scroll"
 msgstr ""
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:815
+#: applet.js:828
 msgid "Left click"
 msgstr ""
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:821
+#: applet.js:834
 msgid "Middle click"
 msgstr ""
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:825
+#: applet.js:838
 msgid "Right click"
 msgstr ""
 
@@ -548,4 +542,45 @@ msgstr ""
 
 #. settings-schema.json->pref_switcher_modifier->options
 msgid "Shift"
+msgstr ""
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-12 22:30-0300\n"
-"PO-Revision-Date: 2018-08-25 02:47-0300\n"
+"POT-Creation-Date: 2019-05-23 15:29-0300\n"
+"PO-Revision-Date: 2019-05-23 15:40-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -87,11 +87,11 @@ msgstr ""
 "llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
 #. Context menu items
-#: applet.js:136
+#: applet.js:144
 msgid "Active applications"
 msgstr "Aplicaciones activas"
 
-#: applet.js:137
+#: applet.js:145
 msgid "Inactive applications"
 msgstr "Aplicaciones inactivas"
 
@@ -191,6 +191,61 @@ msgstr "px"
 #. settings-schema.json->pref_tray_icon_padding->description
 msgid "Padding of tray icons: "
 msgstr "Espaciado de los íconos de la bandeja:"
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr "Configuración de depuración"
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr "Nivel de registro (*)"
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the "
+"extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/"
+"prototypes along with their execution time."
+msgstr ""
+"Permite la capacidad de registrar la salida de varias funciones utilizadas "
+"por la extensión.\n"
+"\n"
+"Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
+"Detallado: registra adicionalmente mensajes de salida adicionales y todas "
+"las respuestas HTTP.\n"
+"Muy detallado: registra adicionalmente todas las llamadas de método de todas "
+"las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr "Normal"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr "Detallado"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr "Muy detallado"
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr "Habilitar depurador (*)"
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid ""
+"It enables the ability to catch all exceptions that under normal use would "
+"not be caught."
+msgstr ""
+"Permite la posibilidad de capturar todas las excepciones que, en el uso "
+"normal, no se detectarían."
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
+msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
 
 #. settings-schema.json->pref_icon_visibility_list->description
 msgid "Internal use"

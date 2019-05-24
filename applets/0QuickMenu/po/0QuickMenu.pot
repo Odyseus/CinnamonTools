@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0QuickMenu VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:542
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:556
 msgid "Help"
 msgstr ""
 
@@ -169,28 +169,28 @@ msgstr ""
 
 #. NOTE: This string could be left blank because it's a default string,
 #. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:247
+#: applet.js:259
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""
 
-#: applet.js:524
+#: applet.js:538
 msgid "Update menu"
 msgstr ""
 
-#: applet.js:529
+#: applet.js:543
 msgid "Scan the main folder to re-create the menu."
 msgstr ""
 
-#: applet.js:532
+#: applet.js:546
 msgid "Open folder"
 msgstr ""
 
-#: applet.js:538
+#: applet.js:552
 msgid "Open the main folder."
 msgstr ""
 
-#: applet.js:548
+#: applet.js:562
 msgid "Open the help file."
 msgstr ""
 
@@ -382,4 +382,45 @@ msgstr ""
 
 #. settings-schema.json->pref_auto_close_opened_sub_menus->tooltip
 msgid "When enabled, the previously opened sub menu will be automatically closed."
+msgstr ""
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""

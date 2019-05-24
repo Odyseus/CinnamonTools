@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "Reset to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:584 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:272 applet.js:1402
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:584 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:303 utils.js:72
 msgid "Help"
 msgstr ""
 
@@ -259,7 +259,7 @@ msgstr ""
 msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
 
-#: settings.py:34 z_create_localized_help.py:129 applet.js:1037 weather_providers/WeatherBit.js:124
+#: settings.py:34 z_create_localized_help.py:129 applet.js:1072 weather_providers/WeatherBit.js:124
 msgid "Location name"
 msgstr ""
 
@@ -526,11 +526,11 @@ msgstr ""
 msgid "Credentials"
 msgstr ""
 
-#: settings.py:439 z_create_localized_help.py:71 constants.js:228
+#: settings.py:439 z_create_localized_help.py:71 constants.js:190
 msgid "Dark Sky"
 msgstr ""
 
-#: settings.py:450 z_create_localized_help.py:76 constants.js:230
+#: settings.py:450 z_create_localized_help.py:76 constants.js:192
 msgid "OpenWeatherMap"
 msgstr ""
 
@@ -538,11 +538,11 @@ msgstr ""
 msgid "API Key"
 msgstr ""
 
-#: settings.py:461 z_create_localized_help.py:81 constants.js:231
+#: settings.py:461 z_create_localized_help.py:81 constants.js:193
 msgid "WeatherBit"
 msgstr ""
 
-#: settings.py:472 z_create_localized_help.py:86 constants.js:229
+#: settings.py:472 z_create_localized_help.py:86 constants.js:191
 msgid "Yahoo! Weather"
 msgstr ""
 
@@ -611,7 +611,7 @@ msgstr ""
 msgid "More customization options (current weather icon size, forecasts icon size, etc.)."
 msgstr ""
 
-#: z_create_localized_help.py:55 applet.js:148
+#: z_create_localized_help.py:55 applet.js:176
 msgid "This applet requires valid credentials from any of the weather provider services for it to work."
 msgstr ""
 
@@ -823,666 +823,689 @@ msgstr ""
 msgid "A custom icon theme should contain 240 icons to support both full color and symbolic icons. Or half of that (120) to support one or the other."
 msgstr ""
 
-#: applet.js:90
+#: z_create_localized_help.py:196
+msgid "Cinnamon versions bellow 3.6.x"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:199
+msgid "Cinnamon versions prior to 3.6.x have a design flaw. If an xlet uses an external settings application, and at the same time the file **settings-schema.json** exists inside an xlet folder, all shortcuts to open an xlet settings will not open the external application as it should; they will open the Cinnamon's native settings window. To work around this design flaw, I put in place different mechanisms depending on the xlet type."
+msgstr ""
+
+#: z_create_localized_help.py:202
+msgid "Applets"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:204
+msgid "The **Configure...** context menu item is overridden so it opens the proper settings application."
+msgstr ""
+
+#: z_create_localized_help.py:207
+msgid "Extensions"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:209
+msgid "A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at **~/.local/share/applications**, so it will make the shortcut available in your applications menu inside the **Preferences** category."
+msgstr ""
+
+#: z_create_localized_help.py:212
+msgid "For all xlets types"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:214
+msgid "If the *wrong* settings window is opened, a button to open the *right* settings window will be available."
+msgstr ""
+
+#: applet.js:126
 msgid "Click to open"
 msgstr ""
 
-#: applet.js:147
+#: applet.js:175
 msgid "Read the help page"
 msgstr ""
 
-#: applet.js:259
+#: applet.js:290
 msgid "Copy current location data"
 msgstr ""
 
-#: applet.js:283
+#: applet.js:315
 msgid "Configure..."
 msgstr ""
 
-#: applet.js:392
+#: applet.js:425
 msgid "Click to copy error to clipboard."
 msgstr ""
 
-#: applet.js:393
+#: applet.js:426
 msgid "Look at the logs for details."
 msgstr ""
 
-#: applet.js:430
+#: applet.js:463
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:443
+#: applet.js:476
 msgid "Click to refresh weather data"
 msgstr ""
 
-#: applet.js:630
+#: applet.js:663
 msgid "Selected path for custom icon theme doesn't exist!"
 msgstr ""
 
-#: applet.js:707
+#: applet.js:740
 msgid "No current location set!"
 msgstr ""
 
-#: applet.js:760
+#: applet.js:793
 msgid "Error initializing weather provider!"
 msgstr ""
 
-#: applet.js:823
+#: applet.js:856
 msgid "No weather data available!"
 msgstr ""
 
-#: applet.js:931
+#: applet.js:964
 #, javascript-format
 msgid "Powered by %s"
 msgstr ""
 
-#: applet.js:1107
+#: applet.js:1142
 msgid "Current location"
 msgstr ""
 
-#: applet.js:1120
+#: applet.js:1155
 msgid "Open location weather details page"
 msgstr ""
 
-#: applet.js:1320
+#: applet.js:1346 applet.js:1349
 msgid "Not available"
 msgstr ""
 
-#: applet.js:1717
+#: applet.js:1679
 msgid "Error trying to get theme"
 msgstr ""
 
-#: applet.js:1725
+#: applet.js:1687
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: applet.js:1735
+#: applet.js:1697
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: applet.js:1815
-msgid "Remember to restart Cinnamon to fully enable/disable this option."
-msgstr ""
-
-#: constants.js:54
+#: constants.js:16
 msgid "Blowing snow"
 msgstr ""
 
-#: constants.js:55
+#: constants.js:17
 msgid "Blustery"
 msgstr ""
 
-#: constants.js:56 weather_providers/DarkSky.js:111
+#: constants.js:18 weather_providers/DarkSky.js:111
 msgid "Clear"
 msgstr ""
 
-#: constants.js:57
+#: constants.js:19
 msgid "Cloudy"
 msgstr ""
 
-#: constants.js:58
+#: constants.js:20
 msgid "Cold"
 msgstr ""
 
-#: constants.js:59
+#: constants.js:21
 msgid "Drizzle"
 msgstr ""
 
-#: constants.js:60
+#: constants.js:22
 msgid "Dust"
 msgstr ""
 
-#: constants.js:61
+#: constants.js:23
 msgid "Fair"
 msgstr ""
 
-#: constants.js:62
+#: constants.js:24
 msgid "Foggy"
 msgstr ""
 
-#: constants.js:63
+#: constants.js:25
 msgid "Freezing drizzle"
 msgstr ""
 
-#: constants.js:64
+#: constants.js:26
 msgid "Freezing rain"
 msgstr ""
 
-#: constants.js:65
+#: constants.js:27
 msgid "Hail"
 msgstr ""
 
-#: constants.js:66
+#: constants.js:28
 msgid "Haze"
 msgstr ""
 
-#: constants.js:67
+#: constants.js:29
 msgid "Heavy snow"
 msgstr ""
 
-#: constants.js:68
+#: constants.js:30
 msgid "Hot"
 msgstr ""
 
-#: constants.js:69
+#: constants.js:31
 msgid "Hurricane"
 msgstr ""
 
-#: constants.js:70
+#: constants.js:32
 msgid "Isolated thundershowers"
 msgstr ""
 
-#: constants.js:71
+#: constants.js:33
 msgid "Isolated thunderstorms"
 msgstr ""
 
-#: constants.js:72
+#: constants.js:34
 msgid "Light snow showers"
 msgstr ""
 
-#: constants.js:73
+#: constants.js:35
 msgid "Mixed rain and hail"
 msgstr ""
 
-#: constants.js:74
+#: constants.js:36
 msgid "Mixed rain and sleet"
 msgstr ""
 
-#: constants.js:75
+#: constants.js:37
 msgid "Mixed rain and snow"
 msgstr ""
 
-#: constants.js:76
+#: constants.js:38
 msgid "Mixed snow and sleet"
 msgstr ""
 
-#: constants.js:77
+#: constants.js:39
 msgid "Mostly cloudy"
 msgstr ""
 
-#: constants.js:78
+#: constants.js:40
 msgid "Partly cloudy"
 msgstr ""
 
-#: constants.js:79
+#: constants.js:41
 msgid "Scattered showers"
 msgstr ""
 
-#: constants.js:80
+#: constants.js:42
 msgid "Scattered snow showers"
 msgstr ""
 
-#: constants.js:81
+#: constants.js:43
 msgid "Scattered thunderstorms"
 msgstr ""
 
-#: constants.js:82
+#: constants.js:44
 msgid "Severe thunderstorms"
 msgstr ""
 
-#: constants.js:83
+#: constants.js:45
 msgid "Showers"
 msgstr ""
 
-#: constants.js:84
+#: constants.js:46
 msgid "Sleet"
 msgstr ""
 
-#: constants.js:85
+#: constants.js:47
 msgid "Smoky"
 msgstr ""
 
-#: constants.js:86
+#: constants.js:48
 msgid "Snow flurries"
 msgstr ""
 
-#: constants.js:87
+#: constants.js:49
 msgid "Snow showers"
 msgstr ""
 
-#: constants.js:88
+#: constants.js:50
 msgid "Snow"
 msgstr ""
 
-#: constants.js:89
+#: constants.js:51
 msgid "Sunny"
 msgstr ""
 
-#: constants.js:90
+#: constants.js:52
 msgid "Thundershowers"
 msgstr ""
 
-#: constants.js:91
+#: constants.js:53
 msgid "Thunderstorms"
 msgstr ""
 
-#: constants.js:92
+#: constants.js:54
 msgid "Tornado"
 msgstr ""
 
-#: constants.js:93
+#: constants.js:55
 msgid "Tropical storm"
 msgstr ""
 
-#: constants.js:94
+#: constants.js:56
 msgid "Windy"
 msgstr ""
 
-#: constants.js:96
+#: constants.js:58
 msgid "Thunderstorm with light rain"
 msgstr ""
 
-#: constants.js:97
+#: constants.js:59
 msgid "Thunderstorm with rain"
 msgstr ""
 
-#: constants.js:98
+#: constants.js:60
 msgid "Thunderstorm with heavy rain"
 msgstr ""
 
-#: constants.js:99
+#: constants.js:61
 msgid "Light thunderstorm"
 msgstr ""
 
-#: constants.js:100
+#: constants.js:62
 msgid "Thunderstorm"
 msgstr ""
 
-#: constants.js:101
+#: constants.js:63
 msgid "Heavy thunderstorm"
 msgstr ""
 
-#: constants.js:102
+#: constants.js:64
 msgid "Ragged thunderstorm"
 msgstr ""
 
-#: constants.js:103
+#: constants.js:65
 msgid "Thunderstorm with light drizzle"
 msgstr ""
 
-#: constants.js:104
+#: constants.js:66
 msgid "Thunderstorm with drizzle"
 msgstr ""
 
-#: constants.js:105
+#: constants.js:67
 msgid "Thunderstorm with heavy drizzle"
 msgstr ""
 
-#: constants.js:106
+#: constants.js:68
 msgid "Light intensity drizzle"
 msgstr ""
 
-#: constants.js:107
+#: constants.js:69
 msgid "Heavy intensity drizzle"
 msgstr ""
 
-#: constants.js:108
+#: constants.js:70
 msgid "Light intensity drizzle rain"
 msgstr ""
 
-#: constants.js:109
+#: constants.js:71
 msgid "Drizzle rain"
 msgstr ""
 
-#: constants.js:110
+#: constants.js:72
 msgid "Heavy intensity drizzle rain"
 msgstr ""
 
-#: constants.js:111
+#: constants.js:73
 msgid "Shower rain and drizzle"
 msgstr ""
 
-#: constants.js:112
+#: constants.js:74
 msgid "Heavy shower rain and drizzle"
 msgstr ""
 
-#: constants.js:113
+#: constants.js:75
 msgid "Shower drizzle"
 msgstr ""
 
-#: constants.js:114
+#: constants.js:76
 msgid "Light rain"
 msgstr ""
 
-#: constants.js:115
+#: constants.js:77
 msgid "Moderate rain"
 msgstr ""
 
-#: constants.js:116
+#: constants.js:78
 msgid "Heavy intensity rain"
 msgstr ""
 
-#: constants.js:117
+#: constants.js:79
 msgid "Very heavy rain"
 msgstr ""
 
-#: constants.js:118
+#: constants.js:80
 msgid "Extreme rain"
 msgstr ""
 
-#: constants.js:119
+#: constants.js:81
 msgid "Light intensity shower rain"
 msgstr ""
 
-#: constants.js:120
+#: constants.js:82
 msgid "Shower rain"
 msgstr ""
 
-#: constants.js:121
+#: constants.js:83
 msgid "Heavy intensity shower rain"
 msgstr ""
 
-#: constants.js:122
+#: constants.js:84
 msgid "Ragged shower rain"
 msgstr ""
 
-#: constants.js:123
+#: constants.js:85
 msgid "Light snow"
 msgstr ""
 
-#: constants.js:124
+#: constants.js:86
 msgid "Shower sleet"
 msgstr ""
 
-#: constants.js:125
+#: constants.js:87
 msgid "Light rain and snow"
 msgstr ""
 
-#: constants.js:126
+#: constants.js:88
 msgid "Rain and snow"
 msgstr ""
 
-#: constants.js:127
+#: constants.js:89
 msgid "Light shower snow"
 msgstr ""
 
-#: constants.js:128
+#: constants.js:90
 msgid "Shower snow"
 msgstr ""
 
-#: constants.js:129
+#: constants.js:91
 msgid "Heavy shower snow"
 msgstr ""
 
-#: constants.js:130
+#: constants.js:92
 msgid "Mist"
 msgstr ""
 
-#: constants.js:131
+#: constants.js:93
 msgid "Smoke"
 msgstr ""
 
-#: constants.js:132
+#: constants.js:94
 msgid "Sand, dust whirls"
 msgstr ""
 
-#: constants.js:133
+#: constants.js:95
 msgid "Fog"
 msgstr ""
 
-#: constants.js:134
+#: constants.js:96
 msgid "Sand"
 msgstr ""
 
-#: constants.js:135
+#: constants.js:97
 msgid "Volcanic ash"
 msgstr ""
 
-#: constants.js:136
+#: constants.js:98
 msgid "Squalls"
 msgstr ""
 
-#: constants.js:137
+#: constants.js:99
 msgid "Clear sky"
 msgstr ""
 
-#: constants.js:138
+#: constants.js:100
 msgid "Few clouds"
 msgstr ""
 
-#: constants.js:139
+#: constants.js:101
 msgid "Scattered clouds"
 msgstr ""
 
-#: constants.js:140
+#: constants.js:102
 msgid "Broken clouds"
 msgstr ""
 
-#: constants.js:141
+#: constants.js:103
 msgid "Overcast clouds"
 msgstr ""
 
-#: constants.js:143
+#: constants.js:105
 msgid "Thunderstorm with Hail"
 msgstr ""
 
-#: constants.js:144
+#: constants.js:106
 msgid "Freezing Fog"
 msgstr ""
 
-#: constants.js:176
+#: constants.js:138
 msgid "Loading..."
 msgstr ""
 
-#: constants.js:180
+#: constants.js:142
 msgid "Unable to resolve destination host name"
 msgstr ""
 
-#: constants.js:181
+#: constants.js:143
 msgid "Temporary redirect"
 msgstr ""
 
-#: constants.js:182
+#: constants.js:144
 msgid "Unable to resolve proxy host name"
 msgstr ""
 
-#: constants.js:183
+#: constants.js:145
 msgid "Bad request"
 msgstr ""
 
-#: constants.js:184
+#: constants.js:146
 msgid "Unauthorized"
 msgstr ""
 
-#: constants.js:185
+#: constants.js:147
 msgid "Payment required"
 msgstr ""
 
-#: constants.js:186
+#: constants.js:148
 msgid "Not found"
 msgstr ""
 
-#: constants.js:187
+#: constants.js:149
 msgid "Proxy authentication required"
 msgstr ""
 
-#: constants.js:188
+#: constants.js:150
 msgid "Request timeout"
 msgstr ""
 
-#: constants.js:189
+#: constants.js:151
 msgid "Unable to connect to remote host"
 msgstr ""
 
-#: constants.js:190
+#: constants.js:152
 msgid "Internal server error"
 msgstr ""
 
-#: constants.js:191
+#: constants.js:153
 msgid "Service unavailable"
 msgstr ""
 
-#: constants.js:192
+#: constants.js:154
 msgid "Unable to connect to proxy"
 msgstr ""
 
-#: constants.js:193
+#: constants.js:155
 msgid "SSL/TLS negotiation failed"
 msgstr ""
 
-#: constants.js:194
+#: constants.js:156
 msgid "A network error occurred, or the other end closed the connection unexpectedly"
 msgstr ""
 
-#: constants.js:199
+#: constants.js:161
 msgid "Missing credentials for weather provider!"
 msgstr ""
 
-#: constants.js:200
+#: constants.js:162
 msgid "Wrong location ID format!"
 msgstr ""
 
-#: constants.js:201
+#: constants.js:163
 msgid "Selected language not supported by weather provider!"
 msgstr ""
 
-#: constants.js:202
+#: constants.js:164
 #, javascript-format
 msgid "Error getting data! Status code: %s"
 msgstr ""
 
-#: constants.js:203
+#: constants.js:165
 msgid "Error parsing weather data."
 msgstr ""
 
-#: constants.js:208
+#: constants.js:170
 msgid "Sunday"
 msgstr ""
 
-#: constants.js:209
+#: constants.js:171
 msgid "Monday"
 msgstr ""
 
-#: constants.js:210
+#: constants.js:172
 msgid "Tuesday"
 msgstr ""
 
-#: constants.js:211
+#: constants.js:173
 msgid "Wednesday"
 msgstr ""
 
-#: constants.js:212
+#: constants.js:174
 msgid "Thursday"
 msgstr ""
 
-#: constants.js:213
+#: constants.js:175
 msgid "Friday"
 msgstr ""
 
-#: constants.js:214
+#: constants.js:176
 msgid "Saturday"
 msgstr ""
 
-#: constants.js:281
+#: constants.js:243
 msgid "Temperature"
 msgstr ""
 
-#: constants.js:282
+#: constants.js:244
 msgid "Humidity"
 msgstr ""
 
-#: constants.js:283
+#: constants.js:245
 msgid "Pressure"
 msgstr ""
 
-#: constants.js:284
+#: constants.js:246
 msgid "Wind"
 msgstr ""
 
-#: constants.js:285
+#: constants.js:247
 msgid "Wind chill"
 msgstr ""
 
-#: constants.js:286
+#: constants.js:248
 msgid "Visibility"
 msgstr ""
 
-#: constants.js:287
+#: constants.js:249
 msgid "Sunrise"
 msgstr ""
 
-#: constants.js:288
+#: constants.js:250
 msgid "Sunset"
 msgstr ""
 
-#: constants.js:289
+#: constants.js:251
 msgid "Moon phase"
 msgstr ""
 
-#: utils.js:70
-#, javascript-format
-msgid "Schema %s could not be found for xlet %s."
-msgstr ""
-
-#: utils.js:71
-msgid "Please check your installation."
-msgstr ""
-
-#: utils.js:472
+#: utils.js:433
 msgid "E"
 msgstr ""
 
-#: utils.js:472
+#: utils.js:433
 msgid "N"
 msgstr ""
 
-#: utils.js:472
+#: utils.js:433
 msgid "NE"
 msgstr ""
 
-#: utils.js:472
+#: utils.js:433
 msgid "NW"
 msgstr ""
 
-#: utils.js:472
+#: utils.js:433
 msgid "S"
 msgstr ""
 
-#: utils.js:472
+#: utils.js:433
 msgid "SE"
 msgstr ""
 
-#: utils.js:472
+#: utils.js:433
 msgid "SW"
 msgstr ""
 
-#: utils.js:472
+#: utils.js:433
 msgid "W"
 msgstr ""
 
-#: utils.js:645
+#: utils.js:542
 msgid "Displayed weather data doesn't belong to any currently configured location!"
 msgstr ""
 
-#: utils.js:929 utils.js:946
+#: utils.js:698 utils.js:715
 msgid "New Moon"
 msgstr ""
 
-#: utils.js:931
+#: utils.js:700
 msgid "Waxing Crescent"
 msgstr ""
 
-#: utils.js:933
+#: utils.js:702
 msgid "First Quarter"
 msgstr ""
 
-#: utils.js:935
+#: utils.js:704
 msgid "Waxing Gibbous"
 msgstr ""
 
-#: utils.js:937
+#: utils.js:706
 msgid "Full Moon"
 msgstr ""
 
-#: utils.js:939
+#: utils.js:708
 msgid "Waning Gibbous"
 msgstr ""
 
-#: utils.js:941
+#: utils.js:710
 msgid "Third Quarter"
 msgstr ""
 
-#: utils.js:943
+#: utils.js:712
 msgid "Waning Crescent"
 msgstr ""
 

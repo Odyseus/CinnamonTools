@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1161
+#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1155
 msgid "Help"
 msgstr ""
 
@@ -101,73 +101,73 @@ msgstr ""
 msgid "Inverted menu on top panel"
 msgstr ""
 
-#: utils.js:1013
+#: utils.js:1007
 msgid "Preferences"
 msgstr ""
 
-#: utils.js:1027
+#: utils.js:1021
 msgid "Move to the other monitor"
 msgstr ""
 
-#: utils.js:1038
+#: utils.js:1032
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr ""
 
-#: utils.js:1049
+#: utils.js:1043
 msgid "Only on this workspace"
 msgstr ""
 
-#: utils.js:1055
+#: utils.js:1049
 msgid "Visible on all workspaces"
 msgstr ""
 
-#: utils.js:1061
+#: utils.js:1055
 msgid "Move to another workspace"
 msgstr ""
 
 #. Close all/others
-#: utils.js:1091
+#: utils.js:1085
 msgid "Close all"
 msgstr ""
 
-#: utils.js:1101
+#: utils.js:1095
 msgid "Close others"
 msgstr ""
 
-#: utils.js:1116
+#: utils.js:1110
 msgid "Restore to full opacity"
 msgstr ""
 
-#: utils.js:1124
+#: utils.js:1118
 msgid "Restore"
 msgstr ""
 
-#: utils.js:1129
+#: utils.js:1123
 msgid "Minimize"
 msgstr ""
 
-#: utils.js:1137
+#: utils.js:1131
 msgid "Unmaximize"
 msgstr ""
 
-#: utils.js:1142
+#: utils.js:1136
 msgid "Maximize"
 msgstr ""
 
-#: utils.js:1149
+#: utils.js:1143
 msgid "Close"
 msgstr ""
 
-#: utils.js:1168
+#: utils.js:1162
 msgid "About..."
 msgstr ""
 
-#: utils.js:1173
+#: utils.js:1167
 msgid "Configure..."
 msgstr ""
 
-#: utils.js:1189
+#: utils.js:1183
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""
@@ -262,4 +262,45 @@ msgstr ""
 
 #. settings-schema.json->pref_sub_menu_placement->options
 msgid "Bottom of menu"
+msgstr ""
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""

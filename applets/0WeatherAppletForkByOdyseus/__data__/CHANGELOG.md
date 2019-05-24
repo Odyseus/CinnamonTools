@@ -4,6 +4,22 @@
 
 ***
 
+- **Date:** Thu, 23 May 2019 02:16:58 -0300
+- **Commit:** [e0d44f6](https://gitlab.com/Odyseus/CinnamonTools/commit/e0d44f6)
+- **Author:** Odyseus
+
+```
+- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
+- JavaScript code homogenization.
+- Improved debugger.
+- Override the **Configure..** context menu item only when it is needed.
+- Fixed (at least tried to) warnings about "function does not always return value" nonsense.
+- Added SVG icon.
+
+```
+
+***
+
 - **Date:** Sat, 18 May 2019 22:29:33 -0300
 - **Commit:** [581cbbe](https://gitlab.com/Odyseus/CinnamonTools/commit/581cbbe)
 - **Author:** Odyseus

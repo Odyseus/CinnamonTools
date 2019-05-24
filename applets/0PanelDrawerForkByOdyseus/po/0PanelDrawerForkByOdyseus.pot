@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PanelDrawerForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,11 +64,11 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: applet.js:106
+#: applet.js:113
 msgid "Panel Edit mode"
 msgstr ""
 
-#: applet.js:112
+#: applet.js:119
 msgid "Add applets to the panel"
 msgstr ""
 
@@ -139,4 +139,45 @@ msgstr ""
 
 #. settings-schema.json->autohide_rs_time->description
 msgid "Reshowers' autohide delay: "
+msgstr ""
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""

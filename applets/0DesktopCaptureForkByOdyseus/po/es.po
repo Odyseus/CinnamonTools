@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-05-08 20:40-0300\n"
-"PO-Revision-Date: 2019-05-08 21:26-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
+"PO-Revision-Date: 2019-05-23 15:40-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:234
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:275
 msgid "Help"
 msgstr "Ayuda"
 
@@ -133,7 +133,7 @@ msgstr "Las configuraciones están disponibles inmediatamente después de cambia
 msgid "The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program."
 msgstr "El elemento 'Repetir el último' no solo está disponible para las capturas de pantalla de Cinnamon, sino para cualquier dispositivo y programa."
 
-#: z_create_localized_help.py:48 applet.js:179
+#: z_create_localized_help.py:48 applet.js:220
 msgid "Programs support"
 msgstr "Soporte de programas"
 
@@ -457,7 +457,7 @@ msgstr "El nombre de clase de la ventana seleccionada."
 msgid "The selected window class title."
 msgstr "El título de la clase de la ventana seleccionada."
 
-#: z_create_localized_help.py:251 applet.js:186
+#: z_create_localized_help.py:251 applet.js:227
 msgid "Cinnamon recorder profiles"
 msgstr "Perfiles del grabador de Cinnamon"
 
@@ -522,11 +522,11 @@ msgstr "Problemas conocidos"
 msgid "Cinnamon 3.0.x and its built-in screenshot mechanism"
 msgstr "Cinnamon 3.0.x y su mecanismo de captura de pantalla incorporado"
 
-#: z_create_localized_help.py:323 applet.js:2038
+#: z_create_localized_help.py:323 applet.js:1988
 msgid "The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"
 msgstr "¡El mecanismo de captura de pantalla incorporado de Cinnamon 3.0.x está roto!"
 
-#: z_create_localized_help.py:326 applet.js:2039
+#: z_create_localized_help.py:326 applet.js:1989
 msgid "Do not use it or Cinnamon will crash!"
 msgstr "¡No lo uses o Cinnamon se estrellará!"
 
@@ -539,392 +539,344 @@ msgstr "Solo se puede arreglar compilando desde la fuente el paquete cinnamon pa
 msgid "To permanently dismiss the critical notification displayed when the applet is used under Cinnamon 3.0.x, enable the option found in this applet settings window called \"I read the disclaimer and I'm aware of the consequences\", under the \"Disclaimer\" section."
 msgstr "Para descartar permanentemente la notificación crítica que se muestra cuando se utiliza el applet en Cinnamon 3.0.x, habilitar la opción que se encuentra en esta ventana de configuración del applet llamada \"Leí el descargo de responsabilidad y soy consciente de las consecuencias\", bajo la sección \"Descargo de responsabilidad\"."
 
-#: applet.js:128
+#: applet.js:169
 msgid "Open screenshots folder"
 msgstr "Abrir carpeta de capturas de pantalla"
 
-#: applet.js:138
+#: applet.js:179
 msgid "Open screencasts folder"
 msgstr "Abrir carpeta de screencasts"
 
-#: applet.js:180
+#: applet.js:221
 msgid "Export programs"
 msgstr "Exportar programas"
 
-#: applet.js:181
+#: applet.js:222
 msgid "Import programs"
 msgstr "Importar programas"
 
-#: applet.js:182
+#: applet.js:223
 msgid "Reset programs"
 msgstr "Restablecer programas"
 
-#: applet.js:183
+#: applet.js:224
 msgid "Remove all programs"
 msgstr "Eliminar todos los programas"
 
-#: applet.js:187
+#: applet.js:228
 msgid "Export profiles"
 msgstr "Exportar perfiles"
 
-#: applet.js:188
+#: applet.js:229
 msgid "Import profiles"
 msgstr "Importar perfiles"
 
-#: applet.js:189
+#: applet.js:230
 msgid "Reset profiles"
 msgstr "Restablecer perfiles"
 
-#: applet.js:190
+#: applet.js:231
 msgid "Remove all profiles"
 msgstr "Eliminar todos los perfiles"
 
-#: applet.js:391
+#: applet.js:433
 msgid "Error trying to get theme"
 msgstr "Error al intentar obtener el tema"
 
-#: applet.js:398
+#: applet.js:440
 msgid "Stylesheet parse error"
 msgstr "Error de análisis de hoja de estilo"
 
-#: applet.js:408
+#: applet.js:450
 msgid "Error unloading stylesheet"
 msgstr "Error al descargar la hoja de estilos"
 
-#: applet.js:765
+#: applet.js:783
 msgid "Choose camera"
 msgstr "Eligir cámara"
 
-#: applet.js:766
+#: applet.js:784
 msgid "Choose recorder"
 msgstr "Elegir grabador"
 
-#: applet.js:771
+#: applet.js:789
 msgid "Latest capture"
 msgstr "Última captura"
 
-#: applet.js:803
+#: applet.js:819
 msgid "Screencast"
 msgstr "Screencast"
 
-#: applet.js:803
+#: applet.js:819
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
-#: applet.js:814
+#: applet.js:830
 msgid "Assign a title to your program!!!"
 msgstr "¡Asignar un título a tu programa!"
 
-#: applet.js:818 utils.js:55
+#: applet.js:834 constants.js:43
 msgid "Disabled"
 msgstr "Deshabilitado"
 
-#: applet.js:889
+#: applet.js:905
 msgid "Include cursor"
 msgstr "Incluir cursor"
 
-#: applet.js:896
+#: applet.js:912
 msgid "Whether to include mouse cursor in screenshot."
 msgstr "Incluir o no el cursor del ratón en la captura de pantalla."
 
-#: applet.js:910
+#: applet.js:926
 #, javascript-format
 msgid "Monitor %d"
 msgstr "Monitor %d"
 
-#: applet.js:923
+#: applet.js:939
 msgid "Auto copy image"
 msgstr "Automáticamente copiar imagen"
 
-#: applet.js:939 applet.js:1035
+#: applet.js:955 applet.js:1051
 msgid "Repeat last"
 msgstr "Repetir última"
 
-#: applet.js:956
+#: applet.js:972
 msgid "Capture delay"
 msgstr "Retraso de captura"
 
 #. TO TRANSLATORS:
 #. sec. = abbreviation of "second"
 #. secs. = abbreviation of "seconds"
-#: applet.js:970
+#: applet.js:986
 msgid "sec."
 msgid_plural "secs."
 msgstr[0] "seg."
 msgstr[1] "segs."
 
-#: applet.js:978
+#: applet.js:994
 msgid "How many seconds to wait before taking a screenshot."
 msgstr "Cuántos segundos hay que esperar antes de tomar una captura de pantalla."
 
-#: applet.js:990 utils.js:526
+#: applet.js:1006 utils.js:413
 msgid "Profile"
 msgstr "Perfil"
 
-#: applet.js:999
+#: applet.js:1015
 msgid "Choose Cinnamon recorder profile"
 msgstr "Elegir perfil de grabador de Cinnamon"
 
-#: applet.js:1005 applet.js:1380
+#: applet.js:1021 applet.js:1378
 msgid "Start recording"
 msgstr "Empezar a grabar"
 
-#: applet.js:1018
+#: applet.js:1034
 msgid "Record sound"
 msgstr "Grabar sonido"
 
-#: applet.js:1025
+#: applet.js:1041
 msgid "Whether to record sound."
 msgstr "Grabar sonido o no."
 
-#: applet.js:1051 applet.js:1377
+#: applet.js:1067 applet.js:1375
 msgid "Stop recording"
 msgstr "Parar grabación"
 
-#: applet.js:1068 applet.js:1087
+#: applet.js:1084 applet.js:1103
 msgid "Frames per second"
 msgstr "Fotogramas por segundo"
 
-#: applet.js:1079
+#: applet.js:1095
 msgid "FPS"
 msgstr "FPS"
 
-#: applet.js:1100
+#: applet.js:1116
 msgid "Device options"
 msgstr "Opciones de dispositivo"
 
-#: applet.js:1303 utils.js:2755
+#: applet.js:1307 utils.js:2341
 msgid "File path copied to clipboard."
 msgstr "Ruta del archivo copiada al portapapeles."
 
-#: applet.js:1307 utils.js:2751
+#: applet.js:1311 utils.js:2337
 msgid "Image data copied to clipboard."
 msgstr "Datos de imagen copiados al portapapeles."
 
-#: applet.js:1391
+#: applet.js:1387
 msgid "Selected storage folder doesn't exist!"
 msgstr "¡Carpeta de destino no existe!"
 
-#: applet.js:1399
+#: applet.js:1395
 msgid "Selected storage folder is not a directory!"
 msgstr "¡Carpeta de destino no es una carpeta!"
 
-#: applet.js:1419
+#: applet.js:1413
 msgid "File cannot be created!"
 msgstr "¡Archivo o puede ser creado!"
 
-#: applet.js:1663 applet.js:1725
+#: applet.js:1637 applet.js:1697
 msgid "Displaying command that will be executed"
 msgstr "Viendo el comando que será ejecutado"
 
-#: applet.js:1760
+#: applet.js:1728
 msgid "Command exited with error status"
 msgstr "Comando terminado con estado de error"
 
-#: applet.js:1913
+#: applet.js:1867
 msgid "Possibly malformed JSON file."
 msgstr "Posiblemente archivo JSON mal formado."
 
-#: applet.js:1914
+#: applet.js:1868
 msgid "Check the logs."
 msgstr "Comprobar los registros."
 
-#: applet.js:1974
+#: applet.js:1926
 msgid "Do you really want to reset this preference to its default value?"
 msgstr "¿Realmente desea restablecer esta preferencia a su valor predeterminado?"
 
-#: applet.js:2015
+#: applet.js:1965
 msgid "Do you really want to empty this preference?"
 msgstr "¿De verdad desea vaciar esta preferencia?"
 
-#: applet.js:2040
+#: applet.js:1990
 msgid "Read this applet help page (Known issues) for more details on the matter."
 msgstr "Lea la página de ayuda de este applet (Problemas conocidos) para obtener más detalles al respecto."
 
-#: applet.js:2041
+#: applet.js:1991
 msgid "You will keep seeing this notification until you follow the instructions found on the help page."
 msgstr "Seguirá viendo esta notificación hasta que siga las instrucciones que se encuentran en la página de ayuda."
 
-#: applet.js:2052
+#: applet.js:2002
 msgid "Operation aborted!"
 msgstr "¡Operación abortada!"
 
-#: utils.js:56
+#: constants.js:44
 msgid "Area"
 msgstr "Área"
 
-#: utils.js:57
+#: constants.js:45
 msgid "Cinnamon UI"
 msgstr "Interfaz de Cinnamon"
 
-#: utils.js:58
+#: constants.js:46
 msgid "Current Window"
 msgstr "Ventana actual"
 
-#: utils.js:59
+#: constants.js:47
 msgid "Monitor"
 msgstr "Monitor"
 
-#: utils.js:60
+#: constants.js:48
 msgid "Screen"
 msgstr "Pantalla"
 
-#: utils.js:61
+#: constants.js:49
 msgid "Tooltip"
 msgstr "Caja de herramientas"
 
-#: utils.js:62
+#: constants.js:50
 msgid "Window Menu"
 msgstr "Menú de ventana"
 
-#: utils.js:63
+#: constants.js:51
 msgid "Window Section"
 msgstr "Sección de ventana"
 
-#: utils.js:64
+#: constants.js:52
 msgid "Window"
 msgstr "Ventana"
 
 #. settings-schema.json->pref_copy_to_clipboard->options
-#: utils.js:659
+#: utils.js:546
 msgid "Off"
 msgstr "Apagado"
 
-#: utils.js:1333
+#: utils.js:982
 msgid "Select an area by clicking and dragging"
 msgstr "Seleccionar un área haciendo clic y arrastrando"
 
-#: utils.js:1335
+#: utils.js:984
 msgid "Use arrow keys to move the selection"
 msgstr "Utilizar las teclas de flecha para mover la selección"
 
-#: utils.js:1337
+#: utils.js:986
 msgid "Use SHIFT and arrow keys to resize the selection"
 msgstr "Utilizar MAYÚS y las teclas de flecha para redimensionar la selección"
 
-#: utils.js:1339
+#: utils.js:988
 msgid "Press ENTER to confirm or ESC to cancel"
 msgstr "Presionar ENTRAR para confirmar o ESCAPE para cancelar"
 
-#: utils.js:1343
+#: utils.js:992
 msgid "Select a UI element by moving the mouse"
 msgstr "Seleccione un elemento de la interfaz de usuario moviendo el ratón"
 
-#: utils.js:1345
+#: utils.js:994
 msgid "Use mouse wheel to traverse hierarchy"
 msgstr "Usar la rueda del ratón para atravesar la jerarquía."
 
-#: utils.js:1347
+#: utils.js:996
 msgid "Hold SHIFT to allow clicking UI element"
 msgstr "Mantenga presionada la tecla MAYÚS para permitir hacer clic en el elemento de la interfaz"
 
-#: utils.js:1349
+#: utils.js:998
 msgid "Click to complete the capture, or ESC to cancel"
 msgstr "Haga clic para completar la captura, o ESCAPE para cancelar"
 
-#: utils.js:2572
+#: utils.js:2158
 msgid "File no longer available"
 msgstr "Archivo ya no disponible"
 
-#: utils.js:2591
+#: utils.js:2177
 msgid "Delete"
 msgstr "Borrar"
 
-#: utils.js:2592
+#: utils.js:2178
 msgid "Delete captured file from file system."
 msgstr "Borrar archivo de captura del archivo de sistemas."
 
-#: utils.js:2596
+#: utils.js:2182
 msgid "Copy data"
 msgstr "Copiar datos"
 
-#: utils.js:2597
+#: utils.js:2183
 msgid "Copy image data to clipboard."
 msgstr "Copiar datos de imagen al portapapeles."
 
-#: utils.js:2601
+#: utils.js:2187
 msgid "Copy path"
 msgstr "Copiar ruta"
 
-#: utils.js:2602
+#: utils.js:2188
 msgid "Copy image path to clipboard."
 msgstr "Copiar ruta de la imagen al portapapeles."
 
-#: utils.js:2719
+#: utils.js:2305
 msgid "Do you really want to delete this file?"
 msgstr "¿De verdad desea borrar este archivo?"
 
-#: utils.js:2742
+#: utils.js:2328
 msgid "Failed copying image data."
 msgstr "Error al copiar los datos de la imagen."
 
-#: utils.js:2791
+#: utils.js:2377
 msgid "Left click"
 msgstr "Clic izquierdo"
 
-#: utils.js:2791
+#: utils.js:2377
 msgid "Open image file."
 msgstr "Abrir archivo de imagen."
 
-#: utils.js:2792
+#: utils.js:2378
 msgid "Open folder."
 msgstr "Abrir carpeta."
 
-#: utils.js:2792
+#: utils.js:2378
 msgid "Right click"
 msgstr "Clic derecho"
 
-#: utils.js:2839
+#: utils.js:2425
 msgid "WARNING!!!"
 msgstr "¡ADVERTENCIA!"
-
-#: utils.js:2981 utils.js:2982
-msgid "Ctrl"
-msgstr "Ctrl"
-
-#: utils.js:2983
-msgid "Ctrl L"
-msgstr "Ctrl I"
-
-#: utils.js:2984
-msgid "Ctrl R"
-msgstr "Ctrl D"
-
-#: utils.js:2985
-msgid "Shift"
-msgstr "Mayús."
-
-#: utils.js:2986
-msgid "Shift L"
-msgstr "Mayús. I"
-
-#: utils.js:2987
-msgid "Shift R"
-msgstr "Mayús. D"
-
-#: utils.js:2988
-msgid "Alt"
-msgstr "Alt"
-
-#: utils.js:2989
-msgid "Alt L"
-msgstr "Alt I"
-
-#: utils.js:2990
-msgid "Alt R"
-msgstr "Alt D"
-
-#: utils.js:2991
-msgid "Super"
-msgstr "Súper"
-
-#: utils.js:2992
-msgid "Super L"
-msgstr "Súper I"
-
-#: utils.js:2993
-msgid "Super R"
-msgstr "Súper D"
 
 #. metadata.json->contributors
 msgid "See this xlet help file."
@@ -1214,13 +1166,47 @@ msgstr "Si se ha leído la página de ayuda de este applet (Problemas conocidos)
 msgid "Debugging"
 msgstr "Configuración de depuración"
 
-#. settings-schema.json->pref_enable_verbose_logging->description
-msgid "Verbose logging"
-msgstr "Registro detallado"
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr "Nivel de registro (*)"
 
-#. settings-schema.json->pref_enable_verbose_logging->tooltip
-msgid "Checking this will enable debug level logging."
-msgstr "Habilitar el registro de nivel de depuración."
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+"Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
+"\n"
+"Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
+"Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+"Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr "Normal"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr "Detallado"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr "Muy detallado"
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr "Habilitar depurador (*)"
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
+msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
 
 #. settings-schema.json->x264enc->title
 msgid "H264"
@@ -1271,6 +1257,48 @@ msgstr "Byzanz GIF"
 #. settings-schema.json->byzanz-ogv->title
 msgid "Byzanz OGV"
 msgstr "Byzanz OGV"
+
+#~ msgid "Ctrl"
+#~ msgstr "Ctrl"
+
+#~ msgid "Ctrl L"
+#~ msgstr "Ctrl I"
+
+#~ msgid "Ctrl R"
+#~ msgstr "Ctrl D"
+
+#~ msgid "Shift"
+#~ msgstr "Mayús."
+
+#~ msgid "Shift L"
+#~ msgstr "Mayús. I"
+
+#~ msgid "Shift R"
+#~ msgstr "Mayús. D"
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Alt L"
+#~ msgstr "Alt I"
+
+#~ msgid "Alt R"
+#~ msgstr "Alt D"
+
+#~ msgid "Super"
+#~ msgstr "Súper"
+
+#~ msgid "Super L"
+#~ msgstr "Súper I"
+
+#~ msgid "Super R"
+#~ msgstr "Súper D"
+
+#~ msgid "Verbose logging"
+#~ msgstr "Registro detallado"
+
+#~ msgid "Checking this will enable debug level logging."
+#~ msgstr "Habilitar el registro de nivel de depuración."
 
 #~ msgid "No stylesheet found"
 #~ msgstr "Hoja de estilo no encontrada"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-04-16 00:07-0300\n"
-"PO-Revision-Date: 2019-01-17 15:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
+"PO-Revision-Date: 2019-05-23 15:41-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:301 python/manage_feeds.py:213
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:326 python/manage_feeds.py:213
 msgid "Help"
 msgstr "Ayuda"
 
@@ -114,35 +114,35 @@ msgstr "El módulo feedparser para Python 3 es un analizador de fuentes universa
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr "Instalar con `pip` (Cinnamon necesita ser reiniciado luego de instalar feedparser si el applet ya fue colocado en un panel):"
 
-#: applet.js:75
+#: applet.js:99
 msgid "Feed reader"
 msgstr "Lector de Feeds"
 
-#: applet.js:207
+#: applet.js:234
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:208
+#: applet.js:235
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr "Este applet necesita que el módulo feedparser para Python 3 esté instalado en su sistema para que funcione."
 
-#: applet.js:209
+#: applet.js:236
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
-#: applet.js:268
+#: applet.js:293
 msgid "Mark all read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:281
+#: applet.js:306
 msgid "Reload"
 msgstr "Recargar"
 
-#: applet.js:292
+#: applet.js:317
 msgid "Manage feeds"
 msgstr "Administrar feeds"
 
-#: applet.js:396
+#: applet.js:417
 msgid "No unread feeds"
 msgstr "Sin feeds no leídos."
 
@@ -337,56 +337,56 @@ msgstr "Ruta de acceso al archivo feeds.json."
 msgid "Profile name used by an instance of this applet."
 msgstr "Nombre de perfil usado por una instancia de este applet."
 
-#: utils.js:276
+#: utils.js:242
 msgid "Right Click to open feed"
 msgstr "Clic derecho para abrir el feed"
 
 #. Only one page of items to read, no need to display mark all posts option.
-#: utils.js:346
+#: utils.js:312
 msgid "Mark All Posts Read"
 msgstr "Marcar todo como leído"
 
-#: utils.js:354
+#: utils.js:320
 #, javascript-format
 msgid "Mark Next %d Posts Read"
 msgstr "Marcar las siguientes %d publicaciones como leídas"
 
-#: utils.js:360
+#: utils.js:326
 msgid "Update feed URL"
 msgstr "Actualizar URL del feed"
 
-#: utils.js:445 utils.js:451
+#: utils.js:410 utils.js:416
 msgid "Published"
 msgstr "Publicado"
 
-#: utils.js:514
+#: utils.js:476
 msgid "Mark Post Read"
 msgstr "Marcar como leído"
 
-#: utils.js:552
+#: utils.js:511
 msgid "d"
 msgstr "d"
 
-#: utils.js:554 utils.js:556
+#: utils.js:513 utils.js:515
 msgid "h"
 msgstr "h"
 
-#: utils.js:556
+#: utils.js:515
 #, javascript-format
 msgid "(<1%s) "
 msgstr "(<1%s) "
 
 #. Invalid feed detected, throw and log error.
-#: utils.js:832
+#: utils.js:790
 msgid "Invalid feed url"
 msgstr "URL del feed inválida"
 
-#: utils.js:913
+#: utils.js:871
 #, javascript-format
 msgid "%d unread items!"
 msgstr "¡%d ítems sin leer!"
 
-#: utils.js:1060 utils.js:1076
+#: utils.js:1015 utils.js:1031
 msgid "Loading feed"
 msgstr "Cargando feed"
 
@@ -490,6 +490,52 @@ msgstr "Registro detallado"
 #. settings-schema.json->pref_enable_verbose_logging->tooltip
 msgid "Checking this will enable debug level logging."
 msgstr "Habilitar el registro de nivel de depuración."
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr "Configuración de depuración"
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr "Nivel de registro (*)"
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+"Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
+"\n"
+"Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
+"Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+"Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr "Normal"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr "Detallado"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr "Muy detallado"
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr "Habilitar depurador (*)"
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
+msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
 
 #. settings-schema.json->pref_profile_name->description
 msgid "Feed Profile Name."

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:301 python/manage_feeds.py:213
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:326 python/manage_feeds.py:213
 msgid "Help"
 msgstr ""
 
@@ -110,35 +110,35 @@ msgstr ""
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr ""
 
-#: applet.js:75
+#: applet.js:99
 msgid "Feed reader"
 msgstr ""
 
-#: applet.js:207
+#: applet.js:234
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:208
+#: applet.js:235
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr ""
 
-#: applet.js:209
+#: applet.js:236
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:268
+#: applet.js:293
 msgid "Mark all read"
 msgstr ""
 
-#: applet.js:281
+#: applet.js:306
 msgid "Reload"
 msgstr ""
 
-#: applet.js:292
+#: applet.js:317
 msgid "Manage feeds"
 msgstr ""
 
-#: applet.js:396
+#: applet.js:417
 msgid "No unread feeds"
 msgstr ""
 
@@ -333,56 +333,56 @@ msgstr ""
 msgid "Profile name used by an instance of this applet."
 msgstr ""
 
-#: utils.js:276
+#: utils.js:242
 msgid "Right Click to open feed"
 msgstr ""
 
 #. Only one page of items to read, no need to display mark all posts option.
-#: utils.js:346
+#: utils.js:312
 msgid "Mark All Posts Read"
 msgstr ""
 
-#: utils.js:354
+#: utils.js:320
 #, javascript-format
 msgid "Mark Next %d Posts Read"
 msgstr ""
 
-#: utils.js:360
+#: utils.js:326
 msgid "Update feed URL"
 msgstr ""
 
-#: utils.js:445 utils.js:451
+#: utils.js:410 utils.js:416
 msgid "Published"
 msgstr ""
 
-#: utils.js:514
+#: utils.js:476
 msgid "Mark Post Read"
 msgstr ""
 
-#: utils.js:552
+#: utils.js:511
 msgid "d"
 msgstr ""
 
-#: utils.js:554 utils.js:556
+#: utils.js:513 utils.js:515
 msgid "h"
 msgstr ""
 
-#: utils.js:556
+#: utils.js:515
 #, javascript-format
 msgid "(<1%s) "
 msgstr ""
 
 #. Invalid feed detected, throw and log error.
-#: utils.js:832
+#: utils.js:790
 msgid "Invalid feed url"
 msgstr ""
 
-#: utils.js:913
+#: utils.js:871
 #, javascript-format
 msgid "%d unread items!"
 msgstr ""
 
-#: utils.js:1060 utils.js:1076
+#: utils.js:1015 utils.js:1031
 msgid "Loading feed"
 msgstr ""
 
@@ -485,6 +485,47 @@ msgstr ""
 
 #. settings-schema.json->pref_enable_verbose_logging->tooltip
 msgid "Checking this will enable debug level logging."
+msgstr ""
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""
 
 #. settings-schema.json->pref_profile_name->description

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:732 utils.js:1306
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:752 utils.js:97
 msgid "Help"
 msgstr ""
 
@@ -83,7 +83,7 @@ msgstr ""
 msgid "Nothing to do here."
 msgstr ""
 
-#: z_create_localized_help.py:29 z_create_localized_help.py:137 z_create_localized_help.py:185 z_create_localized_help.py:202
+#: z_create_localized_help.py:29 z_create_localized_help.py:129 z_create_localized_help.py:177 z_create_localized_help.py:194
 msgid "Description"
 msgstr ""
 
@@ -105,7 +105,7 @@ msgstr ""
 msgid "See %s."
 msgstr ""
 
-#: z_create_localized_help.py:39 z_create_localized_help.py:263
+#: z_create_localized_help.py:39 z_create_localized_help.py:255
 msgid "BitBar plugins with Argos for Cinnamon"
 msgstr ""
 
@@ -133,550 +133,549 @@ msgstr ""
 msgid "Fully documented:"
 msgstr ""
 
-#: z_create_localized_help.py:54 z_create_localized_help.py:70
+#: z_create_localized_help.py:54 z_create_localized_help.py:62
 msgid "Usage"
 msgstr ""
 
-#: z_create_localized_help.py:57
-msgid "Dependencies"
-msgstr ""
-
-#: z_create_localized_help.py:59
-msgid "xdg-open command"
-msgstr ""
-
-#: z_create_localized_help.py:61
-msgid "Debian and Archlinux based distributions:"
-msgstr ""
-
-#: z_create_localized_help.py:62
-msgid "This command is installed with the package called **xdg-utils**."
-msgstr ""
-
-#: z_create_localized_help.py:63
-msgid "Installed by default in modern versions of Linux Mint."
-msgstr ""
-
-#: z_create_localized_help.py:74
+#: z_create_localized_help.py:66
 msgid "I will use the words *plugin* or *script* when referring to a script file associated with an instance of **Argos for Cinnamon** applet."
 msgstr ""
 
-#: z_create_localized_help.py:77
+#: z_create_localized_help.py:69
 msgid "After placing a new instance of **Argos for Cinnamon** into a panel, one of the example scripts provided by this applet will be automatically attached to it and a menu will be created based on the output of the executed plugin. These example scripts contain various examples of what **Argos for Cinnamon** can do."
 msgstr ""
 
-#: z_create_localized_help.py:79
+#: z_create_localized_help.py:71
 msgid "A just placed applet will have an initial execution interval of 0 seconds (zero seconds) and an initial applet text rotation interval of 3 seconds (three seconds). The execution interval is set to 0 seconds because the initial example script doesn't have any dynamic data that requires update. And the applet text rotation interval is set to 3 seconds so the text rotation of the example script can be seen in action."
 msgstr ""
 
-#: z_create_localized_help.py:81
+#: z_create_localized_help.py:73
 msgid "For scripts that display non dynamic data, it isn't needed an execution interval. But if your script displays dynamic data (a clock for example), then an execution and/or applet text rotation interval needs to be specified. Both of these values can be set from the applet context menu."
 msgstr ""
 
-#: z_create_localized_help.py:84
+#: z_create_localized_help.py:76
 msgid "The three example scripts provided by this applet will produce the exact same output, but they are created using three different languages (**bash_examples.bash**, **python_examples.py** and **ruby_examples.rb**)."
 msgstr ""
 
-#: z_create_localized_help.py:90
+#: z_create_localized_help.py:82
 msgid "Never save your custom plugins/scripts inside this applet folder. Otherwise, you will loose them all when there is an update for the applet."
 msgstr ""
 
-#: z_create_localized_help.py:93
+#: z_create_localized_help.py:85
 msgid "File name format"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:95
+#: z_create_localized_help.py:87
 msgid "**Argos for Gnome Shell** parses the script's file name to extract certain set of preferences. **Argos for Cinnamon** doesn't parse the script's file name in such way (nor in any other way). All the applet settings can be set from the applet settings window and/or from the applet context menu."
 msgstr ""
 
-#: z_create_localized_help.py:96
+#: z_create_localized_help.py:88
 msgid "Output format"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:98
+#: z_create_localized_help.py:90
 msgid "Argos plugins are executables (such as shell scripts **(*)**) that print to standard output lines of the following form:"
 msgstr ""
 
-#: z_create_localized_help.py:103
+#: z_create_localized_help.py:95
 msgid "All attributes are optional, so the most basic plugins simply print lines consisting of text to be displayed. To include whitespace, attribute values may be quoted using the same convention employed by most command line shells."
 msgstr ""
 
-#: z_create_localized_help.py:107
+#: z_create_localized_help.py:99
 msgid "(*) Not just shell scripts, but also python scripts, ruby scripts or any other script in any other language that can print to standard output."
 msgstr ""
 
-#: z_create_localized_help.py:110
+#: z_create_localized_help.py:102
 msgid "Rendering"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:113
+#: z_create_localized_help.py:105
 msgid "Lines containing only dashes (`---`) are *separators*."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:116
+#: z_create_localized_help.py:108
 msgid "Lines above the first separator belong to the applet button itself. If there are multiple such lines, they are displayed in succession, each of them for a configurable amount of time (rotation interval) before switching to the next. Additionally, all button lines get a dropdown menu item, except if their `dropdown` attribute is set to `false`."
 msgstr ""
 
-#: z_create_localized_help.py:118
+#: z_create_localized_help.py:110
 msgid "Lines below the first separator are rendered as dropdown menu items. Further separators create graphical separator menu items."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:121
+#: z_create_localized_help.py:113
 msgid "Lines beginning with `--` are rendered in a submenu associated with the preceding unindented line. **Argos for Cinnamon** supports unlimited number of nested submenus."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:124
+#: z_create_localized_help.py:116
 msgid "[Emoji codes](http://www.emoji-cheat-sheet.com) like `:horse:` and `:smile:` in the line text are replaced with their corresponding Unicode characters (unless the `emojize` attribute is set to `false`). Note that unpatched Cinnamon does not yet support multicolor emoji."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:127
+#: z_create_localized_help.py:119
 msgid "[ANSI SGR escape sequences](https://en.wikipedia.org/wiki/ANSI_escape_code#graphics) and [Pango markup](https://developer.gnome.org/pango/stable/PangoMarkupFormat.html) tags may be used for styling. This can be disabled by setting the `ansi` and `useMarkup` attributes, respectively, to `false`."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:130
+#: z_create_localized_help.py:122
 msgid "Backslash escapes such as `\\n` and `\\t` in the line text are converted to their corresponding characters (newline and tab in this case), which can be prevented by setting the `unescape` attribute to `false`. Newline escapes can be used to create multi-line menu items."
 msgstr ""
 
-#: z_create_localized_help.py:132
+#: z_create_localized_help.py:124
 msgid "Line attributes"
 msgstr ""
 
-#: z_create_localized_help.py:134
+#: z_create_localized_help.py:126
 msgid "Display"
 msgstr ""
 
-#: z_create_localized_help.py:135
+#: z_create_localized_help.py:127
 msgid "Control how the line is rendered."
 msgstr ""
 
-#: z_create_localized_help.py:137 z_create_localized_help.py:185 z_create_localized_help.py:202
+#: z_create_localized_help.py:129 z_create_localized_help.py:177 z_create_localized_help.py:194
 msgid "Attribute"
 msgstr ""
 
-#: z_create_localized_help.py:137 z_create_localized_help.py:185 z_create_localized_help.py:202 z_create_localized_help.py:253
+#: z_create_localized_help.py:129 z_create_localized_help.py:177 z_create_localized_help.py:194 z_create_localized_help.py:245
 msgid "Value"
 msgstr ""
 
-#: z_create_localized_help.py:139
+#: z_create_localized_help.py:131
 msgid "Hex RGB/RGBA or color name"
 msgstr ""
 
-#: z_create_localized_help.py:140
+#: z_create_localized_help.py:132
 msgid "Sets the text color for the item."
 msgstr ""
 
-#: z_create_localized_help.py:141
+#: z_create_localized_help.py:133
 msgid "Font name"
 msgstr ""
 
-#: z_create_localized_help.py:141
+#: z_create_localized_help.py:133
 msgid "Sets the font for the item."
 msgstr ""
 
-#: z_create_localized_help.py:142
+#: z_create_localized_help.py:134
 msgid "Font size in points"
 msgstr ""
 
-#: z_create_localized_help.py:143
+#: z_create_localized_help.py:135
 msgid "Sets the font size for the item."
 msgstr ""
 
-#: z_create_localized_help.py:144
+#: z_create_localized_help.py:136
 msgid "Icon name"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:146
+#: z_create_localized_help.py:138
 msgid "Sets a menu icon for the item. See the [freedesktop.org icon naming specification](https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html) for a list of names that should work anywhere, or run [gtk3-icon-browser](https://developer.gnome.org/gtk3/unstable/gtk3-icon-browser.html) to see the names of all icons in your current icon theme. **Argos only**. **Argos for Cinnamon** also supports a path to an icon file (paths starting with `~/` will be expanded to the user's home folder)."
 msgstr ""
 
-#: z_create_localized_help.py:147
+#: z_create_localized_help.py:139
 msgid "Base64-encoded image file"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect
 #. formatting.
-#: z_create_localized_help.py:150
+#: z_create_localized_help.py:142
 msgid "Renders an image inside the item. The image is positioned to the left of the text and to the right of the icon. Cinnamon does not have a concept of *template images*, so `image` and `templateImage` are interchangeable in Argos."
 msgstr ""
 
-#: z_create_localized_help.py:151
+#: z_create_localized_help.py:143
 msgid "Width/height in pixels"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect
 #. formatting.
-#: z_create_localized_help.py:154
+#: z_create_localized_help.py:146
 msgid "Sets the dimensions of the image. If only one dimension is specified, the image's original aspect ratio is maintained. **Argos only**."
 msgstr ""
 
-#: z_create_localized_help.py:155
+#: z_create_localized_help.py:147
 msgid "Length in characters"
 msgstr ""
 
-#: z_create_localized_help.py:156
+#: z_create_localized_help.py:148
 msgid "Truncate the line text to the specified number of characters, ellipsizing the truncated part."
 msgstr ""
 
-#: z_create_localized_help.py:158 z_create_localized_help.py:161 z_create_localized_help.py:164 z_create_localized_help.py:168 z_create_localized_help.py:172 z_create_localized_help.py:175 z_create_localized_help.py:178 z_create_localized_help.py:193 z_create_localized_help.py:213 z_create_localized_help.py:226
+#: z_create_localized_help.py:150 z_create_localized_help.py:153 z_create_localized_help.py:156 z_create_localized_help.py:160 z_create_localized_help.py:164 z_create_localized_help.py:167 z_create_localized_help.py:170 z_create_localized_help.py:185 z_create_localized_help.py:205 z_create_localized_help.py:218
 msgid "Boolean value"
 msgstr ""
 
-#: z_create_localized_help.py:159 z_create_localized_help.py:162 z_create_localized_help.py:170 z_create_localized_help.py:173 z_create_localized_help.py:176 z_create_localized_help.py:180
+#: z_create_localized_help.py:151 z_create_localized_help.py:154 z_create_localized_help.py:162 z_create_localized_help.py:165 z_create_localized_help.py:168 z_create_localized_help.py:172
 msgid "Enabled by default if not specified."
 msgstr ""
 
-#: z_create_localized_help.py:159
+#: z_create_localized_help.py:151
 msgid "If disabled, preserve leading and trailing whitespace of the line text."
 msgstr ""
 
-#: z_create_localized_help.py:162
+#: z_create_localized_help.py:154
 msgid "If disabled and the line is a button line (see above), exclude it from being displayed in the dropdown menu."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:166
+#: z_create_localized_help.py:158
 msgid "If enabled, the item is hidden by default, and shown in place of the preceding item when the [[Alt]] key is pressed."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:170
+#: z_create_localized_help.py:162
 msgid "If disabled, disable substitution of `:emoji_name:` with emoji characters in the line text."
 msgstr ""
 
-#: z_create_localized_help.py:173
+#: z_create_localized_help.py:165
 msgid "If disabled, disable interpretation of ANSI escape sequences in the line text."
 msgstr ""
 
-#: z_create_localized_help.py:176
+#: z_create_localized_help.py:168
 msgid "If disabled, disable interpretation of Pango markup in the line text. **Argos only**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:180
+#: z_create_localized_help.py:172
 msgid "If disabled, disable interpretation of backslash escapes such as `\\n` in the line text. **Argos only**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:183
+#: z_create_localized_help.py:175
 msgid "Attributes available on **Argos for Cinnamon** only."
 msgstr ""
 
-#: z_create_localized_help.py:187
+#: z_create_localized_help.py:179
 msgid "Text to display as toolip"
 msgstr ""
 
-#: z_create_localized_help.py:188
+#: z_create_localized_help.py:180
 msgid "Sets the tooltip for the item."
 msgstr ""
 
-#: z_create_localized_help.py:189
+#: z_create_localized_help.py:181
 msgid "An integer from 12 to 512"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:191
+#: z_create_localized_help.py:183
 msgid "Sets the size for the menu item's icon if any. The size for menu item icons can be defined globally in the settings of an instance of Argos for Cinnamon."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:195
+#: z_create_localized_help.py:187
 msgid "If enabled, the symbolic version of `iconName` will be used on the item (if exists). This attribute is ignored if the icon defined in `iconName` is a path to an icon file."
 msgstr ""
 
-#: z_create_localized_help.py:196
+#: z_create_localized_help.py:188
 msgid "Actions"
 msgstr ""
 
-#: z_create_localized_help.py:197
+#: z_create_localized_help.py:189
 msgid "Define actions to be performed when the user clicks on the line's menu item."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:200
+#: z_create_localized_help.py:192
 msgid "Action attributes are *not* mutually exclusive. Any combination of them may be associated with the same item, and all actions are executed when the item is clicked."
 msgstr ""
 
-#: z_create_localized_help.py:204
+#: z_create_localized_help.py:196
 msgid "A command to execute"
 msgstr ""
 
-#: z_create_localized_help.py:205
+#: z_create_localized_help.py:197
 msgid "Runs a command using a default shell specified in the options of an instance of Argos for Cinnamon or specified by the `shell` attribute."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:207
+#: z_create_localized_help.py:199
 msgid "Path or executable name of a shell program"
 msgstr ""
 
-#: z_create_localized_help.py:208
+#: z_create_localized_help.py:200
 msgid "This attribute overrides the default shell set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if one decides to use different shells to execute commands whithin the menu created by an instance of Argos for Cinnamon."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:210
+#: z_create_localized_help.py:202
 msgid "Argument to pass to a shell program"
 msgstr ""
 
-#: z_create_localized_help.py:211
+#: z_create_localized_help.py:203
 msgid "The argument used by a shell program that allows to execute a command. In most shells is '-c'. This attribute overrides the shell argument set on the settings of an instance of Argos for Cinnamon. This attribute should only be used if the shell argument set on the settings of an instance of Argos for Cinnamon isn't compatible with the shell specified in the `shell` attribute."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:215
+#: z_create_localized_help.py:207
 msgid "If disabled, runs the command specified in the `command` or `bash` attributes in the background (i.e. without opening a terminal window). If enabled, a terminal will be opened to execute a command and will be kept open."
 msgstr ""
 
-#: z_create_localized_help.py:216
+#: z_create_localized_help.py:208
 msgid "Command line arguments"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect
 #. formatting.
-#: z_create_localized_help.py:219
+#: z_create_localized_help.py:211
 msgid "Arguments to be passed to the command specified in the `command` or `bash` attributes. *Note: Provided for compatibility with BitBar only. Argos allows placing arguments directly in the command string.*"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:221
+#: z_create_localized_help.py:213
 msgid "Opens a URI in the application registered to handle it. URIs starting with `http://` launch the web browser, while `file://` URIs open the file in its associated default application. **Argos for Cinnamon** also supports paths starting with `~/` that will be automatically expanded to the user's home folder."
 msgstr ""
 
-#: z_create_localized_help.py:222
+#: z_create_localized_help.py:214
 msgid "JavaScript code"
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:224
+#: z_create_localized_help.py:216
 msgid "Passes the code to JavaScript's `eval` function. **Argos only**."
 msgstr ""
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:228
+#: z_create_localized_help.py:220
 msgid "If enabled, re-runs the plugin, updating its output."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. About the "command" and "bash" attributes.
 #. Do not translate nor modify the {command} and {bash} placeholders.
-#: z_create_localized_help.py:237
+#: z_create_localized_help.py:229
 #, python-brace-format
 msgid "About the {command} and {bash} attributes"
 msgstr ""
 
-#: z_create_localized_help.py:240
+#: z_create_localized_help.py:232
 msgid "These attributes are mutually exclusive. I added the `command` attribute because it didn't make much sense to have it named `bash` when Argos for Cinnamon can use any shell, not just Bash. I left the `bash` attribute so any scripts written for BitBar or for the original Argos for Gnome Shell extension can be used without modifications. I will never remove the `bash` attribute while the two previously mentioned tools keep using it."
 msgstr ""
 
-#: z_create_localized_help.py:246
+#: z_create_localized_help.py:238
 msgid "About boolean attributes"
 msgstr ""
 
-#: z_create_localized_help.py:247
+#: z_create_localized_help.py:239
 msgid "Any boolean attribute can have a value of `true` or `1` (one) to enable a feature/option. Or a value of `false` or `0` (zero) to disable a feature/option. Values are case-insensitive. Any other value will be considered `false`."
 msgstr ""
 
-#: z_create_localized_help.py:250
+#: z_create_localized_help.py:242
 msgid "Environment variables"
 msgstr ""
 
-#: z_create_localized_help.py:251
+#: z_create_localized_help.py:243
 msgid "Plugin executables are run with the following special environment variables set:"
 msgstr ""
 
-#: z_create_localized_help.py:253
+#: z_create_localized_help.py:245
 msgid "Name"
 msgstr ""
 
-#: z_create_localized_help.py:257
+#: z_create_localized_help.py:249
 msgid "Version number of the Argos for Cinnamon applet. The presence of this environment variable can also be used to determine that the plugin is actually running in Argos, rather than BitBar or [kargos](https://github.com/lipido/kargos)."
 msgstr ""
 
-#: z_create_localized_help.py:259
+#: z_create_localized_help.py:251
 msgid "`true` if the dropdown menu was open at the time the plugin was run, and `false` otherwise."
 msgstr ""
 
-#: z_create_localized_help.py:267
+#: z_create_localized_help.py:259
 msgid "WARNING!!! DO NOT RANDOMLY TEST SCRIPTS!!!"
 msgstr ""
 
-#: z_create_localized_help.py:272
+#: z_create_localized_help.py:264
 msgid "Apply common sense. Read and understand what a script does and how demanding it could be."
 msgstr ""
 
-#: z_create_localized_help.py:274
+#: z_create_localized_help.py:266
 msgid "Test unknown scripts on an environment from which you can recover easily (for example, a virtual machine)."
 msgstr ""
 
-#: z_create_localized_help.py:275
+#: z_create_localized_help.py:267
 msgid "I found one specific case in which a script can freeze and ultimately crash Cinnamon. It's a script that downloads a GIF image from the internet, converts it to Base64 and then that encoded image is inserted into a menu item using the *image* attribute. I will not provide a link to that script, but if you follow the very first advice that I listed here, when you see that script, you will know."
 msgstr ""
 
-#: z_create_localized_help.py:279
+#: z_create_localized_help.py:271
 msgid "These screenshots show how some scripts from the BitBar plugin repository look when rendered by Argos compared to the \"canonical\" BitBar rendering (macOS screenshots taken from https://getbitbar.com)."
 msgstr ""
 
-#: z_create_localized_help.py:281
+#: z_create_localized_help.py:273
 msgid "Argos on Cinnamon"
 msgstr ""
 
-#: z_create_localized_help.py:281
+#: z_create_localized_help.py:273
 msgid "BitBar on macOS"
 msgstr ""
 
-#: z_create_localized_help.py:281
+#: z_create_localized_help.py:273
 msgid "Plugin"
 msgstr ""
 
-#: applet.js:144
+#: applet.js:164
 msgid "Script file is not executable."
 msgstr ""
 
-#: applet.js:146
+#: applet.js:166
 msgid "The script file can be made executable from this applet context menu."
 msgstr ""
 
-#: applet.js:152 applet.js:717
+#: applet.js:172 applet.js:737
 msgid "Script file isn't a file, but a directory."
 msgstr ""
 
-#: applet.js:162 applet.js:723
+#: applet.js:182 applet.js:743
 msgid "Script file doesn't exists."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file 'FileName':"
-#: applet.js:250
+#: applet.js:270
 #, javascript-format
 msgid "Unable to execute file '%s':"
 msgstr ""
 
-#: applet.js:254 applet.js:566 applet.js:592
+#: applet.js:274 applet.js:586 applet.js:612
 msgid "Script file not set, cannot be found or it isn't an executable."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Invalid menu level for line 'LineWithTheError'"
-#: applet.js:356
+#: applet.js:376
 #, javascript-format
 msgid "Invalid menu level for line '%s'"
 msgstr ""
 
-#: applet.js:433
+#: applet.js:453
 msgid "No script set"
 msgstr ""
 
-#: applet.js:495
+#: applet.js:515
 msgid "Execution interval:"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->tooltip
-#: applet.js:503
+#: applet.js:523
 msgid "Choose the time unit for the script execution interval."
 msgstr ""
 
-#: applet.js:516
+#: applet.js:536
 msgid "Set the script execution interval."
 msgstr ""
 
-#: applet.js:526
+#: applet.js:546
 msgid "Choose script"
 msgstr ""
 
-#: applet.js:553
+#: applet.js:573
 msgid "Choose a script file."
 msgstr ""
 
-#: applet.js:559
+#: applet.js:579
 msgid "Edit script"
 msgstr ""
 
-#: applet.js:577
+#: applet.js:597
 msgid "Edit the script file with your prefered text editor."
 msgstr ""
 
-#: applet.js:578
+#: applet.js:598
 msgid "After saving the changes made, the applet will update its data automatically if there is an interval set."
 msgstr ""
 
-#: applet.js:579
+#: applet.js:599
 msgid "Or the update could be done manually with the »Refresh« item on this applet context menu."
 msgstr ""
 
-#: applet.js:585
+#: applet.js:605
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:600
+#: applet.js:620
 msgid "This will re-run on demand the script assigned to this applet for the purpose of updating its output."
 msgstr ""
 
-#: applet.js:601
+#: applet.js:621
 msgid "This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited."
 msgstr ""
 
 #. Extras submenu
-#: applet.js:608
+#: applet.js:628
 msgid "Extras"
 msgstr ""
 
-#: applet.js:616
+#: applet.js:636
 msgid "Rotation interval:"
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval_units->tooltip
-#: applet.js:622
+#: applet.js:642
 msgid "Choose the time unit for the applet text rotation interval."
 msgstr ""
 
-#: applet.js:635
+#: applet.js:655
 msgid "Set the applet text rotation interval."
 msgstr ""
 
-#: applet.js:644
+#: applet.js:664
 msgid "Clear script"
 msgstr ""
 
-#: applet.js:650 applet.js:668
+#: applet.js:670 applet.js:688
 msgid "This operation will remove the current script from this applet leaving it \"blank\"."
 msgstr ""
 
-#: applet.js:651
+#: applet.js:671
 msgid "The current applet settings will be untouched and the actual script file will not be deleted."
 msgstr ""
 
-#: applet.js:652
+#: applet.js:672
 msgid "Do you want to proceed?"
 msgstr ""
 
-#: applet.js:682
+#: applet.js:702
 msgid "Make script executable"
 msgstr ""
 
-#: applet.js:688
+#: applet.js:708
 msgid "Make the script file executable so it can be used by this applet."
 msgstr ""
 
-#: applet.js:711
+#: applet.js:731
 msgid "Script file is already executable."
 msgstr ""
 
-#. Just in case.
-#: applet.js:736 utils.js:1307
+#: applet.js:756
 msgid "Open this applet help file."
 msgstr ""
 
-#: applet.js:1040
-msgid "Remember to restart Cinnamon to fully enable/disable this option."
+#. settings-schema.json->pref_update_interval_units->options
+#. settings-schema.json->pref_rotation_interval_units->options
+#: constants.js:88
+msgid "Seconds"
+msgstr ""
+
+#. settings-schema.json->pref_update_interval_units->options
+#. settings-schema.json->pref_rotation_interval_units->options
+#: constants.js:91
+msgid "Minutes"
+msgstr ""
+
+#. settings-schema.json->pref_update_interval_units->options
+#. settings-schema.json->pref_rotation_interval_units->options
+#: constants.js:94
+msgid "Hours"
+msgstr ""
+
+#. settings-schema.json->pref_update_interval_units->options
+#. settings-schema.json->pref_rotation_interval_units->options
+#: constants.js:97
+msgid "Days"
 msgstr ""
 
 #: examples/python_examples.py:56
@@ -876,99 +875,62 @@ msgstr ""
 msgid "Error underline"
 msgstr ""
 
-#: utils.js:113
+#: utils.js:111
 msgid "millisecond"
 msgid_plural "milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:115
+#: utils.js:113
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:117
+#: utils.js:115
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:119
+#: utils.js:117
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:121
+#: utils.js:119
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:148
-#, javascript-format
-msgid "Schema %s could not be found for xlet %s."
-msgstr ""
-
-#: utils.js:149
-msgid "Please check your installation."
-msgstr ""
-
-#. settings-schema.json->pref_update_interval_units->options
-#. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:204
-msgid "Seconds"
-msgstr ""
-
-#. settings-schema.json->pref_update_interval_units->options
-#. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:207
-msgid "Minutes"
-msgstr ""
-
-#. settings-schema.json->pref_update_interval_units->options
-#. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:210
-msgid "Hours"
-msgstr ""
-
-#. settings-schema.json->pref_update_interval_units->options
-#. settings-schema.json->pref_rotation_interval_units->options
-#: utils.js:213
-msgid "Days"
-msgstr ""
-
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to load image from Base64 representation: ErrorMessage"
-#: utils.js:493
+#: utils.js:401
 #, javascript-format
 msgid "Unable to load image from Base64 representation: %s"
 msgstr ""
 
-#: utils.js:1303
-msgid "Check this applet help file for instructions."
-msgstr ""
-
-#: utils.js:1577
+#: utils.js:1079
 msgid "Script file name"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval->description
-#: utils.js:1582
+#: utils.js:1084
 msgid "Execution interval"
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval->description
-#: utils.js:1587
+#: utils.js:1089
 msgid "Rotation interval"
 msgstr ""
 
-#: utils.js:1592
+#: utils.js:1094
 msgid "Script execution time"
 msgstr ""
 
-#: utils.js:1597
+#: utils.js:1099
 msgid "Output process time"
 msgstr ""
 

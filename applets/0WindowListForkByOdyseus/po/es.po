@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-04-26 14:06-0300\n"
-"PO-Revision-Date: 2019-03-05 03:18-0300\n"
+"POT-Creation-Date: 2019-05-23 15:29-0300\n"
+"PO-Revision-Date: 2019-05-23 15:43-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1161
+#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1155
 msgid "Help"
 msgstr "Ayuda"
 
@@ -104,73 +104,73 @@ msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 
-#: utils.js:1013
+#: utils.js:1007
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: utils.js:1027
+#: utils.js:1021
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: utils.js:1038
+#: utils.js:1032
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: utils.js:1049
+#: utils.js:1043
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: utils.js:1055
+#: utils.js:1049
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: utils.js:1061
+#: utils.js:1055
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: utils.js:1091
+#: utils.js:1085
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: utils.js:1101
+#: utils.js:1095
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: utils.js:1116
+#: utils.js:1110
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: utils.js:1124
+#: utils.js:1118
 msgid "Restore"
 msgstr "Restaurar"
 
-#: utils.js:1129
+#: utils.js:1123
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: utils.js:1137
+#: utils.js:1131
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: utils.js:1142
+#: utils.js:1136
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: utils.js:1149
+#: utils.js:1143
 msgid "Close"
 msgstr "Cerrar"
 
-#: utils.js:1168
+#: utils.js:1162
 msgid "About..."
 msgstr "Acerca de..."
 
-#: utils.js:1173
+#: utils.js:1167
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: utils.js:1189
+#: utils.js:1183
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
@@ -266,3 +266,49 @@ msgstr "En la parte superior del menú"
 #. settings-schema.json->pref_sub_menu_placement->options
 msgid "Bottom of menu"
 msgstr "En la parte inferior del menú"
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr "Configuración de depuración"
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr "Nivel de registro (*)"
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+"Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
+"\n"
+"Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
+"Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+"Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr "Normal"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr "Detallado"
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr "Muy detallado"
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr "Habilitar depurador (*)"
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
+msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"

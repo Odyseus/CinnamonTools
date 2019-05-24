@@ -4,6 +4,33 @@
 
 ***
 
+- **Date:** Fri, 24 May 2019 16:18:46 -0300
+- **Commit:** [332eb0f](https://gitlab.com/Odyseus/CinnamonTools/commit/332eb0f)
+- **Author:** Odyseus
+
+```
+- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
+- JavaScript code homogenization.
+- Improved debugger.
+- Removed manual mechanism to generate .desktop files to access the extension settings window. Now the .desktop file generation is automatic and will be created only on Cinnamon versions that requires it.
+- Fixed empty list of languages in the language selector dialogs under certain conditions.
+
+```
+
+***
+
+- **Date:** Sun, 19 May 2019 12:34:25 -0300
+- **Commit:** [e502dd7](https://gitlab.com/Odyseus/CinnamonTools/commit/e502dd7)
+- **Author:** Odyseus
+
+```
+- Finished mechanism that allows to update existent settings when there is a change on the default translation engines.
+- Corrected wrong title in the preferences window and added information label.
+
+```
+
+***
+
 - **Date:** Sat, 18 May 2019 22:22:01 -0300
 - **Commit:** [38eed82](https://gitlab.com/Odyseus/CinnamonTools/commit/38eed82)
 - **Author:** Odyseus

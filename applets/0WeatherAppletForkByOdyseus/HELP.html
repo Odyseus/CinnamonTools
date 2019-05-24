@@ -204,6 +204,13 @@
 <li>Un tema de icono personalizado puede contener imágenes SVG o PNG; aunque las imágenes SVG son preferibles debido a su capacidad de escalar a cualquier tamaño de icono establecido en esta configuración de applet sin perder calidad. Se podrían usar otros tipos de imágenes, pero no los probé.</li>
 <li>Un tema de ícono personalizado debe contener 240 íconos para soportar íconos a todo color y simbólicos. O la mitad de eso (120) para soportar a uno u otro.</li>
 </ul>
+<h2>Versiones de Cinnamon abajo de 3.6.x</h2>
+<p>Las versiones de Cinnamon anteriores a 3.6.x tienen un defecto de diseño. Si un xlet utiliza una aplicación de configuración externa y al mismo tiempo existe el archivo <strong>settings-schema.json</strong> dentro de la carpeta de un xlet, todos los accesos directos para abrir la configuración del xlet no abrirán la aplicación externa como deberían; se abrirá la ventana de configuración nativa de la Cinnamon. Para evitar este defecto de diseño, instalé diferentes mecanismos según el tipo de xlet.</p>
+<ul>
+<li><strong>Applets:</strong> El elemento del menú contextual <strong>Configurar...</strong> está anulado para abrir la aplicación de configuración adecuada.</li>
+<li><strong>Extensiones:</strong> Al habilitar la extensión, se genera automáticamente un acceso directo (un archivo .desktop) para abrir la aplicación de configuración adecuada y se elimina cuando la extensión se deshabilita. El archivo .desktop se crea en <strong>~/.local/share/applications</strong>, por lo que el acceso directo estará disponible en el menú de aplicaciones dentro de la categoría <strong>Preferencias</strong>.</li>
+<li><strong>Para todos los xlets:</strong> Si se abre la ventana de configuración <em>incorrecta</em>, estará disponible un botón para abrir la ventana de configuración <em>correcta</em>.</li>
+</ul>
 
 </br>
 
@@ -369,6 +376,13 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <li>A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them.</li>
 <li>A custom icon theme should contain 240 icons to support both full color and symbolic icons. Or half of that (120) to support one or the other.</li>
 </ul>
+<h2>Cinnamon versions bellow 3.6.x</h2>
+<p>Cinnamon versions prior to 3.6.x have a design flaw. If an xlet uses an external settings application, and at the same time the file <strong>settings-schema.json</strong> exists inside an xlet folder, all shortcuts to open an xlet settings will not open the external application as it should; they will open the Cinnamon's native settings window. To work around this design flaw, I put in place different mechanisms depending on the xlet type.</p>
+<ul>
+<li><strong>Applets:</strong> The <strong>Configure...</strong> context menu item is overridden so it opens the proper settings application.</li>
+<li><strong>Extensions:</strong> A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at <strong>~/.local/share/applications</strong>, so it will make the shortcut available in your applications menu inside the <strong>Preferences</strong> category.</li>
+<li><strong>For all xlets types:</strong> If the <em>wrong</em> settings window is opened, a button to open the <em>right</em> settings window will be available.</li>
+</ul>
 
 </br>
 
@@ -395,6 +409,19 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Weather (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Thu, 23 May 2019 02:16:58 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e0d44f6">e0d44f6</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
+- JavaScript code homogenization.
+- Improved debugger.
+- Override the **Configure..** context menu item only when it is needed.
+- Fixed (at least tried to) warnings about "function does not always return value" nonsense.
+- Added SVG icon.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Sat, 18 May 2019 22:29:33 -0300</li>

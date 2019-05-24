@@ -4,6 +4,20 @@
 
 ***
 
+- **Date:** Fri, 24 May 2019 16:19:26 -0300
+- **Commit:** [a302240](https://gitlab.com/Odyseus/CinnamonTools/commit/a302240)
+- **Author:** Odyseus
+
+```
+- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
+- JavaScript code homogenization.
+- Improved debugger.
+- Removed manual mechanism to generate .desktop files to access the extension settings window. Now the .desktop file generation is automatic and will be created only on Cinnamon versions that requires it.
+
+```
+
+***
+
 - **Date:** Sat, 18 May 2019 22:27:24 -0300
 - **Commit:** [25640a0](https://gitlab.com/Odyseus/CinnamonTools/commit/25640a0)
 - **Author:** Odyseus

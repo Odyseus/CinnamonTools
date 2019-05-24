@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:989
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:986
 msgid "Help"
 msgstr ""
 
@@ -264,171 +264,171 @@ msgstr ""
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr ""
 
-#: applet.js:112 applet.js:174
+#: applet.js:139 applet.js:199
 msgid "New tasks list..."
 msgstr ""
 
-#: applet.js:885
+#: applet.js:882
 msgid "Save as TODO"
 msgstr ""
 
-#: applet.js:893
+#: applet.js:890
 msgid "Save all current tasks lists as a TODO file."
 msgstr ""
 
-#: applet.js:903
+#: applet.js:900
 msgid "Export tasks"
 msgstr ""
 
-#: applet.js:911
+#: applet.js:908
 msgid "Export all current tasks lists into a JSON file."
 msgstr ""
 
-#: applet.js:912 applet.js:930
+#: applet.js:909 applet.js:927
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr ""
 
-#: applet.js:922
+#: applet.js:919
 msgid "Import tasks"
 msgstr ""
 
-#: applet.js:929
+#: applet.js:926
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr ""
 
-#: applet.js:939
+#: applet.js:936
 msgid "Restore example tasks"
 msgstr ""
 
-#: applet.js:955
+#: applet.js:952
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr ""
 
-#: applet.js:961
+#: applet.js:958
 msgid "Reset tasks"
 msgstr ""
 
-#: applet.js:967 applet.js:980
+#: applet.js:964 applet.js:977
 msgid "WARNING!!!"
 msgstr ""
 
-#: applet.js:968
+#: applet.js:965
 msgid "Do you really want to remove all your current tasks?"
 msgstr ""
 
-#: applet.js:969 applet.js:980
+#: applet.js:966 applet.js:977
 msgid "This operation cannot be reverted!!!"
 msgstr ""
 
-#: applet.js:979
+#: applet.js:976
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr ""
 
-#: applet.js:993
+#: applet.js:990
 msgid "Open this applet help file."
 msgstr ""
 
-#: utils.js:53
+#: constants.js:24
 msgid "Tasks list - Some examples"
 msgstr ""
 
-#: utils.js:59
+#: constants.js:30
 msgid "Tasks can be \"tagged\" by simply writing \"@tagname\" as part of the task text. For now, there are 5 priority tags available."
 msgstr ""
 
-#: utils.js:62
+#: constants.js:33
 msgid "This is a @critical priority task"
 msgstr ""
 
-#: utils.js:65
+#: constants.js:36
 msgid "This is a @high priority task"
 msgstr ""
 
-#: utils.js:68
+#: constants.js:39
 msgid "This is a @medium priority task"
 msgstr ""
 
-#: utils.js:71
+#: constants.js:42
 msgid "This is a @today priority task"
 msgstr ""
 
-#: utils.js:74
+#: constants.js:45
 msgid "This is a @low priority task"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:208
+#: utils.js:181
 msgid "low"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:210
+#: utils.js:183
 msgid "today"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:212
+#: utils.js:185
 msgid "medium"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:214
+#: utils.js:187
 msgid "high"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:216
+#: utils.js:189
 msgid "critical"
 msgstr ""
 
-#: utils.js:604
+#: utils.js:560
 msgid "New task..."
 msgstr ""
 
-#: utils.js:615
+#: utils.js:571
 msgid "Tasks list options"
 msgstr ""
 
-#: utils.js:673
+#: utils.js:625
 msgid "Export this tasks list"
 msgstr ""
 
-#: utils.js:678
+#: utils.js:630
 msgid "Save this tasks list as TODO"
 msgstr ""
 
-#: utils.js:683
+#: utils.js:635
 msgid "Sort tasks alphabetically"
 msgstr ""
 
-#: utils.js:688 utils.js:698
+#: utils.js:640 utils.js:650
 msgid "Takes effect after closing and re-opening the main menu."
 msgstr ""
 
-#: utils.js:693
+#: utils.js:645
 msgid "Sort tasks by completed state"
 msgstr ""
 
-#: utils.js:703
+#: utils.js:655
 msgid "Display remove tasks buttons"
 msgstr ""
 
-#: utils.js:708 utils.js:718
+#: utils.js:660 utils.js:670
 msgid "Takes effect immediately."
 msgstr ""
 
-#: utils.js:713
+#: utils.js:665
 msgid "Keep completed tasks hidden"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence.
 #. "Remove this section/task"
-#: utils.js:1635
+#: utils.js:1517
 #, javascript-format
 msgid "Remove this %s"
 msgstr ""
 
-#: utils.js:1638
+#: utils.js:1520
 msgid "(Hold Ctrl key)"
 msgstr ""
 
@@ -679,14 +679,43 @@ msgid ""
 "* Every time that this applet's tasks list are modified, but only if the last cleanup operation was performed at least in the last 60 minutes."
 msgstr ""
 
-#. settings-schema.json->head12->description
+#. settings-schema.json->debugging-header->description
 msgid "Debugging"
 msgstr ""
 
-#. settings-schema.json->pref_enable_verbose_logging->description
-msgid "Verbose logging"
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
 msgstr ""
 
-#. settings-schema.json->pref_enable_verbose_logging->tooltip
-msgid "Checking this will enable debug level logging."
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""

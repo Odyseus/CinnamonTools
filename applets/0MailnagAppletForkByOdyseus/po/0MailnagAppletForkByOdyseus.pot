@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:174
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:211
 msgid "Help"
 msgstr ""
 
@@ -144,105 +144,105 @@ msgstr ""
 msgid "The Mailnag's **LibNotify Notifications** plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass such limitations. Needless to say, if one choses to use the notifications provided by this applet, the **LibNotify Notifications** plug-in must be disabled to avoid receiving duplicated notifications."
 msgstr ""
 
-#: applet.js:165
+#: applet.js:202
 msgid "Configure Mailnag daemon"
 msgstr ""
 
-#: applet.js:212
+#: applet.js:249
 msgid "Mailnag daemon stopped working!"
 msgstr ""
 
-#: applet.js:214
+#: applet.js:251
 msgid "Mailnag daemon isn't running! Do you have it installed?"
 msgstr ""
 
-#: applet.js:470
+#: applet.js:513
 #, javascript-format
 msgid "You have %d new mail!"
 msgid_plural "You have %d new mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:474 applet.js:654
+#: applet.js:517 applet.js:699
 msgid "Mark All Read"
 msgstr ""
 
-#: applet.js:475
+#: applet.js:518
 msgid "Mark Read"
 msgstr ""
 
-#: applet.js:535
+#: applet.js:578
 #, javascript-format
 msgid "(and %d more)"
 msgid_plural "(and %d more)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:558
+#: applet.js:601
 msgid "Open Mail client"
 msgstr ""
 
-#: applet.js:687 applet.js:731
+#: applet.js:732 applet.js:776
 msgid "No unread mails."
 msgstr ""
 
-#: applet.js:711
+#: applet.js:756
 msgid "Mailnag daemon is not running!"
 msgstr ""
 
-#: applet.js:721
+#: applet.js:766
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr ""
 
-#: applet.js:727
+#: applet.js:772
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:741
+#: applet.js:786
 msgid "Click to see error!"
 msgstr ""
 
-#: applet.js:742
+#: applet.js:787
 msgid "Error"
 msgstr ""
 
 #. 86400 = Amount of seconds in 24 hours.
 #. today
 #. <1 minute
-#: utils.js:190
+#: utils.js:124
 msgid "just now"
 msgstr ""
 
-#: utils.js:193
+#: utils.js:127
 #, javascript-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:196
+#: utils.js:130
 #, javascript-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:200
+#: utils.js:134
 msgid "yesterday"
 msgstr ""
 
-#: utils.js:202
+#: utils.js:136
 #, javascript-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:205
+#: utils.js:139
 #, javascript-format
 msgid "%d week ago"
 msgid_plural "%d weeks ago"
@@ -390,4 +390,45 @@ msgstr ""
 
 #. settings-schema.json->notification_test_button->description
 msgid "Test notifications"
+msgstr ""
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""

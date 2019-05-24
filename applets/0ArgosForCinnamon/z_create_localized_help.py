@@ -54,14 +54,6 @@ class Main(LocalizedHelpCreator):
                 md(_("See %s.") % ("**[%s](#usage-{{lhc_lang_id}})**" % _("Usage")))
             )).strip(),
             "",
-            "## %s" % _("Dependencies"),
-            "",
-            "- **%s:** %s" % (_("xdg-open command"),
-                              ("Open a URI in the user's preferred application that handles the respective URI or file type.")),
-            "    - %s %s %s" % (_("Debian and Archlinux based distributions:"),
-                                _("This command is installed with the package called **xdg-utils**."),
-                                _("Installed by default in modern versions of Linux Mint.")),
-            "\n"
         ])
 
     def get_content_extra(self):

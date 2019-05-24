@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "Reset to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:584 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:314
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:584 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:335
 msgid "Help"
 msgstr ""
 
@@ -530,145 +530,136 @@ msgstr ""
 msgid "There is a folder named **icons** inside this applet directory. It contains several symbolic icons (most of them are from the Faenza icon theme) and each icon can be used directly by name (on a custom launcher, for example)."
 msgstr ""
 
-#: applet.js:60
+#: applet.js:77
 msgid "Menu"
 msgstr ""
 
-#: applet.js:297
+#: applet.js:318
 msgid "Open the menu editor"
 msgstr ""
 
-#: applet.js:302
+#: applet.js:323
 msgid "Edit custom launchers"
 msgstr ""
 
-#: applet.js:1446
+#: applet.js:1467
 msgid "Favorites"
 msgstr ""
 
-#: applet.js:1472
+#: applet.js:1493
 msgid "Recently Used"
 msgstr ""
 
-#: applet.js:1502
+#: applet.js:1523
 msgid "All Applications"
 msgstr ""
 
-#: applet.js:1584
+#: applet.js:1605
 msgid "No search results"
 msgstr ""
 
-#: applet.js:1606
+#: applet.js:1627
 msgid "No recent applications"
 msgstr ""
 
-#: applet.js:1614
+#: applet.js:1635
 msgid "Clear list"
 msgstr ""
 
-#: applet.js:1784
+#: applet.js:1807
 msgid "Type to search..."
 msgstr ""
 
-#: applet.js:2508 applet.js:2518
+#: applet.js:2537 applet.js:2547
 msgid "Categories"
 msgstr ""
 
-#: utils.js:638
+#: utils.js:610
 msgid "Add to panel"
 msgstr ""
 
-#: utils.js:642
+#: utils.js:614
 msgid "Add this application to the Panel launchers applet."
 msgstr ""
 
-#: utils.js:649
+#: utils.js:621
 msgid "Add to desktop"
 msgstr ""
 
-#: utils.js:653
+#: utils.js:625
 msgid "Add this application to the Desktop."
 msgstr ""
 
-#: utils.js:661
+#: utils.js:633
 msgid "Remove from favorites"
 msgstr ""
 
-#: utils.js:665
+#: utils.js:637
 msgid "Remove application from your favorites."
 msgstr ""
 
-#: utils.js:670
+#: utils.js:642
 msgid "Add to favorites"
 msgstr ""
 
-#: utils.js:674
+#: utils.js:646
 msgid "Add application to your favorites."
 msgstr ""
 
-#: utils.js:682
+#: utils.js:654
 msgid "Uninstall"
 msgstr ""
 
-#: utils.js:686
+#: utils.js:658
 msgid "Uninstall application from your system."
 msgstr ""
 
-#: utils.js:693
+#: utils.js:665
 msgid "Run with NVIDIA GPU"
 msgstr ""
 
-#: utils.js:697
+#: utils.js:669
 msgid "Run application through optirun command (Bumblebee)."
 msgstr ""
 
-#: utils.js:704
+#: utils.js:676
 msgid "Run as root"
 msgstr ""
 
-#: utils.js:708
+#: utils.js:680
 msgid "Run application as root."
 msgstr ""
 
-#: utils.js:715
+#: utils.js:687
 msgid "Edit .desktop file"
 msgstr ""
 
-#: utils.js:719
+#: utils.js:691
 msgid "Edit this application .desktop file with a text editor."
 msgstr ""
 
-#: utils.js:726
+#: utils.js:698
 msgid "Open .desktop file folder"
 msgstr ""
 
-#: utils.js:730
+#: utils.js:702
 msgid "Open the folder containg this application .desktop file."
 msgstr ""
 
-#: utils.js:737
+#: utils.js:709
 msgid "Run from terminal"
 msgstr ""
 
-#: utils.js:741
+#: utils.js:713
 msgid "Run application from a terminal."
 msgstr ""
 
-#: utils.js:748
+#: utils.js:720
 msgid "Run from terminal as root"
 msgstr ""
 
-#: utils.js:752
+#: utils.js:724
 msgid "Run application from a terminal as root."
-msgstr ""
-
-#: utils.js:1025
-#, javascript-format
-msgid "Schema %s could not be found for xlet %s."
-msgstr ""
-
-#: utils.js:1026
-msgid "Please check your installation."
 msgstr ""
 
 #. metadata.json->name
@@ -1094,4 +1085,45 @@ msgstr ""
 
 #. settings-schema.json->padding_5_header->description
 msgid "Search box padding"
+msgstr ""
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""

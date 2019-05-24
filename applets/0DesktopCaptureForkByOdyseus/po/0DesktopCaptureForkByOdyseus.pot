@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:234
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:275
 msgid "Help"
 msgstr ""
 
@@ -129,7 +129,7 @@ msgstr ""
 msgid "The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program."
 msgstr ""
 
-#: z_create_localized_help.py:48 applet.js:179
+#: z_create_localized_help.py:48 applet.js:220
 msgid "Programs support"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgstr ""
 msgid "The selected window class title."
 msgstr ""
 
-#: z_create_localized_help.py:251 applet.js:186
+#: z_create_localized_help.py:251 applet.js:227
 msgid "Cinnamon recorder profiles"
 msgstr ""
 
@@ -518,11 +518,11 @@ msgstr ""
 msgid "Cinnamon 3.0.x and its built-in screenshot mechanism"
 msgstr ""
 
-#: z_create_localized_help.py:323 applet.js:2038
+#: z_create_localized_help.py:323 applet.js:1988
 msgid "The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"
 msgstr ""
 
-#: z_create_localized_help.py:326 applet.js:2039
+#: z_create_localized_help.py:326 applet.js:1989
 msgid "Do not use it or Cinnamon will crash!"
 msgstr ""
 
@@ -535,391 +535,343 @@ msgstr ""
 msgid "To permanently dismiss the critical notification displayed when the applet is used under Cinnamon 3.0.x, enable the option found in this applet settings window called \"I read the disclaimer and I'm aware of the consequences\", under the \"Disclaimer\" section."
 msgstr ""
 
-#: applet.js:128
+#: applet.js:169
 msgid "Open screenshots folder"
 msgstr ""
 
-#: applet.js:138
+#: applet.js:179
 msgid "Open screencasts folder"
 msgstr ""
 
-#: applet.js:180
+#: applet.js:221
 msgid "Export programs"
 msgstr ""
 
-#: applet.js:181
+#: applet.js:222
 msgid "Import programs"
 msgstr ""
 
-#: applet.js:182
+#: applet.js:223
 msgid "Reset programs"
 msgstr ""
 
-#: applet.js:183
+#: applet.js:224
 msgid "Remove all programs"
 msgstr ""
 
-#: applet.js:187
+#: applet.js:228
 msgid "Export profiles"
 msgstr ""
 
-#: applet.js:188
+#: applet.js:229
 msgid "Import profiles"
 msgstr ""
 
-#: applet.js:189
+#: applet.js:230
 msgid "Reset profiles"
 msgstr ""
 
-#: applet.js:190
+#: applet.js:231
 msgid "Remove all profiles"
 msgstr ""
 
-#: applet.js:391
+#: applet.js:433
 msgid "Error trying to get theme"
 msgstr ""
 
-#: applet.js:398
+#: applet.js:440
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: applet.js:408
+#: applet.js:450
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: applet.js:765
+#: applet.js:783
 msgid "Choose camera"
 msgstr ""
 
-#: applet.js:766
+#: applet.js:784
 msgid "Choose recorder"
 msgstr ""
 
-#: applet.js:771
+#: applet.js:789
 msgid "Latest capture"
 msgstr ""
 
-#: applet.js:803
+#: applet.js:819
 msgid "Screencast"
 msgstr ""
 
-#: applet.js:803
+#: applet.js:819
 msgid "Screenshot"
 msgstr ""
 
-#: applet.js:814
+#: applet.js:830
 msgid "Assign a title to your program!!!"
 msgstr ""
 
-#: applet.js:818 utils.js:55
+#: applet.js:834 constants.js:43
 msgid "Disabled"
 msgstr ""
 
-#: applet.js:889
+#: applet.js:905
 msgid "Include cursor"
 msgstr ""
 
-#: applet.js:896
+#: applet.js:912
 msgid "Whether to include mouse cursor in screenshot."
 msgstr ""
 
-#: applet.js:910
+#: applet.js:926
 #, javascript-format
 msgid "Monitor %d"
 msgstr ""
 
-#: applet.js:923
+#: applet.js:939
 msgid "Auto copy image"
 msgstr ""
 
-#: applet.js:939 applet.js:1035
+#: applet.js:955 applet.js:1051
 msgid "Repeat last"
 msgstr ""
 
-#: applet.js:956
+#: applet.js:972
 msgid "Capture delay"
 msgstr ""
 
 #. TO TRANSLATORS:
 #. sec. = abbreviation of "second"
 #. secs. = abbreviation of "seconds"
-#: applet.js:970
+#: applet.js:986
 msgid "sec."
 msgid_plural "secs."
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:978
+#: applet.js:994
 msgid "How many seconds to wait before taking a screenshot."
 msgstr ""
 
-#: applet.js:990 utils.js:526
+#: applet.js:1006 utils.js:413
 msgid "Profile"
 msgstr ""
 
-#: applet.js:999
+#: applet.js:1015
 msgid "Choose Cinnamon recorder profile"
 msgstr ""
 
-#: applet.js:1005 applet.js:1380
+#: applet.js:1021 applet.js:1378
 msgid "Start recording"
 msgstr ""
 
-#: applet.js:1018
+#: applet.js:1034
 msgid "Record sound"
 msgstr ""
 
-#: applet.js:1025
+#: applet.js:1041
 msgid "Whether to record sound."
 msgstr ""
 
-#: applet.js:1051 applet.js:1377
+#: applet.js:1067 applet.js:1375
 msgid "Stop recording"
 msgstr ""
 
-#: applet.js:1068 applet.js:1087
+#: applet.js:1084 applet.js:1103
 msgid "Frames per second"
 msgstr ""
 
-#: applet.js:1079
+#: applet.js:1095
 msgid "FPS"
 msgstr ""
 
-#: applet.js:1100
+#: applet.js:1116
 msgid "Device options"
 msgstr ""
 
-#: applet.js:1303 utils.js:2755
+#: applet.js:1307 utils.js:2341
 msgid "File path copied to clipboard."
 msgstr ""
 
-#: applet.js:1307 utils.js:2751
+#: applet.js:1311 utils.js:2337
 msgid "Image data copied to clipboard."
 msgstr ""
 
-#: applet.js:1391
+#: applet.js:1387
 msgid "Selected storage folder doesn't exist!"
 msgstr ""
 
-#: applet.js:1399
+#: applet.js:1395
 msgid "Selected storage folder is not a directory!"
 msgstr ""
 
-#: applet.js:1419
+#: applet.js:1413
 msgid "File cannot be created!"
 msgstr ""
 
-#: applet.js:1663 applet.js:1725
+#: applet.js:1637 applet.js:1697
 msgid "Displaying command that will be executed"
 msgstr ""
 
-#: applet.js:1760
+#: applet.js:1728
 msgid "Command exited with error status"
 msgstr ""
 
-#: applet.js:1913
+#: applet.js:1867
 msgid "Possibly malformed JSON file."
 msgstr ""
 
-#: applet.js:1914
+#: applet.js:1868
 msgid "Check the logs."
 msgstr ""
 
-#: applet.js:1974
+#: applet.js:1926
 msgid "Do you really want to reset this preference to its default value?"
 msgstr ""
 
-#: applet.js:2015
+#: applet.js:1965
 msgid "Do you really want to empty this preference?"
 msgstr ""
 
-#: applet.js:2040
+#: applet.js:1990
 msgid "Read this applet help page (Known issues) for more details on the matter."
 msgstr ""
 
-#: applet.js:2041
+#: applet.js:1991
 msgid "You will keep seeing this notification until you follow the instructions found on the help page."
 msgstr ""
 
-#: applet.js:2052
+#: applet.js:2002
 msgid "Operation aborted!"
 msgstr ""
 
-#: utils.js:56
+#: constants.js:44
 msgid "Area"
 msgstr ""
 
-#: utils.js:57
+#: constants.js:45
 msgid "Cinnamon UI"
 msgstr ""
 
-#: utils.js:58
+#: constants.js:46
 msgid "Current Window"
 msgstr ""
 
-#: utils.js:59
+#: constants.js:47
 msgid "Monitor"
 msgstr ""
 
-#: utils.js:60
+#: constants.js:48
 msgid "Screen"
 msgstr ""
 
-#: utils.js:61
+#: constants.js:49
 msgid "Tooltip"
 msgstr ""
 
-#: utils.js:62
+#: constants.js:50
 msgid "Window Menu"
 msgstr ""
 
-#: utils.js:63
+#: constants.js:51
 msgid "Window Section"
 msgstr ""
 
-#: utils.js:64
+#: constants.js:52
 msgid "Window"
 msgstr ""
 
 #. settings-schema.json->pref_copy_to_clipboard->options
-#: utils.js:659
+#: utils.js:546
 msgid "Off"
 msgstr ""
 
-#: utils.js:1333
+#: utils.js:982
 msgid "Select an area by clicking and dragging"
 msgstr ""
 
-#: utils.js:1335
+#: utils.js:984
 msgid "Use arrow keys to move the selection"
 msgstr ""
 
-#: utils.js:1337
+#: utils.js:986
 msgid "Use SHIFT and arrow keys to resize the selection"
 msgstr ""
 
-#: utils.js:1339
+#: utils.js:988
 msgid "Press ENTER to confirm or ESC to cancel"
 msgstr ""
 
-#: utils.js:1343
+#: utils.js:992
 msgid "Select a UI element by moving the mouse"
 msgstr ""
 
-#: utils.js:1345
+#: utils.js:994
 msgid "Use mouse wheel to traverse hierarchy"
 msgstr ""
 
-#: utils.js:1347
+#: utils.js:996
 msgid "Hold SHIFT to allow clicking UI element"
 msgstr ""
 
-#: utils.js:1349
+#: utils.js:998
 msgid "Click to complete the capture, or ESC to cancel"
 msgstr ""
 
-#: utils.js:2572
+#: utils.js:2158
 msgid "File no longer available"
 msgstr ""
 
-#: utils.js:2591
+#: utils.js:2177
 msgid "Delete"
 msgstr ""
 
-#: utils.js:2592
+#: utils.js:2178
 msgid "Delete captured file from file system."
 msgstr ""
 
-#: utils.js:2596
+#: utils.js:2182
 msgid "Copy data"
 msgstr ""
 
-#: utils.js:2597
+#: utils.js:2183
 msgid "Copy image data to clipboard."
 msgstr ""
 
-#: utils.js:2601
+#: utils.js:2187
 msgid "Copy path"
 msgstr ""
 
-#: utils.js:2602
+#: utils.js:2188
 msgid "Copy image path to clipboard."
 msgstr ""
 
-#: utils.js:2719
+#: utils.js:2305
 msgid "Do you really want to delete this file?"
 msgstr ""
 
-#: utils.js:2742
+#: utils.js:2328
 msgid "Failed copying image data."
 msgstr ""
 
-#: utils.js:2791
+#: utils.js:2377
 msgid "Left click"
 msgstr ""
 
-#: utils.js:2791
+#: utils.js:2377
 msgid "Open image file."
 msgstr ""
 
-#: utils.js:2792
+#: utils.js:2378
 msgid "Open folder."
 msgstr ""
 
-#: utils.js:2792
+#: utils.js:2378
 msgid "Right click"
 msgstr ""
 
-#: utils.js:2839
+#: utils.js:2425
 msgid "WARNING!!!"
-msgstr ""
-
-#: utils.js:2981 utils.js:2982
-msgid "Ctrl"
-msgstr ""
-
-#: utils.js:2983
-msgid "Ctrl L"
-msgstr ""
-
-#: utils.js:2984
-msgid "Ctrl R"
-msgstr ""
-
-#: utils.js:2985
-msgid "Shift"
-msgstr ""
-
-#: utils.js:2986
-msgid "Shift L"
-msgstr ""
-
-#: utils.js:2987
-msgid "Shift R"
-msgstr ""
-
-#: utils.js:2988
-msgid "Alt"
-msgstr ""
-
-#: utils.js:2989
-msgid "Alt L"
-msgstr ""
-
-#: utils.js:2990
-msgid "Alt R"
-msgstr ""
-
-#: utils.js:2991
-msgid "Super"
-msgstr ""
-
-#: utils.js:2992
-msgid "Super L"
-msgstr ""
-
-#: utils.js:2993
-msgid "Super R"
 msgstr ""
 
 #. metadata.json->contributors
@@ -1200,12 +1152,41 @@ msgstr ""
 msgid "Debugging"
 msgstr ""
 
-#. settings-schema.json->pref_enable_verbose_logging->description
-msgid "Verbose logging"
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
 msgstr ""
 
-#. settings-schema.json->pref_enable_verbose_logging->tooltip
-msgid "Checking this will enable debug level logging."
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""
 
 #. settings-schema.json->x264enc->title

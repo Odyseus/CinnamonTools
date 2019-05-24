@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-18 23:57-0300\n"
+"POT-Creation-Date: 2019-05-24 17:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:194
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:214
 msgid "Help"
 msgstr ""
 
@@ -125,51 +125,51 @@ msgstr ""
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr ""
 
-#: applet.js:205
+#: applet.js:225
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:206
+#: applet.js:226
 msgid "This applet needs the GTop library installed on your system for it  to work."
 msgstr ""
 
-#: applet.js:207
+#: applet.js:227
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:421
+#: applet.js:441
 msgid "Command not set!"
 msgstr ""
 
-#: applet.js:422
+#: applet.js:442
 msgid "Set a custom command from this applet settings window."
 msgstr ""
 
-#: utils.js:89
+#: utils.js:78
 msgid "CPU"
 msgstr ""
 
-#: utils.js:115 utils.js:141
+#: utils.js:104 utils.js:130
 msgid "MB"
 msgstr ""
 
-#: utils.js:120
+#: utils.js:109
 msgid "Memory"
 msgstr ""
 
-#: utils.js:146
+#: utils.js:135
 msgid "Swap"
 msgstr ""
 
-#: utils.js:191
+#: utils.js:180
 msgid "KB/s"
 msgstr ""
 
-#: utils.js:196
+#: utils.js:185
 msgid "Network D/U"
 msgstr ""
 
-#: utils.js:234
+#: utils.js:223
 msgid "Load average"
 msgstr ""
 
@@ -351,4 +351,45 @@ msgstr ""
 
 #. settings-schema.json->pref_load_color_0->description
 msgid "Color"
+msgstr ""
+
+#. settings-schema.json->debugging-header->description
+msgid "Debugging"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->description
+msgid "Logging level (*)"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->tooltip
+msgid ""
+"It enables the ability to log the output of several functions used by the extension.\n"
+"\n"
+"Normal: Only log messages caused by non critical errors.\n"
+"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Normal"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Verbose"
+msgstr ""
+
+#. settings-schema.json->pref_logging_level->options
+msgid "Very verbose"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->description
+msgid "Enable debugger (*)"
+msgstr ""
+
+#. settings-schema.json->pref_debugger_enabled->tooltip
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#. settings-schema.json->label->description
+msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr ""

@@ -4,6 +4,20 @@
 
 ***
 
+- **Date:** Thu, 23 May 2019 02:15:46 -0300
+- **Commit:** [20a83f2](https://gitlab.com/Odyseus/CinnamonTools/commit/20a83f2)
+- **Author:** Odyseus
+
+```
+- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
+- JavaScript code homogenization.
+- Implemented debugger.
+- Added an ID to the custom confirmation dialog to avoid conflictive styling with other xlets.
+
+```
+
+***
+
 - **Date:** Tue, 15 Jan 2019 22:37:49 -0300
 - **Commit:** [7525419](https://gitlab.com/Odyseus/CinnamonTools/commit/7525419)
 - **Author:** Odyseus

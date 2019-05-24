@@ -192,6 +192,28 @@ class Main(LocalizedHelpCreator):
             "- %s" % _("A custom icon theme can contain only full colored icons, only symbolic icons or both. The **Menu icon type** and **Applet icon type** applet settings should be set accordingly to the icon type used by the custom theme."),
             "- %s" % _("A custom icon theme can contain SVG or PNG images; although SVG images are preferable due to their ability to scale into any icon size set in this applet settings without loosing quality. Other image types might be used, but I didn't test them."),
             "- %s" % _("A custom icon theme should contain 240 icons to support both full color and symbolic icons. Or half of that (120) to support one or the other."),
+            "",
+            "## %s" % _("Cinnamon versions bellow 3.6.x"),
+            "",
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+            _("Cinnamon versions prior to 3.6.x have a design flaw. If an xlet uses an external settings application, and at the same time the file **settings-schema.json** exists inside an xlet folder, all shortcuts to open an xlet settings will not open the external application as it should; they will open the Cinnamon's native settings window. To work around this design flaw, I put in place different mechanisms depending on the xlet type."),
+            "",
+            "- **%s:** %s" % (
+                _("Applets"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                _("The **Configure...** context menu item is overridden so it opens the proper settings application.")
+            ),
+            "- **%s:** %s" % (
+                _("Extensions"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                _("A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at **~/.local/share/applications**, so it will make the shortcut available in your applications menu inside the **Preferences** category.")
+            ),
+            "- **%s:** %s" % (
+                _("For all xlets types"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                _("If the *wrong* settings window is opened, a button to open the *right* settings window will be available.")
+            ),
+            "",
         ])
         ))
 

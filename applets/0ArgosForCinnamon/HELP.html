@@ -96,13 +96,6 @@
 <li><strong>Optimizado para el consumo mínimo de recursos:</strong> Incluso con varios complementos actualizando cada segundo, Argos normalmente usa menos del 1 por ciento de la CPU.</li>
 <li><strong>Totalmente documentado:</strong> <p>Ver <strong><a href="#usage-es">Uso del applet</a></strong>.</p></li>
 </ul>
-<h2>Dependencias</h2>
-<ul>
-<li><strong>Comando xdg-open:</strong> Open a URI in the user's preferred application that handles the respective URI or file type.<ul>
-<li>Distribuciones basadas en Debian y Archlinux: Distribuciones basadas en Debian y Archlinux: Este comando es instalado por el paquete llamado <strong>xdg-utils</strong>. Instalado por defecto en todas las versiones modernas de Linux Mint.</li>
-</ul>
-</li>
-</ul>
 
 <p><span id="usage-es"></span></p>
 <h2>Uso del applet</h2>
@@ -427,13 +420,6 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <li><strong>Optimized for minimum resource consumption:</strong> Even with multiple plugins refreshing every second, Argos typically uses less than 1 percent of the CPU.</li>
 <li><strong>Fully documented:</strong> <p>See <strong><a href="#usage-en">Usage</a></strong>.</p></li>
 </ul>
-<h2>Dependencies</h2>
-<ul>
-<li><strong>xdg-open command:</strong> Open a URI in the user's preferred application that handles the respective URI or file type.<ul>
-<li>Debian and Archlinux based distributions: This command is installed with the package called <strong>xdg-utils</strong>. Installed by default in modern versions of Linux Mint.</li>
-</ul>
-</li>
-</ul>
 
 <p><span id="usage-en"></span></p>
 <h2>Usage</h2>
@@ -726,6 +712,17 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Argos for Cinnamon changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Thu, 23 May 2019 02:14:46 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0806714">0806714</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
+- JavaScript code homogenization.
+- Improved debugger.
+- Added SVG icon.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Tue, 14 May 2019 14:39:50 -0300</li>
