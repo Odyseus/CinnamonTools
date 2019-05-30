@@ -1606,7 +1606,7 @@ Date.prototype.toCustomISOString = function() {
         "." + pad(tzo % 60);
 };
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     InteligentTooltip: InteligentTooltip,
     NewTaskEntry: NewTaskEntry,
     ReactiveButton: ReactiveButton,
