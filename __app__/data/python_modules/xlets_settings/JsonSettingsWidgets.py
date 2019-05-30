@@ -27,12 +27,16 @@ from gi.repository import Gio
 from gi.repository import Gtk
 
 # NOTE: JEESH!!! I hate import *!!!
+from .AppChooserWidgets import AppChooser  # noqa
+from .AppChooserWidgets import AppList  # noqa
 from .SettingsWidgets import *  # noqa
 from .TreeListWidgets import List  # noqa
 from .common import BaseGrid
 from .common import sort_combo_options
 
 
+CAN_BACKEND.append("AppChooser")  # noqa
+CAN_BACKEND.append("AppList")  # noqa
 CAN_BACKEND.append("List")  # noqa
 
 JSON_SETTINGS_PROPERTIES_MAP = {
@@ -304,23 +308,34 @@ class JSONSettingsRevealer(Gtk.Revealer):
         super().__init__()
         self.settings = settings
 
-        self.dep_key = None
-        self.op = None
+        if isinstance(dep_key, str):
+            dep_keys = [dep_key]
+        else:
+            dep_keys = dep_key
+
+        self.dep_keys = {}
+        self.ops = {}
         self.value = None
 
-        for op in OPERATIONS:
-            if op in dep_key:
-                self.op = op
-                self.dep_key, self.value = dep_key.split(op)
-                break
+        for d_k in dep_keys:
+            operator_found = False
 
-        if self.dep_key is None:
-            if dep_key[:1] is "!":
-                self.invert = True
-                self.dep_key = dep_key[1:]
+            for op in OPERATIONS:
+                if op in d_k:
+                    key, value = d_k.split(op)
+                    self.dep_keys[key] = value
+                    self.ops[key] = op
+                    operator_found = True
+                    break
+
+            # If an operator is used, continue to the next dep. key.
+            if operator_found:
+                continue
+
+            if d_k[:1] == "!":
+                self.dep_keys[d_k[1:]] = True
             else:
-                self.invert = False
-                self.dep_key = dep_key
+                self.dep_keys[d_k] = False
 
         self.box = BaseGrid()
         Gtk.Revealer.add(self, self.box)
@@ -328,23 +343,32 @@ class JSONSettingsRevealer(Gtk.Revealer):
         self.set_transition_type(Gtk.RevealerTransitionType.SLIDE_DOWN)
         self.set_transition_duration(150)
 
-        self.settings.listen(self.dep_key, self.key_changed)
-        self.key_changed(self.dep_key, self.settings.get_value(self.dep_key))
+        for k in self.dep_keys.keys():
+            self.settings.listen(k, self.key_changed)
+
+        self.key_changed()
 
     def add(self, widget):
         self.box.attach(widget, 0, 0, 1, 1)
 
-    def key_changed(self, dep_key, value):
-        try:
-            if self.op is not None:
-                val_type = type(value)
-                self.set_reveal_child(OPERATIONS_MAP[self.op](value, val_type(self.value)))
-            elif value != self.invert:
-                self.set_reveal_child(True)
-            else:
-                self.set_reveal_child(False)
-        except Exception as e:
-            print(e)
+    def key_changed(self, *args):
+        reveal_conditions = []
+
+        for key, val in self.dep_keys.items():
+            dep_value = self.settings.get_value(key)
+            try:
+                if key in self.ops:
+                    val_type = type(dep_value)
+                    reveal_conditions.append(
+                        OPERATIONS_MAP[self.ops[key]](dep_value, val_type(val)))
+                elif dep_value != val:
+                    reveal_conditions.append(True)
+                else:
+                    reveal_conditions.append(False)
+            except Exception as e:
+                print(e)
+
+        self.set_reveal_child(all(reveal_conditions))
 
 
 class JSONSettingsBackend(object):
@@ -416,7 +440,8 @@ def json_settings_factory(subclass):
                     else:
                         kwargs["options"] = zip(options_list, options_list)
 
-                    kwargs["options"] = sort_combo_options(kwargs["options"], properties.get("first-option", ""))
+                    kwargs["options"] = sort_combo_options(
+                        kwargs["options"], properties.get("first-option", ""))
 
             super().__init__(**kwargs)
             self.attach_backend()

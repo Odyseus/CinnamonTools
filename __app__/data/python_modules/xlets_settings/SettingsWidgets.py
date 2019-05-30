@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import cgi
 import gi
 import os
 
@@ -13,6 +12,7 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import Gtk
+from html import escape
 
 from .KeybindingWidgets import ButtonKeybinding
 from .common import BaseGrid
@@ -75,11 +75,11 @@ class SectionContainer(Gtk.Frame):
 
         toolbar = Gtk.Toolbar()
         toolbar.set_hexpand(True)
-        Gtk.StyleContext.add_class(Gtk.Widget.get_style_context(toolbar), "cs-header")
+        toolbar.get_style_context().add_class("cs-header")
 
         label = Gtk.Label()
         label.set_hexpand(True)
-        label.set_markup("<b>%s</b>" % cgi.escape(title))
+        label.set_markup("<b>%s</b>" % escape(title))
         title_holder = Gtk.ToolItem()
         title_holder.add(label)
         toolbar.add(title_holder)
@@ -92,8 +92,6 @@ class SectionContainer(Gtk.Frame):
             dummy_holder.set_expand(True)
             dummy_holder.add(dummy)
             toolbar.add(dummy_holder)
-            # Using set_image on button adds an un-removable padding.
-            # Setting the image as argument doesn't. ¬¬
             button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
                 ("dialog-%s-symbolic" % section_info.get("context", "information")),
                 Gtk.IconSize.BUTTON

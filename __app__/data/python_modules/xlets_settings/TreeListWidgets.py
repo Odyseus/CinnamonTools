@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import cgi
 import gi
 import json
 import os
@@ -9,9 +8,12 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 
 from gi.repository import Gdk
+from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import Pango
+from html import escape
 
+from .AppChooserWidgets import AppChooser
 from .SettingsWidgets import ColorChooser
 from .SettingsWidgets import ComboBox
 from .SettingsWidgets import Entry
@@ -33,6 +35,8 @@ from .common import sort_combo_options
 # from SettingsWidgets import SoundFileChooser
 
 LIST_VARIABLE_TYPE_MAP = {
+    # appchooser
+    "app": str,
     # switch
     "boolean": bool,
     # colorchooser
@@ -58,6 +62,7 @@ LIST_VARIABLE_TYPE_MAP = {
 }
 
 LIST_CLASS_TYPE_MAP = {
+    "app": AppChooser,
     "boolean": Switch,
     "color": ColorChooser,
     "file": FileChooser,
@@ -307,6 +312,23 @@ class List(SettingsWidget):
                 column.set_cell_data_func(renderer, set_color_func, {
                     "col_index": i
                 })
+            elif column_def["type"] == "app":
+                def set_app_func(col, rend, model, row_iter, data):
+                    value = model[row_iter][data["col_index"]]
+
+                    try:
+                        app_info = Gio.DesktopAppInfo.new(value)
+                    except Exception:
+                        app_info = None
+
+                    if isinstance(app_info, Gio.DesktopAppInfo):
+                        rend.set_property("text", app_info.get_display_name())
+                    else:
+                        rend.set_property("text", _("No app chosen"))
+
+                column.set_cell_data_func(renderer, set_app_func, {
+                    "col_index": i
+                })
 
             if has_option_map:
                 def map_func(col, rend, model, row_iter, data):
@@ -379,7 +401,7 @@ class List(SettingsWidget):
         button_toolbar.set_icon_size(1)
         button_toolbar.set_halign(Gtk.Align.FILL)
         button_toolbar.set_hexpand(True)
-        Gtk.StyleContext.add_class(Gtk.Widget.get_style_context(button_toolbar), "inline-toolbar")
+        button_toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
         self.attach(button_toolbar, 0, 1, 1, 1)
 
         button_holder = Gtk.ToolItem()
@@ -585,10 +607,10 @@ class List(SettingsWidget):
 
             dialog.set_title(_("Item removal"))
 
-            esc = cgi.escape(
+            esc = escape(
                 _("Are you sure that you want to remove this item?"))
-            esc += "\n\n<b>%s</b>: %s" % (cgi.escape(_("Note")),
-                                          cgi.escape(_("Press and hold Control key to remove items without confirmation.")))
+            esc += "\n\n<b>%s</b>: %s" % (escape(_("Note")),
+                                          escape(_("Press and hold Control key to remove items without confirmation.")))
             dialog.set_markup(esc)
             dialog.show_all()
             response = dialog.run()
@@ -691,10 +713,10 @@ class List(SettingsWidget):
             content_area.set_margin_right(10)
             label = Gtk.Label(xalign=0)
             label.set_markup("<b>%s</b>: %s\n<b>%s</b>: %s" % (
-                cgi.escape(_("Overwrite")),
-                cgi.escape(_("replace the current data with the imported data.")),
-                cgi.escape(_("Append")),
-                cgi.escape(_("add the imported data to the current data.")),
+                escape(_("Overwrite")),
+                escape(_("replace the current data with the imported data.")),
+                escape(_("Append")),
+                escape(_("add the imported data to the current data.")),
             ))
             content_area.add(label)
 
@@ -772,8 +794,7 @@ class List(SettingsWidget):
 
         frame = Gtk.Frame()
         frame.set_shadow_type(Gtk.ShadowType.IN)
-        frame_style = frame.get_style_context()
-        frame_style.add_class("view")
+        frame.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW)
         content_area.add(frame)
 
         content = BaseGrid()

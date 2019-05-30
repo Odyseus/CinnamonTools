@@ -11,19 +11,21 @@ proxy : Gio.DBusProxy
 XLET_SETTINGS_WIDGETS : dict
     Settings widgets map.
 """
-import cgi
 import gi
 import json
 import os
 
-gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
+gi.require_version("GdkPixbuf", "2.0")
+gi.require_version("Gtk", "3.0")
 
 from gi.repository import GLib
 from gi.repository import Gdk
+from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import Pango
+from html import escape
 from subprocess import check_output
 from subprocess import run
 
@@ -44,6 +46,8 @@ proxy = None
 XLET_SETTINGS_WIDGETS = {
     # NOTE: Custom simplified widget.
     "button": "JSONSettingsButton",
+    "applist": "JSONSettingsAppList",
+    "appchooser": "JSONSettingsAppChooser",
     "colorchooser": "JSONSettingsColorChooser",
     "combobox": "JSONSettingsComboBox",
     "entry": "JSONSettingsEntry",
@@ -144,15 +148,21 @@ class SettingsBox(BaseGrid):
                     if not widget_def.get("compatible", True):
                         continue
 
-                    if widget_def["widget-type"] == "label":
-                        widget = Text(**widget_def["args"])  # noqa
-                    elif widget_def["widget-type"] in XLET_SETTINGS_WIDGETS:
-                        widget_def["args"]["settings"] = settings
-                        widget = globals()[XLET_SETTINGS_WIDGETS[widget_def["widget-type"]]](
-                            **widget_def["args"])
-                        if widget_def["widget-type"] == "list" and app_window is not None:
-                            widget.app_window = app_window
-                    else:
+                    try:
+                        if widget_def["widget-type"] == "label":
+                            widget = Text(**widget_def["args"])  # noqa
+                        elif widget_def["widget-type"] in XLET_SETTINGS_WIDGETS:
+                            widget_def["args"]["settings"] = settings
+                            widget = globals()[XLET_SETTINGS_WIDGETS[widget_def["widget-type"]]](
+                                **widget_def["args"])
+                            if widget_def["widget-type"] == "list" and app_window is not None:
+                                widget.app_window = app_window
+                        else:
+                            continue
+                    except Exception as err:
+                        print("Widget definition")
+                        print(json.dumps(widget_def, indent=4))
+                        print(err)
                         continue
 
                     if widget_def["widget-type"] == "list":
@@ -309,6 +319,14 @@ class MainApplication(Gtk.Application):
 
         self.load_css()
 
+        self.xlet_icon_path = os.path.join(self.xlet_dir, "icon.svg")
+
+        if not os.path.isfile(self.xlet_icon_path):
+            self.xlet_icon_path = os.path.join(self.xlet_dir, "icon.png")
+
+        if not os.path.isfile(self.xlet_icon_path):
+            self.xlet_icon_path = None
+
     def load_css(self):
         """Summary
         """
@@ -319,6 +337,10 @@ class MainApplication(Gtk.Application):
         # with just a couple of lines of code.
         css_provider.load_from_data(str.encode(
             """
+            .cinnamon-xlet-settings-app-title-button GtkImage:insensitive {
+                opacity: 1;
+                -gtk-image-effect: none;
+            }
             .cinnamon-xlet-settings-section-information-button:hover,
             .cinnamon-xlet-settings-section-information-button {
                 padding: 0;
@@ -503,13 +525,8 @@ class MainApplication(Gtk.Application):
         else:
             self.window.set_position(Gtk.WindowPosition.CENTER)
 
-        icon_path = os.path.join(self.xlet_dir, "icon.svg")
-
-        if not os.path.isfile(icon_path):
-            icon_path = os.path.join(self.xlet_dir, "icon.png")
-
-        if os.path.isfile(icon_path):
-            self.window.set_icon_from_file(icon_path)
+        if self.xlet_icon_path is not None:
+            self.window.set_icon_from_file(self.xlet_icon_path)
 
         settings_box = SettingsBox(pages_definition=self.pages_definition,
                                    settings=self.settings,
@@ -527,20 +544,29 @@ class MainApplication(Gtk.Application):
         header = Gtk.HeaderBar()
         header.set_show_close_button(True)
 
-        header_title = Gtk.Label(self._get_application_title())
-        # NOTE: Set the "title" class to the label so it is styled accordingly.
-        Gtk.StyleContext.add_class(Gtk.Widget.get_style_context(header_title), "title")
-        header_title.set_tooltip_text(self._get_application_title())
-        # NOTE: Ellipsize the title label so the window can tile/resize even when there
-        # is not enough room to display the complete text.
-        header_title.set_property("ellipsize", Pango.EllipsizeMode.END)
+        res, width, height = Gtk.IconSize.lookup(Gtk.IconSize.BUTTON)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
+            self.xlet_icon_path,
+            width if res else 16,
+            height if res else 16
+        )
+        image = Gtk.Image.new_from_pixbuf(pixbuf)
+        app_image = Gtk.Button(image=image)
+        app_image.set_sensitive(False)
+        # NOTE: Set a custom class to override the insensitive styling.
+        app_image.get_style_context().add_class("cinnamon-xlet-settings-app-title-button")
+        app_image.set_property("can_default", False)
+        app_image.set_property("receives_default", False)
+        app_image.set_property("can_focus", False)
+        app_image.set_property("relief", Gtk.ReliefStyle.NONE)
+        app_image.set_tooltip_text(self._get_application_title())
+        header.pack_start(app_image)
 
         stack_switcher = settings_box.get_stack_switcher()
 
         if stack_switcher is not None:
             stack = stack_switcher.get_stack()
             stack.connect("notify", self.on_stack_switcher_changed)
-            header.pack_start(header_title)
             header.set_custom_title(stack_switcher)
 
             try:
@@ -548,6 +574,14 @@ class MainApplication(Gtk.Application):
             except Exception:
                 pass
         else:
+            header_title = Gtk.Label(self._get_application_title())
+            # NOTE: Set the "title" class to the label so it is styled accordingly.
+            header_title.get_style_context().add_class(Gtk.STYLE_CLASS_TITLE)
+            header_title.set_tooltip_text(self._get_application_title())
+            # NOTE: Ellipsize the title label so the window can tile/resize even when there
+            # is not enough room to display the complete text.
+            header_title.set_property("ellipsize", Pango.EllipsizeMode.END)
+
             header.set_custom_title(header_title)
 
         self.window.set_titlebar(header)
@@ -589,7 +623,7 @@ class MainApplication(Gtk.Application):
             menu_button = Gtk.MenuButton()
             menu_button.set_popup(menu_popup)
             menu_button.add(Gtk.Image.new_from_icon_name(
-                "open-menu-symbolic", Gtk.IconSize.MENU
+                "open-menu-symbolic", Gtk.IconSize.BUTTON
             ))
 
             header.pack_end(menu_button)
@@ -599,7 +633,7 @@ class MainApplication(Gtk.Application):
         if compare_version(CINNAMON_VERSION, "3.2.0") < 0 and self.xlet_type != "extension":
             highlight_button = Gtk.Button()
             highlight_button.add(Gtk.Image.new_from_icon_name(
-                "software-update-available-symbolic", Gtk.IconSize.SMALL_TOOLBAR
+                "software-update-available-symbolic", Gtk.IconSize.BUTTON
             ))
             highlight_button.set_tooltip_text(
                 _("Momentarily highlight the %s on your desktop") % self.xlet_type)
@@ -779,7 +813,7 @@ class MainApplication(Gtk.Application):
 
         dialog.set_title(_("Trying to reset all settings!!!"))
 
-        msg = cgi.escape(_("Reset all settings to their default values?"))
+        msg = escape(_("Reset all settings to their default values?"))
         dialog.set_markup(msg)
 
         dialog.show_all()

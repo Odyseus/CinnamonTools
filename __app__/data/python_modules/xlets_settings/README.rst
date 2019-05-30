@@ -6,7 +6,7 @@ Cinnamon's xlets settings re-implementation
 General changes
 ---------------
 
-- This implementation uses header bars instead of traditional windows. Why?
+- This implementation uses header bars instead of traditional windows with a toolbar. Why?
 
     + Because upstream is planing to switch to this aberration belched from the bowels of corporations full of web developers playing at being software developers. SO, better get used to this garbage in preparation for when it's forced down our throats.
     + Gtk.HeaderBars are easier to deal with (just create one and throw all widgets inside it). So, there is the barely bright side. LOL
@@ -47,6 +47,7 @@ Widget changes made on this implementation
     + Added ``dialog-info-labels`` option (an array/list of strings) that allows to display informative labels on the edit/add dialog. This allows to keep the window clean and at the same time keep basic information at hand.
     + Changed ``keybinding`` cell renderer. The cell will display the exact same name displayed in the ``keybinding`` widget instead of the internal value. For example, a ``keybinding`` with its shortcut set to **Control+d** (the actual internal value is **<Primary>d**), it will display **Control+D** in the ``keybinding`` widget label **AND** in the ``keybinding`` cell renderer.
     + Implemented ``apply-and-quit`` boolean option. It allows to exit the settings window when the apply button on a ``list`` widget is clicked.
+    + Added ``app`` cell rendered. It allows to use a ``appchooser`` widget to choose an application from the applications installed in a system. The value stored is the application ID and the value showed in the list is the application name.
 
 - **keybinding**: Added ``num-bind`` integer option that exposes for configuration the number of keybindings to create for each ``keybinding`` widget.
 - **keybinding-with-options**. A new widget that allows to attach a keybinding to a combo box. The objective is to be able to easily tie a keybinding to a predefined action. This widget is also exposed to be used with the ``list`` widget.
@@ -62,6 +63,9 @@ Widget changes made on this implementation
 
         I finally figure out why in Cinnamon's implementation the ``options`` option is implemented in an *unnatural* way. It's because when the widgets are generated from definitions found in a settings-schema.json file, the values can be defined in the type that is needed (integer, float, string or boolean). Then, when the widget is built, the type is extracted from the values themselves. Since I inverted the ``options`` option into a *natural* behavior, I broke that very clever feature, and that's why I exposed the ``valtype`` option; to be able to explicitly set a type for an option.
 
+- **appchooser**: A new widget that allows to select an application from the list of installed applications on a system. The value stored in the setting for this widget is the application ID (the name of its .desktop file).
+- **applist**: A new widget that allows to store a list of unique applications that can be selected from the list of installed applications on a system. The value stored in the setting for this widget is an array with the list application IDs (the name of their .desktop files).
+
 
 Limitations of this implementation
 ----------------------------------
@@ -76,3 +80,11 @@ TODO
 - Implement handling of gsettings. This will allow me to use this framework on the xlets in which I use gsettings with custom GUIs.
 - Implement a *multi-widget widget*. Something similar to the ``keybinding-with-options`` widget. But instead of binding a combo box to a key binding, I would like to bind any type of widget to an option selector widget (a combo box or a stack switcher). Very green idea yet.
 - Implement handling of multiple xlet instances. I didn't implemented this due to its complexity and because I mostly use one instance of each xlet, so it never bothered me. But now that I'm familiar enough with the original code, I might give it a try.
+
+    + Forget about adding the window title to the header bar. If I implement this, I would have to add the instance switcher buttons at the start of the header bar, leaving no place whatsoever to display the window title.
+    + Maybe add a status bar at the bottom of the window that can hold the window title along with other information; like the instance ID perhaps? Or maybe just a simple label at the top of the window and bellow the header bar? But what I like the most so far is:
+
+        1. Add a button at the start of the header bar with the xlet icon as an image and the text "Settings for..." as a tooltip.
+        2. In most cases, the image alone will serve to quickly identify to which xlet the window belongs.
+        3. K.I.S.S. it. Do not add a menu nor any other action to the button.
+        4. I already implemented this button without implementing multi-instance support. It was bothering a big deal to see the title text ellipsized 90% of the time; it just made that text in that place totally useless. Like I said in point 3, in most cases the image is enough.
