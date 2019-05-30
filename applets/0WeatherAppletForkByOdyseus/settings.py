@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import argparse
-import cgi
 import os
 import sys
+
+from html import escape
 
 XLET_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 modules_dir = os.path.join(XLET_DIR)
@@ -14,10 +15,10 @@ from python_modules.xlets_settings import _
 
 
 INFO_LABELS = [
-    "<b>%s</b>" % cgi.escape(_("Language legends")),
-    "<b>(D)</b>: %s" % cgi.escape(_("Language supported by DarkSky.")),
-    "<b>(O)</b>: %s" % cgi.escape(_("Language supported by OpenWeatherMap.")),
-    "<b>(W)</b>: %s" % cgi.escape(_("Language supported by WeatherBit.")),
+    "<b>%s</b>" % escape(_("Language legends")),
+    "<b>(D)</b>: %s" % escape(_("Language supported by DarkSky.")),
+    "<b>(O)</b>: %s" % escape(_("Language supported by OpenWeatherMap.")),
+    "<b>(W)</b>: %s" % escape(_("Language supported by WeatherBit.")),
 ]
 
 LOGGING_LEVEL_TOOLTIP = "\n".join([
@@ -245,7 +246,7 @@ GENERAL_TAB = {
         }, {
             "widget-type": "label",
             "args": {
-                "label": "<b>(*) %s</b>" % cgi.escape(_("Requires Cinnamon restart to enable/disable")),
+                "label": "<b>(*) %s</b>" % escape(_("Requires Cinnamon restart to enable/disable")),
                 "use_markup": True
             }
         }]

@@ -58,7 +58,7 @@ const {
 
 var Debugger = new DebugManager.DebugManager();
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     CustomNotification: CustomNotification,
     LocationSelectorMenu: LocationSelectorMenu,
     LocationSelectorMenuItem: LocationSelectorMenuItem,

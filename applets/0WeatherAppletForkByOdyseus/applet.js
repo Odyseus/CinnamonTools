@@ -43,6 +43,7 @@ const {
         Cinnamon,
         Clutter,
         Gio,
+        GLib,
         Gtk,
         Pango,
         Soup,
@@ -94,7 +95,7 @@ const {
 
 const {
     LoggingLevel,
-    prototypeDebugger
+    methodWrapper
 } = DebugManager;
 
 const {
@@ -212,7 +213,7 @@ Weather.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -338,7 +339,7 @@ Weather.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         }
     },
@@ -769,7 +770,7 @@ Weather.prototype = {
 
                 if ($.Debugger.logging_level === LoggingLevel.VERY_VERBOSE ||
                     $.Debugger.debugger_enabled) {
-                    prototypeDebugger(provider, {
+                    methodWrapper(provider, {
                         objectName: providerID + ".Provider",
                         verbose: $.Debugger.logging_level === LoggingLevel.VERY_VERBOSE,
                         debug: $.Debugger.debugger_enabled
@@ -1041,7 +1042,7 @@ Weather.prototype = {
                     this.set_applet_label("");
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
 
             this.forceMenuReload = false;
@@ -1055,7 +1056,8 @@ Weather.prototype = {
 
         Mainloop.timeout_add_seconds(60, () => {
             this._startRefreshWeatherLoop();
-            return false;
+
+            return GLib.SOURCE_REMOVE;
         });
     },
 
@@ -1585,9 +1587,7 @@ Weather.prototype = {
         try {
             this.locationsMap = new Map(
                 this.sortLocations(this.pref_locations_storage).map((aObj) => {
-                    if (aObj && typeof aObj !== "function") {
-                        return [aObj.locationID + ":" + aObj.providerID, aObj];
-                    }
+                    return [aObj.locationID + ":" + aObj.providerID, aObj];
                 })
             );
         } catch (aErr) {
@@ -1792,7 +1792,7 @@ Weather.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         CustomPanelTooltip: CustomPanelTooltip,
         InteligentTooltip: InteligentTooltip,
         Weather: Weather
