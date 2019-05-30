@@ -15,6 +15,7 @@ if (typeof require === "function") {
 
 const {
     gi: {
+        GLib,
         St
     },
     mainloop: Mainloop,
@@ -192,7 +193,7 @@ CollapsibleSystray.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -908,7 +909,7 @@ CollapsibleSystray.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         CollapsibleSystray: CollapsibleSystray
     });
 

@@ -643,7 +643,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
 
 };
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet: CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet,
     CSCollapseBtn: CSCollapseBtn,
     CSRemovableSwitchMenuItem: CSRemovableSwitchMenuItem,
