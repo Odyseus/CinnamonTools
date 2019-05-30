@@ -2579,7 +2579,7 @@ function TryExec(aParams) {
     return true;
 }
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     CinnamonRecorderProfileItem: CinnamonRecorderProfileItem,
     CinnamonRecorderProfileSelector: CinnamonRecorderProfileSelector,
     CustomPopupMenuSection: CustomPopupMenuSection,

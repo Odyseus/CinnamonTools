@@ -304,7 +304,7 @@ DesktopCapture.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -1255,7 +1255,7 @@ DesktopCapture.prototype = {
                             break;
                     }
 
-                    return false;
+                    return GLib.SOURCE_REMOVE;
                 });
             }
         }
@@ -1355,7 +1355,7 @@ DesktopCapture.prototype = {
                 }
             );
 
-            return false;
+            return GLib.SOURCE_REMOVE;
         };
 
         this.closeMainMenu();
@@ -1483,7 +1483,7 @@ DesktopCapture.prototype = {
                         this._handleHistoryAndClipboard("recorder", file_path);
                     }
 
-                    return false;
+                    return GLib.SOURCE_REMOVE;
                 });
         }
 
@@ -1796,7 +1796,8 @@ DesktopCapture.prototype = {
         // Timeout to not worry about closing menu animation.
         return Mainloop.timeout_add(200, () => {
             $.Exec(cmd);
-            return false;
+
+            return GLib.SOURCE_REMOVE;
         });
     },
 
@@ -1807,7 +1808,8 @@ DesktopCapture.prototype = {
         return Mainloop.timeout_add(200,
             () => {
                 $.TryExec(aParams);
-                return false;
+
+                return GLib.SOURCE_REMOVE;
             });
     },
 
@@ -2094,7 +2096,7 @@ DesktopCapture.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelheight, aInstanceId) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         DesktopCapture: DesktopCapture,
         InteligentTooltip: InteligentTooltip
     });
