@@ -12,6 +12,7 @@ if (typeof require === "function") {
 
 const {
     gi: {
+        GLib,
         St
     },
     mainloop: Mainloop,
@@ -73,7 +74,8 @@ PanelDrawer.prototype = {
                         if (this.h) {
                             this.autodo(true);
                         }
-                        return false;
+
+                        return GLib.SOURCE_REMOVE;
                     }
                 );
             }
@@ -101,7 +103,8 @@ PanelDrawer.prototype = {
                             this.doAction(true);
                             this.autodo(true);
                         }
-                        return false;
+
+                        return GLib.SOURCE_REMOVE;
                     });
                 }
             });
@@ -154,7 +157,7 @@ PanelDrawer.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -283,7 +286,8 @@ PanelDrawer.prototype = {
             if (this.auto_hide & !global.settings.get_boolean("panel-edit-mode")) {
                 this._hideTimeoutId = Mainloop.timeout_add_seconds(this.hide_time, () => {
                     this.autodo(updalreadyH);
-                    return false;
+
+                    return GLib.SOURCE_REMOVE;
                 });
             }
         }
@@ -330,7 +334,8 @@ PanelDrawer.prototype = {
             this._hideTimeoutId = Mainloop.timeout_add_seconds(this.hide_time,
                 () => {
                     this.autodo(updalreadyH);
-                    return false;
+
+                    return GLib.SOURCE_REMOVE;
                 }
             );
         } else if (this.h && !global.settings.get_boolean("panel-edit-mode")) {
@@ -380,7 +385,7 @@ PanelDrawer.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapPrototypes(Debugger, {
+    DebugManager.wrapObjectMethods(Debugger, {
         PanelDrawer: PanelDrawer
     });
 
