@@ -967,15 +967,15 @@ RecentAppsManager.prototype = {
             schemaSource = GioSSS.get_default();
         }
 
-        this.schemaObj = schemaSource.lookup(GSETTINGS_SCHEMA, false);
+        let schemaObj = schemaSource.lookup(GSETTINGS_SCHEMA, false);
 
-        if (!this.schemaObj) {
+        if (!schemaObj) {
             throw new Error("Schema %s could not be found for xlet %s."
                 .format(GSETTINGS_SCHEMA, XletMeta.uuid) + "Please check your installation.");
         }
 
         this.schema = new Gio.Settings({
-            settings_schema: this.schemaObj
+            settings_schema: schemaObj
         });
 
         this._handlers = [];
@@ -1058,7 +1058,7 @@ RecentAppsManager.prototype = {
     }
 };
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     ApplicationButton: ApplicationButton,
     ApplicationContextMenuItem: ApplicationContextMenuItem,
     CategoriesApplicationsBox: CategoriesApplicationsBox,

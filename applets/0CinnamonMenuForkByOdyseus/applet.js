@@ -204,7 +204,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -420,14 +420,14 @@ CinnamonMenuForkByOdyseus.prototype = {
         this._appSysChangedId = Mainloop.timeout_add(3000, () => {
             if (this.refreshing) {
                 // Return true so this callback is called again.
-                return true;
+                return GLib.SOURCE_CONTINUE;
             }
 
             this.refreshing = true;
             this._hardRefreshAll();
             this._appSysChangedId = 0;
 
-            return false;
+            return GLib.SOURCE_REMOVE;
         });
     },
 
@@ -1710,7 +1710,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.appBoxIter.reloadVisible();
             this._refreshRecentApps();
 
-            return false;
+            return GLib.SOURCE_REMOVE;
         });
     },
 
@@ -1930,7 +1930,7 @@ CinnamonMenuForkByOdyseus.prototype = {
         Mainloop.idle_add(() => {
             this._clearAllSelections();
 
-            return false;
+            return GLib.SOURCE_REMOVE;
         });
 
         this.menu.actor.connect("allocation-changed",
@@ -2178,10 +2178,12 @@ CinnamonMenuForkByOdyseus.prototype = {
              */
             this._searchingTimeout = Mainloop.timeout_add(50, () => {
                 let searchString = this.searchEntry.get_text();
+
                 if (!searchString && !this.searchActive) {
                     this._searchingTimeout = 0;
-                    return false;
+                    return GLib.SOURCE_REMOVE;
                 }
+
                 this.searchActive = !!searchString;
                 this._clearAllSelections();
 
@@ -2209,7 +2211,8 @@ CinnamonMenuForkByOdyseus.prototype = {
                 }
 
                 this._searchingTimeout = 0;
-                return false;
+
+                return GLib.SOURCE_REMOVE;
             });
 
             return;
@@ -2510,7 +2513,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                 haystacks: haystacks
             });
 
-            return false;
+            return GLib.SOURCE_REMOVE;
         });
     },
 
@@ -2561,7 +2564,8 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.initial_load_done = true;
             this.on_orientation_changed(this.orientation);
             this._hardRefreshTimeout = 0;
-            return false;
+
+            return GLib.SOURCE_REMOVE;
         });
     },
 
@@ -2618,7 +2622,7 @@ CinnamonMenuForkByOdyseus.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceID) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         CinnamonMenu: CinnamonMenuForkByOdyseus
     });
 
