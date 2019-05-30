@@ -139,7 +139,7 @@ FeedsReaderForkByOdyseus.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -707,7 +707,7 @@ FeedsReaderForkByOdyseus.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         CustomNotificationSource: CustomNotificationSource,
         FeedsReaderForkByOdyseus: FeedsReaderForkByOdyseus
     });

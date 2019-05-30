@@ -1149,7 +1149,7 @@ FeedReader.prototype = {
 };
 Signals.addSignalMethods(FeedReader.prototype);
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     FeedDataItem: FeedDataItem,
     FeedMenuItem: FeedMenuItem,
     FeedReader: FeedReader,

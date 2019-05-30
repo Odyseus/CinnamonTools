@@ -13,7 +13,6 @@ XLET_DIR : str
 """
 
 import argparse
-import cgi
 import gettext
 import gi
 import os
@@ -24,6 +23,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GLib
 from gi.repository import Gio
 from gi.repository import Gtk
+from html import escape
 
 from config_file_manager import ConfigFileManager
 
@@ -57,7 +57,7 @@ def display_warning_message(widget, title, message):
                                buttons=Gtk.ButtonsType.OK)
 
     try:
-        esc = cgi.escape(message)
+        esc = escape(message)
     except Exception:
         esc = message
 
@@ -145,7 +145,7 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
             The window toolbar.
         """
         toolbar = Gtk.Toolbar()
-        toolbar.get_style_context().add_class("primary-toolbar")
+        toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_PRIMARY_TOOLBAR)
 
         toolitem = Gtk.ToolItem()
         toolitem.set_expand(True)
@@ -183,7 +183,7 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         add_profile_button = Gtk.Button()
         add_profile_button.set_property("valign", Gtk.Align.CENTER)
         add_profile_button.add(Gtk.Image.new_from_icon_name(
-            "list-add-symbolic", Gtk.IconSize.MENU))
+            "list-add-symbolic", Gtk.IconSize.BUTTON))
         add_profile_button.set_tooltip_text(_("Create a new profile"))
 
         add_profile_button.connect("clicked", self.on_new_profile_button_activate)
@@ -191,7 +191,7 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         remove_profile_button = Gtk.Button()
         remove_profile_button.set_property("valign", Gtk.Align.CENTER)
         remove_profile_button.add(Gtk.Image.new_from_icon_name(
-            "edit-delete-symbolic", Gtk.IconSize.MENU))
+            "edit-delete-symbolic", Gtk.IconSize.BUTTON))
         remove_profile_button.set_tooltip_text(_("Remove current profile"))
 
         remove_profile_button.connect("clicked", self.on_remove_profile_button_activate)
@@ -217,7 +217,7 @@ class FeedsManagerWindow(Gtk.ApplicationWindow):
         menu_button = Gtk.MenuButton()
         menu_button.set_property("valign", Gtk.Align.CENTER)
         menu_button.set_popup(menu_popup)
-        menu_button.add(Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU))
+        menu_button.add(Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.BUTTON))
         menu_button.set_tooltip_text(_("Manage settings"))
 
         toolbar_box.attach(profile_label, 0, 0, 1, 1)
