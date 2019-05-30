@@ -21,6 +21,9 @@ settings = {
         "source": "__app__/data/javascript_modules/customFileUtils.js",
         "destination": "customFileUtils.js"
     }, {
+        "source": "__app__/data/javascript_modules/extensionSettingsUtils.js",
+        "destination": "extensionSettingsUtils.js"
+    }, {
         "source": "__app__/data/python_modules/xlets_settings",
         "destination": "python_modules/xlets_settings"
     }, {

@@ -1,27 +1,14 @@
-let XletMeta,
-    GlobalUtils;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
-} else {
-    XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
-}
+let GlobalUtils,
+    ExtensionSettingsUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     GlobalUtils = require("./globalUtils.js");
+    ExtensionSettingsUtils = require("./extensionSettingsUtils.js");
 } else {
     GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
+    ExtensionSettingsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].extensionSettingsUtils;
 }
-
-const {
-    ui: {
-        settings: {
-            ExtensionSettings
-        }
-    }
-} = imports;
 
 const {
     _
@@ -47,90 +34,16 @@ const BOUND_SETTINGS_ARRAY = [
     "pref_imp_exp_last_selected_directory"
 ];
 
-/* NOTE: Future me, ULTRA-VERY-IMPORTANT!!!
- * TL;DR;: Keep using Cinnamon's native settings system initialized inside an
- * applet/desklet class/prototype, not globally declared and initialized in its
- * own class/prototype.
- * Do NOT bother using Cinnamon's native settings system initialized with its own
- * class/prototype on any type of xlet other than extensions.
- * The settings system for applets/desklets requires an xlet instance ID to be
- * passed for the settings to be initialized. This will force me to initialize the
- * settings class/prototype inside main(). That would defeat the purpose of having
- * a class initialized in a module to be able to use it by any other module.
- * It is worth mentioning that, if an xlet is NOT multi-instance (like extension are),
- * its instance ID is also its UUID; which is available globally.
- */
-function ColorBlindnessAssistantSettings() {
-    this._init.apply(this, arguments);
-}
-
-ColorBlindnessAssistantSettings.prototype = {
-    _init: function() {
-        this.settings = new ExtensionSettings(
-            this,
-            XletMeta.uuid
-        );
-
-        this._handlers = [];
-
-        this._bindSettings();
-    },
-
-    _bindSettings: function() {
-        /* NOTE: I converted the entire extension from using gsetting into using
-         * Cinnamon's native settings system for the sole purpose of "enjoying"
-         * the native system. I was enjoying it until I discovered that using
-         * this.settings.bind/bindProperty doesn't make properties act like
-         * getters!!! So I had to f*cking do it myself!!!!
-         */
-        let i = BOUND_SETTINGS_ARRAY.length;
-        while (i--) {
-            Object.defineProperty(
-                this,
-                BOUND_SETTINGS_ARRAY[i],
-                this._getDescriptor(BOUND_SETTINGS_ARRAY[i])
-            );
-        }
-    },
-
-    _getDescriptor: function(aKey) {
-        return Object.create({
-            get: () => {
-                return this.settings.getValue(aKey);
-            },
-            set: (aVal) => {
-                this.settings.setValue(aKey, aVal);
-            },
-            enumerable: true,
-            configurable: true
-        });
-    },
-
-    connect: function(signal, callback) {
-        let handler_id = this.settings.connect(signal, callback);
-        this._handlers.push(handler_id);
-        return handler_id;
-    },
-
-    destroy: function() {
-        while (this._handlers.length) {
-            this.disconnect(this._handlers[0]);
-        }
-    },
-
-    disconnect: function(handler_id) {
-        let index = this._handlers.indexOf(handler_id);
-        this.settings.disconnect(handler_id);
-
-        if (index > -1) {
-            this._handlers.splice(index, 1);
-        }
-    }
-};
-
-var Settings = new ColorBlindnessAssistantSettings();
+var Settings = new ExtensionSettingsUtils.CustomExtensionSettings(BOUND_SETTINGS_ARRAY);
 
 var EFFECT_PROP_NAME = "__ColorBlindnessAssistantExtension";
+
+var Injections = {
+    workspace: {},
+    appSwitcher3D: {},
+    expoThumbnail: {},
+    timelineSwitcher: {}
+};
 
 var ELLIPSIS = "...";
 
@@ -199,6 +112,7 @@ var DaltonizerWizardTooltips = {
 /* exported  EFFECT_PROP_NAME,
              Settings,
              LoggingLevel,
+             Injections,
              ELLIPSIS,
              EFFECT_DEFAULT_PARAMS,
              ShaderEffectTypeMap,

@@ -56,8 +56,7 @@ const {
 } = CustomTooltips;
 
 const {
-    LoggingLevel,
-    prototypeDebugger
+    wrapObjectMethods
 } = DebugManager;
 
 function CheckButton() {
@@ -801,27 +800,12 @@ Daltonizer.prototype = {
     }
 };
 
-if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE ||
-    Settings.pref_debugger_enabled) {
-    try {
-        let protos = {
-            CheckButton: CheckButton,
-            CheckGroup: CheckGroup,
-            Daltonizer: Daltonizer,
-            DaltonizerTitleBox: DaltonizerTitleBox,
-            DaltonizerWizard: DaltonizerWizard,
-            InteligentTooltip: InteligentTooltip,
-            WindowTracker: WindowTracker
-        };
-
-        for (let name in protos) {
-            prototypeDebugger(protos[name], {
-                objectName: name,
-                verbose: Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE,
-                debug: Settings.pref_debugger_enabled
-            });
-        }
-    } catch (aErr) {
-        global.logError(aErr);
-    }
-}
+wrapObjectMethods(Settings, {
+    CheckButton: CheckButton,
+    CheckGroup: CheckGroup,
+    Daltonizer: Daltonizer,
+    DaltonizerTitleBox: DaltonizerTitleBox,
+    DaltonizerWizard: DaltonizerWizard,
+    InteligentTooltip: InteligentTooltip,
+    WindowTracker: WindowTracker
+});

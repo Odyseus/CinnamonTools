@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import argparse
-import cgi
 import os
 import sys
+
+from html import escape
 
 XLET_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 modules_dir = os.path.join(XLET_DIR)
@@ -14,24 +15,24 @@ from python_modules.xlets_settings import _
 
 INFO_LABELS = [
     "<b>%s</b>: %s" % (
-        cgi.escape(_("Acromatopia (rod monochromatism)")),
-        cgi.escape(_("Total or almost total color blindness."))
+        escape(_("Acromatopia (rod monochromatism)")),
+        escape(_("Total or almost total color blindness."))
     ),
     "<b>%s</b>: %s" % (
-        cgi.escape(_("Acromatopia (blue-cone monochromatism)")),
-        cgi.escape(_("Total or almost total color blindness."))
+        escape(_("Acromatopia (blue-cone monochromatism)")),
+        escape(_("Total or almost total color blindness."))
     ),
     "<b>%s</b>: %s" % (
-        cgi.escape(_("Deuteranopia")),
-        cgi.escape(_("Green color deficiency."))
+        escape(_("Deuteranopia")),
+        escape(_("Green color deficiency."))
     ),
     "<b>%s</b>: %s" % (
-        cgi.escape(_("Protanopia")),
-        cgi.escape(_("Red color deficiency."))
+        escape(_("Protanopia")),
+        escape(_("Red color deficiency."))
     ),
     "<b>%s</b>: %s" % (
-        cgi.escape(_("Tritanopia")),
-        cgi.escape(_("Blue color deficiency."))
+        escape(_("Tritanopia")),
+        escape(_("Blue color deficiency."))
     )
 ]
 
@@ -256,7 +257,7 @@ OTHER_TAB = {
         }, {
             "widget-type": "label",
             "args": {
-                "label": "<b>(*) %s</b>" % cgi.escape(_("Requires Cinnamon restart to enable/disable")),
+                "label": "<b>(*) %s</b>" % escape(_("Requires Cinnamon restart to enable/disable")),
                 "use_markup": True
             }
         }]

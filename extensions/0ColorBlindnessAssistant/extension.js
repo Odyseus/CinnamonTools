@@ -46,10 +46,6 @@ ColorBlindnessAssistant.prototype = {
         this._settingsDesktopFileName = "org.Cinnamon.Extensions.ColorBlindnessAssistant.Settings";
         this._settingsDesktopFilePath = GLib.get_home_dir() +
             "/.local/share/applications/%s.desktop".format(this._settingsDesktopFileName);
-        this.workspaceInjection = null;
-        this.appSwitcher3DInjection = null;
-        this.expoThumbnailInjection = null;
-        this.timelineSwitcherInjection = null;
         this.theme = null;
         this.stylesheet = null;
         this.load_theme_id = 0;
@@ -404,155 +400,132 @@ ColorBlindnessAssistant.prototype = {
 
         /* NOTE: This injection affects Scale mode (all windows displayed in "exposé").
          */
-        if (!this.workspaceInjection) {
-            this.workspaceInjection = G.injectAfter(
-                imports.ui.workspace.WindowClone.prototype,
-                "_init",
-                function(realWindow, myContainer) { // jshint ignore:line
-                    try {
-                        if (this.realWindow.get_effect(extScope._effect_id) &&
-                            this.realWindow.hasOwnProperty(C.EFFECT_PROP_NAME)) {
-                            this.actor.add_effect_with_name(
-                                extScope._effect_id,
-                                extScope._getEffect(this.realWindow[C.EFFECT_PROP_NAME])
-                            );
-                        } else {
-                            this.actor.remove_effect_by_name(extScope._effect_id);
-                        }
-                    } catch (aErr) {
-                        global.logError(aErr);
+        C.Injections.workspace._init = G.injectMethodAfter(
+            imports.ui.workspace.WindowClone.prototype,
+            "_init",
+            function(realWindow, myContainer) { // jshint ignore:line
+                try {
+                    if (this.realWindow.get_effect(extScope._effect_id) &&
+                        this.realWindow.hasOwnProperty(C.EFFECT_PROP_NAME)) {
+                        this.actor.add_effect_with_name(
+                            extScope._effect_id,
+                            extScope._getEffect(this.realWindow[C.EFFECT_PROP_NAME])
+                        );
+                    } else {
+                        this.actor.remove_effect_by_name(extScope._effect_id);
                     }
+                } catch (aErr) {
+                    global.logError(aErr);
                 }
-            );
-        }
+            }
+        );
 
         /* NOTE: This injection affects Coverflow (3D).
          */
-        if (!this.appSwitcher3DInjection) {
-            this.appSwitcher3DInjection = G.injectAfter(
-                imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
-                "_adaptClones",
-                function() {
-                    try {
-                        let i = this._previews.length;
-                        while (i--) {
-                            let preview = this._previews[i];
-                            let winActor = preview.metaWindow.get_compositor_private();
+        C.Injections.appSwitcher3D._adaptClones = G.injectMethodAfter(
+            imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
+            "_adaptClones",
+            function() {
+                try {
+                    let i = this._previews.length;
+                    while (i--) {
+                        let preview = this._previews[i];
+                        let winActor = preview.metaWindow.get_compositor_private();
 
-                            if (winActor.get_effect(extScope._effect_id) &&
-                                winActor.hasOwnProperty(C.EFFECT_PROP_NAME)) {
-                                preview.add_effect_with_name(
-                                    extScope._effect_id,
-                                    extScope._getEffect(winActor[C.EFFECT_PROP_NAME])
-                                );
-                            } else {
-                                preview.remove_effect_by_name(extScope._effect_id);
-                            }
+                        if (winActor.get_effect(extScope._effect_id) &&
+                            winActor.hasOwnProperty(C.EFFECT_PROP_NAME)) {
+                            preview.add_effect_with_name(
+                                extScope._effect_id,
+                                extScope._getEffect(winActor[C.EFFECT_PROP_NAME])
+                            );
+                        } else {
+                            preview.remove_effect_by_name(extScope._effect_id);
                         }
-                    } catch (aErr) {
-                        global.logError(aErr);
                     }
+                } catch (aErr) {
+                    global.logError(aErr);
                 }
-            );
-        }
+            }
+        );
 
         /* NOTE: This injection affects Expo mode (the preview of all workspaces).
          */
-        if (!this.expoThumbnailInjection) {
-            this.expoThumbnailInjection = G.injectAfter(
-                imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
-                "syncStacking",
-                function() {
-                    try {
-                        let i = this.windows.length;
-                        while (i--) {
-                            let clone = this.windows[i];
-                            let winActor = clone.metaWindow.get_compositor_private();
+        C.Injections.expoThumbnail.syncStacking = G.injectMethodAfter(
+            imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
+            "syncStacking",
+            function() {
+                try {
+                    let i = this.windows.length;
+                    while (i--) {
+                        let clone = this.windows[i];
+                        let winActor = clone.metaWindow.get_compositor_private();
 
-                            if (winActor.get_effect(extScope._effect_id) &&
-                                winActor.hasOwnProperty(C.EFFECT_PROP_NAME)) {
-                                clone.actor.add_effect_with_name(
-                                    extScope._effect_id,
-                                    extScope._getEffect(winActor[C.EFFECT_PROP_NAME])
-                                );
-                            } else {
-                                clone.actor.remove_effect_by_name(extScope._effect_id);
-                            }
+                        if (winActor.get_effect(extScope._effect_id) &&
+                            winActor.hasOwnProperty(C.EFFECT_PROP_NAME)) {
+                            clone.actor.add_effect_with_name(
+                                extScope._effect_id,
+                                extScope._getEffect(winActor[C.EFFECT_PROP_NAME])
+                            );
+                        } else {
+                            clone.actor.remove_effect_by_name(extScope._effect_id);
                         }
-                    } catch (aErr) {
-                        global.logError(aErr);
                     }
+                } catch (aErr) {
+                    global.logError(aErr);
                 }
-            );
-        }
+            }
+        );
 
         /* NOTE: This injection affects Timeline (3D).
          */
-        if (!this.timelineSwitcherInjection) {
-            this.timelineSwitcherInjection = G.injectAfter(
-                imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
-                "_adaptClones",
-                function() {
-                    try {
-                        let i = this._previews.length;
-                        while (i--) {
-                            let clone = this._previews[i];
-                            let winActor = clone.metaWindow.get_compositor_private();
+        C.Injections.timelineSwitcher._adaptClones = G.injectMethodAfter(
+            imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
+            "_adaptClones",
+            function() {
+                try {
+                    let i = this._previews.length;
+                    while (i--) {
+                        let clone = this._previews[i];
+                        let winActor = clone.metaWindow.get_compositor_private();
 
-                            if (winActor.get_effect(extScope._effect_id) &&
-                                winActor.hasOwnProperty(C.EFFECT_PROP_NAME)) {
-                                clone.add_effect_with_name(
-                                    extScope._effect_id,
-                                    extScope._getEffect(winActor[C.EFFECT_PROP_NAME])
-                                );
-                            } else {
-                                clone.remove_effect_by_name(extScope._effect_id);
-                            }
+                        if (winActor.get_effect(extScope._effect_id) &&
+                            winActor.hasOwnProperty(C.EFFECT_PROP_NAME)) {
+                            clone.add_effect_with_name(
+                                extScope._effect_id,
+                                extScope._getEffect(winActor[C.EFFECT_PROP_NAME])
+                            );
+                        } else {
+                            clone.remove_effect_by_name(extScope._effect_id);
                         }
-                    } catch (aErr) {
-                        global.logError(aErr);
                     }
+                } catch (aErr) {
+                    global.logError(aErr);
                 }
-            );
-        }
+            }
+        );
     },
 
     _removeCinnamonInjections: function() {
-        if (this.workspaceInjection) {
-            G.removeInjection(
-                imports.ui.workspace.WindowClone.prototype,
-                "_init",
-                this.workspaceInjection
-            );
-            this.workspaceInjection = null;
-        }
-
-        if (this.appSwitcher3DInjection) {
-            G.removeInjection(
-                imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
-                "_adaptClones",
-                this.appSwitcher3DInjection
-            );
-            this.appSwitcher3DInjection = null;
-        }
-
-        if (this.expoThumbnailInjection) {
-            G.removeInjection(
-                imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
-                "syncStacking",
-                this.expoThumbnailInjection
-            );
-            this.expoThumbnailInjection = null;
-        }
-
-        if (this.timelineSwitcherInjection) {
-            G.removeInjection(
-                imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
-                "_adaptClones",
-                this.timelineSwitcherInjection
-            );
-            this.timelineSwitcherInjection = null;
-        }
+        G.removeInjection(
+            imports.ui.workspace.WindowClone.prototype,
+            C.Injections.workspace,
+            "_init"
+        );
+        G.removeInjection(
+            imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
+            C.Injections.appSwitcher3D,
+            "_adaptClones"
+        );
+        G.removeInjection(
+            imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
+            C.Injections.expoThumbnail,
+            "syncStacking"
+        );
+        G.removeInjection(
+            imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
+            C.Injections.timelineSwitcher,
+            "_adaptClones"
+        );
     },
 
     enable: function(aFromInit = false) {
@@ -622,7 +595,7 @@ ColorBlindnessAssistant.prototype = {
                 Mainloop.idle_add(() => {
                     this.enable();
 
-                    return false;
+                    return GLib.SOURCE_REMOVE;
                 });
             }
         }.bind(this));
@@ -671,7 +644,7 @@ ColorBlindnessAssistant.prototype = {
                 Mainloop.idle_add(() => {
                     Settings.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
 
-                    return false;
+                    return GLib.SOURCE_REMOVE;
                 });
             }
         }.bind(this));
@@ -749,24 +722,9 @@ function init(aXletMeta) {
 }
 
 function enable() {
-    if (Settings.pref_logging_level === D.LoggingLevel.VERY_VERBOSE ||
-        Settings.pref_debugger_enabled) {
-        try {
-            let protos = {
-                ColorBlindnessAssistant: ColorBlindnessAssistant
-            };
-
-            for (let name in protos) {
-                D.prototypeDebugger(protos[name], {
-                    objectName: name,
-                    verbose: Settings.pref_logging_level === D.LoggingLevel.VERY_VERBOSE,
-                    debug: Settings.pref_debugger_enabled
-                });
-            }
-        } catch (aErr) {
-            global.logError(aErr);
-        }
-    }
+    D.wrapObjectMethods(Settings, {
+        ColorBlindnessAssistant: ColorBlindnessAssistant
+    });
 
     try {
         assistant = new ColorBlindnessAssistant();

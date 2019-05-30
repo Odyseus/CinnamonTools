@@ -35,32 +35,16 @@ const {
 } = GlobalUtils;
 
 const {
-    LoggingLevel,
-    prototypeDebugger
+    wrapObjectMethods
 } = DebugManager;
 
 const {
     CustomNotification
 } = DesktopNotificationsUtils;
 
-if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE ||
-    Settings.pref_debugger_enabled) {
-    try {
-        let protos = {
-            CustomNotification: CustomNotification
-        };
-
-        for (let name in protos) {
-            prototypeDebugger(protos[name], {
-                objectName: name,
-                verbose: Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE,
-                debug: Settings.pref_debugger_enabled
-            });
-        }
-    } catch (aErr) {
-        global.logError(aErr);
-    }
-}
+wrapObjectMethods(Settings, {
+    CustomNotification: CustomNotification
+});
 
 var Notification = new CustomNotification({
     title: escapeHTML(_(XletMeta.name)),
