@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import argparse
-import cgi
 import gettext
 import gi
 import json
@@ -18,6 +17,7 @@ from gi.repository import Gdk
 from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import Pango
+from htnl import escape
 from time import time
 
 from python_modules.html_tags_stripper import strip_html_tags
@@ -200,9 +200,9 @@ def sanitize_history(transient_for=None):
     dialog.set_title(_("History file sanitation"))
 
     msg = [
-        "<b>%s</b>" % cgi.escape(
+        "<b>%s</b>" % escape(
             _("It is recommended to perform a backup of the history file before continuing.")),
-        cgi.escape(_("Proceed anyways?")),
+        escape(_("Proceed anyways?")),
     ]
     dialog.set_markup("\n".join(msg))
     dialog.show_all()
@@ -425,7 +425,7 @@ class HistoryApplication(Gtk.Application):
         header.set_show_close_button(True)
 
         header_title = Gtk.Label(APPLICATION_TITLE)
-        Gtk.StyleContext.add_class(Gtk.Widget.get_style_context(header_title), "title")
+        header_title.get_style_context().add_class(Gtk.STYLE_CLASS_TITLE)
         header_title.set_tooltip_text(APPLICATION_TITLE)
         header_title.set_property("ellipsize", Pango.EllipsizeMode.END)
         header.pack_start(header_title)
@@ -510,7 +510,7 @@ class HistoryApplication(Gtk.Application):
         menu_button = Gtk.MenuButton()
         menu_button.set_popup(menu_popup)
         menu_button.add(Gtk.Image.new_from_icon_name(
-            "open-menu-symbolic", Gtk.IconSize.MENU
+            "open-menu-symbolic", Gtk.IconSize.BUTTON
         ))
 
         header.pack_end(menu_button)
@@ -597,7 +597,7 @@ class HistoryApplication(Gtk.Application):
             _("This operation is permanent and irreversible."),
             _("It is recommended to perform a backup of the history file before continuing."),
         ]
-        dialog.set_markup(cgi.escape("\n".join(msg)))
+        dialog.set_markup(escape("\n".join(msg)))
         dialog.show_all()
         response = dialog.run()
         dialog.destroy()
@@ -761,9 +761,9 @@ class HistoryApplication(Gtk.Application):
                             destination_text_cleaned = trans_list[lang][entry]["tT"]
 
                         self.tree_store.set_value(iter, 2, "<b>%s %s %s</b>" % (
-                            cgi.escape(source_lang),
-                            cgi.escape(">"),
-                            cgi.escape(target_lang)
+                            escape(source_lang),
+                            escape(">"),
+                            escape(target_lang)
                         ))
                         self.tree_store.set_value(iter, 3, destination_text_cleaned)
 

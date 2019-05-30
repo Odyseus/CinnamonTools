@@ -927,7 +927,7 @@ MultiTranslator.prototype = {
             Mainloop.idle_add(() => {
                 this._translate();
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         });
     },
@@ -949,7 +949,7 @@ MultiTranslator.prototype = {
             Mainloop.idle_add(() => {
                 this._translate();
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -1419,23 +1419,9 @@ function init(aXletMeta) {
 }
 
 function enable() {
-    if (Settings.pref_logging_level === D.LoggingLevel.VERY_VERBOSE || Settings.pref_debugger_enabled) {
-        try {
-            let protos = {
-                MultiTranslator: MultiTranslator
-            };
-
-            for (let name in protos) {
-                D.prototypeDebugger(protos[name], {
-                    objectName: name,
-                    verbose: Settings.pref_logging_level === D.LoggingLevel.VERY_VERBOSE,
-                    debug: Settings.pref_debugger_enabled
-                });
-            }
-        } catch (aErr) {
-            global.logError(aErr);
-        }
-    }
+    D.wrapObjectMethods(Settings, {
+        MultiTranslator: MultiTranslator
+    });
 
     try {
         translator = new MultiTranslator();
@@ -1445,7 +1431,7 @@ function enable() {
         Mainloop.idle_add(() => {
             translator.enable();
 
-            return false;
+            return GLib.SOURCE_REMOVE;
         });
 
         /* NOTE: Object needed to be able to trigger callbacks when pressing

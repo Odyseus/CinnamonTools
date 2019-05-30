@@ -62,7 +62,8 @@ const {
 
 const {
     LoggingLevel,
-    prototypeDebugger
+    methodWrapper,
+    wrapObjectMethods
 } = DebugManager;
 
 const {
@@ -81,27 +82,13 @@ try {
     global.logError(aErr);
 }
 
-if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE || Settings.pref_debugger_enabled) {
-    try {
-        let protos = {
-            CustomNotification: CustomNotification,
-            LanguagesStats: LanguagesStats,
-            TranslateShellBaseTranslator: TranslateShellBaseTranslator,
-            TranslationProviderBase: TranslationProviderBase,
-            ProvidersManager: ProvidersManager
-        };
-
-        for (let name in protos) {
-            prototypeDebugger(protos[name], {
-                objectName: name,
-                verbose: Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE,
-                debug: Settings.pref_debugger_enabled
-            });
-        }
-    } catch (aErr) {
-        global.logError(aErr);
-    }
-}
+wrapObjectMethods(Settings, {
+    CustomNotification: CustomNotification,
+    LanguagesStats: LanguagesStats,
+    TranslateShellBaseTranslator: TranslateShellBaseTranslator,
+    TranslationProviderBase: TranslationProviderBase,
+    ProvidersManager: ProvidersManager
+});
 
 Soup.Session.prototype.add_feature.call(
     _httpSession,
@@ -345,7 +332,7 @@ ProvidersManager.prototype = {
             if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE ||
                 Settings.pref_debugger_enabled) {
                 try {
-                    prototypeDebugger(translator_module.Translator, {
+                    methodWrapper(translator_module.Translator, {
                         /* NOTE: Remove the "_translation_provider.js" part of the file name.
                          */
                         objectName: "Translator(%s)".format(file_name.slice(0, -24)),

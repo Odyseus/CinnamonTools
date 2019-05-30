@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import argparse
-import cgi
 import os
 import sys
+
+from html import escape
 
 XLET_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 MODULES_DIR = os.path.join(XLET_DIR)
@@ -290,7 +291,7 @@ TRANSLATORS_TAB = {
         }, {
             "widget-type": "label",
             "args": {
-                "label": "<b>%s</b>" % cgi.escape(_("Translators whose names are suffixed with TS require translate-shell package")),
+                "label": "<b>%s</b>" % escape(_("Translators whose names are suffixed with TS require translate-shell package")),
                 "use_markup": True
             }
         }]
@@ -489,7 +490,7 @@ MISCELLANEOUS_TAB = {
         }, {
             "widget-type": "label",
             "args": {
-                "label": "<b>(*) %s</b>" % cgi.escape(_("Requires Cinnamon restart to enable/disable")),
+                "label": "<b>(*) %s</b>" % escape(_("Requires Cinnamon restart to enable/disable")),
                 "use_markup": True
             }
         }]

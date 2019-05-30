@@ -82,7 +82,7 @@ const {
 
 const {
     LoggingLevel,
-    prototypeDebugger
+    wrapObjectMethods
 } = DebugManager;
 
 let Gst;
@@ -2576,38 +2576,24 @@ Spinner.prototype = {
     }
 };
 
-if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE || Settings.pref_debugger_enabled) {
-    try {
-        let protos = {
-            BaseDialog: BaseDialog,
-            ButtonsBar: ButtonsBar,
-            ButtonsBarButton: ButtonsBarButton,
-            ButtonsBarLabel: ButtonsBarLabel,
-            CharsCounter: CharsCounter,
-            DialogPopup: DialogPopup,
-            EntryBase: EntryBase,
-            GoogleTTS: GoogleTTS,
-            HelpDialog: HelpDialog,
-            InfoBar: InfoBar,
-            InfoBarMessage: InfoBarMessage,
-            InfoDialogBase: InfoDialogBase,
-            InteligentTooltip: InteligentTooltip,
-            LanguageChooser: LanguageChooser,
-            MostUsedLangsBox: MostUsedLangsBox,
-            SourceEntry: SourceEntry,
-            Spinner: Spinner,
-            TargetEntry: TargetEntry,
-            TranslatorDialog: TranslatorDialog
-        };
-
-        for (let name in protos) {
-            prototypeDebugger(protos[name], {
-                objectName: name,
-                verbose: Settings.pref_logging_level == LoggingLevel.VERY_VERBOSE,
-                debug: Settings.pref_debugger_enabled
-            });
-        }
-    } catch (aErr) {
-        global.logError(aErr);
-    }
-}
+wrapObjectMethods(Settings, {
+    BaseDialog: BaseDialog,
+    ButtonsBar: ButtonsBar,
+    ButtonsBarButton: ButtonsBarButton,
+    ButtonsBarLabel: ButtonsBarLabel,
+    CharsCounter: CharsCounter,
+    DialogPopup: DialogPopup,
+    EntryBase: EntryBase,
+    GoogleTTS: GoogleTTS,
+    HelpDialog: HelpDialog,
+    InfoBar: InfoBar,
+    InfoBarMessage: InfoBarMessage,
+    InfoDialogBase: InfoDialogBase,
+    InteligentTooltip: InteligentTooltip,
+    LanguageChooser: LanguageChooser,
+    MostUsedLangsBox: MostUsedLangsBox,
+    SourceEntry: SourceEntry,
+    Spinner: Spinner,
+    TargetEntry: TargetEntry,
+    TranslatorDialog: TranslatorDialog
+});
