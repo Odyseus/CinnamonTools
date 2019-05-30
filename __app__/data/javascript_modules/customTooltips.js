@@ -50,18 +50,11 @@ InteligentTooltip.prototype = {
         }
 
         let tooltipWidth = this._tooltip.get_allocation_box().x2 - this._tooltip.get_allocation_box().x1;
-        let tooltipHeight = this._tooltip.get_height();
+        let tooltipHeight = this._tooltip.get_allocation_box().y2 - this._tooltip.get_allocation_box().y1;
 
         let monitor = Main.layoutManager.findMonitorForActor(this.item);
 
         let rtl = (St.Widget.get_default_direction() === St.TextDirection.RTL);
-
-        this._tooltip.set_style("text-align: %s;width:auto;max-width: %spx;".format(
-            // Align to right or left depending on default direction.
-            rtl ? "right" : "left",
-            // Set max. width of tooltip to half the width of the monitor.
-            String(Math.round(Number(monitor.width) / 2))
-        ));
 
         let cursorSize = this.desktop_settings.get_int("cursor-size");
         let tooltipTop = this.mousePosition[1] + Math.round(cursorSize / 1.5);
@@ -74,6 +67,13 @@ InteligentTooltip.prototype = {
         }
 
         this._tooltip.set_position(tooltipLeft, tooltipTop);
+
+        this._tooltip.set_style("text-align: %s;width:auto;max-width: %spx;".format(
+            // Align to right or left depending on default direction.
+            rtl ? "right" : "left",
+            // Set max. width of tooltip to half the width of the monitor.
+            String(Math.round(Number(monitor.width) / 2))
+        ));
 
         this._tooltip.show();
         this._tooltip.raise_top();

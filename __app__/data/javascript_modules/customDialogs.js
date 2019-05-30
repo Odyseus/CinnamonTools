@@ -86,7 +86,7 @@ ConfirmDialog.prototype = {
                 this.close();
 
                 if (params.callback && typeof params.callback === "function") {
-                    params.callback;
+                    params.callback();
                 }
             }
         }]);

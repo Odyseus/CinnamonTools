@@ -20,6 +20,7 @@ const {
 const GioSSS = Gio.SettingsSchemaSource;
 
 const DEBUG_MANAGER_SCHEMA = "org.cinnamon.{{XLET_TYPE}}s." + XletMeta.uuid;
+const OUTPUT_TEMPLATE = "[%s.%s]: %fms (MAX: %fms AVG: %fms)";
 const PROTOTYPE_DEBUGGER_PARAMS = Object.freeze({
     objectName: "Object",
     methods: [],
@@ -37,23 +38,26 @@ var LoggingLevel = {
 /**
  * Benchmark function invocations within a given class or prototype.
  *
- * @param  {Object}  aObject                    JavaScript class or prototype to benchmark.
- * @param  {Object}  aParams                    Object containing parameters, all are optional.
- * @param  {String}  aParams.objectName         Because it's impossible to get the name of a prototype
- *                                              in JavaScript, force it down its throat. ¬¬
- * @param  {Array}   aParams.methods            By default, all methods in aObject will be
- *                                              "proxyfied". aParams.methods should containg the name
- *                                              of the methods that one wants to debug/benchmark.
- *                                              aParams.methods acts as a whitelist by default.
- * @param  {Boolean} aParams.blacklistMethods   If true, ALL methods in aObject will be
- *                                              debugged/benchmarked, except those listed in aParams.methods.
- * @param  {Number}  aParams.threshold          The minimum latency of interest.
- * @param  {Boolean}  aParams.debug              If true, the target method will be executed inside a
- *                                              try{} catch{} block.
+ * @param {Object}  aObject                  - JavaScript class/prototype/object to benchmark.
+ * @param {Object}  aParams                  - Object containing parameters, all are optional.
+ * @param {String}  aParams.objectName       - Because it's impossible to get the name of a
+ *                                           prototype in JavaScript, force it down its throat. ¬¬
+ * @param {Array}   aParams.methods          - By default, all methods in aObject will be "proxyfied".
+ *                                           aParams.methods should containg the name of the methods
+ *                                           that one wants to debug/benchmark. aParams.methods acts
+ *                                           as a whitelist by default.
+ * @param {Boolean} aParams.blacklistMethods - If true, ALL methods in aObject will be
+ *                                           debugged/benchmarked, except those listed in aParams.methods.
+ * @param {Number}  aParams.threshold        - The minimum latency of interest.
+ * @param {Boolean} aParams.debug            - If true, the target method will be executed inside
+ *                                           a try{} catch{} block.
  */
-function prototypeDebugger(aObject, aParams) {
+function methodWrapper(aObject, aParams) {
     let options = Params.parse(aParams, PROTOTYPE_DEBUGGER_PARAMS);
-    let keys = Object.getOwnPropertyNames(aObject.prototype);
+    let _obj = Object.getPrototypeOf(aObject) === Object.prototype ?
+        aObject :
+        aObject.prototype;
+    let keys = Object.getOwnPropertyNames(_obj);
 
     if (options.methods.length > 0) {
         keys = keys.filter((aKey) => {
@@ -65,13 +69,19 @@ function prototypeDebugger(aObject, aParams) {
         });
     }
 
-    let outpuTemplate = "[%s.%s]: %fms (MAX: %fms AVG: %fms)";
-    let times = [];
-    let i = keys.length;
+    /* FIXME: For now, I'm just ignoreing setters/getters.
+     * See if I can wrap getters/setters too.
+     * See note inside the last while loop.
+     */
+    keys = keys.filter((aKey) => {
+        return !Object.getOwnPropertyDescriptor(_obj, aKey)["get"] &&
+            !Object.getOwnPropertyDescriptor(_obj, aKey)["set"];
+    });
 
+    let times = [];
     let getHandler = (aKey) => {
         return {
-            apply: function(aTarget, aThisA, aArgs) { // jshint ignore:line
+            apply: function(aTarget, aThisA, aArgs) {
                 let val;
                 let now;
 
@@ -106,7 +116,7 @@ function prototypeDebugger(aObject, aParams) {
                         let avg = ((total / timesLength) / 1000).toFixed(2);
                         time = (time / 1000).toFixed(2);
 
-                        global.log(outpuTemplate.format(
+                        global.log(OUTPUT_TEMPLATE.format(
                             options.objectName,
                             aKey,
                             time,
@@ -121,35 +131,43 @@ function prototypeDebugger(aObject, aParams) {
         };
     };
 
+    let i = keys.length;
     while (i--) {
         let key = keys[i];
-
-        /* NOTE: If key is a setter or getter, aObject.prototype[key] will throw.
+        /* NOTE: In the original Cinnamon function, getters/setters aren't ignored.
+         * As I understand it, a getter would be executed when doing _obj[key], instead
+         * of storing the getter function. So, as a workaround, I just ignore all
+         * setters/getters and move on.
          */
-        if (!!Object.getOwnPropertyDescriptor(aObject.prototype, key)["get"] ||
-            !!Object.getOwnPropertyDescriptor(aObject.prototype, key)["set"]) {
-            continue;
-        }
-
-        let fn = aObject.prototype[key];
+        let fn = _obj[key];
 
         if (typeof fn !== "function") {
             continue;
         }
 
-        aObject.prototype[key] = new Proxy(fn, getHandler(key));
+        _obj[key] = new Proxy(fn, getHandler(key));
     }
 }
 
-function wrapPrototypes(aDebugger, aPrototypes) {
+function wrapObjectMethods(aDebugger, aObjects) {
     try {
-        if (aDebugger.logging_level === LoggingLevel.VERY_VERBOSE ||
-            aDebugger.debugger_enabled) {
-            for (let name in aPrototypes) {
-                prototypeDebugger(aPrototypes[name], {
+        /* NOTE: aDebugger could be an instance of DebugManager or
+         * an instance of CustomExtensionSettings (extensionSettingsUtils.js).
+         */
+        let isDebugManager = aDebugger instanceof DebugManager;
+        let loggingLevel = isDebugManager ?
+            aDebugger.logging_level :
+            aDebugger.pref_logging_level;
+        let debuggerEnabled = isDebugManager ?
+            aDebugger.debugger_enabled :
+            aDebugger.pref_debugger_enabled;
+
+        if (loggingLevel === LoggingLevel.VERY_VERBOSE || debuggerEnabled) {
+            for (let name in aObjects) {
+                methodWrapper(aObjects[name], {
                     objectName: name,
-                    verbose: aDebugger.logging_level === LoggingLevel.VERY_VERBOSE,
-                    debug: aDebugger.debugger_enabled
+                    verbose: loggingLevel === LoggingLevel.VERY_VERBOSE,
+                    debug: debuggerEnabled
                 });
             }
         }
@@ -234,5 +252,5 @@ DebugManager.prototype = {
 };
 
 /* exported LoggingLevel,
-            wrapPrototypes
+            wrapObjectMethods
  */

@@ -126,7 +126,7 @@ function ngettext(aSingular, aPlural, aN) {
 }
 
 function isBlank(aStr) {
-    return (!String(aStr).trim());
+    return (!aStr || !String(aStr).trim());
 }
 
 /**
@@ -176,14 +176,15 @@ function getKeybindingDisplayName(aAccelString) {
  *
  * This function was born in http://stackoverflow.com/a/6832721.
  *
- * @param  {String} aV1       - The first version to be compared.
- * @param  {String} aV2       - The second version to be compared.
- * @param  {Object} aOptions  - Optional flags that affect comparison behavior:
- *                            - lexicographical: If true, compares each part of the version strings lexicographically instead of
- *                            naturally; this allows suffixes such as "b" or "dev" but will cause "1.10" to be considered smaller than
- *                            "1.2".
- *                            - zeroExtend: If true, changes the result if one version string has less parts than the other. In
- *                            this case the shorter string will be padded with "zero" parts instead of being considered smaller.
+ * @param {String} aV1                      - The first version to be compared.
+ * @param {String} aV2                      - The second version to be compared.
+ * @param {Object} aOptions                 - Optional flags that affect comparison behavior:
+ * @param {Object} aOptions.lexicographical - If true, compares each part of the version strings
+ *                                          lexicographically instead of naturally; this allows suffixes
+ *                                          such as "b" or "dev" but will cause "1.10" to be considered smaller than "1.2".
+ * @param {Object} aOptions.zeroExtend      - If true, changes the result if one version string has
+ *                                          less parts than the other. In this case the shorter string
+ *                                          will be padded with "zero" parts instead of being considered smaller.
  *
  * @return {Number|NaN}
  *         - 0 if the versions are equal.
@@ -366,34 +367,98 @@ function safeGet() {
 }
 
 /**
+ * Override a method with a new method.
+ *
+ * @param {Object}   aParent - The object that contain the method to which to override.
+ * @param {String}   aName   - The name of a method on aParent.
+ * @param {Function} aFunc   - The function that will override the original function.
+ */
+function overrideMethod(aParent, aName, aNewFunc) {
+    let origin = aParent[aName];
+    aParent[aName] = function() {
+        return aNewFunc.apply(this, arguments);
+    };
+
+    return origin;
+}
+
+/**
  * Inject code at the end of an existent method.
  *
- * @param {Object}   aParent - The prototype that contain the method to which to inject.
+ * @param {Object}   aParent - The object that contains the method to which to inject.
  * @param {String}   aName   - The name of a method on aParent.
  * @param {Function} aFunc   - The function that will be injected.
  */
-function injectAfter(aParent, aName, aFunc) {
+function injectMethodAfter(aParent, aName, aFunc) {
     let origin = aParent[aName];
     aParent[aName] = function() {
         let ret;
         ret = origin.apply(this, arguments);
+
         if (ret === undefined) {
             ret = aFunc.apply(this, arguments);
         }
+
         return ret;
     };
+
+    return origin;
+}
+
+/**
+ * Inject code at the start of an existent method.
+ *
+ * @param {Object}   aParent - The object that contains the method to which to inject.
+ * @param {String}   aName   - The name of a method on aParent.
+ * @param {Function} aFunc   - The function that will be injected.
+ */
+function injectMethodBefore(aParent, aName, aFunc) {
+    let origin = aParent[aName];
+    aParent[aName] = function() {
+        let ret;
+        ret = aFunc.apply(this, arguments);
+
+        if (ret === undefined) {
+            ret = origin.apply(this, arguments);
+        }
+
+        return ret;
+    };
+
     return origin;
 }
 
 /**
  * Remove injection from a prototype.
  *
- * @param {Object}   aProto    - The prototype from which to remove an injection.
- * @param {String}   aName     - The name of a method on aProto.
- * @param {Function} aOriginal - The original function to restore.
+ * @param {Object}      aObj        - The object from which to remove an injection or override.
+ * @param {Object|null} aInjStorage  - The object where the original function is stored.
+ * @param {String}      aMethodName - The name of a method on aObj.
  */
-function removeInjection(aProto, aName, aOriginal) {
-    aProto[aName] = aOriginal;
+function removeInjection(aObj, aInjStorage, aMethodName) {
+    /* NOTE: Only deal with existent injections.
+     * Only delete aMethodName from aObj if aInjStorage is identical to null.
+     * If the aInjStorage object exists but its aMethodName property is undefined,
+     * it could have been caused by failing to inject/override the original method.
+     * In which case, aObj[aMethodName] is already the original method.
+     * If aObj[aMethodName] was a new method added to aObj, there is no need to call
+     * removeInjection and neither would have been needed to call
+     * overrideMethod/injectMethodAfter methods. Or so I thing so...
+     */
+    if (aObj && aInjStorage && aInjStorage.hasOwnProperty(aMethodName)) {
+        aObj[aMethodName] = aInjStorage[aMethodName];
+        delete aInjStorage[aMethodName];
+    }
+}
+
+/**
+ * See removeInjection.
+ *
+ * NOTE: It just bothered me to use the function called removeInjection to
+ * remove what it is an override, not an injection.
+ */
+function removeOverride() {
+    removeInjection.apply(null, arguments);
 }
 
 /* exported _,
@@ -410,6 +475,9 @@ function removeInjection(aProto, aName, aOriginal) {
             tokensReplacer,
             deepMergeObjects,
             safeGet,
-            injectAfter,
+            overrideMethod,
+            injectMethodAfter,
+            injectMethodBefore,
             removeInjection,
+            removeOverride,
  */
