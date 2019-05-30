@@ -252,7 +252,7 @@ FileMenuItem.prototype = {
     }
 };
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     CustomSubMenuMenuItem: CustomSubMenuMenuItem,
     FileMenuItem: FileMenuItem
 });
