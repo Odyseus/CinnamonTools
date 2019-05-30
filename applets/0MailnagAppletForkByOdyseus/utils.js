@@ -179,7 +179,7 @@ function ellipsize(aString, aMaxLen) {
         aString;
 }
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     AccountMenu: AccountMenu,
     MailItem: MailItem,
 });

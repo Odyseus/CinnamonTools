@@ -25,6 +25,7 @@ if (typeof require === "function") {
 const {
     gi: {
         Gio,
+        GLib,
         St
     },
     mainloop: Mainloop,
@@ -144,7 +145,7 @@ Mailnag.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -387,7 +388,7 @@ Mailnag.prototype = {
         Mainloop.idle_add(() => {
             this.notify(newMails, allMails);
 
-            return false;
+            return GLib.SOURCE_REMOVE;
         });
     },
 
@@ -464,7 +465,7 @@ Mailnag.prototype = {
                     }
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         }
     },
@@ -964,7 +965,7 @@ Mailnag.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         CustomNotificationSource: CustomNotificationSource,
         Mailnag: Mailnag
     });
