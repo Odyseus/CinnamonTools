@@ -77,7 +77,7 @@ const {
 
 var Debugger = new DebugManager.DebugManager();
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     AltSwitcher: AltSwitcher,
     ArgosLineView: ArgosLineView,
     ArgosMenuItem: ArgosMenuItem,

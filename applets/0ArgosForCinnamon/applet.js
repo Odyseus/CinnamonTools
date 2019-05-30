@@ -785,7 +785,7 @@ Argos.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -1043,7 +1043,7 @@ Argos.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         Argos: Argos,
         InteligentTooltip: InteligentTooltip
     });
