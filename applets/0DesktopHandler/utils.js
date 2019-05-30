@@ -375,7 +375,7 @@ ConfirmationDialog.prototype = {
     }
 };
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     ConfirmationDialog: ConfirmationDialog,
     MenuItem: MenuItem,
     MyClassicSwitcher: MyClassicSwitcher,

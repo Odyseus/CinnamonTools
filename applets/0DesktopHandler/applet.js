@@ -115,7 +115,7 @@ DesktopHandler.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -709,7 +709,6 @@ DesktopHandler.prototype = {
                         }
                         this.didpeek = true;
                     }
-
                 }
             );
         }
@@ -1269,7 +1268,7 @@ DesktopHandler.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         DesktopHandler: DesktopHandler
     });
 
