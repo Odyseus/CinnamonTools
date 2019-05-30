@@ -415,7 +415,7 @@ function colorToArray(c) {
     return c;
 }
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     CpuData: CpuData,
     LoadAvgData: LoadAvgData,
     MemData: MemData,

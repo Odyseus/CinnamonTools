@@ -127,7 +127,7 @@ SystemMonitor.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -570,7 +570,7 @@ SystemMonitor.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         CustomPanelTooltip: CustomPanelTooltip,
         SystemMonitor: SystemMonitor
     });
