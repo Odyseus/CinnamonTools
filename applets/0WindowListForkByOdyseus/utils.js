@@ -1209,7 +1209,7 @@ AppMenuButtonRightClickMenu.prototype = {
     }
 };
 
-DebugManager.wrapPrototypes(Debugger, {
+DebugManager.wrapObjectMethods(Debugger, {
     AppMenuButton: AppMenuButton,
     AppMenuButtonRightClickMenu: AppMenuButtonRightClickMenu,
     WindowPreview: WindowPreview

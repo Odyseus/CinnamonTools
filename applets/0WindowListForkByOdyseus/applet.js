@@ -18,6 +18,7 @@ const {
         Clutter,
         Gdk,
         Gio,
+        GLib,
         St
     },
     mainloop: Mainloop,
@@ -145,7 +146,7 @@ WindowList.prototype = {
                     global.logError(aErr);
                 }
 
-                return false;
+                return GLib.SOURCE_REMOVE;
             });
         };
 
@@ -586,7 +587,8 @@ WindowList.prototype = {
         this._tooltipErodeTimer = Mainloop.timeout_add(300, () => {
             this._tooltipShowing = false;
             this._tooltipErodeTimer = null;
-            return false;
+
+            return GLib.SOURCE_REMOVE;
         });
     },
 
@@ -635,7 +637,7 @@ WindowList.prototype = {
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapPrototypes($.Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         WindowList: WindowList
     });
 
