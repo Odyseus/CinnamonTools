@@ -587,16 +587,6 @@ class XletBuilder():
 
         self._schemas_dir = os.path.join(xlet_data["destination"], "schemas")
         self._config_file = os.path.join(xlet_data["source"], "z_config.py")
-        self._replacement_data = [
-            ("{{UUID}}", xlet_data.get("uuid", "")),
-            ("{{XLET_SYSTEM}}", XLET_SYSTEM[xlet_data.get("type", "")]),
-            ("{{XLET_META}}", XLET_META[xlet_data.get("type", "")]),
-            ("{{REPO_URL}}", URLS["repo"]),
-            ("{{XLET_TYPE}}", xlet_data.get("type", "")),
-            # Yes, include the escaped double quotes to keep the template file without errors.
-            # The replacement data will be a "Python boolean" (True or False).
-            ("\"{{XLET_HAS_SCHEMA}}\"", "True" if file_utils.is_real_dir(self._schemas_dir) else "False"),
-        ]
 
     def build(self):
         """Build xlet.
@@ -613,11 +603,23 @@ class XletBuilder():
                                     self._xlet_data["destination"])
         else:
             string_utils.do_string_substitutions(self._xlet_data["destination"],
-                                                 self._replacement_data,
+                                                 self._get_replacement_data(),
                                                  logger=self.logger)
 
         self._compile_schemas()
         self._set_executable()
+
+    def _get_replacement_data(self):
+        return [
+            ("{{UUID}}", self._xlet_data.get("uuid", "")),
+            ("{{XLET_SYSTEM}}", XLET_SYSTEM[self._xlet_data.get("type", "")]),
+            ("{{XLET_META}}", XLET_META[self._xlet_data.get("type", "")]),
+            ("{{REPO_URL}}", URLS["repo"]),
+            ("{{XLET_TYPE}}", self._xlet_data.get("type", "")),
+            # Yes, include the escaped double quotes to keep the template file without errors.
+            # The replacement data will be a "Python boolean" (True or False).
+            ("\"{{XLET_HAS_SCHEMA}}\"", "True" if file_utils.is_real_dir(self._schemas_dir) else "False"),
+        ]
 
     def _do_copy(self):
         """Copy xlet files into its final destination.
