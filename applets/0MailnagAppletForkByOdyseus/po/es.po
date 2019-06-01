@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-05-24 17:30-0300\n"
+"POT-Creation-Date: 2019-06-01 04:56-0300\n"
 "PO-Revision-Date: 2019-05-23 15:43-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:211
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:212
 msgid "Help"
 msgstr "Ayuda"
 
@@ -148,69 +148,69 @@ msgstr "Se recomienda instalar el paquete de dependencia opcional de Mailnag `gi
 msgid "The Mailnag's **LibNotify Notifications** plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass such limitations. Needless to say, if one choses to use the notifications provided by this applet, the **LibNotify Notifications** plug-in must be disabled to avoid receiving duplicated notifications."
 msgstr "El complemento **Notificaciones LibNotify** de Mailnag no puede agregar acciones de notificación como marcar correos como leídos o abrir el cliente de correo directamente desde la notificación. Estas funciones solo están disponibles para Gnome (una limitación en el propio complemento). Este applet implementa sus propias notificaciones configurables para evitar dichas limitaciones. No hace falta decir que si uno elige usar las notificaciones proporcionadas por este applet, el complemento **Notificaciones LibNotify** debe estar deshabilitado para evitar recibir notificaciones duplicadas."
 
-#: applet.js:202
+#: applet.js:203
 msgid "Configure Mailnag daemon"
 msgstr "Configurar el demonio Mailnag"
 
-#: applet.js:249
+#: applet.js:250
 msgid "Mailnag daemon stopped working!"
 msgstr "¡El demonio Mailnag dejó de funcionar!"
 
-#: applet.js:251
+#: applet.js:252
 msgid "Mailnag daemon isn't running! Do you have it installed?"
 msgstr "¡El demonio de Mailnag no se está ejecutando! ¿Lo tiene instalado?"
 
-#: applet.js:513
+#: applet.js:514
 #, javascript-format
 msgid "You have %d new mail!"
 msgid_plural "You have %d new mails!"
 msgstr[0] "¡Tienes %d correo nuevo!"
 msgstr[1] "¡Tienes %d correos nuevos!"
 
-#: applet.js:517 applet.js:699
+#: applet.js:518 applet.js:700
 msgid "Mark All Read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:518
+#: applet.js:519
 msgid "Mark Read"
 msgstr "Marcar como leído"
 
-#: applet.js:578
+#: applet.js:579
 #, javascript-format
 msgid "(and %d more)"
 msgid_plural "(and %d more)"
 msgstr[0] "(y %d más)"
 msgstr[1] "(y %d más)"
 
-#: applet.js:601
+#: applet.js:602
 msgid "Open Mail client"
 msgstr "Abrir cliente de correo"
 
-#: applet.js:732 applet.js:776
+#: applet.js:733 applet.js:777
 msgid "No unread mails."
 msgstr "Sin mensajes no leídos."
 
-#: applet.js:756
+#: applet.js:757
 msgid "Mailnag daemon is not running!"
 msgstr "El demonio Mailnag no se está ejecutando!"
 
-#: applet.js:766
+#: applet.js:767
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr "¡Tienes un correo de %s!"
 
-#: applet.js:772
+#: applet.js:773
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] "¡Tienes %d correo sin leer!"
 msgstr[1] "¡Tienes %d correos sin leer!"
 
-#: applet.js:786
+#: applet.js:787
 msgid "Click to see error!"
 msgstr "¡Hacer clic para ver el error!"
 
-#: applet.js:787
+#: applet.js:788
 msgid "Error"
 msgstr "Error"
 

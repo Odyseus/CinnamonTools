@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopHandler VERSION\n"
-"POT-Creation-Date: 2019-05-24 17:30-0300\n"
+"POT-Creation-Date: 2019-06-01 05:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,12 +87,12 @@ msgid "Scroll over applet actions:"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:35 applet.js:796
+#: z_create_localized_help.py:35 applet.js:795
 msgid "Switch between workspaces"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:36 applet.js:797
+#: z_create_localized_help.py:36 applet.js:796
 msgid "Adjust opacity of windows"
 msgstr ""
 
@@ -106,7 +106,7 @@ msgid "Toggle Show desktop"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:38 applet.js:799
+#: z_create_localized_help.py:38 applet.js:798
 msgid "Switch between windows"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:42 applet.js:488 applet.js:780
+#: z_create_localized_help.py:42 applet.js:488 applet.js:779
 msgid "Expo"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:43 applet.js:781
+#: z_create_localized_help.py:43 applet.js:780
 msgid "Overview"
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:44 applet.js:782
+#: z_create_localized_help.py:44 applet.js:781
 msgid "Launch App Switcher"
 msgstr ""
 
@@ -154,7 +154,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:46 applet.js:783
+#: z_create_localized_help.py:46 applet.js:782
 msgid "Run 1st Custom Command"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:47 applet.js:784
+#: z_create_localized_help.py:47 applet.js:783
 msgid "Run 2nd Custom Command"
 msgstr ""
 
@@ -170,7 +170,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:48 applet.js:785
+#: z_create_localized_help.py:48 applet.js:784
 msgid "Run 3rd Custom Command"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:49 applet.js:786
+#: z_create_localized_help.py:49 applet.js:785
 msgid "Run 4rd Custom Command"
 msgstr ""
 
@@ -241,82 +241,82 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: applet.js:787
+#: applet.js:786
 msgid "None"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:788
+#: applet.js:787
 msgid "Icons only"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:789
+#: applet.js:788
 msgid "Thumbnails only"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:790
+#: applet.js:789
 msgid "Icons and thumbnails"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:791
+#: applet.js:790
 msgid "Icons and window preview"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:792
+#: applet.js:791
 msgid "Window preview (no icons)"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:793
+#: applet.js:792
 msgid "Coverflow (3D)"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:794
+#: applet.js:793
 msgid "Timeline (3D)"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:795
+#: applet.js:794
 msgid "System default"
 msgstr ""
 
-#: applet.js:798
+#: applet.js:797
 msgid "Toggle show desktop"
 msgstr ""
 
-#: applet.js:800
+#: applet.js:799
 msgid "Open windows list menu"
 msgstr ""
 
-#: applet.js:818
+#: applet.js:817
 msgid "Scroll Up"
 msgstr ""
 
-#: applet.js:819
+#: applet.js:818
 msgid "Scroll Down"
 msgstr ""
 
-#: applet.js:821
+#: applet.js:820
 msgid "Scroll"
 msgstr ""
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:828
+#: applet.js:827
 msgid "Left click"
 msgstr ""
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:834
+#: applet.js:833
 msgid "Middle click"
 msgstr ""
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:838
+#: applet.js:837
 msgid "Right click"
 msgstr ""
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-24 17:30-0300\n"
+"POT-Creation-Date: 2019-06-01 05:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:211
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:212
 msgid "Help"
 msgstr ""
 
@@ -144,69 +144,69 @@ msgstr ""
 msgid "The Mailnag's **LibNotify Notifications** plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass such limitations. Needless to say, if one choses to use the notifications provided by this applet, the **LibNotify Notifications** plug-in must be disabled to avoid receiving duplicated notifications."
 msgstr ""
 
-#: applet.js:202
+#: applet.js:203
 msgid "Configure Mailnag daemon"
 msgstr ""
 
-#: applet.js:249
+#: applet.js:250
 msgid "Mailnag daemon stopped working!"
 msgstr ""
 
-#: applet.js:251
+#: applet.js:252
 msgid "Mailnag daemon isn't running! Do you have it installed?"
 msgstr ""
 
-#: applet.js:513
+#: applet.js:514
 #, javascript-format
 msgid "You have %d new mail!"
 msgid_plural "You have %d new mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:517 applet.js:699
+#: applet.js:518 applet.js:700
 msgid "Mark All Read"
 msgstr ""
 
-#: applet.js:518
+#: applet.js:519
 msgid "Mark Read"
 msgstr ""
 
-#: applet.js:578
+#: applet.js:579
 #, javascript-format
 msgid "(and %d more)"
 msgid_plural "(and %d more)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:601
+#: applet.js:602
 msgid "Open Mail client"
 msgstr ""
 
-#: applet.js:732 applet.js:776
+#: applet.js:733 applet.js:777
 msgid "No unread mails."
 msgstr ""
 
-#: applet.js:756
+#: applet.js:757
 msgid "Mailnag daemon is not running!"
 msgstr ""
 
-#: applet.js:766
+#: applet.js:767
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr ""
 
-#: applet.js:772
+#: applet.js:773
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:786
+#: applet.js:787
 msgid "Click to see error!"
 msgstr ""
 
-#: applet.js:787
+#: applet.js:788
 msgid "Error"
 msgstr ""
 

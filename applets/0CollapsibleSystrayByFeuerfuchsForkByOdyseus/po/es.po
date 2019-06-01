@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-23 15:29-0300\n"
+"POT-Creation-Date: 2019-06-01 04:55-0300\n"
 "PO-Revision-Date: 2019-05-23 15:40-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: \n"
@@ -87,11 +87,11 @@ msgstr ""
 "llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
 #. Context menu items
-#: applet.js:144
+#: applet.js:145
 msgid "Active applications"
 msgstr "Aplicaciones activas"
 
-#: applet.js:145
+#: applet.js:146
 msgid "Inactive applications"
 msgstr "Aplicaciones inactivas"
 

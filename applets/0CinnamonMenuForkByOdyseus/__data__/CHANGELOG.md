@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Thu, 30 May 2019 03:46:46 -0300
+- **Commit:** [da83098](https://gitlab.com/Odyseus/CinnamonTools/commit/da83098)
+- **Author:** Odyseus
+
+```
+- Minor changes due to changes in global modules.
+- Added SVG icon.
+
+```
+
+***
+
 - **Date:** Thu, 23 May 2019 02:14:57 -0300
 - **Commit:** [1335515](https://gitlab.com/Odyseus/CinnamonTools/commit/1335515)
 - **Author:** Odyseus

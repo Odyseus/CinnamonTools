@@ -4,6 +4,21 @@
 
 ***
 
+- **Date:** Thu, 30 May 2019 03:47:29 -0300
+- **Commit:** [ffd29d0](https://gitlab.com/Odyseus/CinnamonTools/commit/ffd29d0)
+- **Author:** Odyseus
+
+```
+- Minor changes due to changes in global modules.
+- Python scripts:
+    - Changed the use of cgi.escape to html.escape due to cgi.escape deprecation.
+    - Changed to Gtk.IconSize.BUTTON constant to specify icon sizes.
+    - Implemented the use of constants to specify default Gtk CSS classes.
+
+```
+
+***
+
 - **Date:** Thu, 23 May 2019 02:15:54 -0300
 - **Commit:** [af8e1cf](https://gitlab.com/Odyseus/CinnamonTools/commit/af8e1cf)
 - **Author:** Odyseus

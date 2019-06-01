@@ -27,7 +27,7 @@ class Main(LocalizedHelpCreator):
         return "\n".join([
             "## %s" % _("Description"),
             "",
-            _("This extension adds some options to modify the default behaviour of certain Cinnamon features."),
+            _("This extension adds some options to modify the default behavior of certain Cinnamon features."),
         ])
 
     def get_content_extra(self):
@@ -36,7 +36,6 @@ class Main(LocalizedHelpCreator):
             "",
             utils.get_bootstrap_alert(
                 context="warning",
-                heading=_("Warning"),
                 # TO TRANSLATORS: MARKDOWN string. Respect formatting.
                 content=_("Some tweaks have warnings, dependencies, limitations and or known issues that must be read and understood before a tweak is enabled. No worries, nothing *fatal* could ever happen.")
             ),
@@ -54,15 +53,12 @@ class Main(LocalizedHelpCreator):
             "- [%s](#auto-move-windows-{{lhc_lang_id}})" % _("Auto move windows"),
             "- [%s](#windows-decorations-removal-{{lhc_lang_id}})" % _(
                 "Windows decorations removal"),
-            "",
+            "***",
             '<span id="appletsdesklets-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Applets/Desklets tweaks"),
             "- **%s** %s" % (_("Ask for confirmation on applet/desklet removal:"), _(
                 "Instead of directly remove the applet/desklet from the context menus, it will ask for confirmation. This option doesn't affect the removal of applets/desklets from the Applets/Desklets manager in Cinnamon settings (there will be no confirmation).")),
-            "- **%s** & **%s** %s" % (_("Display \"Open applet/desklet folder\" on context menu for applets/desklets"), _("Display \"Edit applet/desklet main file\" on context menu for applets/desklet:"),
-                                      # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                                      _("These options will add new menu items to the applets/desklets context menus. The place where this items will be located is chosen by the option **Where to place the menu item?**.")),
-            "",
+            "***",
             '<span id="hot-corners-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Hot Corners tweaks"),
             _("This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has hot corners delay activation."),
@@ -70,25 +66,33 @@ class Main(LocalizedHelpCreator):
             "- **%s** %s" % (_("Top right hot corner activation delay:"), _("Crystal clear.")),
             "- **%s** %s" % (_("Bottom left hot corner activation delay:"), _("Crystal clear.")),
             "- **%s** %s" % (_("Bottom right hot corner activation delay:"), _("Crystal clear.")),
-            "",
+            "***",
             '<span id="desktop-area-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Desktop area tweaks"),
             "- **%s** %s" % (_("Enable applications drop to the Desktop:"), _(
                 "This tweak enables the ability to drag and drop applications from the menu applet and from the panel launchers applet into the desktop.")),
-            "",
+            "***",
             '<span id="popup-menus-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Popup menus tweaks"),
             "##### %s" % _("Panel menus behavior"),
-            "**%s** %s" % (_("Note:"), _(
-                "This setting affects only the behavior of menus that belongs to applets placed on any panel.")),
+            "",
+            utils.get_bootstrap_alert(
+                content=_(
+                    "This setting affects only the behavior of menus that belongs to applets placed on any panel.")
+            ),
             "",
             "- **%s** %s" % (_("Don't eat clicks:"), _("By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open.")),
-            "",
+            "***",
             '<span id="tooltips-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Tooltips tweaks"),
-            "- **%s** %s" % (_("Avoid mouse pointer overlapping tooltips:"), _("Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse pointer. This leads to having tooltips overlapped by the mouse pointer. This tweak aligns the tooltip to the bottom-right corner of the mouse pointer (approximately), reducing the possibility of the mouse pointer to overlap the tooltip. This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has the position of the tooltips changed.")),
+            "- **%s:** %s" % (_("Intelligent positioning"), _(
+                "It prevents the mouse cursor overlapping the tooltip and also allows to display a tooltip above the mouse cursor if there is no room on the screen to completely show the tooltip below it.")),
+            "- **%s:** %s" % (_("Never center tooltip text"), _(
+                "Override the centered alignment of tooltips text set by certain Cinnamon themes (all the default ones). With this tweak enabled, the tooltip text will be aligned to the left or right depending on the text direction of the current system language.")),
+            "- **%s:** %s" % (_("Restrict tooltips width to half monitor width"),
+                              _("Crystal clear.")),
             "- **%s** %s" % (_("Tooltips show delay:"), _("Crystal clear.")),
-            "",
+            "***",
             '<span id="notifications-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Notifications tweaks"),
             "- **%s** %s" % (_("Enable notifications open/close animation:"), _("Crystal clear.")),
@@ -101,7 +105,7 @@ class Main(LocalizedHelpCreator):
                 "This is the distance between the top border of the bottom panel (if no bottom panel, from the bottom of the screen) to the bottom border of the notification popup.")),
             "- **%s** %s" % (_("Notification popup right margin:"), _(
                 "By default, the right margin of the notification popup is defined by the currently used theme. This option, set to any value other than 0 (zero), allows to set a custom right margin, ignoring the defined by the theme.")),
-            "",
+            "***",
             '<span id="window-focus-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Window focus tweaks"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
@@ -117,38 +121,62 @@ class Main(LocalizedHelpCreator):
                                  _("will focus windows demanding attention with a keyboard shortcut.")),
             "- **%s** %s" % (_("Keyboard shortcut:"),
                              _("Set a keyboard shortcut for the option **...is performed with a keyboard shortcut**.")),
-            "",
+            "***",
             '<span id="window-shadows-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Window Shadows tweaks"),
+            "",
+            utils.get_bootstrap_alert(
+                content=_(
+                    "Client side decorated windows aren't affected by this tweak.")
+            ),
+            "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Tweak based on a Cinnamon extension called [Custom Shadows](https://cinnamon-spices.linuxmint.com/extensions/view/43) created by [mikhail-ekzi](https://github.com/mikhail-ekzi). It allows to modify the shadows used by Cinnamon's window manager (Muffin)."),
-            "",
-            "**%s** %s" % (_("Note:"),
-                           _("Client side decorated windows aren't affected by this tweak.")),
             "",
             "##### %s" % _("Shadow presets"),
             "- **%s**" % _("Custom shadows"),
             "- **%s**" % _("Default shadows"),
             "- **%s**" % _("No shadows"),
             "- **%s**" % _("Windows 10 shadows"),
-            "",
+            "***",
             '<span id="auto-move-windows-{{lhc_lang_id}}"></span>',
             "### %s" % _("Auto move windows"),
+            _("This tweak is composed of two features that work in conjunction:"),
+            "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            _("Tweak based on the gnome-shell extension called [Auto Move Windows](https://extensions.gnome.org/extension/16/auto-move-windows/) by [Florian Muellner](https://github.com/fmuellner). It enables the ability to set rules to open determined applications on specific workspaces."),
+            "1. **%s:** %s" % (
+                _("Auto move application to specific workspaces"),
+                _("Tweak based on the gnome-shell extension called [Auto Move Windows](https://extensions.gnome.org/extension/16/auto-move-windows/) by [Florian Muellner](https://github.com/fmuellner). It enables the ability to set rules to open determined applications on specific workspaces.")
+            ),
+            "2. **%s:** %s" % (
+                _("Move full screen applications to their own workspace"),
+                _("Tweak based on two gnome-shell extensions; one called [Fullscreen On New Workspace](https://extensions.gnome.org/extension/1502/fullscreen-on-new-workspace) by [Satyajit Ranjeev](https://github.com/satran) and another one called [Maximize To Workspace](https://extensions.gnome.org/extension/1181/maximize-to-workspace) by [rliang](https://github.com/rliang).")
+            ),
             "",
-            "**%s** %s" % (_("Note:"),
-                           # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                           _("If the application that you want to select doesn't show up on the application chooser dialog, read the section on this help file called **Applications not showing up on the applications chooser dialogs**.")),
+            "#### %s" % _("Usage"),
             "",
+            "- %s" % _("When an application is opened, it will be moved to the workspace that it is configured to be opened on."),
+            "- %s" % _("When an application enters full screen, it will be moved to the first empty workspace (a workspace that has no windows on it). Except when the application is configured to be opened into an specific workspace."),
+            "- %s" % _("If an application is not configured to be opened into an specific workspace, and there are no empty workspaces, when the application enters full screen, a new workspace will be created."),
+            "- %s" % _("When an application that entered into full screen exits that state, it will be moved back into the workspace from which the application was set to full screen."),
+            "- %s" % _("When an application that entered into full screen is closed, the first workspace will be activated."),
+            "- %s" % _("If an application needed to create a new workspace, that workspace will be removed when the application exits full screen or is closed, but only if there are no other windows in it."),
+            "",
+            utils.get_bootstrap_alert(
+                content=_("See %s.") % ('<a href="#applications-not-showing-up-{{lhc_lang_id}}">%s</a>' % _(
+                    "Applications not showing up on the applications chooser dialogs"))
+            ),
+            "",
+            "***",
             '<span id="windows-decorations-removal-{{lhc_lang_id}}"></span>',
             "### %s" % _("Windows decorations removal"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Tweak based on the extension called [Cinnamon Maximus](https://cinnamon-spices.linuxmint.com/extensions/view/29) by [Fatih Mete](https://github.com/fatihmete) with some options from the gnome-shell extension called [Maximus NG](https://github.com/luispabon/maximus-gnome-shell) by [Luis Pabon](https://github.com/luispabon). This tweak allows to remove the windows decorations from maximized/half-maximized/tiled windows."),
             "",
-            "**%s** %s" % (_("Note:"),
-                           # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                           _("If the application that you want to select doesn't show up on the application chooser dialog, read the section on this help file called **Applications not showing up on the applications chooser dialogs**.")),
+            utils.get_bootstrap_alert(
+                content=_("See %s.") % ('<a href="#applications-not-showing-up-{{lhc_lang_id}}">%s</a>' % _(
+                    "Applications not showing up on the applications chooser dialogs"))
+            ),
             "",
             "#### %s" % _("Dependencies"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
@@ -213,26 +241,17 @@ class Main(LocalizedHelpCreator):
     <distance name="button_height" value="0"/>
 </frame_geometry>
 ```""",
-            "",
+            "***",
             "## %s" % _("General extension issues"),
+            '<span id="applications-not-showing-up-{{lhc_lang_id}}"></span>',
+
             "### %s" % _("Applications not showing up on the applications chooser dialogs"),
             "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("The application chooser dialog used by the settings window of this extension lists only those applications that have available .desktop files. Simply because these applications are the only ones that any of the tweaks that require an application ID (**Auto move windows** and **Windows decorations removal**) will recognize and handle."),
             "",
+            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Following the [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html), one can create a .desktop file for any application that doesn't appear in the applications list."),
-            "## %s" % _("Xlet's settings window"),
-            _("From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."),
-            "",
-            "- %s" % _("To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"),
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "    - %s %s" % (_("Command to install the settings schema:"),
-                             "`./settings.py install-schema`"),
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "    - %s %s" % (_("Command to uninstall the settings schema:"),
-                             "`./settings.py remove-schema`"),
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            "- %s" % _("To import/export settings, the **dconf** command needs to be available on the system."),
             "",
         ])
         ))

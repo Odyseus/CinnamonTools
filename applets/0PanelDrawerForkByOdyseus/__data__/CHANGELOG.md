@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Thu, 30 May 2019 03:47:50 -0300
+- **Commit:** [090e1a9](https://gitlab.com/Odyseus/CinnamonTools/commit/090e1a9)
+- **Author:** Odyseus
+
+```
+- Minor changes due to changes in global modules.
+
+```
+
+***
+
 - **Date:** Thu, 23 May 2019 02:16:11 -0300
 - **Commit:** [718c1dd](https://gitlab.com/Odyseus/CinnamonTools/commit/718c1dd)
 - **Author:** Odyseus

@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Thu, 30 May 2019 03:48:00 -0300
+- **Commit:** [cdcab86](https://gitlab.com/Odyseus/CinnamonTools/commit/cdcab86)
+- **Author:** Odyseus
+
+```
+- Minor changes due to changes in global modules.
+
+```
+
+***
+
 - **Date:** Thu, 23 May 2019 02:16:19 -0300
 - **Commit:** [142fa93](https://gitlab.com/Odyseus/CinnamonTools/commit/142fa93)
 - **Author:** Odyseus

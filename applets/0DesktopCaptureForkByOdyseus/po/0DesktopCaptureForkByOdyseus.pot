@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-24 17:30-0300\n"
+"POT-Creation-Date: 2019-06-01 05:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -518,11 +518,11 @@ msgstr ""
 msgid "Cinnamon 3.0.x and its built-in screenshot mechanism"
 msgstr ""
 
-#: z_create_localized_help.py:323 applet.js:1988
+#: z_create_localized_help.py:323 applet.js:1990
 msgid "The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"
 msgstr ""
 
-#: z_create_localized_help.py:326 applet.js:1989
+#: z_create_localized_help.py:326 applet.js:1991
 msgid "Do not use it or Cinnamon will crash!"
 msgstr ""
 
@@ -717,31 +717,31 @@ msgstr ""
 msgid "Command exited with error status"
 msgstr ""
 
-#: applet.js:1867
+#: applet.js:1869
 msgid "Possibly malformed JSON file."
 msgstr ""
 
-#: applet.js:1868
+#: applet.js:1870
 msgid "Check the logs."
 msgstr ""
 
-#: applet.js:1926
+#: applet.js:1928
 msgid "Do you really want to reset this preference to its default value?"
 msgstr ""
 
-#: applet.js:1965
+#: applet.js:1967
 msgid "Do you really want to empty this preference?"
 msgstr ""
 
-#: applet.js:1990
+#: applet.js:1992
 msgid "Read this applet help page (Known issues) for more details on the matter."
 msgstr ""
 
-#: applet.js:1991
+#: applet.js:1993
 msgid "You will keep seeing this notification until you follow the instructions found on the help page."
 msgstr ""
 
-#: applet.js:2002
+#: applet.js:2004
 msgid "Operation aborted!"
 msgstr ""
 

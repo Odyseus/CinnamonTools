@@ -4,6 +4,69 @@
 
 ***
 
+- **Date:** Sat, 1 Jun 2019 04:47:18 -0300
+- **Commit:** [854e3d3](https://gitlab.com/Odyseus/CinnamonTools/commit/854e3d3)
+- **Author:** Odyseus
+
+```
+Extension rewrite
+=================
+
+WARNING 1: If a user is already using this extension prior to this update, it is recommended to build this extension with a different domain name than the one installed. This update is a complete re-write of the extension and uses a different settings system, so existent settings will be ignored.
+
+WARNING 2: Needless to say that a previous version of the extension should be disabled before enabling this new version.
+
+General changes
+===============
+
+- Switched from a gsettings settings system to Cinnamon's native settings system. This was done so I can use my own xlet settings framework that I already use in several of my xlets without the need to maintain the GUI (more than 2500 lines of code) I created exclusively for this extension.
+- Added SVG icon.
+- Modified the stylesheet.css file to use IDs to avoid possible conflicts with other xlets styles.
+
+Specific tweaks changes
+=======================
+
+Auto move windows
+-----------------
+
+- Fixed the window mover tweak not being able to open an application to a non existent workspace.
+- Added option to allow to switch to the workspace of the recently opened application.
+- Added option to always move a full screen application into its own workspace.
+
+Tooltips tweaks
+---------------
+
+- Changed the tweak that allowed to display the tooltip without the mouse cursor overlapping it. Now this tweak is called *intelligent positioning*. It not only avoids the mouse cursor overlap issue, but also allows to display a tooltip above the mouse cursor if there is no room on the screen to completely show the tooltip bellow it.
+- Added tweak that allows to override the centered alignment of tooltips text set by certain Cinnamon themes (all the default ones). With this tweak enabled, the tooltip text will be aligned to the left or right depending on the text direction of the current system language.
+- Added tweak to restrict tooltips width to half the monitor width.
+
+Windows decorations removal
+---------------------------
+
+- Removed the use of synchronous functions to use their asynchronous counterparts instead. This effectively removes the warning seen on this extension in the extensions list.
+- Fixed an issue with this tweak that prevented a window from an application from being auto-moved when the application was configured for both, decorations removal and auto-moved to a new workspace.
+
+Removals
+========
+
+Applets/Desklets tweaks
+-----------------------
+
+- Removed the context menu items that allowed to open an installed applet/desklet folder and main file. I removed them for two main reasons:
+    1. I don't use these items anymore since I don't ever edit the xlets directly where they are installed.
+    2. Adding new context menu items indiscriminately to all xlets is invasive because an xlet might want to make use of the context menu on its own way (like I do myself with the Desktop Handler applet).
+
+Popup menus tweaks
+------------------
+
+- Removed the Gnome Shell behavior for menus. This was never finished and it's a nightmare to implement now for two reasons:
+    1. Gnome Shell is light years apart from Cinnamon and it currently uses a totally different mechanism to handle grab focus.
+    2. And Cinnamon implementation is a total nightmare.
+
+```
+
+***
+
 - **Date:** Thu, 17 Jan 2019 14:17:49 -0300
 - **Commit:** [1bc1bc4](https://gitlab.com/Odyseus/CinnamonTools/commit/1bc1bc4)
 - **Author:** Odyseus

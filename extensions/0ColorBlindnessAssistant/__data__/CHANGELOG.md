@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Thu, 30 May 2019 03:49:46 -0300
+- **Commit:** [2c57b3b](https://gitlab.com/Odyseus/CinnamonTools/commit/2c57b3b)
+- **Author:** Odyseus
+
+```
+- Minor changes due to changes in global modules.
+- Python scripts: Changed the use of cgi.escape to html.escape due to cgi.escape deprecation.
+
+```
+
+***
+
 - **Date:** Fri, 24 May 2019 16:19:26 -0300
 - **Commit:** [a302240](https://gitlab.com/Odyseus/CinnamonTools/commit/a302240)
 - **Author:** Odyseus

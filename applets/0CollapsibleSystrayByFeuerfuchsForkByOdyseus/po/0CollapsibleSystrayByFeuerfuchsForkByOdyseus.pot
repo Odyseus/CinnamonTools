@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CollapsibleSystrayByFeuerfuchsForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-05-24 17:30-0300\n"
+"POT-Creation-Date: 2019-06-01 05:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,11 +65,11 @@ msgid "If this xlet was installed manually and not trough Cinnamon Settings, loc
 msgstr ""
 
 #. Context menu items
-#: applet.js:144
+#: applet.js:145
 msgid "Active applications"
 msgstr ""
 
-#: applet.js:145
+#: applet.js:146
 msgid "Inactive applications"
 msgstr ""
 

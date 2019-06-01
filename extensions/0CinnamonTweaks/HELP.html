@@ -90,7 +90,7 @@
 
 <h2>Detalles de las opciones de la extensión</h2>
 <div class="alert alert-warning text-bold shadow-sm" role="alert">
-<h4 class="alert-heading">Advertencia</h4>
+
 Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas conocidos que deben ser leídos y entendidos antes de habilitar un ajuste. No preocuparse, nada *fatal* podría suceder.
 </div><h2>Table de Contenido</h2>
 <ul>
@@ -105,12 +105,13 @@ Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas co
 <li><a href="#auto-move-windows-es">Mover ventanas automáticamente</a></li>
 <li><a href="#windows-decorations-removal-es">Eliminación de decoraciones de ventanas</a></li>
 </ul>
+<hr>
 <p><span id="appletsdesklets-tweaks-es"></span></p>
 <h3>Ajustes de applets/desklets</h3>
 <ul>
 <li><strong>Pedir confirmación al eliminar applet/desklet:</strong> En vez de directamente remover un applet/desklet desde los menúes contextuales, un diálogo de confirmación será mostrado. Esta opción no afecta la eliminación de applets/desklets desde el administrador de applet/desklets dentro de Configuración de Cinnamon (diálogo de confirmación no será mostrado).</li>
-<li><strong>Mostrar "Abrir carpeta del applet/desklet" en el menú contextual</strong> &amp; <strong>Mostrar "Editar archivo principal del applet/desklet" en el menú contextual</strong> Estas opciones agregarán nuevos ítems a los menúes contextuales de applets/desklets. El lugar donde estos ítems serán colocados puede elegirse con la opción <strong>¿Dónde colocar el elemento...?</strong>.</li>
 </ul>
+<hr>
 <p><span id="hot-corners-tweaks-es"></span></p>
 <h3>Ajustes de esquinas activas</h3>
 <p>Este ajuste está disponible sólo para versiones de Cinnamon menores a 3.2.x. Cinnamon 3.2.x ya posee retardo de activación para esquinas activas.</p>
@@ -120,24 +121,32 @@ Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas co
 <li><strong>Retardo de activación para la esquina inferior izquierda:</strong> Claro como el cristal.</li>
 <li><strong>Retardo de activación para la esquina inferior derecha:</strong> Claro como el cristal.</li>
 </ul>
+<hr>
 <p><span id="desktop-area-tweaks-es"></span></p>
 <h3>Ajustes del área de escritorio</h3>
 <ul>
 <li><strong>Habilitar soltar aplicaciones en el escritorio:</strong> Este ajuste habilita a las aplicaciones para que se puedan arrastrar desde el menú y desde los lanzadores del panel y sean soltadas en el escritorio.</li>
 </ul>
+<hr>
 <p><span id="popup-menus-tweaks-es"></span></p>
 <h3>Ajustes de menúes emergentes</h3>
 <h5>Comportamiento de los menúes del panel</h5>
-<p><strong>Nota:</strong> Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los applets colocados en cualquier panel.</p>
-<ul>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los applets colocados en cualquier panel.
+</div><ul>
 <li><strong>No consumir clics:</strong> De forma predeterminada, cuando se abre el menú de un applet en Cinnamon y luego se hace clic en otro applet para abrir su menú, el primer clic se utiliza para cerrar el primer menú abierto y, a continuación, se debe realizar otro clic para abrir el menú del segundo applet. Con esta opción habilitada, se puede abrir directamente el menú de cualquier applet incluso si otro applet tiene su menú abierto.</li>
 </ul>
+<hr>
 <p><span id="tooltips-tweaks-es"></span></p>
 <h3>Ajustes de caja de herramientas</h3>
 <ul>
-<li><strong>Evitar la superposición de puntero del ratón sobre las cajas de información sobre herramientas:</strong> Las cajas de información en la interfaz de usuario de Cinnamon están alineadas con la esquina superior izquierda del puntero del ratón. Esto lleva a tener esta información superpuesta por el puntero del ratón. Este ajuste alinea la caja de información sobre herramientas en la esquina inferior derecha del puntero del ratón (aproximadamente), reduciendo la posibilidad de que el puntero del ratón se solape con la caja de información sobre herramientas.</li>
+<li><strong>Posicionamiento inteligente:</strong> Evita que el cursor del mouse se superponga a la información sobre herramientas y también permite mostrar una información sobre la herramienta sobre el cursor del mouse si no hay espacio en la pantalla para mostrar completamente la información sobre la herramienta debajo.</li>
+<li><strong>Nunca centrar el texto de información sobre herramientas:</strong> Anular la alineación centrada del texto de información sobre herramientas establecido por ciertos temas de Cinnamon (todos los predeterminados). Con este ajuste habilitado, el texto de la información sobre herramientas se alineará hacia la izquierda o hacia la derecha según la dirección del texto del idioma del sistema actual.</li>
+<li><strong>Restrinjir el ancho de la información sobre herramientas a la mitad del ancho del monitor:</strong> Claro como el cristal.</li>
 <li><strong>Retardo para mostrar información sobre herramientas:</strong> Claro como el cristal.</li>
 </ul>
+<hr>
 <p><span id="notifications-tweaks-es"></span></p>
 <h3>Ajustes de notificaciones</h3>
 <ul>
@@ -150,6 +159,7 @@ Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas co
 </li>
 <li><strong>Margen derecho del popup de las notificaciones:</strong> Por defecto, el margen derecho de la notificación es definido por el tema que se usa actualmente. Esta opción, con un valor distinto de 0 (cero), permite establecer un margen derecho personalizado, ignorando el definido por el tema.</li>
 </ul>
+<hr>
 <p><span id="window-focus-tweaks-es"></span></p>
 <h3>Ajustes de foco de ventanas</h3>
 <p>Ajuste basado en la extensión para Gnome Shell llamada <a href="https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus">Steal My Focus</a> por <a href="https://github.com/v-dimitrov">Valentin Dimitrov</a> y otra extensión para Gnome Shell llamada <a href="https://github.com/awamper/window-demands-attention-shortcut">Window Demands Attention Shortcut</a> por <a href="https://github.com/awamper">awamper</a>.</p>
@@ -163,10 +173,13 @@ Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas co
 </li>
 <li><strong>Atajo de teclado:</strong> Establecer un atajo de teclado para la opción <strong>...se lleva a cabo con un atajo de teclado</strong>.</li>
 </ul>
+<hr>
 <p><span id="window-shadows-tweaks-es"></span></p>
 <h3>Ajustes de sombras de ventana</h3>
-<p>Ajuste basado en la extensión para Cinnamon llamada <a href="https://cinnamon-spices.linuxmint.com/extensions/view/43">Custom Shadows</a> creada por <a href="https://github.com/mikhail-ekzi">mikhail-ekzi</a>. Permite modificar las sombras usadas por el gestor de ventanas de Cinnamon (Muffin).</p>
-<p><strong>Nota:</strong> Las ventanas decoradas del lado del cliente no se ven afectadas por este ajuste.</p>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+Las ventanas decoradas del lado del cliente no se ven afectadas por este ajuste.
+</div><p>Ajuste basado en la extensión para Cinnamon llamada <a href="https://cinnamon-spices.linuxmint.com/extensions/view/43">Custom Shadows</a> creada por <a href="https://github.com/mikhail-ekzi">mikhail-ekzi</a>. Permite modificar las sombras usadas por el gestor de ventanas de Cinnamon (Muffin).</p>
 <h5>Preajustes de sombra</h5>
 <ul>
 <li><strong>Sombras personalizadas</strong></li>
@@ -174,15 +187,34 @@ Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas co
 <li><strong>Sin sombras</strong></li>
 <li><strong>Sombras de Windows 10</strong></li>
 </ul>
+<hr>
 <p><span id="auto-move-windows-es"></span></p>
 <h3>Mover ventanas automáticamente</h3>
-<p>Ajuste basado en la extensión para Gnome Shell llamada <a href="https://extensions.gnome.org/extension/16/auto-move-windows/">Auto Move Windows</a> por <a href="https://github.com/fmuellner">Florian Muellner</a>. Permite la creación de reglas para abrir determinadas aplicaciones en áreas de trabajo específicas.</p>
-<p><strong>Nota:</strong> i la aplicación que se quiere seleccionar no se muestra en el diálogo selector de aplicaciones, leer la sección de este archivo de ayuda llamada <strong>Aplicaciones que no aparecen en los cuadros de diálogo de selección de aplicaciones</strong>.</p>
+<p>Este ajuste se compone de dos características que trabajan en conjunto:</p>
+<ol>
+<li><strong>Auto mover aplicaciones a espacios de trabajo específicos:</strong> Ajuste basado en la extensión para Gnome Shell llamada <a href="https://extensions.gnome.org/extension/16/auto-move-windows/">Auto Move Windows</a> por <a href="https://github.com/fmuellner">Florian Muellner</a>. Permite la creación de reglas para abrir determinadas aplicaciones en áreas de trabajo específicas.</li>
+<li><strong>Mover aplicaciones de pantalla completa a su propio espacio de trabajo:</strong> Ajuste basado en dos extensiones para gnome-shell; una llamada <a href="https://extensions.gnome.org/extension/1502/fullscreen-on-new-workspace">Pantalla completa en nuevo espacio de trabajo</a> por <a href="https://github.com/satran">Satyajit Ranjeev</a> y otra llamada <a href="https://extensions.gnome.org/extension/1181/maximize-to-workspace">Maximizar a espacio de trabajo</a> por <a href="https://github.com/rliang">rliang</a>.</li>
+</ol>
+<h4>Uso</h4>
+<ul>
+<li>Cuando se abre una aplicación, se moverá al área de trabajo en la que está configurada para abrirse.</li>
+<li>Cuando una aplicación ingresa a pantalla completa, se moverá al primer espacio de trabajo vacío (un espacio de trabajo que no tiene ventanas). Excepto cuando la aplicación está configurada para abrirse en un espacio de trabajo específico.</li>
+<li>Si una aplicación no está configurada para abrirse en un espacio de trabajo específico y no hay espacios de trabajo vacíos, cuando la aplicación ingrese a pantalla completa, se creará un nuevo espacio de trabajo.</li>
+<li>Cuando una aplicación que entró en pantalla completa salga de ese estado, se moverá nuevamente al área de trabajo desde la cual la aplicación entró en pantalla completa.</li>
+<li>Cuando se cierra una aplicación que entró en pantalla completa, se activará el primer espacio de trabajo.</li>
+<li>Si una aplicación necesitó crear un nuevo espacio de trabajo, ese espacio de trabajo se eliminará cuando la aplicación salga de pantalla completa o se cierre, pero solo si no hay otras ventanas en él.</li>
+</ul>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+Ver <a href="#applications-not-showing-up-es">Aplicaciones no aparecen en los cuadros de diálogo de selección de aplicaciones</a>.
+</div><hr>
 <p><span id="windows-decorations-removal-es"></span></p>
 <h3>Eliminación de decoraciones de ventanas</h3>
 <p>Ajuste basado en la extensión para Cinnamon llamada <a href="https://cinnamon-spices.linuxmint.com/extensions/view/29">Cinnamon Maximus</a> por <a href="https://github.com/fatihmete">Fatih Mete</a> con algunas opciones extraídas de la extensión para Gnome Shell llamada <a href="https://github.com/luispabon/maximus-gnome-shell">Maximus NG</a> por <a href="https://github.com/luispabon">Luis Pabon</a>. Este ajuste permite remover las decoraciones de ventanas maximizadas/medio-maximizadas/en mosaico.</p>
-<p><strong>Nota:</strong> i la aplicación que se quiere seleccionar no se muestra en el diálogo selector de aplicaciones, leer la sección de este archivo de ayuda llamada <strong>Aplicaciones que no aparecen en los cuadros de diálogo de selección de aplicaciones</strong>.</p>
-<h4>Dependencias</h4>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+Ver <a href="#applications-not-showing-up-es">Aplicaciones no aparecen en los cuadros de diálogo de selección de aplicaciones</a>.
+</div><h4>Dependencias</h4>
 <p>Este ajuste requiere dos comandos disponibles en el sistema (<strong>xprop</strong> y <strong>xwininfo</strong>) para que funcione.</p>
 <ul>
 <li>Distribuciones basadas en Debian: Estos comandos son proporcionados por el paquete <strong>x11-utils</strong>. Linux Mint ya tiene este paquete instalado.</li>
@@ -232,20 +264,12 @@ Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas co
     &lt;distance name=&quot;button_height&quot; value=&quot;0&quot;/&gt;
 &lt;/frame_geometry&gt;
 </code></pre>
+<hr>
 <h2>Problemas generales de la extensión</h2>
+<p><span id="applications-not-showing-up-es"></span></p>
 <h3>Aplicaciones no aparecen en los cuadros de diálogo de selección de aplicaciones</h3>
 <p>El selector de aplicaciones usado por la ventana de preferencias de esta extensión lista sólo las aplicaciones que tienen un archivo .desktop disponible. Simplemente porque estas son las aplicaciones que cualquiera de los ajustes que requieren una ID de aplicación (<strong>Mover ventanas automáticamente</strong> y <strong>Eliminación de decoraciones de ventanas</strong>) van a reconocer.</p>
 <p>Siguiendo la <a href="https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html">Especificación para Entradas de Escritorio</a>, uno puede crear un archivo .desktop para cualquier aplicación que no aparece en la lista de aplicaciones.</p>
-<h2>Ventana de preferencias del xlet</h2>
-<p>Desde la ventana de preferencias de este xlet, todas las opciones pueden ser importadas, exportadas y/o restablecidas a sus valores por defecto.</p>
-<ul>
-<li>Para poder realizar cualquiera de estas tareas, el esquema de las preferencias necesita estar instalado en el sistema. Esto es realizado automáticamente cuando el xlet es instalado desde el administrador de xlets de Cinnamon. Pero si el xlet fue instalado manualmente, el esquema de las preferencias necesita ser instalado manualmente. Esto se logra simplemente con ir a la carpeta del xlet y ejecutar el siguiente comando:<ul>
-<li>Comando para instalar el esquema de preferencias: <code>./settings.py install-schema</code></li>
-<li>Comando para desinstalar el esquema de preferencias: <code>./settings.py remove-schema</code></li>
-</ul>
-</li>
-<li>Para importar/exportar preferencias, el comando <strong>dconf</strong> necesita estar disponible en el sistema.</li>
-</ul>
 
 </br>
 
@@ -293,11 +317,11 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </div>
 </div>
 <h2>Description</h2>
-<p>This extension adds some options to modify the default behaviour of certain Cinnamon features.</p>
+<p>This extension adds some options to modify the default behavior of certain Cinnamon features.</p>
 
 <h2>Extension options details</h2>
 <div class="alert alert-warning text-bold shadow-sm" role="alert">
-<h4 class="alert-heading">Warning</h4>
+
 Some tweaks have warnings, dependencies, limitations and or known issues that must be read and understood before a tweak is enabled. No worries, nothing *fatal* could ever happen.
 </div><h2>Table of Content</h2>
 <ul>
@@ -312,12 +336,13 @@ Some tweaks have warnings, dependencies, limitations and or known issues that mu
 <li><a href="#auto-move-windows-en">Auto move windows</a></li>
 <li><a href="#windows-decorations-removal-en">Windows decorations removal</a></li>
 </ul>
+<hr>
 <p><span id="appletsdesklets-tweaks-en"></span></p>
 <h3>Applets/Desklets tweaks</h3>
 <ul>
 <li><strong>Ask for confirmation on applet/desklet removal:</strong> Instead of directly remove the applet/desklet from the context menus, it will ask for confirmation. This option doesn't affect the removal of applets/desklets from the Applets/Desklets manager in Cinnamon settings (there will be no confirmation).</li>
-<li><strong>Display "Open applet/desklet folder" on context menu for applets/desklets</strong> &amp; <strong>Display "Edit applet/desklet main file" on context menu for applets/desklet:</strong> These options will add new menu items to the applets/desklets context menus. The place where this items will be located is chosen by the option <strong>Where to place the menu item?</strong>.</li>
 </ul>
+<hr>
 <p><span id="hot-corners-tweaks-en"></span></p>
 <h3>Hot Corners tweaks</h3>
 <p>This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has hot corners delay activation.</p>
@@ -327,24 +352,32 @@ Some tweaks have warnings, dependencies, limitations and or known issues that mu
 <li><strong>Bottom left hot corner activation delay:</strong> Crystal clear.</li>
 <li><strong>Bottom right hot corner activation delay:</strong> Crystal clear.</li>
 </ul>
+<hr>
 <p><span id="desktop-area-tweaks-en"></span></p>
 <h3>Desktop area tweaks</h3>
 <ul>
 <li><strong>Enable applications drop to the Desktop:</strong> This tweak enables the ability to drag and drop applications from the menu applet and from the panel launchers applet into the desktop.</li>
 </ul>
+<hr>
 <p><span id="popup-menus-tweaks-en"></span></p>
 <h3>Popup menus tweaks</h3>
 <h5>Panel menus behavior</h5>
-<p><strong>Note:</strong> This setting affects only the behavior of menus that belongs to applets placed on any panel.</p>
-<ul>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+This setting affects only the behavior of menus that belongs to applets placed on any panel.
+</div><ul>
 <li><strong>Don't eat clicks:</strong> By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open.</li>
 </ul>
+<hr>
 <p><span id="tooltips-tweaks-en"></span></p>
 <h3>Tooltips tweaks</h3>
 <ul>
-<li><strong>Avoid mouse pointer overlapping tooltips:</strong> Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse pointer. This leads to having tooltips overlapped by the mouse pointer. This tweak aligns the tooltip to the bottom-right corner of the mouse pointer (approximately), reducing the possibility of the mouse pointer to overlap the tooltip. This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has the position of the tooltips changed.</li>
+<li><strong>Intelligent positioning:</strong> It prevents the mouse cursor overlapping the tooltip and also allows to display a tooltip above the mouse cursor if there is no room on the screen to completely show the tooltip below it.</li>
+<li><strong>Never center tooltip text:</strong> Override the centered alignment of tooltips text set by certain Cinnamon themes (all the default ones). With this tweak enabled, the tooltip text will be aligned to the left or right depending on the text direction of the current system language.</li>
+<li><strong>Restrict tooltips width to half monitor width:</strong> Crystal clear.</li>
 <li><strong>Tooltips show delay:</strong> Crystal clear.</li>
 </ul>
+<hr>
 <p><span id="notifications-tweaks-en"></span></p>
 <h3>Notifications tweaks</h3>
 <ul>
@@ -357,6 +390,7 @@ Some tweaks have warnings, dependencies, limitations and or known issues that mu
 </li>
 <li><strong>Notification popup right margin:</strong> By default, the right margin of the notification popup is defined by the currently used theme. This option, set to any value other than 0 (zero), allows to set a custom right margin, ignoring the defined by the theme.</li>
 </ul>
+<hr>
 <p><span id="window-focus-tweaks-en"></span></p>
 <h3>Window focus tweaks</h3>
 <p>Tweak based on the gnome-shell extension called <a href="https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus">Steal My Focus</a> by <a href="https://github.com/v-dimitrov">Valentin Dimitrov</a> and another gnome-shell extension called <a href="https://github.com/awamper/window-demands-attention-shortcut">Window Demands Attention Shortcut</a> by <a href="https://github.com/awamper">awamper</a>.</p>
@@ -370,10 +404,13 @@ Some tweaks have warnings, dependencies, limitations and or known issues that mu
 </li>
 <li><strong>Keyboard shortcut:</strong> Set a keyboard shortcut for the option <strong>...is performed with a keyboard shortcut</strong>.</li>
 </ul>
+<hr>
 <p><span id="window-shadows-tweaks-en"></span></p>
 <h3>Window Shadows tweaks</h3>
-<p>Tweak based on a Cinnamon extension called <a href="https://cinnamon-spices.linuxmint.com/extensions/view/43">Custom Shadows</a> created by <a href="https://github.com/mikhail-ekzi">mikhail-ekzi</a>. It allows to modify the shadows used by Cinnamon's window manager (Muffin).</p>
-<p><strong>Note:</strong> Client side decorated windows aren't affected by this tweak.</p>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+Client side decorated windows aren't affected by this tweak.
+</div><p>Tweak based on a Cinnamon extension called <a href="https://cinnamon-spices.linuxmint.com/extensions/view/43">Custom Shadows</a> created by <a href="https://github.com/mikhail-ekzi">mikhail-ekzi</a>. It allows to modify the shadows used by Cinnamon's window manager (Muffin).</p>
 <h5>Shadow presets</h5>
 <ul>
 <li><strong>Custom shadows</strong></li>
@@ -381,15 +418,34 @@ Some tweaks have warnings, dependencies, limitations and or known issues that mu
 <li><strong>No shadows</strong></li>
 <li><strong>Windows 10 shadows</strong></li>
 </ul>
+<hr>
 <p><span id="auto-move-windows-en"></span></p>
 <h3>Auto move windows</h3>
-<p>Tweak based on the gnome-shell extension called <a href="https://extensions.gnome.org/extension/16/auto-move-windows/">Auto Move Windows</a> by <a href="https://github.com/fmuellner">Florian Muellner</a>. It enables the ability to set rules to open determined applications on specific workspaces.</p>
-<p><strong>Note:</strong> If the application that you want to select doesn't show up on the application chooser dialog, read the section on this help file called <strong>Applications not showing up on the applications chooser dialogs</strong>.</p>
+<p>This tweak is composed of two features that work in conjunction:</p>
+<ol>
+<li><strong>Auto move application to specific workspaces:</strong> Tweak based on the gnome-shell extension called <a href="https://extensions.gnome.org/extension/16/auto-move-windows/">Auto Move Windows</a> by <a href="https://github.com/fmuellner">Florian Muellner</a>. It enables the ability to set rules to open determined applications on specific workspaces.</li>
+<li><strong>Move full screen applications to their own workspace:</strong> Tweak based on two gnome-shell extensions; one called <a href="https://extensions.gnome.org/extension/1502/fullscreen-on-new-workspace">Fullscreen On New Workspace</a> by <a href="https://github.com/satran">Satyajit Ranjeev</a> and another one called <a href="https://extensions.gnome.org/extension/1181/maximize-to-workspace">Maximize To Workspace</a> by <a href="https://github.com/rliang">rliang</a>.</li>
+</ol>
+<h4>Usage</h4>
+<ul>
+<li>When an application is opened, it will be moved to the workspace that it is configured to be opened on.</li>
+<li>When an application enters full screen, it will be moved to the first empty workspace (a workspace that has no windows on it). Except when the application is configured to be opened into an specific workspace.</li>
+<li>If an application is not configured to be opened into an specific workspace, and there are no empty workspaces, when the application enters full screen, a new workspace will be created.</li>
+<li>When an application that entered into full screen exits that state, it will be moved back into the workspace from which the application was set to full screen.</li>
+<li>When an application that entered into full screen is closed, the first workspace will be activated.</li>
+<li>If an application needed to create a new workspace, that workspace will be removed when the application exits full screen or is closed, but only if there are no other windows in it.</li>
+</ul>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+See <a href="#applications-not-showing-up-en">Applications not showing up on the applications chooser dialogs</a>.
+</div><hr>
 <p><span id="windows-decorations-removal-en"></span></p>
 <h3>Windows decorations removal</h3>
 <p>Tweak based on the extension called <a href="https://cinnamon-spices.linuxmint.com/extensions/view/29">Cinnamon Maximus</a> by <a href="https://github.com/fatihmete">Fatih Mete</a> with some options from the gnome-shell extension called <a href="https://github.com/luispabon/maximus-gnome-shell">Maximus NG</a> by <a href="https://github.com/luispabon">Luis Pabon</a>. This tweak allows to remove the windows decorations from maximized/half-maximized/tiled windows.</p>
-<p><strong>Note:</strong> If the application that you want to select doesn't show up on the application chooser dialog, read the section on this help file called <strong>Applications not showing up on the applications chooser dialogs</strong>.</p>
-<h4>Dependencies</h4>
+<div class="alert alert-info text-bold shadow-sm" role="alert">
+
+See <a href="#applications-not-showing-up-en">Applications not showing up on the applications chooser dialogs</a>.
+</div><h4>Dependencies</h4>
 <p>This tweak requires two commands available on the system (<strong>xprop</strong> and <strong>xwininfo</strong>) for it to work.</p>
 <ul>
 <li>Debian based distributions: These commands are provided by the <strong>x11-utils</strong> package. Linux Mint already has this package installed.</li>
@@ -439,20 +495,12 @@ Some tweaks have warnings, dependencies, limitations and or known issues that mu
     &lt;distance name=&quot;button_height&quot; value=&quot;0&quot;/&gt;
 &lt;/frame_geometry&gt;
 </code></pre>
+<hr>
 <h2>General extension issues</h2>
+<p><span id="applications-not-showing-up-en"></span></p>
 <h3>Applications not showing up on the applications chooser dialogs</h3>
 <p>The application chooser dialog used by the settings window of this extension lists only those applications that have available .desktop files. Simply because these applications are the only ones that any of the tweaks that require an application ID (<strong>Auto move windows</strong> and <strong>Windows decorations removal</strong>) will recognize and handle.</p>
 <p>Following the <a href="https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html">Desktop Entry Specification</a>, one can create a .desktop file for any application that doesn't appear in the applications list.</p>
-<h2>Xlet's settings window</h2>
-<p>From this xlet settings window, all options can be imported, exported and/or reseted to their defaults.</p>
-<ul>
-<li>To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:<ul>
-<li>Command to install the settings schema: <code>./settings.py install-schema</code></li>
-<li>Command to uninstall the settings schema: <code>./settings.py remove-schema</code></li>
-</ul>
-</li>
-<li>To import/export settings, the <strong>dconf</strong> command needs to be available on the system.</li>
-</ul>
 
 </br>
 
@@ -475,6 +523,8 @@ The following sections are available only in English.
 <li><strong><a href="https://github.com/fmuellner">Florian Muellner</a>:</strong> Author of the gnome-shell extension called <a href="https://extensions.gnome.org/extension/16/auto-move-windows/">Auto Move Windows</a>.</li>
 <li><strong><a href="https://github.com/v-dimitrov">Valentin Dimitrov</a>:</strong> Author of the gnome-shell extension called <a href="https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus">Steal My Focus</a>.</li>
 <li><strong><a href="https://github.com/awamper">awamper</a>:</strong> Author of the gnome-shell extension called <a href="https://github.com/awamper/window-demands-attention-shortcut">Window Demands Attention Shortcut</a>.</li>
+<li><strong><a href="https://github.com/satran">Satyajit Ranjeev</a>:</strong> Author of the gnome-shell extension called <a href="https://extensions.gnome.org/extension/1502/fullscreen-on-new-workspace">Fullscreen On New Workspace</a>.</li>
+<li><strong><a href="https://github.com/rliang">rliang</a>:</strong> Author of the gnome-shell extension called <a href="https://extensions.gnome.org/extension/1181/maximize-to-workspace">Maximize To Workspace</a>.</li>
 </ul>
 
 </div> <!-- .container.boxed -->
@@ -483,6 +533,66 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Cinnamon Tweaks changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Sat, 1 Jun 2019 04:47:18 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/854e3d3">854e3d3</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>Extension rewrite
+=================
+
+WARNING 1: If a user is already using this extension prior to this update, it is recommended to build this extension with a different domain name than the one installed. This update is a complete re-write of the extension and uses a different settings system, so existent settings will be ignored.
+
+WARNING 2: Needless to say that a previous version of the extension should be disabled before enabling this new version.
+
+General changes
+===============
+
+- Switched from a gsettings settings system to Cinnamon's native settings system. This was done so I can use my own xlet settings framework that I already use in several of my xlets without the need to maintain the GUI (more than 2500 lines of code) I created exclusively for this extension.
+- Added SVG icon.
+- Modified the stylesheet.css file to use IDs to avoid possible conflicts with other xlets styles.
+
+Specific tweaks changes
+=======================
+
+Auto move windows
+-----------------
+
+- Fixed the window mover tweak not being able to open an application to a non existent workspace.
+- Added option to allow to switch to the workspace of the recently opened application.
+- Added option to always move a full screen application into its own workspace.
+
+Tooltips tweaks
+---------------
+
+- Changed the tweak that allowed to display the tooltip without the mouse cursor overlapping it. Now this tweak is called *intelligent positioning*. It not only avoids the mouse cursor overlap issue, but also allows to display a tooltip above the mouse cursor if there is no room on the screen to completely show the tooltip bellow it.
+- Added tweak that allows to override the centered alignment of tooltips text set by certain Cinnamon themes (all the default ones). With this tweak enabled, the tooltip text will be aligned to the left or right depending on the text direction of the current system language.
+- Added tweak to restrict tooltips width to half the monitor width.
+
+Windows decorations removal
+---------------------------
+
+- Removed the use of synchronous functions to use their asynchronous counterparts instead. This effectively removes the warning seen on this extension in the extensions list.
+- Fixed an issue with this tweak that prevented a window from an application from being auto-moved when the application was configured for both, decorations removal and auto-moved to a new workspace.
+
+Removals
+========
+
+Applets/Desklets tweaks
+-----------------------
+
+- Removed the context menu items that allowed to open an installed applet/desklet folder and main file. I removed them for two main reasons:
+    1. I don't use these items anymore since I don't ever edit the xlets directly where they are installed.
+    2. Adding new context menu items indiscriminately to all xlets is invasive because an xlet might want to make use of the context menu on its own way (like I do myself with the Desktop Handler applet).
+
+Popup menus tweaks
+------------------
+
+- Removed the Gnome Shell behavior for menus. This was never finished and it's a nightmare to implement now for two reasons:
+    1. Gnome Shell is light years apart from Cinnamon and it currently uses a totally different mechanism to handle grab focus.
+    2. And Cinnamon implementation is a total nightmare.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Thu, 17 Jan 2019 14:17:49 -0300</li>

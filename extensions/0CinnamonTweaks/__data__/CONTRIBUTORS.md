@@ -7,3 +7,5 @@
 - **[Florian Muellner](https://github.com/fmuellner):** Author of the gnome-shell extension called [Auto Move Windows](https://extensions.gnome.org/extension/16/auto-move-windows/).
 - **[Valentin Dimitrov](https://github.com/v-dimitrov):** Author of the gnome-shell extension called [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus).
 - **[awamper](https://github.com/awamper):** Author of the gnome-shell extension called [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut).
+- **[Satyajit Ranjeev](https://github.com/satran):** Author of the gnome-shell extension called [Fullscreen On New Workspace](https://extensions.gnome.org/extension/1502/fullscreen-on-new-workspace).
+- **[rliang](https://github.com/rliang):** Author of the gnome-shell extension called [Maximize To Workspace](https://extensions.gnome.org/extension/1181/maximize-to-workspace).
