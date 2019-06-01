@@ -1,4 +1,9 @@
-let XletMeta;
+let XletMeta,
+    GlobalUtils,
+    DebugManager,
+    Constants,
+    DesktopNotificationsUtils,
+    SpawnUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -7,279 +12,95 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    GlobalUtils = require("./globalUtils.js");
+    DebugManager = require("./debugManager.js");
+    Constants = require("./constants.js");
+    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
+    SpawnUtils = require("./spawnUtils.js");
+} else {
+    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
+    DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
+    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
+    SpawnUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].spawnUtils;
+}
+
 const {
-    gettext: Gettext,
     gi: {
         Cinnamon,
-        Clutter,
         Gio,
         GLib,
-        Meta,
-        St
+        Clutter,
+        Meta
     },
     mainloop: Mainloop,
     misc: {
         fileUtils: FileUtils,
+        signalManager: SignalManager,
         util: Util
     },
     ui: {
         dnd: DND,
         extension: Extension,
-        main: Main,
-        modalDialog: ModalDialog
+        main: Main
     }
 } = imports;
 
-const GioSSS = Gio.SettingsSchemaSource;
+const {
+    Settings,
+    Connections,
+    WIN_MOVER_PROP
+} = Constants;
 
-const SETTINGS_SCHEMA = "org.cinnamon.extensions." + XletMeta.uuid;
+const {
+    _,
+    escapeHTML,
+    xdgOpen
+} = GlobalUtils;
 
-Gettext.bindtextdomain(XletMeta.uuid, GLib.get_home_dir() + "/.local/share/locale");
+const {
+    wrapObjectMethods
+} = DebugManager;
 
-/**
- * Return the localized translation of a string, based on the xlet domain or
- * the current global domain (Cinnamon's).
- *
- * This function "overrides" the _() function globally defined by Cinnamon.
- *
- * @param {String} aStr - The string being translated.
- *
- * @return {String} The translated string.
- */
-function _(aStr) {
-    let customTrans = Gettext.dgettext(XletMeta.uuid, aStr);
+const {
+    CustomNotification,
+    NotificationUrgency
+} = DesktopNotificationsUtils;
 
-    if (customTrans !== aStr && aStr !== "") {
-        return customTrans;
-    }
+wrapObjectMethods(Settings, {
+    CustomNotification: CustomNotification
+});
 
-    return Gettext.gettext(aStr);
-}
-
-var CINNAMON_VERSION = GLib.getenv("CINNAMON_VERSION");
-
-var CTX_ITM_POS = {
-    last: 0,
-    bfr_about: 3,
-    bfr_conf: 2,
-    bfr_rem: 1
-
-};
-
-var SHADOW_VALUES = {
-    "windows_10": {
-        "focused": {
-            "normal": [3, -1, 0, 3, 128],
-            "dialog": [3, -1, 0, 3, 128],
-            "modal_dialog": [3, -1, 0, 1, 128],
-            "utility": [3, -1, 0, 3, 128],
-            "border": [3, -1, 0, 3, 128],
-            "menu": [3, -1, 0, 3, 128],
-            "popup-menu": [1, 0, 0, 1, 128],
-            "dropdown-menu": [1, 10, 0, 1, 128],
-            "attached": [1, 0, 0, 1, 128]
-        },
-        "unfocused": {
-            "normal": [3, -1, 0, 3, 128],
-            "dialog": [3, -1, 0, 3, 128],
-            "modal_dialog": [3, -1, 0, 1, 128],
-            "utility": [3, -1, 0, 3, 128],
-            "border": [3, -1, 0, 3, 128],
-            "menu": [3, -1, 0, 3, 128],
-            "popup-menu": [1, 0, 0, 1, 128],
-            "dropdown-menu": [1, 10, 0, 1, 128],
-            "attached": [1, 0, 0, 1, 128]
-        }
-    },
-    "no_shadows": {
-        "focused": {
-            "normal": [1, -1, 0, 3, 0],
-            "dialog": [1, -1, 0, 3, 0],
-            "modal_dialog": [1, -1, 0, 1, 0],
-            "utility": [1, -1, 0, 1, 0],
-            "border": [1, -1, 0, 3, 0],
-            "menu": [1, -1, 0, 3, 0],
-            "popup-menu": [1, -1, 0, 1, 0],
-            "dropdown-menu": [1, 10, 0, 1, 0],
-            "attached": [1, -1, 0, 1, 0]
-        },
-        "unfocused": {
-            "normal": [1, -1, 0, 3, 0],
-            "dialog": [1, -1, 0, 3, 0],
-            "modal_dialog": [1, -1, 0, 3, 0],
-            "utility": [1, -1, 0, 1, 0],
-            "border": [1, -1, 0, 3, 0],
-            "menu": [1, -1, 0, 0, 0],
-            "popup-menu": [1, -1, 0, 1, 0],
-            "dropdown-menu": [1, 10, 0, 1, 0],
-            "attached": [1, -1, 0, 3, 0]
-        }
-    },
-    "default": {
-        "focused": {
-            "normal": [6, -1, 0, 3, 255],
-            "dialog": [6, -1, 0, 3, 255],
-            "modal_dialog": [6, -1, 0, 1, 255],
-            "utility": [3, -1, 0, 1, 255],
-            "border": [6, -1, 0, 3, 255],
-            "menu": [6, -1, 0, 3, 255],
-            "popup-menu": [1, -1, 0, 1, 128],
-            "dropdown-menu": [1, 10, 0, 1, 128],
-            "attached": [6, -1, 0, 1, 255]
-        },
-        "unfocused": {
-            "normal": [3, -1, 0, 3, 128],
-            "dialog": [3, -1, 0, 3, 128],
-            "modal_dialog": [3, -1, 0, 3, 128],
-            "utility": [3, -1, 0, 1, 128],
-            "border": [3, -1, 0, 3, 128],
-            "menu": [3, -1, 0, 0, 128],
-            "popup-menu": [1, -1, 0, 1, 128],
-            "dropdown-menu": [1, 10, 0, 1, 128],
-            "attached": [3, -1, 0, 3, 128]
+var Notification = new CustomNotification({
+    title: escapeHTML(_(XletMeta.name)),
+    defaultButtons: [{
+        action: "dialog-information",
+        label: escapeHTML(_("Help"))
+    }],
+    actionInvokedCallback: (aSource, aAction) => {
+        switch (aAction) {
+            case "dialog-information":
+                xdgOpen(XletMeta.path + "/HELP.html");
+                break;
         }
     }
-};
+});
 
-function CinnamonTweaksSettings() {
-    this._init.apply(this, arguments);
-}
-
-CinnamonTweaksSettings.prototype = {
-    _init: function() {
-        let schemaSource = GioSSS.get_default();
-        let schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
-
-        if (!schemaObj) {
-            let schemaDir = Gio.file_new_for_path(XletMeta.path + "/schemas");
-
-            if (schemaDir.query_exists(null)) {
-                schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
-                    GioSSS.get_default(),
-                    false);
-                schemaObj = schemaSource.lookup(SETTINGS_SCHEMA, false);
-            }
-        }
-
-        if (!schemaObj) {
-            throw new Error(_("Schema %s could not be found for extension %s.")
-                .format(SETTINGS_SCHEMA, XletMeta.uuid) + _("Please check your installation."));
-        }
-
-        this.schema = new Gio.Settings({
-            settings_schema: schemaObj
-        });
-
-        this._handlers = [];
-
-        this._extendProperties();
-    },
-
-    _getDescriptor: function(aKey) {
-        return Object.create({
-            get: () => {
-                return this._getValue(aKey);
-            },
-            set: (aVal) => {
-                this._setValue(aKey, aVal);
-            },
-            enumerable: true,
-            configurable: true,
-        });
-    },
-
-    // Keep this in case the above one misbehaves.
-    // _getDescriptor: function(aKey) {
-    //     return Object.create({
-    //         get: function(aK) {
-    //             return this._getValue(aK);
-    //         }.bind(this, aKey),
-    //         set: function(aK, aVal) {
-    //             this._setValue(aK, aVal);
-    //         }.bind(this, aKey),
-    //         enumerable: true,
-    //         configurable: true,
-    //     });
-    // },
-
-    /**
-     * Create a getter and a setter for each key in the schema.
-     */
-    _extendProperties: function() {
-        let prefKeys = this.schema.list_keys();
-        // Based on Cinnamon's xlets settings code. A life saver!
-        for (let i = prefKeys.length - 1; i >= 0; i--) {
-            Object.defineProperty(
-                this,
-                (prefKeys[i].split("-")).join("_"),
-                this._getDescriptor(prefKeys[i])
-            );
-        }
-    },
-
-    _getValue: function(aPrefKey) {
-        // Keep checking if this works for all variant types.
-        return this.schema.get_value(aPrefKey).deep_unpack();
-    },
-
-    _setValue: function(aPrefKey, aPrefVal) {
-        let prefVal = this.schema.get_value(aPrefKey);
-
-        if (prefVal.deep_unpack() !== aPrefVal) {
-            // NOT TO SELF: DO NOT EVER CONSIDER USING THIS REPUGNANT SETTING SYSTEM EVER AGAIN!!!!!
-            switch (prefVal.get_type_string()) {
-                case "b":
-                    this.schema.set_boolean(aPrefKey, aPrefVal);
-                    break;
-                case "i":
-                    this.schema.set_int(aPrefKey, aPrefVal);
-                    break;
-                case "s":
-                    this.schema.set_string(aPrefKey, aPrefVal);
-                    break;
-                case "as":
-                    this.schema.set_strv(aPrefKey, aPrefVal);
-                    break;
-                default:
-                    this.schema.set_value(aPrefKey, aPrefVal);
-            }
-        }
-    },
-
-    connect: function(signal, callback) {
-        let handler_id = this.schema.connect(signal, callback);
-        this._handlers.push(handler_id);
-        return handler_id;
-    },
-
-    destroy: function() {
-        // Remove the remaining signals...
-        while (this._handlers.length) {
-            this.disconnect(this._handlers[0]);
-        }
-    },
-
-    disconnect: function(handler_id) {
-        let index = this._handlers.indexOf(handler_id);
-        this.schema.disconnect(handler_id);
-
-        if (index > -1) {
-            this._handlers.splice(index, 1);
-        }
-    }
-};
-
-var Settings = new CinnamonTweaksSettings();
+const OutputReader = new SpawnUtils.SpawnReader();
 
 function dealWithRejection(aTweakDescription) {
-    Main.warningNotify(_(XletMeta.name), _(aTweakDescription) + "\n" +
-        _("Tweak activation aborted!!!") + "\n" +
-        _("Your Cinnamon version may not be compatible!!!"));
+    Notification.notify([
+        escapeHTML(_(aTweakDescription)),
+        escapeHTML(_("Tweak activation aborted!!!")),
+        escapeHTML(_("Your Cinnamon version may not be compatible!!!"))
+    ], NotificationUrgency.CRITICAL);
 }
 
 function testNotifications() {
-    Main.warningNotify(
-        _("This is a test notification"),
+    Notification.notify([
+        escapeHTML(_("This is a test notification")),
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" +
         "Suspendisse eleifend, lacus ut tempor vehicula, lorem tortor\n" +
         "suscipit libero, sit amet congue odio libero vitae lacus.\n" +
@@ -292,44 +113,27 @@ function testNotifications() {
         "feugiat est. Nam non libero dolor. Duis egestas sodales massa\n" +
         "sit amet lobortis. Donec sit amet nisi turpis. Morbi aliquet\n" +
         "aliquam ullamcorper."
-    );
+    ]);
+}
+
+function informCinnamonRestart() {
+    Notification.notify(escapeHTML(_("Cinnamon needs to be restarted.")));
 }
 
 function informAndDisable() {
     try {
         let msg = [
-            _("Extension activation aborted!!!"),
-            _("Your Cinnamon version may not be compatible!!!"),
-            _("Minimum Cinnamon version allowed: 3.0.x")
+            escapeHTML(_("Extension activation aborted!!!")),
+            escapeHTML(_("Your Cinnamon version may not be compatible!!!")),
+            escapeHTML(_("Minimum Cinnamon version allowed: 3.0.x"))
         ];
         global.logError(msg);
-        Main.criticalNotify(_(XletMeta.name), msg.join("\n"));
+        Notification.notify(msg, NotificationUrgency.CRITICAL);
     } finally {
         let enabledExtensions = global.settings.get_strv("enabled-extensions");
         Extension.unloadExtension(XletMeta.uuid, Extension.Type.EXTENSION);
         enabledExtensions.splice(enabledExtensions.indexOf(XletMeta.uuid), 1);
         global.settings.set_strv("enabled-extensions", enabledExtensions);
-    }
-}
-
-function injectToFunction(aParent, aName, aFunc) {
-    let origin = aParent[aName];
-    aParent[aName] = function() {
-        let ret;
-        ret = origin.apply(this, arguments);
-        if (ret === undefined) {
-            ret = aFunc.apply(this, arguments);
-        }
-        return ret;
-    };
-    return origin;
-}
-
-function removeInjection(aStorage, aInjection, aName) {
-    if (aInjection[aName] === undefined) {
-        delete aStorage[aName];
-    } else {
-        aStorage[aName] = aInjection[aName];
     }
 }
 
@@ -349,13 +153,13 @@ CT_NemoDesktopArea.prototype = {
         let app = source.app;
 
         if (app === null || app.is_window_backed()) {
-            return false;
+            return DND.DragMotionResult.NO_DROP;
         }
 
         let backgroundActor = global.stage.get_actor_at_pos(Clutter.PickMode.ALL, x, y);
 
-        if (backgroundActor != global.window_group) {
-            return false;
+        if (backgroundActor !== global.window_group) {
+            return DND.DragMotionResult.NO_DROP;
         }
 
         let file = Gio.file_new_for_path(app.get_app_info().get_filename());
@@ -370,11 +174,11 @@ CT_NemoDesktopArea.prototype = {
                 Util.spawnCommandLine('chmod +x "' + fPath + '"');
             }
         } catch (aErr) {
-            global.log(aErr);
-            return false;
+            global.logError(aErr);
+            return DND.DragMotionResult.NO_DROP;
         }
 
-        return true;
+        return DND.DragMotionResult.CONTINUE;
     },
 
     handleDragOver: function(source, actor, x, y, time) { // jshint ignore:line
@@ -386,95 +190,13 @@ CT_NemoDesktopArea.prototype = {
 
         let backgroundActor = global.stage.get_actor_at_pos(Clutter.PickMode.ALL, x, y);
 
-        if (backgroundActor != global.window_group) {
+        if (backgroundActor !== global.window_group) {
             return DND.DragMotionResult.NO_DROP;
         }
 
         return DND.DragMotionResult.COPY_DROP;
     }
 };
-
-function CT_MyCheckWorkspaces() {
-    if (!this.dynamicWorkspaces) {
-        return false;
-    }
-
-    let emptyWorkspaces = new Array(this._workspaces.length);
-
-    let a = 0,
-        aLen = this._workspaces.length;
-    for (; a < aLen; a++) {
-        let lastRemoved = this._workspaces[a]._lastRemovedWindow;
-        if ((lastRemoved &&
-                (lastRemoved.get_window_type() == Meta.WindowType.SPLASHSCREEN ||
-                    lastRemoved.get_window_type() == Meta.WindowType.DIALOG ||
-                    lastRemoved.get_window_type() == Meta.WindowType.MODAL_DIALOG)) ||
-            this._workspaces[a]._keepAliveId) {
-            emptyWorkspaces[a] = false;
-        } else {
-            emptyWorkspaces[a] = true;
-        }
-    }
-
-    let sequences = Cinnamon.WindowTracker.get_default().get_startup_sequences();
-    let b = 0,
-        bLen = sequences.length;
-    for (; b < bLen; b++) {
-        let index = sequences[b].get_workspace();
-        if (index >= 0 && index <= global.screen.n_workspaces) {
-            emptyWorkspaces[index] = false;
-        }
-    }
-
-    let windows = global.get_window_actors();
-    let c = 0,
-        cLen = windows.length;
-    for (; c < cLen; c++) {
-        let winActor = windows[c];
-        let win = winActor.meta_window;
-        if (win.is_on_all_workspaces()) {
-            continue;
-        }
-
-        let workspaceIndex = win.get_workspace().index();
-        emptyWorkspaces[workspaceIndex] = false;
-    }
-
-    // If we don't have an empty workspace at the end, add one
-    if (!emptyWorkspaces[emptyWorkspaces.length - 1]) {
-        global.screen.append_new_workspace(false, global.get_current_time());
-        emptyWorkspaces.push(false);
-    }
-
-    let activeWorkspaceIndex = global.screen.get_active_workspace_index();
-    let removingCurrentWorkspace = (emptyWorkspaces[activeWorkspaceIndex] &&
-        activeWorkspaceIndex < emptyWorkspaces.length - 1);
-
-    emptyWorkspaces[activeWorkspaceIndex] = false;
-
-    if (removingCurrentWorkspace) {
-        // "Merge" the empty workspace we are removing with the one at the end
-        this.wm.blockAnimations();
-    }
-
-    // Delete other empty workspaces; do it from the end to avoid index changes
-    let i;
-    for (i = emptyWorkspaces.length - 2; i >= 0; i--) {
-        if (emptyWorkspaces[i]) {
-            global.screen.remove_workspace(this._workspaces[i], global.get_current_time());
-        } else {
-            break;
-        }
-    }
-
-    if (removingCurrentWorkspace) {
-        global.screen.get_workspace_by_index(global.screen.n_workspaces - 1).activate(global.get_current_time());
-        this.wm.unblockAnimations();
-    }
-
-    this._checkWorkspacesId = 0;
-    return false;
-}
 
 function CT_WindowMover() {
     this._init.apply(this, arguments);
@@ -484,14 +206,91 @@ CT_WindowMover.prototype = {
 
     _init: function() {
         this._windowTracker = Cinnamon.WindowTracker.get_default();
+        this._display = global.screen.get_display();
+        this.sigMan = new SignalManager.SignalManager(null);
+        this._autoMovedAppsMap = new Map();
+        this._transientWorkspaces = new Set();
+        this._windowCreatedId = 0;
+        this._pref1Id = 0;
+        this._pref2Id = 0;
 
-        let display = global.screen.get_display();
+        this.connectSignals();
+        this._updateAutoMovedApplicationsMap();
+    },
+
+    connectSignals: function() {
+        /* NOTE: Do not use SignalManager for the _windowCreatedId connection.
+         * SignalManager has no connect_after method on the Cinnamon version that I use.
+         * This note is here so that you (Odyseus) do not try to implement it
+         * for a third time, dumb arse!!!
+         */
         // Connect after so the handler from CinnamonWindowTracker has already run
-        this._windowCreatedId = display.connect_after("window-created",
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Use SignalManager to manage this._windowCreatedId signal.
+        this._windowCreatedId = this._display.connect_after("window-created",
             (aDisplay, aWindow) => {
-                this._findAndMove(aDisplay, aWindow);
+                this._findAppAndMove(aDisplay, aWindow);
             }
         );
+
+        this._pref1Id = Settings.connect("changed::pref_window_auto_move_application_list", function() {
+            this._updateAutoMovedApplicationsMap();
+        }.bind(this));
+
+        this._pref2Id = Settings.connect("changed::pref_window_auto_move_fullscreen_in_own_ws", function() {
+            this._reconnectFullScreenSignal();
+        }.bind(this));
+
+        this._reconnectFullScreenSignal();
+    },
+
+    _reconnectFullScreenSignal: function() {
+        this.sigMan.disconnectAllSignals();
+
+        if (Settings.pref_window_auto_move_fullscreen_in_own_ws) {
+            this.sigMan.connect(global.screen, "in-fullscreen-changed", function(m) {
+                Mainloop.idle_add(() => {
+                    this._handleFullscreenState(m);
+
+                    return GLib.SOURCE_REMOVE;
+                });
+            }.bind(this));
+
+            this.sigMan.connect(global.window_manager, "destroy", function() {
+                Mainloop.idle_add(() => {
+                    let currentWs = global.screen.get_active_workspace();
+                    let currentWsIndex = currentWs.index();
+                    let winList = currentWs.list_windows().filter((aW) => {
+                        return aW.window_type === Meta.WindowType.NORMAL &&
+                            !aW.is_on_all_workspaces();
+                    });
+
+                    if (this._transientWorkspaces.has(currentWsIndex) &&
+                        winList.length === 0) {
+                        this._transientWorkspaces.delete(currentWsIndex);
+                        global.screen.get_workspace_by_index(0).activate(global.get_current_time());
+
+                        Mainloop.idle_add(() => {
+                            global.screen.remove_workspace(currentWs, global.get_current_time());
+
+                            return GLib.SOURCE_REMOVE;
+                        });
+                    }
+
+                    return GLib.SOURCE_REMOVE;
+                });
+            }.bind(this));
+        }
+    },
+
+    _updateAutoMovedApplicationsMap: function() {
+        let appList = JSON.parse(JSON.stringify(Settings.pref_window_auto_move_application_list));
+
+        if (appList.length > 0) {
+            this._autoMovedAppsMap = new Map(appList.map((aEl) => {
+                return [aEl["app_id"], aEl["workspace"]];
+            }));
+        }
     },
 
     destroy: function() {
@@ -499,229 +298,250 @@ CT_WindowMover.prototype = {
             global.screen.get_display().disconnect(this._windowCreatedId);
             this._windowCreatedId = 0;
         }
-    },
 
-    _ensureAtLeastWorkspaces: function(num, window) {
-        for (let j = global.screen.n_workspaces; j <= num; j++) {
-            window.change_workspace_by_index(j - 1, false);
-            global.screen.append_new_workspace(false, 0);
+        if (this._pref1Id > 0) {
+            Settings.disconnect(this._pref1Id);
         }
+
+        if (this._pref2Id > 0) {
+            Settings.disconnect(this._pref2Id);
+        }
+
+        this.sigMan.disconnectAllSignals();
+
+        this._autoMovedAppsMap.clear();
+        this._transientWorkspaces.clear();
     },
 
-    _findAndMove: function(display, window, noRecurse) {
-        if (window.skip_taskbar) {
+    _handleFullscreenState: function(aMetaScreen) {
+        let win = aMetaScreen.get_display().focus_window;
+
+        if (!win || win.window_type !== Meta.WindowType.NORMAL ||
+            global.screen.get_active_workspace().index() !== win.get_workspace().index()) {
             return;
         }
 
-        let spaces = Settings.window_auto_move_application_list;
+        let winActor = win.get_compositor_private();
 
-        let app = this._windowTracker.get_window_app(window);
-        if (!app) {
-            if (!noRecurse) {
-                // window is not tracked yet
-                Mainloop.idle_add(() => {
-                    this._findAndMove(display, window, true);
-                    return false;
-                });
-            } else {
-                // It's just freaking annoying!!!
-                // global.logWarning(_("Cannot find application for window"));
+        if (!winActor) {
+            return;
+        }
+
+        if (win.is_fullscreen()) {
+            this._checkWinAndMove(winActor);
+        } else {
+            this._restoreWinToOriginalWS(winActor);
+        }
+    },
+
+    _checkWinAndMove: function(aWinActor) {
+        let win = aWinActor.meta_window;
+
+        if (!win || win.window_type !== Meta.WindowType.NORMAL) {
+            return;
+        }
+
+        let app = this._windowTracker.get_window_app(win);
+
+        /* NOTE: If the window belongs to an app. that is configured to be opened in its
+         * own workspace, let the proper function handle the window.
+         */
+        if (app) {
+            let appId = app.get_id();
+
+            if (this._autoMovedAppsMap.has(appId)) {
+                this._findAppAndMove(null, win);
+
+                return;
+            } else if (Settings.pref_window_auto_move_fullscreen_in_own_ws_blacklist.indexOf(appId) !== -1) {
+                return;
             }
+        }
+
+        let otherWinList = win.get_workspace().list_windows().filter((aW) => {
+            return aW !== win &&
+                aW.window_type === Meta.WindowType.NORMAL &&
+                !aW.is_on_all_workspaces();
+        });
+
+        if (otherWinList.length >= 1) {
+            // put on last workspace if all else fails (OO)
+            let lastworkspace = global.screen.n_workspaces;
+            // always start with the second workspace (OO)
+            if (lastworkspace < 1) {
+                lastworkspace = 1;
+            }
+
+            let wc = 0;
+            let emptyWorkspace;
+            for (emptyWorkspace = 1; emptyWorkspace < lastworkspace; emptyWorkspace++) {
+                wc = global.screen.get_workspace_by_index(emptyWorkspace).list_windows().filter((aW) => {
+                    return aW.window_type === Meta.WindowType.NORMAL && !aW.is_on_all_workspaces();
+                }).length;
+
+                if (wc < 1) {
+                    break;
+                }
+            }
+
+            // don't try to move it if we're already here (break recursion)
+            if (emptyWorkspace === win.get_workspace().index()) {
+                return;
+            }
+
+            /* NOTE: A workspace will be transient because it had to be created to hold
+             * the window and it will be removed when the window leaves the workspace.
+             */
+            let workspaceIsTransient = emptyWorkspace >= global.screen.n_workspaces;
+
+            if (workspaceIsTransient) {
+                this._transientWorkspaces.add(emptyWorkspace);
+                this._ensureAtLeastWorkspaces(emptyWorkspace);
+            }
+
+            /* NOTE: Store the data in the window itself.
+             * I tried first storing the data in a preference with the string representation
+             * of the window as an ID. But I quickly ended up with hundreds of entries stored
+             * because each time a window state changes, its string representation also changes.
+             * SO, to cut it short, force the data into the window's throat. The property where
+             * the data is stored is reused on each window state change and the data is destroyed
+             * when the window is destroyed. Moving on!!!
+             */
+            win[WIN_MOVER_PROP] = {
+                original_workspace: win.get_workspace().index(),
+                transient: workspaceIsTransient
+            };
+
+            Mainloop.idle_add(() => {
+                this._moveWindow(emptyWorkspace, win, true);
+
+                return GLib.SOURCE_REMOVE;
+            });
+        }
+    },
+
+    _restoreWinToOriginalWS: function(aWinActor) {
+        let win = aWinActor.meta_window;
+
+        if (!win || win.window_type !== Meta.WindowType.NORMAL) {
+            return;
+        }
+
+        let currectWinWorkspace = win.get_workspace();
+
+        if (win.hasOwnProperty(WIN_MOVER_PROP)) {
+            let previous = win[WIN_MOVER_PROP].original_workspace;
+
+            if (previous >= global.screen.n_workspaces) {
+                this._ensureAtLeastWorkspaces(previous);
+            }
+
+            Mainloop.idle_add(() => {
+                this._moveWindow(previous, win, true);
+
+                let otherWinsList = currectWinWorkspace.list_windows().filter((aW) => {
+                    return aW.window_type === Meta.WindowType.NORMAL && !aW.is_on_all_workspaces();
+                });
+
+                if (win[WIN_MOVER_PROP].transient && otherWinsList.length === 0) {
+                    global.screen.remove_workspace(currectWinWorkspace, global.get_current_time());
+                }
+
+                return GLib.SOURCE_REMOVE;
+            });
+        }
+    },
+
+    _ensureAtLeastWorkspaces: function(aNum) {
+        for (let j = global.screen.n_workspaces; j <= aNum; j++) {
+            Main._addWorkspace();
+        }
+    },
+
+    _findAppAndMove: function(aDisplay, aWindow, aRecurse = true) {
+        if (aWindow.skip_taskbar) {
+            return;
+        }
+
+        let app = this._windowTracker.get_window_app(aWindow);
+
+        if (!app && aRecurse) {
+            // Window is not tracked yet. Try one more time.
+            Mainloop.idle_add(() => {
+                this._findAppAndMove(aDisplay, aWindow, false);
+
+                return GLib.SOURCE_REMOVE;
+            });
+
+            return;
+        }
+
+        if (!app) {
             return;
         }
 
         let app_id = app.get_id();
-        let j = 0,
-            jLen = spaces.length;
-        for (; j < jLen; j++) {
-            let apps_to_space = spaces[j].split(":");
-            // Match application id
-            if (apps_to_space[0] == app_id) {
-                let workspace_num = parseInt(apps_to_space[1]) - 1;
 
-                if (workspace_num >= global.screen.n_workspaces) {
-                    this._ensureAtLeastWorkspaces(workspace_num, window);
-                }
+        if (this._autoMovedAppsMap.has(app_id)) {
+            let wsIndex = parseInt(this._autoMovedAppsMap.get(app_id), 10) - 1;
 
-                window.change_workspace_by_index(workspace_num, false, global.get_current_time());
+            if (wsIndex >= global.screen.n_workspaces) {
+                this._ensureAtLeastWorkspaces(wsIndex);
+            }
+            Mainloop.idle_add(() => {
+                this._moveWindow(wsIndex, aWindow);
+
+                return GLib.SOURCE_REMOVE;
+            });
+
+        }
+    },
+
+    _moveWindow: function(aWsIndex, aWin, aForceFocus) {
+        if (aWin) {
+            Main.wm.blockAnimations();
+            aWin.change_workspace_by_index(aWsIndex, false, global.get_current_time());
+
+            if (Settings.pref_window_auto_move_auto_focus || aForceFocus) {
+
+                Mainloop.idle_add(() => {
+                    aWin.get_workspace().activate_with_focus(aWin, global.get_current_time());
+                    Main.wm.unblockAnimations();
+
+                    return GLib.SOURCE_REMOVE;
+                });
+            } else {
+                Main.wm.unblockAnimations();
             }
         }
     }
 };
-
-function ConfirmationDialog() {
-    this._init.apply(this, arguments);
-}
-
-ConfirmationDialog.prototype = {
-    __proto__: ModalDialog.ModalDialog.prototype,
-
-    _init: function(aCallback, aDialogTitle, aDialogMessage) {
-        ModalDialog.ModalDialog.prototype._init.call(this, {
-            styleClass: null
-        });
-
-        let mainContentBox = new St.BoxLayout({
-            style_class: "confirm-dialog-main-layout",
-            vertical: false
-        });
-        this.contentLayout.add(mainContentBox, {
-            x_fill: true,
-            y_fill: true
-        });
-
-        let messageBox = new St.BoxLayout({
-            style_class: "confirm-dialog-message-layout",
-            vertical: true
-        });
-        mainContentBox.add(messageBox, {
-            y_align: St.Align.START
-        });
-
-        this._subjectLabel = new St.Label({
-            style_class: "confirm-dialog-headline",
-            text: aDialogTitle
-        });
-
-        messageBox.add(this._subjectLabel, {
-            y_fill: false,
-            y_align: St.Align.START
-        });
-
-        this._descriptionLabel = new St.Label({
-            style_class: "confirm-dialog-description",
-            text: aDialogMessage
-        });
-
-        messageBox.add(this._descriptionLabel, {
-            y_fill: true,
-            y_align: St.Align.START
-        });
-
-        this.setButtons([{
-            label: _("Cancel"),
-            focused: true,
-            action: () => {
-                this.close();
-            },
-            key: Clutter.Escape
-        }, {
-            label: _("OK"),
-            action: () => {
-                this.close();
-                aCallback();
-            }
-        }]);
-    }
-};
-
-/**
- * Compares two software version numbers (e.g. "1.7.1" or "1.2b").
- *
- * This function was born in http://stackoverflow.com/a/6832721.
- *
- * @param {string} v1 The first version to be compared.
- * @param {string} v2 The second version to be compared.
- * @param {object} [options] Optional flags that affect comparison behavior:
- * <ul>
- *     <li>
- *         <tt>lexicographical: true</tt> compares each part of the version strings lexicographically instead of
- *         naturally; this allows suffixes such as "b" or "dev" but will cause "1.10" to be considered smaller than
- *         "1.2".
- *     </li>
- *     <li>
- *         <tt>zeroExtend: true</tt> changes the result if one version string has less parts than the other. In
- *         this case the shorter string will be padded with "zero" parts instead of being considered smaller.
- *     </li>
- * </ul>
- * @returns {number|NaN}
- * <ul>
- *    <li>0 if the versions are equal</li>
- *    <li>a negative integer iff v1 < v2</li>
- *    <li>a positive integer iff v1 > v2</li>
- *    <li>NaN if either version string is in the wrong format</li>
- * </ul>
- *
- * @copyright by Jon Papaioannou (["john", "papaioannou"].join(".") + "@gmail.com")
- * @license This function is in the public domain. Do what you want with it, no strings attached.
- */
-function versionCompare(v1, v2, options) {
-    let lexicographical = options && options.lexicographical,
-        zeroExtend = options && options.zeroExtend,
-        v1parts = v1.split("."),
-        v2parts = v2.split(".");
-
-    function isValidPart(x) {
-        return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
-    }
-
-    if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
-        return NaN;
-    }
-
-    if (zeroExtend) {
-        while (v1parts.length < v2parts.length) {
-            v1parts.push("0");
-        }
-        while (v2parts.length < v1parts.length) {
-            v2parts.push("0");
-        }
-    }
-
-    if (!lexicographical) {
-        v1parts = v1parts.map(Number);
-        v2parts = v2parts.map(Number);
-    }
-
-    for (let i = 0; i < v1parts.length; ++i) {
-        if (v2parts.length == i) {
-            return 1;
-        }
-
-        if (v1parts[i] == v2parts[i]) {
-            continue;
-        } else if (v1parts[i] > v2parts[i]) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-
-    if (v1parts.length != v2parts.length) {
-        return -1;
-    }
-
-    return 0;
-}
 
 function CT_MaximusNG() {
     this._init.apply(this, arguments);
 }
 
 CT_MaximusNG.prototype = {
-    maxID: 0,
-    minID: 0,
-    tileID: 0,
-    changeWorkspaceID: 0,
-    grabID: 0,
-    workspaces: [],
-    oldFullscreenPref: null,
-    onetime: 0,
-    app_list: [],
-    is_blacklist: false,
-
-    /* This is not used but is kept in case that Cinnamon's developers regain their senses
-     * and re-add a feature to muffin that should have never been removed in the first place.
-     */
-    use_set_hide_titlebar: false,
 
     _init: function() {
-        Meta.MaximizeFlags.BOTH = (Meta.MaximizeFlags.VERTICAL | Meta.MaximizeFlags.HORIZONTAL);
+        this._windowTracker = Cinnamon.WindowTracker.get_default();
+        this.sigMan = new SignalManager.SignalManager(null);
+        this.workspacesSigMan = new SignalManager.SignalManager(null);
+
+        this.shouldFocusWindow = true;
+        this.oldFullscreenPref = null;
+        this._autoMovedApps = new Set();
+        this.onetime = 0;
+        /* NOTE: This is not used but is kept in case that Cinnamon's developers
+         * regain their senses and re-add a feature to muffin that should have never
+         * been removed in the first place.
+         */
+        this.use_set_hide_titlebar = false;
     },
 
-    log: function(message) {
-        if (Settings.maximus_enable_logging) {
-            global.log("[" + _(XletMeta.name) + "][Maximus] " + message);
+    log: function(aMsg) {
+        if (Settings.pref_maximus_enable_logging) {
+            global.log("[" + _(XletMeta.name) + "][Maximus] " + aMsg);
         }
     },
 
@@ -744,50 +564,57 @@ CT_MaximusNG.prototype = {
      * @param {Meta.Window} win - the window to guess the XID of. You wil get better
      * success if the window's actor (`win.get_compositor_private()`) exists.
      */
-    guessWindowXID: function(win) {
+    guessWindowXIDAsync: function(aWin, aCallback) {
         let id = null;
         /* If window title has non-utf8 characters, get_description() complains
          * "Failed to convert UTF-8 string to JS string: Invalid byte sequence in conversion input",
          * event though get_title() works.
          */
         try {
-            id = win.get_description().match(/0x[0-9a-f]+/);
+            id = aWin.get_description().match(/0x[0-9a-f]+/);
 
             if (id) {
                 id = id[0];
-                return id;
+                aCallback(id);
+                return;
             }
         } catch (err) {}
 
         // Use xwininfo, take first child.
-        let act = win.get_compositor_private();
+        let winActor = aWin.get_compositor_private();
 
-        if (act && act["x-window"]) {
-            id = GLib.spawn_command_line_sync("xwininfo -children -id 0x%x".format(act["x-window"]));
-            if (id[0]) {
-                let str = id[1].toString();
+        if (winActor && winActor.hasOwnProperty("x-window")) {
+            OutputReader.spawn("xwininfo -children -id 0x%x"
+                .format(winActor["x-window"]), null, null, GLib.SpawnFlags.DEFAULT, null,
+                (aStandardOutput) => {
+                    let str = aStandardOutput.toString();
 
-                /* The X ID of the window is the one preceding the target window's title.
-                 * This is to handle cases where the window has no frame and so
-                 * act['x-window'] is actually the X ID we want, not the child.
-                 */
-                let regexp = new RegExp('(0x[0-9a-f]+) +"%s"'.format(win.title));
-                id = str.match(regexp);
+                    /* The X ID of the window is the one preceding the target window's title.
+                     * This is to handle cases where the window has no frame and so
+                     * winActor['x-window'] is actually the X ID we want, not the child.
+                     */
+                    let regexp = new RegExp('(0x[0-9a-f]+) +"%s"'.format(aWin.title));
+                    id = str.match(regexp);
 
-                if (id) {
-                    return id[1];
+                    if (id) {
+                        aCallback(id[1]);
+                        return;
+                    }
+
+                    // Otherwise, just grab the child and hope for the best
+                    id = str.split(/child(?:ren)?:/)[1].match(/0x[0-9a-f]+/);
+
+                    if (id) {
+                        aCallback(id[0]);
+                    }
+
+                    return;
                 }
-
-                // Otherwise, just grab the child and hope for the best
-                id = str.split(/child(?:ren)?:/)[1].match(/0x[0-9a-f]+/);
-
-                if (id) {
-                    return id[0];
-                }
-            }
+            );
         }
-        this.log("Could not find XID for window with title %s".format(win.title));
-        return null;
+
+        this.log("Could not find XID for window with title %s".format(aWin.title));
+        aCallback(null);
     },
 
     /**
@@ -818,46 +645,58 @@ CT_MaximusNG.prototype = {
      *
      * @param {Meta.Window} win - window to undecorate.
      */
-    undecorate: function(win) {
-        let id = this.guessWindowXID(win);
-        // Undecorate with xprop
-        let cmd = ["xprop", "-id", id,
-            "-f", "_MOTIF_WM_HINTS", "32c",
-            "-set", "_MOTIF_WM_HINTS",
-            "0x2, 0x0, %s, 0x0, 0x0"
-            .format(Settings.maximus_invisible_win_hack ? "0x2" : "0x0")
-        ];
+    undecorate: function(aWin) {
+        let winApp = this._windowTracker.get_window_app(aWin);
+        this.shouldFocusWindow = winApp && !this._autoMovedApps.has(winApp.get_id());
 
-        /* _MOTIF_WM_HINTS: see MwmUtil.h from OpenMotif source (cvs.openmotif.org),
-         *  or rudimentary documentation here:
-         * http://odl.sysworks.biz/disk$cddoc04sep11/decw$book/d3b0aa63.p264.decw$book
-         *
-         * Struct { flags, functions, decorations, input_mode, status }.
-         * Flags: what the hints are for. (functions, decorations, input mode and/or status).
-         * Functions: minimize, maximize, close, ...
-         * Decorations: title, border, all, none, ...
-         * Input Mode: modeless, application modal, system model, ..
-         * Status: tearoff window.
-         */
+        this.guessWindowXIDAsync(aWin, (aWinId) => {
+            // Undecorate with xprop
+            let cmd = ["xprop", "-id", aWinId,
+                "-f", "_MOTIF_WM_HINTS", "32c",
+                "-set", "_MOTIF_WM_HINTS",
+                "0x2, 0x0, %s, 0x0, 0x0"
+                .format(Settings.pref_maximus_invisible_win_hack ? "0x2" : "0x0")
+            ];
 
-        // Fallback: if couldn't get id for some reason, use the window's name
-        if (!id) {
-            cmd[1] = "-name";
-            cmd[2] = win.get_title();
-        }
+            /* _MOTIF_WM_HINTS: see MwmUtil.h from OpenMotif source (cvs.openmotif.org),
+             *  or rudimentary documentation here:
+             * http://odl.sysworks.biz/disk$cddoc04sep11/decw$book/d3b0aa63.p264.decw$book
+             *
+             * Struct { flags, functions, decorations, input_mode, status }.
+             * Flags: what the hints are for. (functions, decorations, input mode and/or status).
+             * Functions: minimize, maximize, close, ...
+             * Decorations: title, border, all, none, ...
+             * Input Mode: modeless, application modal, system model, ..
+             * Status: tearoff window.
+             */
 
-        this.log(cmd.join(" "));
-        Util.spawn(cmd);
-        /* #25: when undecorating a Qt app (texmaker, keepassx) somehow focus is lost.
-         * However, is there a use case where this would happen legitimately?
-         * For some reaons the Qt apps seem to take a while to be refocused.
-         */
-        Meta.later_add(Meta.LaterType.IDLE, () => {
-            if (win.focus) {
-                win.focus(global.get_current_time());
-            } else {
-                win.activate(global.get_current_time());
+            // Fallback: if couldn't get id for some reason, use the window's name
+            if (!aWinId) {
+                cmd[1] = "-name";
+                cmd[2] = aWin.get_title();
             }
+
+            this.log(cmd.join(" "));
+            Util.spawn_async(cmd, () => {
+                /* #25: when undecorating a Qt app (texmaker, keepassx) somehow focus is lost.
+                 * However, is there a use case where this would happen legitimately?
+                 * For some reasons the Qt apps seem to take a while to be refocused.
+                 */
+                /* NOTE: If an application is configured to be auto-moved into another
+                 * workspace, do not auto-focus it; it will prevent it from being moved.
+                 */
+                if (this.shouldFocusWindow) {
+                    Meta.later_add(Meta.LaterType.IDLE, () => {
+                        if (aWin.focus) {
+                            aWin.focus(global.get_current_time());
+                        } else {
+                            aWin.activate(global.get_current_time());
+                        }
+
+                        return GLib.SOURCE_REMOVE;
+                    });
+                }
+            });
         });
     },
 
@@ -867,34 +706,35 @@ CT_MaximusNG.prototype = {
      *
      * @param {Meta.Window} win - window to undecorate.
      */
-    decorate: function(win) {
-        let id = this.guessWindowXID(win);
-        // Decorate with xprop: 1 == DECOR_ALL
-        let cmd = ["xprop", "-id", id,
-            "-f", "_MOTIF_WM_HINTS", "32c",
-            "-set", "_MOTIF_WM_HINTS",
-            "0x2, 0x0, 0x1, 0x0, 0x0"
-        ];
+    decorate: function(aWin) {
+        this.guessWindowXIDAsync(aWin, (aWinId) => {
+            // Decorate with xprop: 1 === DECOR_ALL
+            let cmd = ["xprop", "-id", aWinId,
+                "-f", "_MOTIF_WM_HINTS", "32c",
+                "-set", "_MOTIF_WM_HINTS",
+                "0x2, 0x0, 0x1, 0x0, 0x0"
+            ];
 
-        // Fallback: if couldn't get id for some reason, use the window's name
-        if (!id) {
-            cmd[1] = "-name";
-            cmd[2] = win.get_title();
-        }
-
-        this.log(cmd.join(" "));
-        Util.spawn(cmd);
-
-        /* #25: when undecorating a Qt app (texmaker, keepassx) somehow focus is lost.
-         * However, is there a use case where this would happen legitimately?
-         * For some reaons the Qt apps seem to take a while to be refocused.
-         */
-        Meta.later_add(Meta.LaterType.IDLE, () => {
-            if (win.focus) {
-                win.focus(global.get_current_time());
-            } else {
-                win.activate(global.get_current_time());
+            // Fallback: if couldn't get id for some reason, use the window's name
+            if (!aWinId) {
+                cmd[1] = "-name";
+                cmd[2] = aWin.get_title();
             }
+
+            this.log(cmd.join(" "));
+            Util.spawn_async(cmd, () => {
+                /* #25: when undecorating a Qt app (texmaker, keepassx) somehow focus is lost.
+                 * However, is there a use case where this would happen legitimately?
+                 * For some reaons the Qt apps seem to take a while to be refocused.
+                 */
+                Meta.later_add(Meta.LaterType.IDLE, () => {
+                    if (aWin.focus) {
+                        aWin.focus(global.get_current_time());
+                    } else {
+                        aWin.activate(global.get_current_time());
+                    }
+                });
+            });
         });
     },
 
@@ -918,40 +758,41 @@ CT_MaximusNG.prototype = {
      * find the window's XID, we try one more time to detect the XID, unless this
      * is `true`. Internal use.
      */
-    setHideTitlebar: function(win, hide, stopAdding) {
-        this.log("setHideTitlebar: " + win.get_title() + ": " + hide + (stopAdding ? " (2)" : ""));
-        let id = this.guessWindowXID(win);
+    setHideTitlebar: function(aWin, aHide, aStopAdding) {
+        this.log("setHideTitlebar: " + aWin.get_title() + ": " + aHide + (aStopAdding ? " (2)" : ""));
+        this.guessWindowXIDAsync(aWin, (aWinId) => {
+            /* Newly-created windows are added to the workspace before
+             * the compositor knows about them: get_compositor_private() is null.
+             * Additionally things like .get_maximized() aren't properly done yet.
+             * (see workspace.js _doAddWindow)
+             */
+            if (!aWinId && !aWin.get_compositor_private() && !aStopAdding) {
+                Mainloop.idle_add(() => {
+                    this.setHideTitlebar(null, aWin, true);
 
-        /* Newly-created windows are added to the workspace before
-         * the compositor knows about them: get_compositor_private() is null.
-         * Additionally things like .get_maximized() aren't properly done yet.
-         * (see workspace.js _doAddWindow)
-         */
-        if (!id && !win.get_compositor_private() && !stopAdding) {
-            Mainloop.idle_add(() => {
-                this.setHideTitlebar(null, win, true);
-                return false;
-            });
-            return;
-        }
+                    return GLib.SOURCE_REMOVE;
+                });
+                return;
+            }
 
-        /* Undecorate with xprop. Use _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED.
-         * See (eg) mutter/src/window-props.c
-         */
-        let cmd = ["xprop", "-id", id,
-            "-f", "_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED", "32c",
-            "-set", "_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED",
-            (hide ? "0x1" : "0x0")
-        ];
+            /* Undecorate with xprop. Use _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED.
+             * See (eg) mutter/src/window-props.c
+             */
+            let cmd = ["xprop", "-id", aWinId,
+                "-f", "_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED", "32c",
+                "-set", "_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED",
+                (aHide ? "0x1" : "0x0")
+            ];
 
-        // Fallback: if couldn't get id for some reason, use the window's name
-        if (!id) {
-            cmd[1] = "-name";
-            cmd[2] = win.get_title();
-        }
+            // Fallback: if couldn't get id for some reason, use the window's name
+            if (!aWinId) {
+                cmd[1] = "-name";
+                cmd[2] = aWin.get_title();
+            }
 
-        this.log(cmd.join(" "));
-        Util.spawn(cmd);
+            this.log(cmd.join(" "));
+            Util.spawn_async(cmd);
+        });
     },
 
     /**
@@ -966,16 +807,18 @@ CT_MaximusNG.prototype = {
      * @returns {boolean} whether the window is originally decorated and not in
      * the blacklist (or in the whitelist).
      */
-    shouldAffect: function(win) {
-        if (!win._maximusDecoratedOriginal) {
+    shouldAffect: function(aWin) {
+        if (!aWin.__CT_MaximusNG_decoratedOriginal) {
             return false;
         }
 
-        let app = Cinnamon.WindowTracker.get_default().get_window_app(win);
+        let app = Cinnamon.WindowTracker.get_default().get_window_app(aWin);
         let appid = (app ? app.get_id() : -1);
-        let inList = this.app_list.length > 0 && this.app_list.indexOf(appid) >= 0;
+        let inList = Settings.pref_maximus_app_list.length > 0 &&
+            Settings.pref_maximus_app_list.indexOf(appid) >= 0;
 
-        return !((this.is_blacklist && inList) || (!this.is_blacklist && !inList));
+        return !((Settings.pref_maximus_is_blacklist && inList) ||
+            (!Settings.pref_maximus_is_blacklist && !inList));
     },
 
     /**
@@ -987,42 +830,44 @@ CT_MaximusNG.prototype = {
      *
      * Use with `shouldAffect` to get a full check..
      */
-    shouldBeUndecorated: function(win) {
-        let max = win.get_maximized();
-        return (max === Meta.MaximizeFlags.BOTH ||
-            (Settings.maximus_undecorate_half_maximized && max > 0));
+    shouldBeUndecorated: function(aWin) {
+        let max = aWin.get_maximized();
+        return (max === (Meta.MaximizeFlags.VERTICAL | Meta.MaximizeFlags.HORIZONTAL) ||
+            (Settings.pref_maximus_undecorate_half_maximized && max > 0));
     },
 
     /**
-     * Checks if `win` is fully maximised, or half-maximised + undecorateHalfMaximised.
+     * Checks if `aWin` is fully maximised, or half-maximised + undecorateHalfMaximised.
      * If so, undecorates the window.
      */
-    possiblyUndecorate: function(win) {
-        if (this.shouldBeUndecorated(win)) {
-            if (!win.get_compositor_private()) {
-                Mainloop.idle_add(() => {
-                    this.undecorate(win);
-                    return false;
-                });
+    possiblyUndecorate: function(aWin) {
+        if (this.shouldBeUndecorated(aWin)) {
+            if (aWin.get_compositor_private()) {
+                this.undecorate(aWin);
             } else {
-                this.undecorate(win);
+                Mainloop.idle_add(() => {
+                    this.undecorate(aWin);
+
+                    return GLib.SOURCE_REMOVE;
+                });
             }
         }
     },
 
     /**
-     * Checks if `win` is fully maximised, or half-maximised + undecorateHalfMaximised.
+     * Checks if `aWin` is fully maximised, or half-maximised + undecorateHalfMaximised.
      * If *NOT*, redecorates the window.
      */
-    possiblyRedecorate: function(win) {
-        if (!this.shouldBeUndecorated(win)) {
-            if (!win.get_compositor_private()) {
+    possiblyRedecorate: function(aWin) {
+        if (!this.shouldBeUndecorated(aWin)) {
+            if (!aWin.get_compositor_private()) {
                 Mainloop.idle_add(() => {
-                    this.decorate(win);
-                    return false;
+                    this.decorate(aWin);
+
+                    return GLib.SOURCE_REMOVE;
                 });
             } else {
-                this.decorate(win);
+                this.decorate(aWin);
             }
         }
     },
@@ -1037,15 +882,15 @@ CT_MaximusNG.prototype = {
      * It is expected to be maximized (in at least one direction) already - we will
      * not check before undecorating.
      */
-    onMaximise: function(shellwm, actor) {
-        if (!actor) {
-            return;
+    onMaximise: function(CinnWM, aActor) {
+        if (!aActor) {
+            return false;
         }
 
-        let win = actor.get_meta_window();
+        let win = aActor.get_meta_window();
 
         if (!this.shouldAffect(win)) {
-            return;
+            return false;
         }
 
         let max = win.get_maximized();
@@ -1054,14 +899,21 @@ CT_MaximusNG.prototype = {
         /* If this is a partial maximization, and we do not wish to undecorate
          * half-maximized or tiled windows, make sure the window is decorated.
          */
-        if (max !== Meta.MaximizeFlags.BOTH &&
-            ((!Settings.maximus_undecorate_half_maximized && win.tile_type === 0) ||
-                (!Settings.maximus_undecorate_tiled && win.tile_type > 0))) {
+        if (max !== (Meta.MaximizeFlags.VERTICAL | Meta.MaximizeFlags.HORIZONTAL) &&
+            ((!Settings.pref_maximus_undecorate_half_maximized && win.tile_type === 0) ||
+                (!Settings.pref_maximus_undecorate_tiled && win.tile_type > 0))) {
             this.decorate(win);
-            return;
+            return false;
         }
 
-        this.undecorate(win);
+        // this.undecorate(win);
+        Meta.later_add(Meta.LaterType.IDLE, () => {
+            this.undecorate(win);
+
+            return GLib.SOURCE_REMOVE;
+        });
+
+        return false;
     },
 
     /**
@@ -1073,15 +925,15 @@ CT_MaximusNG.prototype = {
      * @param {Meta.WindowActor} actor - the window actor for the unmaximized window.
      * It is expected to be unmaximized - we will not check before decorating.
      */
-    onUnmaximise: function(shellwm, actor) {
-        if (!actor) {
-            return;
+    onUnmaximise: function(CinnWM, aActor) {
+        if (!aActor) {
+            return false;
         }
 
-        let win = actor.meta_window;
+        let win = aActor.meta_window;
 
         if (!this.shouldAffect(win)) {
-            return;
+            return false;
         }
 
         this.log("onUnmaximise: " + win.get_title());
@@ -1094,19 +946,15 @@ CT_MaximusNG.prototype = {
          * this is not an issue).
          */
         if (!this.use_set_hide_titlebar && global.display.get_grab_op() === Meta.GrabOp.MOVING) {
-            if (this.grabID > 0) {
-                global.display.disconnect(this.grabID);
-                this.grabID = 0;
-            }
-
-            this.grabID = global.display.connect("grab-op-end", () => {
+            this.sigMan.connect(global.display, "grab-op-end", function() {
                 this.possiblyRedecorate(win);
-                global.display.disconnect(this.grabID);
-                this.grabID = 0;
-            });
+                this.sigMan.disconnect("grab-op-end");
+            }.bind(this));
         } else {
             this.decorate(win);
         }
+
+        return false;
     },
 
     /**
@@ -1125,13 +973,13 @@ CT_MaximusNG.prototype = {
      *
      * @see onWindowAdded
      */
-    onWindowChangesMaximiseState: function(win) {
-        if ((win.maximized_horizontally && !win.maximized_vertically) ||
-            (!win.maximized_horizontally && win.maximized_vertically)) {
-            this.setHideTitlebar(win, false);
-            this.decorate(win);
+    onWindowChangesMaximiseState: function(aWin) {
+        if ((aWin.maximized_horizontally && !aWin.maximized_vertically) ||
+            (!aWin.maximized_horizontally && aWin.maximized_vertically)) {
+            this.setHideTitlebar(aWin, false);
+            this.decorate(aWin);
         } else {
-            this.setHideTitlebar(win, true);
+            this.setHideTitlebar(aWin, true);
         }
     },
 
@@ -1160,9 +1008,9 @@ CT_MaximusNG.prototype = {
      *
      * @see undecorate
      */
-    onWindowAdded: function(ws, win) {
-        if (win._maximusDecoratedOriginal) {
-            return;
+    onWindowAdded: function(aWorkspace, aWin) {
+        if (aWin.__CT_MaximusNG_decoratedOriginal) {
+            return false;
         }
 
         /* Newly-created windows are added to the workspace before
@@ -1170,40 +1018,43 @@ CT_MaximusNG.prototype = {
          * Additionally things like .get_maximized() aren't properly done yet.
          * (see workspace.js _doAddWindow)
          */
-        win._maximusDecoratedOriginal = Boolean(win.decorated);
-        this.log("onWindowAdded: " + win.get_title() + " initially decorated? " +
-            win._maximusDecoratedOriginal);
+        aWin.__CT_MaximusNG_decoratedOriginal = Boolean(aWin.decorated);
+        this.log("onWindowAdded: " + aWin.get_title() + " initially decorated? " +
+            aWin.__CT_MaximusNG_decoratedOriginal);
 
-        if (!this.shouldAffect(win)) {
-            return;
+        if (!this.shouldAffect(aWin)) {
+            return false;
         }
 
         // With set_hide_titlebar, set the window hint when the window is added and
         // there is no further need to listen to maximize/unmaximize on the window.
         if (this.use_set_hide_titlebar) {
-            this.setHideTitlebar(win, true);
-            if (this.shouldBeUndecorated(win)) {
-                win.unmaximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
+            this.setHideTitlebar(aWin, true);
+            if (this.shouldBeUndecorated(aWin)) {
+                aWin.unmaximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
                 Mainloop.idle_add(() => {
-                    win.maximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
-                    return false;
+                    aWin.maximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
+
+                    return GLib.SOURCE_REMOVE;
                 });
             }
 
-            if (!Settings.maximus_undecorate_half_maximized) {
-                win._maxHStateId = win.connect("notify::maximized-horizontally",
-                    (aWin) => this.onWindowChangesMaximiseState(aWin));
-                win._maxVStateId = win.connect("notify::maximized-vertically",
-                    (aWin) => this.onWindowChangesMaximiseState(aWin));
+            if (!Settings.pref_maximus_undecorate_half_maximized) {
+                aWin.__CT_MaximusNG_maxHStateId = aWin.connect("notify::maximized-horizontally",
+                    (aW) => this.onWindowChangesMaximiseState(aW));
+                aWin.__CT_MaximusNG_maxVStateId = aWin.connect("notify::maximized-vertically",
+                    (aW) => this.onWindowChangesMaximiseState(aW));
 
-                if (win.get_maximized()) {
-                    this.onWindowChangesMaximiseState(win);
+                if (aWin.get_maximized()) {
+                    this.onWindowChangesMaximiseState(aWin);
                 }
             }
         } else {
             // If it is added initially maximized, we undecorate it.
-            this.possiblyUndecorate(win);
+            this.possiblyUndecorate(aWin);
         }
+
+        return false;
     },
 
     /**
@@ -1215,60 +1066,52 @@ CT_MaximusNG.prototype = {
      * @see onWindowAdded
      */
     onChangeNWorkspaces: function() {
-        let ws;
-        let i = this.workspaces.length;
-
-        if (i > 0) {
-            while (i--) {
-                if (this.workspaces[i]._MaximusWindowAddedId) {
-                    this.workspaces[i].disconnect(this.workspaces[i]._MaximusWindowAddedId);
-                }
-            }
-        }
-
-        this.workspaces = [];
-        i = global.screen.n_workspaces;
+        this.workspacesSigMan.disconnectAllSignals();
 
         let maxWinAddedFn = () => {
-            return (aWorkspace, aWindow) => {
+            return function(aWorkspace, aWindow) {
+                /* NOTE: We need to add a Mainloop.idle_add, or else in onWindowAdded the
+                 * window's maximized state is not correct yet.
+                 */
                 Mainloop.idle_add(() => {
                     this.onWindowAdded(aWorkspace, aWindow);
-                    this.changeWorkspaceID = 0;
-                    return false;
+
+                    return GLib.SOURCE_REMOVE;
                 });
             };
         };
 
+        let i = global.screen.n_workspaces;
         while (i--) {
-            ws = global.screen.get_workspace_by_index(i);
-            this.workspaces.push(ws);
-            /* we need to add a Mainloop.idle_add, or else in onWindowAdded the
-             * window's maximized state is not correct yet.
-             */
-            ws._MaximusWindowAddedId = ws.connect("window-added",
-                maxWinAddedFn());
+            let ws = global.screen.get_workspace_by_index(i);
+            this.workspacesSigMan.connect(ws, "window-added", maxWinAddedFn().bind(this));
         }
     },
 
     // Start listening to events and undecorate already-existing windows.
     startUndecorating: function() {
-        this.is_blacklist = Settings.maximus_is_blacklist;
-        this.app_list = Settings.maximus_app_list;
+        Settings.connect("changed::pref_window_auto_move_application_list", function() {
+            this._updateAutoMovedApplicationsList();
+        }.bind(this));
+        this._updateAutoMovedApplicationsList();
 
-        // Connect events
-        this.changeWorkspaceID = global.screen.connect("notify::n-workspaces",
-            () => this.onChangeNWorkspaces());
+        this.sigMan.connect(global.screen, "notify::n-workspaces", function() {
+            this.onChangeNWorkspaces();
+        }.bind(this));
 
         // If we are not using the set_hide_titlebar hint, we must listen to maximize and unmaximize events.
         if (!this.use_set_hide_titlebar) {
-            this.maxID = global.window_manager.connect("maximize",
-                (shellwm, actor) => this.onMaximise(shellwm, actor));
-            this.minID = global.window_manager.connect("unmaximize",
-                (shellwm, actor) => this.onUnmaximise(shellwm, actor));
+            this.sigMan.connect(global.window_manager, "maximize", function(CinnWM, aActor) {
+                this.onMaximise(CinnWM, aActor);
+            }.bind(this));
+            this.sigMan.connect(global.window_manager, "unmaximize", function(CinnWM, aActor) {
+                this.onUnmaximise(CinnWM, aActor);
+            }.bind(this));
 
-            if (Settings.maximus_undecorate_tiled) {
-                this.tileID = global.window_manager.connect("tile",
-                    (shellwm, actor) => this.onMaximise(shellwm, actor));
+            if (Settings.pref_maximus_undecorate_tiled) {
+                this.sigMan.connect(global.window_manager, "tile", function(CinnWM, aActor) {
+                    this.onMaximise(CinnWM, aActor);
+                }.bind(this));
             }
 
             /* This is needed to prevent Metacity from interpreting an attempted drag
@@ -1312,48 +1155,14 @@ CT_MaximusNG.prototype = {
             // Attempt to remove the following warning:
             // Invalid or null source id used when attempting to run Mainloop.source_remove()
             this.onetime = 0;
-            return false;
+
+            return GLib.SOURCE_REMOVE;
         });
     },
 
     stopUndecorating: function() {
-        if (this.maxID > 0) {
-            global.window_manager.disconnect(this.maxID);
-        }
-
-        if (this.minID > 0) {
-            global.window_manager.disconnect(this.minID);
-        }
-
-        if (this.tileID > 0) {
-            global.window_manager.disconnect(this.tileID);
-        }
-
-        if (this.changeWorkspaceID > 0) {
-            global.window_manager.disconnect(this.changeWorkspaceID);
-        }
-
-        if (this.grabID > 0) {
-            global.display.disconnect(this.grabID);
-        }
-
-        this.maxID = 0;
-        this.minID = 0;
-        this.tileID = 0;
-        this.changeWorkspaceID = 0;
-        this.grabID = 0;
-        let a = this.workspaces.length;
-
-        if (a > 0) {
-            while (a--) {
-                if (this.workspaces[a]._MaximusWindowAddedId) {
-                    this.workspaces[a].disconnect(this.workspaces[a]._MaximusWindowAddedId);
-                    delete this.workspaces[a]._MaximusWindowAddedId;
-                }
-            }
-        }
-
-        this.workspaces = [];
+        this.sigMan.disconnectAllSignals();
+        this.workspacesSigMan.disconnectAllSignals();
 
         if (this.onetime > 0) {
             Mainloop.source_remove(this.onetime);
@@ -1375,24 +1184,24 @@ CT_MaximusNG.prototype = {
 
                 this.log("stopUndecorating: " + win.title);
 
-                if (win._maximusDecoratedOriginal) {
+                if (win.CT_MaximusNG_decoratedOriginal) {
                     if (this.use_set_hide_titlebar) {
                         this.setHideTitlebar(win, false);
-                        if (win._maxHStateId) {
-                            win.disconnect(win._maxHStateId);
-                            delete win._maxHStateId;
+                        if (win.__CT_MaximusNG_maxHStateId) {
+                            win.disconnect(win.__CT_MaximusNG_maxHStateId);
+                            delete win.__CT_MaximusNG_maxHStateId;
                         }
 
-                        if (win._maxVStateId) {
-                            win.disconnect(win._maxVStateId);
-                            delete win._maxVStateId;
+                        if (win.__CT_MaximusNG_maxVStateId) {
+                            win.disconnect(win.__CT_MaximusNG_maxVStateId);
+                            delete win.__CT_MaximusNG_maxVStateId;
                         }
                     }
 
                     this.decorate(win);
                 }
 
-                delete win._maximusDecoratedOriginal;
+                delete win.CT_MaximusNG_decoratedOriginal;
             }
         }
 
@@ -1400,6 +1209,93 @@ CT_MaximusNG.prototype = {
             Meta.prefs_set_force_fullscreen(this.oldFullscreenPref);
             this.oldFullscreenPref = null;
         }
+    },
+
+    _updateAutoMovedApplicationsList: function() {
+        let appList = JSON.parse(JSON.stringify(Settings.pref_window_auto_move_application_list));
+
+        if (appList.length > 0) {
+            this._autoMovedApps = new Set(appList.map((aEl) => {
+                return aEl["app_id"];
+            }));
+        }
+    }
+};
+
+function WindowDemandsAttention() {
+    this._init.apply(this, arguments);
+}
+
+WindowDemandsAttention.prototype = {
+    wdae_shortcut_id: XletMeta.uuid + "-window-demands-attention-shortcut",
+
+    _init: function() {
+        this._handlerid = 0;
+
+        if (Settings.pref_win_demands_attention_activation_mode === "hotkey") {
+            this._windows = [];
+            Connections.WDAE_CONNECTION = global.display.connect(
+                "window-demands-attention",
+                (aDisplay, aWin) => {
+                    this._on_window_demands_attention(aDisplay, aWin);
+                }
+            );
+        } else if (Settings.pref_win_demands_attention_activation_mode === "force") {
+            this._tracker = Cinnamon.WindowTracker.get_default();
+            Connections.WDAE_CONNECTION = global.display.connect("window-demands-attention",
+                (aDisplay, aWin) => {
+                    this._on_window_demands_attention(aDisplay, aWin);
+                }
+            );
+        }
+    },
+
+    _on_window_demands_attention: function(aDisplay, aWin) {
+        switch (Settings.pref_win_demands_attention_activation_mode) {
+            case "hotkey":
+                this._windows.push(aWin);
+                break;
+            case "force":
+                Main.activateWindow(aWin);
+                break;
+        }
+    },
+
+    _activate_last_window: function() {
+        if (this._windows.length === 0) {
+            Notification.notify(_("No windows in the queue."));
+            return;
+        }
+
+        let last_window = this._windows.pop();
+        Main.activateWindow(last_window);
+    },
+
+    _add_keybindings: function() {
+        Main.keybindingManager.addHotKey(
+            this.wdae_shortcut_id,
+            Settings.pref_win_demands_attention_keyboard_shortcut + "::",
+            () => this._activate_last_window());
+    },
+
+    _remove_keybindings: function() {
+        Main.keybindingManager.removeHotKey(this.wdae_shortcut_id);
+    },
+
+    enable: function() {
+        if (Settings.pref_win_demands_attention_activation_mode === "hotkey") {
+            this._add_keybindings();
+        }
+    },
+
+    _destroy: function() {
+        if (Connections.WDAE_CONNECTION > 0) {
+            global.display.disconnect(Connections.WDAE_CONNECTION);
+            Connections.WDAE_CONNECTION = 0;
+        }
+
+        this._windows = null;
+        this._remove_keybindings();
     }
 };
 
@@ -1432,19 +1328,17 @@ function queryCollection(collection, query, indexOnly = false) {
     return indexOnly ? -1 : null;
 }
 
-/*
-exported SHADOW_VALUES,
-         dealWithRejection,
-         informAndDisable,
-         CINNAMON_VERSION,
-         CTX_ITM_POS,
-         injectToFunction,
-         removeInjection,
-         versionCompare,
-         CT_NemoDesktopArea,
-         CT_MyCheckWorkspaces,
-         CT_WindowMover,
-         CT_MaximusNG,
-         testNotifications,
-         queryCollection
-*/
+wrapObjectMethods(Settings, {
+    CT_MaximusNG: CT_MaximusNG,
+    CT_NemoDesktopArea: CT_NemoDesktopArea,
+    CT_WindowMover: CT_WindowMover,
+    WindowDemandsAttention: WindowDemandsAttention
+});
+
+/* exported dealWithRejection,
+            testNotifications,
+            informCinnamonRestart,
+            informAndDisable,
+            CT_MyCheckWorkspaces,
+            queryCollection
+ */

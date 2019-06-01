@@ -1,0 +1,352 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "If you are seeing this window, you are using a Cinnamon version with a design flaw."
+    },
+    "info_label_2": {
+        "type": "label",
+        "description": "This window isn't this extension's \"real\" configuration window."
+    },
+    "info_label_3": {
+        "type": "label",
+        "description": "Click the following button to open the \"real\" configuration window."
+    },
+    "info_label_3": {
+        "type": "label",
+        "description": "If on Cinnamon 3.0.x, the button below will not work."
+    },
+    "info_label_4": {
+        "type": "label",
+        "description": "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "openSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "pref_desktop_tweaks_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_desktop_tweaks_allow_drop_to_desktop": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_popup_menu_manager_tweaks_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_popup_menu_manager_applets_menus_behavior": {
+        "type": "generic",
+        "default": "do-not-eat"
+    },
+    "pref_applets_tweaks_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_applets_ask_confirmation_applet_removal": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_desklets_tweaks_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_desklets_ask_confirmation_desklet_removal": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_notifications_enable_tweaks": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_notifications_enable_animation": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_notifications_enable_close_button": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_notifications_position": {
+        "type": "generic",
+        "default": "bottom"
+    },
+    "pref_notifications_distance_from_panel": {
+        "type": "generic",
+        "default": 25
+    },
+    "pref_notifications_right_margin": {
+        "type": "generic",
+        "default": 20
+    },
+    "pref_windows_focus_enable_tweaks": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_win_demands_attention_activation_mode": {
+        "type": "generic",
+        "default": "force"
+    },
+    "pref_win_demands_attention_keyboard_shortcut": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_hotcorners_tweaks_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_hotcorners_delay_top_left": {
+        "type": "generic",
+        "default": 100
+    },
+    "pref_hotcorners_delay_top_right": {
+        "type": "generic",
+        "default": 100
+    },
+    "pref_hotcorners_delay_bottom_left": {
+        "type": "generic",
+        "default": 100
+    },
+    "pref_hotcorners_delay_bottom_right": {
+        "type": "generic",
+        "default": 100
+    },
+    "pref_tooltips_tweaks_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_tooltips_inteligent_positioning": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_tooltips_never_centered": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_tooltips_half_monitor_width": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_tooltips_delay": {
+        "type": "generic",
+        "default": 100
+    },
+    "pref_initial_load": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_window_shadows_tweaks_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_window_shadows_preset": {
+        "type": "generic",
+        "default": "default"
+    },
+    "trigger_window_shadows_custom_preset": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_window_shadows_custom_preset": {
+        "type": "generic",
+        "default": [{
+            "win_type": "f_normal",
+            "radius": 6,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 3,
+            "opacity": 255
+        }, {
+            "win_type": "f_dialog",
+            "radius": 6,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 3,
+            "opacity": 255
+        }, {
+            "win_type": "f_modal_dialog",
+            "radius": 6,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 1,
+            "opacity": 255
+        }, {
+            "win_type": "f_utility",
+            "radius": 3,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 1,
+            "opacity": 255
+        }, {
+            "win_type": "f_border",
+            "radius": 6,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 3,
+            "opacity": 255
+        }, {
+            "win_type": "f_menu",
+            "radius": 6,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 3,
+            "opacity": 255
+        }, {
+            "win_type": "f_popup-menu",
+            "radius": 1,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 1,
+            "opacity": 128
+        }, {
+            "win_type": "f_dropdown-menu",
+            "radius": 1,
+            "top_fade": 10,
+            "x_offset": 0,
+            "y_offset": 1,
+            "opacity": 128
+        }, {
+            "win_type": "f_attached",
+            "radius": 6,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 1,
+            "opacity": 255
+        }, {
+            "win_type": "u_normal",
+            "radius": 3,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 3,
+            "opacity": 128
+        }, {
+            "win_type": "u_dialog",
+            "radius": 3,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 3,
+            "opacity": 128
+        }, {
+            "win_type": "u_modal_dialog",
+            "radius": 3,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 3,
+            "opacity": 128
+        }, {
+            "win_type": "u_utility",
+            "radius": 3,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 1,
+            "opacity": 128
+        }, {
+            "win_type": "u_border",
+            "radius": 3,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 3,
+            "opacity": 128
+        }, {
+            "win_type": "u_menu",
+            "radius": 3,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 0,
+            "opacity": 128
+        }, {
+            "win_type": "u_popup-menu",
+            "radius": 1,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 1,
+            "opacity": 128
+        }, {
+            "win_type": "u_dropdown-menu",
+            "radius": 1,
+            "top_fade": 10,
+            "x_offset": 0,
+            "y_offset": 1,
+            "opacity": 128
+        }, {
+            "win_type": "u_attached",
+            "radius": 3,
+            "top_fade": -1,
+            "x_offset": 0,
+            "y_offset": 3,
+            "opacity": 128
+        }]
+    },
+    "pref_window_auto_move_tweaks_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_window_auto_move_auto_focus": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_window_auto_move_application_list": {
+        "type": "generic",
+        "default": []
+    },
+    "pref_window_auto_move_fullscreen_in_own_ws": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_window_auto_move_fullscreen_in_own_ws_blacklist": {
+        "type": "generic",
+        "default": []
+    },
+    "pref_maximus_enable_tweak": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_maximus_undecorate_half_maximized": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_maximus_undecorate_tiled": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_maximus_is_blacklist": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_maximus_app_list": {
+        "type": "generic",
+        "default": [
+            "firefox.desktop",
+            "waterfox.desktop"
+        ]
+    },
+    "pref_maximus_enable_logging": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_maximus_apply_settings": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_maximus_invisible_windows_hack": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_test_notifications": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_logging_level": {
+        "type": "generic",
+        "default": 0
+    },
+    "pref_debugger_enabled": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_desktop_file_generated": {
+        "type": "generic",
+        "default": false
+    }
+}
