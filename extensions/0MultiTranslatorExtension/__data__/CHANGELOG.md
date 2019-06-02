@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Sun, 2 Jun 2019 12:34:36 -0300
+- **Commit:** [2148486](https://gitlab.com/Odyseus/CinnamonTools/commit/2148486)
+- **Author:** Odyseus
+
+```
+- Fixed impossibility to open the translation history window due to a typo (again!).
+
+```
+
+***
+
 - **Date:** Thu, 30 May 2019 03:51:27 -0300
 - **Commit:** [658436a](https://gitlab.com/Odyseus/CinnamonTools/commit/658436a)
 - **Author:** Odyseus

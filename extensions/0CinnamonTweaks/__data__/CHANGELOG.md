@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Sun, 2 Jun 2019 12:35:29 -0300
+- **Commit:** [c78bee1](https://gitlab.com/Odyseus/CinnamonTools/commit/c78bee1)
+- **Author:** Odyseus
+
+```
+- Changed some translatable strings for easier localization.
+
+```
+
+***
+
 - **Date:** Sat, 1 Jun 2019 04:47:18 -0300
 - **Commit:** [854e3d3](https://gitlab.com/Odyseus/CinnamonTools/commit/854e3d3)
 - **Author:** Odyseus

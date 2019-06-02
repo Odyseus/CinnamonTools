@@ -5,8 +5,7 @@ settings = {
     "make_pot_additional_files": [
         "../../__app__/data/python_modules/xlets_settings/__init__.py",
         "../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py",
-        "../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py",
-        "../../__app__/data/javascript_modules/globalUtils.js"
+        "../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py"
     ],
     "extra_files": [{
         "source": "__app__/data/python_modules/xlets_settings",

@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 
 settings = {
-    "make_pot_additional_files": [
-        "../../__app__/data/javascript_modules/globalUtils.js"
-    ],
     "extra_files": [{
         "source": "__app__/data/javascript_modules/globalUtils.js",
         "destination": "globalUtils.js"
