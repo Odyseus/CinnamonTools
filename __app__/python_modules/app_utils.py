@@ -138,13 +138,16 @@ _readme_list_item_template = "- [{xlet_name}](%s/_static/xlets_help_pages/{xlet_
     URLS["repo_docs"])
 
 _theme_build_data = """
-**Cinnamon version:**           {cinnamon_version}
-**Cinnamon font size:**         {cinnamon_font_size}
-**Cinnamon font family:**       {cinnamon_font_family}
-**Gtk3 version:**               {gtk3_version}
-**Gtk3 CSD shadow:**            {gtk3_csd_shadow}
-**Gtk3 CSD backdrop shadow:**   {gtk3_csd_backdrop_shadow}
-**Theme name:**                 {theme_name}
+**Cinnamon version:**            {cinnamon_version}
+**Cinnamon font size:**          {cinnamon_font_size}
+**Cinnamon font family:**        {cinnamon_font_family}
+**Gtk3 version:**                {gtk3_version}
+**Gtk3 CSD shadow:**             {gtk3_csd_shadow}
+**Gtk3 CSD backdrop shadow:**    {gtk3_csd_backdrop_shadow}
+**Theme name:**                  {theme_name}
+**Output directory:**            {build_output}
+**Ask overwrite confirmation:**  {do_not_cofirm}
+**Dry run:**                     {dry_run}
 """
 
 _xlets_build_data = """
@@ -589,7 +592,6 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
     }
 
     interactive = from_menu
-    set_temp_output = False
 
     if interactive and o_m_l_v is not None and options_map_defaults != o_m_l_v and \
             options_map_defaults["__version__"] == o_m_l_v.get("__version__"):
@@ -639,13 +641,11 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
         answer = prompts.read_char(question)
         ask_for_confirmation_options = answer != "1"
 
-        if answer == "1":
-            set_temp_output = True
-        elif answer == "2":
+        if answer == "2":
             options_map_defaults["build_output"] = os.path.join(
                 "~", ".local", "share", "cinnamon"
             )
-        else:
+        elif answer != "1" and answer != "2":
             # Ask for output directory.
             print_separator(logger)
             inform("Choose a storage location:")
@@ -664,13 +664,12 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
                               validator=validate_xlet_output)
 
             # NOTE: Yes, check again (just in case) if build_output is inside /tmp.
-            # First, so I can set set_temp_output to true, and second, so I can cancel
-            # asking for confirmation options since there is no need to ask for confirmation
-            # options when the possibility of overwriting an existing xlet is null.
+            # So I can cancel asking for confirmation options since there is no
+            # need to ask for confirmation options when the possibility of
+            # overwriting an existing xlet is null.
             if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
                 ask_for_confirmation_options = False
-                set_temp_output = True
-                options_map_defaults["do_not_cofirm"] = "1"
+                options_map_defaults["do_not_cofirm"] = "2"
 
         if ask_for_confirmation_options:
             # Ask for overwrite confirmation.
@@ -702,7 +701,7 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
                                                                 types="xlets"), date=False, to_file=False)
         raise SystemExit(1)
 
-    if set_temp_output:
+    if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
         options_map_defaults["build_output"] = os.path.join(
             get_base_temp_folder(),
             misc_utils.micro_to_milli(misc_utils.get_date_time("filename"))
@@ -719,7 +718,7 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
     for x in xlets:
         if x in all_xlets:
             xlet_type, xlet_dir_name = x.split(" ")
-            uuid = "%s@%s" % (xlet_dir_name, domain_name)
+            uuid = "%s@%s" % (xlet_dir_name, options_map_defaults["domain_name"])
             xlets_data.append({
                 "uuid": uuid,
                 "type": xlet_type.lower(),
@@ -735,6 +734,8 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
             logger.warning("**%s doesn't exists.**" % x)
             logger.warning("**Global metadata file might need to be re-generated.**" % x)
 
+    dry_run = options_map["dry_run"][options_map_defaults["dry_run"]]
+
     if xlets_data:
         built_xlets = []
 
@@ -742,7 +743,7 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
             builder = XletBuilder(
                 data,
                 do_not_cofirm=options_map["do_not_cofirm"][options_map_defaults["do_not_cofirm"]],
-                dry_run=options_map["dry_run"][options_map_defaults["dry_run"]],
+                dry_run=dry_run,
                 logger=logger
             )
             built = builder.build()
@@ -1177,6 +1178,13 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
     except Exception:
         o_m_l_v = None
 
+    if not theme_name:
+        try:
+            with open(PATHS["theme_name_storage_file"], "r", encoding="UTF-8") as theme_file:
+                theme_name = theme_file.read().strip()
+        except Exception:
+            theme_name = "MyThemeName"
+
     options_map = {
         "cinnamon_version": {
             "1": "3.0",
@@ -1186,16 +1194,28 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         "gtk3_version": {
             "1": "3.18",
             "2": "3.22"
+        },
+        "do_not_cofirm": {
+            "1": False,
+            "2": True
+        },
+        "dry_run": {
+            "1": False,
+            "2": True
         }
     }
 
     # __version__ is used to verify that the stored data is compatible with the
     # default data used when generating themes.
     options_map_defaults = {
-        "__version__": "2",
-        "theme_name": "MyThemeName",
+        "__version__": "3",
+        "theme_name": theme_name,
+        # Note: Check needed to avoid storing None.
+        "build_output": build_output or "",
+        "do_not_cofirm": "2" if do_not_cofirm else "1",
+        "dry_run": "2" if dry_run else "1",
         "cinnamon_version": "1",
-        "cinnamon_font_size": "9pt",
+        "cinnamon_font_size": "10pt",
         "cinnamon_font_family": '"Noto Sans", sans, Sans-Serif',
         "gtk3_version": "1",
         "gtk3_csd_shadow": "0 2px 5px 0 alpha(black, 0.3), 0 0 0 1px darker(@theme_bg_color)",
@@ -1204,7 +1224,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
 
     interactive = True
 
-    if interactive and o_m_l_v is not None and options_map_defaults != o_m_l_v and \
+    if o_m_l_v is not None and options_map_defaults != o_m_l_v and \
             options_map_defaults["__version__"] == o_m_l_v.get("__version__"):
         print_separator(logger)
         inform("Build data from a previous theme build found at:")
@@ -1218,6 +1238,9 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
             gtk3_csd_shadow=o_m_l_v["gtk3_csd_shadow"],
             gtk3_csd_backdrop_shadow=o_m_l_v["gtk3_csd_backdrop_shadow"],
             theme_name=o_m_l_v["theme_name"],
+            build_output=o_m_l_v["build_output"],
+            do_not_cofirm=str(not options_map["do_not_cofirm"][o_m_l_v["do_not_cofirm"]]),
+            dry_run=str(options_map["dry_run"][o_m_l_v["dry_run"]])
         ), date=False, to_file=False)
         print_separator(logger)
         inform("Choose an option:")
@@ -1239,7 +1262,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         # Ask for Cinnamon theme version.
         print_separator(logger)
         inform("Choose in which Cinnamon version the theme will be used.")
-        inform("1. 3.0.x to 3.2.x (Default)")
+        inform("1. 3.0.x to 3.2.x")
         inform("2. 3.4.x to 3.8.x")
         inform("3. 4.0.x plus")
 
@@ -1270,7 +1293,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         # Ask for Gtk3 theme version.
         print_separator(logger)
         inform("Choose in which Gtk+ version the theme will be used.")
-        inform("1. 3.18.x (Default)")
+        inform("1. 3.18.x")
         inform("2. 3.22.x")
 
         prompts.do_prompt(options_map_defaults,
@@ -1303,6 +1326,70 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           "Enter a value",
                           options_map_defaults["gtk3_csd_backdrop_shadow"])
 
+        # Ask for build output.
+        print_separator(logger)
+        inform("Where to store built themes?")
+        inform("Choose an option:")
+        question = "%s\n%s\n%s" % ("**1.** Temporary location.",
+                                   "**2.** Install into user home.",
+                                   "**Press any other key to specify a location.**")
+
+        answer = prompts.read_char(question)
+        ask_for_confirmation_options = answer != "1"
+
+        if answer == "2":
+            options_map_defaults["build_output"] = os.path.join(
+                "~", ".themes"
+            )
+        elif answer != "1" and answer != "2":
+            # Ask for output directory.
+            print_separator(logger)
+            inform("Choose a storage location:")
+            # NOTE: Yes, if the previous build_output was the temporary location,
+            # inform that it will be overwritten with a new temporary location.
+            # This is to avoid dealing with existing xlets built into /tmp.
+            if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
+                logger.info(
+                    "The following default value, if chosen, it will be re-generated and overwritten.",
+                    date=False, to_file=False)
+
+            prompts.do_prompt(options_map_defaults,
+                              "build_output",
+                              "Enter a path",
+                              options_map_defaults["build_output"],
+                              validator=validate_xlet_output)
+
+            # NOTE: Yes, check again (just in case) if build_output is inside /tmp.
+            # So I can cancel asking for confirmation options since there is no
+            # need to ask for confirmation options when the possibility of
+            # overwriting an existing xlet is null.
+            if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
+                ask_for_confirmation_options = False
+                options_map_defaults["do_not_cofirm"] = "2"
+
+        if ask_for_confirmation_options:
+            # Ask for overwrite confirmation.
+            print_separator(logger)
+            inform("Choose what to do when a built theme already exists at the destination.")
+            inform("1. Confirm each overwrite operation")
+            inform("2. Directly overwrite existent themes")
+            prompts.do_prompt(options_map_defaults,
+                              "do_not_cofirm",
+                              "Enter option",
+                              options_map_defaults["do_not_cofirm"],
+                              validator=validate_xlet_overwrite)
+
+        # Ask for dry.
+        print_separator(logger)
+        inform("Choose to perform the build operation or a trial run with no changes made.")
+        inform("1. Perform build operation")
+        inform("2. Perform a trial run (dry run)")
+        prompts.do_prompt(options_map_defaults,
+                          "dry_run",
+                          "Enter option",
+                          options_map_defaults["dry_run"],
+                          validator=validate_xlet_overwrite)
+
     theme_data = {
         "cinnamon_version": options_map["cinnamon_version"][options_map_defaults["cinnamon_version"]],
         "cinnamon_font_size": options_map_defaults["cinnamon_font_size"],
@@ -1313,15 +1400,6 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
     }
 
     if interactive:
-        if theme_name:
-            options_map_defaults["theme_name"] = theme_name
-        else:
-            try:
-                with open(PATHS["theme_name_storage_file"], "r", encoding="UTF-8") as theme_file:
-                    options_map_defaults["theme_name"] = theme_file.read().strip()
-            except Exception:
-                pass
-
         print_separator(logger)
         inform("Enter a name for the theme:")
         prompts.do_prompt(options_map_defaults,
@@ -1338,11 +1416,15 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
 
         raise SystemExit(1)
 
-    if not build_output:
-        base_output_path = os.path.join(get_base_temp_folder(),
-                                        misc_utils.micro_to_milli(misc_utils.get_date_time("filename")))
-    else:
-        base_output_path = build_output
+    if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
+        options_map_defaults["build_output"] = os.path.join(
+            get_base_temp_folder(),
+            misc_utils.micro_to_milli(misc_utils.get_date_time("filename"))
+        )
+
+    if not options_map_defaults["build_output"]:
+        logger.warning(_not_specified_output_location, date=False, to_file=False)
+        raise SystemExit(1)
 
     themes_sources = os.path.join(root_folder, "themes")
     common_version_insensitive_files = os.path.join(
@@ -1358,18 +1440,24 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
 
     from runpy import run_path
 
+    dry_run = options_map["dry_run"][options_map_defaults["dry_run"]]
+    do_not_cofirm = options_map["do_not_cofirm"][o_m_l_v["do_not_cofirm"]]
+    built_theme_variants = []
+
     for variant in theme_variants:
         logger.info(shell_utils.get_cli_separator("-"), date=False)
         logger.info("**Generating variant:** %s" % variant)
 
         full_theme_name = "%s-%s" % (options_map_defaults["theme_name"].strip(), variant)
 
-        destination_folder = os.path.join(base_output_path, full_theme_name)
+        destination_folder = file_utils.expand_path(
+            os.path.join(options_map_defaults["build_output"], full_theme_name)
+        )
 
         if file_utils.is_real_file(destination_folder):
-            logger.error("**InvalidDestination:** Destination exists and is a file!!! Aborted!!!",
-                         date=False)
-            raise SystemExit(1)
+            logger.warning("**InvalidDestination:** Destination exists and is a file!!! Aborted!!!",
+                           date=False)
+            continue
 
         if file_utils.is_real_dir(destination_folder):
             if not do_not_cofirm:
@@ -1383,9 +1471,9 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                 else:
                     rmtree(destination_folder, ignore_errors=True)
             else:
-                logger.error("**OperationAborted:** The theme building process was canceled.",
-                             date=False)
-                raise SystemExit(1)
+                logger.warning("**OperationAborted:** The theme building process was canceled.",
+                               date=False)
+                continue
 
         variant_folder = os.path.join(themes_sources, "_variants", variant)
         variant_config = run_path(os.path.join(variant_folder, "config.py"))["settings"]
@@ -1488,15 +1576,23 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                             file.write(file_data_modified)
                             file.truncate()
 
+        built_theme_variants.append(variant)
         logger.success("**Theme variant %s successfully built.**" % variant)
 
-    print("")
-    logger.info("**Built themes saved at %s**" % base_output_path)
+    if len(theme_variants) != len(built_theme_variants):
+        print_separator(logger)
+        logger.warning(
+            "The build process of some themes was canceled or there was an error while building them.")
+        logger.warning("Check the logs for more details.")
 
     if dry_run:
+        logger.log_dry_run("**Built themes will be saved at %s**" % options_map_defaults["build_output"])
         logger.log_dry_run("**Theme build data will be saved at:**\n%s" %
                            PATHS["theme_latest_build_data_file"])
     else:
+        print("")
+        logger.info("**Built themes saved at %s**" % options_map_defaults["build_output"])
+
         with open(PATHS["theme_latest_build_data_file"], "w", encoding="UTF-8") as outfile:
             json.dump(options_map_defaults, outfile, indent=4, ensure_ascii=False)
 

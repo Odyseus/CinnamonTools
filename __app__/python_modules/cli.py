@@ -260,9 +260,9 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         exceptions.KeyboardInterruption
             Halt execution on Ctrl + C press.
         """
-        try:
-            threads = []
+        threads = []
 
+        try:
             if self.func_names:
                 for func in self.func_names:
                     t = Thread(target=getattr(self.xlets_helper, func, None))
@@ -284,6 +284,11 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     if thread is not None and thread.isAlive():
                         thread.join()
 
+            self.print_log_file()
+        except (KeyboardInterrupt, SystemExit):
+            self.print_log_file()
+            raise exceptions.KeyboardInterruption()
+        else:
             if self.a["--restart-cinnamon"]:
                 if self.a["--dry-run"]:
                     self.logger.log_dry_run("**Cinnamon will be restarted.**")
@@ -296,11 +301,6 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     for thread in threads:
                         if thread is not None and thread.isAlive():
                             thread.join()
-
-            self.print_log_file()
-        except (KeyboardInterrupt, SystemExit):
-            self.print_log_file()
-            raise exceptions.KeyboardInterruption()
 
     def display_main_menu(self):
         """See :any:`app_menu.CLIMenu`
