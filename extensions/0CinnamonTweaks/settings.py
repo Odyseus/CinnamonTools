@@ -75,29 +75,31 @@ WINDOWS_AUTO_MOVE_COLUMNS = [{
     "step": 1
 }]
 
+CSCT = "%s: %s"
+
 CUSTOM_SHADOWS_COLUMNS = [{
     "id": "win_type",
     "title": _("Window type"),
     "type": "string",
     "options": {
-        "f_normal": _("Focused normal"),
-        "f_dialog": _("Focused dialog"),
-        "f_modal_dialog": _("Focused modal_dialog"),
-        "f_utility": _("Focused utility"),
-        "f_border": _("Focused border"),
-        "f_menu": _("Focused menu"),
-        "f_popup-menu": _("Focused popup_menu"),
-        "f_dropdown-menu": _("Focused dropdown_menu"),
-        "f_attached": _("Focused attached"),
-        "u_normal": _("Unfocused normal"),
-        "u_dialog": _("Unfocused dialog"),
-        "u_modal_dialog": _("Unfocused modal_dialog"),
-        "u_utility": _("Unfocused utility"),
-        "u_border": _("Unfocused border"),
-        "u_menu": _("Unfocused menu"),
-        "u_popup-menu": _("Unfocused popup_menu"),
-        "u_dropdown-menu": _("Unfocused dropdown_menu"),
-        "u_attached": _("Unfocused attached"),
+        "f_normal": CSCT % (_("Focused"), _("normal")),
+        "f_dialog": CSCT % (_("Focused"), _("dialog")),
+        "f_modal_dialog": CSCT % (_("Focused"), _("modal dialog")),
+        "f_utility": CSCT % (_("Focused"), _("utility")),
+        "f_border": CSCT % (_("Focused"), _("border")),
+        "f_menu": CSCT % (_("Focused"), _("menu")),
+        "f_popup-menu": CSCT % (_("Focused"), _("popup menu")),
+        "f_dropdown-menu": CSCT % (_("Focused"), _("dropdown menu")),
+        "f_attached": CSCT % (_("Focused"), _("attached")),
+        "u_normal": CSCT % (_("Unfocused"), _("normal")),
+        "u_dialog": CSCT % (_("Unfocused"), _("dialog")),
+        "u_modal_dialog": CSCT % (_("Unfocused"), _("modal dialog")),
+        "u_utility": CSCT % (_("Unfocused"), _("utility")),
+        "u_border": CSCT % (_("Unfocused"), _("border")),
+        "u_menu": CSCT % (_("Unfocused"), _("menu")),
+        "u_popup-menu": CSCT % (_("Unfocused"), _("popup menu")),
+        "u_dropdown-menu": CSCT % (_("Unfocused"), _("dropdown menu")),
+        "u_attached": CSCT % (_("Unfocused"), _("attached")),
     }
 }, {
     "id": "radius",
