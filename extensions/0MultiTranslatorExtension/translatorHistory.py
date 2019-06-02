@@ -17,7 +17,7 @@ from gi.repository import Gdk
 from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import Pango
-from htnl import escape
+from html import escape
 from time import time
 
 from python_modules.html_tags_stripper import strip_html_tags
