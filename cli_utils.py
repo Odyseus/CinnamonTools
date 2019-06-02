@@ -53,6 +53,14 @@ class CommandLineInterfaceSuper():
             self.logger.info("**%s**" % shell_utils.get_cli_header(self._app_name), date=False, to_file=False)
             print("")
 
+    def print_log_file(self):
+        """Print the path to the log file used by the current logger.
+        """
+        self.logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
+        self.logger.warning("**Log file location:**", date=False, to_file=False)
+        self.logger.warning("**%s**" % self.logger.get_log_file(), date=False, to_file=False)
+        self.logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
+
     def run(self):
         """Execute the assigned action stored in self.action if any.
 
