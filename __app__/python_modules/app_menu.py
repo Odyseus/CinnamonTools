@@ -15,46 +15,22 @@ class CLIMenu():
 
     Attributes
     ----------
-    build_output : str
-        Path to the folder were the built xlets are stored.
-    do_not_cofirm : bool
-        Whether to ask for overwrite confirmation when an xlet destination exists or not.
-    domain_name : str
-        The domain name to use to build the xlets.
     logger : object
         See <class :any:`LogSystem`>.
     main_menu : object
         Main menu. See <class :any:`menu.Menu`>.
-    theme_name : str
-        The given name of the theme.
     xlets_helper : object
         Helper functions. See <class :any:`app_utils.XletsHelperCore`>.
     """
 
-    def __init__(self, theme_name="", domain_name="", build_output="",
-                 do_not_cofirm=False, dry_run=False, logger=None):
+    def __init__(self, logger=None):
         """Initialize.
 
         Parameters
         ----------
-        theme_name : str, optional
-            The given name of the theme.
-        domain_name : str, optional
-            The domain name to use to build the xlets.
-        build_output : str
-            Path to the folder were the built xlets are stored.
-        do_not_cofirm : bool
-            Whether to ask for overwrite confirmation when an xlet destination exists or not.
-        dry_run : bool, optional
-            See <class :any:`XletBuilder`>.
         logger : object
             See <class :any:`LogSystem`>.
         """
-        self.theme_name = theme_name
-        self.domain_name = domain_name
-        self.build_output = build_output
-        self.do_not_cofirm = do_not_cofirm
-        self._dry_run = dry_run
         self.logger = logger
         self.xlets_helper = app_utils.XletsHelperCore(logger=self.logger)
 
@@ -83,21 +59,13 @@ class CLIMenu():
         """Build all xlets.
         """
         app_utils.build_xlets(xlets=app_utils.get_xlets_dirs(),
-                              domain_name=self.domain_name,
-                              build_output=self.build_output,
-                              do_not_cofirm=self.do_not_cofirm,
-                              dry_run=self._dry_run,
                               logger=self.logger,
                               from_menu=True)
 
     def build_themes(self):
         """Build all themes.
         """
-        app_utils.build_themes(theme_name=self.theme_name,
-                               build_output=self.build_output,
-                               do_not_cofirm=self.do_not_cofirm,
-                               dry_run=self._dry_run,
-                               logger=self.logger,
+        app_utils.build_themes(logger=self.logger,
                                from_menu=True)
 
     def display_build_selector(self):
@@ -111,10 +79,6 @@ class CLIMenu():
         if selected_items:
             self.close_main_menu()
             app_utils.build_xlets(xlets=selected_items,
-                                  domain_name=self.domain_name,
-                                  build_output=self.build_output,
-                                  do_not_cofirm=self.do_not_cofirm,
-                                  dry_run=self._dry_run,
                                   logger=self.logger,
                                   from_menu=True)
         else:

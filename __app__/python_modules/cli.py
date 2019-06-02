@@ -27,10 +27,7 @@ docopt_doc = """{__appname__} {__version__}
 
 Usage:
     app.py (-h | --help | --version | --manual | -r | --restart-cinnamon)
-    app.py menu [-d <domain> | --domain=<domain>]
-                [-o <dir> | --output=<dir>]
-                [-n | --no-confirmation]
-                [-y | --dry-run]
+    app.py menu
     app.py build (-a | --all-xlets | -x <name> | --xlet=<name>)
                  [-x <name>... | --xlet=<name>...]
                  [-d <domain> | --domain=<domain>]
@@ -44,6 +41,7 @@ Usage:
                         [-r | --restart-cinnamon]
                         [-y | --dry-run]
     app.py dev <sub_commands>...
+               [-x <name>... | --xlet=<name>...]
     app.py generate (system_executable | docs | docs_no_api | base_xlet)
                     [-f | --force-clean-build]
                     [-u | --update-inventories]
@@ -170,23 +168,13 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
 
         super().__init__(__appname__, "tmp/logs")
 
-        if self.a["print_xlets_slugs"]:
-            self.action = self.print_xlets_slugs
-        elif self.a["--manual"]:
-            self.action = self.display_manual_page
-        elif self.a["menu"]:
-            self.action = self.display_main_menu
-        elif self.a["build"]:
-            self.action = self.build_xlets
+        if self.a["build"] or self.a["dev"]:
             all_xlets = app_utils.get_xlets_dirs()
 
             if self.a["--all-xlets"]:
-                self.logger.info("**Building all xlets.**")
                 self.xlets = all_xlets
             elif self.a["--xlet"]:
-                self.logger.info("**Building the following xlets:**")
-
-                # Workaround docopt issue:
+                # NOTE: Deduplicate arguments. Workaround docopt issue:
                 # https://github.com/docopt/docopt/issues/134
                 # Not perfect, but good enough for this particular usage case.
                 for x in set(self.a["--xlet"]):
@@ -195,18 +183,43 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     elif "Extension " + x in all_xlets:
                         self.xlets.append("Extension " + x)
 
-                for x in sorted(self.xlets):
+            self.xlets = sorted(self.xlets)
+
+        if self.a["print_xlets_slugs"]:
+            self.action = self.print_xlets_slugs
+        elif self.a["--manual"]:
+            self.action = self.display_manual_page
+        elif self.a["menu"]:
+            self.action = self.display_main_menu
+        elif self.a["build"]:
+            self.action = self.build_xlets
+
+            if self.a["--all-xlets"]:
+                self.logger.info("**Building all xlets.**")
+            elif self.a["--xlet"]:
+                self.logger.info("**Building the following xlets:**")
+
+                for x in self.xlets:
                     self.logger.info(x)
         elif self.a["build_themes"]:
             self.action = self.build_themes
             self.logger.info("**Building all themes.**")
         elif self.a["dev"]:
-            # Sort the arguments so one doesn't have to worry about the order
+            # NOTE: Deduplicate arguments. Workaround docopt issue:
+            # https://github.com/docopt/docopt/issues/134
+            dev_args = list(set(self.a["<sub_commands>"]))
+            # NOTE: Sort the arguments so one doesn't have to worry about the order
             # in which they are passed.
             # Source: https://stackoverflow.com/a/12814719.
-            dev_args = list(set(self.a["<sub_commands>"]))
             dev_args.sort(key=lambda x: self.dev_args_order.index(x))
-            self.xlets_helper = app_utils.XletsHelperCore(logger=self.logger)
+            # NOTE: Do not pass xlets unnecessarily so in the initialization side of
+            # app_utils.XletsHelperCore all the xlets metadata is used and no filtering
+            # is done.
+            pass_xlets = bool(self.a["--xlet"])
+            self.xlets_helper = app_utils.XletsHelperCore(
+                xlets=self.xlets if pass_xlets else None,
+                logger=self.logger
+            )
             self.logger.info("**Command:** dev")
             self.logger.info("**Arguments:**")
 
@@ -283,7 +296,10 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     for thread in threads:
                         if thread is not None and thread.isAlive():
                             thread.join()
+
+            self.print_log_file()
         except (KeyboardInterrupt, SystemExit):
+            self.print_log_file()
             raise exceptions.KeyboardInterruption()
 
     def display_main_menu(self):
@@ -291,12 +307,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         """
         from . import app_menu
 
-        cli_menu = app_menu.CLIMenu(theme_name=self.a["--theme-name"],
-                                    domain_name=self.a["--domain"],
-                                    build_output=self.a["--output"],
-                                    do_not_cofirm=self.a["--no-confirmation"],
-                                    dry_run=self.a["--dry-run"],
-                                    logger=self.logger)
+        cli_menu = app_menu.CLIMenu(logger=self.logger)
         cli_menu.open_main_menu()
 
     def display_manual_page(self):

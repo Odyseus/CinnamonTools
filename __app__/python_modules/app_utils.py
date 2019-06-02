@@ -11,6 +11,10 @@ root_folder : str
     without exceptions.
 URLS : dict
     URLs storage.
+XLET_META : dict
+    Xlet meta type.
+XLET_SYSTEM : dict
+    Xlet system type.
 """
 
 import json
@@ -34,6 +38,7 @@ from .python_utils.ansi_colors import Ansi
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
     os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
 
+
 URLS = {
     "repo": "https://gitlab.com/Odyseus/CinnamonTools",
     "repo_pages": "https://odyseus.gitlab.io/CinnamonTools",
@@ -46,7 +51,8 @@ PATHS = {
     "domain_storage_file": os.path.join(root_folder, "tmp", "domain_name"),
     "theme_name_storage_file": os.path.join(root_folder, "tmp", "theme_name"),
     "all_xlets_meta_file": os.path.join(root_folder, "tmp", "xlets_metadata.json"),
-    "theme_latest_build_data_file": os.path.join(root_folder, "tmp", "theme_latest_default_data.json")
+    "theme_latest_build_data_file": os.path.join(root_folder, "tmp", "theme_latest_default_data.json"),
+    "xlets_latest_build_data_file": os.path.join(root_folder, "tmp", "xlets_latest_default_data.json")
 }
 
 XLET_SYSTEM = {
@@ -64,7 +70,7 @@ _missing_theme_or_domain_name_msg = """**{capital}NameNotSet:**
 The command line option **--{lower}-name=<name>** should be used to define a {lower}
 name for use when building {types}.
 
-Or a file named **theme_name** should be created inside a folder named **tmp** at
+Or a file named **{lower}_name** should be created inside a folder named **tmp** at
 the root of the repository whose only content should be the desired {lower} name.
 
 The `--{lower}-name` command line option has precedence over the {lower} name found
@@ -75,6 +81,11 @@ _existent_xlet_destination_msg = """**Destination folder exists!!!**
 {path}
 
 Choosing to proceed will completely remove the existent folder.
+"""
+
+_not_specified_output_location = """**No output location specified!!!**
+
+Choose a location that you own.
 """
 
 _xlet_dir_ignored_patterns = [
@@ -136,37 +147,51 @@ _theme_build_data = """
 **Theme name:**                 {theme_name}
 """
 
+_xlets_build_data = """
+**Domain name:**                 {domain_name}
+**Output directory:**            {build_output}
+**Ask overwrite confirmation:**  {do_not_cofirm}
+**Dry run:**                     {dry_run}
+"""
+
 
 class XletsHelperCore():
     """Xlets core functions.
 
     Attributes
     ----------
+    all_xlets_meta : list
+        All xlets meta data.
     logger : object
         See <class :any:`LogSystem`>.
     xlets_meta : dict
         The metadata of all xlets in this repository.
     """
 
-    def __init__(self, logger=None):
+    def __init__(self, xlets=None, logger=None):
         """Initialize.
 
         Parameters
         ----------
+        xlets : None, optional
+            The list of xlets to handle.
         logger : object
             See <class :any:`LogSystem`>.
         """
         self.logger = logger
 
-        try:
-            self.xlets_meta = AllXletsMetadata()
-        except Exception:
-            self.generate_meta_file()
+        self.all_xlets_meta = AllXletsMetadata().meta_list
+
+        if xlets:
+            xlets_filter = [f.split(" ")[1] for f in xlets]
+            self.xlets_meta = [x for x in self.all_xlets_meta if x["slug"] in xlets_filter]
+        else:
+            self.xlets_meta = self.all_xlets_meta
 
     def generate_meta_file(self):
         """See :any:`generate_meta_file`
         """
-        generate_meta_file()
+        generate_meta_file(return_data=False)
 
     def create_changelogs(self):
         """Create change logs.
@@ -177,7 +202,7 @@ class XletsHelperCore():
 
         self.logger.info("**Generating change logs...**")
 
-        for xlet in self.xlets_meta.meta_list:
+        for xlet in self.xlets_meta:
             self.logger.info("**Generating change log for %s...**" % xlet["name"])
 
             try:
@@ -216,7 +241,7 @@ class XletsHelperCore():
         """
         self.logger.info("**Starting POT files update...**")
 
-        for xlet in self.xlets_meta.meta_list:
+        for xlet in self.xlets_meta:
             additional_files_to_scan = []
             xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
             xlet_config_file = os.path.join(xlet_root_folder, "z_config.py")
@@ -235,7 +260,8 @@ class XletsHelperCore():
 
             try:
                 if not cmd_utils.which("make-cinnamon-xlet-pot-cli"):
-                    print(Ansi.LIGHT_RED("**MissingCommand:** make-cinnamon-xlet-pot-cli command not found!!!"))
+                    self.logger.error(
+                        "**MissingCommand:** make-cinnamon-xlet-pot-cli command not found!!!", date=False)
                     raise SystemExit(1)
 
                 cmd = [
@@ -256,10 +282,7 @@ class XletsHelperCore():
         """
         self.logger.info("**Starting localized help creation...**")
 
-        applets_list_items = []
-        extensions_list_items = []
-
-        for xlet in self.xlets_meta.meta_list:
+        for xlet in self.xlets_meta:
             xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
             script_file_path = os.path.join(xlet_root_folder, "z_create_localized_help.py")
 
@@ -268,6 +291,20 @@ class XletsHelperCore():
                 cmd_utils.run_cmd([script_file_path], stdout=None,
                                   stderr=None, cwd=xlet_root_folder)
 
+        self.update_repository_readme()
+
+    def update_repository_readme(self):
+        """Update repository README file.
+        """
+        self.logger.info("**Generating repository README.md file...**")
+        applets_list_items = []
+        extensions_list_items = []
+
+        for xlet in self.all_xlets_meta:
+            xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
+            script_file_path = os.path.join(xlet_root_folder, "z_create_localized_help.py")
+
+            if os.path.exists(script_file_path):
                 # Store list items for later creating the README.md file.
                 list_item = _readme_list_item_template.format(
                     xlet_name=xlet["name"],
@@ -278,8 +315,6 @@ class XletsHelperCore():
                     applets_list_items.append(list_item)
                 elif xlet["type"] == "extension":
                     extensions_list_items.append(list_item)
-
-        self.logger.info("**Generating repository README.md file...**")
 
         readme_template_path = os.path.join(root_folder, "__app__", "data",
                                             "templates", "README.md")
@@ -309,7 +344,7 @@ class XletsHelperCore():
         self.logger.info("**Generating translation statistics...**")
 
         if not cmd_utils.which("msgmerge"):
-            print(Ansi.LIGHT_RED("**MissingCommand:** msgmerge command not found!!!"))
+            self.logger.error("**MissingCommand:** msgmerge command not found!!!")
             raise SystemExit(1)
 
         markdown_content = ""
@@ -319,12 +354,17 @@ class XletsHelperCore():
         rmtree(po_tmp_storage, ignore_errors=True)
         os.makedirs(po_tmp_storage, exist_ok=True)
 
-        for xlet in get_xlets_dirs():
-            xlet_type, xlet_dir_name = xlet.split(" ")
+        for xlet in self.xlets_meta:
+            xlet_type = xlet.get("type", "")
+            xlet_slug = xlet.get("slug", "")
+
+            if not xlet_type or not xlet_slug:
+                continue
+
             xlet_po_dir = os.path.join(
-                root_folder, "%ss" % xlet_type.lower(), xlet_dir_name, "po")
+                root_folder, "%ss" % xlet_type.lower(), xlet_slug, "po")
             tmp_xlet_po_dir = os.path.join(
-                po_tmp_storage, "%ss" % xlet_type.lower(), xlet_dir_name)
+                po_tmp_storage, "%ss" % xlet_type.lower(), xlet_slug)
             os.makedirs(tmp_xlet_po_dir, exist_ok=True)
 
             if file_utils.is_real_dir(xlet_po_dir):
@@ -332,9 +372,9 @@ class XletsHelperCore():
 
                 if xlet_po_list:
                     self.logger.info("%s %s" %
-                                     (xlet_type, xlet_dir_name), date=False)
+                                     (xlet_type, xlet_slug), date=False)
                     markdown_content += "\n### %s %s\n" % (
-                        xlet_type, xlet_dir_name)
+                        xlet_type, xlet_slug)
                     markdown_content += "\n"
                     markdown_content += "|LANGUAGE|UNTRANSLATED|\n"
                     markdown_content += "|--------|------------|\n"
@@ -342,7 +382,7 @@ class XletsHelperCore():
                     for po_file_path in xlet_po_list:
                         po_base_name = os.path.basename(po_file_path)
                         tmp_po_file_path = os.path.join(tmp_xlet_po_dir, po_base_name)
-                        tmp_pot_file_path = os.path.join(xlet_po_dir, "%s.pot" % xlet_dir_name)
+                        tmp_pot_file_path = os.path.join(xlet_po_dir, "%s.pot" % xlet_slug)
 
                         self.logger.info("**Copying %s to temporary location...**" %
                                          po_base_name, date=False)
@@ -384,17 +424,22 @@ class XletsHelperCore():
         self.logger.info("**Updating Spanish localizations...**")
 
         if not cmd_utils.which("msgmerge"):
-            print(Ansi.LIGHT_RED("**MissingCommand:** msgmerge command not found!!!"))
+            self.logger.error("**MissingCommand:** msgmerge command not found!!!")
             raise SystemExit(1)
 
-        for xlet in get_xlets_dirs():
-            xlet_type, xlet_dir_name = xlet.split(" ")
+        for xlet in self.xlets_meta:
+            xlet_type = xlet.get("type", "")
+            xlet_slug = xlet.get("slug", "")
+
+            if not xlet_type or not xlet_slug:
+                continue
+
             po_dir = os.path.join(root_folder, "%ss" %
-                                  xlet_type.lower(), xlet_dir_name, "po")
+                                  xlet_type.lower(), xlet_slug, "po")
             po_file = os.path.join(po_dir, "es.po")
 
             if file_utils.is_real_dir(po_dir) and file_utils.is_real_file(po_file):
-                self.logger.info("**Updating localization for %s**" % xlet_dir_name)
+                self.logger.info("**Updating localization for %s**" % xlet_slug)
 
                 if cmd_utils.run_cmd([
                     "msgmerge",
@@ -403,7 +448,7 @@ class XletsHelperCore():
                     "--backup=off",             # Never make backups.
                     "--update",                 # Update .po file, do nothing if up to date.
                     "es.po",                    # The .po file to update.
-                    "%s.pot" % xlet_dir_name    # The template file to update from.
+                    "%s.pot" % xlet_slug        # The template file to update from.
                 ], stdout=None, stderr=None, cwd=po_dir).returncode:
                     self.logger.warning("**Something might have gone wrong!**")
 
@@ -420,17 +465,26 @@ class AllXletsMetadata():
     def __init__(self):
         """Initialization.
         """
-        try:
-            if not os.path.exists(PATHS["all_xlets_meta_file"]):
-                generate_meta_file()
-        finally:
+        if os.path.exists(PATHS["all_xlets_meta_file"]):
             with open(PATHS["all_xlets_meta_file"], "r", encoding="UTF-8") as xlets_metadata:
                 self.meta_list = list(json.loads(xlets_metadata.read()))
+        else:
+            self.meta_list = generate_meta_file()
 
 
-def generate_meta_file():
+def generate_meta_file(return_data=True):
     """Generate the file containing all the metadata of all xlets on this repository.
     This metadata file is used by several functions on the XletsHelperCore class.
+
+    Parameters
+    ----------
+    return_data : bool, optional
+        Whether to return the data or not.
+
+    Returns
+    -------
+    list
+        The xlets metadata.
     """
     xlet_meta_files = []
     xlet_meta = []
@@ -458,15 +512,18 @@ def generate_meta_file():
             json_meta["slug"] = os.path.basename(
                 os.path.dirname(xlet_meta_files[i]))
 
-            if "/applets/" in xlet_meta_files[i]:
+            if "/applets/" + json_meta["slug"] in xlet_meta_files[i]:
                 json_meta["type"] = "applet"
-            elif "/extensions/" in xlet_meta_files[i]:
+            elif "/extensions/" + json_meta["slug"] in xlet_meta_files[i]:
                 json_meta["type"] = "extension"
 
             xlet_meta.append(json_meta)
 
     with open(PATHS["all_xlets_meta_file"], "w", encoding="UTF-8") as outfile:
         json.dump(xlet_meta, outfile, indent=4, ensure_ascii=False)
+
+    if return_data:
+        return xlet_meta
 
 
 def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False,
@@ -495,66 +552,221 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
     SystemExit
         Halt execution if the domain name cannot be obtained.
     """
-    options_map_defaults = {
-        "domain_name": "domain.com"
-    }
+    # NOTE: o_m_l_v a.k.a. options_map_latest_used_values
+    try:
+        with open(PATHS["xlets_latest_build_data_file"], "r", encoding="UTF-8") as f:
+            o_m_l_v = json.loads(f.read())
+    except Exception:
+        o_m_l_v = None
 
     if not domain_name:
         try:
             with open(PATHS["domain_storage_file"], "r", encoding="UTF-8") as domain_file:
                 domain_name = domain_file.read().strip()
         except Exception:
-            domain_name = False
+            domain_name = "domain.com"
 
-    if not domain_name:
-        inform("\nEnter a domain name:")
-        prompts.do_prompt(options_map_defaults, "domain_name",
-                          "Enter name", options_map_defaults["domain_name"])
-        domain_name = options_map_defaults["domain_name"].strip()
+    options_map = {
+        "do_not_cofirm": {
+            "1": False,
+            "2": True
+        },
+        "dry_run": {
+            "1": False,
+            "2": True
+        }
+    }
 
-    # TODO:
-    # Implement a "domain name validator" function.
-    if not domain_name:
-        # Message from the raised exception isn't printed when this function
-        # is executed from the CLI menu.
-        # So, print the message explicitly.
-        print(Ansi.LIGHT_YELLOW(_missing_theme_or_domain_name_msg.format(capital="Domain",
-                                                                         lower="domain",
-                                                                         types="xlets")))
+    # __version__ is used to verify that the stored data is compatible with the
+    # default data used when building xlets.
+    options_map_defaults = {
+        "__version__": "1",
+        "domain_name": domain_name,
+        # Note: Check needed to avoid storing None.
+        "build_output": build_output or "",
+        "do_not_cofirm": "2" if do_not_cofirm else "1",
+        "dry_run": "2" if dry_run else "1"
+    }
+
+    interactive = from_menu
+    set_temp_output = False
+
+    if interactive and o_m_l_v is not None and options_map_defaults != o_m_l_v and \
+            options_map_defaults["__version__"] == o_m_l_v.get("__version__"):
+        print_separator(logger)
+        inform("Build data from a previous xlet build found at:")
+        logger.info("**%s**" % PATHS["xlets_latest_build_data_file"], date=False, to_file=False)
+        inform("Details:")
+        logger.info(_xlets_build_data.format(
+            domain_name=o_m_l_v["domain_name"],
+            build_output=o_m_l_v["build_output"],
+            do_not_cofirm=str(not options_map["do_not_cofirm"][o_m_l_v["do_not_cofirm"]]),
+            dry_run=str(options_map["dry_run"][o_m_l_v["dry_run"]])
+        ), date=False, to_file=False)
+        print_separator(logger)
+        inform("Choose an option:")
+        question = "%s\n%s\n%s" % ("**1.** Use data interactively.",
+                                   "**2.** Use data and directly build xlets.",
+                                   "**Press any other key to not use stored data.**")
+
+        answer = prompts.read_char(question)
+
+        # Do not change defaults if one chooses not to use stored build data.
+        if answer == "1" or answer == "2":
+            options_map_defaults = o_m_l_v
+        else:
+            pass
+
+        interactive = answer != "2"
+
+    if interactive:
+        # Ask for domain name.
+        print_separator(logger)
+        inform("Choose a domain name:")
+        prompts.do_prompt(options_map_defaults,
+                          "domain_name",
+                          "Enter name",
+                          options_map_defaults["domain_name"])
+
+        # Ask for build output.
+        print_separator(logger)
+        inform("Where to store built xlets?")
+        inform("Choose an option:")
+        question = "%s\n%s\n%s" % ("**1.** Temporary location.",
+                                   "**2.** Install into user home.",
+                                   "**Press any other key to specify a location.**")
+
+        answer = prompts.read_char(question)
+        ask_for_confirmation_options = answer != "1"
+
+        if answer == "1":
+            set_temp_output = True
+        elif answer == "2":
+            options_map_defaults["build_output"] = os.path.join(
+                "~", ".local", "share", "cinnamon"
+            )
+        else:
+            # Ask for output directory.
+            print_separator(logger)
+            inform("Choose a storage location:")
+            # NOTE: Yes, if the previous build_output was the temporary location,
+            # inform that it will be overwritten with a new temporary location.
+            # This is to avoid dealing with existing xlets built into /tmp.
+            if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
+                logger.info(
+                    "The following default value, if chosen, it will be re-generated and overwritten.",
+                    date=False, to_file=False)
+
+            prompts.do_prompt(options_map_defaults,
+                              "build_output",
+                              "Enter a path",
+                              options_map_defaults["build_output"],
+                              validator=validate_xlet_output)
+
+            # NOTE: Yes, check again (just in case) if build_output is inside /tmp.
+            # First, so I can set set_temp_output to true, and second, so I can cancel
+            # asking for confirmation options since there is no need to ask for confirmation
+            # options when the possibility of overwriting an existing xlet is null.
+            if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
+                ask_for_confirmation_options = False
+                set_temp_output = True
+                options_map_defaults["do_not_cofirm"] = "1"
+
+        if ask_for_confirmation_options:
+            # Ask for overwrite confirmation.
+            print_separator(logger)
+            inform("Choose what to do when a built xlet already exists at the destination.")
+            inform("1. Confirm each overwrite operation")
+            inform("2. Directly overwrite existent xlets")
+            prompts.do_prompt(options_map_defaults,
+                              "do_not_cofirm",
+                              "Enter option",
+                              options_map_defaults["do_not_cofirm"],
+                              validator=validate_xlet_overwrite)
+
+        # Ask for dry.
+        print_separator(logger)
+        inform("Choose to perform the build operation or a trial run with no changes made.")
+        inform("1. Perform build operation")
+        inform("2. Perform a trial run (dry run)")
+        prompts.do_prompt(options_map_defaults,
+                          "dry_run",
+                          "Enter option",
+                          options_map_defaults["dry_run"],
+                          validator=validate_xlet_overwrite)
+
+    # TODO: Implement a "domain name validator" function.
+    if not options_map_defaults["domain_name"].strip():
+        logger.warning(_missing_theme_or_domain_name_msg.format(capital="Domain",
+                                                                lower="domain",
+                                                                types="xlets"), date=False, to_file=False)
         raise SystemExit(1)
 
-    if not build_output:
-        base_output_path = os.path.join(get_base_temp_folder(),
-                                        misc_utils.micro_to_milli(misc_utils.get_date_time("filename")))
-    else:
-        base_output_path = build_output
+    if set_temp_output:
+        options_map_defaults["build_output"] = os.path.join(
+            get_base_temp_folder(),
+            misc_utils.micro_to_milli(misc_utils.get_date_time("filename"))
+        )
+
+    if not options_map_defaults["build_output"]:
+        logger.warning(_not_specified_output_location, date=False, to_file=False)
+        raise SystemExit(1)
 
     all_xlets = get_xlets_dirs()
 
     xlets_data = []
 
-    if xlets:
-        for x in xlets:
-            if x in all_xlets:
-                xlet_type, xlet_dir_name = x.split(" ")
-                uuid = "%s@%s" % (xlet_dir_name, domain_name)
-                xlets_data.append({
-                    "uuid": uuid,
-                    "type": xlet_type.lower(),
-                    "slug": xlet_dir_name,
-                    "source": os.path.join(root_folder, "%ss" % xlet_type.lower(), xlet_dir_name),
-                    "destination": os.path.join(base_output_path, "%ss" % xlet_type.lower(), uuid),
-                })
-            else:
-                logger.warning("**%s doesn't exists.**" % x)
+    for x in xlets:
+        if x in all_xlets:
+            xlet_type, xlet_dir_name = x.split(" ")
+            uuid = "%s@%s" % (xlet_dir_name, domain_name)
+            xlets_data.append({
+                "uuid": uuid,
+                "type": xlet_type.lower(),
+                "slug": xlet_dir_name,
+                "source": os.path.join(root_folder, "%ss" % xlet_type.lower(), xlet_dir_name),
+                "destination": os.path.join(
+                    file_utils.expand_path(options_map_defaults["build_output"]),
+                    "%ss" % xlet_type.lower(),
+                    uuid
+                )
+            })
+        else:
+            logger.warning("**%s doesn't exists.**" % x)
+            logger.warning("**Global metadata file might need to be re-generated.**" % x)
 
     if xlets_data:
-        for data in xlets_data:
-            builder = XletBuilder(data, do_not_cofirm=do_not_cofirm, dry_run=dry_run, logger=logger)
-            builder.build()
+        built_xlets = []
 
-    print("")
-    logger.info("**Built xlets saved at:**\n%s" % base_output_path)
+        for data in xlets_data:
+            builder = XletBuilder(
+                data,
+                do_not_cofirm=options_map["do_not_cofirm"][options_map_defaults["do_not_cofirm"]],
+                dry_run=options_map["dry_run"][options_map_defaults["dry_run"]],
+                logger=logger
+            )
+            built = builder.build()
+
+            if built:
+                built_xlets.append(data["slug"])
+
+        if len(xlets_data) != len(built_xlets):
+            print_separator(logger)
+            logger.warning(
+                "The build process of some xlets was canceled or there was an error while building them.")
+            logger.warning("Check the logs for more details.")
+
+        if dry_run:
+            logger.log_dry_run("**Built xlets will be saved at:**\n%s" %
+                               options_map_defaults["build_output"])
+            logger.log_dry_run("**Xlets build data will be saved at:**\n%s" %
+                               PATHS["xlets_latest_build_data_file"])
+        else:
+            print("")
+            logger.info("**Built xlets saved at:**\n%s" % options_map_defaults["build_output"])
+
+            with open(PATHS["xlets_latest_build_data_file"], "w", encoding="UTF-8") as outfile:
+                json.dump(options_map_defaults, outfile, indent=4, ensure_ascii=False)
 
 
 class XletBuilder():
@@ -595,21 +807,35 @@ class XletBuilder():
         self.logger.info("**Building the %s %s**" %
                          (self._xlet_data["type"], self._xlet_data["slug"]))
 
-        self._do_copy()
-        self._handle_config_file()
+        # NOTE: If the copy operation was canceled, do not proceed with the building process.
+        proceed = self._do_copy()
 
-        if self._dry_run:
-            self.logger.log_dry_run("**String substitutions will be performed at:**\n%s" %
-                                    self._xlet_data["destination"])
-        else:
-            string_utils.do_string_substitutions(self._xlet_data["destination"],
-                                                 self._get_replacement_data(),
-                                                 logger=self.logger)
+        if proceed:
+            self._handle_config_file()
 
-        self._compile_schemas()
-        self._set_executable()
+            if self._dry_run:
+                self.logger.log_dry_run("**String substitutions will be performed at:**\n%s" %
+                                        self._xlet_data["destination"])
+            else:
+                string_utils.do_string_substitutions(self._xlet_data["destination"],
+                                                     self._get_replacement_data(),
+                                                     logger=self.logger)
+
+            self._compile_schemas()
+            self._set_executable()
+
+            return True
+
+        return False
 
     def _get_replacement_data(self):
+        """Get replacement data.
+
+        Returns
+        -------
+        list
+            The list of replacements.
+        """
         return [
             ("{{UUID}}", self._xlet_data.get("uuid", "")),
             ("{{XLET_SYSTEM}}", XLET_SYSTEM[self._xlet_data.get("type", "")]),
@@ -624,21 +850,26 @@ class XletBuilder():
     def _do_copy(self):
         """Copy xlet files into its final destination.
 
-        Raises
-        ------
-        exceptions.InvalidDestination
-            Invalid xlet destination.
-        exceptions.OperationAborted
+        NOTE: Do not raise inside this function. Return True or False so other instances
+        of this class can continue operating. For example, if one is building several
+        xlets and decides not to overwrite one of them, just continue building the rest
+        of the xlets.
+
+        Returns
+        -------
+        None
             Halt build operation.
         """
         if file_utils.is_real_file(self._xlet_data["destination"]):
-            raise exceptions.InvalidDestination(
-                "Destination exists and is a file!!! Aborted!!!")
+            self.logger.warning("Destination exists and is a file!!! Aborted!!!",
+                                date=False, to_file=False)
+            return False
 
         if file_utils.is_real_dir(self._xlet_data["destination"]):
             if not self._do_not_cofirm:
-                print(Ansi.LIGHT_YELLOW(_existent_xlet_destination_msg.format(
-                    path=self._xlet_data["destination"])))
+                self.logger.warning(_existent_xlet_destination_msg.format(
+                    path=self._xlet_data["destination"]
+                ), date=False, to_file=False)
 
             if self._do_not_cofirm or prompts.confirm(prompt="Proceed?", response=False):
                 if self._dry_run:
@@ -647,10 +878,13 @@ class XletBuilder():
                 else:
                     rmtree(self._xlet_data["destination"], ignore_errors=True)
             else:
-                raise exceptions.OperationAborted("Building the %s %s was canceled." %
-                                                  (self._xlet_data["type"], self._xlet_data["slug"]))
+                self.logger.warning("Building the %s %s was canceled." %
+                                    (self._xlet_data["type"], self._xlet_data["slug"]
+                                     ), date=False, to_file=False)
+                return False
 
         self.logger.info("**Copying main xlet files...**")
+
         if self._dry_run:
             self.logger.log_dry_run("**Source:** %s" % self._xlet_data["source"])
             self.logger.log_dry_run("**Will be copied into:** %s" % self._xlet_data["destination"])
@@ -680,8 +914,10 @@ class XletBuilder():
 
                 copy2(src, dst)
 
+        return True
+
     def _compile_schemas(self):
-        """Compile schemas file if any.
+        """Compile schema files if any.
         """
         if file_utils.is_real_dir(self._schemas_dir):
             self.logger.info("**Compiling gsettings schema...**")
@@ -811,6 +1047,57 @@ def get_xlets_dirs():
     return applets_dirs + extensions_dirs
 
 
+def validate_xlet_output(x):
+    """Validate xlets build options.
+
+    Parameters
+    ----------
+    x : str
+        The entered option to validate.
+
+    Returns
+    -------
+    str
+        The validated option.
+
+    Raises
+    ------
+    exceptions.ValidationError
+        Halt execution if option is not valid.
+    """
+    if x == file_utils.expand_path("~") or x == "~":
+        raise exceptions.ValidationError("Seriously, don't be daft! Choose another location!")
+    elif x == "/":
+        raise exceptions.ValidationError(
+            "Are you freaking kidding me!? The root partition!? Use your brain!")
+
+    return x
+
+
+def validate_xlet_overwrite(x):
+    """Validate xlets build options.
+
+    Parameters
+    ----------
+    x : str
+        The entered option to validate.
+
+    Returns
+    -------
+    str
+        The validated option.
+
+    Raises
+    ------
+    exceptions.ValidationError
+        Halt execution if option is not valid.
+    """
+    if not x or x not in ["1", "2"]:
+        raise exceptions.ValidationError('Possible options are "1" or "2".')
+
+    return x
+
+
 def validate_cinn_theme_options(x):
     """Validate themes options.
 
@@ -883,6 +1170,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
     SystemExit
         Halt execution if the theme name cannot be obtained.
     """
+    # NOTE: o_m_l_v a.k.a. options_map_latest_used_values
     try:
         with open(PATHS["theme_latest_build_data_file"], "r", encoding="UTF-8") as f:
             o_m_l_v = json.loads(f.read())
@@ -916,13 +1204,13 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
 
     interactive = True
 
-    # o_m_l_v a.k.a. options_map_latest_used_values
-    if o_m_l_v is not None and options_map_defaults != o_m_l_v and \
+    if interactive and o_m_l_v is not None and options_map_defaults != o_m_l_v and \
             options_map_defaults["__version__"] == o_m_l_v.get("__version__"):
+        print_separator(logger)
         inform("Build data from a previous theme build found at:")
         logger.info("**%s**" % PATHS["theme_latest_build_data_file"], date=False, to_file=False)
         inform("Details:")
-        print(Ansi.DEFAULT(_theme_build_data.format(
+        logger.info(_theme_build_data.format(
             cinnamon_version=options_map["cinnamon_version"][o_m_l_v["cinnamon_version"]],
             cinnamon_font_size=o_m_l_v["cinnamon_font_size"],
             cinnamon_font_family=o_m_l_v["cinnamon_font_family"],
@@ -930,7 +1218,8 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
             gtk3_csd_shadow=o_m_l_v["gtk3_csd_shadow"],
             gtk3_csd_backdrop_shadow=o_m_l_v["gtk3_csd_backdrop_shadow"],
             theme_name=o_m_l_v["theme_name"],
-        )))
+        ), date=False, to_file=False)
+        print_separator(logger)
         inform("Choose an option:")
         question = "%s\n%s\n%s" % ("**1.** Use data interactively.",
                                    "**2.** Use data and directly build themes.",
@@ -948,6 +1237,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
 
     if interactive:
         # Ask for Cinnamon theme version.
+        print_separator(logger)
         inform("Choose in which Cinnamon version the theme will be used.")
         inform("1. 3.0.x to 3.2.x (Default)")
         inform("2. 3.4.x to 3.8.x")
@@ -960,6 +1250,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           validator=validate_cinn_theme_options)
 
         # Ask for Cinnamon theme font size.
+        print_separator(logger)
         inform("Set the Cinnamon theme font size.")
 
         prompts.do_prompt(options_map_defaults,
@@ -968,6 +1259,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           options_map_defaults["cinnamon_font_size"])
 
         # Ask for Cinnamon theme font family.
+        print_separator(logger)
         inform("Set the Cinnamon theme font family.")
 
         prompts.do_prompt(options_map_defaults,
@@ -976,6 +1268,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           options_map_defaults["cinnamon_font_family"])
 
         # Ask for Gtk3 theme version.
+        print_separator(logger)
         inform("Choose in which Gtk+ version the theme will be used.")
         inform("1. 3.18.x (Default)")
         inform("2. 3.22.x")
@@ -987,6 +1280,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           validator=validate_gtk3_theme_options)
 
         # Ask for Gtk3 theme CSD selector.
+        print_separator(logger)
         inform("Set Gtk3 client side decorations shadow.")
         inform("Selector: %s" % (
             ".window-frame" if options_map_defaults["gtk3_version"] == "1" else "decoration"
@@ -998,6 +1292,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           options_map_defaults["gtk3_csd_shadow"])
 
         # Ask for Gtk3 theme CSD backdrop selector.
+        print_separator(logger)
         inform("Set Gtk3 client side decorations backdrop shadow.")
         inform("Selector: %s" % (
             ".window-frame:backdrop" if options_map_defaults["gtk3_version"] == "1" else "decoration:backdrop"
@@ -1027,6 +1322,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
             except Exception:
                 pass
 
+        print_separator(logger)
         inform("Enter a name for the theme:")
         prompts.do_prompt(options_map_defaults,
                           "theme_name",
@@ -1034,9 +1330,12 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           options_map_defaults["theme_name"])
 
     if not options_map_defaults["theme_name"].strip():
-        print(Ansi.LIGHT_YELLOW(_missing_theme_or_domain_name_msg.format(capital="Theme",
-                                                                         lower="theme",
-                                                                         types="themes")))
+        logger.warning(_missing_theme_or_domain_name_msg.format(
+            capital="Theme",
+            lower="theme",
+            types="themes"
+        ), date=False, to_file=False)
+
         raise SystemExit(1)
 
     if not build_output:
@@ -1068,12 +1367,14 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         destination_folder = os.path.join(base_output_path, full_theme_name)
 
         if file_utils.is_real_file(destination_folder):
-            print(Ansi.LIGHT_RED("**InvalidDestination:** Destination exists and is a file!!! Aborted!!!"))
+            logger.error("**InvalidDestination:** Destination exists and is a file!!! Aborted!!!",
+                         date=False)
             raise SystemExit(1)
 
         if file_utils.is_real_dir(destination_folder):
             if not do_not_cofirm:
-                print(Ansi.LIGHT_YELLOW(_existent_xlet_destination_msg.format(path=destination_folder)))
+                logger.warning(_existent_xlet_destination_msg.format(path=destination_folder),
+                               date=False)
 
             if do_not_cofirm or prompts.confirm(prompt="Proceed?", response=False):
                 if dry_run:
@@ -1082,7 +1383,8 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                 else:
                     rmtree(destination_folder, ignore_errors=True)
             else:
-                print(Ansi.LIGHT_RED("**OperationAborted:** The theme building process was canceled."))
+                logger.error("**OperationAborted:** The theme building process was canceled.",
+                             date=False)
                 raise SystemExit(1)
 
         variant_folder = os.path.join(themes_sources, "_variants", variant)
@@ -1504,6 +1806,17 @@ def inform(msg):
         Message to display.
     """
     print(Ansi.LIGHT_MAGENTA("**%s**" % msg))
+
+
+def print_separator(logger):
+    """Print separator.
+
+    Parameters
+    ----------
+    logger : object
+        See <class :any:`LogSystem`>.
+    """
+    logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
 
 
 if __name__ == "__main__":
