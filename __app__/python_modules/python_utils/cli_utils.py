@@ -56,6 +56,7 @@ class CommandLineInterfaceSuper():
     def print_log_file(self):
         """Print the path to the log file used by the current logger.
         """
+        print()
         self.logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
         self.logger.warning("**Log file location:**", date=False, to_file=False)
         self.logger.warning("**%s**" % self.logger.get_log_file(), date=False, to_file=False)
