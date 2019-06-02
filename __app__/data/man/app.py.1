@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "APP.PY" "1" "Jun 01, 2019" "" "Cinnamon Tools"
+.TH "APP.PY" "1" "Jun 02, 2019" "" "Cinnamon Tools"
 .SH NAME
 app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .
@@ -41,10 +41,7 @@ This Python application can generate a system executable with Bash completions s
 .ft C
 
 app.py (\-h | \-\-help | \-\-version | \-\-manual | \-r | \-\-restart\-cinnamon)
-app.py menu [\-d <domain> | \-\-domain=<domain>]
-            [\-o <dir> | \-\-output=<dir>]
-            [\-n | \-\-no\-confirmation]
-            [\-y | \-\-dry\-run]
+app.py menu
 app.py build (\-a | \-\-all\-xlets | \-x <name> | \-\-xlet=<name>)
              [\-x <name>... | \-\-xlet=<name>...]
              [\-d <domain> | \-\-domain=<domain>]
@@ -58,6 +55,7 @@ app.py build_themes [\-t <name> | \-\-theme\-name=<name>]
                     [\-r | \-\-restart\-cinnamon]
                     [\-y | \-\-dry\-run]
 app.py dev <sub_commands>...
+           [\-x <name>... | \-\-xlet=<name>...]
 app.py generate (system_executable | docs | docs_no_api | base_xlet)
                 [\-f | \-\-force\-clean\-build]
                 [\-u | \-\-update\-inventories]
@@ -92,7 +90,7 @@ git clone \-\-recurse\-submodules \-\-shallow\-submodules git_repository_url
 .IP \(bu 2
 \fBPython 3.5+\fP
 .IP \(bu 2
-\fBsphinx>=1.6.5\fP: \fBsudo pip3 install sphinx\fP
+\fBsphinx>=1.8.1\fP: \fBsudo pip3 install sphinx\fP
 .UNINDENT
 .sp
 \fBNote:\fP Deep cloning required.
@@ -111,26 +109,21 @@ git clone \-\-recurse\-submodules \-\-shallow\-submodules git_repository_url
 \fBpyuca\fP: \fBsudo pip3 install pyuca\fP
 .UNINDENT
 .SH DETAILED USAGE
-.SS app.py manual
-.sp
-Display this application manual page.
-.SS app.py menu
-.sp
-This command starts a CLI menu from which building and development tasks can be performed.
-.SS Options
+.SS General app.py options
 .INDENT 0.0
 .IP \(bu 2
-\fB\-d <domain>\fP or \fB\-\-domain=<domain>\fP: See \fI\%build command \-\-domain=<domain>\fP\&.
+\fB\-h\fP or \fB\-\-help\fP: Display basic command line usage.
 .IP \(bu 2
-\fB\-o <dir>\fP or \fB\-\-output=<dir>\fP: See \fI\%build command \-\-output=<dir>\fP\&.
+\fB\-\-manual\fP: Display the application manual page.
 .IP \(bu 2
-\fB\-n\fP or \fB\-\-no\-confirmation\fP: See \fI\%build command \-\-no\-confirmation\fP\&.
-.IP \(bu 2
-\fB\-y\fP or \fB\-\-dry\-run\fP: See \fI\%build command \-\-dry\-run\fP\&.
+\fB\-r\fP or \fB\-\-restart\-cinnamon\fP: Restart Cinnamon\(aqs shell.
 .UNINDENT
+.SS app.py menu
+.sp
+This command starts a CLI menu from which xlets and themes can be built interactively.
 .SS app.py build
 .sp
-This command is used to build all or specifics xlets. All xlets found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. \fIBuilding\fP an xlet just means that the \fIraw xlet\fP (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (\fBxlet_name@custom_domain_name\fP) to all files (files content and file names). It will also compile the \fBgsettings\fP files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, etc.).
+This command is used to build all or specifics xlets. All xlets found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. \fIBuilding\fP an xlet just means that the \fIraw xlet\fP (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (\fBxlet_name@custom_domain_name\fP) to all files (files content and file names). It will also compile the \fBgsettings\fP files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, global modules, etc.).
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
@@ -293,12 +286,17 @@ Removed fixed sizes for entries inside menus.
 .SS app.py dev
 .sp
 This command is used to perform development tasks.
+.SS Options
+.INDENT 0.0
+.IP \(bu 2
+\fB\-x <name>\fP or \fB\-\-xlet=<name>\fP: Specify one or more xlets to perform development tasks on. Without specifying any xlet, all xlets will be handled.
+.UNINDENT
 .SS Sub\-commands
 .INDENT 0.0
 .IP \(bu 2
 \fBgenerate_meta_file\fP: Generates a unified metadata file with the content of the metadata.json file from all xlets. It also contains extra data for all xlets to facilitate their development.
 .IP \(bu 2
-\fBcreate_localized_help\fP: Generates the localized \fBHELP.html\fP file for all xlets. This file is a standalone HTML file that contains detailed a description and usage instructions for each xlet. It also contains their changelogs and list of contributors/mentions.
+\fBcreate_localized_help\fP: Generates the localized \fBHELP.html\fP file for all xlets. This file is a standalone HTML file that contains detailed a description and usage instructions for each xlet. It also contains their change logs and list of contributors/mentions.
 .IP \(bu 2
 \fBgenerate_trans_stats\fP: Generates a simple table with information about missing translated strings inside the PO files.
 .IP \(bu 2
@@ -306,7 +304,7 @@ This command is used to perform development tasks.
 .IP \(bu 2
 \fBupdate_spanish_localizations\fP: It updates the \fBes.po\fP files from all xlets from their respective POT files.
 .IP \(bu 2
-\fBcreate_changelogs\fP: Generates \fIhuman readable\fP changelogs from the Git history of changes for each xlet.
+\fBcreate_changelogs\fP: Generates \fIhuman readable\fP change logs from the Git history of changes for each xlet.
 .UNINDENT
 .SS app.py generate
 .SS Sub\-commands
@@ -339,7 +337,7 @@ It will also ask for bash completions creation.
 .UNINDENT
 .SS app.py repo
 .sp
-Command to perform tasks in the Cinnamon Tool\(aqs Git repository. These tasks where directly intregrated into this application to avoid fatal errors (a simple error could mangle the local Git repository).
+Command to perform tasks in the Cinnamon Tool\(aqs Git repository. These tasks where directly integrated into this application to avoid fatal errors (a simple error could mangle the local Git repository).
 .SS Sub\-commands
 .INDENT 0.0
 .IP \(bu 2

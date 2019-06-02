@@ -73,11 +73,6 @@ __cinnamon_tools_cli_{current_date}(){
     cmd="${COMP_WORDS[1]}"
 
     case $cmd in
-    "menu")
-        COMPREPLY=( $(compgen -W \
-            "-d --domain= -o --output= -n --no-confirmation -y --dry-run" -- "${cur}") )
-        _decide_nospace_{current_date} ${COMPREPLY[0]}
-        ;;
     "repo")
         COMPREPLY=( $(compgen -W \
             "submodules subtrees" -- "${cur}") )
@@ -100,7 +95,7 @@ __cinnamon_tools_cli_{current_date}(){
         ;;
     "dev")
         COMPREPLY=( $(compgen -W \
-            "generate_meta_file create_localized_help generate_trans_stats \
+            "-x --xlet= generate_meta_file create_localized_help generate_trans_stats \
 update_pot_files update_spanish_localizations create_changelogs " -- "${cur}") )
         ;;
     esac
