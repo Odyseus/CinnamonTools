@@ -23,7 +23,7 @@ The **app.py** script found at the root of the repository is the *application* t
 
 ### Examples
 
-#### [Interactive shell menu](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/cinnamontools-usage.html#app-py-menu-command)
+#### [Interactive shell menu](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#app-py-menu)
 
 The following command starts a CLI (Command Line Interface) interactive menu from which one can select the xlets to build or build all xlets/themes at once.
 
@@ -33,7 +33,7 @@ $ ./app.py menu
 
 ![CLI menu](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/cli-menu.gif "CLI menu")
 
-#### [Building xlets](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/cinnamontools-usage.html#app-py-build-command)
+#### [Building xlets](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#app-py-build)
 
 The command bellow will perform the following actions:
 
@@ -49,7 +49,7 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 
 **Note:** Refer to the [documentation](#documentation) for detailed command line usage.
 
-#### [Building themes](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/cinnamontools-usage.html#app-py-build-themes-command)
+#### [Building themes](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#app-py-build-themes)
 
 The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family and GTK+ 3 version). The command bellow will perform the following actions:
 
