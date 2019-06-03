@@ -310,12 +310,15 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             indicatorActor._applet = this;
 
             this._shellIndicators[appIndicator.id] = indicatorActor;
-            this._signalManager.connect(indicatorActor.actor, "destroy",
-                (aActor) => this._onIndicatorIconDestroy(aActor));
-            this._signalManager.connect(indicatorActor.actor, "enter-event",
-                (aActor, aEvent) => this._onEnterEvent(aActor, aEvent));
-            this._signalManager.connect(indicatorActor.actor, "leave-event",
-                (aActor, aEvent) => this._onLeaveEvent(aActor, aEvent));
+            this._signalManager.connect(indicatorActor.actor, "destroy", function(aActor) {
+                this._onIndicatorIconDestroy(aActor);
+            }.bind(this));
+            this._signalManager.connect(indicatorActor.actor, "enter-event", function(aActor, aEvent) {
+                this._onEnterEvent(aActor, aEvent);
+            }.bind(this));
+            this._signalManager.connect(indicatorActor.actor, "leave-event", function(aActor, aEvent) {
+                this._onLeaveEvent(aActor, aEvent);
+            }.bind(this));
 
             this.manager_container.add_actor(indicatorActor.actor);
 
@@ -472,13 +475,25 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         Main.statusIconDispatcher.start(this.actor.get_parent().get_parent());
 
         this._signalManager.connect(Main.statusIconDispatcher, "status-icon-added",
-            (o, icon, role) => this._onTrayIconAdded(o, icon, role));
+            function(o, icon, role) {
+                this._onTrayIconAdded(o, icon, role);
+            }.bind(this)
+        );
         this._signalManager.connect(Main.statusIconDispatcher, "status-icon-removed",
-            (o, icon) => this._onTrayIconRemoved(o, icon));
+            function(o, icon) {
+                this._onTrayIconRemoved(o, icon);
+            }.bind(this)
+        );
         this._signalManager.connect(Main.statusIconDispatcher, "before-redisplay",
-            () => this._onBeforeRedisplay());
+            function() {
+                this._onBeforeRedisplay();
+            }.bind(this)
+        );
         this._signalManager.connect(Main.systrayManager, "changed",
-            Main.statusIconDispatcher.redisplay, Main.statusIconDispatcher);
+            function() {
+                Main.statusIconDispatcher.redisplay();
+            }.bind(Main.statusIconDispatcher)
+        );
         this._addIndicatorSupport();
     },
 

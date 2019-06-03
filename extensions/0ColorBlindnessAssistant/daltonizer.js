@@ -497,7 +497,9 @@ WindowTracker.prototype = {
         this.forceScreen = false;
         this._tracker = Cinnamon.WindowTracker.get_default();
         this._onFocusId = 0;
-        this.sigMan.connect(this._tracker, "notify::focus-app", this._onFocus.bind(this));
+        this.sigMan.connect(this._tracker, "notify::focus-app", function() {
+            this._onFocus();
+        }.bind(this));
     },
 
     destroy: function() {
@@ -529,20 +531,22 @@ WindowTracker.prototype = {
             let actorRepr;
 
             if (window && winType !== 1) {
-                this.sigMan.connect(window, "notify::title", this._onFocus.bind(this));
+                this.sigMan.connect(window, "notify::title", function() {
+                    this._onFocus();
+                }.bind(this));
 
                 actor = window.get_compositor_private();
 
                 if (actor) {
-                    this.sigMan.connect(
-                        actor,
-                        "size-changed",
-                        this.daltonizer.moveUI.bind(this.daltonizer)
+                    this.sigMan.connect(actor, "size-changed",
+                        function() {
+                            this.daltonizer.moveUI();
+                        }.bind(this.daltonizer)
                     );
-                    this.sigMan.connect(
-                        actor,
-                        "position-changed",
-                        this.daltonizer.moveUI.bind(this.daltonizer)
+                    this.sigMan.connect(actor, "position-changed",
+                        function() {
+                            this.daltonizer.moveUI();
+                        }.bind(this.daltonizer)
                     );
                 }
 

@@ -161,12 +161,14 @@ CollapsibleSystray.prototype = {
             //
             // Hover events
 
-            this._signalManager.connect(this.actor, "enter-event",
-                () => this._onEnter());
-            this._signalManager.connect(this.actor, "leave-event",
-                () => this._onLeave());
+            this._signalManager.connect(this.actor, "enter-event", function() {
+                this._onEnter();
+            }.bind(this));
+            this._signalManager.connect(this.actor, "leave-event", function() {
+                this._onLeave();
+            }.bind(this));
         }, () => {
-
+            //
         });
     },
 

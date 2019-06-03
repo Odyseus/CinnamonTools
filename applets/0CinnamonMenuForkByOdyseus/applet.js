@@ -1151,6 +1151,7 @@ CinnamonMenuForkByOdyseus.prototype = {
 
     _buttonEnterEvent: function(aButton) {
         let parent = aButton.actor.get_parent();
+
         if (this._activeContainer === this.categoriesBox && parent !== this._activeContainer) {
             this._previousTreeSelectedActor = this._activeActor;
             this._previousSelectedActor = null;

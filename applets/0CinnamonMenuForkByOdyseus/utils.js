@@ -40,6 +40,7 @@ const {
         util: Util
     },
     ui: {
+        applet: Applet,
         appFavorites: AppFavorites,
         main: Main,
         popupMenu: PopupMenu
@@ -162,8 +163,9 @@ SimpleMenuItem.prototype = {
             accessible_role: Atk.Role.MENU_ITEM
         });
 
-        this._signals.connect(this.actor, "destroy",
-            () => this.destroy(true).bind(this));
+        this._signals.connect(this.actor, "destroy", function() {
+            this.destroy(true);
+        }.bind(this));
 
         this.actor._delegate = this;
         this.applet = aApplet;
@@ -176,22 +178,36 @@ SimpleMenuItem.prototype = {
         }
 
         if (params.reactive) {
+            let self = this;
+
             this._signals.connect(this.actor, "enter-event",
-                () => aApplet._buttonEnterEvent(this));
+                function() {
+                    this._buttonEnterEvent(self);
+                }.bind(aApplet)
+            );
             this._signals.connect(this.actor, "leave-event",
-                () => aApplet._buttonLeaveEvent(this));
+                function() {
+                    this._buttonLeaveEvent(self);
+                }.bind(aApplet)
+            );
 
             if (params.activatable || params.withMenu) {
                 this._signals.connect(this.actor, "button-release-event",
-                    this._onButtonReleaseEvent.bind(this));
+                    function(aActor, aEvent) {
+                        this._onButtonReleaseEvent(aActor, aEvent);
+                    }.bind(this)
+                );
                 this._signals.connect(this.actor, "key-press-event",
-                    this._onKeyPressEvent.bind(this));
+                    function(aActor, aEvent) {
+                        this._onKeyPressEvent(aActor, aEvent);
+                    }.bind(this)
+                );
             }
         }
     },
 
-    _onButtonReleaseEvent: function(actor, event) {
-        let button = event.get_button();
+    _onButtonReleaseEvent: function(aActor, aEvent) {
+        let button = aEvent.get_button();
 
         if (this.activate && button === Clutter.BUTTON_PRIMARY) {
             this.activate();
@@ -204,8 +220,8 @@ SimpleMenuItem.prototype = {
         return Clutter.EVENT_PROPAGATE;
     },
 
-    _onKeyPressEvent: function(actor, event) {
-        let symbol = event.get_key_symbol();
+    _onKeyPressEvent: function(aActor, aEvent) {
+        let symbol = aEvent.get_key_symbol();
 
         if (this.activate &&
             (symbol === Clutter.KEY_space ||

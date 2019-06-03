@@ -99,18 +99,42 @@ WindowList.prototype = {
         this._monitorWatchList = [];
 
         this._initializeSettings(() => {
-            this.signals.connect(global.screen, "window-added", this._onWindowAdded, this);
-            this.signals.connect(global.screen, "window-monitor-changed", this._onWindowMonitorChanged, this);
-            this.signals.connect(global.screen, "window-workspace-changed", this._onWindowWorkspaceChanged, this);
+            this.signals.connect(global.screen, "window-added",
+                function(s, w, m) {
+                    this._onWindowAdded(s, w, m);
+                }.bind(this)
+            );
+            this.signals.connect(global.screen, "window-monitor-changed",
+                function(s, w, m) {
+                    this._onWindowMonitorChanged(s, w, m);
+                }.bind(this)
+            );
+            this.signals.connect(global.screen, "window-workspace-changed",
+                function(s, w, ws) {
+                    this._onWindowWorkspaceChanged(s, w, ws);
+                }.bind(this)
+            );
 
             // Condition needed for retro-compatibility.
             // Mark for deletion on EOL. Cinnamon 3.2.x+
             if (versionCompare(CINNAMON_VERSION, "3.2.0") >= 0) {
-                this.signals.connect(global.screen, "window-skip-taskbar-changed", this._onWindowSkipTaskbarChanged, this);
+                this.signals.connect(global.screen, "window-skip-taskbar-changed",
+                    function(s, w) {
+                        this._onWindowSkipTaskbarChanged(s, w);
+                    }.bind(this)
+                );
             }
 
-            this.signals.connect(global.screen, "monitors-changed", this._updateWatchedMonitors, this);
-            this.signals.connect(global.window_manager, "switch-workspace", this._refreshAllItems, this);
+            this.signals.connect(global.screen, "monitors-changed",
+                function() {
+                    this._updateWatchedMonitors();
+                }.bind(this)
+            );
+            this.signals.connect(global.window_manager, "switch-workspace",
+                function() {
+                    this._refreshAllItems();
+                }.bind(this)
+            );
 
             this.actor.connect("style-changed", () => this._updateSpacing());
 
@@ -350,8 +374,16 @@ WindowList.prototype = {
 
     _updateAttentionGrabber: function() {
         if (this.pref_enable_alerts) {
-            this.signals.connect(global.display, "window-marked-urgent", this._onWindowDemandsAttention, this);
-            this.signals.connect(global.display, "window-demands-attention", this._onWindowDemandsAttention, this);
+            this.signals.connect(global.display, "window-marked-urgent",
+                function(d, w) {
+                    this._onWindowDemandsAttention(d, w);
+                }.bind(this)
+            );
+            this.signals.connect(global.display, "window-demands-attention",
+                function(d, w) {
+                    this._onWindowDemandsAttention(d, w);
+                }.bind(this)
+            );
         } else {
             this.signals.disconnect("window-marked-urgent");
             this.signals.disconnect("window-demands-attention");

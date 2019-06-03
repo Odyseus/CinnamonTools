@@ -401,14 +401,38 @@ AppMenuButton.prototype = {
             this.getAttention();
         }
 
-        this.window_signals.connect(this.metaWindow, "notify::title", this.setDisplayTitle, this);
-        this.window_signals.connect(this.metaWindow, "notify::minimized", this.setDisplayTitle, this);
-        this.window_signals.connect(this.metaWindow, "notify::tile-type", this.setDisplayTitle, this);
+        this.window_signals.connect(this.metaWindow, "notify::title",
+            function() {
+                this.setDisplayTitle();
+            }.bind(this)
+        );
+        this.window_signals.connect(this.metaWindow, "notify::minimized",
+            function() {
+                this.setDisplayTitle();
+            }.bind(this)
+        );
+        this.window_signals.connect(this.metaWindow, "notify::tile-type",
+            function() {
+                this.setDisplayTitle();
+            }.bind(this)
+        );
         this.window_signals.connect(this.metaWindow, (versionCompare(CINNAMON_VERSION, "4.0.6") >= 0 ?
-            "icon-changed" :
-            "notify::icon"), this.setIcon, this);
-        this.window_signals.connect(this.metaWindow, "notify::appears-focused", this.onFocus, this);
-        this.window_signals.connect(this.metaWindow, "unmanaged", this.onUnmanaged, this);
+                "icon-changed" :
+                "notify::icon"),
+            function() {
+                this.setIcon();
+            }.bind(this)
+        );
+        this.window_signals.connect(this.metaWindow, "notify::appears-focused",
+            function() {
+                this.onFocus();
+            }.bind(this)
+        );
+        this.window_signals.connect(this.metaWindow, "unmanaged",
+            function() {
+                this.onUnmanaged();
+            }.bind(this)
+        );
     },
 
     onUnmanaged: function() {

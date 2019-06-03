@@ -338,7 +338,9 @@ ColorInspector.prototype = {
     },
 
     showUI: function() {
-        this.sigMan.connect(global.stage, "captured-event", this._onCapturedEvent.bind(this));
+        this.sigMan.connect(global.stage, "captured-event", function(aActor, aEvent) {
+            this._onCapturedEvent(aActor, aEvent);
+        }.bind(this));
         this.update();
         this.updatePassthroughText();
 
