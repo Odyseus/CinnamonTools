@@ -233,11 +233,11 @@ CT_WindowMover.prototype = {
             }
         );
 
-        this._pref1Id = Settings.connect("changed::pref_window_auto_move_application_list", function() {
+        this._pref1Id = Settings.connect("pref_window_auto_move_application_list", function() {
             this._updateAutoMovedApplicationsMap();
         }.bind(this));
 
-        this._pref2Id = Settings.connect("changed::pref_window_auto_move_fullscreen_in_own_ws", function() {
+        this._pref2Id = Settings.connect("pref_window_auto_move_fullscreen_in_own_ws", function() {
             this._reconnectFullScreenSignal();
         }.bind(this));
 
@@ -1090,7 +1090,7 @@ CT_MaximusNG.prototype = {
 
     // Start listening to events and undecorate already-existing windows.
     startUndecorating: function() {
-        Settings.connect("changed::pref_window_auto_move_application_list", function() {
+        Settings.connect("pref_window_auto_move_application_list", function() {
             this._updateAutoMovedApplicationsList();
         }.bind(this));
         this._updateAutoMovedApplicationsList();

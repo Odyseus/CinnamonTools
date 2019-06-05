@@ -38,16 +38,6 @@ let DeskletManager = null;
 let ShadowFactory = null;
 let WorkspaceTracker = null;
 
-function connectSettings(aPrefKeys, aCallback) {
-    let i = aPrefKeys.length;
-    while (i--) {
-        Settings.connect(
-            "changed::" + aPrefKeys[i],
-            aCallback
-        );
-    }
-}
-
 function togglePatch(aPatch, aID, aEnabledPref) {
     try {
         aPatch.disable();
@@ -698,7 +688,7 @@ const CT_PopupMenuManagerPatch = {
             C.Injections.PPMM._onEventCapture = G.overrideMethod(PopupMenu.PopupMenuManager.prototype, "_onEventCapture",
                 function(actor, event) {
                     if (!this.grabbed) {
-                        Clutter.EVENT_PROPAGATE;
+                        return Clutter.EVENT_PROPAGATE;
                     }
 
                     if (Main.keyboard.shouldTakeEvent(event)) {
@@ -707,16 +697,16 @@ const CT_PopupMenuManagerPatch = {
 
                     if (this._owner.menuEventFilter &&
                         this._owner.menuEventFilter(event)) {
-                        Clutter.EVENT_STOP;
+                        return Clutter.EVENT_STOP;
                     }
 
                     if (this._activeMenu !== null && this._activeMenu.passEvents) {
-                        Clutter.EVENT_PROPAGATE;
+                        return Clutter.EVENT_PROPAGATE;
                     }
 
                     if (this._didPop) {
                         this._didPop = false;
-                        Clutter.EVENT_STOP;
+                        return Clutter.EVENT_STOP;
                     }
 
                     let activeMenuContains = this._eventIsOnActiveMenu(event);
@@ -724,19 +714,19 @@ const CT_PopupMenuManagerPatch = {
 
                     if (eventType === Clutter.EventType.BUTTON_RELEASE) {
                         if (activeMenuContains) {
-                            Clutter.EVENT_PROPAGATE;
+                            return Clutter.EVENT_PROPAGATE;
                         } else {
                             this._closeMenu();
-                            Clutter.EVENT_PROPAGATE;
+                            return Clutter.EVENT_PROPAGATE;
                         }
                     } else if (eventType === Clutter.EventType.BUTTON_PRESS && !activeMenuContains) {
                         this._closeMenu();
-                        Clutter.EVENT_PROPAGATE;
+                        return Clutter.EVENT_PROPAGATE;
                     } else if (!this._shouldBlockEvent(event)) {
-                        Clutter.EVENT_PROPAGATE;
+                        return Clutter.EVENT_PROPAGATE;
                     }
 
-                    Clutter.EVENT_PROPAGATE;
+                    return Clutter.EVENT_PROPAGATE;
                 }
             );
         }
@@ -1067,7 +1057,8 @@ CinnamonTweaks.prototype = {
     },
 
     _bindSettings: function() {
-        connectSettings([
+        Settings.connect([
+            "pref_daltonizer_wizard_kb",
             "pref_desktop_tweaks_enabled",
             "pref_desktop_tweaks_allow_drop_to_desktop",
             "pref_tooltips_tweaks_enabled",
@@ -1076,109 +1067,34 @@ CinnamonTweaks.prototype = {
             "pref_tooltips_half_monitor_width",
             "pref_tooltips_delay",
             "pref_popup_menu_manager_tweaks_enabled",
-            "pref_popup_menu_manager_applets_menus_behavior"
-        ], $.informCinnamonRestart);
-
-        connectSettings([
+            "pref_popup_menu_manager_applets_menus_behavior",
             "pref_applets_tweaks_enabled",
-            "pref_applets_ask_confirmation_applet_removal"
-        ], () => {
-            try {
-                if (!AppletManager) {
-                    AppletManager = imports.ui.appletManager;
-                }
-            } finally {
-                CT_AppletManagerPatch.toggle();
-            }
-        });
-
-        connectSettings([
+            "pref_applets_ask_confirmation_applet_removal",
             "pref_desklets_tweaks_enabled",
-            "pref_desklets_ask_confirmation_desklet_removal"
-        ], () => {
-            try {
-                if (!DeskletManager) {
-                    DeskletManager = imports.ui.deskletManager;
-                }
-            } finally {
-                CT_DeskletManagerPatch.toggle();
-            }
-        });
-
-        connectSettings([
+            "pref_desklets_ask_confirmation_desklet_removal",
             "pref_notifications_enable_tweaks",
             "pref_notifications_enable_animation",
             "pref_notifications_enable_close_button",
             "pref_notifications_position",
             "pref_notifications_distance_from_panel",
-            "pref_notifications_right_margin"
-        ], CT_MessageTrayPatch.toggle);
-
-        connectSettings([
+            "pref_notifications_right_margin",
             "pref_windows_focus_enable_tweaks",
             "pref_win_demands_attention_activation_mode",
-            "pref_win_demands_attention_keyboard_shortcut"
-        ], CT_WindowDemandsAttentionBehavior.toggle);
-
-        connectSettings([
+            "pref_win_demands_attention_keyboard_shortcut",
             "pref_hotcorners_tweaks_enabled",
             "pref_hotcorners_delay_top_left",
             "pref_hotcorners_delay_top_right",
             "pref_hotcorners_delay_bottom_left",
-            "pref_hotcorners_delay_bottom_right"
-        ], () => {
-            try {
-                if (!HotCornerPatched) {
-                    // Mark for deletion on EOL. Cinnamon 3.6.x+
-                    if (typeof require === "function") {
-                        HotCornerPatched = require("./extra_modules/hotCornerPatched.js");
-                    } else {
-                        HotCornerPatched = imports.ui.extensionSystem.extensions["{{UUID}}"].extra_modules.hotCornerPatched;
-                    }
-                }
-            } finally {
-                CT_HotCornersPatch.toggle(); // Mark for deletion on EOL. Cinnamon 3.2.x+
-            }
-        });
-
-        connectSettings([
+            "pref_hotcorners_delay_bottom_right",
             "pref_window_shadows_tweaks_enabled",
             "pref_window_shadows_preset",
-            "trigger_window_shadows_custom_preset"
-        ], () => {
-            try {
-                if (!ShadowFactory) {
-                    ShadowFactory = Meta.ShadowFactory.get_default();
-                }
-            } finally {
-                CT_CustomWindowShadows.toggle();
-            }
-        });
-
-        connectSettings([
-            "pref_window_auto_move_tweaks_enabled"
-        ], () => {
-            try {
-                if (!WorkspaceTracker) {
-                    // Mark for deletion on EOL. Cinnamon 3.6.x+
-                    if (typeof require === "function") {
-                        WorkspaceTracker = require("./extra_modules/WorkspaceTracker.js");
-                    } else {
-                        WorkspaceTracker = imports.ui.extensionSystem.extensions["{{UUID}}"].extra_modules.WorkspaceTracker;
-                    }
-                }
-            } finally {
-                CT_AutoMoveWindows.toggle();
-            }
-        });
-
-        connectSettings([
-            "pref_maximus_apply_settings"
-        ], CT_MaximusNG.toggle);
-
-        connectSettings([
+            "trigger_window_shadows_custom_preset",
+            "pref_window_auto_move_tweaks_enabled",
+            "pref_maximus_apply_settings",
             "pref_test_notifications"
-        ], $.testNotifications);
+        ], function(aPrefKey) {
+            this._onSettingsChanged(aPrefKey);
+        }.bind(this));
     },
 
     openExtensionSettings: function() {
@@ -1216,6 +1132,105 @@ CinnamonTweaks.prototype = {
             }
         } catch (aErr) {
             global.logError(aErr);
+        }
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_daltonizer_wizard_kb":
+            case "pref_desktop_tweaks_enabled":
+            case "pref_desktop_tweaks_allow_drop_to_desktop":
+            case "pref_tooltips_tweaks_enabled":
+            case "pref_tooltips_inteligent_positioning":
+            case "pref_tooltips_never_centered":
+            case "pref_tooltips_half_monitor_width":
+            case "pref_tooltips_delay":
+            case "pref_popup_menu_manager_tweaks_enabled":
+            case "pref_popup_menu_manager_applets_menus_behavior":
+                $.informCinnamonRestart();
+                break;
+            case "pref_applets_tweaks_enabled":
+            case "pref_applets_ask_confirmation_applet_removal":
+                try {
+                    if (!AppletManager) {
+                        AppletManager = imports.ui.appletManager;
+                    }
+                } finally {
+                    CT_AppletManagerPatch.toggle();
+                }
+                break;
+            case "pref_desklets_tweaks_enabled":
+            case "pref_desklets_ask_confirmation_desklet_removal":
+                try {
+                    if (!DeskletManager) {
+                        DeskletManager = imports.ui.deskletManager;
+                    }
+                } finally {
+                    CT_DeskletManagerPatch.toggle();
+                }
+                break;
+            case "pref_notifications_enable_tweaks":
+            case "pref_notifications_enable_animation":
+            case "pref_notifications_enable_close_button":
+            case "pref_notifications_position":
+            case "pref_notifications_distance_from_panel":
+            case "pref_notifications_right_margin":
+                CT_MessageTrayPatch.toggle();
+                break;
+            case "pref_windows_focus_enable_tweaks":
+            case "pref_win_demands_attention_activation_mode":
+            case "pref_win_demands_attention_keyboard_shortcut":
+                CT_WindowDemandsAttentionBehavior.toggle();
+                break;
+            case "pref_hotcorners_tweaks_enabled":
+            case "pref_hotcorners_delay_top_left":
+            case "pref_hotcorners_delay_top_right":
+            case "pref_hotcorners_delay_bottom_left":
+            case "pref_hotcorners_delay_bottom_right":
+                try {
+                    if (!HotCornerPatched) {
+                        // Mark for deletion on EOL. Cinnamon 3.6.x+
+                        if (typeof require === "function") {
+                            HotCornerPatched = require("./extra_modules/hotCornerPatched.js");
+                        } else {
+                            HotCornerPatched = imports.ui.extensionSystem.extensions["{{UUID}}"].extra_modules.hotCornerPatched;
+                        }
+                    }
+                } finally {
+                    CT_HotCornersPatch.toggle(); // Mark for deletion on EOL. Cinnamon 3.2.x+
+                }
+                break;
+            case "pref_window_shadows_tweaks_enabled":
+            case "pref_window_shadows_preset":
+            case "trigger_window_shadows_custom_preset":
+                try {
+                    if (!ShadowFactory) {
+                        ShadowFactory = Meta.ShadowFactory.get_default();
+                    }
+                } finally {
+                    CT_CustomWindowShadows.toggle();
+                }
+                break;
+            case "pref_window_auto_move_tweaks_enabled":
+                try {
+                    if (!WorkspaceTracker) {
+                        // Mark for deletion on EOL. Cinnamon 3.6.x+
+                        if (typeof require === "function") {
+                            WorkspaceTracker = require("./extra_modules/WorkspaceTracker.js");
+                        } else {
+                            WorkspaceTracker = imports.ui.extensionSystem.extensions["{{UUID}}"].extra_modules.WorkspaceTracker;
+                        }
+                    }
+                } finally {
+                    CT_AutoMoveWindows.toggle();
+                }
+                break;
+            case "pref_maximus_apply_settings":
+                CT_MaximusNG.toggle();
+                break;
+            case "pref_test_notifications":
+                $.testNotifications();
+                break;
         }
     }
 };

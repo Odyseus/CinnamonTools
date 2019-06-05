@@ -26,8 +26,8 @@ settings = {
         "source": "__app__/data/javascript_modules/spawnUtils.js",
         "destination": "spawnUtils.js"
     }, {
-        "source": "__app__/data/javascript_modules/extensionSettingsUtils.js",
-        "destination": "extensionSettingsUtils.js"
+        "source": "__app__/data/javascript_modules/xletsSettingsUtils.js",
+        "destination": "xletsSettingsUtils.js"
     }, {
         "source": "__app__/data/javascript_modules/debugManager.js",
         "destination": "debugManager.js"

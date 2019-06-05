@@ -1,10 +1,10 @@
-let ExtensionSettingsUtils;
+let XletsSettingsUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
-    ExtensionSettingsUtils = require("./extensionSettingsUtils.js");
+    XletsSettingsUtils = require("./xletsSettingsUtils.js");
 } else {
-    ExtensionSettingsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].extensionSettingsUtils;
+    XletsSettingsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].xletsSettingsUtils;
 }
 
 const BOUND_SETTINGS_ARRAY = [
@@ -59,7 +59,7 @@ const BOUND_SETTINGS_ARRAY = [
     "pref_desktop_file_generated"
 ];
 
-var Settings = new ExtensionSettingsUtils.CustomExtensionSettings(BOUND_SETTINGS_ARRAY);
+var Settings = new XletsSettingsUtils.CustomExtensionSettings(BOUND_SETTINGS_ARRAY);
 
 var WIN_MOVER_PROP = "__CT_WindowMover_storage";
 
