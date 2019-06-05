@@ -174,7 +174,7 @@ WindowPreview.prototype = {
     },
 
     hide: function() {
-        if (this._sizeChangedId != null) {
+        if (!this._sizeChangedId) {
             this.muffinWindow && this.muffinWindow.disconnect(this._sizeChangedId);
             this._sizeChangedId = null;
         }
@@ -233,7 +233,7 @@ WindowPreview.prototype = {
     },
 
     _destroy: function() {
-        if (this._sizeChangedId != null) {
+        if (!this._sizeChangedId) {
             this.muffinWindow && this.muffinWindow.disconnect(this._sizeChangedId);
             this.sizeChangedId = null;
         }
@@ -271,13 +271,13 @@ AppMenuButton.prototype = {
         this.labelVisible = false;
         this.window_signals = new SignalManager.SignalManager(null);
 
-        if (this._applet.orientation == St.Side.TOP) {
+        if (this._applet.orientation === St.Side.TOP) {
             this.actor.add_style_class_name("top");
-        } else if (this._applet.orientation == St.Side.BOTTOM) {
+        } else if (this._applet.orientation === St.Side.BOTTOM) {
             this.actor.add_style_class_name("bottom");
-        } else if (this._applet.orientation == St.Side.LEFT) {
+        } else if (this._applet.orientation === St.Side.LEFT) {
             this.actor.add_style_class_name("left");
-        } else if (this._applet.orientation == St.Side.RIGHT) {
+        } else if (this._applet.orientation === St.Side.RIGHT) {
             this.actor.add_style_class_name("right");
         }
 
@@ -349,7 +349,7 @@ AppMenuButton.prototype = {
                 this.progressOverlay.hide();
             }
             this._updateProgressId = this.metaWindow.connect("notify::progress", () => {
-                if (this.metaWindow.progress != this._progress) {
+                if (this.metaWindow.progress !== this._progress) {
                     this._progress = this.metaWindow.progress;
 
                     if (this._progress > 0) {
@@ -492,20 +492,20 @@ AppMenuButton.prototype = {
 
         }
 
-        if (i == -1) {
+        if (i === -1) {
             return;
         }
 
         //                   v   home-made xor
-        if ((direction == 0) != this._applet.pref_reverse_scrolling) {
+        if ((direction === 0) !== this._applet.pref_reverse_scrolling) {
             i++;
         } else {
             i--;
         }
 
-        if (i == windows.length) {
+        if (i === windows.length) {
             i = 0;
-        } else if (i == -1) {
+        } else if (i === -1) {
             i = windows.length - 1;
         }
 
@@ -513,7 +513,7 @@ AppMenuButton.prototype = {
     },
 
     _onDragBegin: function() {
-        if (this._applet.orientation == St.Side.TOP || this._applet.orientation == St.Side.BOTTOM) {
+        if (this._applet.orientation === St.Side.TOP || this._applet.orientation === St.Side.BOTTOM) {
             this._draggable._overrideY = this.actor.get_transformed_position()[1];
             this._draggable._overrideX = null;
         } else {
@@ -599,9 +599,9 @@ AppMenuButton.prototype = {
 
         if (this.metaWindow.minimized) {
             title = "[" + title + "]";
-        } else if (this.metaWindow.tile_type == Meta.WindowTileType.TILED) {
+        } else if (this.metaWindow.tile_type === Meta.WindowTileType.TILED) {
             title = "|" + title;
-        } else if (this.metaWindow.tile_type == Meta.WindowTileType.SNAPPED) {
+        } else if (this.metaWindow.tile_type === Meta.WindowTileType.SNAPPED) {
             title = "||" + title;
         }
 
@@ -660,19 +660,19 @@ AppMenuButton.prototype = {
     _onButtonRelease: function(actor, event) {
         this._tooltip.hide();
         if (this.alert) {
-            if (event.get_button() == 1) {
+            if (event.get_button() === 1) {
                 this._toggleWindow(false);
             }
             return false;
         }
 
-        if (event.get_button() == 1) {
+        if (event.get_button() === 1) {
             if (this.rightClickMenu.isOpen) {
                 this.rightClickMenu.toggle();
             }
 
             this._toggleWindow(false);
-        } else if (event.get_button() == 2 && this._applet.pref_middle_click_close) {
+        } else if (event.get_button() === 2 && this._applet.pref_middle_click_close) {
             this.metaWindow.delete(global.get_current_time());
         }
         return true;
@@ -680,7 +680,7 @@ AppMenuButton.prototype = {
 
     _onButtonPress: function(actor, event) {
         this._tooltip.hide();
-        if (!this.alert && event.get_button() == 3) {
+        if (!this.alert && event.get_button() === 3) {
             this.rightClickMenu.mouseEvent = event;
             this.rightClickMenu.toggle();
 
@@ -730,7 +730,7 @@ AppMenuButton.prototype = {
         alloc.min_size = naturalSize + 2 * 3 * global.ui_scale;
 
         if (!this._applet.pref_hide_labels) {
-            if (this._applet.orientation == St.Side.TOP || this._applet.orientation == St.Side.BOTTOM) {
+            if (this._applet.orientation === St.Side.TOP || this._applet.orientation === St.Side.BOTTOM) {
                 // the 'buttons use entire space' option only makes sense on horizontal panels
                 if (this._applet.pref_buttons_use_entire_space) {
                     let [lminSize, lnaturalSize] = this._label.get_preferred_width(forHeight); // jshint ignore:line
@@ -755,7 +755,7 @@ AppMenuButton.prototype = {
             alloc.min_size = minSize1;
         }
 
-        if (this._applet.orientation == St.Side.TOP || this._applet.orientation == St.Side.BOTTOM) {
+        if (this._applet.orientation === St.Side.TOP || this._applet.orientation === St.Side.BOTTOM) {
             /* putting a container around the actor for layout management reasons affects the allocation,
                causing the visible border to pull in close around the contents which is not the desired
                (pre-existing) behaviour, so need to push the visible border back towards the panel edge.
@@ -845,7 +845,7 @@ AppMenuButton.prototype = {
         childBox.y2 = childBox.y1 + Math.min(naturalHeight, allocHeight);
 
         if (this.labelVisible) {
-            if (direction == Clutter.TextDirection.LTR) {
+            if (direction === Clutter.TextDirection.LTR) {
                 if (allocWidth < naturalWidth + xPadding * 2) {
                     childBox.x1 = Math.max(0, (allocWidth - naturalWidth) / 2);
                 } else {
@@ -877,7 +877,7 @@ AppMenuButton.prototype = {
             yPadding = Math.floor(Math.max(0, allocHeight - naturalHeight) / 2);
             childBox.y1 = yPadding;
             childBox.y2 = childBox.y1 + Math.min(naturalHeight, allocHeight);
-            if (direction == Clutter.TextDirection.LTR) {
+            if (direction === Clutter.TextDirection.LTR) {
                 // Reuse the values from the previous allocation
                 childBox.x1 = Math.min(childBox.x2 + xPadding, Math.max(0, allocWidth - xPadding));
                 childBox.x2 = Math.max(childBox.x1, allocWidth - xPadding);
@@ -905,7 +905,7 @@ AppMenuButton.prototype = {
     },
 
     updateLabelVisible: function() {
-        if (this._applet.orientation == St.Side.TOP || this._applet.orientation == St.Side.BOTTOM) {
+        if (this._applet.orientation === St.Side.TOP || this._applet.orientation === St.Side.BOTTOM) {
             if (this._applet.pref_hide_labels) {
                 this._label.hide();
                 this.labelVisible = false;
@@ -1037,7 +1037,7 @@ AppMenuButtonRightClickMenu.prototype = {
         }
 
         // Move to monitor
-        if ((amount = Main.layoutManager.monitors.length) == 2) {
+        if ((amount = Main.layoutManager.monitors.length) === 2) {
             Main.layoutManager.monitors.forEach((monitor, index) => {
                 if (index === mw.get_monitor()) {
                     return;
@@ -1120,7 +1120,7 @@ AppMenuButtonRightClickMenu.prototype = {
         item.connect("activate", () => {
             for (let window of this._windows)
                 if (window.actor.visible &&
-                    window.metaWindow != this.metaWindow &&
+                    window.metaWindow !== this.metaWindow &&
                     !window._needsAttention) {
                     window.metaWindow.delete(global.get_current_time());
                 }
@@ -1130,7 +1130,7 @@ AppMenuButtonRightClickMenu.prototype = {
         this.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
         // Miscellaneous
-        if (mw.get_compositor_private().opacity != 255) {
+        if (mw.get_compositor_private().opacity !== 255) {
             item = new PopupMenu.PopupMenuItem(_("Restore to full opacity"));
             item.connect("activate", () => {
                 mw.get_compositor_private().set_opacity(255);

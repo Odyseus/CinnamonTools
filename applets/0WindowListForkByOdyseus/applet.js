@@ -73,7 +73,7 @@ WindowList.prototype = {
 
         // A layout manager is used to cater for vertical panels as well as horizontal
         let manager;
-        if (this.orientation == St.Side.TOP || this.orientation == St.Side.BOTTOM) {
+        if (this.orientation === St.Side.TOP || this.orientation === St.Side.BOTTOM) {
             manager = new Clutter.BoxLayout({
                 orientation: Clutter.Orientation.HORIZONTAL
             });
@@ -275,7 +275,7 @@ WindowList.prototype = {
             window.updateLabelVisible();
         }
 
-        if (orientation == St.Side.TOP || orientation == St.Side.BOTTOM) {
+        if (orientation === St.Side.TOP || orientation === St.Side.BOTTOM) {
             this.manager.set_vertical(false);
             this._reTitleItems();
             this.actor.remove_style_class_name("vertical");
@@ -290,7 +290,7 @@ WindowList.prototype = {
         // boxes butt up against the edge of the screen
         let btnStyle = "margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px;";
 
-        if (orientation == St.Side.TOP) {
+        if (orientation === St.Side.TOP) {
             btnStyle = "margin-top: 0px; " +
                 this.pref_hide_labels ? "padding: 0;" : "padding-top: 0px;";
             for (let child of this.manager_container.get_children()) {
@@ -298,7 +298,7 @@ WindowList.prototype = {
                 child.set_style(btnStyle);
             }
             this.actor.set_style(btnStyle);
-        } else if (orientation == St.Side.BOTTOM) {
+        } else if (orientation === St.Side.BOTTOM) {
             btnStyle = "margin-bottom: 0px; " +
                 this.pref_hide_labels ? "padding: 0;" : "padding-bottom: 0px;";
             for (let child of this.manager_container.get_children()) {
@@ -306,14 +306,14 @@ WindowList.prototype = {
                 child.set_style(btnStyle);
             }
             this.actor.set_style(btnStyle);
-        } else if (orientation == St.Side.LEFT) {
+        } else if (orientation === St.Side.LEFT) {
             for (let child of this.manager_container.get_children()) {
                 child.set_style_class_name("window-list-item-box left");
                 child.set_style(btnStyle);
                 child.set_x_align(Clutter.ActorAlign.CENTER);
             }
             this.actor.set_style(btnStyle);
-        } else if (orientation == St.Side.RIGHT) {
+        } else if (orientation === St.Side.RIGHT) {
             for (let child of this.manager_container.get_children()) {
                 child.set_style_class_name("window-list-item-box right");
                 child.set_style(btnStyle);
@@ -354,7 +354,7 @@ WindowList.prototype = {
     },
 
     _onWindowWorkspaceChanged: function(screen, metaWindow, metaWorkspace) { // jshint ignore:line
-        let window = this._windows.find(win => (win.metaWindow == metaWindow));
+        let window = this._windows.find(win => (win.metaWindow === metaWindow));
 
         if (window) {
             this._refreshItem(window);
@@ -362,9 +362,7 @@ WindowList.prototype = {
     },
 
     _onWindowSkipTaskbarChanged: function(screen, metaWindow) {
-        let window = this._windows.find(win => (win.metaWindow == metaWindow));
-
-        if (window && window.is_skip_taskbar()) {
+        if (metaWindow && metaWindow.is_skip_taskbar()) {
             this._removeWindow(metaWindow);
             return;
         }
@@ -404,12 +402,12 @@ WindowList.prototype = {
     _onWindowDemandsAttention: function(display, window) {
         // Magic to look for AppMenuButton owning window
         let i = this._windows.length;
-        while (i-- && this._windows[i].metaWindow != window) {
+        while (i-- && this._windows[i].metaWindow !== window) {
 
         }
 
         // Window is not in our list
-        if (i == -1) {
+        if (i === -1) {
             return;
         }
 
@@ -418,13 +416,13 @@ WindowList.prototype = {
             return;
         }
 
-        if (window.get_workspace() != global.screen.get_active_workspace()) {
+        if (window.get_workspace() !== global.screen.get_active_workspace()) {
             this._addWindow(window, true);
         }
     },
 
     _refreshItem: function(window) {
-        window.actor.visible = (window.metaWindow.get_workspace() == global.screen.get_active_workspace()) ||
+        window.actor.visible = (window.metaWindow.get_workspace() === global.screen.get_active_workspace()) ||
             window.metaWindow.is_on_all_workspaces() ||
             this.pref_show_all_workspaces;
 
@@ -451,11 +449,11 @@ WindowList.prototype = {
 
     _updateWatchedMonitors: function() {
         let n_mons = Gdk.Screen.get_default().get_n_monitors();
-        let on_primary = this.panel.monitorIndex == Main.layoutManager.primaryIndex;
+        let on_primary = this.panel.monitorIndex === Main.layoutManager.primaryIndex;
         let instances = Main.AppletManager.getRunningInstancesForUuid(this._uuid);
 
         /* Simple cases */
-        if (n_mons == 1) {
+        if (n_mons === 1) {
             this._monitorWatchList = [Main.layoutManager.primaryIndex];
         } else if (instances.length > 1 && !on_primary) {
             this._monitorWatchList = [this.panel.monitorIndex];
@@ -472,7 +470,7 @@ WindowList.prototype = {
             });
 
             for (let i = 0; i < n_mons; i++) {
-                if (instances.indexOf(i) == -1) {
+                if (instances.indexOf(i) === -1) {
                     this._monitorWatchList.push(i);
                 }
             }
@@ -501,8 +499,8 @@ WindowList.prototype = {
 
     _addWindow: function(metaWindow, alert) {
         for (let window of this._windows)
-            if (window.metaWindow == metaWindow &&
-                window.alert == alert) {
+            if (window.metaWindow === metaWindow &&
+                window.alert === alert) {
                 return;
             }
 
@@ -520,7 +518,7 @@ WindowList.prototype = {
                 this.manager_container.set_child_at_index(appButton.actor, 0);
             }
         } else {
-            if (metaWindow.get_workspace() != global.screen.get_active_workspace()) {
+            if (metaWindow.get_workspace() !== global.screen.get_active_workspace()) {
                 if (!(this.pref_show_all_workspaces)) {
                     appButton.actor.hide();
                 }
@@ -532,7 +530,7 @@ WindowList.prototype = {
         let i = this._windows.length;
         // Do an inverse loop because we might remove some elements
         while (i--) {
-            if (this._windows[i].metaWindow == metaWindow) {
+            if (this._windows[i].metaWindow === metaWindow) {
                 this._windows[i].destroy();
                 this._windows.splice(i, 1);
             }
@@ -542,7 +540,7 @@ WindowList.prototype = {
     _shouldAdd: function(metaWindow) {
         return Main.isInteresting(metaWindow) &&
             !metaWindow.is_skip_taskbar() &&
-            this._monitorWatchList.indexOf(metaWindow.get_monitor()) != -1;
+            this._monitorWatchList.indexOf(metaWindow.get_monitor()) !== -1;
     },
 
     handleDragOver: function(source, actor, x, y, time) { // jshint ignore:line
@@ -574,7 +572,7 @@ WindowList.prototype = {
         }
 
         source.actor.hide();
-        if (this._dragPlaceholder == undefined) {
+        if (this._dragPlaceholder === undefined) {
             this._dragPlaceholder = new DND.GenericDragPlaceholderItem();
             this._dragPlaceholder.child.set_width(source.actor.width);
             this._dragPlaceholder.child.set_height(source.actor.height);
@@ -593,7 +591,7 @@ WindowList.prototype = {
         if (!(source instanceof $.AppMenuButton)) {
             return false;
         }
-        if (this._dragPlaceholderPos == undefined) {
+        if (this._dragPlaceholderPos === undefined) {
             return false;
         }
 
