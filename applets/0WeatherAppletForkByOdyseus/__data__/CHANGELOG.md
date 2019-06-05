@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Wed, 5 Jun 2019 19:56:38 -0300
+- **Commit:** [0e2e18e](https://gitlab.com/Odyseus/CinnamonTools/commit/0e2e18e)
+- **Author:** Odyseus
+
+```
+- Eliminated from the quantities.js library all strict warnings (FINALLY).
+
+```
+
+***
+
 - **Date:** Thu, 30 May 2019 03:48:37 -0300
 - **Commit:** [cd63982](https://gitlab.com/Odyseus/CinnamonTools/commit/cd63982)
 - **Author:** Odyseus

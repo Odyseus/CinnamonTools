@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Wed, 5 Jun 2019 19:55:39 -0300
+- **Commit:** [3b74138](https://gitlab.com/Odyseus/CinnamonTools/commit/3b74138)
+- **Author:** Odyseus
+
+```
+- Corrected events return values.
+- Minor changes due to changes in global modules.
+
+```
+
+***
+
 - **Date:** Sun, 2 Jun 2019 12:34:36 -0300
 - **Commit:** [2148486](https://gitlab.com/Odyseus/CinnamonTools/commit/2148486)
 - **Author:** Odyseus

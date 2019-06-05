@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Wed, 5 Jun 2019 19:57:00 -0300
+- **Commit:** [d6c6f9e](https://gitlab.com/Odyseus/CinnamonTools/commit/d6c6f9e)
+- **Author:** Odyseus
+
+```
+- Fix skip_taskbar call on meta window. Upstream fix.
+- *Strictified* conditions.
+
+```
+
+***
+
 - **Date:** Thu, 30 May 2019 03:48:50 -0300
 - **Commit:** [4441640](https://gitlab.com/Odyseus/CinnamonTools/commit/4441640)
 - **Author:** Odyseus
