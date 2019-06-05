@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "APP.PY" "1" "Jun 02, 2019" "" "Cinnamon Tools"
+.TH "APP.PY" "1" "Jun 05, 2019" "" "Cinnamon Tools"
 .SH NAME
 app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .
@@ -46,6 +46,8 @@ app.py build (\-a | \-\-all\-xlets | \-x <name> | \-\-xlet=<name>)
              [\-x <name>... | \-\-xlet=<name>...]
              [\-d <domain> | \-\-domain=<domain>]
              [\-o <dir> | \-\-output=<dir>]
+             [\-e <dir> | \-\-extra\-files=<dir>]
+             [\-i | \-\-install\-localizations]
              [\-n | \-\-no\-confirmation]
              [\-r | \-\-restart\-cinnamon]
              [\-y | \-\-dry\-run]
@@ -205,8 +207,53 @@ Built xlets will always be created inside a folder named as the xlet type (apple
 .UNINDENT
 .UNINDENT
 .UNINDENT
+.IP \(bu 2
+\fB\-e <dir>\fP or \fB\-\-extra\-files=<dir>\fP: Path to a folder containing files that will be copied into an xlet folder at build time.
+.INDENT 2.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+Example usage: \fBapp.py build \-x 0ArgosForCinnamon \-\-extra\-files=~/MyCinnamonToolsExtraFiles\fP
+.IP \(bu 2
+The folder passed to this option should have the same folder structure as the Cinnamon Tools repository.
+.IP \(bu 2
+Only two folders should exist inside this folder; one called \fBapplets\fP and/or another called \fBextensions\fP\&. Any other content will be ignored.
+.IP \(bu 2
+Using the example at the beginning of this list, to add extra files to the built \fB0ArgosForCinnamon\fP xlet, those extra files should reside at \fB~/MyCinnamonToolsExtraFiles/applets/0ArgosForCinnamon\fP\&.
+.IP \(bu 2
+Copied files that exist at the destination will be overwritten without confirmation.
+.IP \(bu 2
+Core xlet files cannot be copied/overwritten. More precisely, files ending with the following file extensions will be ignored: \fB\&.js\fP, \fB\&.py\fP, \fB\&.xml\fP, \fB\&.pot\fP, and \fB\&.json\fP\&.
 .UNINDENT
 .INDENT 0.0
+.INDENT 3.5
+.IP "Why I added this option?"
+.sp
+I created this option for one simple reason. So users can create and use their own localizations for the xlets that they install without the need to modify the files inside the repository nor to learn advanced use of \fBgit\fP\&.
+Users that want to perform more in depth changes to the xlets or even create their own xlets using the Cinnamon Tools repository as a \fIframework\fP should take full advantage of \fBgit\fP\&. It is \fIas simple\fP as creating their own fork of the repository, making any kind of changes in a separated branch, rebasing from the upstream repository\(aqs master branch when needed/wanted.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+\fB\-i\fP or \fB\-\-install\-localizations\fP: Install xlets localizations after building xlets.
+.INDENT 2.0
+.INDENT 3.5
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+Installing xlets localizations is only needed under the following conditions:
+.INDENT 0.0
+.IP \(bu 2
+If a user wants the xlets localized into Spanish (which is the only localizations that I provide).
+.IP \(bu 2
+If a user creates her/his own localizations and wants to install them when building xlets.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
 .IP \(bu 2
 \fB\-n\fP or \fB\-\-no\-confirmation\fP: Do not confirm the deletion of an already built xlet when the \fB\-\-output\fP option is used.
 .IP \(bu 2

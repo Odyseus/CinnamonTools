@@ -33,20 +33,20 @@ __cinnamon_tools_cli_{current_date}(){
 
     # Handle --xxxxxx=
     if [[ ${prev} == "--"* && ${cur} == "=" ]] ; then
-        compopt -o filenames
+        type "compopt" &> /dev/null && compopt -o filenames
         COMPREPLY=(*)
         return 0
     fi
 
     # Handle --xxxxx=path
     case ${prev} in
-        "="|"-o")
+        "="|"-o"|"-e")
             # Unescape space
             cur=${cur//\\ / }
             # Expand tilde to $HOME
             [[ ${cur} == "~/"* ]] && cur=${cur/\~/$HOME}
             # Show completion if path exist (and escape spaces)
-            compopt -o filenames
+            type "compopt" &> /dev/null && compopt -o filenames
             local files=("${cur}"*)
             [[ -e ${files[0]} ]] && COMPREPLY=( "${files[@]// /\ }" )
             return 0
@@ -84,7 +84,7 @@ __cinnamon_tools_cli_{current_date}(){
     "build")
         COMPREPLY=( $(compgen -W \
             "-a --all-xlets -x --xlet= -d --domain= -o --output= -n --no-confirmation -r \
---restart-cinnamon -y --dry-run" -- "${cur}") )
+-e --extra-files= -i --install-localizations --restart-cinnamon -y --dry-run" -- "${cur}") )
         _decide_nospace_{current_date} ${COMPREPLY[0]}
         ;;
     "build_themes")
