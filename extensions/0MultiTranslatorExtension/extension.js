@@ -127,46 +127,18 @@ MultiTranslator.prototype = {
             this._loadTheme(false);
         }.bind(this));
 
-        let cS = (aPref, aCallback) => {
-            Settings.connect(
-                "changed::" + aPref,
-                aCallback
-            );
-        };
-
-        cS("trigger_translators_prefs_defaults", this._reapplyDefaults.bind(this));
-        cS("trigger_date_format_syntax_info", this.openDateFormatSyntaxInfo.bind(this));
-        cS("pref_show_most_used", function() {
-            if (!Settings.pref_show_most_used) {
-                this.langsStats = null;
-            }
-
-            this._initMostUsed();
-        }.bind(this));
-        cS("pref_dialog_theme", function() {
-            this._loadTheme(true);
-        }.bind(this));
-        cS("pref_dialog_theme_custom", function() {
-            /* NOTE: Do not trigger the theme reload when setting the path if
-             * the theme isn't set to custom.
-             */
-            if (Settings.pref_dialog_theme !== "custom") {
-                return;
-            }
-
-            this._loadTheme(true);
-        }.bind(this));
-        cS("pref_open_translator_dialog_keybinding", function() {
-            this._registerKeybindings();
-        }.bind(this));
-        cS("pref_translate_from_clipboard_keybinding", function() {
-            this._registerKeybindings();
-        }.bind(this));
-        cS("pref_translate_from_selection_keybinding", function() {
-            this._registerKeybindings();
-        }.bind(this));
-        cS("pref_history_enabled", function() {
-            this._ensureHistoryFileExists();
+        Settings.connect([
+            "trigger_translators_prefs_defaults",
+            "trigger_date_format_syntax_info",
+            "pref_show_most_used",
+            "pref_dialog_theme",
+            "pref_dialog_theme_custom",
+            "pref_open_translator_dialog_keybinding",
+            "pref_translate_from_clipboard_keybinding",
+            "pref_translate_from_selection_keybinding",
+            "pref_history_enabled"
+        ], function(aPrefKey) {
+            this._onSettingsChanged(aPrefKey);
         }.bind(this));
     },
 
@@ -1376,6 +1348,41 @@ MultiTranslator.prototype = {
             }
         } catch (aErr) {
             global.logError(aErr);
+        }
+    },
+
+    _onSettingsChanged: function(aPrefkey) {
+        switch (aPrefkey) {
+            case "trigger_translators_prefs_defaults":
+                this._reapplyDefaults();
+                break;
+            case "trigger_date_format_syntax_info":
+                this.openDateFormatSyntaxInfo();
+                break;
+            case "pref_show_most_used":
+                if (!Settings.pref_show_most_used) {
+                    this.langsStats = null;
+                }
+
+                this._initMostUsed();
+                break;
+            case "pref_dialog_theme":
+            case "pref_dialog_theme_custom":
+                if (Settings.pref_dialog_theme_custom &&
+                    Settings.pref_dialog_theme !== "custom") {
+                    return;
+                }
+
+                this._loadTheme(true);
+                break;
+            case "pref_open_translator_dialog_keybinding":
+            case "pref_translate_from_clipboard_keybinding":
+            case "pref_translate_from_selection_keybinding":
+                this._registerKeybindings();
+                break;
+            case "pref_history_enabled":
+                this._ensureHistoryFileExists();
+                break;
         }
     }
 };

@@ -212,11 +212,11 @@ BaseDialog.prototype = {
 
     open: function() {
         if (this.state == DialogState.OPENED || this.state == DialogState.OPENING) {
-            Clutter.EVENT_STOP;
+            return Clutter.EVENT_STOP;
         }
 
         if (!this.pushModal()) {
-            Clutter.EVENT_PROPAGATE;
+            return Clutter.EVENT_PROPAGATE;
         }
 
         let monitor = Main.layoutManager.currentMonitor;
@@ -249,7 +249,7 @@ BaseDialog.prototype = {
             }
         });
 
-        Clutter.EVENT_STOP;
+        return Clutter.EVENT_STOP;
     },
 
     close: function() {
@@ -1680,7 +1680,7 @@ EntryBase.prototype = {
         this.set_font_size(Settings.pref_font_size);
 
         this._font_connection_id = Settings.connect(
-            "changed::pref_font_size",
+            "pref_font_size",
             function() {
                 this.set_font_size(Settings.pref_font_size);
             }.bind(this)
@@ -2132,7 +2132,7 @@ TranslatorDialog.prototype = {
         }
 
         this._connection_ids.sync_scroll_settings = Settings.connect(
-            "changed::pref_sync_entries_scrolling",
+            "pref_sync_entries_scrolling",
             function() {
                 let sync = Settings.pref_sync_entries_scrolling;
 
@@ -2151,7 +2151,7 @@ TranslatorDialog.prototype = {
         }
 
         this._connection_ids.show_most_used = Settings.connect(
-            "changed::pref_show_most_used",
+            "pref_show_most_used",
             function() {
                 if (Settings.pref_show_most_used) {
                     this._show_most_used_bar();

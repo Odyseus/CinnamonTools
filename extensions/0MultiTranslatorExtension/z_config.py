@@ -23,8 +23,8 @@ settings = {
         "source": "__app__/data/javascript_modules/desktopNotificationsUtils.js",
         "destination": "desktopNotificationsUtils.js"
     }, {
-        "source": "__app__/data/javascript_modules/extensionSettingsUtils.js",
-        "destination": "extensionSettingsUtils.js"
+        "source": "__app__/data/javascript_modules/xletsSettingsUtils.js",
+        "destination": "xletsSettingsUtils.js"
     }, {
         "source": "__app__/data/python_modules/xlets_settings",
         "destination": "python_modules/xlets_settings"

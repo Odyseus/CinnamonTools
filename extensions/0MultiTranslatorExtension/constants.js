@@ -1,6 +1,6 @@
 let XletMeta,
     GlobalUtils,
-    ExtensionSettingsUtils;
+    XletsSettingsUtils;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -12,10 +12,10 @@ if (typeof __meta === "object") {
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     GlobalUtils = require("./globalUtils.js");
-    ExtensionSettingsUtils = require("./extensionSettingsUtils.js");
+    XletsSettingsUtils = require("./xletsSettingsUtils.js");
 } else {
     GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-    ExtensionSettingsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].extensionSettingsUtils;
+    XletsSettingsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].xletsSettingsUtils;
 }
 
 const {
@@ -57,8 +57,7 @@ const BOUND_SETTINGS_ARRAY = [
     "pref_desktop_file_generated"
 ];
 
-var Settings = new ExtensionSettingsUtils.CustomExtensionSettings(BOUND_SETTINGS_ARRAY);
-// var Settings = new MultiTranslatorSettings();
+var Settings = new XletsSettingsUtils.CustomExtensionSettings(BOUND_SETTINGS_ARRAY);
 
 var TRANS_SHELL_REPLACEMENT_DATA = {
     /* NOTE: Reference extracted from translate-shell.
