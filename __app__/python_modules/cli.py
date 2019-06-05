@@ -32,6 +32,8 @@ Usage:
                  [-x <name>... | --xlet=<name>...]
                  [-d <domain> | --domain=<domain>]
                  [-o <dir> | --output=<dir>]
+                 [-e <dir> | --extra-files=<dir>]
+                 [-i | --install-localizations]
                  [-n | --no-confirmation]
                  [-r | --restart-cinnamon]
                  [-y | --dry-run]
@@ -71,8 +73,15 @@ Options:
     This option has precedence over the domain name found inside
     the **domain_name** file.
 
+-e <dir>, --extra-files=<dir>
+    Path to a folder containing files that will be copied into an xlet folder
+    at build time. Read the documentation to learn how this option works.
+
 -f, --force-clean-build
     Clear doctree cache and destination folder when building the documentation.
+
+-i, --install-localizations
+    Install xlets localizations after building xlets.
 
 -n, --no-confirmation
     Do not ask confirmation when building an xlet and the destination already
@@ -323,6 +332,8 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                               domain_name=self.a["--domain"],
                               build_output=self.a["--output"],
                               do_not_cofirm=self.a["--no-confirmation"],
+                              install_localizations=self.a["--install-localizations"],
+                              extra_files=self.a["--extra-files"],
                               dry_run=self.a["--dry-run"],
                               logger=self.logger)
 

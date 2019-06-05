@@ -16,7 +16,6 @@ XLET_META : dict
 XLET_SYSTEM : dict
     Xlet system type.
 """
-
 import json
 import os
 
@@ -26,14 +25,18 @@ from shutil import ignore_patterns
 from shutil import rmtree
 
 from .python_utils import cmd_utils
-from .python_utils import exceptions
 from .python_utils import file_utils
 from .python_utils import misc_utils
 from .python_utils import prompts
 from .python_utils import shell_utils
 from .python_utils import string_utils
 from .python_utils.ansi_colors import Ansi
+from .python_utils.simple_validators import generate_numeral_options_validator
+from .python_utils.simple_validators import validate_output_path
 
+
+validate_options_1_2 = generate_numeral_options_validator(2)
+validate_options_1_2_3 = generate_numeral_options_validator(3)
 
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
     os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
@@ -46,6 +49,7 @@ URLS = {
 }
 
 PATHS = {
+    "xlets_install_location": file_utils.expand_path(os.path.join("~", ".local", "share", "cinnamon")),
     "docs_sources": os.path.join(root_folder, "__app__", "cinnamon_tools_docs"),
     "docs_built": os.path.join(root_folder, "__app__", "cinnamon_tools_docs", "docs"),
     "domain_storage_file": os.path.join(root_folder, "tmp", "domain_name"),
@@ -95,6 +99,14 @@ _xlet_dir_ignored_patterns = [
     "*.bak",
     "*.pyc",
     "z_*"
+]
+
+_xlet_extra_files_ignored_patterns = [
+    "*.js",
+    "*.py",
+    "*.xml",
+    "*.pot",
+    "*.json"
 ]
 
 _extra_common_files = [{
@@ -153,6 +165,8 @@ _theme_build_data = """
 _xlets_build_data = """
 **Domain name:**                 {domain_name}
 **Output directory:**            {build_output}
+**Install localizations:**       {install_localizations}
+**Extra files from:**            {extra_files}
 **Ask overwrite confirmation:**  {do_not_cofirm}
 **Dry run:**                     {dry_run}
 """
@@ -529,8 +543,15 @@ def generate_meta_file(return_data=True):
         return xlet_meta
 
 
-def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False,
-                dry_run=False, logger=None, from_menu=False):
+def build_xlets(xlets=[],
+                domain_name=None,
+                build_output="",
+                do_not_cofirm=False,
+                install_localizations=False,
+                extra_files="",
+                dry_run=False,
+                logger=None,
+                from_menu=False):
     """Build xlets.
 
     Parameters
@@ -570,6 +591,10 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
             domain_name = "domain.com"
 
     options_map = {
+        "install_localizations": {
+            "1": False,
+            "2": True
+        },
         "do_not_cofirm": {
             "1": False,
             "2": True
@@ -583,10 +608,12 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
     # __version__ is used to verify that the stored data is compatible with the
     # default data used when building xlets.
     options_map_defaults = {
-        "__version__": "1",
+        "__version__": "2",
         "domain_name": domain_name,
         # Note: Check needed to avoid storing None.
         "build_output": build_output or "",
+        "install_localizations": "2" if install_localizations else "1",
+        "extra_files": extra_files,
         "do_not_cofirm": "2" if do_not_cofirm else "1",
         "dry_run": "2" if dry_run else "1"
     }
@@ -603,6 +630,9 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
             domain_name=o_m_l_v["domain_name"],
             build_output=o_m_l_v["build_output"],
             do_not_cofirm=str(not options_map["do_not_cofirm"][o_m_l_v["do_not_cofirm"]]),
+            install_localizations=str(
+                options_map["install_localizations"][o_m_l_v["install_localizations"]]),
+            extra_files=o_m_l_v["extra_files"],
             dry_run=str(options_map["dry_run"][o_m_l_v["dry_run"]])
         ), date=False, to_file=False)
         print_separator(logger)
@@ -641,11 +671,14 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
         answer = prompts.read_char(question)
         ask_for_confirmation_options = answer != "1"
 
-        if answer == "2":
+        if answer == "1":
             options_map_defaults["build_output"] = os.path.join(
-                "~", ".local", "share", "cinnamon"
+                get_base_temp_folder(),
+                misc_utils.micro_to_milli(misc_utils.get_date_time("filename"))
             )
-        elif answer != "1" and answer != "2":
+        elif answer == "2":
+            options_map_defaults["build_output"] = PATHS["xlets_install_location"]
+        else:
             # Ask for output directory.
             print_separator(logger)
             inform("Choose a storage location:")
@@ -653,23 +686,23 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
             # inform that it will be overwritten with a new temporary location.
             # This is to avoid dealing with existing xlets built into /tmp.
             if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
-                logger.info(
-                    "The following default value, if chosen, it will be re-generated and overwritten.",
+                logger.warning(
+                    "The following default value, if chosen, will be re-generated and overwritten.",
                     date=False, to_file=False)
 
             prompts.do_prompt(options_map_defaults,
                               "build_output",
                               "Enter a path",
                               options_map_defaults["build_output"],
-                              validator=validate_xlet_output)
+                              validator=validate_output_path)
 
-            # NOTE: Yes, check again (just in case) if build_output is inside /tmp.
-            # So I can cancel asking for confirmation options since there is no
-            # need to ask for confirmation options when the possibility of
-            # overwriting an existing xlet is null.
-            if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
-                ask_for_confirmation_options = False
-                options_map_defaults["do_not_cofirm"] = "2"
+        # NOTE: Yes, check again (just in case) if build_output is inside /tmp.
+        # So I can cancel asking for confirmation options since there is no
+        # need to ask for confirmation options when the possibility of
+        # overwriting an existing xlet is null.
+        if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
+            ask_for_confirmation_options = False
+            options_map_defaults["do_not_cofirm"] = "2"
 
         if ask_for_confirmation_options:
             # Ask for overwrite confirmation.
@@ -681,7 +714,43 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
                               "do_not_cofirm",
                               "Enter option",
                               options_map_defaults["do_not_cofirm"],
-                              validator=validate_xlet_overwrite)
+                              validator=validate_options_1_2)
+
+        # NOTE: Do not ask to install localizations if the output location
+        # is not Cinnamon's install location ofr xlets.
+        if options_map_defaults["build_output"].startswith(PATHS["xlets_install_location"]):
+            # Ask for localizations installation.
+            print_separator(logger)
+            inform("Choose if you whant to install xlets localizations.")
+            inform("1. Do not install xlets localizations")
+            inform("2. Install xlets localizations")
+            prompts.do_prompt(options_map_defaults,
+                              "install_localizations",
+                              "Enter option",
+                              options_map_defaults["install_localizations"],
+                              validator=validate_options_1_2)
+
+        # Ask for extra files location.
+        print_separator(logger)
+        logger.warning("Read the documentation to learn how this option works.",
+                       date=False, to_file=False)
+        logger.warning("Existent files will be overwritten.",
+                       date=False, to_file=False)
+        inform("Choose an option:")
+        question = "%s\n%s" % ("**1.** Specify location.",
+                               "**Press any other key to ignore and reset this option.**")
+
+        answer = prompts.read_char(question)
+
+        if answer == "1":
+            inform("Choose extra files location:")
+            prompts.do_prompt(options_map_defaults,
+                              "extra_files",
+                              "Enter location",
+                              options_map_defaults["extra_files"],
+                              validator=validate_output_path)
+        else:
+            options_map_defaults["extra_files"] = ""
 
         # Ask for dry.
         print_separator(logger)
@@ -692,7 +761,7 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
                           "dry_run",
                           "Enter option",
                           options_map_defaults["dry_run"],
-                          validator=validate_xlet_overwrite)
+                          validator=validate_options_1_2)
 
     # TODO: Implement a "domain name validator" function.
     if not options_map_defaults["domain_name"].strip():
@@ -735,6 +804,10 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
             logger.warning("**Global metadata file might need to be re-generated.**" % x)
 
     dry_run = options_map["dry_run"][options_map_defaults["dry_run"]]
+    do_not_cofirm = options_map["do_not_cofirm"][options_map_defaults["do_not_cofirm"]]
+    install_localizations = options_map["install_localizations"][
+        options_map_defaults["install_localizations"]
+    ]
 
     if xlets_data:
         built_xlets = []
@@ -742,7 +815,9 @@ def build_xlets(xlets=[], domain_name=None, build_output="", do_not_cofirm=False
         for data in xlets_data:
             builder = XletBuilder(
                 data,
-                do_not_cofirm=options_map["do_not_cofirm"][options_map_defaults["do_not_cofirm"]],
+                do_not_cofirm=do_not_cofirm,
+                install_localizations=install_localizations,
+                extra_files=options_map_defaults["extra_files"],
                 dry_run=dry_run,
                 logger=logger
             )
@@ -779,7 +854,12 @@ class XletBuilder():
         See <class :any:`LogSystem`>.
     """
 
-    def __init__(self, xlet_data, do_not_cofirm=False, dry_run=False, logger=None):
+    def __init__(self, xlet_data,
+                 do_not_cofirm=False,
+                 install_localizations=False,
+                 extra_files="",
+                 dry_run=False,
+                 logger=None):
         """Initialize.
 
         Parameters
@@ -795,6 +875,8 @@ class XletBuilder():
         """
         self._xlet_data = xlet_data
         self._do_not_cofirm = do_not_cofirm
+        self._install_localizations = install_localizations
+        self._extra_files = extra_files
         self._dry_run = dry_run
         self.logger = logger
 
@@ -823,7 +905,9 @@ class XletBuilder():
                                                      logger=self.logger)
 
             self._compile_schemas()
+            self._copy_extra_files()
             self._set_executable()
+            self._install_po_files()
 
             return True
 
@@ -917,20 +1001,6 @@ class XletBuilder():
 
         return True
 
-    def _compile_schemas(self):
-        """Compile schema files if any.
-        """
-        if file_utils.is_real_dir(self._schemas_dir):
-            self.logger.info("**Compiling gsettings schema...**")
-            cmd = ["glib-compile-schemas", ".", "--targetdir=."]
-
-            if self._dry_run:
-                self.logger.log_dry_run("**Command that will be executed:**\n%s" % " ".join(cmd))
-                self.logger.log_dry_run(
-                    "**Command will be executed on directory:**\n%s" % self._schemas_dir)
-            else:
-                cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=self._schemas_dir)
-
     def _handle_config_file(self):
         """Handle xlet configuration file if any.
         """
@@ -991,6 +1061,42 @@ class XletBuilder():
                 else:
                     os.chdir(root_folder)
 
+    def _compile_schemas(self):
+        """Compile schema files if any.
+        """
+        if file_utils.is_real_dir(self._schemas_dir):
+            self.logger.info("**Compiling gsettings schema...**")
+            cmd = ["glib-compile-schemas", ".", "--targetdir=."]
+
+            if self._dry_run:
+                self.logger.log_dry_run("**Command that will be executed:**\n%s" % " ".join(cmd))
+                self.logger.log_dry_run(
+                    "**Command will be executed on directory:**\n%s" % self._schemas_dir)
+            else:
+                cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=self._schemas_dir)
+
+    def _copy_extra_files(self):
+        if not self._extra_files:
+            return
+
+        extra_files_for_xlet = os.path.join(
+            self._extra_files,
+            self._xlet_data["type"] + "s",
+            self._xlet_data["slug"]
+        )
+
+        if not file_utils.is_real_dir(extra_files_for_xlet):
+            return
+
+        self.logger.info("**Copying extra files into built xlet folder:**")
+
+        file_utils.custom_copytree(extra_files_for_xlet,
+                                   self._xlet_data["destination"],
+                                   logger=self.logger,
+                                   log_copied_file=True,
+                                   ignored_patterns=_xlet_dir_ignored_patterns,
+                                   overwrite=True)
+
     def _set_executable(self):
         """Set files as executable.
         """
@@ -1014,6 +1120,36 @@ class XletBuilder():
                         self.logger.info(os.path.relpath(
                             file_path, self._xlet_data["destination"]), date=False)
                         os.chmod(file_path, 0o755)
+
+    def _install_po_files(self):
+        if not self._install_localizations:
+            return
+
+        if not self._xlet_data["destination"].startswith(PATHS["xlets_install_location"]):
+            self.logger.warning(
+                "**Localizations can only be installed when the xlets are built into Cinnamon's install location for xlets.**")
+            return
+
+        self.logger.info("**Installing xlet localizations:**")
+
+        try:
+            executable = "make-cinnamon-xlet-pot-cli"
+
+            # Mark for deletion on EOL. Cinnamon 3.8.x+
+            # Newer Cinnamon versions use cinnamon-xlet-makepot.
+            if not cmd_utils.which(executable):
+                executable = "cinnamon-json-makepot"
+
+            if not cmd_utils.which(executable):
+                executable = "cinnamon-xlet-makepot"
+
+            cmd_utils.run_cmd(executable + " -i",
+                              stdout=None,
+                              stderr=None,
+                              shell=True,
+                              cwd=self._xlet_data["destination"])
+        except Exception as err:
+            self.logger.error(err)
 
 
 def _list_xlets_dirs(xlet_type_subdir):
@@ -1046,105 +1182,6 @@ def get_xlets_dirs():
                        if not item.startswith("0z")]
 
     return applets_dirs + extensions_dirs
-
-
-def validate_xlet_output(x):
-    """Validate xlets build options.
-
-    Parameters
-    ----------
-    x : str
-        The entered option to validate.
-
-    Returns
-    -------
-    str
-        The validated option.
-
-    Raises
-    ------
-    exceptions.ValidationError
-        Halt execution if option is not valid.
-    """
-    if x == file_utils.expand_path("~") or x == "~":
-        raise exceptions.ValidationError("Seriously, don't be daft! Choose another location!")
-    elif x == "/":
-        raise exceptions.ValidationError(
-            "Are you freaking kidding me!? The root partition!? Use your brain!")
-
-    return x
-
-
-def validate_xlet_overwrite(x):
-    """Validate xlets build options.
-
-    Parameters
-    ----------
-    x : str
-        The entered option to validate.
-
-    Returns
-    -------
-    str
-        The validated option.
-
-    Raises
-    ------
-    exceptions.ValidationError
-        Halt execution if option is not valid.
-    """
-    if not x or x not in ["1", "2"]:
-        raise exceptions.ValidationError('Possible options are "1" or "2".')
-
-    return x
-
-
-def validate_cinn_theme_options(x):
-    """Validate themes options.
-
-    Parameters
-    ----------
-    x : str
-        The entered option to validate.
-
-    Returns
-    -------
-    str
-        The validated option.
-
-    Raises
-    ------
-    exceptions.ValidationError
-        Halt execution if option is not valid.
-    """
-    if not x or x not in ["1", "2", "3"]:
-        raise exceptions.ValidationError('Possible options are "1", "2" or "3".')
-
-    return x
-
-
-def validate_gtk3_theme_options(x):
-    """Validate themes options.
-
-    Parameters
-    ----------
-    x : str
-        The entered option to validate.
-
-    Returns
-    -------
-    str
-        The validated option.
-
-    Raises
-    ------
-    exceptions.ValidationError
-        Halt execution if option is not valid.
-    """
-    if not x or x not in ["1", "2"]:
-        raise exceptions.ValidationError('Possible options are "1" or "2".')
-
-    return x
 
 
 def build_themes(theme_name="", build_output="", do_not_cofirm=False,
@@ -1270,7 +1307,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           "cinnamon_version",
                           "Enter an option",
                           options_map_defaults["cinnamon_version"],
-                          validator=validate_cinn_theme_options)
+                          validator=validate_options_1_2_3)
 
         # Ask for Cinnamon theme font size.
         print_separator(logger)
@@ -1300,7 +1337,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           "gtk3_version",
                           "Enter an option",
                           options_map_defaults["gtk3_version"],
-                          validator=validate_gtk3_theme_options)
+                          validator=validate_options_1_2)
 
         # Ask for Gtk3 theme CSD selector.
         print_separator(logger)
@@ -1337,11 +1374,16 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         answer = prompts.read_char(question)
         ask_for_confirmation_options = answer != "1"
 
-        if answer == "2":
+        if answer == "1":
+            options_map_defaults["build_output"] = os.path.join(
+                get_base_temp_folder(),
+                misc_utils.micro_to_milli(misc_utils.get_date_time("filename"))
+            )
+        elif answer == "2":
             options_map_defaults["build_output"] = os.path.join(
                 "~", ".themes"
             )
-        elif answer != "1" and answer != "2":
+        else:
             # Ask for output directory.
             print_separator(logger)
             inform("Choose a storage location:")
@@ -1357,15 +1399,15 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                               "build_output",
                               "Enter a path",
                               options_map_defaults["build_output"],
-                              validator=validate_xlet_output)
+                              validator=validate_output_path)
 
-            # NOTE: Yes, check again (just in case) if build_output is inside /tmp.
-            # So I can cancel asking for confirmation options since there is no
-            # need to ask for confirmation options when the possibility of
-            # overwriting an existing xlet is null.
-            if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
-                ask_for_confirmation_options = False
-                options_map_defaults["do_not_cofirm"] = "2"
+        # NOTE: Yes, check again (just in case) if build_output is inside /tmp.
+        # So I can cancel asking for confirmation options since there is no
+        # need to ask for confirmation options when the possibility of
+        # overwriting an existing xlet is null.
+        if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
+            ask_for_confirmation_options = False
+            options_map_defaults["do_not_cofirm"] = "2"
 
         if ask_for_confirmation_options:
             # Ask for overwrite confirmation.
@@ -1377,7 +1419,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                               "do_not_cofirm",
                               "Enter option",
                               options_map_defaults["do_not_cofirm"],
-                              validator=validate_xlet_overwrite)
+                              validator=validate_options_1_2)
 
         # Ask for dry.
         print_separator(logger)
@@ -1388,7 +1430,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
                           "dry_run",
                           "Enter option",
                           options_map_defaults["dry_run"],
-                          validator=validate_xlet_overwrite)
+                          validator=validate_options_1_2)
 
     theme_data = {
         "cinnamon_version": options_map["cinnamon_version"][options_map_defaults["cinnamon_version"]],
@@ -1586,7 +1628,8 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         logger.warning("Check the logs for more details.")
 
     if dry_run:
-        logger.log_dry_run("**Built themes will be saved at %s**" % options_map_defaults["build_output"])
+        logger.log_dry_run("**Built themes will be saved at %s**" %
+                           options_map_defaults["build_output"])
         logger.log_dry_run("**Theme build data will be saved at:**\n%s" %
                            PATHS["theme_latest_build_data_file"])
     else:
