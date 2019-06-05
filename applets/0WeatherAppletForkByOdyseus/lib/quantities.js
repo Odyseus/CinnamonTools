@@ -168,15 +168,19 @@ function getFractional(num) {
  */
 function QtyError() {
     var err;
+
     if (!this) { // Allows to instantiate QtyError without new()
         err = Object.create(QtyError.prototype);
         QtyError.apply(err, arguments);
         return err;
     }
+
     err = Error.apply(this, arguments);
     this.name = "QtyError";
     this.message = err.message;
     this.stack = err.stack;
+
+    return this;
 }
 QtyError.prototype = Object.create(Error.prototype, {
     constructor: {
@@ -1297,6 +1301,8 @@ function Qty(initValue, initUnits) {
     if (this.isTemperature() && this.baseScalar < 0) {
         throw new QtyError("Temperatures must not be less than absolute zero");
     }
+
+    return this;
 }
 
 Qty.prototype = {
@@ -1344,6 +1350,7 @@ function updateBaseScalar() {
     if (this.baseScalar) {
         return this.baseScalar;
     }
+
     if (this.isBase()) {
         this.baseScalar = this.scalar;
         this.signature = unitSignature.call(this);
@@ -1352,6 +1359,8 @@ function updateBaseScalar() {
         this.baseScalar = base.scalar;
         this.signature = base.signature;
     }
+
+    return this;
 }
 
 var KINDS = {
@@ -2100,9 +2109,11 @@ assign(Qty.prototype, {
         if (isString(other)) {
             return this.compareTo(Qty(other));
         }
+
         if (!this.isCompatible(other)) {
             throwIncompatibleUnits(this.units(), other.units());
         }
+
         if (this.baseScalar < other.baseScalar) {
             return -1;
         } else if (this.baseScalar === other.baseScalar) {
@@ -2110,6 +2121,8 @@ assign(Qty.prototype, {
         } else if (this.baseScalar > other.baseScalar) {
             return 1;
         }
+
+        return throwIncompatibleUnits(this.units(), other.units());
     },
 
     // Return true if quantities and units match
@@ -2204,7 +2217,6 @@ NestedMap.prototype.get = function(keys) {
 
     return keys.reduce(function(map, key, index) {
             if (map) {
-
                 var childMap = map[key];
 
                 if (index === keys.length - 1) {
@@ -2213,6 +2225,8 @@ NestedMap.prototype.get = function(keys) {
                     return childMap;
                 }
             }
+
+            return undefined;
         },
         this);
 };
@@ -2430,7 +2444,3 @@ var quantities = Qty;
 
 /* exported quantities
  */
-
-// FIXME:
-// isFinite
-//
