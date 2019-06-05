@@ -152,7 +152,7 @@ function methodWrapper(aObject, aParams) {
 function wrapObjectMethods(aDebugger, aObjects) {
     try {
         /* NOTE: aDebugger could be an instance of DebugManager or
-         * an instance of CustomExtensionSettings (extensionSettingsUtils.js).
+         * an instance of BaseXletSettings (xletsSettingsUtils.js).
          */
         let isDebugManager = aDebugger instanceof DebugManager;
         let loggingLevel = isDebugManager ?
