@@ -572,81 +572,20 @@ ColorBlindnessAssistant.prototype = {
             this._loadTheme(false);
         }.bind(this));
 
-        let cS = (aPref, aCallback) => {
-            Settings.connect(
-                "changed::" + aPref,
-                aCallback
-            );
-        };
-
-        cS("pref_daltonizer_wizard_kb", this._registerGlobalKeybindings.bind(this));
-        cS("pref_color_inspector_kb", this._registerGlobalKeybindings.bind(this));
-        cS("trigger_effects_list", function() {
-            /* NOTE: "Partially" disable the extension and re-enable it.
-             * A "partial" disable doesn't remove Cinnamon's injections/overrides
-             * and does a "soft removal" of effects.
-             * This allows to easily add back the already applied effects and the
-             * Cinnamon overrides don't need to be removed and re-applied since they
-             * use dynamic data.
-             */
-            try {
-                this.disable(true);
-            } finally {
-                Mainloop.idle_add(() => {
-                    this.enable();
-
-                    return GLib.SOURCE_REMOVE;
-                });
-            }
-        }.bind(this));
-
-        let cb1 = () => {
-            return function() {
-                if (this._daltonizer !== null) {
-                    this._daltonizer.animationTime = Settings.pref_daltonizer_animation_time / 1000;
-                    this._daltonizer.showActorsBox = Settings.pref_daltonizer_show_actors_box;
-                    this._daltonizer.showColorspacesBox = Settings.pref_daltonizer_show_colorspaces_box;
-                }
-            }.bind(this);
-        };
-        cS("pref_daltonizer_animation_time", cb1());
-        cS("pref_daltonizer_show_actors_box", cb1());
-        cS("pref_daltonizer_show_colorspaces_box", cb1());
-
-        let cb2 = () => {
-            return function() {
-                if (this._colorInspector !== null) {
-                    this._colorInspector.animationTime = Settings.pref_color_inspector_animation_time / 1000;
-                    this._colorInspector.copyInfoToClipboard = Settings.pref_color_inspector_always_copy_to_clipboard;
-                }
-            }.bind(this);
-        };
-        cS("pref_color_inspector_animation_time", cb2());
-        cS("pref_color_inspector_always_copy_to_clipboard", cb2());
-
-        let cb4 = (aPrefKey) => {
-            return function() {
-                if (aPrefKey === "pref_theme_path_custom" &&
-                    Settings.pref_theme !== "custom") {
-                    return;
-                }
-
-                this._loadTheme(true);
-            }.bind(this);
-        };
-        cS("pref_theme", cb4("pref_theme"));
-        cS("pref_theme_path_custom", cb4("pref_theme_path_custom"));
-
-        cS("pref_apply_cinnamon_injections", function() {
-            try {
-                this._removeCinnamonInjections();
-            } finally {
-                Mainloop.idle_add(() => {
-                    Settings.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
-
-                    return GLib.SOURCE_REMOVE;
-                });
-            }
+        Settings.connect([
+            "pref_daltonizer_wizard_kb",
+            "pref_color_inspector_kb",
+            "pref_daltonizer_animation_time",
+            "pref_daltonizer_show_actors_box",
+            "pref_daltonizer_show_colorspaces_box",
+            "pref_color_inspector_animation_time",
+            "pref_color_inspector_always_copy_to_clipboard",
+            "pref_theme",
+            "pref_theme_path_custom",
+            "pref_apply_cinnamon_injections",
+            "trigger_effects_list"
+        ], function(aPrefKey) {
+            this._onSettingsChanged(aPrefKey);
         }.bind(this));
     },
 
@@ -680,6 +619,62 @@ ColorBlindnessAssistant.prototype = {
             }
         } catch (aErr) {
             global.logError(aErr);
+        }
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
+            case "pref_daltonizer_wizard_kb":
+            case "pref_color_inspector_kb":
+                this._registerGlobalKeybindings();
+                break;
+            case "pref_daltonizer_animation_time":
+            case "pref_daltonizer_show_actors_box":
+            case "pref_daltonizer_show_colorspaces_box":
+                if (this._daltonizer !== null) {
+                    this._daltonizer.animationTime = Settings.pref_daltonizer_animation_time / 1000;
+                    this._daltonizer.showActorsBox = Settings.pref_daltonizer_show_actors_box;
+                    this._daltonizer.showColorspacesBox = Settings.pref_daltonizer_show_colorspaces_box;
+                }
+                break;
+            case "pref_color_inspector_animation_time":
+            case "pref_color_inspector_always_copy_to_clipboard":
+                if (this._colorInspector !== null) {
+                    this._colorInspector.animationTime = Settings.pref_color_inspector_animation_time / 1000;
+                    this._colorInspector.copyInfoToClipboard = Settings.pref_color_inspector_always_copy_to_clipboard;
+                }
+                break;
+            case "pref_theme":
+            case "pref_theme_path_custom":
+                if (aPrefKey === "pref_theme_path_custom" &&
+                    Settings.pref_theme !== "custom") {
+                    return;
+                }
+
+                this._loadTheme(true);
+                break;
+            case "pref_apply_cinnamon_injections":
+                try {
+                    this._removeCinnamonInjections();
+                } finally {
+                    Mainloop.idle_add(() => {
+                        Settings.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
+
+                        return GLib.SOURCE_REMOVE;
+                    });
+                }
+                break;
+            case "trigger_effects_list":
+                try {
+                    this.disable(true);
+                } finally {
+                    Mainloop.idle_add(() => {
+                        this.enable();
+
+                        return GLib.SOURCE_REMOVE;
+                    });
+                }
+                break;
         }
     }
 };
