@@ -243,7 +243,9 @@ def custom_copy2(source, destination, logger=None, log_copied_file=False, relati
             copy2(source, destination, follow_symlinks=False)
 
             if log_copied_file:
-                logger.info("**File copied:** %s" % os.path.relpath(destination, relative_path))
+                path_to_log = os.path.relpath(destination, relative_path) \
+                    if relative_path else destination
+                logger.info("**File copied:** %s" % path_to_log, date=False)
     except Exception as err:
         logger.error(err)
 
