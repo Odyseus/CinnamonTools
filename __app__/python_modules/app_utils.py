@@ -1482,7 +1482,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
     from runpy import run_path
 
     dry_run = options_map["dry_run"][options_map_defaults["dry_run"]]
-    do_not_cofirm = options_map["do_not_cofirm"][o_m_l_v["do_not_cofirm"]]
+    do_not_cofirm = options_map["do_not_cofirm"][options_map_defaults["do_not_cofirm"]]
     built_theme_variants = []
 
     for variant in theme_variants:
