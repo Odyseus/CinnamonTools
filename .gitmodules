@@ -1,6 +1,3 @@
-[submodule "__app__/data/html_assets/css/flatly_bootstrap_theme"]
-    path = __app__/data/html_assets/css/flatly_bootstrap_theme
-    url = git@gitlab.com:Odyseus/flatly_bootstrap_theme.git
 [submodule "__app__/cinnamon_tools_docs"]
     path = __app__/cinnamon_tools_docs
     url = git@gitlab.com:Odyseus/cinnamon_tools_docs.git
