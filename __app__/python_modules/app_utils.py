@@ -126,7 +126,7 @@ _extra_common_files = [{
     "file_name": "bootstrap-tweaks.css",
     "depends_on": "HELP.html",
 }, {
-    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css", "flatly_bootstrap_theme", "dist"),
+    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
     "destination_path": "assets/css",
     "file_name": "flatly_bootstrap_theme.min.css",
     "depends_on": "HELP.html",
@@ -141,7 +141,7 @@ _common_help_assets = [{
     "destination_path": "css",
     "file_name": "bootstrap-tweaks.css"
 }, {
-    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css", "flatly_bootstrap_theme", "dist"),
+    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
     "destination_path": "css",
     "file_name": "flatly_bootstrap_theme.min.css"
 }]
@@ -721,7 +721,7 @@ def build_xlets(xlets=[],
         if options_map_defaults["build_output"].startswith(PATHS["xlets_install_location"]):
             # Ask for localizations installation.
             print_separator(logger)
-            inform("Choose if you whant to install xlets localizations.")
+            inform("Choose if you want to install xlets localizations.")
             inform("1. Do not install xlets localizations")
             inform("2. Install xlets localizations")
             prompts.do_prompt(options_map_defaults,
@@ -732,9 +732,8 @@ def build_xlets(xlets=[],
 
         # Ask for extra files location.
         print_separator(logger)
+        inform("Choose a location containing extra files to be copied into the built xlets folders.")
         logger.warning("Read the documentation to learn how this option works.",
-                       date=False, to_file=False)
-        logger.warning("Existent files will be overwritten.",
                        date=False, to_file=False)
         inform("Choose an option:")
         question = "%s\n%s" % ("**1.** Specify location.",
