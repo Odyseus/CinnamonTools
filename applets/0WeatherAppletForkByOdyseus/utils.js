@@ -26,13 +26,17 @@ if (typeof require === "function") {
 
 const {
     gi: {
-        Soup
+        Clutter,
+        Soup,
+        St
     },
     misc: {
         params: Params
     },
     ui: {
+        main: Main,
         popupMenu: PopupMenu,
+        tooltips: Tooltips,
         tweener: Tweener
     }
 } = imports;
@@ -48,6 +52,7 @@ const {
 const {
     _,
     isObject,
+    isBlank,
     escapeHTML,
     xdgOpen
 } = GlobalUtils;
@@ -371,7 +376,6 @@ WeatherProviderBase.prototype = {
                     this.applet._httpSession.queue_message(request2,
                         (aSession2, aMessage2) => {
                             if (aMessage2.status_code === Soup.KnownStatusCode.OK) {
-
                                 try {
                                     aRefreshCallback.call(this.applet, this.parseWeatherData(
                                         aMessage1.response_body.data,
@@ -420,9 +424,8 @@ WeatherProviderBase.prototype = {
         return null;
     },
 
-    formatTime: function(aTime) { // jshint ignore:line
-        global.logError("Not implemented method: formatTime");
-        return null;
+    formatTime: function(aTime) {
+        return isNaN(parseInt(aTime, 10)) ? Placeholders.ELLIPSIS : this._getTimeFromDate(aTime);
     },
 
     _compassDirection: function(deg) {
@@ -445,20 +448,24 @@ WeatherProviderBase.prototype = {
         return hours + ":" + minutes + " " + ampm;
     },
 
-    _normalizeMinutes: function(timeStr) {
+    _normalizeMinutes: function(aTimeStr) {
+        if (isBlank(aTimeStr)) {
+            return Placeholders.ELLIPSIS;
+        }
+
         // verify expected time format
-        let result = timeStr.match(/^\d{1,2}:(\d{1,2}) [ap]m$/);
+        let result = aTimeStr.match(/^\d{1,2}:(\d{1,2}) [ap]m$/);
 
         if (result !== null) {
             let minutes = result[1];
             // single-digit minutes values need normalizing (zero-padding)
             if (minutes.length < 2) {
-                let timeSegments = timeStr.split(":");
+                let timeSegments = aTimeStr.split(":");
                 return timeSegments[0] + ":0" + timeSegments[1];
             }
         }
 
-        return timeStr;
+        return aTimeStr;
     },
 
     get weather_details_url() {
@@ -593,6 +600,70 @@ LocationSelectorMenu.prototype = {
         } else {
             this.emit("open-state-changed", true);
         }
+    }
+};
+
+function CustomPanelItemTooltip() {
+    this._init.apply(this, arguments);
+}
+
+CustomPanelItemTooltip.prototype = {
+    __proto__: Tooltips.PanelItemTooltip.prototype,
+
+    _init: function(aApplet, aOrientation, aLocationData = null) {
+        Tooltips.PanelItemTooltip.prototype._init.call(this, aApplet, "", aOrientation);
+
+        // Destroy the original _tooltip, which is an St.Label.
+        this._tooltip.destroy();
+
+        let tooltipBox = new Clutter.GridLayout({
+            orientation: Clutter.Orientation.VERTICAL
+        });
+
+        this._tooltip = new St.Bin({
+            name: "Tooltip"
+        });
+
+        let rtl = (St.Widget.get_default_direction() === St.TextDirection.RTL);
+        this._tooltip.set_style("text-align:%s;".format(rtl ? "right" : "left"));
+
+        /* NOTE: This is a workaround because Tooltip instances have the _tooltip property hard-coded
+         * to be an St.Label(). And the Tooltip's show method calls this._tooltip.get_text() to decide
+         * if the tooltip should be displayed or not.
+         */
+        this._tooltip.get_text = () => {
+            return _(XletMeta.name);
+        };
+        this._tooltip.show_on_set_parent = false;
+
+        this._tooltip.set_child(new St.Widget({
+            layout_manager: tooltipBox
+        }));
+
+        if (aLocationData) {
+            let i = 0,
+                iLen = aLocationData.length;
+            for (; i < iLen; i++) {
+                let [title, value] = aLocationData[i];
+
+                tooltipBox.attach(this._createLabel(title, true), 0, i, 1, 1);
+                tooltipBox.attach(this._createLabel(value), 1, i, 1, 1);
+            }
+        }
+
+        Main.uiGroup.add_actor(this._tooltip);
+    },
+
+    _createLabel: function(aText, aAsMarkup = false) {
+        let label = new St.Label();
+
+        if (aAsMarkup) {
+            label.clutter_text.set_markup("<b>%s</b>: ".format(aText));
+        } else {
+            label.set_text(aText);
+        }
+
+        return label;
     }
 };
 

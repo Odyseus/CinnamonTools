@@ -155,9 +155,5 @@ Provider.prototype = {
             forecasts: forecasts,
             lastCheck: new Date().getTime()
         };
-    },
-
-    formatTime: function(aSeconds) {
-        return this._getTimeFromDate(aSeconds);
     }
 };

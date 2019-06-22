@@ -190,6 +190,10 @@ Provider.prototype = {
     },
 
     formatTime: function(aTimeString) {
-        return aTimeString === null ? Placeholders.ELLIPSIS : this._normalizeMinutes(aTimeString);
+        try {
+            return aTimeString ? this._normalizeMinutes(aTimeString) : Placeholders.ELLIPSIS;
+        } catch (aErr) {}
+
+        return Placeholders.ELLIPSIS;
     }
 };

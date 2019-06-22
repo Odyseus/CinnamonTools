@@ -22,7 +22,7 @@ const {
 const {
     _,
     DayNamesByAbbr,
-    Ellipsis,
+    Placeholders,
     ErrorMessages,
     WeatherProviderNames,
     WeatherProviderDefaultParams
@@ -161,8 +161,12 @@ Provider.prototype = {
                 let day = $.safeGet(F[i], "day");
                 forecasts.push({
                     "code": $.safeGetEll(F[i], "code"),
-                    "date": date !== null ? new Date(Number(date * 1000)).toDateString() : Ellipsis,
-                    "day": day !== null ? DayNamesByAbbr[F[i].day.toLowerCase()] : Ellipsis,
+                    "date": (date !== null ?
+                        new Date(Number(date * 1000)).toDateString() :
+                        Placeholders.ELLIPSIS),
+                    "day": (day !== null ?
+                        DayNamesByAbbr[F[i].day.toLowerCase()] :
+                        Placeholders.ELLIPSIS),
                     "high": $.safeGetEll(F[i], "high"),
                     "low": $.safeGetEll(F[i], "low"),
                     "text": $.safeGetEll(F[i], "text")
@@ -176,9 +180,5 @@ Provider.prototype = {
             forecasts: forecasts,
             lastCheck: new Date().getTime()
         };
-    },
-
-    formatTime: function(aTimeString) {
-        return aTimeString === null ? Ellipsis : this._normalizeMinutes(aTimeString);
     }
 };

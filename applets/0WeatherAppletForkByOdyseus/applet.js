@@ -83,13 +83,13 @@ const {
 
 const {
     _,
+    isBlank,
     escapeHTML,
     CINNAMON_VERSION,
     versionCompare
 } = GlobalUtils;
 
 const {
-    CustomPanelTooltip,
     InteligentTooltip
 } = CustomTooltips;
 
@@ -122,13 +122,6 @@ Weather.prototype = {
         this.instance_id = aInstanceId;
         this.orientation = aOrientation;
         this.menu_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
-
-        try {
-            this.tooltip = new CustomPanelTooltip(this, _("Click to open"), this.orientation);
-        } catch (aErr) {
-            this.tooltip = null;
-            global.logError("Error while initializing tooltip: " + aErr.message);
-        }
 
         this._initializeSettings(() => {
             this._expandAppletContextMenu();
@@ -294,9 +287,14 @@ Weather.prototype = {
             let clipboard = St.Clipboard.get_default();
 
             if (St.ClipboardType) {
-                clipboard.set_text(St.ClipboardType.CLIPBOARD, this._getReadableLocationData(false));
+                clipboard.set_text(
+                    St.ClipboardType.CLIPBOARD,
+                    this._getReadableLocationData(false).join("\n")
+                );
             } else {
-                clipboard.set_text(this._getReadableLocationData(false));
+                clipboard.set_text(
+                    this._getReadableLocationData(false).join("\n")
+                );
             }
         });
         this._applet_context_menu.addMenuItem(menuItem);
@@ -917,7 +915,7 @@ Weather.prototype = {
                 let valueActor = this["_" + id + "SummaryValue"];
                 let curSummaryValue = currentWeather[id];
 
-                if (curSummaryValue === null) {
+                if (isBlank(curSummaryValue)) {
                     titleActor.hide();
                     valueActor.hide();
                     continue;
@@ -1062,10 +1060,15 @@ Weather.prototype = {
     },
 
     _setCustomAppletTooltip: function() {
-        if (this.tooltip) {
-            this.tooltip.set_text(this._getReadableLocationData(true));
-        } else {
-            this.set_applet_tooltip(this._getReadableLocationData(false));
+        try {
+            this.tooltip && this.tooltip.destroy();
+            this.tooltip = new $.CustomPanelItemTooltip(
+                this,
+                this.orientation,
+                this._getReadableLocationData(true)
+            );
+        } catch (aErr) {
+            this.set_applet_tooltip(this._getReadableLocationData(false).join("\n"));
         }
     },
 
@@ -1076,12 +1079,11 @@ Weather.prototype = {
 
         return locationInfo.map((aEl) => {
             if (aAsMarkup) {
-                return "<b>" + escapeHTML(aEl[0]) + "</b>" + ": " +
-                    escapeHTML((aEl[1] + "").trim());
+                return [escapeHTML(aEl[0]), escapeHTML((aEl[1] + "").trim())];
             }
 
             return aEl[0] + ": " + (aEl[1] + "").trim();
-        }).join("\n");
+        });
     },
 
     destroyCurrentWeather: function() {
@@ -1376,6 +1378,10 @@ Weather.prototype = {
     },
 
     convertTo24Hours: function(aTimeStr) {
+        if (!aTimeStr) {
+            return "";
+        }
+
         let s = aTimeStr.indexOf(":");
         let t = aTimeStr.indexOf(" ");
         let n = aTimeStr.length;
@@ -1793,7 +1799,6 @@ Weather.prototype = {
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
     DebugManager.wrapObjectMethods($.Debugger, {
-        CustomPanelTooltip: CustomPanelTooltip,
         InteligentTooltip: InteligentTooltip,
         Weather: Weather
     });

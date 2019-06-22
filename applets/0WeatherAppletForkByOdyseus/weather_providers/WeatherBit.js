@@ -19,7 +19,7 @@ const {
 const {
     _,
     DayNamesByIndex,
-    Ellipsis,
+    Placeholders,
     ErrorMessages,
     WeatherBitSupportedLanguages,
     WeatherProviderNames,
@@ -121,7 +121,6 @@ Provider.prototype = {
         let J = $.safeGetEll(JSON.parse(aResponseDataCurrent), "data")[0];
 
         let locationInfo = [
-            [_("Location name"), $.safeGetEll(J, "city_name")],
             [_("Coordinates"), $.safeGetEll(J, "lat") + "," +
                 $.safeGetEll(J, "lon")
             ],
@@ -167,7 +166,7 @@ Provider.prototype = {
                 let fDate = new Date(Number(date * 1000));
                 forecasts.push({
                     "code": $.safeGetEll(F[i], "weather", "code"),
-                    "date": date !== null ? fDate.toDateString() : Ellipsis,
+                    "date": date !== null ? fDate.toDateString() : Placeholders.ELLIPSIS,
                     "day": DayNamesByIndex[fDate.getDay()],
                     "high": $.safeGetEll(F[i], "max_temp"),
                     "low": $.safeGetEll(F[i], "min_temp"),
