@@ -35,7 +35,7 @@ inxi -xxxSc0 -! 31
 -->
 
 
-### Relevant logs and/or screenshots
+### Relevant logs, configurations and/or screenshots
 
 <!--
 Paste bellow the URLs given by the following two commands run on a terminal.
@@ -46,6 +46,13 @@ The ~/.cinnamon/glass.log file doesn't exists in newer Cinnamon versions. So, do
 
 cat ~/.cinnamon/glass.log | nc termbin.com 9999
 cat ~/.xsession-errors | nc termbin.com 9999
+-->
+
+<!--
+An error in an xlet could be caused by a combination of settings. Cinnamon stores all xlets configurations at ~/.cinnamon/configs.
+Check the content of the configuration files for sensible information BEFORE running the commands.
+
+cat ~/.cinnamon/configs/<XLET_UUID>/<CONFIG_FILE>.json | nc termbin.com 9999
 -->
 
 <!--

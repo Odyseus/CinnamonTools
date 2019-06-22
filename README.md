@@ -25,7 +25,7 @@ The **app.py** script found at the root of the repository is the *application* t
 
 #### [Interactive shell menu](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#app-py-menu)
 
-The following command starts a CLI (Command Line Interface) interactive menu from which one can select the xlets to build or build all xlets/themes at once.
+The following command starts a CLI (Command Line Interface) interactive menu from which one can select the xlets to build or build all xlets/themes at once. From this menu all building tasks are interactive and all chosen options are saved for later reuse.
 
 ```shell
 $ ./app.py menu
@@ -51,7 +51,7 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 
 #### [Building themes](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#app-py-build-themes)
 
-The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family and GTK+ 3 version). The command bellow will perform the following actions:
+The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family, GTK+ 3 version, and Gtk+ 3 client-side-decorated windows shadows). The command bellow will perform the following actions:
 
 ```shell
 $ ./app.py build_themes --theme-name="MyThemeName" --output="$HOME/.themes" --no-confirmation --restart-cinnamon
@@ -81,6 +81,7 @@ Applet's help pages can be accessed from an applet context menu (item named **He
 - [Desktop Handler](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0DesktopHandler/index.html)
 - [Feeds Reader (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0FeedsByJonbrettForkByOdyseus/index.html)
 - [Mailnag (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0MailnagAppletForkByOdyseus/index.html)
+- [Panel Drawer (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0PanelDrawerForkByOdyseus/index.html)
 - [Quick Menu](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0QuickMenu/index.html)
 - [Simple ToDo List](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0SimpleToDoList/index.html)
 - [System Monitor (Fork By Odyseus)](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/xlets_help_pages/0SystemMonitorByOrcusForkByOdyseus/index.html)
@@ -98,7 +99,7 @@ Applet's help pages can be accessed from an applet context menu (item named **He
 
 The documentation of this repository is mainly a development documentation, but it also documents the xlets/themes building processes.
 
-The documentation also has a Cinnamon tips & tricks section which describes some basic concepts and how to recover from an unresponsive Cinnamon session, amonst other things.
+The documentation also has a Cinnamon tips & tricks section which describes some basic concepts and how to recover from an unresponsive Cinnamon session, amongst other things.
 
 ## Redistribution
 
