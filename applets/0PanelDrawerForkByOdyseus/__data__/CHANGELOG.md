@@ -1,6 +1,26 @@
-## Drawer (show/hide applets) (Fork By Odyseus) changelog
+## Panel Drawer (Fork By Odyseus) changelog
 
 #### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+
+***
+
+- **Date:** Fri, 21 Jun 2019 23:03:47 -0300
+- **Commit:** [5429260](https://gitlab.com/Odyseus/CinnamonTools/commit/5429260)
+- **Author:** Odyseus
+
+```
+Applet rewrite
+--------------
+
+WARNING: This update is a complete rewrite of the applet and it will reset the settings of an existent instance to their default values. Read the help page for this applet for detailed usage.
+
+- Added vertical panels support.
+- Added multi-instance support. Now it is possible to add an instance of this applet to each existent panel (vertical or horizontal).
+- Added all items of a panel context menu into this applet context menu.
+- Simplified and cleaned the code.
+- Removed workarounds to handle system tray applets. These workarounds were doing *more damage than good*. DO NOT USE THIS APPLET to hide a system try applet (not the Cinnamon's default nor any other). Simply use a collapsible system tray applet.
+
+```
 
 ***
 

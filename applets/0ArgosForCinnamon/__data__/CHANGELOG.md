@@ -4,6 +4,22 @@
 
 ***
 
+- **Date:** Fri, 21 Jun 2019 23:01:00 -0300
+- **Commit:** [9b7e3b1](https://gitlab.com/Odyseus/CinnamonTools/commit/9b7e3b1)
+- **Author:** Odyseus
+
+```
+- Removed workarounds for older versions of Cinnamon (2.8.x and below).
+- Added option to only execute the script assigned to an applet when the menu is opened. This is different from the **ARGOS_MENU_OPEN** environment variable set on execution time and that can be used inside the scripts. For the environment variable to be read, the script has to be executed. For the option set on the applet settings, the script is not executed at all unless the menu is opened.
+- Added option to avoid ellipsation of the lines displayed on the applet. Applet text of only 3 characters was being ellipsized, which was ultra-annoying.
+- Fixed misbehavior of the menu closing while the mouse cursor was placed over an activatable item in the menu and the menu content was updated. This was misbehaving because; when an item inside a menu is hovered, it has focus; when all items in a menu are removed, the menu loses focus; when a menu loses focus, it closes. I simply moved the focus to the menu itself before removing all its items to prevent the menu from closing.
+- Moved the rotation interval selector found in the applet context menu outside the Extras sub-menu to keep it more accessible.
+- Corrected not being able to set the script name as the applet label.
+
+```
+
+***
+
 - **Date:** Thu, 30 May 2019 03:46:35 -0300
 - **Commit:** [ae5e64a](https://gitlab.com/Odyseus/CinnamonTools/commit/ae5e64a)
 - **Author:** Odyseus

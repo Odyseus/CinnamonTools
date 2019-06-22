@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-06-02 12:36-0300\n"
+"POT-Creation-Date: 2019-06-22 00:01-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,161 +15,173 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:102
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:129
 msgid "Information related to this specific section"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:360
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:419
 msgid "Choose an Icon"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:363 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:781 ../../__app__/data/python_modules/xlets_settings/__init__.py:753 ../../__app__/data/python_modules/xlets_settings/__init__.py:785
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:422 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:783 ../../__app__/data/python_modules/xlets_settings/__init__.py:970 ../../__app__/data/python_modules/xlets_settings/__init__.py:1002
 msgid "_Cancel"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:364
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:423
 msgid "_Open"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:367
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:426
 msgid "Image files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:327
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:643
+msgid "Clear path"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:329
 msgid "No app chosen"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:419
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:421
 msgid "Add new item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:427
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:429
 msgid "Remove selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:438
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:441
 msgid "Edit selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:448
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:451
 msgid "Move selected item up"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:456
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:459
 msgid "Move selected item down"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:470
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:473
 msgid "Export data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:483
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:486
 msgid "Import data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:491
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:494
 msgid "Apply changes"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:608
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:610
 msgid "Item removal"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:611
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:613
 msgid "Are you sure that you want to remove this item?"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:612
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:614
 msgid "Note"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:613
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:694
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
 msgid "Choose how to add the imported data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:697
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
 msgid "_Overwrite"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:700
 msgid "_Append"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:716
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:718
 msgid "Overwrite"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:717
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:719
 msgid "replace the current data with the imported data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:718
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
 msgid "Append"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:719
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:721
 msgid "add the imported data to the current data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:773
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:775
 msgid "Add new entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:775
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:777
 msgid "Edit entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:782 ../../__app__/data/python_modules/xlets_settings/__init__.py:754 ../../__app__/data/python_modules/xlets_settings/__init__.py:786
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:784 ../../__app__/data/python_modules/xlets_settings/__init__.py:971 ../../__app__/data/python_modules/xlets_settings/__init__.py:1003
 msgid "_Save"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:367
-#, python-format
-msgid "Settings for %s"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:541
+msgid "Previous instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:600
-msgid "Import from a file"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:548
+msgid "Next instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:604
-msgid "Export to a file"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:588
+msgid "Import settings from a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:608
-msgid "Reset to defaults"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:592
+msgid "Export settings to a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:618 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:335
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:596
+msgid "Reset settings to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:328
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:639
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:627
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:750
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:680
+#, python-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:967
 msgid "Select or enter file to export to"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:759 ../../__app__/data/python_modules/xlets_settings/__init__.py:790
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:976 ../../__app__/data/python_modules/xlets_settings/__init__.py:1007
 msgid "JSON files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:782
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:999
 msgid "Select a JSON file to import"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:814
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1031
 msgid "Trying to reset all settings!!!"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:816
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1033
 msgid "Reset all settings to their default values?"
 msgstr ""
 
@@ -219,37 +231,459 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: customLaunchersManager.py:17
+#: settings.py:19
+msgid "Box top padding"
+msgstr ""
+
+#: settings.py:20
+msgid "Box right padding"
+msgstr ""
+
+#: settings.py:21
+msgid "Box bottom padding"
+msgstr ""
+
+#: settings.py:22
+msgid "Box left padding"
+msgstr ""
+
+#: settings.py:36 settings.py:326 settings.py:339 settings.py:352
+msgid "pixels"
+msgstr ""
+
+#: settings.py:52
+msgid "Cinnamon needs to be restarted"
+msgstr ""
+
+#: settings.py:56
 msgid "Enabled"
 msgstr ""
 
-#. settings-schema.json->pref_custom_icon_for_applet->description
-#: customLaunchersManager.py:21
+#: settings.py:60 settings.py:131
 msgid "Icon"
 msgstr ""
 
-#: customLaunchersManager.py:25
+#: settings.py:64
 msgid "Title"
 msgstr ""
 
-#: customLaunchersManager.py:29
+#: settings.py:68
 msgid "Command"
 msgstr ""
 
-#: customLaunchersManager.py:33 z_create_localized_help.py:28
+#: settings.py:72 z_create_localized_help.py:28
 msgid "Description"
 msgstr ""
 
-#: customLaunchersManager.py:38
+#: settings.py:77 settings.py:595
 msgid "Mandatory fields"
 msgstr ""
 
-#: customLaunchersManager.py:42 customLaunchersManager.py:44
+#: settings.py:82
+msgid "It enables the ability to log the output of several functions used by the extension."
+msgstr ""
+
+#: settings.py:84 settings.py:625
+msgid "Normal"
+msgstr ""
+
+#: settings.py:84
+msgid "Only log messages caused by non critical errors."
+msgstr ""
+
+#: settings.py:85
+msgid "Additinally log extra output messages and all HTTP responses."
+msgstr ""
+
+#: settings.py:85 settings.py:626
+msgid "Verbose"
+msgstr ""
+
+#: settings.py:86 settings.py:627
+msgid "Very verbose"
+msgstr ""
+
+#: settings.py:87
+msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#: settings.py:97
+msgid "Save settings"
+msgstr ""
+
+#: settings.py:98
+msgid ""
+"Most settings are not automatically saved when modified.\n"
+"Press this button for the settings to take effect."
+msgstr ""
+
+#: settings.py:105 settings.py:107
+msgid "Applet settings"
+msgstr ""
+
+#: settings.py:113
+msgid "Keyboard shortcut to open and close the menu"
+msgstr ""
+
+#: settings.py:122
+msgid "Use a custom icon"
+msgstr ""
+
+#: settings.py:123
+msgid "Unchecking this allows the theme to set the icon."
+msgstr ""
+
+#: settings.py:133
+msgid "Select an icon to show in the panel."
+msgstr ""
+
+#: settings.py:141
+msgid "Text"
+msgstr ""
+
+#: settings.py:142
+msgid "Enter custom text to show in the panel."
+msgstr ""
+
+#: settings.py:150 settings.py:152
+msgid "Menu settings"
+msgstr ""
+
+#: settings.py:158
+msgid "Enable autoscrolling in application list"
+msgstr ""
+
+#: settings.py:159
+msgid "Choose whether or not to enable smooth autoscrolling in the application list."
+msgstr ""
+
+#: settings.py:167
+msgid "Use menu animations"
+msgstr ""
+
+#: settings.py:168
+msgid "Allow the menu to animate on open and close."
+msgstr ""
+
+#: settings.py:176
+msgid "Open the menu when I move my mouse over it"
+msgstr ""
+
+#: settings.py:177
+msgid "Enable opening the menu when the mouse enters the applet."
+msgstr ""
+
+#: settings.py:185
+msgid "Strict search results"
+msgstr ""
+
+#: settings.py:186
+msgid "If enabled, low priority search results will not be displayed."
+msgstr ""
+
+#: settings.py:194
+msgid "Menu hover delay"
+msgstr ""
+
+#: settings.py:196
+msgid "Delay before the menu opens when hovered."
+msgstr ""
+
+#: settings.py:200
+msgid "milliseconds"
+msgstr ""
+
+#: settings.py:208
+msgid "Maximum search results"
+msgstr ""
+
+#: settings.py:209
+msgid "Set the maximum amount of search results to be displayed."
+msgstr ""
+
+#: settings.py:213
+msgid "items"
+msgstr ""
+
+#: settings.py:222 settings.py:224
+msgid "Menu layout"
+msgstr ""
+
+#: settings.py:230
+msgid "Show \"All Applications\" category"
+msgstr ""
+
+#: settings.py:238
+msgid "Show \"Recently Used\" category"
+msgstr ""
+
+#: settings.py:239
+msgid ""
+"From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recently Used\" category.\n"
+"Every time this option is disabled, the list of recently used applications will be cleared."
+msgstr ""
+
+#: settings.py:247
+msgid "Show separator below \"Recently Used\" category"
+msgstr ""
+
+#: settings.py:256
+msgid "Show category icons"
+msgstr ""
+
+#: settings.py:257
+msgid "Choose whether or not to show icons on categories."
+msgstr ""
+
+#: settings.py:265
+msgid "Show application icons"
+msgstr ""
+
+#: settings.py:266
+msgid "Choose whether or not to show icons on applications."
+msgstr ""
+
+#: settings.py:274
+msgid "Hide applications list scrollbar"
+msgstr ""
+
+#: settings.py:282
+msgid "Invert menu layout"
+msgstr ""
+
+#: settings.py:283
+msgid "By default, the search box is at the top of the menu and the custom launchers box is at the bottom. Enabling this preference will invert those elements in the menu."
+msgstr ""
+
+#: settings.py:291
+msgid "Swap categories box"
+msgstr ""
+
+#: settings.py:292
+msgid "By default, the categories box is to the left of the applications list. With this option enabled, the categories box will be placed to the right of the applications list."
+msgstr ""
+
+#: settings.py:300
+msgid "Invert custom launches box buttons order"
+msgstr ""
+
+#: settings.py:308
+msgid "Maximum button width"
+msgstr ""
+
+#: settings.py:309
+msgid "Define the maximum width of menu items inside the applications box."
+msgstr ""
+
+#: settings.py:321
+msgid "Categories icon size"
+msgstr ""
+
+#: settings.py:334
+msgid "Applications icon size"
+msgstr ""
+
+#: settings.py:347
+msgid "Search results icon size"
+msgstr ""
+
+#: settings.py:360
+msgid "Custom launchers icon size"
+msgstr ""
+
+#: settings.py:372
+msgid "Custom launchers button alignment"
+msgstr ""
+
+#: settings.py:375
+msgid "Left"
+msgstr ""
+
+#: settings.py:376
+msgid "Middle"
+msgstr ""
+
+#: settings.py:377
+msgid "Right"
+msgstr ""
+
+#: settings.py:383
+msgid "Recent applications"
+msgstr ""
+
+#: settings.py:390
+msgid "Ignore Favorites"
+msgstr ""
+
+#: settings.py:391
+msgid "If enabled, applications set as Favorite will not be displayed in the list of \"Recent Applications\"."
+msgstr ""
+
+#: settings.py:399
+msgid "Invert recently used applications order"
+msgstr ""
+
+#: settings.py:400
+msgid "By default, the most recently used application is at the top of the list. With this option enabled, the most recently used application will be at the bottom of the list."
+msgstr ""
+
+#: settings.py:408
+msgid "Maximum recently used applications to display"
+msgstr ""
+
+#: settings.py:412
+msgid "applications"
+msgstr ""
+
+#: settings.py:420 settings.py:422
+msgid "Context menu"
+msgstr ""
+
+#: settings.py:428
+msgid "Show \"Add to panel\" on context"
+msgstr ""
+
+#: settings.py:436
+msgid "Show \"Add to desktop\" on context"
+msgstr ""
+
+#: settings.py:444
+msgid "Show \"Add/Remove to/from favorites\" on context"
+msgstr ""
+
+#: settings.py:452
+msgid "Show \"Uninstall\" on context"
+msgstr ""
+
+#: settings.py:460
+msgid "Show \"Run with NVIDIA GPU\" on context"
+msgstr ""
+
+#: settings.py:468
+msgid "Show \"Run as root\" on context"
+msgstr ""
+
+#: settings.py:476
+msgid "Show \"Run from terminal\" on context"
+msgstr ""
+
+#: settings.py:484
+msgid "Show \"Run from terminal as root\" on context"
+msgstr ""
+
+#: settings.py:492
+msgid "Show \"Open .desktop file folder\" on context"
+msgstr ""
+
+#: settings.py:500
+msgid "Show \"Edit .desktop file\" on context"
+msgstr ""
+
+#: settings.py:501
+msgid "It adds to the applications context menu an entry that will allow you to open the current selected application's .desktop file in a text editor."
+msgstr ""
+
+#: settings.py:506
+msgid "Advanced"
+msgstr ""
+
+#: settings.py:512
+msgid "Gain privileges of not owned files"
+msgstr ""
+
+#: settings.py:513
+msgid ""
+"If enabled, this options will open as root .desktop files that aren't owned by the current user.\n"
+"\n"
+"This isn't needed for all text editors. Some text editors will allow you to open and edit not owned files and will ask for the root password at the moment of saving the changes."
+msgstr ""
+
+#: settings.py:521
+msgid "Custom text editor"
+msgstr ""
+
+#: settings.py:522
+msgid ""
+"Set a custom text editor to open .desktop files (just the name of the text editor executable or the path to it).\n"
+"Leave it blank to let the system decide."
+msgstr ""
+
+#: settings.py:530
+msgid "Privileges elevator"
+msgstr ""
+
+#: settings.py:531
+msgid ""
+"The graphical front-end to use to run applications as root.\n"
+"This is used by the \"Open as Root\" context menu and the option \"Gain privileges of not owned files\"."
+msgstr ""
+
+#: settings.py:539
+msgid "Terminal emulator"
+msgstr ""
+
+#: settings.py:540
+msgid ""
+"Choose the terminal emulator used by all launch from terminal options.\n"
+"IMPORTANT!!! The terminal emulator has to support the -e argument (execute the argument to this option inside the terminal)."
+msgstr ""
+
+#: settings.py:548
+msgid "Command interpreter (shell)"
+msgstr ""
+
+#: settings.py:549
+msgid ""
+"The command interpreter (shell) used when launching programs from a terminal.\n"
+"IMPORTANT!!! The shell has to support the -c argument (take the argument passed by this option as a command to execute.)."
+msgstr ""
+
+#: settings.py:557
+msgid "Appearance"
+msgstr ""
+
+#: settings.py:559
+msgid "Custom launchers box padding"
+msgstr ""
+
+#: settings.py:565
+msgid "Categories box padding"
+msgstr ""
+
+#: settings.py:571
+msgid "Applications box padding"
+msgstr ""
+
+#: settings.py:577
+msgid "Search entry padding"
+msgstr ""
+
+#: settings.py:583
+msgid "Search box padding"
+msgstr ""
+
+#: settings.py:592 settings.py:594
 msgid "Custom launchers"
 msgstr ""
 
-#: customLaunchersManager.py:87
-msgid "Custom launchers manager"
+#: settings.py:613
+msgid "Other"
+msgstr ""
+
+#: settings.py:615
+msgid "Debugging"
+msgstr ""
+
+#: settings.py:622
+msgid "Logging level"
+msgstr ""
+
+#: settings.py:636
+msgid "Enable debugger"
+msgstr ""
+
+#: settings.py:637
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
 msgstr ""
 
 #: z_create_localized_help.py:30
@@ -534,135 +968,135 @@ msgstr ""
 msgid "There is a folder named **icons** inside this applet directory. It contains several symbolic icons (most of them are from the Faenza icon theme) and each icon can be used directly by name (on a custom launcher, for example)."
 msgstr ""
 
-#: applet.js:77
+#: applet.js:79
 msgid "Menu"
 msgstr ""
 
-#: applet.js:318
+#: applet.js:323
 msgid "Open the menu editor"
 msgstr ""
 
-#: applet.js:323
-msgid "Edit custom launchers"
+#: applet.js:340
+msgid "Configure..."
 msgstr ""
 
-#: applet.js:1467
+#: applet.js:1501
 msgid "Favorites"
 msgstr ""
 
-#: applet.js:1493
+#: applet.js:1527
 msgid "Recently Used"
 msgstr ""
 
-#: applet.js:1523
+#: applet.js:1557
 msgid "All Applications"
 msgstr ""
 
-#: applet.js:1605
+#: applet.js:1639
 msgid "No search results"
 msgstr ""
 
-#: applet.js:1627
+#: applet.js:1661
 msgid "No recent applications"
 msgstr ""
 
-#: applet.js:1635
+#: applet.js:1669
 msgid "Clear list"
 msgstr ""
 
-#: applet.js:1807
+#: applet.js:1841
 msgid "Type to search..."
 msgstr ""
 
-#: applet.js:2540 applet.js:2550
+#: applet.js:2574 applet.js:2584
 msgid "Categories"
 msgstr ""
 
-#: utils.js:610
+#: utils.js:626
 msgid "Add to panel"
 msgstr ""
 
-#: utils.js:614
+#: utils.js:630
 msgid "Add this application to the Panel launchers applet."
 msgstr ""
 
-#: utils.js:621
+#: utils.js:637
 msgid "Add to desktop"
 msgstr ""
 
-#: utils.js:625
+#: utils.js:641
 msgid "Add this application to the Desktop."
 msgstr ""
 
-#: utils.js:633
+#: utils.js:649
 msgid "Remove from favorites"
 msgstr ""
 
-#: utils.js:637
+#: utils.js:653
 msgid "Remove application from your favorites."
 msgstr ""
 
-#: utils.js:642
+#: utils.js:658
 msgid "Add to favorites"
 msgstr ""
 
-#: utils.js:646
+#: utils.js:662
 msgid "Add application to your favorites."
 msgstr ""
 
-#: utils.js:654
+#: utils.js:670
 msgid "Uninstall"
 msgstr ""
 
-#: utils.js:658
+#: utils.js:674
 msgid "Uninstall application from your system."
 msgstr ""
 
-#: utils.js:665
+#: utils.js:681
 msgid "Run with NVIDIA GPU"
 msgstr ""
 
-#: utils.js:669
+#: utils.js:685
 msgid "Run application through optirun command (Bumblebee)."
 msgstr ""
 
-#: utils.js:676
+#: utils.js:692
 msgid "Run as root"
 msgstr ""
 
-#: utils.js:680
+#: utils.js:696
 msgid "Run application as root."
 msgstr ""
 
-#: utils.js:687
+#: utils.js:703
 msgid "Edit .desktop file"
 msgstr ""
 
-#: utils.js:691
+#: utils.js:707
 msgid "Edit this application .desktop file with a text editor."
 msgstr ""
 
-#: utils.js:698
+#: utils.js:714
 msgid "Open .desktop file folder"
 msgstr ""
 
-#: utils.js:702
+#: utils.js:718
 msgid "Open the folder containg this application .desktop file."
 msgstr ""
 
-#: utils.js:709
+#: utils.js:725
 msgid "Run from terminal"
 msgstr ""
 
-#: utils.js:713
+#: utils.js:729
 msgid "Run application from a terminal."
 msgstr ""
 
-#: utils.js:720
+#: utils.js:736
 msgid "Run from terminal as root"
 msgstr ""
 
-#: utils.js:724
+#: utils.js:740
 msgid "Run application from a terminal as root."
 msgstr ""
 
@@ -678,456 +1112,14 @@ msgstr ""
 msgid "See this xlet help file."
 msgstr ""
 
-#. settings-schema.json->head->description
-msgid ""
-"Most settings are not automatically saved when modified.\n"
-"Press any of the \"Click here to save settings\" buttons for the settings to take effect."
+#. settings-schema.json->info_label_1->description
+msgid "If you are seeing this window, you are using a Cinnamon version with a design flaw."
 msgstr ""
 
-#. settings-schema.json->save_settings_first->description
-#. settings-schema.json->save_settings_3->description
-#. settings-schema.json->save_settings_2->description
-#. settings-schema.json->save_settings_last->description
-msgid "Click here to save settings"
+#. settings-schema.json->info_label_2->description
+msgid "This window isn't this applet's \"real\" configuration window."
 msgstr ""
 
-#. settings-schema.json->applet_settings_header->description
-msgid "Applet settings"
-msgstr ""
-
-#. settings-schema.json->pref_overlay_key->description
-msgid "Keyboard shortcut to open and close the menu"
-msgstr ""
-
-#. settings-schema.json->pref_use_a_custom_icon_for_applet->description
-msgid "Use a custom icon"
-msgstr ""
-
-#. settings-schema.json->pref_use_a_custom_icon_for_applet->tooltip
-msgid "Unchecking this allows the theme to set the icon"
-msgstr ""
-
-#. settings-schema.json->pref_custom_icon_for_applet->tooltip
-msgid "Select an icon to show in the panel."
-msgstr ""
-
-#. settings-schema.json->pref_custom_label_for_applet->description
-msgid "Text"
-msgstr ""
-
-#. settings-schema.json->pref_custom_label_for_applet->tooltip
-msgid "Enter custom text to show in the panel."
-msgstr ""
-
-#. settings-schema.json->menu_settings_header->description
-msgid "Menu settings"
-msgstr ""
-
-#. settings-schema.json->pref_enable_autoscroll->description
-msgid "Enable autoscrolling in application list"
-msgstr ""
-
-#. settings-schema.json->pref_enable_autoscroll->tooltip
-msgid "Choose whether or not to enable smooth autoscrolling in the application list."
-msgstr ""
-
-#. settings-schema.json->pref_animate_menu->description
-msgid "Use menu animations"
-msgstr ""
-
-#. settings-schema.json->pref_animate_menu->tooltip
-msgid "Allow the menu to animate on open and close"
-msgstr ""
-
-#. settings-schema.json->pref_activate_on_hover->description
-msgid "Open the menu when I move my mouse over it"
-msgstr ""
-
-#. settings-schema.json->pref_activate_on_hover->tooltip
-msgid "Enable opening the menu when the mouse enters the applet"
-msgstr ""
-
-#. settings-schema.json->pref_strict_search_results->description
-msgid "Strict search results"
-msgstr ""
-
-#. settings-schema.json->pref_strict_search_results->tooltip
-msgid "If enabled, low priority search results will not be displayed."
-msgstr ""
-
-#. settings-schema.json->pref_menu_hover_delay->units
-msgid "milliseconds"
-msgstr ""
-
-#. settings-schema.json->pref_menu_hover_delay->description
-msgid "Menu hover delay"
-msgstr ""
-
-#. settings-schema.json->pref_menu_hover_delay->tooltip
-msgid "Delay before the menu opens when hovered"
-msgstr ""
-
-#. settings-schema.json->pref_max_search_results->units
-msgid "items"
-msgstr ""
-
-#. settings-schema.json->pref_max_search_results->description
-msgid "Maximum search results"
-msgstr ""
-
-#. settings-schema.json->pref_max_search_results->tooltip
-msgid "Set the maximum amount of search results to be displayed"
-msgstr ""
-
-#. settings-schema.json->menu_layout_header->description
-msgid "Menu layout"
-msgstr ""
-
-#. settings-schema.json->pref_show_all_applications_category->description
-msgid "Show \"All Applications\" category"
-msgstr ""
-
-#. settings-schema.json->pref_recently_used_apps_enabled->description
-msgid "Show \"Recently Used\" category"
-msgstr ""
-
-#. settings-schema.json->pref_recently_used_apps_enabled->tooltip
-msgid ""
-"From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recently Used\" category.\n"
-"Every time this option is disabled, the list of recently used applications will be cleared."
-msgstr ""
-
-#. settings-schema.json->pref_recently_used_apps_show_separator->description
-msgid "Show separator below \"Recently Used\" category"
-msgstr ""
-
-#. settings-schema.json->pref_show_category_icons->description
-msgid "Show category icons"
-msgstr ""
-
-#. settings-schema.json->pref_show_category_icons->tooltip
-msgid "Choose whether or not to show icons on categories."
-msgstr ""
-
-#. settings-schema.json->pref_show_application_icons->description
-msgid "Show application icons"
-msgstr ""
-
-#. settings-schema.json->pref_show_application_icons->tooltip
-msgid "Choose whether or not to show icons on applications."
-msgstr ""
-
-#. settings-schema.json->pref_hide_applications_list_scrollbar->description
-msgid "Hide applications list scrollbar"
-msgstr ""
-
-#. settings-schema.json->pref_invert_menu_layout->description
-msgid "Invert menu layout"
-msgstr ""
-
-#. settings-schema.json->pref_invert_menu_layout->tooltip
-msgid "By default, the search box is at the top of the menu and the custom launchers box is at the bottom. Enabling this preference will invert those elements in the menu."
-msgstr ""
-
-#. settings-schema.json->pref_swap_categories_box->description
-msgid "Swap categories box"
-msgstr ""
-
-#. settings-schema.json->pref_swap_categories_box->tooltip
-msgid "By default, the categories box is to the left of the applications list. With this option enabled, the categories box will be placed to the right of the applications list."
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_box_invert_buttons_order->description
-msgid "Invert custom launches box buttons order"
-msgstr ""
-
-#. settings-schema.json->pref_max_width_for_buttons->units
-msgid "ems"
-msgstr ""
-
-#. settings-schema.json->pref_max_width_for_buttons->description
-msgid "Maximum button width:"
-msgstr ""
-
-#. settings-schema.json->pref_max_width_for_buttons->tooltip
-msgid "Define the maximum width of menu items inside the applications box."
-msgstr ""
-
-#. settings-schema.json->pref_category_icon_size->units
-#. settings-schema.json->pref_application_icon_size->units
-#. settings-schema.json->pref_search_result_icon_size->units
-#. settings-schema.json->pref_custom_launchers_icon_size->units
-#. settings-schema.json->pref_custom_launchers_box_padding_top->units
-#. settings-schema.json->pref_custom_launchers_box_padding_right->units
-#. settings-schema.json->pref_custom_launchers_box_padding_bottom->units
-#. settings-schema.json->pref_custom_launchers_box_padding_left->units
-#. settings-schema.json->pref_categories_box_padding_top->units
-#. settings-schema.json->pref_categories_box_padding_right->units
-#. settings-schema.json->pref_categories_box_padding_bottom->units
-#. settings-schema.json->pref_categories_box_padding_left->units
-#. settings-schema.json->pref_applications_box_padding_top->units
-#. settings-schema.json->pref_applications_box_padding_right->units
-#. settings-schema.json->pref_applications_box_padding_bottom->units
-#. settings-schema.json->pref_applications_box_padding_left->units
-#. settings-schema.json->pref_search_entry_padding_top->units
-#. settings-schema.json->pref_search_entry_padding_right->units
-#. settings-schema.json->pref_search_entry_padding_bottom->units
-#. settings-schema.json->pref_search_entry_padding_left->units
-#. settings-schema.json->pref_search_box_padding_top->units
-#. settings-schema.json->pref_search_box_padding_right->units
-#. settings-schema.json->pref_search_box_padding_bottom->units
-#. settings-schema.json->pref_search_box_padding_left->units
-msgid "pixels"
-msgstr ""
-
-#. settings-schema.json->pref_category_icon_size->description
-msgid "Categories icon size:"
-msgstr ""
-
-#. settings-schema.json->pref_application_icon_size->description
-msgid "Applications icon size:"
-msgstr ""
-
-#. settings-schema.json->pref_search_result_icon_size->description
-msgid "Search results icon size:"
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_icon_size->description
-msgid "Custom launchers icon size:"
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_box_alignment->description
-msgid "Custom launchers button alignment"
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_box_alignment->options
-msgid "Left"
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_box_alignment->options
-msgid "Middle"
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_box_alignment->options
-msgid "Right"
-msgstr ""
-
-#. settings-schema.json->recent_apps_header->description
-msgid "Recent Applications"
-msgstr ""
-
-#. settings-schema.json->pref_recently_used_apps_ignore_favorites->description
-msgid "Ignore Favorites"
-msgstr ""
-
-#. settings-schema.json->pref_recently_used_apps_ignore_favorites->tooltip
-msgid "If enabled, applications set as Favorite will not be displayed in the list of \"Recent Applications\"."
-msgstr ""
-
-#. settings-schema.json->pref_recently_used_apps_invert_order->description
-msgid "Invert recently used applications order"
-msgstr ""
-
-#. settings-schema.json->pref_recently_used_apps_invert_order->tooltip
-msgid "By default, the most recently used application is at the top of the list. With this option enabled, the most recently used application will be at the bottom of the list."
-msgstr ""
-
-#. settings-schema.json->pref_recently_used_apps_max_amount->units
-msgid "applications"
-msgstr ""
-
-#. settings-schema.json->pref_recently_used_apps_max_amount->description
-msgid "Maximum recently used applications to display:"
-msgstr ""
-
-#. settings-schema.json->context_menu_header->description
-msgid "Applications context menu extras"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_add_to_panel->description
-msgid "Show \"Add to panel\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_add_to_desktop->description
-msgid "Show \"Add to desktop\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_add_remove_favorite->description
-msgid "Show \"Add/Remove to/from favorites\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_uninstall->description
-msgid "Show \"Uninstall\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_bumblebee->description
-msgid "Show \"Run with NVIDIA GPU\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_run_as_root->description
-msgid "Show \"Run as root\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_run_from_terminal->description
-msgid "Show \"Run from terminal\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_run_from_terminal_as_root->description
-msgid "Show \"Run from terminal as root\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_desktop_file_folder->description
-msgid "Show \"Open .desktop file folder\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_edit_desktop_file->description
-msgid "Show \"Edit .desktop file\" on context"
-msgstr ""
-
-#. settings-schema.json->pref_context_show_edit_desktop_file->tooltip
-msgid "It adds to the applications context menu an entry that will allow you to open the current selected application's .desktop file in a text editor."
-msgstr ""
-
-#. settings-schema.json->pref_context_gain_privileges->description
-msgid "Gain privileges of not owned files"
-msgstr ""
-
-#. settings-schema.json->pref_context_gain_privileges->tooltip
-msgid ""
-"If enabled, this options will open as root .desktop files that aren't owned by the current user.\n"
-"\n"
-"This isn't needed for all text editors. Some text editors will allow you to open and edit not owned files and will ask for the root password at the moment of saving the changes."
-msgstr ""
-
-#. settings-schema.json->pref_context_custom_editor_for_edit_desktop_file->description
-msgid "Custom text editor:"
-msgstr ""
-
-#. settings-schema.json->pref_context_custom_editor_for_edit_desktop_file->tooltip
-msgid ""
-"Set a custom text editor to open .desktop files (just the name of the text editor executable or the path to it).\n"
-"Leave it blank to let the system decide."
-msgstr ""
-
-#. settings-schema.json->pref_privilege_elevator->description
-msgid "Privileges elevator:"
-msgstr ""
-
-#. settings-schema.json->pref_privilege_elevator->tooltip
-msgid ""
-"The graphical front-end to use to run applications as root.\n"
-"This is used by the \"Open as Root\" context menu and the option \"Gain privileges of not owned files\"."
-msgstr ""
-
-#. settings-schema.json->pref_terminal_emulator->description
-msgid "Terminal emulator:"
-msgstr ""
-
-#. settings-schema.json->pref_terminal_emulator->tooltip
-msgid ""
-"Choose the terminal emulator used by all launch from terminal options.\n"
-"IMPORTANT!!! The terminal emulator has to support the -e argument (execute the argument to this option inside the terminal)."
-msgstr ""
-
-#. settings-schema.json->pref_default_shell->description
-msgid "Command interpreter (shell):"
-msgstr ""
-
-#. settings-schema.json->pref_default_shell->tooltip
-msgid ""
-"The command interpreter (shell) used when launching programs from a terminal.\n"
-"IMPORTANT!!! The shell has to support the -c argument (take the argument passed by this option as a command to execute.)."
-msgstr ""
-
-#. settings-schema.json->padding_1_header->description
-msgid "Custom launchers box padding"
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_box_padding_top->description
-#. settings-schema.json->pref_categories_box_padding_top->description
-#. settings-schema.json->pref_applications_box_padding_top->description
-#. settings-schema.json->pref_search_entry_padding_top->description
-#. settings-schema.json->pref_search_box_padding_top->description
-msgid "Box top padding:"
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_box_padding_right->description
-#. settings-schema.json->pref_categories_box_padding_right->description
-#. settings-schema.json->pref_applications_box_padding_right->description
-#. settings-schema.json->pref_search_entry_padding_right->description
-#. settings-schema.json->pref_search_box_padding_right->description
-msgid "Box right padding:"
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_box_padding_bottom->description
-#. settings-schema.json->pref_categories_box_padding_bottom->description
-#. settings-schema.json->pref_applications_box_padding_bottom->description
-#. settings-schema.json->pref_search_entry_padding_bottom->description
-#. settings-schema.json->pref_search_box_padding_bottom->description
-msgid "Box bottom padding:"
-msgstr ""
-
-#. settings-schema.json->pref_custom_launchers_box_padding_left->description
-#. settings-schema.json->pref_categories_box_padding_left->description
-#. settings-schema.json->pref_applications_box_padding_left->description
-#. settings-schema.json->pref_search_entry_padding_left->description
-#. settings-schema.json->pref_search_box_padding_left->description
-msgid "Box left padding:"
-msgstr ""
-
-#. settings-schema.json->padding_2_header->description
-msgid "Categories box padding"
-msgstr ""
-
-#. settings-schema.json->padding_3_header->description
-msgid "Applications box padding"
-msgstr ""
-
-#. settings-schema.json->padding_4_header->description
-msgid "Search entry padding"
-msgstr ""
-
-#. settings-schema.json->padding_5_header->description
-msgid "Search box padding"
-msgstr ""
-
-#. settings-schema.json->debugging-header->description
-msgid "Debugging"
-msgstr ""
-
-#. settings-schema.json->pref_logging_level->description
-msgid "Logging level (*)"
-msgstr ""
-
-#. settings-schema.json->pref_logging_level->tooltip
-msgid ""
-"It enables the ability to log the output of several functions used by the extension.\n"
-"\n"
-"Normal: Only log messages caused by non critical errors.\n"
-"Verbose: Additinally log extra output messages and all HTTP responses.\n"
-"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
-msgstr ""
-
-#. settings-schema.json->pref_logging_level->options
-msgid "Normal"
-msgstr ""
-
-#. settings-schema.json->pref_logging_level->options
-msgid "Verbose"
-msgstr ""
-
-#. settings-schema.json->pref_logging_level->options
-msgid "Very verbose"
-msgstr ""
-
-#. settings-schema.json->pref_debugger_enabled->description
-msgid "Enable debugger (*)"
-msgstr ""
-
-#. settings-schema.json->pref_debugger_enabled->tooltip
-msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
-msgstr ""
-
-#. settings-schema.json->label->description
-msgid "(*) Requires Cinnamon restart to enable/disable"
+#. settings-schema.json->info_label_3->description
+msgid "Open this applet settings from its context menu."
 msgstr ""

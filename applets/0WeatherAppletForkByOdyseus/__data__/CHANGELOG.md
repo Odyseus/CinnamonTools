@@ -4,6 +4,21 @@
 
 ***
 
+- **Date:** Fri, 21 Jun 2019 23:06:01 -0300
+- **Commit:** [f913c7e](https://gitlab.com/Odyseus/CinnamonTools/commit/f913c7e)
+- **Author:** Odyseus
+
+```
+- Corrected error caused by random missing data from Yahoo! provider.
+- Redesigned applet tooltip to display information symmetrically.
+- Corrected the use of undefined constant in some providers.
+- Removed duplicated field from tooltip when the weather provider is WeatherBit.
+- Minor changes to the settings application due to changes in the custom settings framework.
+
+```
+
+***
+
 - **Date:** Wed, 5 Jun 2019 19:56:38 -0300
 - **Commit:** [0e2e18e](https://gitlab.com/Odyseus/CinnamonTools/commit/0e2e18e)
 - **Author:** Odyseus

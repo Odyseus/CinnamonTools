@@ -4,6 +4,26 @@
 
 ***
 
+- **Date:** Fri, 21 Jun 2019 23:05:27 -0300
+- **Commit:** [0a45561](https://gitlab.com/Odyseus/CinnamonTools/commit/0a45561)
+- **Author:** Odyseus
+
+```
+Applet rewrite
+--------------
+
+WARNING: This update is a complete rewrite of the applet and it will reset some of the settings of an existent instance of this applet to their default values.
+
+- Re-based from the version of the original author to take advantage of the performance improvements.
+- Redesigned applet tooltip to display information symmetrically.
+- Added option to change the order of the graphs in the applet.
+- Enabled support for vertical panels. Vertical panels were already supported since a previous re-base from the original applet, but I forgot to actually set the proper flag for the applet to be allowed to be placed in a vertical panel.
+- Implemented the use of a custom framework to handle the applet settings to take advantage of features not existent on Cinnamon's native settings system.
+
+```
+
+***
+
 - **Date:** Thu, 30 May 2019 03:48:27 -0300
 - **Commit:** [49ddf9d](https://gitlab.com/Odyseus/CinnamonTools/commit/49ddf9d)
 - **Author:** Odyseus

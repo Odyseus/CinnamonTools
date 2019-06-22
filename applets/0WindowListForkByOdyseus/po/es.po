@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-05-23 15:29-0300\n"
-"PO-Revision-Date: 2019-05-23 15:43-0300\n"
+"POT-Creation-Date: 2019-06-21 23:08-0300\n"
+"PO-Revision-Date: 2019-06-22 00:00-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1155
+#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1179
 msgid "Help"
 msgstr "Ayuda"
 
@@ -104,73 +104,73 @@ msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 
-#: utils.js:1007
+#: utils.js:1031
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: utils.js:1021
+#: utils.js:1045
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: utils.js:1032
+#: utils.js:1056
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: utils.js:1043
+#: utils.js:1067
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: utils.js:1049
+#: utils.js:1073
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: utils.js:1055
+#: utils.js:1079
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: utils.js:1085
+#: utils.js:1109
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: utils.js:1095
+#: utils.js:1119
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: utils.js:1110
+#: utils.js:1134
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: utils.js:1118
+#: utils.js:1142
 msgid "Restore"
 msgstr "Restaurar"
 
-#: utils.js:1123
+#: utils.js:1147
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: utils.js:1131
+#: utils.js:1155
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: utils.js:1136
+#: utils.js:1160
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: utils.js:1143
+#: utils.js:1167
 msgid "Close"
 msgstr "Cerrar"
 
-#: utils.js:1162
+#: utils.js:1186
 msgid "About..."
 msgstr "Acerca de..."
 
-#: utils.js:1167
+#: utils.js:1191
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: utils.js:1183
+#: utils.js:1207
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
@@ -280,13 +280,13 @@ msgid ""
 "It enables the ability to log the output of several functions used by the extension.\n"
 "\n"
 "Normal: Only log messages caused by non critical errors.\n"
-"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Verbose: Additionally log extra output messages and all HTTP responses.\n"
 "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
 "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
 "\n"
 "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-"Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+"Verbal: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
 "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
 
 #. settings-schema.json->pref_logging_level->options
@@ -312,3 +312,16 @@ msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+
+#~ msgid ""
+#~ "It enables the ability to log the output of several functions used by the extension.\n"
+#~ "\n"
+#~ "Normal: Only log messages caused by non critical errors.\n"
+#~ "Verbose: Additinally log extra output messages and all HTTP responses.\n"
+#~ "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+#~ msgstr ""
+#~ "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
+#~ "\n"
+#~ "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
+#~ "Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+#~ "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."

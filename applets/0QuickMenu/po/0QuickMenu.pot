@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0QuickMenu VERSION\n"
-"POT-Creation-Date: 2019-06-02 12:36-0300\n"
+"POT-Creation-Date: 2019-06-22 00:01-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:556
+#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:559
 msgid "Help"
 msgstr ""
 
@@ -174,23 +174,23 @@ msgstr ""
 msgid "Remove '%s'"
 msgstr ""
 
-#: applet.js:538
+#: applet.js:541
 msgid "Update menu"
 msgstr ""
 
-#: applet.js:543
+#: applet.js:546
 msgid "Scan the main folder to re-create the menu."
 msgstr ""
 
-#: applet.js:546
+#: applet.js:549
 msgid "Open folder"
 msgstr ""
 
-#: applet.js:552
+#: applet.js:555
 msgid "Open the main folder."
 msgstr ""
 
-#: applet.js:562
+#: applet.js:565
 msgid "Open the help file."
 msgstr ""
 
@@ -397,7 +397,7 @@ msgid ""
 "It enables the ability to log the output of several functions used by the extension.\n"
 "\n"
 "Normal: Only log messages caused by non critical errors.\n"
-"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Verbose: Additionally log extra output messages and all HTTP responses.\n"
 "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
 

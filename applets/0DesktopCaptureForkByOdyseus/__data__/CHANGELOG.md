@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Fri, 21 Jun 2019 23:01:59 -0300
+- **Commit:** [556b3ce](https://gitlab.com/Odyseus/CinnamonTools/commit/556b3ce)
+- **Author:** Odyseus
+
+```
+- Corrected typo in settings-schema.json file.
+
+```
+
+***
+
 - **Date:** Thu, 30 May 2019 03:47:07 -0300
 - **Commit:** [6845519](https://gitlab.com/Odyseus/CinnamonTools/commit/6845519)
 - **Author:** Odyseus

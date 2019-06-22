@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-05-23 15:29-0300\n"
-"PO-Revision-Date: 2019-05-23 15:41-0300\n"
+"POT-Creation-Date: 2019-06-21 23:08-0300\n"
+"PO-Revision-Date: 2019-06-21 23:55-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,14 +18,180 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:129
+msgid "Information related to this specific section"
+msgstr "Información relacionada con esta sección específica."
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:419
+msgid "Choose an Icon"
+msgstr "Elegir un ícono"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:422 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:783 ../../__app__/data/python_modules/xlets_settings/__init__.py:970 ../../__app__/data/python_modules/xlets_settings/__init__.py:1002
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:423
+msgid "_Open"
+msgstr "_Abrir"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:426
+msgid "Image files"
+msgstr "Archivos de imagen"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:643
+msgid "Clear path"
+msgstr "Limpiar ruta"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:329
+msgid "No app chosen"
+msgstr "Ninguna aplicación elegida"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:421
+msgid "Add new item"
+msgstr "Agregar nueva entrada"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:429
+msgid "Remove selected item"
+msgstr "Eliminar ítem seleccionado"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:441
+msgid "Edit selected item"
+msgstr "Editar ítem seleccionado"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:451
+msgid "Move selected item up"
+msgstr "Mover ítem seleccionado hacia arriba"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:459
+msgid "Move selected item down"
+msgstr "Mover ítem seleccionado hacia abajo"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:473
+msgid "Export data"
+msgstr "Exportar datos"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:486
+msgid "Import data"
+msgstr "Importar datos"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:494
+msgid "Apply changes"
+msgstr "Aplicar cambios"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:610
+msgid "Item removal"
+msgstr "Eliminación de ítem"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:613
+msgid "Are you sure that you want to remove this item?"
+msgstr "¿Está seguro de que desea remover este ítem?"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:614
+msgid "Note"
+msgstr "Nota"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
+msgid "Choose how to add the imported data"
+msgstr "Elegir cómo agregar los datos importados"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
+msgid "_Overwrite"
+msgstr "_Sobrescribir"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:700
+msgid "_Append"
+msgstr "_Adjuntar"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:718
+msgid "Overwrite"
+msgstr "Sobrescribir"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:719
+msgid "replace the current data with the imported data."
+msgstr "reemplazar los datos actuales con los datos importados."
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
+msgid "Append"
+msgstr "Adjuntar"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:721
+msgid "add the imported data to the current data."
+msgstr "agregar los datos importados a los datos actuales."
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:775
+msgid "Add new entry"
+msgstr "Agregar nueva entrada"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:777
+msgid "Edit entry"
+msgstr "Editar entrada"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:784 ../../__app__/data/python_modules/xlets_settings/__init__.py:971 ../../__app__/data/python_modules/xlets_settings/__init__.py:1003
+msgid "_Save"
+msgstr "_Guardar"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:541
+msgid "Previous instance"
+msgstr "Instancia previa"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:548
+msgid "Next instance"
+msgstr "Siguiente instancia"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:588
+msgid "Import settings from a file"
+msgstr "Importar configuración desde un archivo"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:592
+msgid "Export settings to a file"
+msgstr "Exportar configuración hacia un archivo"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:596
+msgid "Reset settings to defaults"
+msgstr "Restablecer los valores predeterminados"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:218 utils.js:82
+msgid "Help"
+msgstr "Ayuda"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:627
+#, python-format
+msgid "Momentarily highlight the %s on your desktop"
+msgstr "Resaltar momentáneamente el %s en el escritorio"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:680
+#, python-format
+msgid "Settings for %s"
+msgstr "Preferencias para %s"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:967
+msgid "Select or enter file to export to"
+msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:976 ../../__app__/data/python_modules/xlets_settings/__init__.py:1007
+msgid "JSON files"
+msgstr "Archivos JSON"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:999
+msgid "Select a JSON file to import"
+msgstr "Seleccionar un archivo JSON para importar"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1031
+msgid "Trying to reset all settings!!!"
+msgstr "¡Intentando restablecer todos los ajustes!"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1033
+msgid "Reset all settings to their default values?"
+msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
+
 #: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
-
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:214
-msgid "Help"
-msgstr "Ayuda"
 
 #: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Contributors"
@@ -68,6 +234,238 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
+#: settings.py:17
+msgid "Cinnamon needs to be restarted"
+msgstr "Cinnamon necesita ser reiniciado"
+
+#: settings.py:20
+msgid "It enables the ability to log the output of several functions used by the extension."
+msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por el applet."
+
+#: settings.py:22 settings.py:471
+msgid "Normal"
+msgstr "Normal"
+
+#: settings.py:22
+msgid "Only log messages caused by non critical errors."
+msgstr "Solo registrar mensajes causados por errores críticos."
+
+#: settings.py:23
+msgid "Additinally log extra output messages and all HTTP responses."
+msgstr "Adicionalmente registrar mensajes extra y todas las respuestas HTTP."
+
+#: settings.py:23 settings.py:472
+msgid "Verbose"
+msgstr "Detallado"
+
+#: settings.py:24 settings.py:473
+msgid "Very verbose"
+msgstr "Muy detallado"
+
+#: settings.py:25
+msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr "Adicionalmente registrar todas las llamadas de métodos de todas las clases/prototipos de JavaScript y sus tiempos de ejecución."
+
+#: settings.py:31
+msgid "Enabled"
+msgstr "Habilitado"
+
+#: settings.py:35
+msgid "Graphs"
+msgstr "Gráficos"
+
+#: settings.py:38 settings.py:222 settings.py:224 constants.js:16
+msgid "CPU"
+msgstr "CPU"
+
+#: settings.py:39 settings.py:295 constants.js:20
+msgid "Memory"
+msgstr "Memoria"
+
+#: settings.py:40 settings.py:340 constants.js:24
+msgid "Swap"
+msgstr "Swap"
+
+#: settings.py:41 settings.py:377 constants.js:28
+msgid "Network"
+msgstr "Red"
+
+#: settings.py:42 settings.py:422 constants.js:32
+msgid "Load average"
+msgstr "Promedio de carga"
+
+#: settings.py:48 settings.py:50
+msgid "General"
+msgstr "General"
+
+#: settings.py:56
+msgid "Keyboard shortcut to launch a custom command"
+msgstr "Atajo de teclado para ejecutar un comando personalizado"
+
+#: settings.py:65
+msgid "Command to launch on keyboard shortcut"
+msgstr "Comando a ejecutar con atajo de teclado"
+
+#: settings.py:66
+msgid "Command to launch when the keyboard shortcut specified above is pressed."
+msgstr "Comando a ejecutar cuando el atajo de teclado especificado arriba es presionado."
+
+#: settings.py:74
+msgid "Command to launch on click"
+msgstr "Comando a ejecutar al hacer clic"
+
+#: settings.py:75
+msgid "Command to launch when the applet is clicked."
+msgstr "Comando a ejecutar al hacer clic en el applet."
+
+#: settings.py:80
+msgid "Graphs order"
+msgstr "Orden de gráficos"
+
+#: settings.py:82
+msgid "Move elements on the list to reorder the graphs in the applet."
+msgstr "Mover los elementos de la lista para reordenar los gráficos en el applet."
+
+#: settings.py:100 settings.py:102
+msgid "Appearance"
+msgstr "Apariencia"
+
+#: settings.py:108
+msgid "Smooth graphs"
+msgstr "Usar suavizado de gráficos"
+
+#: settings.py:116
+msgid "Common graph width"
+msgstr "Ancho de gráficos común"
+
+#: settings.py:117
+msgid "If the applet is in a vertical panel, this sets the graph height. The graph width is then the panel width minus padding."
+msgstr "Si el applet está en un panel vertical, esta opción establece la altura del gráfico. El ancho del gráfico es entonces el ancho del panel menos el relleno."
+
+#: settings.py:129
+msgid "Graph spacing"
+msgstr "Espaciado del gráfico"
+
+#: settings.py:130
+msgid "The number of pixels between each graph. Can be set to -1 to allow single line borders between graphs if borders are enabled."
+msgstr "El número de píxeles entre cada gráfico. Se puede establecer en -1 para permitir bordes de una sola línea entre los gráficos si los bordes están habilitados."
+
+#: settings.py:142
+msgid "Refresh rate"
+msgstr "Frecuencia de refresco"
+
+#: settings.py:154
+msgid "Use custom applet padding"
+msgstr "Usar espaciado personalizado"
+
+#: settings.py:162
+msgid "Left/right padding"
+msgstr "Espaciado derecho/izquierdo"
+
+#: settings.py:175
+msgid "Top/bottom padding"
+msgstr "Espaciado arriba/abajo"
+
+#: settings.py:188
+msgid "Draw background"
+msgstr "Dibujar fondo de gráfico"
+
+#: settings.py:196
+msgid "Background color"
+msgstr "Color de fondo"
+
+#: settings.py:205
+msgid "Draw border"
+msgstr "Dibujar borde de gráfico"
+
+#: settings.py:213
+msgid "Border color"
+msgstr "Color del borde"
+
+#: settings.py:230 settings.py:303 settings.py:348 settings.py:385 settings.py:430
+msgid "Override graph width"
+msgstr "Anular el ancho del gráfico"
+
+#: settings.py:238 settings.py:311 settings.py:356 settings.py:393 settings.py:438
+msgid "Graph width"
+msgstr "Anchura del gráfico"
+
+#: settings.py:251
+msgid "Show this many decimals in the tooltip"
+msgstr "Mostrar este número de decimales en la información sobre herramientas"
+
+#: settings.py:263
+msgid "User color"
+msgstr "Usuario"
+
+#: settings.py:271
+msgid "Nice color"
+msgstr "Nice"
+
+#: settings.py:279
+msgid "Kernel color"
+msgstr "Kernel"
+
+#: settings.py:287
+msgid "IOWait color"
+msgstr "IOWait"
+
+#: settings.py:297
+msgid "Memory graph"
+msgstr "Gráfico de memoria"
+
+#: settings.py:324 settings.py:369
+msgid "Used color"
+msgstr "Usado"
+
+#: settings.py:332
+msgid "Cached color"
+msgstr "Almacenado en caché"
+
+#: settings.py:342
+msgid "Swap graph"
+msgstr "Gráfico de swap"
+
+#: settings.py:379
+msgid "Network graph"
+msgstr "Gráfico de red"
+
+#: settings.py:406
+msgid "Download color"
+msgstr "Descarga"
+
+#: settings.py:414
+msgid "Upload color"
+msgstr "Subida"
+
+#: settings.py:424
+msgid "Load average graph"
+msgstr "Gráfico de promedio de carga"
+
+#: settings.py:451
+msgid "Color"
+msgstr "Color"
+
+#: settings.py:459
+msgid "Other"
+msgstr "Otros"
+
+#: settings.py:461
+msgid "Debugging"
+msgstr "Configuración de depuración"
+
+#: settings.py:468
+msgid "Logging level"
+msgstr "Nivel de registro"
+
+#: settings.py:482
+msgid "Enable debugger"
+msgstr "Habilitar depurador"
+
+#: settings.py:483
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
+
 #: z_create_localized_help.py:26
 msgid "Description"
 msgstr "Descripción"
@@ -89,92 +487,80 @@ msgstr "Se agregó un atajo de teclado para poder lanzar un comando personalizad
 msgid "Added option to hide the graphs background, not just set it transparent."
 msgstr "Se agregó una opción para ocultar el fondo de los gráficos, no solo configurarlo de forma transparente."
 
-#: z_create_localized_help.py:36
+#: z_create_localized_help.py:35
+msgid "Added option to change the graphs order."
+msgstr "Añadida opción para cambiar el orden de los gráficos."
+
+#: z_create_localized_help.py:37
 msgid "Dependencies"
 msgstr "Dependencias"
 
-#: z_create_localized_help.py:38
+#: z_create_localized_help.py:39
 msgid "The gtop library reads information about processes and the state of the system."
 msgstr "La biblioteca gtop lee información acerca de procesos y el estado del sistema."
 
-#: z_create_localized_help.py:39
+#: z_create_localized_help.py:40
 msgid "Debian based distributions:"
 msgstr "Distribuciones basadas en Debian:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:41
+#: z_create_localized_help.py:42
 msgid "The package is called **gir1.2-gtop-2.0**."
 msgstr "Distribuciones basadas en Debian: El paquete es llamado **gir1.2-gtop-2.0**."
 
-#: z_create_localized_help.py:42
+#: z_create_localized_help.py:43
 msgid "Archlinux based distributions:"
 msgstr "Distribuciones basadas en Archlinux:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:44
+#: z_create_localized_help.py:45
 msgid "The package is called **libgtop**."
 msgstr "Distribuciones basadas en Archlinux: El paquete es **libgtop**."
 
-#: z_create_localized_help.py:45
+#: z_create_localized_help.py:46
 msgid "Fedora based distributions:"
 msgstr "Distribuciones basadas en Fedora:"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: z_create_localized_help.py:47
+#: z_create_localized_help.py:48
 msgid "The package is called **libgtop2**."
 msgstr "El paquete es llamado **libgtop2**."
 
-#: z_create_localized_help.py:49
+#: z_create_localized_help.py:50
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr "Reiniciar Cinnamon luego de haber instalado los paquetes para que el applet los reconozca."
 
-#: applet.js:225
+#: applet.js:231
+msgid "Configure..."
+msgstr "Configurar..."
+
+#: applet.js:267
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:226
-msgid "This applet needs the GTop library installed on your system for it  to work."
+#: applet.js:268
+msgid "This applet needs the GTop library installed on your system for it to work."
 msgstr "Este applet necesita la biblioteca GTop instalada en su sistema para que funcione."
 
-#: applet.js:227
+#: applet.js:269
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
-#: applet.js:441
+#: applet.js:542
 msgid "Command not set!"
 msgstr "¡Comando no establecido!"
 
-#: applet.js:442
+#: applet.js:543
 msgid "Set a custom command from this applet settings window."
 msgstr "Establecer un comando personalizado desde la ventana de configuración de este applet."
 
-#: utils.js:78
-msgid "CPU"
-msgstr "CPU"
-
-#: utils.js:104 utils.js:130
+#: utils.js:374 utils.js:396
 msgid "MB"
 msgstr "MB"
 
-#: utils.js:109
-msgid "Memory"
-msgstr "Memoria"
-
-#: utils.js:135
-msgid "Swap"
-msgstr "Swap"
-
-#: utils.js:180
+#: utils.js:445
 msgid "KB/s"
 msgstr "KB/s"
-
-#: utils.js:185
-msgid "Network D/U"
-msgstr "Red D/S"
-
-#: utils.js:223
-msgid "Load average"
-msgstr "Promedio de carga"
 
 #. metadata.json->name
 msgid "System Monitor (Fork By Odyseus)"
@@ -185,219 +571,72 @@ msgid "See this xlet help file."
 msgstr "Ver el archivo de ayuda de este xlet."
 
 #. metadata.json->description
-msgid "Displays CPU, memory, swap, network usage and load in graphs."
-msgstr "Muestra gráficos de uso de CPU. memoria, swap, red y carga."
+msgid "Displays CPU, memory, swap, network usage and load average in graphs."
+msgstr "Muestra gráficos de uso de CPU. memoria, swap, red y promedio de carga."
 
-#. settings-schema.json->pref_overlay_key->description
-msgid "Keyboard shortcut to launch a custom command."
-msgstr "Atajo de teclado para ejecutar un comando personalizado."
+#. settings-schema.json->info_label_1->description
+msgid "If you are seeing this window, you are using a Cinnamon version with a design flaw."
+msgstr "Si se está viendo esta ventana, se está utilizando una versión de Cinnamon con un defecto de diseño."
 
-#. settings-schema.json->pref_onkeybinding_command->description
-msgid "Command to launch on keyboard shortcut"
-msgstr "Comando a ejecutar con atajo de teclado"
+#. settings-schema.json->info_label_2->description
+msgid "This window isn't this applet's \"real\" configuration window."
+msgstr "Esta no es la ventana de configuración \"real\" de este applet."
 
-#. settings-schema.json->pref_onkeybinding_command->tooltip
-msgid "Command to launch when the keyboard shortcut specified above is pressed."
-msgstr "Comando a ejecutar cuando el atajo de teclado especificado arriba es presionado."
+#. settings-schema.json->info_label_3->description
+msgid "Open this applet settings from its context menu."
+msgstr "Abrir las preferencias de este applet desde su menú contextual."
 
-#. settings-schema.json->pref_onclick_command->description
-msgid "Command to launch on click"
-msgstr "Comando a ejecutar al hacer clic"
+#~ msgid "This applet needs the GTop library installed on your system for it  to work."
+#~ msgstr "Este applet necesita la biblioteca GTop instalada en su sistema para que funcione."
 
-#. settings-schema.json->pref_onclick_command->tooltip
-msgid "Command to launch when the applet is clicked."
-msgstr "Comando a ejecutar al hacer clic en el applet."
+#~ msgid "Network D/U"
+#~ msgstr "Red D/S"
 
-#. settings-schema.json->pref_smooth->description
-msgid "Smooth graphs"
-msgstr "Usar suavizado de gráficos"
+#~ msgid "Displays CPU, memory, swap, network usage and load in graphs."
+#~ msgstr "Muestra gráficos de uso de CPU. memoria, swap, red y carga."
 
-#. settings-schema.json->pref_graph_width->description
-msgid "Common graph width"
-msgstr "Ancho de gráficos común"
+#~ msgid "Keyboard shortcut to launch a custom command."
+#~ msgstr "Atajo de teclado para ejecutar un comando personalizado."
 
-#. settings-schema.json->pref_graph_width->units
-#. settings-schema.json->pref_padding_lr->units
-#. settings-schema.json->pref_padding_tb->units
-#. settings-schema.json->pref_cpu_graph_width->units
-#. settings-schema.json->pref_mem_graph_width->units
-#. settings-schema.json->pref_swap_graph_width->units
-#. settings-schema.json->pref_net_graph_width->units
-#. settings-schema.json->pref_load_graph_width->units
-msgid "pixels"
-msgstr "pixeles"
+#~ msgid "pixels"
+#~ msgstr "pixeles"
 
-#. settings-schema.json->pref_graph_width->tooltip
-msgid "If the applet is in a vertical panel, this sets the graph height. The graph width is then the panel width minus padding"
-msgstr "Si el applet está en un panel vertical, esta opción establece la altura del gráfico. El ancho del gráfico es entonces el ancho del panel menos el relleno."
+#~ msgid "If the applet is in a vertical panel, this sets the graph height. The graph width is then the panel width minus padding"
+#~ msgstr "Si el applet está en un panel vertical, esta opción establece la altura del gráfico. El ancho del gráfico es entonces el ancho del panel menos el relleno."
 
-#. settings-schema.json->pref_refresh_rate->description
-msgid "Refresh rate"
-msgstr "Frecuencia de refresco"
+#~ msgid "ms"
+#~ msgstr "ms"
 
-#. settings-schema.json->pref_refresh_rate->units
-msgid "ms"
-msgstr "ms"
+#~ msgid "CPU graph"
+#~ msgstr "Gráfico de CPU"
 
-#. settings-schema.json->pref_use_padding->description
-msgid "Use custom applet padding"
-msgstr "Usar espaciado personalizado"
+#~ msgid "Enable"
+#~ msgstr "Habilitar"
 
-#. settings-schema.json->pref_padding_lr->description
-msgid "Left/right padding"
-msgstr "Espaciado derecho/izquierdo"
+#~ msgid "decimals"
+#~ msgstr "decimales"
 
-#. settings-schema.json->pref_padding_tb->description
-msgid "Top/bottom padding"
-msgstr "Espaciado arriba/abajo"
+#~ msgid "Load graph"
+#~ msgstr "Gráfico de carga"
 
-#. settings-schema.json->pref_draw_background->description
-msgid "Draw background"
-msgstr "Dibujar fondo de gráfico"
+#~ msgid "Logging level (*)"
+#~ msgstr "Nivel de registro (*)"
 
-#. settings-schema.json->pref_bg_color->description
-msgid "Background color"
-msgstr "Color de fondo"
+#~ msgid ""
+#~ "It enables the ability to log the output of several functions used by the extension.\n"
+#~ "\n"
+#~ "Normal: Only log messages caused by non critical errors.\n"
+#~ "Verbose: Additinally log extra output messages and all HTTP responses.\n"
+#~ "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+#~ msgstr ""
+#~ "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
+#~ "\n"
+#~ "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
+#~ "Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+#~ "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
 
-#. settings-schema.json->pref_draw_border->description
-msgid "Draw border"
-msgstr "Dibujar borde de gráfico"
+#~ msgid "Enable debugger (*)"
+#~ msgstr "Habilitar depurador (*)"
 
-#. settings-schema.json->pref_border_color->description
-msgid "Border color"
-msgstr "Color del borde"
-
-#. settings-schema.json->cpu_head->description
-msgid "CPU graph"
-msgstr "Gráfico de CPU"
-
-#. settings-schema.json->pref_cpu_enabled->description
-#. settings-schema.json->pref_mem_enabled->description
-#. settings-schema.json->pref_swap_enabled->description
-#. settings-schema.json->pref_net_enabled->description
-#. settings-schema.json->pref_load_enabled->description
-msgid "Enable"
-msgstr "Habilitar"
-
-#. settings-schema.json->pref_cpu_override_graph_width->description
-#. settings-schema.json->pref_mem_override_graph_width->description
-#. settings-schema.json->pref_swap_override_graph_width->description
-#. settings-schema.json->pref_net_override_graph_width->description
-#. settings-schema.json->pref_load_override_graph_width->description
-msgid "Override graph width"
-msgstr "Anular el ancho del gráfico"
-
-#. settings-schema.json->pref_cpu_graph_width->description
-#. settings-schema.json->pref_mem_graph_width->description
-#. settings-schema.json->pref_swap_graph_width->description
-#. settings-schema.json->pref_net_graph_width->description
-#. settings-schema.json->pref_load_graph_width->description
-msgid "Graph width"
-msgstr "Anchura del gráfico"
-
-#. settings-schema.json->pref_cpu_tooltip_decimals->description
-msgid "Show this many decimals in the tooltip"
-msgstr "Mostrar este número de decimales en la información sobre herramientas"
-
-#. settings-schema.json->pref_cpu_tooltip_decimals->units
-msgid "decimals"
-msgstr "decimales"
-
-#. settings-schema.json->pref_cpu_color_0->description
-msgid "User color"
-msgstr "Usuario"
-
-#. settings-schema.json->pref_cpu_color_1->description
-msgid "Nice color"
-msgstr "Nice"
-
-#. settings-schema.json->pref_cpu_color_2->description
-msgid "Kernel color"
-msgstr "Kernel"
-
-#. settings-schema.json->pref_cpu_color_3->description
-msgid "IOWait color"
-msgstr "IOWait"
-
-#. settings-schema.json->mem_head->description
-msgid "Memory graph"
-msgstr "Gráfico de memoria"
-
-#. settings-schema.json->pref_mem_color_0->description
-#. settings-schema.json->pref_swap_color_0->description
-msgid "Used color"
-msgstr "Usado"
-
-#. settings-schema.json->pref_mem_color_1->description
-msgid "Cached color"
-msgstr "Almacenado en caché"
-
-#. settings-schema.json->swap_head->description
-msgid "Swap graph"
-msgstr "Gráfico de swap"
-
-#. settings-schema.json->net_head->description
-msgid "Network graph"
-msgstr "Gráfico de red"
-
-#. settings-schema.json->pref_net_color_0->description
-msgid "Download color"
-msgstr "Descarga"
-
-#. settings-schema.json->pref_net_color_1->description
-msgid "Upload color"
-msgstr "Subida"
-
-#. settings-schema.json->load_head->description
-msgid "Load graph"
-msgstr "Gráfico de carga"
-
-#. settings-schema.json->pref_load_color_0->description
-msgid "Color"
-msgstr "Color"
-
-#. settings-schema.json->debugging-header->description
-msgid "Debugging"
-msgstr "Configuración de depuración"
-
-#. settings-schema.json->pref_logging_level->description
-msgid "Logging level (*)"
-msgstr "Nivel de registro (*)"
-
-#. settings-schema.json->pref_logging_level->tooltip
-msgid ""
-"It enables the ability to log the output of several functions used by the extension.\n"
-"\n"
-"Normal: Only log messages caused by non critical errors.\n"
-"Verbose: Additinally log extra output messages and all HTTP responses.\n"
-"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
-msgstr ""
-"Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
-"\n"
-"Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-"Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
-"Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
-
-#. settings-schema.json->pref_logging_level->options
-msgid "Normal"
-msgstr "Normal"
-
-#. settings-schema.json->pref_logging_level->options
-msgid "Verbose"
-msgstr "Detallado"
-
-#. settings-schema.json->pref_logging_level->options
-msgid "Very verbose"
-msgstr "Muy detallado"
-
-#. settings-schema.json->pref_debugger_enabled->description
-msgid "Enable debugger (*)"
-msgstr "Habilitar depurador (*)"
-
-#. settings-schema.json->pref_debugger_enabled->tooltip
-msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
-msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
-
-#. settings-schema.json->label->description
-msgid "(*) Requires Cinnamon restart to enable/disable"
-msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+#~ msgid "(*) Requires Cinnamon restart to enable/disable"
+#~ msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"

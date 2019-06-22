@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-06-01 04:55-0300\n"
-"PO-Revision-Date: 2019-06-01 04:57-0300\n"
+"POT-Creation-Date: 2019-06-21 23:08-0300\n"
+"PO-Revision-Date: 2019-06-21 23:19-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Español; Castellano <zodiac_es@yahoo.es>\n"
 "Language: es\n"
@@ -18,161 +18,173 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:102
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:129
 msgid "Information related to this specific section"
 msgstr "Información relacionada con esta sección específica."
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:360
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:419
 msgid "Choose an Icon"
 msgstr "Elegir un ícono"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:363 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:781 ../../__app__/data/python_modules/xlets_settings/__init__.py:753 ../../__app__/data/python_modules/xlets_settings/__init__.py:785
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:422 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:783 ../../__app__/data/python_modules/xlets_settings/__init__.py:970 ../../__app__/data/python_modules/xlets_settings/__init__.py:1002
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:364
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:423
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:367
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:426
 msgid "Image files"
 msgstr "Archivos de imagen"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:327
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:643
+msgid "Clear path"
+msgstr "Limpiar ruta"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:329
 msgid "No app chosen"
 msgstr "Ninguna aplicación elegida"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:419
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:421
 msgid "Add new item"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:427
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:429
 msgid "Remove selected item"
 msgstr "Eliminar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:438
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:441
 msgid "Edit selected item"
 msgstr "Editar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:448
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:451
 msgid "Move selected item up"
 msgstr "Mover ítem seleccionado hacia arriba"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:456
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:459
 msgid "Move selected item down"
 msgstr "Mover ítem seleccionado hacia abajo"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:470
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:473
 msgid "Export data"
 msgstr "Exportar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:483
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:486
 msgid "Import data"
 msgstr "Importar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:491
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:494
 msgid "Apply changes"
 msgstr "Aplicar cambios"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:608
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:610
 msgid "Item removal"
 msgstr "Eliminación de ítem"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:611
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:613
 msgid "Are you sure that you want to remove this item?"
 msgstr "¿Está seguro de que desea remover este ítem?"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:612
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:614
 msgid "Note"
 msgstr "Nota"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:613
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:694
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
 msgid "Choose how to add the imported data"
 msgstr "Elegir cómo agregar los datos importados"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:697
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
 msgid "_Overwrite"
 msgstr "_Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:700
 msgid "_Append"
 msgstr "_Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:716
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:718
 msgid "Overwrite"
 msgstr "Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:717
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:719
 msgid "replace the current data with the imported data."
 msgstr "reemplazar los datos actuales con los datos importados."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:718
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
 msgid "Append"
 msgstr "Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:719
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:721
 msgid "add the imported data to the current data."
 msgstr "agregar los datos importados a los datos actuales."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:773
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:775
 msgid "Add new entry"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:775
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:777
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:782 ../../__app__/data/python_modules/xlets_settings/__init__.py:754 ../../__app__/data/python_modules/xlets_settings/__init__.py:786
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:784 ../../__app__/data/python_modules/xlets_settings/__init__.py:971 ../../__app__/data/python_modules/xlets_settings/__init__.py:1003
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:367
-#, python-format
-msgid "Settings for %s"
-msgstr "Preferencias para %s"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:541
+msgid "Previous instance"
+msgstr "Instancia previa"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:600
-msgid "Import from a file"
-msgstr "Importar desde un archivo"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:548
+msgid "Next instance"
+msgstr "Siguiente instancia"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:604
-msgid "Export to a file"
-msgstr "Exportar hacia un archivo"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:588
+msgid "Import settings from a file"
+msgstr "Importar configuración desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:608
-msgid "Reset to defaults"
-msgstr "Restablecer a los valores predeterminados"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:592
+msgid "Export settings to a file"
+msgstr "Exportar configuración hacia un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:618 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:304 utils.js:72
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:596
+msgid "Reset settings to defaults"
+msgstr "Restablecer los valores predeterminados"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:318 applet.js:302 utils.js:77
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:639
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:627
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:750
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:680
+#, python-format
+msgid "Settings for %s"
+msgstr "Preferencias para %s"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:967
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:759 ../../__app__/data/python_modules/xlets_settings/__init__.py:790
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:976 ../../__app__/data/python_modules/xlets_settings/__init__.py:1007
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:782
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:999
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:814
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1031
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:816
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1033
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
@@ -222,298 +234,302 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
+#: settings.py:17
+msgid "Cinnamon needs to be restarted"
+msgstr "Cinnamon necesita ser reiniciado"
+
 #: settings.py:18
+msgid "Cinnamon might need to be restarted"
+msgstr "Cinnamon podría necesitar ser reiniciado."
+
+#: settings.py:21
 msgid "Language legends"
 msgstr "Leyendas de lenguaje"
 
-#: settings.py:19
+#: settings.py:22
 msgid "Language supported by DarkSky."
 msgstr "Idioma soportado por DarkSky."
 
-#: settings.py:20
+#: settings.py:23
 msgid "Language supported by OpenWeatherMap."
 msgstr "Idioma soportado por OpenWeatherMap."
 
-#: settings.py:21
+#: settings.py:24
 msgid "Language supported by WeatherBit."
 msgstr "Idioma soportado por WeatherBit."
 
-#: settings.py:25
+#: settings.py:28
 msgid "It enables the ability to log the output of several functions used by the extension."
 msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por el applet."
 
-#: settings.py:27 settings.py:231
+#: settings.py:30 settings.py:235
 msgid "Normal"
 msgstr "Normal"
 
-#: settings.py:27
+#: settings.py:30
 msgid "Only log messages caused by non critical errors."
 msgstr "Solo registrar mensajes causados por errores críticos."
 
-#: settings.py:28
+#: settings.py:31
 msgid "Additinally log extra output messages and all HTTP responses."
 msgstr "Adicionalmente registrar mensajes extra y todas las respuestas HTTP."
 
-#: settings.py:28 settings.py:232
+#: settings.py:31 settings.py:236
 msgid "Verbose"
 msgstr "Detallado"
 
-#: settings.py:29 settings.py:233
+#: settings.py:32 settings.py:237
 msgid "Very verbose"
 msgstr "Muy detallado"
 
-#: settings.py:30
+#: settings.py:33
 msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr "Adicionalmente registrar todas las llamadas de métodos de todas las clases/prototipos de JavaScript y sus tiempos de ejecución."
 
-#: settings.py:35 z_create_localized_help.py:129 applet.js:1074 weather_providers/WeatherBit.js:124
+#: settings.py:38 z_create_localized_help.py:129 applet.js:1077
 msgid "Location name"
 msgstr "Nombre de la ubicación"
 
-#: settings.py:39 z_create_localized_help.py:133
+#: settings.py:42 z_create_localized_help.py:133
 msgid "Location ID"
 msgstr "ID de la ubicación"
 
-#: settings.py:44 z_create_localized_help.py:140
+#: settings.py:47 z_create_localized_help.py:140
 msgid "Language"
 msgstr "Lenguaje"
 
-#: settings.py:106
+#: settings.py:109
 msgid "Fore. days"
 msgstr "Días de previsión"
 
-#: settings.py:113
+#: settings.py:116
 msgid "days"
 msgstr "días"
 
-#: settings.py:116
+#: settings.py:119
 msgid "Fore. rows/cols"
 msgstr "Filas/Cols. de previsión"
 
-#: settings.py:123
+#: settings.py:126
 msgid "rows/cols"
 msgstr "files/cols."
 
-#: settings.py:126 z_create_localized_help.py:67 z_create_localized_help.py:152
+#: settings.py:129 z_create_localized_help.py:67 z_create_localized_help.py:152
 msgid "Provider"
 msgstr "Proveedor"
 
-#: settings.py:138 settings.py:140
+#: settings.py:141 settings.py:143
 msgid "General"
 msgstr "General"
 
-#: settings.py:146
+#: settings.py:149
 msgid "Keyboard shortcut to open and close the menu"
 msgstr "Atajo de teclado para abrir y cerrar el menú"
 
-#: settings.py:155
+#: settings.py:158
 msgid "Update weather data interval"
 msgstr "Intervalo de actualización de datos de clima"
 
-#: settings.py:158
+#: settings.py:161
 msgid "minutes"
 msgstr "minutos"
 
-#: settings.py:164
+#: settings.py:167
 msgid "Units"
 msgstr "Unidades"
 
-#: settings.py:172
+#: settings.py:175
 msgid "Celsius"
 msgstr "Celsius"
 
-#: settings.py:173
+#: settings.py:176
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: settings.py:174
+#: settings.py:177
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: settings.py:184
+#: settings.py:187
 msgid "Kilometers"
 msgstr "Kilómetors"
 
-#: settings.py:185
+#: settings.py:188
 msgid "Meters"
 msgstr "Metros"
 
-#: settings.py:186
+#: settings.py:189
 msgid "Miles"
 msgstr "Millas"
 
-#: settings.py:196
+#: settings.py:199
 msgid "Kilometers per hour"
 msgstr "Kilómetros por hora"
 
-#: settings.py:197
+#: settings.py:200
 msgid "Knots"
 msgstr "Nudos"
 
-#: settings.py:198
+#: settings.py:201
 msgid "Meters per second"
 msgstr "Metros por segundo"
 
-#: settings.py:199
+#: settings.py:202
 msgid "Miles per hour"
 msgstr "Millas por hora"
 
-#: settings.py:209
+#: settings.py:212
 msgid "Atmospheres"
 msgstr "Atmósferas"
 
-#: settings.py:210
+#: settings.py:213
 msgid "Hectopascals"
 msgstr "Hectopascales"
 
-#: settings.py:211
+#: settings.py:214
 msgid "Inches mercury"
 msgstr "Pulgadas de mercurio"
 
-#: settings.py:212
+#: settings.py:215
 msgid "Kilopascals"
 msgstr "Kilopascales"
 
-#: settings.py:213
+#: settings.py:216
 msgid "Millibars"
 msgstr "Milibares"
 
-#: settings.py:214
+#: settings.py:217
 msgid "Millimeters mercury"
 msgstr "Milímetros de mercurio"
 
-#: settings.py:215
+#: settings.py:218
 msgid "Pascals"
 msgstr "Pascales"
 
-#: settings.py:216
+#: settings.py:219
 msgid "Pounds per square inch"
 msgstr "Libras por pulgadas cuadradas"
 
-#: settings.py:222
+#: settings.py:225
 msgid "Debugging"
 msgstr "Configuración de depuración"
 
-#: settings.py:228
+#: settings.py:232
 msgid "Logging level"
 msgstr "Nivel de registro"
 
-#: settings.py:242
+#: settings.py:246
 msgid "Enable debugger"
 msgstr "Habilitar depurador"
 
-#: settings.py:243
+#: settings.py:247
 msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
 msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
 
-#: settings.py:249
-msgid "Requires Cinnamon restart to enable/disable"
-msgstr "Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
-
-#: settings.py:257
+#: settings.py:255
 msgid "Locations"
 msgstr "Ubicaciones"
 
-#: settings.py:259 z_create_localized_help.py:108 z_create_localized_help.py:125
+#: settings.py:257 z_create_localized_help.py:108 z_create_localized_help.py:125
 msgid "Locations manager"
 msgstr "Administrador de ubicaciones"
 
-#: settings.py:279
+#: settings.py:277
 msgid "Appearance"
 msgstr "Apariencia"
 
-#: settings.py:281
+#: settings.py:279
 msgid "General appearance"
 msgstr "Apariencia general"
 
-#: settings.py:287 z_create_localized_help.py:169
+#: settings.py:285 z_create_localized_help.py:169
 msgid "Icon theme"
 msgstr "Tema de ícono"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: settings.py:289 z_create_localized_help.py:174
+#: settings.py:287 z_create_localized_help.py:174
 msgid "System"
 msgstr "Systema"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: settings.py:290 z_create_localized_help.py:177
+#: settings.py:288 z_create_localized_help.py:177
 msgid "Built-in"
 msgstr "Incorporado"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: settings.py:291 settings.py:315 z_create_localized_help.py:180
+#: settings.py:289 settings.py:314 z_create_localized_help.py:180
 msgid "Custom"
 msgstr "Personalizado"
 
-#: settings.py:300
+#: settings.py:298
 msgid "Path to custom icon theme"
 msgstr "Ruta al tema de ícono personalizado"
 
-#: settings.py:306
+#: settings.py:304
 msgid "Menu appearance"
 msgstr "Apariencia del menú"
 
-#: settings.py:312 z_create_localized_help.py:156
+#: settings.py:311 z_create_localized_help.py:156
 msgid "Menu theme"
 msgstr "Tema del menú"
 
-#: settings.py:314
+#: settings.py:313
 msgid "Default"
 msgstr "Por defecto"
 
-#: settings.py:324
+#: settings.py:323
 msgid "Path to custom style sheet"
 msgstr "Ruta a la hoja de estilo personalizada"
 
-#: settings.py:332
+#: settings.py:331
 msgid "Menu orientation"
 msgstr "Orientación del menú"
 
-#: settings.py:334
+#: settings.py:333
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: settings.py:335
+#: settings.py:334
 msgid "Vertical"
 msgstr "Vertical"
 
-#: settings.py:344
+#: settings.py:343
 msgid "Menu icon type"
 msgstr "Tipo de ícono"
 
-#: settings.py:347 settings.py:411
+#: settings.py:346 settings.py:411
 msgid "Full color"
 msgstr "A todo color"
 
-#: settings.py:348 settings.py:412
+#: settings.py:347 settings.py:412
 msgid "Symbolic"
 msgstr "Simbólicos"
 
-#: settings.py:357
+#: settings.py:356
 msgid "Current weather icon size"
 msgstr "Tamaño de ícono para el clima actual"
 
-#: settings.py:360 settings.py:372
+#: settings.py:359 settings.py:371
 msgid "pixels"
 msgstr "pixeles"
 
-#: settings.py:369
+#: settings.py:368
 msgid "Forecasts icon size"
 msgstr "Tamaño de ícono para los pronósticos"
 
-#: settings.py:381
+#: settings.py:380
 msgid "Show high temperature first in forecast"
 msgstr "Mostrar primero la temperatura máxima"
 
-#: settings.py:389
+#: settings.py:388
 msgid "Display forecast dates"
 msgstr "Mostrar fechas en los pronósticos"
 
-#: settings.py:397
+#: settings.py:396
 msgid "Display time in 24 hours format"
 msgstr "Visualizar hora en formato de 24 horas"
 
-#: settings.py:402
+#: settings.py:401
 msgid "Applet appearance"
 msgstr "Apariencia del applet"
 
@@ -536,6 +552,10 @@ msgstr "Credenciales"
 #: settings.py:440 z_create_localized_help.py:71 constants.js:190
 msgid "Dark Sky"
 msgstr "Dark Sky"
+
+#: settings.py:446
+msgid "Secret Key"
+msgstr "Clave secreta"
 
 #: settings.py:451 z_create_localized_help.py:76 constants.js:192
 msgid "OpenWeatherMap"
@@ -618,7 +638,7 @@ msgstr "La fecha en la que se publicaron los datos meteorológicos siempre se mu
 msgid "More customization options (current weather icon size, forecasts icon size, etc.)."
 msgstr "Más opciones de personalización (tamaño del icono del tiempo actual, tamaño del icono de pronósticos, etc.)."
 
-#: z_create_localized_help.py:55 applet.js:177
+#: z_create_localized_help.py:55 applet.js:170
 msgid "This applet requires valid credentials from any of the weather provider services for it to work."
 msgstr "Este applet requiere credenciales válidas de cualquiera de los servicios proveedores de clima para que funcione."
 
@@ -866,80 +886,76 @@ msgstr "Para todos los xlets"
 msgid "If the *wrong* settings window is opened, a button to open the *right* settings window will be available."
 msgstr "Si se abre la ventana de configuración *incorrecta*, estará disponible un botón para abrir la ventana de configuración *correcta*."
 
-#: applet.js:127
-msgid "Click to open"
-msgstr "Click para abrir"
-
-#: applet.js:176
+#: applet.js:169
 msgid "Read the help page"
 msgstr "Leer la página de ayuda"
 
-#: applet.js:291
+#: applet.js:284
 msgid "Copy current location data"
 msgstr "Copiar datos de ubicación actual"
 
-#: applet.js:316
+#: applet.js:314
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: applet.js:426
+#: applet.js:424
 msgid "Click to copy error to clipboard."
 msgstr "Haga clic para copiar el error al portapapeles."
 
-#: applet.js:427
+#: applet.js:425
 msgid "Look at the logs for details."
 msgstr "Mirar los registros para más detalles."
 
-#: applet.js:464
+#: applet.js:462
 msgid "Refresh"
 msgstr "Recargar"
 
-#: applet.js:477
+#: applet.js:475
 msgid "Click to refresh weather data"
 msgstr "Hacer clic para actualizar los datos meteorológicos."
 
-#: applet.js:664
+#: applet.js:662
 msgid "Selected path for custom icon theme doesn't exist!"
 msgstr "¡La ruta seleccionada para el tema de icono personalizado no existe!"
 
-#: applet.js:741
+#: applet.js:739
 msgid "No current location set!"
 msgstr "¡No hay ubicación actual establecida!"
 
-#: applet.js:794
+#: applet.js:792
 msgid "Error initializing weather provider!"
 msgstr "¡Error al inicializar el proveedor de clima!"
 
-#: applet.js:857
+#: applet.js:855
 msgid "No weather data available!"
 msgstr "¡No hay datos meteorológicos disponibles!"
 
-#: applet.js:965
+#: applet.js:963
 #, javascript-format
 msgid "Powered by %s"
 msgstr "Energizado por %s"
 
-#: applet.js:1144
+#: applet.js:1146
 msgid "Current location"
 msgstr "Ubicación actual"
 
-#: applet.js:1157
+#: applet.js:1159
 msgid "Open location weather details page"
 msgstr "Abrir página de detalles del clima"
 
-#: applet.js:1348 applet.js:1351
+#: applet.js:1350 applet.js:1353
 msgid "Not available"
 msgstr "No disponible"
 
-#: applet.js:1679
+#: applet.js:1685
 msgid "Error trying to get theme"
 msgstr "Error al intentar obtener el tema"
 
-#: applet.js:1687
+#: applet.js:1693
 msgid "Stylesheet parse error"
 msgstr "Error de análisis de hoja de estilo"
 
-#: applet.js:1697
+#: applet.js:1703
 msgid "Error unloading stylesheet"
 msgstr "Error al descargar la hoja de estilos"
 
@@ -1448,79 +1464,79 @@ msgstr "Puesta del sol"
 msgid "Moon phase"
 msgstr "Fase lunar"
 
-#: utils.js:433
+#: utils.js:436
 msgid "E"
 msgstr "E"
 
-#: utils.js:433
+#: utils.js:436
 msgid "N"
 msgstr "N"
 
-#: utils.js:433
+#: utils.js:436
 msgid "NE"
 msgstr "NE"
 
-#: utils.js:433
+#: utils.js:436
 msgid "NW"
 msgstr "NO"
 
-#: utils.js:433
+#: utils.js:436
 msgid "S"
 msgstr "S"
 
-#: utils.js:433
+#: utils.js:436
 msgid "SE"
 msgstr "SE"
 
-#: utils.js:433
+#: utils.js:436
 msgid "SW"
 msgstr "SO"
 
-#: utils.js:433
+#: utils.js:436
 msgid "W"
 msgstr "O"
 
-#: utils.js:542
+#: utils.js:549
 msgid "Displayed weather data doesn't belong to any currently configured location!"
 msgstr "¡Los datos meteorológicos mostrados no pertenecen a ninguna ubicación configurada actualmente!"
 
-#: utils.js:698 utils.js:715
+#: utils.js:769 utils.js:786
 msgid "New Moon"
 msgstr "Luna Nueva"
 
-#: utils.js:700
+#: utils.js:771
 msgid "Waxing Crescent"
 msgstr "Lúnula Creciente"
 
-#: utils.js:702
+#: utils.js:773
 msgid "First Quarter"
 msgstr "Cuarto Creciente"
 
-#: utils.js:704
+#: utils.js:775
 msgid "Waxing Gibbous"
 msgstr "Gibosa Creciente"
 
-#: utils.js:706
+#: utils.js:777
 msgid "Full Moon"
 msgstr "Luna Llena"
 
-#: utils.js:708
+#: utils.js:779
 msgid "Waning Gibbous"
 msgstr "Gibosa Menguante"
 
-#: utils.js:710
+#: utils.js:781
 msgid "Third Quarter"
 msgstr "Cuarto Menguante"
 
-#: utils.js:712
+#: utils.js:783
 msgid "Waning Crescent"
 msgstr "Lúnula Creciente"
 
-#: weather_providers/DarkSky.js:100 weather_providers/OpenWeatherMap.js:129 weather_providers/SKEL.js:121 weather_providers/WeatherBit.js:125 weather_providers/YahooWeather.js:132
+#: weather_providers/DarkSky.js:100 weather_providers/OpenWeatherMap.js:129 weather_providers/SKEL.js:121 weather_providers/WeatherBit.js:124 weather_providers/YahooWeather.js:132
 msgid "Coordinates"
 msgstr "Coordenadas"
 
-#: weather_providers/DarkSky.js:103 weather_providers/SKEL.js:124 weather_providers/WeatherBit.js:128 weather_providers/YahooWeather.js:135
+#: weather_providers/DarkSky.js:103 weather_providers/SKEL.js:124 weather_providers/WeatherBit.js:127 weather_providers/YahooWeather.js:135
 msgid "Time zone"
 msgstr "Zona horaria"
 
@@ -1551,6 +1567,21 @@ msgstr "Esta no es la ventana de configuración \"real\" de este applet."
 #. settings-schema.json->info_label_3->description
 msgid "Open this applet settings from its context menu."
 msgstr "Abrir las preferencias de este applet desde su menú contextual."
+
+#~ msgid "Import from a file"
+#~ msgstr "Importar desde un archivo"
+
+#~ msgid "Export to a file"
+#~ msgstr "Exportar hacia un archivo"
+
+#~ msgid "Reset to defaults"
+#~ msgstr "Restablecer a los valores predeterminados"
+
+#~ msgid "Requires Cinnamon restart to enable/disable"
+#~ msgstr "Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+
+#~ msgid "Click to open"
+#~ msgstr "Click para abrir"
 
 #~ msgid "Remember to restart Cinnamon to fully enable/disable this option."
 #~ msgstr "Recordar reiniciar Cinnamon para habilitar/deshabilitar completamente esta opción."

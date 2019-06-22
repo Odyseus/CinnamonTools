@@ -3,7 +3,7 @@
 
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>Help for Feeds Reader (Fork By Odyseus)</title>
+<title>Help for Panel Drawer (Fork By Odyseus)</title>
 <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="./assets/js/localizations-handler.min.js"></script>
@@ -40,8 +40,8 @@
                         <span class="input-group-text" for="localization-switch">🌐</span>
                     </div>
                     <select class="custom-select custom-select-sm text-bold" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
-<!-- English --><option selected data-title="Help for Feeds Reader (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Lector de Feeds (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
+<!-- English --><option selected data-title="Help for Panel Drawer (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
+<!-- Español --><option data-title="Ayuda para Cajón de panel (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
                     </select>
                 </div>
             </form>
@@ -51,7 +51,7 @@
 <div class="container boxed my-3 py-3">
 
 <div id="es" class="localization-content" hidden="true">
-<h1>Ayuda para Lector de Feeds (Modificado por Odyseus)</h1>
+<h1>Ayuda para Cajón de panel (Modificado por Odyseus)</h1>
 
 <div class="card text-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Advertencia</div>
@@ -86,23 +86,23 @@
 </div>
 </div>
 <h2>Descripción</h2>
-<p>Este applet es una modificación del applet <a href="https://cinnamon-spices.linuxmint.com/applets/view/149">Feeds Reader</a>, por Jason Jackson (también conocido como jake1164).</p>
-<h2>Diferencias con el original</h2>
+<p>Este applet es una modificación del applet llamado <a href="https://cinnamon-spices.linuxmint.com/applets/view/169">Drawer (show/hide applets)</a> modificado por <a href="https://github.com/mohammad-sn">mohammad-sn</a>. Su propósito principal es alternar selectivamente la visibilidad de un grupo de applets dentro de un panel.</p>
+<h2>Diferencias con el applet original</h2>
 <ul>
-<li>Agregado atajo de teclado para abrir y cerrar el menú.</li>
-<li>Se agregó una adecuada navegación de teclado para el menú.</li>
-<li>Eliminada la necesidad de un archivo stylesheet.css. El menú será estilizado respetando el tema de Cinnamon actualmente en uso.</li>
-<li>Los feeds solo se actualizarán desde sus fuentes en línea si la última verificación se realizó después del intervalo de actualización.</li>
-<li>Forzado el uso de Python 3 en todos los módulos/archivos de comandos escritos en Python.</li>
+<li>Se pueden colocar múltiples instancias de este applet en cualquier panel (solo una instancia por panel).</li>
+<li>Este applet soporta paneles verticales.</li>
+<li>Este applet agrega todos los elementos del menú contextual de un panel a su propio menú contextual.</li>
 </ul>
-<h2>Dependencias</h2>
-<ul>
-<li><strong>feedparser:</strong> El módulo feedparser para Python 3 es un analizador de fuentes universal que maneja feeds RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3 y Atom 1.0.
-Instalar con <code>pip</code> (Cinnamon necesita ser reiniciado luego de instalar feedparser si el applet ya fue colocado en un panel):</li>
-</ul>
-<pre><code>sudo pip3 install feedparser
-</code></pre>
 
+<h2>Uso</h2>
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
+
+<strong><p>No intentar ocultar con este applet el applet de la Bandeja del Sistema por defecto de Cinnamon (ni ningún otro applet que actúe como tal). El applet original (Drawer) maneja estos tipos de applets de una manera muy <em>tosca</em> (establece el tamaño de los iconos de la bandeja a cero cuando los oculta y los vuelve a colocar en un tamaño fijo al mostrarlos). Simplemente quité ese comportamiento de este applet porque me niego a lidiar con el desorden que es el mecanismo de la bandeja del sistema de Cinnamon.</p>
+</strong>
+</div><ul>
+<li>El applet hace su trabajo cuando se coloca dentro de la caja derecha de un panel (caja inferior en paneles verticales). No colocarlo dentro de ninguna otra caja de panel.</li>
+<li>Todos los applets que se colocan delante de este applet (o sobre él en paneles verticales) serán ocultados.</li>
+</ul>
 
 </br>
 
@@ -115,7 +115,7 @@ Las siguientes secciones están disponibles sólo en Inglés.
 
 
 <div id="en" class="localization-content" >
-<h1>Help for Feeds Reader (Fork By Odyseus)</h1>
+<h1>Help for Panel Drawer (Fork By Odyseus)</h1>
 
 <div class="card text-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Warning</div>
@@ -150,23 +150,23 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </div>
 </div>
 <h2>Description</h2>
-<p>This applet is a fork of <a href="https://cinnamon-spices.linuxmint.com/applets/view/149">Feeds Reader</a> applet by Jason Jackson (a.k.a. jake1164).</p>
+<p>This applet is a fork of <a href="https://cinnamon-spices.linuxmint.com/applets/view/169">Drawer (show/hide applets)</a> applet by <a href="https://github.com/mohammad-sn">mohammad-sn</a>. Its main purpose is to selectively toggle the visibility of a group of applets inside a panel.</p>
 <h2>Differences with the original applet</h2>
 <ul>
-<li>Added keyboard shortcut to be able to open/close the menu.</li>
-<li>Added proper keyboard navigation for the menu.</li>
-<li>Eliminated the need of a stylesheet.css file. The menu will be styled respecting the currently used Cinnamon theme.</li>
-<li>Feeds will only be updated from their online sources if the last check was made after the refresh interval.</li>
-<li>Forced the use of Python 3 in all Python modules/scripts.</li>
+<li>Multiple instances of this fork can be placed in any panel (only one instance per panel).</li>
+<li>This fork supports vertical panels.</li>
+<li>This fork adds all items from a panel context menu into its own context menu.</li>
 </ul>
-<h2>Dependencies</h2>
-<ul>
-<li><strong>feedparser:</strong> The feedparser Python 3 module is a universal feed parser that handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds.
-Install with <code>pip</code> (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):</li>
-</ul>
-<pre><code>sudo pip3 install feedparser
-</code></pre>
 
+<h2>Usage</h2>
+<div class="alert alert-warning text-bold shadow-sm" role="alert">
+
+<strong><p>Do not try to hide with this applet the Cinnamon's default System Tray applet (nor any other applet that acts as such). The original Drawer applet handles these types of applets in a very <em>hacky</em> way (it sets the size of the tray icons to zero when hiding them and sets them back to a hard-coded size when displaying them). I simply removed that behavior from this fork because I refuse to deal with the mess that the system tray mechanism is in Cinnamon.</p>
+</strong>
+</div><ul>
+<li>The applet does its job when it is placed inside the rigth box of a panel (bottom box for vertical panels). Do not place inside any other panel box.</li>
+<li>All applets that are placed in front of this applet (or on top of it in vertical panels) will be hidden.</li>
+</ul>
 
 </br>
 
@@ -179,159 +179,103 @@ The following sections are available only in English.
 
 </div> <!-- .container.boxed -->
 <span id="xlet-contributors">
-<div class="container boxed my-3 py-3">
-<h2>Contributors/Mentions</h2>
-<h3>Original authors</h3>
-<ul>
-<li><strong>Jonathan Brett</strong>: <a href="mailto:jonbrett.dev@gmail.com">jonbrett.dev@gmail.com</a></li>
-<li><strong>Niklas Meinzer</strong>: <a href="mailto:lamouletrescool@gmail.com">lamouletrescool@gmail.com</a></li>
-<li><strong>Stephen Collins</strong>: <a href="mailto:scrivera64@gmail.com">scrivera64@gmail.com</a></li>
-<li><strong>Kausheel Kumar</strong>: <a href="mailto:kausheelkumar@gmail.com">kausheelkumar@gmail.com</a></li>
-<li><strong>mockturtl</strong>: <a href="mailto:mockturtl@users.noreply.github.com">mockturtl@users.noreply.github.com</a></li>
-<li><strong>Jason Jackson</strong>: <a href="mailto:jake1164@hotmail.com">jake1164@hotmail.com</a></li>
-</ul>
-
-</div> <!-- .container.boxed -->
 
 <span id="xlet-changelog">
 <div class="container boxed my-3 py-3">
-<h2>Feeds Reader (Fork By Odyseus) changelog</h2>
+<h2>Panel Drawer (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
 <hr>
 <ul>
-<li><strong>Date:</strong> Fri, 21 Jun 2019 23:02:18 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/7d7041a">7d7041a</a></li>
+<li><strong>Date:</strong> Fri, 21 Jun 2019 23:03:47 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5429260">5429260</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
-<pre><code>- Corrected typo in settings-schema.json file.
+<pre><code>Applet rewrite
+--------------
+
+WARNING: This update is a complete rewrite of the applet and it will reset the settings of an existent instance to their default values. Read the help page for this applet for detailed usage.
+
+- Added vertical panels support.
+- Added multi-instance support. Now it is possible to add an instance of this applet to each existent panel (vertical or horizontal).
+- Added all items of a panel context menu into this applet context menu.
+- Simplified and cleaned the code.
+- Removed workarounds to handle system tray applets. These workarounds were doing *more damage than good*. DO NOT USE THIS APPLET to hide a system try applet (not the Cinnamon's default nor any other). Simply use a collapsible system tray applet.
 </code></pre>
 <hr>
 <ul>
-<li><strong>Date:</strong> Thu, 30 May 2019 03:47:29 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ffd29d0">ffd29d0</a></li>
+<li><strong>Date:</strong> Thu, 30 May 2019 03:47:50 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/090e1a9">090e1a9</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
 <pre><code>- Minor changes due to changes in global modules.
-- Python scripts:
-    - Changed the use of cgi.escape to html.escape due to cgi.escape deprecation.
-    - Changed to Gtk.IconSize.BUTTON constant to specify icon sizes.
-    - Implemented the use of constants to specify default Gtk CSS classes.
 </code></pre>
 <hr>
 <ul>
-<li><strong>Date:</strong> Thu, 23 May 2019 02:15:54 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/af8e1cf">af8e1cf</a></li>
+<li><strong>Date:</strong> Thu, 23 May 2019 02:16:11 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/718c1dd">718c1dd</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
 <pre><code>- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
 - JavaScript code homogenization.
-- Improved debugger.
-- Added SVG icon.
+- Implemented debugger.
 </code></pre>
 <hr>
 <ul>
-<li><strong>Date:</strong> Mon, 15 Apr 2019 22:00:51 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3c3afc3">3c3afc3</a></li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>- Implemented a tooltip for feed items that automatically positions itself above the cursor when there is no room on the screen to display the tooltip.
-- Added clean up of new lines on the tooltip's text.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Thu, 21 Feb 2019 10:34:36 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/245db25">245db25</a></li>
+<li><strong>Date:</strong> Thu, 21 Feb 2019 10:33:38 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3155c00">3155c00</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
 <pre><code>- Added call to finalize settings when applet is removed from panel.
 </code></pre>
 <hr>
 <ul>
-<li><strong>Date:</strong> Thu, 17 Jan 2019 13:59:27 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/927b262">927b262</a></li>
+<li><strong>Date:</strong> Mon, 21 Jan 2019 21:54:37 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/cea22b7">cea22b7</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
-<pre><code>- Added button to remove profiles to the Feeds Manager GUI (Finally I figured out! LOL).
-- Added option to *unify* notifications.
-- Cleaned up inaccurate/unnecessary comments.
-- Changed default feeds to include a second profile.
-- Python files improvements:
-    - Simplified localization system.
-    - Homogenized/Cleaned up code.
-    - Docstrings completion/clean up.
+<pre><code>- Changed applet icon.
 </code></pre>
 <hr>
 <ul>
-<li><strong>Date:</strong> Tue, 15 Jan 2019 22:37:24 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/99f22ba">99f22ba</a></li>
+<li><strong>Date:</strong> Tue, 15 Jan 2019 22:37:00 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/bdac179">bdac179</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
 <pre><code>- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
 </code></pre>
 <hr>
 <ul>
-<li><strong>Date:</strong> Thu, 23 Aug 2018 02:46:10 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/7c30cea">7c30cea</a></li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>- Implemented a more transparent way of calling `Gio.File.load_contents_finish`.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Tue, 7 Aug 2018 03:08:45 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0c43e68">0c43e68</a></li>
+<li><strong>Date:</strong> Tue, 7 Aug 2018 03:09:23 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/198c667">198c667</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
 <pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 </code></pre>
 <hr>
 <ul>
-<li><strong>Date:</strong> Sat, 4 Aug 2018 05:15:18 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3aecd1d">3aecd1d</a></li>
+<li><strong>Date:</strong> Sat, 4 Aug 2018 05:14:49 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/71e8143">71e8143</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
 <pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 </code></pre>
 <hr>
 <ul>
-<li><strong>Date:</strong> Wed, 18 Jul 2018 00:37:54 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/56ed4bb">56ed4bb</a></li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>- Fixed an issue that prevented to set and use the default profile when the applet was placed in a panel for the first time.
-- Added options to set custom icons for use with the applet.
-- Removed some `try{} catch{}` blocks that were used for debugging.
-- Renamed the icons shipped with the applet to be less generic.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Wed, 13 Jun 2018 01:01:13 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c586d38">c586d38</a></li>
+<li><strong>Date:</strong> Wed, 13 Jun 2018 01:03:24 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e7da167">e7da167</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
 <pre><code>- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
+- Fixed some warnings shown on Cinnamon 3.8.x.
 </code></pre>
 <hr>
 <ul>
-<li><strong>Date:</strong> Tue, 5 Jun 2018 16:15:19 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e043ddd">e043ddd</a></li>
+<li><strong>Date:</strong> Wed, 2 May 2018 00:17:26 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/de934e4">de934e4</a></li>
 <li><strong>Author:</strong> Odyseus</li>
 </ul>
-<pre><code>- Re-based from the new applet version from the original author.
-- Added keyboard shortcut to be able to open/close the menu.
-- Added proper keyboard navigation for the menu.
-- Eliminated the need of a stylesheet.css file. The menu will be styled respecting the currently used Cinnamon theme.
-- Feeds will only be updated from their online sources if the last check was made after the refresh interval.
-- Added missing dependency message.
-- Forced the use of Python 3 in all Python modules/scripts.
-</code></pre>
-<hr>
-<ul>
-<li><strong>Date:</strong> Wed, 2 May 2018 00:40:33 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/aec58b6">aec58b6</a></li>
-<li><strong>Author:</strong> Odyseus</li>
-</ul>
-<pre><code>- Fixed preference name type.
+<pre><code>- Move context menu items insertion into a function and call that function outside `Mainloop.idle_add` call.
+- Minor clean up.
 </code></pre>
 <hr>
 

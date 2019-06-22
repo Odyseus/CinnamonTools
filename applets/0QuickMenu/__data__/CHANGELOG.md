@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Fri, 21 Jun 2019 23:04:11 -0300
+- **Commit:** [b2b85bf](https://gitlab.com/Odyseus/CinnamonTools/commit/b2b85bf)
+- **Author:** Odyseus
+
+```
+- Corrected typo in settings-schema.json file.
+- Attempt to remove a warning.
+
+```
+
+***
+
 - **Date:** Thu, 30 May 2019 03:48:00 -0300
 - **Commit:** [cdcab86](https://gitlab.com/Odyseus/CinnamonTools/commit/cdcab86)
 - **Author:** Odyseus

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0MultiTranslatorExtension VERSION\n"
-"POT-Creation-Date: 2019-06-02 12:36-0300\n"
+"POT-Creation-Date: 2019-06-22 00:01-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,161 +15,173 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:102
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:129
 msgid "Information related to this specific section"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:360
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:419
 msgid "Choose an Icon"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:363 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:781 ../../__app__/data/python_modules/xlets_settings/__init__.py:753 ../../__app__/data/python_modules/xlets_settings/__init__.py:785 translatorHistory.py:237 translatorHistory.py:242
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:422 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:783 ../../__app__/data/python_modules/xlets_settings/__init__.py:970 ../../__app__/data/python_modules/xlets_settings/__init__.py:1002 translatorHistory.py:237 translatorHistory.py:242
 msgid "_Cancel"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:364 translatorHistory.py:243
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:423 translatorHistory.py:243
 msgid "_Open"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:367
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:426
 msgid "Image files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:327
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:643
+msgid "Clear path"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:329
 msgid "No app chosen"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:419
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:421
 msgid "Add new item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:427
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:429
 msgid "Remove selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:438
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:441
 msgid "Edit selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:448
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:451
 msgid "Move selected item up"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:456
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:459
 msgid "Move selected item down"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:470
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:473
 msgid "Export data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:483
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:486
 msgid "Import data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:491
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:494
 msgid "Apply changes"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:608
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:610
 msgid "Item removal"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:611
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:613
 msgid "Are you sure that you want to remove this item?"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:612
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:614
 msgid "Note"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:613
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:694
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
 msgid "Choose how to add the imported data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:697
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
 msgid "_Overwrite"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:700
 msgid "_Append"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:716
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:718
 msgid "Overwrite"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:717
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:719
 msgid "replace the current data with the imported data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:718
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
 msgid "Append"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:719
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:721
 msgid "add the imported data to the current data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:773
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:775
 msgid "Add new entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:775
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:777
 msgid "Edit entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:782 ../../__app__/data/python_modules/xlets_settings/__init__.py:754 ../../__app__/data/python_modules/xlets_settings/__init__.py:786 translatorHistory.py:238
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:784 ../../__app__/data/python_modules/xlets_settings/__init__.py:971 ../../__app__/data/python_modules/xlets_settings/__init__.py:1003 translatorHistory.py:238
 msgid "_Save"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:367 extension.js:1355
-#, python-format, javascript-format
-msgid "Settings for %s"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:541
+msgid "Previous instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:600
-msgid "Import from a file"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:548
+msgid "Next instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:604
-msgid "Export to a file"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:588
+msgid "Import settings from a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:608
-msgid "Reset to defaults"
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:592
+msgid "Export settings to a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:618 ../../__app__/python_modules/localized_help_creator.py:318 translatorHistory.py:302 utils.js:122
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:596
+msgid "Reset settings to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:318 translatorHistory.py:302 utils.js:122
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:639
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:627
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:750 translatorHistory.py:236
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:680 extension.js:1327
+#, python-format, javascript-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:967 translatorHistory.py:236
 msgid "Select or enter file to export to"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:759 ../../__app__/data/python_modules/xlets_settings/__init__.py:790 translatorHistory.py:258
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:976 ../../__app__/data/python_modules/xlets_settings/__init__.py:1007 translatorHistory.py:258
 msgid "JSON files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:782
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:999
 msgid "Select a JSON file to import"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:814
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1031
 msgid "Trying to reset all settings!!!"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:816
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1033
 msgid "Reset all settings to their default values?"
 msgstr ""
 
@@ -230,717 +242,721 @@ msgstr ""
 msgid "trans command not found or it isn't in your PATH!!!"
 msgstr ""
 
-#: settings.py:17 translatorHistory.py:49 constants.js:278
+#: settings.py:16
+msgid "Cinnamon needs to be restarted"
+msgstr ""
+
+#: settings.py:19 translatorHistory.py:49 constants.js:277
 msgid "Detect language"
 msgstr ""
 
-#: settings.py:18 translatorHistory.py:51 constants.js:280 constants.js:389
+#: settings.py:20 translatorHistory.py:51 constants.js:279 constants.js:388
 msgid "Afrikaans"
 msgstr ""
 
-#: settings.py:19 translatorHistory.py:52 constants.js:281 constants.js:390
+#: settings.py:21 translatorHistory.py:52 constants.js:280 constants.js:389
 msgid "Amharic"
 msgstr ""
 
-#: settings.py:20 translatorHistory.py:53 constants.js:282 constants.js:391
+#: settings.py:22 translatorHistory.py:53 constants.js:281 constants.js:390
 msgid "Arabic"
 msgstr ""
 
-#: settings.py:21 translatorHistory.py:54 constants.js:283 constants.js:392
+#: settings.py:23 translatorHistory.py:54 constants.js:282 constants.js:391
 msgid "Azerbaijani"
 msgstr ""
 
-#: settings.py:22 translatorHistory.py:55 constants.js:284 constants.js:393
+#: settings.py:24 translatorHistory.py:55 constants.js:283 constants.js:392
 msgid "Belarusian"
 msgstr ""
 
-#: settings.py:23 translatorHistory.py:56 constants.js:285 constants.js:394
+#: settings.py:25 translatorHistory.py:56 constants.js:284 constants.js:393
 msgid "Bulgarian"
 msgstr ""
 
-#: settings.py:24 translatorHistory.py:57 constants.js:286 constants.js:395
+#: settings.py:26 translatorHistory.py:57 constants.js:285 constants.js:394
 msgid "Bengali"
 msgstr ""
 
-#: settings.py:25 translatorHistory.py:58 constants.js:287 constants.js:396
+#: settings.py:27 translatorHistory.py:58 constants.js:286 constants.js:395
 msgid "Bosnian (Y)"
 msgstr ""
 
-#: settings.py:26 translatorHistory.py:59 constants.js:288 constants.js:397
+#: settings.py:28 translatorHistory.py:59 constants.js:287 constants.js:396
 msgid "Catalan"
 msgstr ""
 
-#: settings.py:27 translatorHistory.py:60 constants.js:289 constants.js:398
+#: settings.py:29 translatorHistory.py:60 constants.js:288 constants.js:397
 msgid "Chichewa"
 msgstr ""
 
-#: settings.py:28 translatorHistory.py:61 constants.js:290 constants.js:399
+#: settings.py:30 translatorHistory.py:61 constants.js:289 constants.js:398
 msgid "Corsican"
 msgstr ""
 
-#: settings.py:29 translatorHistory.py:62 constants.js:291 constants.js:400
+#: settings.py:31 translatorHistory.py:62 constants.js:290 constants.js:399
 msgid "Czech"
 msgstr ""
 
-#: settings.py:30 translatorHistory.py:63 constants.js:292 constants.js:401
+#: settings.py:32 translatorHistory.py:63 constants.js:291 constants.js:400
 msgid "Welsh"
 msgstr ""
 
-#: settings.py:31 translatorHistory.py:64 constants.js:293 constants.js:402
+#: settings.py:33 translatorHistory.py:64 constants.js:292 constants.js:401
 msgid "Danish"
 msgstr ""
 
-#: settings.py:32 translatorHistory.py:65 constants.js:294 constants.js:403
+#: settings.py:34 translatorHistory.py:65 constants.js:293 constants.js:402
 msgid "German"
 msgstr ""
 
-#: settings.py:33 translatorHistory.py:66 constants.js:295 constants.js:404
+#: settings.py:35 translatorHistory.py:66 constants.js:294 constants.js:403
 msgid "Greek"
 msgstr ""
 
 #. TO TRANSLATORS: URL pointing to website in English
-#: settings.py:34 translatorHistory.py:67 z_create_localized_help.py:183 constants.js:296 constants.js:405
+#: settings.py:36 translatorHistory.py:67 z_create_localized_help.py:183 constants.js:295 constants.js:404
 msgid "English"
 msgstr ""
 
-#: settings.py:35 translatorHistory.py:68 constants.js:297 constants.js:406
+#: settings.py:37 translatorHistory.py:68 constants.js:296 constants.js:405
 msgid "Esperanto"
 msgstr ""
 
-#: settings.py:36 translatorHistory.py:69 constants.js:298 constants.js:407
+#: settings.py:38 translatorHistory.py:69 constants.js:297 constants.js:406
 msgid "Spanish"
 msgstr ""
 
-#: settings.py:37 translatorHistory.py:70 constants.js:299 constants.js:408
+#: settings.py:39 translatorHistory.py:70 constants.js:298 constants.js:407
 msgid "Estonian"
 msgstr ""
 
-#: settings.py:38 translatorHistory.py:71 constants.js:300 constants.js:409
+#: settings.py:40 translatorHistory.py:71 constants.js:299 constants.js:408
 msgid "Basque"
 msgstr ""
 
-#: settings.py:39 translatorHistory.py:72 constants.js:301 constants.js:410
+#: settings.py:41 translatorHistory.py:72 constants.js:300 constants.js:409
 msgid "Persian"
 msgstr ""
 
-#: settings.py:40 translatorHistory.py:73 constants.js:302 constants.js:411
+#: settings.py:42 translatorHistory.py:73 constants.js:301 constants.js:410
 msgid "Finnish"
 msgstr ""
 
-#: settings.py:41 translatorHistory.py:74 constants.js:303 constants.js:412
+#: settings.py:43 translatorHistory.py:74 constants.js:302 constants.js:411
 msgid "French"
 msgstr ""
 
-#: settings.py:42 translatorHistory.py:75 constants.js:304 constants.js:413
+#: settings.py:44 translatorHistory.py:75 constants.js:303 constants.js:412
 msgid "Frisian"
 msgstr ""
 
-#: settings.py:43 translatorHistory.py:76 constants.js:305 constants.js:414
+#: settings.py:45 translatorHistory.py:76 constants.js:304 constants.js:413
 msgid "Irish"
 msgstr ""
 
-#: settings.py:44 translatorHistory.py:77 constants.js:306 constants.js:415
+#: settings.py:46 translatorHistory.py:77 constants.js:305 constants.js:414
 msgid "Scots Gaelic"
 msgstr ""
 
-#: settings.py:45 translatorHistory.py:78 constants.js:307 constants.js:416
+#: settings.py:47 translatorHistory.py:78 constants.js:306 constants.js:415
 msgid "Galician"
 msgstr ""
 
-#: settings.py:46 translatorHistory.py:79 constants.js:308 constants.js:417
+#: settings.py:48 translatorHistory.py:79 constants.js:307 constants.js:416
 msgid "Gujarati"
 msgstr ""
 
-#: settings.py:47 translatorHistory.py:80 constants.js:309 constants.js:418
+#: settings.py:49 translatorHistory.py:80 constants.js:308 constants.js:417
 msgid "Hausa"
 msgstr ""
 
-#: settings.py:48 translatorHistory.py:81 constants.js:310 constants.js:419
+#: settings.py:50 translatorHistory.py:81 constants.js:309 constants.js:418
 msgid "Hawaiian"
 msgstr ""
 
-#: settings.py:49 translatorHistory.py:82 constants.js:311
+#: settings.py:51 translatorHistory.py:82 constants.js:310
 msgid "Hebrew (Y)"
 msgstr ""
 
-#: settings.py:50 translatorHistory.py:83 constants.js:312 constants.js:420
+#: settings.py:52 translatorHistory.py:83 constants.js:311 constants.js:419
 msgid "Hindi"
 msgstr ""
 
-#: settings.py:51 translatorHistory.py:84 constants.js:313 constants.js:421
+#: settings.py:53 translatorHistory.py:84 constants.js:312 constants.js:420
 msgid "Hmong"
 msgstr ""
 
-#: settings.py:52 translatorHistory.py:85 constants.js:314 constants.js:422
+#: settings.py:54 translatorHistory.py:85 constants.js:313 constants.js:421
 msgid "Croatian"
 msgstr ""
 
-#: settings.py:53 translatorHistory.py:86 constants.js:315 constants.js:423
+#: settings.py:55 translatorHistory.py:86 constants.js:314 constants.js:422
 msgid "Haitian Creole"
 msgstr ""
 
-#: settings.py:54 translatorHistory.py:87 constants.js:316 constants.js:424
+#: settings.py:56 translatorHistory.py:87 constants.js:315 constants.js:423
 msgid "Hungarian"
 msgstr ""
 
-#: settings.py:55 translatorHistory.py:88 constants.js:317 constants.js:425
+#: settings.py:57 translatorHistory.py:88 constants.js:316 constants.js:424
 msgid "Armenian"
 msgstr ""
 
-#: settings.py:56 translatorHistory.py:89 constants.js:318 constants.js:426
+#: settings.py:58 translatorHistory.py:89 constants.js:317 constants.js:425
 msgid "Indonesian"
 msgstr ""
 
-#: settings.py:57 translatorHistory.py:90 constants.js:319 constants.js:427
+#: settings.py:59 translatorHistory.py:90 constants.js:318 constants.js:426
 msgid "Igbo"
 msgstr ""
 
-#: settings.py:58 translatorHistory.py:91 constants.js:320 constants.js:428
+#: settings.py:60 translatorHistory.py:91 constants.js:319 constants.js:427
 msgid "Icelandic"
 msgstr ""
 
-#: settings.py:59 translatorHistory.py:92 constants.js:321 constants.js:429
+#: settings.py:61 translatorHistory.py:92 constants.js:320 constants.js:428
 msgid "Italian"
 msgstr ""
 
-#: settings.py:60 translatorHistory.py:93 constants.js:322 constants.js:430
+#: settings.py:62 translatorHistory.py:93 constants.js:321 constants.js:429
 msgid "Hebrew"
 msgstr ""
 
-#: settings.py:61 translatorHistory.py:94 constants.js:323 constants.js:431
+#: settings.py:63 translatorHistory.py:94 constants.js:322 constants.js:430
 msgid "Japanese"
 msgstr ""
 
-#: settings.py:62 translatorHistory.py:95 constants.js:324 constants.js:432
+#: settings.py:64 translatorHistory.py:95 constants.js:323 constants.js:431
 msgid "Javanese"
 msgstr ""
 
-#: settings.py:63 translatorHistory.py:96 constants.js:325 constants.js:433
+#: settings.py:65 translatorHistory.py:96 constants.js:324 constants.js:432
 msgid "Georgian"
 msgstr ""
 
-#: settings.py:64 translatorHistory.py:97 constants.js:326 constants.js:434
+#: settings.py:66 translatorHistory.py:97 constants.js:325 constants.js:433
 msgid "Kazakh"
 msgstr ""
 
-#: settings.py:65 translatorHistory.py:98 constants.js:327 constants.js:435
+#: settings.py:67 translatorHistory.py:98 constants.js:326 constants.js:434
 msgid "Khmer"
 msgstr ""
 
-#: settings.py:66 translatorHistory.py:99 constants.js:328 constants.js:436
+#: settings.py:68 translatorHistory.py:99 constants.js:327 constants.js:435
 msgid "Kannada"
 msgstr ""
 
-#: settings.py:67 translatorHistory.py:100 constants.js:329 constants.js:437
+#: settings.py:69 translatorHistory.py:100 constants.js:328 constants.js:436
 msgid "Korean"
 msgstr ""
 
-#: settings.py:68 translatorHistory.py:101 constants.js:330 constants.js:438
+#: settings.py:70 translatorHistory.py:101 constants.js:329 constants.js:437
 msgid "Kurdish (Kurmanji)"
 msgstr ""
 
-#: settings.py:69 translatorHistory.py:102 constants.js:331 constants.js:439
+#: settings.py:71 translatorHistory.py:102 constants.js:330 constants.js:438
 msgid "Kyrgyz"
 msgstr ""
 
-#: settings.py:70 translatorHistory.py:103 constants.js:332 constants.js:440
+#: settings.py:72 translatorHistory.py:103 constants.js:331 constants.js:439
 msgid "Latin"
 msgstr ""
 
-#: settings.py:71 translatorHistory.py:104 constants.js:333 constants.js:441
+#: settings.py:73 translatorHistory.py:104 constants.js:332 constants.js:440
 msgid "Luxembourgish"
 msgstr ""
 
-#: settings.py:72 translatorHistory.py:105 constants.js:334 constants.js:442
+#: settings.py:74 translatorHistory.py:105 constants.js:333 constants.js:441
 msgid "Lao"
 msgstr ""
 
-#: settings.py:73 translatorHistory.py:106 constants.js:335 constants.js:443
+#: settings.py:75 translatorHistory.py:106 constants.js:334 constants.js:442
 msgid "Lithuanian"
 msgstr ""
 
-#: settings.py:74 translatorHistory.py:107 constants.js:336 constants.js:444
+#: settings.py:76 translatorHistory.py:107 constants.js:335 constants.js:443
 msgid "Latvian"
 msgstr ""
 
-#: settings.py:75 translatorHistory.py:108 constants.js:337 constants.js:445
+#: settings.py:77 translatorHistory.py:108 constants.js:336 constants.js:444
 msgid "Malagasy"
 msgstr ""
 
-#: settings.py:76 translatorHistory.py:109 constants.js:338 constants.js:446
+#: settings.py:78 translatorHistory.py:109 constants.js:337 constants.js:445
 msgid "Maori"
 msgstr ""
 
-#: settings.py:77 translatorHistory.py:110 constants.js:339 constants.js:447
+#: settings.py:79 translatorHistory.py:110 constants.js:338 constants.js:446
 msgid "Macedonian"
 msgstr ""
 
-#: settings.py:78 translatorHistory.py:111 constants.js:340 constants.js:448
+#: settings.py:80 translatorHistory.py:111 constants.js:339 constants.js:447
 msgid "Malayalam"
 msgstr ""
 
-#: settings.py:79 translatorHistory.py:112 constants.js:341 constants.js:449
+#: settings.py:81 translatorHistory.py:112 constants.js:340 constants.js:448
 msgid "Mongolian"
 msgstr ""
 
-#: settings.py:80 translatorHistory.py:113 constants.js:342 constants.js:450
+#: settings.py:82 translatorHistory.py:113 constants.js:341 constants.js:449
 msgid "Marathi"
 msgstr ""
 
-#: settings.py:81 translatorHistory.py:114 constants.js:343 constants.js:451
+#: settings.py:83 translatorHistory.py:114 constants.js:342 constants.js:450
 msgid "Malay"
 msgstr ""
 
-#: settings.py:82 translatorHistory.py:115 constants.js:344 constants.js:452
+#: settings.py:84 translatorHistory.py:115 constants.js:343 constants.js:451
 msgid "Maltese"
 msgstr ""
 
-#: settings.py:83 translatorHistory.py:116 constants.js:345 constants.js:453
+#: settings.py:85 translatorHistory.py:116 constants.js:344 constants.js:452
 msgid "Myanmar (Burmese)"
 msgstr ""
 
-#: settings.py:84 translatorHistory.py:117 constants.js:346 constants.js:454
+#: settings.py:86 translatorHistory.py:117 constants.js:345 constants.js:453
 msgid "Nepali"
 msgstr ""
 
-#: settings.py:85 translatorHistory.py:118 constants.js:347 constants.js:455
+#: settings.py:87 translatorHistory.py:118 constants.js:346 constants.js:454
 msgid "Dutch"
 msgstr ""
 
-#: settings.py:86 translatorHistory.py:119 constants.js:348 constants.js:456
+#: settings.py:88 translatorHistory.py:119 constants.js:347 constants.js:455
 msgid "Norwegian"
 msgstr ""
 
-#: settings.py:87 translatorHistory.py:120 constants.js:349 constants.js:457
+#: settings.py:89 translatorHistory.py:120 constants.js:348 constants.js:456
 msgid "Cebuano"
 msgstr ""
 
-#: settings.py:88 translatorHistory.py:121 constants.js:350 constants.js:458
+#: settings.py:90 translatorHistory.py:121 constants.js:349 constants.js:457
 msgid "Punjabi"
 msgstr ""
 
-#: settings.py:89 translatorHistory.py:122 constants.js:351 constants.js:459
+#: settings.py:91 translatorHistory.py:122 constants.js:350 constants.js:458
 msgid "Polish"
 msgstr ""
 
-#: settings.py:90 translatorHistory.py:123 constants.js:352 constants.js:460
+#: settings.py:92 translatorHistory.py:123 constants.js:351 constants.js:459
 msgid "Pashto"
 msgstr ""
 
-#: settings.py:91 translatorHistory.py:124 constants.js:353 constants.js:461
+#: settings.py:93 translatorHistory.py:124 constants.js:352 constants.js:460
 msgid "Portuguese"
 msgstr ""
 
-#: settings.py:92 translatorHistory.py:125 constants.js:354 constants.js:462
+#: settings.py:94 translatorHistory.py:125 constants.js:353 constants.js:461
 msgid "Romanian"
 msgstr ""
 
 #. TO TRANSLATORS: URL pointing to website in Russian
-#: settings.py:93 translatorHistory.py:126 z_create_localized_help.py:185 constants.js:355 constants.js:463
+#: settings.py:95 translatorHistory.py:126 z_create_localized_help.py:185 constants.js:354 constants.js:462
 msgid "Russian"
 msgstr ""
 
-#: settings.py:94 translatorHistory.py:127 constants.js:356 constants.js:464
+#: settings.py:96 translatorHistory.py:127 constants.js:355 constants.js:463
 msgid "Sindhi"
 msgstr ""
 
-#: settings.py:95 translatorHistory.py:128 constants.js:357 constants.js:465
+#: settings.py:97 translatorHistory.py:128 constants.js:356 constants.js:464
 msgid "Sinhala"
 msgstr ""
 
-#: settings.py:96 translatorHistory.py:129 constants.js:358 constants.js:466
+#: settings.py:98 translatorHistory.py:129 constants.js:357 constants.js:465
 msgid "Slovak"
 msgstr ""
 
-#: settings.py:97 translatorHistory.py:130 constants.js:359 constants.js:467
+#: settings.py:99 translatorHistory.py:130 constants.js:358 constants.js:466
 msgid "Slovenian"
 msgstr ""
 
-#: settings.py:98 translatorHistory.py:131 constants.js:360 constants.js:468
+#: settings.py:100 translatorHistory.py:131 constants.js:359 constants.js:467
 msgid "Samoan"
 msgstr ""
 
-#: settings.py:99 translatorHistory.py:132 constants.js:361 constants.js:469
+#: settings.py:101 translatorHistory.py:132 constants.js:360 constants.js:468
 msgid "Shona"
 msgstr ""
 
-#: settings.py:100 translatorHistory.py:133 constants.js:362 constants.js:470
+#: settings.py:102 translatorHistory.py:133 constants.js:361 constants.js:469
 msgid "Somali"
 msgstr ""
 
-#: settings.py:101 translatorHistory.py:134 constants.js:363 constants.js:471
+#: settings.py:103 translatorHistory.py:134 constants.js:362 constants.js:470
 msgid "Albanian"
 msgstr ""
 
-#: settings.py:102 translatorHistory.py:135 constants.js:364 constants.js:472 constants.js:473
+#: settings.py:104 translatorHistory.py:135 constants.js:363 constants.js:471 constants.js:472
 msgid "Serbian"
 msgstr ""
 
-#: settings.py:103 translatorHistory.py:136 constants.js:365 constants.js:474
+#: settings.py:105 translatorHistory.py:136 constants.js:364 constants.js:473
 msgid "Sesotho"
 msgstr ""
 
-#: settings.py:104 translatorHistory.py:137 constants.js:366 constants.js:475
+#: settings.py:106 translatorHistory.py:137 constants.js:365 constants.js:474
 msgid "Sundanese"
 msgstr ""
 
-#: settings.py:105 translatorHistory.py:138 constants.js:367 constants.js:476
+#: settings.py:107 translatorHistory.py:138 constants.js:366 constants.js:475
 msgid "Swedish"
 msgstr ""
 
-#: settings.py:106 translatorHistory.py:139 constants.js:368 constants.js:477
+#: settings.py:108 translatorHistory.py:139 constants.js:367 constants.js:476
 msgid "Swahili"
 msgstr ""
 
-#: settings.py:107 translatorHistory.py:140 constants.js:369 constants.js:478
+#: settings.py:109 translatorHistory.py:140 constants.js:368 constants.js:477
 msgid "Tamil"
 msgstr ""
 
-#: settings.py:108 translatorHistory.py:141 constants.js:370 constants.js:479
+#: settings.py:110 translatorHistory.py:141 constants.js:369 constants.js:478
 msgid "Telugu"
 msgstr ""
 
-#: settings.py:109 translatorHistory.py:142 constants.js:371 constants.js:480
+#: settings.py:111 translatorHistory.py:142 constants.js:370 constants.js:479
 msgid "Tajik"
 msgstr ""
 
-#: settings.py:110 translatorHistory.py:143 constants.js:372 constants.js:481
+#: settings.py:112 translatorHistory.py:143 constants.js:371 constants.js:480
 msgid "Thai"
 msgstr ""
 
-#: settings.py:111 translatorHistory.py:144 constants.js:373 constants.js:482
+#: settings.py:113 translatorHistory.py:144 constants.js:372 constants.js:481
 msgid "Filipino"
 msgstr ""
 
-#: settings.py:112 translatorHistory.py:145 constants.js:374 constants.js:483
+#: settings.py:114 translatorHistory.py:145 constants.js:373 constants.js:482
 msgid "Turkish"
 msgstr ""
 
-#: settings.py:113 translatorHistory.py:146 constants.js:375 constants.js:484
+#: settings.py:115 translatorHistory.py:146 constants.js:374 constants.js:483
 msgid "Ukrainian"
 msgstr ""
 
-#: settings.py:114 translatorHistory.py:147 constants.js:376 constants.js:485
+#: settings.py:116 translatorHistory.py:147 constants.js:375 constants.js:484
 msgid "Urdu"
 msgstr ""
 
-#: settings.py:115 translatorHistory.py:148 constants.js:377 constants.js:486
+#: settings.py:117 translatorHistory.py:148 constants.js:376 constants.js:485
 msgid "Uzbek"
 msgstr ""
 
-#: settings.py:116 translatorHistory.py:149 constants.js:378 constants.js:487
+#: settings.py:118 translatorHistory.py:149 constants.js:377 constants.js:486
 msgid "Vietnamese"
 msgstr ""
 
-#: settings.py:117 translatorHistory.py:150 constants.js:379 constants.js:488
+#: settings.py:119 translatorHistory.py:150 constants.js:378 constants.js:487
 msgid "Xhosa"
 msgstr ""
 
-#: settings.py:118 translatorHistory.py:151 constants.js:380 constants.js:489
+#: settings.py:120 translatorHistory.py:151 constants.js:379 constants.js:488
 msgid "Yiddish"
 msgstr ""
 
-#: settings.py:119 translatorHistory.py:152 constants.js:381 constants.js:490
+#: settings.py:121 translatorHistory.py:152 constants.js:380 constants.js:489
 msgid "Yoruba"
 msgstr ""
 
-#: settings.py:120 translatorHistory.py:153 constants.js:382
+#: settings.py:122 translatorHistory.py:153 constants.js:381
 msgid "Chinese (Y)"
 msgstr ""
 
-#: settings.py:121 translatorHistory.py:154 constants.js:383 constants.js:491
+#: settings.py:123 translatorHistory.py:154 constants.js:382 constants.js:490
 msgid "Chinese Simplified"
 msgstr ""
 
-#: settings.py:122 translatorHistory.py:155 constants.js:384 constants.js:492
+#: settings.py:124 translatorHistory.py:155 constants.js:383 constants.js:491
 msgid "Chinese Traditional"
 msgstr ""
 
-#: settings.py:123 translatorHistory.py:156 constants.js:385 constants.js:493
+#: settings.py:125 translatorHistory.py:156 constants.js:384 constants.js:492
 msgid "Zulu"
 msgstr ""
 
-#: settings.py:128
+#: settings.py:130
 msgid "It enables the ability to log the output of several functions used by the extension."
 msgstr ""
 
-#: settings.py:130 settings.py:466
+#: settings.py:132 settings.py:466
 msgid "Normal"
 msgstr ""
 
-#: settings.py:130
+#: settings.py:132
 msgid "Only log messages caused by non critical errors."
 msgstr ""
 
-#: settings.py:131
+#: settings.py:133
 msgid "Additinally log extra output messages and all HTTP responses."
 msgstr ""
 
-#: settings.py:131 settings.py:467
+#: settings.py:133 settings.py:467
 msgid "Verbose"
 msgstr ""
 
-#: settings.py:132 settings.py:468
+#: settings.py:134 settings.py:468
 msgid "Very verbose"
 msgstr ""
 
-#: settings.py:133
+#: settings.py:135
 msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
 
-#: settings.py:138
+#: settings.py:140
 msgid "Translator"
 msgstr ""
 
-#: settings.py:142
+#: settings.py:144
 msgid "Source language"
 msgstr ""
 
-#: settings.py:148
+#: settings.py:150
 msgid "Target language"
 msgstr ""
 
-#: settings.py:154
+#: settings.py:156
 msgid "Remember last language"
 msgstr ""
 
-#: settings.py:159
+#: settings.py:161
 msgid "General"
 msgstr ""
 
-#: settings.py:161
+#: settings.py:163
 msgid "General options"
 msgstr ""
 
-#: settings.py:167
+#: settings.py:169
 msgid "Default translation provider"
 msgstr ""
 
-#: settings.py:169
+#: settings.py:171
 msgid "Select the default translation provider."
 msgstr ""
 
-#: settings.py:170
+#: settings.py:172
 msgid "Providers marked with (*) require translate-shell package to work."
 msgstr ""
 
-#: settings.py:171 ui.js:2460
+#: settings.py:173 ui.js:2460
 msgid "See the extended help of this extension for more information."
 msgstr ""
 
-#: settings.py:175 constants.js:261
+#: settings.py:177 constants.js:260
 msgid "Bing Translator"
 msgstr ""
 
-#: settings.py:176 settings.py:177 constants.js:262 constants.js:263
+#: settings.py:178 settings.py:179 constants.js:261 constants.js:262
 msgid "Google Translate"
 msgstr ""
 
-#: settings.py:178 settings.py:179
+#: settings.py:180 settings.py:181
 msgid "Yandex Translate"
 msgstr ""
 
-#: settings.py:188
+#: settings.py:190
 msgid "UI animation time"
 msgstr ""
 
-#: settings.py:189
+#: settings.py:191
 msgid "Set to zero to disable animations."
 msgstr ""
 
-#: settings.py:190
+#: settings.py:192
 msgid "milliseconds"
 msgstr ""
 
-#: settings.py:203
+#: settings.py:205
 msgid "Remember last translator"
 msgstr ""
 
-#: settings.py:204
+#: settings.py:206
 msgid "Remember last used translation provider."
 msgstr ""
 
-#: settings.py:212
+#: settings.py:214
 msgid "Automatically translate when switching languages"
 msgstr ""
 
-#: settings.py:220
+#: settings.py:222
 msgid "Keep source entry text selected"
 msgstr ""
 
-#: settings.py:221
+#: settings.py:223
 msgid "Keep source entry text selected whenever the translation dialog is opened and the source entry box contains text."
 msgstr ""
 
-#: settings.py:228
+#: settings.py:230
 msgid "Show most used languages"
 msgstr ""
 
-#: settings.py:229
+#: settings.py:231
 msgid "Display a list of most used languages."
 msgstr ""
 
-#: settings.py:237
+#: settings.py:239
 msgid "Synchronize scroll entries"
 msgstr ""
 
-#: settings.py:238
+#: settings.py:240
 msgid "Make the source and target entries scroll synchronously."
 msgstr ""
 
-#: settings.py:246
+#: settings.py:248
 msgid "Keybinding to open translator dialog"
 msgstr ""
 
-#: settings.py:255
+#: settings.py:257
 msgid "Keybinding to translate text from clipboard"
 msgstr ""
 
-#: settings.py:264
+#: settings.py:266
 msgid "Keybinding to translate text from primary selection"
 msgstr ""
 
-#: settings.py:274
+#: settings.py:276
 msgid "Translators"
 msgstr ""
 
-#: settings.py:276
+#: settings.py:278
 msgid "Translators default preferences"
 msgstr ""
 
-#: settings.py:294
+#: settings.py:280
 msgid "Translators whose names are suffixed with TS require translate-shell package"
 msgstr ""
 
-#: settings.py:303
+#: settings.py:302
 msgid "Appearance"
 msgstr ""
 
-#: settings.py:305
+#: settings.py:304
 msgid "Translation dialog appearance"
 msgstr ""
 
-#: settings.py:311
+#: settings.py:310
 msgid "Dialog theme"
 msgstr ""
 
-#: settings.py:312
+#: settings.py:311
 msgid "Select a theme for the translation dialog."
 msgstr ""
 
-#: settings.py:314 settings.py:397
+#: settings.py:313 settings.py:396
 msgid "Custom"
 msgstr ""
 
-#: settings.py:315
+#: settings.py:314
 msgid "Default"
 msgstr ""
 
-#: settings.py:325
+#: settings.py:324
 msgid "Custom theme path"
 msgstr ""
 
-#: settings.py:326
+#: settings.py:325
 msgid "Select a custom theme for the translation dialog."
 msgstr ""
 
-#: settings.py:334
+#: settings.py:333
 msgid "Font size"
 msgstr ""
 
-#: settings.py:335
+#: settings.py:334
 msgid "Select a font size for the source text and target text entries."
 msgstr ""
 
-#: settings.py:340
+#: settings.py:339
 msgid "ems"
 msgstr ""
 
-#: settings.py:348
+#: settings.py:347
 msgid "Percentage of screen width"
 msgstr ""
 
-#: settings.py:349
+#: settings.py:348
 msgid "What percentage of screen width should the translation dialog fill."
 msgstr ""
 
-#: settings.py:354 settings.py:368
+#: settings.py:353 settings.py:367
 msgid "percentage"
 msgstr ""
 
-#: settings.py:362
+#: settings.py:361
 msgid "Percentage of screen height"
 msgstr ""
 
-#: settings.py:363
+#: settings.py:362
 msgid "What percentage of screen height should the translation dialog fill."
 msgstr ""
 
-#: settings.py:377 extension.js:1211 extension.js:1214 ui.js:2048
+#: settings.py:376 extension.js:1183 extension.js:1186 ui.js:2048
 msgid "History"
 msgstr ""
 
-#: settings.py:379
+#: settings.py:378
 msgid "Translation history settings"
 msgstr ""
 
-#: settings.py:385
+#: settings.py:384
 msgid "Enable translation history"
 msgstr ""
 
-#: settings.py:393
+#: settings.py:392
 msgid "Timestamp for history entries"
 msgstr ""
 
-#: settings.py:394
+#: settings.py:393
 msgid ""
 "Timestamp format for the translation history entries.\n"
 "Note: After changing this setting, only new entries in the translation history will be saved with the new timestamp format. Old entries will still have the previous timestamp format."
 msgstr ""
 
-#: settings.py:399
+#: settings.py:398
 msgid "European"
 msgstr ""
 
-#: settings.py:408
+#: settings.py:407
 msgid "Custom timestamp"
 msgstr ""
 
-#: settings.py:417
+#: settings.py:416
 msgid "Date format syntax information"
 msgstr ""
 
-#: settings.py:426
+#: settings.py:425
 msgid "Width to trigger word wrap"
 msgstr ""
 
-#: settings.py:427
+#: settings.py:426
 msgid "The \"Source text\" and \"Target text\" columns on the history window will wrap their text at the width defined by this setting."
 msgstr ""
 
-#: settings.py:433
+#: settings.py:432
 msgid "pixels"
 msgstr ""
 
-#: settings.py:442
+#: settings.py:441
 msgid "Miscellaneous"
 msgstr ""
 
-#: settings.py:444
+#: settings.py:443
 msgid "Credentials"
 msgstr ""
 
-#: settings.py:451
+#: settings.py:450
 msgid "Yandex API keys"
 msgstr ""
 
-#: settings.py:452
+#: settings.py:451
 msgid ""
 "Enter one API key per line.\n"
 "Read the help file found inside this extension folder to know how to get free Yandex API keys."
 msgstr ""
 
-#: settings.py:457
+#: settings.py:456
 msgid "Debugging"
 msgstr ""
 
@@ -964,15 +980,11 @@ msgstr ""
 msgid "It allows to save the translation history data with indentation."
 msgstr ""
 
-#: settings.py:493
-msgid "Requires Cinnamon restart to enable/disable"
-msgstr ""
-
 #: translatorHistory.py:33
 msgid "Multi Translator history"
 msgstr ""
 
-#: translatorHistory.py:50 constants.js:279
+#: translatorHistory.py:50 constants.js:278
 msgid "Unknown"
 msgstr ""
 
@@ -996,7 +1008,7 @@ msgstr ""
 msgid "Sanitize"
 msgstr ""
 
-#: translatorHistory.py:305 extension.js:1154
+#: translatorHistory.py:305 extension.js:1126
 msgid "The translation history requires sanitation."
 msgstr ""
 
@@ -1157,15 +1169,15 @@ msgstr ""
 msgid "Show help dialog."
 msgstr ""
 
-#: z_create_localized_help.py:107 z_create_localized_help.py:117 z_create_localized_help.py:122 z_create_localized_help.py:126 z_create_localized_help.py:130 z_create_localized_help.py:134 extension.js:529 extension.js:603 extension.js:712 extension.js:721 ui.js:1021 ui.js:1027 ui.js:1030 ui.js:1033 ui.js:1036 ui.js:1039
+#: z_create_localized_help.py:107 z_create_localized_help.py:117 z_create_localized_help.py:122 z_create_localized_help.py:126 z_create_localized_help.py:130 z_create_localized_help.py:134 extension.js:501 extension.js:575 extension.js:684 extension.js:693 ui.js:1021 ui.js:1027 ui.js:1030 ui.js:1033 ui.js:1036 ui.js:1039
 msgid "Ctrl"
 msgstr ""
 
-#: z_create_localized_help.py:108 z_create_localized_help.py:113 extension.js:721 ui.js:1021 ui.js:1024
+#: z_create_localized_help.py:108 z_create_localized_help.py:113 extension.js:693 ui.js:1021 ui.js:1024
 msgid "Enter"
 msgstr ""
 
-#: z_create_localized_help.py:109 extension.js:720 ui.js:1022
+#: z_create_localized_help.py:109 extension.js:692 ui.js:1022
 msgid "Translate text"
 msgstr ""
 
@@ -1181,7 +1193,7 @@ msgstr ""
 msgid "Copy translated text to clipboard."
 msgstr ""
 
-#: z_create_localized_help.py:123 extension.js:711 ui.js:1031
+#: z_create_localized_help.py:123 extension.js:683 ui.js:1031
 msgid "Swap languages"
 msgstr ""
 
@@ -1189,15 +1201,15 @@ msgstr ""
 msgid "Reset languages to default."
 msgstr ""
 
-#: z_create_localized_help.py:131 extension.js:602 ui.js:1037
+#: z_create_localized_help.py:131 extension.js:574 ui.js:1037
 msgid "Provider selector menu"
 msgstr ""
 
-#: z_create_localized_help.py:135 extension.js:528 ui.js:1040
+#: z_create_localized_help.py:135 extension.js:500 ui.js:1040
 msgid "Main menu"
 msgstr ""
 
-#: z_create_localized_help.py:138 extension.js:741 ui.js:885 ui.js:1042
+#: z_create_localized_help.py:138 extension.js:713 ui.js:885 ui.js:1042
 msgid "Escape"
 msgstr ""
 
@@ -1205,7 +1217,7 @@ msgstr ""
 msgid "Close dialog."
 msgstr ""
 
-#: z_create_localized_help.py:142 extension.js:553
+#: z_create_localized_help.py:142 extension.js:525
 msgid "Translation history"
 msgstr ""
 
@@ -1338,160 +1350,160 @@ msgstr ""
 msgid "If the *wrong* settings window is opened, a button to open the *right* settings window will be available."
 msgstr ""
 
-#: constants.js:164
+#: constants.js:163
 msgid "Unable to resolve destination host name"
 msgstr ""
 
-#: constants.js:165
+#: constants.js:164
 msgid "Temporary redirect"
 msgstr ""
 
-#: constants.js:166
+#: constants.js:165
 msgid "Unable to resolve proxy host name"
 msgstr ""
 
-#: constants.js:167
+#: constants.js:166
 msgid "Bad request"
 msgstr ""
 
-#: constants.js:168
+#: constants.js:167
 msgid "Unauthorized"
 msgstr ""
 
-#: constants.js:169
+#: constants.js:168
 msgid "Payment required"
 msgstr ""
 
-#: constants.js:170
+#: constants.js:169
 msgid "Not found"
 msgstr ""
 
-#: constants.js:171
+#: constants.js:170
 msgid "Proxy authentication required"
 msgstr ""
 
-#: constants.js:172
+#: constants.js:171
 msgid "Request timeout"
 msgstr ""
 
-#: constants.js:173
+#: constants.js:172
 msgid "Unable to connect to remote host"
 msgstr ""
 
-#: constants.js:174
+#: constants.js:173
 msgid "Internal server error"
 msgstr ""
 
-#: constants.js:175
+#: constants.js:174
 msgid "Service unavailable"
 msgstr ""
 
-#: constants.js:176
+#: constants.js:175
 msgid "Unable to connect to proxy"
 msgstr ""
 
-#: constants.js:177
+#: constants.js:176
 msgid "SSL/TLS negotiation failed"
 msgstr ""
 
-#: constants.js:178
+#: constants.js:177
 msgid "A network error occurred, or the other end closed the connection unexpectedly"
 msgstr ""
 
-#: constants.js:260
+#: constants.js:259
 msgid "Apertium"
 msgstr ""
 
-#: extension.js:294
+#: extension.js:266
 msgid "There is nothing to copy"
 msgstr ""
 
-#: extension.js:307
+#: extension.js:279
 msgid "Translated text copied to clipboard"
 msgstr ""
 
-#: extension.js:349
+#: extension.js:321
 #, javascript-format
 msgid "Service provided by %s"
 msgstr ""
 
-#: extension.js:406
+#: extension.js:378
 msgid "Languages cannot be swapped"
 msgstr ""
 
-#: extension.js:545
+#: extension.js:517
 msgid "Preferences"
 msgstr ""
 
-#: extension.js:561
+#: extension.js:533
 msgid "Check dependencies"
 msgstr ""
 
-#: extension.js:568
+#: extension.js:540
 msgid "Extended help"
 msgstr ""
 
-#: extension.js:661 extension.js:682
+#: extension.js:633 extension.js:654
 msgid "Choose source language"
 msgstr ""
 
-#: extension.js:669 extension.js:753
+#: extension.js:641 extension.js:725
 msgid "Choose target language"
 msgstr ""
 
-#: extension.js:731
+#: extension.js:703
 msgid "Quick help"
 msgstr ""
 
-#: extension.js:740
+#: extension.js:712
 msgid "Quit"
 msgstr ""
 
-#: extension.js:774 extension.js:817 utils.js:773
+#: extension.js:746 extension.js:789 utils.js:773
 msgid "Nothing to translate"
 msgstr ""
 
-#: extension.js:918
+#: extension.js:890
 msgid "Selection is empty or xsel was not able to grab it"
 msgstr ""
 
-#: extension.js:940
+#: extension.js:912
 msgid "Clipboard is empty"
 msgstr ""
 
-#: extension.js:1064
+#: extension.js:1036
 msgid "Error trying to get theme"
 msgstr ""
 
-#: extension.js:1072
+#: extension.js:1044
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: extension.js:1082
+#: extension.js:1054
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: extension.js:1155
+#: extension.js:1127
 msgid "The sanitation can be performed from the translation history window."
 msgstr ""
 
-#: extension.js:1156
+#: extension.js:1128
 msgid "Check this extension help file for more details."
 msgstr ""
 
-#: extension.js:1165
+#: extension.js:1137
 msgid "Something might have gone wrong parsing the translation history."
 msgstr ""
 
-#: extension.js:1361
+#: extension.js:1333
 msgid "A shortcut to open this extension settings has been generated."
 msgstr ""
 
-#: extension.js:1362
+#: extension.js:1334
 msgid "Search for it on your applications menu."
 msgstr ""
 
-#: extension.js:1363
+#: extension.js:1335
 msgid "Read this extension help page for more details."
 msgstr ""
 

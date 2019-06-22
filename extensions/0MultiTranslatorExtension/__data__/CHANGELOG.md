@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Fri, 21 Jun 2019 23:07:33 -0300
+- **Commit:** [3d3b373](https://gitlab.com/Odyseus/CinnamonTools/commit/3d3b373)
+- **Author:** Odyseus
+
+```
+- Minor changes to the settings application due to changes in the custom settings framework.
+
+```
+
+***
+
 - **Date:** Wed, 5 Jun 2019 19:55:39 -0300
 - **Commit:** [3b74138](https://gitlab.com/Odyseus/CinnamonTools/commit/3b74138)
 - **Author:** Odyseus

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-06-02 12:36-0300\n"
+"POT-Creation-Date: 2019-06-22 00:01-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1155
+#: ../../__app__/python_modules/localized_help_creator.py:318 utils.js:1179
 msgid "Help"
 msgstr ""
 
@@ -101,73 +101,73 @@ msgstr ""
 msgid "Inverted menu on top panel"
 msgstr ""
 
-#: utils.js:1007
+#: utils.js:1031
 msgid "Preferences"
 msgstr ""
 
-#: utils.js:1021
+#: utils.js:1045
 msgid "Move to the other monitor"
 msgstr ""
 
-#: utils.js:1032
+#: utils.js:1056
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr ""
 
-#: utils.js:1043
+#: utils.js:1067
 msgid "Only on this workspace"
 msgstr ""
 
-#: utils.js:1049
+#: utils.js:1073
 msgid "Visible on all workspaces"
 msgstr ""
 
-#: utils.js:1055
+#: utils.js:1079
 msgid "Move to another workspace"
 msgstr ""
 
 #. Close all/others
-#: utils.js:1085
+#: utils.js:1109
 msgid "Close all"
 msgstr ""
 
-#: utils.js:1095
+#: utils.js:1119
 msgid "Close others"
 msgstr ""
 
-#: utils.js:1110
+#: utils.js:1134
 msgid "Restore to full opacity"
 msgstr ""
 
-#: utils.js:1118
+#: utils.js:1142
 msgid "Restore"
 msgstr ""
 
-#: utils.js:1123
+#: utils.js:1147
 msgid "Minimize"
 msgstr ""
 
-#: utils.js:1131
+#: utils.js:1155
 msgid "Unmaximize"
 msgstr ""
 
-#: utils.js:1136
+#: utils.js:1160
 msgid "Maximize"
 msgstr ""
 
-#: utils.js:1143
+#: utils.js:1167
 msgid "Close"
 msgstr ""
 
-#: utils.js:1162
+#: utils.js:1186
 msgid "About..."
 msgstr ""
 
-#: utils.js:1167
+#: utils.js:1191
 msgid "Configure..."
 msgstr ""
 
-#: utils.js:1183
+#: utils.js:1207
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""
@@ -277,7 +277,7 @@ msgid ""
 "It enables the ability to log the output of several functions used by the extension.\n"
 "\n"
 "Normal: Only log messages caused by non critical errors.\n"
-"Verbose: Additinally log extra output messages and all HTTP responses.\n"
+"Verbose: Additionally log extra output messages and all HTTP responses.\n"
 "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
 

@@ -121,7 +121,7 @@
         "type": "checkbox",
         "indent": true,
         "default": false,
-        "description": "Cycle script only when menu open",
+        "description": "Rotate script only when menu is open",
         "tooltip": "When enabled, the script will be executed and its execution repeated at the specified rotation interval only when the main menu is opened."
     },
     "head2": {

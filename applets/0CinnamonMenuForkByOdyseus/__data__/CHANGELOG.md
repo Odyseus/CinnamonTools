@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Fri, 21 Jun 2019 23:01:39 -0300
+- **Commit:** [5cfae62](https://gitlab.com/Odyseus/CinnamonTools/commit/5cfae62)
+- **Author:** Odyseus
+
+```
+- Implemented the use of a custom framework to handle the applet settings since I was already using the framework to create the custom launchers manager window.
+
+```
+
+***
+
 - **Date:** Thu, 30 May 2019 03:46:46 -0300
 - **Commit:** [da83098](https://gitlab.com/Odyseus/CinnamonTools/commit/da83098)
 - **Author:** Odyseus

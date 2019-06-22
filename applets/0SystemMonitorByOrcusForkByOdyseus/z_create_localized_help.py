@@ -32,6 +32,7 @@ class Main(LocalizedHelpCreator):
             "",
             "- %s" % _("Added keyboard shortcut to be able to launch a custom command."),
             "- %s" % _("Added option to hide the graphs background, not just set it transparent."),
+            "- %s" % _("Added option to change the graphs order."),
             "",
             "## " + _("Dependencies"),
             "- **GTop:** " +

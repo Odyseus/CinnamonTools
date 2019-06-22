@@ -4,6 +4,18 @@
 
 ***
 
+- **Date:** Fri, 21 Jun 2019 23:06:57 -0300
+- **Commit:** [6b9cf1e](https://gitlab.com/Odyseus/CinnamonTools/commit/6b9cf1e)
+- **Author:** Odyseus
+
+```
+- Selectively disabled the xlets tweaks section from the settings window (confirmation dialogs for applets/desklets removal) in Cinnamon version greater than 4.2.x since that feature was added to Cinnamon.
+- Minor changes to the settings application due to changes in the custom settings framework.
+
+```
+
+***
+
 - **Date:** Wed, 5 Jun 2019 19:52:53 -0300
 - **Commit:** [126e856](https://gitlab.com/Odyseus/CinnamonTools/commit/126e856)
 - **Author:** Odyseus
