@@ -1,675 +1,275 @@
 {
-    "head": {
-        "type": "header",
-        "description": "Most settings are not automatically saved when modified.\nPress any of the \"Click here to save settings\" buttons for the settings to take effect."
+    "info_label_1": {
+        "type": "label",
+        "description": "If you are seeing this window, you are using a Cinnamon version with a design flaw."
     },
-    "save_settings_first": {
-        "type": "button",
-        "description": "Click here to save settings",
-        "callback": "_hardRefreshAll"
+    "info_label_2": {
+        "type": "label",
+        "description": "This window isn't this applet's \"real\" configuration window."
     },
-
-    "applet_settings_header": {
-        "type": "header",
-        "description": "Applet settings"
+    "info_label_3": {
+        "type": "label",
+        "description": "Open this applet settings from its context menu."
     },
-
     "pref_overlay_key": {
-        "type": "keybinding",
-        "indent": true,
-        "description": "Keyboard shortcut to open and close the menu",
+        "type": "generic",
         "default": "Super_L::"
     },
     "pref_use_a_custom_icon_for_applet": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Use a custom icon",
-        "tooltip": "Unchecking this allows the theme to set the icon"
+        "type": "generic",
+        "default": true
     },
     "pref_custom_icon_for_applet": {
-        "type": "iconfilechooser",
-        "indent": true,
-        "dependency": "pref_use_a_custom_icon_for_applet",
-        "default": "custom-start-here-linux-mint-symbolic",
-        "description": "Icon",
-        "tooltip": "Select an icon to show in the panel."
+        "type": "generic",
+        "default": "custom-start-here-linux-mint-symbolic"
     },
     "pref_custom_label_for_applet": {
-        "type": "entry",
-        "indent": true,
-        "default": "Menu",
-        "description": "Text",
-        "tooltip": "Enter custom text to show in the panel."
-    },
-
-    "menu_settings_separator": {
-        "type": "separator"
-    },
-    "menu_settings_header": {
-        "type": "header",
-        "description": "Menu settings"
+        "type": "generic",
+        "default": "Menu"
     },
     "pref_enable_autoscroll": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Enable autoscrolling in application list",
-        "tooltip": "Choose whether or not to enable smooth autoscrolling in the application list."
-    },
-    "pref_animate_menu": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Use menu animations",
-        "tooltip": "Allow the menu to animate on open and close"
-    },
-    "pref_activate_on_hover": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Open the menu when I move my mouse over it",
-        "tooltip": "Enable opening the menu when the mouse enters the applet"
-    },
-    "pref_strict_search_results": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Strict search results",
-        "tooltip": "If enabled, low priority search results will not be displayed."
-    },
-    "pref_menu_hover_delay": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 100,
-        "min": 0,
-        "max": 1000,
-        "step": 50,
-        "units": "milliseconds",
-        "dependency": "pref_activate_on_hover",
-        "description": "Menu hover delay",
-        "tooltip": "Delay before the menu opens when hovered"
-    },
-    "pref_max_search_results": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 15,
-        "min": 5,
-        "max": 100,
-        "step": 1,
-        "units": "items",
-        "description": "Maximum search results",
-        "tooltip": "Set the maximum amount of search results to be displayed"
-    },
-
-    "menu_layout_separator": {
-        "type": "separator"
-    },
-    "menu_layout_header": {
-        "type": "header",
-        "description": "Menu layout"
-    },
-    "pref_show_all_applications_category": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show \"All Applications\" category",
-        "tooltip": ""
-    },
-    "pref_recently_used_apps_enabled": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Show \"Recently Used\" category",
-        "tooltip": "From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recently Used\" category.\nEvery time this option is disabled, the list of recently used applications will be cleared."
-    },
-    "pref_recently_used_apps_show_separator": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "dependency": "pref_recently_used_apps_enabled",
-        "description": "Show separator below \"Recently Used\" category",
-        "tooltip": ""
-    },
-    "pref_show_category_icons": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Show category icons",
-        "tooltip": "Choose whether or not to show icons on categories."
-    },
-    "pref_show_application_icons": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Show application icons",
-        "tooltip": "Choose whether or not to show icons on applications."
-    },
-    "pref_hide_applications_list_scrollbar": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Hide applications list scrollbar",
-        "tooltip": ""
-    },
-    "pref_invert_menu_layout": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Invert menu layout",
-        "tooltip": "By default, the search box is at the top of the menu and the custom launchers box is at the bottom. Enabling this preference will invert those elements in the menu."
-    },
-    "pref_swap_categories_box": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Swap categories box",
-        "tooltip": "By default, the categories box is to the left of the applications list. With this option enabled, the categories box will be placed to the right of the applications list."
-    },
-    "pref_custom_launchers_box_invert_buttons_order": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Invert custom launches box buttons order",
-        "tooltip": ""
-    },
-    "pref_max_width_for_buttons": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 12.0,
-        "min": 1,
-        "max": 50,
-        "step": 0.5,
-        "units": "ems",
-        "description": "Maximum button width:",
-        "tooltip": "Define the maximum width of menu items inside the applications box."
-    },
-    "pref_category_icon_size": {
-        "type": "spinbutton",
-        "indent": true,
-        "dependency": "pref_show_category_icons",
-        "default": 22,
-        "min": 16,
-        "max": 256,
-        "step": 2,
-        "units": "pixels",
-        "description": "Categories icon size:",
-        "tooltip": ""
-    },
-    "pref_application_icon_size": {
-        "type": "spinbutton",
-        "indent": true,
-        "dependency": "pref_show_application_icons",
-        "default": 22,
-        "min": 16,
-        "max": 256,
-        "step": 2,
-        "units": "pixels",
-        "description": "Applications icon size:",
-        "tooltip": ""
-    },
-    "pref_search_result_icon_size": {
-        "type": "spinbutton",
-        "indent": true,
-        "dependency": "pref_show_application_icons",
-        "default": 16,
-        "min": 16,
-        "max": 256,
-        "step": 2,
-        "units": "pixels",
-        "description": "Search results icon size:",
-        "tooltip": ""
-    },
-    "pref_custom_launchers_icon_size": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 24,
-        "min": 16,
-        "max": 256,
-        "step": 2,
-        "units": "pixels",
-        "description": "Custom launchers icon size:",
-        "tooltip": ""
-    },
-    "pref_custom_launchers_box_alignment": {
-        "type": "combobox",
-        "indent": true,
-        "default": 2,
-        "description": "Custom launchers button alignment",
-        "options": {
-            "Left": 0,
-            "Middle": 1,
-            "Right": 2
-        }
-    },
-
-    "recent_apps_separator": {
-        "type": "separator"
-    },
-    "recent_apps_header": {
-        "type": "header",
-        "description": "Recent Applications"
-    },
-    "pref_recently_used_apps_ignore_favorites": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "dependency": "pref_recently_used_apps_enabled",
-        "description": "Ignore Favorites",
-        "tooltip": "If enabled, applications set as Favorite will not be displayed in the list of \"Recent Applications\"."
-    },
-    "pref_recently_used_apps_invert_order": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "dependency": "pref_recently_used_apps_enabled",
-        "description": "Invert recently used applications order",
-        "tooltip": "By default, the most recently used application is at the top of the list. With this option enabled, the most recently used application will be at the bottom of the list."
-    },
-    "pref_recently_used_apps_max_amount": {
-        "type": "spinbutton",
-        "indent": true,
-        "dependency": "pref_recently_used_apps_enabled",
-        "default": 20,
-        "min": 5,
-        "max": 100,
-        "step": 1,
-        "units": "applications",
-        "description": "Maximum recently used applications to display:",
-        "tooltip": ""
-    },
-
-    "context_menu_separator": {
-        "type": "separator"
-    },
-    "save_settings_3": {
-        "type": "button",
-        "description": "Click here to save settings",
-        "callback": "_hardRefreshAll"
-    },
-    "context_menu_header": {
-        "type": "header",
-        "description": "Applications context menu extras"
-    },
-    "pref_context_show_add_to_panel": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show \"Add to panel\" on context"
-    },
-    "pref_context_show_add_to_desktop": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show \"Add to desktop\" on context"
-    },
-    "pref_context_show_add_remove_favorite": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Show \"Add/Remove to/from favorites\" on context"
-    },
-    "pref_context_show_uninstall": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show \"Uninstall\" on context"
-    },
-    "pref_context_show_bumblebee": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show \"Run with NVIDIA GPU\" on context"
-    },
-    "pref_context_show_run_as_root": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show \"Run as root\" on context"
-    },
-    "pref_context_show_run_from_terminal": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Show \"Run from terminal\" on context"
-    },
-    "pref_context_show_run_from_terminal_as_root": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show \"Run from terminal as root\" on context"
-    },
-    "pref_context_show_desktop_file_folder": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Show \"Open .desktop file folder\" on context"
-    },
-    "pref_context_show_edit_desktop_file": {
-        "type": "checkbox",
-        "indent": true,
-        "default": true,
-        "description": "Show \"Edit .desktop file\" on context",
-        "tooltip": "It adds to the applications context menu an entry that will allow you to open the current selected application's .desktop file in a text editor."
-    },
-    "context_menu_separator_2": {
-        "type": "separator"
-    },
-    "pref_context_gain_privileges": {
-        "type": "checkbox",
-        "indent": true,
-        "default": false,
-        "description": "Gain privileges of not owned files",
-        "tooltip": "If enabled, this options will open as root .desktop files that aren't owned by the current user.\n\nThis isn't needed for all text editors. Some text editors will allow you to open and edit not owned files and will ask for the root password at the moment of saving the changes."
-    },
-    "pref_context_custom_editor_for_edit_desktop_file": {
-        "type": "entry",
-        "indent": true,
-        "default": "",
-        "description": "Custom text editor:",
-        "tooltip": "Set a custom text editor to open .desktop files (just the name of the text editor executable or the path to it).\nLeave it blank to let the system decide."
-    },
-    "pref_privilege_elevator": {
-        "type": "entry",
-        "indent": true,
-        "default": "/usr/bin/pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY",
-        "description": "Privileges elevator:",
-        "tooltip": "The graphical front-end to use to run applications as root.\nThis is used by the \"Open as Root\" context menu and the option \"Gain privileges of not owned files\"."
-    },
-    "pref_terminal_emulator": {
-        "type": "entry",
-        "indent": true,
-        "default": "x-terminal-emulator",
-        "description": "Terminal emulator:",
-        "tooltip": "Choose the terminal emulator used by all launch from terminal options.\nIMPORTANT!!! The terminal emulator has to support the -e argument (execute the argument to this option inside the terminal)."
-    },
-    "pref_default_shell": {
-        "type": "entry",
-        "indent": true,
-        "default": "bash",
-        "description": "Command interpreter (shell):",
-        "tooltip": "The command interpreter (shell) used when launching programs from a terminal.\nIMPORTANT!!! The shell has to support the -c argument (take the argument passed by this option as a command to execute.)."
-    },
-
-    "save_settings_2": {
-        "type": "button",
-        "description": "Click here to save settings",
-        "callback": "_hardRefreshAll"
-    },
-
-    "padding_1_header": {
-        "type": "header",
-        "description": "Custom launchers box padding"
-    },
-    "pref_custom_launchers_box_padding_top": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box top padding:",
-        "tooltip": ""
-    },
-    "pref_custom_launchers_box_padding_right": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box right padding:",
-        "tooltip": ""
-    },
-    "pref_custom_launchers_box_padding_bottom": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box bottom padding:",
-        "tooltip": ""
-    },
-    "pref_custom_launchers_box_padding_left": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box left padding:",
-        "tooltip": ""
-    },
-    "padding_2_header": {
-        "type": "header",
-        "description": "Categories box padding"
-    },
-    "pref_categories_box_padding_top": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box top padding:",
-        "tooltip": ""
-    },
-    "pref_categories_box_padding_right": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box right padding:",
-        "tooltip": ""
-    },
-    "pref_categories_box_padding_bottom": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box bottom padding:",
-        "tooltip": ""
-    },
-    "pref_categories_box_padding_left": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box left padding:",
-        "tooltip": ""
-    },
-    "padding_3_header": {
-        "type": "header",
-        "description": "Applications box padding"
-    },
-    "pref_applications_box_padding_top": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box top padding:",
-        "tooltip": ""
-    },
-    "pref_applications_box_padding_right": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box right padding:",
-        "tooltip": ""
-    },
-    "pref_applications_box_padding_bottom": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box bottom padding:",
-        "tooltip": ""
-    },
-    "pref_applications_box_padding_left": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box left padding:",
-        "tooltip": ""
-    },
-    "padding_4_header": {
-        "type": "header",
-        "description": "Search entry padding"
-    },
-    "pref_search_entry_padding_top": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box top padding:",
-        "tooltip": ""
-    },
-    "pref_search_entry_padding_right": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box right padding:",
-        "tooltip": ""
-    },
-    "pref_search_entry_padding_bottom": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box bottom padding:",
-        "tooltip": ""
-    },
-    "pref_search_entry_padding_left": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box left padding:",
-        "tooltip": ""
-    },
-    "padding_5_header": {
-        "type": "header",
-        "description": "Search box padding"
-    },
-    "pref_search_box_padding_top": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box top padding:",
-        "tooltip": ""
-    },
-    "pref_search_box_padding_right": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box right padding:",
-        "tooltip": ""
-    },
-    "pref_search_box_padding_bottom": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box bottom padding:",
-        "tooltip": ""
-    },
-    "pref_search_box_padding_left": {
-        "type": "spinbutton",
-        "indent": true,
-        "default": 5,
-        "min": 0,
-        "max": 500,
-        "step": 1,
-        "units": "pixels",
-        "description": "Box left padding:",
-        "tooltip": ""
-    },
-
-    "save_settings_last": {
-        "type": "button",
-        "description": "Click here to save settings",
-        "callback": "_hardRefreshAll"
-    },
-    "debugging-header": {
-        "type": "header",
-        "description": "Debugging"
-    },
-    "pref_logging_level": {
-        "type": "combobox",
-        "indent": true,
-        "default": 0,
-        "description": "Logging level (*)",
-        "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additinally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
-        "options": {
-            "Normal": 0,
-            "Verbose": 1,
-            "Very verbose": 2
-        }
-    },
-    "pref_debugger_enabled": {
-        "type": "checkbox",
-        "indent": true,
-        "description": "Enable debugger (*)",
-        "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
+        "type": "generic",
         "default": false
     },
-    "label": {
-        "type": "label",
-        "indent": true,
-        "description": "(*) Requires Cinnamon restart to enable/disable"
+    "pref_animate_menu": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_activate_on_hover": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_strict_search_results": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_menu_hover_delay": {
+        "type": "generic",
+        "default": 100
+    },
+    "pref_max_search_results": {
+        "type": "generic",
+        "default": 15
+    },
+    "pref_show_all_applications_category": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_recently_used_apps_enabled": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_recently_used_apps_show_separator": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_show_category_icons": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_show_application_icons": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_hide_applications_list_scrollbar": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_invert_menu_layout": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_swap_categories_box": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_custom_launchers_box_invert_buttons_order": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_max_width_for_buttons": {
+        "type": "generic",
+        "default": 12.0
+    },
+    "pref_category_icon_size": {
+        "type": "generic",
+        "default": 22
+    },
+    "pref_application_icon_size": {
+        "type": "generic",
+        "default": 22
+    },
+    "pref_search_result_icon_size": {
+        "type": "generic",
+        "default": 16
+    },
+    "pref_custom_launchers_icon_size": {
+        "type": "generic",
+        "default": 24
+    },
+    "pref_custom_launchers_box_alignment": {
+        "type": "generic",
+        "default": 2
+    },
+    "pref_recently_used_apps_ignore_favorites": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_recently_used_apps_invert_order": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_recently_used_apps_max_amount": {
+        "type": "generic",
+        "default": 20
+    },
+    "pref_context_show_add_to_panel": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_context_show_add_to_desktop": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_context_show_add_remove_favorite": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_context_show_uninstall": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_context_show_bumblebee": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_context_show_run_as_root": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_context_show_run_from_terminal": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_context_show_run_from_terminal_as_root": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_context_show_desktop_file_folder": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_context_show_edit_desktop_file": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_context_gain_privileges": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_context_custom_editor_for_edit_desktop_file": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_privilege_elevator": {
+        "type": "generic",
+        "default": "/usr/bin/pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY"
+    },
+    "pref_terminal_emulator": {
+        "type": "generic",
+        "default": "x-terminal-emulator"
+    },
+    "pref_default_shell": {
+        "type": "generic",
+        "default": "bash"
+    },
+    "pref_custom_launchers_box_padding_top": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_custom_launchers_box_padding_right": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_custom_launchers_box_padding_bottom": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_custom_launchers_box_padding_left": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_categories_box_padding_top": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_categories_box_padding_right": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_categories_box_padding_bottom": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_categories_box_padding_left": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_applications_box_padding_top": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_applications_box_padding_right": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_applications_box_padding_bottom": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_applications_box_padding_left": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_search_entry_padding_top": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_search_entry_padding_right": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_search_entry_padding_bottom": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_search_entry_padding_left": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_search_box_padding_top": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_search_box_padding_right": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_search_box_padding_bottom": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_search_box_padding_left": {
+        "type": "generic",
+        "default": 5
+    },
+    "pref_logging_level": {
+        "type": "generic",
+        "default": 0
+    },
+    "pref_debugger_enabled": {
+        "type": "generic",
+        "default": false
     },
     "pref_hard_refresh_menu": {
         "type": "generic",

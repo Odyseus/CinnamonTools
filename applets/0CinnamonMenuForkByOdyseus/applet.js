@@ -49,7 +49,9 @@ const {
 
 const {
     _,
-    escapeHTML
+    escapeHTML,
+    versionCompare,
+    CINNAMON_VERSION
 } = GlobalUtils;
 
 function CinnamonMenuForkByOdyseus() {
@@ -160,6 +162,9 @@ CinnamonMenuForkByOdyseus.prototype = {
             }.bind(this));
             this.sigMan.connect(this.appsys, "installed-changed", function() {
                 this.onAppSysChanged();
+            }.bind(this));
+            this.sigMan.connect(this, "orientation-changed", function() {
+                this._seekAndDetroyConfigureContext();
             }.bind(this));
 
             this._setupRecentAppsManager();
@@ -320,24 +325,52 @@ CinnamonMenuForkByOdyseus.prototype = {
         menuItem.connect("activate", () => this._launch_editor());
         this._applet_context_menu.addMenuItem(menuItem);
 
-        menuItem = new PopupMenu.PopupIconMenuItem(_("Edit custom launchers"),
-            "preferences-other", St.IconType.SYMBOLIC);
-        menuItem.connect("activate", () => {
-            Util.spawn_async([
-                this.metadata.path + "/customLaunchersManager.py",
-                "--xlet-type=applet",
-                "--xlet-instance-id=" + this.instance_id,
-                "--xlet-uuid=" + this.metadata.uuid
-            ], null);
-        });
-        this._applet_context_menu.addMenuItem(menuItem);
-
         menuItem = new PopupMenu.PopupIconMenuItem(_("Help"),
             "dialog-information", St.IconType.SYMBOLIC);
         menuItem.connect("activate", () => {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
         });
         this._applet_context_menu.addMenuItem(menuItem);
+
+        this._seekAndDetroyConfigureContext();
+    },
+
+    _seekAndDetroyConfigureContext: function() {
+        if (versionCompare(CINNAMON_VERSION, "3.6.0") < 0) {
+            let menuItem = new PopupMenu.PopupIconMenuItem(_("Configure..."),
+                "system-run", St.IconType.SYMBOLIC);
+            menuItem.connect("activate", () => {
+                Util.spawn_async([
+                    this.metadata.path + "/settings.py",
+                    "--xlet-type=applet",
+                    "--xlet-instance-id=" + this.instance_id,
+                    "--xlet-uuid=" + this.metadata.uuid
+                ], null);
+            });
+
+            Mainloop.timeout_add_seconds(5, () => {
+                try {
+                    let children = this._applet_context_menu._getMenuItems();
+                    let i = children.length;
+                    while (i--) {
+                        if (this.hasOwnProperty("context_menu_item_configure") &&
+                            children[i] === this.context_menu_item_configure) {
+                            children[i].destroy();
+                            this.context_menu_item_configure = menuItem;
+                            this._applet_context_menu.addMenuItem(
+                                this.context_menu_item_configure,
+                                i
+                            );
+                            break;
+                        }
+                    }
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+
+                return GLib.SOURCE_REMOVE;
+            });
+        }
     },
 
     _setupRecentAppsManager: function() {
@@ -556,18 +589,18 @@ CinnamonMenuForkByOdyseus.prototype = {
 
         if (symbol === Clutter.KEY_space || symbol === Clutter.KEY_Return) {
             this.menu.toggle();
-            return true;
+            return Clutter.EVENT_STOP;
         } else if (symbol === Clutter.KEY_Escape && this.menu.isOpen) {
             this.closeMainMenu();
-            return true;
+            return Clutter.EVENT_STOP;
         } else if (symbol === Clutter.KEY_Down) {
             if (!this.menu.isOpen) {
                 this.menu.toggle();
             }
             this.menu.actor.navigate_focus(this.actor, Gtk.DirectionType.DOWN, false);
-            return true;
+            return Clutter.EVENT_STOP;
         } else {
-            return false;
+            return Clutter.EVENT_PROPAGATE;
         }
     },
 
@@ -828,7 +861,7 @@ CinnamonMenuForkByOdyseus.prototype = {
         let action = global.display.get_keybinding_action(keyCode, modifierState);
 
         if (action === Meta.KeyBindingAction.CUSTOM) {
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
         index = this._selectedItemIndex;
@@ -862,7 +895,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                     break;
             }
             if (!continueNavigation) {
-                return true;
+                return Clutter.EVENT_STOP;
             }
         }
 
@@ -1115,7 +1148,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                     break;
             }
             if (!item_actor) {
-                return false;
+                return Clutter.EVENT_PROPAGATE;
             }
             index = item_actor.get_parent()._vis_iter.getAbsoluteIndexOfChild(item_actor);
         } else {
@@ -1127,26 +1160,26 @@ CinnamonMenuForkByOdyseus.prototype = {
                     item_actor = this.applicationsBox.get_child_at_index(this._selectedItemIndex);
                     this.toggleContextMenu(item_actor._delegate);
                 }
-                return true;
+                return Clutter.EVENT_STOP;
             } else if (this._activeContainer === this.applicationsBox && symbol === Clutter.KEY_Menu) {
                 item_actor = this.applicationsBox.get_child_at_index(this._selectedItemIndex);
                 this.toggleContextMenu(item_actor._delegate);
-                return true;
+                return Clutter.EVENT_STOP;
             } else if (symbol === Clutter.Tab || symbol === Clutter.ISO_Left_Tab) {
-                return true;
+                return Clutter.EVENT_STOP;
             } else {
-                return false;
+                return Clutter.EVENT_PROPAGATE;
             }
         }
 
         this._selectedItemIndex = index;
 
         if (!item_actor || item_actor === this.searchEntry) {
-            return false;
+            return Clutter.EVENT_PROPAGATE;
         }
 
         this._buttonEnterEvent(item_actor._delegate);
-        return true;
+        return Clutter.EVENT_STOP;
     },
 
     _buttonEnterEvent: function(aButton) {
@@ -1338,7 +1371,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             }
         }
         this.vector_update_loop = 0;
-        return false;
+        return Clutter.EVENT_PROPAGATE;
     },
 
     destroyVectorBox: function() {
