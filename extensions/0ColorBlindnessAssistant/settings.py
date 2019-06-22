@@ -13,6 +13,8 @@ sys.path.append(modules_dir)
 from python_modules.xlets_settings import MainApplication
 from python_modules.xlets_settings import _
 
+CINN_RESTART = "(*) <i>%s</i>" % escape(_("Cinnamon needs to be restarted"))
+
 INFO_LABELS = [
     "<b>%s</b>: %s" % (
         escape(_("Acromatopia (rod monochromatism)")),
@@ -231,6 +233,7 @@ OTHER_TAB = {
         }]
     }, {
         "section-title": _("Debugging"),
+        "section-notes": [CINN_RESTART],
         "widgets": [{
             "widget-type": "combobox",
             "args": {
@@ -254,12 +257,6 @@ OTHER_TAB = {
                     "tooltip": _("It enables the ability to catch all exceptions that under normal use would not be caught.")
                 }
             }
-        }, {
-            "widget-type": "label",
-            "args": {
-                "label": "<b>(*) %s</b>" % escape(_("Requires Cinnamon restart to enable/disable")),
-                "use_markup": True
-            }
         }]
     }]
 }
@@ -281,7 +278,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = MainApplication(
-        application_base_id="org.Cinnamon.Extensions.ColorBlindnessAssistant.Settings",
+        application_id="org.Cinnamon.Extensions.ColorBlindnessAssistant.Settings",
         xlet_type=args.xlet_type or "extension",
         xlet_instance_id=args.xlet_instance_id or None,
         xlet_uuid=args.xlet_uuid or "{{UUID}}",
