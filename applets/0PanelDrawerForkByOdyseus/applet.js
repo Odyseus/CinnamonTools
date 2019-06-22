@@ -1,13 +1,19 @@
 let GlobalUtils,
-    DebugManager;
+    DesktopNotificationsUtils,
+    DebugManager,
+    $;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     GlobalUtils = require("./globalUtils.js");
+    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
     DebugManager = require("./debugManager.js");
+    $ = require("./utils.js");
 } else {
     GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
+    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
     DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
 
 const {
@@ -17,21 +23,21 @@ const {
     },
     mainloop: Mainloop,
     misc: {
+        signalManager: SignalManager,
         util: Util
     },
     ui: {
         applet: Applet,
-        main: Main,
+        panel: Panel,
         popupMenu: PopupMenu,
         settings: Settings
     }
 } = imports;
 
 const {
-    _
+    _,
+    escapeHTML
 } = GlobalUtils;
-
-var Debugger = new DebugManager.DebugManager();
 
 function PanelDrawer() {
     this._init.apply(this, arguments);
@@ -46,92 +52,130 @@ PanelDrawer.prototype = {
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         if (Applet.hasOwnProperty("AllowedLayout")) {
-            this.setAllowedLayout(Applet.AllowedLayout.HORIZONTAL);
+            this.setAllowedLayout(Applet.AllowedLayout.BOTH);
         }
 
         this.metadata = aMetadata;
         this.instance_id = aInstanceId;
         this.orientation = aOrientation;
+        this.vertical = this.orientation === St.Side.LEFT || this.orientation === St.Side.RIGHT;
 
         this._initializeSettings(() => {
-            this._expandAppletContextMenu();
-        }, () => {
-            this.set_applet_icon_symbolic_name("pan-end");
-
-            global.settings.connect("changed::panel-edit-mode",
-                () => this.on_panel_edit_mode_changed());
-            this.actor.connect("enter-event",
-                (aEvent) => this._onEntered(aEvent));
+            this.set_applet_tooltip(_(this.metadata.name));
 
             this._hideTimeoutId = 0;
-            this._rshideTimeoutId = 0;
-            this.h = true;
-            this.alreadyH = [];
+            this._reshowingHideTimeoutId = 0;
+            this._collapse = true;
+            this.handledPanel = null;
+            this.handledPanelBox = null;
+            this.collapsedApplets = new Set();
+            this.sigMan = new SignalManager.SignalManager(null);
 
-            if ((!this.disable_starttime_autohide) || this.auto_hide) {
+            this._setupHandledPanel();
+            this._expandAppletContextMenu();
+        }, () => {
+            if (!this.handledPanel || !this.handledPanelBox) {
+                this.set_applet_icon_symbolic_name("dialog-error");
+
+                let msg = [
+                    escapeHTML(_("Something have gone wrong.")),
+                    escapeHTML(_("The applet was not able to identify the panel it is in.")),
+                    escapeHTML(_("Try restarting Cinnamon."))
+                ];
+
+                $.Notification.notify(msg, DesktopNotificationsUtils.NotificationUrgency.CRITICAL);
+
+                return;
+            }
+
+            this._setAppletIcon(true);
+
+            this.sigMan.connect(global.settings, "changed::panel-edit-mode", function() {
+                this.on_panel_edit_mode_changed();
+            }.bind(this));
+            this.sigMan.connect(this.actor, "enter-event", function(aEvent) {
+                this._onEntered(aEvent);
+            }.bind(this));
+
+            if (!this.pref_disable_starttime_autohide || this.pref_auto_hide) {
+                if (this._hideTimeoutId > 0) {
+                    Mainloop.source_remove(this._hideTimeoutId);
+                    this._hideTimeoutId = 0;
+                }
+
                 this._hideTimeoutId = Mainloop.timeout_add_seconds(2,
                     () => {
-                        if (this.h) {
-                            this.autodo(true);
+                        if (this._collapse) {
+                            this.autoCollapse();
                         }
+
+                        this._hideTimeoutId = 0;
 
                         return GLib.SOURCE_REMOVE;
                     }
                 );
             }
 
-            /*if more than one instance
-            this.actor.connect('hide', ()=>{
-                if (this.h)
-                    this.doAction(true);
-            });*/
-
-            this.cbox = Main.panel._rightBox;
-
-            /*this doesn't work, i don't know why!
-            if (Main.panel2 !== null){
-                let c2=Main.panel2._rightBox.get_children();
-                if (c2.indexOf(this.actor) > -1)
-                    this.cbox = Main.panel2._rightBox;
-            }*/
-
-            this.cbox.connect("queue-relayout", () => {
-                if (this.autohide_rs && !this.h) {
-                    this._rshideTimeoutId = Mainloop.timeout_add_seconds(this.autohide_rs_time, () => {
-                        if (!this.h) {
-                            // this.h=true;
-                            this.doAction(true);
-                            this.autodo(true);
-                        }
-
-                        return GLib.SOURCE_REMOVE;
-                    });
-                }
-            });
+            if (!this.pref_usage_notified) {
+                $.Notification.notify(
+                    escapeHTML(_("Read this applet help page for usage instructions.")),
+                    DesktopNotificationsUtils.NotificationUrgency.CRITICAL
+                );
+                this.pref_usage_notified = true;
+            }
         });
     },
 
     _expandAppletContextMenu: function() {
-        let editMode = global.settings.get_boolean("panel-edit-mode");
-        this.panelEditMode = new PopupMenu.PopupSwitchMenuItem(_("Panel Edit mode"), editMode);
-        this.panelEditMode.connect("toggled", (item) => {
-            global.settings.set_boolean("panel-edit-mode", item.state);
-        });
-        this._applet_context_menu.addMenuItem(this.panelEditMode);
+        /* NOTE: If panel couldn't be retrieved, don't bother nor think about it!!! ¬¬
+         */
+        if (!this.handledPanel) {
+            return;
+        }
 
-        let addapplets = new PopupMenu.PopupMenuItem(_("Add applets to the panel"));
-        let addappletsicon = new St.Icon({
-            icon_name: "applets",
-            icon_size: 22,
-            icon_type: St.IconType.FULLCOLOR
+        let panelId = this.handledPanel.panelId;
+
+        let menuItem = new Panel.SettingsLauncher(
+            _("Add applets to the panel"),
+            "applets panel" + panelId,
+            "list-add"
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
+
+        menuItem = new Panel.SettingsLauncher(
+            _("Panel settings"),
+            "panel " + panelId,
+            "emblem-system"
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
+
+        menuItem = new Panel.SettingsLauncher(
+            _("Themes"),
+            "themes",
+            "applications-graphics"
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
+
+        menuItem = new Panel.SettingsLauncher(
+            _("System Settings"),
+            "",
+            "preferences-system"
+        );
+        this._applet_context_menu.addMenuItem(menuItem);
+
+        Panel.populateSettingsMenu(this._applet_context_menu, panelId);
+
+        this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
+        menuItem = new PopupMenu.PopupIconMenuItem(
+            _("Help"),
+            "dialog-information",
+            St.IconType.SYMBOLIC);
+        menuItem.connect("activate", () => {
+            Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
         });
-        addapplets.connect("activate", () => {
-            Util.spawnCommandLine("cinnamon-settings applets");
-        });
-        addapplets.addActor(addappletsicon, {
-            align: St.Align.END
-        });
-        this._applet_context_menu.addMenuItem(addapplets);
+        this._applet_context_menu.addMenuItem(menuItem);
+
     },
 
     _initializeSettings: function(aDirectCallback, aIdleCallback) {
@@ -184,16 +228,17 @@ PanelDrawer.prototype = {
             BIDIRECTIONAL: 3
         };
         let prefKeysArray = [
-            "auto_hide",
-            "disable_starttime_autohide",
-            "hover_activates",
-            "hover_activates_hide",
-            "hide_time",
-            "hover_time",
-            "autohide_rs",
-            "autohide_rs_time",
+            "pref_auto_hide",
+            "pref_disable_starttime_autohide",
+            "pref_hover_activates",
+            "pref_hover_activates_hide",
+            "pref_hide_delay",
+            "pref_hover_delay",
+            "pref_autohide_reshowing",
+            "pref_autohide_reshowing_delay",
             "pref_logging_level",
-            "pref_debugger_enabled"
+            "pref_debugger_enabled",
+            "pref_usage_notified"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -208,121 +253,115 @@ PanelDrawer.prototype = {
         }
     },
 
-    on_applet_clicked: function(event) { // jshint ignore:line
-        this.doAction(true);
+    _setAppletIcon: function(aCollapsed) {
+        if (this.vertical) {
+            this.set_applet_icon_symbolic_name(aCollapsed ? "pan-down" : "pan-up");
+        } else {
+            this.set_applet_icon_symbolic_name(aCollapsed ? "pan-end" : "pan-start");
+        }
+    },
+
+    _setupHandledPanel: function() {
+        this.sigMan.disconnect("queue-relayout", this.handledPanelBox);
+
+        this.handledPanel = $.getPanelOfApplet(this.instance_id);
+        this.handledPanelBox = this.handledPanel._rightBox;
+
+        if (this.handledPanelBox) {
+            this.sigMan.connect(this.handledPanelBox, "queue-relayout", function() {
+                if (this.pref_autohide_reshowing && !this._collapse) {
+                    if (this._reshowingHideTimeoutId > 0) {
+                        Mainloop.source_remove(this._reshowingHideTimeoutId);
+                        this._reshowingHideTimeoutId = 0;
+                    }
+
+                    this._reshowingHideTimeoutId = Mainloop.timeout_add_seconds(this.pref_autohide_reshowing_delay, () => {
+                        if (!this._collapse) {
+                            this.toggleCollapsed();
+                            this.autoCollapse();
+                        }
+
+                        this._reshowingHideTimeoutId = 0;
+
+                        return GLib.SOURCE_REMOVE;
+                    });
+                }
+            }.bind(this));
+        }
     },
 
     _onEntered: function(event) { // jshint ignore:line
-        if (!this.actor.hover && this.hover_activates && !global.settings.get_boolean("panel-edit-mode")) {
-            this._showTimeoutId = Mainloop.timeout_add(this.hover_time, () => {
-                if (this.actor.hover && (this.hover_activates_hide || !this.h)) {
-                    this.doAction(true);
+        if (!this.actor.hover && this.pref_hover_activates && !this.editModeEnabled) {
+            this._showTimeoutId = Mainloop.timeout_add(this.pref_hover_delay, () => {
+                if (this.actor.hover && (this.pref_hover_activates_hide || !this._collapse)) {
+                    this.toggleCollapsed();
                 }
             });
         }
     },
 
-    doAction: function(updalreadyH) {
-        let _children = this.cbox.get_children();
-        let p = _children.indexOf(this.actor);
+    toggleCollapsed: function() {
+        let _children = this.handledPanelBox.get_children();
+        let selfIndex = _children.indexOf(this.actor);
 
-        if (this.h) {
+        if (this._collapse) {
+            this.collapsedApplets.clear();
 
-            if (updalreadyH) {
-                this.alreadyH = [];
-            }
+            this._setAppletIcon(false);
 
-            this.set_applet_icon_symbolic_name("pan-start");
-            for (let i = p - 1; i > -1; i--) {
-                if (!_children[i].visible && updalreadyH) {
-                    this.alreadyH.push(_children[i]);
+            for (let i = selfIndex - 1; i > -1; i--) {
+                if (!_children[i].visible) {
+                    this.collapsedApplets.add(_children[i]);
                 }
-                if (_children[i]._applet._uuid == "systray@cinnamon.org" || _children[i]._applet._uuid == "systray@cinnaman") {
-                    this.tray = _children[i];
-                    let tis = _children[i].get_first_child().get_children();
-                    for (let j in tis) {
-                        tis[j].set_size(0, 0);
-                    }
-                    Mainloop.timeout_add(10, () => {
-                        this.tray.hide();
-                    });
-                    continue;
-                    // this.traysize =
-                }
+
                 _children[i].hide();
-                //                if(_children[i]._applet._uuid=="systray@cinnamon.org" || _children[i]._applet._uuid=="systray-collapsible@koutch"){
-                //                    this.sta=_children[i];
-                //                    this.stai=i;
-                //                    this.cbox.remove_actor(_children[i]);
-                //                }
             }
         } else {
-            this.set_applet_icon_symbolic_name("pan-end");
-            for (let i = 0; i < p; i++) {
-                if (this.alreadyH.indexOf(_children[i]) < 0) {
+            this._setAppletIcon(true);
+
+            for (let i = 0; i < selfIndex; i++) {
+                if (!this.collapsedApplets.has(_children[i])) {
                     _children[i].show();
                 }
-
-                if (_children[i]._applet._uuid == "systray@cinnaman") {
-                    let htis = _children[i].get_first_child().get_children();
-                    for (let j in htis) {
-                        htis[j].set_size(16, 16);
-                    }
-                }
-
-                if (_children[i]._applet._uuid == "systray@cinnamon.org") {
-                    let htis = _children[i].get_first_child().get_children();
-                    for (let j in htis) {
-                        htis[j].set_size(20, 20);
-                    }
-                }
             }
 
-            if (this.sta) {
-                this.cbox.insert_actor(this.sta, this.stai);
-                Main.statusIconDispatcher.redisplay();
-            }
+            if (this.pref_auto_hide && !this.editModeEnabled) {
+                if (this._hideTimeoutId > 0) {
+                    Mainloop.source_remove(this._hideTimeoutId);
+                    this._hideTimeoutId = 0;
+                }
 
-            if (this.auto_hide & !global.settings.get_boolean("panel-edit-mode")) {
-                this._hideTimeoutId = Mainloop.timeout_add_seconds(this.hide_time, () => {
-                    this.autodo(updalreadyH);
+                this._hideTimeoutId = Mainloop.timeout_add_seconds(this.pref_hide_delay, () => {
+                    this.autoCollapse();
+                    this._hideTimeoutId = 0;
 
                     return GLib.SOURCE_REMOVE;
                 });
             }
         }
-        this.h = !this.h;
+
+        this._collapse = !this._collapse;
     },
 
-    on_panel_edit_mode_changed: function() {
-        this.panelEditMode.setToggleState(global.settings.get_boolean("panel-edit-mode"));
-        if (global.settings.get_boolean("panel-edit-mode")) {
-            if (!this.h) {
-                this.doAction(true);
-            }
-        } else if (this.h) {
-            this.doAction(true);
-        }
-    },
-
-    autodo: function(updalreadyH) {
+    autoCollapse: function() {
         let postpone = this.actor.hover;
-        let _children = this.cbox.get_children();
-        let p = _children.indexOf(this.actor);
-        for (let i = 0; i < p; i++) {
-            postpone = postpone || _children[i].hover;
-            let hasAppletObject = _children[i].hasOwnProperty("_applet");
+        let panelBoxChildren = this.handledPanelBox.get_children();
+        let selfIndex = panelBoxChildren.indexOf(this.actor);
 
-            if (hasAppletObject &&
-                _children[i]._applet.hasOwnProperty("_menuManager") &&
-                _children[i]._applet._menuManager) {
-                postpone = postpone || _children[i]._applet._menuManager._activeMenu;
+        let i = 0;
+        for (; i < selfIndex; i++) {
+            let child = panelBoxChildren[i];
+            let hasAppletObject = child.hasOwnProperty("_applet");
+            postpone = postpone || child.hover;
+
+            if (hasAppletObject && child._applet.hasOwnProperty("_menuManager") &&
+                child._applet._menuManager) {
+                postpone = postpone || child._applet._menuManager._activeMenu;
             }
 
-            if (hasAppletObject &&
-                _children[i]._applet.hasOwnProperty("menuManager") &&
-                _children[i]._applet.menuManager) {
-                postpone = postpone || _children[i]._applet.menuManager._activeMenu;
+            if (hasAppletObject && child._applet.hasOwnProperty("menuManager") &&
+                child._applet.menuManager) {
+                postpone = postpone || child._applet.menuManager._activeMenu;
             }
 
             if (postpone) {
@@ -331,26 +370,62 @@ PanelDrawer.prototype = {
         }
 
         if (postpone) {
-            this._hideTimeoutId = Mainloop.timeout_add_seconds(this.hide_time,
+            if (this._hideTimeoutId > 0) {
+                Mainloop.source_remove(this._hideTimeoutId);
+                this._hideTimeoutId = 0;
+            }
+
+            this._hideTimeoutId = Mainloop.timeout_add_seconds(this.pref_hide_delay,
                 () => {
-                    this.autodo(updalreadyH);
+                    this.autoCollapse();
+                    this._hideTimeoutId = 0;
 
                     return GLib.SOURCE_REMOVE;
                 }
             );
-        } else if (this.h && !global.settings.get_boolean("panel-edit-mode")) {
-            this.doAction(updalreadyH);
+        } else if (this._collapse && !this.editModeEnabled) {
+            this.toggleCollapsed();
+        }
+    },
+
+    on_orientation_changed: function(aOrientation) {
+        this.vertical = aOrientation === St.Side.LEFT || aOrientation === St.Side.RIGHT;
+
+        this._setupHandledPanel();
+    },
+
+    on_applet_clicked: function() {
+        if (this.handledPanelBox) {
+            this.toggleCollapsed();
+        }
+    },
+
+    on_panel_edit_mode_changed: function() {
+        if (this.editModeEnabled) {
+            if (!this._collapse) {
+                /* NOTE: Workaround for unbelievable retarded newer versions of Cinnamon.
+                 * When entering edit mode, the panel box would not expand when displaying
+                 * the applet that were hidden. ¬¬
+                 */
+                this.handledPanelBox.set_size(-1, -1);
+                this.toggleCollapsed();
+            }
+        } else if (this._collapse) {
+            this.toggleCollapsed();
         }
     },
 
     on_applet_removed_from_panel: function() {
-        if (!this.h) {
-            this.doAction(true);
+        if (!this._collapse) {
+            this.toggleCollapsed();
         }
 
-        if (this.settings) {
-            this.settings.finalize();
-        }
+        this.sigMan.disconnectAllSignals();
+        this.settings && this.settings.finalize();
+    },
+
+    get editModeEnabled() {
+        return global.settings.get_boolean("panel-edit-mode");
     },
 
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
@@ -363,29 +438,28 @@ PanelDrawer.prototype = {
         // Remove the following variable and directly use the second argument.
         let pref_key = aPrefKey || aPrefValue;
         switch (pref_key) {
-            case "auto_hide":
-                if (this.auto_hide & this.h) {
-                    this.autodo(true);
+            case "pref_auto_hide":
+                if (this.pref_auto_hide && this._collapse) {
+                    this.autoCollapse();
                 }
                 break;
-            case "autohide_rs":
-                if (!this.h) {
-                    // this.h=true;
-                    this.doAction(true);
-                    this.autodo(true);
+            case "pref_autohide_reshowing":
+                if (!this._collapse) {
+                    this.toggleCollapsed();
+                    this.autoCollapse();
                 }
                 break;
             case "pref_logging_level":
             case "pref_debugger_enabled":
-                Debugger.logging_level = this.pref_logging_level;
-                Debugger.debugger_enabled = this.pref_debugger_enabled;
+                $.Debugger.logging_level = this.pref_logging_level;
+                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
                 break;
         }
     }
 };
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapObjectMethods(Debugger, {
+    DebugManager.wrapObjectMethods($.Debugger, {
         PanelDrawer: PanelDrawer
     });
 

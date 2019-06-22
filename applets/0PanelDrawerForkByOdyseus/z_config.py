@@ -6,6 +6,9 @@ settings = {
         "source": "__app__/data/javascript_modules/globalUtils.js",
         "destination": "globalUtils.js"
     }, {
+        "source": "__app__/data/javascript_modules/desktopNotificationsUtils.js",
+        "destination": "desktopNotificationsUtils.js"
+    }, {
         "source": "__app__/data/javascript_modules/debugManager.js",
         "destination": "debugManager.js"
     }, {

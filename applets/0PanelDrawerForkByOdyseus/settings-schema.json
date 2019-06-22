@@ -1,71 +1,65 @@
 {
-    "head": {
-        "type": "header",
-        "description": "Settings for 0PanelDrawer@odyseus.ong"
-    },
-    "auto_hide": {
+    "pref_auto_hide": {
         "type": "checkbox",
         "default": true,
-        "description": "Autohide",
-        "tooltip": "check if you want to hide applets automatically, unless you should click on applet to do so"
+        "description": "Auto-hide",
+        "tooltip": "With this option enabled, applets will be hidden automatically. Otherwise, applets will be hidden when interacting with the drawer."
     },
-    "disable_starttime_autohide": {
-        "type": "checkbox",
-        "default": false,
-        "description": "Disable start time autohide",
-        "tooltip": "if not in autohide mode"
-    },
-    "hide_time": {
+    "pref_hide_delay": {
         "type": "spinbutton",
+        "description": "Auto-hide delay",
+        "dependency": "pref_auto_hide",
         "default": 2,
         "min": 0.25,
         "max": 10,
         "step": 0.25,
-        "units": "seconds",
-        "dependency": "autohide",
-        "description": "Autohide after ",
-        "tooltip": ""
+        "units": "seconds"
     },
-    "hover_activates": {
+    "pref_disable_starttime_autohide": {
         "type": "checkbox",
-        "default": true,
-        "description": "Activate on hover",
-        "tooltip": "show applets on mouse hover"
-    },
-    "hover_activates_hide": {
-        "type": "checkbox",
+        "description": "Disable start time auto-hide",
+        "dependency": "pref_auto_hide",
         "default": false,
-        "dependency": "hoveractivates",
-        "description": "Hide on hovering again",
-        "tooltip": "toggle visibility of applets on mouse hover"
+        "tooltip": "Do not automatically hide at system startup."
     },
-    "hover_time": {
-        "type": "spinbutton",
-        "default": 75,
-        "min": 10,
-        "max": 500,
-        "step": 5,
-        "units": "miliseconds",
-        "dependency": "hoveractivates",
-        "description": "Hover activates/hides after ",
-        "tooltip": ""
-    },
-    "autohide_rs": {
+    "pref_hover_activates": {
         "type": "checkbox",
+        "description": "Activate on hover",
         "default": true,
-        "description": "Autohide reshowing applets",
-        "tooltip": ""
+        "tooltip": "Display applets on mouse hover."
     },
-    "autohide_rs_time": {
+    "pref_hover_activates_hide": {
+        "type": "checkbox",
+        "description": "Hide on hover",
+        "dependency": "pref_hover_activates",
+        "default": false,
+        "tooltip": "Hide applets on mouse hover."
+    },
+    "pref_hover_delay": {
         "type": "spinbutton",
+        "description": "Hover delay",
+        "dependency": "pref_hover_activates",
+        "default": 100,
+        "min": 10,
+        "max": 1000,
+        "step": 10,
+        "units": "milliseconds"
+    },
+    "pref_autohide_reshowing": {
+        "type": "checkbox",
+        "description": "Auto-hide reshowing applets",
+        "default": false,
+        "tooltip": "With this option enabled, applets managed by the drawer and whose visibility is variable (the notifications applet for example), will be automatically hidden after a delay. With this option disabled, such applets will stay visible until the drawer is interacted again."
+    },
+    "pref_autohide_reshowing_delay": {
+        "type": "spinbutton",
+        "description": "Auto-hide delay",
+        "dependency": "pref_autohide_reshowing",
         "default": 1.25,
         "min": 0,
         "max": 5,
         "step": 0.25,
-        "units": "seconds",
-        "dependency": "autohiders",
-        "description": "Reshowers' autohide delay: ",
-        "tooltip": ""
+        "units": "seconds"
     },
     "debugging-header": {
         "type": "header",
@@ -75,7 +69,7 @@
         "type": "combobox",
         "default": 0,
         "description": "Logging level (*)",
-        "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additinally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
+        "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additionally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
         "options": {
             "Normal": 0,
             "Verbose": 1,
@@ -86,6 +80,10 @@
         "type": "checkbox",
         "description": "Enable debugger (*)",
         "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
+        "default": false
+    },
+    "pref_usage_notified": {
+        "type": "generic",
         "default": false
     },
     "label": {

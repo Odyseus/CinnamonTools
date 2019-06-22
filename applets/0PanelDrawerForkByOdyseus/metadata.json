@@ -1,5 +1,5 @@
 {
-    "max-instances": "1",
+    "max-instances": -1,
     "website": "{{REPO_URL}}",
     "cinnamon-version": [
         "3.0",
@@ -19,7 +19,9 @@
         "5.8",
         "6.0"
     ],
+    "contributors": "See this xlet help file.",
+    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
     "uuid": "{{UUID}}",
-    "name": "Drawer (show/hide applets) (Fork By Odyseus)",
-    "description": "Hide a few applets to have a neater panel, and make them show up again by a click."
+    "name": "Panel Drawer (Fork By Odyseus)",
+    "description": "Selectively show/hide applets from any panel."
 }
