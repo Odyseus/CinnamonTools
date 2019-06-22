@@ -13,6 +13,8 @@ sys.path.append(MODULES_DIR)
 from python_modules.xlets_settings import MainApplication
 from python_modules.xlets_settings import _
 
+CINN_RESTART = "(*) <i>%s</i>" % escape(_("Cinnamon needs to be restarted"))
+
 LANGUAGES_LIST = {
     "auto": _("Detect language"),
     "af": _("Afrikaans"),
@@ -274,6 +276,9 @@ TRANSLATORS_TAB = {
     "page-title": _("Translators"),
     "sections": [{
         "section-title": _("Translators default preferences"),
+        "section-notes": [
+            "<i>%s</i>" % escape(_("Translators whose names are suffixed with TS require translate-shell package"))
+        ],
         "widgets": [{
             "widget-type": "list",
             "args": {
@@ -287,12 +292,6 @@ TRANSLATORS_TAB = {
                     "height": 300,
                     "move-buttons": False
                 }
-            }
-        }, {
-            "widget-type": "label",
-            "args": {
-                "label": "<b>%s</b>" % escape(_("Translators whose names are suffixed with TS require translate-shell package")),
-                "use_markup": True
             }
         }]
     }]
@@ -455,6 +454,7 @@ MISCELLANEOUS_TAB = {
         }]
     }, {
         "section-title": _("Debugging"),
+        "section-notes": [CINN_RESTART],
         "widgets": [{
             "widget-type": "combobox",
             "args": {
@@ -487,12 +487,6 @@ MISCELLANEOUS_TAB = {
                     "tooltip": _("It allows to save the translation history data with indentation.")
                 }
             }
-        }, {
-            "widget-type": "label",
-            "args": {
-                "label": "<b>(*) %s</b>" % escape(_("Requires Cinnamon restart to enable/disable")),
-                "use_markup": True
-            }
         }]
     }]
 }
@@ -516,7 +510,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = MainApplication(
-        application_base_id="org.Cinnamon.Extensions.MultiTranslator.Settings",
+        application_id="org.Cinnamon.Extensions.MultiTranslator.Settings",
         xlet_type=args.xlet_type or "extension",
         xlet_instance_id=args.xlet_instance_id or None,
         xlet_uuid=args.xlet_uuid or "{{UUID}}",
