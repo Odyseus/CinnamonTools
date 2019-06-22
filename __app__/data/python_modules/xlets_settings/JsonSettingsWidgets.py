@@ -35,9 +35,9 @@ from .common import BaseGrid
 from .common import sort_combo_options
 
 
-CAN_BACKEND.append("AppChooser")  # noqa
-CAN_BACKEND.append("AppList")  # noqa
-CAN_BACKEND.append("List")  # noqa
+CAN_BACKEND.append("AppChooser")  # noqa | SettingsWidgets
+CAN_BACKEND.append("AppList")  # noqa | SettingsWidgets
+CAN_BACKEND.append("List")  # noqa | SettingsWidgets
 
 JSON_SETTINGS_PROPERTIES_MAP = {
     # All widgets.
@@ -365,8 +365,8 @@ class JSONSettingsRevealer(Gtk.Revealer):
                     reveal_conditions.append(True)
                 else:
                     reveal_conditions.append(False)
-            except Exception as e:
-                print(e)
+            except Exception as err:
+                print(err)
 
         self.set_reveal_child(all(reveal_conditions))
 
@@ -414,7 +414,7 @@ class JSONSettingsBackend(object):
 
 
 def json_settings_factory(subclass):
-    if subclass not in CAN_BACKEND:  # noqa
+    if subclass not in CAN_BACKEND:  # noqa | SettingsWidgets
         raise SystemExit()
 
     class NewClass(globals()[subclass], JSONSettingsBackend):
@@ -449,7 +449,7 @@ def json_settings_factory(subclass):
     return NewClass
 
 
-for setting_widget in CAN_BACKEND:  # noqa
+for setting_widget in CAN_BACKEND:  # noqa | SettingsWidgets
     globals()["JSONSettings" + setting_widget] = json_settings_factory(setting_widget)
 
 

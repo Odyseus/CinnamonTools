@@ -12,7 +12,7 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import Gtk
-from html import escape
+from gi.repository import Pango
 
 from .KeybindingWidgets import ButtonKeybinding
 from .common import BaseGrid
@@ -31,7 +31,9 @@ __all__ = [
     "KeybindingWithOptions",
     "SectionContainer",
     "SettingsLabel",
+    "SettingsPage",
     "SettingsRevealer",
+    "SettingsStack",
     "SettingsWidget",
     "SpinButton",
     "Switch",
@@ -62,59 +64,99 @@ CAN_BACKEND = [
 ]
 
 
-class SectionContainer(Gtk.Frame):
-    def __init__(self, title, section_info={}):
+class SettingsStack(Gtk.Stack):
+    def __init__(self):
         super().__init__()
-        self.set_shadow_type(Gtk.ShadowType.IN)
+        self.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
+        self.set_transition_duration(150)
+        self.expand = True
+
+
+class SettingsPage(BaseGrid):
+    def __init__(self):
+        super().__init__()
+        self.set_spacing(15, 15)
+        self.set_property("expand", True)
+        self.set_property("margin", 15)
+        self.set_border_width(0)
+
+    def add_section(self, title=None, subtitle=None, section_info={}):
+        section = SectionContainer(title, subtitle, section_info)
+        self.add(section)
+
+        return section
+
+    def add_reveal_section(self, title=None, subtitle=None, section_info={},
+                           schema=None, key=None, values=None, revealer=None):
+        section = SectionContainer(title, subtitle, section_info)
+
+        # if revealer is None:
+        #     revealer = SettingsRevealer(schema, key, values)
+
+        revealer.add(section)
+        section._revealer = revealer
+        self.add(revealer)
+
+        return section
+
+
+class SectionContainer(BaseGrid):
+    def __init__(self, title=None, subtitle=None, section_info={}):
+        super().__init__()
+        self.set_spacing(10, 10)
+
+        if title or subtitle:
+            header_box = BaseGrid()
+            header_box.set_spacing(10, 10)
+            self.add(header_box)
+
+            if title:
+                label = Gtk.Label()
+                label.set_property("wrap", True)
+                label.set_property("wrap-mode", Pango.WrapMode.WORD)
+                label.set_hexpand(True)
+                label.set_markup("<b>%s</b>" % title)
+                label.set_xalign(0.0)
+                header_box.attach(label, 0, 0, 1, 1)
+
+                if section_info:
+                    button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                        ("dialog-%s-symbolic" % section_info.get("context", "information")),
+                        Gtk.IconSize.BUTTON
+                    ))
+                    button.set_relief(Gtk.ReliefStyle.NONE)
+                    button.set_always_show_image(True)
+                    button.set_tooltip_text(_("Information related to this specific section"))
+                    button.connect("clicked", display_message_dialog,
+                                   title, section_info.get("message", ""),
+                                   section_info.get("context", "information"))
+                    header_box.attach(button, 1, 0, 1, 1)
+
+            if subtitle:
+                sub = Gtk.Label()
+                sub.set_property("wrap", True)
+                sub.set_property("wrap-mode", Pango.WrapMode.WORD)
+                sub.set_text(subtitle)
+                sub.get_style_context().add_class(Gtk.STYLE_CLASS_DIM_LABEL)
+                sub.set_xalign(0.0)
+                header_box.attach(sub, 0, 1, 1, 1)
+
+        self.frame = Gtk.Frame()
+        self.frame.set_shadow_type(Gtk.ShadowType.IN)
+        self.frame.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW)
+
+        self.size_group = Gtk.SizeGroup()
+        self.size_group.set_mode(Gtk.SizeGroupMode.VERTICAL)
 
         self.box = BaseGrid()
-        self.box.set_border_width(0)
-        self.box.set_property("margin", 0)
-        self.box.set_spacing(0, 0)
-        self.add(self.box)
-
-        toolbar = Gtk.Toolbar()
-        toolbar.set_hexpand(True)
-        toolbar.get_style_context().add_class("cs-header")
-
-        label = Gtk.Label()
-        label.set_hexpand(True)
-        label.set_markup("<b>%s</b>" % escape(title))
-        title_holder = Gtk.ToolItem()
-        title_holder.add(label)
-        toolbar.add(title_holder)
-
-        if section_info:
-            dummy = BaseGrid()
-            dummy.set_property("hexpand", True)
-            dummy.set_property("vexpand", False)
-            dummy_holder = Gtk.ToolItem()
-            dummy_holder.set_expand(True)
-            dummy_holder.add(dummy)
-            toolbar.add(dummy_holder)
-            button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
-                ("dialog-%s-symbolic" % section_info.get("context", "information")),
-                Gtk.IconSize.BUTTON
-            ))
-            button.get_style_context().add_class("cinnamon-xlet-settings-section-information-button")
-            button.set_relief(Gtk.ReliefStyle.NONE)
-            button.set_always_show_image(True)
-            button.set_tooltip_text(_("Information related to this specific section"))
-            button.connect("clicked", display_message_dialog,
-                           title, section_info.get("message", ""),
-                           section_info.get("context", "information"))
-            button_holder = Gtk.ToolItem()
-            button_holder.add(button)
-            toolbar.add(button_holder)
-
-        self.box.attach(toolbar, 0, 0, 2, 1)
+        self.frame.add(self.box)
 
         self.need_separator = False
 
     def add_row(self, widget, col_pos, row_pos, col_span, row_span):
-        list_box = Gtk.ListBox()
+        list_box = Gtk.ListBox(can_focus=False)
         list_box.set_selection_mode(Gtk.SelectionMode.NONE)
-        row = Gtk.ListBoxRow()
+        row = Gtk.ListBoxRow(can_focus=False)
         row.add(widget)
 
         if self.need_separator:
@@ -135,11 +177,14 @@ class SectionContainer(Gtk.Frame):
 
         self.box.attach(list_box, col_pos, row_pos, col_span, row_span)
 
+        if self.frame.get_parent() is None:
+            self.add(self.frame)
+
         self.need_separator = True
 
     def add_reveal_row(self, widget, col_pos, row_pos, col_span, row_span,
                        schema=None, key=None, values=None, check_func=None, revealer=None):
-        list_box = Gtk.ListBox()
+        list_box = Gtk.ListBox(can_focus=False)
         list_box.set_selection_mode(Gtk.SelectionMode.NONE)
 
         if self.need_separator:
@@ -165,16 +210,26 @@ class SectionContainer(Gtk.Frame):
 
         return revealer
 
+    def add_note(self, text):
+        label = Gtk.Label()
+        label.set_property("wrap", True)
+        label.set_property("wrap-mode", Pango.WrapMode.WORD)
+        label.set_xalign(0.0)
+        label.set_markup(text)
+        label.set_line_wrap(True)
+        self.add(label)
+
+        return label
+
 
 class SettingsRevealer(Gtk.Revealer):
     # NOTE: Not used for now
     def __init__(self, schema=None, key=None, values=None, check_func=None):
-        # Gtk.Revealer.__init__(self)
-        super().__init__()
+        Gtk.Revealer.__init__(self)
 
         self.check_func = check_func
 
-        self.box = BaseGrid(orientation=Gtk.Orientation.VERTICAL, spacing=15)
+        self.box = BaseGrid(spacing=15)
         Gtk.Revealer.add(self, self.box)
 
         self.set_transition_type(Gtk.RevealerTransitionType.SLIDE_DOWN)
@@ -205,6 +260,7 @@ class SettingsRevealer(Gtk.Revealer):
 class SettingsWidget(BaseGrid):
     def __init__(self, dep_key=None):
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
+        self.set_spacing(5, 5)
 
         if dep_key:
             self.set_dep_key(dep_key)
@@ -224,8 +280,8 @@ class SettingsWidget(BaseGrid):
 
     def fill_row(self):
         self.set_border_width(0)
-        self.set_margin_left(0)
-        self.set_margin_right(0)
+        self.set_margin_start(0)
+        self.set_margin_end(0)
 
     # NOTE: This is to handle gsettings. Don't bother looking at it.
     def get_settings(self, schema):
@@ -253,6 +309,8 @@ class Text(SettingsWidget):
             justification = Gtk.Justification.LEFT
 
         self.content_widget = Gtk.Label(halign=align, xalign=xalign, justify=justification)
+        self.content_widget.set_property("wrap", True)
+        self.content_widget.set_property("wrap-mode", Pango.WrapMode.WORD)
         self.content_widget.set_line_wrap(True)
 
         if use_markup:
@@ -272,7 +330,7 @@ class Button(SettingsWidget):
         super().__init__()
         self.label = label
 
-        self.content_widget = Gtk.Button(label=label)
+        self.content_widget = Gtk.Button(label=label, valign=Gtk.Align.CENTER)
         self.attach(self.content_widget, 0, 0, 2, 1)
         self.content_widget.set_hexpand(True)
 
@@ -303,6 +361,8 @@ class SettingsLabel(Gtk.Label):
             self.set_label(text)
 
         self.set_alignment(0.0, 0.5)
+        self.set_property("wrap", True)
+        self.set_property("wrap-mode", Pango.WrapMode.WORD)
 
     def set_label_text(self, text):
         self.set_label(text)
@@ -320,13 +380,12 @@ class IconChooser(SettingsWidget):
 
         valid, self.width, self.height = Gtk.icon_size_lookup(Gtk.IconSize.BUTTON)
 
-        self.set_spacing(5, 5)
-
         self.label = SettingsLabel(label)
 
         self.content_widget = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
         self.content_widget.set_spacing(5, 0)
         self.content_widget.set_hexpand(True)
+        self.content_widget.set_valign(Gtk.Align.CENTER)
         self.bind_object = Gtk.Entry()
         self.bind_object.set_hexpand(True)
         self.image_button = Gtk.Button()
@@ -402,11 +461,9 @@ class Entry(SettingsWidget):
 
     def __init__(self, label, expand_width=True, size_group=None, dep_key=None, tooltip=""):
         super().__init__(dep_key=dep_key)
-        self.set_spacing(5, 5)
 
         self.label = SettingsLabel(label)
-        self.content_widget = Gtk.Entry()
-        self.content_widget.set_valign(Gtk.Align.CENTER)
+        self.content_widget = Gtk.Entry(valign=Gtk.Align.CENTER)
         self.content_widget.set_hexpand(expand_width)
 
         self.attach(self.label, 0, 0, 1, 1)
@@ -424,7 +481,6 @@ class TextView(SettingsWidget):
 
     def __init__(self, label, height=200, accept_tabs=False, dep_key=None, tooltip=""):
         super().__init__(dep_key=dep_key)
-        self.set_spacing(5, 5)
 
         self.label = SettingsLabel(label)
         self.label.set_alignment(0.5, 0.5)
@@ -458,7 +514,6 @@ class Switch(SettingsWidget):
 
     def __init__(self, label, dep_key=None, tooltip=""):
         super().__init__(dep_key=dep_key)
-        self.set_spacing(5, 5)
 
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
@@ -479,7 +534,6 @@ class ComboBox(SettingsWidget):
 
     def __init__(self, label, options=[], valtype=None, size_group=None, dep_key=None, tooltip=""):
         super().__init__()
-        self.set_spacing(5, 5)
 
         self.valtype = valtype
         self.option_map = {}
@@ -487,15 +541,13 @@ class ComboBox(SettingsWidget):
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
 
-        self.content_widget = Gtk.ComboBox()
+        self.content_widget = Gtk.ComboBox(valign=Gtk.Align.CENTER)
         renderer_text = Gtk.CellRendererText()
         self.content_widget.pack_start(renderer_text, True)
         self.content_widget.add_attribute(renderer_text, "text", 1)
 
         self.attach(self.label, 0, 0, 1, 1)
         self.attach(self.content_widget, 1, 0, 1, 1)
-
-        self.content_widget.set_valign(Gtk.Align.CENTER)
 
         self.set_options(options)
 
@@ -530,7 +582,8 @@ class ComboBox(SettingsWidget):
         self.model = Gtk.ListStore(var_type, str)
 
         for option in options:
-            self.option_map[var_type(option[0])] = self.model.append([var_type(option[0]), option[1]])
+            self.option_map[var_type(option[0])] = self.model.append(
+                [var_type(option[0]), option[1]])
 
         self.content_widget.set_model(self.model)
         self.content_widget.set_id_column(0)
@@ -582,9 +635,16 @@ class FileChooser(SettingsWidget):
 
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
-        self.content_widget = Gtk.FileChooserButton(action=action)
+        self._clear_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+            "edit-clear-symbolic",
+            Gtk.IconSize.BUTTON
+        ))
+        self.content_widget = Gtk.FileChooserButton(action=action, valign=Gtk.Align.CENTER)
+        self._clear_button.set_tooltip_text(_("Clear path"))
+        self._clear_button.set_valign(Gtk.Align.CENTER)
         self.attach(self.label, 0, 0, 1, 1)
-        self.attach(self.content_widget, 1, 0, 1, 1)
+        self.attach(self._clear_button, 1, 0, 1, 1)
+        self.attach(self.content_widget, 2, 0, 1, 1)
 
         self.set_tooltip_text(tooltip)
 
@@ -597,8 +657,12 @@ class FileChooser(SettingsWidget):
     def on_setting_changed(self, *args):
         self.content_widget.set_uri(self.get_value())
 
+    def _on_clear_button_clicked(self, *args):
+        self.set_value("")
+
     def connect_widget_handlers(self, *args):
         self.content_widget.connect("file-set", self.on_file_selected)
+        self._clear_button.connect("clicked", self._on_clear_button_clicked)
 
 
 class SpinButton(SettingsWidget):
@@ -607,7 +671,6 @@ class SpinButton(SettingsWidget):
 
     def __init__(self, label, units="", mini=None, maxi=None, step=1, page=None, size_group=None, dep_key=None, tooltip=""):
         super().__init__(dep_key=dep_key)
-        self.set_spacing(5, 5)
 
         self.timer = None
 
@@ -616,8 +679,7 @@ class SpinButton(SettingsWidget):
 
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
-        self.content_widget = Gtk.SpinButton()
-        self.content_widget.set_valign(Gtk.Align.CENTER)
+        self.content_widget = Gtk.SpinButton(valign=Gtk.Align.CENTER)
 
         self.attach(self.label, 0, 0, 1, 1)
         self.attach(self.content_widget, 1, 0, 1, 1)
@@ -672,18 +734,15 @@ class Keybinding(SettingsWidget):
 
     def __init__(self, label, num_bind=2, size_group=None, dep_key=None, tooltip=""):
         super().__init__(dep_key=dep_key)
-        self.set_spacing(5, 5)
 
         self.num_bind = num_bind
-
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
 
         self.buttons = []
         self.teach_button = None
 
-        self.content_widget = Gtk.Frame(shadow_type=Gtk.ShadowType.IN)
-        self.content_widget.set_valign(Gtk.Align.CENTER)
+        self.content_widget = Gtk.Frame(shadow_type=Gtk.ShadowType.IN, valign=Gtk.Align.CENTER)
         box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
         self.content_widget.add(box)
 
@@ -733,7 +792,6 @@ class KeybindingWithOptions(SettingsWidget):
 
     def __init__(self, label, options=[], valtype=None, size_group=None, dep_key=None, tooltip=""):
         super().__init__(dep_key=dep_key)
-        self.set_spacing(5, 5)
 
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
@@ -818,7 +876,8 @@ class KeybindingWithOptions(SettingsWidget):
         self.model = Gtk.ListStore(var_type, str)
 
         for option in options:
-            self.option_map[var_type(option[0])] = self.model.append([var_type(option[0]), option[1]])
+            self.option_map[var_type(option[0])] = self.model.append(
+                [var_type(option[0]), option[1]])
 
         self.combo_button.set_model(self.model)
         self.combo_button.set_id_column(0)

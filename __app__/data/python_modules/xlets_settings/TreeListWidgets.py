@@ -183,7 +183,7 @@ def list_edit_factory(options, xlet_settings):
 class List(SettingsWidget):
     bind_dir = None
 
-    def __init__(self, label=None, columns=None, immutable=None, dialog_info_labels=None, height=200,
+    def __init__(self, label=None, columns=None, immutable={}, dialog_info_labels=None, height=200,
                  move_buttons=True, dialog_width=450, apply_and_quit=False):
         super().__init__()
         self.columns = columns
@@ -196,6 +196,8 @@ class List(SettingsWidget):
         self.set_vexpand(True)
         self.timer = None
         self.app_window = None
+        self.allow_edition = not self.immutable or \
+            (self.immutable and self.immutable.get("allow_edition", True))
 
         self.add_button = None
         self.remove_button = None
@@ -413,7 +415,7 @@ class List(SettingsWidget):
 
         button_position = 0
 
-        if self.immutable is None:
+        if not self.immutable:
             self.add_button = Gtk.ToolButton(None, None)
             self.add_button.set_icon_name("list-add-symbolic")
             self.add_button.set_tooltip_text(_("Add new item"))
@@ -433,14 +435,15 @@ class List(SettingsWidget):
             buttons_box.attach(self.remove_button, button_position, 0, 1, 1)
             button_position += 1
 
-        self.edit_button = Gtk.ToolButton(None, None)
-        self.edit_button.set_icon_name("view-list-symbolic")
-        self.edit_button.set_tooltip_text(_("Edit selected item"))
-        self.edit_button.connect("clicked", self.edit_item)
-        self.edit_button.set_sensitive(False)
+        if self.allow_edition:
+            self.edit_button = Gtk.ToolButton(None, None)
+            self.edit_button.set_icon_name("view-list-symbolic")
+            self.edit_button.set_tooltip_text(_("Edit selected item"))
+            self.edit_button.connect("clicked", self.edit_item)
+            self.edit_button.set_sensitive(False)
 
-        buttons_box.attach(self.edit_button, button_position, 0, 1, 1)
-        button_position += 1
+            buttons_box.attach(self.edit_button, button_position, 0, 1, 1)
+            button_position += 1
 
         if self.move_buttons:
             self.move_up_button = Gtk.ToolButton(None, None)
@@ -527,29 +530,26 @@ class List(SettingsWidget):
             return False
 
     def key_press_cb(self, widget, event):
-        if self.immutable is not None:
-            return False
-
         state = event.get_state() & Gdk.ModifierType.CONTROL_MASK
         ctrl = state == Gdk.ModifierType.CONTROL_MASK
         symbol, keyval = event.get_keyval()
 
-        if symbol and keyval == Gdk.KEY_Delete:
+        if not self.immutable and symbol and keyval == Gdk.KEY_Delete:
             self.remove_item_cb(None, event)
             return True
-        elif ctrl and symbol and (keyval == Gdk.KEY_N or keyval == Gdk.KEY_n):
+        elif not self.immutable and ctrl and symbol and (keyval == Gdk.KEY_N or keyval == Gdk.KEY_n):
             self.add_item()
             return True
-        elif ctrl and symbol and keyval == Gdk.KEY_Up:
+        elif self.move_buttons and ctrl and symbol and keyval == Gdk.KEY_Up:
             self.move_item_up()
             return True
-        elif ctrl and symbol and keyval == Gdk.KEY_Down:
+        elif self.move_buttons and ctrl and symbol and keyval == Gdk.KEY_Down:
             self.move_item_down()
             return True
-        elif ctrl and symbol and keyval == Gdk.KEY_Page_Up:
+        elif self.move_buttons and ctrl and symbol and keyval == Gdk.KEY_Page_Up:
             self.move_item_to_first_position()
             return True
-        elif ctrl and symbol and keyval == Gdk.KEY_Page_Down:
+        elif self.move_buttons and ctrl and symbol and keyval == Gdk.KEY_Page_Down:
             self.move_item_to_last_position()
             return True
 
@@ -564,10 +564,11 @@ class List(SettingsWidget):
             else:
                 self.remove_button.set_sensitive(True)
 
-        if selected is None:
-            self.edit_button.set_sensitive(False)
-        else:
-            self.edit_button.set_sensitive(True)
+        if self.edit_button:
+            if selected is None:
+                self.edit_button.set_sensitive(False)
+            else:
+                self.edit_button.set_sensitive(True)
 
         if self.move_buttons:
             if selected is None or model.iter_previous(selected) is None:
@@ -587,7 +588,8 @@ class List(SettingsWidget):
                 self.export_button.set_sensitive(True)
 
     def on_row_activated(self, *args):
-        self.edit_item()
+        if self.allow_edition:
+            self.edit_item()
 
     def add_item(self, *args):
         data = self.open_add_edit_dialog()
@@ -709,8 +711,8 @@ class List(SettingsWidget):
 
             content_area = dialog.get_content_area()
             content_area.set_border_width(10)
-            content_area.set_margin_left(10)
-            content_area.set_margin_right(10)
+            content_area.set_margin_start(10)
+            content_area.set_margin_end(10)
             label = Gtk.Label(xalign=0)
             label.set_markup("<b>%s</b>: %s\n<b>%s</b>: %s" % (
                 escape(_("Overwrite")),

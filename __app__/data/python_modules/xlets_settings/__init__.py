@@ -6,6 +6,8 @@ Attributes
 ----------
 CINNAMON_VERSION : str
     Cinnamon version.
+MODULE_PATH : str
+    Path to the root of this module.
 proxy : Gio.DBusProxy
     DBus proxy.
 XLET_SETTINGS_WIDGETS : dict
@@ -24,7 +26,6 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import Gtk
-from gi.repository import Pango
 from html import escape
 from subprocess import check_output
 from subprocess import run
@@ -35,7 +36,7 @@ from .common import HOME
 from .common import _
 from .common import compare_version
 
-module_path = os.path.dirname(os.path.abspath(__file__))
+MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 CINNAMON_VERSION = check_output(
     ["cinnamon", "--version"]
@@ -73,40 +74,46 @@ class SettingsBox(BaseGrid):
 
     Attributes
     ----------
-    stack_switcher : Gtk.StackSwitcher
-        The Gtk.StackSwitcher used to switch pages.
+    app : object
+        <class "Gtk.Application">.
+    instance_info : dict
+        Xlet instance information.
+    stack : object
+        <class "Gtk.Stack">.
+    timer : int
+        Throttle timer.
     """
 
-    def __init__(self, pages_definition=[], settings={}, xlet_instance_id="",
-                 xlet_uuid="", app_window=None):
+    def __init__(self, pages_definition=[], instance_info={}, app=None):
         """Initialization.
 
         Parameters
         ----------
         pages_definition : list, optional
             The list containing the data to generate all window widgets.
-        settings : dict, optional
-            <class "JSONSettingsHandler">
-        xlet_instance_id : str, optional
-            The instance ID of an xlet.
-        xlet_uuid : str, optional
-            The xlet UUID.
-        app_window : None, optional
-            <class "Gtk.ApplicationWindow">.
+        instance_info : dict, optional
+            Xlet instance information.
+        app : None, optional
+            <class "Gtk.Application">.
         """
-        BaseGrid.__init__(self)
+        super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
         self.set_border_width(0)
         self.set_spacing(0, 0)
         self.set_property("expand", True)
         self.set_property("margin", 0)
 
+        self.timer = None
+        self.app = app
+        self.instance_info = instance_info
+
         stack = Gtk.Stack()
-        stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
+        self.stack = stack
+        stack.set_transition_type(Gtk.StackTransitionType.SLIDE_UP_DOWN)
         stack.set_transition_duration(150)
         stack.set_property("margin", 0)
         stack.set_property("expand", True)
 
-        create_stack_switcher = len(pages_definition) > 1
+        create_page_switcher = len(pages_definition) > 1
         page_count = 0
 
         for page_def in pages_definition:
@@ -119,11 +126,7 @@ class SettingsBox(BaseGrid):
             page_scrolled_window.set_policy(hscrollbar_policy=Gtk.PolicyType.NEVER,
                                             vscrollbar_policy=Gtk.PolicyType.AUTOMATIC)
             page_scrolled_window.set_shadow_type(type=Gtk.ShadowType.ETCHED_IN)
-            page = BaseGrid()
-            page.set_spacing(15, 15)
-            page.set_property("expand", True)
-            page.set_property("margin", 15)
-            page.set_border_width(0)
+            page = SettingsPage()  # noqa | JsonSettingsWidgets > SettingsWidgets
             page_scrolled_window.add(page)
 
             section_count = 0
@@ -134,10 +137,23 @@ class SettingsBox(BaseGrid):
                 if not section_def.get("compatible", True):
                     continue
 
-                section_container = SectionContainer(  # noqa
-                    section_def.get("section-title", ""),
-                    section_def.get("section-info", {}),
-                )
+                if "dependency" in section_def:
+                    revealer = JSONSettingsRevealer(  # noqa | JsonSettingsWidgets
+                    instance_info["settings"], section_def["dependency"]
+                    )
+                    section_container = page.add_reveal_section(
+                        title=section_def.get("section-title", ""),
+                        subtitle=section_def.get("section-subtitle", ""),
+                        section_info=section_def.get("section-info", {}),
+                        revealer=revealer
+                    )
+                else:
+                    section_container = page.add_section(
+                        title=section_def.get("section-title", ""),
+                        subtitle=section_def.get("section-subtitle", ""),
+                        section_info=section_def.get("section-info", {}),
+                    )
+
                 section_widgets = section_def["widgets"]
 
                 for i in range(0, len(section_widgets)):
@@ -150,13 +166,13 @@ class SettingsBox(BaseGrid):
 
                     try:
                         if widget_def["widget-type"] == "label":
-                            widget = Text(**widget_def["args"])  # noqa
+                            widget = Text(**widget_def["args"])  # noqa | JsonSettingsWidgets > SettingsWidgets
                         elif widget_def["widget-type"] in XLET_SETTINGS_WIDGETS:
-                            widget_def["args"]["settings"] = settings
+                            widget_def["args"]["settings"] = instance_info["settings"]
                             widget = globals()[XLET_SETTINGS_WIDGETS[widget_def["widget-type"]]](
                                 **widget_def["args"])
-                            if widget_def["widget-type"] == "list" and app_window is not None:
-                                widget.app_window = app_window
+                            if widget_def["widget-type"] == "list" and app is not None:
+                                widget.app_window = app.window
                         else:
                             continue
                     except Exception as err:
@@ -169,8 +185,8 @@ class SettingsBox(BaseGrid):
                         widget.fill_row()
                     else:
                         widget.set_border_width(5)
-                        widget.set_margin_left(15)
-                        widget.set_margin_right(15)
+                        widget.set_margin_start(15)
+                        widget.set_margin_end(15)
 
                     if widget_def["widget-type"] == "button":
                         col_span = 2
@@ -178,36 +194,68 @@ class SettingsBox(BaseGrid):
                         col_span = 1
 
                     if "dependency" in widget_def["args"].get("properties", []):
-                        revealer = JSONSettingsRevealer(  # noqa
-                            settings, widget_def["args"]["properties"]["dependency"])
+                        revealer = JSONSettingsRevealer(  # noqa | JsonSettingsWidgets
+                            instance_info["settings"], widget_def["args"]["properties"]["dependency"])
                         section_container.add_reveal_row(
                             widget, 0, i + 1, col_span, 1, revealer=revealer)
                     else:
                         section_container.add_row(widget, 0, i + 1, col_span, 1)
 
-                page.attach(section_container, 0, section_count, 1, 1)
+                # page.attach(section_container, 0, section_count, 1, 1)
                 section_count += 1
+
+                for note in section_def.get("section-notes", []):
+                    section_container.add_note(note)
+
+                if len(page_def["sections"]) != section_count:
+                    section_container.add(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
 
             page_count += 1
             stack.add_titled(page_scrolled_window, "stack_id_%d" %
                              page_count, page_def["page-title"])
 
-            if page_def.get("page-icon"):
-                stack.child_set_property(page_scrolled_window, "icon-name", page_def["page-icon"])
-
-        if create_stack_switcher:
-            self.stack_switcher = Gtk.StackSwitcher()
-            self.stack_switcher.set_stack(stack)
-            self.stack_switcher.set_halign(Gtk.Align.CENTER)
-            self.stack_switcher.set_homogeneous(False)
-        else:
-            self.stack_switcher = None
+        if create_page_switcher:
+            page_switcher = Gtk.StackSidebar()
+            page_switcher.set_stack(stack)
+            self.add(page_switcher)
+            stack.connect("notify::visible-child", self.on_stack_switcher_changed)
 
         self.add(stack)
 
         self.show_all()
 
-    def get_stack_switcher(self):
+    def on_stack_switcher_changed(self, *args):
+        """Highlight applet on demand.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        # NOTE: This bit me in the arse real good!!! LOL
+        # Without the throttle, and connecting only the "notify" signal to the stack, the
+        # on_stack_switcher_changed method was triggered like 5 times and it always stored
+        # the wrong value to self.app.win_stacks_state.
+        # With the "notify::visible-child" signal connected, on_stack_switcher_changed triggers
+        # automatically only once when the stack is created and the first child is selected,
+        # and immediately again, if needed, to select the child name stored in
+        # self.app.win_stacks_state. The second call will cancel the first and then store what was
+        # stored (Yeah, I know! ¬¬). Successive changes to the visible children (selecting items
+        # in the sidebar) will trigger on_stack_switcher_changed and store the correct ID (hopefully).
+
+        def apply(self):
+            """Apply.
+            """
+            self.app.win_stacks_state[self.instance_info["id"]
+                                      ] = self.stack.get_visible_child_name()
+            self.timer = None
+
+        if self.timer:
+            GLib.source_remove(self.timer)
+
+        self.timer = GLib.timeout_add(500, apply, self)
+
+    def get_page_stack(self):
         """Get stack switcher.
 
         Returns
@@ -215,7 +263,7 @@ class SettingsBox(BaseGrid):
         Gtk.StackSwitcher
             The Gtk.StackSwitcher used to switch pages.
         """
-        return self.stack_switcher
+        return self.stack
 
 
 class MainApplication(Gtk.Application):
@@ -223,22 +271,40 @@ class MainApplication(Gtk.Application):
 
     Attributes
     ----------
-    application_base_id : str
+    all_instances_info : list
+        Storage for all xlets instances information.
+    app_image : object
+        <class `Gtk.Button`>.
+    application_id : str
         A base application ID that will be used to generate the real application ID.
     application_title : str
         A custom application title.
-    current_selected_tab : str
-        The name of the currently selected stack.
+    cinnamon_gsettings : object
+        <class `Gio.Settings`>.
     display_settings_handling : bool
         Whether to display settings handler item in the header bar menu.
+    header_bar : object
+        <class `Gtk.HeaderBar`>.
     help_file_path : str
         Path to the xlet help file.
+    instance_stack : object
+        <class `Gtk.Stack`>.
+    instance_switcher : object
+        <class `Gtk.StackSwitcher`>.
+    instance_switcher_box : object
+        <class `BaseGrid`>.
+    legacy_xlet_highlighting : bool
+        Whether to use the "old way" of highlighting an xlet instance.
+    next_button : object
+        <class `Gtk.Button`>.
     pages_definition : list
         The list containing the data to generate all window widgets.
+    prev_button : object
+        <class `Gtk.Button`>.
     required_args : set
         Required arguments.
-    settings : object
-        <class "JSONSettingsHandler">.
+    selected_instance : dict
+        The information of the currently selected instance.
     win_current_height : int
         Window current height.
     win_current_width : int
@@ -249,6 +315,8 @@ class MainApplication(Gtk.Application):
         Window initial width.
     win_is_maximized : bool
         Whether the window is maximized.
+    win_stacks_state : dict
+        The name of each selected stack of each xlet instance.
     win_state_cache_file : str
         Path to the file where the window state is stored.
     window : object
@@ -257,6 +325,8 @@ class MainApplication(Gtk.Application):
         Path to where the xlet is installed.
     xlet_help_file_exists : bool
         Whether the HELP.html file inside an xlet directory exist.
+    xlet_icon_path : str
+        Path to a file called icon.svg (or icon.png) inside an xlet folder.
     xlet_instance_id : str
         The instance ID of an xlet.
     xlet_meta : dict
@@ -268,7 +338,7 @@ class MainApplication(Gtk.Application):
         The xlet UUID.
     """
     required_args = {
-        "application_base_id",
+        "application_id",
         "pages_definition",
         "xlet_instance_id",
         "xlet_type",
@@ -294,7 +364,8 @@ class MainApplication(Gtk.Application):
             raise SystemExit("Missing required arguments: %s" %
                              ", ".join(list(self.required_args.difference(kwargs_keys))))
 
-        self.application_base_id = ""
+        # kwargs attributes.
+        self.application_id = ""
         self.display_settings_handling = True
         self.application_title = ""
         self.pages_definition = []
@@ -304,20 +375,21 @@ class MainApplication(Gtk.Application):
         self.xlet_instance_id = ""
         self.xlet_type = ""
         self.xlet_uuid = ""
+        # Other attributes.
+        self.selected_instance = None
+        self.cinnamon_gsettings = Gio.Settings.new("org.cinnamon")
+        self.all_instances_info = []
+        # Mark for deletion on EOL. Cinnamon 3.2.x+
+        # See where this property is used.
+        self.legacy_xlet_highlighting = compare_version(CINNAMON_VERSION, "3.2.0") < 0
 
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-        self.load_xlet_data_and_instance()
+        if not self.xlet_instance_id:
+            self.xlet_instance_id = self.xlet_uuid
 
-        GLib.set_application_name(self._get_application_title())
-
-        super().__init__(
-            application_id=self._get_application_id(),
-            flags=Gio.ApplicationFlags.FLAGS_NONE,
-        )
-
-        self.load_css()
+        self.load_xlet_data()
 
         self.xlet_icon_path = os.path.join(self.xlet_dir, "icon.svg")
 
@@ -327,8 +399,253 @@ class MainApplication(Gtk.Application):
         if not os.path.isfile(self.xlet_icon_path):
             self.xlet_icon_path = None
 
+        GLib.set_application_name(self._get_application_title())
+
+        super().__init__(
+            application_id=self.application_id,
+            flags=Gio.ApplicationFlags.FLAGS_NONE,
+        )
+
+    def load_xlet_data(self):
+        """Load xlet data.
+        """
+        self.xlet_dir = "/usr/share/cinnamon/%ss/%s" % (self.xlet_type, self.xlet_uuid)
+
+        if not os.path.exists(self.xlet_dir):
+            self.xlet_dir = "%s/.local/share/cinnamon/%ss/%s" % (
+                HOME, self.xlet_type, self.xlet_uuid)
+
+        if os.path.exists("%s/metadata.json" % self.xlet_dir):
+            raw_data = open("%s/metadata.json" % self.xlet_dir).read()
+            self.xlet_meta = json.loads(raw_data)
+            self.xlet_meta["path"] = self.xlet_dir
+        else:
+            print("Could not find %s metadata for uuid %s - are you sure it's installed correctly?" %
+                  (self.xlet_type, self.xlet_uuid))
+            quit()
+
+        # NOTE: Append the "icons" folder found in the framework.
+        Gtk.IconTheme.get_default().append_search_path(os.path.join(MODULE_PATH, "icons"))
+
+        # NOTE: If exists, append the "icons" folder found in the xlet. Some xlets
+        # settings windows might want to add icons that are shipped with them.
+        # For use in the stack switcher for example.
+        if os.path.isdir(os.path.join(self.xlet_dir, "icons")):
+            Gtk.IconTheme.get_default().append_search_path(os.path.join(self.xlet_dir, "icons"))
+
+        self.help_file_path = os.path.join(self.xlet_dir, "HELP.html")
+        self.xlet_help_file_exists = os.path.isfile(self.help_file_path)
+
+    def load_instances(self):
+        """Load xlets instances.
+        """
+        config_path = "%s/.cinnamon/configs/%s" % (HOME, self.xlet_uuid)
+        instances = 0
+        config_files = sorted([entry.name for entry in os.scandir(
+            config_path) if entry.is_file(follow_symlinks=False) and entry.name.endswith(".json")])
+
+        multi_instance = int(self.xlet_meta.get("max-instances", 1)) != 1
+        multiple_pages = len(self.pages_definition) > 1
+
+        for item in config_files:
+            instance_id = item[0:-5]
+
+            if not multi_instance and instance_id != self.xlet_uuid:
+                continue  # for single instance the file name should be [uuid].json
+
+            if multi_instance:
+                try:
+                    int(instance_id)
+                except Exception:
+                    continue  # multi-instance should have file names of the form [instance-id].json
+
+                instance_exists = False
+                enabled_xlets = self.cinnamon_gsettings.get_strv("enabled-%ss" % self.xlet_type)
+
+                for xlet_def in enabled_xlets:
+                    if self.xlet_uuid in xlet_def and instance_id in xlet_def.split(":"):
+                        instance_exists = True
+                        break
+
+                if not instance_exists:
+                    continue
+
+            settings = JSONSettingsHandler(  # noqa | JsonSettingsWidgets
+                filepath=os.path.join(config_path, item),
+                xlet_meta=self.xlet_meta
+            )
+            settings.instance_id = instance_id
+
+            instance_info = {
+                "settings": settings,
+                "id": instance_id,
+                "uuid": self.xlet_uuid,
+                "stack": SettingsStack() if multiple_pages else None  # noqa | JsonSettingsWidgets > SettingsWidgets
+            }
+
+            instance_box = SettingsBox(pages_definition=self.pages_definition,
+                                       instance_info=instance_info,
+                                       app=self)
+
+            self.all_instances_info.append(instance_info)
+            self.instance_stack.add_named(instance_box, instance_id)
+
+            if self.selected_instance is None:
+                self.selected_instance = instance_info
+
+                if "stack" in instance_info:
+                    self.instance_switcher.set_stack(instance_info["stack"])
+
+            instances += 1
+
+        if instances < 2:
+            self.app_image.show()
+            self.instance_switcher_box.set_no_show_all(True)
+            self.instance_switcher_box.hide()
+        else:
+            self.app_image.set_no_show_all(True)
+            self.app_image.hide()
+            self.instance_switcher_box.show()
+
+        self.set_visible_stack_for_page()
+
+    def build_window(self):
+        """Build window.
+        """
+        self.window = Gtk.ApplicationWindow(application=self,
+                                            title=self._get_application_title())
+        self.window.set_type_hint(Gdk.WindowTypeHint.NORMAL)
+        # NOTE: Always use set_default_size(). Otherwise, when exiting maximized
+        # state, the window will be resized to its minimum size instead of its
+        # previous size.
+        self.window.set_default_size(
+            self.win_current_width or self.win_initial_width,
+            self.win_current_height or self.win_initial_height
+        )
+
+        if self.win_is_maximized:
+            self.window.maximize()
+        else:
+            self.window.set_position(Gtk.WindowPosition.CENTER)
+
+        if self.xlet_icon_path is not None:
+            self.window.set_icon_from_file(self.xlet_icon_path)
+
+        self.instance_switcher = Gtk.StackSwitcher()
+
+        self.instance_switcher_box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
+        self.instance_switcher_box.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED)
+
+        self.prev_button = Gtk.Button.new_from_icon_name(
+            "go-previous-symbolic", Gtk.IconSize.BUTTON)
+        self.prev_button.set_tooltip_text(_("Previous instance"))
+        self.instance_switcher_box.add(self.prev_button)
+
+        self.instance_switcher_box.add(self.instance_switcher)
+
+        self.next_button = Gtk.Button.new_from_icon_name(
+            "go-next-symbolic", Gtk.IconSize.BUTTON)
+        self.next_button.set_tooltip_text(_("Next instance"))
+        self.instance_switcher_box.add(self.next_button)
+
+        self.header_bar = Gtk.HeaderBar()
+        self.header_bar.set_show_close_button(True)
+
+        res, width, height = Gtk.IconSize.lookup(Gtk.IconSize.BUTTON)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
+            self.xlet_icon_path,
+            width if res else 16,
+            height if res else 16
+        )
+        image = Gtk.Image.new_from_pixbuf(pixbuf)
+        self.app_image = Gtk.Button(image=image)
+        self.app_image.set_sensitive(False)
+        # NOTE: Set of a custom class to override the insensitive styling.
+        self.app_image.get_style_context().add_class("cinnamon-xlet-settings-app-title-button")
+        self.app_image.set_property("can_default", False)
+        self.app_image.set_property("receives_default", False)
+        self.app_image.set_property("can_focus", False)
+        self.app_image.set_property("relief", Gtk.ReliefStyle.NONE)
+
+        self.header_bar.pack_start(self.app_image)
+        self.header_bar.pack_start(self.instance_switcher_box)
+        self.header_bar.set_title(self._get_application_title())
+
+        main_box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
+        main_box.set_spacing(0, 0)
+        main_box.set_property("margin", 0)
+
+        self.instance_stack = Gtk.Stack()
+        main_box.add(self.instance_stack)
+
+        if self.xlet_help_file_exists or self.display_settings_handling:
+            add_separator = False
+            menu_popup = Gtk.Menu()
+            menu_popup.set_halign(Gtk.Align.END)
+
+            if self.display_settings_handling:
+                menu_popup.append(
+                    self.create_menu_item(text=_("Import settings from a file"),
+                                          callback=self.restore_settings)
+                )
+                menu_popup.append(
+                    self.create_menu_item(text=_("Export settings to a file"),
+                                          callback=self.backup_settings)
+                )
+                menu_popup.append(
+                    self.create_menu_item(text=_("Reset settings to defaults"),
+                                          callback=self.reset_settings)
+                )
+                add_separator = True
+
+            if self.xlet_help_file_exists:
+                if add_separator:
+                    menu_popup.append(Gtk.SeparatorMenuItem())
+
+                menu_popup.append(
+                    self.create_menu_item(text=_("Help"),
+                                          callback=self.open_help_page)
+                )
+
+            menu_popup.show_all()
+            menu_button = Gtk.MenuButton()
+            menu_button.set_popup(menu_popup)
+            menu_button.add(Gtk.Image.new_from_icon_name(
+                "open-menu-symbolic", Gtk.IconSize.BUTTON
+            ))
+
+            self.header_bar.pack_end(menu_button)
+
+        # Mark for deletion on EOL. Cinnamon 3.2.x+
+        # Remove check and button.
+        if self.legacy_xlet_highlighting and self.xlet_type != "extension":
+            highlight_button = Gtk.Button()
+            highlight_button.add(Gtk.Image.new_from_icon_name(
+                "software-update-available-symbolic", Gtk.IconSize.BUTTON
+            ))
+            highlight_button.set_tooltip_text(
+                _("Momentarily highlight the %s on your desktop") % self.xlet_type)
+            highlight_button.connect("clicked", self.on_highlight_button_clicked)
+            self.header_bar.pack_end(highlight_button)
+
+        self.window.set_titlebar(self.header_bar)
+        self.window.add(main_box)
+        self.window.connect("destroy", self.on_quit)
+        self.window.connect("size-allocate", self.on_size_allocate_cb)
+        self.window.connect("window-state-event", self.on_window_state_event_cb)
+        self.prev_button.connect("clicked", self.previous_instance)
+        self.next_button.connect("clicked", self.next_instance)
+
+    def _set_win_subtitle(self):
+        """Set window subtitle.
+        """
+        if self.selected_instance["id"] == self.xlet_uuid:
+            self.header_bar.set_subtitle(self.selected_instance["id"])
+        else:
+            self.header_bar.set_subtitle("%s - %s" % (self.xlet_uuid, self.selected_instance["id"]))
+
     def load_css(self):
-        """Summary
+        """Load CSS.
         """
         css_provider = Gtk.CssProvider()
         # css_provider.load_from_path(
@@ -340,10 +657,6 @@ class MainApplication(Gtk.Application):
             .cinnamon-xlet-settings-app-title-button GtkImage:insensitive {
                 opacity: 1;
                 -gtk-image-effect: none;
-            }
-            .cinnamon-xlet-settings-section-information-button:hover,
-            .cinnamon-xlet-settings-section-information-button {
-                padding: 0;
             }
             """
         ))
@@ -368,16 +681,6 @@ class MainApplication(Gtk.Application):
 
         return title_text
 
-    def _get_application_id(self):
-        """Get application ID.
-
-        Returns
-        -------
-        str
-            The application ID.
-        """
-        return "%s-%s" % (self.application_base_id, (self.xlet_instance_id or "unique"))
-
     def _on_proxy_ready(self, obj, result, data=None):
         """Define proxy on proxy ready.
 
@@ -400,9 +703,12 @@ class MainApplication(Gtk.Application):
             # Mark for deletion on EOL. Cinnamon 3.2.x+
             # Remove call to proxy.highlightApplet. Which isn't very useful anyways.
             try:
-                proxy.highlightXlet("(ssb)", self.xlet_uuid, self.xlet_instance_id, True)
+                proxy.highlightXlet("(ssb)", self.xlet_uuid, self.selected_instance["id"], True)
             except Exception:
-                proxy.highlightApplet("(ss)", self.xlet_uuid, self.xlet_instance_id)
+                try:
+                    proxy.highlightApplet("(ss)", self.xlet_uuid, self.selected_instance["id"])
+                except Exception:
+                    pass
 
     def do_activate(self, *args):
         """Do activate.
@@ -424,7 +730,33 @@ class MainApplication(Gtk.Application):
         """
         Gtk.Application.do_startup(self)
         self._load_window_state()
-        self._buildUI()
+        self.build_window()
+        self.load_instances()
+
+        if self.xlet_instance_id and len(self.all_instances_info) > 1:
+            for instance_info in self.all_instances_info:
+                if instance_info["id"] == self.xlet_instance_id:
+                    self.set_instance(instance_info)
+                    break
+
+        self.load_css()
+        self._set_win_subtitle()
+        self.window.show_all()
+
+        # NOTE: Do not initialize DBus proxy when the xlet type is extension.
+        if self.xlet_type != "extension":
+            try:
+                Gio.DBusProxy.new_for_bus(Gio.BusType.SESSION,
+                                          Gio.DBusProxyFlags.NONE,
+                                          None,
+                                          "org.Cinnamon",
+                                          "/org/Cinnamon",
+                                          "org.Cinnamon",
+                                          None,
+                                          self._on_proxy_ready,
+                                          None)
+            except Exception as err:
+                print(err)
 
     def on_size_allocate_cb(self, window, *args):
         """Save window state and size in size-allocate signal.
@@ -474,10 +806,10 @@ class MainApplication(Gtk.Application):
                     "width": self.win_current_width,
                     "height": self.win_current_height,
                     "is_maximized": self.win_is_maximized,
-                    "selected_tab": self.current_selected_tab
-                }, state_file)
-        except Exception as e:
-            print(e)
+                    "stacks_state": self.win_stacks_state
+                }, state_file, indent=4)
+        except Exception as err:
+            print(err)
 
     def _load_window_state(self):
         """Load window state from file.
@@ -486,17 +818,17 @@ class MainApplication(Gtk.Application):
             "width": self.win_initial_width,
             "height": self.win_initial_height,
             "is_maximized": False,
-            "selected_tab": "stack_id_1"
+            "stacks_state": {}
         }
         self.win_state_cache_file = os.path.join(
-            GLib.get_user_cache_dir(), self._get_application_id(), "state.json")
+            GLib.get_user_cache_dir(), self.application_id, "state.json")
 
         if os.path.isfile(self.win_state_cache_file):
             try:
                 with open(self.win_state_cache_file) as state_file:
                     state_data = json.loads(state_file.read())
-            except Exception as e:
-                print(e)
+            except Exception as err:
+                print(err)
                 state_data = default_state
         else:
             state_data = default_state
@@ -504,155 +836,7 @@ class MainApplication(Gtk.Application):
         self.win_current_width = state_data.get("width", default_state["width"])
         self.win_current_height = state_data.get("height", default_state["height"])
         self.win_is_maximized = state_data.get("is_maximized", default_state["is_maximized"])
-        self.current_selected_tab = state_data.get("selected_tab", default_state["selected_tab"])
-
-    def _buildUI(self):
-        """Build UI.
-        """
-        self.window = Gtk.ApplicationWindow(application=self,
-                                            title=self._get_application_title())
-        self.window.set_type_hint(Gdk.WindowTypeHint.NORMAL)
-        # NOTE: Always use set_default_size(). Otherwise, when exiting maximized
-        # state, the window will be resized to its minimum size instead of its
-        # previous size.
-        self.window.set_default_size(
-            self.win_current_width or self.win_initial_width,
-            self.win_current_height or self.win_initial_height
-        )
-
-        if self.win_is_maximized:
-            self.window.maximize()
-        else:
-            self.window.set_position(Gtk.WindowPosition.CENTER)
-
-        if self.xlet_icon_path is not None:
-            self.window.set_icon_from_file(self.xlet_icon_path)
-
-        settings_box = SettingsBox(pages_definition=self.pages_definition,
-                                   settings=self.settings,
-                                   xlet_instance_id=self.xlet_instance_id,
-                                   xlet_uuid=self.xlet_uuid,
-                                   app_window=self.window)
-
-        # NOTE: I tested several layouts for the header.
-        # The current in use is the "less worse" that I could come up with. ¬¬
-        # Set the stack switcher as a custom title using set_custom_title. Then
-        # add a Gtk.Label to hold the title of the window and insert it using
-        # header.pack_start.
-        # For when there is not stack switcher, directly insert the Gtk.Label
-        # holding the title set_custom_title.
-        header = Gtk.HeaderBar()
-        header.set_show_close_button(True)
-
-        res, width, height = Gtk.IconSize.lookup(Gtk.IconSize.BUTTON)
-        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(
-            self.xlet_icon_path,
-            width if res else 16,
-            height if res else 16
-        )
-        image = Gtk.Image.new_from_pixbuf(pixbuf)
-        app_image = Gtk.Button(image=image)
-        app_image.set_sensitive(False)
-        # NOTE: Set a custom class to override the insensitive styling.
-        app_image.get_style_context().add_class("cinnamon-xlet-settings-app-title-button")
-        app_image.set_property("can_default", False)
-        app_image.set_property("receives_default", False)
-        app_image.set_property("can_focus", False)
-        app_image.set_property("relief", Gtk.ReliefStyle.NONE)
-        app_image.set_tooltip_text(self._get_application_title())
-        header.pack_start(app_image)
-
-        stack_switcher = settings_box.get_stack_switcher()
-
-        if stack_switcher is not None:
-            stack = stack_switcher.get_stack()
-            stack.connect("notify", self.on_stack_switcher_changed)
-            header.set_custom_title(stack_switcher)
-
-            try:
-                stack.set_visible_child_name(self.current_selected_tab)
-            except Exception:
-                pass
-        else:
-            header_title = Gtk.Label(self._get_application_title())
-            # NOTE: Set the "title" class to the label so it is styled accordingly.
-            header_title.get_style_context().add_class(Gtk.STYLE_CLASS_TITLE)
-            header_title.set_tooltip_text(self._get_application_title())
-            # NOTE: Ellipsize the title label so the window can tile/resize even when there
-            # is not enough room to display the complete text.
-            header_title.set_property("ellipsize", Pango.EllipsizeMode.END)
-
-            header.set_custom_title(header_title)
-
-        self.window.set_titlebar(header)
-
-        main_box = BaseGrid()
-        main_box.set_spacing(0, 0)
-        main_box.set_property("margin", 0)
-
-        if self.xlet_help_file_exists or self.display_settings_handling:
-            add_separator = False
-            menu_popup = Gtk.Menu()
-            menu_popup.set_halign(Gtk.Align.END)
-
-            if self.display_settings_handling:
-                menu_popup.append(
-                    self.create_menu_item(text=_("Import from a file"),
-                                          callback=self.restore_settings)
-                )
-                menu_popup.append(
-                    self.create_menu_item(text=_("Export to a file"),
-                                          callback=self.backup_settings)
-                )
-                menu_popup.append(
-                    self.create_menu_item(text=_("Reset to defaults"),
-                                          callback=self.reset_settings)
-                )
-                add_separator = True
-
-            if self.xlet_help_file_exists:
-                if add_separator:
-                    menu_popup.append(Gtk.SeparatorMenuItem())
-
-                menu_popup.append(
-                    self.create_menu_item(text=_("Help"),
-                                          callback=self.open_help_page)
-                )
-
-            menu_popup.show_all()
-            menu_button = Gtk.MenuButton()
-            menu_button.set_popup(menu_popup)
-            menu_button.add(Gtk.Image.new_from_icon_name(
-                "open-menu-symbolic", Gtk.IconSize.BUTTON
-            ))
-
-            header.pack_end(menu_button)
-
-        # Mark for deletion on EOL. Cinnamon 3.2.x+
-        # Remove the compare_version() check (or update it) and the highlight_button entirely.
-        if compare_version(CINNAMON_VERSION, "3.2.0") < 0 and self.xlet_type != "extension":
-            highlight_button = Gtk.Button()
-            highlight_button.add(Gtk.Image.new_from_icon_name(
-                "software-update-available-symbolic", Gtk.IconSize.BUTTON
-            ))
-            highlight_button.set_tooltip_text(
-                _("Momentarily highlight the %s on your desktop") % self.xlet_type)
-            highlight_button.connect("clicked", self.on_highlight_button_clicked)
-            header.pack_end(highlight_button)
-
-        # NOTE: Separator used so the buttons on the right of the header bar never
-        # touch the stack switcher. This is so the misalignment between these elements
-        # isn't blatantly noticed (there isn't in existence ONE Gtk3 theme that
-        # can align these elements together inside a header bar. NONE!!!).
-        header.pack_end(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL))
-
-        main_box.add(settings_box)
-
-        self.window.add(main_box)
-        self.window.show_all()
-        self.window.connect("destroy", self.on_quit)
-        self.window.connect("size-allocate", self.on_size_allocate_cb)
-        self.window.connect("window-state-event", self.on_window_state_event_cb)
+        self.win_stacks_state = state_data.get("stacks_state", default_state["stacks_state"])
 
     def create_menu_item(self, text, callback, *args):
         """Create menu item.
@@ -678,6 +862,90 @@ class MainApplication(Gtk.Application):
 
         return item
 
+    def set_instance(self, instance_info):
+        """Set instance.
+
+        Parameters
+        ----------
+        instance_info : dict
+            Xlet instance information.
+        """
+        self.instance_stack.set_visible_child_name(instance_info["id"])
+
+        if "stack" in instance_info:
+            self.instance_switcher.set_stack(instance_info["stack"])
+
+            children = instance_info["stack"].get_children()
+
+            if len(children) > 1:
+                instance_info["stack"].set_visible_child(children[0])
+
+        # NOTE: This has to be done BEFORE storing the new instance because it has to remove the
+        # highlighting of the currently highlighted xlet, highlight the one that's going to be
+        # the selected instance and then set the selected instance.
+        try:
+            # Mark for deletion on EOL. Cinnamon 3.2.x+
+            # Remove check for legacy highlighting (or update it).
+            if not self.legacy_xlet_highlighting and self.xlet_type != "extension" and proxy:
+                proxy.highlightXlet("(ssb)", self.xlet_uuid, self.selected_instance["id"], False)
+                proxy.highlightXlet("(ssb)", self.xlet_uuid, instance_info["id"], True)
+        except Exception:
+            pass
+
+        self.selected_instance = instance_info
+        self._set_win_subtitle()
+        self.set_visible_stack_for_page()
+
+        # NOTE: This has to be done AFTER storing the new instance.
+        # Mark for deletion on EOL. Cinnamon 3.2.x+
+        # Remove call.
+        self.on_highlight_button_clicked()
+
+    def set_visible_stack_for_page(self):
+        """Set visible stack for page.
+        """
+        if self.selected_instance["id"] in self.win_stacks_state:
+            # NOTE: Keep the try/catch block!!!
+            # When I add/remove pages to an xlet settings page, the already stored
+            # stacks IDs might not exist. In which case, the first stack is always selected.
+            try:
+                instance_stack = self.instance_stack.get_visible_child()
+                instance_box_stack = instance_stack.get_page_stack()
+                instance_box_stack.set_visible_child_name(
+                    self.win_stacks_state[self.selected_instance["id"]])
+            except Exception as err:
+                print(err)
+
+    def previous_instance(self, *args):
+        """Select previous instance.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        self.instance_stack.set_transition_type(Gtk.StackTransitionType.SLIDE_RIGHT)
+        index = self.all_instances_info.index(self.selected_instance)
+        self.set_instance(self.all_instances_info[index - 1])
+
+    def next_instance(self, *args):
+        """Select next instance.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        self.instance_stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT)
+        index = self.all_instances_info.index(self.selected_instance)
+
+        if index == len(self.all_instances_info) - 1:
+            index = 0
+        else:
+            index += 1
+
+        self.set_instance(self.all_instances_info[index])
+
     def open_help_page(self, *args):
         """Open the xlet help page.
 
@@ -687,57 +955,6 @@ class MainApplication(Gtk.Application):
             Arguments.
         """
         run(["xdg-open", self.help_file_path])
-
-    def load_xlet_data_and_instance(self):
-        """Load xlet data and instance.
-        """
-        self.xlet_dir = "/usr/share/cinnamon/%ss/%s" % (self.xlet_type, self.xlet_uuid)
-
-        if not os.path.exists(self.xlet_dir):
-            self.xlet_dir = "%s/.local/share/cinnamon/%ss/%s" % (
-                HOME, self.xlet_type, self.xlet_uuid)
-
-        if os.path.exists("%s/metadata.json" % self.xlet_dir):
-            raw_data = open("%s/metadata.json" % self.xlet_dir).read()
-            self.xlet_meta = json.loads(raw_data)
-            self.xlet_meta["path"] = self.xlet_dir
-        else:
-            print("Could not find %s metadata for uuid %s - are you sure it's installed correctly?" %
-                  (self.xlet_type, self.xlet_uuid))
-            quit()
-
-        # NOTE: Append the "icons" folder found in the framework.
-        Gtk.IconTheme.get_default().append_search_path(os.path.join(module_path, "icons"))
-
-        # NOTE: If exists, append the "icons" folder found in the xlet. Some xlets
-        # settings windows might want to add icons that are shipped with them.
-        # For use in the stack switcher for example.
-        if os.path.isdir(os.path.join(self.xlet_dir, "icons")):
-            Gtk.IconTheme.get_default().append_search_path(os.path.join(self.xlet_dir, "icons"))
-
-        self.help_file_path = os.path.join(self.xlet_dir, "HELP.html")
-        self.xlet_help_file_exists = os.path.isfile(self.help_file_path)
-
-        config_path = "%s/.cinnamon/configs/%s" % (HOME, self.xlet_uuid)
-        self.settings = JSONSettingsHandler(  # noqa
-            os.path.join(config_path, "%s.json" % (self.xlet_instance_id or self.xlet_uuid)),
-            xlet_meta=self.xlet_meta
-        )
-
-        # NOTE: Do not initialize DBus proxy when the xlet type is extension.
-        if self.xlet_type != "extension":
-            try:
-                Gio.DBusProxy.new_for_bus(Gio.BusType.SESSION,
-                                          Gio.DBusProxyFlags.NONE,
-                                          None,
-                                          "org.Cinnamon",
-                                          "/org/Cinnamon",
-                                          "org.Cinnamon",
-                                          None,
-                                          self._on_proxy_ready,
-                                          None)
-            except Exception as e:
-                print(e)
 
     def backup_settings(self, *args):
         """Backup xlet settings.
@@ -767,7 +984,7 @@ class MainApplication(Gtk.Application):
             if ".json" not in filename:
                 filename = filename + ".json"
 
-            self.settings.save_to_file(filename)
+            self.selected_instance["settings"].save_to_file(filename)
 
         dialog.destroy()
 
@@ -794,7 +1011,7 @@ class MainApplication(Gtk.Application):
 
         if response == Gtk.ResponseType.OK:
             filename = dialog.get_filename()
-            self.settings.load_from_file(filename)
+            self.selected_instance["settings"].load_from_file(filename)
 
         dialog.destroy()
 
@@ -820,7 +1037,7 @@ class MainApplication(Gtk.Application):
         response = dialog.run()
 
         if response == Gtk.ResponseType.YES:
-            self.settings.reset_to_defaults()
+            self.selected_instance["settings"].reset_to_defaults()
 
         dialog.destroy()
 
@@ -834,23 +1051,11 @@ class MainApplication(Gtk.Application):
         *args
             Arguments.
         """
-        if proxy:
+        if proxy and self.legacy_xlet_highlighting:
             try:
-                proxy.highlightApplet("(ss)", self.xlet_uuid, self.xlet_instance_id)
+                proxy.highlightApplet("(ss)", self.xlet_uuid, self.selected_instance["id"])
             except Exception:
                 pass
-
-    def on_stack_switcher_changed(self, stack, *args):
-        """Highlight applet on demand.
-
-        Parameters
-        ----------
-        stack : object
-            The stack from which to get the its name.
-        *args
-            Arguments.
-        """
-        self.current_selected_tab = stack.get_visible_child_name()
 
     def on_quit(self, *args):
         """On quit.
@@ -864,7 +1069,7 @@ class MainApplication(Gtk.Application):
 
         if proxy:
             try:
-                proxy.highlightXlet("(ssb)", self.xlet_uuid, self.xlet_instance_id, False)
+                proxy.highlightXlet("(ssb)", self.xlet_uuid, self.selected_instance["id"], False)
             except Exception:
                 pass
 

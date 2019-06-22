@@ -234,7 +234,7 @@ class AppList(SettingsWidget):
             "ICON": 2
         }
 
-        self.content_widget = Gtk.Button(label=label)
+        self.content_widget = Gtk.Button(label=label, valign=Gtk.Align.CENTER)
         self.attach(self.content_widget, 0, 0, 2, 1)
         self.content_widget.set_hexpand(True)
 
@@ -416,7 +416,7 @@ class AppChooser(SettingsWidget):
 
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
-        self.content_widget = Gtk.Button()
+        self.content_widget = Gtk.Button(valign=Gtk.Align.CENTER)
         self.content_widget.set_always_show_image(True)
 
         self.attach(self.label, 0, 0, 1, 1)
