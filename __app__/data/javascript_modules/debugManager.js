@@ -149,7 +149,7 @@ function methodWrapper(aObject, aParams) {
     }
 }
 
-function wrapObjectMethods(aDebugger, aObjects) {
+function wrapObjectMethods(aDebugger, aProtos, aExtraOptions = {}) {
     try {
         /* NOTE: aDebugger could be an instance of DebugManager or
          * an instance of BaseXletSettings (xletsSettingsUtils.js).
@@ -163,12 +163,22 @@ function wrapObjectMethods(aDebugger, aObjects) {
             aDebugger.pref_debugger_enabled;
 
         if (loggingLevel === LoggingLevel.VERY_VERBOSE || debuggerEnabled) {
-            for (let name in aObjects) {
-                methodWrapper(aObjects[name], {
+            for (let name in aProtos) {
+                let options = {
                     objectName: name,
                     verbose: loggingLevel === LoggingLevel.VERY_VERBOSE,
                     debug: debuggerEnabled
-                });
+                };
+
+                if (name in aExtraOptions) {
+                    for (let opt in aExtraOptions[name]) {
+                        if (aExtraOptions[name].hasOwnProperty(opt)) {
+                            options[opt] = aExtraOptions[name][opt];
+                        }
+                    }
+                }
+
+                methodWrapper(aProtos[name], options);
             }
         }
     } catch (aErr) {

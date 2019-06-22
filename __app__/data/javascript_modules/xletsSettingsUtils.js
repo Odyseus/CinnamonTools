@@ -10,7 +10,6 @@ if (typeof __meta === "object") {
 const {
     ui: {
         settings: {
-            AppletSettings,
             ExtensionSettings
         }
     },
@@ -107,26 +106,6 @@ CustomExtensionSettings.prototype = {
         this.settings = new ExtensionSettings(
             this,
             XletMeta.uuid
-        );
-
-        this._bindSettings();
-    }
-};
-
-function CustomAppletSettings() {
-    this._init.apply(this, arguments);
-}
-
-CustomAppletSettings.prototype = {
-    __proto__: BaseXletSettings.prototype,
-
-    _init: function(aBoundSettingsArray, aInstanceID, aAsync = true) {
-        BaseXletSettings.prototype._init.call(this, aBoundSettingsArray);
-        this.settings = new AppletSettings(
-            this,
-            XletMeta.uuid,
-            aInstanceID,
-            aAsync
         );
 
         this._bindSettings();
