@@ -109,8 +109,9 @@ const CT_AppletManagerPatch = {
                         let dialog = new CustomDialogs.ConfirmDialog({
                             dialogName: "CinnamonTweaksAppletRemoval",
                             headline: _("Applet removal"),
-                            description: _("Do you want to remove '%s' from your panel?\nInstance ID: %s")
-                                .format(AppletManager.get_object_for_uuid(uuid, applet_id)._meta.name, applet_id),
+                            description: _("Are you sure you want to remove %s?").format(
+                                AppletManager.get_object_for_uuid(uuid, applet_id)._meta.name
+                            ) + "\n%s: %s".format(_("Instance ID"), applet_id),
                             cancelLabel: _("Cancel"),
                             okLabel: _("OK"),
                             callback: () => {
@@ -166,8 +167,9 @@ const CT_DeskletManagerPatch = {
                         let dialog = new CustomDialogs.ConfirmDialog({
                             dialogName: "CinnamonTweaksDeskletRemoval",
                             headline: _("Desklet removal"),
-                            description: _("Do you want to remove '%s' from your desktop?\nInstance ID: %s")
-                                .format(DeskletManager.get_object_for_uuid(uuid, desklet_id)._meta.name, desklet_id),
+                            description: _("Are you sure you want to remove %s?").format(
+                                DeskletManager.get_object_for_uuid(uuid, desklet_id)._meta.name
+                            ) + "\n%s: %s".format(_("Instance ID"), desklet_id),
                             cancelLabel: _("Cancel"),
                             okLabel: _("OK"),
                             callback: () => {
@@ -1147,6 +1149,8 @@ CinnamonTweaks.prototype = {
             case "pref_tooltips_delay":
             case "pref_popup_menu_manager_tweaks_enabled":
             case "pref_popup_menu_manager_applets_menus_behavior":
+            case "pref_logging_level":
+            case "pref_debugger_enabled":
                 $.informCinnamonRestart();
                 break;
             case "pref_applets_tweaks_enabled":

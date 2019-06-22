@@ -18,6 +18,8 @@ from python_modules.xlets_settings.common import compare_version
 CIRCLE = "<b>⚫</b>"
 ASTERISK = " (*)"
 
+CINN_RESTART = "(*) <i>%s</i>" % escape(_("Cinnamon needs to be restarted"))
+
 NOTIFICATIONS_SECTION_INFO = "\n".join([
     escape(_("After enabling notifications tweaks, some settings set by this extension will have priority over Cinnamon's notification settings.")),
     "",
@@ -139,8 +141,8 @@ CUSTOM_SHADOWS_COLUMNS = [{
 }]
 
 XLETS_TAB = {
-    "page-title": _("Xlets tweaks"),
-    "page-icon": "cinnamon-tweaks-xlets-symbolic",
+    "page-title": _("Xlets"),
+    "compatible": compare_version(CINNAMON_VERSION, "4.2") < 0,
     "sections": [{
         "section-title": _("Applets tweaks"),
         "widgets": [{
@@ -188,8 +190,7 @@ XLETS_TAB = {
 
 
 HOTCORNERS_TAB = {
-    "page-title": _("Hot corners tweaks"),
-    "page-icon": "cinnamon-tweaks-hotcorners-symbolic",
+    "page-title": _("Hot corners"),
     "compatible": compare_version(CINNAMON_VERSION, "3.2") < 0,
     "sections": [{
         "section-title": _("Hot corners tweaks"),
@@ -262,10 +263,10 @@ HOTCORNERS_TAB = {
 }
 
 DESKTOP_TAB = {
-    "page-title": _("Desktop tweaks"),
-    "page-icon": "cinnamon-tweaks-desktop-symbolic",
+    "page-title": _("Desktop"),
     "sections": [{
         "section-title": _("Desktop area tweaks"),
+        "section-notes": [CINN_RESTART],
         "widgets": [{
             "widget-type": "switch",
             "args": {
@@ -287,6 +288,7 @@ DESKTOP_TAB = {
         }]
     }, {
         "section-title": _("Tooltips tweaks"),
+        "section-notes": [CINN_RESTART],
         "widgets": [{
             "widget-type": "switch",
             "args": {
@@ -341,6 +343,7 @@ DESKTOP_TAB = {
         }]
     }, {
         "section-title": _("Popup menus tweaks"),
+        "section-notes": [CINN_RESTART],
         "widgets": [{
             "widget-type": "switch",
             "args": {
@@ -368,8 +371,7 @@ DESKTOP_TAB = {
 }
 
 NOTIFICATIONS_TAB = {
-    "page-title": _("Notifications tweaks"),
-    "page-icon": "cinnamon-tweaks-notifications-symbolic",
+    "page-title": _("Notifications"),
     "sections": [{
         "section-title": _("Notifications tweaks"),
         "section-info": {
@@ -456,8 +458,7 @@ NOTIFICATIONS_TAB = {
 }
 
 WINDOWS_TAB = {
-    "page-title": _("Windows tweaks"),
-    "page-icon": "cinnamon-tweaks-windows-symbolic",
+    "page-title": _("Windows"),
     "sections": [{
         "section-title": _("Window focus tweaks"),
         "widgets": [{
@@ -681,9 +682,9 @@ WINDOWS_TAB = {
 
 OTHER_TAB = {
     "page-title": _("Other"),
-    "page-icon": "system-run-symbolic",
     "sections": [{
         "section-title": _("Debugging"),
+        "section-notes": [CINN_RESTART],
         "widgets": [{
             "widget-type": "combobox",
             "args": {
@@ -731,7 +732,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = MainApplication(
-        application_base_id="org.Cinnamon.Extensions.CinnamonTweaks.Settings",
+        application_id="org.Cinnamon.Extensions.CinnamonTweaks.Settings",
         xlet_type=args.xlet_type or "extension",
         xlet_instance_id=args.xlet_instance_id or None,
         xlet_uuid=args.xlet_uuid or "{{UUID}}",
