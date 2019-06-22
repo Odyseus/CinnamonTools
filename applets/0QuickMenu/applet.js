@@ -284,6 +284,9 @@ QuickMenu.prototype = {
             () => {
                 this._createMenu();
                 this._loadDir(this.pref_directory, this.menu);
+                this.update_menu_id = 0;
+
+                return GLib.SOURCE_REMOVE;
             });
     },
 
