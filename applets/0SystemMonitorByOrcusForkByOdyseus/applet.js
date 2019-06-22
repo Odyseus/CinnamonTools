@@ -1,18 +1,18 @@
 let GlobalUtils,
     DebugManager,
-    CustomTooltips,
+    DesktopNotificationsUtils,
     $;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
     GlobalUtils = require("./globalUtils.js");
     DebugManager = require("./debugManager.js");
-    CustomTooltips = require("./customTooltips.js");
+    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
     $ = require("./utils.js");
 } else {
     GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
     DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
+    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
     $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
 }
 
@@ -23,6 +23,7 @@ const {
     },
     mainloop: Mainloop,
     misc: {
+        signalManager: SignalManager,
         util: Util
     },
     ui: {
@@ -35,70 +36,76 @@ const {
 
 const {
     _,
-    escapeHTML
+    escapeHTML,
+    versionCompare,
+    CINNAMON_VERSION
 } = GlobalUtils;
 
 const {
-    CustomPanelTooltip
-} = CustomTooltips;
+    NotificationUrgency
+} = DesktopNotificationsUtils;
 
 function SystemMonitor() {
     this._init.apply(this, arguments);
 }
 
 SystemMonitor.prototype = {
-    __proto__: Applet.IconApplet.prototype,
+    __proto__: Applet.TextIconApplet.prototype,
 
     _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
+        Applet.TextIconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
 
         // Condition needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.2.x+
         if (Applet.hasOwnProperty("AllowedLayout")) {
-            this.setAllowedLayout(Applet.AllowedLayout.HORIZONTAL);
+            this.setAllowedLayout(Applet.AllowedLayout.BOTH);
         }
 
-        this.update_id = 0;
+        this.update_timeout_id = 0;
         this.orientation = aOrientation;
         this.metadata = aMetadata;
         this.instance_id = aInstanceId;
         this.command_keybinding_name = this.metadata.uuid + "-" + this.instance_id;
-
-        try {
-            this.tooltip = new CustomPanelTooltip(this, "", this.orientation);
-        } catch (aErr) {
-            global.logError("Error while initializing tooltip: " + aErr.message);
-        }
-
-        if (!$.GTop) {
-            this._informDependency();
-            this._applet_icon_box.show();
-            return;
-        }
+        this.holdInitialization = false;
 
         this._initializeSettings(() => {
             this._expandAppletContextMenu();
+
+            /* NOTE: Inform about missing dependency AFTER the applet context menu is expanded.
+             * Otherwise, the Help menu item in the context menu will not exist.
+             */
+            if (!$.GTop) {
+                this._informDependency();
+                this.holdInitialization = true;
+            }
         }, () => {
-            this._applet_icon_box.hide();
-
-            this.vertical = this.orientation == St.Side.LEFT || this.orientation == St.Side.RIGHT;
-            this.graph_ids = ["cpu", "mem", "swap", "net", "load"];
-            this.bg_color = $.colorToArray(this.pref_bg_color);
-            this.border_color = $.colorToArray(this.pref_border_color);
-            this.areas = new Array(this.graph_ids.length);
-            this.graphs = new Array(this.graph_ids.length);
-            this.graph_indices = new Array(this.graph_ids.length);
-
-            for (let i = 0; i < this.graph_ids.length; i++) {
-                this.areas[i] = null;
-                this.graphs[i] = null;
-                this.graph_indices[i] = null;
+            if (this.holdInitialization) {
+                return;
             }
 
-            this.graph_order = [0, 1, 2, 3, 4];
+            this.sigMan = new SignalManager.SignalManager(null);
+            this.vertical = this.orientation === St.Side.LEFT || this.orientation === St.Side.RIGHT;
 
-            this._changePadding();
+            this.bg_color = $.colorToArray(this.pref_bg_color);
+            this.border_color = $.colorToArray(this.pref_border_color);
+            this.graphs = null;
+            this.resolution_needs_update = true;
+            this.tooltip = null;
+            this._graph_ids = null;
+
+            this.area = new St.DrawingArea();
+            this.actor.add_child(this.area);
+
+            this.sigMan.connect(this.area, "repaint", function() {
+                this.paint();
+            }.bind(this));
+
+            this.sigMan.connect(this, "orientation-changed", function() {
+                this._seekAndDetroyConfigureContext();
+            }.bind(this));
+
             this._changeGraphEnabled();
+            this._changePadding();
             this._updateKeybindings();
             this.update();
         });
@@ -167,7 +174,7 @@ SystemMonitor.prototype = {
             "pref_bg_color",
             "pref_border_color",
             "pref_graph_width",
-            "pref_cpu_enabled",
+            "pref_graph_spacing",
             "pref_cpu_override_graph_width",
             "pref_cpu_graph_width",
             "pref_cpu_tooltip_decimals",
@@ -175,26 +182,23 @@ SystemMonitor.prototype = {
             "pref_cpu_color_1",
             "pref_cpu_color_2",
             "pref_cpu_color_3",
-            "pref_mem_enabled",
             "pref_mem_override_graph_width",
             "pref_mem_graph_width",
             "pref_mem_color_0",
             "pref_mem_color_1",
-            "pref_swap_enabled",
             "pref_swap_override_graph_width",
             "pref_swap_graph_width",
             "pref_swap_color_0",
-            "pref_net_enabled",
             "pref_net_override_graph_width",
             "pref_net_graph_width",
             "pref_net_color_0",
             "pref_net_color_1",
-            "pref_load_enabled",
             "pref_load_override_graph_width",
             "pref_load_graph_width",
             "pref_load_color_0",
             "pref_logging_level",
-            "pref_debugger_enabled"
+            "pref_debugger_enabled",
+            "pref_graph_ids"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -218,56 +222,77 @@ SystemMonitor.prototype = {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
         });
         this._applet_context_menu.addMenuItem(menuItem);
+
+        this._seekAndDetroyConfigureContext();
+    },
+
+    _seekAndDetroyConfigureContext: function() {
+        if (versionCompare(CINNAMON_VERSION, "3.6.0") < 0) {
+            let menuItem = new PopupMenu.PopupIconMenuItem(_("Configure..."),
+                "system-run", St.IconType.SYMBOLIC);
+            menuItem.connect("activate", () => {
+                this._openSettings();
+            });
+
+            Mainloop.timeout_add_seconds(5, () => {
+                try {
+                    let children = this._applet_context_menu._getMenuItems();
+                    let i = children.length;
+                    while (i--) {
+                        if (this.hasOwnProperty("context_menu_item_configure") &&
+                            children[i] === this.context_menu_item_configure) {
+                            children[i].destroy();
+                            this.context_menu_item_configure = menuItem;
+                            this._applet_context_menu.addMenuItem(
+                                this.context_menu_item_configure,
+                                i
+                            );
+                            break;
+                        }
+                    }
+                } catch (aErr) {
+                    global.logError(aErr);
+                }
+
+                return GLib.SOURCE_REMOVE;
+            });
+        }
     },
 
     _informDependency: function() {
-        this.set_applet_icon_symbolic_name("dialog-error");
-        let msg = [_("Missing dependency!!!"),
-            _("This applet needs the GTop library installed on your system for it  to work."),
-            _("Read this applet help for more details (Applet context menu > Help item).")
-        ];
+        Mainloop.idle_add(() => {
+            this._applet_icon_box.show();
+            this.set_applet_icon_symbolic_name("dialog-error");
+            let msg = [
+                escapeHTML(_("Missing dependency!!!")),
+                escapeHTML(_("This applet needs the GTop library installed on your system for it to work.")),
+                escapeHTML(_("Read this applet help for more details (Applet context menu > Help item)."))
+            ];
 
-        let tt = _(this.metadata.name) + "\n\n" + msg.join("\n");
+            let tt = _(this.metadata.name) + "\n\n" + msg.join("\n");
 
-        if (this.tooltip) {
-            try {
-                this.tooltip.set_text('<span color="red"><b>' + escapeHTML(tt) + "</b></span>");
-            } catch (aErr) {
-                global.logError(aErr);
-                global.logError(_(this.metadata.name) + ": " + aErr.message);
-            }
-        } else {
             this.set_applet_tooltip(tt);
-        }
 
-        let icon = new St.Icon({
-            icon_name: "dialog-error",
-            icon_type: St.IconType.SYMBOLIC,
-            icon_size: 24
+            $.Notification.notify(msg, NotificationUrgency.CRITICAL);
+
+            return GLib.SOURCE_REMOVE;
         });
-
-        Main.criticalNotify(_(this.metadata.name), msg.join("\n"), icon);
     },
 
-    addGraph: function(provider, graph_idx) {
-        let area = new St.DrawingArea();
-        this.actor.insert_child_at_index(area, this.graph_indices[graph_idx]);
-        let graph = new $.Graph(area, provider);
-        this.areas[graph_idx] = area;
-        this.graphs[graph_idx] = graph;
+    addGraph: function(aProvider, aGraphIdx) {
+        let graph = new $.Graph(aProvider);
+        this.graphs[aGraphIdx] = graph;
 
-        provider.refresh_rate = this.pref_refresh_rate;
-        graph.smooth = this.pref_smooth;
-        graph.setWidth(this.getGraphWidth(graph_idx), this.vertical);
-        graph.setColors(this.getGraphColors(graph_idx));
-        graph.setDrawBackground(this.pref_draw_background);
+        aProvider.setRefreshRate(this.pref_refresh_rate);
+        graph.setSmooth(this.pref_smooth);
         graph.setDrawBorder(this.pref_draw_border);
-        graph.bg_color = this.bg_color;
-        graph.border_color = this.border_color;
-        let tooltip_decimals = this.getGraphTooltipDecimals(graph_idx);
+        graph.setDrawBackground(this.pref_draw_background);
+        graph.setColors(this.getGraphColors(graph));
+        graph.setBGColor(this.bg_color);
+        graph.setBorderColor(this.border_color);
 
-        if (tooltip_decimals) {
-            provider.setTextDecimals(tooltip_decimals);
+        if ("setTextDecimals" in aProvider) {
+            aProvider.setTextDecimals(this.getGraphTooltipDecimals(aProvider.id));
         }
 
         return graph;
@@ -275,77 +300,148 @@ SystemMonitor.prototype = {
 
     update: function() {
         let tooltip = "";
-
-        for (let i = 0; i < this.graphs.length; ++i) {
+        let i = 0,
+            iLen = this.graphs.length;
+        for (; i < iLen; ++i) {
             if (this.graphs[i]) {
                 this.graphs[i].refresh();
-                if (i > 0) {
-                    tooltip = tooltip + "\n";
-                }
-                let text = this.graphs[i].provider.getText();
+
+                let text = this.graphs[i].provider.text;
+
                 if (this.tooltip) {
-                    tooltip = tooltip + "<b>" + escapeHTML(text[0]) + ":</b> " +
-                        escapeHTML(text[1]);
+                    this.tooltip.set_text(
+                        this.graphs[i].provider.id,
+                        text[1]
+                    );
                 } else {
-                    tooltip = tooltip + text[0] + " " + text[1];
+                    if (i > 0) {
+                        tooltip += "\n";
+                    }
+
+                    tooltip += text[0] + " " + text[1];
                 }
             }
         }
 
-        if (this.tooltip) {
-            this.tooltip.set_text(tooltip);
-        } else {
+        if (!this.tooltip) {
             this.set_applet_tooltip(tooltip);
         }
 
-        this.update_timeout_id = Mainloop.timeout_add(Math.max(100, this.pref_refresh_rate),
-            () => this.update());
+        this.repaint();
+
+        this.update_timeout_id = Mainloop.timeout_add(
+            Math.max(100, this.pref_refresh_rate),
+            () => this.update()
+        );
     },
 
-    recalcGraphIndices: function() {
-        let idx = 0;
-        for (let i = 0; i < this.graph_ids.length; i++) {
-            let graph_id = this.graph_ids[i];
-            let enabled = this["pref_" + graph_id + "_enabled"];
-
-            if (!enabled) {
-                continue;
+    paint: function() {
+        if (this.resolution_needs_update) {
+            // Drawing area size can be reliably retrieved only in repaint callback
+            let [area_width, area_height] = this.area.get_size();
+            let i = 0,
+                iLen = this.graphs.length;
+            for (; i < iLen; i++) {
+                if (this.graphs[i]) {
+                    this.updateGraphResolution(i, area_width, area_height);
+                }
             }
-
-            this.graph_indices[i] = idx++;
+            this.resolution_needs_update = false;
         }
+
+        let cr = this.area.get_context();
+        let graph_offset = 0;
+        let i = 0,
+            iLen = this.graphs.length;
+        for (; i < iLen; i++) {
+            if (this.graphs[i]) {
+                if (this.vertical) {
+                    cr.translate(0, graph_offset);
+                } else {
+                    cr.translate(graph_offset, 0);
+                }
+
+                this.graphs[i].paint(cr, this.pref_graph_spacing === -1 && i > 0);
+
+                graph_offset = this.getGraphWidth(this.graphs[i].provider.id) + this.pref_graph_spacing;
+            }
+        }
+
+        cr.$dispose();
     },
 
-    getGraphWidth: function(graph_idx) {
-        let graph_id = this.graph_ids[graph_idx];
-        return this["pref_" + graph_id + "_override_graph_width"] ?
-            this["pref_" + graph_id + "_graph_width"] :
+    repaint: function() {
+        this.area.queue_repaint();
+    },
+
+    getGraphWidth: function(aGraphId) {
+        return this["pref_" + aGraphId + "_override_graph_width"] ?
+            this["pref_" + aGraphId + "_graph_width"] :
             this.pref_graph_width;
     },
 
-    getGraphColors: function(graph_idx) {
-        let graph_id = this.graph_ids[graph_idx];
+    getGraphColors: function(aGraph) {
         let c = [];
-        for (let j = 0; j < this.graphs[graph_idx].dim; j++) {
-            let prop = "pref_" + graph_id + "_color_" + j;
+
+        for (let j = 0; j < aGraph.dim; j++) {
+            let prop = "pref_" + aGraph.provider.id + "_color_" + j;
+
             if (this.hasOwnProperty(prop)) {
                 c.push($.colorToArray(this[prop]));
             } else {
                 break;
             }
         }
+
         return c;
     },
 
-    getGraphTooltipDecimals: function(graph_idx) {
-        let graph_id = this.graph_ids[graph_idx];
-        let prop = "pref_" + graph_id + "_tooltip_decimals";
+    getGraphTooltipDecimals: function(aGraphId) {
+        let prop = "pref_" + aGraphId + "_tooltip_decimals";
 
         if (this.hasOwnProperty(prop)) {
             return this[prop];
         }
 
-        return 0;
+        return null;
+    },
+
+    resizeArea: function() {
+        let total_graph_width = 0;
+        let enabled_graphs = 0;
+        let i = 0,
+            iLen = this.graphs.length;
+        for (; i < iLen; i++) {
+            if (this.graphs[i]) {
+                total_graph_width += this.getGraphWidth(this.graphs[i].provider.id);
+                enabled_graphs++;
+            }
+        }
+        if (enabled_graphs > 1) {
+            total_graph_width += this.pref_graph_spacing * (enabled_graphs - 1);
+        }
+
+        if (this.vertical) {
+            this.area.set_size(-1, total_graph_width);
+        } else {
+            this.area.set_size(total_graph_width, -1);
+        }
+
+        this.resolution_needs_update = true;
+    },
+
+    updateGraphResolution: function(aGraphIdx, aAreaWidth, aAreaHeight) {
+        if (this.vertical) {
+            this.graphs[aGraphIdx].setResolution(
+                aAreaWidth,
+                this.getGraphWidth(this.graphs[aGraphIdx].provider.id)
+            );
+        } else {
+            this.graphs[aGraphIdx].setResolution(
+                this.getGraphWidth(this.graphs[aGraphIdx].provider.id),
+                aAreaHeight
+            );
+        }
     },
 
     on_applet_clicked: function() {
@@ -355,57 +451,63 @@ SystemMonitor.prototype = {
     },
 
     on_applet_removed_from_panel: function() {
-        Main.keybindingManager.removeHotKey(this.command_keybinding_name);
-
         if (this.update_timeout_id > 0) {
             Mainloop.source_remove(this.update_timeout_id);
             this.update_timeout_id = 0;
         }
-        if (this.settings) {
-            this.settings.finalize();
-        }
+
+        this.sigMan.disconnectAllSignals();
+        this.settings && this.settings.finalize();
     },
 
-    on_orientation_changed: function(orientation) {
-        this.vertical = orientation == St.Side.LEFT || orientation == St.Side.RIGHT;
-        this._changeGraphWidth();
+    on_orientation_changed: function(aOrientation) {
+        this.vertical = aOrientation === St.Side.LEFT || aOrientation === St.Side.RIGHT;
+        this._changeGraphSize();
+    },
+
+    _updateGraphIds: function() {
+        this._graph_ids = this.pref_graph_ids.filter((aEl) => {
+            return aEl.enabled;
+        }).map((aEl) => {
+            return aEl.graph_id;
+        });
+    },
+
+    _createCustomTooltip: function() {
+        this.tooltip && this.tooltip.destroy();
+
+        try {
+            this.tooltip = new $.CustomPanelItemTooltip(this, this.orientation);
+        } catch (aErr) {
+            this.tooltip = null;
+            global.logError(aErr);
+        }
     },
 
     _changeGraphEnabled: function() {
-        this.recalcGraphIndices();
-        let enable = (i) => {
-            let graph_id = this.graph_ids[i];
-            if (this["pref_" + graph_id + "_enabled"]) {
-                if (this.graphs[i]) {
-                    return;
-                }
+        this._updateGraphIds();
+        this._createCustomTooltip();
 
-                if (i == 0) {
-                    this.addGraph(new $.CpuData(), i);
-                } else if (i == 1) {
-                    this.addGraph(new $.MemData(), i);
-                } else if (i == 2) {
-                    this.addGraph(new $.SwapData(), i);
-                } else if (i == 3) {
-                    this.addGraph(new $.NetData(), i).setAutoScale(1024);
-                } else if (i == 4) {
-                    let ncpu = $.GTop.glibtop_get_sysinfo().ncpu;
-                    this.addGraph(new $.LoadAvgData(), i).setAutoScale(2 * ncpu);
-                }
+        this.graphs = null;
+        this.graphs = new Array(this.graph_ids.length);
+
+        let enable = (aGraphId, aIndex) => {
+            if (aGraphId === "load") {
+                let ncpu = $.GTop.glibtop_get_sysinfo().ncpu;
+                this.addGraph(new $.LoadData(), aIndex).setAutoScale(2 * ncpu);
             } else {
-                if (!this.graphs[i]) {
-                    return;
-                }
-
-                this.actor.remove_child(this.areas[i]);
-                this.graphs[i] = null;
-                this.areas[i] = null;
+                let upper = aGraphId.charAt(0).toUpperCase() + aGraphId.slice(1);
+                this.addGraph(new $[upper + "Data"](), aIndex);
             }
         };
 
-        for (let i = 0; i < this.graphs.length; i++) {
-            enable(i);
+        let i = 0,
+            iLen = this.graph_ids.length;
+        for (; i < iLen; i++) {
+            enable(this.graph_ids[i], i);
         }
+
+        this.resizeArea();
     },
 
     _changePadding: function() {
@@ -416,21 +518,19 @@ SystemMonitor.prototype = {
             this.actor.set_style("");
         }
 
-        for (let g of this.graphs) {
-            g && g.updateSize();
-        }
+        this.resolution_needs_update = true;
+        this.repaint();
     },
 
-    _changeGraphWidth: function() {
-        for (let g of this.graphs) {
-            g && g.setWidth(this.getGraphWidth(this.graphs.indexOf(g)), this.vertical);
-        }
+    _changeGraphSize: function() {
+        this.resizeArea();
+        this.repaint();
     },
 
     _updateKeybindings: function() {
         Main.keybindingManager.removeHotKey(this.command_keybinding_name);
 
-        if (this.pref_overlay_key !== "") {
+        if (this.pref_overlay_key) {
             Main.keybindingManager.addHotKey(
                 this.command_keybinding_name,
                 this.pref_overlay_key,
@@ -438,23 +538,34 @@ SystemMonitor.prototype = {
                     if (this.pref_onkeybinding_command) {
                         GLib.spawn_command_line_async(this.pref_onkeybinding_command);
                     } else {
-                        let msg = [_("Command not set!"),
-                            _("Set a custom command from this applet settings window.")
+                        let msg = [
+                            escapeHTML(_("Command not set!")),
+                            escapeHTML(_("Set a custom command from this applet settings window."))
                         ];
-                        let icon = new St.Icon({
-                            icon_name: "dialog-warning",
-                            icon_type: St.IconType.SYMBOLIC,
-                            icon_size: 24
-                        });
 
-                        Main.warningNotify(_(this.metadata.name), msg.join("\n"), icon);
+                        $.Notification.notify(msg, NotificationUrgency.CRITICAL);
                     }
                 }
             );
         }
     },
 
+    _openSettings: function() {
+        Util.spawn_async([
+            this.metadata.path + "/settings.py",
+            "--xlet-type=applet",
+            "--xlet-instance-id=" + this.instance_id,
+            "--xlet-uuid=" + this.metadata.uuid
+        ], null);
+    },
+
+    get graph_ids() {
+        return this._graph_ids;
+    },
+
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
+        let i = 0,
+            iLen = this.graphs.length;
         // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
         // settings callback instead of just one as in older versions. The first one is the
         // setting value and the second one is the user data. To workaround this nonsense,
@@ -474,25 +585,26 @@ SystemMonitor.prototype = {
             case "pref_net_color_0":
             case "pref_net_color_1":
             case "pref_load_color_0":
-                for (let g of this.graphs) {
-                    g && g.setColors(this.getGraphColors(this.graphs.indexOf(g)));
+                for (; i < iLen; i++) {
+                    this.graphs[i] && this.graphs[i].setColors(this.getGraphColors(this.graphs[i]));
                 }
+
+                this.repaint();
                 break;
             case "pref_cpu_tooltip_decimals":
-                for (let g of this.graphs) {
-                    if (g && "setTextDecimals" in g.provider) {
-                        g.provider.setTextDecimals(this.getGraphTooltipDecimals(this.graphs.indexOf(g)));
+                for (; i < iLen; i++) {
+                    if (this.graphs[i] && "setTextDecimals" in this.graphs[i].provider) {
+                        this.graphs[i].provider.setTextDecimals(
+                            this.getGraphTooltipDecimals(this.graphs[i].provider.id)
+                        );
                     }
                 }
                 break;
-            case "pref_cpu_enabled":
-            case "pref_mem_enabled":
-            case "pref_swap_enabled":
-            case "pref_net_enabled":
-            case "pref_load_enabled":
+            case "pref_graph_ids":
                 this._changeGraphEnabled();
                 break;
             case "pref_graph_width":
+            case "pref_graph_spacing":
             case "pref_cpu_override_graph_width":
             case "pref_cpu_graph_width":
             case "pref_mem_override_graph_width":
@@ -503,19 +615,21 @@ SystemMonitor.prototype = {
             case "pref_net_graph_width":
             case "pref_load_override_graph_width":
             case "pref_load_graph_width":
-                this._changeGraphWidth();
+                this._changeGraphSize();
                 break;
             case "pref_bg_color":
             case "pref_border_color":
                 this.bg_color = $.colorToArray(this.pref_bg_color);
                 this.border_color = $.colorToArray(this.pref_border_color);
-                for (let g of this.graphs) {
-                    if (g) {
-                        g.bg_color = this.bg_color;
-                        g.border_color = this.border_color;
-                        g.repaint();
+
+                for (; i < iLen; i++) {
+                    if (this.graphs[i]) {
+                        this.graphs[i].setBGColor(this.bg_color);
+                        this.graphs[i].setBorderColor(this.border_color);
                     }
                 }
+
+                this.repaint();
                 break;
             case "pref_use_padding":
             case "pref_padding_lr":
@@ -523,16 +637,15 @@ SystemMonitor.prototype = {
                 this._changePadding();
                 break;
             case "pref_draw_border":
-                for (let g of this.graphs) {
-                    if (g) {
-                        g.setDrawBorder(this.pref_draw_border);
-                        g.repaint();
-                    }
+                for (; i < iLen; i++) {
+                    this.graphs[i] && this.graphs[i].setDrawBorder(this.pref_draw_border);
                 }
+
+                this.repaint();
                 break;
             case "pref_draw_background":
-                for (let g of this.graphs) {
-                    g && g.setDrawBackground(this.pref_draw_background);
+                for (; i < iLen; i++) {
+                    this.graphs[i] && this.graphs[i].setDrawBackground(this.pref_draw_background);
                 }
                 break;
             case "pref_refresh_rate":
@@ -541,21 +654,18 @@ SystemMonitor.prototype = {
                     this.update_timeout_id = 0;
                 }
 
-                for (let g of this.graphs) {
-                    if (g) {
-                        g.provider.refresh_rate = this.pref_refresh_rate;
-                    }
+                for (; i < iLen; i++) {
+                    this.graphs[i] && this.graphs[i].provider.setRefreshRate(this.pref_refresh_rate);
                 }
 
                 this.update();
                 break;
             case "pref_smooth":
-                for (let g of this.graphs) {
-                    if (g) {
-                        g.smooth = this.pref_smooth;
-                        g.repaint();
-                    }
+                for (; i < iLen; i++) {
+                    this.graphs[i] && this.graphs[i].setSmooth(this.pref_smooth);
                 }
+
+                this.repaint();
                 break;
             case "pref_overlay_key":
                 this._updateKeybindings();
@@ -571,7 +681,6 @@ SystemMonitor.prototype = {
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
     DebugManager.wrapObjectMethods($.Debugger, {
-        CustomPanelTooltip: CustomPanelTooltip,
         SystemMonitor: SystemMonitor
     });
 

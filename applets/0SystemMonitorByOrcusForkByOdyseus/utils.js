@@ -1,24 +1,58 @@
-let GlobalUtils,
-    DebugManager;
+let XletMeta,
+    Constants,
+    GlobalUtils,
+    DebugManager,
+    DesktopNotificationsUtils;
+
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof __meta === "object") {
+    XletMeta = __meta;
+} else {
+    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
+}
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    Constants = require("./constants.js");
     GlobalUtils = require("./globalUtils.js");
     DebugManager = require("./debugManager.js");
+    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
 } else {
+    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
     GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
     DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
+    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
 }
 
 const {
     gi: {
-        Gio
+        Clutter,
+        Gio,
+        St
+    },
+    ui: {
+        main: Main,
+        tooltips: Tooltips
     }
 } = imports;
 
 const {
-    _
+    ProvidersData
+} = Constants;
+
+const {
+    _,
+    escapeHTML,
+    xdgOpen
 } = GlobalUtils;
+
+const {
+    CustomNotification
+} = DesktopNotificationsUtils;
+
+const {
+    wrapObjectMethods
+} = DebugManager;
 
 var Debugger = new DebugManager.DebugManager();
 
@@ -30,12 +64,256 @@ try {
     GTop = null;
 }
 
+wrapObjectMethods(Debugger, {
+    CpuData: CpuData,
+    CustomNotification: CustomNotification,
+    CustomPanelItemTooltip: CustomPanelItemTooltip,
+    Graph: Graph,
+    LoadData: LoadData,
+    MemData: MemData,
+    NetData: NetData,
+    SwapData: SwapData
+});
+
+var Notification = new CustomNotification({
+    title: escapeHTML(_(XletMeta.name)),
+    defaultButtons: [{
+        action: "dialog-information",
+        label: escapeHTML(_("Help"))
+    }],
+    actionInvokedCallback: (aSource, aAction) => {
+        switch (aAction) {
+            case "dialog-information":
+                xdgOpen(XletMeta.path + "/HELP.html");
+                break;
+        }
+    }
+});
+
+function Graph() {
+    this._init.apply(this, arguments);
+}
+
+Graph.prototype = {
+    _init: function(aProvider) {
+        this.provider = aProvider;
+        this.colors = [
+            [1, 1, 1, 1]
+        ];
+        this.bg_color = [0, 0, 0, 1];
+        this.border_color = [1, 1, 1, 1];
+        this.smooth = false;
+        this.data = [];
+        this.dim = this.provider.dim;
+        this.autoScale = false;
+        this.scale = 1;
+        this.width = 1;
+        this.height = 1;
+        this.draw_background = true;
+        this.draw_border = true;
+        this.resize_data = false;
+    },
+
+    _setColor: function(aCr, aIndex) {
+        let c = this.colors[aIndex % this.colors.length];
+        aCr.setSourceRGBA(c[0], c[1], c[2], c[3]);
+    },
+
+    _resizeData: function() {
+        let datasize = this.width - (this.draw_border ? 2 : 0);
+        if (datasize > this.data.length) {
+            let d = Array(datasize - this.data.length);
+            let i = 0,
+                iLen = d.length;
+            for (; i < iLen; i++) {
+                d[i] = Array(this.dim);
+                let j = 0;
+                for (; j < this.dim; j++) {
+                    d[i][j] = 0;
+                }
+            }
+            this.data = d.concat(this.data);
+        } else if (datasize < this.data.length) {
+            this.data = this.data.slice(this.data.length - datasize);
+        }
+    },
+
+    setResolution: function(aWidth, aHeight) {
+        this.width = aWidth;
+        this.height = aHeight;
+        this.resize_data = true;
+    },
+
+    setDrawBackground: function(draw_background) {
+        this.draw_background = draw_background;
+        this.resize_data = true;
+    },
+
+    setDrawBorder: function(aDrawBorder) {
+        this.draw_border = aDrawBorder;
+        this.resize_data = true;
+    },
+
+    setSmooth: function(aSmooth) {
+        this.smooth = aSmooth;
+    },
+
+    setColors: function(aColor) {
+        this.colors = aColor;
+    },
+
+    setBGColor: function(aColor) {
+        this.bg_color = aColor;
+    },
+
+    setBorderColor: function(aColor) {
+        this.border_color = aColor;
+    },
+
+    refresh: function() {
+        let d = this.provider.getData();
+        this.data.push(d);
+        this.data.shift();
+
+        if (this.autoScale) {
+            let maxVal = this.minScale;
+            for (let i = 0; i < this.data.length; ++i) {
+                let sum = this.dataSum(i, this.dim - 1);
+
+                if (sum > maxVal) {
+                    maxVal = sum;
+                }
+            }
+            this.scale = 1.0 / maxVal;
+        }
+    },
+
+    dataSum: function(aIndex, aDepth) {
+        let sum = 0;
+        for (let j = 0; j <= aDepth; ++j) {
+            sum += this.data[aIndex][j];
+        }
+
+        return sum;
+    },
+
+    paint: function(aCr, aNoLeftBorder) {
+        if (this.resize_data) {
+            this._resizeData();
+            this.resize_data = false;
+        }
+
+        let border_width = this.draw_border ? 1 : 0;
+        let graph_width = this.width - 2 * border_width;
+        let graph_height = this.height - 2 * border_width;
+        aCr.setLineWidth(1);
+
+        // background
+        if (this.draw_background) {
+            aCr.setSourceRGBA(this.bg_color[0], this.bg_color[1], this.bg_color[2], this.bg_color[3]);
+            aCr.rectangle(border_width, border_width, graph_width, graph_height);
+            aCr.fill();
+        }
+
+        // data
+        if (this.smooth) {
+            for (let j = this.dim - 1; j >= 0; --j) {
+                this._setColor(aCr, j);
+                aCr.moveTo(border_width, graph_height + border_width);
+                for (let i = 0; i < this.data.length; ++i) {
+                    let v = Math.round(graph_height * Math.min(1, this.scale * this.dataSum(i, j)));
+                    v = graph_height + border_width - v;
+                    if (i === 0) {
+                        aCr.lineTo(i + border_width, v);
+                    }
+                    aCr.lineTo(i + border_width + 0.5, v);
+                    if (i === this.data.length - 1) {
+                        aCr.lineTo(i + border_width + 1, v);
+                    }
+                }
+                aCr.lineTo(graph_width + border_width, graph_height + border_width);
+                aCr.lineTo(border_width, graph_height + border_width);
+                aCr.fill();
+            }
+        } else {
+            for (let i = 0; i < this.data.length; ++i) {
+                for (let j = this.dim - 1; j >= 0; --j) {
+                    this._setColor(aCr, j);
+                    aCr.moveTo(i + border_width + 0.5, graph_height + border_width);
+                    let v = Math.round(graph_height * Math.min(1, this.scale * this.dataSum(i, j)));
+                    aCr.relLineTo(0, -v);
+                    aCr.stroke();
+                }
+            }
+        }
+
+        // border
+        if (this.draw_border) {
+            aCr.setSourceRGBA(this.border_color[0], this.border_color[1], this.border_color[2], this.border_color[3]);
+            aCr.moveTo(0.5, 0.5);
+            aCr.lineTo(this.width - 0.5, 0.5);
+            aCr.lineTo(this.width - 0.5, this.height - 0.5);
+            aCr.lineTo(0.5, this.height - 0.5);
+
+            if (!aNoLeftBorder) {
+                aCr.closePath();
+            }
+
+            aCr.stroke();
+        }
+    },
+
+    setAutoScale: function(aMinScale) {
+        if (aMinScale > 0) {
+            this.autoScale = true;
+            this.minScale = aMinScale;
+        } else {
+            this.autoScale = false;
+        }
+    }
+};
+
+function Provider() {
+    this._init.apply(this, arguments);
+}
+
+Provider.prototype = {
+    _init: function(aProviderID) {
+        this._refresh_rate = 1000;
+        this._id = aProviderID;
+        this._dim = ProvidersData[aProviderID].dim;
+        this._title = ProvidersData[aProviderID].title;
+
+        this._text = "";
+    },
+
+    setRefreshRate: function (aRefreshRate) {
+       this._refresh_rate = aRefreshRate;
+    },
+
+    get id() {
+        return this._id;
+    },
+
+    get dim() {
+        return this._dim;
+    },
+
+    get text() {
+        return [this._title, this._text];
+    }
+};
+
 function CpuData() {
-    this._init();
+    this._init.apply(this, arguments);
 }
 
 CpuData.prototype = {
+    __proto__: Provider.prototype,
+
     _init: function() {
+        Provider.prototype._init.call(this, "cpu");
+
         this.gtop = new GTop.glibtop_cpu();
         this.idle_last = 0;
         this.nice_last = 0;
@@ -43,10 +321,6 @@ CpuData.prototype = {
         this.iowait_last = 0;
         this.total_last = 0;
         this.text_decimals = 0;
-    },
-
-    getDim: function() {
-        return 4;
     },
 
     getData: function() {
@@ -70,12 +344,9 @@ CpuData.prototype = {
         this.iowait_last = this.gtop.iowait;
         this.total_last = this.gtop.total;
         let used = 1 - idle - nice - sys - iowait;
-        this.text = (100 * used).toFixed(this.text_decimals) + " %";
-        return [used, nice, sys, iowait];
-    },
+        this._text = (100 * used).toFixed(this.text_decimals) + " %";
 
-    getText: function() {
-        return [_("CPU"), this.text];
+        return [used, nice, sys, iowait];
     },
 
     setTextDecimals: function(decimals) {
@@ -84,65 +355,61 @@ CpuData.prototype = {
 };
 
 function MemData() {
-    this._init();
+    this._init.apply(this, arguments);
 }
 
 MemData.prototype = {
-    _init: function() {
-        this.gtop = new GTop.glibtop_mem();
-    },
+    __proto__: Provider.prototype,
 
-    getDim: function() {
-        return 2;
+    _init: function() {
+        Provider.prototype._init.call(this, "mem");
+        this.gtop = new GTop.glibtop_mem();
     },
 
     getData: function() {
         GTop.glibtop_get_mem(this.gtop);
         let used = this.gtop.used / this.gtop.total;
         let cached = (this.gtop.buffer + this.gtop.cached) / this.gtop.total;
-        this.text = Math.round((this.gtop.used - this.gtop.cached - this.gtop.buffer) / (1024 * 1024)) +
+        this._text = Math.round((this.gtop.used - this.gtop.cached - this.gtop.buffer) / (1024 * 1024)) +
             " / " + Math.round(this.gtop.total / (1024 * 1024)) + " " + _("MB");
-        return [used - cached, cached];
-    },
 
-    getText: function() {
-        return [_("Memory"), this.text];
+        return [used - cached, cached];
     }
 };
 
 function SwapData() {
-    this._init();
+    this._init.apply(this, arguments);
 }
 
 SwapData.prototype = {
-    _init: function() {
-        this.gtop = new GTop.glibtop_swap();
-    },
+    __proto__: Provider.prototype,
 
-    getDim: function() {
-        return 1;
+    _init: function() {
+        Provider.prototype._init.call(this, "swap");
+        this.gtop = new GTop.glibtop_swap();
     },
 
     getData: function() {
         GTop.glibtop_get_swap(this.gtop);
-        let used = this.gtop.used / this.gtop.total;
-        this.text = Math.round(this.gtop.used / (1024 * 1024)) +
+        let used = this.gtop.total > 0 ? (this.gtop.used / this.gtop.total) : 0;
+        this._text = Math.round(this.gtop.used / (1024 * 1024)) +
             " / " + Math.round(this.gtop.total / (1024 * 1024)) + " " + _("MB");
-        return [used];
-    },
 
-    getText: function() {
-        return [_("Swap"), this.text];
+        return [used];
     }
 };
 
 function NetData() {
-    this._init();
+    this._init.apply(this, arguments);
 }
 
 NetData.prototype = {
+    __proto__: Provider.prototype,
+
     _init: function() {
+        Provider.prototype._init.call(this, "net");
         this.gtop = new GTop.glibtop_netload();
+
         try {
             let nl = new GTop.glibtop_netlist();
             this.devices = GTop.glibtop.get_netlist(nl);
@@ -155,7 +422,9 @@ NetData.prototype = {
                 this.devices.push(info.get_name());
             }
         }
+
         this.devices = this.devices.filter(v => v !== "lo"); // don't measure loopback interface
+
         try {
             // Workaround, because string match() function throws an error for some reason if called after GTop.glibtop.get_netlist(). After the error is thrown, everything works fine.
             // If the match() would not be called here, the error would be thrown somewhere in Cinnamon applet init code and applet init would fail.
@@ -163,249 +432,124 @@ NetData.prototype = {
             // No idea why this error happens, but this workaround works.
             "".match(/./);
         } catch (e) {}
-        [this.down_last, this.up_last] = this.getNetLoad();
-    },
 
-    getDim: function() {
-        return 2;
+        [this.down_last, this.up_last] = this.getNetLoad();
     },
 
     getData: function() {
         let [down, up] = this.getNetLoad();
-        let down_delta = (down - this.down_last) * 1000 / this.refresh_rate;
-        let up_delta = (up - this.up_last) * 1000 / this.refresh_rate;
+        let down_delta = (down - this.down_last) * 1000 / this._refresh_rate;
+        let up_delta = (up - this.up_last) * 1000 / this._refresh_rate;
         this.down_last = down;
         this.up_last = up;
-        this.text = Math.round(down_delta / 1024) + " / " + Math.round(up_delta / 1024) +
-            " " + _("KB/s");
-        return [down_delta, up_delta];
-    },
+        this._text = Math.round(down_delta / 1024) + " / " + Math.round(up_delta / 1024) + " " + _("KB/s");
 
-    getText: function() {
-        return [_("Network D/U"), this.text];
+        return [down_delta, up_delta];
     },
 
     getNetLoad: function() {
         let down = 0;
         let up = 0;
-        for (let i = 0; i < this.devices.length; ++i) {
+        let i = 0,
+            iLen = this.devices.length;
+        for (; i < iLen; ++i) {
             GTop.glibtop.get_netload(this.gtop, this.devices[i]);
             down += this.gtop.bytes_in;
             up += this.gtop.bytes_out;
         }
+
         return [down, up];
     }
 };
 
-function LoadAvgData() {
-    this._init();
+function LoadData() {
+    this._init.apply(this, arguments);
 }
 
-LoadAvgData.prototype = {
-    _init: function() {
-        this.gtop = new GTop.glibtop_loadavg();
-    },
+LoadData.prototype = {
+    __proto__: Provider.prototype,
 
-    getDim: function() {
-        return 1;
+    _init: function() {
+        Provider.prototype._init.call(this, "load");
+        this.gtop = new GTop.glibtop_loadavg();
     },
 
     getData: function() {
         GTop.glibtop_get_loadavg(this.gtop);
         let load = this.gtop.loadavg[0];
-        this.text = this.gtop.loadavg[0] +
+        this._text = this.gtop.loadavg[0] +
             ", " + this.gtop.loadavg[1] +
             ", " + this.gtop.loadavg[2];
-        return [load];
-    },
 
-    getText: function() {
-        return [_("Load average"), this.text];
+        return [load];
     }
 };
 
-function Graph() {
+function CustomPanelItemTooltip() {
     this._init.apply(this, arguments);
 }
 
-Graph.prototype = {
-    _init: function(area, provider) {
-        this.area = area;
-        this.provider = provider;
-        this.colors = [
-            [1, 1, 1, 1]
-        ];
-        this.bg_color = [0, 0, 0, 1];
-        this.border_color = [1, 1, 1, 1];
-        this.smooth = false;
-        this.data = [];
-        this.dim = this.provider.getDim();
-        this.autoScale = false;
-        this.scale = 1;
-        this.width = 1;
-        this.draw_background = true;
-        this.draw_border = true;
-        this.paint_queued = false;
-        this.area.connect("repaint", () => this.paint());
-    },
+CustomPanelItemTooltip.prototype = {
+    __proto__: Tooltips.PanelItemTooltip.prototype,
 
-    _setColor: function(cr, i) {
-        let c = this.colors[i % this.colors.length];
-        cr.setSourceRGBA(c[0], c[1], c[2], c[3]);
-    },
+    _init: function(aApplet, aOrientation) {
+        Tooltips.PanelItemTooltip.prototype._init.call(this, aApplet, "", aOrientation);
 
-    _resizeData: function() {
-        let datasize = this.width - (this.draw_border ? 2 : 0);
-        if (datasize > this.data.length) {
-            let d = Array(datasize - this.data.length);
-            for (let i = 0; i < d.length; i++) {
-                d[i] = Array(this.dim);
-                for (let j = 0; j < this.dim; j++) {
-                    d[i][j] = 0;
-                }
-            }
-            this.data = d.concat(this.data);
-        } else if (datasize < this.data.length) {
-            this.data = this.data.slice(this.data.length - datasize);
-        }
-    },
+        // Destroy the original _tooltip, which is an St.Label.
+        this._tooltip.destroy();
 
-    updateSize: function() {
-        this.width = null;
-        this.repaint();
-    },
+        let tooltipBox = new Clutter.GridLayout({
+            orientation: Clutter.Orientation.VERTICAL
+        });
 
-    setWidth: function(width, vertical) {
-        if (vertical) {
-            this.area.set_width(-1);
-            this.area.set_height(width);
-        } else {
-            this.area.set_width(width);
-            this.area.set_height(-1);
-        }
-        this.updateSize();
-    },
+        this._tooltip = new St.Bin({
+            name: "Tooltip"
+        });
 
-    setDrawBackground: function(draw_background) {
-        this.draw_background = draw_background;
-        this.repaint();
-    },
+        let rtl = (St.Widget.get_default_direction() === St.TextDirection.RTL);
+        this._tooltip.set_style("text-align:%s;".format(rtl ? "right" : "left"));
 
-    setDrawBorder: function(draw_border) {
-        this.draw_border = draw_border;
-        this.updateSize();
-    },
+        /* NOTE: This is a workaround because Tooltip instances have the _tooltip property hard-coded
+         * to be an St.Label(). And the Tooltip's show method calls this._tooltip.get_text() to decide
+         * if the tooltip should be displayed or not.
+         */
+        this._tooltip.get_text = () => {
+            return "I'm a dummy string.";
+        };
+        this._tooltip.show_on_set_parent = false;
 
-    setColors: function(c) {
-        this.colors = c;
-        this.repaint();
-    },
+        this._tooltip.set_child(new St.Widget({
+            layout_manager: tooltipBox
+        }));
 
-    refresh: function() {
-        let d = this.provider.getData();
-        this.data.push(d);
-        this.data.shift();
+        this.__markupTemplate = "<b>%s</b>: ";
+        this.__ellipsisObj = {
+            text: "..."
+        };
 
-        if (this.autoScale) {
-            let maxVal = this.minScale;
-            for (let i = 0; i < this.data.length; ++i) {
-                let sum = this.dataSum(i, this.dim - 1);
-                if (sum > maxVal) {
-                    maxVal = sum;
-                }
-            }
-            this.scale = 1.0 / maxVal;
-        }
-        this.repaint();
-    },
+        let i = 0,
+            iLen = aApplet.graph_ids.length;
+        for (; i < iLen; i++) {
+            let graph_id = aApplet.graph_ids[i];
 
-    dataSum: function(i, depth) {
-        let sum = 0;
-        for (let j = 0; j <= depth; ++j) {
-            sum += this.data[i][j];
-        }
-        return sum;
-    },
-
-    repaint: function() {
-        if (!this.paint_queued) {
-            this.paint_queued = true;
-            this.area.queue_repaint();
-        }
-    },
-
-    paint: function() {
-        this.paint_queued = false;
-        let cr = this.area.get_context();
-        let [width, height] = this.area.get_size();
-
-        if (!this.width) {
-            this.width = width;
-            this._resizeData();
+            this._createLabel(graph_id);
+            tooltipBox.attach(this["__" + graph_id + "Title"], 0, i, 1, 1);
+            tooltipBox.attach(this["__" + graph_id + "Value"], 1, i, 1, 1);
         }
 
-        let border_width = this.draw_border ? 1 : 0;
-        let graph_width = width - 2 * border_width;
-        let graph_height = height - 2 * border_width;
-        cr.setLineWidth(1);
-
-        // background
-        if (this.draw_background) {
-            cr.setSourceRGBA(this.bg_color[0], this.bg_color[1], this.bg_color[2], this.bg_color[3]);
-            cr.rectangle(border_width, border_width, graph_width, graph_height);
-            cr.fill();
-        }
-
-        // data
-        if (this.smooth) {
-            for (let j = this.dim - 1; j >= 0; --j) {
-                this._setColor(cr, j);
-                cr.moveTo(border_width, graph_height + border_width);
-                for (let i = 0; i < this.data.length; ++i) {
-                    let v = Math.round(graph_height * Math.min(1, this.scale * this.dataSum(i, j)));
-                    v = graph_height + border_width - v;
-
-                    if (i == 0) {
-                        cr.lineTo(i + border_width, v);
-                    }
-
-                    cr.lineTo(i + border_width + 0.5, v);
-
-                    if (i == this.data.length - 1) {
-                        cr.lineTo(i + border_width + 1, v);
-                    }
-                }
-                cr.lineTo(graph_width + border_width, graph_height + border_width);
-                cr.lineTo(border_width, graph_height + border_width);
-                cr.fill();
-            }
-        } else {
-            for (let i = 0; i < this.data.length; ++i) {
-                for (let j = this.dim - 1; j >= 0; --j) {
-                    this._setColor(cr, j);
-                    cr.moveTo(i + border_width + 0.5, graph_height + border_width);
-                    let v = Math.round(graph_height * Math.min(1, this.scale * this.dataSum(i, j)));
-                    cr.relLineTo(0, -v);
-                    cr.stroke();
-                }
-            }
-        }
-
-        // border
-        if (this.draw_border) {
-            cr.setSourceRGBA(this.border_color[0], this.border_color[1], this.border_color[2], this.border_color[3]);
-            cr.rectangle(0.5, 0.5, width - 1, height - 1);
-            cr.stroke();
-        }
+        Main.uiGroup.add_actor(this._tooltip);
     },
 
-    setAutoScale: function(minScale) {
-        if (minScale > 0) {
-            this.autoScale = true;
-            this.minScale = minScale;
-        } else {
-            this.autoScale = false;
-        }
+    _createLabel: function(aProviderID) {
+        this["__" + aProviderID + "Title"] = new St.Label();
+        this["__" + aProviderID + "Title"].clutter_text.set_markup(
+            this.__markupTemplate.format(ProvidersData[aProviderID]["title"])
+        );
+        this["__" + aProviderID + "Value"] = new St.Label(this.__ellipsisObj);
+    },
+
+    set_text: function(aProviderID, aValue) {
+        this["__" + aProviderID + "Value"].set_text(aValue);
     }
 };
 
@@ -415,13 +559,7 @@ function colorToArray(c) {
     return c;
 }
 
-DebugManager.wrapObjectMethods(Debugger, {
-    CpuData: CpuData,
-    LoadAvgData: LoadAvgData,
-    MemData: MemData,
-    NetData: NetData,
-    SwapData: SwapData
-});
-
-/* exported colorToArray
+/* exported colorToArray,
+            Notification,
+            Debugger
  */
