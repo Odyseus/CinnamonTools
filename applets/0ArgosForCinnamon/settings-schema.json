@@ -24,6 +24,13 @@
         "description": "Show script name on applet",
         "tooltip": "When inside the script there isn't a line assigned to be shown on the applet, the script name will be displayed. With this option disabled, the script name will not be shown on this applet, giving us the possibility to use a custom text for the applet."
     },
+    "pref_prevent_applet_lines_ellipsation": {
+        "type": "checkbox",
+        "indent": true,
+        "default": false,
+        "description": "Prevent applet lines ellipsation",
+        "tooltip": "When enabled, the text of lines defined in a script to be displayed in the applet will not ellipsize."
+    },
     "pref_overlay_key": {
         "type": "keybinding",
         "indent": true,
@@ -109,6 +116,13 @@
             "Days": "d"
         },
         "tooltip": "Choose the time unit for the applet text rotation interval."
+    },
+    "pref_cycle_on_menu_open": {
+        "type": "checkbox",
+        "indent": true,
+        "default": false,
+        "description": "Cycle script only when menu open",
+        "tooltip": "When enabled, the script will be executed and its execution repeated at the specified rotation interval only when the main menu is opened."
     },
     "head2": {
         "type": "header",
@@ -199,7 +213,7 @@
         "indent": true,
         "default": 0,
         "description": "Logging level (*)",
-        "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additinally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
+        "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additionally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
         "options": {
             "Normal": 0,
             "Verbose": 1,

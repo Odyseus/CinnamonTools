@@ -81,6 +81,46 @@ var DefaultAttributes = Object.freeze({
     "iconissymbolic": false
 });
 
+var UnitSelectorMenuItemParams = Object.freeze({
+    submenu: null,
+    label: "",
+    value: "",
+    units_key: ""
+});
+
+var UnitSelectorSubMenuItemParams = Object.freeze({
+    settings: null,
+    label: "",
+    tooltip: "",
+    value_key: "",
+    units_key: "",
+    set_unit_cb: null
+});
+
+var CustomPopupSliderMenuItemParams = Object.freeze({
+    value: "",
+    associated_submenu: "",
+    tooltip: "",
+    value_changed_cb: null,
+    drag_begin_cb: null,
+    drag_end_cb: null
+});
+
+var ArgosMenuItemParams = Object.freeze({
+    applet_menu: null,
+    update_cb: null,
+    settings: null,
+    line: null,
+    alt_line: null
+});
+
+var UnitsMultiplicationFactor = {
+    s: 1,
+    m: 60,
+    h: 3600,
+    d: 86400
+};
+
 var SLIDER_SCALE = 0.00025;
 
 var UNITS_MAP = {
@@ -106,4 +146,9 @@ var UNITS_MAP = {
             Placeholders,
             TruthyVals,
             DefaultAttributes,
+            UnitSelectorMenuItemParams,
+            UnitSelectorSubMenuItemParams,
+            CustomPopupSliderMenuItemParams,
+            ArgosMenuItemParams,
+            UnitsMultiplicationFactor
  */

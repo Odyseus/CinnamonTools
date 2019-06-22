@@ -26,7 +26,6 @@ const {
     gi: {
         Gio,
         GLib,
-        Gtk,
         St
     },
     mainloop: Mainloop,
@@ -45,7 +44,8 @@ const {
 
 const {
     DefaultAttributes,
-    Placeholders
+    Placeholders,
+    UnitsMultiplicationFactor
 } = Constants;
 
 const {
@@ -83,7 +83,7 @@ Argos.prototype = {
         this._initializeSettings(() => {
             this._expandAppletContextMenu();
         }, () => {
-            this._lineView = new $.ArgosLineView(this);
+            this._lineView = new $.ArgosLineView(this.settings, null, null, true);
             this.actor.add_actor(this._lineView.actor);
 
             this.menuManager = new PopupMenu.PopupMenuManager(this);
@@ -106,14 +106,14 @@ Argos.prototype = {
             this._sliderIsSliding = false;
             this._script_path = "";
 
-            this._processFile();
+            this._processFile(true);
             this._updateKeybindings();
             this._updateIconAndLabel();
 
             this.menu.connect("open-state-changed", (aMenu, aOpen) => {
-                if (this.pref_update_on_menu_open && aOpen) {
+                if ((this.pref_cycle_on_menu_open || this.pref_update_on_menu_open) &&
+                    aOpen) {
                     this.update();
-                    global.log("Menu opened.");
                 }
             });
 
@@ -134,7 +134,17 @@ Argos.prototype = {
         });
     },
 
-    _processFile: function() {
+    _processFile: function(aForceUpdate = false) {
+        /* NOTE: The _processingFile property is a fail safe. The pref_file_path
+         * preference is bound to trigger this._processFile(). But the freaking
+         * preference doesn't always trigger the callback when changed, so I have
+         * to manually call this._processFile() in some places. So, in the case
+         * that the callback is triggered whenever the f*ck it wants when the pref.
+         * is changed AND the callback is manually called, avoid re-processing the
+         * file when the _processingFile property is set to true.
+         * I could have used Mainloop to throttle this function, but I'm f*cking fed
+         * up with dealing with CJS nonsenses! FFS!!!!
+         */
         if (this._processingFile) {
             return;
         }
@@ -194,17 +204,17 @@ Argos.prototype = {
         }
 
         if (this._file !== null) {
-            this.update();
+            this.update(aForceUpdate);
         } else {
             // If this._file is null, it might be because the script assigned to the applet was
             // removed, so clean up all remaining data (menu elements, applet text, etc.).
-            this._lineView.setLine(DefaultAttributes);
+            this._lineView.setLine(this.defaultAttributes);
             this.menu.removeAll();
         }
         this._processingFile = false;
     },
 
-    update: function() {
+    update: function(aForceUpdate) {
         this._syncLabelsWithSlidersValue();
 
         if (this._updateTimeout > 0) {
@@ -219,14 +229,17 @@ Argos.prototype = {
 
         // This is absolutelly needed because this.update could be triggered
         // hundreds of times by the sliders.
-        this._callToUpdateTimeout = Mainloop.timeout_add_seconds(1,
+        this._callToUpdateTimeout = Mainloop.timeout_add(100,
             () => {
-                this._update();
+                this._update(aForceUpdate);
                 this._callToUpdateTimeout = 0;
-            });
+
+                return GLib.SOURCE_REMOVE;
+            }
+        );
     },
 
-    _update: function() {
+    _update: function(aForceUpdate = false) {
         if (this._updateRunning) {
             return;
         }
@@ -234,6 +247,23 @@ Argos.prototype = {
         this._updateRunning = true;
 
         try {
+            let updateInterval = this._getInterval("pref_update_interval");
+
+            if (!aForceUpdate && this.pref_cycle_on_menu_open && !this.menu.isOpen && updateInterval > 0) {
+                this._updateTimeout = Mainloop.timeout_add_seconds(updateInterval,
+                    () => {
+                        this._update();
+                        this._updateTimeout = 0;
+
+                        return GLib.SOURCE_REMOVE;
+                    }
+                );
+
+                this._updateRunning = false;
+
+                return;
+            }
+
             let envp = GLib.get_environ();
             envp.push("ARGOS_VERSION=2");
             envp.push("ARGOS_MENU_OPEN=" + (this.menu.isOpen ? "true" : "false"));
@@ -249,14 +279,13 @@ Argos.prototype = {
                     this._timeScriptExecutionFinished = GLib.get_monotonic_time();
                     this._processOutput(aStandardOutput.split("\n"));
 
-                    let updateInterval = this._getInterval("pref_update_interval");
-
                     if (updateInterval > 0) {
                         this._updateTimeout = Mainloop.timeout_add_seconds(updateInterval,
                             () => {
-                                this._updateTimeout = 0;
                                 this._update();
-                                return false;
+                                this._updateTimeout = 0;
+
+                                return GLib.SOURCE_REMOVE;
                             }
                         );
                     }
@@ -278,17 +307,11 @@ Argos.prototype = {
     },
 
     _getInterval: function(aPref) {
-        let updateInterval = 0;
-        let number = this[aPref];
-        let unit = this[aPref + "_units"];
-        let factorIndex = "smhd".indexOf(unit);
-
-        if (factorIndex >= 0 && /^\d+$/.test(number)) {
-            let factors = [1, 60, 60 * 60, 24 * 60 * 60];
-            updateInterval = parseInt(number, 10) * factors[factorIndex];
+        if (this[aPref + "_units"] in UnitsMultiplicationFactor && !isNaN(this[aPref])) {
+            return parseInt(this[aPref], 10) * UnitsMultiplicationFactor[this[aPref + "_units"]] || 0;
         }
 
-        return updateInterval;
+        return 0;
     },
 
     _processOutput: function(aOutput) {
@@ -315,6 +338,12 @@ Argos.prototype = {
             }
         }
 
+        /* NOTE: Miracle that this worked!!! LOL
+         * Grabbing the key focus before removing all items in the menu avoids
+         * the closing of the menu when the menu is updated while open and the
+         * mouse cursor is placed on an active menu item.
+         */
+        this.menu.actor.grab_key_focus();
         this.menu.removeAll();
 
         if (this._cycleTimeout > 0) {
@@ -325,14 +354,13 @@ Argos.prototype = {
         this._lineView.actor.set_style("spacing: " + this.pref_applet_spacing + "px;");
 
         if (appletLines.length === 0) {
-            let attrs = DefaultAttributes;
+            let attrs = this.defaultAttributes;
 
             if (this.pref_show_script_name) {
                 attrs.markup = GLib.markup_escape_text(this._file.get_basename(), -1);
-                this._lineView.setMarkup(attrs);
-            } else {
-                this._lineView.setLine(attrs);
             }
+
+            this._lineView.setLine(attrs);
         } else if (appletLines.length === 1) {
             this._lineView.setLine(appletLines[0]);
         } else {
@@ -344,7 +372,8 @@ Argos.prototype = {
                 this._cycleTimeout = Mainloop.timeout_add_seconds(rotationInterval, () => {
                     i++;
                     this._lineView.setLine(appletLines[i % appletLines.length]);
-                    return true;
+
+                    return GLib.SOURCE_CONTINUE;
                 });
             }
         }
@@ -353,7 +382,14 @@ Argos.prototype = {
             jLen = appletLines.length;
         for (; j < jLen; j++) {
             if (appletLines[j].dropdown) {
-                this.menu.addMenuItem(new $.ArgosMenuItem(this, appletLines[j]));
+                this.menu.addMenuItem(new $.ArgosMenuItem({
+                    applet_menu: this.menu,
+                    update_cb: function() {
+                        this.update();
+                    }.bind(this),
+                    settings: this.settings,
+                    line: appletLines[j]
+                }));
             }
         }
 
@@ -396,21 +432,36 @@ Argos.prototype = {
                 //
                 // As I really like that feature, I add it to all my applets with menus,
                 // but without breaking the ability to open submenus inside other submenus.
-                let lineView = new $.ArgosLineView(this, menuLines[l]);
-                menuItem = new $.CustomSubMenuItem(this, lineView.actor, menuLines[l].menuLevel);
+                let lineView = new $.ArgosLineView(this.settings, menuLines[l]);
+                menuItem = new $.CustomSubMenuItem(this.settings, lineView.actor, menuLines[l].menuLevel);
                 menus[menuLines[l + 1].menuLevel] = menuItem.menu;
             } else if ((l + 1) < menuLines.length &&
                 menuLines[l + 1].menuLevel === menuLines[l].menuLevel &&
                 menuLines[l + 1].alternate &&
                 !menuLines[l].isSeparator) {
-                menuItem = new $.ArgosMenuItem(this, menuLines[l], menuLines[l + 1]);
+                menuItem = new $.ArgosMenuItem({
+                    applet_menu: this.menu,
+                    update_cb: function() {
+                        this.update();
+                    }.bind(this),
+                    settings: this.settings,
+                    line: menuLines[l],
+                    alt_line: menuLines[l + 1]
+                });
                 // Increment to skip alternate line.
                 l++;
             } else {
                 if (menuLines[l].isSeparator) {
                     menuItem = new PopupMenu.PopupSeparatorMenuItem();
                 } else {
-                    menuItem = new $.ArgosMenuItem(this, menuLines[l]);
+                    menuItem = new $.ArgosMenuItem({
+                        applet_menu: this.menu,
+                        update_cb: function() {
+                            this.update();
+                        }.bind(this),
+                        settings: this.settings,
+                        line: menuLines[l]
+                    });
                 }
             }
 
@@ -473,7 +524,6 @@ Argos.prototype = {
 
         let newValue = parseInt(Math.floor(value * 3600), 10);
 
-        // This doesn't trigger the callback!!!!!
         this[aPref] = newValue;
 
         this._syncLabelsWithSlidersValue(aSlider);
@@ -493,49 +543,92 @@ Argos.prototype = {
         aSlider.emit("value-changed", aSlider.value);
     },
 
-    _syncLabelsWithSlidersValue: function(aSlider) {
+    _syncLabelsWithSlidersValue: function(aSlider = null) {
         // If there is no slider specified, update all of them.
-        if (!aSlider) {
+        if (aSlider) {
+            if (aSlider.params.associated_submenu &&
+                this.hasOwnProperty(aSlider.params.associated_submenu)) {
+                this[aSlider.params.associated_submenu].setLabel();
+                this[aSlider.params.associated_submenu]._setCheckedState();
+            }
+        } else {
             this.updateIntervalLabel.setLabel();
             this.updateIntervalLabel._setCheckedState();
             this.rotationIntervalLabel.setLabel();
             this.rotationIntervalLabel._setCheckedState();
-        } else {
-            if (aSlider._associatedLabel !== null) {
-                this[aSlider._associatedLabel].setLabel();
-                this[aSlider._associatedLabel]._setCheckedState();
-            }
         }
     },
 
     _expandAppletContextMenu: function() {
         // Execution interval unit selector submenu.
-        this.updateIntervalLabel = new $.UnitSelectorSubMenuMenuItem(
-            this,
-            "<b>%s</b>".format(_("Execution interval:")),
-            "pref_update_interval_units",
-            "pref_update_interval"
-        );
+        this.updateIntervalLabel = new $.UnitSelectorSubMenuItem({
+            settings: this.settings,
+            label: "<b>%s:</b>".format(_("Execution interval")),
+            tooltip: _("Choose the time unit for the script execution interval."),
+            value_key: "pref_update_interval",
+            units_key: "pref_update_interval_units",
+            set_unit_cb: function() {
+                this._setUpdateInterval();
+            }.bind(this)
+        });
         this.updateIntervalLabel.menu.connect("open-state-changed",
             (aMenu, aOpen) => this._contextSubMenuOpenStateChanged(aMenu, aOpen));
-        this.updateIntervalLabel.tooltip = new InteligentTooltip(
-            this.updateIntervalLabel.actor,
-            _("Choose the time unit for the script execution interval.")
-        );
+
         this._applet_context_menu.addMenuItem(this.updateIntervalLabel);
 
         // Execution interval slider
-        this.updateIntervalSlider = new $.CustomPopupSliderMenuItem(parseFloat(this.pref_update_interval / 3600));
-        this.updateIntervalSlider._associatedLabel = "updateIntervalLabel";
-        this.updateIntervalSlider.connect("value-changed",
-            (aSlider, aValue) => this.onSliderChanged(aSlider, aValue, false, "pref_update_interval"));
-        this.updateIntervalSlider.connect("drag-begin", (aSlider) => this.onSliderGrabbed(aSlider));
-        this.updateIntervalSlider.connect("drag-end", (aSlider) => this.onSliderReleased(aSlider));
-        this.updateIntervalSlider.tooltip = new InteligentTooltip(
-            this.updateIntervalSlider.actor,
-            _("Set the script execution interval.")
-        );
+        this.updateIntervalSlider = new $.CustomPopupSliderMenuItem({
+            value: parseFloat(this.pref_update_interval / 3600),
+            associated_submenu: "updateIntervalLabel",
+            tooltip: _("Set the script execution interval."),
+            value_changed_cb: function(aSlider, aValue) {
+                this.onSliderChanged(aSlider, aValue, false, "pref_update_interval");
+            }.bind(this),
+            drag_begin_cb: function(aSlider) {
+                this.onSliderGrabbed(aSlider);
+            }.bind(this),
+            drag_end_cb: function(aSlider) {
+                this.onSliderReleased(aSlider);
+            }.bind(this)
+        });
+
         this._applet_context_menu.addMenuItem(this.updateIntervalSlider);
+
+        this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
+        // Rotation interval unit selector submenu.
+        this.rotationIntervalLabel = new $.UnitSelectorSubMenuItem({
+            settings: this.settings,
+            label: "<b>%s:</b>".format(_("Rotation interval")),
+            tooltip: _("Choose the time unit for the applet text rotation interval."),
+            value_key: "pref_rotation_interval",
+            units_key: "pref_rotation_interval_units",
+            set_unit_cb: function() {
+                this._setRotationInterval();
+            }.bind(this)
+        });
+        this.rotationIntervalLabel.menu.connect("open-state-changed",
+            (aMenu, aOpen) => this._contextSubMenuOpenStateChanged(aMenu, aOpen));
+
+        this._applet_context_menu.addMenuItem(this.rotationIntervalLabel);
+
+        // Rotation interval slider
+        this.rotationIntervalSlider = new $.CustomPopupSliderMenuItem({
+            value: parseFloat(this.pref_rotation_interval / 3600),
+            associated_submenu: "rotationIntervalLabel",
+            tooltip: _("Set the applet text rotation interval."),
+            value_changed_cb: function(aSlider, aValue) {
+                this.onSliderChanged(aSlider, aValue, false, "pref_rotation_interval");
+            }.bind(this),
+            drag_begin_cb: function(aSlider) {
+                this.onSliderGrabbed(aSlider);
+            }.bind(this),
+            drag_end_cb: function(aSlider) {
+                this.onSliderReleased(aSlider);
+            }.bind(this),
+        });
+
+        this._applet_context_menu.addMenuItem(this.rotationIntervalSlider);
 
         this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
@@ -612,7 +705,7 @@ Argos.prototype = {
                     escapeHTML(_("Script file not set, cannot be found or it isn't an executable."))
                 );
             } else {
-                this.update();
+                this.update(true);
             }
         });
         menuItem.tooltip = new InteligentTooltip(
@@ -629,35 +722,6 @@ Argos.prototype = {
         subMenu.menu.connect("open-state-changed",
             (aMenu, aOpen) => this._contextSubMenuOpenStateChanged(aMenu, aOpen));
         this._applet_context_menu.addMenuItem(subMenu);
-
-        // Rotation interval unit selector submenu.
-        this.rotationIntervalLabel = new $.UnitSelectorSubMenuMenuItem(
-            this,
-            "<b>%s</b>".format(_("Rotation interval:")),
-            "pref_rotation_interval_units",
-            "pref_rotation_interval"
-        );
-        this.rotationIntervalLabel.tooltip = new InteligentTooltip(
-            this.rotationIntervalLabel.actor,
-            _("Choose the time unit for the applet text rotation interval.")
-        );
-        subMenu.menu.addMenuItem(this.rotationIntervalLabel);
-
-        // Rotation interval slider
-        this.rotationIntervalSlider = new $.CustomPopupSliderMenuItem(parseFloat(this.pref_rotation_interval / 3600));
-        this.rotationIntervalSlider._associatedLabel = "rotationIntervalLabel";
-        this.rotationIntervalSlider.connect("value-changed",
-            (aSlider, aValue) => this.onSliderChanged(aSlider, aValue, false, "pref_rotation_interval"));
-        this.rotationIntervalSlider.connect("drag-begin", (aSlider) => this.onSliderGrabbed(aSlider));
-        this.rotationIntervalSlider.connect("drag-end", (aSlider) => this.onSliderReleased(aSlider));
-        this.rotationIntervalSlider.tooltip = new InteligentTooltip(
-            this.rotationIntervalSlider.actor,
-            _("Set the applet text rotation interval.")
-        );
-        subMenu.menu.addMenuItem(this.rotationIntervalSlider);
-
-        // Separator
-        subMenu.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
         // Clear script
         menuItem = new PopupMenu.PopupIconMenuItem(
@@ -678,7 +742,7 @@ Argos.prototype = {
                     }
 
                     this.pref_file_path = "";
-                    this._lineView.setLine(DefaultAttributes);
+                    this._lineView.setLine(this.defaultAttributes);
                     this._processFile();
                 }
             ).open(global.get_current_time());
@@ -689,18 +753,10 @@ Argos.prototype = {
         );
         subMenu.menu.addMenuItem(menuItem);
 
-        // Use standard icon if exists. Otherwise, override it.
-        // The lesser evil, so to speak.
-        // Needed for LM 17 which doesn't support "application-x-executable" icon
-        // (at least, is not available in some of the icon themes).
-        let iconName = Gtk.IconTheme.get_default().has_icon("application-x-executable") ?
-            "application-x-executable" :
-            "argos-for-cinnamon-application-x-executable";
-
         // Make script executable
         menuItem = new PopupMenu.PopupIconMenuItem(
             _("Make script executable"),
-            iconName,
+            "application-x-executable",
             St.IconType.SYMBOLIC
         );
         menuItem.tooltip = new InteligentTooltip(
@@ -815,6 +871,7 @@ Argos.prototype = {
             "pref_custom_icon_for_applet",
             "pref_custom_label_for_applet",
             "pref_show_script_name",
+            "pref_prevent_applet_lines_ellipsation",
             "pref_overlay_key",
             "pref_animate_menu",
             "pref_keep_one_menu_open",
@@ -823,6 +880,7 @@ Argos.prototype = {
             "pref_menu_spacing",
             "pref_applet_spacing",
             "pref_update_on_menu_open",
+            "pref_cycle_on_menu_open",
             "pref_update_interval",
             "pref_update_interval_units",
             "pref_rotation_interval",
@@ -853,18 +911,26 @@ Argos.prototype = {
         this.updateIntervalSlider.setValue(this.pref_update_interval / 3600);
         this._syncLabelsWithSlidersValue(this.updateIntervalSlider);
 
-        if (!this._sliderIsSliding) {
-            this.update();
-        }
+        Mainloop.idle_add(() => {
+            if (!this._sliderIsSliding) {
+                this.update();
+            }
+
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _setRotationInterval: function() {
         this.rotationIntervalSlider.setValue(this.pref_rotation_interval / 3600);
         this._syncLabelsWithSlidersValue(this.rotationIntervalSlider);
 
-        if (!this._sliderIsSliding) {
-            this.update();
-        }
+        Mainloop.idle_add(() => {
+            if (!this._sliderIsSliding) {
+                this.update();
+            }
+
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _contextSubMenuOpenStateChanged: function(aMenu, aOpen) {
@@ -876,7 +942,7 @@ Argos.prototype = {
                 let item = children[i];
 
                 if (item instanceof PopupMenu.PopupSubMenuMenuItem ||
-                    item instanceof $.UnitSelectorSubMenuMenuItem) {
+                    item instanceof $.UnitSelectorSubMenuItem) {
                     if (aMenu !== item.menu) {
                         item.menu.close(true);
                     }
@@ -999,6 +1065,12 @@ Argos.prototype = {
         }
     },
 
+    get defaultAttributes() {
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Replace JSON trick with Object.assign().
+        return JSON.parse(JSON.stringify(DefaultAttributes));
+    },
+
     _onSettingsChanged: function(aPrefValue, aPrefKey) {
         // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
         // settings callback instead of just one as in older versions. The first one is the
@@ -1017,6 +1089,7 @@ Argos.prototype = {
             case "pref_default_icon_size":
             case "pref_menu_spacing":
             case "pref_applet_spacing":
+            case "pref_prevent_applet_lines_ellipsation":
                 this.update();
                 break;
             case "pref_overlay_key":
@@ -1024,14 +1097,6 @@ Argos.prototype = {
                 break;
             case "pref_file_path":
                 this._processFile();
-                break;
-            case "pref_update_interval":
-            case "pref_update_interval_units":
-                this._setUpdateInterval();
-                break;
-            case "pref_rotation_interval":
-            case "pref_rotation_interval_units":
-                this._setRotationInterval();
                 break;
             case "pref_logging_level":
             case "pref_debugger_enabled":

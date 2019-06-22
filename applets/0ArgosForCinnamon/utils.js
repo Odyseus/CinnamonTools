@@ -36,11 +36,12 @@ const {
         GdkPixbuf,
         Gio,
         GLib,
+        Pango,
         St
     },
     misc: {
         params: Params,
-        util: Util
+        signalManager: SignalManager
     },
     ui: {
         main: Main,
@@ -57,7 +58,11 @@ const {
     DefaultAttributes,
     OrnamentType,
     Placeholders,
-    TruthyVals
+    TruthyVals,
+    UnitSelectorMenuItemParams,
+    UnitSelectorSubMenuItemParams,
+    CustomPopupSliderMenuItemParams,
+    ArgosMenuItemParams
 } = Constants;
 
 const {
@@ -87,7 +92,7 @@ DebugManager.wrapObjectMethods(Debugger, {
     CustomSubMenuItem: CustomSubMenuItem,
     InteligentTooltip: InteligentTooltip,
     UnitSelectorMenuItem: UnitSelectorMenuItem,
-    UnitSelectorSubMenuMenuItem: UnitSelectorSubMenuMenuItem
+    UnitSelectorSubMenuItem: UnitSelectorSubMenuItem
 });
 
 var Notification = new CustomNotification({
@@ -129,22 +134,23 @@ function UnitSelectorMenuItem() {
 UnitSelectorMenuItem.prototype = {
     __proto__: PopupMenu.PopupIndicatorMenuItem.prototype,
 
-    _init: function(aSubMenu, aLabel, aValue, aUnitsKey) {
-        PopupMenu.PopupIndicatorMenuItem.prototype._init.call(this, aLabel);
-        this._subMenu = aSubMenu;
-        this._applet = aSubMenu._applet;
-        this._value = aValue;
-        this._unitsKey = aUnitsKey;
+    _init: function(aParams) {
+        this.params = Params.parse(aParams, UnitSelectorMenuItemParams);
+
+        PopupMenu.PopupIndicatorMenuItem.prototype._init.call(this, this.params.label);
+
         this.setOrnament(OrnamentType.DOT);
 
         this._handler_id = this.connect("activate", () => {
-            this._applet[this._unitsKey] = this._value;
-            this._subMenu._setCheckedState();
-            this._applet.update();
-            return true; // Avoids the closing of the sub menu.
+            this.params.submenu.params.settings.setValue(this.params.units_key, this.params.value);
+            this.params.submenu.params.set_unit_cb();
+
+            return Clutter.EVENT_STOP; // Avoids the closing of the sub menu.
         });
 
-        this._ornament.child._delegate.setToggleState(this._applet[this._unitsKey] === this._value);
+        this._ornament.child._delegate.setToggleState(
+            this.params.submenu.params.settings.getValue(this.params.units_key) === this.params.value
+        );
     },
 
     destroy: function() {
@@ -153,31 +159,35 @@ UnitSelectorMenuItem.prototype = {
     }
 };
 
-function UnitSelectorSubMenuMenuItem() {
+function UnitSelectorSubMenuItem() {
     this._init.apply(this, arguments);
 }
 
-UnitSelectorSubMenuMenuItem.prototype = {
+UnitSelectorSubMenuItem.prototype = {
     __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
 
-    _init: function(aApplet, aLabel, aUnitsKey, aValueKey) {
-        this._applet = aApplet;
-        this._unitsKey = aUnitsKey;
-        this._valueKey = aValueKey;
-        this._label = aLabel;
+    _init: function(aParams) {
+        this.params = Params.parse(aParams, UnitSelectorSubMenuItemParams);
 
         PopupMenu.PopupSubMenuMenuItem.prototype._init.call(this, " "); // ¬¬
 
         this.setLabel();
         this._populateMenu();
-        this._applet.settings.connect("changed::" + this._valueKey,
-            () => this.setLabel());
+
+        this.tooltip = new InteligentTooltip(
+            this.actor,
+            this.params.tooltip
+        );
     },
 
     setLabel: function() {
         this.label.clutter_text.set_markup(
-            this._label + " " + this._applet[this._valueKey] + " " +
-            getUnitPluralForm(this._applet[this._unitsKey], this._applet[this._valueKey])
+            this.params.label + " " + this.params.settings.getValue(this.params.value_key) +
+            " " +
+            getUnitPluralForm(
+                this.params.settings.getValue(this.params.units_key),
+                this.params.settings.getValue(this.params.value_key)
+            )
         );
     },
 
@@ -185,12 +195,12 @@ UnitSelectorSubMenuMenuItem.prototype = {
         this.label.grab_key_focus();
         this.menu.removeAll();
         for (let unit in UNITS_MAP) {
-            let item = new UnitSelectorMenuItem(
-                this,
-                UNITS_MAP[unit].capital,
-                unit,
-                this._unitsKey
-            );
+            let item = new UnitSelectorMenuItem({
+                submenu: this,
+                label: UNITS_MAP[unit].capital,
+                value: unit,
+                units_key: this.params.units_key
+            });
             this.menu.addMenuItem(item);
         }
     },
@@ -203,7 +213,9 @@ UnitSelectorSubMenuMenuItem.prototype = {
         for (; i < iLen; i++) {
             let item = children[i];
             if (item instanceof UnitSelectorMenuItem) { // Just in case
-                item._ornament.child._delegate.setToggleState(this._applet[this._unitsKey] === item._value);
+                item._ornament.child._delegate.setToggleState(
+                    this.params.settings.getValue(this.params.units_key) === item.params.value
+                );
             }
         }
     }
@@ -219,20 +231,24 @@ function CustomPopupSliderMenuItem() {
 CustomPopupSliderMenuItem.prototype = {
     __proto__: PopupMenu.PopupSliderMenuItem.prototype,
 
-    _init: function(aValue) {
+    _init: function(aParams) {
+        this.params = Params.parse(aParams, CustomPopupSliderMenuItemParams);
+
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
             activate: false
         });
+        this.sigMan = new SignalManager.SignalManager(null);
 
-        this.actor.connect("key-press-event",
-            (aActor, aEvent) => this._onKeyPressEvent(aActor, aEvent));
+        this.sigMan.connect(this.actor, "key-press-event", function(aActor, aEvent) {
+            this._onKeyPressEvent(aActor, aEvent);
+        }.bind(this));
 
         // Avoid spreading NaNs around
-        if (isNaN(aValue)) {
+        if (isNaN(this.params.value)) {
             throw TypeError("The slider value must be a number.");
         }
 
-        this._value = Math.max(Math.min(aValue, 1), 0);
+        this._value = Math.max(Math.min(this.params.value, 1), 0);
 
         this._slider = new St.DrawingArea({
             style_class: "popup-slider-menu-item",
@@ -242,16 +258,29 @@ CustomPopupSliderMenuItem.prototype = {
             span: -1,
             expand: true
         });
-        this._slider.connect("repaint",
-            (aArea) => this._sliderRepaint(aArea));
-        this.actor.connect("button-press-event",
-            (aActor, aEvent) => this._startDragging(aActor, aEvent));
-        this.actor.connect("scroll-event",
-            (aActor, aEvent) => this._onScrollEvent(aActor, aEvent));
+
+        this.sigMan.connect(this._slider, "repaint",
+            function(aArea) {
+                this._sliderRepaint(aArea);
+            }.bind(this)
+        );
+        this.sigMan.connect(this.actor, "button-press-event",
+            function(aActor, aEvent) {
+                this._startDragging(aActor, aEvent);
+            }.bind(this)
+        );
+        this.sigMan.connect(this.actor, "scroll-event",
+            function(aActor, aEvent) {
+                this._onScrollEvent(aActor, aEvent);
+            }.bind(this)
+        );
 
         this._releaseId = this._motionId = 0;
         this._dragging = false;
-        this._associatedLabel = null;
+
+        this.sigMan.connect(this, "value-changed", this.params.value_changed_cb);
+        this.sigMan.connect(this, "drag-begin", this.params.drag_begin_cb);
+        this.sigMan.connect(this, "drag-end", this.params.drag_end_cb);
     },
 
     _onScrollEvent: function(aActor, aEvent) {
@@ -280,9 +309,14 @@ CustomPopupSliderMenuItem.prototype = {
             this._slider.queue_repaint();
             this.emit("value-changed", this._value);
             this.emit("drag-end");
-            return true;
+            return Clutter.EVENT_STOP;
         }
-        return false;
+        return Clutter.EVENT_PROPAGATE;
+    },
+
+    destroy: function() {
+        this.sigMan.disconnectAllSignals();
+        PopupMenu.PopupBaseMenuItem.prototype.destroy.call(this);
     },
 
     get ctrlKey() {
@@ -295,12 +329,15 @@ function ArgosLineView() {
 }
 
 ArgosLineView.prototype = {
-    _init: function(aApplet, aLine = null, aMenuItem = null) {
-        this._applet = aApplet;
+    _init: function(aSettings, aLine = null, aMenuItem = null, aSetEllipsation = false) {
+        this._settings = aSettings;
         this._menuItem = aMenuItem;
+        this._setEllipsation = aSetEllipsation;
 
         this.actor = new St.BoxLayout();
         this.actor._delegate = this;
+        this.icon = null;
+        this.label = null;
 
         if (aLine !== null) {
             this.setLine(aLine);
@@ -313,15 +350,18 @@ ArgosLineView.prototype = {
         this.actor.remove_all_children();
 
         if (this._menuItem !== null && aLine.tooltip) {
-            this._menuItem.tooltip.set_text(aLine.tooltip);
+            if (this._menuItem.tooltip) {
+                this._menuItem.tooltip.set_text(aLine.tooltip);
+            } else if (aLine.tooltip && !this._menuItem.tooltip) {
+                this._menuItem.tooltip = new InteligentTooltip(this._menuItem.actor, aLine.tooltip);
+            }
         }
 
         if (aLine.iconname) {
-            let icon = null;
             let iconName = aLine.iconname;
             let iconSize = aLine.iconsize ?
                 aLine.iconsize :
-                this._applet.pref_default_icon_size;
+                this._settings.getValue("pref_default_icon_size");
 
             // If aLine.iconName is a path to an icon.
             if (iconName[0] === "/" || iconName[0] === "~") {
@@ -335,13 +375,13 @@ ArgosLineView.prototype = {
                     file: file
                 });
 
-                icon = new St.Icon({
+                this.icon = new St.Icon({
                     style_class: "popup-menu-icon",
                     gicon: iconFile,
                     icon_size: iconSize
                 });
             } else { // use a themed icon
-                icon = new St.Icon({
+                this.icon = new St.Icon({
                     style_class: "popup-menu-icon",
                     icon_size: iconSize,
                     icon_name: iconName,
@@ -351,8 +391,8 @@ ArgosLineView.prototype = {
                 });
             }
 
-            if (icon !== null) {
-                this.actor.add_actor(icon);
+            if (this.icon !== null) {
+                this.actor.add_actor(this.icon);
             }
         }
 
@@ -404,16 +444,22 @@ ArgosLineView.prototype = {
         }
 
         if (aLine.markup.length > 0) {
-            let label = new St.Label({
+            this.label = new St.Label({
                 y_expand: true,
                 y_align: Clutter.ActorAlign.CENTER
             });
 
-            this.actor.add_actor(label);
+            this.actor.add_actor(this.label);
 
-            let clutterText = label.get_clutter_text();
+            let clutterText = this.label.get_clutter_text();
             clutterText.use_markup = true;
             clutterText.text = aLine.markup;
+
+            if (this._setEllipsation) {
+                clutterText.ellipsize = this._settings.getValue("pref_prevent_applet_lines_ellipsation") ?
+                    Pango.EllipsizeMode.NONE :
+                    Pango.EllipsizeMode.END;
+            }
 
             if (aLine.length) {
                 let maxLength = parseInt(aLine.length, 10);
@@ -431,6 +477,10 @@ ArgosLineView.prototype = {
 
     setMarkup: function(aLine) {
         this.setLine(aLine);
+    },
+
+    destroy: function() {
+        this.actor.destroy();
     }
 };
 
@@ -446,29 +496,47 @@ function AltSwitcher() {
 
 AltSwitcher.prototype = {
     _init: function(aMenuItem, aStandard, aAlternate) {
+        this.sigMan = new SignalManager.SignalManager(null);
+
         this._menuItem = aMenuItem;
 
         this._standard = aStandard;
-        this._standard.connect("notify::visible", () => this._sync());
+        this.sigMan.connect(this._standard, "notify::visible", function() {
+            this._sync();
+        }.bind(this));
 
         this._alternate = aAlternate;
-        this._alternate.connect("notify::visible", () => this._sync());
+        this.sigMan.connect(this._alternate, "notify::visible", function() {
+            this._sync();
+        }.bind(this));
 
-        this._capturedEventId = global.stage.connect("captured-event",
-            (aActor, aEvent) => this._onCapturedEvent(aActor, aEvent));
+        this.sigMan.connect(global.stage, "captured-event",
+            function(aActor, aEvent) {
+                this._onCapturedEvent(aActor, aEvent);
+            }.bind(this)
+        );
 
         this._flipped = false;
 
         this._clickAction = new Clutter.ClickAction();
-        this._clickAction.connect("long-press",
-            (aAction, aActor, aState) => this._onLongPress(aAction, aActor, aState));
+        this.sigMan.connect(this._clickAction, "long-press",
+            function(aAction, aActor, aState) {
+                this._onLongPress(aAction, aActor, aState);
+            }.bind(this)
+        );
 
         this.actor = new St.Bin();
         this.actor.add_style_class_name("popup-alternating-menu-item");
-        this.actor.connect("destroy", () => this._onDestroy());
-        this.actor.connect("notify::mapped", () => {
-            this._flipped = false;
-        });
+        this.sigMan.connect(this.actor, "destroy",
+            function() {
+                this._onDestroy();
+            }.bind(this)
+        );
+        this.sigMan.connect(this.actor, "notify::mapped",
+            function() {
+                this._flipped = false;
+            }.bind(this)
+        );
     },
 
     _sync: function() {
@@ -510,17 +578,14 @@ AltSwitcher.prototype = {
         }
 
         if (childToShow !== null) {
-            this._menuItem.tooltip.set_text(childToShow._delegate.line.tooltip);
+            this._menuItem.tooltip && this._menuItem.tooltip.set_text(childToShow._delegate.line.tooltip);
         }
 
         this.actor.visible = (childToShow !== null);
     },
 
     _onDestroy: function() {
-        if (this._capturedEventId > 0) {
-            global.stage.disconnect(this._capturedEventId);
-            this._capturedEventId = 0;
-        }
+        this.sigMan.disconnectAllSignals();
     },
 
     _onCapturedEvent: function(aActor, aEvent) {
@@ -531,8 +596,8 @@ AltSwitcher.prototype = {
 
             // Nonsense time!!! On Linux Mint 18 with Cinnamon 3.0.7, pressing the Alt Right key
             // gives a keycode of 65027 and Clutter docs say that that keycode belongs
-            // to Clutter.KEY_ISO_Level3_Shift. That's why I make that third ckeck,
-            // because Clutter.KEY_Alt_R isn't recognised as pressing Alt Right key. ¬¬
+            // to Clutter.KEY_ISO_Level3_Shift. That's why I make that third check,
+            // because Clutter.KEY_Alt_R isn't recognized as pressing Alt Right key. ¬¬
             // See _sync, because the stupid nonsense continues!!!
             switch (key) {
                 case Clutter.KEY_ISO_Level3_Shift:
@@ -549,13 +614,13 @@ AltSwitcher.prototype = {
     _onLongPress: function(aAction, aActor, aState) {
         if (aState === Clutter.LongPressState.QUERY ||
             aState === Clutter.LongPressState.CANCEL) {
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
         this._flipped = !this._flipped;
         this._sync();
 
-        return true;
+        return Clutter.EVENT_STOP;
     },
 
     get altKey() {
@@ -571,9 +636,11 @@ function ArgosMenuItem() {
 ArgosMenuItem.prototype = {
     __proto__: PopupMenu.PopupBaseMenuItem.prototype,
 
-    _init: function(aApplet, aLine, aAlternateLine = null) {
-        let hasAction = aLine.hasAction || (aAlternateLine !== null &&
-            aAlternateLine.hasAction);
+    _init: function(aParams) {
+        this.params = Params.parse(aParams, ArgosMenuItemParams);
+
+        let hasAction = this.params.line.hasAction || (this.params.alt_line !== null &&
+            this.params.alt_line.hasAction);
 
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
             activate: hasAction,
@@ -581,45 +648,70 @@ ArgosMenuItem.prototype = {
             focusOnHover: hasAction
         });
 
-        this._applet = aApplet;
-        this.tooltip = new InteligentTooltip(this.actor, "");
-
-        let altSwitcher = null;
-
-        let lineView = new ArgosLineView(aApplet, aLine, this);
-        lineView.actor.set_style("spacing: " + aApplet.pref_menu_spacing + "em;");
-
-        if (aAlternateLine === null) {
-            this.addActor(lineView.actor);
+        if (this.params.line.tooltip && this.params.alt_line && this.params.alt_line.tooltip) {
+            this.tooltip = new InteligentTooltip(this.actor, "");
         } else {
-            let alternateLineView = new ArgosLineView(aApplet, aAlternateLine, this);
-            alternateLineView.actor.set_style("spacing: " + aApplet.pref_menu_spacing + "em;");
+            this.tooltip = null;
+        }
+
+        this._settings = this.params.settings;
+
+        this.lineView = new ArgosLineView(this._settings, this.params.line, this);
+        this.lineView.actor.set_style("spacing: " + this._settings.getValue("pref_menu_spacing") + "em;");
+        this.altSwitcher = null;
+        this.alternateLineView = null;
+
+        if (this.params.alt_line === null) {
+            this.addActor(this.lineView.actor);
+        } else {
+            this.alternateLineView = new ArgosLineView(this._settings, this.params.alt_line, this);
+            this.alternateLineView.actor.set_style("spacing: " + this._settings.getValue("pref_menu_spacing") + "em;");
             // The following class and pseudo class are set so the AltSwitcher is styled somewhat
             // the same as the Cinnamon's default.
-            alternateLineView.actor.add_style_class_name("popup-alternating-menu-item");
-            alternateLineView.actor.add_style_pseudo_class("alternate");
-            altSwitcher = new AltSwitcher(this, lineView.actor, alternateLineView.actor);
-            lineView.actor.visible = true;
-            alternateLineView.actor.visible = true;
-            this.addActor(altSwitcher.actor);
+            this.alternateLineView.actor.add_style_class_name("popup-alternating-menu-item");
+            this.alternateLineView.actor.add_style_pseudo_class("alternate");
+            this.altSwitcher = new AltSwitcher(this, this.lineView.actor, this.alternateLineView.actor);
+            this.lineView.actor.visible = true;
+            this.alternateLineView.actor.visible = true;
+            this.addActor(this.altSwitcher.actor);
         }
 
         if (hasAction) {
             this.connect("activate", () => {
-                let activeLine = (altSwitcher === null) ?
-                    aLine :
-                    altSwitcher.actor.get_child()._delegate.line;
+                let activeLine = (this.altSwitcher === null) ?
+                    this.params.line :
+                    this.altSwitcher.actor.get_child()._delegate.line;
 
                 if (activeLine.href) {
                     // On the original extension was:
                     // Gio.AppInfo.launch_default_for_uri(activeLine.href, null);
-                    Util.spawn_async(["xdg-open", activeLine.href], null);
+                    // Mark for deletion on EOL. Cinnamon 3.6.x+
+                    // Implement the use of Gio.AppInfo.launch_default_for_uri_async.
+                    let argv = ["xdg-open", activeLine.href];
+                    try {
+                        let [success, pid] = GLib.spawn_async( // jshint ignore:line
+                            null, argv, null, GLib.SpawnFlags.SEARCH_PATH, null
+                        );
+                    } catch (aErr) {
+                        Notification.notify([
+                            escapeHTML(_("Error opening URL/URI.")),
+                            escapeHTML(_("A detailed error has been logged.")),
+                        ]);
+                        global.logError("%s: %s".format(_("Defined URL/URI"), activeLine.href));
+                        global.logError("%s: %s".format(_("Executed command"), argv.join(" ")));
+                        global.logError(aErr);
+                    }
                 }
 
                 if (activeLine.eval) {
                     try {
                         eval(activeLine.eval);
                     } catch (aErr) {
+                        Notification.notify([
+                            escapeHTML(_("Error evaluating code.")),
+                            escapeHTML(_("A detailed error has been logged.")),
+                        ]);
+                        global.logError("%s: %s".format(_("Evaluated code"), activeLine.eval));
                         global.logError(aErr);
                     }
                 }
@@ -628,13 +720,13 @@ ArgosMenuItem.prototype = {
                     let argv = [];
                     let shell = activeLine.shell ?
                         activeLine.shell :
-                        aApplet.pref_shell ?
-                        aApplet.pref_shell :
+                        this._settings.getValue("pref_shell") ?
+                        this._settings.getValue("pref_shell") :
                         "/bin/bash";
                     let shellArg = activeLine.shellargument ?
                         activeLine.shellargument :
-                        aApplet.pref_shell_argument ?
-                        aApplet.pref_shell_argument :
+                        this._settings.getValue("pref_shell_argument") ?
+                        this._settings.getValue("pref_shell_argument") :
                         "-c";
                     let cmd = activeLine.command ?
                         activeLine.command :
@@ -646,11 +738,11 @@ ArgosMenuItem.prototype = {
                         // Run shell immediately after executing the command to keep the terminal window open
                         // (see http://stackoverflow.com/q/3512055)
                         argv = [
-                            aApplet.pref_terminal_emulator,
-                            aApplet.pref_terminal_emulator_argument
+                            this._settings.getValue("pref_terminal_emulator"),
+                            this._settings.getValue("pref_terminal_emulator_argument")
                         ].concat(
                             // Workaround for the terminal that decided to reinvent the wheel. ¬¬
-                            aApplet.pref_terminal_emulator_argument === "--" ?
+                            this._settings.getValue("pref_terminal_emulator_argument") === "--" ?
                             [shell, shellArg, cmd + "; exec " + shell] :
                             [shell + " " + shellArg + " " + GLib.shell_quote(cmd + "; exec " + shell)]
                         );
@@ -658,25 +750,51 @@ ArgosMenuItem.prototype = {
                         argv = [shell, shellArg, cmd];
                     }
 
-                    let [success, pid] = GLib.spawn_async(null, argv, null,
-                        GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD, null);
+                    try {
+                        let [success, pid] = GLib.spawn_async(null, argv, null,
+                            GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD, null);
 
-                    if (success) {
-                        GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, () => {
-                            if (activeLine.refresh) {
-                                aApplet.update();
-                            }
-                        });
+                        if (success) {
+                            GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, () => {
+                                if (activeLine.refresh) {
+                                    this.params.update_cb && this.params.update_cb();
+                                }
+                            });
+                        }
+                    } catch (aErr) {
+                        /* NOTE: This is only useful for very specific use cases because
+                         * commands are not directly executed; they are executed through
+                         * a shell and/or a terminal. So, GLib.spawn_async will always succeed
+                         * at running the commands if the shell and/or the terminal were executed.
+                         * In a nut shell, GLib.spawn_async will only fail if it can't execute
+                         * the shell or the terminal. And since these two programs are open
+                         * for configuration, displaying the error is very useful.
+                         */
+                        Notification.notify([
+                            escapeHTML(_("Error executing command.")),
+                            escapeHTML(_("A detailed error has been logged.")),
+                        ]);
+                        global.logError("%s: %s".format(_("Defined command"), cmd));
+                        global.logError("%s: %s".format(_("Executed command"), argv.join(" ")));
+                        global.logError(aErr);
                     }
                 }
 
                 if (activeLine.refresh) {
-                    aApplet.update();
+                    this.params.update_cb && this.params.update_cb();
                 }
 
-                this._applet.menu.close();
+                this.params.applet_menu && this.params.applet_menu.close();
             });
         }
+    },
+
+    destroy: function() {
+        this.lineView && this.lineView.actor && this.lineView.actor.destroy();
+        this.altSwitcher && this.altSwitcher.actor && this.altSwitcher.actor.destroy();
+        this.alternateLineView && this.alternateLineView.actor && this.alternateLineView.actor.destroy();
+
+        PopupMenu.PopupBaseMenuItem.prototype.destroy.call(this);
     }
 };
 
@@ -691,10 +809,10 @@ function CustomSubMenuItem() {
 CustomSubMenuItem.prototype = {
     __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
 
-    _init: function(aApplet, aActor, aMenuLevel) {
+    _init: function(aSettings, aActor, aMenuLevel) {
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this);
 
-        this._applet = aApplet;
+        this._settings = aSettings;
 
         this._triangleBin = new St.Bin({
             x_expand: true,
@@ -722,7 +840,7 @@ CustomSubMenuItem.prototype = {
             align: St.Align.START
         });
         // Kind of pointless to set a spacing, but it doesn't hurt.
-        aActor.set_style("spacing: " + this._applet.pref_menu_spacing + "em;");
+        aActor.set_style("spacing: " + this._settings.getValue("pref_menu_spacing") + "em;");
 
         // Add the triangle to emulate accurately a sub menu item.
         this.addActor(this._triangleBin, {
@@ -733,14 +851,16 @@ CustomSubMenuItem.prototype = {
     },
 
     destroy: function() {
-        this.menu.close(this._applet.pref_animate_menu);
+        this.menu.close(false);
         this.disconnectAll();
         this.menu.removeAll();
         this.actor.destroy();
+
+        PopupMenu.PopupSubMenuMenuItem.prototype.destroy.call(this);
     },
 
     _subMenuOpenStateChanged: function(aMenu, aOpen) {
-        if (aOpen && this._applet.pref_keep_one_menu_open) {
+        if (aOpen && this._settings.getValue("pref_keep_one_menu_open")) {
             let children = aMenu._getTopMenu()._getMenuItems();
             let i = 0,
                 iLen = children.length;
@@ -838,7 +958,7 @@ function parseAttributes(aAttrString) {
         global.logError("Unable to parse attributes for line '" + aAttrString + "': " + aErr);
     }
 
-    return DefaultAttributes;
+    return JSON.parse(JSON.stringify(DefaultAttributes));
 }
 
 // Performs (mostly) BitBar-compatible output line parsing
