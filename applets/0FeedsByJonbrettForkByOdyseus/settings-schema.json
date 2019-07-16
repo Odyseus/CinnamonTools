@@ -77,11 +77,15 @@
         "description": "Unified notifications",
         "tooltip": "If enabled, all feeds notifications will use and update one notification."
     },
-    "pref_enable_verbose_logging": {
+    "third-party-header": {
+        "type": "header",
+        "description": "Third party integrations"
+    },
+    "pref_third_party_integration_panel_drawer": {
         "type": "checkbox",
-        "default": false,
-        "description": "Verbose logging",
-        "tooltip": "Checking this will enable debug level logging."
+        "default": true,
+        "description": "Panel Drawer applet integration",
+        "tooltip": "Display applet when receiving new items."
     },
     "debugging-header": {
         "type": "header",

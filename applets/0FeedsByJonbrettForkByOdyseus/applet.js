@@ -178,7 +178,8 @@ FeedsReaderForkByOdyseus.prototype = {
             "pref_new_feed_icon",
             "pref_feed_icon",
             "pref_logging_level",
-            "pref_debugger_enabled"
+            "pref_debugger_enabled",
+            "pref_third_party_integration_panel_drawer"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -411,10 +412,19 @@ FeedsReaderForkByOdyseus.prototype = {
 
         if (unread_count > 0) {
             this._setAppletIcon(true);
+            this._toggleAppletVisibility(true);
             this.set_applet_tooltip(tooltip);
         } else {
             this._setAppletIcon(false);
+            this._toggleAppletVisibility(false);
             this.set_applet_tooltip(_("No unread feeds"));
+        }
+    },
+
+    _toggleAppletVisibility: function(aShow) {
+        if (this.pref_third_party_integration_panel_drawer &&
+            this.actor.hasOwnProperty("__HandledByPanelDrawer")) {
+            this.actor[aShow ? "show" : "hide"]();
         }
     },
 
