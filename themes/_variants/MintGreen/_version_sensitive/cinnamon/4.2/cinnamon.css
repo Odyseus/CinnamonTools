@@ -110,8 +110,8 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
   background-gradient-end: #d7d7d7;
-  border: 1px solid #398ee7;
-  box-shadow: inset 0 0 0 1px #398ee7;
+  border: 1px solid #accd8a;
+  box-shadow: inset 0 0 0 1px #accd8a;
   padding: 4px 8px;
 }
 .modal-dialog-button:focus:hover,
@@ -121,8 +121,8 @@ StScrollView StScrollBar {
   background-gradient-direction: vertical;
   background-gradient-start: #f0f0f0;
   background-gradient-end: #e4e4e4;
-  border: 1px solid #398ee7;
-  box-shadow: inset 0 0 0 1px #398ee7;
+  border: 1px solid #accd8a;
+  box-shadow: inset 0 0 0 1px #accd8a;
   padding: 4px 8px;
 }
 .modal-dialog-button:focus:checked, .modal-dialog-button:focus:active,
@@ -187,7 +187,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -203,7 +203,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
@@ -220,7 +220,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -279,8 +279,8 @@ StScrollView StScrollBar {
 }
 .popup-menu-item:active {
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   box-shadow: inset 0 0 1px 1px #ababab;
   color: white;
 }
@@ -309,7 +309,7 @@ StScrollView StScrollBar {
   -slider-height: 0.3em;
   -slider-background-color: #a6a6a6;
   -slider-border-color: transparent;
-  -slider-active-background-color: #398ee7;
+  -slider-active-background-color: #accd8a;
   -slider-active-border-color: transparent;
   -slider-border-width: 1px;
   -slider-handle-radius: 0.5em;
@@ -410,10 +410,10 @@ StScrollView StScrollBar {
   border-bottom: 1px solid transparent;
 }
 .panel-top:highlight {
-  box-shadow: 0 0 1px 1px rgba(57, 142, 231, 0.4);
+  box-shadow: 0 0 1px 1px rgba(172, 205, 138, 0.4);
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
 }
 .panel-bottom {
   box-shadow: 0 0 1px 1px #292929;
@@ -427,10 +427,10 @@ StScrollView StScrollBar {
   border-top: 1px solid transparent;
 }
 .panel-bottom:highlight {
-  box-shadow: 0 0 1px 1px rgba(57, 142, 231, 0.4);
+  box-shadow: 0 0 1px 1px rgba(172, 205, 138, 0.4);
   background-gradient-direction: vertical;
-  background-gradient-start: #abcff5;
-  background-gradient-end: #94c2f2;
+  background-gradient-start: #ebf3e3;
+  background-gradient-end: #dfecd1;
 }
 .panel-left {
   box-shadow: 0 0 1px 1px #292929;
@@ -445,10 +445,10 @@ StScrollView StScrollBar {
   spacing: 0;
 }
 .panel-left:highlight {
-  box-shadow: 0 0 1px 1px rgba(57, 142, 231, 0.4);
+  box-shadow: 0 0 1px 1px rgba(172, 205, 138, 0.4);
   background-gradient-direction: horizontal;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
 }
 .panel-right {
   box-shadow: 0 0 1px 1px #292929;
@@ -463,17 +463,17 @@ StScrollView StScrollBar {
   spacing: 0;
 }
 .panel-right:highlight {
-  box-shadow: 0 0 1px 1px rgba(57, 142, 231, 0.4);
+  box-shadow: 0 0 1px 1px rgba(172, 205, 138, 0.4);
   background-gradient-direction: horizontal;
-  background-gradient-start: #abcff5;
-  background-gradient-end: #94c2f2;
+  background-gradient-start: #ebf3e3;
+  background-gradient-end: #dfecd1;
 }
 .panel-dummy {
-  border: 1px solid #398ee7;
-  background-color: rgba(57, 142, 231, 0.6);
+  border: 1px solid #accd8a;
+  background-color: rgba(172, 205, 138, 0.6);
 }
 .panel-dummy:entered {
-  background-color: rgba(57, 142, 231, 0.9);
+  background-color: rgba(172, 205, 138, 0.9);
 }
 
 .system-status-icon {
@@ -559,7 +559,7 @@ StScrollView StScrollBar {
   min-width: unset;
   padding: 8px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-color: #404040;
   text-align: center;
@@ -624,8 +624,8 @@ StScrollView StScrollBar {
 .window-caption:focus {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
 }
@@ -643,11 +643,11 @@ StScrollView StScrollBar {
 }
 
 .window-border {
-  border: 3px #398ee7;
+  border: 3px #accd8a;
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.05);
   /* Cover rounded corners and some bad adjustment gaps */
-  box-shadow: 0 0 0 1px #398ee7 inset;
+  box-shadow: 0 0 0 1px #accd8a inset;
 }
 
 /* =============================================================================
@@ -657,10 +657,10 @@ StScrollView StScrollBar {
   color: #464646;
 }
 .desklet:highlight {
-  background-color: #398ee7;
+  background-color: #accd8a;
 }
 .desklet-with-borders:highlight, .desklet-with-borders-and-header:highlight {
-  background-color: #398ee7;
+  background-color: #accd8a;
 }
 .desklet-with-borders {
   background-color: #e1e1e1;
@@ -763,7 +763,7 @@ StScrollView StScrollBar {
   height: 2.4em;
 }
 .calendar-day-base:active {
-  background: #398ee7;
+  background: #accd8a;
   box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.1);
   color: white;
 }
@@ -795,7 +795,7 @@ StScrollView StScrollBar {
   background-color: rgba(128, 128, 128, 0.1);
 }
 .calendar-today {
-  color: #398ee7;
+  color: #accd8a;
   font-weight: bold;
 }
 .calendar-other-month-day {
@@ -844,7 +844,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -860,7 +860,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
@@ -877,7 +877,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -976,8 +976,8 @@ StScrollView StScrollBar {
 .switcher-list .item-box:selected {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
 }
@@ -1037,8 +1037,8 @@ StScrollView StScrollBar {
   /* 50% is not recognized. */
   background-gradient-direction: radial;
   /* start=center, end=edges */
-  background-gradient-start: rgba(57, 142, 231, 0.3);
-  background-gradient-end: rgba(57, 142, 231, 0.2);
+  background-gradient-start: rgba(172, 205, 138, 0.3);
+  background-gradient-end: rgba(172, 205, 138, 0.2);
 }
 
 /* =============================================================================
@@ -1085,7 +1085,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -1101,7 +1101,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
@@ -1118,7 +1118,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -1317,8 +1317,8 @@ StScrollView StScrollBar {
 .menu-favorites-button:hover {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
 }
@@ -1344,8 +1344,8 @@ StScrollView StScrollBar {
 .menu-application-button-selected {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
   padding: 7px;
@@ -1374,8 +1374,8 @@ StScrollView StScrollBar {
 .menu-category-button-selected {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
   padding: 7px;
@@ -1419,7 +1419,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -1435,7 +1435,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #f3f3f3;
@@ -1452,7 +1452,7 @@ StScrollView StScrollBar {
   min-width: 250px;
   padding: 4px 12px;
   selected-color: white;
-  selection-background-color: #398ee7;
+  selection-background-color: #accd8a;
   transition-duration: 150;
   background-gradient-direction: vertical;
   background-gradient-start: #eeeeee;
@@ -1508,7 +1508,7 @@ StScrollView StScrollBar {
 }
 .window-list-item-box:active, .window-list-item-box:checked, .window-list-item-box:focus, .window-list-item-box:checked:hover, .window-list-item-box:focus:hover, .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 3px 0 0;
   font-weight: bold;
@@ -1522,8 +1522,8 @@ StScrollView StScrollBar {
 .window-list-item-box .progress {
   border-radius: 3px 3px 0 0;
   background-gradient-direction: vertical;
-  background-gradient-start: rgba(57, 142, 231, 0.5);
-  background-gradient-end: rgba(57, 142, 231, 0.9);
+  background-gradient-start: rgba(172, 205, 138, 0.5);
+  background-gradient-end: rgba(172, 205, 138, 0.9);
 }
 .panel-top .window-list-item-box {
   box-shadow: inset 0 0 0 1px #ababab;
@@ -1533,7 +1533,7 @@ StScrollView StScrollBar {
 }
 .panel-top .window-list-item-box:active, .panel-top .window-list-item-box:checked, .panel-top .window-list-item-box:focus, .panel-top .window-list-item-box:checked:hover, .panel-top .window-list-item-box:focus:hover, .panel-top .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 0 3px 3px;
 }
@@ -1556,7 +1556,7 @@ StScrollView StScrollBar {
 }
 .panel-left .window-list-item-box:active, .panel-left .window-list-item-box:checked, .panel-left .window-list-item-box:focus, .panel-left .window-list-item-box:checked:hover, .panel-left .window-list-item-box:focus:hover, .panel-left .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 3px 3px 0;
 }
@@ -1579,7 +1579,7 @@ StScrollView StScrollBar {
 }
 .panel-right .window-list-item-box:active, .panel-right .window-list-item-box:checked, .panel-right .window-list-item-box:focus, .panel-right .window-list-item-box:checked:hover, .panel-right .window-list-item-box:focus:hover, .panel-right .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 0 0 3px;
 }
@@ -1646,7 +1646,7 @@ StScrollView StScrollBar {
 }
 .grouped-window-list-item-box:focus:hover, .grouped-window-list-item-box:focus:active:hover, .grouped-window-list-item-box:focus {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 3px 0 0;
   font-weight: bold;
@@ -1654,8 +1654,8 @@ StScrollView StScrollBar {
 .grouped-window-list-item-box .progress {
   border-radius: 3px 3px 0 0;
   background-gradient-direction: vertical;
-  background-gradient-start: rgba(57, 142, 231, 0.5);
-  background-gradient-end: rgba(57, 142, 231, 0.9);
+  background-gradient-start: rgba(172, 205, 138, 0.5);
+  background-gradient-end: rgba(172, 205, 138, 0.9);
 }
 .panel-top .grouped-window-list-item-box {
   box-shadow: inset 0 0 0 1px #ababab;
@@ -1671,7 +1671,7 @@ StScrollView StScrollBar {
 }
 .panel-top .grouped-window-list-item-box:focus:hover, .panel-top .grouped-window-list-item-box:focus:active:hover, .panel-top .grouped-window-list-item-box:focus {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 0 3px 3px;
 }
@@ -1694,7 +1694,7 @@ StScrollView StScrollBar {
 }
 .panel-left .grouped-window-list-item-box:focus:hover, .panel-left .grouped-window-list-item-box:focus:active:hover, .panel-left .grouped-window-list-item-box:focus {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 3px 3px 0;
 }
@@ -1717,7 +1717,7 @@ StScrollView StScrollBar {
 }
 .panel-right .grouped-window-list-item-box:focus:hover, .panel-right .grouped-window-list-item-box:focus:active:hover, .panel-right .grouped-window-list-item-box:focus {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 0 0 3px;
 }
@@ -1766,8 +1766,8 @@ StScrollView StScrollBar {
 .grouped-window-list-thumbnail-menu .item-box:selected {
   box-shadow: inset 0 0 2px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #398ee7;
-  background-gradient-end: #1a74d3;
+  background-gradient-start: #accd8a;
+  background-gradient-end: #93be66;
   color: white;
   border-radius: 4px;
 }
@@ -1839,7 +1839,7 @@ StScrollView StScrollBar {
   -slider-height: 0.5em;
   -slider-background-color: #a6a6a6;
   -slider-border-color: transparent;
-  -slider-active-background-color: #398ee7;
+  -slider-active-background-color: #accd8a;
   -slider-active-border-color: transparent;
   -slider-border-width: 0;
   -slider-handle-radius: 0;
@@ -1875,6 +1875,42 @@ StScrollView StScrollBar {
 }
 
 /* =============================================================================
+ * Spacer applet (/usr/share/cinnamon/applets/spacer@cinnamon.org)
+ * ============================================================================= */
+.spacer-box:highlight {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-gradient-direction: vertical;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
+  color: white;
+  border-radius: 3px 3px 0 0;
+}
+.panel-top .spacer-box:highlight {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-gradient-direction: vertical;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
+  color: white;
+  border-radius: 0 0 3px 3px;
+}
+.panel-left .spacer-box:highlight {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-gradient-direction: vertical;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
+  color: white;
+  border-radius: 0 3px 3px 0;
+}
+.panel-right .spacer-box:highlight {
+  box-shadow: inset 0 0 0 1px #ababab;
+  background-gradient-direction: vertical;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
+  color: white;
+  border-radius: 3px 0 0 3px;
+}
+
+/* =============================================================================
  * Workspace Switcher applet (/usr/share/cinnamon/applets/workspace-switcher@cinnamon.org/applet.js)
  * ============================================================================= */
 .workspace-button {
@@ -1900,7 +1936,7 @@ StScrollView StScrollBar {
 }
 .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 3px 0 0;
 }
@@ -1912,7 +1948,7 @@ StScrollView StScrollBar {
 }
 .panel-top .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 0 3px 3px;
 }
@@ -1924,7 +1960,7 @@ StScrollView StScrollBar {
 }
 .panel-left .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 0 3px 3px 0;
 }
@@ -1936,7 +1972,7 @@ StScrollView StScrollBar {
 }
 .panel-right .workspace-button:outlined {
   box-shadow: inset 0 0 0 1px #ababab;
-  background-color: #398ee7;
+  background-color: #accd8a;
   color: white;
   border-radius: 3px 0 0 3px;
 }
@@ -1965,7 +2001,7 @@ StScrollView StScrollBar {
   -inactive-window-border: rgba(0, 0, 0, 0.7);
 }
 .workspace-graph .workspace:active .windows {
-  -active-window-background: #398ee7;
+  -active-window-background: #accd8a;
   -active-window-border: rgba(0, 0, 0, 0.9);
   -inactive-window-background: darkgray;
   -inactive-window-border: rgba(0, 0, 0, 0.7);
@@ -2048,8 +2084,8 @@ StScrollView StScrollBar {
 .applet-box:highlight {
   box-shadow: inset 0 0 0 1px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
   color: white;
   border-radius: 3px 3px 0 0;
 }
@@ -2065,8 +2101,8 @@ StScrollView StScrollBar {
 .panel-top .applet-box:highlight {
   box-shadow: inset 0 0 0 1px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
   color: white;
   border-radius: 0 0 3px 3px;
 }
@@ -2079,8 +2115,8 @@ StScrollView StScrollBar {
 .panel-left .applet-box:highlight {
   box-shadow: inset 0 0 0 1px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
   color: white;
   border-radius: 0 3px 3px 0;
 }
@@ -2093,8 +2129,8 @@ StScrollView StScrollBar {
 .panel-right .applet-box:highlight {
   box-shadow: inset 0 0 0 1px #ababab;
   background-gradient-direction: vertical;
-  background-gradient-start: #94c2f2;
-  background-gradient-end: #abcff5;
+  background-gradient-start: #dfecd1;
+  background-gradient-end: #ebf3e3;
   color: white;
   border-radius: 3px 0 0 3px;
 }
@@ -2263,7 +2299,7 @@ StScrollView StScrollBar {
 .osd-window .level-bar {
   height: 0.7em;
   border-radius: 0.3em;
-  background-color: #398ee7;
+  background-color: #accd8a;
 }
 .osd-window .level {
   height: 0.7em;
@@ -2275,19 +2311,19 @@ StScrollView StScrollBar {
  * Snap/Tile Chrome (/usr/share/cinnamon/js/ui/windowManager.js)
  * ============================================================================= */
 .tile-preview {
-  background-color: rgba(57, 142, 231, 0.4);
-  border: 1px solid rgba(57, 142, 231, 0.8);
+  background-color: rgba(172, 205, 138, 0.4);
+  border: 1px solid rgba(172, 205, 138, 0.8);
 }
 .tile-preview.snap {
-  background-color: rgba(57, 142, 231, 0.8);
+  background-color: rgba(172, 205, 138, 0.8);
 }
 
 .tile-hud {
-  background-color: rgba(57, 142, 231, 0.4);
-  border: 1px solid rgba(57, 142, 231, 0.8);
+  background-color: rgba(172, 205, 138, 0.4);
+  border: 1px solid rgba(172, 205, 138, 0.8);
 }
 .tile-hud.snap {
-  background-color: rgba(57, 142, 231, 0.8);
+  background-color: rgba(172, 205, 138, 0.8);
 }
 .tile-hud:top {
   border-top-width: 0;

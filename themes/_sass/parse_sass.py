@@ -12,19 +12,26 @@ variants = {
         "color": "#accd8a"
     }
 }
-supported_cinnamon_versions = ["3.0", "3.4", "4.0"]
+supported_cinnamon_versions = [
+    "3.0",
+    "3.4",
+    "4.0",
+    "4.2"
+]
 
 if __name__ == "__main__":
     files_to_remove = []
     cmd = ["sass", "--no-source-map"]
+    template_file_path = os.path.abspath(os.path.join("cinnamon", "template.scss"))
 
-    with open(os.path.abspath(os.path.join("cinnamon", "template.scss")), "r", encoding="UTF-8") as template_file:
+    with open(template_file_path, "r", encoding="UTF-8") as template_file:
         template_data = template_file.read()
 
     for variant_name, variant_data in variants.items():
         for cinnamon_version in supported_cinnamon_versions:
             sass_file_path = os.path.abspath(os.path.join(
                 "cinnamon", "%s-%s.scss" % (variant_name, cinnamon_version)))
+            # NOTE: Replace the dot to be able to store an integer since I don't trust SASS comparissons.
             sass_file_data = template_data.replace(
                 '"@cinnamon_version@"', cinnamon_version.replace(".", ""))
             sass_file_data = sass_file_data.replace("@variant@", variant_name)

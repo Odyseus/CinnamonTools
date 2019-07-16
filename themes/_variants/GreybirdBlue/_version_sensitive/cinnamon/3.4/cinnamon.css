@@ -79,6 +79,7 @@ StScrollView StScrollBar {
 /* =============================================================================
  * Shared button properties
  * ============================================================================= */
+.modal-dialog-button,
 .notification-button,
 .notification-icon-button {
   border-radius: 3px;
@@ -87,11 +88,12 @@ StScrollView StScrollBar {
   background-gradient-start: #f0f0f0;
   background-gradient-end: gainsboro;
   border: 1px solid #a8a8a8;
-  font-size: 0.95em;
+  padding: 4px 8px;
+  font-size: 1.1em;
   font-weight: normal;
   text-align: center;
 }
-
+.modal-dialog-button:hover,
 .notification-button:hover,
 .notification-icon-button:hover {
   border-radius: 3px;
@@ -99,8 +101,9 @@ StScrollView StScrollBar {
   background-gradient-start: #f0f0f0;
   background-gradient-end: #e4e4e4;
   border: 1px solid #aeaeae;
+  padding: 4px 8px;
 }
-
+.modal-dialog-button:focus,
 .notification-button:focus,
 .notification-icon-button:focus {
   border-radius: 3px;
@@ -109,8 +112,22 @@ StScrollView StScrollBar {
   background-gradient-end: #d7d7d7;
   border: 1px solid #398ee7;
   box-shadow: inset 0 0 0 1px #398ee7;
+  padding: 4px 8px;
 }
-.notification-button:focus:checked, .notification-button:focus:active,
+.modal-dialog-button:focus:hover,
+.notification-button:focus:hover,
+.notification-icon-button:focus:hover {
+  border-radius: 3px;
+  background-gradient-direction: vertical;
+  background-gradient-start: #f0f0f0;
+  background-gradient-end: #e4e4e4;
+  border: 1px solid #398ee7;
+  box-shadow: inset 0 0 0 1px #398ee7;
+  padding: 4px 8px;
+}
+.modal-dialog-button:focus:checked, .modal-dialog-button:focus:active,
+.notification-button:focus:checked,
+.notification-button:focus:active,
 .notification-icon-button:focus:checked,
 .notification-icon-button:focus:active {
   border-radius: 3px;
@@ -118,34 +135,30 @@ StScrollView StScrollBar {
   background-gradient-start: #b1b1b1;
   background-gradient-end: #b8b8b8;
   border: 1px solid #8a8a8a;
+  padding: 4px 8px;
 }
-
+.modal-dialog-button:active, .modal-dialog-button:checked,
 .notification-button:active,
-.notification-icon-button:active {
+.notification-button:checked,
+.notification-icon-button:active,
+.notification-icon-button:checked {
   border-radius: 3px;
   background-gradient-direction: vertical;
   background-gradient-start: #b1b1b1;
   background-gradient-end: #b8b8b8;
   border: 1px solid #8a8a8a;
+  padding: 4px 8px;
 }
-
-.notification-button:focus:hover,
-.notification-icon-button:focus:hover,
-.modal-dialog-button:focus:hover {
-  border-radius: 3px;
-  background-gradient-direction: vertical;
-  background-gradient-start: #f0f0f0;
-  background-gradient-end: #e4e4e4;
-  border: 1px solid #398ee7;
-  box-shadow: inset 0 0 0 1px #398ee7;
+.modal-dialog-button:disabled,
+.notification-button:disabled,
+.notification-icon-button:disabled {
+  color: rgba(70, 70, 70, 0.8);
+  padding: 4px 8px;
 }
 
 /* =============================================================================
  * PopupMenu (/usr/share/cinnamon/js/ui/popupMenu.js)
  * ============================================================================= */
-/* Mark for deletion on EOL. Cinnamon 3.2.x+
- * Remove condition and rule/s.
- */
 .menu {
   background-color: #ebebeb;
   border: 1px solid rgba(41, 41, 41, 0.3);
@@ -469,9 +482,6 @@ StScrollView StScrollBar {
   spacing: 0;
   margin: 0;
   icon-size: 1.14em;
-  /* Mark for deletion on EOL. Cinnamon 3.4.x+
-   * Remove condition only.
-   */
   /* #####################################################################
    * Added in Cinnamon 3.4
    *
@@ -903,31 +913,30 @@ StScrollView StScrollBar {
   color: #464646;
 }
 
-.notification-button {
-  border-radius: 3px;
-  color: #464646;
-  background-gradient-direction: vertical;
-  background-gradient-start: #f0f0f0;
-  background-gradient-end: gainsboro;
-  border: 1px solid #a8a8a8;
-  font-size: 1.1em;
-  padding: 4px 20px;
-}
-
+/* Override padding for this class so the button is squared. */
 .notification-icon-button {
-  border-radius: 3px;
-  color: #464646;
-  background-gradient-direction: vertical;
-  background-gradient-start: #f0f0f0;
-  background-gradient-end: gainsboro;
-  border: 1px solid #a8a8a8;
-  padding: 5px;
+  padding: 4px;
+}
+.notification-icon-button:hover {
+  padding: 4px;
 }
 .notification-icon-button:focus {
   padding: 4px;
 }
+.notification-icon-button:focus:hover {
+  padding: 4px;
+}
+.notification-icon-button:focus:checked, .notification-icon-button:focus:active {
+  padding: 4px;
+}
+.notification-icon-button:active, .notification-icon-button:checked {
+  padding: 4px;
+}
+.notification-icon-button:disabled {
+  padding: 4px;
+}
 .notification-icon-button > StIcon {
-  icon-size: 36px;
+  icon-size: 1.1em;
 }
 
 /* =============================================================================
@@ -1038,59 +1047,6 @@ StScrollView StScrollBar {
 .modal-dialog-button-box {
   spacing: 110px;
   padding-top: 20px;
-}
-.modal-dialog-button {
-  border-radius: 3px;
-  color: #464646;
-  background-gradient-direction: vertical;
-  background-gradient-start: #f0f0f0;
-  background-gradient-end: gainsboro;
-  border: 1px solid #a8a8a8;
-  height: 22px;
-  font-size: 1.1em;
-  padding: 4px 20px;
-}
-.modal-dialog-button:hover {
-  border-radius: 3px;
-  background-gradient-direction: vertical;
-  background-gradient-start: #f0f0f0;
-  background-gradient-end: #e4e4e4;
-  border: 1px solid #aeaeae;
-}
-.modal-dialog-button:focus {
-  border-radius: 3px;
-  background-gradient-direction: vertical;
-  background-gradient-start: #f3f3f3;
-  background-gradient-end: #d7d7d7;
-  border: 1px solid #398ee7;
-  box-shadow: inset 0 0 0 1px #398ee7;
-  padding: 4px 20px;
-}
-.modal-dialog-button:focus:hover {
-  border-radius: 3px;
-  background-gradient-direction: vertical;
-  background-gradient-start: #f0f0f0;
-  background-gradient-end: #e4e4e4;
-  border: 1px solid #398ee7;
-  box-shadow: inset 0 0 0 1px #398ee7;
-  padding: 4px 20px;
-}
-.modal-dialog-button:focus:checked, .modal-dialog-button:focus:active {
-  border-radius: 3px;
-  background-gradient-direction: vertical;
-  background-gradient-start: #b1b1b1;
-  background-gradient-end: #b8b8b8;
-  border: 1px solid #8a8a8a;
-}
-.modal-dialog-button:active, .modal-dialog-button:checked {
-  border-radius: 3px;
-  background-gradient-direction: vertical;
-  background-gradient-start: #b1b1b1;
-  background-gradient-end: #b8b8b8;
-  border: 1px solid #8a8a8a;
-}
-.modal-dialog-button:disabled {
-  color: rgba(70, 70, 70, 0.8);
 }
 
 /* =============================================================================
@@ -1513,9 +1469,6 @@ StScrollView StScrollBar {
  * Window list applet (/usr/share/cinnamon/applets/window-list@cinnamon.org/applet.js)
  * ============================================================================= */
 .window-list {
-  /* Mark for deletion on EOL. Cinnamon 3.6.x+
-   * Remove condition only.
-   */
   /* #########################################################################
    * Class "window-list-preview":Added in Cinnamon 3.6
    * ######################################################################### */
@@ -1544,9 +1497,6 @@ StScrollView StScrollBar {
   /* #####################################################################
    * Class "progress" (window list items progress overlay):Added in Cinnamon 3.4
    * ##################################################################### */
-  /* Mark for deletion on EOL. Cinnamon 3.6.x+
-   * Remove condition only.
-   */
 }
 .window-list-item-box:active, .window-list-item-box:checked, .window-list-item-box:focus, .window-list-item-box:checked:hover, .window-list-item-box:focus:hover, .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
@@ -1572,9 +1522,6 @@ StScrollView StScrollBar {
   background-color: #e1e1e1;
   color: #464646;
   border-radius: 0 0 3px 3px;
-  /* Mark for deletion on EOL. Cinnamon 3.6.x+
-   * Remove condition only.
-   */
 }
 .panel-top .window-list-item-box:active, .panel-top .window-list-item-box:checked, .panel-top .window-list-item-box:focus, .panel-top .window-list-item-box:checked:hover, .panel-top .window-list-item-box:focus:hover, .panel-top .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
@@ -1598,9 +1545,6 @@ StScrollView StScrollBar {
   border-radius: 0 3px 3px 0;
   padding-left: 0;
   padding-right: 0;
-  /* Mark for deletion on EOL. Cinnamon 3.6.x+
-   * Remove condition only.
-   */
 }
 .panel-left .window-list-item-box:active, .panel-left .window-list-item-box:checked, .panel-left .window-list-item-box:focus, .panel-left .window-list-item-box:checked:hover, .panel-left .window-list-item-box:focus:hover, .panel-left .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
@@ -1624,9 +1568,6 @@ StScrollView StScrollBar {
   border-radius: 3px 0 0 3px;
   padding-left: 0;
   padding-right: 0;
-  /* Mark for deletion on EOL. Cinnamon 3.6.x+
-   * Remove condition only.
-   */
 }
 .panel-right .window-list-item-box:active, .panel-right .window-list-item-box:checked, .panel-right .window-list-item-box:focus, .panel-right .window-list-item-box:checked:hover, .panel-right .window-list-item-box:focus:hover, .panel-right .window-list-item-box:active:hover {
   box-shadow: inset 0 0 0 1px #ababab;
@@ -1677,9 +1618,6 @@ StScrollView StScrollBar {
   padding: 5px;
 }
 
-/* =============================================================================
- * Grouped window list applet (/usr/share/cinnamon/applets/grouped-window-list@cinnamon.org
- * ============================================================================= */
 /* =============================================================================
  * Sound applet (/usr/share/cinnamon/applets/sound@cinnamon.org/applet.js)
  * ============================================================================= */
@@ -1858,9 +1796,6 @@ StScrollView StScrollBar {
 /* =============================================================================
  * Panel Launchers applet (/usr/share/cinnamon/applets/panel-launchers@cinnamon.org/applet.js)
  * ============================================================================= */
-/* Mark for deletion on EOL. Cinnamon 3.2.x+
- * Remove condition and rule.
- */
 .panel-launchers {
   spacing: 0;
 }
@@ -1911,9 +1846,6 @@ StScrollView StScrollBar {
    */
   /* &:active {
    * }
-   */
-  /* Mark for deletion on EOL. Cinnamon 3.4.x+
-   * Remove condition only.
    */
   /* #########################################################################
    * Added in Cinnamon 3.4
@@ -2148,9 +2080,6 @@ StScrollView StScrollBar {
   border-radius: 4px;
   padding: 20px;
   spacing: 1em;
-  /* Mark for deletion on EOL. Cinnamon 3.4.x+
-   * Remove condition only.
-   */
   /*level-bar class added in Cinnamon 3.4.x.*/
 }
 .osd-window .level-bar {
@@ -2219,9 +2148,6 @@ StScrollView StScrollBar {
   border-radius: 8px 0 0;
 }
 
-/* Mark for deletion on EOL. Cinnamon 3.4.x+
- * Remove condition only.
- */
 /* #########################################################################
  * Systray Applet - Added in Cinnamon 3.4
  *
