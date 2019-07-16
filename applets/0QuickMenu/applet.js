@@ -91,7 +91,7 @@ QuickMenu.prototype = {
         /* NOTE: Monitoring the directory is very limited. It doesn't monitor files
          * recursively and it doesn't even monitor file changes inside sub-folders.
          * The only solution would be to add a monitor per file,
-         * which I will never even consider doing. Tha is way the Auto-update menu
+         * which I will never even consider doing. That's why the Auto-update menu
          * option is disabled by default, it's totally useless.
          */
         if (this.directory_last && GLib.file_test(this.directory_last, GLib.FileTest.IS_DIR)) {
@@ -581,8 +581,8 @@ QuickMenu.prototype = {
 
     on_applet_removed_from_panel: function() {
         this.dealWithFolderMonitor(true);
-        this.settings.finalize();
         Main.keybindingManager.removeHotKey(this.menu_keybinding_name);
+        this.settings && this.settings.finalize();
     },
 
     on_applet_clicked: function(event) { // jshint ignore:line
