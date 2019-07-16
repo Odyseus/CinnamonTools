@@ -94,6 +94,7 @@ Mailnag.prototype = {
             this.accountMenus = {};
             this._onMailsAddedId = 0;
             this._onMailsRemovedId = 0;
+            this._panelDrawerHandlerId = 0;
             this.busWatcherId = 0;
 
             this.menuManager = new PopupMenu.PopupMenuManager(this);
@@ -183,7 +184,8 @@ Mailnag.prototype = {
             "pref_middle_click_behavior",
             "pref_keep_one_menu_open",
             "pref_logging_level",
-            "pref_debugger_enabled"
+            "pref_debugger_enabled",
+            "pref_third_party_integration_panel_drawer"
         ];
         let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
@@ -300,7 +302,7 @@ Mailnag.prototype = {
     },
 
     // converts the mail list returned from dbus to a list of dictionaries
-    fromDbusMailList: function(dbusList) {
+    fromDbusMailList: function(aDBusList) {
         let mList = {
             new: [],
             all: []
@@ -308,7 +310,7 @@ Mailnag.prototype = {
 
         for (let m in mList) {
             let idx = m === "new" ? 0 : 1;
-            let mails = dbusList[idx];
+            let mails = aDBusList[idx];
             let r = mList[m];
 
             if (!mails) {
@@ -351,12 +353,12 @@ Mailnag.prototype = {
         return mList;
     },
 
-    sortMails: function(mails) {
+    sortMails: function(aMails) {
         // ascending order
-        mails.sort((m1, m2) => {
+        aMails.sort((m1, m2) => {
             return m1.datetime - m2.datetime;
         });
-        return mails;
+        return aMails;
     },
 
     onMailsAdded: function(source, t, aDBusMailList) {
@@ -388,20 +390,24 @@ Mailnag.prototype = {
         Mainloop.idle_add(() => {
             this.notify(newMails, allMails);
 
+            if (iLen && this.pref_third_party_integration_panel_drawer) {
+                this.actor.show();
+            }
+
             return GLib.SOURCE_REMOVE;
         });
     },
 
-    onMailsRemoved: function(source, t, remainingMails) {
-        remainingMails = this.fromDbusMailList(remainingMails).new;
+    onMailsRemoved: function(source, t, aRemainingMails) {
+        aRemainingMails = this.fromDbusMailList(aRemainingMails).new;
 
         // make a list of remaining ids
         let ids = new Set();
         let i = 0,
-            iLen = remainingMails.length;
+            iLen = aRemainingMails.length;
 
         for (; i < iLen; i++) {
-            ids.add(remainingMails[i].id);
+            ids.add(aRemainingMails[i].id);
         }
 
         // remove menu item if its id isn't in the list
@@ -413,22 +419,29 @@ Mailnag.prototype = {
         }
     },
 
-    makeMenuItem: function(mail) {
-        let mi = new $.MailItem(mail.id, mail.sender, mail.sender_address, mail.subject, mail.datetime, mail.account);
+    makeMenuItem: function(aMail) {
+        let mi = new $.MailItem({
+            id: aMail.id,
+            sender: aMail.sender,
+            sender_address: aMail.sender_address,
+            subject: aMail.subject,
+            datetime: aMail.datetime,
+            account: aMail.account
+        });
         mi.markReadButton.connect("clicked",
-            () => this.markMailRead(mail.id));
+            () => this.markMailRead(aMail.id));
         mi.connect("activate", () => this.launchClient(true));
-        this.menuItems[mail.id] = mi;
+        this.menuItems[aMail.id] = mi;
 
         return mi;
     },
 
-    makeAccountMenu: function(account) {
-        let accmenu = new $.AccountMenu(account, this.orientation);
+    makeAccountMenu: function(aAccount) {
+        let accmenu = new $.AccountMenu(aAccount, this.orientation);
         accmenu.menu.connect("open-state-changed",
             (aMenu, aOpen) => this._subMenuOpenStateChanged(aMenu, aOpen));
 
-        this.accountMenus[account] = accmenu;
+        this.accountMenus[aAccount] = accmenu;
 
         if (this.orientation === St.Side.TOP) {
             this.menu.addMenuItem(accmenu, 0);
@@ -473,20 +486,20 @@ Mailnag.prototype = {
     // Adds a MailItem to the menu. If `account` is defined it's added
     // to its 'account menu'. An 'account menu' is created if it
     // doesn't exist.
-    addMailMenuItem: function(mailItem) {
-        if (mailItem.hasOwnProperty("account") && mailItem.account) {
+    addMailMenuItem: function(aMailItem) {
+        if (aMailItem.hasOwnProperty("account") && aMailItem.account) {
             let accmenu;
-            if (mailItem.account in this.accountMenus) {
-                accmenu = this.accountMenus[mailItem.account];
+            if (aMailItem.account in this.accountMenus) {
+                accmenu = this.accountMenus[aMailItem.account];
             } else {
-                accmenu = this.makeAccountMenu(mailItem.account);
+                accmenu = this.makeAccountMenu(aMailItem.account);
             }
-            accmenu.add(mailItem);
+            accmenu.add(aMailItem);
         } else {
             if (this.orientation === St.Side.TOP) {
-                this.menu.addMenuItem(mailItem, 0); // add to top of menu
+                this.menu.addMenuItem(aMailItem, 0); // add to top of menu
             } else {
-                this.menu.addMenuItem(mailItem); // add to bottom of menu
+                this.menu.addMenuItem(aMailItem); // add to bottom of menu
             }
         }
     },
@@ -789,14 +802,26 @@ Mailnag.prototype = {
         this.set_applet_icon_symbolic_name("mail-unread");
     },
 
-    markMailRead: function(id) {
+    markMailRead: function(aId) {
+        if (this._panelDrawerHandlerId > 0) {
+            Mainloop.source_remove(this._panelDrawerHandlerId);
+            this._panelDrawerHandlerId = 0;
+        }
+
         // remove account name from mail id
-        let actual_id = id.slice(0, id.indexOf("_"));
+        let actual_id = aId.slice(0, aId.indexOf("_"));
 
         // tell mailnag
         this.mailnag.MarkMailAsReadSync(actual_id);
 
-        this.removeMailMenuItem(id);
+        this.removeMailMenuItem(aId);
+
+        this._panelDrawerHandlerId = Mainloop.timeout_add(500, () => {
+            this.autoHideApplet();
+            this._panelDrawerHandlerId = 0;
+
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     removeMailMenuItem: function(id) {
@@ -841,22 +866,28 @@ Mailnag.prototype = {
          */
     },
 
-    // marks a list of mails as read
-    markMailsRead: function(mails) {
+    markMailsRead: function(aMails) {
         let i = 0,
-            iLen = mails.length;
+            iLen = aMails.length;
 
         for (; i < iLen; i++) {
-            this.markMailRead(mails[i].id);
+            this.markMailRead(aMails[i].id);
         }
     },
 
-    // mark all currently displayed mail as read
     markAllRead: function() {
         for (let id in this.menuItems) {
             if (this.menuItems.hasOwnProperty(id)) {
                 this.markMailRead(id);
             }
+        }
+    },
+
+    autoHideApplet: function() {
+        if (this.pref_third_party_integration_panel_drawer &&
+            this.actor.hasOwnProperty("__HandledByPanelDrawer") &&
+            !Object.keys(this.menuItems).length) {
+            this.actor.hide();
         }
     },
 
@@ -874,12 +905,12 @@ Mailnag.prototype = {
         }
     },
 
-    on_applet_clicked: function(event) { // jshint ignore:line
+    on_applet_clicked: function() {
         this.menu.toggle();
     },
 
-    _onButtonPressEvent: function(actor, event) {
-        if (event.get_button() === 2) { // 2: middle button
+    _onButtonPressEvent: function(aActor, aEvent) {
+        if (aEvent.get_button() === 2) { // 2: middle button
             switch (this.pref_middle_click_behavior) {
                 case "mark_read":
                     this.markAllRead();
@@ -892,11 +923,11 @@ Mailnag.prototype = {
                     break;
             }
         }
-        return Applet.Applet.prototype._onButtonPressEvent.call(this, actor, event);
+        return Applet.Applet.prototype._onButtonPressEvent.call(this, aActor, aEvent);
     },
 
-    on_orientation_changed: function(orientation) {
-        this.orientation = orientation;
+    on_orientation_changed: function(aOrientation) {
+        this.orientation = aOrientation;
         this.loadMails();
     },
 

@@ -39,9 +39,18 @@ var NotificationMode = {
     SUMMARY_COMPRESSED: 3,
     SUMMARY_CUSTOM: 4
 };
+var MailItemParams = Object.freeze({
+    id: "",
+    sender: "",
+    sender_address: "",
+    subject: "",
+    datetime: "",
+    account: ""
+});
 
 /* exported MailnagProxy,
             DBUS_NAME,
             DBUS_PATH,
-            NotificationMode
+            NotificationMode,
+            MailItemParams
 */

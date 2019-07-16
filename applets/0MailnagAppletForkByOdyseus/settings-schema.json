@@ -110,6 +110,16 @@
         "description": "Test notifications",
         "callback": "_testNotifications"
     },
+    "third-party-header": {
+        "type": "header",
+        "description": "Third party integrations"
+    },
+    "pref_third_party_integration_panel_drawer": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Panel Drawer applet integration",
+        "tooltip": "Display applet when receiving new items. Hide applet when marking items as read and there are no unread items left."
+    },
     "debugging-header": {
         "type": "header",
         "description": "Debugging"

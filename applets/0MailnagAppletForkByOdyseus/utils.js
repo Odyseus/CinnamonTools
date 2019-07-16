@@ -28,6 +28,9 @@ const {
     gi: {
         St
     },
+    misc: {
+        params: Params
+    },
     ui: {
         popupMenu: PopupMenu
     }
@@ -42,6 +45,10 @@ const {
     ngettext
 } = GlobalUtils;
 
+const {
+    MailItemParams
+} = Constants;
+
 var Debugger = new DebugManager.DebugManager();
 
 function MailItem() {
@@ -51,29 +58,28 @@ function MailItem() {
 MailItem.prototype = {
     __proto__: PopupMenu.PopupBaseMenuItem.prototype,
 
-    _init: function(id, sender, sender_address, subject, datetime, account) {
+    _init: function(aParams) {
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this);
 
-        this.id = id;
-        this.subject = subject;
-        this.account = account;
-        this.datetime = datetime;
+        let params = Params.parse(aParams, MailItemParams);
 
-        if (sender === "") {
-            sender = sender_address;
-        }
-        this.sender = sender;
+        this.id = params.id;
+        this.subject = params.subject;
+        this.account = params.account;
+        this.datetime = params.datetime;
+        this.sender_address = params.sender_address;
+        this.sender = params.sender || params.sender_address;
 
         this._sender_label = new St.Label({
-            text: sender,
+            text: this.sender,
             style_class: "mailnag-sender-label"
         });
         this._subject_label = new St.Label({
-            text: subject,
+            text: this.subject,
             style_class: "mailnag-subject-label"
         });
         this._datetime_label = new St.Label({
-            text: this.formatDatetime(datetime),
+            text: this.formatDatetime(this.datetime),
             style_class: "popup-inactive-menu-item"
         });
 
@@ -106,8 +112,8 @@ MailItem.prototype = {
         });
     },
 
-    activate: function(event, keepMenu) { // jshint ignore:line
-        this.emit("activate", event, true); // keepMenu=True, prevents menu from closing
+    activate: function(aEvent) {
+        this.emit("activate", aEvent, true); // keepMenu=True, prevents menu from closing
     },
 
     updateTimeDisplay: function() {
@@ -115,8 +121,8 @@ MailItem.prototype = {
     },
 
     // formats datetime relative to now
-    formatDatetime: function(datetime) {
-        let time_diff = (new Date().getTime() - datetime.getTime()) / 1000;
+    formatDatetime: function(aDatetime) {
+        let time_diff = (new Date().getTime() - aDatetime.getTime()) / 1000;
         let days_diff = Math.floor(time_diff / 86400); // 86400 = Amount of seconds in 24 hours.
 
         if (days_diff === 0) { // today
@@ -138,7 +144,7 @@ MailItem.prototype = {
                 let w = Math.ceil(days_diff / 7);
                 return ngettext("%d week ago", "%d weeks ago", w).format(w);
             } else {
-                return datetime.toLocaleDateString();
+                return aDatetime.toLocaleDateString();
             }
         }
     }
@@ -151,21 +157,21 @@ function AccountMenu() {
 AccountMenu.prototype = {
     __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
 
-    _init: function(account, orientation) {
-        PopupMenu.PopupSubMenuMenuItem.prototype._init.call(this, account, false);
-        this._orientation = orientation; // needed for sorting
+    _init: function(aAccount, aOrientation) {
+        PopupMenu.PopupSubMenuMenuItem.prototype._init.call(this, aAccount, false);
+        this._orientation = aOrientation; // needed for sorting
         this.label.style_class = "mailnag-account-label";
         this.menuItems = {};
     },
 
-    add: function(mailMenuItem) {
+    add: function(aMailMenuItem) {
         if (this._orientation === St.Side.TOP) {
-            this.menu.addMenuItem(mailMenuItem, 0); // add to top of menu
+            this.menu.addMenuItem(aMailMenuItem, 0); // add to top of menu
         } else {
-            this.menu.addMenuItem(mailMenuItem); // add to bottom of menu
+            this.menu.addMenuItem(aMailMenuItem); // add to bottom of menu
         }
 
-        this.menuItems[mailMenuItem.id] = mailMenuItem;
+        this.menuItems[aMailMenuItem.id] = aMailMenuItem;
     }
 };
 
