@@ -331,7 +331,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         app_utils.build_xlets(xlets=self.xlets,
                               domain_name=self.a["--domain"],
                               build_output=self.a["--output"],
-                              do_not_cofirm=self.a["--no-confirmation"],
+                              do_not_confirm=self.a["--no-confirmation"],
                               install_localizations=self.a["--install-localizations"],
                               extra_files=self.a["--extra-files"],
                               dry_run=self.a["--dry-run"],
@@ -342,7 +342,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         """
         app_utils.build_themes(theme_name=self.a["--theme-name"],
                                build_output=self.a["--output"],
-                               do_not_cofirm=self.a["--no-confirmation"],
+                               do_not_confirm=self.a["--no-confirmation"],
                                dry_run=self.a["--dry-run"],
                                logger=self.logger)
 

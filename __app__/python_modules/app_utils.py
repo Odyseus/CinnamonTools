@@ -158,7 +158,7 @@ _theme_build_data = """
 **Gtk3 CSD backdrop shadow:**    {gtk3_csd_backdrop_shadow}
 **Theme name:**                  {theme_name}
 **Output directory:**            {build_output}
-**Ask overwrite confirmation:**  {do_not_cofirm}
+**Ask overwrite confirmation:**  {do_not_confirm}
 **Dry run:**                     {dry_run}
 """
 
@@ -167,7 +167,7 @@ _xlets_build_data = """
 **Output directory:**            {build_output}
 **Install localizations:**       {install_localizations}
 **Extra files from:**            {extra_files}
-**Ask overwrite confirmation:**  {do_not_cofirm}
+**Ask overwrite confirmation:**  {do_not_confirm}
 **Dry run:**                     {dry_run}
 """
 
@@ -546,7 +546,7 @@ def generate_meta_file(return_data=True):
 def build_xlets(xlets=[],
                 domain_name=None,
                 build_output="",
-                do_not_cofirm=False,
+                do_not_confirm=False,
                 install_localizations=False,
                 extra_files="",
                 dry_run=False,
@@ -562,7 +562,7 @@ def build_xlets(xlets=[],
         The domain name to use to build the xlets.
     build_output : str, optional
         Path to the folder were the built xlets are stored.
-    do_not_cofirm : bool, optional
+    do_not_confirm : bool, optional
         Whether to ask for overwrite confirmation when an xlet destination exists or not.
     dry_run : bool, optional
         See <class :any:`XletBuilder`>.
@@ -595,7 +595,7 @@ def build_xlets(xlets=[],
             "1": False,
             "2": True
         },
-        "do_not_cofirm": {
+        "do_not_confirm": {
             "1": False,
             "2": True
         },
@@ -605,23 +605,19 @@ def build_xlets(xlets=[],
         }
     }
 
-    # __version__ is used to verify that the stored data is compatible with the
-    # default data used when building xlets.
     options_map_defaults = {
-        "__version__": "2",
         "domain_name": domain_name,
         # Note: Check needed to avoid storing None.
         "build_output": build_output or "",
         "install_localizations": "2" if install_localizations else "1",
         "extra_files": extra_files,
-        "do_not_cofirm": "2" if do_not_cofirm else "1",
+        "do_not_confirm": "2" if do_not_confirm else "1",
         "dry_run": "2" if dry_run else "1"
     }
 
     interactive = from_menu
 
-    if interactive and o_m_l_v is not None and options_map_defaults != o_m_l_v and \
-            options_map_defaults["__version__"] == o_m_l_v.get("__version__"):
+    if interactive and o_m_l_v is not None and options_map_defaults != o_m_l_v:
         print_separator(logger)
         inform("Build data from a previous xlet build found at:")
         logger.info("**%s**" % PATHS["xlets_latest_build_data_file"], date=False, to_file=False)
@@ -629,7 +625,7 @@ def build_xlets(xlets=[],
         logger.info(_xlets_build_data.format(
             domain_name=o_m_l_v["domain_name"],
             build_output=o_m_l_v["build_output"],
-            do_not_cofirm=str(not options_map["do_not_cofirm"][o_m_l_v["do_not_cofirm"]]),
+            do_not_confirm=str(not options_map["do_not_confirm"][o_m_l_v["do_not_confirm"]]),
             install_localizations=str(
                 options_map["install_localizations"][o_m_l_v["install_localizations"]]),
             extra_files=o_m_l_v["extra_files"],
@@ -645,7 +641,20 @@ def build_xlets(xlets=[],
 
         # Do not change defaults if one chooses not to use stored build data.
         if answer == "1" or answer == "2":
-            options_map_defaults = o_m_l_v
+            # Check that the stored options contain all options needed for the building process.
+            # If not, add them.
+            for opt, val in options_map_defaults.items():
+                if opt not in o_m_l_v:
+                    o_m_l_v[opt] = val
+
+            # Check that the stored options doesn't contain options that aren't used anymore.
+            # If they do, remove them.
+            new_o_m_l_v = {}
+            for opt, val in o_m_l_v.items():
+                if opt in options_map_defaults:
+                    new_o_m_l_v[opt] = o_m_l_v[opt]
+
+            options_map_defaults = new_o_m_l_v
         else:
             pass
 
@@ -702,7 +711,7 @@ def build_xlets(xlets=[],
         # overwriting an existing xlet is null.
         if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
             ask_for_confirmation_options = False
-            options_map_defaults["do_not_cofirm"] = "2"
+            options_map_defaults["do_not_confirm"] = "2"
 
         if ask_for_confirmation_options:
             # Ask for overwrite confirmation.
@@ -711,9 +720,9 @@ def build_xlets(xlets=[],
             inform("1. Confirm each overwrite operation")
             inform("2. Directly overwrite existent xlets")
             prompts.do_prompt(options_map_defaults,
-                              "do_not_cofirm",
+                              "do_not_confirm",
                               "Enter option",
-                              options_map_defaults["do_not_cofirm"],
+                              options_map_defaults["do_not_confirm"],
                               validator=validate_options_1_2)
 
         # NOTE: Do not ask to install localizations if the output location
@@ -803,7 +812,7 @@ def build_xlets(xlets=[],
             logger.warning("**Global metadata file might need to be re-generated.**" % x)
 
     dry_run = options_map["dry_run"][options_map_defaults["dry_run"]]
-    do_not_cofirm = options_map["do_not_cofirm"][options_map_defaults["do_not_cofirm"]]
+    do_not_confirm = options_map["do_not_confirm"][options_map_defaults["do_not_confirm"]]
     install_localizations = options_map["install_localizations"][
         options_map_defaults["install_localizations"]
     ]
@@ -814,7 +823,7 @@ def build_xlets(xlets=[],
         for data in xlets_data:
             builder = XletBuilder(
                 data,
-                do_not_cofirm=do_not_cofirm,
+                do_not_confirm=do_not_confirm,
                 install_localizations=install_localizations,
                 extra_files=options_map_defaults["extra_files"],
                 dry_run=dry_run,
@@ -854,7 +863,7 @@ class XletBuilder():
     """
 
     def __init__(self, xlet_data,
-                 do_not_cofirm=False,
+                 do_not_confirm=False,
                  install_localizations=False,
                  extra_files="",
                  dry_run=False,
@@ -865,7 +874,7 @@ class XletBuilder():
         ----------
         xlet_data : dict
             The xlet data to handle.
-        do_not_cofirm : bool
+        do_not_confirm : bool
             Whether to ask for overwrite confirmation when an xlet destination exists or not.
         dry_run : bool
             Log an action without actually performing it.
@@ -873,7 +882,7 @@ class XletBuilder():
             See <class :any:`LogSystem`>.
         """
         self._xlet_data = xlet_data
-        self._do_not_cofirm = do_not_cofirm
+        self._do_not_confirm = do_not_confirm
         self._install_localizations = install_localizations
         self._extra_files = extra_files
         self._dry_run = dry_run
@@ -950,12 +959,12 @@ class XletBuilder():
             return False
 
         if file_utils.is_real_dir(self._xlet_data["destination"]):
-            if not self._do_not_cofirm:
+            if not self._do_not_confirm:
                 self.logger.warning(_existent_xlet_destination_msg.format(
                     path=self._xlet_data["destination"]
                 ), date=False, to_file=False)
 
-            if self._do_not_cofirm or prompts.confirm(prompt="Proceed?", response=False):
+            if self._do_not_confirm or prompts.confirm(prompt="Proceed?", response=False):
                 if self._dry_run:
                     self.logger.log_dry_run("**Destination will be eradicated:**\n%s" %
                                             self._xlet_data["destination"])
@@ -1183,7 +1192,7 @@ def get_xlets_dirs():
     return applets_dirs + extensions_dirs
 
 
-def build_themes(theme_name="", build_output="", do_not_cofirm=False,
+def build_themes(theme_name="", build_output="", do_not_confirm=False,
                  dry_run=False, logger=None, from_menu=False):
     """Build themes.
 
@@ -1193,7 +1202,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         The given name of the theme.
     build_output : str, optional
         Path to the destination folder were the built themes will be saved.
-    do_not_cofirm : bool, optional
+    do_not_confirm : bool, optional
         Whether to ask for overwrite confirmation when a theme destination exists or not.
     dry_run : bool, optional
         See <class :any:`XletBuilder`>.
@@ -1225,13 +1234,14 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         "cinnamon_version": {
             "1": "3.0",
             "2": "3.4",
-            "3": "4.0"
+            "3": "4.0",
+            "4": "4.2"
         },
         "gtk3_version": {
             "1": "3.18",
             "2": "3.22"
         },
-        "do_not_cofirm": {
+        "do_not_confirm": {
             "1": False,
             "2": True
         },
@@ -1241,14 +1251,11 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         }
     }
 
-    # __version__ is used to verify that the stored data is compatible with the
-    # default data used when generating themes.
     options_map_defaults = {
-        "__version__": "3",
         "theme_name": theme_name,
         # Note: Check needed to avoid storing None.
         "build_output": build_output or "",
-        "do_not_cofirm": "2" if do_not_cofirm else "1",
+        "do_not_confirm": "2" if do_not_confirm else "1",
         "dry_run": "2" if dry_run else "1",
         "cinnamon_version": "1",
         "cinnamon_font_size": "10pt",
@@ -1260,23 +1267,36 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
 
     interactive = True
 
-    if o_m_l_v is not None and options_map_defaults != o_m_l_v and \
-            options_map_defaults["__version__"] == o_m_l_v.get("__version__"):
+    if o_m_l_v is not None and options_map_defaults != o_m_l_v:
         print_separator(logger)
         inform("Build data from a previous theme build found at:")
         logger.info("**%s**" % PATHS["theme_latest_build_data_file"], date=False, to_file=False)
         inform("Details:")
         logger.info(_theme_build_data.format(
-            cinnamon_version=options_map["cinnamon_version"][o_m_l_v["cinnamon_version"]],
-            cinnamon_font_size=o_m_l_v["cinnamon_font_size"],
-            cinnamon_font_family=o_m_l_v["cinnamon_font_family"],
-            gtk3_version=options_map["gtk3_version"][o_m_l_v["gtk3_version"]],
-            gtk3_csd_shadow=o_m_l_v["gtk3_csd_shadow"],
-            gtk3_csd_backdrop_shadow=o_m_l_v["gtk3_csd_backdrop_shadow"],
-            theme_name=o_m_l_v["theme_name"],
-            build_output=o_m_l_v["build_output"],
-            do_not_cofirm=str(not options_map["do_not_cofirm"][o_m_l_v["do_not_cofirm"]]),
-            dry_run=str(options_map["dry_run"][o_m_l_v["dry_run"]])
+            cinnamon_version=options_map["cinnamon_version"][
+                o_m_l_v.get("cinnamon_version", options_map_defaults["cinnamon_version"])
+            ],
+            cinnamon_font_size=o_m_l_v.get("cinnamon_font_size",
+                                           options_map_defaults["cinnamon_font_size"]),
+            cinnamon_font_family=o_m_l_v.get("cinnamon_font_family",
+                                             options_map_defaults["cinnamon_font_family"]),
+            gtk3_version=options_map["gtk3_version"][
+                o_m_l_v.get("gtk3_version", options_map_defaults["gtk3_version"])
+            ],
+            gtk3_csd_shadow=o_m_l_v.get("gtk3_csd_shadow",
+                                        options_map_defaults["gtk3_csd_shadow"]),
+            gtk3_csd_backdrop_shadow=o_m_l_v.get("gtk3_csd_backdrop_shadow",
+                                                 options_map_defaults["gtk3_csd_backdrop_shadow"]),
+            theme_name=o_m_l_v.get("theme_name",
+                                   options_map_defaults["theme_name"]),
+            build_output=o_m_l_v.get("build_output",
+                                     options_map_defaults["build_output"]),
+            do_not_confirm=str(not options_map["do_not_confirm"][
+                o_m_l_v.get("do_not_confirm", options_map_defaults["do_not_confirm"])
+            ]),
+            dry_run=str(options_map["dry_run"][
+                o_m_l_v.get("dry_run", options_map_defaults["dry_run"])
+            ])
         ), date=False, to_file=False)
         print_separator(logger)
         inform("Choose an option:")
@@ -1288,7 +1308,20 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
 
         # Do not change defaults if one chooses not to use stored build data.
         if answer == "1" or answer == "2":
-            options_map_defaults = o_m_l_v
+            # Check that the stored options contain all options needed for the building process.
+            # If not, add them.
+            for opt, val in options_map_defaults.items():
+                if opt not in o_m_l_v:
+                    o_m_l_v[opt] = val
+
+            # Check that the stored options doesn't contain options that aren't used anymore.
+            # If they do, remove them.
+            new_o_m_l_v = {}
+            for opt, val in o_m_l_v.items():
+                if opt in options_map_defaults:
+                    new_o_m_l_v[opt] = o_m_l_v[opt]
+
+            options_map_defaults = new_o_m_l_v
         else:
             pass
 
@@ -1300,7 +1333,8 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         inform("Choose in which Cinnamon version the theme will be used.")
         inform("1. 3.0.x to 3.2.x")
         inform("2. 3.4.x to 3.8.x")
-        inform("3. 4.0.x plus")
+        inform("3. 4.0.x")
+        inform("4. 4.2.x plus")
 
         prompts.do_prompt(options_map_defaults,
                           "cinnamon_version",
@@ -1406,7 +1440,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
         # overwriting an existing xlet is null.
         if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
             ask_for_confirmation_options = False
-            options_map_defaults["do_not_cofirm"] = "2"
+            options_map_defaults["do_not_confirm"] = "2"
 
         if ask_for_confirmation_options:
             # Ask for overwrite confirmation.
@@ -1415,9 +1449,9 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
             inform("1. Confirm each overwrite operation")
             inform("2. Directly overwrite existent themes")
             prompts.do_prompt(options_map_defaults,
-                              "do_not_cofirm",
+                              "do_not_confirm",
                               "Enter option",
-                              options_map_defaults["do_not_cofirm"],
+                              options_map_defaults["do_not_confirm"],
                               validator=validate_options_1_2)
 
         # Ask for dry.
@@ -1482,7 +1516,7 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
     from runpy import run_path
 
     dry_run = options_map["dry_run"][options_map_defaults["dry_run"]]
-    do_not_cofirm = options_map["do_not_cofirm"][options_map_defaults["do_not_cofirm"]]
+    do_not_confirm = options_map["do_not_confirm"][options_map_defaults["do_not_confirm"]]
     built_theme_variants = []
 
     for variant in theme_variants:
@@ -1501,11 +1535,11 @@ def build_themes(theme_name="", build_output="", do_not_cofirm=False,
             continue
 
         if file_utils.is_real_dir(destination_folder):
-            if not do_not_cofirm:
+            if not do_not_confirm:
                 logger.warning(_existent_xlet_destination_msg.format(path=destination_folder),
                                date=False)
 
-            if do_not_cofirm or prompts.confirm(prompt="Proceed?", response=False):
+            if do_not_confirm or prompts.confirm(prompt="Proceed?", response=False):
                 if dry_run:
                     logger.log_dry_run("**Destination will be eradicated:**\n%s" %
                                        destination_folder)
