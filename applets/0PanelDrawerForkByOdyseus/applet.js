@@ -39,6 +39,7 @@ const {
     escapeHTML
 } = GlobalUtils;
 
+
 function PanelDrawer() {
     this._init.apply(this, arguments);
 }
@@ -315,6 +316,7 @@ PanelDrawer.prototype = {
                 }
 
                 _children[i].hide();
+                _children[i][$.HANDLER_PROP] = true;
             }
         } else {
             this._setAppletIcon(true);
@@ -322,6 +324,10 @@ PanelDrawer.prototype = {
             for (let i = 0; i < selfIndex; i++) {
                 if (!this.collapsedApplets.has(_children[i])) {
                     _children[i].show();
+
+                    if (_children[i].hasOwnProperty($.HANDLER_PROP)) {
+                        delete _children[i][$.HANDLER_PROP];
+                    }
                 }
             }
 

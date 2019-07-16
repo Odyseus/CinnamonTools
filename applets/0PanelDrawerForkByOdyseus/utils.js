@@ -37,6 +37,8 @@ const {
     CustomNotification
 } = DesktopNotificationsUtils;
 
+var HANDLER_PROP = "__HandledByPanelDrawer";
+
 var Debugger = new DebugManager.DebugManager();
 
 var Notification = new CustomNotification({
@@ -77,6 +79,7 @@ function getPanelOfApplet(aInstanceId) {
 }
 
 /* exported Debugger,
+            HANDLER_PROP,
             Notification,
             getPanelOfApplet
  */
