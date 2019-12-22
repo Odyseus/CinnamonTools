@@ -172,7 +172,7 @@ Translator.prototype = {
                     translation = aResponse[RESPONSE_INDEX_MAP.translation];
                     let transStr = "";
 
-                    if (!translation) {
+                    if (!translation || translation.length === 0) {
                         break;
                     }
 
@@ -193,7 +193,7 @@ Translator.prototype = {
                 case "genderSpecific":
                     let genderSpecific = aResponse[RESPONSE_INDEX_MAP.genderSpecific];
 
-                    if (!genderSpecific) {
+                    if (!genderSpecific || genderSpecific.length === 0) {
                         break;
                     }
 
@@ -237,7 +237,7 @@ Translator.prototype = {
                 case "definitions":
                     let definitions = aResponse[RESPONSE_INDEX_MAP.definitions];
 
-                    if (!definitions) {
+                    if (!definitions || definitions.length === 0) {
                         break;
                     }
 
@@ -272,7 +272,7 @@ Translator.prototype = {
                 case "synonyms":
                     let synonyms = aResponse[RESPONSE_INDEX_MAP.synonyms];
 
-                    if (!synonyms) {
+                    if (!synonyms || synonyms.length === 0) {
                         break;
                     }
 
@@ -306,7 +306,7 @@ Translator.prototype = {
                 case "examples":
                     let examples = aResponse[RESPONSE_INDEX_MAP.examples];
 
-                    if (!examples) {
+                    if (!examples || examples.length === 0) {
                         break;
                     }
 
@@ -334,7 +334,7 @@ Translator.prototype = {
                 case "seeAlso":
                     let seeAlso = aResponse[RESPONSE_INDEX_MAP.seeAlso];
 
-                    if (!seeAlso) {
+                    if (!seeAlso || seeAlso.length === 0) {
                         break;
                     }
 
@@ -346,7 +346,7 @@ Translator.prototype = {
                 case "possibleMistakes":
                     let possibleMistakes = aResponse[RESPONSE_INDEX_MAP.possibleMistakes];
 
-                    if (!possibleMistakes) {
+                    if (!possibleMistakes || possibleMistakes.length === 0) {
                         break;
                     }
 
