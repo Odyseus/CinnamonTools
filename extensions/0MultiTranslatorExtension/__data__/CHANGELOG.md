@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Sun, 22 Dec 2019 04:54:47 -0300
+- **Commit:** [3572463](https://gitlab.com/Odyseus/CinnamonTools/commit/3572463)
+- **Author:** Odyseus
+
+```
+- Added some checks to the default Google translation provider to minimize the logging of non-fatal errors.
+
+```
+
+***
+
 - **Date:** Fri, 21 Jun 2019 23:07:33 -0300
 - **Commit:** [3d3b373](https://gitlab.com/Odyseus/CinnamonTools/commit/3d3b373)
 - **Author:** Odyseus

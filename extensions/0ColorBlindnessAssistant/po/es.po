@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ColorBlindnessAssistant\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-06-21 23:08-0300\n"
-"PO-Revision-Date: 2019-06-21 23:16-0300\n"
+"POT-Creation-Date: 2019-12-22 04:53-0300\n"
+"PO-Revision-Date: 2019-12-22 04:56-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -155,7 +155,7 @@ msgstr "Exportar preferencias a un archivo"
 msgid "Reset settings to defaults"
 msgstr "Restablecer preferencias a los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:318 utils.js:53
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 utils.js:53
 msgid "Help"
 msgstr "Ayuda"
 
@@ -189,49 +189,54 @@ msgstr "¡Intentando restablecer todos los ajustes!"
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
-#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
+#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:319
+#: ../../__app__/python_modules/localized_help_creator.py:312
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:320
+#: ../../__app__/python_modules/localized_help_creator.py:313
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:349
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:363
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:364
+#, python-format
+msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
+msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
+
+#: ../../__app__/python_modules/localized_help_creator.py:381
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:389
+#: ../../__app__/python_modules/localized_help_creator.py:384
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:391
+#: ../../__app__/python_modules/localized_help_creator.py:386
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:402
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:411
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 

@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Tue, 16 Jul 2019 00:51:35 -0300
+- **Commit:** [831d2bd](https://gitlab.com/Odyseus/CinnamonTools/commit/831d2bd)
+- **Author:** Odyseus
+
+```
+- Added a property to applets handled by this applet to allow handled applets to enable a basic integration with the panel drawer.
+
+```
+
+***
+
 - **Date:** Fri, 21 Jun 2019 23:03:47 -0300
 - **Commit:** [5429260](https://gitlab.com/Odyseus/CinnamonTools/commit/5429260)
 - **Author:** Odyseus

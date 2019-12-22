@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Tue, 16 Jul 2019 00:51:56 -0300
+- **Commit:** [f51d8f2](https://gitlab.com/Odyseus/CinnamonTools/commit/f51d8f2)
+- **Author:** Odyseus
+
+```
+- Added basic integration with Panel Drawer applet.
+
+```
+
+***
+
 - **Date:** Fri, 21 Jun 2019 23:02:29 -0300
 - **Commit:** [889dcc2](https://gitlab.com/Odyseus/CinnamonTools/commit/889dcc2)
 - **Author:** Odyseus

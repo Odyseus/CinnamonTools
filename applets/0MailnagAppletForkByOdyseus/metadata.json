@@ -1,27 +1,7 @@
 {
     "description": "Mailnag mail notifier applet",
-    "website": "{{REPO_URL}}",
     "max-instances": -1,
-    "cinnamon-version": [
-        "3.0",
-        "3.2",
-        "3.4",
-        "3.6",
-        "3.8",
-        "4.0",
-        "4.2",
-        "4.4",
-        "4.6",
-        "4.8",
-        "5.0",
-        "5.2",
-        "5.4",
-        "5.6",
-        "5.8",
-        "6.0"
-    ],
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
     "contributors": "See this xlet help file.",
-    "uuid": "{{UUID}}",
     "name": "Mailnag (Fork By Odyseus)"
 }

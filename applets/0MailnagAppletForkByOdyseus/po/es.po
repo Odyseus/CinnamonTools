@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-06-21 23:08-0300\n"
-"PO-Revision-Date: 2019-06-22 00:00-0300\n"
+"POT-Creation-Date: 2019-12-22 04:53-0300\n"
+"PO-Revision-Date: 2019-12-22 04:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -19,53 +19,58 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:247 ../../__app__/python_modules/localized_help_creator.py:321
+#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318 applet.js:212
+#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:214
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:319
+#: ../../__app__/python_modules/localized_help_creator.py:312
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:320
+#: ../../__app__/python_modules/localized_help_creator.py:313
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:356
+#: ../../__app__/python_modules/localized_help_creator.py:349
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:370
+#: ../../__app__/python_modules/localized_help_creator.py:363
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:364
+#, python-format
+msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
+msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
+
+#: ../../__app__/python_modules/localized_help_creator.py:381
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:389
+#: ../../__app__/python_modules/localized_help_creator.py:384
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:391
+#: ../../__app__/python_modules/localized_help_creator.py:386
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:402
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:411
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -148,105 +153,105 @@ msgstr "Se recomienda instalar el paquete de dependencia opcional de Mailnag `gi
 msgid "The Mailnag's **LibNotify Notifications** plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass such limitations. Needless to say, if one choses to use the notifications provided by this applet, the **LibNotify Notifications** plug-in must be disabled to avoid receiving duplicated notifications."
 msgstr "El complemento **Notificaciones LibNotify** de Mailnag no puede agregar acciones de notificación como marcar correos como leídos o abrir el cliente de correo directamente desde la notificación. Estas funciones solo están disponibles para Gnome (una limitación en el propio complemento). Este applet implementa sus propias notificaciones configurables para evitar dichas limitaciones. No hace falta decir que si uno elige usar las notificaciones proporcionadas por este applet, el complemento **Notificaciones LibNotify** debe estar deshabilitado para evitar recibir notificaciones duplicadas."
 
-#: applet.js:203
+#: applet.js:205
 msgid "Configure Mailnag daemon"
 msgstr "Configurar el demonio Mailnag"
 
-#: applet.js:250
+#: applet.js:252
 msgid "Mailnag daemon stopped working!"
 msgstr "¡El demonio Mailnag dejó de funcionar!"
 
-#: applet.js:252
+#: applet.js:254
 msgid "Mailnag daemon isn't running! Do you have it installed?"
 msgstr "¡El demonio de Mailnag no se está ejecutando! ¿Lo tiene instalado?"
 
-#: applet.js:514
+#: applet.js:527
 #, javascript-format
 msgid "You have %d new mail!"
 msgid_plural "You have %d new mails!"
 msgstr[0] "¡Tienes %d correo nuevo!"
 msgstr[1] "¡Tienes %d correos nuevos!"
 
-#: applet.js:518 applet.js:700
+#: applet.js:531 applet.js:713
 msgid "Mark All Read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:519
+#: applet.js:532
 msgid "Mark Read"
 msgstr "Marcar como leído"
 
-#: applet.js:579
+#: applet.js:592
 #, javascript-format
 msgid "(and %d more)"
 msgid_plural "(and %d more)"
 msgstr[0] "(y %d más)"
 msgstr[1] "(y %d más)"
 
-#: applet.js:602
+#: applet.js:615
 msgid "Open Mail client"
 msgstr "Abrir cliente de correo"
 
-#: applet.js:733 applet.js:777
+#: applet.js:746 applet.js:790
 msgid "No unread mails."
 msgstr "Sin mensajes no leídos."
 
-#: applet.js:757
+#: applet.js:770
 msgid "Mailnag daemon is not running!"
 msgstr "El demonio Mailnag no se está ejecutando!"
 
-#: applet.js:767
+#: applet.js:780
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr "¡Tienes un correo de %s!"
 
-#: applet.js:773
+#: applet.js:786
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] "¡Tienes %d correo sin leer!"
 msgstr[1] "¡Tienes %d correos sin leer!"
 
-#: applet.js:787
+#: applet.js:800
 msgid "Click to see error!"
 msgstr "¡Hacer clic para ver el error!"
 
-#: applet.js:788
+#: applet.js:801
 msgid "Error"
 msgstr "Error"
 
 #. 86400 = Amount of seconds in 24 hours.
 #. today
 #. <1 minute
-#: utils.js:124
+#: utils.js:130
 msgid "just now"
 msgstr "hace poco"
 
-#: utils.js:127
+#: utils.js:133
 #, javascript-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
 msgstr[0] "hace %d minuto"
 msgstr[1] "hace %d minutos"
 
-#: utils.js:130
+#: utils.js:136
 #, javascript-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
 msgstr[0] "hace %d hora"
 msgstr[1] "hace %d horas"
 
-#: utils.js:134
+#: utils.js:140
 msgid "yesterday"
 msgstr "ayer"
 
-#: utils.js:136
+#: utils.js:142
 #, javascript-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "hace %d día"
 msgstr[1] "hace %d días"
 
-#: utils.js:139
+#: utils.js:145
 #, javascript-format
 msgid "%d week ago"
 msgid_plural "%d weeks ago"
@@ -400,6 +405,18 @@ msgstr ""
 #. settings-schema.json->notification_test_button->description
 msgid "Test notifications"
 msgstr "Notificaciones de prueba"
+
+#. settings-schema.json->third-party-header->description
+msgid "Third party integrations"
+msgstr "Integraciones de terceros"
+
+#. settings-schema.json->pref_third_party_integration_panel_drawer->description
+msgid "Panel Drawer applet integration"
+msgstr "Integración del applet Cajón del panel"
+
+#. settings-schema.json->pref_third_party_integration_panel_drawer->tooltip
+msgid "Display applet when receiving new items. Hide applet when marking items as read and there are no unread items left."
+msgstr "Mostrar applet al recibir nuevos artículos. Ocultar applet al marcar elementos como leídos y no quedan elementos no leídos."
 
 #. settings-schema.json->debugging-header->description
 msgid "Debugging"

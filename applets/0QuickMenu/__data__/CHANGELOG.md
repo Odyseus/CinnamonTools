@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Tue, 16 Jul 2019 00:53:10 -0300
+- **Commit:** [a7cade1](https://gitlab.com/Odyseus/CinnamonTools/commit/a7cade1)
+- **Author:** Odyseus
+
+```
+- Just a couple of typos/grammar corrections.
+
+```
+
+***
+
 - **Date:** Fri, 21 Jun 2019 23:04:11 -0300
 - **Commit:** [b2b85bf](https://gitlab.com/Odyseus/CinnamonTools/commit/b2b85bf)
 - **Author:** Odyseus
