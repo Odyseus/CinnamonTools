@@ -9,8 +9,16 @@ PATHS : dict
 root_folder : str
     The main folder containing the application. All commands must be executed from this location
     without exceptions.
+SUPPORTED_CINNAMON_VERSION_MAX : float
+    Maximum Cinnamon version number.
+SUPPORTED_CINNAMON_VERSION_MIN : float
+    Minimum Cinnamon version number.
 URLS : dict
     URLs storage.
+validate_options_1_2 : function
+    Function to validate numeric input.
+validate_options_1_2_3 : function
+    Function to validate numeric input.
 XLET_META : dict
     Xlet meta type.
 XLET_SYSTEM : dict
@@ -41,6 +49,9 @@ validate_options_1_2_3 = generate_numeral_options_validator(3)
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
     os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
 
+SUPPORTED_CINNAMON_VERSION_MIN = 3.0
+
+SUPPORTED_CINNAMON_VERSION_MAX = 7.0
 
 URLS = {
     "repo": "https://gitlab.com/Odyseus/CinnamonTools",
@@ -543,6 +554,36 @@ def generate_meta_file(return_data=True):
         return xlet_meta
 
 
+def supported_cinnamon_versions_range(start, stop):
+    """Generate a list of Cinnamon versions.
+
+    This generates a list of Cinnamon versions from a start version to an end version using only
+    mayor and minor version numbers (floats) ignoring micro numbers.
+
+    Parameters
+    ----------
+    start : float/int
+        The start version number.
+    stop : float/int
+        The end version number.
+
+    Returns
+    -------
+    list
+        List of supported Cinnamon versions.
+    """
+    count = start
+    versions = []
+
+    while count < stop:
+        # NOTE: Round to 1 decimal point.
+        # Because working with floats sucks in every single programming language!
+        versions.append("%.1f" % count)
+        count += 0.1
+
+    return versions
+
+
 def build_xlets(xlets=[],
                 domain_name=None,
                 build_output="",
@@ -564,6 +605,10 @@ def build_xlets(xlets=[],
         Path to the folder were the built xlets are stored.
     do_not_confirm : bool, optional
         Whether to ask for overwrite confirmation when an xlet destination exists or not.
+    install_localizations : bool, optional
+        Whether or not to install xlet localizations.
+    extra_files : str, optional
+        Path to a folder containing files that will be copied into an xlet folder at build time.
     dry_run : bool, optional
         See <class :any:`XletBuilder`>.
     logger : object
@@ -820,7 +865,17 @@ def build_xlets(xlets=[],
     if xlets_data:
         built_xlets = []
 
+        # TODO: In the future, maybe (and only MAYBE) add a mechanism to declare specific supported
+        # Cinnamon versions (maybe a min/max option in the z_config.py file).
+        # As of now, I prefer the approach "either the xlet works on all existent Cinnamon versions
+        # or don't bother developing it at all".
+        supported_versions = supported_cinnamon_versions_range(
+            SUPPORTED_CINNAMON_VERSION_MIN,
+            SUPPORTED_CINNAMON_VERSION_MAX
+        )
+
         for data in xlets_data:
+            data["supported_versions"] = supported_versions
             builder = XletBuilder(
                 data,
                 do_not_confirm=do_not_confirm,
@@ -876,6 +931,10 @@ class XletBuilder():
             The xlet data to handle.
         do_not_confirm : bool
             Whether to ask for overwrite confirmation when an xlet destination exists or not.
+        install_localizations : bool, optional
+            Whether or not to install xlet localizations.
+        extra_files : str, optional
+            Path to a folder containing files that will be copied into an xlet folder at build time.
         dry_run : bool
             Log an action without actually performing it.
         logger : object
@@ -893,6 +952,11 @@ class XletBuilder():
 
     def build(self):
         """Build xlet.
+
+        Returns
+        -------
+        bool
+            Whether the xlet was built or not.
         """
         self.logger.info(shell_utils.get_cli_separator("#"), date=False)
         self.logger.info("**Building the %s %s**" %
@@ -912,6 +976,7 @@ class XletBuilder():
                                                      self._get_replacement_data(),
                                                      logger=self.logger)
 
+            self._modify_metadata()
             self._compile_schemas()
             self._copy_extra_files()
             self._set_executable()
@@ -1069,6 +1134,27 @@ class XletBuilder():
                 else:
                     os.chdir(root_folder)
 
+    def _modify_metadata(self):
+        """Modify metadata.
+        """
+        self.logger.info("**Modifying xlet metadata...**")
+        meta_path = os.path.join(self._xlet_data["destination"], "metadata.json")
+
+        if self._dry_run:
+            self.logger.log_dry_run("**The metadata for the '%s' xlet will be modifyied:**\n%s" %
+                                    (self._xlet_data["slug"], meta_path))
+        else:
+            with open(meta_path, "r", encoding="UTF-8") as old:
+                xlet_metadata = json.loads(old.read())
+
+            xlet_metadata["cinnamon-version"] = self._xlet_data["supported_versions"]
+            xlet_metadata["uuid"] = self._xlet_data["uuid"]
+            xlet_metadata["website"] = URLS["repo"]
+            xlet_metadata["url"] = URLS["repo"]
+
+            with open(meta_path, "w", encoding="UTF-8") as new:
+                json.dump(xlet_metadata, new, indent=4, ensure_ascii=False)
+
     def _compile_schemas(self):
         """Compile schema files if any.
         """
@@ -1084,6 +1170,13 @@ class XletBuilder():
                 cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=self._schemas_dir)
 
     def _copy_extra_files(self):
+        """Copy extra files.
+
+        Returns
+        -------
+        None
+            Halt execution.
+        """
         if not self._extra_files:
             return
 
@@ -1098,12 +1191,16 @@ class XletBuilder():
 
         self.logger.info("**Copying extra files into built xlet folder:**")
 
-        file_utils.custom_copytree(extra_files_for_xlet,
-                                   self._xlet_data["destination"],
-                                   logger=self.logger,
-                                   log_copied_file=True,
-                                   ignored_patterns=_xlet_dir_ignored_patterns,
-                                   overwrite=True)
+        if self._dry_run:
+            self.logger.log_dry_run("**Files located at:**\n%s" % extra_files_for_xlet)
+            self.logger.log_dry_run("**Destination:**\n%s" % self._xlet_data["destination"])
+        else:
+            file_utils.custom_copytree(extra_files_for_xlet,
+                                       self._xlet_data["destination"],
+                                       logger=self.logger,
+                                       log_copied_file=True,
+                                       ignored_patterns=_xlet_dir_ignored_patterns,
+                                       overwrite=True)
 
     def _set_executable(self):
         """Set files as executable.
@@ -1130,6 +1227,13 @@ class XletBuilder():
                         os.chmod(file_path, 0o755)
 
     def _install_po_files(self):
+        """Summary
+
+        Returns
+        -------
+        None
+            Halt execution.
+        """
         if not self._install_localizations:
             return
 
@@ -1151,11 +1255,18 @@ class XletBuilder():
             if not cmd_utils.which(executable):
                 executable = "cinnamon-xlet-makepot"
 
-            cmd_utils.run_cmd(executable + " -i",
-                              stdout=None,
-                              stderr=None,
-                              shell=True,
-                              cwd=self._xlet_data["destination"])
+            cmd = executable + " -i"
+
+            if self._dry_run:
+                self.logger.log_dry_run("**Command that will be executed:**\n%s" % cmd)
+                self.logger.log_dry_run(
+                    "**Command will be executed on directory:**\n%s" % self._xlet_data["destination"])
+            else:
+                cmd_utils.run_cmd(cmd,
+                                  stdout=None,
+                                  stderr=None,
+                                  shell=True,
+                                  cwd=self._xlet_data["destination"])
         except Exception as err:
             self.logger.error(err)
 

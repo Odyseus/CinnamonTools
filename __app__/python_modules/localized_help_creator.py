@@ -89,9 +89,6 @@ class LocalizedHelpCreator():
     ----------
     changelog : str
         Xlet changelog.
-    compatibility_data : str
-        Xlet compatibility data (the Cinnamon version/s with which an xlet is compatible). It
-        could be in HTML or Markdown.
     contributors : str
         If existent, the content of the CONTRIBUTORS.md (inside the xlet folder) formatted in HTML.
     help_file_path : str
@@ -126,10 +123,6 @@ class LocalizedHelpCreator():
         self.xlet_meta = utils.XletMetadata(
             os.path.join(xlet_dir)).xlet_meta
 
-        self.compatibility_data = utils.get_compatibility(
-            xlet_meta=self.xlet_meta,
-            for_readme=False
-        )
         self.lang_list = []
         self.sections = []
         self.options = []
@@ -366,9 +359,10 @@ class LocalizedHelpCreator():
         """
         return utils.get_bootstrap_card(
             context="success",
-            body_extra_classes="text-font-size-x-large",
+            body_extra_classes="text-font-size-large",
             header=_("Cinnamon compatibility"),
-            body=self.compatibility_data
+            body=_("This xlet is compatible with Cinnamon %s up to latest Cinnamon version.") %
+            str(utils.app_utils.SUPPORTED_CINNAMON_VERSION_MIN)
         )
 
     def _get_warning_block(self):
@@ -383,6 +377,7 @@ class LocalizedHelpCreator():
 <p>{line2} <a href="{repo_url}">GitLab</a></p>"""
         return utils.get_bootstrap_card(
             context="warning",
+            body_extra_classes="text-font-size-large",
             header=_("Warning"),
             body=body.format(
                 line1=_(
@@ -398,7 +393,7 @@ class LocalizedHelpCreator():
 
         Returns
         -------
-        sre
+        str
             A bootstrap panel containing xlets localization information.
         """
         body = """{line1}

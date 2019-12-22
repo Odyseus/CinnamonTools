@@ -368,57 +368,6 @@ def save_file(file_path, data):
         quit()
 
 
-def get_compatibility(xlet_meta=None, for_readme=False):
-    """Get compatibility.
-
-    Parameters
-    ----------
-    xlet_meta : None, optional
-        Xlet metadata.
-    for_readme : bool, optional
-        Option used to decide if certain information should be added to the
-        generated README.md file.
-
-    Returns
-    -------
-    str
-        A *compatibility block* that can be in HTML or Markdown.
-    """
-    data = ""
-
-    if for_readme:
-        data += "## Compatibility\n\n"
-
-    for version in sorted(xlet_meta["cinnamon-version"]):
-        if for_readme:
-            # The README files uses SVG images hosted on-line for the compatibility badges.
-            data += "![Cinnamon {0}]({1}/lib/badges/cinn-{0}.svg)\n".format(version,
-                                                                            app_utils.URLS["repo_pages"])
-        else:
-            # The help files uses a Bootstrap badge for the compatibility badges.
-            if version[0] in ["2", "5", "8"]:
-                data += get_bootstrap_badge(context="warning",
-                                            extra_classes="text-monospace",
-                                            content="v" + version)
-            elif version[0] in ["3", "6", "9"]:
-                data += get_bootstrap_badge(context="success",
-                                            extra_classes="text-monospace",
-                                            content="v" + version)
-            elif version[0] in ["4", "7"]:
-                data += get_bootstrap_badge(context="info",
-                                            extra_classes="text-monospace",
-                                            content="v" + version)
-            else:
-                data += get_bootstrap_badge(context="warning",
-                                            extra_classes="text-monospace",
-                                            content="v" + version)
-
-    if for_readme:
-        data += "\n<span style=\"color:red;\"><strong>Do not install on any other version of Cinnamon.</strong></span>\n"
-
-    return data
-
-
 # Complex Bootstrap elements.
 
 def get_bootstrap_alert(context="info", content="", heading="", bold_text=True):
