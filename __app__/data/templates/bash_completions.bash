@@ -64,7 +64,7 @@ __cinnamon_tools_cli_{current_date}(){
     # Completion of commands.
     if [[ $COMP_CWORD == 1 ]]; then
         COMPREPLY=( $(compgen -W \
-            "menu build build_themes generate dev repo -h --help --manual --version -r \
+            "menu build build_themes parse_sass generate dev repo -h --help --manual --version -r \
 --restart-cinnamon" -- "${cur}") )
         return 0
     fi
@@ -92,6 +92,9 @@ __cinnamon_tools_cli_{current_date}(){
             "-t --theme-name= -o --output= -n --no-confirmation -r --restart-cinnamon \
 -y --dry-run" -- "${cur}") )
         _decide_nospace_{current_date} ${COMPREPLY[0]}
+        ;;
+    "parse_sass")
+        COMPREPLY=( $(compgen -W "-y --dry-run" -- "${cur}") )
         ;;
     "dev")
         COMPREPLY=( $(compgen -W \

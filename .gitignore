@@ -8,6 +8,11 @@
 # The "temp" folder at the root of the repository.
 /tmp
 
+# This is a place were users can create their own theme variants.
+/themes/_variants/*
+!/themes/_variants/README.md
+!/themes/_variants/GreybirdBlue/*
+
 ##################
 # Global ignores #
 ##################

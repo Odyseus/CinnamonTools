@@ -51,7 +51,9 @@ $ ./app.py build --all-xlets --domain="domain.com" --output="$HOME/.local/share/
 
 #### [Building themes](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#app-py-build-themes)
 
-The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family, GTK+ 3 version, and Gtk+ 3 client-side-decorated windows shadows). The command bellow will perform the following actions:
+The theme building process is interactive (the build process will ask for Cinnamon version, Cinnamon's theme default font size/family, GTK+ 3 version, and Gtk+ 3 client-side-decorated windows shadows). There is only one theme variant in this repository, but an infinite number of variants can be created. See [How to create a custom theme variant?](https://odyseus.gitlab.io/cinnamon_tools_docs/includes/01-usage.html#how-to-create-custom-variant-reference).
+
+The command bellow will perform the following actions:
 
 ```shell
 $ ./app.py build_themes --theme-name="MyThemeName" --output="$HOME/.themes" --no-confirmation --restart-cinnamon
