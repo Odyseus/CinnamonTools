@@ -28,7 +28,6 @@ const {
     },
     ui: {
         applet: Applet,
-        panel: Panel,
         popupMenu: PopupMenu,
         settings: Settings
     }
@@ -134,37 +133,18 @@ PanelDrawer.prototype = {
             return;
         }
 
-        let panelId = this.handledPanel.panelId;
-
-        let menuItem = new Panel.SettingsLauncher(
-            _("Add applets to the panel"),
-            "applets panel" + panelId,
-            "list-add"
+        let menuItem = new PopupMenu.PopupSwitchMenuItem(
+            _("Panel edit mode"),
+            global.settings.get_boolean("panel-edit-mode")
         );
+        menuItem.connect("toggled", function(aItem) {
+            global.settings.set_boolean("panel-edit-mode", aItem.state);
+        });
         this._applet_context_menu.addMenuItem(menuItem);
 
-        menuItem = new Panel.SettingsLauncher(
-            _("Panel settings"),
-            "panel " + panelId,
-            "emblem-system"
-        );
-        this._applet_context_menu.addMenuItem(menuItem);
-
-        menuItem = new Panel.SettingsLauncher(
-            _("Themes"),
-            "themes",
-            "applications-graphics"
-        );
-        this._applet_context_menu.addMenuItem(menuItem);
-
-        menuItem = new Panel.SettingsLauncher(
-            _("System Settings"),
-            "",
-            "preferences-system"
-        );
-        this._applet_context_menu.addMenuItem(menuItem);
-
-        Panel.populateSettingsMenu(this._applet_context_menu, panelId);
+        global.settings.connect("changed::panel-edit-mode", function() {
+            menuItem.setToggleState(global.settings.get_boolean("panel-edit-mode"));
+        });
 
         this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
