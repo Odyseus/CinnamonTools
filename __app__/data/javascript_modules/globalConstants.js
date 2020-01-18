@@ -1,7 +1,7 @@
 /**
  * Global constants.
  *
- * 
+ * - Only include constants that do not require an import (e.g. static data).
  */
 
 var UNICODE_SYMBOLS = {

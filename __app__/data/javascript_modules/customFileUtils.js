@@ -67,7 +67,7 @@ function saveToFileAsync(aData, aFile, aCallback = null) {
  *
  * It will gather the list of all files found inside a directory in chunks of 100
  * files at a time and then call the callback function with the array of all found
- * files a its sole argument.
+ * files as its sole argument.
  *
  * @param {Gio.File} aFileObj  - The file object (a directory) to lookup file on.
  * @param {Function} aCallback - The function to execute after gathering the list of all files.

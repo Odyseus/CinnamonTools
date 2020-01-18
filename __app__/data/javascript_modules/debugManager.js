@@ -69,7 +69,7 @@ function methodWrapper(aObject, aParams) {
         });
     }
 
-    /* FIXME: For now, I'm just ignoreing setters/getters.
+    /* FIXME: For now, I'm just ignoring setters/getters.
      * See if I can wrap getters/setters too.
      * See note inside the last while loop.
      */
