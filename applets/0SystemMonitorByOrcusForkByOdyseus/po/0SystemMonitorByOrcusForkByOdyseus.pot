@@ -1,12 +1,12 @@
 # This is a template file for translating the 0SystemMonitorByOrcusForkByOdyseus package.
-# Copyright (C) 2016-2019
+# Copyright (C) 2016-2020
 # This file is distributed under the same license as the 0SystemMonitorByOrcusForkByOdyseus package.
-# Odyseus <EMAIL@ADDRESS>, 2016-2019.
+# Odyseus <EMAIL@ADDRESS>, 2016-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SystemMonitorByOrcusForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-12-22 05:00-0300\n"
+"POT-Creation-Date: 2020-01-18 14:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Reset settings to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 applet.js:218 utils.js:82
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 applet.js:217 utils.js:82
 msgid "Help"
 msgstr ""
 
@@ -228,11 +228,11 @@ msgstr ""
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -532,27 +532,27 @@ msgstr ""
 msgid "Restart Cinnamon after installing the packages for the applet to recognize them."
 msgstr ""
 
-#: applet.js:231
+#: applet.js:230
 msgid "Configure..."
 msgstr ""
 
-#: applet.js:267
+#: applet.js:266
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:268
+#: applet.js:267
 msgid "This applet needs the GTop library installed on your system for it to work."
 msgstr ""
 
-#: applet.js:269
+#: applet.js:268
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:542
+#: applet.js:541
 msgid "Command not set!"
 msgstr ""
 
-#: applet.js:543
+#: applet.js:542
 msgid "Set a custom command from this applet settings window."
 msgstr ""
 

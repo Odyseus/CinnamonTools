@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0QuickMenu\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-12-22 04:53-0300\n"
+"POT-Creation-Date: 2020-01-13 01:36-0300\n"
 "PO-Revision-Date: 2019-12-22 04:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:559
+#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:558
 msgid "Help"
 msgstr "Ayuda"
 
@@ -65,11 +65,11 @@ msgstr "Los reportes de fallos, peticiones de características y contribuciones 
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -177,28 +177,28 @@ msgstr "El *lenguaje* JSON es muy estricto. Asegurarse de utilizar SOLAMENTE com
 
 #. NOTE: This string could be left blank because it's a default string,
 #. so it's already translated by Cinnamon. It's up to the translators.
-#: applet.js:259
+#: applet.js:258
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
 
-#: applet.js:541
+#: applet.js:540
 msgid "Update menu"
 msgstr "Actualizar menú"
 
-#: applet.js:546
+#: applet.js:545
 msgid "Scan the main folder to re-create the menu."
 msgstr "Escanear la carpeta principal para re-crear el menú."
 
-#: applet.js:549
+#: applet.js:548
 msgid "Open folder"
 msgstr "Abrir carpeta"
 
-#: applet.js:555
+#: applet.js:554
 msgid "Open the main folder."
 msgstr "Abrir la carpeta principal."
 
-#: applet.js:565
+#: applet.js:564
 msgid "Open the help file."
 msgstr "Abrir el archivo de ayuda."
 

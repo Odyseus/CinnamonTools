@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0PanelDrawerForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-12-22 04:53-0300\n"
-"PO-Revision-Date: 2019-12-22 04:59-0300\n"
+"POT-Creation-Date: 2020-01-13 01:36-0300\n"
+"PO-Revision-Date: 2020-01-13 01:52-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:172 utils.js:48
+#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:151 utils.js:48
 msgid "Help"
 msgstr "Ayuda"
 
@@ -66,11 +66,11 @@ msgstr "Los reportes de fallos, peticiones de características y contribuciones 
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -115,37 +115,25 @@ msgstr "El applet hace su trabajo cuando se coloca dentro de la caja derecha de 
 msgid "All applets that are placed in front of this applet (or on top of it in vertical panels) will be hidden."
 msgstr "Todos los applets que se colocan delante de este applet (o sobre él en paneles verticales) serán ocultados."
 
-#: applet.js:82
+#: applet.js:80
 msgid "Something have gone wrong."
 msgstr "Algo ha salido mal."
 
-#: applet.js:83
+#: applet.js:81
 msgid "The applet was not able to identify the panel it is in."
 msgstr "El applet no pudo identificar el panel en el que se encuentra."
 
-#: applet.js:84
+#: applet.js:82
 msgid "Try restarting Cinnamon."
 msgstr "Intentar reiniciar Cinnamon."
 
-#: applet.js:122
+#: applet.js:120
 msgid "Read this applet help page for usage instructions."
 msgstr "Leer la página de ayuda de este applet para obtener instrucciones de uso."
 
-#: applet.js:140
-msgid "Add applets to the panel"
-msgstr "Añadir applets al panel"
-
-#: applet.js:147
-msgid "Panel settings"
-msgstr "Preferencias del panel"
-
-#: applet.js:154
-msgid "Themes"
-msgstr "Temas"
-
-#: applet.js:161
-msgid "System Settings"
-msgstr "Preferencias del sistema"
+#: applet.js:136
+msgid "Panel edit mode"
+msgstr "Modo de edición del panel"
 
 #. metadata.json->contributors
 msgid "See this xlet help file."
@@ -262,6 +250,18 @@ msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+
+#~ msgid "Add applets to the panel"
+#~ msgstr "Añadir applets al panel"
+
+#~ msgid "Panel settings"
+#~ msgstr "Preferencias del panel"
+
+#~ msgid "Themes"
+#~ msgstr "Temas"
+
+#~ msgid "System Settings"
+#~ msgstr "Preferencias del sistema"
 
 #~ msgid ""
 #~ "It enables the ability to log the output of several functions used by the extension.\n"

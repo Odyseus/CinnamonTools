@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-12-22 04:53-0300\n"
+"POT-Creation-Date: 2020-01-13 01:36-0300\n"
 "PO-Revision-Date: 2019-12-22 04:57-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:986
+#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:985
 msgid "Help"
 msgstr "Ayuda"
 
@@ -65,11 +65,11 @@ msgstr "Los reportes de fallos, peticiones de características y contribuciones 
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -276,63 +276,63 @@ msgstr "La única manera de arreglar esto (que yo he podido encontrar) es editan
 msgid "New tasks list..."
 msgstr "Nueva lista de tareas..."
 
-#: applet.js:882
+#: applet.js:881
 msgid "Save as TODO"
 msgstr "Guardar como TODO"
 
-#: applet.js:890
+#: applet.js:889
 msgid "Save all current tasks lists as a TODO file."
 msgstr "Guardar todas las listas de tareas actuales a un archivo TODO."
 
-#: applet.js:900
+#: applet.js:899
 msgid "Export tasks"
 msgstr "Exportar tareas"
 
-#: applet.js:908
+#: applet.js:907
 msgid "Export all current tasks lists into a JSON file."
 msgstr "Exportar todas las listas de tareas actuales a un archivo JSON."
 
-#: applet.js:909 applet.js:927
+#: applet.js:908 applet.js:926
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr "Archivos en formato JSON exportados por este applet pueden ser importados al applet y las listas de tareas encontradas dentro de dicho archivo serán agregadas a las listas de tareas actualmente cargadas en el applet."
 
-#: applet.js:919
+#: applet.js:918
 msgid "Import tasks"
 msgstr "Importar tareas"
 
-#: applet.js:926
+#: applet.js:925
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr "Importar listas de tareas hacia este applet desde un archivo JSON previamente exportado."
 
-#: applet.js:936
+#: applet.js:935
 msgid "Restore example tasks"
 msgstr "Restaurar tareas de ejemplo"
 
-#: applet.js:952
+#: applet.js:951
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr "Restaurar la lista de tareas de ejemplo que estaban presentes cuando se cargó por primera vez el applet."
 
-#: applet.js:958
+#: applet.js:957
 msgid "Reset tasks"
 msgstr "Restablecer tareas"
 
-#: applet.js:964 applet.js:977
+#: applet.js:963 applet.js:976
 msgid "WARNING!!!"
 msgstr "¡ADVERTENCIA!"
 
-#: applet.js:965
+#: applet.js:964
 msgid "Do you really want to remove all your current tasks?"
 msgstr "¿Realmente desea eliminar todas sus tareas actuales?"
 
-#: applet.js:966 applet.js:977
+#: applet.js:965 applet.js:976
 msgid "This operation cannot be reverted!!!"
 msgstr "¡Esta operación no puede ser revertida!"
 
-#: applet.js:976
+#: applet.js:975
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr "Eliminar todas las listas de tareas actualmente cargadas en este applet."
 
-#: applet.js:990
+#: applet.js:989
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 

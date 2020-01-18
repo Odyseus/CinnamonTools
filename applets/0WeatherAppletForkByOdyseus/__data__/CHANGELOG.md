@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Sat, 18 Jan 2020 14:46:45 -0300
+- **Commit:** [06693ef](https://gitlab.com/Odyseus/CinnamonTools/commit/06693ef)
+- **Author:** Odyseus
+
+```
+- Exposed for localization the units abbreviations.
+
+```
+
+***
+
 - **Date:** Fri, 21 Jun 2019 23:06:01 -0300
 - **Commit:** [f913c7e](https://gitlab.com/Odyseus/CinnamonTools/commit/f913c7e)
 - **Author:** Odyseus

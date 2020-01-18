@@ -120,8 +120,7 @@ FeedsReaderForkByOdyseus.prototype = {
         this.settings = new Settings.AppletSettings(
             this,
             this.metadata.uuid,
-            this.instance_id,
-            true // Asynchronous settings initialization.
+            this.instance_id
         );
 
         let callback = () => {

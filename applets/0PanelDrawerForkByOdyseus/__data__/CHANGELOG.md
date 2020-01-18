@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Sat, 18 Jan 2020 14:46:13 -0300
+- **Commit:** [09796bf](https://gitlab.com/Odyseus/CinnamonTools/commit/09796bf)
+- **Author:** Odyseus
+
+```
+- Modified the applet context menu to display only the Panel edit mode switch since in the latest Cinnamon version the convenience function that allowed to replicate the panel context menu was removed.
+
+```
+
+***
+
 - **Date:** Tue, 16 Jul 2019 00:51:35 -0300
 - **Commit:** [831d2bd](https://gitlab.com/Odyseus/CinnamonTools/commit/831d2bd)
 - **Author:** Odyseus

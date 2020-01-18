@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-12-22 04:53-0300\n"
+"POT-Creation-Date: 2020-01-13 01:36-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -150,7 +150,7 @@ msgstr "Exportar configuración hacia un archivo"
 msgid "Reset settings to defaults"
 msgstr "Restablecer los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 applet.js:328
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 applet.js:327
 msgid "Help"
 msgstr "Ayuda"
 
@@ -227,11 +227,11 @@ msgstr "Los reportes de fallos, peticiones de características y contribuciones 
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -991,43 +991,43 @@ msgstr "Existe una carpeta llamada **icons** dentro dentro del directorio de est
 msgid "Menu"
 msgstr "Menú"
 
-#: applet.js:323
+#: applet.js:322
 msgid "Open the menu editor"
 msgstr "Abrir el editor de menús"
 
-#: applet.js:340
+#: applet.js:339
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: applet.js:1501
+#: applet.js:1500
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: applet.js:1527
+#: applet.js:1526
 msgid "Recently Used"
 msgstr "Recientemente Usadas"
 
-#: applet.js:1557
+#: applet.js:1556
 msgid "All Applications"
 msgstr "Todas las aplicaciones"
 
-#: applet.js:1639
+#: applet.js:1638
 msgid "No search results"
 msgstr "No hay resultados de búsqueda"
 
-#: applet.js:1661
+#: applet.js:1660
 msgid "No recent applications"
 msgstr "Sin aplicaciones recientes"
 
-#: applet.js:1669
+#: applet.js:1668
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: applet.js:1841
+#: applet.js:1840
 msgid "Type to search..."
 msgstr "Escriba para buscar..."
 
-#: applet.js:2574 applet.js:2584
+#: applet.js:2573 applet.js:2583
 msgid "Categories"
 msgstr "Categorías"
 

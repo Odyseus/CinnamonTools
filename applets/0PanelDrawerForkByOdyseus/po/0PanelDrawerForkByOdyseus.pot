@@ -1,12 +1,12 @@
 # This is a template file for translating the 0PanelDrawerForkByOdyseus package.
-# Copyright (C) 2017-2019
+# Copyright (C) 2017-2020
 # This file is distributed under the same license as the 0PanelDrawerForkByOdyseus package.
-# Odyseus <EMAIL@ADDRESS>, 2017-2019.
+# Odyseus <EMAIL@ADDRESS>, 2017-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PanelDrawerForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-12-22 05:00-0300\n"
+"POT-Creation-Date: 2020-01-18 14:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:172 utils.js:48
+#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:151 utils.js:48
 msgid "Help"
 msgstr ""
 
@@ -62,11 +62,11 @@ msgstr ""
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -111,36 +111,24 @@ msgstr ""
 msgid "All applets that are placed in front of this applet (or on top of it in vertical panels) will be hidden."
 msgstr ""
 
-#: applet.js:82
+#: applet.js:80
 msgid "Something have gone wrong."
 msgstr ""
 
-#: applet.js:83
+#: applet.js:81
 msgid "The applet was not able to identify the panel it is in."
 msgstr ""
 
-#: applet.js:84
+#: applet.js:82
 msgid "Try restarting Cinnamon."
 msgstr ""
 
-#: applet.js:122
+#: applet.js:120
 msgid "Read this applet help page for usage instructions."
 msgstr ""
 
-#: applet.js:140
-msgid "Add applets to the panel"
-msgstr ""
-
-#: applet.js:147
-msgid "Panel settings"
-msgstr ""
-
-#: applet.js:154
-msgid "Themes"
-msgstr ""
-
-#: applet.js:161
-msgid "System Settings"
+#: applet.js:136
+msgid "Panel edit mode"
 msgstr ""
 
 #. metadata.json->contributors

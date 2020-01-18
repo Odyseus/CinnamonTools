@@ -4,6 +4,19 @@
 
 ***
 
+- **Date:** Sat, 18 Jan 2020 08:58:00 -0300
+- **Commit:** [994c314](https://gitlab.com/Odyseus/CinnamonTools/commit/994c314)
+- **Author:** Odyseus
+
+```
+- Fixed the impossibility to open the applet settings window on CInnamon 4.4.x caused by wrong setting dependency key declared in the settings-schema.json file.
+
+Fixes #5
+
+```
+
+***
+
 - **Date:** Fri, 21 Jun 2019 23:01:49 -0300
 - **Commit:** [ae7c885](https://gitlab.com/Odyseus/CinnamonTools/commit/ae7c885)
 - **Author:** Odyseus

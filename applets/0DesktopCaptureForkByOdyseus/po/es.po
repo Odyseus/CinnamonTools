@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-12-22 04:53-0300\n"
+"POT-Creation-Date: 2020-01-13 01:36-0300\n"
 "PO-Revision-Date: 2019-12-22 04:57-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -66,11 +66,11 @@ msgstr "Los reportes de fallos, peticiones de características y contribuciones 
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -527,11 +527,11 @@ msgstr "Problemas conocidos"
 msgid "Cinnamon 3.0.x and its built-in screenshot mechanism"
 msgstr "Cinnamon 3.0.x y su mecanismo de captura de pantalla incorporado"
 
-#: z_create_localized_help.py:323 applet.js:1990
+#: z_create_localized_help.py:323 applet.js:1989
 msgid "The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"
 msgstr "¡El mecanismo de captura de pantalla incorporado de Cinnamon 3.0.x está roto!"
 
-#: z_create_localized_help.py:326 applet.js:1991
+#: z_create_localized_help.py:326 applet.js:1990
 msgid "Do not use it or Cinnamon will crash!"
 msgstr "¡No lo uses o Cinnamon se estrellará!"
 
@@ -584,173 +584,173 @@ msgstr "Restablecer perfiles"
 msgid "Remove all profiles"
 msgstr "Eliminar todos los perfiles"
 
-#: applet.js:433
+#: applet.js:432
 msgid "Error trying to get theme"
 msgstr "Error al intentar obtener el tema"
 
-#: applet.js:440
+#: applet.js:439
 msgid "Stylesheet parse error"
 msgstr "Error de análisis de hoja de estilo"
 
-#: applet.js:450
+#: applet.js:449
 msgid "Error unloading stylesheet"
 msgstr "Error al descargar la hoja de estilos"
 
-#: applet.js:783
+#: applet.js:782
 msgid "Choose camera"
 msgstr "Eligir cámara"
 
-#: applet.js:784
+#: applet.js:783
 msgid "Choose recorder"
 msgstr "Elegir grabador"
 
-#: applet.js:789
+#: applet.js:788
 msgid "Latest capture"
 msgstr "Última captura"
 
-#: applet.js:819
+#: applet.js:818
 msgid "Screencast"
 msgstr "Screencast"
 
-#: applet.js:819
+#: applet.js:818
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
-#: applet.js:830
+#: applet.js:829
 msgid "Assign a title to your program!!!"
 msgstr "¡Asignar un título a tu programa!"
 
-#: applet.js:834 constants.js:43
+#: applet.js:833 constants.js:43
 msgid "Disabled"
 msgstr "Deshabilitado"
 
-#: applet.js:905
+#: applet.js:904
 msgid "Include cursor"
 msgstr "Incluir cursor"
 
-#: applet.js:912
+#: applet.js:911
 msgid "Whether to include mouse cursor in screenshot."
 msgstr "Incluir o no el cursor del ratón en la captura de pantalla."
 
-#: applet.js:926
+#: applet.js:925
 #, javascript-format
 msgid "Monitor %d"
 msgstr "Monitor %d"
 
-#: applet.js:939
+#: applet.js:938
 msgid "Auto copy image"
 msgstr "Automáticamente copiar imagen"
 
-#: applet.js:955 applet.js:1051
+#: applet.js:954 applet.js:1050
 msgid "Repeat last"
 msgstr "Repetir última"
 
-#: applet.js:972
+#: applet.js:971
 msgid "Capture delay"
 msgstr "Retraso de captura"
 
 #. TO TRANSLATORS:
 #. sec. = abbreviation of "second"
 #. secs. = abbreviation of "seconds"
-#: applet.js:986
+#: applet.js:985
 msgid "sec."
 msgid_plural "secs."
 msgstr[0] "seg."
 msgstr[1] "segs."
 
-#: applet.js:994
+#: applet.js:993
 msgid "How many seconds to wait before taking a screenshot."
 msgstr "Cuántos segundos hay que esperar antes de tomar una captura de pantalla."
 
-#: applet.js:1006 utils.js:413
+#: applet.js:1005 utils.js:413
 msgid "Profile"
 msgstr "Perfil"
 
-#: applet.js:1015
+#: applet.js:1014
 msgid "Choose Cinnamon recorder profile"
 msgstr "Elegir perfil de grabador de Cinnamon"
 
-#: applet.js:1021 applet.js:1378
+#: applet.js:1020 applet.js:1377
 msgid "Start recording"
 msgstr "Empezar a grabar"
 
-#: applet.js:1034
+#: applet.js:1033
 msgid "Record sound"
 msgstr "Grabar sonido"
 
-#: applet.js:1041
+#: applet.js:1040
 msgid "Whether to record sound."
 msgstr "Grabar sonido o no."
 
-#: applet.js:1067 applet.js:1375
+#: applet.js:1066 applet.js:1374
 msgid "Stop recording"
 msgstr "Parar grabación"
 
-#: applet.js:1084 applet.js:1103
+#: applet.js:1083 applet.js:1102
 msgid "Frames per second"
 msgstr "Fotogramas por segundo"
 
-#: applet.js:1095
+#: applet.js:1094
 msgid "FPS"
 msgstr "FPS"
 
-#: applet.js:1116
+#: applet.js:1115
 msgid "Device options"
 msgstr "Opciones de dispositivo"
 
-#: applet.js:1307 utils.js:2341
+#: applet.js:1306 utils.js:2341
 msgid "File path copied to clipboard."
 msgstr "Ruta del archivo copiada al portapapeles."
 
-#: applet.js:1311 utils.js:2337
+#: applet.js:1310 utils.js:2337
 msgid "Image data copied to clipboard."
 msgstr "Datos de imagen copiados al portapapeles."
 
-#: applet.js:1387
+#: applet.js:1386
 msgid "Selected storage folder doesn't exist!"
 msgstr "¡Carpeta de destino no existe!"
 
-#: applet.js:1395
+#: applet.js:1394
 msgid "Selected storage folder is not a directory!"
 msgstr "¡Carpeta de destino no es una carpeta!"
 
-#: applet.js:1413
+#: applet.js:1412
 msgid "File cannot be created!"
 msgstr "¡Archivo o puede ser creado!"
 
-#: applet.js:1637 applet.js:1697
+#: applet.js:1636 applet.js:1696
 msgid "Displaying command that will be executed"
 msgstr "Viendo el comando que será ejecutado"
 
-#: applet.js:1728
+#: applet.js:1727
 msgid "Command exited with error status"
 msgstr "Comando terminado con estado de error"
 
-#: applet.js:1869
+#: applet.js:1868
 msgid "Possibly malformed JSON file."
 msgstr "Posiblemente archivo JSON mal formado."
 
-#: applet.js:1870
+#: applet.js:1869
 msgid "Check the logs."
 msgstr "Comprobar los registros."
 
-#: applet.js:1928
+#: applet.js:1927
 msgid "Do you really want to reset this preference to its default value?"
 msgstr "¿Realmente desea restablecer esta preferencia a su valor predeterminado?"
 
-#: applet.js:1967
+#: applet.js:1966
 msgid "Do you really want to empty this preference?"
 msgstr "¿De verdad desea vaciar esta preferencia?"
 
-#: applet.js:1992
+#: applet.js:1991
 msgid "Read this applet help page (Known issues) for more details on the matter."
 msgstr "Lea la página de ayuda de este applet (Problemas conocidos) para obtener más detalles al respecto."
 
-#: applet.js:1993
+#: applet.js:1992
 msgid "You will keep seeing this notification until you follow the instructions found on the help page."
 msgstr "Seguirá viendo esta notificación hasta que siga las instrucciones que se encuentran en la página de ayuda."
 
-#: applet.js:2004
+#: applet.js:2003
 msgid "Operation aborted!"
 msgstr "¡Operación abortada!"
 

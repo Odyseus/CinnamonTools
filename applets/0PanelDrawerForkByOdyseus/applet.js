@@ -38,7 +38,6 @@ const {
     escapeHTML
 } = GlobalUtils;
 
-
 function PanelDrawer() {
     this._init.apply(this, arguments);
 }
@@ -156,15 +155,13 @@ PanelDrawer.prototype = {
             Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
         });
         this._applet_context_menu.addMenuItem(menuItem);
-
     },
 
     _initializeSettings: function(aDirectCallback, aIdleCallback) {
         this.settings = new Settings.AppletSettings(
             this,
             this.metadata.uuid,
-            this.instance_id,
-            true // Asynchronous settings initialization.
+            this.instance_id
         );
 
         let callback = () => {

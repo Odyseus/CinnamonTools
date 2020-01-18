@@ -1,12 +1,12 @@
 # This is a template file for translating the 0WeatherAppletForkByOdyseus package.
-# Copyright (C) 2017-2019
+# Copyright (C) 2017-2020
 # This file is distributed under the same license as the 0WeatherAppletForkByOdyseus package.
-# Odyseus <EMAIL@ADDRESS>, 2017-2019.
+# Odyseus <EMAIL@ADDRESS>, 2017-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-12-22 05:00-0300\n"
+"POT-Creation-Date: 2020-01-18 14:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Reset settings to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 applet.js:302 utils.js:77
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 applet.js:301 utils.js:77
 msgid "Help"
 msgstr ""
 
@@ -228,11 +228,11 @@ msgstr ""
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -288,7 +288,7 @@ msgstr ""
 msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
 
-#: settings.py:38 z_create_localized_help.py:129 applet.js:1077
+#: settings.py:38 z_create_localized_help.py:129 applet.js:1076
 msgid "Location name"
 msgstr ""
 
@@ -551,7 +551,7 @@ msgstr ""
 msgid "Credentials"
 msgstr ""
 
-#: settings.py:440 z_create_localized_help.py:71 constants.js:190
+#: settings.py:440 z_create_localized_help.py:71 constants.js:209
 msgid "Dark Sky"
 msgstr ""
 
@@ -559,7 +559,7 @@ msgstr ""
 msgid "Secret Key"
 msgstr ""
 
-#: settings.py:451 z_create_localized_help.py:76 constants.js:192
+#: settings.py:451 z_create_localized_help.py:76 constants.js:211
 msgid "OpenWeatherMap"
 msgstr ""
 
@@ -567,11 +567,11 @@ msgstr ""
 msgid "API Key"
 msgstr ""
 
-#: settings.py:462 z_create_localized_help.py:81 constants.js:193
+#: settings.py:462 z_create_localized_help.py:81 constants.js:212
 msgid "WeatherBit"
 msgstr ""
 
-#: settings.py:473 z_create_localized_help.py:86 constants.js:191
+#: settings.py:473 z_create_localized_help.py:86 constants.js:210
 msgid "Yahoo! Weather"
 msgstr ""
 
@@ -892,72 +892,72 @@ msgstr ""
 msgid "Read the help page"
 msgstr ""
 
-#: applet.js:284
+#: applet.js:283
 msgid "Copy current location data"
 msgstr ""
 
-#: applet.js:314
+#: applet.js:313
 msgid "Configure..."
 msgstr ""
 
-#: applet.js:424
+#: applet.js:423
 msgid "Click to copy error to clipboard."
 msgstr ""
 
-#: applet.js:425
+#: applet.js:424
 msgid "Look at the logs for details."
 msgstr ""
 
-#: applet.js:462
+#: applet.js:461
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:475
+#: applet.js:474
 msgid "Click to refresh weather data"
 msgstr ""
 
-#: applet.js:662
+#: applet.js:661
 msgid "Selected path for custom icon theme doesn't exist!"
 msgstr ""
 
-#: applet.js:739
+#: applet.js:738
 msgid "No current location set!"
 msgstr ""
 
-#: applet.js:792
+#: applet.js:791
 msgid "Error initializing weather provider!"
 msgstr ""
 
-#: applet.js:855
+#: applet.js:854
 msgid "No weather data available!"
 msgstr ""
 
-#: applet.js:963
+#: applet.js:962
 #, javascript-format
 msgid "Powered by %s"
 msgstr ""
 
-#: applet.js:1146
+#: applet.js:1145
 msgid "Current location"
 msgstr ""
 
-#: applet.js:1159
+#: applet.js:1158
 msgid "Open location weather details page"
 msgstr ""
 
-#: applet.js:1350 applet.js:1353
+#: applet.js:1349 applet.js:1352
 msgid "Not available"
 msgstr ""
 
-#: applet.js:1685
+#: applet.js:1684
 msgid "Error trying to get theme"
 msgstr ""
 
-#: applet.js:1693
+#: applet.js:1692
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: applet.js:1703
+#: applet.js:1702
 msgid "Error unloading stylesheet"
 msgstr ""
 
@@ -1317,152 +1317,208 @@ msgstr ""
 msgid "Freezing Fog"
 msgstr ""
 
-#: constants.js:138
+#: constants.js:112
+msgid "km"
+msgstr ""
+
+#: constants.js:113
+msgid "mile"
+msgstr ""
+
+#: constants.js:114
+msgid "atm"
+msgstr ""
+
+#: constants.js:115
+msgid "hPa"
+msgstr ""
+
+#: constants.js:116
+msgid "inHg"
+msgstr ""
+
+#: constants.js:117
+msgid "kPa"
+msgstr ""
+
+#: constants.js:118
+msgid "mbar"
+msgstr ""
+
+#: constants.js:119
+msgid "mmHg"
+msgstr ""
+
+#: constants.js:120
+msgid "Pa"
+msgstr ""
+
+#: constants.js:121
+msgid "psi"
+msgstr ""
+
+#: constants.js:122
+msgid "knots"
+msgstr ""
+
+#: constants.js:123
+msgid "kph"
+msgstr ""
+
+#: constants.js:124
+msgid "mph"
+msgstr ""
+
+#: constants.js:125
+msgid "m/s"
+msgstr ""
+
+#: constants.js:157
 msgid "Loading..."
 msgstr ""
 
-#: constants.js:142
+#: constants.js:161
 msgid "Unable to resolve destination host name"
 msgstr ""
 
-#: constants.js:143
+#: constants.js:162
 msgid "Temporary redirect"
 msgstr ""
 
-#: constants.js:144
+#: constants.js:163
 msgid "Unable to resolve proxy host name"
 msgstr ""
 
-#: constants.js:145
+#: constants.js:164
 msgid "Bad request"
 msgstr ""
 
-#: constants.js:146
+#: constants.js:165
 msgid "Unauthorized"
 msgstr ""
 
-#: constants.js:147
+#: constants.js:166
 msgid "Payment required"
 msgstr ""
 
-#: constants.js:148
+#: constants.js:167
 msgid "Not found"
 msgstr ""
 
-#: constants.js:149
+#: constants.js:168
 msgid "Proxy authentication required"
 msgstr ""
 
-#: constants.js:150
+#: constants.js:169
 msgid "Request timeout"
 msgstr ""
 
-#: constants.js:151
+#: constants.js:170
 msgid "Unable to connect to remote host"
 msgstr ""
 
-#: constants.js:152
+#: constants.js:171
 msgid "Internal server error"
 msgstr ""
 
-#: constants.js:153
+#: constants.js:172
 msgid "Service unavailable"
 msgstr ""
 
-#: constants.js:154
+#: constants.js:173
 msgid "Unable to connect to proxy"
 msgstr ""
 
-#: constants.js:155
+#: constants.js:174
 msgid "SSL/TLS negotiation failed"
 msgstr ""
 
-#: constants.js:156
+#: constants.js:175
 msgid "A network error occurred, or the other end closed the connection unexpectedly"
 msgstr ""
 
-#: constants.js:161
+#: constants.js:180
 msgid "Missing credentials for weather provider!"
 msgstr ""
 
-#: constants.js:162
+#: constants.js:181
 msgid "Wrong location ID format!"
 msgstr ""
 
-#: constants.js:163
+#: constants.js:182
 msgid "Selected language not supported by weather provider!"
 msgstr ""
 
-#: constants.js:164
+#: constants.js:183
 #, javascript-format
 msgid "Error getting data! Status code: %s"
 msgstr ""
 
-#: constants.js:165
+#: constants.js:184
 msgid "Error parsing weather data."
 msgstr ""
 
-#: constants.js:170
+#: constants.js:189
 msgid "Sunday"
 msgstr ""
 
-#: constants.js:171
+#: constants.js:190
 msgid "Monday"
 msgstr ""
 
-#: constants.js:172
+#: constants.js:191
 msgid "Tuesday"
 msgstr ""
 
-#: constants.js:173
+#: constants.js:192
 msgid "Wednesday"
 msgstr ""
 
-#: constants.js:174
+#: constants.js:193
 msgid "Thursday"
 msgstr ""
 
-#: constants.js:175
+#: constants.js:194
 msgid "Friday"
 msgstr ""
 
-#: constants.js:176
+#: constants.js:195
 msgid "Saturday"
 msgstr ""
 
-#: constants.js:243
+#: constants.js:262
 msgid "Temperature"
 msgstr ""
 
-#: constants.js:244
+#: constants.js:263
 msgid "Humidity"
 msgstr ""
 
-#: constants.js:245
+#: constants.js:264
 msgid "Pressure"
 msgstr ""
 
-#: constants.js:246
+#: constants.js:265
 msgid "Wind"
 msgstr ""
 
-#: constants.js:247
+#: constants.js:266
 msgid "Wind chill"
 msgstr ""
 
-#: constants.js:248
+#: constants.js:267
 msgid "Visibility"
 msgstr ""
 
-#: constants.js:249
+#: constants.js:268
 msgid "Sunrise"
 msgstr ""
 
-#: constants.js:250
+#: constants.js:269
 msgid "Sunset"
 msgstr ""
 
-#: constants.js:251
+#: constants.js:270
 msgid "Moon phase"
 msgstr ""
 

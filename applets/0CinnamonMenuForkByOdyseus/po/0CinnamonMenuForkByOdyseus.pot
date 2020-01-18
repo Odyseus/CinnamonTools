@@ -1,12 +1,12 @@
 # This is a template file for translating the 0CinnamonMenuForkByOdyseus package.
-# Copyright (C) 2016-2019
+# Copyright (C) 2016-2020
 # This file is distributed under the same license as the 0CinnamonMenuForkByOdyseus package.
-# Odyseus <EMAIL@ADDRESS>, 2016-2019.
+# Odyseus <EMAIL@ADDRESS>, 2016-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2019-12-22 05:00-0300\n"
+"POT-Creation-Date: 2020-01-18 14:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Reset settings to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 applet.js:328
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 applet.js:327
 msgid "Help"
 msgstr ""
 
@@ -228,11 +228,11 @@ msgstr ""
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -977,43 +977,43 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: applet.js:323
+#: applet.js:322
 msgid "Open the menu editor"
 msgstr ""
 
-#: applet.js:340
+#: applet.js:339
 msgid "Configure..."
 msgstr ""
 
-#: applet.js:1501
+#: applet.js:1500
 msgid "Favorites"
 msgstr ""
 
-#: applet.js:1527
+#: applet.js:1526
 msgid "Recently Used"
 msgstr ""
 
-#: applet.js:1557
+#: applet.js:1556
 msgid "All Applications"
 msgstr ""
 
-#: applet.js:1639
+#: applet.js:1638
 msgid "No search results"
 msgstr ""
 
-#: applet.js:1661
+#: applet.js:1660
 msgid "No recent applications"
 msgstr ""
 
-#: applet.js:1669
+#: applet.js:1668
 msgid "Clear list"
 msgstr ""
 
-#: applet.js:1841
+#: applet.js:1840
 msgid "Type to search..."
 msgstr ""
 
-#: applet.js:2574 applet.js:2584
+#: applet.js:2573 applet.js:2583
 msgid "Categories"
 msgstr ""
 

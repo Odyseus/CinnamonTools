@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2019-12-22 04:53-0300\n"
+"POT-Creation-Date: 2020-01-13 01:36-0300\n"
 "PO-Revision-Date: 2019-12-22 04:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:327 python/manage_feeds.py:213
+#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:326 python/manage_feeds.py:213
 msgid "Help"
 msgstr "Ayuda"
 
@@ -66,11 +66,11 @@ msgstr "Los reportes de fallos, peticiones de características y contribuciones 
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -123,31 +123,31 @@ msgstr "Instalar con `pip` (Cinnamon necesita ser reiniciado luego de instalar f
 msgid "Feed reader"
 msgstr "Lector de Feeds"
 
-#: applet.js:235
+#: applet.js:234
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:236
+#: applet.js:235
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr "Este applet necesita que el módulo feedparser para Python 3 esté instalado en su sistema para que funcione."
 
-#: applet.js:237
+#: applet.js:236
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
-#: applet.js:294
+#: applet.js:293
 msgid "Mark all read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:307
+#: applet.js:306
 msgid "Reload"
 msgstr "Recargar"
 
-#: applet.js:318
+#: applet.js:317
 msgid "Manage feeds"
 msgstr "Administrar feeds"
 
-#: applet.js:420
+#: applet.js:419
 msgid "No unread feeds"
 msgstr "Sin feeds no leídos."
 

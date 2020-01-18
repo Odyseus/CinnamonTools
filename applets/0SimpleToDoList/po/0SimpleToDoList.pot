@@ -1,12 +1,12 @@
 # This is a template file for translating the 0SimpleToDoList package.
-# Copyright (C) 2017-2019
+# Copyright (C) 2017-2020
 # This file is distributed under the same license as the 0SimpleToDoList package.
-# Odyseus <EMAIL@ADDRESS>, 2017-2019.
+# Odyseus <EMAIL@ADDRESS>, 2017-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList VERSION\n"
-"POT-Creation-Date: 2019-12-22 05:00-0300\n"
+"POT-Creation-Date: 2020-01-18 14:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:986
+#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:985
 msgid "Help"
 msgstr ""
 
@@ -62,11 +62,11 @@ msgstr ""
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:407
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -273,63 +273,63 @@ msgstr ""
 msgid "New tasks list..."
 msgstr ""
 
-#: applet.js:882
+#: applet.js:881
 msgid "Save as TODO"
 msgstr ""
 
-#: applet.js:890
+#: applet.js:889
 msgid "Save all current tasks lists as a TODO file."
 msgstr ""
 
-#: applet.js:900
+#: applet.js:899
 msgid "Export tasks"
 msgstr ""
 
-#: applet.js:908
+#: applet.js:907
 msgid "Export all current tasks lists into a JSON file."
 msgstr ""
 
-#: applet.js:909 applet.js:927
+#: applet.js:908 applet.js:926
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr ""
 
-#: applet.js:919
+#: applet.js:918
 msgid "Import tasks"
 msgstr ""
 
-#: applet.js:926
+#: applet.js:925
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr ""
 
-#: applet.js:936
+#: applet.js:935
 msgid "Restore example tasks"
 msgstr ""
 
-#: applet.js:952
+#: applet.js:951
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr ""
 
-#: applet.js:958
+#: applet.js:957
 msgid "Reset tasks"
 msgstr ""
 
-#: applet.js:964 applet.js:977
+#: applet.js:963 applet.js:976
 msgid "WARNING!!!"
 msgstr ""
 
-#: applet.js:965
+#: applet.js:964
 msgid "Do you really want to remove all your current tasks?"
 msgstr ""
 
-#: applet.js:966 applet.js:977
+#: applet.js:965 applet.js:976
 msgid "This operation cannot be reverted!!!"
 msgstr ""
 
-#: applet.js:976
+#: applet.js:975
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr ""
 
-#: applet.js:990
+#: applet.js:989
 msgid "Open this applet help file."
 msgstr ""
 
