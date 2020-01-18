@@ -926,12 +926,12 @@ GtkLevelBar.vertical {
  *********/
 *:link,
 .button:link {
-    color: #2a76c6;
+    color: @link_color;
 }
 
 *:link:visited,
 .button:visited {
-    color: #215d9c;
+    color: alpha(@link_color, 0.5);
 }
 
 /**************

@@ -1,12 +1,6 @@
-/* #############################################################################
- * Section common with Gnome Shell.
- * It contains a few cinnamon specific styles (rare occurences).
- * ############################################################################# */
-
-stage {
-    font-family: $font_family;
-    font-size: $font_size;
-}
+// NOTE: stage rule is added at theme build time. This is to allow to build the
+// theme without specifying a font family/size since newer Cinnamon versions can
+// now use the font specified in System Settings > Fonts > Default font.
 
 .cinnamon-link {
     color: $link_color;
@@ -605,7 +599,6 @@ StScrollView {
     spacing: 25px;
     font-size: 1em;
     padding: 6px 8px;
-    spacing: 8px;
     -cinnamon-caption-spacing: 10px;
 
     // Mark for deletion on EOL. Cinnamon 4.0.x+
@@ -1571,6 +1564,7 @@ StScrollView {
     .grouped-window-list {
         &-item-box {
             @include background(normal, bottom);
+            text-align: left;
             font-weight: bold;
             padding: 1px 0 4px 4px;
             border-image: none;
@@ -1670,7 +1664,7 @@ StScrollView {
 
         &-thumbnail-menu {
             @include background(base-frame, null, 4px);
-            padding: 20px;
+            padding: 0;
             font-size: 1em;
             font-weight: bold;
 
@@ -2206,51 +2200,56 @@ StScrollView {
     margin: 6px;
 }
 
-/* =============================================================================
- * About Dialog (/usr/share/cinnamon/js/ui/modalDialog.js)
- * ============================================================================= */
-.about {
-    &-content {
-        width: 550px;
-        height: 250px;
-        spacing: 8px;
-        padding-bottom: 16px;
-    }
+// Mark for deletion on EOL. Cinnamon 4.4.x+
+// Remove condition and rule/s.
+// About dialog for xlets were converted into GTK+ dialogs.
+@if $cinnamon_version < 44 {
+    /* =============================================================================
+     * About Dialog (/usr/share/cinnamon/js/ui/modalDialog.js)
+     * ============================================================================= */
+    .about {
+        &-content {
+            width: 550px;
+            height: 250px;
+            spacing: 8px;
+            padding-bottom: 16px;
+        }
 
-    &-title {
-        font-size: 1.5em;
-        font-weight: bold;
-    }
+        &-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
 
-    &-uuid {
-        font-size: 0.8em;
-    }
+        &-uuid {
+            font-size: 0.8em;
+        }
 
-    &-icon {
-        padding-right: 20px;
-    }
+        &-icon {
+            padding-right: 20px;
+        }
 
-    &-scrollBox {
-        @include background(base-frame, null, 4px);
-    }
+        &-scrollBox {
+            @include background(base-frame, null, 4px);
+        }
 
-    &-scrollBox-innerBox {
-        padding: 1.2em;
-        spacing: 1.2em;
-    }
+        &-scrollBox-innerBox {
+            padding: 1.2em;
+            spacing: 1.2em;
+        }
 
-    &-description {
-        padding-top: 4px;
-        // DUMMY
+        &-description {
+            padding-top: 4px;
+            // DUMMY
 
-        /* Let the description text wrap at least for two
-         * lines until it "touches" the about-scrollBox.
-         */
-        padding-bottom: 20px;
-    }
+            /* Let the description text wrap at least for two
+             * lines until it "touches" the about-scrollBox.
+             */
+            padding-bottom: 20px;
+        }
 
-    &-version {
-        padding-left: 7px;
+        &-version {
+            padding-left: 7px;
+        }
     }
 }
 

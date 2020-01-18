@@ -30,6 +30,10 @@
     -gtk-icon-effect: dim;
 }
 
+.monospace {
+    font-family: Monospace;
+}
+
 /**************
  * action bar *
  **************/
@@ -965,12 +969,12 @@ levelbar block.empty {
  *********/
 *:link,
 .button:link {
-    color: #2a76c6;
+    color: @link_color;
 }
 
 *:link:visited,
 .button:visited {
-    color: #215d9c;
+    color: alpha(@link_color, 0.5);
 }
 
 /**************
@@ -2089,6 +2093,20 @@ stacksidebar row {
 stacksidebar row > label {
     padding-left: 6px;
     padding-right: 6px;
+}
+
+stacksidebar row.needs-attention {
+    background-image: radial-gradient(circle closest-side at 5% 25%, @error_color 0%, @error_color 100%, transparent 100%);
+    background-size: 70px;
+    background-position: 4px;
+    background-repeat: no-repeat;
+}
+
+stacksidebar row:selected.needs-attention {
+    background-image: radial-gradient(circle closest-side at 5% 25%, @theme_selected_fg_color 0%, @theme_selected_fg_color 100%, transparent 100%);
+    background-size: 70px;
+    background-position: 4px;
+    background-repeat: no-repeat;
 }
 
 placessidebar > viewport.frame {
