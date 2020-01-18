@@ -17,7 +17,7 @@ URLS : dict
     URLs storage.
 validate_options_1_2 : function
     Function to validate numeric input.
-validate_options_1_2_3 : function
+validate_options_1_to_5 : function
     Function to validate numeric input.
 XLET_META : dict
     Xlet meta type.
@@ -27,6 +27,7 @@ XLET_SYSTEM : dict
 import json
 import os
 
+from runpy import run_path
 from shutil import copy2
 from shutil import copytree
 from shutil import ignore_patterns
@@ -44,7 +45,7 @@ from .python_utils.simple_validators import validate_output_path
 
 
 validate_options_1_2 = generate_numeral_options_validator(2)
-validate_options_1_2_3 = generate_numeral_options_validator(3)
+validate_options_1_to_5 = generate_numeral_options_validator(5)
 
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
     os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
@@ -79,6 +80,14 @@ XLET_META = {
     "applet": "appletMeta",
     "extension": "extensionMeta",
 }
+
+_supported_cinnamon_theme_versions = [
+    "3.0",
+    "3.4",
+    "4.0",
+    "4.2",
+    "4.4"
+]
 
 _missing_theme_or_domain_name_msg = """**{capital}NameNotSet:**
 
@@ -275,7 +284,6 @@ class XletsHelperCore():
             xlet_config_file = os.path.join(xlet_root_folder, "z_config.py")
 
             if file_utils.is_real_file(xlet_config_file):
-                from runpy import run_path
                 extra_settings = run_path(xlet_config_file)["settings"]
                 extra_paths = extra_settings.get("make_pot_additional_files")
 
@@ -1078,7 +1086,6 @@ class XletBuilder():
         """Handle xlet configuration file if any.
         """
         if os.path.exists(self._config_file):
-            from runpy import run_path
             extra_settings = run_path(self._config_file)["settings"]
 
             if extra_settings.get("extra_files", False):
@@ -1303,6 +1310,30 @@ def get_xlets_dirs():
     return applets_dirs + extensions_dirs
 
 
+def get_cinnamon_theme_stage_css_rule(font_family, font_size):
+    """Get Cinnamon theme stage CSS rule.
+
+    Parameters
+    ----------
+    font_family : str
+        A valid value for the font-family CSS rule.
+    font_size : str
+        A valid value for the font-size CSS rule.
+
+    Returns
+    -------
+    None/str
+        A string representing the stage CSS rule or None.
+    """
+    family = "" if font_family == "unset"else "font-family: %s;" % font_family
+    size = "" if font_size == "unset"else "font-size: %s;" % font_size
+
+    if not family and not size:
+        return None
+
+    return "stage {%s%s}\n\n" % (family, size)
+
+
 def build_themes(theme_name="", build_output="", do_not_confirm=False,
                  dry_run=False, logger=None, from_menu=False):
     """Build themes.
@@ -1346,7 +1377,8 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
             "1": "3.0",
             "2": "3.4",
             "3": "4.0",
-            "4": "4.2"
+            "4": "4.2",
+            "5": "4.4"
         },
         "gtk3_version": {
             "1": "3.18",
@@ -1445,17 +1477,19 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
         inform("1. 3.0.x to 3.2.x")
         inform("2. 3.4.x to 3.8.x")
         inform("3. 4.0.x")
-        inform("4. 4.2.x plus")
+        inform("4. 4.2.x")
+        inform("5. 4.4.x plus")
 
         prompts.do_prompt(options_map_defaults,
                           "cinnamon_version",
                           "Enter an option",
                           options_map_defaults["cinnamon_version"],
-                          validator=validate_options_1_2_3)
+                          validator=validate_options_1_to_5)
 
         # Ask for Cinnamon theme font size.
         print_separator(logger)
         inform("Set the Cinnamon theme font size.")
+        inform("A valid value for the font-size CSS property.")
 
         prompts.do_prompt(options_map_defaults,
                           "cinnamon_font_size",
@@ -1465,6 +1499,7 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
         # Ask for Cinnamon theme font family.
         print_separator(logger)
         inform("Set the Cinnamon theme font family.")
+        inform("A valid value for the font-family CSS property.")
 
         prompts.do_prompt(options_map_defaults,
                           "cinnamon_font_family",
@@ -1486,6 +1521,7 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
         # Ask for Gtk3 theme CSD selector.
         print_separator(logger)
         inform("Set Gtk3 client side decorations shadow.")
+        inform("A valid value for the box-shadow CSS property.")
         inform("Selector: %s" % (
             ".window-frame" if options_map_defaults["gtk3_version"] == "1" else "decoration"
         ))
@@ -1498,6 +1534,7 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
         # Ask for Gtk3 theme CSD backdrop selector.
         print_separator(logger)
         inform("Set Gtk3 client side decorations backdrop shadow.")
+        inform("A valid value for the box-shadow CSS property.")
         inform("Selector: %s" % (
             ".window-frame:backdrop" if options_map_defaults["gtk3_version"] == "1" else "decoration:backdrop"
         ))
@@ -1620,11 +1657,10 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
         common_version_sensitive, "cinnamon", theme_data["cinnamon_version"])
     common_version_sensitive_gtk3_files = os.path.join(
         common_version_sensitive, "gtk-3.0", theme_data["gtk3_version"])
-    theme_variants = os.listdir(os.path.join(themes_sources, "_variants"))
+    theme_variants = [entry.name for entry in os.scandir(
+        os.path.join(themes_sources, "_variants")) if entry.is_dir(follow_symlinks=False)]
     strings_subst_extensions = (".css", ".svg", ".xml", ".json", ".rc",
                                 "gtkrc", ".theme", ".ini")
-
-    from runpy import run_path
 
     dry_run = options_map["dry_run"][options_map_defaults["dry_run"]]
     do_not_confirm = options_map["do_not_confirm"][options_map_defaults["do_not_confirm"]]
@@ -1667,10 +1703,6 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
         variant_config["replacement_data"].append(
             ("@theme_name@", options_map_defaults["theme_name"].strip()))
         variant_config["replacement_data"].append(("@theme_variant@", variant))
-        variant_config["replacement_data"].append(
-            ('"@font_size@"', theme_data["cinnamon_font_size"]))
-        variant_config["replacement_data"].append(
-            ('"@font_family@"', theme_data["cinnamon_font_family"]))
         variant_config["replacement_data"].append(
             ('"@csd_shadow@"', theme_data["gtk3_csd_shadow"]))
         variant_config["replacement_data"].append(
@@ -1761,6 +1793,25 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
                         if file_data_modified != file_data:
                             file.write(file_data_modified)
                             file.truncate()
+
+        logger.info("**Prepending data to Cinnamon theme...**")
+        cinnamon_css = os.path.join(destination_folder, "cinnamon", "cinnamon.css")
+        cinnamon_stage_css_rule = get_cinnamon_theme_stage_css_rule(
+            theme_data["cinnamon_font_family"],
+            theme_data["cinnamon_font_size"]
+        )
+
+        if os.path.exists(cinnamon_css) and cinnamon_stage_css_rule is not None:
+            if dry_run:
+                logger.log_dry_run("**File located at:**\n%s" % cinnamon_css)
+            else:
+                with open(cinnamon_css, "r+", encoding="UTF-8") as css_file:
+                    css_file.seek(0)
+                    css_file_content = css_file.readlines()
+                    css_file.seek(0)
+                    css_file.write(cinnamon_stage_css_rule)
+                    css_file.writelines(css_file_content)
+                    css_file.truncate()
 
         built_theme_variants.append(variant)
         logger.success("**Theme variant %s successfully built.**" % variant)
@@ -2100,6 +2151,117 @@ def print_separator(logger):
         See <class :any:`LogSystem`>.
     """
     logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
+
+
+def parse_sass(dry_run, logger):
+    """Parse SASS.
+
+    Parameters
+    ----------
+    dry_run : bool, optional
+        See <class :any:`XletBuilder`>.
+    logger : object
+        See <class :any:`LogSystem`>.
+
+    Raises
+    ------
+    SystemExit
+        Halt execution.
+    """
+    if cmd_utils.which("sass"):
+        cmd = ["sass"]
+        cmd_arg_1 = "%s:%s"
+        cmd_arg_2 = ["--no-source-map", "--style", "expanded"]
+    elif cmd_utils.which("sassc"):
+        cmd = ["sassc"]
+        cmd_arg_1 = "%s %s"
+        cmd_arg_2 = ["--style", "expanded"]
+    else:
+        logger.error("Missing sass command. Read documentation for requirements.")
+        raise SystemExit(1)
+
+    themes_folder = os.path.join(root_folder, "themes")
+
+    files_to_remove = []
+    sass_path = os.path.join(themes_folder, "_sass")
+    variants_path = os.path.join(themes_folder, "_variants")
+    template_file_path = os.path.join(sass_path, "cinnamon", "template.scss")
+    variants = [entry.name for entry in os.scandir(
+        variants_path) if entry.is_dir(follow_symlinks=False)]
+
+    with open(template_file_path, "r", encoding="UTF-8") as template_file:
+        template_data = template_file.read()
+
+    for variant_name in variants:
+        logger.info("**Attempting to parse SASS files for variant: %s**" % variant_name)
+        variant_config_path = os.path.join(variants_path, variant_name, "config.py")
+
+        if not os.path.exists(variant_config_path):
+            logger.error(variant_name + " is not a valid folder for a theme variant.")
+            continue
+
+        try:
+            variant_config = run_path(variant_config_path)["settings"]
+        except Exception as err:
+            logger.error("Error reading varian config file. Read documentation for usage.")
+            logger.error(err)
+            continue
+
+        for cinnamon_version in _supported_cinnamon_theme_versions:
+            logger.info("**Processing SASS files for Cinnamon version: %s**" % cinnamon_version)
+            sass_file_path = os.path.join(sass_path, "cinnamon", "%s-%s.scss" %
+                                          (variant_name, cinnamon_version))
+            # NOTE: Replace the dot to be able to store an integer since I don't trust SASS comparisons.
+            # In fact, I don't trust floats in any programming language in existence.
+            # Also replace all placeholders including the double quotes to be able to store "raw data".
+            sass_file_data = template_data.replace(
+                '"@cinnamon_version@"', cinnamon_version.replace(".", ""))
+            sass_file_data = sass_file_data.replace("@variant@", variant_name)
+            sass_file_data = sass_file_data.replace(
+                '"@selected_bg_color@"', variant_config["selected_bg_color"])
+            sass_file_data = sass_file_data.replace(
+                '"@warning_color@"', variant_config["warning_color"])
+            sass_file_data = sass_file_data.replace(
+                '"@error_color@"', variant_config["error_color"])
+            sass_file_data = sass_file_data.replace(
+                '"@link_color@"', variant_config["link_color"])
+
+            if dry_run:
+                logger.log_dry_run("**A template file will be created at:**\n%s" % sass_file_path)
+            else:
+                with open(sass_file_path, "w", encoding="UTF-8") as sass_file:
+                    sass_file.write(sass_file_data)
+
+            css_file_path = os.path.abspath(
+                os.path.join(variants_path, variant_name, "_version_sensitive",
+                             "cinnamon", cinnamon_version, "cinnamon.css"))
+
+            if dry_run:
+                logger.log_dry_run(
+                    "**Parent directory will be created at:**\n%s" % os.path.dirname(css_file_path))
+            else:
+                os.makedirs(os.path.dirname(css_file_path), exist_ok=True)
+
+            final_cmd = cmd + [cmd_arg_1 % (sass_file_path, css_file_path)] + cmd_arg_2
+
+            if dry_run:
+                logger.log_dry_run("**Command that will be executed:**\n%s" % " ".join(final_cmd))
+                logger.log_dry_run(
+                    "**Command will be executed on directory:**\n%s" % os.path.dirname(sass_file_path))
+            else:
+                cmd_utils.run_cmd(" ".join(final_cmd), stdout=None, stderr=None,
+                                  cwd=os.path.dirname(sass_file_path), shell=True)
+
+            files_to_remove.append(sass_file_path)
+
+    logger.info("**Cleaning temporary files...**")
+
+    if dry_run:
+        logger.log_dry_run("**The following files will be removed:**\n%s" %
+                           "\n".join(files_to_remove))
+    else:
+        for file_path in files_to_remove:
+            os.remove(file_path)
 
 
 if __name__ == "__main__":

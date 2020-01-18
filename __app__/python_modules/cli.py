@@ -42,6 +42,7 @@ Usage:
                         [-n | --no-confirmation]
                         [-r | --restart-cinnamon]
                         [-y | --dry-run]
+    app.py parse_sass [-y | --dry-run]
     app.py dev <sub_commands>...
                [-x <name>... | --xlet=<name>...]
     app.py generate (system_executable | docs | docs_no_api | base_xlet)
@@ -213,6 +214,9 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         elif self.a["build_themes"]:
             self.action = self.build_themes
             self.logger.info("**Building all themes.**")
+        elif self.a["parse_sass"]:
+            self.action = self.parse_sass
+            self.logger.info("**Parsing SASS files.**")
         elif self.a["dev"]:
             # NOTE: Deduplicate arguments. Workaround docopt issue:
             # https://github.com/docopt/docopt/issues/134
@@ -345,6 +349,12 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                                do_not_confirm=self.a["--no-confirmation"],
                                dry_run=self.a["--dry-run"],
                                logger=self.logger)
+
+    def parse_sass(self):
+        """See :any:`app_utils.parse_sass`
+        """
+        app_utils.parse_sass(dry_run=self.a["--dry-run"],
+                             logger=self.logger)
 
     def system_executable_generation(self):
         """See :any:`cli_utils.CommandLineInterfaceSuper._system_executable_generation`.

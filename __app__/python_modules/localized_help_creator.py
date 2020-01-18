@@ -400,6 +400,7 @@ class LocalizedHelpCreator():
 {line2}"""
         return utils.get_bootstrap_card(
             header=_("Xlets localization"),
+            body_extra_classes="text-font-size-large",
             body=body.format(
                 line1=md(_(
                     "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.")),

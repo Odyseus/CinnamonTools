@@ -36,8 +36,6 @@ repo_folder = os.path.normpath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), *([".."] * 2)))
 
 
-_bootstrap_version = "4.3.1"
-
 HTML_DOC = """<!DOCTYPE html>
 <html>
 
@@ -101,7 +99,7 @@ HTML_DOC = """<!DOCTYPE html>
     <div class="container-fluid text-left">
         <ul class="list-unstyled">
             <li>
-                <p>Page created with <a href="https://getbootstrap.com"><b>Bootstrap</b></a> v%s.</p>
+                <p>Page created with <a href="https://getbootstrap.com"><b>Bootstrap</b></a>.</p>
             </li>
             <li>
                 <p><a href="https://gitlab.com/Odyseus/flatly_bootstrap_theme"><b>Boostrap theme</b></a> based on <a href="https://bootswatch.com"><b>Bootswatch</b></a>'s <a href="https://bootswatch.com/flatly"><b>Flatly theme</b></a>.</p>
@@ -126,8 +124,7 @@ HTML_DOC = """<!DOCTYPE html>
 </script>
 </body>
 </html>
-""" % (_bootstrap_version,
-       datetime.today().year,
+""" % (datetime.today().year,
        app_utils.URLS["repo"])
 
 BOXED_CONTAINER = """<div class="container boxed my-3 py-3">
