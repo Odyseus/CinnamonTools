@@ -23,7 +23,7 @@
         "min": 0,
         "max": 10000,
         "step": 100,
-        "dependency": "expand-on-hover",
+        "dependency": "pref_expand_on_hover",
         "units": "milliseconds",
         "description": "Expand on hover delay: "
     },
@@ -38,7 +38,7 @@
         "min": 0,
         "max": 10000,
         "step": 100,
-        "dependency": "collapse-on-leave",
+        "dependency": "pref_collapse_on_leave",
         "units": "milliseconds",
         "description": "Collapse on un-hover delay: "
     },
