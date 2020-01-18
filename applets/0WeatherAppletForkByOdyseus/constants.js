@@ -106,6 +106,25 @@ const Conditions = {
     FREEZING_FOG: _("Freezing Fog")
 };
 
+// NOTE: This is a dummy variable used to store unit abbreviations to expose them
+// for localization.
+const UnitAbbreviations = [
+    _("km"),
+    _("mile"),
+    _("atm"),
+    _("hPa"),
+    _("inHg"),
+    _("kPa"),
+    _("mbar"),
+    _("mmHg"),
+    _("Pa"),
+    _("psi"),
+    _("knots"),
+    _("kph"),
+    _("mph"),
+    _("m/s"),
+];
+
 var URLs = {
     YAHOO_WOEID: "http://woeid.rosselliot.co.nz",
     YAHOO_API_INSTRUCTIONS: "https://developer.yahoo.com/weather",
@@ -1036,13 +1055,13 @@ var WeatherBitSupportedLanguages = new Set([
 ]);
 
 /* exported CssClasses,
+            UnitAbbreviations,
             DarkSkyConditionData,
             DarkSkySupportedLanguages,
             DayNamesByIndex,
             DebugManagerSchema,
             ErrorMessages,
             KnownStatusCodes,
-            UNICODE_SYMBOLS,
             LoggingLevel,
             OpenWeatherMapConditionData,
             WeatherBitConditionData,
