@@ -11,7 +11,8 @@ settings = {
     }, {
         "source": "__app__/data/gschemas/debugManagerSchema.xml",
         "destination": "schemas/org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml"
-    }]
+    }],
+    "max_cinnamon_version_override": 4.0
 }
 
 
