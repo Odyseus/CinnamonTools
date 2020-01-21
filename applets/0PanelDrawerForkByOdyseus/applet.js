@@ -132,22 +132,22 @@ PanelDrawer.prototype = {
             return;
         }
 
-        let menuItem = new PopupMenu.PopupSwitchMenuItem(
+        let editModeSwitch = new PopupMenu.PopupSwitchMenuItem(
             _("Panel edit mode"),
             global.settings.get_boolean("panel-edit-mode")
         );
-        menuItem.connect("toggled", function(aItem) {
+        editModeSwitch.connect("toggled", function(aItem) {
             global.settings.set_boolean("panel-edit-mode", aItem.state);
         });
-        this._applet_context_menu.addMenuItem(menuItem);
+        this._applet_context_menu.addMenuItem(editModeSwitch);
 
-        global.settings.connect("changed::panel-edit-mode", function() {
-            menuItem.setToggleState(global.settings.get_boolean("panel-edit-mode"));
+        global.settings.connect("changed::panel-edit-mode", () => {
+            editModeSwitch.setToggleState(global.settings.get_boolean("panel-edit-mode"));
         });
 
         this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
-        menuItem = new PopupMenu.PopupIconMenuItem(
+        let menuItem = new PopupMenu.PopupIconMenuItem(
             _("Help"),
             "dialog-information",
             St.IconType.SYMBOLIC);
