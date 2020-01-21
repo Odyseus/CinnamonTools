@@ -589,6 +589,11 @@ def supported_cinnamon_versions_range(start, stop):
         versions.append("%.1f" % count)
         count += 0.1
 
+    # NOTE: Because depending on the stop value, it might get added or not to
+    # the array. So, check if it is, add it otherwise. FLOATS SUCK!!!
+    if str(stop) not in versions:
+        versions.append("%.1f" % stop)
+
     return versions
 
 
@@ -848,12 +853,21 @@ def build_xlets(xlets=[],
     for x in xlets:
         if x in all_xlets:
             xlet_type, xlet_dir_name = x.split(" ")
+            xlet_source = os.path.join(root_folder, "%ss" % xlet_type.lower(), xlet_dir_name)
+            xlet_config_file = os.path.join(xlet_source, "z_config.py")
+
+            if file_utils.is_real_file(xlet_config_file):
+                xlet_config = run_path(xlet_config_file)["settings"]
+            else:
+                xlet_config = {}
+
             uuid = "%s@%s" % (xlet_dir_name, options_map_defaults["domain_name"])
             xlets_data.append({
                 "uuid": uuid,
                 "type": xlet_type.lower(),
                 "slug": xlet_dir_name,
-                "source": os.path.join(root_folder, "%ss" % xlet_type.lower(), xlet_dir_name),
+                "config": xlet_config,
+                "source": xlet_source,
                 "destination": os.path.join(
                     file_utils.expand_path(options_map_defaults["build_output"]),
                     "%ss" % xlet_type.lower(),
@@ -873,17 +887,7 @@ def build_xlets(xlets=[],
     if xlets_data:
         built_xlets = []
 
-        # TODO: In the future, maybe (and only MAYBE) add a mechanism to declare specific supported
-        # Cinnamon versions (maybe a min/max option in the z_config.py file).
-        # As of now, I prefer the approach "either the xlet works on all existent Cinnamon versions
-        # or don't bother developing it at all".
-        supported_versions = supported_cinnamon_versions_range(
-            SUPPORTED_CINNAMON_VERSION_MIN,
-            SUPPORTED_CINNAMON_VERSION_MAX
-        )
-
         for data in xlets_data:
-            data["supported_versions"] = supported_versions
             builder = XletBuilder(
                 data,
                 do_not_confirm=do_not_confirm,
@@ -953,10 +957,11 @@ class XletBuilder():
         self._install_localizations = install_localizations
         self._extra_files = extra_files
         self._dry_run = dry_run
+        self._min_cinnamon_version_override = None
+        self._max_cinnamon_version_override = None
         self.logger = logger
 
         self._schemas_dir = os.path.join(xlet_data["destination"], "schemas")
-        self._config_file = os.path.join(xlet_data["source"], "z_config.py")
 
     def build(self):
         """Build xlet.
@@ -974,7 +979,7 @@ class XletBuilder():
         proceed = self._do_copy()
 
         if proceed:
-            self._handle_config_file()
+            self._handle_config_data()
 
             if self._dry_run:
                 self.logger.log_dry_run("**String substitutions will be performed at:**\n%s" %
@@ -1082,16 +1087,16 @@ class XletBuilder():
 
         return True
 
-    def _handle_config_file(self):
+    def _handle_config_data(self):
         """Handle xlet configuration file if any.
         """
-        if os.path.exists(self._config_file):
-            extra_settings = run_path(self._config_file)["settings"]
+        config_data = self._xlet_data["config"]
 
-            if extra_settings.get("extra_files", False):
+        if config_data:
+            if config_data.get("extra_files", False):
                 self.logger.info("**Copying extra files...**")
 
-                for obj in extra_settings.get("extra_files"):
+                for obj in config_data.get("extra_files"):
                     src = os.path.join(root_folder, obj["source"])
                     dst = os.path.join(self._xlet_data["destination"], obj["destination"])
 
@@ -1108,7 +1113,7 @@ class XletBuilder():
                         else:
                             file_utils.custom_copy2(src, dst, logger=self.logger, overwrite=True)
 
-            if extra_settings.get("symlinks", False):
+            if config_data.get("symlinks", False):
                 self.logger.info("**Generating symbolic links...**")
 
                 if self._dry_run:
@@ -1117,7 +1122,7 @@ class XletBuilder():
                 else:
                     os.chdir(self._xlet_data["destination"])
 
-                for dir in extra_settings.get("symlinks"):
+                for dir in config_data.get("symlinks"):
                     parent_dir = os.path.join(self._xlet_data["destination"], dir)
 
                     if self._dry_run:
@@ -1126,7 +1131,7 @@ class XletBuilder():
                     else:
                         os.makedirs(parent_dir, exist_ok=True)
 
-                    for src, dst in extra_settings.get("symlinks")[dir]:
+                    for src, dst in config_data.get("symlinks")[dir]:
                         if self._dry_run:
                             self.logger.log_dry_run(
                                 "**Symbolic link for file/folder:**\n%s" % src)
@@ -1141,6 +1146,16 @@ class XletBuilder():
                 else:
                     os.chdir(root_folder)
 
+            if config_data.get("min_cinnamon_version_override", None):
+                self.logger.info("**Minimum Cinnamon version override found...**")
+                self._min_cinnamon_version_override = config_data.get(
+                    "min_cinnamon_version_override")
+
+            if config_data.get("max_cinnamon_version_override", None):
+                self.logger.info("**Maximum Cinnamon version override found...**")
+                self._max_cinnamon_version_override = config_data.get(
+                    "max_cinnamon_version_override")
+
     def _modify_metadata(self):
         """Modify metadata.
         """
@@ -1148,13 +1163,20 @@ class XletBuilder():
         meta_path = os.path.join(self._xlet_data["destination"], "metadata.json")
 
         if self._dry_run:
-            self.logger.log_dry_run("**The metadata for the '%s' xlet will be modifyied:**\n%s" %
+            self.logger.log_dry_run("**The metadata for the '%s' xlet will be modified:**\n%s" %
                                     (self._xlet_data["slug"], meta_path))
         else:
             with open(meta_path, "r", encoding="UTF-8") as old:
                 xlet_metadata = json.loads(old.read())
 
-            xlet_metadata["cinnamon-version"] = self._xlet_data["supported_versions"]
+            supported_versions = supported_cinnamon_versions_range(
+                self._min_cinnamon_version_override if self._min_cinnamon_version_override is not None
+                else SUPPORTED_CINNAMON_VERSION_MIN,
+                self._max_cinnamon_version_override if self._max_cinnamon_version_override is not None
+                else SUPPORTED_CINNAMON_VERSION_MAX
+            )
+
+            xlet_metadata["cinnamon-version"] = supported_versions
             xlet_metadata["uuid"] = self._xlet_data["uuid"]
             xlet_metadata["website"] = URLS["repo"]
             xlet_metadata["url"] = URLS["repo"]
