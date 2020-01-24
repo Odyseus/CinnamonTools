@@ -11,7 +11,7 @@
 # This is a place were users can create their own theme variants.
 /themes/_variants/*
 !/themes/_variants/README.md
-!/themes/_variants/GreybirdBlue/*
+!/themes/_variants/GreybirdBlue
 
 ##################
 # Global ignores #
