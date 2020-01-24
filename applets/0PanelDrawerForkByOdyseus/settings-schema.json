@@ -1,4 +1,8 @@
 {
+    "general-header": {
+        "type": "header",
+        "description": "General"
+    },
     "pref_auto_hide": {
         "type": "checkbox",
         "default": true,
@@ -60,6 +64,34 @@
         "max": 5,
         "step": 0.25,
         "units": "seconds"
+    },
+    "appearance-header": {
+        "type": "header",
+        "description": "Appearance"
+    },
+    "pref_horizontal_expand_icon_name": {
+        "type": "iconfilechooser",
+        "default": "pan-start",
+        "description": "Horizontal expand icon",
+        "tooltip": "Enter either the icon's qualified name or it's full path"
+    },
+    "pref_horizontal_collapse_icon_name": {
+        "type": "iconfilechooser",
+        "default": "pan-end",
+        "description": "Horizontal collapse icon",
+        "tooltip": "Enter either the icon's qualified name or it's full path"
+    },
+    "pref_vertical_expand_icon_name": {
+        "type": "iconfilechooser",
+        "default": "pan-up",
+        "description": "Vertical expand icon",
+        "tooltip": "Enter either the icon's qualified name or it's full path"
+    },
+    "pref_vertical_collapse_icon_name": {
+        "type": "iconfilechooser",
+        "default": "pan-down",
+        "description": "Vertical collapse icon",
+        "tooltip": "Enter either the icon's qualified name or it's full path"
     },
     "debugging-header": {
         "type": "header",

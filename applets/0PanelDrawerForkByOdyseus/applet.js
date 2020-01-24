@@ -214,6 +214,10 @@ PanelDrawer.prototype = {
             "pref_hover_delay",
             "pref_autohide_reshowing",
             "pref_autohide_reshowing_delay",
+            "pref_horizontal_expand_icon_name",
+            "pref_horizontal_collapse_icon_name",
+            "pref_vertical_expand_icon_name",
+            "pref_vertical_collapse_icon_name",
             "pref_logging_level",
             "pref_debugger_enabled",
             "pref_usage_notified"
@@ -233,9 +237,15 @@ PanelDrawer.prototype = {
 
     _setAppletIcon: function(aCollapsed) {
         if (this.vertical) {
-            this.set_applet_icon_symbolic_name(aCollapsed ? "pan-down" : "pan-up");
+            this.set_applet_icon_symbolic_name(aCollapsed ?
+                this.pref_vertical_collapse_icon_name :
+                this.pref_vertical_expand_icon_name
+            );
         } else {
-            this.set_applet_icon_symbolic_name(aCollapsed ? "pan-end" : "pan-start");
+            this.set_applet_icon_symbolic_name(aCollapsed ?
+                this.pref_horizontal_collapse_icon_name :
+                this.pref_horizontal_expand_icon_name
+            );
         }
     },
 
@@ -431,6 +441,12 @@ PanelDrawer.prototype = {
                     this.toggleCollapsed();
                     this.autoCollapse();
                 }
+                break;
+            case "pref_horizontal_expand_icon_name":
+            case "pref_horizontal_collapse_icon_name":
+            case "pref_vertical_expand_icon_name":
+            case "pref_vertical_collapse_icon_name":
+                this._setAppletIcon(this._collapse);
                 break;
             case "pref_logging_level":
             case "pref_debugger_enabled":
