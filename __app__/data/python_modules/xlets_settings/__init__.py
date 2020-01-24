@@ -42,6 +42,11 @@ CINNAMON_VERSION = check_output(
     ["cinnamon", "--version"]
 ).decode("utf-8").splitlines()[0].split(" ")[1]
 
+GTK_VERSION = "%s.%s" % (
+    Gtk.get_major_version(),
+    Gtk.get_minor_version()
+)
+
 proxy = None
 
 XLET_SETTINGS_WIDGETS = {
@@ -657,6 +662,11 @@ class MainApplication(Gtk.Application):
             .cinnamon-xlet-settings-app-title-button GtkImage:insensitive {
                 opacity: 1;
                 -gtk-image-effect: none;
+            }
+            """ if compare_version(GTK_VERSION, "3.22") < 0 else """
+            .cinnamon-xlet-settings-app-title-button image:disabled {
+                opacity: 1;
+                -gtk-icon-effect: none;
             }
             """
         ))
