@@ -784,7 +784,7 @@ def build_xlets(xlets=[],
                               validator=validate_options_1_2)
 
         # NOTE: Do not ask to install localizations if the output location
-        # is not Cinnamon's install location ofr xlets.
+        # is not Cinnamon's install location for xlets.
         if options_map_defaults["build_output"].startswith(PATHS["xlets_install_location"]):
             # Ask for localizations installation.
             print_separator(logger)
@@ -836,15 +836,12 @@ def build_xlets(xlets=[],
                                                                 types="xlets"), date=False, to_file=False)
         raise SystemExit(1)
 
-    if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
+    if options_map_defaults["build_output"].startswith(get_base_temp_folder()) or \
+            not options_map_defaults["build_output"]:
         options_map_defaults["build_output"] = os.path.join(
             get_base_temp_folder(),
             misc_utils.micro_to_milli(misc_utils.get_date_time("filename"))
         )
-
-    if not options_map_defaults["build_output"]:
-        logger.warning(_not_specified_output_location, date=False, to_file=False)
-        raise SystemExit(1)
 
     all_xlets = get_xlets_dirs()
 
@@ -1661,15 +1658,12 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
 
         raise SystemExit(1)
 
-    if options_map_defaults["build_output"].startswith(get_base_temp_folder()):
+    if options_map_defaults["build_output"].startswith(get_base_temp_folder()) or \
+            not options_map_defaults["build_output"]:
         options_map_defaults["build_output"] = os.path.join(
             get_base_temp_folder(),
             misc_utils.micro_to_milli(misc_utils.get_date_time("filename"))
         )
-
-    if not options_map_defaults["build_output"]:
-        logger.warning(_not_specified_output_location, date=False, to_file=False)
-        raise SystemExit(1)
 
     themes_sources = os.path.join(root_folder, "themes")
     common_version_insensitive_files = os.path.join(
