@@ -99,7 +99,7 @@ def merge_dict(first, second, logger=None):
     second : dict
         A dictionary to merge into another dictionary.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
 
     Returns
     -------

@@ -4,10 +4,13 @@
 """
 import os
 
+from runpy import run_path
 from shutil import rmtree
 
 from . import cmd_utils
 from . import exceptions
+from . import file_utils
+from . import shell_utils
 from . import tqdm_wget
 from .misc_utils import get_system_tempdir
 
@@ -15,7 +18,7 @@ from .misc_utils import get_system_tempdir
 def check_inventories_existence(update_inventories=False,
                                 docs_sources_path="",
                                 logger=None):
-    """Check inventories existence. Download them if they don't exists.
+    """Check inventories existence. Download them if they don't exist.
 
     These inventory files are the ones used by the intersphinx Sphinx extension. Since
     I couldn't make the intersphinx_mapping option to download the inventory files
@@ -30,43 +33,42 @@ def check_inventories_existence(update_inventories=False,
         Path to the documentation source files that will be used to store the
         downloaded inventories.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
 
     Raises
     ------
     exceptions.KeyboardInterruption
         Halt execution on Ctrl + C press.
-
-    Note
-    ----
-    I may need to implement the inventory_files_map variable as an argument so I can
-    selectively use different inventories for specific documentations. As of now, Python
-    inventory is enough.
     """
-    inventory_files_map = [
-        ("https://docs.python.org/3.5/objects.inv",
-         os.path.join(docs_sources_path, "python-3.5-objects.inv"))
-    ]
+    logger.info(shell_utils.get_cli_separator("-"), date=False)
+    logger.info("**Handling inventory files...**")
+    mapping_file_path = os.path.join(docs_sources_path, "intersphinx_mapping.py")
 
-    logger.info("Checking existence of inventory files...")
+    if file_utils.is_real_file(mapping_file_path):
+        intersphinx_mapping = run_path(mapping_file_path)["intersphinx_mapping"]
 
-    for url, downloaded_file in inventory_files_map:
-        if update_inventories or not os.path.exists(downloaded_file):
-            logger.info("**Downloading inventory file...**")
-            logger.info("**Download URL:**")
-            logger.info(url, date=False)
-            logger.info("**Download location:**")
-            logger.info(downloaded_file, date=False)
+        logger.info("**Checking existence of inventory files...**")
 
-            try:
-                tqdm_wget.download(url, downloaded_file)
-            except (KeyboardInterrupt, SystemExit):
-                raise exceptions.KeyboardInterruption()
-            except Exception as err:
-                logger.error(err)
-        else:
-            logger.info("**Inventory file exists:**")
-            logger.info(downloaded_file, date=False)
+        for url, inv in intersphinx_mapping.values():
+            inv_url = url + "/objects.inv"
+            inv_path = os.path.join(docs_sources_path, inv)
+
+            if update_inventories or not os.path.exists(inv_path):
+                logger.info("**Downloading inventory file...**")
+                logger.info("**Download URL:**")
+                logger.info(inv_url, date=False)
+                logger.info("**Download location:**")
+                logger.info(inv_path, date=False)
+
+                try:
+                    tqdm_wget.download(inv_url, inv_path)
+                except (KeyboardInterrupt, SystemExit):
+                    raise exceptions.KeyboardInterruption()
+                except Exception as err:
+                    logger.error(err)
+            else:
+                logger.info("**Inventory file exists:**")
+                logger.info(inv_path, date=False)
 
 
 def generate_docs(root_folder="",
@@ -111,7 +113,7 @@ def generate_docs(root_folder="",
     build_coverage : bool, optional
         If True, build Sphinx coverage documents.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     """
     doctree_temp_location = os.path.join(get_system_tempdir(),
                                          doctree_temp_location_rel_to_sys_temp)
@@ -125,6 +127,9 @@ def generate_docs(root_folder="",
         rmtree(docs_destination_path, ignore_errors=True)
 
     if generate_api_docs:
+        logger.info(shell_utils.get_cli_separator("-"), date=False)
+        logger.info("**Generating automodule directives...**")
+
         commmon_args = ["--module-first", "--separate", "--private",
                         "--force", "--suffix", "rst", "--output-dir"]
 
@@ -144,11 +149,17 @@ def generate_docs(root_folder="",
 
     try:
         if build_coverage:
+            logger.info(shell_utils.get_cli_separator("-"), date=False)
+            logger.info("**Building coverage data...**")
+
             cmd_utils.run_cmd(["sphinx-build", ".", "-b", "coverage", "-d", doctree_temp_location, "./coverage"],
                               stdout=None,
                               stderr=None,
                               cwd=docs_sources_path)
     finally:
+        logger.info(shell_utils.get_cli_separator("-"), date=False)
+        logger.info("**Generating HTML documentation...**")
+
         cmd_utils.run_cmd(["sphinx-build", ".", "-b", "html", "-d", doctree_temp_location,
                            docs_destination_path],
                           stdout=None,
@@ -175,8 +186,10 @@ def generate_man_pages(root_folder="",
         Name of a temporary folder that will be used to create a path relative to the
         system temporary folder.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     """
+    logger.info(shell_utils.get_cli_separator("-"), date=False)
+    logger.info("**Generating manual pages...**")
     doctree_temp_location = os.path.join(get_system_tempdir(),
                                          doctree_temp_location_rel_to_sys_temp)
     docs_sources_path = os.path.join(root_folder, docs_src_path_rel_to_root)

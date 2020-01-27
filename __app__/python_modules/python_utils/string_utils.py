@@ -83,7 +83,7 @@ def do_string_substitutions(dir_path, replacement_data,
     allowed_extensions : tuple, optional
         A tuple of file extensions that are allowed to be modified.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     """
     logger.info("**Performing string substitutions...**")
 

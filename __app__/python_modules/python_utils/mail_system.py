@@ -46,7 +46,7 @@ class MailSystem():
     Attributes
     ----------
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     """
 
     def __init__(self, mail_settings={}, logger=None):
@@ -57,7 +57,7 @@ class MailSystem():
         mail_settings : dict
             Where all the data to send the email/s is stored.
         logger : object
-            See <class :any:`LogSystem`>.
+            See :any:`LogSystem`.
         """
         self._config = mail_settings
         self.logger = logger

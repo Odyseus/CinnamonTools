@@ -23,7 +23,7 @@ class CommandLineInterfaceSuper():
     Attributes
     ----------
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     """
     _cli_header_blacklist = []
 
@@ -119,7 +119,7 @@ def run_cli(flag_file="", docopt_doc="", app_name="", app_version="", app_status
     app_status : str, optional
         Application status.
     cli_class : class
-        See <class :any:`CommandLineInterfaceSuper`>.
+        See :any:`CommandLineInterfaceSuper`.
     """
     if not os.path.exists(flag_file):
         raise exceptions.BadExecutionLocation()
