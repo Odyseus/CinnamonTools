@@ -292,7 +292,7 @@ ColorBlindnessAssistant.prototype = {
         }
     },
 
-    openExtensionSettings: function() {
+    openXletSettings: function() {
         Util.spawn_async([XletMeta.path + "/settings.py"], null);
     },
 
@@ -590,8 +590,7 @@ ColorBlindnessAssistant.prototype = {
     },
 
     _generateSettingsDesktopFile: function() {
-        if (G.versionCompare(G.CINNAMON_VERSION, "3.6.0") < 0 &&
-            !Settings.pref_desktop_file_generated) {
+        if (!Settings.pref_desktop_file_generated) {
             CustomFileUtils.generateDesktopFile({
                 fileName: this._settingsDesktopFileName,
                 dataName: _(XletMeta.name),
@@ -729,7 +728,7 @@ function enable() {
          * buttons in the settings window. Cinnamon 3.0.x, we are screwed.
          */
         return {
-            openSettings: assistant.openExtensionSettings
+            openXletSettings: assistant.openXletSettings
         };
     } catch (aErr) {
         global.logError(aErr);
