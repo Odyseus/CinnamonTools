@@ -1,15 +1,12 @@
 {
     "info_label_1": {
         "type": "label",
-        "description": "If you are seeing this window, you are using a Cinnamon version with a design flaw."
+        "description": "This window isn't this xlet's \"real\" configuration window."
     },
-    "info_label_2": {
-        "type": "label",
-        "description": "This window isn't this applet's \"real\" configuration window."
-    },
-    "info_label_3": {
-        "type": "label",
-        "description": "Open this applet settings from its context menu."
+    "settings_button": {
+        "type": "button",
+        "callback": "openXletSettings",
+        "description": "Open the \"real\" preference window"
     },
     "pref_overlay_key": {
         "type": "generic",

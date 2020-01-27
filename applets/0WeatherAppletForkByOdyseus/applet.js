@@ -309,36 +309,34 @@ Weather.prototype = {
     },
 
     _seekAndDetroyConfigureContext: function() {
-        if (versionCompare(CINNAMON_VERSION, "3.6.0") < 0) {
-            let menuItem = new PopupMenu.PopupIconMenuItem(_("Configure..."),
-                "system-run", St.IconType.SYMBOLIC);
-            menuItem.connect("activate", () => {
-                this._openSettings();
-            });
+        let menuItem = new PopupMenu.PopupIconMenuItem(_("Configure..."),
+            "system-run", St.IconType.SYMBOLIC);
+        menuItem.connect("activate", () => {
+            this.openXletSettings();
+        });
 
-            Mainloop.timeout_add_seconds(5, () => {
-                try {
-                    let children = this._applet_context_menu._getMenuItems();
-                    let i = children.length;
-                    while (i--) {
-                        if (this.hasOwnProperty("context_menu_item_configure") &&
-                            children[i] === this.context_menu_item_configure) {
-                            children[i].destroy();
-                            this.context_menu_item_configure = menuItem;
-                            this._applet_context_menu.addMenuItem(
-                                this.context_menu_item_configure,
-                                i
-                            );
-                            break;
-                        }
+        Mainloop.timeout_add_seconds(5, () => {
+            try {
+                let children = this._applet_context_menu._getMenuItems();
+                let i = children.length;
+                while (i--) {
+                    if (this.hasOwnProperty("context_menu_item_configure") &&
+                        children[i] === this.context_menu_item_configure) {
+                        children[i].destroy();
+                        this.context_menu_item_configure = menuItem;
+                        this._applet_context_menu.addMenuItem(
+                            this.context_menu_item_configure,
+                            i
+                        );
+                        break;
                     }
-                } catch (aErr) {
-                    global.logError(aErr);
                 }
+            } catch (aErr) {
+                global.logError(aErr);
+            }
 
-                return GLib.SOURCE_REMOVE;
-            });
-        }
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _initSoupSession: function() {
@@ -1627,7 +1625,7 @@ Weather.prototype = {
         }
     },
 
-    _openSettings: function() {
+    openXletSettings: function() {
         Util.spawn_async([
             this.metadata.path + "/settings.py",
             "--xlet-type=applet",
