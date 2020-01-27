@@ -225,7 +225,7 @@ def custom_copy2(source, destination, logger=None, log_copied_file=False, relati
     destination : str
         Target file path.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     log_copied_file : bool, optional
         If True, log the relative destination path of the copied file.
     relative_path : str, optional
@@ -269,7 +269,7 @@ def copy_create_symlink(source, destination, source_is_symlink=False, logger=Non
     source_is_symlink : bool, optional
         If the source path is a symbolic link.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     follow_symlinks : bool, optional
         Follow symlinks.
 
@@ -321,7 +321,7 @@ def custom_copytree(src, dst, symlinks=True, ignored_patterns=None, ignore_dangl
     ignore_dangling_symlinks : bool, optional
         Whether to ignore dangling symlinks.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     log_copied_file : bool, optional
         See :any:`custom_copy2` > log_copied_file parameter.
     relative_path : str, optional

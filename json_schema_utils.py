@@ -56,7 +56,7 @@ def validate(instance, schema,
     extra_types : dict, optional
         Extra type checks.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
 
     Raises
     ------

@@ -43,7 +43,7 @@ def popen(cmd, stdout=None, stderr=None, output_stream=STREAM_BOTH,
     cwd : None, optional
         Path to working directory.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
 
     Returns
     -------
@@ -103,7 +103,7 @@ def exec_command(cmd, cwd=None, do_wait=True, do_log=True, logger=None):
     do_log : bool, optional
         Log or not the command output. (default: {True})
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     """
     try:
         po = Popen(

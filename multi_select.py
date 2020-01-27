@@ -41,11 +41,11 @@ class MultiSelect():
     selected : int
         The index of the menu item on the current cursor position.
     stdscr : object
-        See <class :any:`curses.initscr`>.
+        See :any:`curses.initscr`.
     title : str
         A title to use on the menu.
     win : object
-        See <class :any:`curses.newwin`>.
+        See :any:`curses.newwin`.
     window_height : int
         The height of the terminal window.
     window_width : int
@@ -227,7 +227,7 @@ class MultiSelect():
         Parameters
         ----------
         stdscr : object
-            See <class :any:`curses.initscr`>.
+            See :any:`curses.initscr`.
 
         Raises
         ------

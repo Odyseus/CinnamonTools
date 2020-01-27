@@ -87,7 +87,7 @@ def system_executable_generation(exec_name="",
     do_completions : bool, optional
         Perform the bash completions installation.
     logger : object, optional
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     bash_comp_step_one : bool, optional
         If True, continue with execution. If False, halt execution.
     bash_comp_step_two : bool, optional
@@ -231,7 +231,7 @@ def do_template_copy(source, destination, options={}, logger=None):
     options : dict, optional
         A dictionary of options.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
 
     Raises
     ------
@@ -273,7 +273,7 @@ def generate_from_template(source, destination, options={}, logger=None, confirm
         :any:`do_template_copy` should be made executable.
 
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     confirm_overwrite : bool, optional
         If True, ask to overwrite files. If False, proceed without confirmation.
 
