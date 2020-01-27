@@ -1099,13 +1099,12 @@ CinnamonTweaks.prototype = {
         }.bind(this));
     },
 
-    openExtensionSettings: function() {
+    openXletSettings: function() {
         Util.spawn_async([XletMeta.path + "/settings.py"], null);
     },
 
     _generateSettingsDesktopFile: function() {
-        if (G.versionCompare(G.CINNAMON_VERSION, "3.6.0") < 0 &&
-            !Settings.pref_desktop_file_generated) {
+        if (!Settings.pref_desktop_file_generated) {
             CustomFileUtils.generateDesktopFile({
                 fileName: this._settingsDesktopFileName,
                 dataName: _(XletMeta.name),
@@ -1300,7 +1299,7 @@ function enable() {
         });
 
         return {
-            openSettings: cinnamonTweaks.openExtensionSettings
+            openXletSettings: cinnamonTweaks.openXletSettings
         };
     } catch (aErr) {
         global.logError(aErr);
