@@ -1,5 +1,4 @@
 {
-    "external-configuration-app": "settings.py",
     "max-instances": -1,
     "name": "System Monitor (Fork By Odyseus)",
     "contributors": "See this xlet help file.",
