@@ -515,7 +515,7 @@ MultiTranslator.prototype = {
                     );
                     let items = [
                         [_("Preferences"),
-                            () => this.openExtensionSettings(),
+                            () => this.openXletSettings(),
                             C.Icons.preferences
                         ]
                     ];
@@ -1313,14 +1313,13 @@ MultiTranslator.prototype = {
         G.xdgOpen(XletMeta.path + "/HELP.html");
     },
 
-    openExtensionSettings: function() {
+    openXletSettings: function() {
         this.transDialog.close();
         Util.spawn_async([XletMeta.path + "/settings.py"], null);
     },
 
     _generateSettingsDesktopFile: function() {
-        if (G.versionCompare(G.CINNAMON_VERSION, "3.6.0") < 0 &&
-            !Settings.pref_desktop_file_generated) {
+        if (!Settings.pref_desktop_file_generated) {
             CustomFileUtils.generateDesktopFile({
                 fileName: this._settingsDesktopFileName,
                 dataName: _(XletMeta.name),
@@ -1445,7 +1444,7 @@ function enable() {
          * buttons in the settings window. Cinnamon 3.0.x, we are screwed.
          */
         return {
-            openSettings: translator.openExtensionSettings
+            openXletSettings: translator.openXletSettings
         };
     } catch (aErr) {
         global.logError(aErr);

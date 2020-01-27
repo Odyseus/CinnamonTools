@@ -1,27 +1,11 @@
 {
     "info_label_1": {
         "type": "label",
-        "description": "If you are seeing this window, you are using a Cinnamon version with a design flaw."
-    },
-    "info_label_2": {
-        "type": "label",
-        "description": "This window isn't this extension's \"real\" configuration window."
-    },
-    "info_label_3": {
-        "type": "label",
-        "description": "Click the following button to open the \"real\" configuration window."
-    },
-    "info_label_3": {
-        "type": "label",
-        "description": "If on Cinnamon 3.0.x, the button below will not work."
-    },
-    "info_label_4": {
-        "type": "label",
-        "description": "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
+        "description": "This window isn't this xlet's \"real\" configuration window."
     },
     "settings_button": {
         "type": "button",
-        "callback": "openSettings",
+        "callback": "openXletSettings",
         "description": "Open the \"real\" preference window"
     },
     "pref_open_translator_dialog_keybinding": {
