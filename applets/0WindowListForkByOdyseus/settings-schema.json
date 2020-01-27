@@ -37,37 +37,25 @@
     },
     "pref_window_preview": {
         "type": "checkbox",
-        "default": true,
+        "default": false,
         "description": "Show window thumbnails on hover"
     },
     "pref_window_preview_show_label": {
         "type": "checkbox",
-        "default": true,
+        "default": false,
         "description": "Show title above thumbnail",
         "dependency": "pref_window_preview"
     },
     "pref_window_preview_scale": {
-        "type": "radiogroup",
-        "default": 1,
-        "description": "Thumbnail size",
-        "options": {
-            "Small": 0.75,
-            "Medium": 1,
-            "Large": 1.25,
-            "Largest": 1.5
-        },
-        "dependency": "pref_window_preview"
-    },
-    "pref_window_preview_scale": {
         "type": "spinbutton",
-        "indent": true,
-        "default": 1,
+        "default": 2,
         "min": 0.25,
         "max": 5,
         "step": 0.25,
+        "units": "factor",
         "dependency": "pref_window_preview",
-        "units": "pixels",
-        "description": "Window preview scale factor."
+        "description": "Window preview scale factor",
+        "tooltip": "The default size of the windows preview is 200x150 pixels. A scale factor of 2 will produce previews of 400x300 pixels."
     },
     "pref_hide_tooltips": {
         "type": "checkbox",
@@ -76,9 +64,8 @@
     },
     "pref_hide_labels": {
         "type": "checkbox",
-        "default": false,
-        "description": "Hide labels in the window list buttons (*)",
-        "tooltip": "(*) After changing this settings, Cinnamon needs to be restarted (depends on the Cinnamon version) for the window button icon to have the correct final size."
+        "default": true,
+        "description": "Hide labels in the window list buttons"
     },
     "pref_invert_menu_items_order": {
         "type": "checkbox",

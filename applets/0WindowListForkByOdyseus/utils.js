@@ -62,12 +62,12 @@ WindowPreview.prototype = {
     _init: function(item, metaWindow, previewScale, showLabel) {
         Tooltips.TooltipBase.prototype._init.call(this, item.actor);
         this._applet = item._applet;
-        this.uiScale = St.ThemeContext.get_for_stage(global.stage).scale_factor;
-        this.thumbScale = previewScale;
         this.metaWindow = metaWindow;
-        this.muffinWindow = null;
+        this._windowActor = null;
+        this.uiScale = global.ui_scale;
+        this.thumbScale = previewScale;
 
-        this._sizeChangedId = null;
+        this._sizeChangedId = 0;
         this.thumbnail = null;
 
         // Mark for deletion on EOL. Cinnamon 3.6.x+
@@ -100,6 +100,21 @@ WindowPreview.prototype = {
 
         this.thumbnailBin = new St.Bin();
         this.actor.add_actor(this.thumbnailBin);
+    },
+
+    get windowActor() {
+        if (this._windowActor) {
+            return this._windowActor;
+        }
+
+        this._windowActor = this.metaWindow.get_compositor_private();
+
+        if (this._windowActor) {
+            return this._windowActor;
+        } else {
+            global.log("metaWindow has no actor!");
+            return null;
+        }
     },
 
     _onEnterEvent: function(actor, event) {
@@ -140,15 +155,20 @@ WindowPreview.prototype = {
             return;
         }
 
-        this.muffinWindow = this.metaWindow.get_compositor_private();
-        let windowTexture = this.muffinWindow.get_texture();
-        let [width, height] = this._getScaledTextureSize(windowTexture);
-
         if (this.thumbnail) {
             this.thumbnailBin.set_child(null);
             this.thumbnail.destroy();
             this.thumbnail = null;
         }
+
+        let windowTexture = this.windowActor.get_texture();
+
+        if (!windowTexture) {
+            this.actor.hide();
+            return;
+        }
+
+        let [width, height] = this._getScaledTextureSize(windowTexture);
 
         this.thumbnail = new Clutter.Clone({
             source: windowTexture,
@@ -156,12 +176,11 @@ WindowPreview.prototype = {
             height: height
         });
 
-        this._sizeChangedId = this.muffinWindow.connect("size-changed",
-            () => {
-                let [width, height] = this._getScaledTextureSize(windowTexture);
-                this.thumbnail.set_size(width, height);
-                this._set_position();
-            });
+        this._sizeChangedId = this.windowActor.connect("size-changed", () => {
+            let [width, height] = this._getScaledTextureSize(windowTexture);
+            this.thumbnail.set_size(width, height);
+            this._set_position();
+        });
 
         this.thumbnailBin.set_child(this.thumbnail);
 
@@ -174,9 +193,9 @@ WindowPreview.prototype = {
     },
 
     hide: function() {
-        if (!this._sizeChangedId) {
-            this.muffinWindow && this.muffinWindow.disconnect(this._sizeChangedId);
-            this._sizeChangedId = null;
+        if (this._sizeChangedId > 0) {
+            this.windowActor && this.windowActor.disconnect(this._sizeChangedId);
+            this._sizeChangedId = 0;
         }
         if (this.thumbnail) {
             this.thumbnailBin.set_child(null);
@@ -192,6 +211,16 @@ WindowPreview.prototype = {
     _set_position: function() {
         if (!this.actor) {
             return;
+        }
+
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 4.0.x+
+        // The repugnant is_finalized hack was forced down Cinnamon's throat
+        // around 4.0.x. Unify the following condition with the previous one.
+        if (versionCompare(CINNAMON_VERSION, "4.0.0") >= 0) {
+            if (this.actor.is_finalized()) {
+                return;
+            }
         }
 
         let allocation = this.actor.get_allocation_box();
@@ -215,7 +244,7 @@ WindowPreview.prototype = {
             previewLeft = this.item.get_transformed_position()[0] + this.item.get_transformed_size()[0] / 2 - previewWidth / 2;
         } else if (this._applet.orientation === St.Side.LEFT) {
             previewLeft = this.item.get_transformed_position()[0] + this.item.get_transformed_size()[0] + 5;
-        } else if (this._applet.orientation === St.Side.RIGHT) {
+        } else {
             previewLeft = this.item.get_transformed_position()[0] - previewWidth - 5;
         }
 
@@ -233,9 +262,9 @@ WindowPreview.prototype = {
     },
 
     _destroy: function() {
-        if (!this._sizeChangedId) {
-            this.muffinWindow && this.muffinWindow.disconnect(this._sizeChangedId);
-            this.sizeChangedId = null;
+        if (this._sizeChangedId > 0) {
+            this.windowActor && this.windowActor.disconnect(this._sizeChangedId);
+            this.sizeChangedId = 0;
         }
         if (this.thumbnail) {
             this.thumbnailBin.set_child(null);
@@ -243,10 +272,10 @@ WindowPreview.prototype = {
             this.thumbnail = null;
         }
         if (this.actor) {
+            Main.uiGroup.remove_actor(this.actor);
             this.actor.destroy();
             this.actor = null;
         }
-        this.muffinWindow = null;
     }
 };
 
@@ -269,7 +298,7 @@ AppMenuButton.prototype = {
         this.metaWindow = metaWindow;
         this.alert = alert;
         this.labelVisible = false;
-        this.window_signals = new SignalManager.SignalManager(null);
+        this._signals = new SignalManager.SignalManager(null);
 
         if (this._applet.orientation === St.Side.TOP) {
             this.actor.add_style_class_name("top");
@@ -286,19 +315,19 @@ AppMenuButton.prototype = {
         }
 
         this.actor._delegate = this;
-        this.actor.connect("button-release-event",
-            (aActor, aEvent) => this._onButtonRelease(aActor, aEvent));
-        this.actor.connect("button-press-event",
-            (aActor, aEvent) => this._onButtonPress(aActor, aEvent));
+        this._signals.connect(this.actor, "button-release-event", function(aActor, aEvent) {
+            this._onButtonRelease(aActor, aEvent);
+        }.bind(this));
+        this._signals.connect(this.actor, "button-press-event", function(aActor, aEvent) {
+            this._onButtonPress(aActor, aEvent);
+        }.bind(this));
 
-        this.actor.connect("get-preferred-width",
-            (actor, forHeight, alloc) => {
-                this._getPreferredWidth(actor, forHeight, alloc);
-            });
-        this.actor.connect("get-preferred-height",
-            (actor, forWidth, alloc) => {
-                this._getPreferredHeight(actor, forWidth, alloc);
-            });
+        this._signals.connect(this.actor, "get-preferred-width", function(actor, forHeight, alloc) {
+            this._getPreferredWidth(actor, forHeight, alloc);
+        }.bind(this));
+        this._signals.connect(this.actor, "get-preferred-height", function(actor, forWidth, alloc) {
+            this._getPreferredHeight(actor, forWidth, alloc);
+        }.bind(this));
 
         /* NOTE: The _allocate function is too complex and has too much differences
          * for me to use conditions to make it work right in all versions of Cinnamon.
@@ -307,11 +336,13 @@ AppMenuButton.prototype = {
         // Needed for retro-compatibility.
         // Mark for deletion on EOL. Cinnamon 3.8.x+
         if (versionCompare(CINNAMON_VERSION, "3.8.0") >= 0) {
-            this.actor.connect("allocate",
-                (actor, box, flags) => this._allocate_NEW(actor, box, flags));
+            this._signals.connect(this.actor, "allocate", function(actor, box, flags) {
+                this._allocate_NEW(actor, box, flags);
+            }.bind(this));
         } else {
-            this.actor.connect("allocate",
-                (actor, box, flags) => this._allocate_OLD(actor, box, flags));
+            this._signals.connect(this.actor, "allocate", function(actor, box, flags) {
+                this._allocate_OLD(actor, box, flags);
+            }.bind(this));
         }
 
         this.progressOverlay = new St.Widget({
@@ -325,10 +356,12 @@ AppMenuButton.prototype = {
         this._iconBox = new Cinnamon.Slicer({
             name: "appMenuIcon"
         });
-        this._iconBox.connect("style-changed",
-            () => this._onIconBoxStyleChanged());
-        this._iconBox.connect("notify::allocation",
-            () => this._updateIconBoxClipAndGeometry());
+        this._signals.connect(this._iconBox, "style-changed", function() {
+            this._onIconBoxStyleChanged();
+        }.bind(this));
+        this._signals.connect(this._iconBox, "notify::allocation", function() {
+            this._updateIconBoxClipAndGeometry();
+        }.bind(this));
         this.actor.add_actor(this._iconBox);
 
         this._label = new St.Label();
@@ -375,17 +408,21 @@ AppMenuButton.prototype = {
             this._menuManager.addMenu(this.rightClickMenu);
 
             this._draggable = DND.makeDraggable(this.actor, null, this._applet.actor);
-            this._draggable.connect("drag-begin",
-                () => this._onDragBegin());
-            this._draggable.connect("drag-cancelled",
-                () => this._onDragCancelled());
-            this._draggable.connect("drag-end",
-                () => this._onDragEnd());
+            this._signals.connect(this._draggable, "drag-begin", function() {
+                this._onDragBegin();
+            }.bind(this));
+            this._signals.connect(this._draggable, "drag-cancelled", function() {
+                this._onDragCancelled();
+            }.bind(this));
+            this._signals.connect(this._draggable, "drag-end", function() {
+                this._onDragEnd();
+            }.bind(this));
         }
 
         this.onPanelEditModeChanged();
-        global.settings.connect("changed::panel-edit-mode",
-            () => this.onPanelEditModeChanged());
+        this._signals.connect(global.settings, "changed::panel-edit-mode", function() {
+            this.onPanelEditModeChanged();
+        }.bind(this));
 
         this._windows = this._applet._windows;
 
@@ -401,38 +438,28 @@ AppMenuButton.prototype = {
             this.getAttention();
         }
 
-        this.window_signals.connect(this.metaWindow, "notify::title",
-            function() {
-                this.setDisplayTitle();
-            }.bind(this)
-        );
-        this.window_signals.connect(this.metaWindow, "notify::minimized",
-            function() {
-                this.setDisplayTitle();
-            }.bind(this)
-        );
-        this.window_signals.connect(this.metaWindow, "notify::tile-type",
-            function() {
-                this.setDisplayTitle();
-            }.bind(this)
-        );
-        this.window_signals.connect(this.metaWindow, (versionCompare(CINNAMON_VERSION, "4.0.6") >= 0 ?
+        this._signals.connect(this.metaWindow, "notify::title", function() {
+            this.setDisplayTitle();
+        }.bind(this));
+        this._signals.connect(this.metaWindow, "notify::minimized", function() {
+            this.setDisplayTitle();
+        }.bind(this));
+        this._signals.connect(this.metaWindow, "notify::tile-type", function() {
+            this.setDisplayTitle();
+        }.bind(this));
+        this._signals.connect(this.metaWindow, (versionCompare(CINNAMON_VERSION, "4.0.6") >= 0 ?
                 "icon-changed" :
                 "notify::icon"),
             function() {
                 this.setIcon();
             }.bind(this)
         );
-        this.window_signals.connect(this.metaWindow, "notify::appears-focused",
-            function() {
-                this.onFocus();
-            }.bind(this)
-        );
-        this.window_signals.connect(this.metaWindow, "unmanaged",
-            function() {
-                this.onUnmanaged();
-            }.bind(this)
-        );
+        this._signals.connect(this.metaWindow, "notify::appears-focused", function() {
+            this.onFocus();
+        }.bind(this));
+        this._signals.connect(this.metaWindow, "unmanaged", function() {
+            this.onUnmanaged();
+        }.bind(this));
     },
 
     onUnmanaged: function() {
@@ -613,11 +640,26 @@ AppMenuButton.prototype = {
     },
 
     destroy: function() {
-        this.window_signals.disconnectAllSignals();
+        this._signals.disconnectAllSignals();
         this._tooltip.destroy();
-        if (this.rightClickMenu) {
+
+        if (!this.alert) {
             this.rightClickMenu.destroy();
+
+            if (this._menuManager) {
+                // Needed for retro-compatibility.
+                // Mark for deletion on EOL. Cinnamon 3.6.x+
+                // Remove condiotion and only keep call to destroy.
+                if (versionCompare(CINNAMON_VERSION, "3.6.0") >= 0) {
+                    this._menuManager.destroy();
+                } else {
+                    this._menuManager._signals.disconnectAllSignals();
+                    // Up to 3.6.x, PopupMenuManager didn't have its signal methods added.
+                    // this._menuManager.emit("destroy");
+                }
+            }
         }
+
         this.actor.destroy();
     },
 
@@ -726,16 +768,31 @@ AppMenuButton.prototype = {
     _getPreferredWidth: function(actor, forHeight, alloc) {
         let [minSize, naturalSize] = this._iconBox.get_preferred_width(forHeight); // jshint ignore:line
         // minimum size just enough for icon if we ever get that many apps going
-
-        alloc.min_size = naturalSize + 2 * 3 * global.ui_scale;
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        if (versionCompare(CINNAMON_VERSION, "3.6.0") >= 0) {
+            alloc.min_size = naturalSize;
+        } else {
+            alloc.min_size = naturalSize + 2 * 3 * global.ui_scale;
+        }
 
         if (!this._applet.pref_hide_labels) {
             if (this._applet.orientation === St.Side.TOP || this._applet.orientation === St.Side.BOTTOM) {
                 // the 'buttons use entire space' option only makes sense on horizontal panels
                 if (this._applet.pref_buttons_use_entire_space) {
                     let [lminSize, lnaturalSize] = this._label.get_preferred_width(forHeight); // jshint ignore:line
-                    alloc.natural_size = Math.max(150 * global.ui_scale,
-                        lnaturalSize + naturalSize + 3 * 3 * global.ui_scale);
+
+                    // Needed for retro-compatibility.
+                    // Mark for deletion on EOL. Cinnamon 3.6.x+
+                    if (versionCompare(CINNAMON_VERSION, "3.6.0") >= 0) {
+                        let spacing = this.actor.get_theme_node().get_length("spacing");
+                        alloc.natural_size = Math.max(150 * global.ui_scale,
+                            naturalSize + spacing + lnaturalSize);
+                    } else {
+                        alloc.natural_size = Math.max(150 * global.ui_scale,
+                            lnaturalSize + naturalSize + 3 * 3 * global.ui_scale);
+                    }
+
                 } else {
                     alloc.natural_size = 150 * global.ui_scale;
                 }
@@ -975,27 +1032,33 @@ AppMenuButton.prototype = {
         }
 
         this._needsAttention = true;
-        let counter = 0;
-        this._flashButton(counter);
+        this._flashButton();
+
         return true;
     },
 
-    _flashButton: function(counter) {
+    _flashButton: function() {
         if (!this._needsAttention) {
             return;
         }
 
-        this.actor.add_style_class_name("window-list-item-demands-attention");
-        if (counter < 4) {
-            Mainloop.timeout_add(FLASH_INTERVAL, () => {
-                if (this.actor.has_style_class_name("window-list-item-demands-attention")) {
-                    this.actor.remove_style_class_name("window-list-item-demands-attention");
-                }
-                Mainloop.timeout_add(FLASH_INTERVAL, () => {
-                    this._flashButton(++counter);
-                });
-            });
-        }
+        let counter = 0;
+        let sc = "window-list-item-demands-attention";
+
+        Mainloop.timeout_add(FLASH_INTERVAL, () => {
+            if (!this._needsAttention) {
+                return false;
+            }
+
+            if (this.actor.has_style_class_name(sc)) {
+                this.actor.remove_style_class_name(sc);
+            } else {
+                this.actor.add_style_class_name(sc);
+            }
+            let result = counter < 4;
+            counter++;
+            return result;
+        });
     }
 };
 
@@ -1009,10 +1072,19 @@ AppMenuButtonRightClickMenu.prototype = {
     _init: function(launcher, metaWindow, orientation) {
         Applet.AppletPopupMenu.prototype._init.call(this, launcher, orientation);
 
+        // Needed for retro-compatibility.
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Remove condition and declaration.
+        // this._signals was added to PopupMenuBase in Cinnamon 3.6.x.
+        if (!this.hasOwnProperty("_signals")) {
+            this._signals = new SignalManager.SignalManager(null);
+        }
+
         this._launcher = launcher;
         this._windows = launcher._applet._windows;
-        this.connect("open-state-changed",
-            (aMenu, aOpen) => this._onToggled(aMenu, aOpen));
+        this._signals.connect(this, "open-state-changed", function(aMenu, aOpen) {
+            this._onToggled(aMenu, aOpen);
+        }.bind(this));
 
         this.orientation = orientation;
         this.metaWindow = metaWindow;
@@ -1043,7 +1115,7 @@ AppMenuButtonRightClickMenu.prototype = {
                     return;
                 }
                 item = new PopupMenu.PopupMenuItem(_("Move to the other monitor"));
-                item.connect("activate", () => {
+                this._signals.connect(item, "activate", function() {
                     mw.move_to_monitor(index);
                 });
                 this.addMenuItem(item);
@@ -1054,7 +1126,7 @@ AppMenuButtonRightClickMenu.prototype = {
                     return;
                 }
                 item = new PopupMenu.PopupMenuItem(_("Move to monitor %d").format(index + 1));
-                item.connect("activate", () => {
+                this._signals.connect(item, "activate", function() {
                     mw.move_to_monitor(index);
                 });
                 this.addMenuItem(item);
@@ -1065,13 +1137,13 @@ AppMenuButtonRightClickMenu.prototype = {
         if ((amount = global.screen.n_workspaces) > 1) {
             if (mw.is_on_all_workspaces()) {
                 item = new PopupMenu.PopupMenuItem(_("Only on this workspace"));
-                item.connect("activate", () => {
+                this._signals.connect(item, "activate", function() {
                     mw.unstick();
                 });
                 this.addMenuItem(item);
             } else {
                 item = new PopupMenu.PopupMenuItem(_("Visible on all workspaces"));
-                item.connect("activate", () => {
+                this._signals.connect(item, "activate", function() {
                     mw.stick();
                 });
                 this.addMenuItem(item);
@@ -1096,7 +1168,7 @@ AppMenuButtonRightClickMenu.prototype = {
                         ws.setSensitive(false);
                     }
 
-                    ws.connect("activate", activateEmittedFn(mw, j));
+                    this._signals.connect(ws, "activate", activateEmittedFn(mw, j));
                     item.menu.addMenuItem(ws);
                 }
 
@@ -1107,17 +1179,17 @@ AppMenuButtonRightClickMenu.prototype = {
 
         // Close all/others
         item = new PopupMenu.PopupIconMenuItem(_("Close all"), "application-exit", St.IconType.SYMBOLIC);
-        item.connect("activate", () => {
+        this._signals.connect(item, "activate", function() {
             for (let window of this._windows)
                 if (window.actor.visible &&
                     !window._needsAttention) {
                     window.metaWindow.delete(global.get_current_time());
                 }
-        });
+        }.bind(this));
         this.addMenuItem(item);
 
         item = new PopupMenu.PopupIconMenuItem(_("Close others"), "window-close", St.IconType.SYMBOLIC);
-        item.connect("activate", () => {
+        this._signals.connect(item, "activate", function() {
             for (let window of this._windows)
                 if (window.actor.visible &&
                     window.metaWindow !== this.metaWindow &&
@@ -1132,7 +1204,7 @@ AppMenuButtonRightClickMenu.prototype = {
         // Miscellaneous
         if (mw.get_compositor_private().opacity !== 255) {
             item = new PopupMenu.PopupMenuItem(_("Restore to full opacity"));
-            item.connect("activate", () => {
+            this._signals.connect(item, "activate", function() {
                 mw.get_compositor_private().set_opacity(255);
             });
             this.addMenuItem(item);
@@ -1140,12 +1212,12 @@ AppMenuButtonRightClickMenu.prototype = {
 
         if (mw.minimized) {
             item = new PopupMenu.PopupIconMenuItem(_("Restore"), "view-sort-descending", St.IconType.SYMBOLIC);
-            item.connect("activate", () => {
+            this._signals.connect(item, "activate", function() {
                 Main.activateWindow(mw, global.get_current_time());
             });
         } else {
             item = new PopupMenu.PopupIconMenuItem(_("Minimize"), "view-sort-ascending", St.IconType.SYMBOLIC);
-            item.connect("activate", () => {
+            this._signals.connect(item, "activate", function() {
                 mw.minimize();
             });
         }
@@ -1153,19 +1225,19 @@ AppMenuButtonRightClickMenu.prototype = {
 
         if (mw.get_maximized()) {
             item = new PopupMenu.PopupIconMenuItem(_("Unmaximize"), "view-restore", St.IconType.SYMBOLIC);
-            item.connect("activate", () => {
+            this._signals.connect(item, "activate", function() {
                 mw.unmaximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
             });
         } else {
             item = new PopupMenu.PopupIconMenuItem(_("Maximize"), "view-fullscreen", St.IconType.SYMBOLIC);
-            item.connect("activate", () => {
+            this._signals.connect(item, "activate", function() {
                 mw.maximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
             });
         }
         this.addMenuItem(item);
 
         item = new PopupMenu.PopupIconMenuItem(_("Close"), "edit-delete", St.IconType.SYMBOLIC);
-        item.connect("activate", () => {
+        this._signals.connect(item, "activate", function() {
             mw.delete(global.get_current_time());
         });
         this.addMenuItem(item);
@@ -1178,39 +1250,47 @@ AppMenuButtonRightClickMenu.prototype = {
         if (this._launcher._applet.pref_sub_menu_placement !== 0) {
             item = new PopupMenu.PopupIconMenuItem(_("Help"), "dialog-information",
                 St.IconType.SYMBOLIC);
-            item.connect("activate", () => {
+            this._signals.connect(item, "activate", function() {
                 Util.spawn_async(["xdg-open", this._launcher._applet.metadata.path + "/HELP.html"], null);
-            });
+            }.bind(this));
             subMenu.menu.addMenuItem(item);
 
             item = new PopupMenu.PopupIconMenuItem(_("About..."), "dialog-question",
                 St.IconType.SYMBOLIC);
-            item.connect("activate", () => this._launcher._applet.openAbout());
+            this._signals.connect(item, "activate", function() {
+                this._launcher._applet.openAbout();
+            }.bind(this));
             subMenu.menu.addMenuItem(item);
 
             item = new PopupMenu.PopupIconMenuItem(_("Configure..."), "system-run",
                 St.IconType.SYMBOLIC);
-            item.connect("activate", () => {
+            this._signals.connect(item, "activate", function() {
                 // Condition needed for retro-compatibility.
                 // Mark for deletion on EOL. Cinnamon 3.4.x+
-                if (typeof this._launcher._applet.configureApplet === "function") {
+                if (this._launcher._applet.hasOwnProperty("configureApplet")) {
                     this._launcher._applet.configureApplet();
                 } else {
                     Util.spawn_async(["cinnamon-settings", "applets",
                         this._launcher._applet._uuid, this._launcher._applet.instance_id
                     ], null);
                 }
-            });
+            }.bind(this));
             subMenu.menu.addMenuItem(item);
 
             item = new PopupMenu.PopupIconMenuItem(
                 _("Remove '%s'").format(_(this._launcher._applet.metadata.name)),
                 "edit-delete",
                 St.IconType.SYMBOLIC);
-            item.connect("activate", () => {
-                Main.AppletManager._removeAppletFromPanel(this._launcher._applet._uuid,
-                    this._launcher._applet.instance_id);
-            });
+            this._signals.connect(item, "activate", function(aActor, aEvent) {
+                // Condition needed for retro-compatibility.
+                // Mark for deletion on EOL. Cinnamon 4.4.x+
+                if (this._launcher._applet.hasOwnProperty("confirmRemoveApplet")) {
+                    this._launcher._applet.confirmRemoveApplet(aEvent);
+                } else {
+                    Main.AppletManager._removeAppletFromPanel(this._launcher._applet._uuid,
+                        this._launcher._applet.instance_id);
+                }
+            }.bind(this));
             subMenu.menu.addMenuItem(item);
         }
     },
@@ -1230,6 +1310,16 @@ AppMenuButtonRightClickMenu.prototype = {
         }
 
         Applet.AppletPopupMenu.prototype.toggle.call(this);
+    },
+
+    // Mark for deletion on EOL. Cinnamon 3.6.x+
+    // Remove destroy declaration.
+    destroy: function() {
+        if (versionCompare(CINNAMON_VERSION, "3.6.0") < 0) {
+            this._signals.disconnectAllSignals();
+        }
+
+        Applet.AppletPopupMenu.prototype.destroy.call(this);
     }
 };
 

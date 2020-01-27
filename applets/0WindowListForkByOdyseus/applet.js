@@ -15,6 +15,7 @@ if (typeof require === "function") {
 
 const {
     gi: {
+        Cinnamon,
         Clutter,
         Gdk,
         Gio,
@@ -101,7 +102,7 @@ WindowList.prototype = {
         this._initializeSettings(() => {
             this.signals.connect(global.screen, "window-added",
                 function(s, w, m) {
-                    this._onWindowAdded(s, w, m);
+                    this._onWindowAddedAsync(s, w, m);
                 }.bind(this)
             );
             this.signals.connect(global.screen, "window-monitor-changed",
@@ -136,7 +137,19 @@ WindowList.prototype = {
                 }.bind(this)
             );
 
-            this.actor.connect("style-changed", () => this._updateSpacing());
+            // Condition needed for retro-compatibility.
+            // Mark for deletion on EOL. Cinnamon 4.4.x+
+            if (versionCompare(CINNAMON_VERSION, "4.4.0") >= 0) {
+                this.signals.connect(Cinnamon.WindowTracker.get_default(), "window-app-changed",
+                    function(t, m) {
+                        this._onWindowAppChanged(t, m);
+                    }.bind(this)
+                );
+            }
+
+            this.signals.connect(this.actor, "style-changed", function() {
+                this._updateSpacing();
+            }.bind(this));
 
             global.settings.bind("panel-edit-mode", this.actor, "reactive", Gio.SettingsBindFlags.DEFAULT);
 
@@ -226,10 +239,6 @@ WindowList.prototype = {
         }
     },
 
-    _onLabelsHidden: function() {
-        this.on_orientation_changed(this.orientation);
-    },
-
     on_applet_added_to_panel: function(userEnabled) { // jshint ignore:line
         this._updateSpacing();
         this.appletEnabled = true;
@@ -257,10 +266,10 @@ WindowList.prototype = {
         this._refreshAllItems();
     },
 
+    /* NOTE: This function only exists in Cinnamon 4.0.x+.
+     * No need to check Cinnamon version here.
+     */
     on_panel_icon_size_changed: function(size) {
-        /* NOTE: This function only exists in Cinnamon 4.0.x+.
-         * No need to check Cinnamon version here.
-         */
         this.icon_size = size;
         this._refreshAllItems();
     },
@@ -332,6 +341,14 @@ WindowList.prototype = {
         this.manager.set_spacing(spacing * global.ui_scale);
     },
 
+    _onWindowAddedAsync: function(screen, metaWindow, monitor) {
+        Mainloop.timeout_add(20, () => {
+            this._onWindowAdded(screen, metaWindow, monitor);
+
+            return GLib.SOURCE_REMOVE;
+        });
+    },
+
     _onWindowAdded: function(screen, metaWindow, monitor) { // jshint ignore:line
         if (this._shouldAdd(metaWindow)) {
             this._addWindow(metaWindow, false);
@@ -352,12 +369,20 @@ WindowList.prototype = {
         }
     },
 
-    _onWindowWorkspaceChanged: function(screen, metaWindow, metaWorkspace) { // jshint ignore:line
+    _refreshItemByMetaWindow: function(metaWindow) {
         let window = this._windows.find(win => (win.metaWindow === metaWindow));
 
         if (window) {
             this._refreshItem(window);
         }
+    },
+
+    _onWindowWorkspaceChanged: function(screen, metaWindow, metaWorkspace) { // jshint ignore:line
+        this._refreshItemByMetaWindow(metaWindow);
+    },
+
+    _onWindowAppChanged: function(tracker, metaWindow) {
+        this._refreshItemByMetaWindow(metaWindow);
     },
 
     _onWindowSkipTaskbarChanged: function(screen, metaWindow) {
@@ -431,6 +456,10 @@ WindowList.prototype = {
          * one isn't shown! */
         if (window.alert) {
             window.actor.visible = !window.actor.visible;
+        }
+
+        if (window.actor.visible) {
+            window.setIcon();
         }
     },
 
@@ -654,7 +683,9 @@ WindowList.prototype = {
                 this._onPreviewChanged();
                 break;
             case "pref_hide_labels":
-                this._onLabelsHidden();
+                this.on_orientation_changed();
+                this.on_applet_added_to_panel();
+                this._refreshAllItems();
                 break;
             case "pref_logging_level":
             case "pref_debugger_enabled":
