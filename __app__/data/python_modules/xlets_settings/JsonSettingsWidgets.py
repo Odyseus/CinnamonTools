@@ -1,17 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Cinnamon settings widgets custom implementation.
+"""Settings widgets factory.
 
-This is an uber-simplified implementation of the settings widgets used by
-recent versions of Cinnamon.
-
-Changes
--------
-
-- Eradication of Gtk.Box in favor of Gtk.Grid.
-- Added keyboard handling (delete/move) of items inside the List widget.
-- Simplified version of a Button widget that doesn't attach a callback,
-  but toggles a boolean preference.
+Attributes
+----------
+JSON_SETTINGS_PROPERTIES_MAP : dict
+    Description
+OPERATIONS : list
+    Description
+OPERATIONS_MAP : dict
+    Description
 """
 
 import collections
@@ -86,7 +84,7 @@ JSON_SETTINGS_PROPERTIES_MAP = {
     "dialog-info-labels": "dialog_info_labels",
     # colorchooser: Whether to be able to specify opacity.
     "use-alpha": "use_alpha",
-    # list: A dictionary that can be empty and accepts one key called `read_only_keys`.
+    # list: A dictionary that can be empty and accepts one key called ``read_only_keys``.
     # A list of column IDs whose created widgets should be set as nonsensitive.
     # An immutable list widget has a fixed amount of items.
     # Items cannot be added nor removed but they do can be edited.
@@ -106,7 +104,46 @@ OPERATIONS_MAP = {"<": operator.lt, "<=": operator.le, ">": operator.gt,
 
 
 class JSONSettingsHandler():
+    """Summary
+
+    Attributes
+    ----------
+    bindings : dict
+        Description
+    deps : dict
+        Description
+    file_monitor : TYPE
+        Description
+    file_obj : TYPE
+        Description
+    filepath : TYPE
+        Description
+    handler : TYPE
+        Description
+    listeners : dict
+        Description
+    notify_callback : TYPE
+        Description
+    resume_timeout : TYPE
+        Description
+    settings : TYPE
+        Description
+    xlet_meta : TYPE
+        Description
+    """
+
     def __init__(self, filepath, notify_callback=None, xlet_meta=None):
+        """Initialization.
+
+        Parameters
+        ----------
+        filepath : TYPE
+            Description
+        notify_callback : None, optional
+            Description
+        xlet_meta : None, optional
+            Description
+        """
         super().__init__()
 
         self.resume_timeout = None
@@ -125,9 +162,33 @@ class JSONSettingsHandler():
         self.settings = self.get_settings()
 
     def get_xlet_meta(self):
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return self.xlet_meta
 
     def bind(self, key, obj, prop, direction, map_get=None, map_set=None):
+        """Summary
+
+        Parameters
+        ----------
+        key : TYPE
+            Description
+        obj : TYPE
+            Description
+        prop : TYPE
+            Description
+        direction : TYPE
+            Description
+        map_get : None, optional
+            Description
+        map_set : None, optional
+            Description
+        """
         if direction & (Gio.SettingsBindFlags.SET | Gio.SettingsBindFlags.GET) == 0:
             direction |= Gio.SettingsBindFlags.SET | Gio.SettingsBindFlags.GET
 
@@ -143,14 +204,44 @@ class JSONSettingsHandler():
             binding_info["oid"] = obj.connect("notify::" + prop, self.object_value_changed, key)
 
     def listen(self, key, callback):
+        """Summary
+
+        Parameters
+        ----------
+        key : TYPE
+            Description
+        callback : TYPE
+            Description
+        """
         if key not in self.listeners:
             self.listeners[key] = []
         self.listeners[key].append(callback)
 
     def get_value(self, key):
+        """Summary
+
+        Parameters
+        ----------
+        key : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return self.get_property(key, "value")
 
     def set_value(self, key, value):
+        """Summary
+
+        Parameters
+        ----------
+        key : TYPE
+            Description
+        value : TYPE
+            Description
+        """
         if value != self.settings[key]["value"]:
             self.settings[key]["value"] = value
             self.save_settings()
@@ -166,16 +257,67 @@ class JSONSettingsHandler():
                     callback(key, value)
 
     def get_property(self, key, prop):
+        """Summary
+
+        Parameters
+        ----------
+        key : TYPE
+            Description
+        prop : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         props = self.settings[key]
         return props[prop]
 
     def has_property(self, key, prop):
+        """Summary
+
+        Parameters
+        ----------
+        key : TYPE
+            Description
+        prop : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return prop in self.settings[key]
 
     def has_key(self, key):
+        """Summary
+
+        Parameters
+        ----------
+        key : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return key in self.settings
 
     def object_value_changed(self, obj, value, key):
+        """Summary
+
+        Parameters
+        ----------
+        obj : TYPE
+            Description
+        value : TYPE
+            Description
+        key : TYPE
+            Description
+        """
         for info in self.bindings[key]:
             if obj == info["obj"]:
                 value = info["obj"].get_property(info["prop"])
@@ -192,6 +334,20 @@ class JSONSettingsHandler():
                 callback(key, value)
 
     def set_object_value(self, info, value):
+        """Summary
+
+        Parameters
+        ----------
+        info : TYPE
+            Description
+        value : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         if info["dir"] & Gio.SettingsBindFlags.GET == 0:
             return
 
@@ -202,6 +358,13 @@ class JSONSettingsHandler():
                 info["obj"].set_property(info["prop"], value)
 
     def check_settings(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         old_settings = self.settings
         self.settings = self.get_settings()
 
@@ -218,6 +381,18 @@ class JSONSettingsHandler():
                     callback(key, new_value)
 
     def get_settings(self):
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+
+        Raises
+        ------
+        Exception
+            Description
+        """
         with open(self.filepath) as settings_file:
             raw_data = settings_file.read()
 
@@ -229,6 +404,8 @@ class JSONSettingsHandler():
         return settings
 
     def save_settings(self):
+        """Summary
+        """
         self.pause_monitor()
 
         if os.path.exists(self.filepath):
@@ -242,21 +419,34 @@ class JSONSettingsHandler():
         self.resume_monitor()
 
     def pause_monitor(self):
+        """Summary
+        """
         self.file_monitor.cancel()
         self.handler = None
 
     def resume_monitor(self):
+        """Summary
+        """
         if self.resume_timeout:
             GLib.source_remove(self.resume_timeout)
         self.resume_timeout = GLib.timeout_add(2000, self.do_resume)
 
     def do_resume(self):
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         self.file_monitor = self.file_obj.monitor_file(Gio.FileMonitorFlags.SEND_MOVED, None)
         self.handler = self.file_monitor.connect("changed", self.check_settings)
         self.resume_timeout = None
         return False
 
     def reset_to_defaults(self):
+        """Summary
+        """
         for key in self.settings:
             if "value" in self.settings[key]:
                 self.settings[key]["value"] = self.settings[key]["default"]
@@ -265,6 +455,13 @@ class JSONSettingsHandler():
         self.save_settings()
 
     def do_key_update(self, key):
+        """Summary
+
+        Parameters
+        ----------
+        key : TYPE
+            Description
+        """
         if key in self.bindings:
             for info in self.bindings[key]:
                 self.set_object_value(info, self.settings[key]["value"])
@@ -274,6 +471,18 @@ class JSONSettingsHandler():
                 callback(key, self.settings[key]["value"])
 
     def load_from_file(self, filepath):
+        """Summary
+
+        Parameters
+        ----------
+        filepath : TYPE
+            Description
+
+        Raises
+        ------
+        Exception
+            Description
+        """
         with open(filepath) as settings_file:
             raw_data = settings_file.read()
 
@@ -294,6 +503,13 @@ class JSONSettingsHandler():
         self.save_settings()
 
     def save_to_file(self, filepath):
+        """Summary
+
+        Parameters
+        ----------
+        filepath : TYPE
+            Description
+        """
         if os.path.exists(filepath):
             os.remove(filepath)
 
@@ -304,7 +520,32 @@ class JSONSettingsHandler():
 
 
 class JSONSettingsRevealer(Gtk.Revealer):
+    """Summary
+
+    Attributes
+    ----------
+    box : TYPE
+        Description
+    dep_keys : dict
+        Description
+    ops : dict
+        Description
+    settings : TYPE
+        Description
+    value : TYPE
+        Description
+    """
+
     def __init__(self, settings, dep_key):
+        """Initialization.
+
+        Parameters
+        ----------
+        settings : TYPE
+            Description
+        dep_key : TYPE
+            Description
+        """
         super().__init__()
         self.settings = settings
 
@@ -349,9 +590,23 @@ class JSONSettingsRevealer(Gtk.Revealer):
         self.key_changed()
 
     def add(self, widget):
+        """Summary
+
+        Parameters
+        ----------
+        widget : object
+            See :py:class:`Gtk.Widget`.
+        """
         self.box.attach(widget, 0, 0, 1, 1)
 
     def key_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         reveal_conditions = []
 
         for key, val in self.dep_keys.items():
@@ -372,7 +627,17 @@ class JSONSettingsRevealer(Gtk.Revealer):
 
 
 class JSONSettingsBackend(object):
+    """Summary
+    """
+
     def attach_backend(self):
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         if hasattr(self, "set_rounding") and self.settings.has_property(self.pref_key, "round"):
             self.set_rounding(self.settings.get_property(self.pref_key, "round"))
 
@@ -394,32 +659,123 @@ class JSONSettingsBackend(object):
             self.connect_widget_handlers()
 
     def set_value(self, value):
+        """Summary
+
+        Parameters
+        ----------
+        value : TYPE
+            Description
+        """
         self.settings.set_value(self.pref_key, value)
 
     def get_value(self):
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return self.settings.get_value(self.pref_key)
 
     def get_range(self):
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         min = self.settings.get_property(self.pref_key, "min")
         max = self.settings.get_property(self.pref_key, "max")
         return [min, max]
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+
+        Raises
+        ------
+        NotImplementedError
+            Description
+        """
         raise NotImplementedError("SettingsWidget class must implement on_setting_changed().")
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+
+        Raises
+        ------
+        NotImplementedError
+            Description
+        """
         if self.bind_dir is None:
             raise NotImplementedError(
                 "SettingsWidget classes with no .bind_dir must implement connect_widget_handlers().")
 
 
 def json_settings_factory(subclass):
+    """Summary
+
+    Parameters
+    ----------
+    subclass : TYPE
+        Description
+
+    Raises
+    ------
+    SystemExit
+        Description
+    """
     if subclass not in CAN_BACKEND:  # noqa | SettingsWidgets
         raise SystemExit()
 
     class NewClass(globals()[subclass], JSONSettingsBackend):
+        """Summary
+
+        Attributes
+        ----------
+        apply_key : TYPE
+            Description
+        imp_exp_path_key : TYPE
+            Description
+        pref_key : TYPE
+            Description
+        settings : TYPE
+            Description
+        """
+
         def __init__(self, pref_key="", apply_key="", imp_exp_path_key="",
                      settings={}, properties={}):
+            """Initialization.
+
+            Parameters
+            ----------
+            pref_key : str, optional
+                Description
+            apply_key : str, optional
+                Description
+            imp_exp_path_key : str, optional
+                Description
+            settings : dict, optional
+                Description
+            properties : dict, optional
+                Description
+
+            Returns
+            -------
+            TYPE
+                Description
+            """
             self.pref_key = pref_key
             self.apply_key = apply_key
             self.imp_exp_path_key = imp_exp_path_key

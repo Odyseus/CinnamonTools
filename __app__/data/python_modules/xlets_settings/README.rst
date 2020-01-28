@@ -1,23 +1,29 @@
 
-===========================================
-Cinnamon's xlets settings re-implementation
-===========================================
+*******************************
+Xlets settings custom framework
+*******************************
+
+I created this framework for several reasons.
+
+- I don't want to maintain several versions of my xlets, so I refuse to ever use ``multiversion`` on my xlets. Which is what I would be forced do if I were to make use of Cinnamon's native settings framework because of the always evolving nature of Cinnamon itself.
+- And finally, I don't like the philosophy *the less options the better*.
 
 General changes
----------------
+===============
 
+- Eradication of :py:class:`Gtk.Box` in favor of :py:class:`Gtk.Grid`.
 - This implementation uses header bars instead of traditional windows with a toolbar. Why?
 
     + Because upstream is planing to switch to this aberration belched from the bowels of corporations full of web developers playing at being software developers. SO, better get used to this garbage in preparation for when it's forced down our throats.
-    + Gtk.HeaderBars are easier to deal with (just create one and throw all widgets inside it). So, there is the barely bright side. LOL
+    + :py:class:`Gtk.HeaderBar` is easier to deal with (just create one and throw all widgets inside it). So, there is the barely bright side. LOL
     + In spite of my aversion for header bars, this framework is used for settings windows for xlets. And I create xlets whose settings are "to be set and forgotten". So, one just has to tolerate the settings window once. And for xlet settings that need to be changed frequently, I always create a mechanism to set them on-the-fly, without having to open the settings window.
 
 - This implementation remembers the last state of opened windows (window size and maximized state). Setting an initial size for a window that will be suitable for every single combination of font sizes, Gtk3 themes, screen resolutions just doesn't cut it for me. Last selected section (stack) is also remembered.
 - This implementation doesn't use JSON files for the creation of the widgets. I wanted the power and flexibility of Python scripts.
-- The ``dependency`` option can be a string of a list.
+- The ``dependency`` option can be a string or a list.
 
-Widget changes made on this implementation
-------------------------------------------
+Widget changes made
+===================
 
 - **button**: This widget doesn't use the *proxy* that the Cinnamon implementation uses. Instead, it just toggles a boolean setting that can be bound to any action on the xlet side.
 - **entry**: This widget has the ``expand-width`` option set to True by default, as it should be.
@@ -48,6 +54,7 @@ Widget changes made on this implementation
     + Changed ``keybinding`` cell renderer. The cell will display the exact same name displayed in the ``keybinding`` widget instead of the internal value. For example, a ``keybinding`` with its shortcut set to **Control+d** (the actual internal value is **<Primary>d**), it will display **Control+D** in the ``keybinding`` widget label **AND** in the ``keybinding`` cell renderer.
     + Implemented ``apply-and-quit`` boolean option. It allows to exit the settings window when the apply button on a ``list`` widget is clicked.
     + Added ``app`` cell renderer. It allows to use a ``appchooser`` widget to choose an application from the applications installed in a system. The value stored is the application ID and the value showed in the list is the application name.
+    + Added keyboard handling (delete/move) of items.
 
 - **keybinding**: Added ``num-bind`` integer option that exposes for configuration the number of keybindings to create for each ``keybinding`` widget.
 - **keybinding-with-options**. A new widget that allows to attach a keybinding to a combo box. The objective is to be able to easily tie a keybinding to a predefined action. This widget is also exposed to be used with the ``list`` widget.
@@ -68,8 +75,8 @@ Widget changes made on this implementation
 - **filechooser**: Added a button that allows to clear the path set by this widget.
 
 
-Limitations of this implementation
-----------------------------------
+Limitations
+===========
 
 .. contextual-admonition::
     :title: No longer a limitation
@@ -79,14 +86,14 @@ Limitations of this implementation
         - Settings windows aren't multi instance. When dealing with multiple instances of the same xlet, a setting window for each instance of an xlet will be opened. This was done to simplify the code and to not depend on features dependent on specific Cinnamon versions nor on third-party libraries like XApps.
 
 TODO
-----
+====
 
 - Implement the rest of widgets (``datechooser``, ``fontchooser``, ``scale``, ``soundfilechooser`` and ``tween``). Since I don't use them in any of my xlets, I didn't implemented these widgets just yet. **Low priority**
 - Implement handling of gsettings. This will allow me to use this framework on the xlets in which I use gsettings with custom GUIs. **Ultra low priority**
 - Implement a *multi-widget widget*. Something similar to the ``keybinding-with-options`` widget. But instead of binding a combo box to a key binding, I would like to bind any type of widget to an option selector widget (a combo box or a stack switcher). Very green idea yet. **Low priority**
 
 DONE
-----
+====
 
 .. contextual-admonition::
     :title: Implemented
@@ -97,6 +104,7 @@ DONE
     - At the start of the header bar, the instance switcher. If only one instance, the image of the xlet.
     - In the middle of the header, just the window title and the xlet UUID and instance ID as sub-title.
     - At the end of the header bar, the menu button to handle importing/exporting/reseting settings.
+    - Implemented handling of multiple xlets instances.
 
     .. rst-class:: wy-text-strike
 

@@ -1,5 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+"""Summary
+
+Attributes
+----------
+CAN_BACKEND : TYPE
+    Description
+"""
 import gi
 import os
 
@@ -65,7 +72,17 @@ CAN_BACKEND = [
 
 
 class SettingsStack(Gtk.Stack):
+    """Summary
+
+    Attributes
+    ----------
+    expand : bool
+        Description
+    """
+
     def __init__(self):
+        """Initialization.
+        """
         super().__init__()
         self.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
         self.set_transition_duration(150)
@@ -73,7 +90,12 @@ class SettingsStack(Gtk.Stack):
 
 
 class SettingsPage(BaseGrid):
+    """Summary
+    """
+
     def __init__(self):
+        """Initialization.
+        """
         super().__init__()
         self.set_spacing(15, 15)
         self.set_property("expand", True)
@@ -81,6 +103,22 @@ class SettingsPage(BaseGrid):
         self.set_border_width(0)
 
     def add_section(self, title=None, subtitle=None, section_info={}):
+        """Summary
+
+        Parameters
+        ----------
+        title : None, optional
+            Description
+        subtitle : None, optional
+            Description
+        section_info : dict, optional
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         section = SectionContainer(title, subtitle, section_info)
         self.add(section)
 
@@ -88,6 +126,30 @@ class SettingsPage(BaseGrid):
 
     def add_reveal_section(self, title=None, subtitle=None, section_info={},
                            schema=None, key=None, values=None, revealer=None):
+        """Summary
+
+        Parameters
+        ----------
+        title : None, optional
+            Description
+        subtitle : None, optional
+            Description
+        section_info : dict, optional
+            Description
+        schema : None, optional
+            Description
+        key : None, optional
+            Description
+        values : None, optional
+            Description
+        revealer : None, optional
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         section = SectionContainer(title, subtitle, section_info)
 
         # if revealer is None:
@@ -101,7 +163,32 @@ class SettingsPage(BaseGrid):
 
 
 class SectionContainer(BaseGrid):
+    """Summary
+
+    Attributes
+    ----------
+    box : TYPE
+        Description
+    frame : TYPE
+        Description
+    need_separator : bool
+        Description
+    size_group : TYPE
+        Description
+    """
+
     def __init__(self, title=None, subtitle=None, section_info={}):
+        """Initialization.
+
+        Parameters
+        ----------
+        title : None, optional
+            Description
+        subtitle : None, optional
+            Description
+        section_info : dict, optional
+            Description
+        """
         super().__init__()
         self.set_spacing(10, 10)
 
@@ -154,6 +241,21 @@ class SectionContainer(BaseGrid):
         self.need_separator = False
 
     def add_row(self, widget, col_pos, row_pos, col_span, row_span):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        col_pos : TYPE
+            Description
+        row_pos : TYPE
+            Description
+        col_span : TYPE
+            Description
+        row_span : TYPE
+            Description
+        """
         list_box = Gtk.ListBox(can_focus=False)
         list_box.set_selection_mode(Gtk.SelectionMode.NONE)
         row = Gtk.ListBoxRow(can_focus=False)
@@ -184,6 +286,36 @@ class SectionContainer(BaseGrid):
 
     def add_reveal_row(self, widget, col_pos, row_pos, col_span, row_span,
                        schema=None, key=None, values=None, check_func=None, revealer=None):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        col_pos : TYPE
+            Description
+        row_pos : TYPE
+            Description
+        col_span : TYPE
+            Description
+        row_span : TYPE
+            Description
+        schema : None, optional
+            Description
+        key : None, optional
+            Description
+        values : None, optional
+            Description
+        check_func : None, optional
+            Description
+        revealer : None, optional
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         list_box = Gtk.ListBox(can_focus=False)
         list_box.set_selection_mode(Gtk.SelectionMode.NONE)
 
@@ -211,6 +343,18 @@ class SectionContainer(BaseGrid):
         return revealer
 
     def add_note(self, text):
+        """Summary
+
+        Parameters
+        ----------
+        text : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         label = Gtk.Label()
         label.set_property("wrap", True)
         label.set_property("wrap-mode", Pango.WrapMode.WORD)
@@ -223,8 +367,35 @@ class SectionContainer(BaseGrid):
 
 
 class SettingsRevealer(Gtk.Revealer):
+    """Summary
+
+    Attributes
+    ----------
+    box : TYPE
+        Description
+    check_func : TYPE
+        Description
+    settings : TYPE
+        Description
+    values : TYPE
+        Description
+    """
+
     # NOTE: Not used for now
     def __init__(self, schema=None, key=None, values=None, check_func=None):
+        """Initialization.
+
+        Parameters
+        ----------
+        schema : None, optional
+            Description
+        key : None, optional
+            Description
+        values : None, optional
+            Description
+        check_func : None, optional
+            Description
+        """
         Gtk.Revealer.__init__(self)
 
         self.check_func = check_func
@@ -246,10 +417,26 @@ class SettingsRevealer(Gtk.Revealer):
                 self.on_settings_changed(self.settings, key)
 
     def add(self, widget):
+        """Summary
+
+        Parameters
+        ----------
+        widget object
+            See : :py:class:`Gtk.Widget`.
+        """
         self.box.pack_start(widget, False, True, 0)
 
     # only used when checking values
     def on_settings_changed(self, settings, key):
+        """Summary
+
+        Parameters
+        ----------
+        settings : TYPE
+            Description
+        key : TYPE
+            Description
+        """
         value = settings.get_value(key).unpack()
         if self.check_func is None:
             self.set_reveal_child(value in self.values)
@@ -258,7 +445,17 @@ class SettingsRevealer(Gtk.Revealer):
 
 
 class SettingsWidget(BaseGrid):
+    """Summary
+    """
+
     def __init__(self, dep_key=None):
+        """Initialization.
+
+        Parameters
+        ----------
+        dep_key : None, optional
+            Description
+        """
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
         self.set_spacing(5, 5)
 
@@ -266,6 +463,13 @@ class SettingsWidget(BaseGrid):
             self.set_dep_key(dep_key)
 
     def set_dep_key(self, dep_key):
+        """Summary
+
+        Parameters
+        ----------
+        dep_key : TYPE
+            Description
+        """
         flag = Gio.SettingsBindFlags.GET
         if dep_key[0] == "!":
             dep_key = dep_key[1:]
@@ -276,15 +480,36 @@ class SettingsWidget(BaseGrid):
         dep_settings.bind(split[1], self, "sensitive", flag)
 
     def add_to_size_group(self, group):
+        """Summary
+
+        Parameters
+        ----------
+        group : TYPE
+            Description
+        """
         group.add_widget(self.content_widget)
 
     def fill_row(self):
+        """Summary
+        """
         self.set_border_width(0)
         self.set_margin_start(0)
         self.set_margin_end(0)
 
     # NOTE: This is to handle gsettings. Don't bother looking at it.
     def get_settings(self, schema):
+        """Summary
+
+        Parameters
+        ----------
+        schema : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         global settings_objects
         try:
             return settings_objects[schema]
@@ -294,7 +519,28 @@ class SettingsWidget(BaseGrid):
 
 
 class Text(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    """
+
     def __init__(self, label, align=Gtk.Align.START, use_markup=False):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        align : TYPE, optional
+            Description
+        use_markup : bool, optional
+            Description
+        """
         super().__init__()
         self.label = label
 
@@ -324,9 +570,30 @@ class Text(SettingsWidget):
 
 
 class Button(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    """
+
     bind_dir = None
 
     def __init__(self, label, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__()
         self.label = label
 
@@ -337,22 +604,61 @@ class Button(SettingsWidget):
         self.set_tooltip_text(tooltip)
 
     def _on_button_clicked(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.set_value(not self.get_value())
 
     def set_label(self, label):
+        """Summary
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        """
         self.label = label
         self.content_widget.set_label(label)
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.content_widget.connect("clicked", self._on_button_clicked)
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         pass
 
 
 class SettingsLabel(Gtk.Label):
+    """Summary
+    """
 
     def __init__(self, text=None, use_markup=False):
+        """Initialization.
+
+        Parameters
+        ----------
+        text : None, optional
+            Description
+        use_markup : bool, optional
+            Description
+        """
         super().__init__()
 
         if use_markup:
@@ -365,17 +671,68 @@ class SettingsLabel(Gtk.Label):
         self.set_property("wrap-mode", Pango.WrapMode.WORD)
 
     def set_label_text(self, text):
+        """Summary
+
+        Parameters
+        ----------
+        text : TYPE
+            Description
+        """
         self.set_label(text)
 
     def set_label_markup(self, markup):
+        """Summary
+
+        Parameters
+        ----------
+        markup : TYPE
+            Description
+        """
         self.set_markup(markup)
 
 
 class IconChooser(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    bind_object : TYPE
+        Description
+    bind_prop : str
+        Description
+    content_widget : TYPE
+        Description
+    handler : TYPE
+        Description
+    image_button : TYPE
+        Description
+    label : TYPE
+        Description
+    preview : TYPE
+        Description
+    """
+
     bind_prop = "text"
     bind_dir = Gio.SettingsBindFlags.DEFAULT
 
     def __init__(self, label, expand_width=True, size_group=None, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        expand_width : bool, optional
+            Description
+        size_group : None, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
 
         valid, self.width, self.height = Gtk.icon_size_lookup(Gtk.IconSize.BUTTON)
@@ -408,6 +765,13 @@ class IconChooser(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def set_icon(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         val = self.bind_object.get_text()
         if os.path.exists(val) and not os.path.isdir(val):
             img = GdkPixbuf.Pixbuf.new_from_file_at_size(val, self.width, self.height)
@@ -416,6 +780,13 @@ class IconChooser(SettingsWidget):
             self.preview.set_from_icon_name(val, Gtk.IconSize.BUTTON)
 
     def on_button_pressed(self, widget):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        """
         dialog = Gtk.FileChooserDialog(title=_("Choose an Icon"),
                                        action=Gtk.FileChooserAction.OPEN,
                                        transient_for=self.get_toplevel(),
@@ -441,6 +812,15 @@ class IconChooser(SettingsWidget):
         dialog.destroy()
 
     def update_icon_preview_cb(self, dialog, preview):
+        """Summary
+
+        Parameters
+        ----------
+        dialog : TYPE
+            Description
+        preview : TYPE
+            Description
+        """
         filename = dialog.get_preview_filename()
         dialog.set_preview_widget_active(False)
         if filename is not None:
@@ -456,10 +836,39 @@ class IconChooser(SettingsWidget):
 
 
 class Entry(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    bind_prop : str
+        Description
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    """
+
     bind_prop = "text"
     bind_dir = Gio.SettingsBindFlags.DEFAULT
 
     def __init__(self, label, expand_width=True, size_group=None, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        expand_width : bool, optional
+            Description
+        size_group : None, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
 
         self.label = SettingsLabel(label)
@@ -476,10 +885,43 @@ class Entry(SettingsWidget):
 
 
 class TextView(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    bind_object : TYPE
+        Description
+    bind_prop : str
+        Description
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    scrolledwindow : TYPE
+        Description
+    """
+
     bind_prop = "text"
     bind_dir = Gio.SettingsBindFlags.DEFAULT
 
     def __init__(self, label, height=200, accept_tabs=False, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        height : int, optional
+            Description
+        accept_tabs : bool, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
 
         self.label = SettingsLabel(label)
@@ -504,15 +946,52 @@ class TextView(SettingsWidget):
         self.set_tooltip_text(tooltip)
 
     def focus_the_retarded_text_view(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         self.content_widget.grab_focus()
         return False
 
 
 class Switch(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    bind_prop : str
+        Description
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    """
+
     bind_prop = "active"
     bind_dir = Gio.SettingsBindFlags.DEFAULT
 
     def __init__(self, label, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
 
         self.label = SettingsLabel(label)
@@ -525,14 +1004,58 @@ class Switch(SettingsWidget):
         self.set_tooltip_text(tooltip)
 
     def clicked(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         if self.is_sensitive():
             self.content_widget.set_active(not self.content_widget.get_active())
 
 
 class ComboBox(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    model : TYPE
+        Description
+    option_map : dict
+        Description
+    valtype : TYPE
+        Description
+    value : TYPE
+        Description
+    """
+
     bind_dir = None
 
     def __init__(self, label, options=[], valtype=None, size_group=None, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        options : list, optional
+            Description
+        valtype : None, optional
+            Description
+        size_group : None, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__()
 
         self.valtype = valtype
@@ -557,12 +1080,26 @@ class ComboBox(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def on_my_value_changed(self, widget):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        """
         tree_iter = widget.get_active_iter()
         if tree_iter is not None:
             self.value = self.model[tree_iter][0]
             self.set_value(self.value)
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.value = self.get_value()
         try:
             self.content_widget.set_active_iter(self.option_map[self.value])
@@ -570,9 +1107,23 @@ class ComboBox(SettingsWidget):
             self.content_widget.set_active_iter(None)
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.content_widget.connect("changed", self.on_my_value_changed)
 
     def set_options(self, options):
+        """Summary
+
+        Parameters
+        ----------
+        options : TYPE
+            Description
+        """
         if self.valtype is not None:
             var_type = self.valtype
         else:
@@ -590,9 +1141,36 @@ class ComboBox(SettingsWidget):
 
 
 class ColorChooser(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    """
+
     bind_dir = None
 
     def __init__(self, label, use_alpha=True, size_group=None, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        use_alpha : bool, optional
+            Description
+        size_group : None, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
 
         self.label = SettingsLabel(label)
@@ -608,25 +1186,80 @@ class ColorChooser(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         color_string = self.get_value()
         rgba = Gdk.RGBA()
         rgba.parse(color_string)
         self.content_widget.set_rgba(rgba)
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.content_widget.connect("color-set", self.on_my_value_changed)
 
     def on_my_value_changed(self, widget):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        """
         self.set_value(self.content_widget.get_rgba().to_string())
 
     def clicked(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.content_widget.do_clicked(self.content_widget)
 
 
 class FileChooser(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    """
+
     bind_dir = None
 
     def __init__(self, label, dir_select=False, size_group=None, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        dir_select : bool, optional
+            Description
+        size_group : None, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
         if dir_select:
             action = Gtk.FileChooserAction.SELECT_FOLDER
@@ -652,24 +1285,91 @@ class FileChooser(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def on_file_selected(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.set_value(self.content_widget.get_uri())
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.content_widget.set_uri(self.get_value())
 
     def _on_clear_button_clicked(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.set_value("")
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.content_widget.connect("file-set", self.on_file_selected)
         self._clear_button.connect("clicked", self._on_clear_button_clicked)
 
 
 class SpinButton(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    bind_prop : str
+        Description
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    timer : TYPE
+        Description
+    """
+
     bind_prop = "value"
     bind_dir = Gio.SettingsBindFlags.GET
 
     def __init__(self, label, units="", mini=None, maxi=None, step=1, page=None, size_group=None, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        units : str, optional
+            Description
+        mini : None, optional
+            Description
+        maxi : None, optional
+            Description
+        step : int, optional
+            Description
+        page : None, optional
+            Description
+        size_group : None, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
 
         self.timer = None
@@ -720,7 +1420,17 @@ class SpinButton(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def apply_later(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+
         def apply(self):
+            """Summary
+            """
             self.set_value(self.content_widget.get_value())
             self.timer = None
 
@@ -730,9 +1440,46 @@ class SpinButton(SettingsWidget):
 
 
 class Keybinding(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    buttons : list
+        Description
+    content_widget : TYPE
+        Description
+    event_id : TYPE
+        Description
+    label : TYPE
+        Description
+    num_bind : TYPE
+        Description
+    teach_button : TYPE
+        Description
+    teaching : bool
+        Description
+    """
+
     bind_dir = None
 
     def __init__(self, label, num_bind=2, size_group=None, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        num_bind : int, optional
+            Description
+        size_group : None, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
 
         self.num_bind = num_bind
@@ -768,6 +1515,13 @@ class Keybinding(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def on_kb_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         bindings = []
 
         for x in range(self.num_bind):
@@ -777,6 +1531,13 @@ class Keybinding(SettingsWidget):
         self.set_value("::".join(bindings))
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         value = self.get_value()
         bindings = value.split("::")
 
@@ -784,13 +1545,67 @@ class Keybinding(SettingsWidget):
             self.buttons[x].set_accel_string(bindings[x])
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         pass
 
 
 class KeybindingWithOptions(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    combo_button : TYPE
+        Description
+    content_widget : TYPE
+        Description
+    event_id : TYPE
+        Description
+    kb_button : TYPE
+        Description
+    label : TYPE
+        Description
+    model : TYPE
+        Description
+    option_map : dict
+        Description
+    teach_button : TYPE
+        Description
+    teaching : bool
+        Description
+    valtype : TYPE
+        Description
+    value : TYPE
+        Description
+    """
+
     bind_dir = None
 
     def __init__(self, label, options=[], valtype=None, size_group=None, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        options : list, optional
+            Description
+        valtype : None, optional
+            Description
+        size_group : None, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
 
         self.label = SettingsLabel(label)
@@ -833,6 +1648,13 @@ class KeybindingWithOptions(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.value = self.get_value()
 
         try:
@@ -848,6 +1670,13 @@ class KeybindingWithOptions(SettingsWidget):
             self.combo_button.set_active_iter(None)
 
     def on_kb_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         try:
             kb, opt = self.get_value().split("::")
         except Exception:
@@ -856,6 +1685,13 @@ class KeybindingWithOptions(SettingsWidget):
         self.set_value(self.kb_button.get_accel_string() + "::" + opt)
 
     def on_combo_value_changed(self, combo):
+        """Summary
+
+        Parameters
+        ----------
+        combo : TYPE
+            Description
+        """
         tree_iter = combo.get_active_iter()
 
         if tree_iter is not None:
@@ -863,11 +1699,25 @@ class KeybindingWithOptions(SettingsWidget):
             self.set_value(self.value)
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.kb_button.connect("accel-edited", self.on_kb_changed)
         self.kb_button.connect("accel-cleared", self.on_kb_changed)
         self.combo_button.connect("changed", self.on_combo_value_changed)
 
     def set_options(self, options):
+        """Summary
+
+        Parameters
+        ----------
+        options : TYPE
+            Description
+        """
         if self.valtype is not None:
             var_type = self.valtype
         else:

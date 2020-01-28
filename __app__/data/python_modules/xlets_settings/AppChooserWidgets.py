@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Summary
+"""Applications chooser widgets.
 """
 import gi
 
 gi.require_version("Gtk", "3.0")
-gi.require_version("Gdk", "3.0")
 
 from gi.repository import GObject
 from gi.repository import Gio
@@ -23,7 +22,7 @@ class ApplicationChooserWidget(Gtk.Dialog):
     Source: https://stackoverflow.com/a/41985006
 
     Provides a dialog to select an application from all those installed. The regular
-    Gtk.AppChooserDialog does not seem to provide any way to allow selection from all
+    :py:class:`Gtk.AppChooserDialog` does not seem to provide any way to allow selection from all
     installed applications, so this dialog serves as a replacement.
 
     Example
@@ -55,18 +54,44 @@ class ApplicationChooserWidget(Gtk.Dialog):
         if applications is not None and len(applications) > 0:
             for app in applications:
                 print(app.get_id())
+
+    Attributes
+    ----------
+    app_list : list
+        The list of all installed applications.
+    label : str
+        A string used as a title for the applications chooser dialog.
+    list_store : object
+        See :py:class:`Gtk.ListStore`.
+    multi_selection : bool
+        Allow multi selection inside the applications list.
+    selected_apps : list
+        List of selected applications.
+    show_no_display : bool
+        Show hidden applications.
+    tree_view : object
+        See :py:class:`Gtk.TreeView`.
     """
 
     def __init__(self, parent=None, multi_selection=False, show_no_display=True):
         """Initialization.
+
+        Parameters
+        ----------
+        parent : None, optional
+            See :py:class:`Gtk.Window`.
+        multi_selection : bool, optional
+            Allow multi selection inside the applications list.
+        show_no_display : bool, optional
+            Show hidden applications.
         """
         super().__init__(self,
                          title=_("Application Chooser"),
+                         use_header_bar=True,
                          transient_for=parent,
                          flags=Gtk.DialogFlags.MODAL)
 
         self.set_default_size(400, 500)
-        self.set_icon_name("gtk-search")
         self.multi_selection = multi_selection
         self.show_no_display = show_no_display
 
@@ -77,9 +102,6 @@ class ApplicationChooserWidget(Gtk.Dialog):
         content_box_grid.set_property("expand", True)
         content_box_grid.set_spacing(0, 5)
         content_box.add(content_box_grid)
-
-        button_box = self.get_action_area()
-        button_box.set_property("margin", 4)
 
         # Can be programmatically changed if needed.
         self.label = Gtk.Label(_("Choose an application"))
@@ -130,8 +152,9 @@ class ApplicationChooserWidget(Gtk.Dialog):
         path to a custom icon rather than a themed-icon name, or even no name
         at all. In these cases the generic "gtk-missing-icon" icon is used.</strikethrough>
 
-        NOTE: (by Odyseus) I switched to a Gio.Icon. Simply because that's what Gio.AppInfo provides.
-        And the icon is practically guaranteed to show up be it a named icon or a path to an image.
+        NOTE: (by Odyseus) I switched to a :py:class:`Gio.Icon`. Simply because that's what
+        :py:class:`Gio.AppInfo` provides and the icon is practically guaranteed to show up
+        be it a named icon or a path to an image.
         """
         # I added this filter because there are more that 200 screen savers in Linux Mint. ¬¬
         # They were unnecessarily slowing the heck out the loading of the list of applications.
@@ -142,7 +165,7 @@ class ApplicationChooserWidget(Gtk.Dialog):
 
             Parameters
             ----------
-            x : Gio.DesktopAppInfo
+            x : :py:class:`Gio.DesktopAppInfo`
                 The applicaction to filter.
 
             Returns
@@ -188,8 +211,12 @@ class ApplicationChooserWidget(Gtk.Dialog):
 
         Returns
         -------
-        list|Gio.AppInfo|None
-            The selected application/s or None.
+        list
+            All selected applications.
+        :py:class:`Gio.AppInfo`
+            One selected application.
+        None
+            No selected applications.
         """
         self.populate_app_list()
         self.show_all()
@@ -205,12 +232,22 @@ class ApplicationChooserWidget(Gtk.Dialog):
         return None
 
     def set_label(self, text):
-        """Set the label text, "Choose An Application" by default.
+        """Set the label text, "Application Chooser" by default.
+
+        Parameters
+        ----------
+        text : str
+            String for the dialog title.
         """
         self.label.set_text(text)
 
     def on_ok(self, *args):
-        """Get Gio.AppInfo of selected application when user presses OK.
+        """Get :py:class:`Gio.AppInfo` of selected applications when user presses OK.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
         """
         selection = self.tree_view.get_selection()
         tree_model, paths = selection.get_selected_rows()
@@ -222,9 +259,31 @@ class ApplicationChooserWidget(Gtk.Dialog):
 
 
 class AppList(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    """
     bind_dir = None
 
     def __init__(self, label, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
         self.label = label
         self._change_permitted = True
@@ -243,8 +302,16 @@ class AppList(SettingsWidget):
         self._app_store = Gtk.ListStore()
         self._app_store.set_column_types([Gio.AppInfo, GObject.TYPE_STRING, Gio.Icon])
 
-    def open_applications_list(self, widget):
+    def open_applications_list(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         dialog = Gtk.Dialog(transient_for=self.get_toplevel(),
+                            use_header_bar=True,
                             title=_("Applications list"),
                             flags=Gtk.DialogFlags.MODAL)
 
@@ -298,16 +365,24 @@ class AppList(SettingsWidget):
 
         del_button = Gtk.ToolButton()
         del_button.set_icon_name("edit-delete-symbolic")
+        del_button.set_tooltip_text(_("Remove selected applications"))
         del_button.connect("clicked", self._delete_selected_applications)
         toolbar.add(del_button)
 
         selection = self._tree_view.get_selection()
 
         def set_del_button_sensitive(sel):
-            del_button.sensitive = sel.count_selected_rows() > 0
+            """Summary
+
+            Parameters
+            ----------
+            sel : TYPE
+                Description
+            """
+            del_button.set_sensitive(selection.count_selected_rows() != 0)
 
         selection.connect("changed", set_del_button_sensitive)
-        del_button.sensitive = selection.count_selected_rows() > 0
+        del_button.set_sensitive(selection.count_selected_rows() != 0)
 
         self._change_permitted = True
         self.on_setting_changed()
@@ -318,7 +393,14 @@ class AppList(SettingsWidget):
         dialog.destroy()
         self.list_changed()
 
-    def _add_applications(self, widget):
+    def _add_applications(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         app_chooser = ApplicationChooserWidget(parent=self.get_toplevel(),
                                                multi_selection=True)
         app_chooser.set_label(_("Choose one or more applications (Hold Ctrl key)"))
@@ -343,17 +425,27 @@ class AppList(SettingsWidget):
             self._change_permitted = True
 
     def _delete_selected_applications(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self._change_permitted = False
         selection = self._tree_view.get_selection()
         tree_model, paths = selection.get_selected_rows()
 
-        for path in paths:
+        # Iterate in reverse so the right rows are removed. ¬¬
+        for path in reversed(paths):
             tree_iter = tree_model.get_iter(path)
             tree_model.remove(tree_iter)
 
         self._change_permitted = True
 
     def list_changed(self):
+        """Summary
+        """
         data = set()
 
         for app in self._app_store:
@@ -362,6 +454,18 @@ class AppList(SettingsWidget):
         self.set_value(list(data))
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+
+        Returns
+        -------
+        None
+            Halt execution.
+        """
         if not self._change_permitted:
             # Ignore this notification, model is being modified outside
             return
@@ -405,13 +509,44 @@ class AppList(SettingsWidget):
         self._app_store.set_sort_column_id(self._columns["DISPLAY_NAME"], Gtk.SortType.ASCENDING)
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.content_widget.connect("clicked", self.open_applications_list)
 
 
 class AppChooser(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    content_widget : TYPE
+        Description
+    label : TYPE
+        Description
+    """
     bind_dir = None
 
     def __init__(self, label, size_group=None, dep_key=None, tooltip=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        size_group : None, optional
+            Description
+        dep_key : None, optional
+            Description
+        tooltip : str, optional
+            Description
+        """
         super().__init__(dep_key=dep_key)
 
         self.label = SettingsLabel(label)
@@ -430,6 +565,13 @@ class AppChooser(SettingsWidget):
         self.set_button_data()
 
     def open_app_chooser(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         app_chooser = ApplicationChooserWidget(parent=self.get_toplevel(),
                                                multi_selection=False)
         app_chooser.set_label(_("Choose an application"))
@@ -439,10 +581,28 @@ class AppChooser(SettingsWidget):
             self.on_app_selected(app_info.get_id())
 
     def on_app_selected(self, apps_id):
+        """Summary
+
+        Parameters
+        ----------
+        apps_id : TYPE
+            Description
+        """
         self.set_value(apps_id)
         self.on_setting_changed()
 
     def set_button_data(self, image=None, label=_("No app chosen"), extra_info=""):
+        """Summary
+
+        Parameters
+        ----------
+        image : None, optional
+            Description
+        label : TYPE, optional
+            Description
+        extra_info : str, optional
+            Description
+        """
         if image is None:
             image = Gtk.Image.new_from_gicon(
                 Gio.Icon.new_for_string("image-missing"), Gtk.IconSize.BUTTON)
@@ -452,6 +612,13 @@ class AppChooser(SettingsWidget):
         self.content_widget.set_tooltip_text(label + extra_info)
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         try:
             app_info = Gio.DesktopAppInfo.new(self.get_value())
         except Exception:
@@ -471,6 +638,13 @@ class AppChooser(SettingsWidget):
             self.set_button_data()
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.content_widget.connect("clicked", self.open_app_chooser)
 
 

@@ -6,10 +6,12 @@ Attributes
 ----------
 CINNAMON_VERSION : str
     Cinnamon version.
+GTK_VERSION : str
+    Gtk version.
 MODULE_PATH : str
     Path to the root of this module.
-proxy : Gio.DBusProxy
-    DBus proxy.
+proxy : object
+    See :py:class:`Gio.DBusProxy`.
 XLET_SETTINGS_WIDGETS : dict
     Settings widgets map.
 """
@@ -80,11 +82,11 @@ class SettingsBox(BaseGrid):
     Attributes
     ----------
     app : object
-        <class "Gtk.Application">.
+        :py:class:`Gtk.Application`.
     instance_info : dict
         Xlet instance information.
     stack : object
-        <class "Gtk.Stack">.
+        :py:class:`Gtk.Stack`.
     timer : int
         Throttle timer.
     """
@@ -99,7 +101,7 @@ class SettingsBox(BaseGrid):
         instance_info : dict, optional
             Xlet instance information.
         app : None, optional
-            <class "Gtk.Application">.
+            See :py:class:`Gtk.Application`.
         """
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
         self.set_border_width(0)
@@ -279,33 +281,33 @@ class MainApplication(Gtk.Application):
     all_instances_info : list
         Storage for all xlets instances information.
     app_image : object
-        <class `Gtk.Button`>.
+        See :py:class:`Gtk.Button`.
     application_id : str
         A base application ID that will be used to generate the real application ID.
     application_title : str
         A custom application title.
     cinnamon_gsettings : object
-        <class `Gio.Settings`>.
+        See :py:class:`Gio.Settings`.
     display_settings_handling : bool
         Whether to display settings handler item in the header bar menu.
     header_bar : object
-        <class `Gtk.HeaderBar`>.
+        See :py:class:`Gtk.HeaderBar`.
     help_file_path : str
         Path to the xlet help file.
     instance_stack : object
-        <class `Gtk.Stack`>.
+        See :py:class:`Gtk.Stack`.
     instance_switcher : object
-        <class `Gtk.StackSwitcher`>.
+        See :py:class:`Gtk.StackSwitcher`.
     instance_switcher_box : object
-        <class `BaseGrid`>.
+        See :py:class:`BaseGrid`.
     legacy_xlet_highlighting : bool
         Whether to use the "old way" of highlighting an xlet instance.
     next_button : object
-        <class `Gtk.Button`>.
+        See :py:class:`Gtk.Button`.
     pages_definition : list
         The list containing the data to generate all window widgets.
     prev_button : object
-        <class `Gtk.Button`>.
+        See :py:class:`Gtk.Button`.
     required_args : set
         Required arguments.
     selected_instance : dict
@@ -325,7 +327,7 @@ class MainApplication(Gtk.Application):
     win_state_cache_file : str
         Path to the file where the window state is stored.
     window : object
-        <class "Gtk.ApplicationWindow">.
+        See :py:class:`Gtk.ApplicationWindow`.
     xlet_dir : str
         Path to where the xlet is installed.
     xlet_help_file_exists : bool
@@ -697,9 +699,9 @@ class MainApplication(Gtk.Application):
         Parameters
         ----------
         obj : object
-            <class "Gio.DBusProxy">.
+            See :py:class:`Gio.DBusProxy`.
         result : object
-            <class "Gio.Task">.
+            See :py:class:`Gio.Task`.
         data : None, optional
             User data.
         """
@@ -774,7 +776,7 @@ class MainApplication(Gtk.Application):
         Parameters
         ----------
         window : object
-            <class "Gtk.ApplicationWindow">.
+            See :py:class:`Gtk.ApplicationWindow`.
         *args : object
             Arguments.
         """
@@ -798,9 +800,9 @@ class MainApplication(Gtk.Application):
         Parameters
         ----------
         window : object
-            <class "Gtk.ApplicationWindow">.
+            See :py:class:`Gtk.ApplicationWindow`.
         event : object
-            <class "Gdk.EventWindowState">.
+            See :py:class:`Gdk.EventWindowState`.
         """
         if event.new_window_state & Gdk.WindowState.MAXIMIZED:
             self.win_is_maximized = window.is_maximized()
@@ -863,7 +865,7 @@ class MainApplication(Gtk.Application):
         Returns
         -------
         object
-            <class "Gtk.MenuItem">.
+            See :py:class:`Gtk.MenuItem`.
         """
         item = Gtk.MenuItem(text)
 

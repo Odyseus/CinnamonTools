@@ -1,5 +1,16 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+"""Summary
+
+Attributes
+----------
+LIST_CLASS_TYPE_MAP : TYPE
+    Description
+LIST_PROPERTIES_MAP : TYPE
+    Description
+LIST_VARIABLE_TYPE_MAP : TYPE
+    Description
+"""
 import gi
 import json
 import os
@@ -106,6 +117,20 @@ LIST_PROPERTIES_MAP = {
 
 
 def list_edit_factory(options, xlet_settings):
+    """Summary
+
+    Parameters
+    ----------
+    options : TYPE
+        Description
+    xlet_settings : TYPE
+        Description
+
+    Returns
+    -------
+    TYPE
+        Description
+    """
     kwargs = {}
 
     if "options-from-paths" in options:
@@ -134,25 +159,68 @@ def list_edit_factory(options, xlet_settings):
         widget_type = LIST_CLASS_TYPE_MAP[options["type"]]
 
     class Widget(widget_type):
+        """Summary
+
+        Attributes
+        ----------
+        widget_value : TYPE
+            Description
+        """
+
         def __init__(self, **kwargs):
+            """Initialization.
+
+            Parameters
+            ----------
+            **kwargs
+                Description
+            """
             super().__init__(**kwargs)
 
             if self.bind_dir is None:
                 self.connect_widget_handlers()
 
         def get_range(self):
+            """Summary
+
+            Returns
+            -------
+            TYPE
+                Description
+            """
             return None
 
         def set_value(self, value):
+            """Summary
+
+            Parameters
+            ----------
+            value : TYPE
+                Description
+            """
             self.widget_value = value
 
         def get_value(self):
+            """Summary
+
+            Returns
+            -------
+            TYPE
+                Description
+            """
             if hasattr(self, "widget_value"):
                 return self.widget_value
             else:
                 return None
 
         def set_widget_value(self, value):
+            """Summary
+
+            Parameters
+            ----------
+            value : TYPE
+                Description
+            """
             if self.bind_dir is None:
                 self.widget_value = value
                 self.on_setting_changed()
@@ -163,6 +231,13 @@ def list_edit_factory(options, xlet_settings):
                     self.content_widget.set_property(self.bind_prop, value)
 
         def get_widget_value(self):
+            """Summary
+
+            Returns
+            -------
+            TYPE
+                Description
+            """
             if self.bind_dir is None:
                 try:
                     return self.widget_value
@@ -181,10 +256,77 @@ def list_edit_factory(options, xlet_settings):
 
 
 class List(SettingsWidget):
+    """Summary
+
+    Attributes
+    ----------
+    add_button : TYPE
+        Description
+    allow_edition : TYPE
+        Description
+    app_window : TYPE
+        Description
+    apply_and_quit : TYPE
+        Description
+    bind_dir : int
+        See :py:class:`Gio.SettingsBindFlags`.
+    columns : TYPE
+        Description
+    content_widget : TYPE
+        Description
+    dialog_info_labels : TYPE
+        Description
+    dialog_width : TYPE
+        Description
+    edit_button : TYPE
+        Description
+    export_button : TYPE
+        Description
+    immutable : TYPE
+        Description
+    label : TYPE
+        Description
+    model : TYPE
+        Description
+    move_buttons : TYPE
+        Description
+    move_down_button : TYPE
+        Description
+    move_up_button : TYPE
+        Description
+    remove_button : TYPE
+        Description
+    timer : TYPE
+        Description
+    tooltips_storage : dict
+        Description
+    """
+
     bind_dir = None
 
     def __init__(self, label=None, columns=None, immutable={}, dialog_info_labels=None, height=200,
                  move_buttons=True, dialog_width=450, apply_and_quit=False):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : None, optional
+            Description
+        columns : None, optional
+            Description
+        immutable : dict, optional
+            Description
+        dialog_info_labels : None, optional
+            Description
+        height : int, optional
+            Description
+        move_buttons : bool, optional
+            Description
+        dialog_width : int, optional
+            Description
+        apply_and_quit : bool, optional
+            Description
+        """
         super().__init__()
         self.columns = columns
         self.immutable = immutable
@@ -239,6 +381,17 @@ class List(SettingsWidget):
                 renderer = Gtk.CellRendererToggle()
 
                 def toggle_checkbox(widget, path, col):
+                    """Summary
+
+                    Parameters
+                    ----------
+                    widget : TYPE
+                        Description
+                    path : TYPE
+                        Description
+                    col : TYPE
+                        Description
+                    """
                     self.model[path][col] = not self.model[path][col]
                     self.list_changed(path)
 
@@ -267,6 +420,19 @@ class List(SettingsWidget):
                         digits = len(str(step).split(".")[1])
 
                 def edit_spin(widget, path, value, data):
+                    """Summary
+
+                    Parameters
+                    ----------
+                    widget : TYPE
+                        Description
+                    path : TYPE
+                        Description
+                    value : TYPE
+                        Description
+                    data : TYPE
+                        Description
+                    """
                     # NOTE: Stupid internationalization!
                     # float(value) will fail when value is a comma-separated float. ¬¬
                     # int(value) will fail when value is a comma/dot separated integer. ¬¬
@@ -304,6 +470,21 @@ class List(SettingsWidget):
 
             if column_def["type"] == "color":
                 def set_color_func(col, rend, model, row_iter, data):
+                    """Summary
+
+                    Parameters
+                    ----------
+                    col : TYPE
+                        Description
+                    rend : TYPE
+                        Description
+                    model : TYPE
+                        Description
+                    row_iter : TYPE
+                        Description
+                    data : TYPE
+                        Description
+                    """
                     value = model[row_iter][data["col_index"]]
                     bg_rgba = Gdk.RGBA()
                     bg_rgba.parse(value)
@@ -316,6 +497,21 @@ class List(SettingsWidget):
                 })
             elif column_def["type"] == "app":
                 def set_app_func(col, rend, model, row_iter, data):
+                    """Summary
+
+                    Parameters
+                    ----------
+                    col : TYPE
+                        Description
+                    rend : TYPE
+                        Description
+                    model : TYPE
+                        Description
+                    row_iter : TYPE
+                        Description
+                    data : TYPE
+                        Description
+                    """
                     value = model[row_iter][data["col_index"]]
 
                     try:
@@ -334,6 +530,21 @@ class List(SettingsWidget):
 
             if has_option_map:
                 def map_func(col, rend, model, row_iter, data):
+                    """Summary
+
+                    Parameters
+                    ----------
+                    col : TYPE
+                        Description
+                    rend : TYPE
+                        Description
+                    model : TYPE
+                        Description
+                    row_iter : TYPE
+                        Description
+                    data : TYPE
+                        Description
+                    """
                     value = model[row_iter][data["col_index"]]
 
                     for val, key in data["options"].items():
@@ -368,6 +579,21 @@ class List(SettingsWidget):
             else:
                 if column_def["type"] == "keybinding":
                     def kb_map_func(col, rend, model, row_iter, data):
+                        """Summary
+
+                        Parameters
+                        ----------
+                        col : TYPE
+                            Description
+                        rend : TYPE
+                            Description
+                        model : TYPE
+                            Description
+                        row_iter : TYPE
+                            Description
+                        data : TYPE
+                            Description
+                        """
                         value = model[row_iter][data["col_index"]]
 
                         if value:
@@ -501,6 +727,18 @@ class List(SettingsWidget):
         self.update_button_sensitivity()
 
     def get_keybinding_display_name(self, accel_string):
+        """Summary
+
+        Parameters
+        ----------
+        accel_string : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         text = ""
 
         if accel_string:
@@ -511,6 +749,26 @@ class List(SettingsWidget):
         return text
 
     def query_tooltip_cb(self, widget, x, y, keyboard_tip, tooltip):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        x : TYPE
+            Description
+        y : TYPE
+            Description
+        keyboard_tip : TYPE
+            Description
+        tooltip : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         ctx = widget.get_tooltip_context(x, y, keyboard_tip)
 
         if not ctx:
@@ -530,6 +788,20 @@ class List(SettingsWidget):
             return False
 
     def key_press_cb(self, widget, event):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        event : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         state = event.get_state() & Gdk.ModifierType.CONTROL_MASK
         ctrl = state == Gdk.ModifierType.CONTROL_MASK
         symbol, keyval = event.get_keyval()
@@ -556,6 +828,13 @@ class List(SettingsWidget):
         return False
 
     def update_button_sensitivity(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         model, selected = self.content_widget.get_selection().get_selected()
 
         if self.remove_button is not None:
@@ -588,16 +867,44 @@ class List(SettingsWidget):
                 self.export_button.set_sensitive(True)
 
     def on_row_activated(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         if self.allow_edition:
             self.edit_item()
 
     def add_item(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         data = self.open_add_edit_dialog()
         if data is not None:
             self.model.append(data)
             self.list_changed()
 
     def remove_item_cb(self, widget, event):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        event : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         state = event.get_state() & Gdk.ModifierType.CONTROL_MASK
         confirm_removal = state != Gdk.ModifierType.CONTROL_MASK
 
@@ -626,12 +933,21 @@ class List(SettingsWidget):
             self.remove_item()
 
     def remove_item(self):
+        """Summary
+        """
         model, t_iter = self.content_widget.get_selection().get_selected()
         path = model.get_path(t_iter)
         model.remove(t_iter)
         self.list_changed(path)
 
     def edit_item(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         model, t_iter = self.content_widget.get_selection().get_selected()
         data = self.open_add_edit_dialog(model[t_iter])
         if data is not None:
@@ -640,26 +956,61 @@ class List(SettingsWidget):
             self.list_changed(model.get_path(t_iter))
 
     def move_item_up(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         model, t_iter = self.content_widget.get_selection().get_selected()
         model.swap(t_iter, model.iter_previous(t_iter))
         self.list_changed(model.get_path(t_iter))
 
     def move_item_to_first_position(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         model, t_iter = self.content_widget.get_selection().get_selected()
         model.move_after(t_iter, None)
         self.list_changed(model.get_path(t_iter))
 
     def move_item_down(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         model, t_iter = self.content_widget.get_selection().get_selected()
         model.swap(t_iter, model.iter_next(t_iter))
         self.list_changed(model.get_path(t_iter))
 
     def move_item_to_last_position(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         model, t_iter = self.content_widget.get_selection().get_selected()
         model.move_before(t_iter, None)
         self.list_changed(model.get_path(t_iter))
 
     def export_data(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         filepath = import_export(
             self, "export",
             self.settings.get_value(self.imp_exp_path_key) if self.imp_exp_path_key else None
@@ -679,6 +1030,23 @@ class List(SettingsWidget):
                                         os.path.dirname(filepath))
 
     def import_data(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+
+        Returns
+        -------
+        TYPE
+            Description
+
+        Raises
+        ------
+        Exception
+            Description
+        """
         filepath = import_export(
             self,
             "import",
@@ -756,6 +1124,13 @@ class List(SettingsWidget):
                 raise Exception("Wrong data type found on file %s" % filepath)
 
     def apply_changes(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         # NOTE: The setting controlled by this widget (List) is saved in real time.
         # This apply_changes function simply toggles a setting that can have a
         # callback attached (on the JavaScript side) so it can be triggered on demand
@@ -771,6 +1146,18 @@ class List(SettingsWidget):
             self.app_window.emit("destroy")
 
     def open_add_edit_dialog(self, info=None):
+        """Summary
+
+        Parameters
+        ----------
+        info : None, optional
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         if info is None:
             title = _("Add new entry")
         else:
@@ -861,6 +1248,13 @@ class List(SettingsWidget):
         return None
 
     def list_changed(self, path=None):
+        """Summary
+
+        Parameters
+        ----------
+        path : None, optional
+            Description
+        """
         data = []
         for row in self.model:
             i = 0
@@ -880,6 +1274,13 @@ class List(SettingsWidget):
                 pass
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         self.model.clear()
         rows = self.get_value()
         for row in rows:
@@ -897,6 +1298,13 @@ class List(SettingsWidget):
         self.content_widget.columns_autosize()
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
         pass
 
 

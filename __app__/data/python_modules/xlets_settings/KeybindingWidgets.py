@@ -1,5 +1,16 @@
 #!/usr/bin/python3
+"""Summary
+
+Attributes
+----------
+FORBIDDEN_KEYVALS : TYPE
+    Description
+"""
 import gettext
+import gi
+
+gi.require_version("Gdk", "3.0")
+gi.require_version("Gtk", "3.0")
 
 from gi.repository import GObject
 from gi.repository import Gdk
@@ -55,6 +66,17 @@ FORBIDDEN_KEYVALS = [
 
 
 class ButtonKeybinding(Gtk.TreeView):
+    """Summary
+
+    Attributes
+    ----------
+    accel_string : str
+        Description
+    entry_store : TYPE
+        Description
+    keybinding_cell : TYPE
+        Description
+    """
     __gsignals__ = {
         "accel-edited": (GObject.SignalFlags.RUN_LAST, None, (str, str)),
         "accel-cleared": (GObject.SignalFlags.RUN_LAST, None, ())
@@ -69,6 +91,8 @@ class ButtonKeybinding(Gtk.TreeView):
     }
 
     def __init__(self):
+        """Initialization.
+        """
         super().__init__()
 
         self.set_headers_visible(False)
@@ -95,19 +119,52 @@ class ButtonKeybinding(Gtk.TreeView):
         self.connect("focus-out-event", self.on_focus_lost)
 
     def on_cell_edited(self, cell, path, accel_string, accel_label):
+        """Summary
+
+        Parameters
+        ----------
+        cell : TYPE
+            Description
+        path : TYPE
+            Description
+        accel_string : TYPE
+            Description
+        accel_label : TYPE
+            Description
+        """
         self.accel_string = accel_string
         self.emit("accel-edited", accel_string, accel_label)
         self.load_model()
 
     def on_cell_cleared(self, cell, path):
+        """Summary
+
+        Parameters
+        ----------
+        cell : TYPE
+            Description
+        path : TYPE
+            Description
+        """
         self.accel_string = ""
         self.emit("accel-cleared")
         self.load_model()
 
     def on_focus_lost(self, widget, event):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        event : TYPE
+            Description
+        """
         self.get_selection().unselect_all()
 
     def load_model(self):
+        """Summary
+        """
         if self.entry_store:
             self.entry_store.clear()
 
@@ -117,12 +174,43 @@ class ButtonKeybinding(Gtk.TreeView):
         self.set_model(self.entry_store)
 
     def do_get_property(self, prop):
+        """Summary
+
+        Parameters
+        ----------
+        prop : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+
+        Raises
+        ------
+        AttributeError
+            Description
+        """
         if prop.name == "accel-string":
             return self.accel_string
         else:
             raise AttributeError("unknown property %s" % prop.name)
 
     def do_set_property(self, prop, value):
+        """Summary
+
+        Parameters
+        ----------
+        prop : TYPE
+            Description
+        value : TYPE
+            Description
+
+        Raises
+        ------
+        AttributeError
+            Description
+        """
         if prop.name == "accel-string":
             if value != self.accel_string:
                 self.accel_string = value
@@ -131,14 +219,55 @@ class ButtonKeybinding(Gtk.TreeView):
             raise AttributeError("unknown property %s" % prop.name)
 
     def get_accel_string(self):
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return self.accel_string
 
     def set_accel_string(self, accel_string):
+        """Summary
+
+        Parameters
+        ----------
+        accel_string : TYPE
+            Description
+        """
         self.accel_string = accel_string
         self.load_model()
 
 
 class CellRendererKeybinding(Gtk.CellRendererText):
+    """Summary
+
+    Attributes
+    ----------
+    a_widget : TYPE
+        Description
+    accel_editable : TYPE
+        Description
+    accel_string : TYPE
+        Description
+    focus_id : int
+        Description
+    keyboard : TYPE
+        Description
+    path : TYPE
+        Description
+    press_event : TYPE
+        Description
+    press_event_id : int
+        Description
+    release_event_id : int
+        Description
+    teaching : bool
+        Description
+    TOOLTIP_TEXT : TYPE
+        Description
+    """
     __gsignals__ = {
         "accel-edited": (GObject.SignalFlags.RUN_LAST, None, (str, str, str)),
         "accel-cleared": (GObject.SignalFlags.RUN_LAST, None, (str,))
@@ -157,6 +286,15 @@ class CellRendererKeybinding(Gtk.CellRendererText):
                                    _("Press Backspace to clear the existing keybinding."))
 
     def __init__(self, a_widget, accel_string=None):
+        """Initialization.
+
+        Parameters
+        ----------
+        a_widget : TYPE
+            Description
+        accel_string : None, optional
+            Description
+        """
         super().__init__()
         self.connect("editing-started", self.editing_started)
         self.release_event_id = 0
@@ -173,12 +311,43 @@ class CellRendererKeybinding(Gtk.CellRendererText):
         self.update_label()
 
     def do_get_property(self, prop):
+        """Summary
+
+        Parameters
+        ----------
+        prop : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+
+        Raises
+        ------
+        AttributeError
+            Description
+        """
         if prop.name == "accel-string":
             return self.accel_string
         else:
             raise AttributeError("unknown property %s" % prop.name)
 
     def do_set_property(self, prop, value):
+        """Summary
+
+        Parameters
+        ----------
+        prop : TYPE
+            Description
+        value : TYPE
+            Description
+
+        Raises
+        ------
+        AttributeError
+            Description
+        """
         if prop.name == "accel-string":
             if value != self.accel_string:
                 self.accel_string = value
@@ -187,6 +356,8 @@ class CellRendererKeybinding(Gtk.CellRendererText):
             raise AttributeError("unknown property %s" % prop.name)
 
     def update_label(self):
+        """Summary
+        """
         text = _("unassigned")
         if self.accel_string:
             key, codes, mods = Gtk.accelerator_parse_with_keycode(self.accel_string)
@@ -195,9 +366,27 @@ class CellRendererKeybinding(Gtk.CellRendererText):
         self.set_property("text", text)
 
     def set_value(self, accel_string=None):
+        """Summary
+
+        Parameters
+        ----------
+        accel_string : None, optional
+            Description
+        """
         self.set_property("accel-string", accel_string)
 
     def editing_started(self, renderer, editable, path):
+        """Summary
+
+        Parameters
+        ----------
+        renderer : TYPE
+            Description
+        editable : TYPE
+            Description
+        path : TYPE
+            Description
+        """
         if not self.teaching:
             self.path = path
             device = Gtk.get_current_event_device()
@@ -229,10 +418,33 @@ class CellRendererKeybinding(Gtk.CellRendererText):
             self.teaching = False
 
     def on_focus_out(self, widget, event):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        event : TYPE
+            Description
+        """
         self.teaching = False
         self.ungrab()
 
     def on_key_press(self, widget, event):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        event : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         if self.teaching:
             self.press_event = event.copy()
             return True
@@ -240,6 +452,20 @@ class CellRendererKeybinding(Gtk.CellRendererText):
         return False
 
     def on_key_release(self, widget, event):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        event : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         if self.press_event is not None:
             self.ungrab()
 
@@ -261,16 +487,12 @@ class CellRendererKeybinding(Gtk.CellRendererText):
             consumed_modifiers = 0
         else:
             keymap = Gdk.Keymap.get_for_display(display)
-            group_mask_disabled = False
             shift_group_mask = 0
 
             shift_group_mask = keymap.get_modifier_mask(Gdk.ModifierIntent.SHIFT_GROUP)
 
             retval, keyval, effective_group, level, consumed_modifiers = \
                 keymap.translate_keyboard_state(event.hardware_keycode, accel_mods, group)
-
-            if group_mask_disabled:
-                effective_group = 1
 
             if consumed_modifiers:
                 consumed_modifiers &= ~shift_group_mask
@@ -329,7 +551,7 @@ class CellRendererKeybinding(Gtk.CellRendererText):
                 msg += _("Please try again with a modifier key such as Control, Alt or Super (Windows key) at the same time.\n")
                 dialog.set_markup(msg % (accel_label))
                 dialog.show_all()
-                response = dialog.run()
+                dialog.run()
                 dialog.destroy()
                 return True
 
@@ -341,6 +563,8 @@ class CellRendererKeybinding(Gtk.CellRendererText):
         return True
 
     def ungrab(self):
+        """Summary
+        """
         self.keyboard.ungrab(Gdk.CURRENT_TIME)
         if self.release_event_id > 0:
             self.accel_editable.disconnect(self.release_event_id)

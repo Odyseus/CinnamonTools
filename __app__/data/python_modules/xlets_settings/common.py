@@ -1,5 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+"""Common utilities.
+
+Attributes
+----------
+HOME : str
+    Path to user home.
+"""
 import fnmatch
 import gettext
 import gi
@@ -22,19 +29,56 @@ _ = gettext.gettext
 
 
 class BaseGrid(Gtk.Grid):
+    """Summary
+    """
 
     def __init__(self, tooltip="", orientation=Gtk.Orientation.VERTICAL):
+        """Initialization.
+
+        Parameters
+        ----------
+        tooltip : str, optional
+            Description
+        orientation : TYPE, optional
+            Description
+        """
         super().__init__()
         self.set_orientation(orientation)
         self.set_tooltip_text(tooltip)
 
     def set_spacing(self, col, row):
+        """Summary
+
+        Parameters
+        ----------
+        col : TYPE
+            Description
+        row : TYPE
+            Description
+        """
         self.set_column_spacing(col)
         self.set_row_spacing(row)
 
 
 class InfoLabel(BaseGrid):
+    """Summary
+
+    Attributes
+    ----------
+    content_widget : TYPE
+        Description
+    """
+
     def __init__(self, label, align=Gtk.Align.START):
+        """Initialization.
+
+        Parameters
+        ----------
+        label : TYPE
+            Description
+        align : TYPE, optional
+            Description
+        """
         super().__init__()
         self.set_spacing(5, 5)
 
@@ -99,37 +143,150 @@ def compare_version(version1, version2):
     True
     >>> compare_version("2.8.7.1rel.2","2.8.7rel.1") > 0
     True
+
+    Parameters
+    ----------
+    version1 : TYPE
+        Description
+    version2 : TYPE
+        Description
+
+    Returns
+    -------
+    TYPE
+        Description
     """
     def chn(x):
+        """Summary
+
+        Parameters
+        ----------
+        x : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return chain.from_iterable(x)
 
     def split_chrs(strings, chars):
+        """Summary
+
+        Parameters
+        ----------
+        strings : TYPE
+            Description
+        chars : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         for ch in chars:
             strings = chn([e.split(ch) for e in strings])
         return strings
 
     def split_digit_char(x):
+        """Summary
+
+        Parameters
+        ----------
+        x : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return [s for s in re.split(r"([a-zA-Z]+)", x) if len(s) > 0]
 
     def splt(x):
+        """Summary
+
+        Parameters
+        ----------
+        x : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return [split_digit_char(y) for y in split_chrs([x], ".-_")]
 
     def pad(c1, c2, f="0"):
+        """Summary
+
+        Parameters
+        ----------
+        c1 : TYPE
+            Description
+        c2 : TYPE
+            Description
+        f : str, optional
+            Description
+        """
         while len(c1) > len(c2):
             c2 += [f]
         while len(c2) > len(c1):
             c1 += [f]
 
     def base_code(ints, base):
+        """Summary
+
+        Parameters
+        ----------
+        ints : TYPE
+            Description
+        base : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         res = 0
         for i in ints:
             res = base * res + i
         return res
 
     def ABS(lst):
+        """Summary
+
+        Parameters
+        ----------
+        lst : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         return [abs(x) for x in lst]
 
     def cmp(v1, v2):
+        """Summary
+
+        Parameters
+        ----------
+        v1 : TYPE
+            Description
+        v2 : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         c1 = splt(v1)
         c2 = splt(v2)
         pad(c1, c2, ["0"])
@@ -163,6 +320,18 @@ def compare_version(version1, version2):
 
 
 def contrast_rgba_color(rgba):
+    """Summary
+
+    Parameters
+    ----------
+    rgba : TYPE
+        Description
+
+    Returns
+    -------
+    TYPE
+        Description
+    """
     # <3 https://stackoverflow.com/a/1855903
     # StackOverflow to the rescue!!!
     luminance = (0.299 * rgba.red + 0.587 * rgba.green + 0.114 * rgba.blue) / 1.0
@@ -176,6 +345,22 @@ def contrast_rgba_color(rgba):
 
 
 def import_export(parent, type, last_dir):
+    """Summary
+
+    Parameters
+    ----------
+    parent : TYPE
+        Description
+    type : TYPE
+        Description
+    last_dir : TYPE
+        Description
+
+    Returns
+    -------
+    TYPE
+        Description
+    """
     if type == "export":
         mode = Gtk.FileChooserAction.SAVE
         string = _("Select or enter file to export to")
@@ -219,9 +404,32 @@ def import_export(parent, type, last_dir):
 
 
 def generate_options_from_paths(opts, xlet_settings):
+    """Summary
+
+    Parameters
+    ----------
+    opts : TYPE
+        Description
+    xlet_settings : TYPE
+        Description
+
+    Returns
+    -------
+    TYPE
+        Description
+    """
     options = []
 
     def scan_and_generate(folder_path, add_prefix):
+        """Summary
+
+        Parameters
+        ----------
+        folder_path : TYPE
+            Description
+        add_prefix : TYPE
+            Description
+        """
         for pattern in opts.get("file-patterns"):
             for file_name in fnmatch.filter(os.listdir(folder_path), pattern):
                 options.append(("::" if add_prefix else "") + file_name)
@@ -244,6 +452,19 @@ def generate_options_from_paths(opts, xlet_settings):
 
 
 def display_message_dialog(widget, title, message, context="information"):
+    """Summary
+
+    Parameters
+    ----------
+    widget : TYPE
+        Description
+    title : TYPE
+        Description
+    message : TYPE
+        Description
+    context : str, optional
+        Description
+    """
     if context == "warning":
         message_type = Gtk.MessageType.WARNING
     elif context == "error":
@@ -267,7 +488,7 @@ def display_message_dialog(widget, title, message, context="information"):
 
 
 def sort_combo_options(options, first_option=""):
-    """Sort ComboBox widget options.
+    """Sort :any:`ComboBox` widget options.
 
     If the list of tuples was built from a dictionary, the list needs to be
     sorted by the item at index 1 of each tuple. If the list of tuples was
@@ -278,7 +499,9 @@ def sort_combo_options(options, first_option=""):
     ----------
     options : list
         A list of tuples of two elements representing the options used to build
-        a ComboBox widget and its derivatives.
+        a :any:`ComboBox` widget and its derivatives.
+    first_option : str, optional
+        Description
 
     Returns
     -------
