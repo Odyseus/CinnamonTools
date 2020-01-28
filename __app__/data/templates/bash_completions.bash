@@ -79,7 +79,7 @@ __cinnamon_tools_cli_{current_date}(){
         ;;
     "generate")
         COMPREPLY=( $(compgen -W \
-            "system_executable docs docs_no_api base_xlet" -- "${cur}") )
+            "system_executable docs docs_no_api base_xlet repo_changelog" -- "${cur}") )
         ;;
     "build")
         COMPREPLY=( $(compgen -W \
@@ -99,7 +99,7 @@ __cinnamon_tools_cli_{current_date}(){
     "dev")
         COMPREPLY=( $(compgen -W \
             "-x --xlet= generate_meta_file create_localized_help generate_trans_stats \
-update_pot_files update_spanish_localizations create_changelogs " -- "${cur}") )
+update_pot_files update_spanish_localizations create_xlets_changelogs " -- "${cur}") )
         ;;
     esac
 
