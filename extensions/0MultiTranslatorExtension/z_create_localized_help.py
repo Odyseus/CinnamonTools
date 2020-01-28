@@ -195,10 +195,9 @@ $ sudo make install
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "- %s" % _("With each Yandex translator API key you can translate **UP TO** 1.000.000 (1 million) characters per day **BUT NOT MORE** than 10.000.000 (10 millions) per month."),
             "",
-            "## %s" % _("Cinnamon versions bellow 3.6.x"),
+            "## %s" % _("Custom xlet settings system"),
             "",
-            # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-            _("Cinnamon versions prior to 3.6.x have a design flaw. If an xlet uses an external settings application, and at the same time the file **settings-schema.json** exists inside an xlet folder, all shortcuts to open an xlet settings will not open the external application as it should; they will open the Cinnamon's native settings window. To work around this design flaw, I put in place different mechanisms depending on the xlet type."),
+            _("This xlet uses a custom application to handle its settings. Cinnamon's native settings system handles external applications for xlets settings in a very limited way. To work around these limitations, I put in place different mechanisms depending on the xlet type."),
             "",
             "- **%s:** %s" % (
                 _("Applets"),
@@ -215,7 +214,7 @@ $ sudo make install
                 # TO TRANSLATORS: MARKDOWN string. Respect formatting.
                 _("If the *wrong* settings window is opened, a button to open the *right* settings window will be available.")
             ),
-            "",
+            ""
         ])
         ))
 

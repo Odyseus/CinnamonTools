@@ -167,8 +167,8 @@ $ sudo make install
 <li><strong>¡NUNCA hacer públicas las llaves de API!</strong> El sólo propósito de tomarse la molestia de obtener sus propias claves API es que el único el "consumir sus límites" es usted y nadie más.</li>
 <li>Con cada llave de API Yandex uno puede traducir <strong>HASTA</strong> 1.000.000 (1 millón) de caracteres por día <strong>PERO NO MÁS</strong> de 10.000.000 (10 millones) por mes.</li>
 </ul>
-<h2>Versiones de Cinnamon abajo de 3.6.x</h2>
-<p>Las versiones de Cinnamon anteriores a 3.6.x tienen un defecto de diseño. Si un xlet utiliza una aplicación de configuración externa y al mismo tiempo existe el archivo <strong>settings-schema.json</strong> dentro de la carpeta de un xlet, todos los accesos directos para abrir la configuración del xlet no abrirán la aplicación externa como deberían; se abrirá la ventana de configuración nativa de la Cinnamon. Para evitar este defecto de diseño, instalé diferentes mecanismos según el tipo de xlet.</p>
+<h2>Sistema personalizado de configuración de xlet</h2>
+<p>Este xlet utiliza una aplicación personalizada para manejar su configuración. El sistema de configuración nativo de Cinnamon maneja aplicaciones externas para la configuración de xlets de una manera muy limitada. Para evitar estas limitaciones, establecí diferentes mecanismos según el tipo de xlet.</p>
 <ul>
 <li><strong>Applets:</strong> El elemento del menú contextual <strong>Configurar...</strong> está anulado para abrir la aplicación de configuración adecuada.</li>
 <li><strong>Extensiones:</strong> Al habilitar la extensión, se genera automáticamente un acceso directo (un archivo .desktop) para abrir la aplicación de configuración adecuada y se elimina cuando la extensión se deshabilita. El archivo .desktop se crea en <strong>~/.local/share/applications</strong>, por lo que el acceso directo estará disponible en el menú de aplicaciones dentro de la categoría <strong>Preferencias</strong>.</li>
@@ -302,8 +302,8 @@ NEVER edit the translation history file manually!!! Always use the translation h
 <li><strong>NEVER make your API keys public!!!</strong> The whole purpose of going to the trouble of getting your own API keys is that the only one "consuming their limits" is you and nobody else.</li>
 <li>With each Yandex translator API key you can translate <strong>UP TO</strong> 1.000.000 (1 million) characters per day <strong>BUT NOT MORE</strong> than 10.000.000 (10 millions) per month.</li>
 </ul>
-<h2>Cinnamon versions bellow 3.6.x</h2>
-<p>Cinnamon versions prior to 3.6.x have a design flaw. If an xlet uses an external settings application, and at the same time the file <strong>settings-schema.json</strong> exists inside an xlet folder, all shortcuts to open an xlet settings will not open the external application as it should; they will open the Cinnamon's native settings window. To work around this design flaw, I put in place different mechanisms depending on the xlet type.</p>
+<h2>Custom xlet settings system</h2>
+<p>This xlet uses a custom application to handle its settings. Cinnamon's native settings system handles external applications for xlets settings in a very limited way. To work around these limitations, I put in place different mechanisms depending on the xlet type.</p>
 <ul>
 <li><strong>Applets:</strong> The <strong>Configure...</strong> context menu item is overridden so it opens the proper settings application.</li>
 <li><strong>Extensions:</strong> A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at <strong>~/.local/share/applications</strong>, so it will make the shortcut available in your applications menu inside the <strong>Preferences</strong> category.</li>
@@ -335,6 +335,17 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Multi Translator changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 27 Jan 2020 20:26:43 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/7104783">7104783</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>Countermeasures for using an external settings application
+----------------------------------------------------------
+
+- Removed condition used to selectively generate a .desktop file to open the extension's settings window. Now the .desktop file will be created in all Cinnamon version the extension is installed.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Sun, 22 Dec 2019 04:54:47 -0300</li>

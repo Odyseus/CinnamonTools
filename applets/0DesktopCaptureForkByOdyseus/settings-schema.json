@@ -5,14 +5,12 @@
     },
     "pref_custom_icon_for_applet": {
         "type": "iconfilechooser",
-        "indent": true,
         "default": "desktop-capture-camera-photo-symbolic",
         "description": "Normal icon",
         "tooltip": "Select an icon to show in the panel."
     },
     "pref_custom_icon_for_applet_recording": {
         "type": "iconfilechooser",
-        "indent": true,
         "default": "desktop-capture-media-record-symbolic",
         "description": "Screencasting icon",
         "tooltip": "Select an icon to show in the panel when screencasting is active."
@@ -31,14 +29,12 @@
     },
     "pref_camera_save_dir": {
         "type": "filechooser",
-        "indent": true,
         "select-dir": true,
         "default": "",
         "description": "Save location",
         "tooltip": "Path to a folder to save new screenshots."
     },
     "pref_camera_save_prefix": {
-        "indent": true,
         "default": "Screenshot-%TYPE-%Y-%M-%D-%H%I%S",
         "type": "entry",
         "description": "File name format",
@@ -63,20 +59,17 @@
         "tooltip": "Whether to copy the file path or image data of screenshots to clipboard after capture."
     },
     "label-recorder-settings": {
-        "indent": true,
         "type": "label",
         "description": "Please note not all recorder tools may respect these settings."
     },
     "pref_recorder_save_dir": {
         "type": "filechooser",
         "select-dir": true,
-        "indent": true,
         "default": "",
         "description": "Save location",
         "tooltip": "Path to a folder for new screen recordings."
     },
     "pref_recorder_save_prefix": {
-        "indent": true,
         "default": "Screencast-%Y-%M-%D-%H%I%S",
         "type": "entry",
         "description": "File name format",
@@ -99,53 +92,45 @@
         "description": "Screenshot Keybindings"
     },
     "pref_key_camera_window": {
-        "indent": true,
         "type": "keybinding",
         "description": "Capture a window",
         "default": ""
     },
     "pref_key_camera_area": {
-        "indent": true,
         "type": "keybinding",
         "description": "Capture an area",
         "default": ""
     },
     "pref_key_camera_cinnamon_ui": {
-        "indent": true,
         "type": "keybinding",
         "description": "Capture a Cinnamon UI element",
         "default": "",
         "tooltip": "Cinnamon only."
     },
     "pref_key_camera_screen": {
-        "indent": true,
         "type": "keybinding",
         "description": "Capture the screen",
         "default": ""
     },
     "pref_key_camera_monitor_0": {
-        "indent": true,
         "type": "keybinding",
         "description": "Capture monitor 1",
         "default": "",
         "tooltip": "Cinnamon only."
     },
     "pref_key_camera_monitor_1": {
-        "indent": true,
         "type": "keybinding",
         "description": "Capture monitor 2",
         "default": "",
         "tooltip": "Cinnamon only."
     },
     "pref_key_camera_monitor_2": {
-        "indent": true,
         "type": "keybinding",
         "description": "Capture monitor 3",
         "default": "",
         "tooltip": "Cinnamon only."
     },
     "pref_key_camera_repeat": {
-        "indent": true,
         "type": "keybinding",
         "description": "Repeat last capture",
         "default": ""
@@ -155,14 +140,12 @@
         "description": "Screencast Keybindings"
     },
     "pref_key_recorder_stop_toggle": {
-        "indent": true,
         "type": "keybinding",
         "description": "Start/stop recording",
         "tooltip": "Will start only Cinnamon Recorder. Will stop any recorder using its stop-command.",
         "default": ""
     },
     "pref_key_recorder_repeat": {
-        "indent": true,
         "type": "keybinding",
         "description": "Repeat last capture",
         "default": ""
@@ -247,7 +230,6 @@
     "pref_theme_selector": {
         "type": "combobox",
         "default": "dark",
-        "indent": true,
         "options": {
             "Light overlay": "light",
             "Dark overlay": "dark",
@@ -258,7 +240,6 @@
     },
     "pref_theme_custom": {
         "type": "filechooser",
-        "indent": true,
         "select-dir": false,
         "default": "",
         "description": "Path to custom stylesheet"
@@ -273,7 +254,6 @@
     "pref_disclaimer_read": {
         "type": "checkbox",
         "default": false,
-        "indent": true,
         "description": "I read the disclaimer and I'm aware of the consequences",
         "tooltip": "If you read the help page for this applet (Known issues), you know what this is about."
     },
@@ -286,7 +266,6 @@
     },
     "pref_logging_level": {
         "type": "combobox",
-        "indent": true,
         "default": 0,
         "description": "Logging level (*)",
         "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additionally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
@@ -298,14 +277,12 @@
     },
     "pref_debugger_enabled": {
         "type": "checkbox",
-        "indent": true,
         "description": "Enable debugger (*)",
         "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
         "default": false
     },
     "label": {
         "type": "label",
-        "indent": true,
         "description": "(*) Requires Cinnamon restart to enable/disable"
     },
     "pref_record_sound": {

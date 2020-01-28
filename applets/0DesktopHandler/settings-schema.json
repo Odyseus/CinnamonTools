@@ -4,14 +4,12 @@
         "description": "Applet options: "
     },
     "pref_custom_icon": {
-        "indent": true,
         "type": "iconfilechooser",
         "default": "windows-quick-list-symbolic",
         "description": "Icon for Applet (Leave blank to remove icon):",
         "tooltip": "Set a custom icon for the applet."
     },
     "pref_applet_with": {
-        "indent": true,
         "type": "spinbutton",
         "description": "Applet custom width (Set to 0 (zero) to not set a width):",
         "min": 0,
@@ -21,7 +19,6 @@
         "default": 0
     },
     "pref_applet_background_color": {
-        "indent": true,
         "type": "colorchooser",
         "default": "rgba(0,0,0,0)",
         "description": "Background color for the applet:",
@@ -35,7 +32,6 @@
         "description": "Mouse scroll options: "
     },
     "pref_scroll_action": {
-        "indent": true,
         "type": "combobox",
         "default": "switch_workspace",
         "description": "Action on scrolling: ",
@@ -49,14 +45,12 @@
         "tooltip": ""
     },
     "pref_prevent_fast_scroll": {
-        "indent": true,
         "type": "checkbox",
         "default": true,
         "description": "Prevent accidental workspace/window switching on rapid scrolling",
         "tooltip": ""
     },
     "pref_scroll_delay": {
-        "indent": true,
         "type": "spinbutton",
         "description": "Minimum delay between scrolls:",
         "min": 0,
@@ -67,14 +61,12 @@
         "dependency": "pref_prevent_fast_scroll"
     },
     "pref_separated_scroll_action": {
-        "indent": true,
         "type": "checkbox",
         "default": false,
         "description": "Independent actions for scrolling up and down",
         "tooltip": ""
     },
     "pref_scroll_up_action": {
-        "indent": true,
         "type": "combobox",
         "default": "none",
         "description": "Action on scrolling up: ",
@@ -93,7 +85,6 @@
         "tooltip": ""
     },
     "pref_scroll_down_action": {
-        "indent": true,
         "type": "combobox",
         "default": "none",
         "description": "Action on scrolling down: ",
@@ -119,7 +110,6 @@
         "description": "Mouse click options: "
     },
     "pref_left_click_action": {
-        "indent": true,
         "type": "combobox",
         "default": "desktop",
         "description": "Action on applet left click: ",
@@ -137,7 +127,6 @@
         "tooltip": ""
     },
     "pref_middle_click_action": {
-        "indent": true,
         "type": "combobox",
         "default": "cc3",
         "description": "Action on applet middle click: ",
@@ -163,14 +152,12 @@
         "description": "Windows menu options"
     },
     "pref_windows_list_menu_enabled": {
-        "indent": true,
         "type": "checkbox",
         "default": true,
         "description": "Enable Windows list menu",
         "tooltip": ""
     },
     "pref_button_to_open_menu": {
-        "indent": true,
         "type": "combobox",
         "default": "winlistmenu3",
         "dependency": "pref_windows_list_menu_enabled",
@@ -182,7 +169,6 @@
         }
     },
     "pref_show_close_buttons": {
-        "indent": true,
         "type": "checkbox",
         "dependency": "pref_windows_list_menu_enabled",
         "default": true,
@@ -190,7 +176,6 @@
         "tooltip": ""
     },
     "pref_show_close_all_buttons": {
-        "indent": true,
         "type": "checkbox",
         "default": true,
         "dependency": "pref_windows_list_menu_enabled",
@@ -198,7 +183,6 @@
         "tooltip": ""
     },
     "pref_keep_menu_open": {
-        "indent": true,
         "type": "checkbox",
         "dependency": "pref_windows_list_menu_enabled",
         "default": true,
@@ -206,7 +190,6 @@
         "tooltip": ""
     },
     "pref_show_context_menu_default_items": {
-        "indent": true,
         "type": "checkbox",
         "dependency": "pref_windows_list_menu_enabled",
         "default": true,
@@ -214,7 +197,6 @@
         "tooltip": ""
     },
     "pref_show_context_menu_help": {
-        "indent": true,
         "type": "checkbox",
         "dependency": "pref_windows_list_menu_enabled",
         "default": false,
@@ -222,7 +204,6 @@
         "tooltip": ""
     },
     "pref_show_context_menu_about": {
-        "indent": true,
         "type": "checkbox",
         "dependency": "pref_windows_list_menu_enabled",
         "default": false,
@@ -230,7 +211,6 @@
         "tooltip": ""
     },
     "pref_show_context_menu_configure": {
-        "indent": true,
         "type": "checkbox",
         "dependency": "pref_windows_list_menu_enabled",
         "default": true,
@@ -238,7 +218,6 @@
         "tooltip": ""
     },
     "pref_show_context_menu_remove": {
-        "indent": true,
         "type": "checkbox",
         "dependency": "pref_windows_list_menu_enabled",
         "default": false,
@@ -254,14 +233,12 @@
         "description": "Peek at desktop options:"
     },
     "pref_peek_desktop_enabled": {
-        "indent": true,
         "type": "checkbox",
         "default": false,
         "description": "Opacify windows on hover (a.k.a. desktop peek)",
         "tooltip": "Take a glance at your desktop and desklets."
     },
     "pref_peek_desktop_delay": {
-        "indent": true,
         "type": "spinbutton",
         "description": "Peek desktop trigger delay:",
         "min": 0,
@@ -272,7 +249,6 @@
         "dependency": "pref_peek_desktop_enabled"
     },
     "pref_opacify_desktop_icons": {
-        "indent": true,
         "type": "checkbox",
         "default": false,
         "dependency": "pref_peek_desktop_enabled",
@@ -280,7 +256,6 @@
         "tooltip": ""
     },
     "pref_opacify_desklets": {
-        "indent": true,
         "type": "checkbox",
         "default": false,
         "dependency": "pref_peek_desktop_enabled",
@@ -288,7 +263,6 @@
         "tooltip": ""
     },
     "pref_peek_opacity": {
-        "indent": true,
         "type": "scale",
         "default": 120,
         "min": 0,
@@ -299,7 +273,6 @@
         "tooltip": ""
     },
     "pref_blur_effect_enabled": {
-        "indent": true,
         "type": "checkbox",
         "default": false,
         "dependency": "pref_peek_desktop_enabled",
@@ -315,25 +288,21 @@
         "description": "Custom Commands: "
     },
     "pref_custom_cmd1_action": {
-        "indent": true,
         "type": "entry",
         "description": "1st Custom Command:",
         "default": "gnome-system-monitor"
     },
     "pref_custom_cmd2_action": {
-        "indent": true,
         "type": "entry",
         "description": "2nd Custom Command:",
         "default": "gnome-terminal"
     },
     "pref_custom_cmd3_action": {
-        "indent": true,
         "type": "entry",
         "description": "3rd Custom Command:",
         "default": "nohup cinnamon --replace > /dev/null 2>&1 &"
     },
     "pref_custom_cmd4_action": {
-        "indent": true,
         "type": "entry",
         "description": "4rd Custom Command:",
         "default": ""
@@ -346,7 +315,6 @@
         "description": "App Switcher Settings: "
     },
     "pref_switcher_style": {
-        "indent": true,
         "type": "combobox",
         "default": "default",
         "description": "App switcher style: ",
@@ -363,7 +331,6 @@
         "tooltip": ""
     },
     "pref_switcher_scope": {
-        "indent": true,
         "type": "combobox",
         "default": "switch-windows",
         "description": "Switch between windows from: ",
@@ -375,7 +342,6 @@
         "tooltip": ""
     },
     "pref_switcher_modified": {
-        "indent": true,
         "type": "combobox",
         "default": "switch-panels",
         "description": "When a modifier key is pressed, switch between windows from: ",
@@ -387,7 +353,6 @@
         "tooltip": ""
     },
     "pref_switcher_modifier": {
-        "indent": true,
         "type": "combobox",
         "default": "4",
         "description": "Modifier key: ",
@@ -403,7 +368,6 @@
     },
     "pref_logging_level": {
         "type": "combobox",
-        "indent": true,
         "default": 0,
         "description": "Logging level (*)",
         "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additionally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
@@ -415,14 +379,12 @@
     },
     "pref_debugger_enabled": {
         "type": "checkbox",
-        "indent": true,
         "description": "Enable debugger (*)",
         "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
         "default": false
     },
     "label": {
         "type": "label",
-        "indent": true,
         "description": "(*) Requires Cinnamon restart to enable/disable"
     }
 }

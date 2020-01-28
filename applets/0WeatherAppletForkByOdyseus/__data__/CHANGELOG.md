@@ -4,6 +4,22 @@
 
 ***
 
+- **Date:** Mon, 27 Jan 2020 02:41:38 -0300
+- **Commit:** [c9d9edb](https://gitlab.com/Odyseus/CinnamonTools/commit/c9d9edb)
+- **Author:** Odyseus
+
+```
+Countermeasures for using an external settings application
+----------------------------------------------------------
+
+- Removed condition used to selectively override the applet's Configure context menu item depending on Cinnamon version used. This condition caused to not open the settings window on newer Cinnamon versions.
+- Added button to the settings-schema.json file so the *real* settings window can be opened from Cinnamon's native settings window. Trying to open the correct xlet settings from the xlets manager isn't possible, so I added this button.
+- Removed `external-configuration-app` key from the metadata.json file so the built-in mechanism to open xlet settings doesn't fail silently without displaying error messages.
+
+```
+
+***
+
 - **Date:** Sat, 18 Jan 2020 14:46:45 -0300
 - **Commit:** [06693ef](https://gitlab.com/Odyseus/CinnamonTools/commit/06693ef)
 - **Author:** Odyseus

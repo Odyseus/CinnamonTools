@@ -41,7 +41,7 @@
                     </div>
                     <select class="custom-select custom-select-sm text-bold" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
 <!-- English --><option selected data-title="Help for Desktop Effects Applier" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Desktop Effects Applier" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish) (63%)</option>
+<!-- Español --><option data-title="Ayuda para Aplicador de Efectos de Escritorio" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
                     </select>
                 </div>
             </form>
@@ -51,36 +51,20 @@
 <div class="container boxed my-3 py-3">
 
 <div id="es" class="localization-content" hidden="true">
-<h1>Ayuda para Desktop Effects Applier</h1>
+<h1>Ayuda para Aplicador de Efectos de Escritorio</h1>
 
 <div class="card text-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Advertencia</div>
-    <div class="card-body text-warning "><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
+    <div class="card-body text-warning text-font-size-large"><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 <p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
 <div class="card text-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Compatibilidad con Cinnamon</div>
-    <div class="card-body text-success text-font-size-x-large"><span class="badge  badge-success shadow-sm text-monospace">v3.0</span>
-<span class="badge  badge-success shadow-sm text-monospace">v3.2</span>
-<span class="badge  badge-success shadow-sm text-monospace">v3.4</span>
-<span class="badge  badge-success shadow-sm text-monospace">v3.6</span>
-<span class="badge  badge-success shadow-sm text-monospace">v3.8</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.0</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.2</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.4</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.6</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.8</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.0</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.2</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.4</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.6</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.8</span>
-<span class="badge  badge-success shadow-sm text-monospace">v6.0</span>
-</div>
+    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 3.0 hasta la última versión de Cinnamon.</div>
 </div>
 <div class="card text-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Localización de xlets</div>
-    <div class="card-body text-info "><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
+    <div class="card-body text-info text-font-size-large"><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
 
 <p>Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet.</p>
 </div>
@@ -88,13 +72,20 @@
 
 <h2>Características</h2>
 <ul>
-<li>All effects are applied through keyboard shortcuts.</li>
-<li>All effects applied to windows are inherited by their <em>clones</em>. That is, the thumbnails of the windows displayed in <kbd>Alt</kbd> + <kbd>Tab</kbd> window switchers, Expo, etc. See <strong>Known issues and limitations</strong>.</li>
+<li>Todos los efectos se aplican mediante atajos de teclado.</li>
+<li>Todos los efectos aplicados a las ventanas son heredados por sus <em>clones</em>. Es decir, las miniaturas de las ventanas que se muestran en los conmutadores de ventana <kbd>Alt</kbd> + <kbd>Tab</kbd>, Expo, etc. Ver <strong>Problemas conocidos y limitaciones</strong>.</li>
 </ul>
-<h2>Known issues and limitations</h2>
+<h2>Problemas conocidos y limitaciones</h2>
 <ul>
-<li>All effects applied by this extension are transient. Which means that, whenever a window is closed, Cinnamon is restarted or the system is restarted, all effects will be removed/destroyed.</li>
-<li>Thumbnails of windows in the classic application switcher will not inherit the effect of the real windows. This is a limitation of my own; I simply couldn't find the way of doing it.</li>
+<li>Todos los efectos aplicados por esta extensión son transitorios. Lo que significa que, siempre que se cierre una ventana, se reinicie Cinnamon o se reinicie el sistema, todos los efectos se eliminarán/destruirán.</li>
+<li>Las miniaturas de ventanas en el conmutador de aplicaciones clásico no heredarán el efecto de las ventanas reales. Esta es una limitación mía; Simplemente no pude encontrar la manera de hacerlo.</li>
+</ul>
+<h2>Sistema personalizado de configuración de xlet</h2>
+<p>Este xlet utiliza una aplicación personalizada para manejar su configuración. El sistema de configuración nativo de Cinnamon maneja aplicaciones externas para la configuración de xlets de una manera muy limitada. Para evitar estas limitaciones, establecí diferentes mecanismos según el tipo de xlet.</p>
+<ul>
+<li><strong>Applets:</strong> El elemento del menú contextual <strong>Configurar...</strong> está anulado para abrir la aplicación de configuración adecuada.</li>
+<li><strong>Extensiones:</strong> Al habilitar la extensión, se genera automáticamente un acceso directo (un archivo .desktop) para abrir la aplicación de configuración adecuada y se elimina cuando la extensión se deshabilita. El archivo .desktop se crea en <strong>~/.local/share/applications</strong>, por lo que el acceso directo estará disponible en el menú de aplicaciones dentro de la categoría <strong>Preferencias</strong>.</li>
+<li><strong>Para todos los xlets:</strong> Si se abre la ventana de configuración <em>incorrecta</em>, estará disponible un botón para abrir la ventana de configuración <em>correcta</em>.</li>
 </ul>
 
 </br>
@@ -112,32 +103,16 @@ Las siguientes secciones están disponibles sólo en Inglés.
 
 <div class="card text-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Warning</div>
-    <div class="card-body text-warning "><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
+    <div class="card-body text-warning text-font-size-large"><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 <p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
 <div class="card text-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Cinnamon compatibility</div>
-    <div class="card-body text-success text-font-size-x-large"><span class="badge  badge-success shadow-sm text-monospace">v3.0</span>
-<span class="badge  badge-success shadow-sm text-monospace">v3.2</span>
-<span class="badge  badge-success shadow-sm text-monospace">v3.4</span>
-<span class="badge  badge-success shadow-sm text-monospace">v3.6</span>
-<span class="badge  badge-success shadow-sm text-monospace">v3.8</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.0</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.2</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.4</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.6</span>
-<span class="badge  badge-info shadow-sm text-monospace">v4.8</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.0</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.2</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.4</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.6</span>
-<span class="badge  badge-warning shadow-sm text-monospace">v5.8</span>
-<span class="badge  badge-success shadow-sm text-monospace">v6.0</span>
-</div>
+    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 3.0 up to latest Cinnamon version.</div>
 </div>
 <div class="card text-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Xlets localization</div>
-    <div class="card-body text-info "><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
+    <div class="card-body text-info text-font-size-large"><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
 
 <p>If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder.</p>
 </div>
@@ -152,6 +127,13 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <ul>
 <li>All effects applied by this extension are transient. Which means that, whenever a window is closed, Cinnamon is restarted or the system is restarted, all effects will be removed/destroyed.</li>
 <li>Thumbnails of windows in the classic application switcher will not inherit the effect of the real windows. This is a limitation of my own; I simply couldn't find the way of doing it.</li>
+</ul>
+<h2>Custom xlet settings system</h2>
+<p>This xlet uses a custom application to handle its settings. Cinnamon's native settings system handles external applications for xlets settings in a very limited way. To work around these limitations, I put in place different mechanisms depending on the xlet type.</p>
+<ul>
+<li><strong>Applets:</strong> The <strong>Configure...</strong> context menu item is overridden so it opens the proper settings application.</li>
+<li><strong>Extensions:</strong> A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at <strong>~/.local/share/applications</strong>, so it will make the shortcut available in your applications menu inside the <strong>Preferences</strong> category.</li>
+<li><strong>For all xlets types:</strong> If the <em>wrong</em> settings window is opened, a button to open the <em>right</em> settings window will be available.</li>
 </ul>
 
 </br>
@@ -179,6 +161,20 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Desktop Effects Applier changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Tue, 28 Jan 2020 01:24:52 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/89b9ed3">89b9ed3</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>Brought up to date with the rest of xlets.
+
+- Implementation of JavaScript global modules.
+- Removed unused icons.
+- Updated metadata.json files due to changes to their handling.
+- Replaced the use of the cgi.escape method (due to its deprecation) in the settings application for the html.escape method.
+- Fixed non functional keybinding effects when there are more than one of the same type defined. This lead to having effects with the same internal IDs.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Sat, 27 Apr 2019 15:03:02 -0300</li>
@@ -223,7 +219,7 @@ TODO:
     <div class="container-fluid text-left">
         <ul class="list-unstyled">
             <li>
-                <p>Page created with <a href="https://getbootstrap.com"><b>Bootstrap</b></a> v4.3.1.</p>
+                <p>Page created with <a href="https://getbootstrap.com"><b>Bootstrap</b></a>.</p>
             </li>
             <li>
                 <p><a href="https://gitlab.com/Odyseus/flatly_bootstrap_theme"><b>Boostrap theme</b></a> based on <a href="https://bootswatch.com"><b>Bootswatch</b></a>'s <a href="https://bootswatch.com/flatly"><b>Flatly theme</b></a>.</p>
@@ -237,7 +233,7 @@ TODO:
     <!--Copyright-->
     <div class="text-center py-3">
         <div class="container-fluid">
-            © 2016-2019 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
+            © 2016-2020 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
         </div>
     </div>
     <!--/.Copyright-->

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2020-01-18 14:52-0300\n"
+"POT-Creation-Date: 2020-01-28 01:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 utils.js:1179
+#: ../../__app__/python_modules/localized_help_creator.py:311 utils.js:1251
 msgid "Help"
 msgstr ""
 
@@ -106,73 +106,73 @@ msgstr ""
 msgid "Inverted menu on top panel"
 msgstr ""
 
-#: utils.js:1031
+#: utils.js:1103
 msgid "Preferences"
 msgstr ""
 
-#: utils.js:1045
+#: utils.js:1117
 msgid "Move to the other monitor"
 msgstr ""
 
-#: utils.js:1056
+#: utils.js:1128
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr ""
 
-#: utils.js:1067
+#: utils.js:1139
 msgid "Only on this workspace"
 msgstr ""
 
-#: utils.js:1073
+#: utils.js:1145
 msgid "Visible on all workspaces"
 msgstr ""
 
-#: utils.js:1079
+#: utils.js:1151
 msgid "Move to another workspace"
 msgstr ""
 
 #. Close all/others
-#: utils.js:1109
+#: utils.js:1181
 msgid "Close all"
 msgstr ""
 
-#: utils.js:1119
+#: utils.js:1191
 msgid "Close others"
 msgstr ""
 
-#: utils.js:1134
+#: utils.js:1206
 msgid "Restore to full opacity"
 msgstr ""
 
-#: utils.js:1142
+#: utils.js:1214
 msgid "Restore"
 msgstr ""
 
-#: utils.js:1147
+#: utils.js:1219
 msgid "Minimize"
 msgstr ""
 
-#: utils.js:1155
+#: utils.js:1227
 msgid "Unmaximize"
 msgstr ""
 
-#: utils.js:1160
+#: utils.js:1232
 msgid "Maximize"
 msgstr ""
 
-#: utils.js:1167
+#: utils.js:1239
 msgid "Close"
 msgstr ""
 
-#: utils.js:1186
+#: utils.js:1258
 msgid "About..."
 msgstr ""
 
-#: utils.js:1191
+#: utils.js:1265
 msgid "Configure..."
 msgstr ""
 
-#: utils.js:1207
+#: utils.js:1281
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""
@@ -226,11 +226,15 @@ msgid "Show title above thumbnail"
 msgstr ""
 
 #. settings-schema.json->pref_window_preview_scale->units
-msgid "pixels"
+msgid "factor"
 msgstr ""
 
 #. settings-schema.json->pref_window_preview_scale->description
-msgid "Window preview scale factor."
+msgid "Window preview scale factor"
+msgstr ""
+
+#. settings-schema.json->pref_window_preview_scale->tooltip
+msgid "The default size of the windows preview is 200x150 pixels. A scale factor of 2 will produce previews of 400x300 pixels."
 msgstr ""
 
 #. settings-schema.json->pref_hide_tooltips->description
@@ -238,11 +242,7 @@ msgid "Do not display tooltips"
 msgstr ""
 
 #. settings-schema.json->pref_hide_labels->description
-msgid "Hide labels in the window list buttons (*)"
-msgstr ""
-
-#. settings-schema.json->pref_hide_labels->tooltip
-msgid "(*) After changing this settings, Cinnamon needs to be restarted (depends on the Cinnamon version) for the window button icon to have the correct final size."
+msgid "Hide labels in the window list buttons"
 msgstr ""
 
 #. settings-schema.json->pref_invert_menu_items_order->description

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0PanelDrawerForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2020-01-18 14:52-0300\n"
+"POT-Creation-Date: 2020-01-28 01:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,6 +143,10 @@ msgstr ""
 msgid "Selectively show/hide applets from any panel."
 msgstr ""
 
+#. settings-schema.json->general-header->description
+msgid "General"
+msgstr ""
+
 #. settings-schema.json->pref_auto_hide->description
 msgid "Auto-hide"
 msgstr ""
@@ -199,6 +203,33 @@ msgstr ""
 
 #. settings-schema.json->pref_autohide_reshowing->tooltip
 msgid "With this option enabled, applets managed by the drawer and whose visibility is variable (the notifications applet for example), will be automatically hidden after a delay. With this option disabled, such applets will stay visible until the drawer is interacted again."
+msgstr ""
+
+#. settings-schema.json->appearance-header->description
+msgid "Appearance"
+msgstr ""
+
+#. settings-schema.json->pref_horizontal_expand_icon_name->description
+msgid "Horizontal expand icon"
+msgstr ""
+
+#. settings-schema.json->pref_horizontal_expand_icon_name->tooltip
+#. settings-schema.json->pref_horizontal_collapse_icon_name->tooltip
+#. settings-schema.json->pref_vertical_expand_icon_name->tooltip
+#. settings-schema.json->pref_vertical_collapse_icon_name->tooltip
+msgid "Enter either the icon's qualified name or it's full path"
+msgstr ""
+
+#. settings-schema.json->pref_horizontal_collapse_icon_name->description
+msgid "Horizontal collapse icon"
+msgstr ""
+
+#. settings-schema.json->pref_vertical_expand_icon_name->description
+msgid "Vertical expand icon"
+msgstr ""
+
+#. settings-schema.json->pref_vertical_collapse_icon_name->description
+msgid "Vertical collapse icon"
 msgstr ""
 
 #. settings-schema.json->debugging-header->description

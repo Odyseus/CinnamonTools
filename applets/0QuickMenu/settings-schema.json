@@ -27,7 +27,6 @@
         "default": "folder-open",
         "description": "Icon for Applet",
         "dependency": "pref_show_customicon",
-        "indent": true,
         "tooltip": "Set a custom icon for the applet."
     },
     "pref_show_applet_title": {
@@ -41,7 +40,6 @@
         "default": "Quick Menu",
         "description": "Title for Applet",
         "dependency": "pref_show_applet_title",
-        "indent": true,
         "tooltip": "Set a custom title for the applet."
     },
 
@@ -112,7 +110,6 @@
         "max": 512,
         "step": 1,
         "units": "pixels",
-        "indent": true,
         "dependency": "pref_show_submenu_icons",
         "description": "Sub-menus icon size"
     },
@@ -129,7 +126,6 @@
         "max": 512,
         "step": 1,
         "units": "pixels",
-        "indent": true,
         "dependency": "pref_show_applications_icons",
         "description": "Menu items icon size"
     },
@@ -143,7 +139,6 @@
         "type": "entry",
         "default": "0_icons_for_sub_menus.json",
         "description": "Name for the file containing the icons for sub-menus",
-        "indent": true,
         "dependency": "pref_use_different_icons_for_sub_menus",
         "tooltip": "Read this applet help for details about this option usage (Applet context menu > Help item)."
     },
@@ -165,7 +160,6 @@
     },
     "pref_logging_level": {
         "type": "combobox",
-        "indent": true,
         "default": 0,
         "description": "Logging level (*)",
         "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additionally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
@@ -177,14 +171,12 @@
     },
     "pref_debugger_enabled": {
         "type": "checkbox",
-        "indent": true,
         "description": "Enable debugger (*)",
         "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
         "default": false
     },
     "label": {
         "type": "label",
-        "indent": true,
         "description": "(*) Requires Cinnamon restart to enable/disable"
     }
 }

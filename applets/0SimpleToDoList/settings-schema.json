@@ -5,27 +5,23 @@
     },
     "pref_custom_icon_for_applet": {
         "type": "iconfilechooser",
-        "indent": true,
         "default": "",
         "description": "Icon",
         "tooltip": "Select an icon to show in the panel."
     },
     "pref_custom_label_for_applet": {
         "type": "entry",
-        "indent": true,
         "default": "ToDo",
         "description": "Custom label",
         "tooltip": "Enter custom text to show in the panel."
     },
     "pref_overlay_key": {
         "type": "keybinding",
-        "indent": true,
         "default": "",
         "description": "Keyboard shortcut to open and close the menu"
     },
     "pref_show_tasks_counter_on_applet": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Display tasks counter on applet"
     },
@@ -35,21 +31,18 @@
     },
     "pref_use_fail_safe": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Avoid accidental sections/tasks deletions",
         "tooltip": "When enabled, to remove a task or a section of the menu, the Control key needs to be pressed."
     },
     "pref_animate_menu": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Animate menu",
         "tooltip": "Enables/Disables menu open/close animations."
     },
     "pref_keep_one_menu_open": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Keep just one sub menu open",
         "tooltip": "When enabled, the previously opened sub menu will be automatically closed."
@@ -60,7 +53,6 @@
     },
     "pref_section_font_size": {
         "type": "spinbutton",
-        "indent": true,
         "default": 1.25,
         "min": 0.1,
         "max": 10.0,
@@ -70,7 +62,6 @@
     },
     "pref_section_set_min_width": {
         "type": "spinbutton",
-        "indent": true,
         "default": 350,
         "min": 0,
         "max": 1024,
@@ -81,7 +72,6 @@
     },
     "pref_section_set_max_width": {
         "type": "spinbutton",
-        "indent": true,
         "default": 350,
         "min": 0,
         "max": 1024,
@@ -92,27 +82,23 @@
     },
     "pref_section_keep_alphabetic_order": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Keep sections sorted alphabetically",
         "tooltip": "When enabled, the sections will be displayed/created in alphabetic order."
     },
     "pref_section_set_bold": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Set bold"
     },
     "pref_section_remove_native_entry_theming": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Remove native entry theming (only visuals)"
     },
     "pref_section_remove_native_entry_theming_sizing": {
         "type": "checkbox",
         "dependency": "pref_section_remove_native_entry_theming",
-        "indent": true,
         "default": false,
         "description": "Remove native entry theming (also sizing)"
     },
@@ -122,7 +108,6 @@
     },
     "pref_task_font_size": {
         "type": "spinbutton",
-        "indent": true,
         "default": 1,
         "min": 0.1,
         "max": 10.0,
@@ -132,7 +117,6 @@
     },
     "pref_task_set_min_width": {
         "type": "spinbutton",
-        "indent": true,
         "default": 350,
         "min": 0,
         "max": 1024,
@@ -143,7 +127,6 @@
     },
     "pref_task_set_max_width": {
         "type": "spinbutton",
-        "indent": true,
         "default": 350,
         "min": 0,
         "max": 1024,
@@ -154,7 +137,6 @@
     },
     "pref_task_set_custom_spacing": {
         "type": "spinbutton",
-        "indent": true,
         "default": 2,
         "min": 0,
         "max": 20,
@@ -165,20 +147,17 @@
     },
     "pref_task_set_bold": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Set bold"
     },
     "pref_task_remove_native_entry_theming": {
         "type": "checkbox",
-        "indent": true,
         "default": false,
         "description": "Remove native entry theming (only visuals)"
     },
     "pref_task_remove_native_entry_theming_sizing": {
         "type": "checkbox",
         "dependency": "pref_task_remove_native_entry_theming",
-        "indent": true,
         "default": false,
         "description": "Remove native entry theming (also sizing)"
     },
@@ -188,14 +167,12 @@
     },
     "pref_task_completed_character": {
         "type": "entry",
-        "indent": true,
         "default": "✔",
         "description": "Character/s for completed tasks",
         "tooltip": "The character or characters that will represent a completed task on a TODO file."
     },
     "pref_task_notcompleted_character": {
         "type": "entry",
-        "indent": true,
         "default": "☐",
         "description": "Character/s for not completed tasks",
         "tooltip": "The character or characters that will represent a not completed task on a TODO file."
@@ -206,7 +183,6 @@
     },
     "pref_tasks_priorities_colors_enabled": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Enable priority tags colorization",
         "tooltip": "If enabled, this option will colorize a task entry depending on the tags found on its text. Tasks can be \"tagged\" by simply writing \"@tagname\" as part of the task text. For now, there are 5 priority tags available."
@@ -214,7 +190,6 @@
     "pref_tasks_priorities_highlight_entire_row": {
         "type": "checkbox",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": true,
         "description": "Colorize entire menu item",
         "tooltip": "This option is useful, for example, when the Cinnamon theme used styles entries with a non transparent background image. The background color set by a priority tag will not be visible in this case. With this option enabled, the entire menu item of a task will be colorized and not just its entry."
@@ -226,14 +201,12 @@
     "pref_tasks_priorities_critical_background": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(255,0,0,1)",
         "description": "Background color"
     },
     "pref_tasks_priorities_critical_foreground": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(0,0,0,1)",
         "description": "Text color"
     },
@@ -244,14 +217,12 @@
     "pref_tasks_priorities_high_background": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(200,0,0,1)",
         "description": "Background color"
     },
     "pref_tasks_priorities_high_foreground": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(0,0,0,1)",
         "description": "Text color"
     },
@@ -262,14 +233,12 @@
     "pref_tasks_priorities_today_background": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(255,255,0,1)",
         "description": "Background color"
     },
     "pref_tasks_priorities_today_foreground": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(0,0,0,1)",
         "description": "Text color"
     },
@@ -280,14 +249,12 @@
     "pref_tasks_priorities_medium_background": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(232,204,73,1)",
         "description": "Background color"
     },
     "pref_tasks_priorities_medium_foreground": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(0,0,0,1)",
         "description": "Text color"
     },
@@ -298,14 +265,12 @@
     "pref_tasks_priorities_low_background": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(221,160,221,1)",
         "description": "Background color"
     },
     "pref_tasks_priorities_low_foreground": {
         "type": "colorchooser",
         "dependency": "pref_tasks_priorities_colors_enabled",
-        "indent": true,
         "default": "rgba(0,0,0,1)",
         "description": "Text color"
     },
@@ -315,7 +280,6 @@
     },
     "pref_autobackups_enabled": {
         "type": "checkbox",
-        "indent": true,
         "default": false,
         "description": "Enable auto backups",
         "tooltip": "It enables the ability to automatically backup the tasks list."
@@ -323,7 +287,6 @@
     "pref_autobackups_max_files_to_keep": {
         "type": "spinbutton",
         "dependency": "pref_autobackups_enabled",
-        "indent": true,
         "default": 10,
         "min": 10,
         "max": 100,
@@ -338,7 +301,6 @@
     },
     "pref_logging_level": {
         "type": "combobox",
-        "indent": true,
         "default": 0,
         "description": "Logging level (*)",
         "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additionally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
@@ -350,14 +312,12 @@
     },
     "pref_debugger_enabled": {
         "type": "checkbox",
-        "indent": true,
         "description": "Enable debugger (*)",
         "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
         "default": false
     },
     "label": {
         "type": "label",
-        "indent": true,
         "description": "(*) Requires Cinnamon restart to enable/disable"
     },
     "pref_initial_load": {

@@ -146,6 +146,27 @@ class Main(LocalizedHelpCreator):
              _("Just set the terminal executable of your choice on this applet settings window.")),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "2. %s" % _("There is a folder named **icons** inside this applet directory. It contains several symbolic icons (most of them are from the Faenza icon theme) and each icon can be used directly by name (on a custom launcher, for example)."),
+            "",
+            "## %s" % _("Custom xlet settings system"),
+            "",
+            _("This xlet uses a custom application to handle its settings. Cinnamon's native settings system handles external applications for xlets settings in a very limited way. To work around these limitations, I put in place different mechanisms depending on the xlet type."),
+            "",
+            "- **%s:** %s" % (
+                _("Applets"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                _("The **Configure...** context menu item is overridden so it opens the proper settings application.")
+            ),
+            "- **%s:** %s" % (
+                _("Extensions"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                _("A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at **~/.local/share/applications**, so it will make the shortcut available in your applications menu inside the **Preferences** category.")
+            ),
+            "- **%s:** %s" % (
+                _("For all xlets types"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                _("If the *wrong* settings window is opened, a button to open the *right* settings window will be available.")
+            ),
+            ""
         ])
         ))
 

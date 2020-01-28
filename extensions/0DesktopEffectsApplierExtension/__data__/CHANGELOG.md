@@ -4,6 +4,23 @@
 
 ***
 
+- **Date:** Tue, 28 Jan 2020 01:24:52 -0300
+- **Commit:** [89b9ed3](https://gitlab.com/Odyseus/CinnamonTools/commit/89b9ed3)
+- **Author:** Odyseus
+
+```
+Brought up to date with the rest of xlets.
+
+- Implementation of JavaScript global modules.
+- Removed unused icons.
+- Updated metadata.json files due to changes to their handling.
+- Replaced the use of the cgi.escape method (due to its deprecation) in the settings application for the html.escape method.
+- Fixed non functional keybinding effects when there are more than one of the same type defined. This lead to having effects with the same internal IDs.
+
+```
+
+***
+
 - **Date:** Sat, 27 Apr 2019 15:03:02 -0300
 - **Commit:** [93e2b71](https://gitlab.com/Odyseus/CinnamonTools/commit/93e2b71)
 - **Author:** Odyseus

@@ -4,6 +4,20 @@
 
 ***
 
+- **Date:** Mon, 27 Jan 2020 20:27:08 -0300
+- **Commit:** [4a83c5e](https://gitlab.com/Odyseus/CinnamonTools/commit/4a83c5e)
+- **Author:** Odyseus
+
+```
+Countermeasures for using an external settings application
+----------------------------------------------------------
+
+- Removed condition used to selectively generate a .desktop file to open the extension's settings window. Now the .desktop file will be created in all Cinnamon version the extension is installed.
+
+```
+
+***
+
 - **Date:** Fri, 21 Jun 2019 23:06:57 -0300
 - **Commit:** [6b9cf1e](https://gitlab.com/Odyseus/CinnamonTools/commit/6b9cf1e)
 - **Author:** Odyseus

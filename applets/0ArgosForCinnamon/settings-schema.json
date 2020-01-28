@@ -5,48 +5,41 @@
     },
     "pref_custom_icon_for_applet": {
         "type": "iconfilechooser",
-        "indent": true,
         "default": "",
         "description": "Icon",
         "tooltip": "Select an icon to show in the panel."
     },
     "pref_custom_label_for_applet": {
         "type": "entry",
-        "indent": true,
         "default": "",
         "description": "Custom label",
         "tooltip": "Enter custom text to show in the panel."
     },
     "pref_show_script_name": {
         "type": "checkbox",
-        "indent": true,
         "default": false,
         "description": "Show script name on applet",
         "tooltip": "When inside the script there isn't a line assigned to be shown on the applet, the script name will be displayed. With this option disabled, the script name will not be shown on this applet, giving us the possibility to use a custom text for the applet."
     },
     "pref_prevent_applet_lines_ellipsation": {
         "type": "checkbox",
-        "indent": true,
         "default": false,
         "description": "Prevent applet lines ellipsation",
         "tooltip": "When enabled, the text of lines defined in a script to be displayed in the applet will not ellipsize."
     },
     "pref_overlay_key": {
         "type": "keybinding",
-        "indent": true,
         "default": "",
         "description": "Keyboard shortcut to open and close the menu"
     },
     "pref_animate_menu": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Animate menu",
         "tooltip": "Enables/Disables menu open/close animations."
     },
     "pref_keep_one_menu_open": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Keep just one sub menu open",
         "tooltip": "When enabled, the previously opened sub menu will be automatically closed."
@@ -59,19 +52,16 @@
         "type": "filechooser",
         "select-dir": false,
         "default": "",
-        "indent": true,
         "description": "Path to script"
     },
     "pref_update_on_menu_open": {
         "type": "checkbox",
-        "indent": true,
         "default": false,
         "description": "Execute script on menu open",
         "tooltip": "When enabled, the script will be executed immediately when the main menu is opened to refresh its content."
     },
     "pref_update_interval": {
         "type": "spinbutton",
-        "indent": true,
         "default": 0,
         "min": 0,
         "max": 3600,
@@ -82,7 +72,6 @@
     },
     "pref_update_interval_units": {
         "type": "combobox",
-        "indent": true,
         "default": "s",
         "description": "Execution interval time unit",
         "options": {
@@ -95,7 +84,6 @@
     },
     "pref_rotation_interval": {
         "type": "spinbutton",
-        "indent": true,
         "default": 3,
         "min": 0,
         "max": 3600,
@@ -106,7 +94,6 @@
     },
     "pref_rotation_interval_units": {
         "type": "combobox",
-        "indent": true,
         "default": "s",
         "description": "Rotation interval time unit",
         "options": {
@@ -119,7 +106,6 @@
     },
     "pref_cycle_on_menu_open": {
         "type": "checkbox",
-        "indent": true,
         "default": false,
         "description": "Rotate script only when menu is open",
         "tooltip": "When enabled, the script will be executed and its execution repeated at the specified rotation interval only when the main menu is opened."
@@ -130,7 +116,6 @@
     },
     "pref_default_icon_size": {
         "type": "spinbutton",
-        "indent": true,
         "default": 16,
         "min": 16,
         "max": 512,
@@ -141,7 +126,6 @@
     },
     "pref_menu_spacing": {
         "type": "spinbutton",
-        "indent": true,
         "default": 1.00,
         "min": 0.00,
         "max": 10.00,
@@ -152,7 +136,6 @@
     },
     "pref_applet_spacing": {
         "type": "spinbutton",
-        "indent": true,
         "default": 6,
         "min": 0,
         "max": 10,
@@ -163,7 +146,6 @@
     },
     "pref_applet_spacing": {
         "type": "spinbutton",
-        "indent": true,
         "default": 6,
         "min": 0,
         "max": 10,
@@ -178,28 +160,24 @@
     },
     "pref_terminal_emulator": {
         "type": "entry",
-        "indent": true,
         "default": "gnome-terminal",
         "description": "Terminal emulator",
         "tooltip": "Choose the terminal emulator used by this applet. Used when an item has the 'terminal' attribute set to true."
     },
     "pref_terminal_emulator_argument": {
         "type": "entry",
-        "indent": true,
         "default": "-e",
         "description": "Terminal emulator argument",
         "tooltip": "The argument used by a terminal program that allows to execute a command inside the terminal window. In most terminals is '-e'. In terminals that decided to reinvent the wheel, read their manual pages."
     },
     "pref_shell": {
         "type": "entry",
-        "indent": true,
         "default": "/bin/bash",
         "description": "Default shell",
         "tooltip": "Default shell used to execute commands."
     },
     "pref_shell_argument": {
         "type": "entry",
-        "indent": true,
         "default": "-c",
         "description": "Shell argument",
         "tooltip": "The argument used by a shell program that allows to execute a command. In most shells is '-c'."
@@ -210,7 +188,6 @@
     },
     "pref_logging_level": {
         "type": "combobox",
-        "indent": true,
         "default": 0,
         "description": "Logging level (*)",
         "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additionally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
@@ -222,14 +199,12 @@
     },
     "pref_debugger_enabled": {
         "type": "checkbox",
-        "indent": true,
         "description": "Enable debugger (*)",
         "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
         "default": false
     },
     "label": {
         "type": "label",
-        "indent": true,
         "description": "(*) Requires Cinnamon restart to enable/disable"
     },
     "pref_last_selected_directory": {

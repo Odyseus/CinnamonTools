@@ -4,6 +4,19 @@
 
 ***
 
+- **Date:** Mon, 27 Jan 2020 20:22:57 -0300
+- **Commit:** [a189739](https://gitlab.com/Odyseus/CinnamonTools/commit/a189739)
+- **Author:** Odyseus
+
+```
+- Rebased from upstream to take advantage of bug fixes and improvements and to make the applet compatible with all Cinnamon versions in existence.
+- Changed default settings to suit my needs.
+- Removed the need to restart Cinnamon when hiding/showing the buttons labels.
+
+```
+
+***
+
 - **Date:** Fri, 21 Jun 2019 23:06:14 -0300
 - **Commit:** [877291f](https://gitlab.com/Odyseus/CinnamonTools/commit/877291f)
 - **Author:** Odyseus

@@ -4,6 +4,28 @@
 
 ***
 
+- **Date:** Fri, 24 Jan 2020 03:14:23 -0300
+- **Commit:** [926281a](https://gitlab.com/Odyseus/CinnamonTools/commit/926281a)
+- **Author:** Odyseus
+
+```
+- Added options to set custom icons for collapsed/expanded states.
+
+```
+
+***
+
+- **Date:** Tue, 21 Jan 2020 16:54:44 -0300
+- **Commit:** [ac5312c](https://gitlab.com/Odyseus/CinnamonTools/commit/ac5312c)
+- **Author:** Odyseus
+
+```
+- Fixed panel edit mode switch connection.
+
+```
+
+***
+
 - **Date:** Sat, 18 Jan 2020 14:46:13 -0300
 - **Commit:** [09796bf](https://gitlab.com/Odyseus/CinnamonTools/commit/09796bf)
 - **Author:** Odyseus

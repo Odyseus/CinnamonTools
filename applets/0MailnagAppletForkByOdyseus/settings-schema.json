@@ -5,13 +5,11 @@
     },
     "pref_overlay_key": {
         "type": "keybinding",
-        "indent": true,
         "default": "",
         "description": "Keyboard shortcut to open and close the menu"
     },
     "pref_middle_click_behavior": {
         "type": "combobox",
-        "indent": true,
         "default": "do_nothing",
         "description": "Middle click on applet action",
         "tooltip": "What to do when middle clicked on applet icon",
@@ -23,7 +21,6 @@
     },
     "pref_client": {
         "type": "entry",
-        "indent": true,
         "default": "",
         "description": "Mail client to launch (or webpage)",
         "tooltip": "Enter the command to launch your mail client here. You can also enter a web address that starts with 'http'."
@@ -34,14 +31,12 @@
     },
     "pref_launch_client_on_click": {
         "type": "checkbox",
-        "indent": true,
         "default": false,
         "description": "Launch mail client on click",
         "tooltip": "Mail client is launched when clicked on a menu item."
     },
     "pref_keep_one_menu_open": {
         "type": "checkbox",
-        "indent": true,
         "default": true,
         "description": "Keep just one sub menu open",
         "tooltip": "When enabled, the previously opened sub menu will be automatically closed."
@@ -52,7 +47,6 @@
     },
     "pref_notification_mode": {
         "type": "combobox",
-        "indent": true,
         "default": 2,
         "description": "Notification mode",
         "options": {
@@ -65,8 +59,6 @@
     },
     "pref_notification_max_mails": {
         "type": "spinbutton",
-        "indent": true,
-        "indent": true,
         "default": 10,
         "min": 5,
         "max": 50,
@@ -77,7 +69,6 @@
     },
     "pref_notification_sender_max_chars": {
         "type": "spinbutton",
-        "indent": true,
         "default": 20,
         "min": 10,
         "max": 200,
@@ -88,7 +79,6 @@
     },
     "pref_notification_subject_max_chars": {
         "type": "spinbutton",
-        "indent": true,
         "default": 100,
         "min": 10,
         "max": 200,
@@ -99,7 +89,6 @@
     },
     "pref_notification_custom_template": {
         "type": "textview",
-        "indent": true,
         "height": 100,
         "default": "<b>From:</b> {{sender}}\n<b>To:</b> {{account}}\n<b>Subject:</b> {{subject}}\n\n",
         "description": "Custom summary template",
@@ -126,7 +115,6 @@
     },
     "pref_logging_level": {
         "type": "combobox",
-        "indent": true,
         "default": 0,
         "description": "Logging level (*)",
         "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additionally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
@@ -138,7 +126,6 @@
     },
     "pref_debugger_enabled": {
         "type": "checkbox",
-        "indent": true,
         "description": "Enable debugger (*)",
         "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
         "default": false

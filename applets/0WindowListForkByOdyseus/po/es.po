@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-01-13 01:36-0300\n"
-"PO-Revision-Date: 2019-12-22 05:00-0300\n"
+"POT-Creation-Date: 2020-01-27 22:05-0300\n"
+"PO-Revision-Date: 2020-01-27 23:05-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 utils.js:1179
+#: ../../__app__/python_modules/localized_help_creator.py:311 utils.js:1251
 msgid "Help"
 msgstr "Ayuda"
 
@@ -109,73 +109,73 @@ msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 
-#: utils.js:1031
+#: utils.js:1103
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: utils.js:1045
+#: utils.js:1117
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: utils.js:1056
+#: utils.js:1128
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: utils.js:1067
+#: utils.js:1139
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: utils.js:1073
+#: utils.js:1145
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: utils.js:1079
+#: utils.js:1151
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: utils.js:1109
+#: utils.js:1181
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: utils.js:1119
+#: utils.js:1191
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: utils.js:1134
+#: utils.js:1206
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: utils.js:1142
+#: utils.js:1214
 msgid "Restore"
 msgstr "Restaurar"
 
-#: utils.js:1147
+#: utils.js:1219
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: utils.js:1155
+#: utils.js:1227
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: utils.js:1160
+#: utils.js:1232
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: utils.js:1167
+#: utils.js:1239
 msgid "Close"
 msgstr "Cerrar"
 
-#: utils.js:1186
+#: utils.js:1258
 msgid "About..."
 msgstr "Acerca de..."
 
-#: utils.js:1191
+#: utils.js:1265
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: utils.js:1207
+#: utils.js:1281
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
@@ -229,24 +229,24 @@ msgid "Show title above thumbnail"
 msgstr "Mostrar título arriba de la miniatura"
 
 #. settings-schema.json->pref_window_preview_scale->units
-msgid "pixels"
-msgstr "pixeles"
+msgid "factor"
+msgstr "factor"
 
 #. settings-schema.json->pref_window_preview_scale->description
-msgid "Window preview scale factor."
-msgstr "Factor de escala de vista previa de la ventana."
+msgid "Window preview scale factor"
+msgstr "Factor de escala de vista previa de la ventana"
+
+#. settings-schema.json->pref_window_preview_scale->tooltip
+msgid "The default size of the windows preview is 200x150 pixels. A scale factor of 2 will produce previews of 400x300 pixels."
+msgstr "El tamaño predeterminado de la vista previa de ventanas es de 200x150 píxeles. Un factor de escala de 2 producirá vistas previas de 400x300 píxeles."
 
 #. settings-schema.json->pref_hide_tooltips->description
 msgid "Do not display tooltips"
 msgstr "No mostrar caja de herramientas"
 
 #. settings-schema.json->pref_hide_labels->description
-msgid "Hide labels in the window list buttons (*)"
-msgstr "Ocultar etiquetas de los botones de la lista de ventanas (*)"
-
-#. settings-schema.json->pref_hide_labels->tooltip
-msgid "(*) After changing this settings, Cinnamon needs to be restarted (depends on the Cinnamon version) for the window button icon to have the correct final size."
-msgstr "(*) Luego de cambiar esta opción, Cinnamon debe reiniciarse (depende de la versión de Cinnamon) para que el icono del botón de ventana tenga el tamaño final correcto."
+msgid "Hide labels in the window list buttons"
+msgstr "Ocultar etiquetas de los botones de la lista de ventanas"
 
 #. settings-schema.json->pref_invert_menu_items_order->description
 msgid "Invert context menu items order"
@@ -317,6 +317,18 @@ msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+
+#~ msgid "pixels"
+#~ msgstr "pixeles"
+
+#~ msgid "Window preview scale factor."
+#~ msgstr "Factor de escala de vista previa de la ventana."
+
+#~ msgid "Hide labels in the window list buttons (*)"
+#~ msgstr "Ocultar etiquetas de los botones de la lista de ventanas (*)"
+
+#~ msgid "(*) After changing this settings, Cinnamon needs to be restarted (depends on the Cinnamon version) for the window button icon to have the correct final size."
+#~ msgstr "(*) Luego de cambiar esta opción, Cinnamon debe reiniciarse (depende de la versión de Cinnamon) para que el icono del botón de ventana tenga el tamaño final correcto."
 
 #~ msgid ""
 #~ "It enables the ability to log the output of several functions used by the extension.\n"

@@ -253,6 +253,26 @@ class Main(LocalizedHelpCreator):
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Following the [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html), one can create a .desktop file for any application that doesn't appear in the applications list."),
             "",
+            "## %s" % _("Custom xlet settings system"),
+            "",
+            _("This xlet uses a custom application to handle its settings. Cinnamon's native settings system handles external applications for xlets settings in a very limited way. To work around these limitations, I put in place different mechanisms depending on the xlet type."),
+            "",
+            "- **%s:** %s" % (
+                _("Applets"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                _("The **Configure...** context menu item is overridden so it opens the proper settings application.")
+            ),
+            "- **%s:** %s" % (
+                _("Extensions"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                _("A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at **~/.local/share/applications**, so it will make the shortcut available in your applications menu inside the **Preferences** category.")
+            ),
+            "- **%s:** %s" % (
+                _("For all xlets types"),
+                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                _("If the *wrong* settings window is opened, a button to open the *right* settings window will be available.")
+            ),
+            ""
         ])
         ))
 

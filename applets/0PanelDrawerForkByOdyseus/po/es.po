@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0PanelDrawerForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-01-13 01:36-0300\n"
-"PO-Revision-Date: 2020-01-13 01:52-0300\n"
+"POT-Creation-Date: 2020-01-27 22:05-0300\n"
+"PO-Revision-Date: 2020-01-27 23:03-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -147,6 +147,10 @@ msgstr "Cajón de panel (Modificado por Odyseus)"
 msgid "Selectively show/hide applets from any panel."
 msgstr "Mostrar/Ocultar applets de forma selectiva desde cualquier panel."
 
+#. settings-schema.json->general-header->description
+msgid "General"
+msgstr "General"
+
 #. settings-schema.json->pref_auto_hide->description
 msgid "Auto-hide"
 msgstr "Auto-ocultar"
@@ -204,6 +208,33 @@ msgstr "Auto-ocultar applets que han vuelto a ser mostrados"
 #. settings-schema.json->pref_autohide_reshowing->tooltip
 msgid "With this option enabled, applets managed by the drawer and whose visibility is variable (the notifications applet for example), will be automatically hidden after a delay. With this option disabled, such applets will stay visible until the drawer is interacted again."
 msgstr "Con esta opción activada, los applets administrados por el cajón y cuya visibilidad es variable (el applet de notificaciones, por ejemplo), se ocultarán automáticamente después de un retraso. Con esta opción desactivada, dichos applets permanecerán visibles hasta que se vuelva a interactuar con el cajón."
+
+#. settings-schema.json->appearance-header->description
+msgid "Appearance"
+msgstr "Apariencia"
+
+#. settings-schema.json->pref_horizontal_expand_icon_name->description
+msgid "Horizontal expand icon"
+msgstr "Ícono de expansión horizontal"
+
+#. settings-schema.json->pref_horizontal_expand_icon_name->tooltip
+#. settings-schema.json->pref_horizontal_collapse_icon_name->tooltip
+#. settings-schema.json->pref_vertical_expand_icon_name->tooltip
+#. settings-schema.json->pref_vertical_collapse_icon_name->tooltip
+msgid "Enter either the icon's qualified name or it's full path"
+msgstr "Ingresar el nombre calificado del ícono o su ruta completa"
+
+#. settings-schema.json->pref_horizontal_collapse_icon_name->description
+msgid "Horizontal collapse icon"
+msgstr "Ícono de colapsamiento horizontal"
+
+#. settings-schema.json->pref_vertical_expand_icon_name->description
+msgid "Vertical expand icon"
+msgstr "Ícono de expansión vertical"
+
+#. settings-schema.json->pref_vertical_collapse_icon_name->description
+msgid "Vertical collapse icon"
+msgstr "Ícono de colapsamiento vertical"
 
 #. settings-schema.json->debugging-header->description
 msgid "Debugging"

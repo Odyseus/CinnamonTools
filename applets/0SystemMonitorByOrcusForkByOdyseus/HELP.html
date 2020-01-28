@@ -87,6 +87,13 @@
 </li>
 </ul>
 <p><strong>Reiniciar Cinnamon luego de haber instalado los paquetes para que el applet los reconozca.</strong></p>
+<h2>Sistema personalizado de configuración de xlet</h2>
+<p>Este xlet utiliza una aplicación personalizada para manejar su configuración. El sistema de configuración nativo de Cinnamon maneja aplicaciones externas para la configuración de xlets de una manera muy limitada. Para evitar estas limitaciones, establecí diferentes mecanismos según el tipo de xlet.</p>
+<ul>
+<li><strong>Applets:</strong> El elemento del menú contextual <strong>Configurar...</strong> está anulado para abrir la aplicación de configuración adecuada.</li>
+<li><strong>Extensiones:</strong> Al habilitar la extensión, se genera automáticamente un acceso directo (un archivo .desktop) para abrir la aplicación de configuración adecuada y se elimina cuando la extensión se deshabilita. El archivo .desktop se crea en <strong>~/.local/share/applications</strong>, por lo que el acceso directo estará disponible en el menú de aplicaciones dentro de la categoría <strong>Preferencias</strong>.</li>
+<li><strong>Para todos los xlets:</strong> Si se abre la ventana de configuración <em>incorrecta</em>, estará disponible un botón para abrir la ventana de configuración <em>correcta</em>.</li>
+</ul>
 
 
 </br>
@@ -136,6 +143,13 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </li>
 </ul>
 <p><strong>Restart Cinnamon after installing the packages for the applet to recognize them.</strong></p>
+<h2>Custom xlet settings system</h2>
+<p>This xlet uses a custom application to handle its settings. Cinnamon's native settings system handles external applications for xlets settings in a very limited way. To work around these limitations, I put in place different mechanisms depending on the xlet type.</p>
+<ul>
+<li><strong>Applets:</strong> The <strong>Configure...</strong> context menu item is overridden so it opens the proper settings application.</li>
+<li><strong>Extensions:</strong> A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at <strong>~/.local/share/applications</strong>, so it will make the shortcut available in your applications menu inside the <strong>Preferences</strong> category.</li>
+<li><strong>For all xlets types:</strong> If the <em>wrong</em> settings window is opened, a button to open the <em>right</em> settings window will be available.</li>
+</ul>
 
 
 </br>
@@ -162,6 +176,19 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>System Monitor (Fork By Odyseus) changelog</h2>
 <h4>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a></h4>
+<hr>
+<ul>
+<li><strong>Date:</strong> Mon, 27 Jan 2020 02:42:00 -0300</li>
+<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/6d81829">6d81829</a></li>
+<li><strong>Author:</strong> Odyseus</li>
+</ul>
+<pre><code>Countermeasures for using an external settings application
+----------------------------------------------------------
+
+- Removed condition used to selectively override the applet's Configure context menu item depending on Cinnamon version used. This condition caused to not open the settings window on newer Cinnamon versions.
+- Added button to the settings-schema.json file so the *real* settings window can be opened from Cinnamon's native settings window. Trying to open the correct xlet settings from the xlets manager isn't possible, so I added this button.
+- Removed `external-configuration-app` key from the metadata.json file so the built-in mechanism to open xlet settings doesn't fail silently without displaying error messages.
+</code></pre>
 <hr>
 <ul>
 <li><strong>Date:</strong> Fri, 21 Jun 2019 23:05:27 -0300</li>

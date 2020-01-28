@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Tue, 21 Jan 2020 16:54:29 -0300
+- **Commit:** [9957231](https://gitlab.com/Odyseus/CinnamonTools/commit/9957231)
+- **Author:** Odyseus
+
+```
+- Limited compatibility up to Cinnamon 4.0.x.
+
+```
+
+***
+
 - **Date:** Sat, 18 Jan 2020 08:58:00 -0300
 - **Commit:** [994c314](https://gitlab.com/Odyseus/CinnamonTools/commit/994c314)
 - **Author:** Odyseus

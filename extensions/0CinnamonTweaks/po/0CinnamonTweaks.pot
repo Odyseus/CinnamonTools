@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks VERSION\n"
-"POT-Creation-Date: 2020-01-18 14:52-0300\n"
+"POT-Creation-Date: 2020-01-28 01:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,173 +15,173 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:129
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:216
 msgid "Information related to this specific section"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:419
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:790
 msgid "Choose an Icon"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:422 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:783 ../../__app__/data/python_modules/xlets_settings/__init__.py:970 ../../__app__/data/python_modules/xlets_settings/__init__.py:1002
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:793 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1066 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1170 ../../__app__/data/python_modules/xlets_settings/__init__.py:980 ../../__app__/data/python_modules/xlets_settings/__init__.py:1012
 msgid "_Cancel"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:423
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:794
 msgid "_Open"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:426
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:797
 msgid "Image files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:643
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1276
 msgid "Clear path"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:329
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:525
 msgid "No app chosen"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:421
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:647
 msgid "Add new item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:429
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:655
 msgid "Remove selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:441
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:667
 msgid "Edit selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:451
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:677
 msgid "Move selected item up"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:459
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:685
 msgid "Move selected item down"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:473
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
 msgid "Export data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:486
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:712
 msgid "Import data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:494
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
 msgid "Apply changes"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:610
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:917
 msgid "Item removal"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:613
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:920
 msgid "Are you sure that you want to remove this item?"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:614
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:921
 msgid "Note"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:615
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:922
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1064
 msgid "Choose how to add the imported data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1067
 msgid "_Overwrite"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:700
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1068
 msgid "_Append"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:718
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1086
 msgid "Overwrite"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:719
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1087
 msgid "replace the current data with the imported data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1088
 msgid "Append"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:721
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1089
 msgid "add the imported data to the current data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:775
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1162
 msgid "Add new entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:777
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1164
 msgid "Edit entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:784 ../../__app__/data/python_modules/xlets_settings/__init__.py:971 ../../__app__/data/python_modules/xlets_settings/__init__.py:1003
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1171 ../../__app__/data/python_modules/xlets_settings/__init__.py:981 ../../__app__/data/python_modules/xlets_settings/__init__.py:1013
 msgid "_Save"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:541
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:546
 msgid "Previous instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:548
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:553
 msgid "Next instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:588
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:593
 msgid "Import settings from a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:592
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:597
 msgid "Export settings to a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:596
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:601
 msgid "Reset settings to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:606 ../../__app__/python_modules/localized_help_creator.py:311 utils.js:80
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:611 ../../__app__/python_modules/localized_help_creator.py:311 utils.js:80
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:627
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:632
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:680 extension.js:1112
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:690 extension.js:1111
 #, python-format, javascript-format
 msgid "Settings for %s"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:967
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:977
 msgid "Select or enter file to export to"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:976 ../../__app__/data/python_modules/xlets_settings/__init__.py:1007
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:986 ../../__app__/data/python_modules/xlets_settings/__init__.py:1017
 msgid "JSON files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:999
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1009
 msgid "Select a JSON file to import"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1031
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1041
 msgid "Trying to reset all settings!!!"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1033
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1043
 msgid "Reset all settings to their default values?"
 msgstr ""
 
@@ -1108,6 +1108,41 @@ msgstr ""
 msgid "Following the [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html), one can create a .desktop file for any application that doesn't appear in the applications list."
 msgstr ""
 
+#: z_create_localized_help.py:256
+msgid "Custom xlet settings system"
+msgstr ""
+
+#: z_create_localized_help.py:258
+msgid "This xlet uses a custom application to handle its settings. Cinnamon's native settings system handles external applications for xlets settings in a very limited way. To work around these limitations, I put in place different mechanisms depending on the xlet type."
+msgstr ""
+
+#: z_create_localized_help.py:261
+msgid "Applets"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:263
+msgid "The **Configure...** context menu item is overridden so it opens the proper settings application."
+msgstr ""
+
+#: z_create_localized_help.py:266
+msgid "Extensions"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:268
+msgid "A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at **~/.local/share/applications**, so it will make the shortcut available in your applications menu inside the **Preferences** category."
+msgstr ""
+
+#: z_create_localized_help.py:271
+msgid "For all xlets types"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: z_create_localized_help.py:273
+msgid "If the *wrong* settings window is opened, a button to open the *right* settings window will be available."
+msgstr ""
+
 #: extension.js:111
 msgid "Applet removal"
 msgstr ""
@@ -1149,15 +1184,15 @@ msgstr ""
 msgid "This message will not be displayed again."
 msgstr ""
 
-#: extension.js:1118
+#: extension.js:1117
 msgid "A shortcut to open this extension settings has been generated."
 msgstr ""
 
-#: extension.js:1119
+#: extension.js:1118
 msgid "Search for it on your applications menu."
 msgstr ""
 
-#: extension.js:1120
+#: extension.js:1119
 msgid "Read this extension help page for more details."
 msgstr ""
 
@@ -1206,19 +1241,7 @@ msgid "Several tweaks for Cinnamon."
 msgstr ""
 
 #. settings-schema.json->info_label_1->description
-msgid "If you are seeing this window, you are using a Cinnamon version with a design flaw."
-msgstr ""
-
-#. settings-schema.json->info_label_2->description
-msgid "This window isn't this extension's \"real\" configuration window."
-msgstr ""
-
-#. settings-schema.json->info_label_3->description
-msgid "If on Cinnamon 3.0.x, the button below will not work."
-msgstr ""
-
-#. settings-schema.json->info_label_4->description
-msgid "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
+msgid "This window isn't this xlet's \"real\" configuration window."
 msgstr ""
 
 #. settings-schema.json->settings_button->description
