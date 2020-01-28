@@ -2020,14 +2020,18 @@ def generate_docs(generate_api_docs=False,
         # b*tch and throws a million warnings for no reason.
         # Ignore it until Sphinx gets its sh*t together.
         os.path.join("__app__", "python_modules", "python_utils", "tqdm_wget.py"),
-        # Ignore the python_utils folder from all apps.
+        # Ignore until I finish them.
+        os.path.join("__app__", "data", "python_modules", "xlets_settings", "GSettingsWidgets.py"),
+        os.path.join("__app__", "data", "python_modules", "xlets_settings", "z_MultiOptionsWidgets.py")
     ]
 
     base_apidoc_dest_path_rel_to_root = os.path.join("__app__", "cinnamon_tools_docs", "modules")
 
     apidoc_paths_rel_to_root = [
         (os.path.join("__app__", "python_modules"),
-            os.path.join(base_apidoc_dest_path_rel_to_root, "python_modules"))
+            os.path.join(base_apidoc_dest_path_rel_to_root, "python_modules")),
+        (os.path.join("__app__", "data", "python_modules", "xlets_settings"),
+            os.path.join(base_apidoc_dest_path_rel_to_root, "xlets_settings"))
     ]
 
     sphinx_docs_utils.generate_docs(root_folder=root_folder,
