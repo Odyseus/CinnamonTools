@@ -1,23 +1,21 @@
-let $,
-    EffectsApplier,
-    EffectsStoragePropName;
+let desktopEffects = null;
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    $ = require("./utils.js");
-    EffectsApplier = require("./effectsApplier.js");
-} else {
-    $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
-    EffectsApplier = imports.ui.extensionSystem.extensions["{{UUID}}"].effectsApplier;
-}
-
-EffectsStoragePropName = EffectsApplier.DESKTOP_EFFECTS_PROP_NAME;
-
-const _ = $._;
+let XletMeta,
+    _,
+    $,
+    G,
+    D,
+    C,
+    CustomFileUtils,
+    Settings,
+    DesktopNotificationsUtils,
+    EffectsApplier;
 
 const {
     gi: {
-        Clutter
+        Clutter,
+        Gio,
+        GLib
     },
     mainloop: Mainloop,
     misc: {
@@ -25,14 +23,9 @@ const {
         util: Util
     },
     ui: {
-        main: Main,
-        messageTray: MessageTray,
-        settings: Settings
+        main: Main
     }
 } = imports;
-
-let xletMeta = null;
-let desktopEffects = null;
 
 function DesktopEffectsApplier() {
     this._init.apply(this, arguments);
@@ -44,190 +37,31 @@ DesktopEffectsApplier.prototype = {
         "color",
         "desaturation",
         "contrast",
-        "brightness",
+        "brightness"
     ],
 
+    injectionsStorage: {
+        workspace: null,
+        appSwitcher3D: null,
+        expoThumbnail: null,
+        timelineSwitcher: null
+    },
+
     _init: function() {
-        this._initializeSettings(() => {
-            this.workspaceInjection = null;
-            this.appSwitcher3DInjection = null;
-            this.expoThumbnailInjection = null;
-            this.timelineSwitcherInjection = null;
-            this._allEffects = {};
-            this._allEffectsIDs = [];
-            this.registeredEffectKeybindings = [];
-            this.registeredGlobalKeybindings = [];
-            this._notificationSource = null;
-            this.desktopNotification = null;
-            this._notificationParams = {
-                titleMarkup: true,
-                bannerMarkup: true,
-                bodyMarkup: true,
-                clear: true
-            };
+        this._settingsDesktopFileName = "org.Cinnamon.Extensions.DesktopEffectsApplier.Settings";
+        this._settingsDesktopFilePath = GLib.get_home_dir() +
+            "/.local/share/applications/%s.desktop".format(this._settingsDesktopFileName);
+        this._allEffects = {};
+        this._allEffectsIDs = [];
+        this.registeredEffectKeybindings = [];
+        this.registeredGlobalKeybindings = [];
 
-            if (!this.pref_usage_notified) {
-                this._notifyMessage(
-                    _("Read this extension help page for usage instructions."),
-                    $.NotificationsUrgency.CRITICAL
-                );
-                this.pref_usage_notified = true;
-            }
-        }, () => {
-            /* NOTE: Do not use Mainloop.idle_add calls.
-             * Reason: I'm planning to create an applet that will interact
-             * with this extension. So, the extension needs to be ready before
-             * the applet is initialized.
-             */
-        });
-    },
-
-    _initializeSettings: function(aDirectCallback, aIdleCallback) {
-        this.settings = new Settings.ExtensionSettings(
-            this,
-            xletMeta.uuid,
-            /* NOTE: Do not use asynchronous settings initialization.
-             * Reason: I'm planning to create an applet that will interact
-             * with this extension. So, the extension needs to be ready before
-             * the applet is initialized.
-             */
-            false // Asynchronous settings initialization.
-        );
-
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
-
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
-        }
-    },
-
-    _bindSettings: function() {
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        let bD = {
-            IN: 1,
-            OUT: 2,
-            BIDIRECTIONAL: 3
-        };
-        let prefKeysArray = [
-            "pref_extra_shaders_path",
-            "pref_global_keybindings",
-            "pref_shader_list",
-            "pref_color_list",
-            "pref_desaturation_list",
-            "pref_contrast_list",
-            "pref_brightness_list",
-            "pref_usage_notified",
-            "trigger_shader_list_changed",
-            "trigger_color_list_changed",
-            "trigger_desaturation_list_changed",
-            "trigger_contrast_list_changed",
-            "trigger_brightness_list_changed",
-            "trigger_global_keybindings_changed",
-            "trigger_settings_shortcut_creation_desktop",
-            "trigger_settings_shortcut_creation_xdg",
-        ];
-        let newBinding = typeof this.settings.bind === "function";
-        for (let pref_key of prefKeysArray) {
-            // Condition needed for retro-compatibility.
-            // Mark for deletion on EOL. Cinnamon 3.2.x+
-            // Abandon this.settings.bindProperty and keep this.settings.bind.
-            if (newBinding) {
-                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
-            } else {
-                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
-            }
-        }
-    },
-
-    _ensureNotificationSource: function() {
-        if (!this._notificationSource) {
-            this._notificationSource = new $.DesktopEffectsApplierMessageTraySource();
-            this._notificationSource.connect("destroy", () => {
-                this._notificationSource = null;
-            });
-
-            if (Main.messageTray) {
-                Main.messageTray.add(this._notificationSource);
-            }
-        }
-    },
-
-    _notifyMessage: function(aMessage, aUrgency = $.NotificationsUrgency.NORMAL, aButtons = []) {
-        this._ensureNotificationSource();
-
-        let body = "";
-
-        body += aMessage + "\n";
-
-        body = body.trim();
-
-        if (this._notificationSource && !this.desktopNotification) {
-            this.desktopNotification = new MessageTray.Notification(
-                this._notificationSource,
-                " ",
-                " ",
-                this._notificationParams
+        if (!Settings.pref_usage_notified) {
+            $.Notification.notify(
+                G.escapeHTML(_("Read this extension help page for usage instructions.")),
+                DesktopNotificationsUtils.NotificationUrgency.CRITICAL
             );
-            this.desktopNotification.setUrgency(aUrgency);
-            this.desktopNotification.setTransient(false);
-            this.desktopNotification.setResident(true);
-            this.desktopNotification.connect("destroy", () => {
-                this.desktopNotification = null;
-            });
-            this.desktopNotification.connect("action-invoked", (aSource, aAction) => {
-                switch (aAction) {
-                    case "dialog-information":
-                        this.openHelpPage();
-                        break;
-                }
-            });
-
-            this.desktopNotification.addButton("dialog-information", _("Help"));
-        }
-
-        if (body) {
-            this.desktopNotification.update(
-                $.escapeHTML(_(xletMeta.name)),
-                body,
-                this._desktopNotificationParams
-            );
-
-            /* FIXME: Buttons should be removed before adding more.
-             * It should remove all buttons, if any, and leave the default ones
-             * (like the "Help" button).
-             */
-            for (let i = aButtons.length - 1; i >= 0; i--) {
-                this.desktopNotification.addButton(aButtons[i].action, aButtons[i].label);
-            }
-
-            this._notificationSource.notify(this.desktopNotification);
-        } else {
-            this.desktopNotification && this.desktopNotification.destroy();
+            Settings.pref_usage_notified = true;
         }
     },
 
@@ -239,19 +73,23 @@ DesktopEffectsApplier.prototype = {
         return this._allEffectsIDs;
     },
 
-    set fxIDs(aVal) {
-        delete this._allEffectsIDs;
-        this._allEffectsIDs = aVal;
-    },
-
     _updateEffectsMap: function() {
+        delete this._allEffectsIDs;
+        this._allEffectsIDs = [];
+
         delete this._allEffects;
         this._allEffects = {};
 
         let t = this.effectTypes.length;
         while (t--) {
+            // NOTE: This is to avoid generating effects with duplicated IDs. Since it would be to
+            // complex to check duplicated effects on the settings framework side, I imply force
+            // unique IDs here.
+            let idSuffix = 1;
             let effectType = this.effectTypes[t];
-            let effectsList = JSON.parse(JSON.stringify(this["pref_" + effectType + "_list"]));
+            // Mark for deletion on EOL. Cinnamon 3.6.x+
+            // Replace JSON trick with Object.assign().
+            let effectsList = JSON.parse(JSON.stringify(Settings["pref_" + effectType + "_list"]));
             let i = effectsList.length;
             while (i--) {
                 let e = effectsList[i];
@@ -263,24 +101,26 @@ DesktopEffectsApplier.prototype = {
                         /* NOTE: The String() call is because an effect of type desaturation
                          * returns a float, not a string.
                          */
-                        e["id"] = effectType + String(e["base_name"]).replace($.PROP_NAME_CLEANER_RE, "_");
+                        e["id"] = effectType +
+                            String(e["base_name"]).replace(C.PROP_NAME_CLEANER_RE, "_") +
+                            "_" + idSuffix;
                         break;
                     case "contrast":
                     case "brightness":
-                        e["id"] = (effectType + e["red"] + e["green"] + e["blue"]).replace($.PROP_NAME_CLEANER_RE, "_");
+                        e["id"] = (effectType +
+                                e["red"] + e["green"] + e["blue"]).replace(C.PROP_NAME_CLEANER_RE, "_") +
+                            "_" + idSuffix;
                         break;
                 }
 
                 e["type"] = effectType;
-                e["extra_shaders_path"] = this.pref_extra_shaders_path;
-                this._allEffects[e.id] = Params.parse(e, $.EFFECT_DEFAULT_PARAMS, true);
+                e["extra_shaders_path"] = Settings.pref_extra_shaders_path;
+                this._allEffects[e.id] = Params.parse(e, C.EFFECT_DEFAULT_PARAMS, true);
+                this._allEffectsIDs.push(e.id);
+
+                idSuffix += 1;
             }
         }
-
-        /* NOTE: Objects suck!!! Since I'm constantly iterating through the effects,
-         * store all of their IDs in an array for infinitely faster iterations.
-         */
-        this.fxIDs = Object.keys(this._allEffects);
     },
 
     _iterateAllWindows: function(aEffectObj, aAction) {
@@ -311,7 +151,7 @@ DesktopEffectsApplier.prototype = {
 
         allWindows = allWindows.filter((aWin) => {
             let win = isListOfActors ? aWin.metaWindow : aWin;
-            let isAllowed = win.get_window_type() in $.ALLOWED_WIN_TYPES;
+            let isAllowed = win.get_window_type() in C.ALLOWED_WIN_TYPES;
 
             if (onlyNonMinimized && win.minimized) {
                 isAllowed = false;
@@ -353,7 +193,7 @@ DesktopEffectsApplier.prototype = {
         this._removeKeybindings("Effect");
 
         let registerKb = (aEffect, aAction, aKb) => {
-            let kbName = xletMeta.uuid + aEffect.id + aAction;
+            let kbName = XletMeta.uuid + aEffect.id + aAction;
             Main.keybindingManager.addHotKey(
                 kbName,
                 aKb,
@@ -384,7 +224,7 @@ DesktopEffectsApplier.prototype = {
         this._removeKeybindings("Global");
 
         let registerKb = (aAction, aKb) => {
-            let kbName = xletMeta.uuid + "Global" + aAction;
+            let kbName = XletMeta.uuid + "Global" + aAction;
             Main.keybindingManager.addHotKey(
                 kbName,
                 aKb,
@@ -394,7 +234,9 @@ DesktopEffectsApplier.prototype = {
             this.registeredGlobalKeybindings.push(kbName);
         };
 
-        let globalKbs = JSON.parse(JSON.stringify(this.pref_global_keybindings));
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Replace JSON trick with Object.assign().
+        let globalKbs = JSON.parse(JSON.stringify(Settings.pref_global_keybindings));
         let i = globalKbs.length;
         while (i--) {
             /* NOTE: Do not allow to register a keybinding without an action
@@ -459,202 +301,205 @@ DesktopEffectsApplier.prototype = {
                 this.clearAllScreenEffects();
                 break;
             case "open_extension_settings":
-                this.openExtensionSettings();
+                this.openXletSettings();
                 break;
         }
     },
 
-    enable: function() {
-        this._updateEffectsMap();
-        this._registerEffectKeybindings();
-        this._registerGlobalKeybindings();
+    _applyCinnamonInjections: function() {
+        let extScope = this;
 
-        let self = this;
-
-        // Injections.
         /* NOTE: This injection affects Scale mode (all windows displayed in "exposé").
          */
-        if (!this.workspaceInjection) {
-            this.workspaceInjection = $.injectAfter(
-                imports.ui.workspace.WindowClone.prototype,
-                "_init",
-                function(realWindow, myContainer) { // jshint ignore:line
-                    for (let i = self.fxIDs.length - 1; i >= 0; i--) {
-                        let id = self.fxIDs[i];
+        C.Injections.workspace._init = G.injectMethodAfter(
+            imports.ui.workspace.WindowClone.prototype,
+            "_init",
+            function(realWindow, myContainer) { // jshint ignore:line
+                try {
+                    for (let i = extScope.fxIDs.length - 1; i >= 0; i--) {
+                        let id = extScope.fxIDs[i];
                         if (this.realWindow.get_effect(id) &&
-                            self.actorHasEffectStored(this.realWindow, id)) {
+                            extScope.actorHasEffectStored(this.realWindow, id)) {
                             this.actor.add_effect_with_name(
                                 id,
-                                this.realWindow[EffectsStoragePropName][id].getNewEffect(this.actor)
+                                this.realWindow[C.EFFECTS_PROP_NAME][id].getNewEffect(this.actor)
                             );
                         } else {
                             this.actor.remove_effect_by_name(id);
                         }
                     }
+                } catch (aErr) {
+                    global.logError(aErr);
                 }
-            );
-        }
+            }
+        );
 
         /* NOTE: This injection affects Coverflow (3D).
          */
-        if (!this.appSwitcher3DInjection) {
-            this.appSwitcher3DInjection = $.injectAfter(
-                imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
-                "_adaptClones",
-                function() {
+        C.Injections.appSwitcher3D._adaptClones = G.injectMethodAfter(
+            imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
+            "_adaptClones",
+            function() {
+                try {
                     let i = this._previews.length;
                     while (i--) {
-                        let e = self.fxIDs.length;
+                        let e = extScope.fxIDs.length;
                         while (e--) {
-                            let id = self.fxIDs[e];
+                            let id = extScope.fxIDs[e];
                             let preview = this._previews[i];
                             let winActor = preview.metaWindow.get_compositor_private();
 
                             if (winActor.get_effect(id) &&
-                                self.actorHasEffectStored(winActor, id)) {
+                                extScope.actorHasEffectStored(winActor, id)) {
                                 preview.add_effect_with_name(
                                     id,
-                                    winActor[EffectsStoragePropName][id].getNewEffect(preview)
+                                    winActor[C.EFFECTS_PROP_NAME][id].getNewEffect(preview)
                                 );
                             } else {
                                 preview.remove_effect_by_name(id);
                             }
                         }
                     }
+                } catch (aErr) {
+                    global.logError(aErr);
                 }
-            );
-        }
+            }
+        );
 
         /* NOTE: This injection affects Expo mode (the preview of all workspaces).
          */
-        if (!this.expoThumbnailInjection) {
-            this.expoThumbnailInjection = $.injectAfter(
-                imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
-                "syncStacking",
-                function() {
+        C.Injections.expoThumbnail.syncStacking = G.injectMethodAfter(
+            imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
+            "syncStacking",
+            function() {
+                try {
                     let i = this.windows.length;
                     while (i--) {
-                        let e = self.fxIDs.length;
+                        let e = extScope.fxIDs.length;
                         while (e--) {
-                            let id = self.fxIDs[e];
+                            let id = extScope.fxIDs[e];
                             let clone = this.windows[i];
                             let winActor = clone.metaWindow.get_compositor_private();
 
                             if (winActor.get_effect(id) &&
-                                self.actorHasEffectStored(winActor, id)) {
+                                extScope.actorHasEffectStored(winActor, id)) {
                                 clone.actor.add_effect_with_name(
                                     id,
-                                    winActor[EffectsStoragePropName][id].getNewEffect(clone.actor)
+                                    winActor[C.EFFECTS_PROP_NAME][id].getNewEffect(clone.actor)
                                 );
                             } else {
                                 clone.actor.remove_effect_by_name(id);
                             }
                         }
                     }
+                } catch (aErr) {
+                    global.logError(aErr);
                 }
-            );
-        }
+            }
+        );
 
         /* NOTE: This injection affects Timeline (3D).
          */
-        if (!this.timelineSwitcherInjection) {
-            this.timelineSwitcherInjection = $.injectAfter(
-                imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
-                "_adaptClones",
-                function() {
+        C.Injections.timelineSwitcher._adaptClones = G.injectMethodAfter(
+            imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
+            "_adaptClones",
+            function() {
+                try {
                     let i = this._previews.length;
                     while (i--) {
-                        let e = self.fxIDs.length;
+                        let e = extScope.fxIDs.length;
                         while (e--) {
-                            let id = self.fxIDs[e];
+                            let id = extScope.fxIDs[e];
                             let clone = this._previews[i];
                             let winActor = clone.metaWindow.get_compositor_private();
 
                             if (winActor.get_effect(id) &&
-                                self.actorHasEffectStored(winActor, id)) {
+                                extScope.actorHasEffectStored(winActor, id)) {
                                 clone.add_effect_with_name(
                                     id,
-                                    winActor[EffectsStoragePropName][id].getNewEffect(clone)
+                                    winActor[C.EFFECTS_PROP_NAME][id].getNewEffect(clone)
                                 );
                             } else {
                                 clone.remove_effect_by_name(id);
                             }
                         }
                     }
+                } catch (aErr) {
+                    global.logError(aErr);
                 }
-            );
-        }
+            }
+        );
+    },
 
+    _removeCinnamonInjections: function() {
+        G.removeInjection(
+            imports.ui.workspace.WindowClone.prototype,
+            C.Injections.workspace,
+            "_init"
+        );
+        G.removeInjection(
+            imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
+            C.Injections.appSwitcher3D,
+            "_adaptClones"
+        );
+        G.removeInjection(
+            imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
+            C.Injections.expoThumbnail,
+            "syncStacking"
+        );
+        G.removeInjection(
+            imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
+            C.Injections.timelineSwitcher,
+            "_adaptClones"
+        );
+    },
+
+    enable: function() {
+        this._updateEffectsMap();
+        this._registerEffectKeybindings();
+        this._registerGlobalKeybindings();
+        Settings.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
+
+        this._connectSignals();
+        this._generateSettingsDesktopFile();
+    },
+
+    disable: function() {
+        /* NOTE: Set pref_desktop_file_generated to false so it forces the re-generation
+         * of the desktop file the next time the extension is enabled.
+         */
+        Settings.pref_desktop_file_generated = false;
+
+        this._removeSettingsDesktopFile();
+        this._removeKeybindings("Effect");
+        this._removeKeybindings("Global");
+        this._removeCinnamonInjections();
+        this.clearAllWindowsEffects();
+        this.clearAllScreenEffects();
+        Settings.destroy();
+    },
+
+    reApplyAllWindowsEffects: function() {
         /* NOTE: Here are re-applied all effects to all opened windows.
          * This only works after disabling and re-enabling the extension or
          * after applying the changes made to the effects lists.
          */
-        try {
-            let allWinActors = global.get_window_actors();
-            let w = allWinActors.length;
-            while (w--) {
-                let e = this.fxIDs.length;
-                while (e--) {
-                    let id = this.fxIDs[e];
+        let allWinActors = global.get_window_actors();
+        let w = allWinActors.length;
+        while (w--) {
+            let e = this.fxIDs.length;
+            while (e--) {
+                let id = this.fxIDs[e];
 
-                    if (self.actorHasEffectStored(allWinActors[w], id)) {
-                        allWinActors[w].add_effect_with_name(
-                            id,
-                            allWinActors[w][EffectsStoragePropName][id].getNewEffect(allWinActors[w])
-                        );
-                    } else {
-                        allWinActors[w].remove_effect_by_name(id);
-                    }
+                if (this.actorHasEffectStored(allWinActors[w], id)) {
+                    allWinActors[w].add_effect_with_name(
+                        id,
+                        allWinActors[w][C.EFFECTS_PROP_NAME][id].getNewEffect(allWinActors[w])
+                    );
+                } else {
+                    allWinActors[w].remove_effect_by_name(id);
                 }
             }
-        } catch (aErr) {
-            global.logError(aErr);
-        }
-    },
-
-    disable: function(aPartial) {
-        // Keybindings unregistration.
-        this._removeKeybindings("Effect");
-        this._removeKeybindings("Global");
-
-        if (aPartial) {
-            // Clear all effects "softly".
-            this.softlyClearAllEffects();
-        } else {
-            // Clear all effects "hardly".
-            this.clearAllWindowsEffects();
-            this.clearAllScreenEffects();
-        }
-
-        if (!aPartial) {
-            // Remove injections.
-            $.removeInjection(
-                imports.ui.workspace.WindowClone.prototype,
-                "_init",
-                this.workspaceInjection
-            );
-            this.workspaceInjection = null;
-
-            $.removeInjection(
-                imports.ui.appSwitcher.appSwitcher3D.AppSwitcher3D.prototype,
-                "_adaptClones",
-                this.appSwitcher3DInjection
-            );
-            this.appSwitcher3DInjection = null;
-
-            $.removeInjection(
-                imports.ui.expoThumbnail.ExpoWorkspaceThumbnail.prototype,
-                "syncStacking",
-                this.expoThumbnailInjection
-            );
-            this.expoThumbnailInjection = null;
-
-            $.removeInjection(
-                imports.ui.appSwitcher.timelineSwitcher.TimelineSwitcher.prototype,
-                "_adaptClones",
-                this.timelineSwitcherInjection
-            );
-            this.timelineSwitcherInjection = null;
         }
     },
 
@@ -676,53 +521,94 @@ DesktopEffectsApplier.prototype = {
     },
 
     actorHasEffectStored: function(aActor, aEffectId) {
-        return aActor.hasOwnProperty(EffectsStoragePropName) &&
-            aActor[EffectsStoragePropName].hasOwnProperty(aEffectId);
+        return aActor.hasOwnProperty(C.EFFECTS_PROP_NAME) &&
+            aActor[C.EFFECTS_PROP_NAME].hasOwnProperty(aEffectId);
     },
 
     clearAllWindowsEffects: function() {
         let allWinActors = global.get_window_actors();
         let i = allWinActors.length;
         while (i--) {
-            if (allWinActors[i].hasOwnProperty(EffectsStoragePropName)) {
-                allWinActors[i][EffectsStoragePropName].removeAllEffects();
-                allWinActors[i][EffectsStoragePropName] = null;
-                delete allWinActors[i][EffectsStoragePropName];
+            if (allWinActors[i].hasOwnProperty(C.EFFECTS_PROP_NAME)) {
+                allWinActors[i][C.EFFECTS_PROP_NAME].removeAllEffects();
+                allWinActors[i][C.EFFECTS_PROP_NAME] = null;
+                delete allWinActors[i][C.EFFECTS_PROP_NAME];
             }
         }
     },
 
     clearAllScreenEffects: function() {
-        if (Main.uiGroup.hasOwnProperty(EffectsStoragePropName)) {
-            Main.uiGroup[EffectsStoragePropName].removeAllEffects();
-            Main.uiGroup[EffectsStoragePropName] = null;
-            delete Main.uiGroup[EffectsStoragePropName];
+        if (Main.uiGroup.hasOwnProperty(C.EFFECTS_PROP_NAME)) {
+            Main.uiGroup[C.EFFECTS_PROP_NAME].removeAllEffects();
+            Main.uiGroup[C.EFFECTS_PROP_NAME] = null;
+            delete Main.uiGroup[C.EFFECTS_PROP_NAME];
         }
     },
 
-    openExtensionSettings: function() {
-        Util.spawn_async([xletMeta.path + "/settings.py"], null);
+    openXletSettings: function() {
+        Util.spawn_async([XletMeta.path + "/settings.py"], null);
     },
 
     openHelpPage: function() {
-        this._xdgOpen(xletMeta.path + "/HELP.html");
+        G.xdgOpen(XletMeta.path + "/HELP.html");
     },
 
-    _xdgOpen: function() {
-        Util.spawn_async(["xdg-open"].concat(Array.prototype.slice.call(arguments)), null);
+    _connectSignals: function() {
+        Settings.connect([
+            "pref_extra_shaders_path",
+            "pref_global_keybindings",
+            "pref_shader_list",
+            "pref_color_list",
+            "pref_desaturation_list",
+            "pref_contrast_list",
+            "pref_brightness_list",
+            "pref_usage_notified",
+            "pref_apply_cinnamon_injections",
+            "trigger_shader_list_changed",
+            "trigger_color_list_changed",
+            "trigger_desaturation_list_changed",
+            "trigger_contrast_list_changed",
+            "trigger_brightness_list_changed",
+            "trigger_global_keybindings_changed"
+        ], function(aPrefKey) {
+            this._onSettingsChanged(aPrefKey);
+        }.bind(this));
     },
 
-    _onSettingsChanged: function(aPrefValue, aPrefKey) {
-        /* NOTE: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
-         * settings callback instead of just one as in older versions. The first one is the
-         * setting value and the second one is the user data. To workaround this nonsense,
-         * check if the second argument is undefined to decide which
-         * argument to use as the pref key depending on the Cinnamon version.
-         */
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        // Remove the following variable and directly use the second argument.
-        let pref_key = aPrefKey || aPrefValue;
-        switch (pref_key) {
+    _generateSettingsDesktopFile: function() {
+        if (!Settings.pref_desktop_file_generated) {
+            CustomFileUtils.generateDesktopFile({
+                fileName: this._settingsDesktopFileName,
+                dataName: _(XletMeta.name),
+                dataComment: _("Settings for %s").format(_(XletMeta.name)),
+                dataExec: XletMeta.path + "/settings.py",
+                dataIcon: XletMeta.path + "/icon.svg"
+            });
+
+            $.Notification.notify([
+                G.escapeHTML(_("A shortcut to open this extension settings has been generated.")),
+                G.escapeHTML(_("Search for it on your applications menu.")),
+                G.escapeHTML(_("Read this extension help page for more details."))
+            ]);
+
+            Settings.pref_desktop_file_generated = true;
+        }
+    },
+
+    _removeSettingsDesktopFile: function() {
+        try {
+            let desktopFile = Gio.file_new_for_path(this._settingsDesktopFilePath);
+
+            if (desktopFile.query_exists(null)) {
+                desktopFile.delete_async(GLib.PRIORITY_LOW, null, null);
+            }
+        } catch (aErr) {
+            global.logError(aErr);
+        }
+    },
+
+    _onSettingsChanged: function(aPrefKey) {
+        switch (aPrefKey) {
             case "trigger_global_keybindings_changed":
                 this._registerGlobalKeybindings();
                 break;
@@ -731,36 +617,62 @@ DesktopEffectsApplier.prototype = {
             case "trigger_desaturation_list_changed":
             case "trigger_contrast_list_changed":
             case "trigger_brightness_list_changed":
-                /* NOTE: "Partially" disable the extension and re-enable it.
-                 * A "partial" disable doesn't remove Cinnamon's injections/overrides
-                 * and does a "soft removal" of effects.
-                 * This allows to easily add back the already applied effects and the
-                 * Cinnamon overrides don't need to be removed and re-applied since they
-                 * use dynamic data.
-                 */
+                this.softlyClearAllEffects();
+                this._updateEffectsMap();
+                this._registerEffectKeybindings();
+
+                Mainloop.idle_add(() => {
+                    this.reApplyAllWindowsEffects();
+
+                    return GLib.SOURCE_REMOVE;
+                });
+                break;
+            case "pref_apply_cinnamon_injections":
                 try {
-                    this.disable(true);
+                    this._removeCinnamonInjections();
                 } finally {
                     Mainloop.idle_add(() => {
-                        this.enable();
+                        Settings.pref_apply_cinnamon_injections && this._applyCinnamonInjections();
+
+                        return GLib.SOURCE_REMOVE;
                     });
                 }
-                break;
-            case "trigger_settings_shortcut_creation_desktop":
-            case "trigger_settings_shortcut_creation_xdg":
-                let where = pref_key === "trigger_settings_shortcut_creation_desktop" ?
-                    "desktop" : "xdg";
-                $.generateSettingsDesktopFile(where);
                 break;
         }
     }
 };
 
 function init(aXletMeta) {
-    xletMeta = aXletMeta;
+    XletMeta = aXletMeta;
+
+    // Mark for deletion on EOL. Cinnamon 3.6.x+
+    if (typeof require === "function") {
+        C = require("./constants.js");
+        G = require("./globalUtils.js");
+        D = require("./debugManager.js");
+        CustomFileUtils = require("./customFileUtils.js");
+        $ = require("./utils.js");
+        DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
+        EffectsApplier = require("./effectsApplier.js");
+    } else {
+        C = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+        G = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
+        D = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
+        CustomFileUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].customFileUtils;
+        $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
+        DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
+        EffectsApplier = imports.ui.extensionSystem.extensions["{{UUID}}"].effectsApplier;
+    }
+
+    _ = G._;
+    Settings = C.Settings;
 }
 
 function enable() {
+    D.wrapObjectMethods(Settings, {
+        DesktopEffectsApplier: DesktopEffectsApplier
+    });
+
     try {
         desktopEffects = new DesktopEffectsApplier();
         desktopEffects.enable();
@@ -769,11 +681,13 @@ function enable() {
          * buttons in the settings window. Cinnamon 3.0.x, we are screwed.
          */
         return {
-            openSettings: desktopEffects.openExtensionSettings
+            openXletSettings: desktopEffects.openXletSettings
         };
     } catch (aErr) {
         global.logError(aErr);
     }
+
+    return null;
 }
 
 function disable() {

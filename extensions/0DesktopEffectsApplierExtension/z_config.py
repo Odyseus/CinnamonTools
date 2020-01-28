@@ -10,6 +10,21 @@ settings = {
     "extra_files": [{
         "source": "__app__/data/python_modules/xlets_settings",
         "destination": "python_modules/xlets_settings"
+    }, {
+        "source": "__app__/data/javascript_modules/globalUtils.js",
+        "destination": "globalUtils.js"
+    }, {
+        "source": "__app__/data/javascript_modules/desktopNotificationsUtils.js",
+        "destination": "desktopNotificationsUtils.js"
+    }, {
+        "source": "__app__/data/javascript_modules/customFileUtils.js",
+        "destination": "customFileUtils.js"
+    }, {
+        "source": "__app__/data/javascript_modules/debugManager.js",
+        "destination": "debugManager.js"
+    }, {
+        "source": "__app__/data/javascript_modules/xletsSettingsUtils.js",
+        "destination": "xletsSettingsUtils.js"
     }]
 }
 

@@ -1,4 +1,5 @@
-let XletMeta;
+let XletMeta,
+    Constants;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -7,6 +8,19 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
+// Mark for deletion on EOL. Cinnamon 3.6.x+
+if (typeof require === "function") {
+    Constants = require("./constants.js");
+} else {
+    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+}
+
+const {
+    DEFAULT_SHADER_FILE_RE,
+    URI_RE,
+    EFFECTS_PROP_NAME
+} = Constants;
+
 const {
     gi: {
         Clutter,
@@ -14,11 +28,6 @@ const {
         GObject
     }
 } = imports;
-
-const DEFAULT_SHADER_FILE_RE = /^\:\:/;
-const URI_RE = /^file\:\/\//;
-
-var DESKTOP_EFFECTS_PROP_NAME = "__CinnamonDesktopEffectsApplierExtension";
 
 function _getEffectSourceAsync(aEffectParams, aCallback) {
     switch (aEffectParams.type) {
@@ -50,7 +59,8 @@ function _getEffectSourceAsync(aEffectParams, aCallback) {
             if (shaderFile && shaderFile.query_exists(null)) {
                 shaderFile.load_contents_async(null,
                     (aFile, aResponce) => {
-                        let success, contents = "",
+                        let success,
+                            contents = "",
                             tag;
 
                         try {
@@ -176,8 +186,8 @@ function removeEffect(aEffectId, aActor) {
 }
 
 function _getEffectState(aActor, aEffectId) {
-    if (!aActor.hasOwnProperty(DESKTOP_EFFECTS_PROP_NAME)) {
-        aActor[DESKTOP_EFFECTS_PROP_NAME] = {
+    if (!aActor.hasOwnProperty(EFFECTS_PROP_NAME)) {
+        aActor[EFFECTS_PROP_NAME] = {
             removeAllEffects: function() {
                 for (let prop in this) {
                     if (this.hasOwnProperty(prop) &&
@@ -189,8 +199,8 @@ function _getEffectState(aActor, aEffectId) {
         };
     }
 
-    if (!aActor[DESKTOP_EFFECTS_PROP_NAME].hasOwnProperty(aEffectId)) {
-        aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId] = {
+    if (!aActor[EFFECTS_PROP_NAME].hasOwnProperty(aEffectId)) {
+        aActor[EFFECTS_PROP_NAME][aEffectId] = {
             __state__: null,
             timeline: null,
             actorDestroyedId: 0,
@@ -199,7 +209,7 @@ function _getEffectState(aActor, aEffectId) {
         };
     }
 
-    return aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId];
+    return aActor[EFFECTS_PROP_NAME][aEffectId];
 }
 
 function _resetEffectState(aActor, aEffectId) {
@@ -212,9 +222,9 @@ function _resetEffectState(aActor, aEffectId) {
         return;
     }
 
-    let state = (aActor.hasOwnProperty(DESKTOP_EFFECTS_PROP_NAME) &&
-            aActor[DESKTOP_EFFECTS_PROP_NAME].hasOwnProperty(aEffectId)) ?
-        aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId] : null;
+    let state = (aActor.hasOwnProperty(EFFECTS_PROP_NAME) &&
+            aActor[EFFECTS_PROP_NAME].hasOwnProperty(aEffectId)) ?
+        aActor[EFFECTS_PROP_NAME][aEffectId] : null;
 
     if (state && state.actor) {
         for (let connectionId of ["actorDestroyedId", "newFrameId", "sizeChangedId"]) {
@@ -228,33 +238,34 @@ function _resetEffectState(aActor, aEffectId) {
             state.timeline = null;
         }
 
-        aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId] = null;
-        delete aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId];
+        aActor[EFFECTS_PROP_NAME][aEffectId] = null;
+        delete aActor[EFFECTS_PROP_NAME][aEffectId];
     }
 
     aActor.remove_effect_by_name(aEffectId);
 }
 
 function _newFrame(aActor, aEffectId) {
-    aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId].effect
+    aActor[EFFECTS_PROP_NAME][aEffectId].effect
         .set_uniform_value("height", aActor.get_height());
-    aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId].effect
+    aActor[EFFECTS_PROP_NAME][aEffectId].effect
         .set_uniform_value("width", aActor.get_width());
-    aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId].effect
+    aActor[EFFECTS_PROP_NAME][aEffectId].effect
         .set_uniform_value("mouseX", global.get_pointer()[0]);
-    aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId].effect
+    aActor[EFFECTS_PROP_NAME][aEffectId].effect
         .set_uniform_value("mouseY", global.get_pointer()[1]);
 }
 
 function _sizeChanged(aActor, aEffectId) {
-    aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId].effect
+    aActor[EFFECTS_PROP_NAME][aEffectId].effect
         .set_uniform_value("height", aActor.get_height());
-    aActor[DESKTOP_EFFECTS_PROP_NAME][aEffectId].effect
+    aActor[EFFECTS_PROP_NAME][aEffectId].effect
         .set_uniform_value("width", aActor.get_width());
 }
 
 function _getClutterColorFromString(aColorString) {
-    let clutterColor, res;
+    let clutterColor,
+        res;
 
     if (typeof Clutter.Color.from_string !== "function") {
         clutterColor = new Clutter.Color();

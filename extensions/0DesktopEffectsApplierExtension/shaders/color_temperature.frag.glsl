@@ -14,7 +14,7 @@ precision mediump float;
 
 uniform sampler2D tex;
 
-#define COLOR_TEMP 6500.0
+#define COLOR_TEMP 5000.0
 #define BLENDING_FACTOR 0.5
 
 // Playing with this value tweaks how dim or bright the resulting image is
