@@ -45,7 +45,8 @@ Usage:
     app.py parse_sass [-y | --dry-run]
     app.py dev <sub_commands>...
                [-x <name>... | --xlet=<name>...]
-    app.py generate (system_executable | docs | docs_no_api | base_xlet)
+    app.py generate (system_executable | docs | docs_no_api | base_xlet |
+                    repo_changelog)
                     [-f | --force-clean-build]
                     [-u | --update-inventories]
     app.py print_xlets_slugs
@@ -154,9 +155,9 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         "generate_meta_file",
         "update_pot_files",
         "update_spanish_localizations",
-        "create_changelogs",
+        "create_xlets_changelogs",
         "create_localized_help",
-        "generate_trans_stats",
+        "generate_trans_stats"
     ]
     xlets = []
     xlets_helper = None
@@ -254,6 +255,10 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             if self.a["base_xlet"]:
                 self.logger.info("**Base xlet generation...**")
                 self.action = self.base_xlet_generation
+
+            if self.a["repo_changelog"]:
+                self.logger.info("**Repository changelog generation...**")
+                self.action = self.generate_repo_changelog
         elif self.a["repo"]:
             self.repo_action = "init" if self.a["init"] else "update" if self.a["update"] else ""
 
@@ -376,6 +381,11 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                                 update_inventories=self.a["--update-inventories"],
                                 force_clean_build=self.a["--force-clean-build"],
                                 logger=self.logger)
+
+    def generate_repo_changelog(self):
+        """See :any:`app_utils.generate_repo_changelog`.
+        """
+        app_utils.generate_repo_changelog(logger=self.logger)
 
     def base_xlet_generation(self):
         """See :any:`app_utils.BaseXletGenerator`

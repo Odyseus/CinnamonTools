@@ -191,6 +191,34 @@ _xlets_build_data = """
 **Dry run:**                     {dry_run}
 """
 
+git_log_cmd_xlets = 'git log --grep={xlet_slug} --pretty=format:"\
+- **Date:** %aD%n\
+- **Commit:** [%h]({repo_url}/commit/%h)%n\
+- **Author:** %aN%n%n\`\`\`%n%b%n\`\`\`%n%n***%n" \
+-- {relative_xlet_path} {append_or_override} "{log_path}"'
+
+CHANGELOG_HEADER_XLETS = """## {xlet_name} changelog
+
+#### This change log is only valid for the version of the xlet hosted on [its original repository]({repo_url})
+
+***
+
+"""
+
+git_log_cmd_repo = 'git log --grep="{all_xlets_slugs}" --invert-grep --pretty=format:"\
+- **Date:** %aD%n\
+- **Commit:** [%h]({repo_url}/commit/%h)%n\
+- **Author:** %aN%n%n\`\`\`%n%B%n\`\`\`%n%n***%n" \
+-- {relative_xlet_path} {append_or_override} "{log_path}"'
+
+CHANGELOG_HEADER_REPO = """## Repository changelog
+
+#### The changelogs for xlets can be found inside each xlet folder and/or in their help pages.
+
+***
+
+"""
+
 
 class XletsHelperCore():
     """Xlets core functions.
@@ -230,14 +258,12 @@ class XletsHelperCore():
         """
         generate_meta_file(return_data=False)
 
-    def create_changelogs(self):
-        """Create change logs.
+    def create_xlets_changelogs(self):
+        """Create xlets change logs.
 
         Generate the CHANGELOG.md files for all xlets.
         """
-        from . import changelog_handler
-
-        self.logger.info("**Generating change logs...**")
+        self.logger.info("**Generating xlets change logs...**")
 
         for xlet in self.xlets_meta:
             self.logger.info("**Generating change log for %s...**" % xlet["name"])
@@ -248,14 +274,14 @@ class XletsHelperCore():
                 os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
                 with open(log_path, "w") as f:
-                    f.write(changelog_handler.CHANGELOG_HEADER.format(
+                    f.write(CHANGELOG_HEADER_XLETS.format(
                         xlet_name=xlet["name"],
                         repo_url=URLS["repo"]
                     ))
 
                 # Generate change log from current repository paths.
                 relative_xlet_path = "./" + xlet["type"] + "s/" + xlet["slug"]
-                cmd = changelog_handler.git_log_cmd.format(
+                cmd = git_log_cmd_xlets.format(
                     xlet_slug=xlet["slug"],
                     relative_xlet_path=relative_xlet_path,
                     append_or_override=">>",
@@ -2022,7 +2048,8 @@ def generate_docs(generate_api_docs=False,
         os.path.join("__app__", "python_modules", "python_utils", "tqdm_wget.py"),
         # Ignore until I finish them.
         os.path.join("__app__", "data", "python_modules", "xlets_settings", "GSettingsWidgets.py"),
-        os.path.join("__app__", "data", "python_modules", "xlets_settings", "z_MultiOptionsWidgets.py")
+        os.path.join("__app__", "data", "python_modules",
+                     "xlets_settings", "z_MultiOptionsWidgets.py")
     ]
 
     base_apidoc_dest_path_rel_to_root = os.path.join("__app__", "cinnamon_tools_docs", "modules")
@@ -2282,6 +2309,29 @@ def parse_sass(dry_run, logger):
     else:
         for file_path in files_to_remove:
             os.remove(file_path)
+
+
+def generate_repo_changelog(logger):
+    """Generate repository changelog.
+    """
+    xlets_list = AllXletsMetadata().meta_list
+    all_xlets_slugs = [xlet["slug"] for xlet in xlets_list]
+    log_path = os.path.join(root_folder, "CHANGELOG.md")
+
+    try:
+        with open(log_path, "w") as f:
+            f.write(CHANGELOG_HEADER_REPO)
+
+        cmd = git_log_cmd_repo.format(
+            all_xlets_slugs="\\|".join(all_xlets_slugs),
+            relative_xlet_path="./",
+            append_or_override=">>",
+            log_path=log_path,
+            repo_url=URLS["repo"]
+        )
+        cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=root_folder, shell=True)
+    except Exception as err:
+        logger.error(err)
 
 
 if __name__ == "__main__":
