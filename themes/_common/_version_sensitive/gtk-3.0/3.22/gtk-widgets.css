@@ -2081,7 +2081,8 @@ stacksidebar.sidebar.left:dir(rtl) list {
     border-left-style: none;
 }
 
-stacksidebar.sidebar:dir(rtl) list,stacksidebar.sidebar.right list {
+stacksidebar.sidebar:dir(rtl) list,
+stacksidebar.sidebar.right list {
     border-left: 1px solid @border;
     border-right-style: none;
 }

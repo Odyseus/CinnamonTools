@@ -1781,6 +1781,15 @@ GtkMenuButton .menuitem.separator {
     background-image: none;
 }
 
+GtkStackSidebar .list-row {
+    padding: 10px 4px;
+}
+
+GtkStackSidebar .list-row > .label {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
 GtkPlacesSidebar.sidebar {
     -gtk-icon-style: regular;
 }
