@@ -26,6 +26,7 @@ class CommandLineInterfaceSuper():
         See :any:`LogSystem`.
     """
     _cli_header_blacklist = []
+    _print_log_blacklist = []
 
     def __init__(self, app_name, logs_storage_dir="UserData/logs"):
         """Initialization.
@@ -56,11 +57,12 @@ class CommandLineInterfaceSuper():
     def print_log_file(self):
         """Print the path to the log file used by the current logger.
         """
-        print()
-        self.logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
-        self.logger.warning("**Log file location:**", date=False, to_file=False)
-        self.logger.warning("**%s**" % self.logger.get_log_file(), date=False, to_file=False)
-        self.logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
+        if not self._print_log_blacklist or not any(self._print_log_blacklist):
+            print()
+            self.logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
+            self.logger.warning("**Log file location:**", date=False, to_file=False)
+            self.logger.warning("**%s**" % self.logger.get_log_file(), date=False, to_file=False)
+            self.logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
 
     def run(self):
         """Execute the assigned action stored in self.action if any.
