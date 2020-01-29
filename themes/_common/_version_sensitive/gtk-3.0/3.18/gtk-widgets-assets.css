@@ -170,3 +170,88 @@ GtkFlowBox.view.check:checked:hover {
 .pane-separator.vertical {
     background-image: -gtk-scaled(url("assets/pane-separator-grip.png"), url("assets/pane-separator-grip@2.png"));
 }
+
+/***********************************
+ * Header/Titlebar control .buttons *
+ ***********************************/
+.header-bar .button.titlebutton.close,
+.titlebar .button.titlebutton.close,
+.header-bar .button.titlebutton.close:active,
+.titlebar .button.titlebutton.close:active,
+.header-bar .button.titlebutton.close:active:hover,
+.titlebar .button.titlebutton.close:active:hover,
+.header-bar .button.titlebutton.maximize,
+.titlebar .button.titlebutton.maximize,
+.header-bar .button.titlebutton.maximize:active,
+.titlebar .button.titlebutton.maximize:active,
+.header-bar .button.titlebutton.maximize:active:hover,
+.titlebar .button.titlebutton.maximize:active:hover,
+.header-bar .button.titlebutton.minimize,
+.titlebar .button.titlebutton.minimize,
+.header-bar .button.titlebutton.minimize:active,
+.titlebar .button.titlebutton.minimize:active,
+.header-bar .button.titlebutton.minimize:active:hover,
+.titlebar .button.titlebutton.minimize:active:hover {
+    color: transparent;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-width: 0;
+}
+
+.header-bar .button.titlebutton.close,
+.titlebar .button.titlebutton.close,
+.header-bar .button.titlebutton.close:active,
+.titlebar .button.titlebutton.close:active,
+.header-bar .button.titlebutton.close:active:hover,
+.titlebar .button.titlebutton.close:active:hover {
+    background-image: -gtk-scaled(url("assets/titlebutton-close-normal.png"), url("assets/titlebutton-close-normal@2.png"));
+}
+
+.header-bar .button.titlebutton.close:backdrop,
+.titlebar .button.titlebutton.close:backdrop {
+    background-image: -gtk-scaled(url("assets/titlebutton-close-backdrop.png"), url("assets/titlebutton-close-backdrop@2.png"));
+}
+
+.header-bar .button.close:hover,
+.titlebar .button.close:hover {
+    background-image: -gtk-scaled(url("assets/titlebutton-close-hover.png"), url("assets/titlebutton-close-hover@2.png"));
+}
+
+.header-bar .button.titlebutton.maximize,
+.titlebar .button.titlebutton.maximize,
+.header-bar .button.titlebutton.maximize:active,
+.titlebar .button.titlebutton.maximize:active,
+.header-bar .button.titlebutton.maximize:active:hover,
+.titlebar .button.titlebutton.maximize:active:hover {
+    background-image: -gtk-scaled(url("assets/titlebutton-maximize-normal.png"), url("assets/titlebutton-maximize-normal@2.png"));
+}
+
+.header-bar .button.titlebutton.maximize:backdrop,
+.titlebar .button.titlebutton.maximize:backdrop {
+    background-image: -gtk-scaled(url("assets/titlebutton-maximize-backdrop.png"), url("assets/titlebutton-maximize-backdrop@2.png"));
+}
+
+.header-bar .button.titlebutton.maximize:hover,
+.titlebar .button.titlebutton.maximize:hover {
+    background-image: -gtk-scaled(url("assets/titlebutton-maximize-hover.png"), url("assets/titlebutton-maximize-hover@2.png"));
+}
+
+.header-bar .button.titlebutton.minimize,
+.titlebar .button.titlebutton.minimize,
+.header-bar .button.titlebutton.minimize:active,
+.titlebar .button.titlebutton.minimize:active,
+.header-bar .button.titlebutton.minimize:active:hover,
+.titlebar .button.titlebutton.minimize:active:hover {
+    background-image: -gtk-scaled(url("assets/titlebutton-minimize-normal.png"), url("assets/titlebutton-minimize-normal@2.png"));
+}
+
+.header-bar .button.titlebutton.minimize:backdrop,
+.titlebar .button.titlebutton.minimize:backdrop {
+    background-image: -gtk-scaled(url("assets/titlebutton-minimize-backdrop.png"), url("assets/titlebutton-minimize-backdrop@2.png"));
+}
+
+.header-bar .button.titlebutton.minimize:hover,
+.titlebar .button.titlebutton.minimize:hover {
+    background-image: -gtk-scaled(url("assets/titlebutton-minimize-hover.png"), url("assets/titlebutton-minimize-hover@2.png"));
+}
