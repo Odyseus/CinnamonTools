@@ -176,6 +176,9 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             self.a["print_xlets_slugs"],
             self.a["menu"]
         ]
+        self._print_log_blacklist = [
+            self.a["print_xlets_slugs"]
+        ]
 
         super().__init__(__appname__, "tmp/logs")
 
@@ -302,8 +305,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     if thread is not None and thread.isAlive():
                         thread.join()
 
-            if not self.a["print_xlets_slugs"]:
-                self.print_log_file()
+            self.print_log_file()
         except (KeyboardInterrupt, SystemExit):
             self.print_log_file()
             raise exceptions.KeyboardInterruption()
