@@ -4,6 +4,80 @@
 
 ***
 
+- **Date:** Wed, 29 Jan 2020 03:11:32 -0300
+- **Commit:** [1c0975d](https://gitlab.com/Odyseus/CinnamonTools/commit/1c0975d)
+- **Author:** Odyseus
+
+```
+Python modules
+
+- cli.py: Implemented a better way to decide when the log file should be printed.
+
+```
+
+***
+
+- **Date:** Wed, 29 Jan 2020 03:09:54 -0300
+- **Commit:** [d0502a9](https://gitlab.com/Odyseus/CinnamonTools/commit/d0502a9)
+- **Author:** Odyseus
+
+```
+ Merge ref. 'master' of git@gitlab.com:Odyseus/python_utils.git
+
+```
+
+***
+
+- **Date:** Wed, 29 Jan 2020 03:09:54 -0300
+- **Commit:** [189c3cd](https://gitlab.com/Odyseus/CinnamonTools/commit/189c3cd)
+- **Author:** Odyseus
+
+```
+Squashed '__app__/python_modules/python_utils/' changes from 0f986ce..639a5e5
+
+639a5e5 cli_utils.py
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 639a5e5b4862250dc1b8efeb1afb8de6f72cba7b
+
+```
+
+***
+
+- **Date:** Wed, 29 Jan 2020 00:44:14 -0300
+- **Commit:** [5591e57](https://gitlab.com/Odyseus/CinnamonTools/commit/5591e57)
+- **Author:** Odyseus
+
+```
+Python modules
+
+- All modules: Some tweaks to docstrings references.
+- localized_help_creator.py: Modified the Cinnamon compatibility block to display the min. and max. version overrides declared on an xlet z_config.py file.
+- app_menu.py: Removed initialization of the XletsHelperCore class. This was used when development tasks could be performed from the CLI menu, a thing that I removed a long time ago.
+- cli.py: Don't print log file path when executing the print_xlets_slugs command. This was interfering with the Bash completions.
+- app_utils.py:
+    - Simplified generation of the global metadata file.
+    - Renamed some arguments/variables/functions to better depict what they contain.
+    - Removed unnecessary check when building xlets. I was checking the validity of the passed xlets inside the build_xlets function, but I already do that on the CLI commands parsing side.
+
+```
+
+***
+
+- **Date:** Tue, 28 Jan 2020 18:34:58 -0300
+- **Commit:** [b7765ea](https://gitlab.com/Odyseus/CinnamonTools/commit/b7765ea)
+- **Author:** Odyseus
+
+```
+General
+
+- Added CHANGELOG.md.
+- Updated Bash completions.
+
+```
+
+***
+
 - **Date:** Tue, 28 Jan 2020 18:34:14 -0300
 - **Commit:** [b79d40b](https://gitlab.com/Odyseus/CinnamonTools/commit/b79d40b)
 - **Author:** Odyseus
@@ -94,17 +168,6 @@ Themes
 ***
 
 - **Date:** Mon, 27 Jan 2020 00:20:36 -0300
-- **Commit:** [f2013d2](https://gitlab.com/Odyseus/CinnamonTools/commit/f2013d2)
-- **Author:** Odyseus
-
-```
- Merge ref. 'master' of git@gitlab.com:Odyseus/python_utils.git
-
-```
-
-***
-
-- **Date:** Mon, 27 Jan 2020 00:20:36 -0300
 - **Commit:** [2e774b8](https://gitlab.com/Odyseus/CinnamonTools/commit/2e774b8)
 - **Author:** Odyseus
 
@@ -118,6 +181,17 @@ b6c5298 Renamed .sublime folder to .editor
 
 git-subtree-dir: __app__/python_modules/python_utils
 git-subtree-split: 0f986ce8790ac1699bc3d86402527f2d834d079e
+
+```
+
+***
+
+- **Date:** Mon, 27 Jan 2020 00:20:36 -0300
+- **Commit:** [f2013d2](https://gitlab.com/Odyseus/CinnamonTools/commit/f2013d2)
+- **Author:** Odyseus
+
+```
+ Merge ref. 'master' of git@gitlab.com:Odyseus/python_utils.git
 
 ```
 
