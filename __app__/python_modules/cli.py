@@ -159,7 +159,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         "create_localized_help",
         "generate_trans_stats"
     ]
-    xlets = []
+    xlets_display_names = []
     xlets_helper = None
 
     def __init__(self, docopt_args):
@@ -180,21 +180,21 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         super().__init__(__appname__, "tmp/logs")
 
         if self.a["build"] or self.a["dev"]:
-            all_xlets = app_utils.get_xlets_dirs()
+            all_xlets_display_names = app_utils.get_xlets_display_names()
 
             if self.a["--all-xlets"]:
-                self.xlets = all_xlets
+                self.xlets_display_names = all_xlets_display_names
             elif self.a["--xlet"]:
                 # NOTE: Deduplicate arguments. Workaround docopt issue:
                 # https://github.com/docopt/docopt/issues/134
                 # Not perfect, but good enough for this particular usage case.
                 for x in set(self.a["--xlet"]):
-                    if "Applet " + x in all_xlets:
-                        self.xlets.append("Applet " + x)
-                    elif "Extension " + x in all_xlets:
-                        self.xlets.append("Extension " + x)
+                    if "Applet " + x in all_xlets_display_names:
+                        self.xlets_display_names.append("Applet " + x)
+                    elif "Extension " + x in all_xlets_display_names:
+                        self.xlets_display_names.append("Extension " + x)
 
-            self.xlets = sorted(self.xlets)
+            self.xlets_display_names = sorted(self.xlets_display_names)
 
         if self.a["print_xlets_slugs"]:
             self.action = self.print_xlets_slugs
@@ -210,7 +210,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             elif self.a["--xlet"]:
                 self.logger.info("**Building the following xlets:**")
 
-                for x in self.xlets:
+                for x in self.xlets_display_names:
                     self.logger.info(x)
         elif self.a["build_themes"]:
             self.action = self.build_themes
@@ -231,7 +231,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             # is done.
             pass_xlets = bool(self.a["--xlet"])
             self.xlets_helper = app_utils.XletsHelperCore(
-                xlets=self.xlets if pass_xlets else None,
+                xlets_display_names=self.xlets_display_names if pass_xlets else None,
                 logger=self.logger
             )
             self.logger.info("**Command:** dev")
@@ -302,7 +302,8 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     if thread is not None and thread.isAlive():
                         thread.join()
 
-            self.print_log_file()
+            if not self.a["print_xlets_slugs"]:
+                self.print_log_file()
         except (KeyboardInterrupt, SystemExit):
             self.print_log_file()
             raise exceptions.KeyboardInterruption()
@@ -337,7 +338,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
     def build_xlets(self):
         """See :any:`app_utils.build_xlets`
         """
-        app_utils.build_xlets(xlets=self.xlets,
+        app_utils.build_xlets(xlets_display_names=self.xlets_display_names,
                               domain_name=self.a["--domain"],
                               build_output=self.a["--output"],
                               do_not_confirm=self.a["--no-confirmation"],

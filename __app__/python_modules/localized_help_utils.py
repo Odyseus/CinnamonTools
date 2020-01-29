@@ -4,7 +4,7 @@
 
 .. note::
 
-    No <class :any:`LogSystem`> available in this module since this module is imported
+    No :any:`LogSystem` available in this module since this module is imported
     by scripts executed outside the main Python application.
 
 Attributes

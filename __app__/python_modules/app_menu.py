@@ -16,11 +16,9 @@ class CLIMenu():
     Attributes
     ----------
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     main_menu : object
-        Main menu. See <class :any:`menu.Menu`>.
-    xlets_helper : object
-        Helper functions. See <class :any:`app_utils.XletsHelperCore`>.
+        Main menu. See :any:`menu.Menu`.
     """
 
     def __init__(self, logger=None):
@@ -29,10 +27,9 @@ class CLIMenu():
         Parameters
         ----------
         logger : object
-            See <class :any:`LogSystem`>.
+            See :any:`LogSystem`.
         """
         self.logger = logger
-        self.xlets_helper = app_utils.XletsHelperCore(logger=self.logger)
 
         self.main_menu = menu.Menu(title="%s %s" % (__appname__, __version__),
                                    message="Main menu")
@@ -58,7 +55,7 @@ class CLIMenu():
     def build_all_xlets(self):
         """Build all xlets.
         """
-        app_utils.build_xlets(xlets=app_utils.get_xlets_dirs(),
+        app_utils.build_xlets(xlets_display_names=app_utils.get_xlets_display_names(),
                               logger=self.logger,
                               from_menu=True)
 
@@ -73,12 +70,12 @@ class CLIMenu():
         """
         selected_items = multi_select.MultiSelect(
             title="Choose xlets to build",
-            menu_items=sorted(app_utils.get_xlets_dirs())
+            menu_items=sorted(app_utils.get_xlets_display_names())
         ).getSelected()
 
         if selected_items:
             self.close_main_menu()
-            app_utils.build_xlets(xlets=selected_items,
+            app_utils.build_xlets(xlets_display_names=selected_items,
                                   logger=self.logger,
                                   from_menu=True)
         else:

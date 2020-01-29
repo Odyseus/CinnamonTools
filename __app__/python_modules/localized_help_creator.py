@@ -4,7 +4,7 @@
 
 .. note::
 
-    No <class :any:`LogSystem`> available in this module since this module is imported
+    No :any:`LogSystem` available in this module since this module is imported
     by scripts executed outside the main Python application.
 
 Attributes
@@ -12,9 +12,9 @@ Attributes
 repo_folder : str
     The main repository folder. All commands must be executed from this location without exceptions.
 translations : object
-    See <class :any:`localized_help_utils.Translations`>.
+    See :any:`localized_help_utils.Translations`.
 utils : object
-    See <class :any:`localized_help_utils`>.
+    See :any:`localized_help_utils`.
 """
 
 import os
@@ -100,6 +100,8 @@ class LocalizedHelpCreator():
         The list of options (HTML tags) that will be used to populate the language selector menu.
     sections : list
         The list of sections that contain the localized content.
+    xlet_config : dict
+        Xlet configuration defined in a z_config.py file.
     xlet_dir : str
         Path to the xlet directory.
     xlet_meta : dict
@@ -108,7 +110,7 @@ class LocalizedHelpCreator():
         The name of the folder that contains the source files for an xlet.
     """
 
-    def __init__(self, xlet_dir="", xlet_slug=""):
+    def __init__(self, xlet_dir="", xlet_slug="", xlet_config={}):
         """Initialize.
 
         Parameters
@@ -117,9 +119,12 @@ class LocalizedHelpCreator():
             Path to the xlet directory.
         xlet_slug : str, optional
             The name of the folder that contains the source files for an xlet.
+        xlet_config : dict, optional
+            Xlet configuration defined in a z_config.py file.
         """
         self.xlet_dir = xlet_dir
         self.xlet_slug = xlet_slug
+        self.xlet_config = xlet_config
         self.xlet_meta = utils.XletMetadata(
             os.path.join(xlet_dir)).xlet_meta
 
@@ -357,12 +362,26 @@ class LocalizedHelpCreator():
         str
             A bootstrap panel containing Cinnamon compatibility data.
         """
+        min_ver_override = self.xlet_config.get("min_cinnamon_version_override", None)
+        max_ver_override = self.xlet_config.get("max_cinnamon_version_override", None)
+        min_ver = min_ver_override if min_ver_override else \
+            utils.app_utils.SUPPORTED_CINNAMON_VERSION_MIN
+        max_ver = max_ver_override if max_ver_override else \
+            utils.app_utils.SUPPORTED_CINNAMON_VERSION_MAX
+
+        if max_ver == utils.app_utils.SUPPORTED_CINNAMON_VERSION_MAX and \
+                min_ver == utils.app_utils.SUPPORTED_CINNAMON_VERSION_MIN:
+            body = _("This xlet is compatible with Cinnamon %s up to latest Cinnamon version.") % \
+                str(min_ver)
+        else:
+            body = _("This xlet is compatible with Cinnamon %s up to %s.") % (
+                str(min_ver), str(max_ver))
+
         return utils.get_bootstrap_card(
             context="success",
             body_extra_classes="text-font-size-large",
             header=_("Cinnamon compatibility"),
-            body=_("This xlet is compatible with Cinnamon %s up to latest Cinnamon version.") %
-            str(utils.app_utils.SUPPORTED_CINNAMON_VERSION_MIN)
+            body=body
         )
 
     def _get_warning_block(self):

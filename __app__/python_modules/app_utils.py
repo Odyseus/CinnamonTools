@@ -191,13 +191,13 @@ _xlets_build_data = """
 **Dry run:**                     {dry_run}
 """
 
-git_log_cmd_xlets = 'git log --grep={xlet_slug} --pretty=format:"\
+_git_log_cmd_xlets = 'git log --grep={xlet_slug} --pretty=format:"\
 - **Date:** %aD%n\
 - **Commit:** [%h]({repo_url}/commit/%h)%n\
 - **Author:** %aN%n%n\`\`\`%n%b%n\`\`\`%n%n***%n" \
 -- {relative_xlet_path} {append_or_override} "{log_path}"'
 
-CHANGELOG_HEADER_XLETS = """## {xlet_name} changelog
+_changelog_header_xlets = """## {xlet_name} changelog
 
 #### This change log is only valid for the version of the xlet hosted on [its original repository]({repo_url})
 
@@ -205,13 +205,13 @@ CHANGELOG_HEADER_XLETS = """## {xlet_name} changelog
 
 """
 
-git_log_cmd_repo = 'git log --grep="{all_xlets_slugs}" --invert-grep --pretty=format:"\
+_git_log_cmd_repo = 'git log --grep="{all_xlets_slugs}" --invert-grep --pretty=format:"\
 - **Date:** %aD%n\
 - **Commit:** [%h]({repo_url}/commit/%h)%n\
 - **Author:** %aN%n%n\`\`\`%n%B%n\`\`\`%n%n***%n" \
 -- {relative_xlet_path} {append_or_override} "{log_path}"'
 
-CHANGELOG_HEADER_REPO = """## Repository changelog
+_changelog_header_repo = """## Repository changelog
 
 #### The changelogs for xlets can be found inside each xlet folder and/or in their help pages.
 
@@ -228,27 +228,34 @@ class XletsHelperCore():
     all_xlets_meta : list
         All xlets meta data.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
+    xlets_display_names : list
+        The complete list of xlets as returned by :any:`get_xlets_display_names`.
     xlets_meta : dict
         The metadata of all xlets in this repository.
     """
 
-    def __init__(self, xlets=None, logger=None):
+    def __init__(self, xlets_display_names=[], logger=None):
         """Initialize.
 
         Parameters
         ----------
-        xlets : None, optional
-            The list of xlets to handle.
+        xlets_display_names : list, optional
+            The complete list of xlets as returned by :any:`get_xlets_display_names`.
         logger : object
-            See <class :any:`LogSystem`>.
+            See :any:`LogSystem`.
         """
         self.logger = logger
-
+        self.xlets_display_names = xlets_display_names
         self.all_xlets_meta = AllXletsMetadata().meta_list
 
-        if xlets:
-            xlets_filter = [f.split(" ")[1] for f in xlets]
+        self._store_xlets_meta()
+
+    def _store_xlets_meta(self):
+        """Set xlets metadata.
+        """
+        if self.xlets_display_names:
+            xlets_filter = [f.split(" ")[1] for f in self.xlets_display_names]
             self.xlets_meta = [x for x in self.all_xlets_meta if x["slug"] in xlets_filter]
         else:
             self.xlets_meta = self.all_xlets_meta
@@ -256,7 +263,8 @@ class XletsHelperCore():
     def generate_meta_file(self):
         """See :any:`generate_meta_file`
         """
-        generate_meta_file(return_data=False)
+        self.all_xlets_meta = generate_meta_file()
+        self._store_xlets_meta()
 
     def create_xlets_changelogs(self):
         """Create xlets change logs.
@@ -274,14 +282,14 @@ class XletsHelperCore():
                 os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
                 with open(log_path, "w") as f:
-                    f.write(CHANGELOG_HEADER_XLETS.format(
+                    f.write(_changelog_header_xlets.format(
                         xlet_name=xlet["name"],
                         repo_url=URLS["repo"]
                     ))
 
                 # Generate change log from current repository paths.
                 relative_xlet_path = "./" + xlet["type"] + "s/" + xlet["slug"]
-                cmd = git_log_cmd_xlets.format(
+                cmd = _git_log_cmd_xlets.format(
                     xlet_slug=xlet["slug"],
                     relative_xlet_path=relative_xlet_path,
                     append_or_override=">>",
@@ -536,7 +544,7 @@ class AllXletsMetadata():
 
 def generate_meta_file(return_data=True):
     """Generate the file containing all the metadata of all xlets on this repository.
-    This metadata file is used by several functions on the XletsHelperCore class.
+    This metadata file is used by several functions on the :any:`XletsHelperCore` class.
 
     Parameters
     ----------
@@ -551,18 +559,30 @@ def generate_meta_file(return_data=True):
     xlet_meta_files = []
     xlet_meta = []
 
-    for dirname, dirnames, filenames in os.walk(os.path.join(root_folder, "applets"), topdown=False):
-        for filename in filenames:
-            if filename == "metadata.json":
-                xlet_meta_files.append(os.path.join(dirname, filename))
+    applet_dirs = _list_xlets_dirs("applets")
+    exension_dirs = _list_xlets_dirs("extensions")
 
-    for dirname, dirnames, filenames in os.walk(os.path.join(root_folder, "extensions"), topdown=False):
-        for filename in filenames:
-            if filename == "metadata.json":
-                xlet_meta_files.append(os.path.join(dirname, filename))
+    def append_meta_path(xlet_dirs, xlet_type):
+        """Append metadata path.
 
-    for i in range(0, len(xlet_meta_files)):
-        with open(xlet_meta_files[i], "r", encoding="UTF-8") as xlet_meta_file:
+        Parameters
+        ----------
+        xlet_dirs : list
+            List of xlets directories.
+        xlet_type : str
+            The type of xlet.
+        """
+        for xlet_dir in xlet_dirs:
+            xlet_meta_path = os.path.join(root_folder, xlet_type, xlet_dir, "metadata.json")
+
+            if file_utils.is_real_file(xlet_meta_path):
+                xlet_meta_files.append(xlet_meta_path)
+
+    append_meta_path(applet_dirs, "applets")
+    append_meta_path(exension_dirs, "extensions")
+
+    for xlet_meta_path in xlet_meta_files:
+        with open(xlet_meta_path, "r", encoding="UTF-8") as xlet_meta_file:
             raw_meta = xlet_meta_file.read()
             json_meta = json.loads(raw_meta)
             # Store the path to the metadata.json file so I can use it to create
@@ -570,13 +590,13 @@ def generate_meta_file(return_data=True):
             # This will allow me to avoid to constantly create a path with
             # os.path.join in my functions. I will just use the metadata.json path
             # and "traverse it".
-            json_meta["meta-path"] = xlet_meta_files[i]
+            json_meta["meta-path"] = xlet_meta_path
             json_meta["slug"] = os.path.basename(
-                os.path.dirname(xlet_meta_files[i]))
+                os.path.dirname(xlet_meta_path))
 
-            if "/applets/" + json_meta["slug"] in xlet_meta_files[i]:
+            if "/applets/" + json_meta["slug"] in xlet_meta_path:
                 json_meta["type"] = "applet"
-            elif "/extensions/" + json_meta["slug"] in xlet_meta_files[i]:
+            elif "/extensions/" + json_meta["slug"] in xlet_meta_path:
                 json_meta["type"] = "extension"
 
             xlet_meta.append(json_meta)
@@ -623,7 +643,7 @@ def supported_cinnamon_versions_range(start, stop):
     return versions
 
 
-def build_xlets(xlets=[],
+def build_xlets(xlets_display_names=[],
                 domain_name=None,
                 build_output="",
                 do_not_confirm=False,
@@ -636,7 +656,7 @@ def build_xlets(xlets=[],
 
     Parameters
     ----------
-    xlets : list, optional
+    xlets_display_names : list, optional
         The list of xlets to build.
     domain_name : None, optional
         The domain name to use to build the xlets.
@@ -649,9 +669,9 @@ def build_xlets(xlets=[],
     extra_files : str, optional
         Path to a folder containing files that will be copied into an xlet folder at build time.
     dry_run : bool, optional
-        See <class :any:`XletBuilder`>.
+        See :any:`XletBuilder`.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     from_menu : bool, optional
         Whether this function was called from the CLI menu or not.
 
@@ -869,37 +889,32 @@ def build_xlets(xlets=[],
             misc_utils.micro_to_milli(misc_utils.get_date_time("filename"))
         )
 
-    all_xlets = get_xlets_dirs()
-
     xlets_data = []
 
-    for x in xlets:
-        if x in all_xlets:
-            xlet_type, xlet_dir_name = x.split(" ")
-            xlet_source = os.path.join(root_folder, "%ss" % xlet_type.lower(), xlet_dir_name)
-            xlet_config_file = os.path.join(xlet_source, "z_config.py")
+    for x in xlets_display_names:
+        xlet_type, xlet_dir_name = x.split(" ")
+        xlet_type = xlet_type.lower()
+        xlet_source = os.path.join(root_folder, "%ss" % xlet_type, xlet_dir_name)
+        xlet_config_file = os.path.join(xlet_source, "z_config.py")
 
-            if file_utils.is_real_file(xlet_config_file):
-                xlet_config = run_path(xlet_config_file)["settings"]
-            else:
-                xlet_config = {}
-
-            uuid = "%s@%s" % (xlet_dir_name, options_map_defaults["domain_name"])
-            xlets_data.append({
-                "uuid": uuid,
-                "type": xlet_type.lower(),
-                "slug": xlet_dir_name,
-                "config": xlet_config,
-                "source": xlet_source,
-                "destination": os.path.join(
-                    file_utils.expand_path(options_map_defaults["build_output"]),
-                    "%ss" % xlet_type.lower(),
-                    uuid
-                )
-            })
+        if file_utils.is_real_file(xlet_config_file):
+            xlet_config = run_path(xlet_config_file)["settings"]
         else:
-            logger.warning("**%s doesn't exists.**" % x)
-            logger.warning("**Global metadata file might need to be re-generated.**" % x)
+            xlet_config = {}
+
+        uuid = "%s@%s" % (xlet_dir_name, options_map_defaults["domain_name"])
+        xlets_data.append({
+            "uuid": uuid,
+            "type": xlet_type,
+            "slug": xlet_dir_name,
+            "config": xlet_config,
+            "source": xlet_source,
+            "destination": os.path.join(
+                file_utils.expand_path(options_map_defaults["build_output"]),
+                "%ss" % xlet_type,
+                uuid
+            )
+        })
 
     dry_run = options_map["dry_run"][options_map_defaults["dry_run"]]
     do_not_confirm = options_map["do_not_confirm"][options_map_defaults["do_not_confirm"]]
@@ -949,7 +964,7 @@ class XletBuilder():
     Attributes
     ----------
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     """
 
     def __init__(self, xlet_data,
@@ -973,7 +988,7 @@ class XletBuilder():
         dry_run : bool
             Log an action without actually performing it.
         logger : object
-            See <class :any:`LogSystem`>.
+            See :any:`LogSystem`.
         """
         self._xlet_data = xlet_data
         self._do_not_confirm = do_not_confirm
@@ -1279,7 +1294,7 @@ class XletBuilder():
                         os.chmod(file_path, 0o755)
 
     def _install_po_files(self):
-        """Summary
+        """Install xlets .po files.
 
         Returns
         -------
@@ -1336,10 +1351,14 @@ def _list_xlets_dirs(xlet_type_subdir):
     list
         The list of xlet directory names.
     """
-    return os.listdir(os.path.join(root_folder, xlet_type_subdir))
+    return [entry.name for entry in os.scandir(os.path.join(root_folder, xlet_type_subdir))
+            if all((entry.is_dir(follow_symlinks=False),
+                    not entry.name.startswith("0z"),
+                    not entry.name.endswith("~"))
+                   )]
 
 
-def get_xlets_dirs():
+def get_xlets_display_names():
     """Get xlets dirs.
 
     Returns
@@ -1347,10 +1366,8 @@ def get_xlets_dirs():
     list
         The list of xlets directory names prefixed with their "types".
     """
-    applets_dirs = ["Applet %s" % item for item in _list_xlets_dirs("applets")
-                    if not item.startswith("0z")]
-    extensions_dirs = ["Extension %s" % item for item in _list_xlets_dirs("extensions")
-                       if not item.startswith("0z")]
+    applets_dirs = ["Applet %s" % item for item in _list_xlets_dirs("applets")]
+    extensions_dirs = ["Extension %s" % item for item in _list_xlets_dirs("extensions")]
 
     return applets_dirs + extensions_dirs
 
@@ -1392,9 +1409,9 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
     do_not_confirm : bool, optional
         Whether to ask for overwrite confirmation when a theme destination exists or not.
     dry_run : bool, optional
-        See <class :any:`XletBuilder`>.
+        See :any:`XletBuilder`.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     from_menu : bool, optional
         Whether this function was called from the CLI menu or not.
 
@@ -1892,7 +1909,7 @@ class BaseXletGenerator():
     base_xlet_path : str
         Path to the base application (the template).
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     new_xlet_destination : str
         The path to the new generated application.
     xlet_data : dict
@@ -1905,7 +1922,7 @@ class BaseXletGenerator():
         Parameters
         ----------
         logger : object
-            See <class :any:`LogSystem`>.
+            See :any:`LogSystem`.
         """
         self.logger = logger
         self.xlet_data = {}
@@ -2092,7 +2109,7 @@ def copy_help_pages_to_docs(logger):
     Parameters
     ----------
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     """
     logger.info("**Copying xlets help pages into docs folder...**")
 
@@ -2173,8 +2190,7 @@ def print_xlets_slugs():
     This method is called by the Bash completions script to auto-complete
     xlets slugs for the ``--xlet=`` and ``-x`` CLI options.
     """
-    for xlet in get_xlets_dirs():
-        xlet_type, xlet_dir_name = xlet.split(" ")
+    for xlet_dir_name in _list_xlets_dirs("applets") + _list_xlets_dirs("extensions"):
         print(xlet_dir_name)
 
 
@@ -2195,7 +2211,7 @@ def print_separator(logger):
     Parameters
     ----------
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
     """
     logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
 
@@ -2206,9 +2222,9 @@ def parse_sass(dry_run, logger):
     Parameters
     ----------
     dry_run : bool, optional
-        See <class :any:`XletBuilder`>.
+        See :any:`XletBuilder`.
     logger : object
-        See <class :any:`LogSystem`>.
+        See :any:`LogSystem`.
 
     Raises
     ------
@@ -2313,6 +2329,11 @@ def parse_sass(dry_run, logger):
 
 def generate_repo_changelog(logger):
     """Generate repository changelog.
+
+    Parameters
+    ----------
+    logger : object
+        See :any:`LogSystem`-
     """
     xlets_list = AllXletsMetadata().meta_list
     all_xlets_slugs = [xlet["slug"] for xlet in xlets_list]
@@ -2320,9 +2341,9 @@ def generate_repo_changelog(logger):
 
     try:
         with open(log_path, "w") as f:
-            f.write(CHANGELOG_HEADER_REPO)
+            f.write(_changelog_header_repo)
 
-        cmd = git_log_cmd_repo.format(
+        cmd = _git_log_cmd_repo.format(
             all_xlets_slugs="\\|".join(all_xlets_slugs),
             relative_xlet_path="./",
             append_or_override=">>",
