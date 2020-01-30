@@ -195,25 +195,38 @@ _git_log_cmd_xlets = 'git log --grep={xlet_slug} --pretty=format:"\
 - **Date:** %aD%n\
 - **Commit:** [%h]({repo_url}/commit/%h)%n\
 - **Author:** %aN%n%n\`\`\`%n%b%n\`\`\`%n%n***%n" \
--- {relative_xlet_path} {append_or_override} "{log_path}"'
+-- {relative_path} {append_or_override} "{log_path}"'
 
 _changelog_header_xlets = """## {xlet_name} changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository]({repo_url})
+**This change log is only valid for the version of the xlet hosted on [its original repository]({repo_url}).**
 
 ***
 
 """
 
+# Making 'git log' ignore changes for certain paths: https://stackoverflow.com/a/21079437
 _git_log_cmd_repo = 'git log --grep="{all_xlets_slugs}" --invert-grep --pretty=format:"\
 - **Date:** %aD%n\
 - **Commit:** [%h]({repo_url}/commit/%h)%n\
 - **Author:** %aN%n%n\`\`\`%n%B%n\`\`\`%n%n***%n" \
--- {relative_xlet_path} {append_or_override} "{log_path}"'
+-- {relative_path} ":(exclude)themes" {append_or_override} "{log_path}"'
 
 _changelog_header_repo = """## Repository changelog
 
-#### The changelogs for xlets can be found inside each xlet folder and/or in their help pages.
+**The changelogs for xlets can be found inside each xlet folder and/or in their help pages. The changelog for themes can be found inside the *themes* folder.**
+
+***
+
+"""
+
+_git_log_cmd_themes = 'git log --pretty=format:"\
+- **Date:** %aD%n\
+- **Commit:** [%h]({repo_url}/commit/%h)%n\
+- **Author:** %aN%n%n\`\`\`%n%b%n\`\`\`%n%n***%n" \
+-- {relative_path} {append_or_override} "{log_path}"'
+
+_changelog_header_themes = """## Themes changelog
 
 ***
 
@@ -288,10 +301,10 @@ class XletsHelperCore():
                     ))
 
                 # Generate change log from current repository paths.
-                relative_xlet_path = "./" + xlet["type"] + "s/" + xlet["slug"]
+                relative_path = "./" + xlet["type"] + "s/" + xlet["slug"]
                 cmd = _git_log_cmd_xlets.format(
                     xlet_slug=xlet["slug"],
-                    relative_xlet_path=relative_xlet_path,
+                    relative_path=relative_path,
                     append_or_override=">>",
                     log_path=log_path,
                     repo_url=URLS["repo"]
@@ -2345,12 +2358,39 @@ def generate_repo_changelog(logger):
 
         cmd = _git_log_cmd_repo.format(
             all_xlets_slugs="\\|".join(all_xlets_slugs),
-            relative_xlet_path="./",
+            relative_path="./",
             append_or_override=">>",
             log_path=log_path,
             repo_url=URLS["repo"]
         )
         cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=root_folder, shell=True)
+        logger.info("**Changelog generated at:**\n%s" % log_path)
+    except Exception as err:
+        logger.error(err)
+
+
+def generate_themes_changelog(logger):
+    """Generate themes changelog.
+
+    Parameters
+    ----------
+    logger : object
+        See :any:`LogSystem`-
+    """
+    log_path = os.path.join(root_folder, "themes", "CHANGELOG.md")
+
+    try:
+        with open(log_path, "w") as f:
+            f.write(_changelog_header_themes)
+
+        cmd = _git_log_cmd_themes.format(
+            relative_path="./themes",
+            append_or_override=">>",
+            log_path=log_path,
+            repo_url=URLS["repo"]
+        )
+        cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=root_folder, shell=True)
+        logger.info("**Changelog generated at:**\n%s" % log_path)
     except Exception as err:
         logger.error(err)
 

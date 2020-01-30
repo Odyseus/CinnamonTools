@@ -46,7 +46,7 @@ Usage:
     app.py dev <sub_commands>...
                [-x <name>... | --xlet=<name>...]
     app.py generate (system_executable | docs | docs_no_api | base_xlet |
-                    repo_changelog)
+                    repo_changelog | themes_changelog | all_changelogs)
                     [-f | --force-clean-build]
                     [-u | --update-inventories]
     app.py print_xlets_slugs
@@ -262,6 +262,14 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             if self.a["repo_changelog"]:
                 self.logger.info("**Repository changelog generation...**")
                 self.action = self.generate_repo_changelog
+
+            if self.a["themes_changelog"]:
+                self.logger.info("**Themes changelog generation...**")
+                self.action = self.generate_themes_changelog
+
+            if self.a["all_changelogs"]:
+                self.logger.info("**Changelogs generation...**")
+                self.action = self.generate_all_changelogs
         elif self.a["repo"]:
             self.repo_action = "init" if self.a["init"] else "update" if self.a["update"] else ""
 
@@ -389,6 +397,17 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         """See :any:`app_utils.generate_repo_changelog`.
         """
         app_utils.generate_repo_changelog(logger=self.logger)
+
+    def generate_themes_changelog(self):
+        """See :any:`app_utils.generate_themes_changelog`.
+        """
+        app_utils.generate_themes_changelog(logger=self.logger)
+
+    def generate_all_changelogs(self):
+        """See :any:`app_utils.generate_repo_changelog` and :any:`app_utils.generate_themes_changelog`.
+        """
+        app_utils.generate_repo_changelog(logger=self.logger)
+        app_utils.generate_themes_changelog(logger=self.logger)
 
     def base_xlet_generation(self):
         """See :any:`app_utils.BaseXletGenerator`
