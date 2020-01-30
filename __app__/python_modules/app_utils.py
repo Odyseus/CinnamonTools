@@ -224,7 +224,7 @@ _git_log_cmd_themes = 'git log --pretty=format:"\
 - **Date:** %aD%n\
 - **Commit:** [%h]({repo_url}/commit/%h)%n\
 - **Author:** %aN%n%n\`\`\`%n%b%n\`\`\`%n%n***%n" \
--- {relative_path} {append_or_override} "{log_path}"'
+-- {relative_path} ":(exclude)themes/CHANGELOG.md" {append_or_override} "{log_path}"'
 
 _changelog_header_themes = """## Themes changelog
 
