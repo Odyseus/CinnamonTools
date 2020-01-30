@@ -4,6 +4,47 @@
 
 ***
 
+- **Date:** Wed, 29 Jan 2020 21:37:40 -0300
+- **Commit:** [88651c7](https://gitlab.com/Odyseus/CinnamonTools/commit/88651c7)
+- **Author:** Odyseus
+
+```
+Python modules
+
+- Modified themes changelog generation to ignore the themes/CHANGELOG.md file.
+
+```
+
+***
+
+- **Date:** Wed, 29 Jan 2020 21:31:38 -0300
+- **Commit:** [943df52](https://gitlab.com/Odyseus/CinnamonTools/commit/943df52)
+- **Author:** Odyseus
+
+```
+General
+
+- Updated changelogs.
+- Updated Bash completions.
+
+```
+
+***
+
+- **Date:** Wed, 29 Jan 2020 21:31:08 -0300
+- **Commit:** [ee6dba6](https://gitlab.com/Odyseus/CinnamonTools/commit/ee6dba6)
+- **Author:** Odyseus
+
+```
+Python modules
+
+- Modified repository changelog generation to ignore the themes folder.
+- Added themes changelog generation.
+
+```
+
+***
+
 - **Date:** Wed, 29 Jan 2020 05:24:16 -0300
 - **Commit:** [c2edfd0](https://gitlab.com/Odyseus/CinnamonTools/commit/c2edfd0)
 - **Author:** Odyseus
