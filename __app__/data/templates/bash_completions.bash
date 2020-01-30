@@ -79,7 +79,8 @@ __cinnamon_tools_cli_{current_date}(){
         ;;
     "generate")
         COMPREPLY=( $(compgen -W \
-            "system_executable docs docs_no_api base_xlet repo_changelog" -- "${cur}") )
+            "system_executable docs docs_no_api base_xlet repo_changelog themes_changelog \
+all_changelogs" -- "${cur}") )
         ;;
     "build")
         COMPREPLY=( $(compgen -W \

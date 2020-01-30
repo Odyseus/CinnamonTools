@@ -1,6 +1,32 @@
 ## Repository changelog
 
-#### The changelogs for xlets can be found inside each xlet folder and/or in their help pages.
+**The changelogs for xlets can be found inside each xlet folder and/or in their help pages. The changelog for themes can be found inside the *themes* folder.**
+
+***
+
+- **Date:** Wed, 29 Jan 2020 05:24:16 -0300
+- **Commit:** [c2edfd0](https://gitlab.com/Odyseus/CinnamonTools/commit/c2edfd0)
+- **Author:** Odyseus
+
+```
+General
+
+- Updated sub-modules
+
+```
+
+***
+
+- **Date:** Wed, 29 Jan 2020 03:12:05 -0300
+- **Commit:** [cdd2bfe](https://gitlab.com/Odyseus/CinnamonTools/commit/cdd2bfe)
+- **Author:** Odyseus
+
+```
+General
+
+- Updated changelog.
+
+```
 
 ***
 
@@ -154,19 +180,6 @@ All xlets
 
 ***
 
-- **Date:** Tue, 28 Jan 2020 01:26:20 -0300
-- **Commit:** [358faf5](https://gitlab.com/Odyseus/CinnamonTools/commit/358faf5)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Added some basic styling to the Gtk 3.18 theme for GtkStackSidebar.
-
-```
-
-***
-
 - **Date:** Mon, 27 Jan 2020 00:20:36 -0300
 - **Commit:** [2e774b8](https://gitlab.com/Odyseus/CinnamonTools/commit/2e774b8)
 - **Author:** Odyseus
@@ -192,22 +205,6 @@ git-subtree-split: 0f986ce8790ac1699bc3d86402527f2d834d079e
 
 ```
  Merge ref. 'master' of git@gitlab.com:Odyseus/python_utils.git
-
-```
-
-***
-
-- **Date:** Fri, 24 Jan 2020 03:11:30 -0300
-- **Commit:** [bfb68de](https://gitlab.com/Odyseus/CinnamonTools/commit/bfb68de)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Gtk3 theme: Fixed wrongly colored header bars.
-- Cinnamon:
-    - Added new class that will be available on next Cinnamon version.
-    - Added missing cinnamon.css files that was removed due to incorrect rules on the .gitignore file.
 
 ```
 
@@ -331,31 +328,6 @@ JavaScript modules
 
 ***
 
-- **Date:** Sat, 18 Jan 2020 14:56:27 -0300
-- **Commit:** [c03b4f4](https://gitlab.com/Odyseus/CinnamonTools/commit/c03b4f4)
-- **Author:** Odyseus
-
-```
-Themes
-
-- General changes:
-    - Made it easier for users to create their own theme variants. Read the documentation for instructions: Usage > app.py build_themes > How to create a custom theme variant?.
-    - Removed MintGreen variant since I never used it and now users can create their own variant.
-    - Exposed for configuration several contextual colors for customization when creating custom variants.
-- Gtk2 theme changes:
-    - Removed unused image.
-- Gtk3 theme changes:
-    - Xfce 4.14 fixes. (Upstream fix)
-    - Add support for GtkStackSidebar needs attention. (Upstream fix)
-    - Compliance with application's request to set a monospace font. (Upstream fix)
-- Cinnamon theme changes:
-    - [GWL] Fixed justification of label inherited from applet-box. (Upstream fix)
-    - [GWL] Adjusted grouped-window-list-thumbnail-menu becoming active. (Upstream fix)
-
-```
-
-***
-
 - **Date:** Sun, 22 Dec 2019 05:10:21 -0300
 - **Commit:** [725b7c6](https://gitlab.com/Odyseus/CinnamonTools/commit/725b7c6)
 - **Author:** Odyseus
@@ -397,24 +369,6 @@ Python modules
 - Modified the handling of the metadata.json file for xlets. Now this file is modified at xlet build time to avoid having to manually keep it up to date (the cinnamon-version key more than anything).
 - Simplified the compatibility data displayed in all xlets help pages. It was pointless to display the specific Cinnamon versions (read from the metadata.json file) since all my xlets are *compatible* with a minimum Cinnamon version up to the latest version.
 - Added some missing docstrings of features previously added.
-
-```
-
-***
-
-- **Date:** Tue, 16 Jul 2019 00:48:05 -0300
-- **Commit:** [ddee4ac](https://gitlab.com/Odyseus/CinnamonTools/commit/ddee4ac)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Added support for Cinnamon 4.2.x. There is a new class for spacer applets.
-- Cinnamon theme SASS sources:
-    - Changed the type of certain comments so they don't show up in the built CSS files.
-    - Moved some comments inside conditions so they aren't added to the built CSS files.
-    - Changed the ridiculous huge size of the **notification-icon-button** class.
-    - Unified some styles used by button classes.
 
 ```
 
@@ -1257,19 +1211,6 @@ Python modules
 
 ***
 
-- **Date:** Mon, 15 Apr 2019 20:29:39 -0300
-- **Commit:** [81bd8b3](https://gitlab.com/Odyseus/CinnamonTools/commit/81bd8b3)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Exposed for configuration the shadow for client side decorated windows on the Gtk3 theme.
-
-```
-
-***
-
 - **Date:** Mon, 15 Apr 2019 20:28:37 -0300
 - **Commit:** [c177fe6](https://gitlab.com/Odyseus/CinnamonTools/commit/c177fe6)
 - **Author:** Odyseus
@@ -1609,19 +1550,6 @@ Python modules
 
 ***
 
-- **Date:** Mon, 18 Feb 2019 00:24:45 -0300
-- **Commit:** [b0424f0](https://gitlab.com/Odyseus/CinnamonTools/commit/b0424f0)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Removed color definition from the `.popup-alternating-menu-item:alternate` selector on the Cinnamon theme. The definition of this color was overwriting the color set by the `active`, `hover`, etc. pseudo classes. Setting the font weight to bold is enough to differentiate an alternate item from a primary one.
-
-```
-
-***
-
 - **Date:** Sun, 17 Feb 2019 02:58:20 -0300
 - **Commit:** [f49e859](https://gitlab.com/Odyseus/CinnamonTools/commit/f49e859)
 - **Author:** Odyseus
@@ -1914,20 +1842,6 @@ All xlets
 
 ***
 
-- **Date:** Tue, 1 Jan 2019 13:32:50 -0300
-- **Commit:** [4e9a380](https://gitlab.com/Odyseus/CinnamonTools/commit/4e9a380)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Cinnamon theme:
-    - Removed italic styling from the menu-category-button-greyed class. This class is applied to the category buttons in the Cinnamon menu applet when performing searches. Every time that a search was performed, the italic styling changed the size of the categories box (ultra ANNOYING!!!). A lighter color for the font is good enough to represent a disabled button.
-
-```
-
-***
-
 - **Date:** Tue, 25 Dec 2018 21:06:28 -0300
 - **Commit:** [862da4d](https://gitlab.com/Odyseus/CinnamonTools/commit/862da4d)
 - **Author:** Odyseus
@@ -2030,32 +1944,6 @@ Python modules
 
 ***
 
-- **Date:** Sat, 22 Dec 2018 17:48:26 -0300
-- **Commit:** [84c5bbe](https://gitlab.com/Odyseus/CinnamonTools/commit/84c5bbe)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Cinnamon theme: changed fixed font size for the run-dialog-completion-box class to a relative font size.
-
-```
-
-***
-
-- **Date:** Fri, 21 Dec 2018 14:30:45 -0300
-- **Commit:** [4523cb5](https://gitlab.com/Odyseus/CinnamonTools/commit/4523cb5)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Cinnamon theme: fixed erroneous styling of items from the grouped window applet when this applet is placed in the bottom panel.
-
-```
-
-***
-
 - **Date:** Thu, 20 Dec 2018 18:20:44 -0300
 - **Commit:** [6223ecb](https://gitlab.com/Odyseus/CinnamonTools/commit/6223ecb)
 - **Author:** Odyseus
@@ -2153,35 +2041,6 @@ git-subtree-split: 699056ecc3e79a1e746a8ec22957748bbbb47932
 
 ```
 Merge ref. 'master' of git@gitlab.com:Odyseus/python_utils.git
-
-```
-
-***
-
-- **Date:** Mon, 17 Dec 2018 15:37:18 -0300
-- **Commit:** [3665405](https://gitlab.com/Odyseus/CinnamonTools/commit/3665405)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Metacity theme:
-    - Fixed attached dialog titlebar. (Upstream fix)
-- Gtk3 theme:
-    - Properly place the "grab" area for pane separators. (Upstream fix)
-    - Style new overview classes. (Upstream fix)
-    - Improve the titlebar styling. (Upstream fix)
-    - Special case some headerbars. (Upstream fix)
-    - Don't use pure white for file managers sidebar foregrounds. (Upstream fix)
-    - Fixed some missing commas.
-    - Eradication of single quotes.
-    - Fixed some white space inconsistencies.
-- Cinnamon theme:
-    - Added support for the grouped window list applet. (Upstream fix)
-    - Use square menu favorites buttons. (Upstream fix)
-    - Center align text in applets. (Upstream fix)
-    - Updated the parse_sass.py script to generate on-the-fly from a template the SASS files used to build the Cinnamon theme CSS files.
-    - Restructured SASS files to avoid breakages caused by mediocre code formatters.
 
 ```
 
@@ -3965,20 +3824,6 @@ Documentation
 
 ***
 
-- **Date:** Mon, 3 Sep 2018 01:08:22 -0300
-- **Commit:** [ac665a3](https://gitlab.com/Odyseus/CinnamonTools/commit/ac665a3)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Eradicated the usage of SASS (the Ruby gem) in favor of using the new standalone SASS application. FINALLY some freaking sense!!!
-- Rebuilt Cinnamon themes from their SASS sources.
-
-```
-
-***
-
 - **Date:** Mon, 3 Sep 2018 01:02:09 -0300
 - **Commit:** [dc7f72c](https://gitlab.com/Odyseus/CinnamonTools/commit/dc7f72c)
 - **Author:** Odyseus
@@ -4622,23 +4467,6 @@ BaseXlet
 
 ***
 
-- **Date:** Tue, 24 Jul 2018 09:37:15 -0300
-- **Commit:** [19e3a4c](https://gitlab.com/Odyseus/CinnamonTools/commit/19e3a4c)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Gtk3.22: Upstream fix. Fix a couple of issues with slick-greeter.
-- Gtk3.22: Upstream fix. Restore the 18.3 styling of mate-panel taskbar.
-- Gtk3.22: Upstream fix. Remove a white border from the nemo sidebar.
-- Added some missing assets for Mate panel theming.
-- Added some fixes from upstream to the Metacity theme that were overlooked.
-
-```
-
-***
-
 - **Date:** Mon, 23 Jul 2018 16:14:22 -0300
 - **Commit:** [8db2696](https://gitlab.com/Odyseus/CinnamonTools/commit/8db2696)
 - **Author:** Odyseus
@@ -4844,24 +4672,6 @@ Added .gitlab-ci.yml
 
 ***
 
-- **Date:** Tue, 12 Jun 2018 00:10:34 -0300
-- **Commit:** [de4fd74](https://gitlab.com/Odyseus/CinnamonTools/commit/de4fd74)
-- **Author:** Odyseus
-
-```
-Theme
-
-- Some upstream fixes/improvements:
-    - Added theming for Mate OSD window when marco with compositing is enabled.
-    - Fixed transparent background in mate-terminal.
-    - Metacity: Fixed black border on focused titlebars under hidpi.
-    - Gtk 3.22: Fixed the color of some selected labels.
-    - Gtk 3.22: Tab alignment fixes.
-
-```
-
-***
-
 - **Date:** Tue, 5 Jun 2018 16:18:26 -0300
 - **Commit:** [6ec0f1a](https://gitlab.com/Odyseus/CinnamonTools/commit/6ec0f1a)
 - **Author:** Odyseus
@@ -4883,33 +4693,6 @@ Documentation
 All xlets
 
 - Updated localization templates, Spanish localizations and help files.
-
-```
-
-***
-
-- **Date:** Tue, 5 Jun 2018 16:12:11 -0300
-- **Commit:** [8e20931](https://gitlab.com/Odyseus/CinnamonTools/commit/8e20931)
-- **Author:** Odyseus
-
-```
-Theme
-
-- More fixes from upstream.
-- Added back the removed selectors and instead commented them. Makes it easier to make comparisons with upstream.
-
-```
-
-***
-
-- **Date:** Mon, 14 May 2018 11:27:37 -0300
-- **Commit:** [f5eb419](https://gitlab.com/Odyseus/CinnamonTools/commit/f5eb419)
-- **Author:** Odyseus
-
-```
-Theme
-
-- Gtk3 theme: Fix for Mate panel.
 
 ```
 
@@ -5004,45 +4787,6 @@ Development application
 - Added .sass-cache folder to .gitignore.
 - Added missing argument to bash completions file.
 - Added --ignored-pattern to the function that generates the xlets POT files.
-
-```
-
-***
-
-- **Date:** Tue, 8 May 2018 04:55:37 -0300
-- **Commit:** [2a2b933](https://gitlab.com/Odyseus/CinnamonTools/commit/2a2b933)
-- **Author:** Odyseus
-
-```
-Themes
-
-- More clean up.
-
-```
-
-***
-
-- **Date:** Tue, 8 May 2018 04:51:45 -0300
-- **Commit:** [20066e8](https://gitlab.com/Odyseus/CinnamonTools/commit/20066e8)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Switched to a size in pixels for the sound applet icons to avoid blurring.
-
-```
-
-***
-
-- **Date:** Tue, 8 May 2018 04:23:27 -0300
-- **Commit:** [323374c](https://gitlab.com/Odyseus/CinnamonTools/commit/323374c)
-- **Author:** Odyseus
-
-```
-Themes
-
-- Clean up.
 
 ```
 
