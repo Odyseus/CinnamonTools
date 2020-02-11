@@ -374,7 +374,7 @@ class LocalizedHelpCreator():
             body = _("This xlet is compatible with Cinnamon %s up to latest Cinnamon version.") % \
                 str(min_ver)
         else:
-            body = _("This xlet is compatible with Cinnamon %s up to %s.") % (
+            body = _("This xlet is compatible with Cinnamon {0} up to {1}.").format(
                 str(min_ver), str(max_ver))
 
         return utils.get_bootstrap_card(

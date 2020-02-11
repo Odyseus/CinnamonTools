@@ -2088,7 +2088,9 @@ def generate_docs(generate_api_docs=False,
         (os.path.join("__app__", "python_modules"),
             os.path.join(base_apidoc_dest_path_rel_to_root, "python_modules")),
         (os.path.join("__app__", "data", "python_modules", "xlets_settings"),
-            os.path.join(base_apidoc_dest_path_rel_to_root, "xlets_settings"))
+            os.path.join(base_apidoc_dest_path_rel_to_root, "xlets_settings")),
+        (os.path.join("__app__", "data", "python_modules", "file_chooser_dialog"),
+            os.path.join(base_apidoc_dest_path_rel_to_root, "file_chooser_dialog"))
     ]
 
     sphinx_docs_utils.generate_docs(root_folder=root_folder,
