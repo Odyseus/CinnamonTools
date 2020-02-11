@@ -48,7 +48,8 @@ const {
 const {
     _,
     ngettext,
-    escapeHTML
+    escapeHTML,
+    xdgOpen
 } = GlobalUtils;
 
 const {
@@ -130,37 +131,14 @@ Mailnag.prototype = {
             this.instance_id
         );
 
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+        this._bindSettings();
+        aDirectCallback();
 
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+        Mainloop.idle_add(() => {
+            aIdleCallback();
 
-                return GLib.SOURCE_REMOVE;
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
-        }
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _bindSettings: function() {
@@ -213,7 +191,7 @@ Mailnag.prototype = {
             _("Help"),
             "dialog-information",
             () => {
-                Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
+                xdgOpen(this.metadata.path + "/HELP.html");
             }
         );
         this._applet_context_menu.addMenuItem(menuItem);
@@ -898,7 +876,7 @@ Mailnag.prototype = {
         this.menu.close();
 
         if (this.pref_client.startsWith("http")) { // client is a web page
-            Util.spawn_async("xdg-open " + this.pref_client, null);
+            xdgOpen(this.pref_client);
         } else { // client is a command
             Util.spawn_async(this.pref_client, null);
         }
