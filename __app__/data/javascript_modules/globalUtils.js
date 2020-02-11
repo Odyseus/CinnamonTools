@@ -24,7 +24,8 @@ const {
     gettext: Gettext,
     gi: {
         Gtk,
-        GLib
+        GLib,
+        St
     },
     misc: {
         util: Util
@@ -461,6 +462,81 @@ function removeOverride() {
     removeInjection.apply(null, arguments);
 }
 
+/**
+ * Convert HTML to plain text.
+ *
+ * @param {String} aHtml - The string to convert.
+ *
+ * @return {String} The converted string.
+ */
+function html2text(aHtml) {
+    let ret = aHtml.replace("<br/>", "\n")
+        .replace("</p>", "\n")
+        .replace(/<\/h[0-9]>/g, "\n\n")
+        .replace(/<.*?>/g, "")
+        .replace("&nbsp;", " ")
+        .replace("&quot;", '"')
+        .replace("&rdquo;", '"')
+        .replace("&ldquo;", '"')
+        .replace("&#8220;", '"')
+        .replace("&#8221;", '"')
+        .replace("&rsquo;", "'")
+        .replace("&lsquo;", "'")
+        .replace("&#8216;", "'")
+        .replace("&#8217;", "'")
+        .replace("&#8230;", "...");
+
+    return ret;
+}
+
+/**
+ * Convert HTML to Pango markup.
+ *
+ * @param {String} aHtml - The string to convert.
+ *
+ * @return {String} The converted string.
+ */
+function html2pango(aHtml) {
+    let esc_open = "-@~]";
+    let esc_close = "]~@-";
+
+    // </p> <br/> --> newline
+    let ret = aHtml.replace("<br/>", "\n").replace("</p>", "\n")
+        // &nbsp; --> space
+        .replace(/&nbsp;/g, " ")
+        // Headings --> <b> + 2*newline
+        .replace(/<h[0-9]>/g, esc_open + 'span weight="bold"' + esc_close)
+        .replace(/<\/h[0-9]>\s*/g, esc_open + "/span" + esc_close + "\n\n")
+        // <strong> -> <b>
+        .replace("<strong>", esc_open + "b" + esc_close)
+        .replace("</strong>", esc_open + "/b" + esc_close)
+        // <i> -> <i>
+        .replace("<i>", esc_open + "i" + esc_close)
+        .replace("</i>", esc_open + "/i" + esc_close)
+        // Strip remaining tags
+        .replace(/<.*?>/g, "");
+
+    // Replace escaped <, > with actual angle-brackets
+    let re1 = new RegExp(esc_open, "g");
+    let re2 = new RegExp(esc_close, "g");
+    ret = ret.replace(re1, "<").replace(re2, ">");
+
+    return ret.replace(/[\r\n]+/g, "\n");
+}
+
+/**
+ * Copy to clipboard.
+ *
+ * @param {String} aText - The string to copy.
+ */
+function copyToClipboard(aText) {
+    if (St.hasOwnProperty("ClipboardType")) {
+        St.Clipboard.get_default().set_text(St.ClipboardType.CLIPBOARD, aText);
+    } else {
+        St.Clipboard.get_default().set_text(aText);
+    }
+}
+
 /* exported _,
             CINNAMON_VERSION,
             WARNING_CHARACTER,
@@ -480,4 +556,7 @@ function removeOverride() {
             injectMethodBefore,
             removeInjection,
             removeOverride,
+            html2text,
+            html2pango,
+            copyToClipboard
  */

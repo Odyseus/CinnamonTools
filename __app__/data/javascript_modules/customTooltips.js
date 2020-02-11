@@ -4,11 +4,19 @@ const {
         Pango,
         St
     },
+    misc: {
+        params: Params
+    },
     ui: {
         main: Main,
         tooltips: Tooltips
     }
 } = imports;
+
+var IntelligentTooltipParams = Object.freeze({
+    max_width: 0,
+    text_alignement: "" // "left", "right", "center" or " justify".
+});
 
 /**
  * An instance of Tooltips.Tooltip with enhancements:
@@ -25,15 +33,17 @@ const {
  *     for two reasons. First, because a tooltip occupying the entire screen is super
  *     annoying. And second, the default tooltips have no line wrapping.
  */
-function InteligentTooltip() {
+function IntelligentTooltip() {
     this._init.apply(this, arguments);
 }
 
-InteligentTooltip.prototype = {
+IntelligentTooltip.prototype = {
     __proto__: Tooltips.Tooltip.prototype,
 
-    _init: function(aActor, aTitle) {
+    _init: function(aActor, aTitle, aOverrides) {
         Tooltips.Tooltip.prototype._init.call(this, aActor, aTitle);
+
+        this.overrides = Params.parse(aOverrides, IntelligentTooltipParams);
 
         this._tooltip.get_clutter_text().set_line_wrap(true);
         this._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
@@ -49,12 +59,34 @@ InteligentTooltip.prototype = {
             return;
         }
 
+        let monitor = Main.layoutManager.findMonitorForActor(this.item);
+        let rtl = (St.Widget.get_default_direction() === St.TextDirection.RTL);
+
+        this._tooltip.set_style("text-align: %s;width:auto;max-width: %spx;".format(
+            (this.overrides.text_alignement ?
+                // Set a custom text alignement...
+                this.overrides.text_alignement :
+                // ...or an automatic alignement depending on default text direction.
+                (rtl ? "right" : "left")),
+            (this.overrides.max_width > 0 ?
+                // Set a custom max. tooltip width...
+                this.overrides.max_width :
+                // ...or a fixed max. width not greater than half the monitor width.
+                String(Math.round(Number(monitor.width) / 2)))
+        ));
+
+        // NOTE: Ultra cheap hack to fix retarded behavior.
+        // Getting the tooltip width before it was ever shown could get a tooltip width
+        // bigger than the monitor width, producing tooltips that will show up outside the
+        // monitor view. SO, "display the tooltip hidden" once before getting its width.
+        // MOVING THE F*CK ON!!!
+        this._tooltip.set_opacity(0);
+        this._tooltip.show();
+        this._tooltip.hide();
+        this._tooltip.set_opacity(255);
+
         let tooltipWidth = this._tooltip.get_allocation_box().x2 - this._tooltip.get_allocation_box().x1;
         let tooltipHeight = this._tooltip.get_allocation_box().y2 - this._tooltip.get_allocation_box().y1;
-
-        let monitor = Main.layoutManager.findMonitorForActor(this.item);
-
-        let rtl = (St.Widget.get_default_direction() === St.TextDirection.RTL);
 
         let cursorSize = this.desktop_settings.get_int("cursor-size");
         let tooltipTop = this.mousePosition[1] + Math.round(cursorSize / 1.5);
@@ -62,18 +94,18 @@ InteligentTooltip.prototype = {
         tooltipLeft = Math.max(tooltipLeft, monitor.x);
         tooltipLeft = Math.min(tooltipLeft, monitor.x + monitor.width - tooltipWidth);
 
+        // NOTE: If the tooltip doesn't fit under the cursor, display it over the cursor.
         if (tooltipTop + tooltipHeight > monitor.height) {
             tooltipTop = tooltipTop - tooltipHeight - Math.round(cursorSize);
         }
 
-        this._tooltip.set_position(tooltipLeft, tooltipTop);
+        // NOTE: If the tooltip is to big to fit over the cursor, at least make the top of the
+        // tooltip "touch" the top of the screen.
+        if (tooltipTop < monitor.y) {
+            tooltipTop = 0;
+        }
 
-        this._tooltip.set_style("text-align: %s;width:auto;max-width: %spx;".format(
-            // Align to right or left depending on default direction.
-            rtl ? "right" : "left",
-            // Set max. width of tooltip to half the width of the monitor.
-            String(Math.round(Number(monitor.width) / 2))
-        ));
+        this._tooltip.set_position(tooltipLeft, tooltipTop);
 
         this._tooltip.show();
         this._tooltip.raise_top();
