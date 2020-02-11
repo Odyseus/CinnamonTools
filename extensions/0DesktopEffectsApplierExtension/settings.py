@@ -19,7 +19,7 @@ LOGGING_LEVEL_TOOLTIP = "\n".join([
     _("It enables the ability to log the output of several functions used by the extension."),
     "",
     "%s: %s" % (_("Normal"), _("Only log messages caused by non critical errors.")),
-    "%s: %s" % (_("Verbose"), _("Additinally log extra output messages and all HTTP responses.")),
+    "%s: %s" % (_("Verbose"), _("Additionally log extra output messages and all HTTP responses.")),
     "%s: %s" % (_("Very verbose"), _(
         "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."))
 ])
@@ -230,25 +230,25 @@ SHADERS_TAB = {
         "section-title": _("Shader effects"),
         "widgets": [{
             "widget-type": "list",
-            "args": {
+            "widget-attrs": {
                 "pref_key": "pref_shader_list",
                 "apply_key": "trigger_shader_list_changed",
-                "imp_exp_path_key": "pref_imp_exp_last_selected_directory",
-                "properties": {
-                    "columns": SHADERS_COLUMNS + ALL_TRIGGER_OPTIONS,
-                    "height": 280,
-                    "dialog-info-labels": SHADERS_INFO_LABELS + INFO_LABELS
-                }
+                "imp_exp_path_key": "pref_imp_exp_last_selected_directory"
+            },
+            "widget-kwargs": {
+                "columns": SHADERS_COLUMNS + ALL_TRIGGER_OPTIONS,
+                "height": 280,
+                "dialog-info-labels": SHADERS_INFO_LABELS + INFO_LABELS
             }
         }, {
             "widget-type": "filechooser",
-            "args": {
-                "pref_key": "pref_extra_shaders_path",
-                "properties": {
-                    "description": "Extra shaders path",
-                    "select-dir": True,
-                    "default": ""
-                }
+            "widget-attrs": {
+                "pref_key": "pref_extra_shaders_path"
+            },
+            "widget-kwargs": {
+                "description": "Extra shaders path",
+                "select-dir": True,
+                "default": ""
             }
         }]
     }]
@@ -261,15 +261,15 @@ DESATURATION_TAB = {
         "section-title": _("Desaturation effects"),
         "widgets": [{
             "widget-type": "list",
-            "args": {
+            "widget-attrs": {
                 "pref_key": "pref_desaturation_list",
                 "apply_key": "trigger_desaturation_list_changed",
-                "imp_exp_path_key": "pref_imp_exp_last_selected_directory",
-                "properties": {
-                    "columns": DESATURATION_COLUMNS + ALL_TRIGGER_OPTIONS,
-                    "height": 300,
-                    "dialog-info-labels": DESATURATION_INFO_LABELS + INFO_LABELS
-                }
+                "imp_exp_path_key": "pref_imp_exp_last_selected_directory"
+            },
+            "widget-kwargs": {
+                "columns": DESATURATION_COLUMNS + ALL_TRIGGER_OPTIONS,
+                "height": 300,
+                "dialog-info-labels": DESATURATION_INFO_LABELS + INFO_LABELS
             }
         }]
     }]
@@ -282,15 +282,15 @@ COLORS_TAB = {
         "section-title": _("Color effects"),
         "widgets": [{
             "widget-type": "list",
-            "args": {
+            "widget-attrs": {
                 "pref_key": "pref_color_list",
                 "apply_key": "trigger_color_list_changed",
-                "imp_exp_path_key": "pref_imp_exp_last_selected_directory",
-                "properties": {
-                    "columns": COLORS_COLUMNS + ALL_TRIGGER_OPTIONS,
-                    "height": 300,
-                    "dialog-info-labels": INFO_LABELS
-                }
+                "imp_exp_path_key": "pref_imp_exp_last_selected_directory"
+            },
+            "widget-kwargs": {
+                "columns": COLORS_COLUMNS + ALL_TRIGGER_OPTIONS,
+                "height": 300,
+                "dialog-info-labels": INFO_LABELS
             }
         }]
     }]
@@ -303,15 +303,15 @@ CONTRAST_TAB = {
         "section-title": _("Contrast effects"),
         "widgets": [{
             "widget-type": "list",
-            "args": {
+            "widget-attrs": {
                 "pref_key": "pref_contrast_list",
                 "apply_key": "trigger_contrast_list_changed",
-                "imp_exp_path_key": "pref_imp_exp_last_selected_directory",
-                "properties": {
-                    "columns": CONTRAST_COLUMNS + ALL_TRIGGER_OPTIONS,
-                    "height": 300,
-                    "dialog-info-labels": CONTRAST_INFO_LABELS + INFO_LABELS
-                }
+                "imp_exp_path_key": "pref_imp_exp_last_selected_directory"
+            },
+            "widget-kwargs": {
+                "columns": CONTRAST_COLUMNS + ALL_TRIGGER_OPTIONS,
+                "height": 300,
+                "dialog-info-labels": CONTRAST_INFO_LABELS + INFO_LABELS
             }
         }]
     }]
@@ -324,15 +324,15 @@ BRIGHTNESS_TAB = {
         "section-title": _("Brightness effects"),
         "widgets": [{
             "widget-type": "list",
-            "args": {
+            "widget-attrs": {
                 "pref_key": "pref_brightness_list",
                 "apply_key": "trigger_brightness_list_changed",
-                "imp_exp_path_key": "pref_imp_exp_last_selected_directory",
-                "properties": {
-                    "columns": BRIGHTNESS_COLUMNS + ALL_TRIGGER_OPTIONS,
-                    "height": 300,
-                    "dialog-info-labels": BRIGHTNESS_INFO_LABELS + INFO_LABELS
-                }
+                "imp_exp_path_key": "pref_imp_exp_last_selected_directory"
+            },
+            "widget-kwargs": {
+                "columns": BRIGHTNESS_COLUMNS + ALL_TRIGGER_OPTIONS,
+                "height": 300,
+                "dialog-info-labels": BRIGHTNESS_INFO_LABELS + INFO_LABELS
             }
         }]
     }]
@@ -346,52 +346,54 @@ OTHER_TAB = {
         "section-title": _("Global keybindings"),
         "widgets": [{
             "widget-type": "list",
-            "args": {
+            "widget-attrs": {
                 "pref_key": "pref_global_keybindings",
                 "apply_key": "trigger_global_keybindings_changed",
-                "imp_exp_path_key": "pref_imp_exp_last_selected_directory",
-                "properties": {
-                    "columns": KEYBINDINGS_COLUMNS
-                }
+                "imp_exp_path_key": "pref_imp_exp_last_selected_directory"
+            },
+            "widget-kwargs": {
+                "columns": KEYBINDINGS_COLUMNS
             }
         }]
     }, {
         "section-title": _("Miscellaneous"),
         "widgets": [{
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_apply_cinnamon_injections",
-                "properties": {
-                    "description": _("Windows clones inherit effects"),
-                    "tooltip": _("Window thumbnails generated by the [[Alt]] + [[Tab]] switchers and workspace previews will inherit the effect of the real windows.")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_apply_cinnamon_injections"
+            },
+            "widget-kwargs": {
+                "description": _("Windows clones inherit effects"),
+                "tooltip": _("Window thumbnails generated by the [[Alt]] + [[Tab]] switchers and workspace previews will inherit the effect of the real windows.")
             }
         }]
     }, {
         "section-title": _("Debugging"),
         "section-notes": [CINN_RESTART],
         "widgets": [{
-            "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_logging_level",
-                "properties": {
-                    "description": "%s (*)" % _("Logging level"),
-                    "tooltip": LOGGING_LEVEL_TOOLTIP,
-                    "options": {
-                        0: _("Normal"),
-                        1: _("Verbose"),
-                        2: _("Very verbose")
-                    }
+            "widget-type": "gcombobox",
+            "widget-attrs": {
+                "pref_key": "pref-logging-level",
+                "schema": "org.cinnamon.{{XLET_TYPE}}s.{{UUID}}"
+            },
+            "widget-kwargs": {
+                "description": "%s (*)" % _("Logging level"),
+                "tooltip": LOGGING_LEVEL_TOOLTIP,
+                "options": {
+                    0: _("Normal"),
+                    1: _("Verbose"),
+                    2: _("Very verbose")
                 }
             }
         }, {
-            "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_debugger_enabled",
-                "properties": {
-                    "description": "%s (*)" % _("Enable debugger"),
-                    "tooltip": _("It enables the ability to catch all exceptions that under normal use would not be caught.")
-                }
+            "widget-type": "gswitch",
+            "widget-attrs": {
+                "pref_key": "pref-debugger-enabled",
+                "schema": "org.cinnamon.{{XLET_TYPE}}s.{{UUID}}"
+            },
+            "widget-kwargs": {
+                "description": "%s (*)" % _("Enable debugger"),
+                "tooltip": _("It enables the ability to catch all exceptions that under normal use would not be caught.")
             }
         }]
     }]

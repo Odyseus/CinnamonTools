@@ -25,10 +25,6 @@ if (typeof require === "function") {
 }
 
 const {
-    Settings,
-} = Constants;
-
-const {
     _,
     escapeHTML,
     xdgOpen
@@ -42,7 +38,9 @@ const {
     CustomNotification
 } = DesktopNotificationsUtils;
 
-wrapObjectMethods(Settings, {
+var Debugger = new DebugManager.DebugManager("org.cinnamon.{{XLET_TYPE}}s.{{UUID}}");
+
+wrapObjectMethods(Debugger, {
     CustomNotification: CustomNotification
 });
 

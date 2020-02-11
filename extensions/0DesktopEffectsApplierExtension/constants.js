@@ -12,8 +12,6 @@ if (typeof require === "function") {
 
 var BOUND_SETTINGS_ARRAY = [
     "pref_desktop_file_generated",
-    "pref_logging_level",
-    "pref_debugger_enabled",
     "pref_extra_shaders_path",
     "pref_global_keybindings",
     "pref_shader_list",

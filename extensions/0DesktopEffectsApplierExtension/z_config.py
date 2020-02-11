@@ -23,6 +23,9 @@ settings = {
         "source": "__app__/data/javascript_modules/debugManager.js",
         "destination": "debugManager.js"
     }, {
+        "source": "__app__/data/gschemas/debugManagerSchema.xml",
+        "destination": "schemas/org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml"
+    }, {
         "source": "__app__/data/javascript_modules/xletsSettingsUtils.js",
         "destination": "xletsSettingsUtils.js"
     }]

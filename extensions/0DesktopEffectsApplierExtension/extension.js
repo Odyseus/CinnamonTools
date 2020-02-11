@@ -669,7 +669,7 @@ function init(aXletMeta) {
 }
 
 function enable() {
-    D.wrapObjectMethods(Settings, {
+    D.wrapObjectMethods($.Debugger, {
         DesktopEffectsApplier: DesktopEffectsApplier
     });
 
