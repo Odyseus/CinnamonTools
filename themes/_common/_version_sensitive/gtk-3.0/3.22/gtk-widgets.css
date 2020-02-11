@@ -611,7 +611,7 @@ expander arrow:checked {
 /************
  * flow box *
  ************/
-GtkFlowBox .grid-child {
+flowbox flowboxchild {
     padding: 3px;
     border-radius: 3px;
 }
@@ -2475,6 +2475,8 @@ entry selection {
     background-color: @theme_selected_bg_color;
 }
 
+flowbox flowboxchild:selected,
+flowbox flowboxchild:selected:focus,
 row:selected label,
 label:selected,
 label selection,
