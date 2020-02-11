@@ -20,7 +20,7 @@ LOGGING_LEVEL_TOOLTIP = "\n".join([
     _("It enables the ability to log the output of several functions used by the extension."),
     "",
     "%s: %s" % (_("Normal"), _("Only log messages caused by non critical errors.")),
-    "%s: %s" % (_("Verbose"), _("Additinally log extra output messages and all HTTP responses.")),
+    "%s: %s" % (_("Verbose"), _("Additionally log extra output messages and all HTTP responses.")),
     "%s: %s" % (_("Very verbose"), _(
         "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."))
 ])
@@ -50,30 +50,29 @@ GENERAL_TAB = {
         "section-title": _("General"),
         "widgets": [{
             "widget-type": "keybinding",
-            "args": {
-                "pref_key": "pref_overlay_key",
-                "properties": {
-                    "description": _("Keyboard shortcut to launch a custom command"),
-                    "num-bind": 1
-                }
+            "widget-attrs": {
+                "pref_key": "pref_overlay_key"
+            },
+            "widget-kwargs": {
+                "description": _("Keyboard shortcut to launch a custom command")
             }
         }, {
             "widget-type": "entry",
-            "args": {
-                "pref_key": "pref_onkeybinding_command",
-                "properties": {
-                    "description": _("Command to launch on keyboard shortcut"),
-                    "tooltip": _("Command to launch when the keyboard shortcut specified above is pressed.")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_onkeybinding_command"
+            },
+            "widget-kwargs": {
+                "description": _("Command to launch on keyboard shortcut"),
+                "tooltip": _("Command to launch when the keyboard shortcut specified above is pressed.")
             }
         }, {
             "widget-type": "entry",
-            "args": {
-                "pref_key": "pref_onclick_command",
-                "properties": {
-                    "description": _("Command to launch on click"),
-                    "tooltip": _("Command to launch when the applet is clicked.")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_onclick_command"
+            },
+            "widget-kwargs": {
+                "description": _("Command to launch on click"),
+                "tooltip": _("Command to launch when the applet is clicked.")
             }
         }]
     }, {
@@ -83,13 +82,13 @@ GENERAL_TAB = {
         ],
         "widgets": [{
             "widget-type": "list",
-            "args": {
-                "pref_key": "pref_graph_ids",
-                "properties": {
-                    "columns": IDS_COLUMN,
-                    "immutable": {
-                        "allow_edition": False
-                    }
+            "widget-attrs": {
+                "pref_key": "pref_graph_ids"
+            },
+            "widget-kwargs": {
+                "columns": IDS_COLUMN,
+                "immutable": {
+                    "allow_edition": False
                 }
             }
         }]
@@ -102,117 +101,117 @@ APPEARANCE_TAB = {
         "section-title": _("Appearance"),
         "widgets": [{
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_smooth",
-                "properties": {
-                    "description": _("Smooth graphs")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_smooth"
+            },
+            "widget-kwargs": {
+                "description": _("Smooth graphs")
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_graph_width",
-                "properties": {
-                    "description": _("Common graph width"),
-                    "tooltip": _("If the applet is in a vertical panel, this sets the graph height. The graph width is then the panel width minus padding."),
-                    "min": 10,
-                    "max": 1000,
-                    "step": 1,
-                    "units": "pixels"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Common graph width"),
+                "tooltip": _("If the applet is in a vertical panel, this sets the graph height. The graph width is then the panel width minus padding."),
+                "min": 10,
+                "max": 1000,
+                "step": 1,
+                "units": "pixels"
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_graph_spacing",
-                "properties": {
-                    "description": _("Graph spacing"),
-                    "tooltip": _("The number of pixels between each graph. Can be set to -1 to allow single line borders between graphs if borders are enabled."),
-                    "min": -1,
-                    "max": 100,
-                    "step": 1,
-                    "units": "pixels"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_graph_spacing"
+            },
+            "widget-kwargs": {
+                "description": _("Graph spacing"),
+                "tooltip": _("The number of pixels between each graph. Can be set to -1 to allow single line borders between graphs if borders are enabled."),
+                "min": -1,
+                "max": 100,
+                "step": 1,
+                "units": "pixels"
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_refresh_rate",
-                "properties": {
-                    "description": _("Refresh rate"),
-                    "min": 100,
-                    "max": 10000,
-                    "step": 50,
-                    "units": "milliseconds"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_refresh_rate"
+            },
+            "widget-kwargs": {
+                "description": _("Refresh rate"),
+                "min": 100,
+                "max": 10000,
+                "step": 50,
+                "units": "milliseconds"
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_use_padding",
-                "properties": {
-                    "description": _("Use custom applet padding")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_use_padding"
+            },
+            "widget-kwargs": {
+                "description": _("Use custom applet padding")
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_padding_lr",
-                "properties": {
-                    "description": _("Left/right padding"),
-                    "dependency": "pref_use_padding",
-                    "min": 0,
-                    "max": 100,
-                    "step": 1,
-                    "units": "pixels"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_padding_lr"
+            },
+            "widget-kwargs": {
+                "description": _("Left/right padding"),
+                "dependency": "pref_use_padding",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "units": "pixels"
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_padding_tb",
-                "properties": {
-                    "description": _("Top/bottom padding"),
-                    "dependency": "pref_use_padding",
-                    "min": 0,
-                    "max": 100,
-                    "step": 1,
-                    "units": "pixels"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_padding_tb"
+            },
+            "widget-kwargs": {
+                "description": _("Top/bottom padding"),
+                "dependency": "pref_use_padding",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "units": "pixels"
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_draw_background",
-                "properties": {
-                    "description": _("Draw background")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_draw_background"
+            },
+            "widget-kwargs": {
+                "description": _("Draw background")
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_bg_color",
-                "properties": {
-                    "description": _("Background color"),
-                    "dependency": "pref_draw_background"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_bg_color"
+            },
+            "widget-kwargs": {
+                "description": _("Background color"),
+                "dependency": "pref_draw_background"
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_draw_border",
-                "properties": {
-                    "description": _("Draw border")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_draw_border"
+            },
+            "widget-kwargs": {
+                "description": _("Draw border")
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_border_color",
-                "properties": {
-                    "description": _("Border color"),
-                    "dependency": "pref_draw_border"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_border_color"
+            },
+            "widget-kwargs": {
+                "description": _("Border color"),
+                "dependency": "pref_draw_border"
             }
         }]
     }]
@@ -224,68 +223,68 @@ CPU_TAB = {
         "section-title": _("CPU"),
         "widgets": [{
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_cpu_override_graph_width",
-                "properties": {
-                    "description": _("Override graph width")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_cpu_override_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Override graph width")
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_cpu_graph_width",
-                "properties": {
-                    "description": _("Graph width"),
-                    "dependency": "pref_cpu_override_graph_width",
-                    "min": 10,
-                    "max": 1000,
-                    "step": 1,
-                    "units": "pixels"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_cpu_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Graph width"),
+                "dependency": "pref_cpu_override_graph_width",
+                "min": 10,
+                "max": 1000,
+                "step": 1,
+                "units": "pixels"
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_cpu_tooltip_decimals",
-                "properties": {
-                    "description": _("Show this many decimals in the tooltip"),
-                    "min": 0,
-                    "max": 10,
-                    "step": 1,
-                    "units": "decimals"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_cpu_tooltip_decimals"
+            },
+            "widget-kwargs": {
+                "description": _("Show this many decimals in the tooltip"),
+                "min": 0,
+                "max": 10,
+                "step": 1,
+                "units": "decimals"
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_cpu_color_0",
-                "properties": {
-                    "description": _("User color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_cpu_color_0"
+            },
+            "widget-kwargs": {
+                "description": _("User color")
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_cpu_color_1",
-                "properties": {
-                    "description": _("Nice color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_cpu_color_1"
+            },
+            "widget-kwargs": {
+                "description": _("Nice color")
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_cpu_color_2",
-                "properties": {
-                    "description": _("Kernel color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_cpu_color_2"
+            },
+            "widget-kwargs": {
+                "description": _("Kernel color")
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_cpu_color_3",
-                "properties": {
-                    "description": _("IOWait color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_cpu_color_3"
+            },
+            "widget-kwargs": {
+                "description": _("IOWait color")
             }
         }]
     }]
@@ -297,40 +296,40 @@ MEMORY_TAB = {
         "section-title": _("Memory graph"),
         "widgets": [{
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_mem_override_graph_width",
-                "properties": {
-                    "description": _("Override graph width")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_mem_override_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Override graph width")
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_mem_graph_width",
-                "properties": {
-                    "description": _("Graph width"),
-                    "dependency": "pref_mem_override_graph_width",
-                    "min": 10,
-                    "max": 1000,
-                    "step": 1,
-                    "units": "pixels"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_mem_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Graph width"),
+                "dependency": "pref_mem_override_graph_width",
+                "min": 10,
+                "max": 1000,
+                "step": 1,
+                "units": "pixels"
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_mem_color_0",
-                "properties": {
-                    "description": _("Used color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_mem_color_0"
+            },
+            "widget-kwargs": {
+                "description": _("Used color")
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_mem_color_1",
-                "properties": {
-                    "description": _("Cached color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_mem_color_1"
+            },
+            "widget-kwargs": {
+                "description": _("Cached color")
             }
         }]
     }]
@@ -342,32 +341,32 @@ SWAP_TAB = {
         "section-title": _("Swap graph"),
         "widgets": [{
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_swap_override_graph_width",
-                "properties": {
-                    "description": _("Override graph width")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_swap_override_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Override graph width")
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_swap_graph_width",
-                "properties": {
-                    "description": _("Graph width"),
-                    "dependency": "pref_swap_override_graph_width",
-                    "min": 10,
-                    "max": 1000,
-                    "step": 1,
-                    "units": "pixels"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_swap_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Graph width"),
+                "dependency": "pref_swap_override_graph_width",
+                "min": 10,
+                "max": 1000,
+                "step": 1,
+                "units": "pixels"
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_swap_color_0",
-                "properties": {
-                    "description": _("Used color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_swap_color_0"
+            },
+            "widget-kwargs": {
+                "description": _("Used color")
             }
         }]
     }]
@@ -379,40 +378,40 @@ NETWORK_TAB = {
         "section-title": _("Network graph"),
         "widgets": [{
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_net_override_graph_width",
-                "properties": {
-                    "description": _("Override graph width")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_net_override_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Override graph width")
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_net_graph_width",
-                "properties": {
-                    "description": _("Graph width"),
-                    "dependency": "pref_net_override_graph_width",
-                    "min": 10,
-                    "max": 1000,
-                    "step": 1,
-                    "units": "pixels"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_net_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Graph width"),
+                "dependency": "pref_net_override_graph_width",
+                "min": 10,
+                "max": 1000,
+                "step": 1,
+                "units": "pixels"
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_net_color_0",
-                "properties": {
-                    "description": _("Download color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_net_color_0"
+            },
+            "widget-kwargs": {
+                "description": _("Download color")
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_net_color_1",
-                "properties": {
-                    "description": _("Upload color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_net_color_1"
+            },
+            "widget-kwargs": {
+                "description": _("Upload color")
             }
         }]
     }]
@@ -424,32 +423,32 @@ LOAD_TAB = {
         "section-title": _("Load average graph"),
         "widgets": [{
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_load_override_graph_width",
-                "properties": {
-                    "description": _("Override graph width")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_load_override_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Override graph width")
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_load_graph_width",
-                "properties": {
-                    "description": _("Graph width"),
-                    "dependency": "pref_load_override_graph_width",
-                    "min": 10,
-                    "max": 1000,
-                    "step": 1,
-                    "units": "pixels"
-                }
+            "widget-attrs": {
+                "pref_key": "pref_load_graph_width"
+            },
+            "widget-kwargs": {
+                "description": _("Graph width"),
+                "dependency": "pref_load_override_graph_width",
+                "min": 10,
+                "max": 1000,
+                "step": 1,
+                "units": "pixels"
             }
         }, {
             "widget-type": "colorchooser",
-            "args": {
-                "pref_key": "pref_load_color_0",
-                "properties": {
-                    "description": _("Color")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_load_color_0"
+            },
+            "widget-kwargs": {
+                "description": _("Color")
             }
         }]
     }]
@@ -462,26 +461,26 @@ OTHER_TAB = {
         "section-notes": [CINN_RESTART],
         "widgets": [{
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_logging_level",
-                "properties": {
-                    "description": _("Logging level") + ASTERISK,
-                    "tooltip": LOGGING_LEVEL_TOOLTIP,
-                    "options": {
-                        0: _("Normal"),
-                        1: _("Verbose"),
-                        2: _("Very verbose")
-                    }
+            "widget-attrs": {
+                "pref_key": "pref_logging_level"
+            },
+            "widget-kwargs": {
+                "description": _("Logging level") + ASTERISK,
+                "tooltip": LOGGING_LEVEL_TOOLTIP,
+                "options": {
+                    0: _("Normal"),
+                    1: _("Verbose"),
+                    2: _("Very verbose")
                 }
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_debugger_enabled",
-                "properties": {
-                    "description": _("Enable debugger") + ASTERISK,
-                    "tooltip": _("It enables the ability to catch all exceptions that under normal use would not be caught.")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_debugger_enabled"
+            },
+            "widget-kwargs": {
+                "description": _("Enable debugger") + ASTERISK,
+                "tooltip": _("It enables the ability to catch all exceptions that under normal use would not be caught.")
             }
         }]
     }]
