@@ -34,7 +34,7 @@ const {
 } = GlobalUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 const {
@@ -568,7 +568,7 @@ NewTaskEntry.prototype = {
         this.newTask.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
 
         this.opt_btn = new ReactiveButton("system-run");
-        this.opt_btn.actor.tooltip = new InteligentTooltip(this.opt_btn.actor, _("Tasks list options"));
+        this.opt_btn.actor.tooltip = new IntelligentTooltip(this.opt_btn.actor, _("Tasks list options"));
 
         this.addActor(this.opt_btn.actor, {
             align: St.Align.START,
@@ -635,7 +635,7 @@ NewTaskEntry.prototype = {
             _("Sort tasks alphabetically"),
             section["sort-tasks-alphabetically"]
         );
-        sortAlphaSwitch.tooltip = new InteligentTooltip(
+        sortAlphaSwitch.tooltip = new IntelligentTooltip(
             sortAlphaSwitch.actor,
             _("Takes effect after closing and re-opening the main menu.")
         );
@@ -645,7 +645,7 @@ NewTaskEntry.prototype = {
             _("Sort tasks by completed state"),
             section["sort-tasks-by-completed"]
         );
-        sortCompletedSwitch.tooltip = new InteligentTooltip(
+        sortCompletedSwitch.tooltip = new IntelligentTooltip(
             sortCompletedSwitch.actor,
             _("Takes effect after closing and re-opening the main menu.")
         );
@@ -655,7 +655,7 @@ NewTaskEntry.prototype = {
             _("Display remove tasks buttons"),
             section["display-remove-task-buttons"]
         );
-        showRemoveTaskSwitch.tooltip = new InteligentTooltip(
+        showRemoveTaskSwitch.tooltip = new IntelligentTooltip(
             showRemoveTaskSwitch.actor,
             _("Takes effect immediately.")
         );
@@ -665,7 +665,7 @@ NewTaskEntry.prototype = {
             _("Keep completed tasks hidden"),
             section["keep-completed-tasks-hidden"]
         );
-        keepCompletedHiddenSwitch.tooltip = new InteligentTooltip(
+        keepCompletedHiddenSwitch.tooltip = new IntelligentTooltip(
             keepCompletedHiddenSwitch.actor,
             _("Takes effect immediately.")
         );
@@ -1509,7 +1509,7 @@ function RemoveTaskButtonTooltip() {
 }
 
 RemoveTaskButtonTooltip.prototype = {
-    __proto__: InteligentTooltip.prototype,
+    __proto__: IntelligentTooltip.prototype,
 
     _init: function(aActor, aObj) {
         // TO TRANSLATORS: Full sentence.
@@ -1520,7 +1520,7 @@ RemoveTaskButtonTooltip.prototype = {
             tt += " " + _("(Hold Ctrl key)");
         }
 
-        InteligentTooltip.prototype._init.call(this, aActor, tt);
+        IntelligentTooltip.prototype._init.call(this, aActor, tt);
     }
 };
 
@@ -1607,7 +1607,7 @@ Date.prototype.toCustomISOString = function() {
 };
 
 DebugManager.wrapObjectMethods(Debugger, {
-    InteligentTooltip: InteligentTooltip,
+    IntelligentTooltip: IntelligentTooltip,
     NewTaskEntry: NewTaskEntry,
     ReactiveButton: ReactiveButton,
     RemoveTaskButtonTooltip: RemoveTaskButtonTooltip,

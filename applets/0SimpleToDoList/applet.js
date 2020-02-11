@@ -48,7 +48,8 @@ const {
 } = Constants;
 
 const {
-    _
+    _,
+    xdgOpen
 } = GlobalUtils;
 
 const {
@@ -57,7 +58,7 @@ const {
 } = CustomFileUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 function SimpleToDoList() {
@@ -525,37 +526,14 @@ SimpleToDoList.prototype = {
             this.instance_id
         );
 
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+        this._bindSettings();
+        aDirectCallback();
 
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+        Mainloop.idle_add(() => {
+            aIdleCallback();
 
-                return GLib.SOURCE_REMOVE;
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
-        }
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _bindSettings: function() {
@@ -884,7 +862,7 @@ SimpleToDoList.prototype = {
         menuItem._icon.icon_size = 14;
         menuItem.connect("activate",
             (aActor, aEvent) => this._saveAsTODOFile(aActor, aEvent));
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _("Save all current tasks lists as a TODO file.")
         );
@@ -902,7 +880,7 @@ SimpleToDoList.prototype = {
         menuItem._icon.icon_size = 14;
         menuItem.connect("activate",
             (aActor, aEvent) => this._exportTasks(aActor, aEvent));
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _("Export all current tasks lists into a JSON file.") + "\n\n" +
             _("JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet.")
@@ -920,7 +898,7 @@ SimpleToDoList.prototype = {
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
         menuItem.connect("activate", () => this._importTasks());
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _("Import tasks lists from a previously exported JSON file into this applet.") + "\n\n" +
             _("JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet.")
@@ -946,7 +924,7 @@ SimpleToDoList.prototype = {
                 this._buildUI();
             }
         });
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _("Restore the example tasks list that were present when the applet was first loaded.")
         );
@@ -970,7 +948,7 @@ SimpleToDoList.prototype = {
             );
             confirmDialog.open(global.get_current_time());
         });
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _("Remove all currently loaded tasks lists from this applet.") + "\n\n" +
             _("WARNING!!!") + " " + _("This operation cannot be reverted!!!")
@@ -986,9 +964,9 @@ SimpleToDoList.prototype = {
             "dialog-information",
             St.IconType.SYMBOLIC);
         menuItem._icon.icon_size = 14;
-        menuItem.tooltip = new InteligentTooltip(menuItem.actor, _("Open this applet help file."));
+        menuItem.tooltip = new IntelligentTooltip(menuItem.actor, _("Open this applet help file."));
         menuItem.connect("activate", () => {
-            Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
+            xdgOpen(this.metadata.path + "/HELP.html");
         });
         this._applet_context_menu.addMenuItem(menuItem);
     },
@@ -1115,7 +1093,7 @@ SimpleToDoList.prototype = {
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
     DebugManager.wrapObjectMethods($.Debugger, {
-        InteligentTooltip: InteligentTooltip,
+        IntelligentTooltip: IntelligentTooltip,
         SimpleToDoList: SimpleToDoList
     });
 
