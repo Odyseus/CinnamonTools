@@ -56,11 +56,12 @@ const {
 const {
     _,
     getKeybindingDisplayName,
-    tokensReplacer
+    tokensReplacer,
+    copyToClipboard
 } = GlobalUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 const {
@@ -189,7 +190,7 @@ RadioSelectorMenuItem.prototype = {
         this.setOrnament(2); // 2 = OrnamentType.DOT
 
         if (params.item_tooltip) {
-            this.tooltip = new InteligentTooltip(
+            this.tooltip = new IntelligentTooltip(
                 this.actor,
                 _(params.item_tooltip)
             );
@@ -2276,7 +2277,7 @@ LastCaptureContainer.prototype = {
         }
 
         if (params.tooltip_text) {
-            this[params.self_actor].tooltip = new InteligentTooltip(
+            this[params.self_actor].tooltip = new IntelligentTooltip(
                 this[params.self_actor], params.tooltip_text);
         }
     },
@@ -2337,7 +2338,7 @@ LastCaptureContainer.prototype = {
                 notify([_("Image data copied to clipboard.")]);
                 break;
             case "copy-image-path":
-                setClipboardText(this.fileData.f);
+                copyToClipboard(this.fileData.f);
                 notify([_("File path copied to clipboard.")]);
                 break;
             default:
@@ -2441,14 +2442,6 @@ function askForConfirmation(aParams, aCallback) {
             }
         }
     );
-}
-
-function setClipboardText(aText) {
-    if (St.ClipboardType) {
-        St.Clipboard.get_default().set_text(St.ClipboardType.CLIPBOARD, aText);
-    } else {
-        St.Clipboard.get_default().set_text(aText);
-    }
 }
 
 function notify(aMsg, aLevel = "info") {
@@ -2585,7 +2578,7 @@ DebugManager.wrapObjectMethods(Debugger, {
     CustomPopupMenuSection: CustomPopupMenuSection,
     CustomPopupSliderMenuItem: CustomPopupSliderMenuItem,
     CustomSwitchMenuItem: CustomSwitchMenuItem,
-    InteligentTooltip: InteligentTooltip,
+    IntelligentTooltip: IntelligentTooltip,
     LastCaptureContainer: LastCaptureContainer,
     ProgramSelectorMenuItem: ProgramSelectorMenuItem,
     ProgramSelectorSubMenuItem: ProgramSelectorSubMenuItem,

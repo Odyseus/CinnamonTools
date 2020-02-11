@@ -53,11 +53,12 @@ const {
     isObject,
     versionCompare,
     deepMergeObjects,
-    tokensReplacer
+    tokensReplacer,
+    copyToClipboard
 } = GlobalUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 const {
@@ -288,37 +289,14 @@ DesktopCapture.prototype = {
             this.instance_id
         );
 
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+        this._bindSettings();
+        aDirectCallback();
 
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+        Mainloop.idle_add(() => {
+            aIdleCallback();
 
-                return GLib.SOURCE_REMOVE;
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
-        }
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _bindSettings: function() {
@@ -776,7 +754,7 @@ DesktopCapture.prototype = {
                         }
                     }
                 );
-                this[device + "Header"].tooltip = new InteligentTooltip(
+                this[device + "Header"].tooltip = new IntelligentTooltip(
                     this[device + "Header"].actor,
                     (device === "camera" ?
                         _("Choose camera") :
@@ -906,7 +884,7 @@ DesktopCapture.prototype = {
                     style_class: "bin"
                 }
             );
-            includeCursorSwitch.tooltip = new InteligentTooltip(
+            includeCursorSwitch.tooltip = new IntelligentTooltip(
                 includeCursorSwitch.actor,
                 _("Whether to include mouse cursor in screenshot.")
             );
@@ -988,7 +966,7 @@ DesktopCapture.prototype = {
                         slider_value_min: 0,
                         slider_value_max: 10
                     });
-                timerSlider.tooltip = new InteligentTooltip(
+                timerSlider.tooltip = new IntelligentTooltip(
                     timerSlider.actor,
                     _("How many seconds to wait before taking a screenshot.")
                 );
@@ -1009,7 +987,7 @@ DesktopCapture.prototype = {
                             item_style_class: "desktop-capture-cinnamon-recorder-profile-submenu-label"
                         }
                     );
-                    profileSelector.tooltip = new InteligentTooltip(
+                    profileSelector.tooltip = new IntelligentTooltip(
                         profileSelector.actor,
                         _("Choose Cinnamon recorder profile")
                     );
@@ -1035,7 +1013,7 @@ DesktopCapture.prototype = {
                             style_class: "bin"
                         }
                     );
-                    soundSwitch.tooltip = new InteligentTooltip(
+                    soundSwitch.tooltip = new IntelligentTooltip(
                         soundSwitch.actor,
                         _("Whether to record sound.")
                     );
@@ -1097,7 +1075,7 @@ DesktopCapture.prototype = {
                         slider_value_min: 10,
                         slider_value_max: 120
                     });
-                fpsSlider.tooltip = new InteligentTooltip(
+                fpsSlider.tooltip = new IntelligentTooltip(
                     fpsSlider.actor,
                     _("Frames per second")
                 );
@@ -1291,7 +1269,7 @@ DesktopCapture.prototype = {
         this[aDevice + "LastCaptureContent"].fileData = historyEntry;
 
         if (aDevice === "camera") {
-            let copyToClipboard = this.pref_auto_copy_data ?
+            let copyType = this.pref_auto_copy_data ?
                 ClipboardCopyType.IMAGE_DATA :
                 this.pref_copy_to_clipboard;
 
@@ -1300,9 +1278,9 @@ DesktopCapture.prototype = {
                 this._rebuildDeviceSection("camera");
             }
 
-            switch (copyToClipboard) {
+            switch (copyType) {
                 case ClipboardCopyType.IMAGE_PATH:
-                    $.setClipboardText(aFilePath);
+                    copyToClipboard(aFilePath);
                     $.notify([_("File path copied to clipboard.")]);
                     break;
                 case ClipboardCopyType.IMAGE_DATA:
@@ -2097,7 +2075,7 @@ DesktopCapture.prototype = {
 function main(aMetadata, aOrientation, aPanelheight, aInstanceId) {
     DebugManager.wrapObjectMethods($.Debugger, {
         DesktopCapture: DesktopCapture,
-        InteligentTooltip: InteligentTooltip
+        IntelligentTooltip: IntelligentTooltip
     });
 
     return new DesktopCapture(aMetadata, aOrientation, aPanelheight, aInstanceId);
