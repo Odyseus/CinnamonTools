@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopHandler VERSION\n"
-"POT-Creation-Date: 2020-01-28 01:33-0300\n"
+"POT-Creation-Date: 2020-02-11 00:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,58 +15,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
+#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:550
+#: ../../__app__/python_modules/localized_help_creator.py:316 applet.js:528
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:312
+#: ../../__app__/python_modules/localized_help_creator.py:317
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:313
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:349
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:363
-msgid "Cinnamon compatibility"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:364
+#: ../../__app__/python_modules/localized_help_creator.py:374
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:381
+#: ../../__app__/python_modules/localized_help_creator.py:377
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:383
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:400
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:403
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:425
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -92,12 +97,12 @@ msgid "Scroll over applet actions:"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:35 applet.js:794
+#: z_create_localized_help.py:35 applet.js:772
 msgid "Switch between workspaces"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:36 applet.js:795
+#: z_create_localized_help.py:36 applet.js:773
 msgid "Adjust opacity of windows"
 msgstr ""
 
@@ -111,7 +116,7 @@ msgid "Toggle Show desktop"
 msgstr ""
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:38 applet.js:797
+#: z_create_localized_help.py:38 applet.js:775
 msgid "Switch between windows"
 msgstr ""
 
@@ -131,7 +136,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:42 applet.js:487 applet.js:778
+#: z_create_localized_help.py:42 applet.js:465 applet.js:756
 msgid "Expo"
 msgstr ""
 
@@ -139,7 +144,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:43 applet.js:779
+#: z_create_localized_help.py:43 applet.js:757
 msgid "Overview"
 msgstr ""
 
@@ -147,7 +152,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:44 applet.js:780
+#: z_create_localized_help.py:44 applet.js:758
 msgid "Launch App Switcher"
 msgstr ""
 
@@ -159,7 +164,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:46 applet.js:781
+#: z_create_localized_help.py:46 applet.js:759
 msgid "Run 1st Custom Command"
 msgstr ""
 
@@ -167,7 +172,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:47 applet.js:782
+#: z_create_localized_help.py:47 applet.js:760
 msgid "Run 2nd Custom Command"
 msgstr ""
 
@@ -175,7 +180,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:48 applet.js:783
+#: z_create_localized_help.py:48 applet.js:761
 msgid "Run 3rd Custom Command"
 msgstr ""
 
@@ -183,7 +188,7 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:49 applet.js:784
+#: z_create_localized_help.py:49 applet.js:762
 msgid "Run 4rd Custom Command"
 msgstr ""
 
@@ -199,45 +204,45 @@ msgstr ""
 msgid "Desktop peek functionality with configurable levels of opacity."
 msgstr ""
 
-#: applet.js:389 applet.js:455
+#: applet.js:367 applet.js:433
 msgid "Close window"
 msgstr ""
 
-#: applet.js:424
+#: applet.js:402
 msgid "Close all windows from this wrokspace"
 msgstr ""
 
-#: applet.js:474
+#: applet.js:452
 msgid "No open windows"
 msgstr ""
 
-#: applet.js:496
+#: applet.js:474
 msgid "Close all windows from all workspaces"
 msgstr ""
 
-#: applet.js:559
+#: applet.js:537
 msgid "About..."
 msgstr ""
 
-#: applet.js:567
+#: applet.js:545
 msgid "Configure..."
 msgstr ""
 
-#: applet.js:579
+#: applet.js:557
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""
 
-#: applet.js:587
+#: applet.js:565
 #, javascript-format
 msgid "Are you sure that you want to remove '%s' from your panel?"
 msgstr ""
 
-#: applet.js:589
+#: applet.js:567
 msgid "Cancel"
 msgstr ""
 
-#: applet.js:590
+#: applet.js:568
 msgid "OK"
 msgstr ""
 
@@ -246,82 +251,82 @@ msgstr ""
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: applet.js:785
+#: applet.js:763
 msgid "None"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:786
+#: applet.js:764
 msgid "Icons only"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:787
+#: applet.js:765
 msgid "Thumbnails only"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:788
+#: applet.js:766
 msgid "Icons and thumbnails"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:789
+#: applet.js:767
 msgid "Icons and window preview"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:790
+#: applet.js:768
 msgid "Window preview (no icons)"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:791
+#: applet.js:769
 msgid "Coverflow (3D)"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:792
+#: applet.js:770
 msgid "Timeline (3D)"
 msgstr ""
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:793
+#: applet.js:771
 msgid "System default"
 msgstr ""
 
-#: applet.js:796
+#: applet.js:774
 msgid "Toggle show desktop"
 msgstr ""
 
-#: applet.js:798
+#: applet.js:776
 msgid "Open windows list menu"
 msgstr ""
 
-#: applet.js:816
+#: applet.js:794
 msgid "Scroll Up"
 msgstr ""
 
-#: applet.js:817
+#: applet.js:795
 msgid "Scroll Down"
 msgstr ""
 
-#: applet.js:819
+#: applet.js:797
 msgid "Scroll"
 msgstr ""
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:826
+#: applet.js:804
 msgid "Left click"
 msgstr ""
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:832
+#: applet.js:810
 msgid "Middle click"
 msgstr ""
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:836
+#: applet.js:814
 msgid "Right click"
 msgstr ""
 

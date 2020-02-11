@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0MailnagAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-01-13 01:36-0300\n"
-"PO-Revision-Date: 2019-12-22 04:59-0300\n"
+"POT-Creation-Date: 2020-02-10 20:44-0300\n"
+"PO-Revision-Date: 2020-02-10 20:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -19,58 +19,63 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-03-05 12:36:45.951\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
+#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:213
+#: ../../__app__/python_modules/localized_help_creator.py:316 applet.js:191
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:312
+#: ../../__app__/python_modules/localized_help_creator.py:317
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:313
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:349
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:363
-msgid "Cinnamon compatibility"
-msgstr "Compatibilidad con Cinnamon"
-
-#: ../../__app__/python_modules/localized_help_creator.py:364
+#: ../../__app__/python_modules/localized_help_creator.py:374
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:381
+#: ../../__app__/python_modules/localized_help_creator.py:377
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
+
+#: ../../__app__/python_modules/localized_help_creator.py:383
+msgid "Cinnamon compatibility"
+msgstr "Compatibilidad con Cinnamon"
+
+#: ../../__app__/python_modules/localized_help_creator.py:400
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:403
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:425
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -153,69 +158,69 @@ msgstr "Se recomienda instalar el paquete de dependencia opcional de Mailnag `gi
 msgid "The Mailnag's **LibNotify Notifications** plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass such limitations. Needless to say, if one choses to use the notifications provided by this applet, the **LibNotify Notifications** plug-in must be disabled to avoid receiving duplicated notifications."
 msgstr "El complemento **Notificaciones LibNotify** de Mailnag no puede agregar acciones de notificación como marcar correos como leídos o abrir el cliente de correo directamente desde la notificación. Estas funciones solo están disponibles para Gnome (una limitación en el propio complemento). Este applet implementa sus propias notificaciones configurables para evitar dichas limitaciones. No hace falta decir que si uno elige usar las notificaciones proporcionadas por este applet, el complemento **Notificaciones LibNotify** debe estar deshabilitado para evitar recibir notificaciones duplicadas."
 
-#: applet.js:204
+#: applet.js:182
 msgid "Configure Mailnag daemon"
 msgstr "Configurar el demonio Mailnag"
 
-#: applet.js:251
+#: applet.js:229
 msgid "Mailnag daemon stopped working!"
 msgstr "¡El demonio Mailnag dejó de funcionar!"
 
-#: applet.js:253
+#: applet.js:231
 msgid "Mailnag daemon isn't running! Do you have it installed?"
 msgstr "¡El demonio de Mailnag no se está ejecutando! ¿Lo tiene instalado?"
 
-#: applet.js:526
+#: applet.js:504
 #, javascript-format
 msgid "You have %d new mail!"
 msgid_plural "You have %d new mails!"
 msgstr[0] "¡Tienes %d correo nuevo!"
 msgstr[1] "¡Tienes %d correos nuevos!"
 
-#: applet.js:530 applet.js:712
+#: applet.js:508 applet.js:690
 msgid "Mark All Read"
 msgstr "Marcar todo como leído"
 
-#: applet.js:531
+#: applet.js:509
 msgid "Mark Read"
 msgstr "Marcar como leído"
 
-#: applet.js:591
+#: applet.js:569
 #, javascript-format
 msgid "(and %d more)"
 msgid_plural "(and %d more)"
 msgstr[0] "(y %d más)"
 msgstr[1] "(y %d más)"
 
-#: applet.js:614
+#: applet.js:592
 msgid "Open Mail client"
 msgstr "Abrir cliente de correo"
 
-#: applet.js:745 applet.js:789
+#: applet.js:723 applet.js:767
 msgid "No unread mails."
 msgstr "Sin mensajes no leídos."
 
-#: applet.js:769
+#: applet.js:747
 msgid "Mailnag daemon is not running!"
 msgstr "El demonio Mailnag no se está ejecutando!"
 
-#: applet.js:779
+#: applet.js:757
 #, javascript-format
 msgid "You have a mail from %s!"
 msgstr "¡Tienes un correo de %s!"
 
-#: applet.js:785
+#: applet.js:763
 #, javascript-format
 msgid "You have %d unread mail!"
 msgid_plural "You have %d unread mails!"
 msgstr[0] "¡Tienes %d correo sin leer!"
 msgstr[1] "¡Tienes %d correos sin leer!"
 
-#: applet.js:799
+#: applet.js:777
 msgid "Click to see error!"
 msgstr "¡Hacer clic para ver el error!"
 
-#: applet.js:800
+#: applet.js:778
 msgid "Error"
 msgstr "Error"
 
@@ -463,48 +468,3 @@ msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
-
-#~ msgid ""
-#~ "It enables the ability to log the output of several functions used by the extension.\n"
-#~ "\n"
-#~ "Normal: Only log messages caused by non critical errors.\n"
-#~ "Verbose: Additinally log extra output messages and all HTTP responses.\n"
-#~ "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
-#~ msgstr ""
-#~ "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
-#~ "\n"
-#~ "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-#~ "Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
-#~ "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
-
-#~ msgid "d% week ago"
-#~ msgid_plural "%d weeks ago"
-#~ msgstr[0] "hace %d semana"
-#~ msgstr[1] "hace %d semanas"
-
-#~ msgid "The Mailnag's **LibNotify Notifications** plug-in cannot add notification actions such as mark mails as read or open mail client directly from the notification. These features are available only for Gnome (a limitation hard-coded into the plug-in itself). This applet implements its own configurable notifications to bypass suck limitations. Needless to say, if one choses to use the notifications provided by this applet, the **LibNotify Notifications** plug-in must be disabled to avoid receiving duplicated notifications."
-#~ msgstr "El complemento **Notificaciones LibNotify** de Mailnag no puede agregar acciones de notificación como marcar correos como leídos o abrir el cliente de correo directamente desde la notificación. Estas funciones solo están disponibles para Gnome (una limitación en el propio complemento). Este applet implementa sus propias notificaciones configurables para evitar dichas limitaciones. No hace falta decir que si uno elige usar las notificaciones proporcionadas por este applet, el complemento **Notificaciones LibNotify** debe estar deshabilitado para evitar recibir notificaciones duplicadas."
-
-#~ msgid "It is recommended to enable the Mailnag plug-in called **LibNotify Notifications** to make use of desktop notifications. The plug-in has more configuration options than this applet."
-#~ msgstr "Es recomendable habilitar el complemento de Mailnag llamado **Notificaciones LibNotify** para hacer use de notificaciones de escritorio. El complemento cuenta con más opciones de configuración que este applet."
-
-#~ msgid "You have new mail!"
-#~ msgstr "¡Tienes nuevo correo!"
-
-#~ msgid "Keyboard shortcut to open and close the menu."
-#~ msgstr "Atajo de teclado para abrir o cerrar el menú"
-
-#~ msgid "Show notifications"
-#~ msgstr "Mostrar Notificaciones"
-
-#~ msgid "Enables display of mail arrived notifications by applet. Make sure you disable mailnag notification plugin, otherwise you will have duplicates."
-#~ msgstr "Permite la visualización de notificaciones al recibir correo. Asegúrese de desactivar el complemento de notificación mailnag; de lo contrario, tendrá duplicados."
-
-#~ msgid "On middle click:"
-#~ msgstr "Al hacer clic medio:"
-
-#~ msgid "Cinnamon needs to be restarted after installing Mailnag if the applet was already placed in a panel"
-#~ msgstr "Cinnamon necesita ser reiniciado luego de instalar Mailnag si el applet ya fue colocado en un panel."
-
-#~ msgid "Configure Mailnag"
-#~ msgstr "Configurar Mailnag"

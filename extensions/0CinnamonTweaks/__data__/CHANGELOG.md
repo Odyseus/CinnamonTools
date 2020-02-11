@@ -1,6 +1,18 @@
 ## Cinnamon Tweaks changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
+
+***
+
+- **Date:** Mon, 10 Feb 2020 23:05:37 -0300
+- **Commit:** [d3492bc](https://gitlab.com/Odyseus/CinnamonTools/commit/d3492bc)
+- **Author:** Odyseus
+
+```
+- Adaptations due to changes to the custom settings framework.
+- Adaptations due to changes to the `debugManager.js` JavaScript module.
+
+```
 
 ***
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-01-13 01:36-0300\n"
-"PO-Revision-Date: 2019-12-22 04:59-0300\n"
+"POT-Creation-Date: 2020-02-11 00:28-0300\n"
+"PO-Revision-Date: 2020-02-11 00:29-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -19,60 +19,431 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:304
+msgid "Information related to this specific section"
+msgstr "Información relacionada con esta sección específica."
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1285
+msgid "Clear color"
+msgstr "Limpiar color"
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1398
+msgid "Clear path"
+msgstr "Limpiar ruta"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:501
+msgid "No app chosen"
+msgstr "Ninguna aplicación elegida"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:623
+msgid "Add new item"
+msgstr "Agregar nueva entrada"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:631
+msgid "Remove selected item"
+msgstr "Eliminar ítem seleccionado"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:643
+msgid "Edit selected item"
+msgstr "Editar ítem seleccionado"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:653
+msgid "Move selected item up"
+msgstr "Mover ítem seleccionado hacia arriba"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:661
+msgid "Move selected item down"
+msgstr "Mover ítem seleccionado hacia abajo"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:675
+msgid "Export data"
+msgstr "Exportar datos"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:688 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1082
+msgid "Import data"
+msgstr "Importar datos"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
+msgid "Apply changes"
+msgstr "Aplicar cambios"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:881
+msgid "Item removal"
+msgstr "Eliminación de ítem"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:884
+msgid "Are you sure that you want to remove the selected items?"
+msgstr "¿Está seguro de que desea remover los ítems seleccionados?"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:885
+msgid "Note"
+msgstr "Nota"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:886
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1192 ../../__app__/data/python_modules/xlets_settings/__init__.py:1090 ../../__app__/data/python_modules/xlets_settings/__init__.py:1123 python_modules/feeds_importer.py:161
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1086
+msgid "_Overwrite"
+msgstr "_Sobrescribir"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1087
+msgid "_Append"
+msgstr "_Adjuntar"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1107
+msgid "Overwrite"
+msgstr "Sobrescribir"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1108
+msgid "replace the current data with the imported data."
+msgstr "reemplazar los datos actuales con los datos importados."
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1109
+msgid "Append"
+msgstr "Adjuntar"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1110
+msgid "add the imported data to the current data."
+msgstr "agregar los datos importados a los datos actuales."
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1184
+msgid "Add new entry"
+msgstr "Agregar nueva entrada"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1186
+msgid "Edit entry"
+msgstr "Editar entrada"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1193 ../../__app__/data/python_modules/xlets_settings/__init__.py:1091 ../../__app__/data/python_modules/xlets_settings/__init__.py:1124
+msgid "_Save"
+msgstr "_Guardar"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:497 settings.py:247
+msgid "Other"
+msgstr "Otros"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:636
+msgid "Previous instance"
+msgstr "Instancia previa"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:643
+msgid "Next instance"
+msgstr "Siguiente instancia"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:683
+msgid "Import settings from a file"
+msgstr "Importar configuración desde un archivo"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:687
+msgid "Export settings to a file"
+msgstr "Exportar configuración hacia un archivo"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:691
+msgid "Reset settings to defaults"
+msgstr "Restablecer los valores predeterminados"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:701 ../../__app__/python_modules/localized_help_creator.py:316 applet.js:407
+msgid "Help"
+msgstr "Ayuda"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:722
+#, python-format
+msgid "Momentarily highlight the %s on your desktop"
+msgstr "Resaltar momentáneamente el %s en el escritorio"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:790
+#, python-format
+msgid "Settings for %s"
+msgstr "Preferencias para %s"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1086
+msgid "Select or enter file to export to"
+msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1096 ../../__app__/data/python_modules/xlets_settings/__init__.py:1128
+msgid "JSON files"
+msgstr "Archivos JSON"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1119
+msgid "Select a JSON file to import"
+msgstr "Seleccionar un archivo JSON para importar"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1152
+msgid "Trying to reset all settings!!!"
+msgstr "¡Intentando restablecer todos los ajustes!"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1154
+msgid "Reset all settings to their default values?"
+msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
+
+#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:326 python/manage_feeds.py:213
-msgid "Help"
-msgstr "Ayuda"
-
-#: ../../__app__/python_modules/localized_help_creator.py:312
+#: ../../__app__/python_modules/localized_help_creator.py:317
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:313
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:349
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:363
-msgid "Cinnamon compatibility"
-msgstr "Compatibilidad con Cinnamon"
-
-#: ../../__app__/python_modules/localized_help_creator.py:364
+#: ../../__app__/python_modules/localized_help_creator.py:374
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:381
+#: ../../__app__/python_modules/localized_help_creator.py:377
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
+
+#: ../../__app__/python_modules/localized_help_creator.py:383
+msgid "Cinnamon compatibility"
+msgstr "Compatibilidad con Cinnamon"
+
+#: ../../__app__/python_modules/localized_help_creator.py:400
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:403
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:425
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
+
+#: settings.py:17
+msgid "Cinnamon needs to be restarted"
+msgstr "Cinnamon necesita ser reiniciado"
+
+#: settings.py:22 utils.js:372
+msgid "Enabled"
+msgstr "Habilitado"
+
+#: settings.py:27 utils.js:359
+msgid "Notify"
+msgstr "Notificar"
+
+#: settings.py:32 utils.js:346
+msgid "Show read"
+msgstr "Mostrar leído"
+
+#: settings.py:36
+msgid "Interval"
+msgstr "Intervalo"
+
+#: settings.py:42 settings.py:150
+msgid "minutes"
+msgstr "minutos"
+
+#: settings.py:45
+msgid "Category"
+msgstr "Categoría"
+
+#: settings.py:49
+msgid "Custom title"
+msgstr "Título personalizado"
+
+#: settings.py:53
+msgid "URL"
+msgstr "URL"
+
+#: settings.py:59
+msgid "It enables the ability to log the output of several functions used by the extension."
+msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión."
+
+#: settings.py:61 settings.py:272
+msgid "Normal"
+msgstr "Normal"
+
+#: settings.py:61
+msgid "Only log messages caused by non critical errors."
+msgstr "Solo registrar mensajes causados por errores críticos."
+
+#: settings.py:62
+msgid "Additionally log extra output messages and all HTTP responses."
+msgstr "Adicionalmente registrar mensajes extra y todas las respuestas HTTP."
+
+#: settings.py:62 settings.py:273
+msgid "Verbose"
+msgstr "Detallado"
+
+#: settings.py:63 settings.py:274
+msgid "Very verbose"
+msgstr "Muy detallado"
+
+#: settings.py:64
+msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr "Adicionalmente registrar todas las llamadas de métodos de todas las clases/prototipos de JavaScript y sus tiempos de ejecución."
+
+#: settings.py:68 settings.py:226
+msgid "Mandatory fields"
+msgstr "Campos obligatorios"
+
+#: settings.py:72
+msgid "General"
+msgstr "General"
+
+#: settings.py:74
+msgid "Applet settings"
+msgstr "Ajustes del applet"
+
+#: settings.py:81
+msgid "Keyboard shortcut to open and close the menu"
+msgstr "Atajo de teclado para abrir y cerrar el menú"
+
+#: settings.py:90
+msgid "Icon used when there are new feeds"
+msgstr "Ícono usado cuando hay feeds nuevos"
+
+#: settings.py:91 settings.py:100
+msgid "Select an icon to show in the panel."
+msgstr "Seleccionar un ícono para mostrar en el panel."
+
+#: settings.py:99
+msgid "Icon used when there are not new feeds"
+msgstr "Ícono usado cuando no hay feeds nuevos"
+
+#: settings.py:104
+msgid "Menu settings"
+msgstr "Preferencias del menú"
+
+#: settings.py:111
+msgid "Show icons on menu"
+msgstr "Mostrar íconos en los elementos del menú"
+
+#: settings.py:119
+msgid "Minimum article items width"
+msgstr "Establecer un ancho mínimo para la entrada de texto"
+
+#: settings.py:120
+msgid "Set a minimum width for article menu items. This is used to prevent the menu to drastically change size when opening/closing sub-menus."
+msgstr "Establecer un ancho mínimo para los elementos del menú de los artículos. Esto se utiliza para evitar que el menú cambie drásticamente el tamaño al abrir/cerrar submenús."
+
+#: settings.py:124 settings.py:176
+msgid "pixels"
+msgstr "píxeles"
+
+#: settings.py:132
+msgid "Maximum number of articles"
+msgstr "Número máximo de artículos"
+
+#: settings.py:133
+msgid "Maximum number of article items to display for each feed."
+msgstr "Número máximo de artículos a mostrar por cada feed."
+
+#: settings.py:137
+msgid "articles"
+msgstr "artículos"
+
+#: settings.py:145
+msgid "Update interval"
+msgstr "Intervalo de actualización"
+
+#: settings.py:146
+msgid "Interval between checking for new articles."
+msgstr "Intervalo para buscar nuevos artículos."
+
+#: settings.py:158
+msgid "Description maximum length"
+msgstr "Longitud máxima de descripción"
+
+#: settings.py:159
+msgid "The maximum numbers of characters that will be displayed in the article tooltip as the article description. With a value of zero the entire article will be displayed."
+msgstr "El número máximo de caracteres que se mostrarán en la información sobre herramientas del artículo como descripción del artículo. Con un valor de cero, se mostrará el artículo completo."
+
+#: settings.py:163
+msgid "characters"
+msgstr "caracteres"
+
+#: settings.py:171
+msgid "Tooltip maximum width"
+msgstr "Ancho máximo de tooltips"
+
+#: settings.py:172
+msgid "Set a custom maximum width for the articles tooltips. With a value of zero the maximum width will be set to half the monitor width."
+msgstr "Establecer un ancho máximo personalizado para la información sobre herramientas de artículos. Con un valor de cero, el ancho máximo se establecerá en la mitad del ancho del monitor."
+
+#: settings.py:180
+msgid "Notifications settings"
+msgstr "Preferencias de Notificaciones"
+
+#: settings.py:187
+msgid "Show notifications for new articles"
+msgstr "Mostrar notificaciones para nuevos artículos"
+
+#: settings.py:188
+msgid "If enabled, a popup notification will be displayed for new articles."
+msgstr "Con esta opción habilitada, se mostrará una notificación emergente para nuevos artículos."
+
+#: settings.py:196
+msgid "Unified notifications"
+msgstr "Notificaciones unificadas"
+
+#: settings.py:197
+msgid "If enabled, all feeds notifications will use and update one notification."
+msgstr "Con esta opción habilitada, todos los feeds usarán y actualizarán una notificación."
+
+#: settings.py:223
+msgid "Feeds"
+msgstr "Feeds"
+
+#: settings.py:225
+msgid "Feeds Manager"
+msgstr "Administrador de Feeds"
+
+#: settings.py:249
+msgid "Third party integrations"
+msgstr "Integraciones de terceros"
+
+#: settings.py:256
+msgid "Panel Drawer applet integration"
+msgstr "Integración del applet Cajón del panel"
+
+#: settings.py:257
+msgid "Display applet when receiving new articles."
+msgstr "Mostrar applet al recibir nuevos artículos."
+
+#: settings.py:261
+msgid "Debugging"
+msgstr "Configuración de depuración"
+
+#: settings.py:269
+msgid "Logging level"
+msgstr "Nivel de registro"
+
+#: settings.py:283
+msgid "Enable debugger"
+msgstr "Habilitar depurador"
+
+#: settings.py:284
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
 
 #: z_create_localized_help.py:27
 msgid "Description"
@@ -119,281 +490,210 @@ msgstr "El módulo feedparser para Python 3 es un analizador de fuentes universa
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr "Instalar con `pip` (Cinnamon necesita ser reiniciado luego de instalar feedparser si el applet ya fue colocado en un panel):"
 
-#: applet.js:99
-msgid "Feed reader"
-msgstr "Lector de Feeds"
+#: applet.js:112
+msgid "Feeds reader"
+msgstr "Lector de feeds"
 
-#: applet.js:234
+#: applet.js:243
 msgid "Missing dependency!!!"
 msgstr "¡¡¡Falta de dependencia!!!"
 
-#: applet.js:235
+#: applet.js:244
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr "Este applet necesita que el módulo feedparser para Python 3 esté instalado en su sistema para que funcione."
 
-#: applet.js:236
+#: applet.js:245
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr "Leer el archivo de ayuda de este applet para más detalles sobre esta opción (menú contextual del applet > elemento Ayuda)."
 
-#: applet.js:293
-msgid "Mark all read"
-msgstr "Marcar todo como leído"
+#: applet.js:246
+msgid "Restart Cinnamon after satisfying all dependencies."
+msgstr "Reiniciar Cinnamon luego de satisfacer todas las dependencias."
 
-#: applet.js:306
-msgid "Reload"
-msgstr "Recargar"
+#: applet.js:314
+msgid "Mark all feeds as read"
+msgstr "Marcar todos los feeds como leídos"
 
-#: applet.js:317
-msgid "Manage feeds"
-msgstr "Administrar feeds"
+#: applet.js:320
+msgid "Are you sure that you want to mark as read all articles from all feeds?"
+msgstr "¿Está seguro de que desea marcar como leído todos los artículos de todos los feeds?"
 
-#: applet.js:419
-msgid "No unread feeds"
-msgstr "Sin feeds no leídos."
-
-#. metadata.json->name
-#: python/manage_feeds.py:35
-msgid "Feeds Reader (Fork By Odyseus)"
-msgstr "Lector de Feeds (Modificado por Odyseus)"
-
-#: python/manage_feeds.py:171
-msgid "Profile Name:"
-msgstr "Nombre del Perfil:"
-
-#: python/manage_feeds.py:187
-msgid "Create a new profile"
-msgstr "Crear un perfil nuevo"
-
-#: python/manage_feeds.py:195
-msgid "Remove current profile"
-msgstr "Eliminar perfil actual"
-
-#: python/manage_feeds.py:202
-msgid "Import OPML"
-msgstr "Importar OPML"
-
-#: python/manage_feeds.py:204
-msgid "Import Feeds File"
-msgstr "Importar archivo de feeds"
-
-#: python/manage_feeds.py:207
-msgid "Export Feeds File"
-msgstr "Exportar archivo de feeds"
-
-#: python/manage_feeds.py:210
-msgid "Toggle Hidden Fields"
-msgstr "Alternar campos ocultos"
-
-#: python/manage_feeds.py:221
-msgid "Manage settings"
-msgstr "Administrar configuración"
-
-#: python/manage_feeds.py:255
-msgid "Enable"
-msgstr "Habilitar"
-
-#: python/manage_feeds.py:262
-msgid "Url"
-msgstr "Url"
-
-#: python/manage_feeds.py:269
-msgid "Custom title"
-msgstr "Título personalizado"
-
-#: python/manage_feeds.py:275
-msgid "Notify"
-msgstr "Notificar"
-
-#: python/manage_feeds.py:281
-msgid "Show Read"
-msgstr "Mostrar leído"
-
-#: python/manage_feeds.py:288
-msgid "Interval"
-msgstr "Intervalo"
-
-#: python/manage_feeds.py:296
-msgid "Show Image"
-msgstr "Mostrar imagen"
-
-#: python/manage_feeds.py:324
-msgid "Add Feed"
-msgstr "Agregar feed"
-
-#: python/manage_feeds.py:326
-msgid "Add a new Feed."
-msgstr "Agregar un feed nuevo."
-
-#: python/manage_feeds.py:331
-msgid "Delete Feed"
-msgstr "Borrar feed"
-
-#: python/manage_feeds.py:333
-msgid "Delete selected Feed."
-msgstr "Borrar feed seleccionado."
-
-#: python/manage_feeds.py:338
+#: applet.js:321
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: python/manage_feeds.py:344
-msgid "Apply"
-msgstr "Aplicar"
+#: applet.js:322
+msgid "OK"
+msgstr "Aceptar"
 
-#: python/manage_feeds.py:346
-msgid "Save changes."
-msgstr "Guardar cambios."
+#: applet.js:336
+msgid "Mark all articles from all feeds as read."
+msgstr "Marcar todos los artículos de todos los feeds como leídos."
 
-#: python/manage_feeds.py:372
-msgid "Unauthorized action"
-msgstr "Acción no autoraizada"
+#: applet.js:341
+msgid "Reload"
+msgstr "Recargar"
 
-#: python/manage_feeds.py:373
-msgid "Default profile cannot be removed."
-msgstr "El perfil predeterminado no se puede eliminar."
+#: applet.js:351
+msgid "Update feeds from their on-line sources."
+msgstr "Actualizar los feeds desde sus fuentes en línea."
 
-#: python/manage_feeds.py:379
-msgid "Do you wish to remove the currently selected profile?"
-msgstr "¿Desea eliminar el perfil seleccionado actualmente?"
+#: applet.js:356
+msgid "Manage feeds"
+msgstr "Administrar feeds"
 
-#: python/manage_feeds.py:380
-msgid "This operation cannot be undone!"
-msgstr "¡Esta operación no puede ser revertida!"
+#. Extras submenu
+#: applet.js:367
+msgid "Extras"
+msgstr "Extras"
 
-#: python/manage_feeds.py:381
-msgid "Profile removal"
-msgstr "Eliminación de perfil"
+#: applet.js:371
+msgid "Import feeds in old format"
+msgstr "Importar feeds en formato antiguo"
 
-#: python/manage_feeds.py:402
-msgid "Changes will be discarded, continue?"
-msgstr "Cambios serán descartados. ¿Continuar?"
+#: applet.js:385
+msgid "Import feeds from an old version of this applet."
+msgstr "Importar feeds desde una versión anterior de este applet."
 
-#: python/manage_feeds.py:403
-msgid "Are you sure?"
-msgstr "¿Está seguro?"
+#: applet.js:390
+msgid "Import feeds from OPML file"
+msgstr "Importar archivo OPML de feeds"
 
-#: python/manage_feeds.py:412
-msgid "New Profile Name"
-msgstr "Nombre de nuevo perfil"
+#: applet.js:419
+msgid "Configure..."
+msgstr "Configurar..."
 
-#: python/manage_feeds.py:420
-msgid "Add New Profile"
-msgstr "Agregar nuevo perfil"
+#: applet.js:521
+msgid "No unread feeds"
+msgstr "Sin feeds no leídos."
 
-#: python/manage_feeds.py:548
-msgid "Failed to save config file"
-msgstr "Fallo al guardar archivo de configuración"
+#: applet.js:689
+msgid "Feeds successfully imported."
+msgstr "Feeds importados con éxito."
 
-#: python/manage_feeds.py:585
+#: applet.js:690
+msgid "All imported feeds are disabled."
+msgstr "Todos los feeds importados están deshabilitados."
+
+#: applet.js:694
+msgid "Error importing feeds file!"
+msgstr "¡Error al importar el archivo de feeds!"
+
+#: applet.js:695
+msgid "Look at the logs for details."
+msgstr "Mirar los registros para más detalles."
+
+#: python_modules/feeds_importer.py:153
 msgid "Choose a OPML feed file"
 msgstr "Elegir un archivo de feed OPML"
 
-#: python/manage_feeds.py:586
+#: python_modules/feeds_importer.py:154
 msgid "OPML files"
 msgstr "Archivos OPML"
 
-#: python/manage_feeds.py:589
+#: python_modules/feeds_importer.py:156
 msgid "Choose a feed file"
 msgstr "Elegir un archivo de feed"
 
-#: python/manage_feeds.py:590 python/manage_feeds.py:659
+#: python_modules/feeds_importer.py:157
 msgid "CSV files"
 msgstr "Archivos CSV"
 
-#: python/manage_feeds.py:603 python/manage_feeds.py:664
-msgid "All files"
-msgstr "Todos los archivos"
+#: python_modules/feeds_importer.py:161
+msgid "_Open"
+msgstr "_Abrir"
 
-#: python/manage_feeds.py:624
+#: python_modules/feeds_importer.py:168 python_modules/feeds_importer.py:182
 msgid "File imported"
 msgstr "Archivo importado"
 
-#: python/manage_feeds.py:625
+#: python_modules/feeds_importer.py:177
 #, python-format
-msgid "Imported %d feeds"
-msgstr "%d feeds importados"
+msgid "Invalid file, first line must match: %s"
+msgstr "Archivo no válido, la primera línea debe coincidir con: %s"
 
-#: python/manage_feeds.py:633
+#: python_modules/feeds_importer.py:187
+#, python-format
+msgid "%d feed found"
+msgid_plural "%d feeds found"
+msgstr[0] "%d artículo encontrado"
+msgstr[1] "%d artículos encontrado"
+
+#: python_modules/feeds_importer.py:195
 msgid "Failed to import file"
 msgstr "Fallo al importar archivo"
 
-#: python/manage_feeds.py:646
-msgid "Save a feed file"
-msgstr "Guardar un archivo de feed"
+#: python_modules/get_feed.py:37
+msgid "Feed is password protected and not supported at this time."
+msgstr "El feed está protegido por contraseña y no es compatible en este momento."
 
-#: python/manage_feeds.py:655
-msgid "Untitled"
-msgstr "Sin Título"
+#: python_modules/get_feed.py:39
+msgid "Feed marked Gone, please remove and stop trying."
+msgstr "Feed marcado como Gone, elimínelo y deje de intentarlo."
 
-#: python/manage_feeds.py:677
-#, python-format
-msgid "Unable to export file, exception: %s"
-msgstr "No se puede exportar el archivo, excepción: %s"
+#: utils.js:114 utils.js:1120
+msgid "Loading..."
+msgstr "Cargando..."
 
-#: python/manage_feeds.py:681
-msgid "Unable to export file"
-msgstr "No se puede exportar archivo"
-
-#: python/manage_feeds.py:820
-msgid "Path to the feeds.json file."
-msgstr "Ruta de acceso al archivo feeds.json."
-
-#: python/manage_feeds.py:821
-msgid "Profile name used by an instance of this applet."
-msgstr "Nombre de perfil usado por una instancia de este applet."
-
-#: utils.js:242
-msgid "Right Click to open feed"
-msgstr "Clic derecho para abrir el feed"
+#: utils.js:252
+msgid "Right Click to display extra options"
+msgstr "Hacer clic derecho para mostrar opciones adicionales"
 
 #. Only one page of items to read, no need to display mark all posts option.
-#: utils.js:312
-msgid "Mark All Posts Read"
-msgstr "Marcar todo como leído"
-
-#: utils.js:320
-#, javascript-format
-msgid "Mark Next %d Posts Read"
-msgstr "Marcar las siguientes %d publicaciones como leídas"
+#: utils.js:315
+msgid "Mark All Articles as Read"
+msgstr "Marcar Todos los Artículos Como Leídos"
 
 #: utils.js:326
-msgid "Update feed URL"
+#, javascript-format
+msgid "Mark %d Article as Read"
+msgid_plural "Mark the Next %d Articles as Read"
+msgstr[0] "Marcar %d Artículo Como Leído "
+msgstr[1] "Marcar los Siguientes %d Artículos Como Leídos "
+
+#: utils.js:335
+msgid "Update Feed URL"
 msgstr "Actualizar URL del feed"
 
-#: utils.js:410 utils.js:416
+#: utils.js:340
+msgid "Visit Feed URL"
+msgstr "Ir a la URL del Feed"
+
+#: utils.js:501 utils.js:507
 msgid "Published"
 msgstr "Publicado"
 
-#: utils.js:476
-msgid "Mark Post Read"
-msgstr "Marcar como leído"
+#: utils.js:575
+msgid "Mark Article as Read"
+msgstr "Marcar Artículo Como Leído"
 
-#: utils.js:511
+#: utils.js:579
+msgid "Copy Article URL"
+msgstr "Copiar la URL del Artículo"
+
+#: utils.js:614
 msgid "d"
 msgstr "d"
 
-#: utils.js:513 utils.js:515
+#: utils.js:616 utils.js:618
 msgid "h"
 msgstr "h"
 
-#: utils.js:515
+#: utils.js:618
 #, javascript-format
 msgid "(<1%s) "
 msgstr "(<1%s) "
 
-#. Invalid feed detected, throw and log error.
-#: utils.js:790
-msgid "Invalid feed url"
-msgstr "URL del feed inválida"
-
-#: utils.js:871
+#: utils.js:966
 #, javascript-format
-msgid "%d unread items!"
-msgstr "¡%d ítems sin leer!"
+msgid "%d unread article!"
+msgid_plural "%d unread articles!"
+msgstr[0] "%d artículo sin leer"
+msgstr[1] "%d artículos sin leer"
 
-#: utils.js:1015 utils.js:1031
-msgid "Loading feed"
-msgstr "Cargando feed"
+#: utils.js:1104
+msgid "Fail to load feed"
+msgstr "Fallo al cargar feed"
 
 #. metadata.json->description
 msgid "Displays RSS news feeds."
@@ -403,172 +703,210 @@ msgstr "Mostrar feeds de noticias RSS."
 msgid "See this xlet help file."
 msgstr "Ver el archivo de ayuda de este xlet."
 
-#. settings-schema.json->heading1->description
-msgid "Feed URLs"
-msgstr "URLs de feed"
+#. metadata.json->name
+msgid "Feeds Reader (Fork By Odyseus)"
+msgstr "Lector de Feeds (Modificado por Odyseus)"
 
-#. settings-schema.json->manage_feeds_button->description
-msgid "Manage Feeds..."
-msgstr "Administrar feeds..."
+#~ msgid "Mark the Next Article as Read"
+#~ msgid_plural "Mark the Next %d Articles as Read"
+#~ msgstr[0] "Marcar %d Artículo Como Leído"
+#~ msgstr[1] "Marcar los Siguientes %d Artículos Como Leídos"
 
-#. settings-schema.json->manage_feeds_button->tooltip
-msgid "Launch the feeds manager application to add/remove/edit feeds."
-msgstr "Iniciar la aplicación del administrador de feeds para agregar/eliminar/editar feeds."
+#~ msgid "feeds"
+#~ msgstr "feeds"
 
-#. settings-schema.json->pref_overlay_key->description
-msgid "Keyboard shortcut to open and close the menu."
-msgstr "Atajo de teclado para abrir o cerrar el menú"
+#~ msgid "Profile Name:"
+#~ msgstr "Nombre del Perfil:"
 
-#. settings-schema.json->pref_new_feed_icon->description
-msgid "Icon used when there are new feeds"
-msgstr "Ícono usado cuando hay feeds nuevos"
+#~ msgid "Create a new profile"
+#~ msgstr "Crear un perfil nuevo"
 
-#. settings-schema.json->pref_new_feed_icon->tooltip
-#. settings-schema.json->pref_feed_icon->tooltip
-msgid "Select an icon to show in the panel."
-msgstr "Seleccionar un ícono para mostrar en el panel."
+#~ msgid "Remove current profile"
+#~ msgstr "Eliminar perfil actual"
 
-#. settings-schema.json->pref_feed_icon->description
-msgid "Icon used when there are not new feeds"
-msgstr "Ícono usado cuando no hay feeds nuevos"
+#~ msgid "Import OPML"
+#~ msgstr "Importar OPML"
 
-#. settings-schema.json->pref_max_items->units
-msgid "feeds"
-msgstr "feeds"
+#~ msgid "Import Feeds File"
+#~ msgstr "Importar archivo de feeds"
 
-#. settings-schema.json->pref_max_items->description
-msgid "Maximum number of items"
-msgstr "Número máximo de ítems"
+#~ msgid "Export Feeds File"
+#~ msgstr "Exportar archivo de feeds"
 
-#. settings-schema.json->pref_max_items->tooltip
-msgid "Maximum number of items to display for each feed."
-msgstr "Número máximo de ítems a mostrar por cada feed."
+#~ msgid "Toggle Hidden Fields"
+#~ msgstr "Alternar campos ocultos"
 
-#. settings-schema.json->pref_refresh_interval_mins->units
-msgid "minutes"
-msgstr "minutos"
+#~ msgid "Manage settings"
+#~ msgstr "Administrar configuración"
 
-#. settings-schema.json->pref_refresh_interval_mins->description
-msgid "Update interval"
-msgstr "Intervalo de actualización"
+#~ msgid "Enable"
+#~ msgstr "Habilitar"
 
-#. settings-schema.json->pref_refresh_interval_mins->tooltip
-msgid "Interval between checking for new items."
-msgstr "Intervalo para buscar nuevos elementos."
+#~ msgid "Url"
+#~ msgstr "Url"
 
-#. settings-schema.json->pref_description_max_length->units
-msgid "characters"
-msgstr "caracteres"
+#~ msgid "Show Read"
+#~ msgstr "Mostrar leído"
 
-#. settings-schema.json->pref_description_max_length->description
-msgid "Description maximum length"
-msgstr "Longitud máxima de descripción"
+#~ msgid "Show Image"
+#~ msgstr "Mostrar imagen"
 
-#. settings-schema.json->pref_tooltip_max_width->units
-msgid "pixels"
-msgstr "píxeles"
+#~ msgid "Add Feed"
+#~ msgstr "Agregar feed"
 
-#. settings-schema.json->pref_tooltip_max_width->description
-msgid "Tooltip maximum width"
-msgstr "Ancho máximo de tooltips"
+#~ msgid "Add a new Feed."
+#~ msgstr "Agregar un feed nuevo."
 
-#. settings-schema.json->pref_notifications_enabled->description
-msgid "Show notifications for new items"
-msgstr "Mostrar notificaciones para nuevos ítems"
+#~ msgid "Delete Feed"
+#~ msgstr "Borrar feed"
 
-#. settings-schema.json->pref_notifications_enabled->tooltip
-msgid "If enabled, a popup notification will be displayed for new items."
-msgstr "Con esta opción habilitada, se mostrará una notificación emergente para nuevos elementos"
+#~ msgid "Delete selected Feed."
+#~ msgstr "Borrar feed seleccionado."
 
-#. settings-schema.json->pref_unified_notifications->description
-msgid "Unified notifications"
-msgstr "Notificaciones unificadas"
+#~ msgid "Apply"
+#~ msgstr "Aplicar"
 
-#. settings-schema.json->pref_unified_notifications->tooltip
-msgid "If enabled, all feeds notifications will use and update one notification."
-msgstr "Con esta opción habilitada, todos los feeds usarán y actualizarán una notificación."
+#~ msgid "Save changes."
+#~ msgstr "Guardar cambios."
 
-#. settings-schema.json->third-party-header->description
-msgid "Third party integrations"
-msgstr "Integraciones de terceros"
+#~ msgid "Unauthorized action"
+#~ msgstr "Acción no autoraizada"
 
-#. settings-schema.json->pref_third_party_integration_panel_drawer->description
-msgid "Panel Drawer applet integration"
-msgstr "Integración del applet Cajón del panel"
+#~ msgid "Default profile cannot be removed."
+#~ msgstr "El perfil predeterminado no se puede eliminar."
 
-#. settings-schema.json->pref_third_party_integration_panel_drawer->tooltip
-msgid "Display applet when receiving new items."
-msgstr "Mostrar applet al recibir nuevos artículos."
+#~ msgid "Do you wish to remove the currently selected profile?"
+#~ msgstr "¿Desea eliminar el perfil seleccionado actualmente?"
 
-#. settings-schema.json->debugging-header->description
-msgid "Debugging"
-msgstr "Configuración de depuración"
+#~ msgid "This operation cannot be undone!"
+#~ msgstr "¡Esta operación no puede ser revertida!"
 
-#. settings-schema.json->pref_logging_level->description
-msgid "Logging level (*)"
-msgstr "Nivel de registro (*)"
+#~ msgid "Profile removal"
+#~ msgstr "Eliminación de perfil"
 
-#. settings-schema.json->pref_logging_level->tooltip
-msgid ""
-"It enables the ability to log the output of several functions used by the extension.\n"
-"\n"
-"Normal: Only log messages caused by non critical errors.\n"
-"Verbose: Additionally log extra output messages and all HTTP responses.\n"
-"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
-msgstr ""
-"Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
-"\n"
-"Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-"Verbal: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
-"Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+#~ msgid "Changes will be discarded, continue?"
+#~ msgstr "Cambios serán descartados. ¿Continuar?"
 
-#. settings-schema.json->pref_logging_level->options
-msgid "Normal"
-msgstr "Normal"
+#~ msgid "Are you sure?"
+#~ msgstr "¿Está seguro?"
 
-#. settings-schema.json->pref_logging_level->options
-msgid "Verbose"
-msgstr "Detallado"
+#~ msgid "New Profile Name"
+#~ msgstr "Nombre de nuevo perfil"
 
-#. settings-schema.json->pref_logging_level->options
-msgid "Very verbose"
-msgstr "Muy detallado"
+#~ msgid "Add New Profile"
+#~ msgstr "Agregar nuevo perfil"
 
-#. settings-schema.json->pref_debugger_enabled->description
-msgid "Enable debugger (*)"
-msgstr "Habilitar depurador (*)"
+#~ msgid "Failed to save config file"
+#~ msgstr "Fallo al guardar archivo de configuración"
 
-#. settings-schema.json->pref_debugger_enabled->tooltip
-msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
-msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
+#~ msgid "All files"
+#~ msgstr "Todos los archivos"
 
-#. settings-schema.json->label->description
-msgid "(*) Requires Cinnamon restart to enable/disable"
-msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+#~ msgid "Imported %d feeds"
+#~ msgstr "%d feeds importados"
 
-#. settings-schema.json->pref_profile_name->description
-msgid "Feed Profile Name."
-msgstr "Nombre del Perfil."
+#~ msgid "Save a feed file"
+#~ msgstr "Guardar un archivo de feed"
 
-#. settings-schema.json->pref_last_checked_storage->description
-msgid "Storage for last feeds checked values."
-msgstr "Almacenamiento para los últimos valores comprobados de feeds."
+#~ msgid "Untitled"
+#~ msgstr "Sin Título"
 
-#~ msgid "Verbose logging"
-#~ msgstr "Registro detallado"
+#~ msgid "Unable to export file, exception: %s"
+#~ msgstr "No se puede exportar el archivo, excepción: %s"
 
-#~ msgid "Checking this will enable debug level logging."
-#~ msgstr "Habilitar el registro de nivel de depuración."
+#~ msgid "Unable to export file"
+#~ msgstr "No se puede exportar archivo"
+
+#~ msgid "Path to the feeds.json file."
+#~ msgstr "Ruta de acceso al archivo feeds.json."
+
+#~ msgid "Profile name used by an instance of this applet."
+#~ msgstr "Nombre de perfil usado por una instancia de este applet."
+
+#~ msgid "Feed reader"
+#~ msgstr "Lector de Feeds"
+
+#~ msgid "Mark all read"
+#~ msgstr "Marcar todo como leído"
+
+#~ msgid "Right Click to open feed"
+#~ msgstr "Clic derecho para abrir el feed"
+
+#~ msgid "Mark All Posts Read"
+#~ msgstr "Marcar todo como leído"
+
+#~ msgid "Mark Next %d Posts Read"
+#~ msgstr "Marcar las siguientes %d publicaciones como leídas"
+
+#~ msgid "Update feed URL"
+#~ msgstr "Actualizar URL del feed"
+
+#~ msgid "Mark Post Read"
+#~ msgstr "Marcar como leído"
+
+#~ msgid "Invalid feed url"
+#~ msgstr "URL del feed inválida"
+
+#~ msgid "%d unread items!"
+#~ msgstr "¡%d ítems sin leer!"
+
+#~ msgid "Loading feed"
+#~ msgstr "Cargando feed"
+
+#~ msgid "Feed URLs"
+#~ msgstr "URLs de feed"
+
+#~ msgid "Manage Feeds..."
+#~ msgstr "Administrar feeds..."
+
+#~ msgid "Launch the feeds manager application to add/remove/edit feeds."
+#~ msgstr "Iniciar la aplicación del administrador de feeds para agregar/eliminar/editar feeds."
+
+#~ msgid "Keyboard shortcut to open and close the menu."
+#~ msgstr "Atajo de teclado para abrir o cerrar el menú"
+
+#~ msgid "Maximum number of items"
+#~ msgstr "Número máximo de ítems"
+
+#~ msgid "Maximum number of items to display for each feed."
+#~ msgstr "Número máximo de ítems a mostrar por cada feed."
+
+#~ msgid "Interval between checking for new items."
+#~ msgstr "Intervalo para buscar nuevos elementos."
+
+#~ msgid "Show notifications for new items"
+#~ msgstr "Mostrar notificaciones para nuevos ítems"
+
+#~ msgid "If enabled, a popup notification will be displayed for new items."
+#~ msgstr "Con esta opción habilitada, se mostrará una notificación emergente para nuevos elementos"
+
+#~ msgid "Display applet when receiving new items."
+#~ msgstr "Mostrar applet al recibir nuevos artículos."
+
+#~ msgid "Logging level (*)"
+#~ msgstr "Nivel de registro (*)"
 
 #~ msgid ""
 #~ "It enables the ability to log the output of several functions used by the extension.\n"
 #~ "\n"
 #~ "Normal: Only log messages caused by non critical errors.\n"
-#~ "Verbose: Additinally log extra output messages and all HTTP responses.\n"
+#~ "Verbose: Additionally log extra output messages and all HTTP responses.\n"
 #~ "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 #~ msgstr ""
 #~ "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
 #~ "\n"
 #~ "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-#~ "Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+#~ "Verbal: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
 #~ "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+
+#~ msgid "Enable debugger (*)"
+#~ msgstr "Habilitar depurador (*)"
+
+#~ msgid "(*) Requires Cinnamon restart to enable/disable"
+#~ msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+
+#~ msgid "Feed Profile Name."
+#~ msgstr "Nombre del Perfil."
+
+#~ msgid "Storage for last feeds checked values."
+#~ msgstr "Almacenamiento para los últimos valores comprobados de feeds."

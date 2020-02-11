@@ -1,6 +1,18 @@
 ## Desktop Capture (Fork By Odyseus) changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
+
+***
+
+- **Date:** Mon, 10 Feb 2020 23:57:32 -0300
+- **Commit:** [ab32134](https://gitlab.com/Odyseus/CinnamonTools/commit/ab32134)
+- **Author:** Odyseus
+
+```
+- Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.
+- Adaptations due to changes to global JavaScript modules.
+
+```
 
 ***
 

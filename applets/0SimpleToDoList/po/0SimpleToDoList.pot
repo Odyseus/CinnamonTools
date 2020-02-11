@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList VERSION\n"
-"POT-Creation-Date: 2020-01-28 01:33-0300\n"
+"POT-Creation-Date: 2020-02-11 00:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,58 +15,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
+#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:985
+#: ../../__app__/python_modules/localized_help_creator.py:316 applet.js:963
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:312
+#: ../../__app__/python_modules/localized_help_creator.py:317
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:313
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:349
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:363
-msgid "Cinnamon compatibility"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:364
+#: ../../__app__/python_modules/localized_help_creator.py:374
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:381
+#: ../../__app__/python_modules/localized_help_creator.py:377
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:383
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:400
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:403
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:425
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -269,67 +274,67 @@ msgstr ""
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr ""
 
-#: applet.js:139 applet.js:199
+#: applet.js:140 applet.js:200
 msgid "New tasks list..."
 msgstr ""
 
-#: applet.js:881
+#: applet.js:859
 msgid "Save as TODO"
 msgstr ""
 
-#: applet.js:889
+#: applet.js:867
 msgid "Save all current tasks lists as a TODO file."
 msgstr ""
 
-#: applet.js:899
+#: applet.js:877
 msgid "Export tasks"
 msgstr ""
 
-#: applet.js:907
+#: applet.js:885
 msgid "Export all current tasks lists into a JSON file."
 msgstr ""
 
-#: applet.js:908 applet.js:926
+#: applet.js:886 applet.js:904
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr ""
 
-#: applet.js:918
+#: applet.js:896
 msgid "Import tasks"
 msgstr ""
 
-#: applet.js:925
+#: applet.js:903
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr ""
 
-#: applet.js:935
+#: applet.js:913
 msgid "Restore example tasks"
 msgstr ""
 
-#: applet.js:951
+#: applet.js:929
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr ""
 
-#: applet.js:957
+#: applet.js:935
 msgid "Reset tasks"
 msgstr ""
 
-#: applet.js:963 applet.js:976
+#: applet.js:941 applet.js:954
 msgid "WARNING!!!"
 msgstr ""
 
-#: applet.js:964
+#: applet.js:942
 msgid "Do you really want to remove all your current tasks?"
 msgstr ""
 
-#: applet.js:965 applet.js:976
+#: applet.js:943 applet.js:954
 msgid "This operation cannot be reverted!!!"
 msgstr ""
 
-#: applet.js:975
+#: applet.js:953
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr ""
 
-#: applet.js:989
+#: applet.js:967
 msgid "Open this applet help file."
 msgstr ""
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ColorBlindnessAssistant\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-01-27 22:05-0300\n"
-"PO-Revision-Date: 2020-01-27 22:08-0300\n"
+"POT-Creation-Date: 2020-02-10 20:50-0300\n"
+"PO-Revision-Date: 2020-02-10 21:00-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -19,224 +19,221 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:216
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:304
 msgid "Information related to this specific section"
 msgstr "Información relacionada con esta sección específica."
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:790
-msgid "Choose an Icon"
-msgstr "Elegir un ícono"
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1285
+msgid "Clear color"
+msgstr "Limpiar color"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:793 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1066 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1170 ../../__app__/data/python_modules/xlets_settings/__init__.py:980 ../../__app__/data/python_modules/xlets_settings/__init__.py:1012
-msgid "_Cancel"
-msgstr "_Cancelar"
-
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:794
-msgid "_Open"
-msgstr "_Abrir"
-
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:797
-msgid "Image files"
-msgstr "Archivos de imagen"
-
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1276
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1398
 msgid "Clear path"
 msgstr "Limpiar ruta"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:525
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:501
 msgid "No app chosen"
 msgstr "Ninguna aplicación elegida"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:647
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:623
 msgid "Add new item"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:655
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:631
 msgid "Remove selected item"
 msgstr "Eliminar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:667
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:643
 msgid "Edit selected item"
 msgstr "Editar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:677
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:653
 msgid "Move selected item up"
 msgstr "Mover ítem seleccionado hacia arriba"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:685
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:661
 msgid "Move selected item down"
 msgstr "Mover ítem seleccionado hacia abajo"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:675
 msgid "Export data"
 msgstr "Exportar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:712
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:688 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1082
 msgid "Import data"
 msgstr "Importar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
 msgid "Apply changes"
 msgstr "Aplicar cambios"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:917
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:881
 msgid "Item removal"
 msgstr "Eliminación de ítem"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:920
-msgid "Are you sure that you want to remove this item?"
-msgstr "¿Está seguro de que desea remover este ítem?"
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:884
+msgid "Are you sure that you want to remove the selected items?"
+msgstr "¿Está seguro de que desea remover los ítems seleccionados?"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:921
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:885
 msgid "Note"
 msgstr "Nota"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:922
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:886
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1064
-msgid "Choose how to add the imported data"
-msgstr "Elegir cómo agregar los datos importados"
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1192 ../../__app__/data/python_modules/xlets_settings/__init__.py:1090 ../../__app__/data/python_modules/xlets_settings/__init__.py:1123
+msgid "_Cancel"
+msgstr "_Cancelar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1067
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1086
 msgid "_Overwrite"
 msgstr "_Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1068
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1087
 msgid "_Append"
 msgstr "_Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1086
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1107
 msgid "Overwrite"
 msgstr "Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1087
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1108
 msgid "replace the current data with the imported data."
 msgstr "reemplazar los datos actuales con los datos importados."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1088
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1109
 msgid "Append"
 msgstr "Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1089
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1110
 msgid "add the imported data to the current data."
 msgstr "agregar los datos importados a los datos actuales."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1162
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1184
 msgid "Add new entry"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1164
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1186
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1171 ../../__app__/data/python_modules/xlets_settings/__init__.py:981 ../../__app__/data/python_modules/xlets_settings/__init__.py:1013
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1193 ../../__app__/data/python_modules/xlets_settings/__init__.py:1091 ../../__app__/data/python_modules/xlets_settings/__init__.py:1124
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:546
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:497 settings.py:198
+msgid "Other"
+msgstr "Otros"
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:636
 msgid "Previous instance"
 msgstr "Instancia previa"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:553
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:643
 msgid "Next instance"
 msgstr "Siguiente instancia"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:593
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:683
 msgid "Import settings from a file"
 msgstr "Importar preferencias desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:597
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:687
 msgid "Export settings to a file"
 msgstr "Exportar preferencias a un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:601
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:691
 msgid "Reset settings to defaults"
 msgstr "Restablecer preferencias a los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:611 ../../__app__/python_modules/localized_help_creator.py:311 utils.js:53
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:701 ../../__app__/python_modules/localized_help_creator.py:316 utils.js:55
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:632
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:722
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:690 extension.js:597
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:790 extension.js:597
 #, python-format, javascript-format
 msgid "Settings for %s"
 msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:977
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1086
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:986 ../../__app__/data/python_modules/xlets_settings/__init__.py:1017
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1096 ../../__app__/data/python_modules/xlets_settings/__init__.py:1128
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1009
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1119
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1041
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1152
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1043
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1154
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
-#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
+#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:312
+#: ../../__app__/python_modules/localized_help_creator.py:317
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:313
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:349
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:363
-msgid "Cinnamon compatibility"
-msgstr "Compatibilidad con Cinnamon"
-
-#: ../../__app__/python_modules/localized_help_creator.py:364
+#: ../../__app__/python_modules/localized_help_creator.py:374
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:381
+#: ../../__app__/python_modules/localized_help_creator.py:377
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
+
+#: ../../__app__/python_modules/localized_help_creator.py:383
+msgid "Cinnamon compatibility"
+msgstr "Compatibilidad con Cinnamon"
+
+#: ../../__app__/python_modules/localized_help_creator.py:400
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:403
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:425
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -284,7 +281,7 @@ msgstr "Deficiencia de color azul."
 msgid "It enables the ability to log the output of several functions used by the extension."
 msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión."
 
-#: settings.py:45 settings.py:245 constants.js:81 constants.js:97
+#: settings.py:45 settings.py:247 constants.js:79 constants.js:95
 msgid "Normal"
 msgstr "Normal"
 
@@ -293,14 +290,14 @@ msgid "Only log messages caused by non critical errors."
 msgstr "Solo registrar mensajes causados por errores críticos."
 
 #: settings.py:46
-msgid "Additinally log extra output messages and all HTTP responses."
+msgid "Additionally log extra output messages and all HTTP responses."
 msgstr "Adicionalmente registrar mensajes extra y todas las respuestas HTTP."
 
-#: settings.py:46 settings.py:246
+#: settings.py:46 settings.py:248
 msgid "Verbose"
 msgstr "Detallado"
 
-#: settings.py:47 settings.py:247
+#: settings.py:47 settings.py:249
 msgid "Very verbose"
 msgstr "Muy detallado"
 
@@ -312,47 +309,47 @@ msgstr "Adicionalmente registrar todas las llamadas de métodos de todas las cla
 msgid "Effect"
 msgstr "Effecto"
 
-#: settings.py:58 constants.js:102
+#: settings.py:58 constants.js:100
 msgid "Acromatopia (rod) simulation"
 msgstr "Simulación de acromatopía (varilla)"
 
-#: settings.py:59 constants.js:103
+#: settings.py:59 constants.js:101
 msgid "Acromatopia (blue cone) simulation"
 msgstr "Simulación de acromatopía (cono azul)"
 
-#: settings.py:60 constants.js:104
+#: settings.py:60 constants.js:102
 msgid "Deuteranopia compensation"
 msgstr "Compensación de deuteranopía"
 
-#: settings.py:61 constants.js:107
+#: settings.py:61 constants.js:105
 msgid "Deuteranopia simulation"
 msgstr "Simulación de deuteranopía"
 
-#: settings.py:62 constants.js:105
+#: settings.py:62 constants.js:103
 msgid "Protanopia compensation"
 msgstr "Compensación de protanopía"
 
-#: settings.py:63 constants.js:108
+#: settings.py:63 constants.js:106
 msgid "Protanopia simulation"
 msgstr "Simulación de protanopía"
 
-#: settings.py:64 constants.js:106
+#: settings.py:64 constants.js:104
 msgid "Tritanopia compensation"
 msgstr "Compensación de tritanopía"
 
-#: settings.py:65 constants.js:109
+#: settings.py:65 constants.js:107
 msgid "Tritanopia simulation"
 msgstr "Simulación de tritanopía"
 
-#: settings.py:69 z_create_localized_help.py:116 daltonizer.js:358
+#: settings.py:69 z_create_localized_help.py:116 daltonizer.js:361
 msgid "Actor"
 msgstr "Actor"
 
-#: settings.py:73 constants.js:82 constants.js:98
+#: settings.py:73 constants.js:80 constants.js:96
 msgid "Focused window"
 msgstr "Ventana enfocada"
 
-#: settings.py:74 constants.js:83 constants.js:99 daltonizer.js:566
+#: settings.py:74 constants.js:81 constants.js:97 daltonizer.js:569
 msgid "Screen"
 msgstr "Pantalla"
 
@@ -368,7 +365,7 @@ msgstr "sRGB"
 msgid "CIE RGB"
 msgstr "CIE RGB"
 
-#: settings.py:87 settings.py:102 settings.py:136
+#: settings.py:87 settings.py:103 settings.py:137
 msgid "Keybinding"
 msgstr "Combinación de teclas"
 
@@ -380,31 +377,31 @@ msgstr "Herramientas"
 msgid "Color inspector"
 msgstr "Inspector de color"
 
-#: settings.py:111
+#: settings.py:112
 msgid "Always copy color information to clipboard"
 msgstr "Siempre copiar información de color al portapapeles"
 
-#: settings.py:119 settings.py:145
+#: settings.py:120 settings.py:146
 msgid "UI animation time"
 msgstr "Duración de animación de la interfaz"
 
-#: settings.py:120 settings.py:147
+#: settings.py:121 settings.py:148
 msgid "milliseconds"
 msgstr "milisegundos"
 
-#: settings.py:130 z_create_localized_help.py:110 daltonizer.js:626
+#: settings.py:130 z_create_localized_help.py:110 daltonizer.js:629
 msgid "Daltonizer"
 msgstr "Daltonizador"
 
-#: settings.py:146
+#: settings.py:147
 msgid "Set to zero to disable animations."
 msgstr "Establece en 0 (cero) para deshabilitar animaciones."
 
-#: settings.py:160
+#: settings.py:161
 msgid "Display actor selection section"
 msgstr "Mostrar sección de selección de actor"
 
-#: settings.py:168
+#: settings.py:169
 msgid "Display color space selection section"
 msgstr "Mostrar sección de selección de espacio de color"
 
@@ -412,27 +409,23 @@ msgstr "Mostrar sección de selección de espacio de color"
 msgid "Effects"
 msgstr "Efectos"
 
-#: settings.py:198
-msgid "Other"
-msgstr "Otros"
-
 #: settings.py:200 z_create_localized_help.py:134
 msgid "GUI theme"
 msgstr "Tema de interfaz"
 
-#: settings.py:206
+#: settings.py:207
 msgid "Theme"
 msgstr "Tema"
 
-#: settings.py:208
+#: settings.py:209
 msgid "Default"
 msgstr "Por defecto"
 
-#: settings.py:209
+#: settings.py:210
 msgid "Custom"
 msgstr "Personalizado"
 
-#: settings.py:218
+#: settings.py:219
 msgid "Custom theme path"
 msgstr "Ruta al tema personalizado"
 
@@ -440,12 +433,12 @@ msgstr "Ruta al tema personalizado"
 msgid "Miscellaneous"
 msgstr "Misceláneos"
 
-#: settings.py:229
+#: settings.py:230
 msgid "Windows clones inherit effects"
 msgstr "Los clones de ventanas heredan efectos"
 
 #. TO TRANSLATORS: MARKDOWN string. Respect formatting.
-#: settings.py:230 z_create_localized_help.py:81
+#: settings.py:231 z_create_localized_help.py:81
 msgid "Window thumbnails generated by the [[Alt]] + [[Tab]] switchers and workspace previews will inherit the effect of the real windows."
 msgstr "Las miniaturas de ventanas generadas por los conmutadores [[Alt]] + [[Tab]] y las vistas previas del área de trabajo heredarán el efecto de las ventanas reales."
 
@@ -453,15 +446,15 @@ msgstr "Las miniaturas de ventanas generadas por los conmutadores [[Alt]] + [[Ta
 msgid "Debugging"
 msgstr "Configuración de depuración"
 
-#: settings.py:242
+#: settings.py:244
 msgid "Logging level"
 msgstr "Nivel de registro"
 
-#: settings.py:256
+#: settings.py:259
 msgid "Enable debugger"
 msgstr "Habilitar depurador"
 
-#: settings.py:257
+#: settings.py:260
 msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
 msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
 
@@ -575,7 +568,7 @@ msgstr "Nombre de color"
 msgid "It could be an approximation of the input color or an exact match."
 msgstr "Podría ser una aproximación del color de entrada o una coincidencia exacta."
 
-#: z_create_localized_help.py:93 constants.js:75
+#: z_create_localized_help.py:93 constants.js:73
 msgid "Input Color"
 msgstr "Color de Entrada"
 
@@ -583,7 +576,7 @@ msgstr "Color de Entrada"
 msgid "The hexadecimal and RGB representation of the color that's immediately under the mouse cursor."
 msgstr "La representación hexadecimal y RGB del color que está inmediatamente debajo del cursor del mouse."
 
-#: z_create_localized_help.py:95 constants.js:76
+#: z_create_localized_help.py:95 constants.js:74
 msgid "Detected Color"
 msgstr "Color Detectado"
 
@@ -591,7 +584,7 @@ msgstr "Color Detectado"
 msgid "The hexadecimal and RGB representation of the color detected by the **Name that color** library based on the input color."
 msgstr "La representación hexadecimal y RGB del color detectado por la biblioteca **Nombra ese color** según el color de entrada."
 
-#: z_create_localized_help.py:97 constants.js:77
+#: z_create_localized_help.py:97 constants.js:75
 msgid "Hue"
 msgstr "Matiz"
 
@@ -611,7 +604,7 @@ msgstr "Ejemplo de color aproximado."
 msgid "Daltonizer is a tool that allows to apply an effect on-the-fly to a focused window or the screen. An effect can simulate a color vision deficiency or compensate it. The daltonizer UI is composed of the following sections:"
 msgstr "Daltonizador es una herramienta que permite aplicar un efecto sobre la marcha en una ventana enfocada o en la pantalla. Un efecto puede simular una deficiencia de visión del color o compensarlo. La interfaz de usuario del daltonizador se compone de las siguientes secciones:"
 
-#: z_create_localized_help.py:114 daltonizer.js:321
+#: z_create_localized_help.py:114 daltonizer.js:324
 msgid "Effect Name"
 msgstr "Nombre de Efecto"
 
@@ -623,7 +616,7 @@ msgstr "El efecto a aplicar al actor actualmente enfocado."
 msgid "The actor (focused window or screen) to which to apply an effect."
 msgstr "El actor (ventana enfocada o pantalla) al cual aplicar un efecto."
 
-#: z_create_localized_help.py:118 daltonizer.js:379
+#: z_create_localized_help.py:118 daltonizer.js:382
 msgid "Color Space"
 msgstr "Espacio de Color"
 
@@ -731,75 +724,75 @@ msgstr "Para todos los xlets"
 msgid "If the *wrong* settings window is opened, a button to open the *right* settings window will be available."
 msgstr "Si se abre la ventana de configuración *incorrecta*, estará disponible un botón para abrir la ventana de configuración *correcta*."
 
-#: colorInspector.js:127
+#: colorInspector.js:128
 msgid "No matches"
 msgstr "No hay coincidencias"
 
-#: colorInspector.js:136
+#: colorInspector.js:137
 msgid "Press Escape or click to exit"
 msgstr "Presionar Escape o clic para salir"
 
-#: colorInspector.js:435
+#: colorInspector.js:436
 msgid "Press Pause or Control to disable event pass through"
 msgstr "Presionar Pausa o Control para deshabilitar el paso de eventos"
 
-#: colorInspector.js:437
+#: colorInspector.js:438
 msgid "Press Pause or Control to enable event pass through"
 msgstr "Presionar Pausa o Control para habilitar el paso de eventos"
 
-#: colorInspector.js:522
+#: colorInspector.js:523
 msgid "Exact Match"
 msgstr "Coincidencia Exacta"
 
-#: colorInspector.js:523
+#: colorInspector.js:524
 msgid "Approximation"
 msgstr "Aproximación"
 
-#: colorInspector.js:575
+#: colorInspector.js:569
 msgid "Color information copied to clipboard."
 msgstr "Información de color copiada al portapapeles."
 
-#: constants.js:86
+#: constants.js:84
 msgid "Acrom. (R) sim."
 msgstr "Sim. de acrom. (V)"
 
-#: constants.js:87
+#: constants.js:85
 msgid "Acrom. (BC) sim."
 msgstr "Sim. de acrom. (CA)"
 
-#: constants.js:88
+#: constants.js:86
 msgid "Deuteran comp."
 msgstr "Comp. deuterana"
 
-#: constants.js:89
+#: constants.js:87
 msgid "Protan comp."
 msgstr "Comp. protana"
 
-#: constants.js:90
+#: constants.js:88
 msgid "Tritan comp."
 msgstr "Comp. tritana"
 
-#: constants.js:91
+#: constants.js:89
 msgid "Deuteran sim."
 msgstr "Sim. deuterana"
 
-#: constants.js:92
+#: constants.js:90
 msgid "Protan sim."
 msgstr "Sim. deuterana"
 
-#: constants.js:93
+#: constants.js:91
 msgid "Tritan sim."
 msgstr "Sim. tritana"
 
-#: constants.js:100
+#: constants.js:98
 msgid "Standard RGB"
 msgstr "RGB estándar"
 
-#: daltonizer.js:180
+#: daltonizer.js:183
 msgid "Close daltonizer"
 msgstr "Cerrar daltonizador"
 
-#: daltonizer.js:283
+#: daltonizer.js:286
 msgid "Press Escape or the close button to exit"
 msgstr "Presionar Escape o clic para salir"
 
@@ -7410,6 +7403,21 @@ msgstr "Esta no es la ventana de configuración \"real\" de este xlet."
 #. settings-schema.json->settings_button->description
 msgid "Open the \"real\" preference window"
 msgstr "Abrir la ventana \"real\" de preferencias"
+
+#~ msgid "Choose an Icon"
+#~ msgstr "Elegir un ícono"
+
+#~ msgid "_Open"
+#~ msgstr "_Abrir"
+
+#~ msgid "Image files"
+#~ msgstr "Archivos de imagen"
+
+#~ msgid "Are you sure that you want to remove this item?"
+#~ msgstr "¿Está seguro de que desea remover este ítem?"
+
+#~ msgid "Choose how to add the imported data"
+#~ msgstr "Elegir cómo agregar los datos importados"
 
 #~ msgid "Cinnamon versions bellow 3.6.x"
 #~ msgstr "Versiones de Cinnamon abajo de 3.6.x"

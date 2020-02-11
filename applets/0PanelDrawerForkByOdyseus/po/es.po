@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0PanelDrawerForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-01-27 22:05-0300\n"
-"PO-Revision-Date: 2020-01-27 23:03-0300\n"
+"POT-Creation-Date: 2020-02-10 20:44-0300\n"
+"PO-Revision-Date: 2020-02-10 20:58-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -19,58 +19,63 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
+#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:151 utils.js:48
+#: ../../__app__/python_modules/localized_help_creator.py:316 applet.js:151 utils.js:48
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:312
+#: ../../__app__/python_modules/localized_help_creator.py:317
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:313
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:349
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:363
-msgid "Cinnamon compatibility"
-msgstr "Compatibilidad con Cinnamon"
-
-#: ../../__app__/python_modules/localized_help_creator.py:364
+#: ../../__app__/python_modules/localized_help_creator.py:374
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:381
+#: ../../__app__/python_modules/localized_help_creator.py:377
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
+
+#: ../../__app__/python_modules/localized_help_creator.py:383
+msgid "Cinnamon compatibility"
+msgstr "Compatibilidad con Cinnamon"
+
+#: ../../__app__/python_modules/localized_help_creator.py:400
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:403
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:425
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -95,23 +100,19 @@ msgstr "Se pueden colocar múltiples instancias de este applet en cualquier pane
 msgid "This fork supports vertical panels."
 msgstr "Este applet soporta paneles verticales."
 
-#: z_create_localized_help.py:37
-msgid "This fork adds all items from a panel context menu into its own context menu."
-msgstr "Este applet agrega todos los elementos del menú contextual de un panel a su propio menú contextual."
-
-#: z_create_localized_help.py:43
+#: z_create_localized_help.py:42
 msgid "Usage"
 msgstr "Uso"
 
-#: z_create_localized_help.py:48
+#: z_create_localized_help.py:47
 msgid "Do not try to hide with this applet the Cinnamon's default System Tray applet (nor any other applet that acts as such). The original Drawer applet handles these types of applets in a very *hacky* way (it sets the size of the tray icons to zero when hiding them and sets them back to a hard-coded size when displaying them). I simply removed that behavior from this fork because I refuse to deal with the mess that the system tray mechanism is in Cinnamon."
 msgstr "No intentar ocultar con este applet el applet de la Bandeja del Sistema por defecto de Cinnamon (ni ningún otro applet que actúe como tal). El applet original (Drawer) maneja estos tipos de applets de una manera muy *tosca* (establece el tamaño de los iconos de la bandeja a cero cuando los oculta y los vuelve a colocar en un tamaño fijo al mostrarlos). Simplemente quité ese comportamiento de este applet porque me niego a lidiar con el desorden que es el mecanismo de la bandeja del sistema de Cinnamon."
 
-#: z_create_localized_help.py:52
+#: z_create_localized_help.py:51
 msgid "The applet does its job when it is placed inside the rigth box of a panel (bottom box for vertical panels). Do not place inside any other panel box."
 msgstr "El applet hace su trabajo cuando se coloca dentro de la caja derecha de un panel (caja inferior en paneles verticales). No colocarlo dentro de ninguna otra caja de panel."
 
-#: z_create_localized_help.py:53
+#: z_create_localized_help.py:52
 msgid "All applets that are placed in front of this applet (or on top of it in vertical panels) will be hidden."
 msgstr "Todos los applets que se colocan delante de este applet (o sobre él en paneles verticales) serán ocultados."
 
@@ -282,27 +283,5 @@ msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso 
 msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
 
-#~ msgid "Add applets to the panel"
-#~ msgstr "Añadir applets al panel"
-
-#~ msgid "Panel settings"
-#~ msgstr "Preferencias del panel"
-
-#~ msgid "Themes"
-#~ msgstr "Temas"
-
-#~ msgid "System Settings"
-#~ msgstr "Preferencias del sistema"
-
-#~ msgid ""
-#~ "It enables the ability to log the output of several functions used by the extension.\n"
-#~ "\n"
-#~ "Normal: Only log messages caused by non critical errors.\n"
-#~ "Verbose: Additinally log extra output messages and all HTTP responses.\n"
-#~ "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
-#~ msgstr ""
-#~ "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
-#~ "\n"
-#~ "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-#~ "Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
-#~ "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+#~ msgid "This fork adds all items from a panel context menu into its own context menu."
+#~ msgstr "Este applet agrega todos los elementos del menú contextual de un panel a su propio menú contextual."

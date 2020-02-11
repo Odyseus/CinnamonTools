@@ -1,6 +1,20 @@
 ## Cinnamon Menu (Fork By Odyseus) changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
+
+***
+
+- **Date:** Tue, 11 Feb 2020 00:00:15 -0300
+- **Commit:** [9c2c2e7](https://gitlab.com/Odyseus/CinnamonTools/commit/9c2c2e7)
+- **Author:** Odyseus
+
+```
+- Corrected keyboard navigation behavior. Now menu items are correctly focused when performing *jumps*.
+- Adaptations due to changes to global JavaScript modules.
+- Implemented the use of the `xdgOpen` function from the `globalUtils.js` JavaScript module.
+- Adaptations due to changes to custom xlets settings framework.
+
+```
 
 ***
 

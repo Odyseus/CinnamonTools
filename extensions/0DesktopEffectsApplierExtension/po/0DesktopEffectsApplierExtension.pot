@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopEffectsApplierExtension VERSION\n"
-"POT-Creation-Date: 2020-01-28 01:33-0300\n"
+"POT-Creation-Date: 2020-02-11 00:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,224 +15,221 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:216
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:304
 msgid "Information related to this specific section"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:790
-msgid "Choose an Icon"
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1285
+msgid "Clear color"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:793 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1066 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1170 ../../__app__/data/python_modules/xlets_settings/__init__.py:980 ../../__app__/data/python_modules/xlets_settings/__init__.py:1012
-msgid "_Cancel"
-msgstr ""
-
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:794
-msgid "_Open"
-msgstr ""
-
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:797
-msgid "Image files"
-msgstr ""
-
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1276
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1398
 msgid "Clear path"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:525
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:501
 msgid "No app chosen"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:647
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:623
 msgid "Add new item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:655
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:631
 msgid "Remove selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:667
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:643
 msgid "Edit selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:677
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:653
 msgid "Move selected item up"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:685
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:661
 msgid "Move selected item down"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:675
 msgid "Export data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:712
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:688 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1082
 msgid "Import data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
 msgid "Apply changes"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:917
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:881
 msgid "Item removal"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:920
-msgid "Are you sure that you want to remove this item?"
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:884
+msgid "Are you sure that you want to remove the selected items?"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:921
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:885
 msgid "Note"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:922
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:886
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1064
-msgid "Choose how to add the imported data"
-msgstr ""
-
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1067
-msgid "_Overwrite"
-msgstr ""
-
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1068
-msgid "_Append"
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1192 ../../__app__/data/python_modules/xlets_settings/__init__.py:1090 ../../__app__/data/python_modules/xlets_settings/__init__.py:1123
+msgid "_Cancel"
 msgstr ""
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1086
-msgid "Overwrite"
+msgid "_Overwrite"
 msgstr ""
 
 #: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1087
+msgid "_Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1107
+msgid "Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1108
 msgid "replace the current data with the imported data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1088
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1109
 msgid "Append"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1089
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1110
 msgid "add the imported data to the current data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1162
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1184
 msgid "Add new entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1164
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1186
 msgid "Edit entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1171 ../../__app__/data/python_modules/xlets_settings/__init__.py:981 ../../__app__/data/python_modules/xlets_settings/__init__.py:1013
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1193 ../../__app__/data/python_modules/xlets_settings/__init__.py:1091 ../../__app__/data/python_modules/xlets_settings/__init__.py:1124
 msgid "_Save"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:546
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:497 settings.py:343
+msgid "Other"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:636
 msgid "Previous instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:553
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:643
 msgid "Next instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:593
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:683
 msgid "Import settings from a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:597
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:687
 msgid "Export settings to a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:601
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:691
 msgid "Reset settings to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:611 ../../__app__/python_modules/localized_help_creator.py:311 utils.js:53
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:701 ../../__app__/python_modules/localized_help_creator.py:316 utils.js:51
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:632
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:722
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:690 extension.js:583
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:790 extension.js:583
 #, python-format, javascript-format
 msgid "Settings for %s"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:977
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1086
 msgid "Select or enter file to export to"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:986 ../../__app__/data/python_modules/xlets_settings/__init__.py:1017
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1096 ../../__app__/data/python_modules/xlets_settings/__init__.py:1128
 msgid "JSON files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1009
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1119
 msgid "Select a JSON file to import"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1041
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1152
 msgid "Trying to reset all settings!!!"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1043
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1154
 msgid "Reset all settings to their default values?"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
+#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:312
+#: ../../__app__/python_modules/localized_help_creator.py:317
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:313
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:349
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:363
-msgid "Cinnamon compatibility"
-msgstr ""
-
-#: ../../__app__/python_modules/localized_help_creator.py:364
+#: ../../__app__/python_modules/localized_help_creator.py:374
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:381
+#: ../../__app__/python_modules/localized_help_creator.py:377
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:383
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:400
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:403
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:425
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -244,7 +241,7 @@ msgstr ""
 msgid "It enables the ability to log the output of several functions used by the extension."
 msgstr ""
 
-#: settings.py:21 settings.py:381
+#: settings.py:21 settings.py:383
 msgid "Normal"
 msgstr ""
 
@@ -253,14 +250,14 @@ msgid "Only log messages caused by non critical errors."
 msgstr ""
 
 #: settings.py:22
-msgid "Additinally log extra output messages and all HTTP responses."
+msgid "Additionally log extra output messages and all HTTP responses."
 msgstr ""
 
-#: settings.py:22 settings.py:382
+#: settings.py:22 settings.py:384
 msgid "Verbose"
 msgstr ""
 
-#: settings.py:23 settings.py:383
+#: settings.py:23 settings.py:385
 msgid "Very verbose"
 msgstr ""
 
@@ -434,10 +431,6 @@ msgstr ""
 msgid "Brightness effects"
 msgstr ""
 
-#: settings.py:343
-msgid "Other"
-msgstr ""
-
 #: settings.py:346
 msgid "Global keybindings"
 msgstr ""
@@ -446,11 +439,11 @@ msgstr ""
 msgid "Miscellaneous"
 msgstr ""
 
-#: settings.py:365
+#: settings.py:366
 msgid "Windows clones inherit effects"
 msgstr ""
 
-#: settings.py:366
+#: settings.py:367
 msgid "Window thumbnails generated by the [[Alt]] + [[Tab]] switchers and workspace previews will inherit the effect of the real windows."
 msgstr ""
 
@@ -458,15 +451,15 @@ msgstr ""
 msgid "Debugging"
 msgstr ""
 
-#: settings.py:378
+#: settings.py:380
 msgid "Logging level"
 msgstr ""
 
-#: settings.py:392
+#: settings.py:395
 msgid "Enable debugger"
 msgstr ""
 
-#: settings.py:393
+#: settings.py:396
 msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
 msgstr ""
 

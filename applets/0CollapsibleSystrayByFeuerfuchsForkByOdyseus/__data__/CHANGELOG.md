@@ -1,6 +1,17 @@
 ## Collapsible Systray (Fork By Odyseus) changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
+
+***
+
+- **Date:** Mon, 10 Feb 2020 23:58:00 -0300
+- **Commit:** [b7bcae9](https://gitlab.com/Odyseus/CinnamonTools/commit/b7bcae9)
+- **Author:** Odyseus
+
+```
+- Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.
+
+```
 
 ***
 

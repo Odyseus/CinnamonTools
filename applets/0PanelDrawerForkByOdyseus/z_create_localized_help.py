@@ -34,7 +34,6 @@ class Main(LocalizedHelpCreator):
             "",
             "- %s" % _("Multiple instances of this fork can be placed in any panel (only one instance per panel)."),
             "- %s" % _("This fork supports vertical panels."),
-            "- %s" % _("This fork adds all items from a panel context menu into its own context menu."),
             "",
         ])
 

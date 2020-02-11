@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-01-27 22:05-0300\n"
-"PO-Revision-Date: 2020-01-27 23:05-0300\n"
+"POT-Creation-Date: 2020-02-10 20:44-0300\n"
+"PO-Revision-Date: 2020-02-10 20:58-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,58 +18,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
+#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 utils.js:1251
+#: ../../__app__/python_modules/localized_help_creator.py:316 utils.js:1252
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:312
+#: ../../__app__/python_modules/localized_help_creator.py:317
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:313
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:349
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:363
-msgid "Cinnamon compatibility"
-msgstr "Compatibilidad con Cinnamon"
-
-#: ../../__app__/python_modules/localized_help_creator.py:364
+#: ../../__app__/python_modules/localized_help_creator.py:374
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:381
+#: ../../__app__/python_modules/localized_help_creator.py:377
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
+
+#: ../../__app__/python_modules/localized_help_creator.py:383
+msgid "Cinnamon compatibility"
+msgstr "Compatibilidad con Cinnamon"
+
+#: ../../__app__/python_modules/localized_help_creator.py:400
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:403
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:425
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -109,73 +114,73 @@ msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 
-#: utils.js:1103
+#: utils.js:1104
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: utils.js:1117
+#: utils.js:1118
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: utils.js:1128
+#: utils.js:1129
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: utils.js:1139
+#: utils.js:1140
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: utils.js:1145
+#: utils.js:1146
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: utils.js:1151
+#: utils.js:1152
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: utils.js:1181
+#: utils.js:1182
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: utils.js:1191
+#: utils.js:1192
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: utils.js:1206
+#: utils.js:1207
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: utils.js:1214
+#: utils.js:1215
 msgid "Restore"
 msgstr "Restaurar"
 
-#: utils.js:1219
+#: utils.js:1220
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: utils.js:1227
+#: utils.js:1228
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: utils.js:1232
+#: utils.js:1233
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: utils.js:1239
+#: utils.js:1240
 msgid "Close"
 msgstr "Cerrar"
 
-#: utils.js:1258
+#: utils.js:1259
 msgid "About..."
 msgstr "Acerca de..."
 
-#: utils.js:1265
+#: utils.js:1266
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: utils.js:1281
+#: utils.js:1282
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
@@ -317,28 +322,3 @@ msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
-
-#~ msgid "pixels"
-#~ msgstr "pixeles"
-
-#~ msgid "Window preview scale factor."
-#~ msgstr "Factor de escala de vista previa de la ventana."
-
-#~ msgid "Hide labels in the window list buttons (*)"
-#~ msgstr "Ocultar etiquetas de los botones de la lista de ventanas (*)"
-
-#~ msgid "(*) After changing this settings, Cinnamon needs to be restarted (depends on the Cinnamon version) for the window button icon to have the correct final size."
-#~ msgstr "(*) Luego de cambiar esta opción, Cinnamon debe reiniciarse (depende de la versión de Cinnamon) para que el icono del botón de ventana tenga el tamaño final correcto."
-
-#~ msgid ""
-#~ "It enables the ability to log the output of several functions used by the extension.\n"
-#~ "\n"
-#~ "Normal: Only log messages caused by non critical errors.\n"
-#~ "Verbose: Additinally log extra output messages and all HTTP responses.\n"
-#~ "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
-#~ msgstr ""
-#~ "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
-#~ "\n"
-#~ "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-#~ "Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
-#~ "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."

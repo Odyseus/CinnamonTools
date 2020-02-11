@@ -1,6 +1,18 @@
 ## Color Blindness Assistant changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
+
+***
+
+- **Date:** Mon, 10 Feb 2020 23:05:01 -0300
+- **Commit:** [11964fd](https://gitlab.com/Odyseus/CinnamonTools/commit/11964fd)
+- **Author:** Odyseus
+
+```
+- Adaptations due to changes to the custom settings framework.
+- Adaptations due to changes to the `debugManager.js` JavaScript module.
+
+```
 
 ***
 

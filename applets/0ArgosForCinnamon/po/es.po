@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-01-13 01:36-0300\n"
-"PO-Revision-Date: 2019-12-22 04:57-0300\n"
+"POT-Creation-Date: 2020-02-10 20:44-0300\n"
+"PO-Revision-Date: 2020-02-10 20:58-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,58 +18,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:240 ../../__app__/python_modules/localized_help_creator.py:314
+#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:311 applet.js:808 utils.js:102
+#: ../../__app__/python_modules/localized_help_creator.py:316 applet.js:809 utils.js:102
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:312
+#: ../../__app__/python_modules/localized_help_creator.py:317
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:313
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:349
+#: ../../__app__/python_modules/localized_help_creator.py:354
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:363
-msgid "Cinnamon compatibility"
-msgstr "Compatibilidad con Cinnamon"
-
-#: ../../__app__/python_modules/localized_help_creator.py:364
+#: ../../__app__/python_modules/localized_help_creator.py:374
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:381
+#: ../../__app__/python_modules/localized_help_creator.py:377
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
+
+#: ../../__app__/python_modules/localized_help_creator.py:383
+msgid "Cinnamon compatibility"
+msgstr "Compatibilidad con Cinnamon"
+
+#: ../../__app__/python_modules/localized_help_creator.py:400
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:403
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:386
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:402
+#: ../../__app__/python_modules/localized_help_creator.py:421
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:406
+#: ../../__app__/python_modules/localized_help_creator.py:425
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:407
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -525,142 +530,142 @@ msgstr "BitBar en macOS"
 msgid "Plugin"
 msgstr "Complemento"
 
-#: applet.js:174
+#: applet.js:175
 msgid "Script file is not executable."
 msgstr "El archivo de comandos no es ejecutable."
 
-#: applet.js:176
+#: applet.js:177
 msgid "The script file can be made executable from this applet context menu."
 msgstr "El archivo de comandos puede hacerse ejecutable desde el menú contextual de este applet."
 
-#: applet.js:182 applet.js:793
+#: applet.js:183 applet.js:794
 msgid "Script file isn't a file, but a directory."
 msgstr "El archivo de comandos no es una archivo, es un directorio."
 
-#: applet.js:192 applet.js:799
+#: applet.js:193 applet.js:800
 msgid "Script file doesn't exists."
 msgstr "El archivo de comandos no existe."
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file 'FileName':"
-#: applet.js:299
+#: applet.js:300
 #, javascript-format
 msgid "Unable to execute file '%s':"
 msgstr "Imposible ejecutar el archivo '%s':"
 
-#: applet.js:303 applet.js:679 applet.js:705
+#: applet.js:304 applet.js:680 applet.js:706
 msgid "Script file not set, cannot be found or it isn't an executable."
 msgstr "Archivo de comandos no establecido, no puede ser encontrado o no es ejecutable."
 
 #. TO TRANSLATORS: Full sentence:
 #. "Invalid menu level for line 'LineWithTheError'"
-#: applet.js:412
+#: applet.js:413
 #, javascript-format
 msgid "Invalid menu level for line '%s'"
 msgstr "Nivel de menú inválido para la línea '%s'"
 
-#: applet.js:504
+#: applet.js:505
 msgid "No script set"
 msgstr "Archivo de comandos no establecido"
 
 #. settings-schema.json->pref_update_interval->description
-#: applet.js:566 utils.js:1204
+#: applet.js:567 utils.js:1204
 msgid "Execution interval"
 msgstr "Intervalo de ejecución"
 
 #. settings-schema.json->pref_update_interval_units->tooltip
-#: applet.js:567
+#: applet.js:568
 msgid "Choose the time unit for the script execution interval."
 msgstr "Elegir la unidad de tiempo para el intervalo de ejecución del archivo de comandos."
 
-#: applet.js:583
+#: applet.js:584
 msgid "Set the script execution interval."
 msgstr "Elegir el intervalo de ejecución del archivo de comandos."
 
 #. settings-schema.json->pref_rotation_interval->description
-#: applet.js:602 utils.js:1209
+#: applet.js:603 utils.js:1209
 msgid "Rotation interval"
 msgstr "Intervalo de rotación"
 
 #. settings-schema.json->pref_rotation_interval_units->tooltip
-#: applet.js:603
+#: applet.js:604
 msgid "Choose the time unit for the applet text rotation interval."
 msgstr "Elegir la unidad de tiempo para el intervalo de rotación del texto del applet."
 
-#: applet.js:619
+#: applet.js:620
 msgid "Set the applet text rotation interval."
 msgstr "Establecer el intervalo de rotación del texto del applet."
 
-#: applet.js:639
+#: applet.js:640
 msgid "Choose script"
 msgstr "Elegir archivo de comandos"
 
-#: applet.js:666
+#: applet.js:667
 msgid "Choose a script file."
 msgstr "Elegir un archivo de comandos."
 
-#: applet.js:672
+#: applet.js:673
 msgid "Edit script"
 msgstr "Editar archivo de comandos"
 
-#: applet.js:690
+#: applet.js:691
 msgid "Edit the script file with your prefered text editor."
 msgstr "Editar el archivo de comandos con su editor de textos preferido."
 
-#: applet.js:691
+#: applet.js:692
 msgid "After saving the changes made, the applet will update its data automatically if there is an interval set."
 msgstr "Luego de guardar los cambios realizados, el applet actualizará sus datos automáticamente si hay un intervalo de ejecución establecido."
 
-#: applet.js:692
+#: applet.js:693
 msgid "Or the update could be done manually with the »Refresh« item on this applet context menu."
 msgstr "O la actualización puede realizarse manualmente con el ítem »Refrescar« en el menú contextual de este applet."
 
-#: applet.js:698
+#: applet.js:699
 msgid "Refresh"
 msgstr "Refrescar"
 
-#: applet.js:713
+#: applet.js:714
 msgid "This will re-run on demand the script assigned to this applet for the purpose of updating its output."
 msgstr "Esto volverá a ejecutar a petición el archivo de comandos asignado a este applet con el propósito de actualizar su salida."
 
-#: applet.js:714
+#: applet.js:715
 msgid "This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited."
 msgstr "Esto es sólo necesario si no hay un intervalo de actualización establecido (o si el intervalo es muy largo), así que la actualización necesita realizarse manualmente en caso de que el archivo de comandos haya sido editado."
 
 #. Extras submenu
-#: applet.js:721
+#: applet.js:722
 msgid "Extras"
 msgstr "Extras"
 
-#: applet.js:728
+#: applet.js:729
 msgid "Clear script"
 msgstr "Vaciar archivo de comandos"
 
-#: applet.js:734 applet.js:752
+#: applet.js:735 applet.js:753
 msgid "This operation will remove the current script from this applet leaving it \"blank\"."
 msgstr "Esta operación eliminará el archivo de comandos de este applet dejándolo \"en blanco\"."
 
-#: applet.js:735
+#: applet.js:736
 msgid "The current applet settings will be untouched and the actual script file will not be deleted."
 msgstr "Las preferencias actuales del applet no serán modificadas y el archivo de comando en sí no será borrado."
 
-#: applet.js:736
+#: applet.js:737
 msgid "Do you want to proceed?"
 msgstr "¿Desea proceder?"
 
-#: applet.js:758
+#: applet.js:759
 msgid "Make script executable"
 msgstr "Hacer archivo de comandos ejecutable"
 
-#: applet.js:764
+#: applet.js:765
 msgid "Make the script file executable so it can be used by this applet."
 msgstr "Hacer el archivo de comandos ejecutable para que pueda ser utilizado por este applet."
 
-#: applet.js:787
+#: applet.js:788
 msgid "Script file is already executable."
 msgstr "El archivo de comandos ya es ejecutable."
 
-#: applet.js:812
+#: applet.js:813
 msgid "Open this applet help file."
 msgstr "Abrir el archivo de ayuda de este applet."
 
@@ -1189,74 +1194,3 @@ msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
-
-#~ msgid "Execution interval:"
-#~ msgstr "Intervalo de ejecución:"
-
-#~ msgid "Rotation interval:"
-#~ msgstr "Intervalo de rotación:"
-
-#~ msgid ""
-#~ "It enables the ability to log the output of several functions used by the extension.\n"
-#~ "\n"
-#~ "Normal: Only log messages caused by non critical errors.\n"
-#~ "Verbose: Additinally log extra output messages and all HTTP responses.\n"
-#~ "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
-#~ msgstr ""
-#~ "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
-#~ "\n"
-#~ "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-#~ "Detallado: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
-#~ "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
-
-#~ msgid "Dependencies"
-#~ msgstr "Dependencias"
-
-#~ msgid "xdg-open command"
-#~ msgstr "Comando xdg-open"
-
-#~ msgid "Debian and Archlinux based distributions:"
-#~ msgstr "Distribuciones basadas en Debian y Archlinux:"
-
-#~ msgid "This command is installed with the package called **xdg-utils**."
-#~ msgstr "Distribuciones basadas en Debian y Archlinux: Este comando es instalado por el paquete llamado **xdg-utils**."
-
-#~ msgid "Installed by default in modern versions of Linux Mint."
-#~ msgstr "Instalado por defecto en todas las versiones modernas de Linux Mint."
-
-#~ msgid "Check this applet help file for instructions."
-#~ msgstr "Comprobar el archivo de ayuda de este applet para obtener instrucciones."
-
-#~ msgid "Remember to restart Cinnamon to fully enable/disable this option."
-#~ msgstr "Recordar reiniciar Cinnamon para habilitar/deshabilitar completamente esta opción."
-
-#~ msgid "Schema %s could not be found for xlet %s."
-#~ msgstr "No se pudo encontrar el esquema %s para el xlet %s."
-
-#~ msgid "Please check your installation."
-#~ msgstr "Compruebe su instalación."
-
-#~ msgid ""
-#~ "It enables the ability to log the output of several functions used by the extension.\n"
-#~ "\n"
-#~ "Normal: Only log messages caused by non critical errors.\n"
-#~ "Vebose: Additinally log extra output messages and all HTTP responses.\n"
-#~ "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
-#~ msgstr ""
-#~ "Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
-#~ "\n"
-#~ "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-#~ "Verbal: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
-#~ "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
-
-#~ msgid "Vebose"
-#~ msgstr "Verbal"
-
-#~ msgid "Debugging toggled"
-#~ msgstr "Depuración activada"
-
-#~ msgid "Verbose logging (needs Cinnamon restart)"
-#~ msgstr "Registro detallado (Cinnamon necesita ser reiniciado)"
-
-#~ msgid "Checking this will enable debug level logging."
-#~ msgstr "Habilitar el registro de nivel de depuración."

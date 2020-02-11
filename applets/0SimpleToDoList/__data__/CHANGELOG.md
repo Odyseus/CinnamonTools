@@ -1,6 +1,18 @@
 ## Simple ToDo List changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
+
+***
+
+- **Date:** Mon, 10 Feb 2020 23:20:27 -0300
+- **Commit:** [3c56847](https://gitlab.com/Odyseus/CinnamonTools/commit/3c56847)
+- **Author:** Odyseus
+
+```
+- Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.
+- Adaptations due to changes to global JavaScript modules.
+
+```
 
 ***
 

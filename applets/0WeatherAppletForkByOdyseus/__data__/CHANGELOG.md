@@ -1,6 +1,19 @@
 ## Weather (Fork By Odyseus) changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
+
+***
+
+- **Date:** Mon, 10 Feb 2020 23:14:40 -0300
+- **Commit:** [c1170b5](https://gitlab.com/Odyseus/CinnamonTools/commit/c1170b5)
+- **Author:** Odyseus
+
+```
+- Added a couple more known status codes to better identify network problems.
+- Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.
+- Implemented the use of the `xdgOpen`, `copyToClipboard`, and `safeGet` functions from the `globalUtils.js` javaScript module.
+
+```
 
 ***
 

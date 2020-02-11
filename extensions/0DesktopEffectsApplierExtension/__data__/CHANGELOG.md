@@ -1,6 +1,18 @@
 ## Desktop Effects Applier changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
+
+***
+
+- **Date:** Mon, 10 Feb 2020 23:01:49 -0300
+- **Commit:** [c3e81ea](https://gitlab.com/Odyseus/CinnamonTools/commit/c3e81ea)
+- **Author:** Odyseus
+
+```
+- Adaptations due to changes to the custom settings framework.
+- Adaptations due to changes to the `debugManager.js` JavaScript module.
+
+```
 
 ***
 

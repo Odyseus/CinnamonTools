@@ -323,7 +323,7 @@ FeedSubMenuItem.prototype = {
 
         if (cnt > 0) {
             menu_item = new FeedContextMenuItem(this, ngettext(
-                "Mark the Next Article as Read",
+                "Mark %d Article as Read",
                 "Mark the Next %d Articles as Read".format(cnt),
                 cnt
             ), "mark_next_read");

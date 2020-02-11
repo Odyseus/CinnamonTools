@@ -1,6 +1,29 @@
 ## Feeds Reader (Fork By Odyseus) changelog
 
-#### This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools)
+**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
+
+***
+
+- **Date:** Mon, 10 Feb 2020 23:56:24 -0300
+- **Commit:** [1ed7456](https://gitlab.com/Odyseus/CinnamonTools/commit/1ed7456)
+- **Author:** Odyseus
+
+```
+Applet rewrite
+--------------
+
+WARNING: This update is a complete rewrite of the applet and it will reset most of the settings of an existent instance to their default values. Read the help page for this applet for detailed usage.
+
+WARNING: This update will not recognize existent feeds. It is recommended to export all feeds from all profiles of a previous version of this applet so they can be imported into the new version.
+
+- Completely rewritten from scratch to remove unused code, remove unimplemented features and add new features.
+- More accessible options. Now each feed on the menu has a context menu that can toggle its options without the need to open the applet settings window.
+- Correct localization for plurals.
+- Removed the Feeds Manager GUI in favor of using the same custom framework to handle the applet settings that I use in other xlets. Now the feeds are stored in an applet setting and can be managed from the applet settings page.
+- Added option to show/hide icons on the menu.
+- Added confirmation dialog for when all feeds are marked as read.
+
+```
 
 ***
 
