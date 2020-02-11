@@ -14,11 +14,19 @@ const {
 } = imports;
 
 var DataStorage = GLib.get_home_dir() + "/.cinnamon/" + XletMeta.uuid + "-Storage";
-var MIN_MENU_WIDTH = 400;
 var FEED_LOCAL_DATA_FILE = DataStorage + "/%s.json";
-var FEED_CONFIG_FILE = DataStorage + "/feeds.json";
+var FeedParams = Object.freeze({
+    id: "",
+    group: "",
+    custom_title: "",
+    url: "",
+    notify: true,
+    interval: 30,
+    show_read_items: false,
+    show_image: false
+});
 
 /* exported MIN_MENU_WIDTH,
             FEED_LOCAL_DATA_FILE,
-            FEED_CONFIG_FILE,
+            FeedParams
  */

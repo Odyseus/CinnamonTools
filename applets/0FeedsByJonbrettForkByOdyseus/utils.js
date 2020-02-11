@@ -31,11 +31,11 @@ const {
     gi: {
         Clutter,
         Gio,
-        Pango,
-        Soup,
         St
     },
     misc: {
+        params: Params,
+        signalManager: SignalManager,
         util: Util
     },
     signals: Signals,
@@ -47,8 +47,12 @@ const {
 
 const {
     _,
+    ngettext,
+    xdgOpen,
     escapeUnescapeReplacer,
-    escapeHTML
+    escapeHTML,
+    html2text,
+    copyToClipboard
 } = GlobalUtils;
 
 const {
@@ -56,11 +60,11 @@ const {
 } = CustomFileUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 const {
-    MIN_MENU_WIDTH,
+    FeedParams,
     FEED_LOCAL_DATA_FILE,
     DataStorage
 } = Constants;
@@ -73,14 +77,13 @@ var Debugger = new DebugManager.DebugManager();
 
 function runtimeInfo(aMsg) {
     Debugger.logging_level !== LoggingLevel.NORMAL && aMsg &&
-        global.log("[FeedReader] " + aMsg);
+        global.log("[FeedsReader] " + aMsg);
 }
 
 function runtimeError(aMsg) {
-    aMsg && global.logError("[FeedReader] " + aMsg);
+    aMsg && global.logError("[FeedsReader] " + aMsg);
 }
 
-/* Menu item for displaying the feed title*/
 function FeedSubMenuItem() {
     this._init.apply(this, arguments);
 }
@@ -88,22 +91,27 @@ function FeedSubMenuItem() {
 FeedSubMenuItem.prototype = {
     __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
 
-    _init: function(aURL, aApplet, params) {
+    _init: function(aApplet, aParams) {
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
+            focusOnHover: false
         });
         this._applet = aApplet;
+        this.params = Params.parse(aParams, FeedParams, true);
 
-        // Used to keep track of unique feeds.
-        this.feed_id = params.feed_id;
-        this.notify = params.notify;
-        this.interval = params.interval; // TODO: Not implemented.
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Remove complete block. The use of the signal manager was added in 3.6.x.
+        if (!this.hasOwnProperty("_signals")) {
+            this._signals = new SignalManager.SignalManager(null);
+        }
 
+        // NOTE: Utterly ignore the following TODO. "Web masters" are murdering RSS, nobody
+        // bothers to add an image/icon to their feeds.
         // TODO: Add Box layout type to facilitate adding an icon?
         this.menuItemCount = 0;
-        this.show_action_items = false;
+        this._visitURLContextItem = null;
+        this._contextVisible = false;
         this._title = new St.Label({
-            text: "loading"
+            text: _("Loading...")
         });
 
         this.addActor(this._title, {
@@ -137,64 +145,63 @@ FeedSubMenuItem.prototype = {
 
         this.menu = new PopupMenu.PopupSubMenu(this.actor, this._triangle);
 
-        this.max_items = params.max_items;
-        this.show_feed_image = params.show_feed_image; // TODO: Not implemented.
-        this.show_read_items = params.show_read_items;
-        this.description_max_length = params.description_max_length;
-        this.tooltip_max_width = params.tooltip_max_width;
         this.unread_count = 0;
-        runtimeInfo("Loading url: " + aURL);
-        this.custom_title = params.custom_title;
+        runtimeInfo("Loading url: " + this.params.url);
 
-        this.reader = new FeedReader(
-            this,
-            this.feed_id,
-            aURL,
-            this.notify, {
-                onUpdate: () => this.update(),
-                onError: () => this.error(),
-                onNewItem: (feed, feedtitle, itemtitle) => {
-                    this._applet.new_item_notification(feed, feedtitle, itemtitle);
-                },
-                onItemRead: (feed) => {
-                    this._applet.item_read_notification(feed);
-                },
-                onDownloaded: () => {
-                    this._applet.process_next_feed();
-                }
-            }
-        );
+        this.reader = new FeedReader(this);
 
-        this.reader.connect("items-loaded", () => {
-            runtimeInfo("items-loaded Event Fired for reader");
-            // Title needs to be set on items-loaded event
-            this.rssTitle = this.custom_title ? this.custom_title : this.reader.title;
+        this._signals.connect(this.reader, "articles-loaded", function() {
+            runtimeInfo("articles-loaded Event Fired for reader");
+            // Title needs to be set on articles-loaded event
+            this.rssTitle = this.params.custom_title ? this.params.custom_title : this.reader.title;
             this._title.set_text(this.rssTitle);
-
-            this.title_length = (this._title.length > MIN_MENU_WIDTH) ?
-                this._title.length :
-                MIN_MENU_WIDTH;
-            this._applet.enqueue_feed(this);
+            this._applet.enqueueFeed(this);
             this.update();
-            this._applet.process_next_feed();
-        });
+            this._applet.processNextFeed();
+        }.bind(this));
+        this._signals.connect(this.reader, "articles-updated", function() {
+            runtimeInfo("articles-updated Event Fired for reader");
+            this.update();
+        }.bind(this));
+        this._signals.connect(this.reader, "articles-read", function(aFeedReader) {
+            runtimeInfo("articles-read Event Fired for reader");
+            this._applet.notifyArticlesRead(aFeedReader);
+        }.bind(this));
+        this._signals.connect(this.reader, "notify-new-articles", function(aFeedReader, aFeedtitle, aItemTitle) {
+            runtimeInfo("notify-new-articles Event Fired for reader");
+            this._applet.notifyNewArticles(aFeedReader, aFeedtitle, aItemTitle);
+        }.bind(this));
+        this._signals.connect(this.reader, "feed-downloaded", function() {
+            runtimeInfo("feed-downloaded Event Fired for reader");
+            this._applet.processNextFeed();
+        }.bind(this));
 
-        this.actor.connect("enter-event",
-            () => this._buttonEnterEvent());
-        this.actor.connect("leave-event",
-            () => this._buttonLeaveEvent());
+        this._signals.connect(this, "destroy", function() {
+            this.reader.emit("destroy");
+        }.bind(this));
+        this._signals.connect(this.menu, "open-state-changed", function(aMenu, aOpen) {
+            !aOpen && this._closeContextItems();
+        }.bind(this));
     },
 
-    get_title: function() {
-        let title = this.custom_title || this.reader.title;
+    _updateTitleLength: function() {
+        this.title_length = (this._title.get_width() > this._applet.pref_min_article_item_width) ?
+            this._title.get_width() :
+            this._applet.pref_min_article_item_width;
+    },
+
+    getTitle: function() {
+        let title = this.params.custom_title || this.reader.title;
+
         if (this.reader.is_redirected) {
             title += " (Redirected to: " + this.reader.redirected_url + ")";
         }
-        title += " [" + this.reader.get_unread_count() + " / " + this.reader.items.length + "]";
+
+        title += " [" + this.reader.getUnreadCount() + " / " + this.reader.articles.length + "]";
         return title;
     },
 
-    get_unread_count: function() {
+    getUnreadCount: function() {
         return this.unread_count;
     },
 
@@ -206,44 +213,47 @@ FeedSubMenuItem.prototype = {
         this.menu.removeAll();
         this.menuItemCount = 0;
         let msg = "Finding first " +
-            this.max_items +
-            " unread items out of: " +
-            this.reader.items.length +
-            " total items";
+            this._applet.pref_max_items +
+            " unread articles out of: " +
+            this.reader.articles.length +
+            " total articles.";
 
         runtimeInfo(msg);
         let menu_items = 0;
         this.unread_count = 0;
 
-        for (let i = 0; i < this.reader.items.length && menu_items < this.max_items; i++) {
-            if (this.reader.items[i].read && !this.show_read_items) {
+        this._updateTitleLength();
+
+        for (let i = 0; i < this.reader.articles.length && menu_items < this._applet.pref_max_items; i++) {
+            if (this.reader.articles[i].read && !this.params.show_read_items) {
                 continue;
             }
 
-            if (!this.reader.items[i].read) {
+            if (!this.reader.articles[i].read) {
                 this.unread_count++;
             }
 
-            let item = new FeedMenuItem(this, this.reader.items[i], this.title_length);
-            item.connect("item-read", () => {
+            let item = new FeedMenuItem(this, this.reader.articles[i], this.title_length);
+            this._signals.connect(item, "article-read", function() {
                 this.update();
-            });
+            }.bind(this));
+
             this.menu.addMenuItem(item);
 
             menu_items++;
         }
 
         // Add the menu items and close the menu?
-        this._add_submenu();
+        this._addContextMenu();
 
         runtimeInfo("Items Loaded: " + menu_items);
-        runtimeInfo("Link: " + this.reader.url);
+        runtimeInfo("Link: " + this.params.url);
 
-        let tooltipText = "<b>%s:</b> \n".format(escapeHTML(_("Right Click to open feed"))) +
-            escapeHTML(this.reader.url);
+        let tooltipText = "<b>%s:</b> \n".format(escapeHTML(_("Right Click to display extra options"))) +
+            escapeHTML(this.params.url);
         this.tooltip = new Tooltips.Tooltip(this.actor, "");
         this.tooltip._tooltip.get_clutter_text().set_markup(tooltipText);
-        this._title.set_text(this.get_title());
+        this._title.set_text(this.getTitle());
 
         if (this.unread_count > 0) {
             this.actor.set_style("font-weight:bold;");
@@ -251,95 +261,165 @@ FeedSubMenuItem.prototype = {
             this.actor.set_style("font-weight:normal;");
         }
 
-        this._applet.update_title();
+        this._applet.updateAppletState();
     },
 
-    on_settings_changed: function(params) {
-        this.max_items = params.max_items;
-        this.show_feed_image = params.show_feed_image; // TODO: Not implemented.
-        this.show_read_items = params.show_read_items;
-        this.description_max_length = params.description_max_length;
-        this.tooltip_max_width = params.tooltip_max_width;
-        this.update();
-    },
+    _onButtonReleaseEvent: function(aActor, aEvent) {
+        runtimeInfo("Button Released Event: " + aEvent.get_button());
 
-    _onButtonReleaseEvent: function(actor, event) {
-        runtimeInfo("Button Released Event: " + event.get_button());
+        if (aEvent.get_button() === 3) {
+            this.toggleFeedContextItems();
 
-        if (event.get_button() == 3) {
-            // Right click, open feed url
-            try {
-                Util.spawnCommandLine("xdg-open " + this.reader.get_url());
-            } catch (aErr) {
-                global.logError(aErr);
+            if (!this.menu.isOpen) {
+                this._applet.toggleFeedMenu(this);
             }
         } else {
-            // Left click, show menu
-            this._applet.toggle_feeds(this);
+            // Any other click, show menu.
+            this._applet.toggleFeedMenu(this);
         }
     },
 
-    _onKeyPressEvent: function(actor, event) {
-        let symbol = event.get_key_symbol();
+    _onKeyPressEvent: function(aActor, aEvent) {
+        let symbol = aEvent.get_key_symbol();
 
         if (symbol === Clutter.KEY_space ||
             symbol === Clutter.KEY_Return ||
             symbol === Clutter.KEY_Right) {
-            this._applet.toggle_feeds(this);
-            return true;
+            this._applet.toggleFeedMenu(this);
+            return Clutter.EVENT_STOP;
         }
-        return false;
+
+        return Clutter.EVENT_PROPAGATE;
     },
 
-    open_menu: function() {
-        runtimeInfo("Feed id:" + this.feed_id);
+    openFeedMenu: function() {
+        runtimeInfo("Feed id:" + this.params.id);
 
         this.menu.open(true);
-        this._applet.open_menu = this;
+        this._applet.openedFeedMenu = this;
     },
 
-    close_menu: function() {
-        runtimeInfo("Feed id:" + this.feed_id);
+    closeFeedMenu: function() {
+        runtimeInfo("Feed id:" + this.params.id);
         this.menu.close(false);
     },
 
-    _add_submenu: function() {
+    _addContextMenu: function() {
+        this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(), 0);
+
         // Add a new item to the top of the list.
         let menu_item;
 
-        if (this.reader.get_unread_count() > this.max_items) {
+        if (this.reader.getUnreadCount() > this._applet.pref_max_items) {
             // Only one page of items to read, no need to display mark all posts option.
-            menu_item = new FeedContextMenuItem(this, _("Mark All Posts Read"), "mark_all_read");
+            menu_item = new FeedContextMenuItem(this, _("Mark All Articles as Read"), "mark_all_read");
             this.menu.addMenuItem(menu_item, 0);
             this.menuItemCount++;
         }
 
-        let cnt = (this.max_items < this.unread_count) ? this.max_items : this.unread_count;
+        let cnt = (this._applet.pref_max_items < this.unread_count) ?
+            this._applet.pref_max_items :
+            this.unread_count;
+
         if (cnt > 0) {
-            menu_item = new FeedContextMenuItem(this,
-                _("Mark Next %d Posts Read".format(cnt)), "mark_next_read");
+            menu_item = new FeedContextMenuItem(this, ngettext(
+                "Mark the Next Article as Read",
+                "Mark the Next %d Articles as Read".format(cnt),
+                cnt
+            ), "mark_next_read");
             this.menu.addMenuItem(menu_item, 0);
             this.menuItemCount++;
         }
 
         if (this.reader.is_redirected) {
-            menu_item = new FeedContextMenuItem(this, _("Update feed URL"), "update_feed_url");
+            menu_item = new FeedContextMenuItem(this, _("Update Feed URL"), "update_feed_url");
             this.menu.addMenuItem(menu_item, 0);
             this.menuItemCount++;
         }
+
+        this._visitURLContextItem = new FeedContextMenuItem(this, _("Visit Feed URL"), "visit_feed_url");
+        this.menu.addMenuItem(this._visitURLContextItem, 0);
+        this._visitURLContextItem.actor.visible = false;
+        this.menuItemCount++;
+
+        this._toggleShowReadItemsContextItem = new PopupMenu.PopupSwitchMenuItem(
+            _("Show read"),
+            this.params.show_read_items, {
+                focusOnHover: false
+            }
+        );
+        this.menu.addMenuItem(this._toggleShowReadItemsContextItem, 0);
+        this._toggleShowReadItemsContextItem.actor.visible = false;
+        this._signals.connect(this._toggleShowReadItemsContextItem, "toggled", function(aActor, aEvent) {
+            this._toggleSwitch(aActor, aEvent, "show_read_items");
+        }.bind(this));
+        this.menuItemCount++;
+
+        this._toggleNotifyContextItem = new PopupMenu.PopupSwitchMenuItem(
+            _("Notify"),
+            this.params.notify, {
+                focusOnHover: false
+            }
+        );
+        this.menu.addMenuItem(this._toggleNotifyContextItem, 0);
+        this._toggleNotifyContextItem.actor.visible = false;
+        this._signals.connect(this._toggleNotifyContextItem, "toggled", function(aActor, aEvent) {
+            this._toggleSwitch(aActor, aEvent, "notify");
+        }.bind(this));
+        this.menuItemCount++;
+
+        this._toggleEnabledContextItem = new PopupMenu.PopupSwitchMenuItem(
+            _("Enabled"),
+            this.params.enabled, {
+                focusOnHover: false
+            }
+        );
+        this.menu.addMenuItem(this._toggleEnabledContextItem, 0);
+        this._toggleEnabledContextItem.actor.visible = false;
+        this._signals.connect(this._toggleEnabledContextItem, "toggled", function(aActor, aEvent) {
+            this._toggleSwitch(aActor, aEvent, "enabled");
+        }.bind(this));
+        this.menuItemCount++;
     },
 
-    _buttonEnterEvent: function() {
-        this.actor.change_style_pseudo_class("active", true);
+    toggleFeedContextItems: function() {
+        if (this._contextVisible) {
+            this._closeContextItems();
+        } else {
+            this._contextVisible = true;
+            this._visitURLContextItem.actor.visible = true;
+            this._toggleShowReadItemsContextItem.actor.visible = true;
+            this._toggleNotifyContextItem.actor.visible = true;
+            this._toggleEnabledContextItem.actor.visible = true;
+        }
     },
 
-    _buttonLeaveEvent: function() {
-        this.actor.change_style_pseudo_class("active", false);
+    _closeContextItems: function() {
+        this._contextVisible = false;
+        this._visitURLContextItem.actor.visible = false;
+        this._toggleShowReadItemsContextItem.actor.visible = false;
+        this._toggleNotifyContextItem.actor.visible = false;
+        this._toggleEnabledContextItem.actor.visible = false;
+    },
+
+    _toggleSwitch: function(aActor, aEvent, aFeedOption) {
+        this.params[aFeedOption] = !this.params[aFeedOption];
+        aActor.setToggleState(this.params[aFeedOption]);
+
+        this._applet.requestMenuRebuild = true;
+        this._applet.updateFeedsMapItem(this.params.id, aFeedOption, this.params[aFeedOption]);
+    },
+
+    // Mark for deletion on EOL. Cinnamon 3.6.x+
+    // Remove complete block. The use of the signal manager was added in 3.6.x.
+    destroy: function() {
+        this._signals.disconnectAllSignals();
+
+        PopupMenu.PopupBaseMenuItem.prototype.destroy.call(this);
     }
 };
 Signals.addSignalMethods(FeedSubMenuItem.prototype);
 
-/* Menu item for displaying an feed item */
 function FeedMenuItem() {
     this._init.apply(this, arguments);
 }
@@ -347,45 +427,49 @@ function FeedMenuItem() {
 FeedMenuItem.prototype = {
     __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
 
-    _init: function(parent, item, width) {
+    _init: function(aSubMenu, aArticle, aWidth) {
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
+            focusOnHover: false
         });
-        this._item_menu_count = 0;
-        this.parent = parent;
-        this.show_action_items = false;
+        this._context_items_count = 0;
+        this.subMenu = aSubMenu;
 
-        this.menu = new PopupMenu.PopupSubMenu(this.actor);
-        this.item = item;
-        if (this.item.read) {
-            this._icon_name = this.parent._applet.pref_feed_icon;
-            this.icon_type = St.IconType.SYMBOLIC;
-        } else {
-            this._icon_name = this.parent._applet.pref_new_feed_icon;
-            this.icon_type = St.IconType.FULLCOLOR;
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Remove complete block. The use of the signal manager was added in 3.6.x.
+        if (!this.hasOwnProperty("_signals")) {
+            this._signals = new SignalManager.SignalManager(null);
         }
 
-        this.icon = new St.Icon({
-            icon_name: this._icon_name,
-            icon_type: this.icon_type,
-            style_class: "popup-menu-icon"
-        });
+        this.menu = new PopupMenu.PopupSubMenu(this.actor);
+        this.article = aArticle;
 
-        // Calculate the age of the post, hours or days only
-        let age = this.calculate_age(item.published);
+        if (this.subMenu._applet.pref_show_icons_in_menu) {
+            this.icon = new St.Icon({
+                icon_type: St.IconType.SYMBOLIC,
+                style_class: "popup-menu-icon"
+            });
+        }
+
+        // Calculate the age of the article, hours or days only
+        let age = this._calculateAge(this.article.published);
 
         this.label = new St.Label({
-            text: age + item.title
+            text: age + this.article.title
         });
 
         let box = new St.BoxLayout({
-            style_class: "popup-combobox-item"
+            // NOTE: Use of the popup-combobox-item class to separate the icon from the label.
+            style_class: this.subMenu._applet.pref_show_icons_in_menu ?
+                "popup-combobox-item" : "popup-submenu-menu-item"
         });
-        box.set_width(width);
+        box.set_width(aWidth);
 
-        box.add(this.icon, {
-            span: 0
-        });
+        if (this.subMenu._applet.pref_show_icons_in_menu) {
+            box.add(this.icon, {
+                span: 0
+            });
+        }
+
         box.add(this.label, {
             expand: true,
             span: 1,
@@ -395,107 +479,126 @@ FeedMenuItem.prototype = {
             expand: true
         });
 
-        this.tooltip = new InteligentTooltip(this.actor, "");
-        this.tooltip._tooltip.set_style("text-align: left;max-width: %spx;"
-            .format(this.parent.tooltip_max_width));
-        this.tooltip._tooltip.get_clutter_text().set_line_wrap(true);
-        this.tooltip._tooltip.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
-        this.tooltip._tooltip.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
+        this.tooltip = new IntelligentTooltip(this.actor, "", {
+            max_width: this.subMenu._applet.pref_tooltip_max_width
+        });
+
+        // NOTE: Always use plain text strings. Trying to cut a marked up string is just a
+        // freaking nightmare.
+        let articleDescription = html2text(this.article.description);
+
+        if (this.subMenu._applet.pref_description_max_length !== 0 &&
+            articleDescription.length >= this.subMenu._applet.pref_description_max_length) {
+            articleDescription = articleDescription
+                .substring(0, this.subMenu._applet.pref_description_max_length) + "\n...";
+        }
 
         try {
             this.tooltip._tooltip.get_clutter_text().set_markup(
                 "<b>" +
-                item.title +
+                this.article.title +
                 "</b>\n" +
-                "<b>%s</b>: ".format(_("Published")) + item.published + "\n\n" +
-                item.description);
+                "<b>%s</b>: ".format(_("Published")) + this.article.published + "\n\n" +
+                articleDescription);
         } catch (aErr) {
             runtimeError("Error Tweaking Tooltip: " + aErr);
 
-            let description = item.title + "\n" +
-                "%s: ".format(_("Published")) + item.published + "\n\n" +
-                item.description_text;
+            let description = this.article.title + "\n" +
+                "%s: ".format(_("Published")) + this.article.published + "\n\n" +
+                articleDescription;
             this.tooltip._tooltip.set_text(description);
         }
 
-        /* Ensure tooltip is destroyed when this menu item is destroyed */
-        this.connect("destroy", () => {
+        this._signals.connect(this, "destroy", function() {
             this.tooltip.destroy();
-        });
-        this.actor.connect("enter-event",
-            () => this._buttonEnterEvent());
-        this.actor.connect("leave-event",
-            () => this._buttonLeaveEvent());
+        }.bind(this));
+
+        this._setReadState();
+    },
+
+    _setReadState: function() {
+        if (this.article.read) {
+            if (this.subMenu._applet.pref_show_icons_in_menu) {
+                this.icon.set_icon_name(this.subMenu._applet.pref_feed_icon);
+            } else {
+                this.label.set_style("font-weight:normal;");
+            }
+        } else {
+            if (this.subMenu._applet.pref_show_icons_in_menu) {
+                this.icon.set_icon_name(this.subMenu._applet.pref_new_feed_icon);
+            } else {
+                this.label.set_style("font-weight:bold;");
+            }
+        }
     },
 
     _onButtonReleaseEvent: function(actor, event) {
         runtimeInfo("Button Released Event: " + event.get_button());
 
-        if (event.get_button() == 1) {
+        if (event.get_button() === 1) {
             this.activate(event);
-            return true;
+            return Clutter.EVENT_STOP;
         }
 
         // Is this feed expanded?
-        if (event.get_button() == 3) {
+        if (event.get_button() === 3) {
             runtimeInfo("Show Submenu");
             this.toggleContextMenu();
-            // this.open_menu();
-            return true;
+
+            return Clutter.EVENT_STOP;
         }
-        return false;
+
+        return Clutter.EVENT_PROPAGATE;
     },
 
     activate: function() {
-        /* Opens item then marks it read */
-        this.item.open();
-        this.mark_read();
+        this.article.openArticle();
+        this.markRead();
     },
 
-    mark_read: function() {
-        /* Marks the item read without opening it. */
-        this.item.mark_read();
-        this._icon_name = this.parent._applet.pref_feed_icon;
-        this.icon.set_icon_name(this._icon_name);
-        // Close sub menus if action has been taken.
-        if (this.show_action_items) {
-            this.toggleContextMenu();
-        }
+    markRead: function() {
+        this.article.markArticleRead();
+        this._setReadState();
 
-        this.emit("item-read");
+        this._closeContextMenu();
 
-        // Check and toggle feeds if this is the last item.
-        // if(this.parent.get_unread_count() == 0)
-        this.parent._applet.toggle_feeds(this.parent, true);
+        this.emit("article-read");
+
+        // Check and toggle feeds if this is the last article.
+        this.subMenu._applet.toggleFeedMenu(this.subMenu, true);
     },
 
-    _open_context_menu: function() {
-        if (this._item_menu_count == 0) {
-            // No submenu item(s), add the item(s)
+    _openContextMenu: function() {
+        if (this._context_items_count === 0) {
+            // No submenu article(s), add the article(s)
             let menu_item;
-            menu_item = new FeedContextMenuItem(this, _("Mark Post Read"), "mark_post_read");
+            menu_item = new FeedContextMenuItem(this, _("Mark Article as Read"), "mark_post_read");
             this.menu.addMenuItem(menu_item);
-            this._item_menu_count++;
+            this._context_items_count++;
+
+            menu_item = new FeedContextMenuItem(this, _("Copy Article URL"), "copy_post_url");
+            this.menu.addMenuItem(menu_item);
+            this._context_items_count++;
         }
 
         this.menu.open();
     },
 
-    _close_context_menu: function() {
-        // no need to remove, just close the menu.
+    _closeContextMenu: function() {
+        // No need to remove, just close the menu.
 
         this.menu.close();
     },
 
     toggleContextMenu: function() {
         if (!this.menu.isOpen) {
-            this._open_context_menu();
+            this._openContextMenu();
         } else {
-            this._close_context_menu();
+            this._closeContextMenu();
         }
     },
 
-    calculate_age: function(published) {
+    _calculateAge: function(published) {
         // If published date was not provided by the feed, return nothing.
         // Otherwise, this function will return the "start of time" date.
         if (!published) {
@@ -520,221 +623,225 @@ FeedMenuItem.prototype = {
         }
     },
 
-    _buttonEnterEvent: function() {
-        this.actor.change_style_pseudo_class("active", true);
-    },
+    // Mark for deletion on EOL. Cinnamon 3.6.x+
+    // Remove complete block. The use of the signal manager was added in 3.6.x.
+    destroy: function() {
+        this._signals.disconnectAllSignals();
 
-    _buttonLeaveEvent: function() {
-        this.actor.change_style_pseudo_class("active", false);
+        PopupMenu.PopupBaseMenuItem.prototype.destroy.call(this);
     }
 };
 
-function FeedContextMenuItem(feed_display_menu_item, label, action) {
-    this._init(feed_display_menu_item, label, action);
+function FeedContextMenuItem() {
+    this._init.apply(this, arguments);
 }
 
 FeedContextMenuItem.prototype = {
     __proto__: PopupMenu.PopupBaseMenuItem.prototype,
 
-    _init: function(feed_display_menu_item, label, action) {
+    _init: function(aParent, aLabel, aAction) {
         PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            hover: false
+            focusOnHover: false
         });
 
-        this._source_item = feed_display_menu_item;
-        this._action = action;
+        // Mark for deletion on EOL. Cinnamon 3.6.x+
+        // Remove complete block. The use of the signal manager was added in 3.6.x.
+        if (!this.hasOwnProperty("_signals")) {
+            this._signals = new SignalManager.SignalManager(null);
+        }
+
+        this.parent = aParent;
+        this._action = aAction;
         this.label = new St.Label({
-            text: label
+            text: aLabel
         });
         this.addActor(this.label);
-        this.actor.connect("enter-event",
-            () => this._buttonEnterEvent());
-        this.actor.connect("leave-event",
-            () => this._buttonLeaveEvent());
     },
 
     activate: function(event) { // jshint ignore:line
         switch (this._action) {
             case "mark_all_read":
+                // NOTE: this.parent = FeedSubMenuItem
                 runtimeInfo("Marking all items read");
                 try {
-                    this._source_item.reader.mark_all_items_read();
-                    this._source_item.update();
+                    this.parent.reader.markAllArticlesRead();
+                    this.parent.update();
                     // All items have been marked so we know we are opening a new feed menu.
-                    this._source_item._applet.toggle_feeds(null);
+                    this.parent._applet.toggleFeedMenu(null);
                 } catch (aErr) {
                     global.logError(aErr);
                 }
                 break;
             case "mark_next_read":
-                runtimeInfo("Marking next " + this._source_item.max_items + " items read");
+                // NOTE: this.parent = FeedSubMenuItem
+                runtimeInfo("Marking next " + this.parent._applet.pref_max_items + " items read");
                 try {
-                    this._source_item.reader.mark_next_items_read(this._source_item.max_items);
-                    this._source_item.update();
-                    this._source_item._applet.toggle_feeds(this._source_item, true);
+                    this.parent.reader.markNextArticlesRead(this.parent._applet.pref_max_items);
+                    this.parent.update();
+                    this.parent._applet.toggleFeedMenu(this.parent, true);
                 } catch (aErr) {
                     global.logError(aErr);
                 }
 
                 break;
             case "update_feed_url":
+                // NOTE: this.parent = FeedSubMenuItem
                 try {
-                    let redirected_url = this._source_item.reader.redirected_url;
-                    let current_url = this._source_item.reader.url;
+                    let redirected_url = this.parent.reader.redirected_url;
+                    let current_url = this.parent.params.url;
 
                     runtimeInfo("Updating feed to point to: " + redirected_url);
 
-                    // Update the feed, no GUI is shown
+                    this.parent._applet.redirectFeed(this.parent, current_url, redirected_url);
 
-                    this._source_item._applet.redirect_feed(current_url, redirected_url);
-
-                    // Reload the regular title and remove the is_redirected flag
-                    this._source_item._applet.toggle_feeds(this._source_item, true);
+                    // Hide the context item. Do not trigger this.update; it will completely destroy
+                    // and recreate the sub menu just to hide this context item.
+                    this.actor.visible = false;
                 } catch (aErr) {
                     global.logError(aErr);
                 }
                 break;
             case "mark_post_read":
-                runtimeInfo("Marking item 'read'");
-                this._source_item.mark_read();
+                // NOTE: this.parent = FeedMenuItem
+                runtimeInfo("Marking article 'read'");
+                this.parent.markRead();
                 break;
-
-                // TODO: Not implemented.
-                // case "delete_all_items":
-                //     runtimeInfo("Marking all items 'deleted'");
-                //     break;
-
-                // TODO: Not implemented.
-                // case "delete_post":
-                //     runtimeInfo("Deleting item");
-                //     break;
+            case "copy_post_url":
+                // NOTE: this.parent = FeedMenuItem
+                runtimeInfo("Copy article URL");
+                copyToClipboard(this.parent.article.link);
+                this.parent.subMenu._applet.menu.close(false);
+                break;
+            case "visit_feed_url":
+                // NOTE: this.parent = FeedSubMenuItem
+                runtimeInfo("Opening feed URL: " + this.parent.params.url);
+                xdgOpen(this.parent.params.url);
+                this.parent._applet.menu.close(false);
+                break;
         }
     },
 
     _onButtonReleaseEvent: function(actor, event) {
-        if (event.get_button() == 1) {
+        if (event.get_button() === 1) {
             this.activate(event);
         }
-        return true;
+
+        return Clutter.EVENT_STOP;
     },
 
-    _buttonEnterEvent: function() {
-        this.actor.change_style_pseudo_class("active", true);
-    },
+    // Mark for deletion on EOL. Cinnamon 3.6.x+
+    // Remove complete block. The use of the signal manager was added in 3.6.x.
+    destroy: function() {
+        this._signals.disconnectAllSignals();
 
-    _buttonLeaveEvent: function() {
-        this.actor.change_style_pseudo_class("active", false);
+        PopupMenu.PopupBaseMenuItem.prototype.destroy.call(this);
     }
 };
 
-/* FeedDataItem objects are used to store data for a single item in a news feed */
-function FeedDataItem() {
+/* FeedArticleItem objects are used to store data for a single article in a news feed */
+function FeedArticleItem() {
     this._init.apply(this, arguments);
 }
 
-FeedDataItem.prototype = {
-    _init: function(id, title, link, description, description_text, published) {
-        this.id = id;
-        this.title = title;
-        this.link = link;
-        this.description = description;
-        this.description_text = description_text;
-        this.published = published;
+FeedArticleItem.prototype = {
+    _init: function(aParams) {
+        // NOTE: Expected params.
+        // id
+        // title
+        // link
+        // description
+        // published
+        for (let prop in aParams) {
+            if (aParams.hasOwnProperty(prop)) {
+                this[prop] = aParams[prop];
+            }
+        }
+
         this.read = false;
         this.deleted = false;
-        this.is_redirected = false;
     },
 
-    open: function() {
-        try {
-            Util.spawnCommandLine("xdg-open " + this.link);
-        } catch (aErr) {
-            global.logError(aErr);
-        }
-        this.mark_read();
+    openArticle: function() {
+        xdgOpen(this.link);
+        this.markArticleRead();
     },
 
-    mark_read: function(single = true) {
+    markArticleRead: function(aSingle = true) {
         this.read = true;
-        // Only notify when marking individual items
-        if (single) {
-            this.emit("item-read");
+        // Only notify when marking individual articles.
+        if (aSingle) {
+            this.emit("article-read");
         }
-    },
-
-    delete_item: function() {
-        this.deleted = true;
-        this.emit("item-deleted");
     }
 };
-Signals.addSignalMethods(FeedDataItem.prototype);
+Signals.addSignalMethods(FeedArticleItem.prototype);
 
 function FeedReader() {
     this._init.apply(this, arguments);
 }
 
 FeedReader.prototype = {
-    _init: function(parent, id, url, notify, callbacks) {
-        this.parent = parent;
-        this.id = id;
-        this.item_status = [];
-        this.url = url;
-        this.notify = notify;
-        this.callbacks = callbacks;
+    _init: function(aSubMenu) {
+        this.subMenu = aSubMenu;
+        this.article_status = [];
+        this.locallyLoaded = false;
         this.error = false;
-        this.entries_file = Gio.file_new_for_path(FEED_LOCAL_DATA_FILE.format(id));
+        this.entries_file = Gio.file_new_for_path(FEED_LOCAL_DATA_FILE.format(this.subMenu.params.id));
+        this._signals = new SignalManager.SignalManager(null);
 
-        /* Feed data */
-        this.title = "";
-        this.items = [];
-
+        this.feed_title = "";
+        this.articles = [];
+        this.is_redirected = false;
+        this.redirected_url = "";
         this.image = {};
+        this._loadArticles();
 
-        /* Init HTTP session */
-        try {
-            this.session = new Soup.SessionAsync();
-            Soup.Session.prototype.add_feature.call(this.session,
-                new Soup.ProxyResolverDefault());
-        } catch (aErr) {
-            global.logError(aErr);
-            throw "Failed to create HTTP session: " + aErr;
-        }
-
-        this.load_items();
+        this._signals.connect(this, "destroy", function() {
+            this.destroy();
+        }.bind(this));
     },
 
-    get_url: function() {
-        return this.url;
+    get feedInterval() {
+        let feedInterval = this.subMenu.params.interval;
+
+        if (feedInterval !== 0 && feedInterval !== this.subMenu._applet.pref_refresh_interval_mins) {
+            return feedInterval;
+        }
+
+        return this.subMenu._applet.pref_refresh_interval_mins;
     },
 
     _shouldUpdate: function() {
-        if (!this.parent._applet.pref_last_checked_storage.hasOwnProperty(this.id)) {
+        if (this.subMenu._applet.forceDownload ||
+            !this.subMenu._applet.pref_last_checked_storage.hasOwnProperty(this.subMenu.params.id)) {
             return true;
         }
 
         //                       milliseconds  - milliseconds
         if (Math.round(new Date().getTime() -
-                this.parent._applet.pref_last_checked_storage[this.id]) >=
+                this.subMenu._applet.pref_last_checked_storage[this.subMenu.params.id]) >=
             //                       minutes to milliseconds
-            Math.round(this.parent._applet.pref_refresh_interval_mins * 60 * 1000)) {
+            Math.round(this.feedInterval * 60 * 1000)) {
             return true;
         }
 
         return !this.entries_file.query_exists(null);
     },
 
-    download_feed: function() {
-        if (this._shouldUpdate() || this.parent._applet.force_download) {
+    downloadFeed: function() {
+        if (this._shouldUpdate()) {
+            this.locallyLoaded = false;
             runtimeInfo("Processing newly downloaded feed.");
-            Util.spawn_async([XletMeta.path + "/python/get_feed.py", this.url],
-                (response, aLocal) => this.process_feed(response, aLocal));
+            Util.spawn_async([XletMeta.path + "/python_modules/get_feed.py", this.subMenu.params.url],
+                (aResponse, aLocal) => this._processFeed(aResponse, aLocal));
         } else {
+            this.locallyLoaded = true;
             runtimeInfo("Processing locally stored feed.");
-            this.process_feed_locally();
+            this._processFeedLocally();
         }
     },
 
-    process_feed_locally: function() {
+    _processFeedLocally: function() {
         this.entries_file.load_contents_async(null, (aFile, aResponce) => {
             let success,
                 contents = "",
@@ -751,51 +858,51 @@ FeedReader.prototype = {
                  * Do not even think about removing the escape/unescape processes.
                  * That thing bit me right in the arse!!!
                  */
-                this.process_feed(escapeUnescapeReplacer.unescape(contents), true);
+                this._processFeed(escapeUnescapeReplacer.unescape(contents), true);
             } catch (aErr) {
-                /* Invalid file contents */
-                runtimeError("Failed to read feed data file for " + this.url + ":" + aErr);
+                runtimeError("Failed to read feed data file for " + this.subMenu.params.url + ":" + aErr);
             }
         });
     },
 
-    process_feed: function(response, aLocal) {
-        runtimeInfo(response);
+    _processFeed: function(aResponse, aLocal) {
+        runtimeInfo(aResponse);
 
-        if (response.trim() === "feedparser_error") {
-            this.parent._applet._informMissingDependency();
+        if (aResponse.trim() === "feedparser_error") {
+            this.subMenu._applet.missingDependencies = true;
+            this.subMenu._applet._informMissingDependency();
             return;
         }
 
         let startTime = new Date().getTime(); // Temp timer for gathering info of performance changes
-        let new_items = [];
-        let unread_items = [];
+        let new_articles = [];
+        let unread_articles = [];
         let info;
 
-        // If response is the data coming from the on-line source, save it for later be used locally.
+        // If aResponse is the data coming from the on-line source, save it for later be used locally.
         if (!aLocal) {
             /* NOTE: The original authors were right on the money!
              * Do not even think about removing the escape/unescape processes.
              * That thing bit me right in the arse!!!
              */
-            saveToFileAsync(escapeUnescapeReplacer.escape(response), this.entries_file);
+            saveToFileAsync(escapeUnescapeReplacer.escape(aResponse), this.entries_file);
         }
 
         try {
-            info = JSON.parse(response);
+            info = JSON.parse(aResponse);
             // Check for error messages first:
 
-            if (info.exception != undefined) {
+            if (info.hasOwnProperty("exception")) {
                 // Invalid feed detected, throw and log error.
-                this.title = _("Invalid feed url");
+                this.feed_title = _(info.exception.trim());
                 throw info.exception;
             }
 
-            this.title = info.title;
+            this.feed_title = this.subMenu.params.custom_title || info.title;
             runtimeInfo("Processing feed: " + info.title);
 
             // Check if feed has a permanent redirect
-            if (!aLocal && info.redirected_url != undefined) {
+            if (!aLocal && info.hasOwnProperty("redirected_url")) {
                 this.is_redirected = true;
                 this.redirected_url = info.redirected_url;
                 runtimeInfo("Feed has been redirected to: " + info.redirected_url + "(Please update feed)");
@@ -807,144 +914,126 @@ FeedReader.prototype = {
                 iLen = info.entries.length;
             for (; i < iLen; i++) {
                 // We only need to process new items, so check if the item exists already
-                let existing = this._get_item_by_id(info.entries[i].id);
+                let existing = this._getArticleByID(info.entries[i].id);
 
                 // not found, add to new item list.
-                if (existing == null) {
+                if (existing === null) {
                     // Do not calculate a date from nothing.
-                    let published = info.entries[i].pubDate ? new Date(info.entries[i].pubDate) : "";
-                    // format title once as text
-                    let title = this.html2text(info.entries[i].title);
+                    let published = info.entries[i].pubDate ? new Date(info.entries[i].pubDate) : 0;
 
-                    // Store the description once as text and once as pango
-                    let description_text = this.html2text(info.entries[i].description)
-                        .substring(0, this.parent.description_max_length);
-                    let description = this.html2pango(info.entries[i].description)
-                        .substring(0, this.parent.description_max_length);
-
-                    let item = new FeedDataItem(info.entries[i].id,
-                        title,
-                        info.entries[i].link,
-                        description,
-                        description_text,
-                        published
-                    );
+                    let article = new FeedArticleItem({
+                        id: info.entries[i].id,
+                        title: html2text(info.entries[i].title),
+                        link: info.entries[i].link,
+                        description: info.entries[i].description,
+                        published: published
+                    });
 
                     // Connect the events
-                    item.connect("item-read", () => {
-                        this.on_item_read();
-                    });
-                    item.connect("item-deleted", () => {
-                        this.on_item_deleted();
-                    });
+                    this._signals.connect(article, "article-read", function() {
+                        this._onArticleRead();
+                    }.bind(this));
 
                     // check if already read
-                    if (this._is_item_read(item.id)) {
-                        item.read = true;
+                    if (this._isArticleRead(article.id)) {
+                        article.read = true;
                     } else {
-                        unread_items.push(item);
+                        unread_articles.push(article);
                     }
 
-                    new_items.push(item);
+                    new_articles.push(article);
                 } else {
-                    // Existing item, reuse the item for now.
-                    new_items.push(existing);
+                    // Existing article, reuse the article for now.
+                    new_articles.push(existing);
                 }
             }
         } catch (aErr) {
             global.logError(aErr);
         }
 
-        /* Were there any new items? */
-        if (unread_items.length > 0) {
-            runtimeInfo("Fetched " + unread_items.length + " new items from " + this.url);
+        if (unread_articles.length > 0) {
+            runtimeInfo("Fetched " + unread_articles.length + " new articles from " + this.subMenu.params.url);
             try {
-                this.items = new_items;
-                // Update the saved items so we can keep track of new and unread items.
-                this.save_items();
-                this.callbacks.onUpdate();
+                this.articles = new_articles;
+                // Update the saved articles so we can keep track of new and unread articles.
+                this._saveArticles();
+                this.emit("articles-updated");
 
-                if (!this.notify) {
-                    runtimeInfo("Item level notifications disabled");
-                } else {
-                    if (this.parent._applet.pref_unified_notifications || unread_items.length > 1) {
-                        this.callbacks.onNewItem(this, this.title, _("%d unread items!".format(unread_items.length)));
-                    } else if (!this.parent._applet.pref_unified_notifications && unread_items.length == 1) {
-                        this.callbacks.onNewItem(this, this.title, unread_items[0].title);
+                if (this.subMenu.params.notify) {
+                    if (this.subMenu._applet.pref_unified_notifications || unread_articles.length > 1) {
+                        this.emit("notify-new-articles", this.feed_title,
+                            ngettext(
+                                "%d unread article!".format(unread_articles.length),
+                                "%d unread articles!".format(unread_articles.length),
+                                unread_articles.length
+                            )
+                        );
+                    } else if (!this.subMenu._applet.pref_unified_notifications && unread_articles.length === 1) {
+                        this.emit("notify-new-articles", this.feed_title, unread_articles[0].title);
                     }
+                } else {
+                    runtimeInfo("Item level notifications disabled");
                 }
             } catch (aErr) {
                 global.logError(aErr);
             }
         }
 
-        // Make items available even on the first load.
-        if (this.items.length == 0 && new_items.length > 0) {
-            this.items = new_items;
-            // TODO: Switch to be an event
-            this.callbacks.onUpdate();
-            // this.emit('')
+        // Make articles available even on the first load.
+        if (this.articles.length === 0 && new_articles.length > 0) {
+            this.articles = new_articles;
+            this.emit("articles-updated");
         }
 
         if (!aLocal && info.hasOwnProperty("lastcheck")) {
-            this.parent._applet.pref_last_checked_storage[this.id] = info.lastcheck;
-            this.parent._applet.pref_last_checked_storage.save();
+            this.subMenu._applet.pref_last_checked_storage[this.subMenu.params.id] = info.lastcheck;
+            this.subMenu._applet.pref_last_checked_storage.save();
         }
 
-        // Notify to start the next item downloading.
+        // Notify to start the next article downloading.
         let time = new Date().getTime() - startTime;
-        // TODO: Switch to be an event
-        this.callbacks.onDownloaded();
-        // this.emit('')
+        this.emit("feed-downloaded");
 
         runtimeInfo("Processing Items took: " + time + " ms");
     },
 
-    mark_all_items_read: function() {
-        let i = this.items.length;
+    markAllArticlesRead: function() {
+        let i = this.articles.length;
         while (i--) {
-            this.items[i].mark_read(false);
+            this.articles[i].markArticleRead(false);
         }
 
-        // TODO: Switch to be an event
-        this.callbacks.onItemRead(this);
-        // this.emit('')
-        this.save_items();
+        this.emit("articles-read");
+        this._saveArticles();
     },
 
-    mark_next_items_read: function(number) {
-        runtimeInfo("Number of items marked as read:" + number);
+    markNextArticlesRead: function(number) {
+        runtimeInfo("Number of articles marked as read:" + number);
 
-        // Mark next unread n items read
+        // Mark next unread n articles read
         let marked = 0;
         let i = 0,
-            iLen = this.items.length;
+            iLen = this.articles.length;
         for (; i < iLen; i++) {
-            if (!this.items[i].read) {
+            if (!this.articles[i].read) {
                 marked++;
-                this.items[i].mark_read(false);
+                this.articles[i].markArticleRead(false);
             }
-            // only mark the number of items read that we specify.
-            if (marked == number) {
+            // only mark the number of articles read that we specify.
+            if (marked === number) {
                 break;
             }
         }
-        // TODO: Switch to be an event
-        this.callbacks.onItemRead(this);
-        this.save_items();
+        this.emit("articles-read");
+        this._saveArticles();
     },
 
-    on_item_read: function() {
-        // TODO: Switch to be an event
-        this.callbacks.onItemRead(this);
-        this.save_items();
+    _onArticleRead: function() {
+        this.emit("articles-read");
+        this._saveArticles();
     },
 
-    on_item_deleted: function() {
-        this.save_items();
-    },
-
-    save_items: function() {
+    _saveArticles: function() {
         try {
             let dir = Gio.file_parse_name(DataStorage);
             if (!dir.query_exists(null)) {
@@ -956,28 +1045,28 @@ FeedReader.prototype = {
              * characters, which could cause problems when parsing the file
              * later */
             // Filename is now the uuid created when a feed is added to the list.
-            let filename = DataStorage + "/" + this.id;
+            let filename = DataStorage + "/" + this.subMenu.params.id;
             runtimeInfo("Saving feed data to: " + filename);
 
             let file = Gio.file_parse_name(filename);
 
-            let item_list = [];
+            let article_list = [];
             let i = 0,
-                iLen = this.items.length;
+                iLen = this.articles.length;
             for (; i < iLen; i++) {
-                item_list.push({
-                    "id": this.items[i].id,
-                    "read": this.items[i].read,
-                    "deleted": this.items[i].deleted
+                article_list.push({
+                    "id": this.articles[i].id,
+                    "read": this.articles[i].read,
+                    "deleted": this.articles[i].deleted
                 });
             }
 
-            // Update the item status
-            this.item_status = item_list;
+            // Update the article status
+            this.article_status = article_list;
 
             let data = {
-                "feed_title": this.title,
-                "item_list": item_list
+                "feed_title": this.feed_title,
+                "article_list": article_list
             };
 
             /* NOTE: The original authors were right on the money!
@@ -995,8 +1084,8 @@ FeedReader.prototype = {
      * load the id, read, deleted status of each message. This is a limited amount of
      * data and thus without a network connection we will not get the title information.
      */
-    load_items: function() {
-        let file = Gio.file_new_for_path(DataStorage + "/" + this.id);
+    _loadArticles: function() {
+        let file = Gio.file_new_for_path(DataStorage + "/" + this.subMenu.params.id);
 
         file.load_contents_async(null, (aFile, aResponce) => {
             let success,
@@ -1006,14 +1095,14 @@ FeedReader.prototype = {
             try {
                 [success, contents, tag] = aFile.load_contents_finish(aResponce);
             } catch (aErr) {
-                global.logError(aErr);
+                runtimeInfo(aErr);
             }
 
             if (!contents) {
-                this.item_status = [];
+                this.article_status = [];
                 runtimeInfo("Number Loaded: 0");
-                this.title = _("Loading feed");
-                this.emit("items-loaded");
+                this.feed_title = _("Fail to load feed");
+                this.emit("articles-loaded");
                 return;
             }
 
@@ -1024,135 +1113,70 @@ FeedReader.prototype = {
                  */
                 let data = JSON.parse(escapeUnescapeReplacer.unescape(contents));
 
-                if (typeof data == "object") {
-                    if (data.feed_title != undefined) {
-                        this.title = data.feed_title;
+                if (typeof data === "object") {
+                    if (data.hasOwnProperty("feed_title")) {
+                        this.feed_title = data.feed_title;
                     } else {
-                        this.title = _("Loading feed");
+                        this.feed_title = _("Loading...");
                     }
 
-                    if (data.item_list != undefined) {
-                        this.item_status = data.item_list;
+                    if (data.hasOwnProperty("article_list")) {
+                        this.article_status = data.article_list;
                     } else {
-                        this.item_status = [];
+                        this.article_status = [];
                     }
 
-                    runtimeInfo("Number Loaded: " + this.item_status.length);
-                    this.emit("items-loaded");
+                    runtimeInfo("Number Loaded: " + this.article_status.length);
+                    this.emit("articles-loaded");
                 } else {
-                    global.logError("Invalid data file for " + this.url);
+                    global.logError("Invalid data file for " + this.subMenu.params.url);
                 }
             } catch (aErr) {
-                runtimeError("Failed to read feed data file for " + this.url + ":" + aErr);
+                runtimeError("Failed to read feed data file for " + this.subMenu.params.url + ":" + aErr);
             }
         });
     },
 
-    get_unread_count: function() {
+    getUnreadCount: function() {
         let count = 0;
-        for (let i = 0; i < this.item_status.length; i++) {
-            if (!this.item_status[i].read) {
+        for (let i = 0; i < this.article_status.length; i++) {
+            if (!this.article_status[i].read) {
                 count++;
             }
         }
         return count;
     },
 
-    _get_item_by_id: function(id) {
-        let i = this.items.length;
+    _getArticleByID: function(id) {
+        let i = this.articles.length;
         while (i--) {
-            if (this.items[i].id == id) {
-                return this.items[i];
+            if (this.articles[i].id === id) {
+                return this.articles[i];
             }
         }
         return null;
     },
 
-    _is_item_read: function(id) {
-        let i = this.item_status.length;
+    _isArticleRead: function(aId) {
+        let i = this.article_status.length;
         while (i--) {
-            if (this.item_status[i].id == id && this.item_status[i].read) {
+            if (this.article_status[i].id === aId && this.article_status[i].read) {
                 return true;
             }
         }
         return false;
     },
 
-    on_error: function(msg, details) {
-        runtimeInfo("FeedReader (" + this.url + "): " + msg);
-        this.error = true;
-        this.error_messsage = msg;
-        this.error_details = details;
-        // TODO: Switch to be an event
-        if (this.callbacks.onError) {
-            this.callbacks.onError(this, msg, details);
-        }
-
-        return 1;
-    },
-
-    html2text: function(html) {
-        /* Convert html to plaintext */
-        let ret = html.replace("<br/>", "\n");
-        ret = ret.replace("</p>", "\n");
-        ret = ret.replace(/<\/h[0-9]>/g, "\n\n");
-        ret = ret.replace(/<.*?>/g, "");
-        ret = ret.replace("&nbsp;", " ");
-        ret = ret.replace("&quot;", '"');
-        ret = ret.replace("&rdquo;", '"');
-        ret = ret.replace("&ldquo;", '"');
-        ret = ret.replace("&#8220;", '"');
-        ret = ret.replace("&#8221;", '"');
-        ret = ret.replace("&rsquo;", "'");
-        ret = ret.replace("&lsquo;", "'");
-        ret = ret.replace("&#8216;", "'");
-        ret = ret.replace("&#8217;", "'");
-        ret = ret.replace("&#8230;", "...");
-        return ret;
-    },
-
-    html2pango: function(html) {
-        let ret = html;
-        let esc_open = "-@~]";
-        let esc_close = "]~@-";
-
-        /* </p> <br/> --> newline */
-        ret = ret.replace("<br/>", "\n").replace("</p>", "\n");
-
-        /* &nbsp; --> space */
-        ret = ret.replace(/&nbsp;/g, " ");
-
-        /* Headings --> <b> + 2*newline */
-        ret = ret.replace(/<h[0-9]>/g, esc_open + 'span weight="bold"' + esc_close);
-        ret = ret.replace(/<\/h[0-9]>\s*/g, esc_open + "/span" + esc_close + "\n\n");
-
-        /* <strong> -> <b> */
-        ret = ret.replace("<strong>", esc_open + "b" + esc_close);
-        ret = ret.replace("</strong>", esc_open + "/b" + esc_close);
-
-        /* <i> -> <i> */
-        ret = ret.replace("<i>", esc_open + "i" + esc_close);
-        ret = ret.replace("</i>", esc_open + "/i" + esc_close);
-
-        /* Strip remaining tags */
-        ret = ret.replace(/<.*?>/g, "");
-
-        /* Replace escaped <, > with actual angle-brackets */
-        let re1 = new RegExp(esc_open, "g");
-        let re2 = new RegExp(esc_close, "g");
-        ret = ret.replace(re1, "<").replace(re2, ">");
-
-        let cleanedRet = ret.replace(/[\r\n]+/g, "\n");
-
-        return cleanedRet;
+    destroy: function() {
+        this._signals.disconnectAllSignals();
     }
 };
 Signals.addSignalMethods(FeedReader.prototype);
 
 DebugManager.wrapObjectMethods(Debugger, {
-    FeedDataItem: FeedDataItem,
+    FeedArticleItem: FeedArticleItem,
     FeedMenuItem: FeedMenuItem,
     FeedReader: FeedReader,
     FeedSubMenuItem: FeedSubMenuItem,
-    InteligentTooltip: InteligentTooltip
+    IntelligentTooltip: IntelligentTooltip
 });

@@ -1,125 +1,174 @@
 {
-    "heading1": {
-        "type": "header",
-        "description": "Feed URLs"
-    },
-    "manage_feeds_button": {
-        "type": "button",
-        "description": "Manage Feeds...",
-        "callback": "manage_feeds",
-        "tooltip": "Launch the feeds manager application to add/remove/edit feeds."
-    },
     "pref_overlay_key": {
-        "type": "keybinding",
-        "default": "",
-        "description": "Keyboard shortcut to open and close the menu."
+        "type": "generic",
+        "default": ""
     },
     "pref_new_feed_icon": {
-        "type": "iconfilechooser",
-        "default": "feeds-reader-rss-new-feed-symbolic",
-        "description": "Icon used when there are new feeds",
-        "tooltip": "Select an icon to show in the panel."
+        "type": "generic",
+        "default": "feeds-reader-rss-new-feed-symbolic"
     },
     "pref_feed_icon": {
-        "type": "iconfilechooser",
-        "default": "feeds-reader-rss-feed-symbolic",
-        "description": "Icon used when there are not new feeds",
-        "tooltip": "Select an icon to show in the panel."
+        "type": "generic",
+        "default": "feeds-reader-rss-feed-symbolic"
     },
-    "pref_max_items": {
-        "type": "spinbutton",
-        "default": 10,
-        "min": 1,
-        "max": 20,
-        "step": 1,
-        "units": "feeds",
-        "description": "Maximum number of items",
-        "tooltip": "Maximum number of items to display for each feed."
+    "pref_min_article_item_width": {
+        "type": "generic",
+        "default": 400
     },
-    "pref_refresh_interval_mins": {
-        "type": "spinbutton",
-        "default": 30,
-        "min": 1,
-        "max": 1440,
-        "step": 1,
-        "units": "minutes",
-        "description": "Update interval",
-        "tooltip": "Interval between checking for new items."
-    },
-    "pref_description_max_length": {
-        "type": "spinbutton",
-        "default": 2000,
-        "min": 1000,
-        "max": 10000,
-        "step": 500,
-        "units": "characters",
-        "description": "Description maximum length"
-    },
-    "pref_tooltip_max_width": {
-        "type": "spinbutton",
-        "default": 500,
-        "min": 100,
-        "max": 2000,
-        "step": 10,
-        "units": "pixels",
-        "description": "Tooltip maximum width"
-    },
-    "pref_notifications_enabled": {
-        "type": "checkbox",
-        "default": true,
-        "description": "Show notifications for new items",
-        "tooltip": "If enabled, a popup notification will be displayed for new items."
-    },
-    "pref_unified_notifications": {
-        "type": "checkbox",
-        "default": true,
-        "dependency": "pref_notifications_enabled",
-        "description": "Unified notifications",
-        "tooltip": "If enabled, all feeds notifications will use and update one notification."
-    },
-    "third-party-header": {
-        "type": "header",
-        "description": "Third party integrations"
-    },
-    "pref_third_party_integration_panel_drawer": {
-        "type": "checkbox",
-        "default": true,
-        "description": "Panel Drawer applet integration",
-        "tooltip": "Display applet when receiving new items."
-    },
-    "debugging-header": {
-        "type": "header",
-        "description": "Debugging"
-    },
-    "pref_logging_level": {
-        "type": "combobox",
-        "default": 0,
-        "description": "Logging level (*)",
-        "tooltip": "It enables the ability to log the output of several functions used by the extension.\n\nNormal: Only log messages caused by non critical errors.\nVerbose: Additionally log extra output messages and all HTTP responses.\nVery verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.",
-        "options": {
-            "Normal": 0,
-            "Verbose": 1,
-            "Very verbose": 2
-        }
-    },
-    "pref_debugger_enabled": {
-        "type": "checkbox",
-        "description": "Enable debugger (*)",
-        "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
+    "pref_show_icons_in_menu": {
+        "type": "generic",
         "default": false
     },
-    "label": {
-        "type": "label",
-        "description": "(*) Requires Cinnamon restart to enable/disable"
-    },
-    "pref_profile_name": {
+    "pref_max_items": {
         "type": "generic",
-        "default": "Default",
-        "description": "Feed Profile Name."
+        "default": 10
+    },
+    "pref_refresh_interval_mins": {
+        "type": "generic",
+        "default": 30
+    },
+    "pref_description_max_length": {
+        "type": "generic",
+        "default": 500
+    },
+    "pref_tooltip_max_width": {
+        "type": "generic",
+        "default": 0
+    },
+    "pref_notifications_enabled": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_unified_notifications": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_unified_notifications_max_entries": {
+        "type": "generic",
+        "default": 10
+    },
+    "pref_third_party_integration_panel_drawer": {
+        "type": "generic",
+        "default": true
+    },
+    "pref_logging_level": {
+        "type": "generic",
+        "default": 0
+    },
+    "pref_debugger_enabled": {
+        "type": "generic",
+        "default": false
     },
     "pref_last_checked_storage": {
         "type": "generic",
-        "default": {},
-        "description": "Storage for last feeds checked values."
+        "default": {}
+    },
+    "pref_feeds_changed": {
+        "type": "generic",
+        "default": false
+    },
+    "pref_imp_exp_last_selected_directory": {
+        "type": "generic",
+        "default": ""
+    },
+    "pref_feeds": {
+        "type": "generic",
+        "default": [{
+            "enabled": true,
+            "category": "",
+            "custom_title": "Cheatography",
+            "url": "https://www.cheatography.com/explore/new/rss/",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "",
+            "custom_title": "DistroWatch",
+            "url": "https://distrowatch.com/news/dw.xml",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "",
+            "custom_title": "gHacks",
+            "url": "https://www.ghacks.net/feed/",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "",
+            "custom_title": "Linux Mint Blog",
+            "url": "https://blog.linuxmint.com/?feed=rss2",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "StackExchange",
+            "custom_title": "StackOverflow - Linux",
+            "url": "https://stackoverflow.com/feeds/tag/linux",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "StackExchange",
+            "custom_title": "StackOverflow - JavaScript",
+            "url": "https://stackoverflow.com/feeds/tag/javascript",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "StackExchange",
+            "custom_title": "StackOverflow - Python",
+            "url": "https://stackoverflow.com/feeds/tag/python",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "StackExchange",
+            "custom_title": "SuperUser - Linux",
+            "url": "https://superuser.com/feeds/tag/linux",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "StackExchange",
+            "custom_title": "StackExchange - Unix - Linux",
+            "url": "https://unix.stackexchange.com/feeds/tag/linux",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "StackExchange",
+            "custom_title": "StackExchange - Unix - Bash",
+            "url": "https://unix.stackexchange.com/feeds/tag/bash",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "StackExchange",
+            "custom_title": "StackExchange - Unix - Debian",
+            "url": "https://unix.stackexchange.com/feeds/tag/debian",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }, {
+            "enabled": true,
+            "category": "StackExchange",
+            "custom_title": "StackExchange - Unix - Shell",
+            "url": "https://unix.stackexchange.com/feeds/tag/shell",
+            "notify": true,
+            "interval": 0,
+            "show_read_items": false
+        }]
     }
 }
