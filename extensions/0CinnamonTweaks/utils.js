@@ -69,7 +69,9 @@ const {
     NotificationUrgency
 } = DesktopNotificationsUtils;
 
-wrapObjectMethods(Settings, {
+var Debugger = new DebugManager.DebugManager("org.cinnamon.{{XLET_TYPE}}s.{{UUID}}");
+
+wrapObjectMethods(Debugger, {
     CustomNotification: CustomNotification
 });
 
@@ -1328,7 +1330,7 @@ function queryCollection(collection, query, indexOnly = false) {
     return indexOnly ? -1 : null;
 }
 
-wrapObjectMethods(Settings, {
+wrapObjectMethods(Debugger, {
     CT_MaximusNG: CT_MaximusNG,
     CT_NemoDesktopArea: CT_NemoDesktopArea,
     CT_WindowMover: CT_WindowMover,

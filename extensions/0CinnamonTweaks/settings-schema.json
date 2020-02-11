@@ -321,14 +321,6 @@
         "type": "generic",
         "default": false
     },
-    "pref_logging_level": {
-        "type": "generic",
-        "default": 0
-    },
-    "pref_debugger_enabled": {
-        "type": "generic",
-        "default": false
-    },
     "pref_desktop_file_generated": {
         "type": "generic",
         "default": false

@@ -54,8 +54,6 @@ const BOUND_SETTINGS_ARRAY = [
     "pref_maximus_apply_settings",
     "pref_maximus_invisible_windows_hack",
     "pref_test_notifications",
-    "pref_logging_level",
-    "pref_debugger_enabled",
     "pref_desktop_file_generated"
 ];
 

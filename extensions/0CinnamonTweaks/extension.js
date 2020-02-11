@@ -340,6 +340,7 @@ const CT_MessageTrayPatch = {
                     // to prevent unnecessary property setting.
                     this.bottomPositionSignal = this._notificationBin.connect("queue-redraw", () => {
                         if (shouldReturn) {
+                            this.bottomPositionSignal = null;
                             return;
                         }
 
@@ -1148,8 +1149,6 @@ CinnamonTweaks.prototype = {
             case "pref_tooltips_delay":
             case "pref_popup_menu_manager_tweaks_enabled":
             case "pref_popup_menu_manager_applets_menus_behavior":
-            case "pref_logging_level":
-            case "pref_debugger_enabled":
                 $.informCinnamonRestart();
                 break;
             case "pref_applets_tweaks_enabled":
@@ -1272,7 +1271,7 @@ function init(aXletMeta) {
     _ = G._;
     Settings = C.Settings;
 
-    D.wrapObjectMethods(Settings, {
+    D.wrapObjectMethods($.Debugger, {
         CinnamonTweaks: CinnamonTweaks,
         CT_AppletManagerPatch: CT_AppletManagerPatch,
         CT_AutoMoveWindows: CT_AutoMoveWindows,
