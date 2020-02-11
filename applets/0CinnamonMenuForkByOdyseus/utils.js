@@ -40,7 +40,6 @@ const {
         util: Util
     },
     ui: {
-        applet: Applet,
         appFavorites: AppFavorites,
         main: Main,
         popupMenu: PopupMenu
@@ -60,7 +59,7 @@ const {
 } = GlobalUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 var Debugger = new DebugManager.DebugManager(GSETTINGS_SCHEMA);
@@ -333,7 +332,7 @@ ApplicationContextMenuItem.prototype = {
         }
 
         this.addActor(this.label);
-        this._tooltip = new InteligentTooltip(this.actor, "");
+        this._tooltip = new IntelligentTooltip(this.actor, "");
     },
 
     activate: function(event) { // jshint ignore:line
@@ -765,7 +764,7 @@ ApplicationButton.prototype = {
         }
 
         this.addLabel(this.name);
-        this.tooltip = new InteligentTooltip(this.actor, "");
+        this.tooltip = new IntelligentTooltip(this.actor, "");
     },
 
     get_app_id: function() {
@@ -816,7 +815,7 @@ DummyApplicationButton.prototype = {
         }
 
         this.addLabel(this.name);
-        this.tooltip = new InteligentTooltip(this.actor, "");
+        this.tooltip = new IntelligentTooltip(this.actor, "");
     },
 
     populateItem: function(aApp) {
@@ -927,7 +926,7 @@ CustomCommandButton.prototype = {
             this.app.icon.search("-symbolic") !== -1
         );
 
-        this.tooltip = new InteligentTooltip(this.actor, "");
+        this.tooltip = new IntelligentTooltip(this.actor, "");
     },
 
     activate: function(event) { // jshint ignore:line
@@ -1082,7 +1081,7 @@ DebugManager.wrapObjectMethods(Debugger, {
     CustomCommandButton: CustomCommandButton,
     DummyApplicationButton: DummyApplicationButton,
     GenericApplicationButton: GenericApplicationButton,
-    InteligentTooltip: InteligentTooltip,
+    IntelligentTooltip: IntelligentTooltip,
     RecentAppsManager: RecentAppsManager,
     SimpleMenuItem: SimpleMenuItem,
     VisibleChildIterator: VisibleChildIterator

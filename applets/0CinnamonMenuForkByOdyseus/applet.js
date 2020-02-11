@@ -50,8 +50,7 @@ const {
 const {
     _,
     escapeHTML,
-    versionCompare,
-    CINNAMON_VERSION
+    xdgOpen
 } = GlobalUtils;
 
 function CinnamonMenuForkByOdyseus() {
@@ -193,37 +192,14 @@ CinnamonMenuForkByOdyseus.prototype = {
             this.instance_id
         );
 
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+        this._bindSettings();
+        aDirectCallback();
 
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+        Mainloop.idle_add(() => {
+            aIdleCallback();
 
-                return GLib.SOURCE_REMOVE;
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
-        }
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _bindSettings: function() {
@@ -327,7 +303,7 @@ CinnamonMenuForkByOdyseus.prototype = {
         menuItem = new PopupMenu.PopupIconMenuItem(_("Help"),
             "dialog-information", St.IconType.SYMBOLIC);
         menuItem.connect("activate", () => {
-            Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
+            xdgOpen(this.metadata.path + "/HELP.html");
         });
         this._applet_context_menu.addMenuItem(menuItem);
 
@@ -1101,13 +1077,13 @@ CinnamonMenuForkByOdyseus.prototype = {
                             this._previousSelectedActor = this.applicationsBox.get_child_at_index(index);
                             item_actor = this.appBoxIter.getPrevVisible(this._previousSelectedActor);
                             this._previousVisibleIndex = this.appBoxIter.getVisibleIndex(item_actor);
-                            this._scrollToButton();
+                            this._scrollToButton(item_actor._delegate);
                             break;
                         case "down":
                             this._previousSelectedActor = this.applicationsBox.get_child_at_index(index);
                             item_actor = this.appBoxIter.getNextVisible(this._previousSelectedActor);
                             this._previousVisibleIndex = this.appBoxIter.getVisibleIndex(item_actor);
-                            this._scrollToButton();
+                            this._scrollToButton(item_actor._delegate);
                             break;
                         case "right":
                             this._previousSelectedActor = this.applicationsBox.get_child_at_index(index);
@@ -1127,12 +1103,12 @@ CinnamonMenuForkByOdyseus.prototype = {
                         case "top":
                             item_actor = this.appBoxIter.getFirstVisible();
                             this._previousVisibleIndex = this.appBoxIter.getVisibleIndex(item_actor);
-                            this._scrollToButton();
+                            this._scrollToButton(item_actor._delegate);
                             break;
                         case "bottom":
                             item_actor = this.appBoxIter.getLastVisible();
                             this._previousVisibleIndex = this.appBoxIter.getVisibleIndex(item_actor);
-                            this._scrollToButton();
+                            this._scrollToButton(item_actor._delegate);
                             break;
                     }
                     break;
