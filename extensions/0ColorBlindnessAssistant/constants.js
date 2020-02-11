@@ -15,8 +15,6 @@ const {
 } = GlobalUtils;
 
 const BOUND_SETTINGS_ARRAY = [
-    "pref_logging_level",
-    "pref_debugger_enabled",
     "pref_usage_notified",
     "pref_effects_list",
     "pref_daltonizer_wizard_kb",

@@ -42,7 +42,9 @@ const {
     CustomNotification
 } = DesktopNotificationsUtils;
 
-wrapObjectMethods(Settings, {
+var Debugger = new DebugManager.DebugManager("org.cinnamon.{{XLET_TYPE}}s.{{UUID}}");
+
+wrapObjectMethods(Debugger, {
     CustomNotification: CustomNotification
 });
 

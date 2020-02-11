@@ -713,13 +713,13 @@ function init(aXletMeta) {
 
     _ = G._;
     Settings = C.Settings;
+
+    D.wrapObjectMethods($.Debugger, {
+        ColorBlindnessAssistant: ColorBlindnessAssistant
+    });
 }
 
 function enable() {
-    D.wrapObjectMethods(Settings, {
-        ColorBlindnessAssistant: ColorBlindnessAssistant
-    });
-
     try {
         assistant = new ColorBlindnessAssistant();
         assistant.enable(true);

@@ -45,7 +45,8 @@ const {
 
 const {
     _,
-    escapeHTML
+    escapeHTML,
+    copyToClipboard
 } = GlobalUtils;
 
 const {
@@ -562,14 +563,7 @@ ColorInspector.prototype = {
     },
 
     _copyColorInfoToClipboard: function() {
-        let clipboard = St.Clipboard.get_default();
-        let colorInfo = this._colorInfoForClipboard.join("\n");
-
-        if (St.ClipboardType) {
-            clipboard.set_text(St.ClipboardType.CLIPBOARD, colorInfo);
-        } else {
-            clipboard.set_text(colorInfo);
-        }
+        copyToClipboard(this._colorInfoForClipboard.join("\n"));
 
         $.Notification.notify(
             escapeHTML(_("Color information copied to clipboard."))
@@ -577,7 +571,7 @@ ColorInspector.prototype = {
     }
 };
 
-wrapObjectMethods(Settings, {
+wrapObjectMethods($.Debugger, {
     ColorInspectorBanner: ColorInspectorBanner,
     ColorInspector: ColorInspector
 });

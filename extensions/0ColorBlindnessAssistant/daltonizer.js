@@ -13,14 +13,18 @@ if (typeof __meta === "object") {
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
+    $ = require("./utils.js");
     GlobalUtils = require("./globalUtils.js");
     DebugManager = require("./debugManager.js");
     Constants = require("./constants.js");
     CustomTooltips = require("./customTooltips.js");
+    CustomTooltips = require("./customTooltips.js");
 } else {
+    $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
     GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
     DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
     Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
+    CustomTooltips = imports.ui.extensionSystem.extensions["{{UUID}}"].customTooltips;
     CustomTooltips = imports.ui.extensionSystem.extensions["{{UUID}}"].customTooltips;
 }
 
@@ -41,7 +45,6 @@ const {
 } = imports;
 
 const {
-    Settings,
     EFFECT_PROP_NAME,
     DaltonizerWizardLabels,
     DaltonizerWizardTooltips
@@ -52,7 +55,7 @@ const {
 } = GlobalUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 const {
@@ -79,7 +82,7 @@ CheckButton.prototype = {
 
         this.actor.add_style_class_name("modal-dialog-button");
         this.actor.connect("button-press-event", () => this._onButtonPress());
-        this.tooltip = new InteligentTooltip(this.actor, DaltonizerWizardTooltips[aCheckPropertyValue]);
+        this.tooltip = new IntelligentTooltip(this.actor, DaltonizerWizardTooltips[aCheckPropertyValue]);
     },
 
     updateCheckedState: function(aActor, aCheckProp) {
@@ -177,7 +180,7 @@ DaltonizerTitleBox.prototype = {
 
         this._closeButton.connect("button-release-event",
             () => this._onCloseButtonClicked());
-        this._closeButton.tooltip = new InteligentTooltip(this._closeButton, _("Close daltonizer"));
+        this._closeButton.tooltip = new IntelligentTooltip(this._closeButton, _("Close daltonizer"));
 
         this.actor.add(this._iconBin);
         this.actor.add(this._label, {
@@ -804,12 +807,12 @@ Daltonizer.prototype = {
     }
 };
 
-wrapObjectMethods(Settings, {
+wrapObjectMethods($.Debugger, {
     CheckButton: CheckButton,
     CheckGroup: CheckGroup,
     Daltonizer: Daltonizer,
     DaltonizerTitleBox: DaltonizerTitleBox,
     DaltonizerWizard: DaltonizerWizard,
-    InteligentTooltip: InteligentTooltip,
+    IntelligentTooltip: IntelligentTooltip,
     WindowTracker: WindowTracker
 });
