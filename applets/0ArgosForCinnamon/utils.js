@@ -73,7 +73,7 @@ const {
 } = GlobalUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 const {
@@ -90,7 +90,7 @@ DebugManager.wrapObjectMethods(Debugger, {
     CustomPanelItemTooltip: CustomPanelItemTooltip,
     CustomPopupSliderMenuItem: CustomPopupSliderMenuItem,
     CustomSubMenuItem: CustomSubMenuItem,
-    InteligentTooltip: InteligentTooltip,
+    IntelligentTooltip: IntelligentTooltip,
     UnitSelectorMenuItem: UnitSelectorMenuItem,
     UnitSelectorSubMenuItem: UnitSelectorSubMenuItem
 });
@@ -174,7 +174,7 @@ UnitSelectorSubMenuItem.prototype = {
         this.setLabel();
         this._populateMenu();
 
-        this.tooltip = new InteligentTooltip(
+        this.tooltip = new IntelligentTooltip(
             this.actor,
             this.params.tooltip
         );
@@ -353,7 +353,7 @@ ArgosLineView.prototype = {
             if (this._menuItem.tooltip) {
                 this._menuItem.tooltip.set_text(aLine.tooltip);
             } else if (aLine.tooltip && !this._menuItem.tooltip) {
-                this._menuItem.tooltip = new InteligentTooltip(this._menuItem.actor, aLine.tooltip);
+                this._menuItem.tooltip = new IntelligentTooltip(this._menuItem.actor, aLine.tooltip);
             }
         }
 
@@ -649,7 +649,7 @@ ArgosMenuItem.prototype = {
         });
 
         if (this.params.line.tooltip && this.params.alt_line && this.params.alt_line.tooltip) {
-            this.tooltip = new InteligentTooltip(this.actor, "");
+            this.tooltip = new IntelligentTooltip(this.actor, "");
         } else {
             this.tooltip = null;
         }

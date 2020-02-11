@@ -50,11 +50,12 @@ const {
 
 const {
     _,
-    escapeHTML
+    escapeHTML,
+    xdgOpen
 } = GlobalUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 const OutputReader = new SpawnUtils.SpawnReader();
@@ -661,7 +662,7 @@ Argos.prototype = {
                     this._processFile();
                 });
         });
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _("Choose a script file.")
         );
@@ -682,10 +683,10 @@ Argos.prototype = {
                 // The original Argos extension uses Gio.AppInfo.launch_default_for_uri
                 // to open the script file. I prefer to stay away from non asynchronous functions.
                 // Gio.AppInfo.launch_default_for_uri_async is still too new.
-                Util.spawn_async(["xdg-open", this._file.get_path()], null);
+                xdgOpen(this._file.get_path());
             }
         });
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _("Edit the script file with your prefered text editor.") + "\n" +
             _("After saving the changes made, the applet will update its data automatically if there is an interval set.") + "\n" +
@@ -708,7 +709,7 @@ Argos.prototype = {
                 this.update(true);
             }
         });
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _("This will re-run on demand the script assigned to this applet for the purpose of updating its output.") + "\n" +
             _("This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited.")
@@ -747,7 +748,7 @@ Argos.prototype = {
                 }
             ).open(global.get_current_time());
         });
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _('This operation will remove the current script from this applet leaving it "blank".')
         );
@@ -759,7 +760,7 @@ Argos.prototype = {
             "application-x-executable",
             St.IconType.SYMBOLIC
         );
-        menuItem.tooltip = new InteligentTooltip(
+        menuItem.tooltip = new IntelligentTooltip(
             menuItem.actor,
             _("Make the script file executable so it can be used by this applet.")
         );
@@ -809,9 +810,9 @@ Argos.prototype = {
             "dialog-information",
             St.IconType.SYMBOLIC
         );
-        menuItem.tooltip = new InteligentTooltip(menuItem.actor, _("Open this applet help file."));
+        menuItem.tooltip = new IntelligentTooltip(menuItem.actor, _("Open this applet help file."));
         menuItem.connect("activate", () => {
-            Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
+            xdgOpen(this.metadata.path + "/HELP.html");
         });
         subMenu.menu.addMenuItem(menuItem);
 
@@ -825,37 +826,14 @@ Argos.prototype = {
             this.instance_id
         );
 
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+        this._bindSettings();
+        aDirectCallback();
 
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+        Mainloop.idle_add(() => {
+            aIdleCallback();
 
-                return GLib.SOURCE_REMOVE;
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
-        }
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _bindSettings: function() {
@@ -1109,7 +1087,7 @@ Argos.prototype = {
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
     DebugManager.wrapObjectMethods($.Debugger, {
         Argos: Argos,
-        InteligentTooltip: InteligentTooltip
+        IntelligentTooltip: IntelligentTooltip
     });
 
     return new Argos(aMetadata, aOrientation, aPanelHeight, aInstanceId);
