@@ -49,8 +49,6 @@ const BOUND_SETTINGS_ARRAY = [
     "pref_history_timestamp_custom",
     "pref_history_width_to_trigger_word_wrap",
     "pref_yandex_api_keys",
-    "pref_logging_level",
-    "pref_debugger_enabled",
     "pref_loggin_save_history_indented",
     "pref_keep_source_entry_text_selected",
     "pref_informed_about_dependencies",

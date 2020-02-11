@@ -359,7 +359,7 @@ Translator.prototype = {
                     break;
             }
         } catch (aErr) {
-            if (Constants.Settings.pref_debugger_enabled) {
+            if ($.Debugger.debugger_enabled) {
                 global.logError(aErr);
 
                 let data = aResponse[RESPONSE_INDEX_MAP[aDataType]];

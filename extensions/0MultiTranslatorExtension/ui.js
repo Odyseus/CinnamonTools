@@ -52,7 +52,6 @@ const {
 } = imports;
 
 const {
-    _,
     TTS_URI,
     TTS_TEXT_MAX_LEN,
     LNG_CHOOSER_COLUMNS,
@@ -69,15 +68,17 @@ const {
 } = Constants;
 
 const {
+    _,
     CINNAMON_VERSION,
     escapeHTML,
     isBlank,
     getKeybindingDisplayName,
-    versionCompare
+    versionCompare,
+    copyToClipboard
 } = GlobalUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 const {
@@ -1725,7 +1726,6 @@ EntryBase.prototype = {
         } else if (
             control_mask && code === Clutter.KEY_6
         ) { // Ctrl + C - Copy to clipboard the content of the active entry.
-            let clipboard = St.Clipboard.get_default();
             let selection = this._clutter_text.get_selection();
             let text;
 
@@ -1735,11 +1735,7 @@ EntryBase.prototype = {
                 text = this._clutter_text.text;
             }
 
-            if (St.ClipboardType) {
-                clipboard.set_text(St.ClipboardType.CLIPBOARD, text);
-            } else {
-                clipboard.set_text(text);
-            }
+            copyToClipboard(text);
 
             return Clutter.EVENT_STOP;
         } else if (
@@ -1749,7 +1745,7 @@ EntryBase.prototype = {
             this.emit("activate", aEvent);
             return Clutter.EVENT_STOP;
         } else {
-            if (Settings.pref_logging_level !== LoggingLevel.NORMAL) {
+            if ($.Debugger.logging_level !== LoggingLevel.NORMAL) {
                 global.log(JSON.stringify({
                     state: state,
                     symbol: symbol,
@@ -2460,7 +2456,7 @@ DialogPopup.prototype = {
                     _("See the extended help of this extension for more information.");
             }
 
-            item.tooltip = new InteligentTooltip(item.actor, tt_text);
+            item.tooltip = new IntelligentTooltip(item.actor, tt_text);
         }
 
         this.addMenuItem(item);
@@ -2576,7 +2572,7 @@ Spinner.prototype = {
     }
 };
 
-wrapObjectMethods(Settings, {
+wrapObjectMethods($.Debugger, {
     BaseDialog: BaseDialog,
     ButtonsBar: ButtonsBar,
     ButtonsBarButton: ButtonsBarButton,
@@ -2589,7 +2585,7 @@ wrapObjectMethods(Settings, {
     InfoBar: InfoBar,
     InfoBarMessage: InfoBarMessage,
     InfoDialogBase: InfoDialogBase,
-    InteligentTooltip: InteligentTooltip,
+    IntelligentTooltip: IntelligentTooltip,
     LanguageChooser: LanguageChooser,
     MostUsedLangsBox: MostUsedLangsBox,
     SourceEntry: SourceEntry,

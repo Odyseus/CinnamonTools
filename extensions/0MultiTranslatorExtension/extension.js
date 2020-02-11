@@ -267,13 +267,7 @@ MultiTranslator.prototype = {
                     type: C.StatusbarMessageType.ERROR
                 });
             } else {
-                let clipboard = St.Clipboard.get_default();
-
-                if (St.ClipboardType) {
-                    clipboard.set_text(St.ClipboardType.CLIPBOARD, text);
-                } else {
-                    clipboard.set_text(text);
-                }
+                G.copyToClipboard(text);
 
                 this.transDialog.info_bar.add_message({
                     message: G.escapeHTML(_("Translated text copied to clipboard"))
@@ -296,7 +290,7 @@ MultiTranslator.prototype = {
         } else if (symbol === Clutter.KEY_F1) { // F1 - Open quick help dialog.
             this._showHelpDialog();
         } else {
-            if (Settings.pref_logging_level !== D.LoggingLevel.NORMAL) {
+            if ($.Debugger.logging_level !== D.LoggingLevel.NORMAL) {
                 global.log(JSON.stringify({
                     state: state,
                     symbol: symbol,
@@ -809,7 +803,7 @@ MultiTranslator.prototype = {
 
                     this.forceTranslation = shift_mask;
                 } catch (aErr) {
-                    if (Settings.pref_logging_level !== D.LoggingLevel.NORMAL) {
+                    if ($.Debugger.logging_level !== D.LoggingLevel.NORMAL) {
                         global.logError(aErr);
                     }
 
@@ -1175,7 +1169,7 @@ MultiTranslator.prototype = {
 
         let historyEntry = this.transHistory[this._current_target_lang][aSourceText];
 
-        if (Settings.pref_logging_level !== D.LoggingLevel.NORMAL) {
+        if ($.Debugger.logging_level !== D.LoggingLevel.NORMAL) {
             global.log("\n_displayHistory()>historyEntry:\n" + JSON.stringify(historyEntry));
         }
 
@@ -1425,7 +1419,7 @@ function init(aXletMeta) {
 }
 
 function enable() {
-    D.wrapObjectMethods(Settings, {
+    D.wrapObjectMethods($.Debugger, {
         MultiTranslator: MultiTranslator
     });
 

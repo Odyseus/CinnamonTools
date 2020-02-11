@@ -73,6 +73,8 @@ const {
 
 const OutputReader = new SpawnUtils.SpawnReader();
 
+var Debugger = new DebugManager.DebugManager("org.cinnamon.{{XLET_TYPE}}s.{{UUID}}");
+
 let Gst;
 
 try {
@@ -82,7 +84,7 @@ try {
     global.logError(aErr);
 }
 
-wrapObjectMethods(Settings, {
+wrapObjectMethods(Debugger, {
     CustomNotification: CustomNotification,
     LanguagesStats: LanguagesStats,
     TranslateShellBaseTranslator: TranslateShellBaseTranslator,
@@ -97,7 +99,7 @@ Soup.Session.prototype.add_feature.call(
 _httpSession.user_agent = "Mozilla/5.0";
 _httpSession.timeout = 10;
 
-if (Settings.pref_logging_level !== LoggingLevel.NORMAL) {
+if (Debugger.logging_level !== LoggingLevel.NORMAL) {
     const SoupLogger = Soup.Logger.new(Soup.LoggerLogLevel.HEADERS | Soup.LoggerLogLevel.BODY, -1);
 
     Soup.Session.prototype.add_feature.call(
@@ -236,7 +238,7 @@ function getSelection(aCallback) {
 
             aCallback(str);
 
-            if (Settings.pref_logging_level !== LoggingLevel.NORMAL) {
+            if (Debugger.logging_level !== LoggingLevel.NORMAL) {
                 global.log("\ngetSelection()>str:\n" + str);
             }
         }
@@ -249,7 +251,7 @@ function checkDependencies() {
             "--check-dependencies"
         ],
         (aResponse) => {
-            if (Settings.pref_logging_level !== LoggingLevel.NORMAL) {
+            if (Debugger.logging_level !== LoggingLevel.NORMAL) {
                 global.log("\ncheckDependencies()>aResponse:\n" + aResponse);
             }
 
@@ -329,15 +331,15 @@ ProvidersManager.prototype = {
                 translator_module = translators_imports[file_name.slice(0, -3)];
             }
 
-            if (Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE ||
-                Settings.pref_debugger_enabled) {
+            if (Debugger.logging_level === LoggingLevel.VERY_VERBOSE ||
+                Debugger.debugger_enabled) {
                 try {
                     methodWrapper(translator_module.Translator, {
                         /* NOTE: Remove the "_translation_provider.js" part of the file name.
                          */
                         objectName: "Translator(%s)".format(file_name.slice(0, -24)),
-                        verbose: Settings.pref_logging_level === LoggingLevel.VERY_VERBOSE,
-                        debug: Settings.pref_debugger_enabled
+                        verbose: Debugger.logging_level === LoggingLevel.VERY_VERBOSE,
+                        debug: Debugger.debugger_enabled
                     });
                 } catch (aErr) {
                     global.logError(aErr);
