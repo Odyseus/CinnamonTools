@@ -47,7 +47,8 @@ const {
 const {
     _,
     CINNAMON_VERSION,
-    versionCompare
+    versionCompare,
+    xdgOpen
 } = GlobalUtils;
 
 var Debugger = new DebugManager.DebugManager();
@@ -1251,7 +1252,7 @@ AppMenuButtonRightClickMenu.prototype = {
             item = new PopupMenu.PopupIconMenuItem(_("Help"), "dialog-information",
                 St.IconType.SYMBOLIC);
             this._signals.connect(item, "activate", function() {
-                Util.spawn_async(["xdg-open", this._launcher._applet.metadata.path + "/HELP.html"], null);
+                xdgOpen(this._launcher._applet.metadata.path + "/HELP.html");
             }.bind(this));
             subMenu.menu.addMenuItem(item);
 
