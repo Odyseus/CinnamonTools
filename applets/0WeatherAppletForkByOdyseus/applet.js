@@ -85,12 +85,12 @@ const {
     _,
     isBlank,
     escapeHTML,
-    CINNAMON_VERSION,
-    versionCompare
+    xdgOpen,
+    copyToClipboard
 } = GlobalUtils;
 
 const {
-    InteligentTooltip
+    IntelligentTooltip
 } = CustomTooltips;
 
 const {
@@ -190,37 +190,14 @@ Weather.prototype = {
             this.instance_id
         );
 
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+        this._bindSettings();
+        aDirectCallback();
 
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+        Mainloop.idle_add(() => {
+            aIdleCallback();
 
-                return GLib.SOURCE_REMOVE;
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
-        }
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _bindSettings: function() {
@@ -283,18 +260,7 @@ Weather.prototype = {
         let menuItem = new PopupMenu.PopupIconMenuItem(_("Copy current location data"),
             "edit-copy", St.IconType.SYMBOLIC);
         menuItem.connect("activate", () => {
-            let clipboard = St.Clipboard.get_default();
-
-            if (St.ClipboardType) {
-                clipboard.set_text(
-                    St.ClipboardType.CLIPBOARD,
-                    this._getReadableLocationData(false).join("\n")
-                );
-            } else {
-                clipboard.set_text(
-                    this._getReadableLocationData(false).join("\n")
-                );
-            }
+            copyToClipboard(this._getReadableLocationData(false).join("\n"));
         });
         this._applet_context_menu.addMenuItem(menuItem);
 
@@ -408,15 +374,9 @@ Weather.prototype = {
 
         this._connectEnterLeaveEvents(this._errorMessage);
         this._errorMessage.connect("clicked", () => {
-            let clipboard = St.Clipboard.get_default();
-
-            if (St.ClipboardType) {
-                clipboard.set_text(St.ClipboardType.CLIPBOARD, this._errorMessage.label);
-            } else {
-                clipboard.set_text(this._errorMessage.label);
-            }
+            copyToClipboard(this._errorMessage.label);
         });
-        this._errorMessage._tooltip = new InteligentTooltip(
+        this._errorMessage._tooltip = new IntelligentTooltip(
             this._errorMessage,
             _("Click to copy error to clipboard.") + "\n" +
             _("Look at the logs for details.") +
@@ -467,7 +427,7 @@ Weather.prototype = {
                 });
             });
         this._connectEnterLeaveEvents(this._refreshButton);
-        this._refreshButton._tooltip = new InteligentTooltip(
+        this._refreshButton._tooltip = new IntelligentTooltip(
             this._refreshButton,
             _("Click to refresh weather data")
         );
@@ -481,7 +441,7 @@ Weather.prototype = {
         });
         this._poweredButton.connect("clicked", () => {
             this.menu.close();
-            this._xdgOpen(this.weatherProvider.website);
+            xdgOpen(this.weatherProvider.website);
         });
         this._connectEnterLeaveEvents(this._poweredButton);
 
@@ -1147,11 +1107,11 @@ Weather.prototype = {
             this.menu.close();
 
             if (this._currentWeatherLocation.url) {
-                this._xdgOpen(this._currentWeatherLocation.url);
+                xdgOpen(this._currentWeatherLocation.url);
             }
         });
         this._connectEnterLeaveEvents(this._currentWeatherLocation);
-        this._currentWeatherLocation._tooltip = new InteligentTooltip(
+        this._currentWeatherLocation._tooltip = new IntelligentTooltip(
             this._currentWeatherLocation,
             _("Open location weather details page")
         );
@@ -1173,7 +1133,7 @@ Weather.prototype = {
         this._currentWeatherSummary.get_clutter_text().set_line_wrap(true);
         this._currentWeatherSummary.get_clutter_text().set_line_wrap_mode(Pango.WrapMode.WORD_CHAR);
         this._currentWeatherSummary.get_clutter_text().ellipsize = Pango.EllipsizeMode.NONE; // Just in case
-        this._currentWeatherSummary._tooltip = new InteligentTooltip(this._currentWeatherSummary, "");
+        this._currentWeatherSummary._tooltip = new IntelligentTooltip(this._currentWeatherSummary, "");
 
         midleBox.add_actor(this._currentWeatherLocation);
         midleBox.add(this._currentWeatherSummary, {
@@ -1282,7 +1242,7 @@ Weather.prototype = {
                 style_class: CLASS.FORECAST_DAY,
                 reactive: true
             });
-            forecastWeather.Day._tooltip = new InteligentTooltip(forecastWeather.Day, "");
+            forecastWeather.Day._tooltip = new IntelligentTooltip(forecastWeather.Day, "");
 
             // Set reactive to trigger tooltips.
             forecastWeather.Summary = new St.Label({
@@ -1290,7 +1250,7 @@ Weather.prototype = {
                 style_class: CLASS.FORECAST_SUMMARY,
                 reactive: true
             });
-            forecastWeather.Summary._tooltip = new InteligentTooltip(forecastWeather.Summary, "");
+            forecastWeather.Summary._tooltip = new IntelligentTooltip(forecastWeather.Summary, "");
 
             forecastWeather.Temperature = new St.Label({
                 text: Placeholders.LOADING,
@@ -1635,11 +1595,7 @@ Weather.prototype = {
     },
 
     _openHelpPage: function() {
-        this._xdgOpen(this.metadata.path + "/HELP.html");
-    },
-
-    _xdgOpen: function() {
-        Util.spawn_async(["xdg-open"].concat(Array.prototype.slice.call(arguments)), null);
+        xdgOpen(this.metadata.path + "/HELP.html");
     },
 
     _loadTheme: function(aFullReload = false) {
@@ -1796,7 +1752,7 @@ Weather.prototype = {
 
 function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
     DebugManager.wrapObjectMethods($.Debugger, {
-        InteligentTooltip: InteligentTooltip,
+        IntelligentTooltip: IntelligentTooltip,
         Weather: Weather
     });
 

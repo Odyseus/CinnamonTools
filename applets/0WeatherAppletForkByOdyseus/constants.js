@@ -169,7 +169,9 @@ var KnownStatusCodes = {
     408: "(408) " + _("Request timeout"),
     4: "(4) " + _("Unable to connect to remote host"),
     500: "(500) " + _("Internal server error"),
+    502: "(502) " + _("Bad Gateway"),
     503: "(503) " + _("Service unavailable"),
+    504: "(504) " + _("Gateway Timeout"),
     5: "(5) " + _("Unable to connect to proxy"),
     6: "(6) " + _("SSL/TLS negotiation failed"),
     7: "(7) " + _("A network error occurred, or the other end closed the connection unexpectedly")

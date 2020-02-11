@@ -51,7 +51,6 @@ const {
 
 const {
     _,
-    isObject,
     isBlank,
     escapeHTML,
     xdgOpen
@@ -62,6 +61,7 @@ const {
 } = DesktopNotificationsUtils;
 
 var Debugger = new DebugManager.DebugManager();
+var safeGet = GlobalUtils.safeGet;
 
 DebugManager.wrapObjectMethods(Debugger, {
     CustomNotification: CustomNotification,
@@ -666,40 +666,6 @@ CustomPanelItemTooltip.prototype = {
         return label;
     }
 };
-
-/**
- * Safely get values from an Object.
- *
- * So one doesn't have to use hasOwnProperty a gazillion times!!!!
- *
- * @return {Any/null} [description]
- */
-function safeGet() {
-    // All arguments passed to the function.
-    let args = Array.prototype.slice.call(arguments);
-    // Extract the first argument (the object).
-    // After this point, args are all the keys to get
-    // a value from the object.
-    let obj = args.shift();
-    let value = null;
-
-    if (!isObject(obj)) {
-        return null;
-    }
-
-    while (args.length) {
-        let key = args.shift();
-
-        if (isObject(obj) && obj.hasOwnProperty(key)) {
-            value = obj = obj[key];
-        } else {
-            value = obj = null;
-            break;
-        }
-    }
-
-    return value;
-}
 
 function safeGetEll() {
     let val = safeGet.apply(null, arguments);

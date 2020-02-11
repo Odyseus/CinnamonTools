@@ -28,7 +28,7 @@ LOGGING_LEVEL_TOOLTIP = "\n".join([
     _("It enables the ability to log the output of several functions used by the extension."),
     "",
     "%s: %s" % (_("Normal"), _("Only log messages caused by non critical errors.")),
-    "%s: %s" % (_("Verbose"), _("Additinally log extra output messages and all HTTP responses.")),
+    "%s: %s" % (_("Verbose"), _("Additionally log extra output messages and all HTTP responses.")),
     "%s: %s" % (_("Very verbose"), _(
         "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."))
 ])
@@ -143,81 +143,84 @@ GENERAL_TAB = {
         "section-title": _("General"),
         "widgets": [{
             "widget-type": "keybinding",
-            "args": {
-                "pref_key": "pref_overlay_key",
-                "properties": {
-                    "description": _("Keyboard shortcut to open and close the menu"),
-                    "num-bind": 1
-                }
+            "widget-attrs": {
+                "pref_key": "pref_overlay_key"
+            },
+            "widget-kwargs": {
+                "description": _("Keyboard shortcut to open and close the menu"),
+                "num-bind": 1
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_refresh_interval",
-                "properties": {
-                    "description": _("Update weather data interval"),
-                    "min": 30,
-                    "max": 1440,
-                    "units": _("minutes"),
-                    "step": 5
-                }
+            "widget-attrs": {
+                "pref_key": "pref_refresh_interval"
+            },
+            "widget-kwargs": {
+                "description": _("Update weather data interval"),
+                "min": 30,
+                "max": 1440,
+                "units": _("minutes"),
+                "step": 5
             }
         }]
     }, {
         "section-title": _("Units"),
         "widgets": [{
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_temperature_unit",
-                "properties": {
-                    "description": "Temperature unit",
-                    "options": {
-                        "celsius": _("Celsius"),
-                        "fahrenheit": _("Fahrenheit"),
-                        "kelvin": _("Kelvin")
-                    }}
+            "widget-attrs": {
+                "pref_key": "pref_temperature_unit"
+            },
+            "widget-kwargs": {
+                "description": "Temperature unit",
+                "options": {
+                    "celsius": _("Celsius"),
+                    "fahrenheit": _("Fahrenheit"),
+                    "kelvin": _("Kelvin")
+                }
             }
         }, {
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_distance_unit",
-                "properties": {
-                    "description": "Distance unit",
-                    "options": {
-                        "km": _("Kilometers"),
-                        "m": _("Meters"),
-                        "mile": _("Miles")
-                    }}
+            "widget-attrs": {
+                "pref_key": "pref_distance_unit"
+            },
+            "widget-kwargs": {
+                "description": "Distance unit",
+                "options": {
+                    "km": _("Kilometers"),
+                    "m": _("Meters"),
+                    "mile": _("Miles")
+                }
             }
         }, {
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_wind_speed_unit",
-                "properties": {
-                    "description": "Wind speed unit",
-                    "options": {
-                        "kph": _("Kilometers per hour"),
-                        "knot": _("Knots"),
-                        "m/s": _("Meters per second"),
-                        "mph": _("Miles per hour")
-                    }}
+            "widget-attrs": {
+                "pref_key": "pref_wind_speed_unit"
+            },
+            "widget-kwargs": {
+                "description": "Wind speed unit",
+                "options": {
+                    "kph": _("Kilometers per hour"),
+                    "knot": _("Knots"),
+                    "m/s": _("Meters per second"),
+                    "mph": _("Miles per hour")
+                }
             }
         }, {
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_pressure_unit",
-                "properties": {
-                    "description": "Atmospheric pressure unit",
-                    "options": {
-                        "atm": _("Atmospheres"),
-                        "hPa": _("Hectopascals"),
-                        "inHg": _("Inches mercury"),
-                        "kPa": _("Kilopascals"),
-                        "mbar": _("Millibars"),
-                        "mmHg": _("Millimeters mercury"),
-                        "Pa": _("Pascals"),
-                        "psi": _("Pounds per square inch")
-                    }
+            "widget-attrs": {
+                "pref_key": "pref_pressure_unit"
+            },
+            "widget-kwargs": {
+                "description": "Atmospheric pressure unit",
+                "options": {
+                    "atm": _("Atmospheres"),
+                    "hPa": _("Hectopascals"),
+                    "inHg": _("Inches mercury"),
+                    "kPa": _("Kilopascals"),
+                    "mbar": _("Millibars"),
+                    "mmHg": _("Millimeters mercury"),
+                    "Pa": _("Pascals"),
+                    "psi": _("Pounds per square inch")
                 }
             }
         }]
@@ -226,26 +229,26 @@ GENERAL_TAB = {
         "section-notes": [CINN_RESTART],
         "widgets": [{
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_logging_level",
-                "properties": {
-                    "description": _("Logging level") + ASTERISK,
-                    "tooltip": LOGGING_LEVEL_TOOLTIP,
-                    "options": {
-                        0: _("Normal"),
-                        1: _("Verbose"),
-                        2: _("Very verbose")
-                    }
+            "widget-attrs": {
+                "pref_key": "pref_logging_level"
+            },
+            "widget-kwargs": {
+                "description": _("Logging level") + ASTERISK,
+                "tooltip": LOGGING_LEVEL_TOOLTIP,
+                "options": {
+                    0: _("Normal"),
+                    1: _("Verbose"),
+                    2: _("Very verbose")
                 }
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_debugger_enabled",
-                "properties": {
-                    "description": _("Enable debugger") + ASTERISK,
-                    "tooltip": _("It enables the ability to catch all exceptions that under normal use would not be caught.")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_debugger_enabled"
+            },
+            "widget-kwargs": {
+                "description": _("Enable debugger") + ASTERISK,
+                "tooltip": _("It enables the ability to catch all exceptions that under normal use would not be caught.")
             }
         }]
     }]
@@ -257,16 +260,16 @@ LOCATIONS_TAB = {
         "section-title": _("Locations manager"),
         "widgets": [{
             "widget-type": "list",
-            "args": {
+            "widget-attrs": {
                 "pref_key": "pref_locations_storage",
                 "apply_key": "trigger_reload_locations",
-                "imp_exp_path_key": "pref_imp_exp_last_selected_directory",
-                "properties": {
-                    "columns": COLUMNS,
-                    "height": 300,
-                    "move-buttons": False,
-                    "dialog-info-labels": INFO_LABELS
-                }
+                "imp_exp_path_key": "pref_imp_exp_last_selected_directory"
+            },
+            "widget-kwargs": {
+                "columns": COLUMNS,
+                "height": 300,
+                "move-buttons": False,
+                "dialog-info-labels": INFO_LABELS
             }
         }]
     }]
@@ -279,25 +282,25 @@ APPEARANCE_TAB = {
         "section-title": _("General appearance"),
         "widgets": [{
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_icon_theme",
-                "properties": {
-                    "description": _("Icon theme"),
-                    "options": {
-                        "system": _("System"),
-                        "built-in": _("Built-in"),
-                        "custom": _("Custom")
-                    }
+            "widget-attrs": {
+                "pref_key": "pref_icon_theme"
+            },
+            "widget-kwargs": {
+                "description": _("Icon theme"),
+                "options": {
+                    "system": _("System"),
+                    "built-in": _("Built-in"),
+                    "custom": _("Custom")
                 }
             }
         }, {
             "widget-type": "filechooser",
-            "args": {
-                "pref_key": "pref_icon_theme_path_custom",
-                "properties": {
-                    "description": _("Path to custom icon theme"),
-                    "select-dir": True
-                }
+            "widget-attrs": {
+                "pref_key": "pref_icon_theme_path_custom"
+            },
+            "widget-kwargs": {
+                "description": _("Path to custom icon theme"),
+                "select-dir": True
             }
         }]
     }, {
@@ -305,96 +308,96 @@ APPEARANCE_TAB = {
         "section-notes": [CINN_RESTART_MIGHT],
         "widgets": [{
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_menu_theme",
-                "properties": {
-                    "description": _("Menu theme"),
-                    "options": {
-                        "default": _("Default"),
-                        "custom": _("Custom")
-                    }
+            "widget-attrs": {
+                "pref_key": "pref_menu_theme"
+            },
+            "widget-kwargs": {
+                "description": _("Menu theme"),
+                "options": {
+                    "default": _("Default"),
+                    "custom": _("Custom")
                 }
             }
         }, {
             "widget-type": "filechooser",
-            "args": {
-                "pref_key": "pref_menu_theme_path_custom",
-                "properties": {
-                    "description": _("Path to custom style sheet")
+            "widget-attrs": {
+                "pref_key": "pref_menu_theme_path_custom"
+            },
+            "widget-kwargs": {
+                "description": _("Path to custom style sheet")
+            }
+        }, {
+            "widget-type": "combobox",
+            "widget-attrs": {
+                "pref_key": "pref_menu_orientation"
+            },
+            "widget-kwargs": {
+                "description": _("Menu orientation"),
+                "options": {
+                    "horizontal": _("Horizontal"),
+                    "vertical": _("Vertical")
                 }
             }
         }, {
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_menu_orientation",
-                "properties": {
-                    "description": _("Menu orientation"),
-                    "options": {
-                        "horizontal": _("Horizontal"),
-                        "vertical": _("Vertical")
-                    }
-                }
-            }
-        }, {
-            "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_menu_icon_type",
-                "properties": {
-                    "description": _("Menu icon type") + ASTERISK,
-                    "valtype": int,
-                    "options": {
-                        "1": _("Full color"),
-                        "0": _("Symbolic")
-                    }
+            "widget-attrs": {
+                "pref_key": "pref_menu_icon_type"
+            },
+            "widget-kwargs": {
+                "description": _("Menu icon type") + ASTERISK,
+                "valtype": int,
+                "options": {
+                    "1": _("Full color"),
+                    "0": _("Symbolic")
                 }
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_current_weather_icon_size",
-                "properties": {
-                    "description": _("Current weather icon size"),
-                    "min": 16,
-                    "max": 512,
-                    "units": _("pixels"),
-                    "step": 2
-                }
+            "widget-attrs": {
+                "pref_key": "pref_current_weather_icon_size"
+            },
+            "widget-kwargs": {
+                "description": _("Current weather icon size"),
+                "min": 16,
+                "max": 512,
+                "units": _("pixels"),
+                "step": 2
             }
         }, {
             "widget-type": "spinbutton",
-            "args": {
-                "pref_key": "pref_forecasts_icon_size",
-                "properties": {
-                    "description": _("Forecasts icon size"),
-                    "min": 16,
-                    "max": 512,
-                    "units": _("pixels"),
-                    "step": 2
-                }
+            "widget-attrs": {
+                "pref_key": "pref_forecasts_icon_size"
+            },
+            "widget-kwargs": {
+                "description": _("Forecasts icon size"),
+                "min": 16,
+                "max": 512,
+                "units": _("pixels"),
+                "step": 2
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_temperature_high_first",
-                "properties": {
-                    "description": _("Show high temperature first in forecast")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_temperature_high_first"
+            },
+            "widget-kwargs": {
+                "description": _("Show high temperature first in forecast")
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_forecats_display_dates",
-                "properties": {
-                    "description": _("Display forecast dates")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_forecats_display_dates"
+            },
+            "widget-kwargs": {
+                "description": _("Display forecast dates")
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_show_common_sense_hours",
-                "properties": {
-                    "description": _("Display time in 24 hours format")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_show_common_sense_hours"
+            },
+            "widget-kwargs": {
+                "description": _("Display time in 24 hours format")
             }
         }]
     }, {
@@ -402,32 +405,32 @@ APPEARANCE_TAB = {
         "section-notes": [CINN_RESTART_MIGHT],
         "widgets": [{
             "widget-type": "combobox",
-            "args": {
-                "pref_key": "pref_applet_icon_type",
-                "properties": {
-                    "description": _("Applet icon type") + ASTERISK,
-                    "valtype": int,
-                    "options": {
-                        "1": _("Full color"),
-                        "0": _("Symbolic")
-                    }
+            "widget-attrs": {
+                "pref_key": "pref_applet_icon_type"
+            },
+            "widget-kwargs": {
+                "description": _("Applet icon type") + ASTERISK,
+                "valtype": int,
+                "options": {
+                    "1": _("Full color"),
+                    "0": _("Symbolic")
                 }
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_show_current_temperature_in_panel",
-                "properties": {
-                    "description": _("Display current temperature in panel")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_show_current_temperature_in_panel"
+            },
+            "widget-kwargs": {
+                "description": _("Display current temperature in panel")
             }
         }, {
             "widget-type": "switch",
-            "args": {
-                "pref_key": "pref_show_current_condition_in_panel",
-                "properties": {
-                    "description": _("Display weather condition in panel")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_show_current_condition_in_panel"
+            },
+            "widget-kwargs": {
+                "description": _("Display weather condition in panel")
             }
         }]
     }]
@@ -440,60 +443,60 @@ CREDENTIALS_TAB = {
         "section-title": _("Dark Sky"),
         "widgets": [{
             "widget-type": "entry",
-            "args": {
-                "pref_key": "pref_darksky_credential_app_id",
-                "properties": {
-                    "description": _("Secret Key")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_darksky_credential_app_id"
+            },
+            "widget-kwargs": {
+                "description": _("Secret Key")
             }
         }]
     }, {
         "section-title": _("OpenWeatherMap"),
         "widgets": [{
             "widget-type": "entry",
-            "args": {
-                "pref_key": "pref_open_weather_map_credential_app_id",
-                "properties": {
-                    "description": _("API Key")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_open_weather_map_credential_app_id"
+            },
+            "widget-kwargs": {
+                "description": _("API Key")
             }
         }]
     }, {
         "section-title": _("WeatherBit"),
         "widgets": [{
             "widget-type": "entry",
-            "args": {
-                "pref_key": "pref_weatherbit_credential_app_id",
-                "properties": {
-                    "description": _("API Key")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_weatherbit_credential_app_id"
+            },
+            "widget-kwargs": {
+                "description": _("API Key")
             }
         }]
     }, {
         "section-title": _("Yahoo! Weather"),
         "widgets": [{
             "widget-type": "entry",
-            "args": {
-                "pref_key": "pref_yahoo_credential_app_id",
-                "properties": {
-                    "description": _("App ID")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_yahoo_credential_app_id"
+            },
+            "widget-kwargs": {
+                "description": _("App ID")
             }
         }, {
             "widget-type": "entry",
-            "args": {
-                "pref_key": "pref_yahoo_credential_client_id",
-                "properties": {
-                    "description": _("Client ID (Consumer Key)")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_yahoo_credential_client_id"
+            },
+            "widget-kwargs": {
+                "description": _("Client ID (Consumer Key)")
             }
         }, {
             "widget-type": "entry",
-            "args": {
-                "pref_key": "pref_yahoo_credential_client_secret",
-                "properties": {
-                    "description": _("Client Secret (Consumer Secret)")
-                }
+            "widget-attrs": {
+                "pref_key": "pref_yahoo_credential_client_secret"
+            },
+            "widget-kwargs": {
+                "description": _("Client Secret (Consumer Secret)")
             }
         }]
     }]
