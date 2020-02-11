@@ -1,30 +1,70 @@
 #!/usr/bin/python3
-"""I didn't check this up to now. I think that it might be useful if I want
-to use this framework on xlets that make use of gsettings.
+# -*- coding: utf-8 -*-
+"""Slimmed down and functional module to handle gsettings from an xlet settings window.
 
-Notes to future me
-------------------
+Only implemented a limited set of widgets (Switch and ComboBox). I will add more if
+the need arises.
 
-- I already did the modification from Gtk.Box to BaseGrid.
-- Some of the classes in here might not be needed. Like BinFileMonitor,
-    DependencyCheckInstallButton and GSettingsDependencySwitch.
-- At a glance. I don't think that it will be possible to implement the use
-    of some widgets (the "list" widget comes to mind). Look deeper into
-    __setitem__ override.
+It can handle schemas that aren't installed on a system.
+
+Attributes
+----------
+CAN_BACKEND : TYPE
+    Description
+GioSSS : TYPE
+    Description
 """
 from gi.repository import GLib
-from gi.repository import GObject
 from gi.repository import Gio
-from gi.repository import Gtk
 
 from .SettingsWidgets import *  # noqa
-from .common import BaseGrid
-from .common import _
+from .common import sort_combo_options
+
+
+GioSSS = Gio.SettingsSchemaSource
+
+
+# NOTE: JEESH!!! I hate import *!!!
+__all__ = [
+    # NOTE: Defined in this module.
+    "GSettingsComboBox",
+    "GSettingsSwitch"
+]
+
+
+CAN_BACKEND = [
+    "ComboBox",
+    "Switch",
+    # "ColorChooser",
+    # "Entry",
+    # "FileChooser",
+    # "FontButton",
+    # "IconChooser",
+    # "Range",
+    # "SpinButton",
+    # "TextView",
+]
 
 # Monkey patch Gio.Settings object
 
 
 def __setitem__(self, key, value):
+    """Summary
+
+    Parameters
+    ----------
+    key : TYPE
+        Description
+    value : TYPE
+        Description
+
+    Raises
+    ------
+    KeyError
+        Description
+    ValueError
+        Description
+    """
     # set_value() aborts the program on an unknown key
     if key not in self:
         raise KeyError("Unknown key: %r" % (key,))
@@ -56,9 +96,40 @@ def __setitem__(self, key, value):
 
 
 def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
+    """Summary
+
+    Parameters
+    ----------
+    key : TYPE
+        Description
+    widget : TYPE
+        Description
+    prop : TYPE
+        Description
+    flags : TYPE
+        Description
+    key_to_prop : TYPE
+        Description
+    prop_to_key : TYPE
+        Description
+    """
     self._ignore_key_changed = False
 
     def key_changed(settings, key):
+        """Summary
+
+        Parameters
+        ----------
+        settings : TYPE
+            Description
+        key : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         if self._ignore_key_changed:
             return
 
@@ -67,6 +138,20 @@ def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
         self._ignore_prop_changed = False
 
     def prop_changed(widget, param):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        param : TYPE
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
         if self._ignore_prop_changed:
             return
 
@@ -94,176 +179,6 @@ Gio.Settings.bind_with_mapping = bind_with_mapping
 Gio.Settings.__setitem__ = __setitem__
 
 
-class BinFileMonitor(GObject.GObject):
-    __gsignals__ = {
-        "changed": (GObject.SignalFlags.RUN_LAST, None, ()),
-    }
-
-    def __init__(self):
-        super().__init__()
-
-        self.changed_id = 0
-
-        env = GLib.getenv("PATH")
-
-        if env is None:
-            env = "/bin:/usr/bin:."
-
-        self.paths = env.split(":")
-
-        self.monitors = []
-
-        for path in self.paths:
-            file = Gio.File.new_for_path(path)
-            mon = file.monitor_directory(Gio.FileMonitorFlags.SEND_MOVED, None)
-            mon.connect("changed", self.queue_emit_changed)
-            self.monitors.append(mon)
-
-    def _emit_changed(self):
-        self.emit("changed")
-        self.changed_id = 0
-        return False
-
-    def queue_emit_changed(self, file, other, event_type, data=None):
-        if self.changed_id > 0:
-            GLib.source_remove(self.changed_id)
-            self.changed_id = 0
-
-        self.changed_id = GLib.idle_add(self._emit_changed)
-
-
-file_monitor = None
-
-
-def get_file_monitor():
-    global file_monitor
-
-    if file_monitor is None:
-        file_monitor = BinFileMonitor()
-
-    return file_monitor
-
-
-class DependencyCheckInstallButton(BaseGrid):
-    def __init__(self, checking_text, install_button_text, binfiles, final_widget=None, satisfied_cb=None):
-        super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
-
-        self.binfiles = binfiles
-        self.satisfied_cb = satisfied_cb
-
-        self.checking_text = checking_text
-        self.install_button_text = install_button_text
-
-        self.stack = Gtk.Stack()
-        self.attach(self.stack, 0, 0, 1, 1)
-
-        self.progress_bar = Gtk.ProgressBar()
-        self.stack.add_named(self.progress_bar, "progress")
-
-        self.progress_bar.set_show_text(True)
-        self.progress_bar.set_text(self.checking_text)
-
-        self.install_warning = Gtk.Label(install_button_text)
-        frame = Gtk.Frame()
-        frame.add(self.install_warning)
-        frame.set_shadow_type(Gtk.ShadowType.OUT)
-        frame.show_all()
-        self.stack.add_named(frame, "install")
-
-        if final_widget:
-            self.stack.add_named(final_widget, "final")
-        else:
-            self.stack.add_named(Gtk.Alignment(), "final")
-
-        self.stack.set_visible_child_name("progress")
-        self.progress_source_id = 0
-
-        self.file_listener = get_file_monitor()
-        self.file_listener_id = self.file_listener.connect("changed", self.on_file_listener_ping)
-
-        self.connect("destroy", self.on_destroy)
-
-        GLib.idle_add(self.check)
-
-    def check(self):
-        self.start_pulse()
-
-        success = True
-
-        for program in self.binfiles:
-            if not GLib.find_program_in_path(program):
-                success = False
-                break
-
-        GLib.idle_add(self.on_check_complete, success)
-
-        return False
-
-    def pulse_progress(self):
-        self.progress_bar.pulse()
-        return True
-
-    def start_pulse(self):
-        self.cancel_pulse()
-        self.progress_source_id = GLib.timeout_add(200, self.pulse_progress)
-
-    def cancel_pulse(self):
-        if (self.progress_source_id > 0):
-            GLib.source_remove(self.progress_source_id)
-            self.progress_source_id = 0
-
-    def on_check_complete(self, result, data=None):
-        self.cancel_pulse()
-        if result:
-            self.stack.set_visible_child_name("final")
-            if self.satisfied_cb:
-                self.satisfied_cb()
-        else:
-            self.stack.set_visible_child_name("install")
-
-    def on_file_listener_ping(self, monitor, data=None):
-        self.stack.set_visible_child_name("progress")
-        self.progress_bar.set_text(self.checking_text)
-        self.check()
-
-    def on_destroy(self, widget):
-        self.file_listener.disconnect(self.file_listener_id)
-        self.file_listener_id = 0
-
-
-class GSettingsDependencySwitch(SettingsWidget):  # noqa
-    def __init__(self, label, schema=None, key=None, dep_key=None, binfiles=None, packages=None):
-        super().__init__(dep_key=dep_key)
-
-        self.binfiles = binfiles
-        self.packages = packages
-
-        self.content_widget = Gtk.Alignment()
-        self.label = Gtk.Label(label)
-        self.attach(self.label, 0, 0, 1, 1)
-        self.attach(self.content_widget, 0, 1, 1, 1)
-
-        self.switch = Gtk.Switch()
-        self.switch.set_halign(Gtk.Align.END)
-        self.switch.set_valign(Gtk.Align.CENTER)
-
-        pkg_string = ""
-
-        for pkg in packages:
-            if pkg_string != "":
-                pkg_string += ", "
-            pkg_string += pkg
-
-        self.dep_button = DependencyCheckInstallButton(_("Checking dependencies"),
-                                                       _("Please install: %s") % (pkg_string),
-                                                       binfiles,
-                                                       self.switch)
-        self.content_widget.add(self.dep_button)
-
-        if schema:
-            self.settings = self.get_settings(schema)
-            self.settings.bind(key, self.switch, "active", Gio.SettingsBindFlags.DEFAULT)
-
 # This class is not meant to be used directly - it is only a backend for the
 # settings widgets to enable them to bind attributes to gsettings keys. To use
 # the gesttings backend, simply add the "GSettings" prefix to the beginning
@@ -289,10 +204,15 @@ class GSettingsDependencySwitch(SettingsWidget):  # noqa
 #                if the setting is an integer
 
 
-class CSGSettingsBackend(object):
-    def bind_settings(self):
+class GSettingsBackend(object):
+
+    """Summary
+    """
+    def attach_backend(self):
+        """Summary
+        """
         if hasattr(self, "set_rounding"):
-            vtype = self.settings.get_value(self.key).get_type_string()
+            vtype = self.settings.get_value(self.pref_key).get_type_string()
             if vtype in ["i", "u"]:
                 self.set_rounding(0)
 
@@ -303,57 +223,191 @@ class CSGSettingsBackend(object):
 
         if hasattr(self, "map_get") or hasattr(self, "map_set"):
             self.settings.bind_with_mapping(
-                self.key, bind_object, self.bind_prop, self.bind_dir, self.map_get, self.map_set)
+                self.pref_key, bind_object, self.bind_prop, self.bind_dir, self.map_get, self.map_set)
         elif self.bind_dir is not None:
-            self.settings.bind(self.key, bind_object, self.bind_prop, self.bind_dir)
+            self.settings.bind(self.pref_key, bind_object, self.bind_prop, self.bind_dir)
         else:
-            self.settings.connect("changed::" + self.key, self.on_setting_changed)
-            self.settings.bind_writable(self.key, bind_object, "sensitive", False)
+            self.settings.connect("changed::" + self.pref_key, self.on_setting_changed)
+            self.settings.bind_writable(self.pref_key, bind_object, "sensitive", False)
             self.on_setting_changed()
             self.connect_widget_handlers()
 
     def set_value(self, value):
-        self.settings[self.key] = value
+        """Summary
+
+        Parameters
+        ----------
+        value : TYPE
+            Description
+        """
+        self.settings[self.pref_key] = value
 
     def get_value(self):
-        return self.settings[self.key]
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
+        return self.settings[self.pref_key]
 
     def get_range(self):
-        range = self.settings.get_range(self.key)
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
+        range = self.settings.get_range(self.pref_key)
         if range[0] == "range":
             return [range[1][0], range[1][1]]
         else:
             return None
 
     def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Description
+
+        Raises
+        ------
+        NotImplementedError
+            Description
+        """
         raise NotImplementedError("SettingsWidget class must implement on_setting_changed().")
 
     def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Description
+
+        Raises
+        ------
+        NotImplementedError
+            Description
+        """
         if self.bind_dir is None:
             raise NotImplementedError(
                 "SettingsWidget classes with no .bind_dir must implement connect_widget_handlers().")
 
 
+def get_gsettings_schema(schema, xlet_meta):
+    """Summary
+
+    Parameters
+    ----------
+    schema : TYPE
+        Description
+    xlet_meta : TYPE
+        Description
+
+    Returns
+    -------
+    TYPE
+        Description
+
+    Raises
+    ------
+    Exception
+        Description
+    """
+    try:
+        schema_source = GioSSS.new_from_directory(
+            xlet_meta.get("path", "") + "/schemas",
+            GioSSS.get_default(),
+            False
+        )
+    except Exception:
+        schema_source = GioSSS.get_default()
+
+    schema_obj = schema_source.lookup(schema, False)
+
+    if not schema_obj:
+        raise Exception(
+            "Schema '%s' could not be found for xlet '%s'. Please check your installation."
+            % (schema, xlet_meta.get("uuid", ""))
+        )
+
+    return Gio.Settings(settings_schema=schema_obj)
+
+
 def g_settings_factory(subclass):
-    class NewClass(globals()[subclass], CSGSettingsBackend):
-        def __init__(self, label, schema, key, *args, **kwargs):
-            self.key = key
-            if schema not in settings_objects:  # noqa
-                settings_objects[schema] = Gio.Settings.new(schema)  # noqa
-            self.settings = settings_objects[schema]  # noqa
+    """Summary
 
-            if "map_get" in kwargs:
-                self.map_get = kwargs["map_get"]
-                del kwargs["map_get"]
-            if "map_set" in kwargs:
-                self.map_set = kwargs["map_set"]
-                del kwargs["map_set"]
+    Parameters
+    ----------
+    subclass : TYPE
+        Description
+    """
+    class NewClass(globals()[subclass], GSettingsBackend):
 
-            super().__init__(label, *args, **kwargs)
-            self.bind_settings()
+        """Summary
+
+        Attributes
+        ----------
+        pref_key : TYPE
+            Description
+        settings : TYPE
+            Description
+        """
+        def __init__(self, widget_attrs={}, widget_kwargs={}):
+            """Summary
+
+            Parameters
+            ----------
+            widget_attrs : dict, optional
+                Description
+            widget_kwargs : dict, optional
+                Description
+
+            Returns
+            -------
+            TYPE
+                Description
+            """
+            self.pref_key = widget_attrs.get("pref_key")
+            schema = widget_attrs.get("schema", "")
+
+            if schema not in settings_objects:  # noqa | SettingsWidgets
+                settings_objects[schema] = get_gsettings_schema(schema, widget_attrs.get("xlet_meta"))  # noqa | SettingsWidgets
+
+            self.settings = settings_objects[schema]  # noqa | SettingsWidgets
+
+            kwargs = {}
+
+            for k in widget_kwargs:
+                if k in JSON_SETTINGS_PROPERTIES_MAP:  # noqa | SettingsWidgets
+                    kwargs[JSON_SETTINGS_PROPERTIES_MAP[k]] = widget_kwargs[k]  # noqa | SettingsWidgets
+                elif k == "options":
+                    options_list = widget_kwargs[k]
+
+                    # NOTE: Sort both types of options. Otherwise, items will appear in
+                    # different order every single time the widget is re-built.
+                    if isinstance(options_list, dict):
+                        kwargs["options"] = [(a, b) for a, b in options_list.items()]
+                    else:
+                        kwargs["options"] = zip(options_list, options_list)
+
+                    kwargs["options"] = sort_combo_options(
+                        kwargs["options"], widget_kwargs.get("first-option", ""))
+
+            super().__init__(**kwargs)
+            self.attach_backend()
 
     return NewClass
 
 
-for widget in CAN_BACKEND:  # noqa
+for widget in CAN_BACKEND:
     globals()["GSettings" + widget] = g_settings_factory(widget)
+
+
+if __name__ == "__main__":
+    pass

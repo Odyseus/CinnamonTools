@@ -60,43 +60,6 @@ class BaseGrid(Gtk.Grid):
         self.set_row_spacing(row)
 
 
-class InfoLabel(BaseGrid):
-    """Summary
-
-    Attributes
-    ----------
-    content_widget : TYPE
-        Description
-    """
-
-    def __init__(self, label, align=Gtk.Align.START):
-        """Initialization.
-
-        Parameters
-        ----------
-        label : TYPE
-            Description
-        align : TYPE, optional
-            Description
-        """
-        super().__init__()
-        self.set_spacing(5, 5)
-
-        if align == Gtk.Align.END:
-            xalign = 1.0
-            justification = Gtk.Justification.RIGHT
-        elif align == Gtk.Align.CENTER:
-            xalign = 0.5
-            justification = Gtk.Justification.CENTER
-        else:  # START and FILL align left
-            xalign = 0
-            justification = Gtk.Justification.LEFT
-
-        self.content_widget = Gtk.Label(label, halign=align, xalign=xalign, justify=justification)
-        self.content_widget.set_line_wrap(True)
-        self.attach(self.content_widget, 0, 0, 1, 1)
-
-
 def compare_version(version1, version2):
     """Compares two version numbers.
 
@@ -374,6 +337,7 @@ def import_export(parent, type, last_dir):
 
     dialog = Gtk.FileChooserDialog(transient_for=parent.get_toplevel(),
                                    title=string,
+                                   use_header_bar=True,
                                    action=mode,
                                    buttons=btns)
 
@@ -518,6 +482,29 @@ def sort_combo_options(options, first_option=""):
                 break
 
     return only_first + sorted(options, key=itemgetter(1))
+
+
+def get_keybinding_display_name(accel_string):
+    """Summary
+
+    Parameters
+    ----------
+    accel_string : str
+        Description
+
+    Returns
+    -------
+    str
+        Description
+    """
+    text = accel_string
+
+    if accel_string:
+        key, codes, mods = Gtk.accelerator_parse_with_keycode(accel_string)
+        if codes is not None and len(codes) > 0:
+            text = Gtk.accelerator_get_label_with_keycode(None, key, codes[0], mods)
+
+    return text
 
 
 if __name__ == "__main__":

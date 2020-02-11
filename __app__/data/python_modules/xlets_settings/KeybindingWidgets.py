@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Summary
+# -*- coding: utf-8 -*-
+"""Keybinding widgets.
 
 Attributes
 ----------
@@ -15,6 +16,8 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GObject
 from gi.repository import Gdk
 from gi.repository import Gtk
+
+from .common import get_keybinding_display_name
 
 # NOTE: All translatable strings used in this module are available in Cinnamon.
 # Keep it that way.
@@ -359,10 +362,10 @@ class CellRendererKeybinding(Gtk.CellRendererText):
         """Summary
         """
         text = _("unassigned")
+
         if self.accel_string:
-            key, codes, mods = Gtk.accelerator_parse_with_keycode(self.accel_string)
-            if codes is not None and len(codes) > 0:
-                text = Gtk.accelerator_get_label_with_keycode(None, key, codes[0], mods)
+            text = get_keybinding_display_name(self.accel_string)
+
         self.set_property("text", text)
 
     def set_value(self, accel_string=None):
@@ -580,3 +583,7 @@ class CellRendererKeybinding(Gtk.CellRendererText):
             self.accel_editable.remove_widget()
         except Exception:
             pass
+
+
+if __name__ == "__main__":
+    pass

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Summary
+"""Tree list widget.
 
 Attributes
 ----------
@@ -41,6 +41,7 @@ from .SettingsWidgets import _
 from .common import BaseGrid
 from .common import contrast_rgba_color
 from .common import generate_options_from_paths
+from .common import get_keybinding_display_name
 from .common import import_export
 from .common import sort_combo_options
 # from SettingsWidgets import SoundFileChooser
@@ -67,7 +68,7 @@ LIST_VARIABLE_TYPE_MAP = {
     # textview
     "multistring": str,
     # soundfilechooser
-    "sound": str,
+    # "sound": str,
     # entry
     "string": str,
 }
@@ -173,7 +174,7 @@ def list_edit_factory(options, xlet_settings):
             Parameters
             ----------
             **kwargs
-                Description
+                Keyword argumets.
             """
             super().__init__(**kwargs)
 
@@ -260,58 +261,24 @@ class List(SettingsWidget):
 
     Attributes
     ----------
-    add_button : TYPE
-        Description
-    allow_edition : TYPE
-        Description
-    app_window : TYPE
-        Description
-    apply_and_quit : TYPE
-        Description
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    columns : TYPE
-        Description
     content_widget : TYPE
         Description
-    dialog_info_labels : TYPE
-        Description
-    dialog_width : TYPE
-        Description
-    edit_button : TYPE
-        Description
-    export_button : TYPE
-        Description
-    immutable : TYPE
-        Description
-    label : TYPE
+    main_app : TYPE
         Description
     model : TYPE
-        Description
-    move_buttons : TYPE
-        Description
-    move_down_button : TYPE
-        Description
-    move_up_button : TYPE
-        Description
-    remove_button : TYPE
-        Description
-    timer : TYPE
-        Description
-    tooltips_storage : dict
         Description
     """
 
     bind_dir = None
 
-    def __init__(self, label=None, columns=None, immutable={}, dialog_info_labels=None, height=200,
-                 move_buttons=True, dialog_width=450, apply_and_quit=False):
+    def __init__(self, columns=None, immutable={}, dialog_info_labels=None, height=200,
+                 move_buttons=True, multi_select=False, dialog_width=450, apply_and_quit=False):
         """Initialization.
 
         Parameters
         ----------
-        label : None, optional
-            Description
         columns : None, optional
             Description
         immutable : dict, optional
@@ -322,40 +289,47 @@ class List(SettingsWidget):
             Description
         move_buttons : bool, optional
             Description
+        multi_select : bool, optional
+            Description
         dialog_width : int, optional
             Description
         apply_and_quit : bool, optional
             Description
         """
         super().__init__()
-        self.columns = columns
-        self.immutable = immutable
-        self.dialog_info_labels = dialog_info_labels
-        self.move_buttons = move_buttons
-        self.dialog_width = dialog_width
-        self.apply_and_quit = apply_and_quit
+        self.set_spacing(0, 0)
         self.set_hexpand(True)
         self.set_vexpand(True)
-        self.timer = None
-        self.app_window = None
-        self.allow_edition = not self.immutable or \
-            (self.immutable and self.immutable.get("allow_edition", True))
 
-        self.add_button = None
-        self.remove_button = None
-        self.edit_button = None
-        self.move_up_button = None
-        self.move_down_button = None
-        self.export_button = None
+        self.main_app = None
 
-        if label is not None:
-            self.label = Gtk.Label(label)
+        self._columns = columns
+        self._immutable = immutable
+        self._dialog_info_labels = dialog_info_labels
+        self._move_buttons = move_buttons
+        self._dialog_width = dialog_width
+        self._multi_select = multi_select
+        self._apply_and_quit = apply_and_quit
+        self._timer = None
+        self._tooltips_storage = {}
 
-        self.tooltips_storage = {}
+        self._allow_edition = not self._immutable or \
+            (isinstance(self._immutable, dict) and self._immutable.get("allow_edition", True))
+
+        self._add_button = None
+        self._remove_button = None
+        self._edit_button = None
+        self._move_up_button = None
+        self._move_down_button = None
+        self._export_button = None
+
         self.content_widget = Gtk.TreeView()
         self.content_widget.set_grid_lines(Gtk.TreeViewGridLines.BOTH)
 
-        self.content_widget.connect("key-press-event", self.key_press_cb)
+        if self._multi_select:
+            self.content_widget.get_selection().set_mode(Gtk.SelectionMode.MULTIPLE)
+
+        self.content_widget.connect("key-press-event", self._on_key_press_cb)
 
         scrollbox = Gtk.ScrolledWindow()
         scrollbox.set_size_request(-1, height)
@@ -372,7 +346,7 @@ class List(SettingsWidget):
             types.append(LIST_VARIABLE_TYPE_MAP[column_def["type"]])
 
             if column_def.get("tooltip"):
-                self.tooltips_storage[column_def["title"]] = column_def["tooltip"]
+                self._tooltips_storage[column_def["title"]] = column_def["tooltip"]
 
             has_option_map = "options" in column_def and isinstance(column_def["options"], dict)
             render_type = "string" if has_option_map else column_def["type"]
@@ -393,7 +367,7 @@ class List(SettingsWidget):
                         Description
                     """
                     self.model[path][col] = not self.model[path][col]
-                    self.list_changed(path)
+                    self._list_changed()
 
                 renderer.connect("toggled", toggle_checkbox, i)
                 prop_name = "active"
@@ -448,7 +422,7 @@ class List(SettingsWidget):
                         val = val.replace(",", "").replace(".", "")
 
                     self.model[path][data["col_index"]] = num_parser(val)
-                    self.list_changed(path)
+                    self._list_changed()
 
                 renderer.connect("edited", edit_spin, {
                     "col_index": i,
@@ -486,11 +460,13 @@ class List(SettingsWidget):
                         Description
                     """
                     value = model[row_iter][data["col_index"]]
-                    bg_rgba = Gdk.RGBA()
-                    bg_rgba.parse(value)
-                    fg_rgba = contrast_rgba_color(bg_rgba)
-                    rend.set_property("background-rgba", bg_rgba)
-                    rend.set_property("foreground-rgba", fg_rgba)
+
+                    if value is not None:
+                        bg_rgba = Gdk.RGBA()
+                        bg_rgba.parse(value)
+                        fg_rgba = contrast_rgba_color(bg_rgba)
+                        rend.set_property("background-rgba", bg_rgba)
+                        rend.set_property("foreground-rgba", fg_rgba)
 
                 column.set_cell_data_func(renderer, set_color_func, {
                     "col_index": i
@@ -559,7 +535,7 @@ class List(SettingsWidget):
                             if kb and val == opt:
                                 rend.set_property(
                                     "text",
-                                    self.get_keybinding_display_name(kb) + "::" + key
+                                    get_keybinding_display_name(kb) + "::" + key
                                 )
                                 break
                             else:
@@ -597,7 +573,7 @@ class List(SettingsWidget):
                         value = model[row_iter][data["col_index"]]
 
                         if value:
-                            kbs = map(lambda e: self.get_keybinding_display_name(
+                            kbs = map(lambda e: get_keybinding_display_name(
                                 e), value.split("::"))
                             rend.set_property(
                                 "text",
@@ -618,7 +594,7 @@ class List(SettingsWidget):
             column.set_resizable(True)
             self.content_widget.append_column(column)
 
-        if len(self.tooltips_storage) > 0:
+        if len(self._tooltips_storage) > 0:
             self.content_widget.props.has_tooltip = True
             self.content_widget.connect("query-tooltip", self.query_tooltip_cb)
 
@@ -626,7 +602,7 @@ class List(SettingsWidget):
         self.content_widget.set_model(self.model)
 
         button_toolbar = Gtk.Toolbar()
-        button_toolbar.set_icon_size(1)
+        button_toolbar.set_icon_size(Gtk.IconSize.MENU)
         button_toolbar.set_halign(Gtk.Align.FILL)
         button_toolbar.set_hexpand(True)
         button_toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
@@ -641,65 +617,65 @@ class List(SettingsWidget):
 
         button_position = 0
 
-        if not self.immutable:
-            self.add_button = Gtk.ToolButton(None, None)
-            self.add_button.set_icon_name("list-add-symbolic")
-            self.add_button.set_tooltip_text(_("Add new item"))
-            self.add_button.connect("clicked", self.add_item)
+        if not self._immutable:
+            self._add_button = Gtk.ToolButton(None, None)
+            self._add_button.set_icon_name("list-add-symbolic")
+            self._add_button.set_tooltip_text(_("Add new item"))
+            self._add_button.connect("clicked", self._add_item)
 
-            buttons_box.attach(self.add_button, button_position, 0, 1, 1)
+            buttons_box.attach(self._add_button, button_position, 0, 1, 1)
             button_position += 1
 
-            self.remove_button = Gtk.ToolButton(None, None)
-            self.remove_button.set_icon_name("list-remove-symbolic")
-            self.remove_button.set_tooltip_text(_("Remove selected item"))
+            self._remove_button = Gtk.ToolButton(None, None)
+            self._remove_button.set_icon_name("list-remove-symbolic")
+            self._remove_button.set_tooltip_text(_("Remove selected item"))
             # NOTE: Using button-release-event to be able to catch events.
             # clicked event doesn't pass the event. ¬¬
-            self.remove_button.connect("button-release-event", self.remove_item_cb)
-            self.remove_button.set_sensitive(False)
+            self._remove_button.connect("button-release-event", self._on_remove_item_cb)
+            self._remove_button.set_sensitive(False)
 
-            buttons_box.attach(self.remove_button, button_position, 0, 1, 1)
+            buttons_box.attach(self._remove_button, button_position, 0, 1, 1)
             button_position += 1
 
-        if self.allow_edition:
-            self.edit_button = Gtk.ToolButton(None, None)
-            self.edit_button.set_icon_name("view-list-symbolic")
-            self.edit_button.set_tooltip_text(_("Edit selected item"))
-            self.edit_button.connect("clicked", self.edit_item)
-            self.edit_button.set_sensitive(False)
+        if self._allow_edition:
+            self._edit_button = Gtk.ToolButton(None, None)
+            self._edit_button.set_icon_name("view-list-symbolic")
+            self._edit_button.set_tooltip_text(_("Edit selected item"))
+            self._edit_button.connect("clicked", self._edit_item)
+            self._edit_button.set_sensitive(False)
 
-            buttons_box.attach(self.edit_button, button_position, 0, 1, 1)
+            buttons_box.attach(self._edit_button, button_position, 0, 1, 1)
             button_position += 1
 
-        if self.move_buttons:
-            self.move_up_button = Gtk.ToolButton(None, None)
-            self.move_up_button.set_icon_name("go-up-symbolic")
-            self.move_up_button.set_tooltip_text(_("Move selected item up"))
-            self.move_up_button.connect("clicked", self.move_item_up)
-            self.move_up_button.set_sensitive(False)
-            buttons_box.attach(self.move_up_button, button_position, 0, 1, 1)
+        if self._move_buttons:
+            self._move_up_button = Gtk.ToolButton(None, None)
+            self._move_up_button.set_icon_name("go-up-symbolic")
+            self._move_up_button.set_tooltip_text(_("Move selected item up"))
+            self._move_up_button.connect("clicked", self._move_item_up)
+            self._move_up_button.set_sensitive(False)
+            buttons_box.attach(self._move_up_button, button_position, 0, 1, 1)
             button_position += 1
 
-            self.move_down_button = Gtk.ToolButton(None, None)
-            self.move_down_button.set_icon_name("go-down-symbolic")
-            self.move_down_button.set_tooltip_text(_("Move selected item down"))
-            self.move_down_button.connect("clicked", self.move_item_down)
-            self.move_down_button.set_sensitive(False)
-            buttons_box.attach(self.move_down_button, button_position, 0, 1, 1)
+            self._move_down_button = Gtk.ToolButton(None, None)
+            self._move_down_button.set_icon_name("go-down-symbolic")
+            self._move_down_button.set_tooltip_text(_("Move selected item down"))
+            self._move_down_button.connect("clicked", self._move_item_down)
+            self._move_down_button.set_sensitive(False)
+            buttons_box.attach(self._move_down_button, button_position, 0, 1, 1)
             button_position += 1
 
         if self.imp_exp_path_key:
-            self.export_button = Gtk.ToolButton(None, None)
+            self._export_button = Gtk.ToolButton(None, None)
 
             if Gtk.IconTheme.get_default().has_icon("document-export-symbolic"):
-                self.export_button.set_icon_name("document-export-symbolic")
+                self._export_button.set_icon_name("document-export-symbolic")
             else:
-                self.export_button.set_icon_name("custom-export-data-symbolic")
+                self._export_button.set_icon_name("custom-export-data-symbolic")
 
-            self.export_button.set_tooltip_text(_("Export data"))
-            self.export_button.connect("clicked", self.export_data)
-            self.export_button.set_sensitive(False)
-            buttons_box.attach(self.export_button, button_position, 0, 1, 1)
+            self._export_button.set_tooltip_text(_("Export data"))
+            self._export_button.connect("clicked", self._export_data)
+            self._export_button.set_sensitive(False)
+            buttons_box.attach(self._export_button, button_position, 0, 1, 1)
             button_position += 1
 
             import_button = Gtk.ToolButton(None, None)
@@ -710,7 +686,7 @@ class List(SettingsWidget):
                 import_button.set_icon_name("custom-import-data-symbolic")
 
             import_button.set_tooltip_text(_("Import data"))
-            import_button.connect("clicked", self.import_data)
+            import_button.connect("clicked", self._import_data)
             buttons_box.attach(import_button, button_position, 0, 1, 1)
             button_position += 1
 
@@ -718,35 +694,13 @@ class List(SettingsWidget):
             apply_button = Gtk.ToolButton(None, None)
             apply_button.set_icon_name("document-save-symbolic")
             apply_button.set_tooltip_text(_("Apply changes"))
-            apply_button.connect("clicked", self.apply_changes)
+            apply_button.connect("clicked", self._apply_changes)
             buttons_box.attach(apply_button, button_position, 0, 1, 1)
 
-        self.content_widget.get_selection().connect("changed", self.update_button_sensitivity)
+        self.content_widget.get_selection().connect("changed", self._update_button_sensitivity)
         self.content_widget.set_activate_on_single_click(False)
-        self.content_widget.connect("row-activated", self.on_row_activated)
-        self.update_button_sensitivity()
-
-    def get_keybinding_display_name(self, accel_string):
-        """Summary
-
-        Parameters
-        ----------
-        accel_string : TYPE
-            Description
-
-        Returns
-        -------
-        TYPE
-            Description
-        """
-        text = ""
-
-        if accel_string:
-            key, codes, mods = Gtk.accelerator_parse_with_keycode(accel_string)
-            if codes is not None and len(codes) > 0:
-                text = Gtk.accelerator_get_label_with_keycode(None, key, codes[0], mods)
-
-        return text
+        self.content_widget.connect("row-activated", self._on_row_activated)
+        self._update_button_sensitivity()
 
     def query_tooltip_cb(self, widget, x, y, keyboard_tip, tooltip):
         """Summary
@@ -780,14 +734,14 @@ class List(SettingsWidget):
         except Exception:
             return False
         else:
-            if self.tooltips_storage.get(col_title):
-                tooltip.set_text(self.tooltips_storage.get(col_title))
+            if self._tooltips_storage.get(col_title):
+                tooltip.set_text(self._tooltips_storage.get(col_title))
                 widget.set_tooltip_cell(tooltip, ctx.path, col, None)
                 return True
 
             return False
 
-    def key_press_cb(self, widget, event):
+    def _on_key_press_cb(self, widget, event):
         """Summary
 
         Parameters
@@ -806,28 +760,28 @@ class List(SettingsWidget):
         ctrl = state == Gdk.ModifierType.CONTROL_MASK
         symbol, keyval = event.get_keyval()
 
-        if not self.immutable and symbol and keyval == Gdk.KEY_Delete:
-            self.remove_item_cb(None, event)
+        if not self._immutable and symbol and keyval == Gdk.KEY_Delete:
+            self._on_remove_item_cb(None, event)
             return True
-        elif not self.immutable and ctrl and symbol and (keyval == Gdk.KEY_N or keyval == Gdk.KEY_n):
-            self.add_item()
+        elif not self._immutable and ctrl and symbol and (keyval == Gdk.KEY_N or keyval == Gdk.KEY_n):
+            self._add_item()
             return True
-        elif self.move_buttons and ctrl and symbol and keyval == Gdk.KEY_Up:
-            self.move_item_up()
+        elif self._move_buttons and ctrl and symbol and keyval == Gdk.KEY_Up:
+            self._move_item_up()
             return True
-        elif self.move_buttons and ctrl and symbol and keyval == Gdk.KEY_Down:
-            self.move_item_down()
+        elif self._move_buttons and ctrl and symbol and keyval == Gdk.KEY_Down:
+            self._move_item_down()
             return True
-        elif self.move_buttons and ctrl and symbol and keyval == Gdk.KEY_Page_Up:
-            self.move_item_to_first_position()
+        elif self._move_buttons and ctrl and symbol and keyval == Gdk.KEY_Page_Up:
+            self._move_item_to_first_position()
             return True
-        elif self.move_buttons and ctrl and symbol and keyval == Gdk.KEY_Page_Down:
-            self.move_item_to_last_position()
+        elif self._move_buttons and ctrl and symbol and keyval == Gdk.KEY_Page_Down:
+            self._move_item_to_last_position()
             return True
 
         return False
 
-    def update_button_sensitivity(self, *args):
+    def _update_button_sensitivity(self, *args):
         """Summary
 
         Parameters
@@ -835,38 +789,47 @@ class List(SettingsWidget):
         *args
             Arguments.
         """
-        model, selected = self.content_widget.get_selection().get_selected()
+        paths = []
+        selected = None
 
-        if self.remove_button is not None:
+        if self._multi_select:
+            model, paths = self.content_widget.get_selection().get_selected_rows()
+            selected = None if len(paths) == 0 else model.get_iter(paths[0])
+        else:
+            model, selected = self.content_widget.get_selection().get_selected()
+
+        if self._remove_button is not None:
             if selected is None:
-                self.remove_button.set_sensitive(False)
+                self._remove_button.set_sensitive(False)
             else:
-                self.remove_button.set_sensitive(True)
+                self._remove_button.set_sensitive(True)
 
-        if self.edit_button:
-            if selected is None:
-                self.edit_button.set_sensitive(False)
+        if self._edit_button:
+            if selected is None or len(paths) > 1:
+                self._edit_button.set_sensitive(False)
             else:
-                self.edit_button.set_sensitive(True)
+                self._edit_button.set_sensitive(True)
 
-        if self.move_buttons:
-            if selected is None or model.iter_previous(selected) is None:
-                self.move_up_button.set_sensitive(False)
+        if self._move_buttons:
+            if selected is None or (self._multi_select and len(paths) > 1) or \
+                    model.iter_previous(selected) is None:
+                self._move_up_button.set_sensitive(False)
             else:
-                self.move_up_button.set_sensitive(True)
+                self._move_up_button.set_sensitive(True)
 
-            if selected is None or model.iter_next(selected) is None:
-                self.move_down_button.set_sensitive(False)
+            if selected is None or (self._multi_select and len(paths) > 1) or \
+                    model.iter_next(selected) is None:
+                self._move_down_button.set_sensitive(False)
             else:
-                self.move_down_button.set_sensitive(True)
+                self._move_down_button.set_sensitive(True)
 
-        if self.export_button is not None:
+        if self._export_button is not None:
             if len(self.settings.get_value(self.pref_key)) == 0:
-                self.export_button.set_sensitive(False)
+                self._export_button.set_sensitive(False)
             else:
-                self.export_button.set_sensitive(True)
+                self._export_button.set_sensitive(True)
 
-    def on_row_activated(self, *args):
+    def _on_row_activated(self, *args):
         """Summary
 
         Parameters
@@ -874,10 +837,10 @@ class List(SettingsWidget):
         *args
             Arguments.
         """
-        if self.allow_edition:
-            self.edit_item()
+        if self._allow_edition:
+            self._edit_item()
 
-    def add_item(self, *args):
+    def _add_item(self, *args):
         """Summary
 
         Parameters
@@ -885,12 +848,13 @@ class List(SettingsWidget):
         *args
             Arguments.
         """
-        data = self.open_add_edit_dialog()
+        data = self._open_add_edit_dialog()
+
         if data is not None:
             self.model.append(data)
-            self.list_changed()
+            self._list_changed()
 
-    def remove_item_cb(self, widget, event):
+    def _on_remove_item_cb(self, widget, event):
         """Summary
 
         Parameters
@@ -917,7 +881,7 @@ class List(SettingsWidget):
             dialog.set_title(_("Item removal"))
 
             esc = escape(
-                _("Are you sure that you want to remove this item?"))
+                _("Are you sure that you want to remove the selected items?"))
             esc += "\n\n<b>%s</b>: %s" % (escape(_("Note")),
                                           escape(_("Press and hold Control key to remove items without confirmation.")))
             dialog.set_markup(esc)
@@ -926,36 +890,29 @@ class List(SettingsWidget):
             dialog.destroy()
 
             if response == Gtk.ResponseType.YES:
-                self.remove_item()
+                self._remove_item()
 
             return None
         else:
-            self.remove_item()
+            self._remove_item()
 
-    def remove_item(self):
+    def _remove_item(self):
         """Summary
         """
-        model, t_iter = self.content_widget.get_selection().get_selected()
-        path = model.get_path(t_iter)
-        model.remove(t_iter)
-        self.list_changed(path)
+        if self._multi_select:
+            model, paths = self.content_widget.get_selection().get_selected_rows()
 
-    def edit_item(self, *args):
-        """Summary
+            for path in reversed(paths):
+                t_iter = model.get_iter(path)
+                model.remove(t_iter)
+                self._list_changed()
+        else:
+            model, t_iter = self.content_widget.get_selection().get_selected()
+            path = model.get_path(t_iter)
+            model.remove(t_iter)
+            self._list_changed()
 
-        Parameters
-        ----------
-        *args
-            Arguments.
-        """
-        model, t_iter = self.content_widget.get_selection().get_selected()
-        data = self.open_add_edit_dialog(model[t_iter])
-        if data is not None:
-            for i in range(len(data)):
-                self.model[t_iter][i] = data[i]
-            self.list_changed(model.get_path(t_iter))
-
-    def move_item_up(self, *args):
+    def _edit_item(self, *args):
         """Summary
 
         Parameters
@@ -963,11 +920,30 @@ class List(SettingsWidget):
         *args
             Arguments.
         """
-        model, t_iter = self.content_widget.get_selection().get_selected()
-        model.swap(t_iter, model.iter_previous(t_iter))
-        self.list_changed(model.get_path(t_iter))
+        if self._multi_select:
+            model, paths = self.content_widget.get_selection().get_selected_rows()
 
-    def move_item_to_first_position(self, *args):
+            if paths:
+                path = paths[0]
+                t_iter = model.get_iter(path)
+                data = self._open_add_edit_dialog(model[t_iter])
+
+                if data is not None:
+                    for i in range(len(data)):
+                        self.model[t_iter][i] = data[i]
+
+                    self._list_changed()
+        else:
+            model, t_iter = self.content_widget.get_selection().get_selected()
+            data = self._open_add_edit_dialog(model[t_iter])
+
+            if data is not None:
+                for i in range(len(data)):
+                    self.model[t_iter][i] = data[i]
+
+                self._list_changed()
+
+    def _move_item_up(self, *args):
         """Summary
 
         Parameters
@@ -975,11 +951,19 @@ class List(SettingsWidget):
         *args
             Arguments.
         """
-        model, t_iter = self.content_widget.get_selection().get_selected()
-        model.move_after(t_iter, None)
-        self.list_changed(model.get_path(t_iter))
+        if self._multi_select:
+            model, paths = self.content_widget.get_selection().get_selected_rows()
 
-    def move_item_down(self, *args):
+            if paths and len(paths) == 1:
+                t_iter = model.get_iter(paths[0])
+                model.swap(t_iter, model.iter_previous(t_iter))
+                self._list_changed()
+        else:
+            model, t_iter = self.content_widget.get_selection().get_selected()
+            model.swap(t_iter, model.iter_previous(t_iter))
+            self._list_changed()
+
+    def _move_item_to_first_position(self, *args):
         """Summary
 
         Parameters
@@ -987,11 +971,18 @@ class List(SettingsWidget):
         *args
             Arguments.
         """
-        model, t_iter = self.content_widget.get_selection().get_selected()
-        model.swap(t_iter, model.iter_next(t_iter))
-        self.list_changed(model.get_path(t_iter))
+        if self._multi_select:
+            model, paths = self.content_widget.get_selection().get_selected_rows()
 
-    def move_item_to_last_position(self, *args):
+            if paths and len(paths) == 1:
+                model.move_after(model.get_iter(paths[0]), None)
+                self._list_changed()
+        else:
+            model, t_iter = self.content_widget.get_selection().get_selected()
+            model.move_after(t_iter, None)
+            self._list_changed()
+
+    def _move_item_down(self, *args):
         """Summary
 
         Parameters
@@ -999,11 +990,38 @@ class List(SettingsWidget):
         *args
             Arguments.
         """
-        model, t_iter = self.content_widget.get_selection().get_selected()
-        model.move_before(t_iter, None)
-        self.list_changed(model.get_path(t_iter))
+        if self._multi_select:
+            model, paths = self.content_widget.get_selection().get_selected_rows()
 
-    def export_data(self, *args):
+            if paths and len(paths) == 1:
+                t_iter = model.get_iter(paths[0])
+                model.swap(t_iter, model.iter_next(t_iter))
+                self._list_changed()
+        else:
+            model, t_iter = self.content_widget.get_selection().get_selected()
+            model.swap(t_iter, model.iter_next(t_iter))
+            self._list_changed()
+
+    def _move_item_to_last_position(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        if self._multi_select:
+            model, paths = self.content_widget.get_selection().get_selected_rows()
+
+            if paths and len(paths) == 1:
+                model.move_before(model.get_iter(paths[0]), None)
+                self._list_changed()
+        else:
+            model, t_iter = self.content_widget.get_selection().get_selected()
+            model.move_before(t_iter, None)
+            self._list_changed()
+
+    def _export_data(self, *args):
         """Summary
 
         Parameters
@@ -1029,7 +1047,7 @@ class List(SettingsWidget):
                 self.settings.set_value(self.imp_exp_path_key,
                                         os.path.dirname(filepath))
 
-    def import_data(self, *args):
+    def _import_data(self, *args):
         """Summary
 
         Parameters
@@ -1061,17 +1079,20 @@ class List(SettingsWidget):
         if filepath:
             dialog = Gtk.Dialog(
                 transient_for=self.get_toplevel(),
-                title=_("Choose how to add the imported data"),
-                flags=Gtk.DialogFlags.MODAL,
+                title=_("Import data"),
+                flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                use_header_bar=True,
                 buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
                          _("_Overwrite"), Gtk.ResponseType.OK,
                          _("_Append"), Gtk.ResponseType.YES)
             )
 
+            dialog.set_default_response(Gtk.ResponseType.CANCEL)
+            dialog.set_size_request(500, -1)
             buttons_box = dialog.get_action_area()
             buttons_box.set_property("halign", Gtk.Align.CENTER)
 
-            # Make OK button the default.
+            # Make Cancel button the default.
             # https://stackoverflow.com/q/23983975
             cancel_button = dialog.get_widget_for_response(response_id=Gtk.ResponseType.CANCEL)
             cancel_button.set_can_default(True)
@@ -1123,7 +1144,7 @@ class List(SettingsWidget):
             else:
                 raise Exception("Wrong data type found on file %s" % filepath)
 
-    def apply_changes(self, *args):
+    def _apply_changes(self, *args):
         """Summary
 
         Parameters
@@ -1132,7 +1153,7 @@ class List(SettingsWidget):
             Arguments.
         """
         # NOTE: The setting controlled by this widget (List) is saved in real time.
-        # This apply_changes function simply toggles a setting that can have a
+        # This _apply_changes function simply toggles a setting that can have a
         # callback attached (on the JavaScript side) so it can be triggered on demand
         # when the Apply changes button is pressed and not every time the data in the
         # widget is modified.
@@ -1141,11 +1162,12 @@ class List(SettingsWidget):
         self.settings.set_value(self.apply_key,
                                 not self.settings.get_value(self.apply_key))
 
-        if self.apply_and_quit and self.app_window is not None and \
-                isinstance(self.app_window, Gtk.ApplicationWindow):
-            self.app_window.emit("destroy")
+        if self.main_app is not None:
+            if self._apply_and_quit and self.main_app.window is not None and \
+                    isinstance(self.main_app.window, Gtk.ApplicationWindow):
+                self.main_app.window.emit("destroy")
 
-    def open_add_edit_dialog(self, info=None):
+    def _open_add_edit_dialog(self, info=None):
         """Summary
 
         Parameters
@@ -1166,7 +1188,7 @@ class List(SettingsWidget):
         dialog = Gtk.Dialog(transient_for=self.get_toplevel(),
                             use_header_bar=True,
                             title=title,
-                            flags=Gtk.DialogFlags.MODAL,
+                            flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                             buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
                                      _("_Save"), Gtk.ResponseType.OK)
                             )
@@ -1177,7 +1199,7 @@ class List(SettingsWidget):
         ok_button.set_can_default(True)
         ok_button.grab_default()
 
-        dialog.set_size_request(width=self.dialog_width, height=-1)
+        dialog.set_size_request(width=self._dialog_width, height=-1)
         content_area = dialog.get_content_area()
         content_area.set_border_width(5)
 
@@ -1192,22 +1214,33 @@ class List(SettingsWidget):
         widgets = []
         last_widget_pos = 0
 
-        for i in range(len(self.columns)):
+        for i in range(len(self._columns)):
             if len(widgets) != 0:
                 content.add(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
 
             settings_box = Gtk.ListBox()
             settings_box.set_selection_mode(Gtk.SelectionMode.NONE)
 
-            widget = list_edit_factory(self.columns[i], self.settings)
+            widget = list_edit_factory(self._columns[i], self.settings)
             widget.set_border_width(5)
 
-            if isinstance(self.immutable, dict):
-                widget.set_sensitive(self.columns[i]["id"]
-                                     not in self.immutable.get("read_only_keys", []))
+            if isinstance(self._immutable, dict):
+                widget.set_sensitive(self._columns[i]["id"]
+                                     not in self._immutable.get("read_only_keys", []))
 
             if isinstance(widget, (Switch, ColorChooser)):
                 settings_box.connect("row-activated", widget.clicked)
+
+            # NOTE: I was forced to use this condition because it was impossible for
+            # the content of the TextView to be edited. It was necessary to triple
+            # click it to gain access to it or being focused with keyboard navigation.
+            # With this callback set to the settings_box, the TextView content can directly
+            # be accessed with a single click.
+            if isinstance(widget, TextView):
+                settings_box.connect("row-activated", widget.focus_the_retarded_text_view)
+
+            if isinstance(widget, IconChooser):
+                widget.main_app = self.main_app
 
             widgets.append(widget)
             content.attach(settings_box, 0, i, 1, 1)
@@ -1215,13 +1248,13 @@ class List(SettingsWidget):
 
             if info is not None and info[i] is not None:
                 widget.set_widget_value(info[i])
-            elif "default" in self.columns[i]:
-                widget.set_widget_value(self.columns[i]["default"])
+            elif "default" in self._columns[i]:
+                widget.set_widget_value(self._columns[i]["default"])
 
             last_widget_pos += 1
 
-        if self.dialog_info_labels:
-            for label in self.dialog_info_labels:
+        if self._dialog_info_labels:
+            for label in self._dialog_info_labels:
                 content.add(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
 
                 info_label = Text(label, use_markup=True)
@@ -1247,31 +1280,20 @@ class List(SettingsWidget):
         dialog.destroy()
         return None
 
-    def list_changed(self, path=None):
+    def _list_changed(self):
         """Summary
-
-        Parameters
-        ----------
-        path : None, optional
-            Description
         """
         data = []
         for row in self.model:
             i = 0
             row_info = {}
-            for column in self.columns:
+            for column in self._columns:
                 row_info[column["id"]] = row[i]
                 i += 1
             data.append(row_info)
 
         self.set_value(data)
-        self.update_button_sensitivity()
-
-        if path:
-            try:
-                self.content_widget.get_selection().select_path(path)
-            except Exception:
-                pass
+        self._update_button_sensitivity()
 
     def on_setting_changed(self, *args):
         """Summary
@@ -1285,7 +1307,7 @@ class List(SettingsWidget):
         rows = self.get_value()
         for row in rows:
             row_info = []
-            for column in self.columns:
+            for column in self._columns:
                 cid = column["id"]
                 if cid in row:
                     row_info.append(row[column["id"]])

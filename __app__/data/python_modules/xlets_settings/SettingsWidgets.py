@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Summary
+"""Settings widgets.
 
 Attributes
 ----------
 CAN_BACKEND : TYPE
+    Description
+JSON_SETTINGS_PROPERTIES_MAP : TYPE
+    Description
+settings_objects : dict
     Description
 """
 import gi
@@ -21,12 +25,16 @@ from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import Pango
 
+from .IconChooserWidgets import IconChooserDialog
 from .KeybindingWidgets import ButtonKeybinding
 from .common import BaseGrid
 from .common import _
 from .common import display_message_dialog
 
+# NOTE: JEESH!!! I hate import *!!!
 __all__ = [
+    "settings_objects",
+    "JSON_SETTINGS_PROPERTIES_MAP",
     "Button",
     "CAN_BACKEND",
     "ColorChooser",
@@ -36,7 +44,7 @@ __all__ = [
     "IconChooser",
     "Keybinding",
     "KeybindingWithOptions",
-    "SectionContainer",
+    "SettingsSection",
     "SettingsLabel",
     "SettingsPage",
     "SettingsRevealer",
@@ -45,9 +53,80 @@ __all__ = [
     "SpinButton",
     "Switch",
     "Text",
-    "TextView",
+    "TextView"
+    # "DateChooser",
+    # "EffectChooser",
+    # "FontButton",
+    # "Range",
+    # "SoundFileChooser",
+    # "TweenChooser"
 ]
 
+
+JSON_SETTINGS_PROPERTIES_MAP = {
+    # All widgets.
+    "description": "label",
+    # spinbutton: Minimum value.
+    "min": "mini",
+    # spinbutton: Maximum value.
+    "max": "maxi",
+    # spinbutton: Adjustment amount.
+    "step": "step",
+    # spinbutton: Adjustment amount when using the Page Up/Down keys.
+    "page": "page",
+    # spinbutton: How many digits to handle.
+    "digits": "digits",
+    # spinbutton: Unit type description.
+    "units": "units",
+    # scale: Show value on the widget.
+    "show-value": "show_value",
+    # filechooser: If true, enable folder selection of the file chooser. If false,
+    # enable file selection.
+    "select-dir": "dir_select",
+    # textview: The height of the textview.
+    "height": "height",
+    # All widgets.
+    "tooltip": "tooltip",
+    # possible: List of effect name.
+    "possible": "possible",
+    # entry and iconfilechooser: If true, expand the widget to all available space.
+    "expand-width": "expand_width",
+    # list: Columns definition.
+    "columns": "columns",
+    # soundfilechooser: If True, only wav and ogg sound files will be filtered in
+    # the file chooser dialog. If set to False, all sound files will be displayed.
+    "event-sounds": "event_sounds",
+    # list: Whether to display or not the the Up/Down buttons.
+    "move-buttons": "move_buttons",
+    # list: The default width of the Edit entry dialog.
+    "dialog-width": "dialog_width",
+    # list: Allow multiple rows selection.
+    "multi-select": "multi_select",
+    # list: Whether to close the settings window after applying.
+    "apply-and-quit": "apply_and_quit",
+    # keybinding: Expose the number of keybindings to create.
+    "num-bind": "num_bind",
+    # label: Whether to use markup.
+    "use-markup": "use_markup",
+    # list: An array of strings to be added as labels to the add/edit entry.
+    "dialog-info-labels": "dialog_info_labels",
+    # colorchooser: Whether to be able to specify opacity.
+    "use-alpha": "use_alpha",
+    # list: A dictionary that can be empty and accepts one key called ``read_only_keys``.
+    # A list of column IDs whose created widgets should be set as nonsensitive.
+    # An immutable list widget has a fixed amount of items.
+    # Items cannot be added nor removed but they do can be edited.
+    "immutable": "immutable",
+    # textview: Whether the Tab key inserts a tab character (accept-tabs = true)
+    # or the keyboard focus is moved (accept-tabs = false).
+    "accept-tabs": "accept_tabs",
+    # combobox: Explicit value type to convert an option key to.
+    "valtype": "valtype",
+    # combobox: A key from the "options" key for comboboxes. This key will be excluded from
+    # the sorting of options and will appear always at the top of the combobox.
+    # NOTE: Not passed as widget argument. Kept here just to keep it documented.
+    "first-option": "first_option",
+}
 
 CAN_BACKEND = [
     "Button",
@@ -69,6 +148,8 @@ CAN_BACKEND = [
     # "SoundFileChooser",
     # "TweenChooser"
 ]
+
+settings_objects = {}
 
 
 class SettingsStack(Gtk.Stack):
@@ -119,7 +200,7 @@ class SettingsPage(BaseGrid):
         TYPE
             Description
         """
-        section = SectionContainer(title, subtitle, section_info)
+        section = SettingsSection(title, subtitle, section_info)
         self.add(section)
 
         return section
@@ -150,7 +231,7 @@ class SettingsPage(BaseGrid):
         TYPE
             Description
         """
-        section = SectionContainer(title, subtitle, section_info)
+        section = SettingsSection(title, subtitle, section_info)
 
         # if revealer is None:
         #     revealer = SettingsRevealer(schema, key, values)
@@ -162,23 +243,27 @@ class SettingsPage(BaseGrid):
         return section
 
 
-class SectionContainer(BaseGrid):
+class SettingsSection(BaseGrid):
+
     """Summary
 
     Attributes
     ----------
+    always_show : bool
+        Description
     box : TYPE
         Description
     frame : TYPE
         Description
     need_separator : bool
         Description
+    revealers : list
+        Description
     size_group : TYPE
         Description
     """
-
     def __init__(self, title=None, subtitle=None, section_info={}):
-        """Initialization.
+        """Summary
 
         Parameters
         ----------
@@ -191,6 +276,9 @@ class SectionContainer(BaseGrid):
         """
         super().__init__()
         self.set_spacing(10, 10)
+
+        self.always_show = False
+        self.revealers = []
 
         if title or subtitle:
             header_box = BaseGrid()
@@ -229,6 +317,7 @@ class SectionContainer(BaseGrid):
                 header_box.attach(sub, 0, 1, 1, 1)
 
         self.frame = Gtk.Frame()
+        self.frame.set_no_show_all(True)
         self.frame.set_shadow_type(Gtk.ShadowType.IN)
         self.frame.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW)
 
@@ -237,6 +326,7 @@ class SectionContainer(BaseGrid):
 
         self.box = BaseGrid()
         self.frame.add(self.box)
+        self.add(self.frame)
 
         self.need_separator = False
 
@@ -279,8 +369,7 @@ class SectionContainer(BaseGrid):
 
         self.box.attach(list_box, col_pos, row_pos, col_span, row_span)
 
-        if self.frame.get_parent() is None:
-            self.add(self.frame)
+        self.update_always_show_state()
 
         self.need_separator = True
 
@@ -340,6 +429,12 @@ class SectionContainer(BaseGrid):
 
         self.need_separator = True
 
+        self.revealers.append(revealer)
+
+        if not self.always_show:
+            revealer.notify_id = revealer.connect('notify::child-revealed', self.check_reveal_state)
+            self.check_reveal_state()
+
         return revealer
 
     def add_note(self, text):
@@ -365,6 +460,45 @@ class SectionContainer(BaseGrid):
 
         return label
 
+    def update_always_show_state(self):
+        """Summary
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
+        if self.always_show:
+            return
+
+        self.frame.set_no_show_all(False)
+        self.frame.show_all()
+        self.always_show = True
+
+        for revealer in self.revealers:
+            revealer.disconnect(revealer.notify_id)
+
+    def check_reveal_state(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Description
+
+        Returns
+        -------
+        TYPE
+            Description
+        """
+        for revealer in self.revealers:
+            if revealer.props.child_revealed:
+                self.box.show_all()
+                self.frame.show()
+                return
+
+        self.frame.hide()
+
 
 class SettingsRevealer(Gtk.Revealer):
     """Summary
@@ -379,9 +513,12 @@ class SettingsRevealer(Gtk.Revealer):
         Description
     values : TYPE
         Description
+
+    Note
+    ----
+    Not used for now.
     """
 
-    # NOTE: Not used for now
     def __init__(self, schema=None, key=None, values=None, check_func=None):
         """Initialization.
 
@@ -421,10 +558,10 @@ class SettingsRevealer(Gtk.Revealer):
 
         Parameters
         ----------
-        widget object
+        widget : object
             See : :py:class:`Gtk.Widget`.
         """
-        self.box.pack_start(widget, False, True, 0)
+        self.box.attach(widget, 0, 0, 1, 1)
 
     # only used when checking values
     def on_settings_changed(self, settings, key):
@@ -706,11 +843,9 @@ class IconChooser(SettingsWidget):
         Description
     handler : TYPE
         Description
-    image_button : TYPE
-        Description
     label : TYPE
         Description
-    preview : TYPE
+    main_app : TYPE
         Description
     """
 
@@ -734,7 +869,7 @@ class IconChooser(SettingsWidget):
             Description
         """
         super().__init__(dep_key=dep_key)
-
+        self.main_app = None
         valid, self.width, self.height = Gtk.icon_size_lookup(Gtk.IconSize.BUTTON)
 
         self.label = SettingsLabel(label)
@@ -745,26 +880,26 @@ class IconChooser(SettingsWidget):
         self.content_widget.set_valign(Gtk.Align.CENTER)
         self.bind_object = Gtk.Entry()
         self.bind_object.set_hexpand(True)
-        self.image_button = Gtk.Button()
+        button = Gtk.Button()
 
-        self.preview = Gtk.Image.new()
-        self.image_button.set_image(self.preview)
+        self._preview_image = Gtk.Image.new()
+        button.set_image(self._preview_image)
 
         self.content_widget.attach(self.bind_object, 0, 0, 1, 1)
-        self.content_widget.attach(self.image_button, 1, 0, 1, 1)
+        self.content_widget.attach(button, 1, 0, 1, 1)
 
         self.attach(self.label, 0, 0, 1, 1)
         self.attach(self.content_widget, 1, 0, 1, 1)
 
-        self.image_button.connect("clicked", self.on_button_pressed)
-        self.handler = self.bind_object.connect("changed", self.set_icon)
+        button.connect("clicked", self._on_button_pressed)
+        self.handler = self.bind_object.connect("changed", self._set_icon)
 
         self.set_tooltip_text(tooltip)
 
         if size_group:
             self.add_to_size_group(size_group)
 
-    def set_icon(self, *args):
+    def _set_icon(self, *args):
         """Summary
 
         Parameters
@@ -772,14 +907,18 @@ class IconChooser(SettingsWidget):
         *args
             Arguments.
         """
-        val = self.bind_object.get_text()
-        if os.path.exists(val) and not os.path.isdir(val):
-            img = GdkPixbuf.Pixbuf.new_from_file_at_size(val, self.width, self.height)
-            self.preview.set_from_pixbuf(img)
-        else:
-            self.preview.set_from_icon_name(val, Gtk.IconSize.BUTTON)
+        val = self.bind_object.get_text().strip()
 
-    def on_button_pressed(self, widget):
+        if val:
+            if os.path.exists(val) and not os.path.isdir(val):
+                img = GdkPixbuf.Pixbuf.new_from_file_at_size(val, self.width, self.height)
+                self._preview_image.set_from_pixbuf(img)
+            else:
+                self._preview_image.set_from_icon_name(val, Gtk.IconSize.BUTTON)
+        else:
+            self._preview_image.set_from_icon_name("image-missing", Gtk.IconSize.BUTTON)
+
+    def _on_button_pressed(self, widget):
         """Summary
 
         Parameters
@@ -787,52 +926,18 @@ class IconChooser(SettingsWidget):
         widget : TYPE
             Description
         """
-        dialog = Gtk.FileChooserDialog(title=_("Choose an Icon"),
-                                       action=Gtk.FileChooserAction.OPEN,
-                                       transient_for=self.get_toplevel(),
-                                       buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
-                                                _("_Open"), Gtk.ResponseType.OK))
+        dialog = IconChooserDialog(transient_for=self.get_toplevel())
+        dialog.set_main_app(self.main_app)
+        search_term = self.get_value() if self.get_value() is not None else ""
+        dialog.set_search_term(search_term)
 
-        filter_text = Gtk.FileFilter()
-        filter_text.set_name(_("Image files"))
-        filter_text.add_mime_type("image/*")
-        dialog.add_filter(filter_text)
+        response = dialog.run()  # Return either an icon name, an icon path or None.
 
-        preview = Gtk.Image()
-        dialog.set_preview_widget(preview)
-        dialog.connect("update-preview", self.update_icon_preview_cb, preview)
-
-        response = dialog.run()
-
-        if response == Gtk.ResponseType.OK:
-            filename = dialog.get_filename()
-            self.bind_object.set_text(filename)
-            self.set_value(filename)
+        if response is not None:
+            self.bind_object.set_text(response)
+            self.set_value(response)
 
         dialog.destroy()
-
-    def update_icon_preview_cb(self, dialog, preview):
-        """Summary
-
-        Parameters
-        ----------
-        dialog : TYPE
-            Description
-        preview : TYPE
-            Description
-        """
-        filename = dialog.get_preview_filename()
-        dialog.set_preview_widget_active(False)
-        if filename is not None:
-            if os.path.isfile(filename):
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file(filename)
-                if pixbuf is not None:
-                    if pixbuf.get_width() > 128:
-                        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(filename, 128, -1)
-                    elif pixbuf.get_height() > 128:
-                        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(filename, -1, 128)
-                    preview.set_from_pixbuf(pixbuf)
-                    dialog.set_preview_widget_active(True)
 
 
 class Entry(SettingsWidget):
@@ -1028,10 +1133,6 @@ class ComboBox(SettingsWidget):
         Description
     model : TYPE
         Description
-    option_map : dict
-        Description
-    valtype : TYPE
-        Description
     value : TYPE
         Description
     """
@@ -1058,8 +1159,8 @@ class ComboBox(SettingsWidget):
         """
         super().__init__()
 
-        self.valtype = valtype
-        self.option_map = {}
+        self._valtype = valtype
+        self._option_map = {}
 
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
@@ -1072,14 +1173,14 @@ class ComboBox(SettingsWidget):
         self.attach(self.label, 0, 0, 1, 1)
         self.attach(self.content_widget, 1, 0, 1, 1)
 
-        self.set_options(options)
+        self._set_options(options)
 
         self.set_tooltip_text(tooltip)
 
         if size_group:
             self.add_to_size_group(size_group)
 
-    def on_my_value_changed(self, widget):
+    def _on_my_value_changed(self, widget):
         """Summary
 
         Parameters
@@ -1092,6 +1193,29 @@ class ComboBox(SettingsWidget):
             self.value = self.model[tree_iter][0]
             self.set_value(self.value)
 
+    def _set_options(self, options):
+        """Summary
+
+        Parameters
+        ----------
+        options : TYPE
+            Description
+        """
+        if self._valtype is not None:
+            var_type = self._valtype
+        else:
+            # assume all keys are the same type (mixing types is going to cause an error somewhere)
+            var_type = type(options[0][0])
+
+        self.model = Gtk.ListStore(var_type, str)
+
+        for option in options:
+            self._option_map[var_type(option[0])] = self.model.append(
+                [var_type(option[0]), option[1]])
+
+        self.content_widget.set_model(self.model)
+        self.content_widget.set_id_column(0)
+
     def on_setting_changed(self, *args):
         """Summary
 
@@ -1102,7 +1226,7 @@ class ComboBox(SettingsWidget):
         """
         self.value = self.get_value()
         try:
-            self.content_widget.set_active_iter(self.option_map[self.value])
+            self.content_widget.set_active_iter(self._option_map[self.value])
         except Exception:
             self.content_widget.set_active_iter(None)
 
@@ -1114,30 +1238,7 @@ class ComboBox(SettingsWidget):
         *args
             Arguments.
         """
-        self.content_widget.connect("changed", self.on_my_value_changed)
-
-    def set_options(self, options):
-        """Summary
-
-        Parameters
-        ----------
-        options : TYPE
-            Description
-        """
-        if self.valtype is not None:
-            var_type = self.valtype
-        else:
-            # assume all keys are the same type (mixing types is going to cause an error somewhere)
-            var_type = type(options[0][0])
-
-        self.model = Gtk.ListStore(var_type, str)
-
-        for option in options:
-            self.option_map[var_type(option[0])] = self.model.append(
-                [var_type(option[0]), option[1]])
-
-        self.content_widget.set_model(self.model)
-        self.content_widget.set_id_column(0)
+        self.content_widget.connect("changed", self._on_my_value_changed)
 
 
 class ColorChooser(SettingsWidget):
@@ -1177,15 +1278,22 @@ class ColorChooser(SettingsWidget):
         self.label.set_hexpand(True)
         self.content_widget = Gtk.ColorButton()
         self.content_widget.set_use_alpha(use_alpha)
+        self._clear_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+            "edit-clear-symbolic",
+            Gtk.IconSize.BUTTON
+        ))
+        self._clear_button.set_tooltip_text(_("Clear color"))
+        self._clear_button.set_valign(Gtk.Align.CENTER)
         self.attach(self.label, 0, 0, 1, 1)
-        self.attach(self.content_widget, 1, 0, 1, 1)
+        self.attach(self._clear_button, 1, 0, 1, 1)
+        self.attach(self.content_widget, 2, 0, 1, 1)
 
         self.set_tooltip_text(tooltip)
 
         if size_group:
             self.add_to_size_group(size_group)
 
-    def on_setting_changed(self, *args):
+    def _on_clear_button_clicked(self, *args):
         """Summary
 
         Parameters
@@ -1193,22 +1301,9 @@ class ColorChooser(SettingsWidget):
         *args
             Arguments.
         """
-        color_string = self.get_value()
-        rgba = Gdk.RGBA()
-        rgba.parse(color_string)
-        self.content_widget.set_rgba(rgba)
+        self.set_value("")
 
-    def connect_widget_handlers(self, *args):
-        """Summary
-
-        Parameters
-        ----------
-        *args
-            Arguments.
-        """
-        self.content_widget.connect("color-set", self.on_my_value_changed)
-
-    def on_my_value_changed(self, widget):
+    def _on_color_value_changed(self, widget):
         """Summary
 
         Parameters
@@ -1227,6 +1322,33 @@ class ColorChooser(SettingsWidget):
             Arguments.
         """
         self.content_widget.do_clicked(self.content_widget)
+
+    def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        color_string = self.get_value()
+
+        # NOTE: Luckyly, empty strings will set the color to white.
+        rgba = Gdk.RGBA()
+        rgba.parse(color_string)
+        # NOTE: set_rgba sets RGBA and RGB.
+        self.content_widget.set_rgba(rgba)
+
+    def connect_widget_handlers(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        self.content_widget.connect("color-set", self._on_color_value_changed)
+        self._clear_button.connect("clicked", self._on_clear_button_clicked)
 
 
 class FileChooser(SettingsWidget):
@@ -1284,7 +1406,7 @@ class FileChooser(SettingsWidget):
         if size_group:
             self.add_to_size_group(size_group)
 
-    def on_file_selected(self, *args):
+    def _on_file_selected(self, *args):
         """Summary
 
         Parameters
@@ -1293,16 +1415,6 @@ class FileChooser(SettingsWidget):
             Arguments.
         """
         self.set_value(self.content_widget.get_uri())
-
-    def on_setting_changed(self, *args):
-        """Summary
-
-        Parameters
-        ----------
-        *args
-            Arguments.
-        """
-        self.content_widget.set_uri(self.get_value())
 
     def _on_clear_button_clicked(self, *args):
         """Summary
@@ -1314,6 +1426,16 @@ class FileChooser(SettingsWidget):
         """
         self.set_value("")
 
+    def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        self.content_widget.set_uri(self.get_value())
+
     def connect_widget_handlers(self, *args):
         """Summary
 
@@ -1322,7 +1444,7 @@ class FileChooser(SettingsWidget):
         *args
             Arguments.
         """
-        self.content_widget.connect("file-set", self.on_file_selected)
+        self.content_widget.connect("file-set", self._on_file_selected)
         self._clear_button.connect("clicked", self._on_clear_button_clicked)
 
 
@@ -1338,8 +1460,6 @@ class SpinButton(SettingsWidget):
     content_widget : TYPE
         Description
     label : TYPE
-        Description
-    timer : TYPE
         Description
     """
 
@@ -1372,7 +1492,7 @@ class SpinButton(SettingsWidget):
         """
         super().__init__(dep_key=dep_key)
 
-        self.timer = None
+        self._timer = None
 
         if units:
             label += " (%s)" % units
@@ -1412,14 +1532,14 @@ class SpinButton(SettingsWidget):
             digits = len(str(step).split(".")[1])
         self.content_widget.set_digits(digits)
 
-        self.content_widget.connect("value-changed", self.apply_later)
+        self.content_widget.connect("value-changed", self._apply_later)
 
         self.set_tooltip_text(tooltip)
 
         if size_group:
             self.add_to_size_group(size_group)
 
-    def apply_later(self, *args):
+    def _apply_later(self, *args):
         """Summary
 
         Parameters
@@ -1432,11 +1552,12 @@ class SpinButton(SettingsWidget):
             """Summary
             """
             self.set_value(self.content_widget.get_value())
-            self.timer = None
+            self._timer = None
 
-        if self.timer:
-            GLib.source_remove(self.timer)
-        self.timer = GLib.timeout_add(300, apply, self)
+        if self._timer:
+            GLib.source_remove(self._timer)
+
+        self._timer = GLib.timeout_add(300, apply, self)
 
 
 class Keybinding(SettingsWidget):
@@ -1446,25 +1567,15 @@ class Keybinding(SettingsWidget):
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    buttons : list
-        Description
     content_widget : TYPE
         Description
-    event_id : TYPE
-        Description
     label : TYPE
-        Description
-    num_bind : TYPE
-        Description
-    teach_button : TYPE
-        Description
-    teaching : bool
         Description
     """
 
     bind_dir = None
 
-    def __init__(self, label, num_bind=2, size_group=None, dep_key=None, tooltip=""):
+    def __init__(self, label, num_bind=1, size_group=None, dep_key=None, tooltip=""):
         """Initialization.
 
         Parameters
@@ -1482,12 +1593,11 @@ class Keybinding(SettingsWidget):
         """
         super().__init__(dep_key=dep_key)
 
-        self.num_bind = num_bind
+        self._num_bind = num_bind
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
 
-        self.buttons = []
-        self.teach_button = None
+        self._kb_buttons = []
 
         self.content_widget = Gtk.Frame(shadow_type=Gtk.ShadowType.IN, valign=Gtk.Align.CENTER)
         box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
@@ -1496,25 +1606,22 @@ class Keybinding(SettingsWidget):
         self.attach(self.label, 0, 0, 1, 1)
         self.attach(self.content_widget, 1, 0, 1, 1)
 
-        for x in range(self.num_bind):
+        for x in range(self._num_bind):
             if x != 0:
                 box.add(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL))
             kb = ButtonKeybinding()
             kb.set_size_request(150, -1)
-            kb.connect("accel-edited", self.on_kb_changed)
-            kb.connect("accel-cleared", self.on_kb_changed)
+            kb.connect("accel-edited", self._on_kb_changed)
+            kb.connect("accel-cleared", self._on_kb_changed)
             box.attach(kb, x, 0, 1, 1)
-            self.buttons.append(kb)
-
-        self.event_id = None
-        self.teaching = False
+            self._kb_buttons.append(kb)
 
         self.set_tooltip_text(tooltip)
 
         if size_group:
             self.add_to_size_group(size_group)
 
-    def on_kb_changed(self, *args):
+    def _on_kb_changed(self, *args):
         """Summary
 
         Parameters
@@ -1524,8 +1631,8 @@ class Keybinding(SettingsWidget):
         """
         bindings = []
 
-        for x in range(self.num_bind):
-            string = self.buttons[x].get_accel_string()
+        for x in range(self._num_bind):
+            string = self._kb_buttons[x].get_accel_string()
             bindings.append(string)
 
         self.set_value("::".join(bindings))
@@ -1541,8 +1648,8 @@ class Keybinding(SettingsWidget):
         value = self.get_value()
         bindings = value.split("::")
 
-        for x in range(min(len(bindings), self.num_bind)):
-            self.buttons[x].set_accel_string(bindings[x])
+        for x in range(min(len(bindings), self._num_bind)):
+            self._kb_buttons[x].set_accel_string(bindings[x])
 
     def connect_widget_handlers(self, *args):
         """Summary
@@ -1562,25 +1669,11 @@ class KeybindingWithOptions(SettingsWidget):
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    combo_button : TYPE
-        Description
     content_widget : TYPE
-        Description
-    event_id : TYPE
-        Description
-    kb_button : TYPE
         Description
     label : TYPE
         Description
     model : TYPE
-        Description
-    option_map : dict
-        Description
-    teach_button : TYPE
-        Description
-    teaching : bool
-        Description
-    valtype : TYPE
         Description
     value : TYPE
         Description
@@ -1611,9 +1704,8 @@ class KeybindingWithOptions(SettingsWidget):
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
 
-        self.teach_button = None
-        self.valtype = valtype
-        self.option_map = {}
+        self._valtype = valtype
+        self._option_map = {}
 
         self.content_widget = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
 
@@ -1623,29 +1715,77 @@ class KeybindingWithOptions(SettingsWidget):
         kb_box = Gtk.Frame(shadow_type=Gtk.ShadowType.IN)
         kb_box.set_valign(Gtk.Align.CENTER)
 
-        self.kb_button = ButtonKeybinding()
-        self.kb_button.set_size_request(150, -1)
-        kb_box.add(self.kb_button)
+        self._kb_button = ButtonKeybinding()
+        self._kb_button.set_size_request(150, -1)
+        kb_box.add(self._kb_button)
 
-        self.combo_button = Gtk.ComboBox()
+        self._combo_button = Gtk.ComboBox()
         renderer_text = Gtk.CellRendererText()
-        self.combo_button.pack_start(renderer_text, True)
-        self.combo_button.add_attribute(renderer_text, "text", 1)
-        self.combo_button.set_valign(Gtk.Align.CENTER)
+        self._combo_button.pack_start(renderer_text, True)
+        self._combo_button.add_attribute(renderer_text, "text", 1)
+        self._combo_button.set_valign(Gtk.Align.CENTER)
 
         self.content_widget.attach(kb_box, 0, 0, 1, 1)
         self.content_widget.attach(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL), 1, 0, 1, 1)
-        self.content_widget.attach(self.combo_button, 2, 0, 1, 1)
+        self.content_widget.attach(self._combo_button, 2, 0, 1, 1)
 
-        self.event_id = None
-        self.teaching = False
-
-        self.set_options(options)
+        self._set_options(options)
 
         self.set_tooltip_text(tooltip)
 
         if size_group:
             self.add_to_size_group(size_group)
+
+    def _on_kb_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        try:
+            kb, opt = self.get_value().split("::")
+        except Exception:
+            kb, opt = "", ""  # noqa
+
+        self.set_value(self._kb_button.get_accel_string() + "::" + opt)
+
+    def _on_combo_value_changed(self, combo):
+        """Summary
+
+        Parameters
+        ----------
+        combo : TYPE
+            Description
+        """
+        tree_iter = combo.get_active_iter()
+
+        if tree_iter is not None:
+            self.value = self._kb_button.get_accel_string() + "::" + self.model[tree_iter][0]
+            self.set_value(self.value)
+
+    def _set_options(self, options):
+        """Summary
+
+        Parameters
+        ----------
+        options : TYPE
+            Description
+        """
+        if self._valtype is not None:
+            var_type = self._valtype
+        else:
+            var_type = type(options[0][0])
+
+        self.model = Gtk.ListStore(var_type, str)
+
+        for option in options:
+            self._option_map[var_type(option[0])] = self.model.append(
+                [var_type(option[0]), option[1]])
+
+        self._combo_button.set_model(self.model)
+        self._combo_button.set_id_column(0)
 
     def on_setting_changed(self, *args):
         """Summary
@@ -1662,41 +1802,12 @@ class KeybindingWithOptions(SettingsWidget):
         except Exception:
             binding, option = "", ""
 
-        self.kb_button.set_accel_string(binding)
+        self._kb_button.set_accel_string(binding)
 
         try:
-            self.combo_button.set_active_iter(self.option_map[option])
+            self._combo_button.set_active_iter(self._option_map[option])
         except Exception:
-            self.combo_button.set_active_iter(None)
-
-    def on_kb_changed(self, *args):
-        """Summary
-
-        Parameters
-        ----------
-        *args
-            Arguments.
-        """
-        try:
-            kb, opt = self.get_value().split("::")
-        except Exception:
-            kb, opt = "", ""  # noqa
-
-        self.set_value(self.kb_button.get_accel_string() + "::" + opt)
-
-    def on_combo_value_changed(self, combo):
-        """Summary
-
-        Parameters
-        ----------
-        combo : TYPE
-            Description
-        """
-        tree_iter = combo.get_active_iter()
-
-        if tree_iter is not None:
-            self.value = self.kb_button.get_accel_string() + "::" + self.model[tree_iter][0]
-            self.set_value(self.value)
+            self._combo_button.set_active_iter(None)
 
     def connect_widget_handlers(self, *args):
         """Summary
@@ -1706,31 +1817,9 @@ class KeybindingWithOptions(SettingsWidget):
         *args
             Arguments.
         """
-        self.kb_button.connect("accel-edited", self.on_kb_changed)
-        self.kb_button.connect("accel-cleared", self.on_kb_changed)
-        self.combo_button.connect("changed", self.on_combo_value_changed)
-
-    def set_options(self, options):
-        """Summary
-
-        Parameters
-        ----------
-        options : TYPE
-            Description
-        """
-        if self.valtype is not None:
-            var_type = self.valtype
-        else:
-            var_type = type(options[0][0])
-
-        self.model = Gtk.ListStore(var_type, str)
-
-        for option in options:
-            self.option_map[var_type(option[0])] = self.model.append(
-                [var_type(option[0]), option[1]])
-
-        self.combo_button.set_model(self.model)
-        self.combo_button.set_id_column(0)
+        self._kb_button.connect("accel-edited", self._on_kb_changed)
+        self._kb_button.connect("accel-cleared", self._on_kb_changed)
+        self._combo_button.connect("changed", self._on_combo_value_changed)
 
 
 if __name__ == "__main__":

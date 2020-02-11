@@ -6,6 +6,8 @@ Attributes
 ----------
 CINNAMON_VERSION : str
     Cinnamon version.
+G_SETTINGS_WIDGETS : TYPE
+    Description
 GTK_VERSION : str
     Gtk version.
 MODULE_PATH : str
@@ -18,6 +20,7 @@ XLET_SETTINGS_WIDGETS : dict
 import gi
 import json
 import os
+import traceback
 
 gi.require_version("Gdk", "3.0")
 gi.require_version("GdkPixbuf", "2.0")
@@ -32,6 +35,7 @@ from html import escape
 from subprocess import check_output
 from subprocess import run
 
+from .GSettingsWidgets import *  # noqa
 from .JsonSettingsWidgets import *  # noqa
 from .common import BaseGrid
 from .common import HOME
@@ -75,23 +79,30 @@ XLET_SETTINGS_WIDGETS = {
     # "tween": "JSONSettingsTweenChooser",
 }
 
+G_SETTINGS_WIDGETS = {
+    "gcombobox": "GSettingsComboBox",
+    "gswitch": "GSettingsSwitch"
+}
+
 
 class SettingsBox(BaseGrid):
     """Settings box.
 
     Attributes
     ----------
-    app : object
-        :py:class:`Gtk.Application`.
     instance_info : dict
         Xlet instance information.
+    main_app : object
+        :py:class:`Gtk.Application`.
     stack : object
         :py:class:`Gtk.Stack`.
     timer : int
         Throttle timer.
+    xlet_meta : TYPE
+        Description
     """
 
-    def __init__(self, pages_definition=[], instance_info={}, app=None):
+    def __init__(self, pages_definition=[], instance_info={}, main_app=None, xlet_meta=None):
         """Initialization.
 
         Parameters
@@ -100,8 +111,10 @@ class SettingsBox(BaseGrid):
             The list containing the data to generate all window widgets.
         instance_info : dict, optional
             Xlet instance information.
-        app : None, optional
+        main_app : None, optional
             See :py:class:`Gtk.Application`.
+        xlet_meta : None, optional
+            Description
         """
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
         self.set_border_width(0)
@@ -110,7 +123,8 @@ class SettingsBox(BaseGrid):
         self.set_property("margin", 0)
 
         self.timer = None
-        self.app = app
+        self.main_app = main_app
+        self.xlet_meta = xlet_meta
         self.instance_info = instance_info
 
         stack = Gtk.Stack()
@@ -163,8 +177,11 @@ class SettingsBox(BaseGrid):
 
                 section_widgets = section_def["widgets"]
 
-                for i in range(0, len(section_widgets)):
-                    widget_def = section_widgets[i]
+                for i, widget_def in enumerate(section_widgets):
+                    # NOTE: widget_def is modified by adding an instance of JSONSettingsHandler to it.
+                    # widget_def is stored in widget_def_clean so it can be used by json.dumps() when
+                    # is printed to STDOUT for easy reading.
+                    widget_def_clean = widget_def
 
                     # NOTE: Possibility to hide individual widgets depending on a condition defined in
                     # the widgets definition file.
@@ -173,19 +190,29 @@ class SettingsBox(BaseGrid):
 
                     try:
                         if widget_def["widget-type"] == "label":
-                            widget = Text(**widget_def["args"])  # noqa | JsonSettingsWidgets > SettingsWidgets
+                            widget = Text(**widget_def["widget-kwargs"])  # noqa | JsonSettingsWidgets > SettingsWidgets
                         elif widget_def["widget-type"] in XLET_SETTINGS_WIDGETS:
-                            widget_def["args"]["settings"] = instance_info["settings"]
+                            widget_def["widget-attrs"]["settings"] = instance_info["settings"]
                             widget = globals()[XLET_SETTINGS_WIDGETS[widget_def["widget-type"]]](
-                                **widget_def["args"])
-                            if widget_def["widget-type"] == "list" and app is not None:
-                                widget.app_window = app.window
+                                widget_attrs=widget_def["widget-attrs"], widget_kwargs=widget_def["widget-kwargs"])
+
+                            if (widget_def["widget-type"] == "list" or widget_def["widget-type"] == "iconfilechooser") and main_app is not None:
+                                widget.main_app = main_app
+                        elif widget_def["widget-type"] in G_SETTINGS_WIDGETS:
+                            widget_def["widget-attrs"]["xlet_meta"] = self.xlet_meta
+                            widget = globals()[G_SETTINGS_WIDGETS[widget_def["widget-type"]]](
+                                widget_attrs=widget_def["widget-attrs"], widget_kwargs=widget_def["widget-kwargs"])
                         else:
                             continue
-                    except Exception as err:
+                    except Exception:
                         print("Widget definition")
-                        print(json.dumps(widget_def, indent=4))
-                        print(err)
+
+                        try:
+                            print(json.dumps(widget_def_clean, indent=4))
+                        except Exception:
+                            print(widget_def_clean)
+
+                        print(traceback.format_exc())
                         continue
 
                     if widget_def["widget-type"] == "list":
@@ -200,15 +227,14 @@ class SettingsBox(BaseGrid):
                     else:
                         col_span = 1
 
-                    if "dependency" in widget_def["args"].get("properties", []):
+                    if "dependency" in widget_def["widget-kwargs"]:
                         revealer = JSONSettingsRevealer(  # noqa | JsonSettingsWidgets
-                            instance_info["settings"], widget_def["args"]["properties"]["dependency"])
+                            instance_info["settings"], widget_def["widget-kwargs"]["dependency"])
                         section_container.add_reveal_row(
                             widget, 0, i + 1, col_span, 1, revealer=revealer)
                     else:
                         section_container.add_row(widget, 0, i + 1, col_span, 1)
 
-                # page.attach(section_container, 0, section_count, 1, 1)
                 section_count += 1
 
                 for note in section_def.get("section-notes", []):
@@ -223,6 +249,10 @@ class SettingsBox(BaseGrid):
 
         if create_page_switcher:
             page_switcher = Gtk.StackSidebar()
+            style_context = page_switcher.get_style_context()
+            # Mark for deletion on EOL. Gtk 3.18.
+            # Remove class definition.
+            style_context.add_class("cinnamon-xlet-settings-app-sidebar")
             page_switcher.set_stack(stack)
             self.add(page_switcher)
             stack.connect("notify::visible-child", self.on_stack_switcher_changed)
@@ -242,19 +272,19 @@ class SettingsBox(BaseGrid):
         # NOTE: This bit me in the arse real good!!! LOL
         # Without the throttle, and connecting only the "notify" signal to the stack, the
         # on_stack_switcher_changed method was triggered like 5 times and it always stored
-        # the wrong value to self.app.win_stacks_state.
+        # the wrong value to self.main_app.win_stacks_state.
         # With the "notify::visible-child" signal connected, on_stack_switcher_changed triggers
         # automatically only once when the stack is created and the first child is selected,
         # and immediately again, if needed, to select the child name stored in
-        # self.app.win_stacks_state. The second call will cancel the first and then store what was
+        # self.main_app.win_stacks_state. The second call will cancel the first and then store what was
         # stored (Yeah, I know! ¬¬). Successive changes to the visible children (selecting items
         # in the sidebar) will trigger on_stack_switcher_changed and store the correct ID (hopefully).
 
         def apply(self):
             """Apply.
             """
-            self.app.win_stacks_state[self.instance_info["id"]
-                                      ] = self.stack.get_visible_child_name()
+            self.main_app.win_stacks_state[self.instance_info["id"]
+                                           ] = self.stack.get_visible_child_name()
             self.timer = None
 
         if self.timer:
@@ -290,10 +320,18 @@ class MainApplication(Gtk.Application):
         See :py:class:`Gio.Settings`.
     display_settings_handling : bool
         Whether to display settings handler item in the header bar menu.
+    gtk_icon_theme : TYPE
+        Description
+    gtk_icon_theme_changed : bool
+        Description
     header_bar : object
         See :py:class:`Gtk.HeaderBar`.
     help_file_path : str
         Path to the xlet help file.
+    icon_chooser_icons : TYPE
+        Description
+    icon_chooser_store : TYPE
+        Description
     instance_stack : object
         See :py:class:`Gtk.Stack`.
     instance_switcher : object
@@ -308,8 +346,6 @@ class MainApplication(Gtk.Application):
         The list containing the data to generate all window widgets.
     prev_button : object
         See :py:class:`Gtk.Button`.
-    required_args : set
-        Required arguments.
     selected_instance : dict
         The information of the currently selected instance.
     win_current_height : int
@@ -318,6 +354,8 @@ class MainApplication(Gtk.Application):
         Window current width.
     win_initial_height : int
         Window initial height.
+    win_initial_stack : TYPE
+        Description
     win_initial_width : int
         Window initial width.
     win_is_maximized : bool
@@ -344,7 +382,7 @@ class MainApplication(Gtk.Application):
     xlet_uuid : str
         The xlet UUID.
     """
-    required_args = {
+    _required_args = {
         "application_id",
         "pages_definition",
         "xlet_instance_id",
@@ -367,9 +405,9 @@ class MainApplication(Gtk.Application):
         """
         kwargs_keys = set(kwargs.keys())
 
-        if not self.required_args.issubset(kwargs_keys):
+        if not self._required_args.issubset(kwargs_keys):
             raise SystemExit("Missing required arguments: %s" %
-                             ", ".join(list(self.required_args.difference(kwargs_keys))))
+                             ", ".join(list(self._required_args.difference(kwargs_keys))))
 
         # kwargs attributes.
         self.application_id = ""
@@ -378,14 +416,23 @@ class MainApplication(Gtk.Application):
         self.pages_definition = []
         self.win_initial_height = 600
         self.win_initial_width = 800
+        self.win_initial_stack = None
         self.xlet_dir = ""
         self.xlet_instance_id = ""
         self.xlet_type = ""
         self.xlet_uuid = ""
         # Other attributes.
         self.selected_instance = None
+        self.gtk_icon_theme_changed = False
+        self.icon_chooser_store = Gtk.ListStore(str, str)
+        self.icon_chooser_icons = dict()
         self.cinnamon_gsettings = Gio.Settings.new("org.cinnamon")
         self.all_instances_info = []
+        self.gtk_icon_theme = Gtk.IconTheme.get_default()
+        self.gtk_icon_theme.connect("changed", self.on_gtk_icon_theme_changed)
+        # NOTE: Append the "icons" folder found in the framework.
+        self.gtk_icon_theme.append_search_path(os.path.join(MODULE_PATH, "icons"))
+
         # Mark for deletion on EOL. Cinnamon 3.2.x+
         # See where this property is used.
         self.legacy_xlet_highlighting = compare_version(CINNAMON_VERSION, "3.2.0") < 0
@@ -413,6 +460,49 @@ class MainApplication(Gtk.Application):
             flags=Gio.ApplicationFlags.FLAGS_NONE,
         )
 
+    def on_gtk_icon_theme_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        self.gtk_icon_theme_changed = True
+
+    def init_icon_chooser_data(self):
+        """Initialize icon chooser data.
+
+        This data is generated and stored in :any:`MainApplication` so the
+        tasks aren't performed for each :any:`IconChooserDialog` created.
+        """
+        if not self.gtk_icon_theme_changed:
+            self.icon_chooser_store.clear()
+            self.icon_chooser_icons.clear()
+
+            icon_contexts = [[_(context), context]
+                             for context in self.gtk_icon_theme.list_contexts()]
+            icon_contexts.sort()
+
+            all_icons_set = set(self.gtk_icon_theme.list_icons(None))
+
+            for l, context in icon_contexts:
+                icons = self.gtk_icon_theme.list_icons(context)
+                self.icon_chooser_icons[context] = icons
+                all_icons_set = all_icons_set - set(icons)
+
+            other_icons = list(all_icons_set)
+            other_icons.sort()
+
+            icon_contexts += [[_("Other"), "other"]]
+
+            self.icon_chooser_icons["other"] = other_icons
+
+            for ctx in icon_contexts:
+                self.icon_chooser_store.append(ctx)
+
+            self.gtk_icon_theme_changed = True
+
     def load_xlet_data(self):
         """Load xlet data.
         """
@@ -431,14 +521,11 @@ class MainApplication(Gtk.Application):
                   (self.xlet_type, self.xlet_uuid))
             quit()
 
-        # NOTE: Append the "icons" folder found in the framework.
-        Gtk.IconTheme.get_default().append_search_path(os.path.join(MODULE_PATH, "icons"))
-
         # NOTE: If exists, append the "icons" folder found in the xlet. Some xlets
         # settings windows might want to add icons that are shipped with them.
-        # For use in the stack switcher for example.
+        # This allows to use the shipped icons by name instead of by their path.
         if os.path.isdir(os.path.join(self.xlet_dir, "icons")):
-            Gtk.IconTheme.get_default().append_search_path(os.path.join(self.xlet_dir, "icons"))
+            self.gtk_icon_theme.get_default().append_search_path(os.path.join(self.xlet_dir, "icons"))
 
         self.help_file_path = os.path.join(self.xlet_dir, "HELP.html")
         self.xlet_help_file_exists = os.path.isfile(self.help_file_path)
@@ -492,7 +579,8 @@ class MainApplication(Gtk.Application):
 
             instance_box = SettingsBox(pages_definition=self.pages_definition,
                                        instance_info=instance_info,
-                                       app=self)
+                                       main_app=self,
+                                       xlet_meta=self.xlet_meta)
 
             self.all_instances_info.append(instance_info)
             self.instance_stack.add_named(instance_box, instance_id)
@@ -567,7 +655,7 @@ class MainApplication(Gtk.Application):
         image = Gtk.Image.new_from_pixbuf(pixbuf)
         self.app_image = Gtk.Button(image=image)
         self.app_image.set_sensitive(False)
-        # NOTE: Set of a custom class to override the insensitive styling.
+        # NOTE: Set of a custom class to override the insensitive/disabled styling.
         self.app_image.get_style_context().add_class("cinnamon-xlet-settings-app-title-button")
         self.app_image.set_property("can_default", False)
         self.app_image.set_property("receives_default", False)
@@ -660,7 +748,17 @@ class MainApplication(Gtk.Application):
         # Loading from data so I don't have to deal with a style sheet file
         # with just a couple of lines of code.
         css_provider.load_from_data(str.encode(
+            # Mark for deletion on EOL. Gtk 3.18.
+            # Remove comparison and leave only newer Gtk version code.
+            # NOTE: The .cinnamon-xlet-settings-app-sidebar .sidebar-item > .label
+            # selector is to enforce a padding to a Gtk.ListBox() that it is used
+            # as a sidebar. Without the padding, scrollbars will cover part of the
+            # sidebar items label.
             """
+            .cinnamon-xlet-settings-app-sidebar .sidebar-item > .label {
+                padding-left: 6px;
+                padding-right: 6px;
+            }
             .cinnamon-xlet-settings-app-title-button GtkImage:insensitive {
                 opacity: 1;
                 -gtk-image-effect: none;
@@ -727,7 +825,7 @@ class MainApplication(Gtk.Application):
 
         Parameters
         ----------
-        *args : object, optional
+        *args
             Arguments.
         """
         self.window.present()
@@ -737,9 +835,11 @@ class MainApplication(Gtk.Application):
 
         Parameters
         ----------
-        *args : object, optional
+        *args
             Arguments.
         """
+        self.load_css()
+
         Gtk.Application.do_startup(self)
         self._load_window_state()
         self.build_window()
@@ -751,7 +851,6 @@ class MainApplication(Gtk.Application):
                     self.set_instance(instance_info)
                     break
 
-        self.load_css()
         self._set_win_subtitle()
         self.window.show_all()
 
@@ -777,7 +876,7 @@ class MainApplication(Gtk.Application):
         ----------
         window : object
             See :py:class:`Gtk.ApplicationWindow`.
-        *args : object
+        *args
             Arguments.
         """
         if not window.is_maximized():
@@ -916,17 +1015,25 @@ class MainApplication(Gtk.Application):
     def set_visible_stack_for_page(self):
         """Set visible stack for page.
         """
-        if self.selected_instance["id"] in self.win_stacks_state:
+        if self.selected_instance["id"] in self.win_stacks_state or self.win_initial_stack:
             # NOTE: Keep the try/catch block!!!
             # When I add/remove pages to an xlet settings page, the already stored
             # stacks IDs might not exist. In which case, the first stack is always selected.
             try:
                 instance_stack = self.instance_stack.get_visible_child()
-                instance_box_stack = instance_stack.get_page_stack()
-                instance_box_stack.set_visible_child_name(
-                    self.win_stacks_state[self.selected_instance["id"]])
+                page_stack = instance_stack.get_page_stack()
+                page = page_stack.get_child_by_name(
+                    self.win_initial_stack if
+                    self.win_initial_stack else
+                    self.win_stacks_state[self.selected_instance["id"]]
+                )
+
+                if page is not None:
+                    page_stack.set_visible_child(page)
             except Exception as err:
                 print(err)
+
+            self.win_initial_stack = None
 
     def previous_instance(self, *args):
         """Select previous instance.
@@ -979,6 +1086,7 @@ class MainApplication(Gtk.Application):
         dialog = Gtk.FileChooserDialog(title=_("Select or enter file to export to"),
                                        action=Gtk.FileChooserAction.SAVE,
                                        transient_for=self.window,
+                                       use_header_bar=True,
                                        buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
                                                 _("_Save"), Gtk.ResponseType.ACCEPT))
 
@@ -1011,6 +1119,7 @@ class MainApplication(Gtk.Application):
         dialog = Gtk.FileChooserDialog(title=_("Select a JSON file to import"),
                                        action=Gtk.FileChooserAction.OPEN,
                                        transient_for=self.window,
+                                       use_header_bar=True,
                                        buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
                                                 _("_Save"), Gtk.ResponseType.OK))
 

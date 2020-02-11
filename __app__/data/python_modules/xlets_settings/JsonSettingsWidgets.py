@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Settings widgets factory.
+"""Xlets settings widgets factory.
 
 Attributes
 ----------
-JSON_SETTINGS_PROPERTIES_MAP : dict
-    Description
 OPERATIONS : list
     Description
 OPERATIONS_MAP : dict
@@ -24,7 +22,6 @@ from gi.repository import GLib
 from gi.repository import Gio
 from gi.repository import Gtk
 
-# NOTE: JEESH!!! I hate import *!!!
 from .AppChooserWidgets import AppChooser  # noqa
 from .AppChooserWidgets import AppList  # noqa
 from .SettingsWidgets import *  # noqa
@@ -32,69 +29,46 @@ from .TreeListWidgets import List  # noqa
 from .common import BaseGrid
 from .common import sort_combo_options
 
+# NOTE: JEESH!!! I hate import *!!!
+__all__ = [
+    # NOTE: Defined in this module.
+    "JSONSettingsHandler",
+    "JSONSettingsRevealer",
+    "JSONSettingsBackend",
+    # NOTE: Defined in SettingsWidgets module.
+    "CAN_BACKEND",
+    "JSONSettingsAppChooser",
+    "JSONSettingsAppList",
+    "JSONSettingsButton",
+    "JSONSettingsColorChooser",
+    "JSONSettingsComboBox",
+    "JSONSettingsEntry",
+    "JSONSettingsFileChooser",
+    "JSONSettingsIconChooser",
+    "JSONSettingsKeybinding",
+    "JSONSettingsKeybindingWithOptions",
+    "JSONSettingsList",
+    "JSONSettingsSpinButton",
+    "JSONSettingsSwitch",
+    "JSONSettingsTextView",
+    "SettingsSection",
+    "SettingsLabel",
+    "SettingsPage",
+    "SettingsRevealer",
+    "SettingsStack",
+    "SettingsWidget",
+    "Text"
+    # "JSONSettingsDateChooser",
+    # "JSONSettingsEffectChooser",
+    # "JSONSettingsFontButton",
+    # "JSONSettingsRange",
+    # "JSONSettingsSoundFileChooser",
+    # "JSONSettingsTweenChooser"
+]
 
 CAN_BACKEND.append("AppChooser")  # noqa | SettingsWidgets
 CAN_BACKEND.append("AppList")  # noqa | SettingsWidgets
 CAN_BACKEND.append("List")  # noqa | SettingsWidgets
-
-JSON_SETTINGS_PROPERTIES_MAP = {
-    # All widgets.
-    "description": "label",
-    # spinbutton: Minimum value.
-    "min": "mini",
-    # spinbutton: Maximum value.
-    "max": "maxi",
-    # spinbutton: Adjustment amount.
-    "step": "step",
-    # spinbutton: Adjustment amount when using the Page Up/Down keys.
-    "page": "page",
-    # spinbutton: How many digits to handle.
-    "digits": "digits",
-    # spinbutton: Unit type description.
-    "units": "units",
-    # scale: Show value on the widget.
-    "show-value": "show_value",
-    # filechooser: If true, enable folder selection of the file chooser. If false,
-    # enable file selection.
-    "select-dir": "dir_select",
-    # textview: The height of the textview.
-    "height": "height",
-    # All widgets.
-    "tooltip": "tooltip",
-    # possible: List of effect name.
-    "possible": "possible",
-    # entry and iconfilechooser: If true, expand the widget to all available space.
-    "expand-width": "expand_width",
-    # list: Columns definition.
-    "columns": "columns",
-    # soundfilechooser: If True, only wav and ogg sound files will be filtered in
-    # the file chooser dialog. If set to False, all sound files will be displayed.
-    "event-sounds": "event_sounds",
-    # list: Whether to display or not the the Up/Down buttons.
-    "move-buttons": "move_buttons",
-    # list: The default width of the Edit entry dialog.
-    "dialog-width": "dialog_width",
-    # list: Whether to close the settings window after applying.
-    "apply-and-quit": "apply_and_quit",
-    # keybinding: Expose the number of keybindings to create.
-    "num-bind": "num_bind",
-    # label: Whether to use markup.
-    "use-markup": "use_markup",
-    # list: An array of strings to be added as labels to the add/edit entry.
-    "dialog-info-labels": "dialog_info_labels",
-    # colorchooser: Whether to be able to specify opacity.
-    "use-alpha": "use_alpha",
-    # list: A dictionary that can be empty and accepts one key called ``read_only_keys``.
-    # A list of column IDs whose created widgets should be set as nonsensitive.
-    # An immutable list widget has a fixed amount of items.
-    # Items cannot be added nor removed but they do can be edited.
-    "immutable": "immutable",
-    # textview: Whether the Tab key inserts a tab character (accept-tabs = true)
-    # or the keyboard focus is moved (accept-tabs = false).
-    "accept-tabs": "accept_tabs",
-    # combobox: Explicit value type to convert an option key to.
-    "valtype": "valtype",
-}
 
 
 OPERATIONS = ["<=", ">=", "<", ">", "!=", "="]
@@ -500,6 +474,7 @@ class JSONSettingsHandler():
                 self.do_key_update(key)
             else:
                 print("Skipping key %s: the key does not exist in %s or has no value" % (key, filepath))
+
         self.save_settings()
 
     def save_to_file(self, filepath):
@@ -638,6 +613,8 @@ class JSONSettingsBackend(object):
         TYPE
             Description
         """
+        self._saving = False
+
         if hasattr(self, "set_rounding") and self.settings.has_property(self.pref_key, "round"):
             self.set_rounding(self.settings.get_property(self.pref_key, "round"))
 
@@ -654,7 +631,7 @@ class JSONSettingsBackend(object):
                                self.map_get if hasattr(self, "map_get") else None,
                                self.map_set if hasattr(self, "map_set") else None)
         else:
-            self.settings.listen(self.pref_key, self.on_setting_changed)
+            self.settings.listen(self.pref_key, self._settings_changed_callback)
             self.on_setting_changed()
             self.connect_widget_handlers()
 
@@ -666,7 +643,20 @@ class JSONSettingsBackend(object):
         value : TYPE
             Description
         """
+        self._saving = True
         self.settings.set_value(self.pref_key, value)
+        self._saving = False
+
+    def _settings_changed_callback(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Description
+        """
+        if not self._saving:
+            self.on_setting_changed(*args)
 
     def get_value(self):
         """Summary
@@ -754,21 +744,14 @@ def json_settings_factory(subclass):
             Description
         """
 
-        def __init__(self, pref_key="", apply_key="", imp_exp_path_key="",
-                     settings={}, properties={}):
+        def __init__(self, widget_attrs={}, widget_kwargs={}):
             """Initialization.
 
             Parameters
             ----------
-            pref_key : str, optional
+            widget_attrs : dict, optional
                 Description
-            apply_key : str, optional
-                Description
-            imp_exp_path_key : str, optional
-                Description
-            settings : dict, optional
-                Description
-            properties : dict, optional
+            widget_kwargs : dict, optional
                 Description
 
             Returns
@@ -776,18 +759,18 @@ def json_settings_factory(subclass):
             TYPE
                 Description
             """
-            self.pref_key = pref_key
-            self.apply_key = apply_key
-            self.imp_exp_path_key = imp_exp_path_key
-            self.settings = settings
+            self.pref_key = widget_attrs.get("pref_key")
+            self.apply_key = widget_attrs.get("apply_key")
+            self.imp_exp_path_key = widget_attrs.get("imp_exp_path_key")
+            self.settings = widget_attrs.get("settings")
 
             kwargs = {}
 
-            for prop in properties:
-                if prop in JSON_SETTINGS_PROPERTIES_MAP:
-                    kwargs[JSON_SETTINGS_PROPERTIES_MAP[prop]] = properties[prop]
-                elif prop == "options":
-                    options_list = properties[prop]
+            for k in widget_kwargs:
+                if k in JSON_SETTINGS_PROPERTIES_MAP:  # noqa | SettingsWidgets
+                    kwargs[JSON_SETTINGS_PROPERTIES_MAP[k]] = widget_kwargs[k]  # noqa | SettingsWidgets
+                elif k == "options":
+                    options_list = widget_kwargs[k]
 
                     # NOTE: Sort both types of options. Otherwise, items will appear in
                     # different order every single time the widget is re-built.
@@ -797,7 +780,7 @@ def json_settings_factory(subclass):
                         kwargs["options"] = zip(options_list, options_list)
 
                     kwargs["options"] = sort_combo_options(
-                        kwargs["options"], properties.get("first-option", ""))
+                        kwargs["options"], widget_kwargs.get("first-option", ""))
 
             super().__init__(**kwargs)
             self.attach_backend()

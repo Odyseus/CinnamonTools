@@ -28,11 +28,11 @@ class ApplicationChooserWidget(Gtk.Dialog):
     Example
     -------
 
-    .. code::
+    .. code:: python
 
         # Multi selection disabled.
         # Hidden applications not included.
-        app_chooser = ApplicationChooserWidget(parent=None,
+        app_chooser = ApplicationChooserWidget(transient_for=None,  # Set accordingly.
                                                multi_selection=False,
                                                show_no_display=False)
         # Open application chooser dialog.
@@ -41,11 +41,11 @@ class ApplicationChooserWidget(Gtk.Dialog):
         if application is not None:
             application.launch()
 
-    .. code::
+    .. code:: python
 
         # Multi selection enabled.
         # Hidden applications included.
-        app_chooser = ApplicationChooserWidget(parent=None,
+        app_chooser = ApplicationChooserWidget(transient_for=None,  # Set accordingly.
                                                multi_selection=True,
                                                show_no_display=True)
         # Open application chooser dialog.
@@ -63,44 +63,39 @@ class ApplicationChooserWidget(Gtk.Dialog):
         A string used as a title for the applications chooser dialog.
     list_store : object
         See :py:class:`Gtk.ListStore`.
-    multi_selection : bool
-        Allow multi selection inside the applications list.
     selected_apps : list
         List of selected applications.
-    show_no_display : bool
-        Show hidden applications.
     tree_view : object
         See :py:class:`Gtk.TreeView`.
     """
 
-    def __init__(self, parent=None, multi_selection=False, show_no_display=True):
+    def __init__(self, transient_for=None, multi_selection=False, show_no_display=True):
         """Initialization.
 
         Parameters
         ----------
-        parent : None, optional
+        transient_for : None, optional
             See :py:class:`Gtk.Window`.
         multi_selection : bool, optional
             Allow multi selection inside the applications list.
         show_no_display : bool, optional
             Show hidden applications.
         """
-        super().__init__(self,
-                         title=_("Application Chooser"),
+        super().__init__(title=_("Application Chooser"),
                          use_header_bar=True,
-                         transient_for=parent,
-                         flags=Gtk.DialogFlags.MODAL)
+                         transient_for=transient_for,
+                         flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                         buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
+                                  _("_OK"), Gtk.ResponseType.OK))
 
-        self.set_default_size(400, 500)
-        self.multi_selection = multi_selection
-        self.show_no_display = show_no_display
+        self.set_size_request(400, 500)
+        self._multi_selection = multi_selection
+        self._show_no_display = show_no_display
 
         content_box = self.get_content_area()
-        content_box.set_property("margin", 8)
-        content_box.set_spacing(8)
         content_box_grid = BaseGrid()
         content_box_grid.set_property("expand", True)
-        content_box_grid.set_spacing(0, 5)
+        content_box_grid.set_spacing(0, 6)
         content_box.add(content_box_grid)
 
         # Can be programmatically changed if needed.
@@ -121,7 +116,7 @@ class ApplicationChooserWidget(Gtk.Dialog):
 
         self.tree_view = Gtk.TreeView()
 
-        if self.multi_selection:
+        if self._multi_selection:
             self.tree_view.get_selection().set_mode(Gtk.SelectionMode.MULTIPLE)
         else:
             self.tree_view.get_selection().set_mode(Gtk.SelectionMode.SINGLE)
@@ -137,15 +132,29 @@ class ApplicationChooserWidget(Gtk.Dialog):
         scroll_window.add(self.tree_view)
         content_box_grid.attach(scroll_window, 0, 1, 1, 1)
 
-        ok_button = self.add_button(_("_OK"), Gtk.ResponseType.OK)
-        ok_button.connect("clicked", self.on_ok)
+        self._ok_button = self.get_widget_for_response(Gtk.ResponseType.OK)
 
-        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self._ok_button.connect("clicked", self.on_ok)
+        self.tree_view.connect("row-activated", self.on_ok)
+        self.tree_view.get_selection().connect("changed", self._update_ok_button_sensitivity)
 
         self.selected_apps = []
         self.app_list = []
 
-    def populate_app_list(self):
+        self._update_ok_button_sensitivity()
+
+    def _update_ok_button_sensitivity(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Description
+        """
+        tree_model, paths = self.tree_view.get_selection().get_selected_rows()
+        self._ok_button.set_sensitive(len(paths) != 0)
+
+    def _populate_app_list(self):
         """Populate the list of applications with all installed applications.
 
         <strikethrough>Icons are provided by icon-name, however some applications may return a full
@@ -181,14 +190,12 @@ class ApplicationChooserWidget(Gtk.Dialog):
             if lowered.startswith("screensavers-") or lowered.startswith("kde4-"):
                 return False
 
-            return True if self.show_no_display else not x.get_nodisplay()
+            return True if self._show_no_display else not x.get_nodisplay()
 
         self.app_list = list(filter(filter_list, Gio.AppInfo.get_all()))
 
-        for i in range(0, len(self.app_list)):
-            app = self.app_list[i]
-
-            if not self.show_no_display and app.get_nodisplay():
+        for i, app in enumerate(self.app_list):
+            if not self._show_no_display and app.get_nodisplay():
                 continue
 
             gio_icon = app.get_icon()
@@ -218,13 +225,12 @@ class ApplicationChooserWidget(Gtk.Dialog):
         None
             No selected applications.
         """
-        self.populate_app_list()
+        self._populate_app_list()
         self.show_all()
-        super().run()
-        self.destroy()
+        response = super().run()
 
-        if self.selected_apps:
-            if self.multi_selection:
+        if response == Gtk.ResponseType.OK and self.selected_apps:
+            if self._multi_selection:
                 return self.selected_apps
             else:
                 return self.selected_apps[0]
@@ -257,6 +263,8 @@ class ApplicationChooserWidget(Gtk.Dialog):
             app_index = tree_model.get_value(tree_iter, 2)
             self.selected_apps.append(self.app_list[app_index])
 
+        self.response(Gtk.ResponseType.OK)
+
 
 class AppList(SettingsWidget):
     """Summary
@@ -271,6 +279,11 @@ class AppList(SettingsWidget):
         Description
     """
     bind_dir = None
+    _columns = {
+        "APPINFO": 0,
+        "DISPLAY_NAME": 1,
+        "ICON": 2
+    }
 
     def __init__(self, label, dep_key=None, tooltip=""):
         """Initialization.
@@ -286,23 +299,16 @@ class AppList(SettingsWidget):
         """
         super().__init__(dep_key=dep_key)
         self.label = label
-        self._change_permitted = True
-        self._columns = {
-            "APPINFO": 0,
-            "DISPLAY_NAME": 1,
-            "ICON": 2
-        }
-
         self.content_widget = Gtk.Button(label=label, valign=Gtk.Align.CENTER)
-        self.attach(self.content_widget, 0, 0, 2, 1)
         self.content_widget.set_hexpand(True)
+        self.attach(self.content_widget, 0, 0, 2, 1)
 
         self.set_tooltip_text(tooltip)
 
         self._app_store = Gtk.ListStore()
         self._app_store.set_column_types([Gio.AppInfo, GObject.TYPE_STRING, Gio.Icon])
 
-    def open_applications_list(self, *args):
+    def _open_applications_list(self, *args):
         """Summary
 
         Parameters
@@ -313,30 +319,30 @@ class AppList(SettingsWidget):
         dialog = Gtk.Dialog(transient_for=self.get_toplevel(),
                             use_header_bar=True,
                             title=_("Applications list"),
-                            flags=Gtk.DialogFlags.MODAL)
+                            flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT)
 
         content_area = dialog.get_content_area()
         content_area_grid = BaseGrid()
-        content_area_grid.set_spacing(0, 0)
-        content_area_grid.set_property("margin", 10)
         content_area.add(content_area_grid)
 
-        self._change_permitted = False
+        label = Gtk.Label(_("Duplicated entries will be automatically removed"))
+        label.set_margin_bottom(6)
+        content_area_grid.attach(label, 0, 0, 1, 1)
 
         scrolled = Gtk.ScrolledWindow(hadjustment=None, vadjustment=None)
         scrolled.set_size_request(width=300, height=300)
         scrolled.set_shadow_type(type=Gtk.ShadowType.IN)
         scrolled.set_policy(hscrollbar_policy=Gtk.PolicyType.NEVER,
                             vscrollbar_policy=Gtk.PolicyType.AUTOMATIC)
-        content_area_grid.attach(scrolled, 0, 0, 1, 1)
+        content_area_grid.attach(scrolled, 0, 1, 1, 1)
 
-        self._tree_view = Gtk.TreeView()
-        self._tree_view.set_property("model", self._app_store)
-        self._tree_view.set_property("expand", True)
-        self._tree_view.get_selection().set_mode(Gtk.SelectionMode.MULTIPLE)
+        tree_view = Gtk.TreeView()
+        tree_view.set_model(self._app_store)
+        tree_view.set_property("expand", True)
+        tree_view.get_selection().set_mode(Gtk.SelectionMode.MULTIPLE)
 
         app_column = Gtk.TreeViewColumn()
-        app_column.set_property("title", _("Application"))
+        app_column.set_title(_("Application"))
         app_column.set_property("expand", True)
         app_column.set_sort_column_id(self._columns["DISPLAY_NAME"])
         app_column.set_sort_indicator(True)
@@ -347,29 +353,37 @@ class AppList(SettingsWidget):
         name_renderer = Gtk.CellRendererText()
         app_column.pack_start(name_renderer, True)
         app_column.add_attribute(name_renderer, "text", self._columns["DISPLAY_NAME"])
-        self._tree_view.append_column(app_column)
+        tree_view.append_column(app_column)
 
-        scrolled.add(self._tree_view)
+        scrolled.add(tree_view)
 
         toolbar = Gtk.Toolbar()
-        toolbar.set_icon_size(Gtk.IconSize.BUTTON)
+        toolbar.set_icon_size(Gtk.IconSize.MENU)
+        toolbar.set_hexpand(True)
+        toolbar.set_halign(Gtk.Align.FILL)
         toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
-        content_area_grid.attach(toolbar, 0, 1, 1, 1)
+        content_area_grid.attach(toolbar, 0, 2, 1, 1)
+
+        button_holder = Gtk.ToolItem()
+        button_holder.set_expand(True)
+        toolbar.add(button_holder)
+        buttons_box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
+        buttons_box.set_halign(Gtk.Align.CENTER)
+        button_holder.add(buttons_box)
 
         new_button = Gtk.ToolButton()
-        new_button.set_icon_name("bookmark-new-symbolic")
-        new_button.set_label(_("Add Application"))
-        new_button.set_is_important(True)
+        new_button.set_icon_name("list-add-symbolic")
+        new_button.set_tooltip_text(_("Add Applications"))
         new_button.connect("clicked", self._add_applications)
-        toolbar.add(new_button)
+        buttons_box.add(new_button)
 
         del_button = Gtk.ToolButton()
         del_button.set_icon_name("edit-delete-symbolic")
         del_button.set_tooltip_text(_("Remove selected applications"))
-        del_button.connect("clicked", self._delete_selected_applications)
-        toolbar.add(del_button)
+        del_button.connect("clicked", self._delete_selected_applications, tree_view)
+        buttons_box.add(del_button)
 
-        selection = self._tree_view.get_selection()
+        selection = tree_view.get_selection()
 
         def set_del_button_sensitive(sel):
             """Summary
@@ -384,96 +398,27 @@ class AppList(SettingsWidget):
         selection.connect("changed", set_del_button_sensitive)
         del_button.set_sensitive(selection.count_selected_rows() != 0)
 
-        self._change_permitted = True
-        self.on_setting_changed()
+        self._populate_app_list()
 
         content_area.show_all()
         dialog.run()
 
         dialog.destroy()
-        self.list_changed()
+        self._list_changed()
 
-    def _add_applications(self, *args):
+    def _populate_app_list(self, *args):
         """Summary
 
         Parameters
         ----------
         *args
-            Arguments.
+            Description
         """
-        app_chooser = ApplicationChooserWidget(parent=self.get_toplevel(),
-                                               multi_selection=True)
-        app_chooser.set_label(_("Choose one or more applications (Hold Ctrl key)"))
-        apps_info = app_chooser.run()
-
-        if apps_info is not None and len(apps_info) > 0:
-            self._change_permitted = False
-
-            for a_i in apps_info:
-                iter = self._app_store.append()
-
-                self._app_store.set(iter, [
-                    self._columns["APPINFO"],
-                    self._columns["ICON"],
-                    self._columns["DISPLAY_NAME"]
-                ], [
-                    a_i,
-                    a_i.get_icon(),
-                    a_i.get_display_name()
-                ])
-
-            self._change_permitted = True
-
-    def _delete_selected_applications(self, *args):
-        """Summary
-
-        Parameters
-        ----------
-        *args
-            Arguments.
-        """
-        self._change_permitted = False
-        selection = self._tree_view.get_selection()
-        tree_model, paths = selection.get_selected_rows()
-
-        # Iterate in reverse so the right rows are removed. ¬¬
-        for path in reversed(paths):
-            tree_iter = tree_model.get_iter(path)
-            tree_model.remove(tree_iter)
-
-        self._change_permitted = True
-
-    def list_changed(self):
-        """Summary
-        """
-        data = set()
-
-        for app in self._app_store:
-            data.add(app[self._columns["APPINFO"]].get_id())
-
-        self.set_value(list(data))
-
-    def on_setting_changed(self, *args):
-        """Summary
-
-        Parameters
-        ----------
-        *args
-            Arguments.
-
-        Returns
-        -------
-        None
-            Halt execution.
-        """
-        if not self._change_permitted:
-            # Ignore this notification, model is being modified outside
-            return
-
         self._app_store.clear()
 
-        current_applications = self.get_value()
-        valid_applications = []
+        # NOTE: list(set()) in case that there are duplicated entries added externally.
+        current_applications = list(set(self.get_value()))
+        valid_applications = set()
 
         for id in current_applications:
             # Needed just in case there is an application in the list and then
@@ -488,7 +433,7 @@ class AppList(SettingsWidget):
             if not app_info:
                 continue
 
-            valid_applications.append(id)
+            valid_applications.add(id)
 
             iter = self._app_store.append()
 
@@ -502,11 +447,79 @@ class AppList(SettingsWidget):
                 app_info.get_display_name()
             ])
 
-        if (len(valid_applications) != len(current_applications)):  # some items were filtered out
-            self.set_value(valid_applications)
+        # NOTE: Sets comparison.
+        if (valid_applications != set(current_applications)):  # some items were filtered out
+            self.set_value(list(valid_applications))
 
         # The following line auto sorts the list at start up!!! Finally!!!
         self._app_store.set_sort_column_id(self._columns["DISPLAY_NAME"], Gtk.SortType.ASCENDING)
+
+    def _add_applications(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        app_chooser = ApplicationChooserWidget(transient_for=self.get_toplevel(),
+                                               multi_selection=True)
+        app_chooser.set_label(_("Choose one or more applications (Hold Ctrl key)"))
+        apps_info = app_chooser.run()
+        app_chooser.destroy()
+
+        if apps_info is not None and len(apps_info) > 0:
+            for a_i in apps_info:
+                iter = self._app_store.append()
+
+                self._app_store.set(iter, [
+                    self._columns["APPINFO"],
+                    self._columns["ICON"],
+                    self._columns["DISPLAY_NAME"]
+                ], [
+                    a_i,
+                    a_i.get_icon(),
+                    a_i.get_display_name()
+                ])
+
+    def _delete_selected_applications(self, widget, tree):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        tree : TYPE
+            Description
+        """
+        selection = tree.get_selection()
+        tree_model, paths = selection.get_selected_rows()
+
+        # Iterate in reverse so the right rows are removed. ¬¬
+        for path in reversed(paths):
+            tree_iter = tree_model.get_iter(path)
+            tree_model.remove(tree_iter)
+
+    def _list_changed(self):
+        """Summary
+        """
+        # NOTE: Use of set() to avoid storing duplicated apps.
+        data = set()
+
+        for app in self._app_store:
+            data.add(app[self._columns["APPINFO"]].get_id())
+
+        self.set_value(list(data))
+
+    def on_setting_changed(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        self._populate_app_list()
 
     def connect_widget_handlers(self, *args):
         """Summary
@@ -516,7 +529,7 @@ class AppList(SettingsWidget):
         *args
             Arguments.
         """
-        self.content_widget.connect("clicked", self.open_applications_list)
+        self.content_widget.connect("clicked", self._open_applications_list)
 
 
 class AppChooser(SettingsWidget):
@@ -554,17 +567,36 @@ class AppChooser(SettingsWidget):
         self.content_widget = Gtk.Button(valign=Gtk.Align.CENTER)
         self.content_widget.set_always_show_image(True)
 
+        self._clear_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+            "edit-clear-symbolic",
+            Gtk.IconSize.BUTTON
+        ))
+        self._clear_button.set_tooltip_text(_("Clear application"))
+        self._clear_button.set_valign(Gtk.Align.CENTER)
+
         self.attach(self.label, 0, 0, 1, 1)
-        self.attach(self.content_widget, 1, 0, 1, 1)
+        self.attach(self._clear_button, 1, 0, 1, 1)
+        self.attach(self.content_widget, 2, 0, 1, 1)
 
         self.set_tooltip_text(tooltip)
 
         if size_group:
             self.add_to_size_group(size_group)
 
-        self.set_button_data()
+        self._set_button_data()
 
-    def open_app_chooser(self, *args):
+    def _on_clear_button_clicked(self, *args):
+        """Summary
+
+        Parameters
+        ----------
+        *args
+            Description
+        """
+        self.set_value("")
+        self._set_button_data()
+
+    def _open_app_chooser(self, *args):
         """Summary
 
         Parameters
@@ -572,15 +604,16 @@ class AppChooser(SettingsWidget):
         *args
             Arguments.
         """
-        app_chooser = ApplicationChooserWidget(parent=self.get_toplevel(),
+        app_chooser = ApplicationChooserWidget(transient_for=self.get_toplevel(),
                                                multi_selection=False)
         app_chooser.set_label(_("Choose an application"))
         app_info = app_chooser.run()
+        app_chooser.destroy()
 
         if app_info is not None:
-            self.on_app_selected(app_info.get_id())
+            self._on_app_selected(app_info.get_id())
 
-    def on_app_selected(self, apps_id):
+    def _on_app_selected(self, apps_id):
         """Summary
 
         Parameters
@@ -589,23 +622,28 @@ class AppChooser(SettingsWidget):
             Description
         """
         self.set_value(apps_id)
-        self.on_setting_changed()
+        self._set_button_data()
 
-    def set_button_data(self, image=None, label=_("No app chosen"), extra_info=""):
+    def _set_button_data(self):
         """Summary
-
-        Parameters
-        ----------
-        image : None, optional
-            Description
-        label : TYPE, optional
-            Description
-        extra_info : str, optional
-            Description
         """
-        if image is None:
-            image = Gtk.Image.new_from_gicon(
-                Gio.Icon.new_for_string("image-missing"), Gtk.IconSize.BUTTON)
+        image = Gtk.Image.new_from_gicon(
+            Gio.Icon.new_for_string("image-missing"), Gtk.IconSize.BUTTON)
+        label = _("No app chosen")
+        extra_info = ""
+
+        try:
+            app_info = Gio.DesktopAppInfo.new(self.get_value())
+        except Exception:
+            app_info = None
+
+        if isinstance(app_info, Gio.DesktopAppInfo):
+            try:
+                label = app_info.get_display_name()
+                extra_info = "\n%s" % app_info.get_id()
+                image = Gtk.Image.new_from_gicon(app_info.get_icon(), Gtk.IconSize.BUTTON)
+            except Exception:
+                pass
 
         self.content_widget.set_image(image)
         self.content_widget.set_label(label)
@@ -619,23 +657,7 @@ class AppChooser(SettingsWidget):
         *args
             Arguments.
         """
-        try:
-            app_info = Gio.DesktopAppInfo.new(self.get_value())
-        except Exception:
-            app_info = None
-
-        if isinstance(app_info, Gio.DesktopAppInfo):
-            extra_info = "\n%s" % app_info.get_id()
-            label = app_info.get_display_name()
-
-            try:
-                image = Gtk.Image.new_from_gicon(app_info.get_icon(), Gtk.IconSize.BUTTON)
-            except Exception:
-                image = Gtk.Image.new_from_gicon(
-                    Gio.Icon.new_for_string("image-missing"), Gtk.IconSize.BUTTON)
-            self.set_button_data(image=image, label=label, extra_info=extra_info)
-        else:
-            self.set_button_data()
+        self._set_button_data()
 
     def connect_widget_handlers(self, *args):
         """Summary
@@ -645,7 +667,8 @@ class AppChooser(SettingsWidget):
         *args
             Arguments.
         """
-        self.content_widget.connect("clicked", self.open_app_chooser)
+        self.content_widget.connect("clicked", self._open_app_chooser)
+        self._clear_button.connect("clicked", self._on_clear_button_clicked)
 
 
 if __name__ == "__main__":

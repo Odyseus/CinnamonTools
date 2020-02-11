@@ -5,7 +5,7 @@ Xlets settings custom framework
 
 I created this framework for several reasons.
 
-- I don't want to maintain several versions of my xlets, so I refuse to ever use ``multiversion`` on my xlets. Which is what I would be forced do if I were to make use of Cinnamon's native settings framework because of the always evolving nature of Cinnamon itself.
+- I don't want to maintain several versions of my xlets, so I refuse to ever use ``multiversion`` (again) on my xlets. Which is what I would be forced to do if I were to make use of Cinnamon's native settings framework because of the always evolving nature of Cinnamon itself.
 - And finally, I don't like the philosophy *the less options the better*.
 
 General changes
@@ -18,9 +18,9 @@ General changes
     + :py:class:`Gtk.HeaderBar` is easier to deal with (just create one and throw all widgets inside it). So, there is the barely bright side. LOL
     + In spite of my aversion for header bars, this framework is used for settings windows for xlets. And I create xlets whose settings are "to be set and forgotten". So, one just has to tolerate the settings window once. And for xlet settings that need to be changed frequently, I always create a mechanism to set them on-the-fly, without having to open the settings window.
 
-- This implementation remembers the last state of opened windows (window size and maximized state). Setting an initial size for a window that will be suitable for every single combination of font sizes, Gtk3 themes, screen resolutions just doesn't cut it for me. Last selected section (stack) is also remembered.
+- This implementation remembers the last state of opened windows (window size, maximized state and selected section on the sidebar). Setting an initial size for a window that will be suitable for every single combination of font sizes, Gtk3 themes, screen resolutions just doesn't cut it for me.
 - This implementation doesn't use JSON files for the creation of the widgets. I wanted the power and flexibility of Python scripts.
-- The ``dependency`` option can be a string or a list.
+- The ``dependency`` option for a widget can be a string or a list.
 
 Widget changes made
 ===================
@@ -39,6 +39,7 @@ Widget changes made
 
     + Added ``color`` cell renderer. It allows to choose a color using a color chooser. The cell will be rendered with the selected color as its background color and the color *name* as its visible value. The color of the text will be black or white depending on the luminance of the background color.
     + Added ``move-buttons`` boolean option. It allows to show/hide the move up/down buttons on the ``list`` widget.
+    + Added ``multi-select`` boolean option. It allows to select multiple rows inside the ``list`` widget. Mostly useful for mass deletions of items.
     + Added ``immutable`` option. An *immutable* ``list`` widget can be edited, but items in the list cannot be removed nor new ones be added.
 
         * This setting can be a boolean or a dictionary.
@@ -59,11 +60,18 @@ Widget changes made
 - **keybinding**: Added ``num-bind`` integer option that exposes for configuration the number of keybindings to create for each ``keybinding`` widget.
 - **keybinding-with-options**. A new widget that allows to attach a keybinding to a combo box. The objective is to be able to easily tie a keybinding to a predefined action. This widget is also exposed to be used with the ``list`` widget.
 - **label**: Added ``use-markup`` boolean option that allows to use markup in labels.
-- **colorchooser**: Added ability to activate the color chooser button when clicking the row is in, just like switches. Also exposed the capability for the color chooser to select color with or without alpha with the boolean option ``use-alpha``.
+- **colorchooser**:
+
+    + Added ability to activate the color chooser button when clicking the row is in, just like switches.
+    + Exposed the capability for the color chooser to select color with or without alpha with the boolean option ``use-alpha``.
+    + Added a button next to the widget that allows to clear its value.
+
 - **textview**: Added ``accept-tabs`` boolean option to ``textview`` widget. Setting it to **true** will allow to insert a tab character when pressing the :kbd:`Tab` key. Setting it to **false** the :kbd:`Tab` key will move the keyboard focus out of the widget.
-- **combobox**: Changes:
+- **combobox**:
 
     + Changed the ``options`` option. I inverted the definition of ``options`` when they are declared as a dictionary. In Cinnamon's implementation, the key in the dictionary is used as a label and the value is used as the value for that label. In this implementation, the value is used as a key in the dictionary and the label as the value of that key. This was done to be able to localize the labels declared in a Python script. If I would have left the Cinnamon implementation intact, I would have been forced to create a *dummy strings storage* for ``gettext`` to be able to *see them* (which would have been a chore). Additionally, in Cinnamon's implementation, one ended up using keys with spaces, which freaked me out (LOL).
+    + The ``options`` option in this implementation will have its items sorted alphabetically.
+    + Added ``first-option`` option. It allows to specify an ``options`` key to be always at the top of the combobox.
     + Exposed for configuration the ``valtype`` option for this widget. This was a necessity born of the change that I made to the ``options`` option.
 
     .. note::
@@ -73,6 +81,10 @@ Widget changes made
 - **appchooser**: A new widget that allows to select an application from the list of installed applications on a system. The value stored in the setting for this widget is the application ID (the name of its .desktop file).
 - **applist**: A new widget that allows to store a list of unique applications that can be selected from the list of installed applications on a system. The value stored in the setting for this widget is an array with the list of application IDs (the name of their .desktop files).
 - **filechooser**: Added a button that allows to clear the path set by this widget.
+- **iconchooser**:
+
+    + Modified to use a custom icon chooser widget that behaves similarly to the one used by Cinnamon's native settings system. Since Cinnamon's native depends on ``XApp``, I created almost from scratch a widget in Python (:any:`IconChooserDialog`).
+    + The value in the widget is always displayed inside an entry for quick edition of it without the need to open the icon chooser dialog.
 
 
 Limitations
@@ -88,9 +100,7 @@ Limitations
 TODO
 ====
 
-- Implement the rest of widgets (``datechooser``, ``fontchooser``, ``scale``, ``soundfilechooser`` and ``tween``). Since I don't use them in any of my xlets, I didn't implemented these widgets just yet. **Low priority**
-- Implement handling of gsettings. This will allow me to use this framework on the xlets in which I use gsettings with custom GUIs. **Ultra low priority**
-- Implement a *multi-widget widget*. Something similar to the ``keybinding-with-options`` widget. But instead of binding a combo box to a key binding, I would like to bind any type of widget to an option selector widget (a combo box or a stack switcher). Very green idea yet. **Low priority**
+- Implement the rest of widgets (``datechooser``, ``fontchooser``, ``scale``, ``soundfilechooser`` and ``tween``). Since I don't use them in any of my xlets, I didn't implemented these widgets just yet. I don't think that I will ever use nor implement any of these widgets (implementing them will require at least a thousand lines of code!). **Ultra low priority**
 
 DONE
 ====
@@ -102,9 +112,10 @@ DONE
 
     - Use of side bars instead of stack switchers in the header bar.
     - At the start of the header bar, the instance switcher. If only one instance, the image of the xlet.
-    - In the middle of the header, just the window title and the xlet UUID and instance ID as sub-title.
-    - At the end of the header bar, the menu button to handle importing/exporting/reseting settings.
+    - In the middle of the header, just the xlet name as the window title and the xlet UUID and instance ID as sub-title.
+    - At the end of the header bar, the menu button to handle importing/exporting/reseting settings and optionally an item to open the xlet help page.
     - Implemented handling of multiple xlets instances.
+    - Implemented handling of gsettings.
 
     .. rst-class:: wy-text-strike
 
@@ -117,3 +128,9 @@ DONE
                 2. In most cases, the image alone will serve to quickly identify to which xlet the window belongs.
                 3. K.I.S.S. it. Do not add a menu nor any other action to the button.
                 4. I already implemented this button without implementing multi-instance support. It was bothering me a big deal to see the title text ellipsized 90% of the time; it just made that text in that place totally useless. Like I said in point 3, in most cases the image is enough.
+
+.. contextual-admonition::
+    :context: warning
+    :title: Abandoned ideas
+
+    - Implement a *multi-widget widget*. Something similar to the ``keybinding-with-options`` widget. But instead of binding a combo box to a key binding, I would like to bind any type of widget to an option selector widget (a combo box or a stack switcher). Very green idea yet. **Low priority**
