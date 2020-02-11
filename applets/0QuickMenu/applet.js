@@ -20,9 +20,6 @@ const {
         St
     },
     mainloop: Mainloop,
-    misc: {
-        util: Util
-    },
     ui: {
         applet: Applet,
         main: Main,
@@ -33,7 +30,8 @@ const {
 } = imports;
 
 const {
-    _
+    _,
+    xdgOpen
 } = GlobalUtils;
 
 function QuickMenu() {
@@ -145,37 +143,14 @@ QuickMenu.prototype = {
             this.instance_id
         );
 
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+        this._bindSettings();
+        aDirectCallback();
 
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+        Mainloop.idle_add(() => {
+            aIdleCallback();
 
-                return GLib.SOURCE_REMOVE;
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
-        }
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _bindSettings: function() {
@@ -549,7 +524,7 @@ QuickMenu.prototype = {
             "folder",
             St.IconType.SYMBOLIC);
         this.open_dir_menu_item.connect("activate", () => {
-            Util.spawn_async(["xdg-open", this.pref_directory]);
+            xdgOpen(this.pref_directory);
         });
         new Tooltips.Tooltip(this.open_dir_menu_item.actor, _("Open the main folder."),
             this.orientation);
@@ -559,7 +534,7 @@ QuickMenu.prototype = {
             "dialog-information",
             St.IconType.SYMBOLIC);
         this.help_menu_item.connect("activate", () => {
-            Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"]);
+            xdgOpen(this.metadata.path + "/HELP.html");
         });
         new Tooltips.Tooltip(this.help_menu_item.actor, _("Open the help file."), this.orientation);
         this._applet_context_menu.addMenuItem(this.help_menu_item);
