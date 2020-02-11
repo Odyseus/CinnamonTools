@@ -14,7 +14,8 @@ if (typeof require === "function") {
 }
 
 const {
-    _
+    _,
+    xdgOpen
 } = GlobalUtils;
 
 const {
@@ -23,9 +24,6 @@ const {
         St
     },
     mainloop: Mainloop,
-    misc: {
-        util: Util
-    },
     ui: {
         applet: Applet,
         popupMenu: PopupMenu,
@@ -77,37 +75,14 @@ MyApplet.prototype = {
             this.instance_id
         );
 
-        let callback = () => {
-            try {
-                this._bindSettings();
-                aDirectCallback();
-            } catch (aErr) {
-                global.logError(aErr);
-            }
+        this._bindSettings();
+        aDirectCallback();
 
-            Mainloop.idle_add(() => {
-                try {
-                    aIdleCallback();
-                } catch (aErr) {
-                    global.logError(aErr);
-                }
+        Mainloop.idle_add(() => {
+            aIdleCallback();
 
-                return GLib.SOURCE_REMOVE;
-            });
-        };
-
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 4.2.x+
-        // Always use promise. Declare content of callback variable
-        // directly inside the promise callback.
-        switch (this.settings.hasOwnProperty("promise")) {
-            case true:
-                this.settings.promise.then(() => callback());
-                break;
-            case false:
-                callback();
-                break;
-        }
+            return GLib.SOURCE_REMOVE;
+        });
     },
 
     _bindSettings: function() {
@@ -141,7 +116,7 @@ MyApplet.prototype = {
         let menuItem = new PopupMenu.PopupIconMenuItem(_("Help"),
             "dialog-information", St.IconType.SYMBOLIC);
         menuItem.connect("activate", () => {
-            Util.spawn_async(["xdg-open", this.metadata.path + "/HELP.html"], null);
+            xdgOpen(this.metadata.path + "/HELP.html");
         });
         this._applet_context_menu.addMenuItem(menuItem);
     },

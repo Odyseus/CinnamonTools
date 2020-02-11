@@ -2,6 +2,17 @@
 
 ***
 
+- **Date:** Mon, 10 Feb 2020 22:49:20 -0300
+- **Commit:** [212a45b](https://gitlab.com/Odyseus/CinnamonTools/commit/212a45b)
+- **Author:** Odyseus
+
+```
+- Fixed styling of `Gtk.FlowBox`es and `Gtk.FlowBoxChild`s. (Upstream fix)
+
+```
+
+***
+
 - **Date:** Wed, 29 Jan 2020 18:25:30 -0300
 - **Commit:** [9fd6766](https://gitlab.com/Odyseus/CinnamonTools/commit/9fd6766)
 - **Author:** Odyseus

@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "APP.PY" "1" "Jan 28, 2020" "" "Cinnamon Tools"
+.TH "APP.PY" "1" "Feb 11, 2020" "" "Cinnamon Tools"
 .SH NAME
 app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .
@@ -59,7 +59,8 @@ app.py build_themes [\-t <name> | \-\-theme\-name=<name>]
 app.py parse_sass [\-y | \-\-dry\-run]
 app.py dev <sub_commands>...
            [\-x <name>... | \-\-xlet=<name>...]
-app.py generate (system_executable | docs | docs_no_api | base_xlet)
+app.py generate (system_executable | docs | docs_no_api | base_xlet |
+                repo_changelog | themes_changelog | all_changelogs)
                 [\-f | \-\-force\-clean\-build]
                 [\-u | \-\-update\-inventories]
 app.py print_xlets_slugs

@@ -4,6 +4,124 @@
 
 ***
 
+- **Date:** Tue, 11 Feb 2020 00:34:32 -0300
+- **Commit:** [33252df](https://gitlab.com/Odyseus/CinnamonTools/commit/33252df)
+- **Author:** Odyseus
+
+```
+All xlets
+
+- Corrected typo of the word "Additionally" found across all xlets files.
+- Compressed all images used by the xlets help pages.
+- Updated localization templates.
+- Updated Spanish localizations.
+- Updated change logs.
+- Updated help pages.
+
+```
+
+***
+
+- **Date:** Mon, 10 Feb 2020 22:59:30 -0300
+- **Commit:** [9524824](https://gitlab.com/Odyseus/CinnamonTools/commit/9524824)
+- **Author:** Odyseus
+
+```
+Python modules
+
+- localized_help_creator.py: Fixed the formatting of a localizable string that prevented to correctly being extracted by gettext.
+- app_utils.py: Added the new file_chooser_dialog Python module for docstrings extraction when generating the documentation.
+
+```
+
+***
+
+- **Date:** Mon, 10 Feb 2020 22:54:05 -0300
+- **Commit:** [bacfc8e](https://gitlab.com/Odyseus/CinnamonTools/commit/bacfc8e)
+- **Author:** Odyseus
+
+```
+JavaScript modules
+
+- customTooltips.js:
+    - Added options to override the max. width of the tooltip and to override the tooltip text alignment.
+    - Corrected typo in the IntelligentTooltip class name.
+    - Corrected tooltip positioning issues. I went with the *if a scalpel doesn't cut it, use a sledgehammer!* approach.
+- globalUtils.js: Added `html2pango`, `html2text` and `copyToClipboard` functions.
+
+```
+
+***
+
+- **Date:** Mon, 10 Feb 2020 22:52:15 -0300
+- **Commit:** [1f56dc3](https://gitlab.com/Odyseus/CinnamonTools/commit/1f56dc3)
+- **Author:** Odyseus
+
+```
+Xlets settings framework
+
+- General:
+    - Added the possibility to open the settings window with a specific section selected.
+    - Use a *safer* way to set the initial page from the stored data.
+    - Added style to enforce padding to the labels of the sidebar items for Gtk version 3.18. Without the padding, scrollbars will cover part of the sidebar items label.
+    - Enabled the use of header bars in several dialogs.
+    - Suffixed most of the class methods/attributes with a `_`. Mostly to avoid the auto-docstring generator that I use to generate double entries for attributes with the same name as keyword arguments. And also to avoid overriding methods/properties on the parent classes.
+    - Added the `Gtk.DialogFlags.DESTROY_WITH_PARENT` to all `Gtk.Dialog`s.
+    - Changes to the widget definitions. I made it more structured/simpler to avoid dumb errors that are hard to troubleshoot.
+    - Removed unused/unfinished `MultiOptionsWidgets.py` module. I don't think that it will ever be worth the headache.
+    - Docstrings clean up.
+- AppChooserWidgets.py:
+    - Added use of the `transient_for` argument to the `ApplicationChooserWidget` class to avoid annoying Gtk warnings.
+    - Improved handling of duplicated applications IDs on the `AppList` widget.
+- SettingsWidgets.py:
+    - Modified the `IconChooser` widget to behave more like the widget used in newer Cinnamon versions. The new icon selector can choose icons from the currently in use icon theme and also image files.
+    - Moved the declaration of the `JSON_SETTINGS_PROPERTIES_MAP` variable from the `JsonSettingsWidgets.py` module to this module so I can use it from the newly functional `GSettingsWidgets.py` module.
+    - Renamed the `SectionContainer` class to `SettingsSection` to make it easy to track upstream changes.
+    - Ensured that settings widgets inside a revealer can be visible when creating `SettingsSection`s. (Upstream fix)
+    - Added a clear color button to the `ColorChooser` widget.
+    - Changed the `num_bind` argument of the `Keybinding` widget from a default of 2 to 1.
+- TreeListWidgets.py:
+    - Added `multi-select` option for **list** widget. It allows to select multiple rows inside the list. Mostly useful for mass deletions of items.
+    - Removed all workarounds when handling **list** widget items by implementing a fix from upstream.
+- JsonSettingsWidgets.py:
+    - Added `__all__` declaration. Just because is the right thing to do when using `import *`.
+    - Changed the way the `self.on_setting_changed` method is called to avoid triggering it unnecessarily. (Upstream fix)
+- common.py:
+    - Moved a function used by more than one module into this module to remove duplicated code.
+    - Removed unused `InfoLabel` class.
+- GSettingsWidgets.py:
+    - Finally implemented the use of this module. Now gsettings can be directly handled from an xlet settings window instead of handled using a xlet setting as a *proxy*. Only `Switch` and `ComboBox` widgets are implemented for now.
+
+```
+
+***
+
+- **Date:** Mon, 10 Feb 2020 22:51:24 -0300
+- **Commit:** [a417d7f](https://gitlab.com/Odyseus/CinnamonTools/commit/a417d7f)
+- **Author:** Odyseus
+
+```
+General
+
+- Added the file_chooser_dialog Python module to be used by xlets to be able to open a file dialog chooser.
+
+```
+
+***
+
+- **Date:** Wed, 29 Jan 2020 21:38:04 -0300
+- **Commit:** [e1afec0](https://gitlab.com/Odyseus/CinnamonTools/commit/e1afec0)
+- **Author:** Odyseus
+
+```
+General
+
+- Updated changelogs.
+
+```
+
+***
+
 - **Date:** Wed, 29 Jan 2020 21:37:40 -0300
 - **Commit:** [88651c7](https://gitlab.com/Odyseus/CinnamonTools/commit/88651c7)
 - **Author:** Odyseus
