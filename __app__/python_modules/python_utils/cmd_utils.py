@@ -218,7 +218,7 @@ def find_executables(executable):
     return None
 
 
-def run_cmd(cmd, stdout=PIPE, stderr=PIPE, env=get_environment(), **kwargs):
+def run_cmd(cmd, stdout=PIPE, stderr=PIPE, env=True, **kwargs):
     """See :any:`subprocess.run`.
 
     Parameters
@@ -239,6 +239,12 @@ def run_cmd(cmd, stdout=PIPE, stderr=PIPE, env=get_environment(), **kwargs):
     object
         See :any:`subprocess.CompletedProcess`.
     """
+    # NOTE: This is a workaround to avoid putting the call to get_environment directly inside
+    # the function definition arguments. Otherwise, when generating the documentation with
+    # Sphinx, the entire environment is dumped into the generated documentation. ¬¬
+    if env is True:
+        env = get_environment()
+
     return run(cmd, stdout=stdout, stderr=stderr, env=env, **kwargs)
 
 
