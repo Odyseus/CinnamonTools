@@ -261,6 +261,7 @@ class XletsHelperCore():
         self.logger = logger
         self.xlets_display_names = xlets_display_names
         self.all_xlets_meta = AllXletsMetadata().meta_list
+        self._errors = {}
 
         self._store_xlets_meta()
 
@@ -289,29 +290,31 @@ class XletsHelperCore():
         for xlet in self.xlets_meta:
             self.logger.info("**Generating change log for %s...**" % xlet["name"])
 
-            try:
-                xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
-                log_path = os.path.join(xlet_root_folder, "__data__", "CHANGELOG.md")
-                os.makedirs(os.path.dirname(log_path), exist_ok=True)
+            xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
+            log_path = os.path.join(xlet_root_folder, "__data__", "CHANGELOG.md")
+            os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
-                with open(log_path, "w") as f:
-                    f.write(_changelog_header_xlets.format(
-                        xlet_name=xlet["name"],
-                        repo_url=URLS["repo"]
-                    ))
-
-                # Generate change log from current repository paths.
-                relative_path = "./" + xlet["type"] + "s/" + xlet["slug"]
-                cmd = _git_log_cmd_xlets.format(
-                    xlet_slug=xlet["slug"],
-                    relative_path=relative_path,
-                    append_or_override=">>",
-                    log_path=log_path,
+            with open(log_path, "w") as f:
+                f.write(_changelog_header_xlets.format(
+                    xlet_name=xlet["name"],
                     repo_url=URLS["repo"]
-                )
-                cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=root_folder, shell=True)
-            except Exception as err:
-                self.logger.error(err)
+                ))
+
+            # Generate change log from current repository paths.
+            relative_path = "./" + xlet["type"] + "s/" + xlet["slug"]
+            cmd = _git_log_cmd_xlets.format(
+                xlet_slug=xlet["slug"],
+                relative_path=relative_path,
+                append_or_override=">>",
+                log_path=log_path,
+                repo_url=URLS["repo"]
+            )
+            po = cmd_utils.run_cmd(cmd, stdout=None, cwd=root_folder, shell=True)
+
+            if po.stderr:
+                self._store_error(xlet["slug"],
+                                  "create_xlets_changelogs",
+                                  po.stderr.decode("UTF-8"))
 
     def update_pot_files(self):
         """Update POT files.
@@ -329,6 +332,8 @@ class XletsHelperCore():
             additional_files_to_scan = []
             xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
             xlet_config_file = os.path.join(xlet_root_folder, "z_config.py")
+            create_localized_help_file = os.path.join(
+                xlet_root_folder, "z_create_localized_help.py")
 
             if file_utils.is_real_file(xlet_config_file):
                 extra_settings = run_path(xlet_config_file)["settings"]
@@ -338,24 +343,29 @@ class XletsHelperCore():
                     additional_files_to_scan = [
                         "--scan-additional-file=%s" % p for p in extra_paths]
 
+            if file_utils.is_real_file(create_localized_help_file):
+                additional_files_to_scan.append(
+                    "--scan-additional-file=../../__app__/python_modules/localized_help_creator.py")
+
             self.logger.info(
                 "**Updating localization template for %s...**" % xlet["name"])
 
-            try:
-                if not cmd_utils.which("make-cinnamon-xlet-pot-cli"):
-                    self.logger.error(
-                        "**MissingCommand:** make-cinnamon-xlet-pot-cli command not found!!!", date=False)
-                    raise SystemExit(1)
+            if not cmd_utils.which("make-cinnamon-xlet-pot-cli"):
+                self.logger.error(
+                    "**MissingCommand:** make-cinnamon-xlet-pot-cli command not found!!!", date=False)
+                raise SystemExit(1)
 
-                cmd = [
-                    "make-cinnamon-xlet-pot-cli",
-                    "--custom-header",
-                    "--scan-additional-file=../../__app__/python_modules/localized_help_creator.py",
-                    "--ignored-pattern=__data__/*"
-                ] + additional_files_to_scan
-                cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=xlet_root_folder)
-            except Exception:
-                continue
+            cmd = [
+                "make-cinnamon-xlet-pot-cli",
+                "--custom-header",
+                "--ignored-pattern=__data__/*"
+            ] + additional_files_to_scan
+            po = cmd_utils.run_cmd(cmd, stdout=None, cwd=xlet_root_folder)
+
+            if po.stderr:
+                self._store_error(xlet["slug"],
+                                  "update_pot_files",
+                                  po.stderr.decode("UTF-8"))
 
     def create_localized_help(self):
         """Create localized help.
@@ -371,8 +381,12 @@ class XletsHelperCore():
 
             if os.path.exists(script_file_path):
                 self.logger.info("**Creating localized help for %s...**" % xlet["name"])
-                cmd_utils.run_cmd([script_file_path], stdout=None,
-                                  stderr=None, cwd=xlet_root_folder)
+                po = cmd_utils.run_cmd([script_file_path], stdout=None, cwd=xlet_root_folder)
+
+                if po.stderr:
+                    self._store_error(xlet["slug"],
+                                      "create_localized_help",
+                                      po.stderr.decode("UTF-8"))
 
         self.update_repository_readme()
 
@@ -473,22 +487,29 @@ class XletsHelperCore():
 
                         self.logger.info("**Updating temporary %s from localization template...**" %
                                          po_base_name, date=False)
-                        cmd_utils.run_cmd([
+                        po = cmd_utils.run_cmd([
                             "msgmerge",
+                            "--silent",             # Shut the heck up.
+                            "--no-wrap",            # Do not wrap long lines.
                             "--no-fuzzy-matching",  # Do not use fuzzy matching.
-                            "--previous",           # Keep previous msgids of translated messages.
                             "--backup=off",         # Never make backups.
                             "--update",             # Update .po file, do nothing if up to date.
                             tmp_po_file_path,       # The .po file to update.
                             tmp_pot_file_path       # The template file to update from.
-                        ], stdout=None, stderr=None)
+                        ], stdout=None)
+
+                        if po.stderr:
+                            self._store_error(xlet_slug,
+                                              "update_spanish_localizations" + " " + po_base_name,
+                                              po.stderr.decode("UTF-8"))
 
                         self.logger.info("**Counting untranslated strings...**", date=False)
                         trans_count_cmd = 'msggrep -v -T -e "." "%s" | grep -c ^msgstr'
                         trans_count_output = cmd_utils.run_cmd(trans_count_cmd % tmp_po_file_path,
                                                                shell=True).stdout
-                        trans_count = str(trans_count_output.decode("UTF-8").strip())
-                        markdown_content += "|%s|%s|\n" % (po_base_name, trans_count)
+                        trans_count = int(trans_count_output.decode("UTF-8").strip())
+                        markdown_content += "|%s|%d|\n" % (
+                            po_base_name, trans_count - 1 if trans_count > 0 else trans_count)
 
         if markdown_content:
             with open(trans_stats_file, "w", encoding="UTF-8") as trans_file:
@@ -524,16 +545,70 @@ class XletsHelperCore():
             if file_utils.is_real_dir(po_dir) and file_utils.is_real_file(po_file):
                 self.logger.info("**Updating localization for %s**" % xlet_slug)
 
-                if cmd_utils.run_cmd([
+                po = cmd_utils.run_cmd([
                     "msgmerge",
+                    "--silent",                 # Shut the heck up.
+                    "--no-wrap",                # Do not wrap long lines.
                     "--no-fuzzy-matching",      # Do not use fuzzy matching.
-                    "--previous",               # Keep previous msgids of translated messages.
                     "--backup=off",             # Never make backups.
                     "--update",                 # Update .po file, do nothing if up to date.
                     "es.po",                    # The .po file to update.
                     "%s.pot" % xlet_slug        # The template file to update from.
-                ], stdout=None, stderr=None, cwd=po_dir).returncode:
-                    self.logger.warning("**Something might have gone wrong!**")
+                ], stdout=None, cwd=po_dir)
+
+                if po.stderr:
+                    self._store_error(xlet_slug,
+                                      "update_spanish_localizations:msgmerge",
+                                      po.stderr.decode("UTF-8"))
+
+                # NOTE: Keep me just in case.
+                # po = cmd_utils.run_cmd([
+                #     "msgattrib",
+                #     "--no-wrap",                # Do not wrap long line.
+                #     "--no-obsolete",            # Remove unused translations.
+                #     "--output-file=es.po",      # Overrwrite original file.
+                #     "es.po"                     # The .po file to update.
+                # ], stdout=None, cwd=po_dir)
+
+                # if po.stderr:
+                #     self._store_error(xlet_slug,
+                #                       "update_spanish_localizations:msgattrib",
+                #                       po.stderr.decode("UTF-8"))
+
+    def _store_error(self, xlet_slug, function_name, error):
+        """Store error for later logging.
+
+        Parameters
+        ----------
+        xlet_slug : str
+            Xlet slug.
+        function_name : str
+            The name of the function that raised the error.
+        error : str
+            The error message.
+        """
+        if xlet_slug not in self._errors:
+            self._errors[xlet_slug] = {}
+
+        if function_name not in self._errors[xlet_slug]:
+            self._errors[xlet_slug][function_name] = []
+
+        self._errors[xlet_slug][function_name].append(error)
+
+    def log_errors(self):
+        """Log all stored errors.
+        """
+        for xlet_slug in self._errors:
+            print_separator(self.logger, "#")
+            self.logger.error("**%s**" % xlet_slug, date=False)
+
+            for function_name in self._errors[xlet_slug]:
+                print_separator(self.logger)
+                self.logger.error(function_name, date=False)
+
+                for error in self._errors[xlet_slug][function_name]:
+                    print_separator(self.logger)
+                    self.logger.error(error.replace(root_folder, ""), date=False)
 
 
 class AllXletsMetadata():
@@ -2220,15 +2295,17 @@ def inform(msg):
     print(Ansi.LIGHT_MAGENTA("**%s**" % msg))
 
 
-def print_separator(logger):
+def print_separator(logger, sep="-"):
     """Print separator.
 
     Parameters
     ----------
     logger : object
         See :any:`LogSystem`.
+    sep : str, optional
+        Separator character.
     """
-    logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
+    logger.info(shell_utils.get_cli_separator(sep), date=False, to_file=False)
 
 
 def parse_sass(dry_run, logger):

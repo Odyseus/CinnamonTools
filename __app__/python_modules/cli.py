@@ -144,8 +144,8 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         in the order they were defined (passed as arguments).
     repo_action : str
         Which action to perform on a repository.
-    xlets : list
-        The list of xlets to build.
+    xlets_display_names : list
+        The complete or partial list of xlets as returned by :any:`get_xlets_display_names`.
     xlets_helper : object
         See :any:`app_utils.XletsHelperCore`.
     """
@@ -246,6 +246,10 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     self.func_names.append(func)
                 else:
                     self.logger.warning("**Non existent function:** %s" % func)
+
+            # NOTE: append last so all the errors caught will be printed at the end.
+            if self.func_names:
+                self.func_names.append("log_errors")
         elif self.a["generate"]:
             if self.a["system_executable"]:
                 self.logger.info("**System executable generation...**")

@@ -18,6 +18,7 @@ utils : object
 """
 
 import os
+import sys
 
 from . import localized_help_utils
 from .locale_list import locale_list
@@ -174,52 +175,56 @@ class LocalizedHelpCreator():
     def start(self):
         """Start procedure.
         """
-        podir = os.path.join(self.xlet_dir, "po")
-        done_one = False
+        errors = []
         dummy_locale_path = os.path.join(repo_folder, "tmp", "locales", self.xlet_slug)
+        po_dir = os.path.join(self.xlet_dir, "po")
+        po_files = [entry.path for entry in os.scandir(po_dir) if all(
+            (entry.is_file(follow_symlinks=False), entry.name.endswith(".po"))
+        )]
 
         print(utils.Ansi.DEFAULT("Starting temporary installation of locales..."))
 
-        if not os.path.exists(dummy_locale_path):
-            os.makedirs(dummy_locale_path)
+        os.makedirs(dummy_locale_path, exist_ok=True)
 
-        for root, subFolders, files in os.walk(podir, topdown=False):
-            for file in files:
-                pofile_path = os.path.join(root, file)
-                parts = os.path.splitext(file)
+        for po_file_path in po_files:
+            po_file = os.path.basename(po_file_path)
+            parts = os.path.splitext(po_file)
 
-                if parts[1] == ".po":
-                    try:
-                        try:
-                            lang_name = locale_list[parts[0]]["name"]
-                        except Exception:
-                            lang_name = ""
+            try:
+                try:
+                    lang_name = locale_list[parts[0]]["name"]
+                except Exception:
+                    lang_name = ""
 
-                        utils.validate_po_file(
-                            pofile_path=pofile_path,
-                            lang_name=lang_name,
-                            xlet_meta=self.xlet_meta,
-                            xlet_slug=self.xlet_slug,
-                        )
-                    finally:
-                        self.lang_list.append(parts[0])
-                        this_locale_dir = os.path.join(dummy_locale_path, parts[0], "LC_MESSAGES")
-                        os.makedirs(this_locale_dir, exist_ok=True)
-                        cmd_utils.run_cmd(["msgfmt", "-c", pofile_path, "-o",
-                                           os.path.join(this_locale_dir, "%s.mo" % self.xlet_slug)])
-                        done_one = True
+                utils.validate_po_file(
+                    pofile_path=po_file_path,
+                    lang_name=lang_name,
+                    xlet_meta=self.xlet_meta,
+                    xlet_slug=self.xlet_slug,
+                )
+            finally:
+                self.lang_list.append(parts[0])
+                this_locale_dir = os.path.join(dummy_locale_path, parts[0], "LC_MESSAGES")
+                os.makedirs(this_locale_dir, exist_ok=True)
+                po = cmd_utils.run_cmd(["msgfmt", "-c", po_file_path, "-o",
+                                        os.path.join(this_locale_dir, "%s.mo" % self.xlet_slug)],
+                                       stdout=None)
 
-        if done_one:
-            print("Dummy install complete.")
+                if po.stderr:
+                    errors.append(po.stderr.decode("UTF-8"))
 
-            if len(self.lang_list) > 0:
-                translations.store(self.xlet_slug, dummy_locale_path, self.lang_list)
+        print("Dummy install complete.")
 
-            # Append English to lang_list AFTER storing the translations.
-            self.lang_list.append("en")
-            self._create_html_document()
-        else:
-            print(utils.Ansi.LIGHT_RED("Dummy install failed."))
+        if len(self.lang_list) > 0:
+            translations.store(self.xlet_slug, dummy_locale_path, self.lang_list)
+
+        # Append English to lang_list AFTER storing the translations.
+        self.lang_list.append("en")
+        self._create_html_document()
+
+        if errors:
+            for error in errors:
+                sys.stderr.write(error.replace(repo_folder, ""))
 
     def _create_html_document(self):
         """Create HTML document.
@@ -280,7 +285,7 @@ class LocalizedHelpCreator():
             js_custom=self.get_js_custom()
         )
 
-        print("Saving file...")
+        print("Saving HELP.html file...")
 
         utils.save_file(file_path=self.help_file_path,
                         data=html_doc)

@@ -19,6 +19,8 @@ OPTION : str
     Option tag template.
 README_DOC : str
     README file template.
+repo_folder : str
+    The main repository folder.
 """
 
 import gettext
@@ -476,6 +478,8 @@ def get_image_container(extra_classes="", alt="", src="", centered=True):
         Extra classes to set to the <img> element.
     alt : str, optional
         Text to set the image alt attribute.
+    src : str, optional
+        Image src HTML attribute.
     centered : bool, optional
         Whether to wrap the <img> element with a <div> with the "img-centered-container" class set.
 
