@@ -136,9 +136,13 @@
         "type": "generic",
         "default": ""
     },
-    "pref_combobox": {
+    "pref_combobox_string": {
         "type": "generic",
         "default": "option_1"
+    },
+    "pref_combobox_integer": {
+        "type": "generic",
+        "default": 1
     },
     "pref_spinbutton": {
         "type": "generic",

@@ -34,7 +34,6 @@ EXAMPLE_PAGE = {
     }]
 }
 
-
 ASTERISK = " (*)"
 
 CINN_RESTART = "(*) <i>%s</i>" % escape("Cinnamon needs to be restarted")
@@ -49,69 +48,81 @@ LOGGING_LEVEL_TOOLTIP = "\n".join([
                 "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time.")
 ])
 
-COMBOBOX_OPTIONS = {
+COMBOBOX_OPTIONS_STRING = {
     "option_1": "Option 1",
     "option_2": "Option 2",
     "option_3": "Option 3",
     "option_4": "Option 4",
 }
 
+COMBOBOX_OPTIONS_INTEGER = {
+    1: "Option 1",
+    2: "Option 2",
+    3: "Option 3",
+    4: "Option 4",
+}
+
 LIST_1_COLUMNS = [{
-    "id": "ap",
-    "title": "app",
+    "id": "app",
+    "title": "'app' list widget",
     "type": "app"
 }, {
-    "id": "boolea",
-    "title": "boolean",
+    "id": "boolean",
+    "title": "'boolean' list widget",
     "type": "boolean"
 }, {
     "id": "color",
-    "title": "color",
+    "title": "'color' list widget",
     "type": "color"
 }, {
-    "id": "fil",
-    "title": "file",
+    "id": "file",
+    "title": "'file' list widget (select-dir=False)",
+    "type": "file"
+}, {
+    "id": "dir",
+    "title": "'file' list widget (select-dir=True)",
+    "select-dir": True,
     "type": "file"
 }, {
     "id": "float",
-    "title": "float",
+    "title": "'float' list widget",
     "type": "float",
     "min": 0.0,
     "max": 1000.0,
     "step": 0.5
 }, {
-    "id": "ico",
-    "title": "icon",
+    "id": "icon",
+    "title": "'icon' list widget",
     "type": "icon"
 }, {
     "id": "integer",
-    "title": "integer",
+    "title": "'integer' list widget",
     "type": "integer",
     "min": 0,
     "max": 1000,
     "step": 100
 }, {
-    "id": "keybindin",
-    "title": "keybinding",
+    "id": "keybinding",
+    "title": "'keybinding' list widget",
     "type": "keybinding"
 }, {
-    "id": "keybinding-with-option",
-    "title": "keybinding-with-options",
+    "id": "keybinding-with-options",
+    "title": "'keybinding-with-options' list widget",
     "type": "keybinding-with-options",
-    "options": COMBOBOX_OPTIONS
+    "options": COMBOBOX_OPTIONS_STRING
 }, {
-    "id": "multistrin",
-    "title": "multistring",
+    "id": "multistring",
+    "title": "'multistring' list widget",
     "type": "multistring"
 }, {
-    "id": "strin",
-    "title": "string",
+    "id": "string",
+    "title": "'string' list widget",
     "type": "string"
 }, {
     "id": "string-with-options",
-    "title": "string",
+    "title": "'string' list widget (with 'options' set)",
     "type": "string",
-    "options": COMBOBOX_OPTIONS
+    "options": COMBOBOX_OPTIONS_STRING
 }]
 
 LIST_2_COLUMNS = [{
@@ -161,11 +172,22 @@ GENERIC_TAB = {
         }, {
             "widget-type": "combobox",
             "widget-attrs": {
-                "pref_key": "pref_combobox"
+                "pref_key": "pref_combobox_string"
             },
             "widget-kwargs": {
-                "description": "'combobox' widget",
-                "options": COMBOBOX_OPTIONS
+                "description": "'combobox' widget (valtype=str)",
+                "valtype": str,
+                "options": COMBOBOX_OPTIONS_STRING
+            }
+        }, {
+            "widget-type": "combobox",
+            "widget-attrs": {
+                "pref_key": "pref_combobox_integer"
+            },
+            "widget-kwargs": {
+                "description": "'combobox' widget (valtype=int)",
+                "valtype": int,
+                "options": COMBOBOX_OPTIONS_INTEGER
             }
         }, {
             "widget-type": "spinbutton",
@@ -464,7 +486,7 @@ KEYBINDINGS_TAB = {
             },
             "widget-kwargs": {
                 "description": "keybinding-with-options",
-                "options": COMBOBOX_OPTIONS
+                "options": COMBOBOX_OPTIONS_STRING
             }
         }]
     }]
@@ -474,7 +496,10 @@ OTHER_TAB = {
     "page-title": "Other",
     "sections": [{
         "section-title": "Debugging",
-        "section-notes": [CINN_RESTART],
+        "section-notes": [
+            CINN_RESTART,
+            "In addition to being used by this extension, this section contains widgets that can control gsettings."
+        ],
         "widgets": [{
             "widget-type": "gcombobox",
             "widget-attrs": {
@@ -482,7 +507,7 @@ OTHER_TAB = {
                 "schema": "org.cinnamon.{{XLET_TYPE}}s.{{UUID}}"
             },
             "widget-kwargs": {
-                "description": "Logging level" + ASTERISK,
+                "description": "Logging level" + ASTERISK + " 'gcombobox' widget",
                 "tooltip": LOGGING_LEVEL_TOOLTIP,
                 "options": {
                     0: "Normal",
@@ -497,7 +522,7 @@ OTHER_TAB = {
                 "schema": "org.cinnamon.{{XLET_TYPE}}s.{{UUID}}"
             },
             "widget-kwargs": {
-                "description": "Enable debugger" + ASTERISK,
+                "description": "Enable debugger" + ASTERISK + " 'gswitch' widget",
                 "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught."
             }
         }]

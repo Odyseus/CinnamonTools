@@ -40,7 +40,8 @@ CustomSettingsFrameworkExamples.prototype = {
         // NOTE: List of setting types that should never be bound.
         let blackList = [
             "pref_applist", // applist
-            "pref_list" // list
+            "pref_list_1", // list
+            "pref_list_2", // list
         ];
         let filteredSettings = $.BOUND_SETTINGS_ARRAY.filter(function(aEl) {
             return blackList.indexOf(aEl) === -1;
@@ -120,7 +121,6 @@ function init(aXletMeta) {
         DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
     }
 
-    _ = G._;
     Settings = $.Settings;
 
     D.wrapObjectMethods($.Debugger, {
