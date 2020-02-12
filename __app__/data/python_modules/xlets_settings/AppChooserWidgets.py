@@ -144,12 +144,12 @@ class ApplicationChooserWidget(Gtk.Dialog):
         self._update_ok_button_sensitivity()
 
     def _update_ok_button_sensitivity(self, *args):
-        """Summary
+        """Update OK button sensitivity.
 
         Parameters
         ----------
         *args
-            Description
+            Arguments.
         """
         tree_model, paths = self.tree_view.get_selection().get_selected_rows()
         self._ok_button.set_sensitive(len(paths) != 0)
@@ -275,8 +275,8 @@ class AppList(SettingsWidget):
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : TYPE
         Description
-    label : TYPE
-        Description
+    label : str
+        Widget text.
     """
     bind_dir = None
     _columns = {
@@ -290,12 +290,12 @@ class AppList(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            Widget text.
         dep_key : None, optional
-            Description
+            Dependency key/s.
         tooltip : str, optional
-            Description
+            Widget tooltip.
         """
         super().__init__(dep_key=dep_key)
         self.label = label
@@ -309,7 +309,7 @@ class AppList(SettingsWidget):
         self._app_store.set_column_types([Gio.AppInfo, GObject.TYPE_STRING, Gio.Icon])
 
     def _open_applications_list(self, *args):
-        """Summary
+        """Open applications list.
 
         Parameters
         ----------
@@ -386,14 +386,14 @@ class AppList(SettingsWidget):
         selection = tree_view.get_selection()
 
         def set_del_button_sensitive(sel):
-            """Summary
+            """Set delete button sensitivity.
 
             Parameters
             ----------
-            sel : TYPE
-                Description
+            sel : object
+                See :py:class:`Gtk.TreeSelection`.
             """
-            del_button.set_sensitive(selection.count_selected_rows() != 0)
+            del_button.set_sensitive(sel.count_selected_rows() != 0)
 
         selection.connect("changed", set_del_button_sensitive)
         del_button.set_sensitive(selection.count_selected_rows() != 0)
@@ -407,12 +407,12 @@ class AppList(SettingsWidget):
         self._list_changed()
 
     def _populate_app_list(self, *args):
-        """Summary
+        """Populate applications list.
 
         Parameters
         ----------
         *args
-            Description
+            Arguments.
         """
         self._app_store.clear()
 
@@ -455,7 +455,7 @@ class AppList(SettingsWidget):
         self._app_store.set_sort_column_id(self._columns["DISPLAY_NAME"], Gtk.SortType.ASCENDING)
 
     def _add_applications(self, *args):
-        """Summary
+        """Add applications.
 
         Parameters
         ----------
@@ -483,7 +483,7 @@ class AppList(SettingsWidget):
                 ])
 
     def _delete_selected_applications(self, widget, tree):
-        """Summary
+        """Delete selected applications.
 
         Parameters
         ----------
@@ -501,7 +501,7 @@ class AppList(SettingsWidget):
             tree_model.remove(tree_iter)
 
     def _list_changed(self):
-        """Summary
+        """List changed.
         """
         # NOTE: Use of set() to avoid storing duplicated apps.
         data = set()
@@ -512,7 +512,7 @@ class AppList(SettingsWidget):
         self.set_value(list(data))
 
     def on_setting_changed(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.on_setting_changed`.
 
         Parameters
         ----------
@@ -522,7 +522,7 @@ class AppList(SettingsWidget):
         self._populate_app_list()
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.connect_widget_handlers`.
 
         Parameters
         ----------
@@ -533,7 +533,7 @@ class AppList(SettingsWidget):
 
 
 class AppChooser(SettingsWidget):
-    """Summary
+    """Widget to store an application.
 
     Attributes
     ----------
@@ -591,7 +591,7 @@ class AppChooser(SettingsWidget):
         Parameters
         ----------
         *args
-            Description
+            Arguments.
         """
         self.set_value("")
         self._set_button_data()
@@ -650,7 +650,7 @@ class AppChooser(SettingsWidget):
         self.content_widget.set_tooltip_text(label + extra_info)
 
     def on_setting_changed(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.on_setting_changed`.
 
         Parameters
         ----------
@@ -660,7 +660,7 @@ class AppChooser(SettingsWidget):
         self._set_button_data()
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.connect_widget_handlers`.
 
         Parameters
         ----------

@@ -1288,7 +1288,8 @@ class List(SettingsWidget):
             i = 0
             row_info = {}
             for column in self._columns:
-                row_info[column["id"]] = row[i]
+                # NOTE: Prevent storing null as a value for a preference that expects a string.
+                row_info[column["id"]] = "" if row[i] is None else row[i]
                 i += 1
             data.append(row_info)
 
@@ -1307,14 +1308,17 @@ class List(SettingsWidget):
         rows = self.get_value()
         for row in rows:
             row_info = []
+
             for column in self._columns:
                 cid = column["id"]
+
                 if cid in row:
                     row_info.append(row[column["id"]])
                 elif "default" in column:
                     row_info.append(column["default"])
                 else:
                     row_info.append(None)
+
             self.model.append(row_info)
 
         self.content_widget.columns_autosize()

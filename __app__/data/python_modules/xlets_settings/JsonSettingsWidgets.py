@@ -628,8 +628,8 @@ class JSONSettingsBackend(object):
 
         if self.bind_dir is not None:
             self.settings.bind(self.pref_key, bind_object, self.bind_prop, self.bind_dir,
-                               self.map_get if hasattr(self, "map_get") else None,
-                               self.map_set if hasattr(self, "map_set") else None)
+                               getattr(self, "map_get", None),
+                               getattr(self, "map_set", None))
         else:
             self.settings.listen(self.pref_key, self._settings_changed_callback)
             self.on_setting_changed()

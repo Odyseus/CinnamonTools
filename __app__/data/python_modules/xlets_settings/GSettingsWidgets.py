@@ -208,6 +208,7 @@ class GSettingsBackend(object):
 
     """Summary
     """
+
     def attach_backend(self):
         """Summary
         """
@@ -299,7 +300,7 @@ class GSettingsBackend(object):
                 "SettingsWidget classes with no .bind_dir must implement connect_widget_handlers().")
 
 
-def get_gsettings_schema(schema, xlet_meta):
+def get_gsettings_schema(schema, xlet_meta={}):
     """Summary
 
     Parameters
@@ -319,13 +320,17 @@ def get_gsettings_schema(schema, xlet_meta):
     Exception
         Description
     """
-    try:
+    xlet_path = xlet_meta.get("path", "")
+    xlet_uuid = xlet_meta.get("uuid", "")
+
+    # NOTE: If the schema contains the xlet UUID, search for it inside the xlet folder.
+    if xlet_path and xlet_uuid in schema:
         schema_source = GioSSS.new_from_directory(
-            xlet_meta.get("path", "") + "/schemas",
+            xlet_path + "/schemas",
             GioSSS.get_default(),
             False
         )
-    except Exception:
+    else:
         schema_source = GioSSS.get_default()
 
     schema_obj = schema_source.lookup(schema, False)
@@ -333,7 +338,7 @@ def get_gsettings_schema(schema, xlet_meta):
     if not schema_obj:
         raise Exception(
             "Schema '%s' could not be found for xlet '%s'. Please check your installation."
-            % (schema, xlet_meta.get("uuid", ""))
+            % (schema, xlet_uuid)
         )
 
     return Gio.Settings(settings_schema=schema_obj)
@@ -358,6 +363,7 @@ def g_settings_factory(subclass):
         settings : TYPE
             Description
         """
+
         def __init__(self, widget_attrs={}, widget_kwargs={}):
             """Summary
 
@@ -380,6 +386,13 @@ def g_settings_factory(subclass):
                 settings_objects[schema] = get_gsettings_schema(schema, widget_attrs.get("xlet_meta"))  # noqa | SettingsWidgets
 
             self.settings = settings_objects[schema]  # noqa | SettingsWidgets
+
+            if "map_get" in widget_kwargs:
+                self.map_get = widget_kwargs["map_get"]
+                del widget_kwargs["map_get"]
+            if "map_set" in widget_kwargs:
+                self.map_set = widget_kwargs["map_set"]
+                del widget_kwargs["map_set"]
 
             kwargs = {}
 

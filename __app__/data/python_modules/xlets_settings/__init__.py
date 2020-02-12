@@ -7,7 +7,7 @@ Attributes
 CINNAMON_VERSION : str
     Cinnamon version.
 G_SETTINGS_WIDGETS : TYPE
-    Description
+    gsettings widgets map.
 GTK_VERSION : str
     Gtk version.
 MODULE_PATH : str
@@ -90,16 +90,8 @@ class SettingsBox(BaseGrid):
 
     Attributes
     ----------
-    instance_info : dict
-        Xlet instance information.
-    main_app : object
-        :py:class:`Gtk.Application`.
     stack : object
         :py:class:`Gtk.Stack`.
-    timer : int
-        Throttle timer.
-    xlet_meta : TYPE
-        Description
     """
 
     def __init__(self, pages_definition=[], instance_info={}, main_app=None, xlet_meta=None):
@@ -114,7 +106,7 @@ class SettingsBox(BaseGrid):
         main_app : None, optional
             See :py:class:`Gtk.Application`.
         xlet_meta : None, optional
-            Description
+            Xlet metadata.
         """
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
         self.set_border_width(0)
@@ -122,10 +114,10 @@ class SettingsBox(BaseGrid):
         self.set_property("expand", True)
         self.set_property("margin", 0)
 
-        self.timer = None
-        self.main_app = main_app
-        self.xlet_meta = xlet_meta
-        self.instance_info = instance_info
+        self._timer = None
+        self._main_app = main_app
+        self._xlet_meta = xlet_meta
+        self._instance_info = instance_info
 
         stack = Gtk.Stack()
         self.stack = stack
@@ -160,7 +152,7 @@ class SettingsBox(BaseGrid):
 
                 if "dependency" in section_def:
                     revealer = JSONSettingsRevealer(  # noqa | JsonSettingsWidgets
-                    instance_info["settings"], section_def["dependency"]
+                    self._instance_info["settings"], section_def["dependency"]
                     )
                     section_container = page.add_reveal_section(
                         title=section_def.get("section-title", ""),
@@ -192,14 +184,14 @@ class SettingsBox(BaseGrid):
                         if widget_def["widget-type"] == "label":
                             widget = Text(**widget_def["widget-kwargs"])  # noqa | JsonSettingsWidgets > SettingsWidgets
                         elif widget_def["widget-type"] in XLET_SETTINGS_WIDGETS:
-                            widget_def["widget-attrs"]["settings"] = instance_info["settings"]
+                            widget_def["widget-attrs"]["settings"] = self._instance_info["settings"]
                             widget = globals()[XLET_SETTINGS_WIDGETS[widget_def["widget-type"]]](
                                 widget_attrs=widget_def["widget-attrs"], widget_kwargs=widget_def["widget-kwargs"])
 
-                            if (widget_def["widget-type"] == "list" or widget_def["widget-type"] == "iconfilechooser") and main_app is not None:
-                                widget.main_app = main_app
+                            if (widget_def["widget-type"] == "list" or widget_def["widget-type"] == "iconfilechooser") and self._main_app is not None:
+                                widget.main_app = self._main_app
                         elif widget_def["widget-type"] in G_SETTINGS_WIDGETS:
-                            widget_def["widget-attrs"]["xlet_meta"] = self.xlet_meta
+                            widget_def["widget-attrs"]["xlet_meta"] = self._xlet_meta
                             widget = globals()[G_SETTINGS_WIDGETS[widget_def["widget-type"]]](
                                 widget_attrs=widget_def["widget-attrs"], widget_kwargs=widget_def["widget-kwargs"])
                         else:
@@ -229,7 +221,7 @@ class SettingsBox(BaseGrid):
 
                     if "dependency" in widget_def["widget-kwargs"]:
                         revealer = JSONSettingsRevealer(  # noqa | JsonSettingsWidgets
-                            instance_info["settings"], widget_def["widget-kwargs"]["dependency"])
+                            self._instance_info["settings"], widget_def["widget-kwargs"]["dependency"])
                         section_container.add_reveal_row(
                             widget, 0, i + 1, col_span, 1, revealer=revealer)
                     else:
@@ -272,25 +264,25 @@ class SettingsBox(BaseGrid):
         # NOTE: This bit me in the arse real good!!! LOL
         # Without the throttle, and connecting only the "notify" signal to the stack, the
         # on_stack_switcher_changed method was triggered like 5 times and it always stored
-        # the wrong value to self.main_app.win_stacks_state.
+        # the wrong value to self._main_app.win_stacks_state.
         # With the "notify::visible-child" signal connected, on_stack_switcher_changed triggers
         # automatically only once when the stack is created and the first child is selected,
         # and immediately again, if needed, to select the child name stored in
-        # self.main_app.win_stacks_state. The second call will cancel the first and then store what was
+        # self._main_app.win_stacks_state. The second call will cancel the first and then store what was
         # stored (Yeah, I know! ¬¬). Successive changes to the visible children (selecting items
         # in the sidebar) will trigger on_stack_switcher_changed and store the correct ID (hopefully).
 
         def apply(self):
             """Apply.
             """
-            self.main_app.win_stacks_state[self.instance_info["id"]
-                                           ] = self.stack.get_visible_child_name()
-            self.timer = None
+            self._main_app.win_stacks_state[self._instance_info["id"]
+                                            ] = self.stack.get_visible_child_name()
+            self._timer = None
 
-        if self.timer:
-            GLib.source_remove(self.timer)
+        if self._timer:
+            GLib.source_remove(self._timer)
 
-        self.timer = GLib.timeout_add(500, apply, self)
+        self._timer = GLib.timeout_add(500, apply, self)
 
     def get_page_stack(self):
         """Get stack switcher.
@@ -320,18 +312,18 @@ class MainApplication(Gtk.Application):
         See :py:class:`Gio.Settings`.
     display_settings_handling : bool
         Whether to display settings handler item in the header bar menu.
-    gtk_icon_theme : TYPE
-        Description
+    gtk_icon_theme : object
+        See :py:class:`Gtk.IconTheme`.
     gtk_icon_theme_changed : bool
-        Description
+        "Flag" used to conditionally force the update of self.icon_chooser_store.
     header_bar : object
         See :py:class:`Gtk.HeaderBar`.
     help_file_path : str
         Path to the xlet help file.
-    icon_chooser_icons : TYPE
-        Description
-    icon_chooser_store : TYPE
-        Description
+    icon_chooser_icons : dict
+        The complete list of icons from the current icon theme.
+    icon_chooser_store : object
+        See :py:class:`Gtk.ListStore`.
     instance_stack : object
         See :py:class:`Gtk.Stack`.
     instance_switcher : object
@@ -354,8 +346,8 @@ class MainApplication(Gtk.Application):
         Window current width.
     win_initial_height : int
         Window initial height.
-    win_initial_stack : TYPE
-        Description
+    win_initial_stack : string
+        Initial stack ID to to open the window with this stack selected.
     win_initial_width : int
         Window initial width.
     win_is_maximized : bool
@@ -374,9 +366,6 @@ class MainApplication(Gtk.Application):
         Path to a file called icon.svg (or icon.png) inside an xlet folder.
     xlet_instance_id : str
         The instance ID of an xlet.
-    xlet_meta : dict
-        An xlet metadata as found inside its metadata.json file plus the added
-        xlet path.
     xlet_type : str
         The type of xlet.
     xlet_uuid : str
@@ -461,7 +450,7 @@ class MainApplication(Gtk.Application):
         )
 
     def on_gtk_icon_theme_changed(self, *args):
-        """Summary
+        """Set self.gtk_icon_theme_changed to true to force stored icons update.
 
         Parameters
         ----------
@@ -514,8 +503,8 @@ class MainApplication(Gtk.Application):
 
         if os.path.exists("%s/metadata.json" % self.xlet_dir):
             raw_data = open("%s/metadata.json" % self.xlet_dir).read()
-            self.xlet_meta = json.loads(raw_data)
-            self.xlet_meta["path"] = self.xlet_dir
+            self._xlet_meta = json.loads(raw_data)
+            self._xlet_meta["path"] = self.xlet_dir
         else:
             print("Could not find %s metadata for uuid %s - are you sure it's installed correctly?" %
                   (self.xlet_type, self.xlet_uuid))
@@ -538,7 +527,7 @@ class MainApplication(Gtk.Application):
         config_files = sorted([entry.name for entry in os.scandir(
             config_path) if entry.is_file(follow_symlinks=False) and entry.name.endswith(".json")])
 
-        multi_instance = int(self.xlet_meta.get("max-instances", 1)) != 1
+        multi_instance = int(self._xlet_meta.get("max-instances", 1)) != 1
         multiple_pages = len(self.pages_definition) > 1
 
         for item in config_files:
@@ -566,7 +555,7 @@ class MainApplication(Gtk.Application):
 
             settings = JSONSettingsHandler(  # noqa | JsonSettingsWidgets
                 filepath=os.path.join(config_path, item),
-                xlet_meta=self.xlet_meta
+                xlet_meta=self._xlet_meta
             )
             settings.instance_id = instance_id
 
@@ -580,7 +569,7 @@ class MainApplication(Gtk.Application):
             instance_box = SettingsBox(pages_definition=self.pages_definition,
                                        instance_info=instance_info,
                                        main_app=self,
-                                       xlet_meta=self.xlet_meta)
+                                       xlet_meta=self._xlet_meta)
 
             self.all_instances_info.append(instance_info)
             self.instance_stack.add_named(instance_box, instance_id)
@@ -787,7 +776,7 @@ class MainApplication(Gtk.Application):
         if self.application_title:
             title_text = self.application_title
         else:
-            title_text = _("Settings for %s") % _(self.xlet_meta["name"])
+            title_text = _("Settings for %s") % _(self._xlet_meta["name"])
 
         return title_text
 

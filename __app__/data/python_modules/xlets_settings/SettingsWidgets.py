@@ -633,7 +633,6 @@ class SettingsWidget(BaseGrid):
         self.set_margin_start(0)
         self.set_margin_end(0)
 
-    # NOTE: This is to handle gsettings. Don't bother looking at it.
     def get_settings(self, schema):
         """Summary
 
@@ -869,6 +868,7 @@ class IconChooser(SettingsWidget):
             Description
         """
         super().__init__(dep_key=dep_key)
+        self._timer = None
         self.main_app = None
         valid, self.width, self.height = Gtk.icon_size_lookup(Gtk.IconSize.BUTTON)
 
@@ -892,31 +892,44 @@ class IconChooser(SettingsWidget):
         self.attach(self.content_widget, 1, 0, 1, 1)
 
         button.connect("clicked", self._on_button_pressed)
-        self.handler = self.bind_object.connect("changed", self._set_icon)
+        self.handler = self.bind_object.connect("changed", self._set_widget_icon)
 
         self.set_tooltip_text(tooltip)
 
         if size_group:
             self.add_to_size_group(size_group)
 
-    def _set_icon(self, *args):
-        """Summary
+        self._set_widget_icon()
+
+    def _set_widget_icon(self, *args):
+        """Set widget icon.
 
         Parameters
         ----------
         *args
             Arguments.
         """
-        val = self.bind_object.get_text().strip()
+        def apply(self):
+            """Delayed apply.
+            """
+            val = self.bind_object.get_text().strip()
 
-        if val:
-            if os.path.exists(val) and not os.path.isdir(val):
-                img = GdkPixbuf.Pixbuf.new_from_file_at_size(val, self.width, self.height)
-                self._preview_image.set_from_pixbuf(img)
+            if val:
+                # NOTE: Check for the existence of "/" first so os.path.isfile() is not called unnecessarily.
+                if "/" in val and os.path.isfile(val):
+                    img = GdkPixbuf.Pixbuf.new_from_file_at_size(val, self.width, self.height)
+                    self._preview_image.set_from_pixbuf(img)
+                else:
+                    self._preview_image.set_from_icon_name(val, Gtk.IconSize.BUTTON)
             else:
-                self._preview_image.set_from_icon_name(val, Gtk.IconSize.BUTTON)
-        else:
-            self._preview_image.set_from_icon_name("image-missing", Gtk.IconSize.BUTTON)
+                self._preview_image.set_from_icon_name("image-missing", Gtk.IconSize.BUTTON)
+
+            self._timer = None
+
+        if self._timer:
+            GLib.source_remove(self._timer)
+
+        self._timer = GLib.timeout_add(300, apply, self)
 
     def _on_button_pressed(self, widget):
         """Summary
@@ -1302,8 +1315,9 @@ class ColorChooser(SettingsWidget):
             Arguments.
         """
         self.set_value("")
+        self._set_widget_color("")
 
-    def _on_color_value_changed(self, widget):
+    def _on_color_set(self, widget):
         """Summary
 
         Parameters
@@ -1312,6 +1326,20 @@ class ColorChooser(SettingsWidget):
             Description
         """
         self.set_value(self.content_widget.get_rgba().to_string())
+
+    def _set_widget_color(self, color_string):
+        """Summary
+
+        Parameters
+        ----------
+        widget : TYPE
+            Description
+        """
+        # NOTE: Luckyly, empty strings will set the color to white.
+        rgba = Gdk.RGBA()
+        rgba.parse(color_string)
+        # NOTE: set_rgba sets RGBA and RGB.
+        self.content_widget.set_rgba(rgba)
 
     def clicked(self, *args):
         """Summary
@@ -1331,13 +1359,7 @@ class ColorChooser(SettingsWidget):
         *args
             Arguments.
         """
-        color_string = self.get_value()
-
-        # NOTE: Luckyly, empty strings will set the color to white.
-        rgba = Gdk.RGBA()
-        rgba.parse(color_string)
-        # NOTE: set_rgba sets RGBA and RGB.
-        self.content_widget.set_rgba(rgba)
+        self._set_widget_color(self.get_value())
 
     def connect_widget_handlers(self, *args):
         """Summary
@@ -1347,7 +1369,7 @@ class ColorChooser(SettingsWidget):
         *args
             Arguments.
         """
-        self.content_widget.connect("color-set", self._on_color_value_changed)
+        self.content_widget.connect("color-set", self._on_color_set)
         self._clear_button.connect("clicked", self._on_clear_button_clicked)
 
 
@@ -1425,6 +1447,7 @@ class FileChooser(SettingsWidget):
             Arguments.
         """
         self.set_value("")
+        self.content_widget.set_uri("")
 
     def on_setting_changed(self, *args):
         """Summary
@@ -1547,9 +1570,8 @@ class SpinButton(SettingsWidget):
         *args
             Arguments.
         """
-
         def apply(self):
-            """Summary
+            """Delayed apply.
             """
             self.set_value(self.content_widget.get_value())
             self._timer = None
