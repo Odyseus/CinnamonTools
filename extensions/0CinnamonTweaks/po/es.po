@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-02-10 20:50-0300\n"
+"POT-Creation-Date: 2020-02-12 04:13-0300\n"
 "PO-Revision-Date: 2020-02-10 21:00-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid "Information related to this specific section"
 msgstr "Información relacionada con esta sección específica."
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1285
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1298
 msgid "Clear color"
 msgstr "Limpiar color"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1398
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1420
 msgid "Clear path"
 msgstr "Limpiar ruta"
 
@@ -82,7 +82,7 @@ msgstr "Nota"
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1192 ../../__app__/data/python_modules/xlets_settings/__init__.py:1090 ../../__app__/data/python_modules/xlets_settings/__init__.py:1123
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1192 ../../__app__/data/python_modules/xlets_settings/__init__.py:1079 ../../__app__/data/python_modules/xlets_settings/__init__.py:1112
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -118,120 +118,120 @@ msgstr "Agregar nueva entrada"
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1193 ../../__app__/data/python_modules/xlets_settings/__init__.py:1091 ../../__app__/data/python_modules/xlets_settings/__init__.py:1124
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1193 ../../__app__/data/python_modules/xlets_settings/__init__.py:1080 ../../__app__/data/python_modules/xlets_settings/__init__.py:1113
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:497 settings.py:685
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:486 settings.py:685
 msgid "Other"
 msgstr "Otros"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:636
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:625
 msgid "Previous instance"
 msgstr "Instancia previa"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:643
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:632
 msgid "Next instance"
 msgstr "Siguiente instancia"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:683
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
 msgid "Import settings from a file"
 msgstr "Importar configuración desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:687
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:676
 msgid "Export settings to a file"
 msgstr "Exportar configuración hacia un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:691
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:680
 msgid "Reset settings to defaults"
 msgstr "Restablecer los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:701 ../../__app__/python_modules/localized_help_creator.py:316 utils.js:82
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:690 ../../__app__/python_modules/localized_help_creator.py:321 utils.js:82
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:722
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:711
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:790 extension.js:1112
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:779 extension.js:1112
 #, python-format, javascript-format
 msgid "Settings for %s"
 msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1086
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1075
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1096 ../../__app__/data/python_modules/xlets_settings/__init__.py:1128
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1085 ../../__app__/data/python_modules/xlets_settings/__init__.py:1117
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1119
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1108
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1152
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1141
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1154
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1143
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
-#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:317
+#: ../../__app__/python_modules/localized_help_creator.py:322
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318
+#: ../../__app__/python_modules/localized_help_creator.py:323
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:359
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
+#: ../../__app__/python_modules/localized_help_creator.py:379
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:377
+#: ../../__app__/python_modules/localized_help_creator.py:382
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:388
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:400
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:403
+#: ../../__app__/python_modules/localized_help_creator.py:408
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:410
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:421
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:425
+#: ../../__app__/python_modules/localized_help_creator.py:430
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:431
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -1254,417 +1254,3 @@ msgstr "Esta no es la ventana de configuración \"real\" de este xlet."
 #. settings-schema.json->settings_button->description
 msgid "Open the \"real\" preference window"
 msgstr "Abrir la ventana \"real\" de preferencias"
-
-#~ msgid "Choose an Icon"
-#~ msgstr "Elegir un ícono"
-
-#~ msgid "_Open"
-#~ msgstr "_Abrir"
-
-#~ msgid "Image files"
-#~ msgstr "Archivos de imagen"
-
-#~ msgid "Are you sure that you want to remove this item?"
-#~ msgstr "¿Está seguro de que desea remover este ítem?"
-
-#~ msgid "Choose how to add the imported data"
-#~ msgstr "Elegir cómo agregar los datos importados"
-
-#~ msgid "If you are seeing this window, you are using a Cinnamon version with a design flaw."
-#~ msgstr "Si se está viendo esta ventana, se está utilizando una versión de Cinnamon con un defecto de diseño."
-
-#~ msgid "This window isn't this extension's \"real\" configuration window."
-#~ msgstr "Esta no es la ventana de configuración \"real\" de esta extensión."
-
-#~ msgid "If on Cinnamon 3.0.x, the button below will not work."
-#~ msgstr "Si se está en Cinnamon 3.0.x, el botón de abajo no funcionará."
-
-#~ msgid "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
-#~ msgstr "Leer el archivo HELP.html (que se encuentra dentro de la carpeta de la extensión) para obtener instrucciones sobre cómo superar estas limitaciones."
-
-#~ msgid "Import from a file"
-#~ msgstr "Importar desde un archivo"
-
-#~ msgid "Export to a file"
-#~ msgstr "Exportar hacia un archivo"
-
-#~ msgid "Reset to defaults"
-#~ msgstr "Restablecer a los valores predeterminados"
-
-#~ msgid "Xlets tweaks"
-#~ msgstr "Retoques de xlets"
-
-#~ msgid "Desktop tweaks"
-#~ msgstr "Ajustes del Escritorio"
-
-#~ msgid "Windows tweaks"
-#~ msgstr "Ajustes de ventanas"
-
-#~ msgid ""
-#~ "Do you want to remove '%s' from your panel?\n"
-#~ "Instance ID: %s"
-#~ msgstr ""
-#~ "¿Desea eliminar '%s' de su panel?\n"
-#~ "ID de instancia: %s"
-
-#~ msgid ""
-#~ "Do you want to remove '%s' from your desktop?\n"
-#~ "Instance ID: %s"
-#~ msgstr ""
-#~ "¿Desea eliminar '%s' de su escritorio?\n"
-#~ "ID de instancia: %s"
-
-#~ msgid "Focused normal"
-#~ msgstr "Enfocada normal"
-
-#~ msgid "Focused dialog"
-#~ msgstr "Enfocada diálogo"
-
-#~ msgid "Focused modal_dialog"
-#~ msgstr "Enfocada diálogo modal"
-
-#~ msgid "Focused utility"
-#~ msgstr "Enfocada utilidad"
-
-#~ msgid "Focused border"
-#~ msgstr "Enfocada borde"
-
-#~ msgid "Focused menu"
-#~ msgstr "Enfocada menu"
-
-#~ msgid "Focused popup_menu"
-#~ msgstr "Enfocada menú popup"
-
-#~ msgid "Focused dropdown_menu"
-#~ msgstr "Enfocada menú desplegable"
-
-#~ msgid "Focused attached"
-#~ msgstr "Enfocada adjunta"
-
-#~ msgid "Unfocused normal"
-#~ msgstr "Desenfocada normal"
-
-#~ msgid "Unfocused dialog"
-#~ msgstr "Desenfocada diálogo"
-
-#~ msgid "Unfocused modal_dialog"
-#~ msgstr "Desenfocada diálogo modal"
-
-#~ msgid "Unfocused utility"
-#~ msgstr "Desenfocada utilidad"
-
-#~ msgid "Unfocused border"
-#~ msgstr "Desenfocada borde"
-
-#~ msgid "Unfocused menu"
-#~ msgstr "Desenfocada menú"
-
-#~ msgid "Unfocused popup_menu"
-#~ msgstr "Desenfocada menú popup"
-
-#~ msgid "Unfocused dropdown_menu"
-#~ msgstr "Desenfocada menú desplegable"
-
-#~ msgid "Unfocused attached"
-#~ msgstr "Desenfocada adjunta"
-
-#~ msgid "This extension adds some options to modify the default behaviour of certain Cinnamon features."
-#~ msgstr "Esta extensión agrega algunas opciones para modificar el comportamiento predeterminado de ciertas funciones de Cinnamon."
-
-#~ msgid "Display \"Edit applet main file\" on context menu"
-#~ msgstr "Mostrar \\\"Editar archivo principal del applet\\\" en el menú contextual"
-
-#~ msgid "Where to place the \"Edit applet main file\" item?"
-#~ msgstr "¿Dónde colocar el elemento \"Editar archivo principal del applet\"?"
-
-#~ msgid "Last item on menu"
-#~ msgstr "Último ítem en el menú"
-
-#~ msgid "Before \"About...\" item"
-#~ msgstr "Antes del ítem \"Acerca de...\""
-
-#~ msgid "Before \"Configure...\" item"
-#~ msgstr "Antes del ítem \"Configurar...\""
-
-#~ msgid "Before \"Remove...\" item"
-#~ msgstr "Antes del ítem \"Remover...\""
-
-#~ msgid "Display \"Open applet folder\" on context menu"
-#~ msgstr "Mostrar \"Abrir carpeta del applet\" en el menú contextual"
-
-#~ msgid "Where to place the \"Open applet folder\" item?"
-#~ msgstr "¿Dónde colocar el elemento \"Abrir carpeta del applet\"?"
-
-#~ msgid "Display \"Edit desklet main file\" on context menu"
-#~ msgstr "Mostrar \\\"Editar archivo principal del desklet\\\" en el menú contextual"
-
-#~ msgid "Where to place the \"Edit desklet main file\" item?"
-#~ msgstr "¿Dónde colocar el elemento \"Editar archivo principal del desklet\"?"
-
-#~ msgid "Display \"Open desklet folder\" on context menu"
-#~ msgstr "Mostrar \\\"Abrir carpeta del desklet\\\" en el menú contextual"
-
-#~ msgid "Where to place the \"Open desklet folder\" item?"
-#~ msgstr "¿Dónde colocar el elemento \"Abrir carpeta del desklet\"?"
-
-#~ msgid "Avoid mouse pointer overlapping tooltips"
-#~ msgstr "Evitar la superposición de puntero del ratón sobre las cajas de información sobre herramientas"
-
-#~ msgid "Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse pointer. This leads to having tooltips overlapped by the mouse pointer. This tweak aligns the tooltip to the bottom-right corner of the mouse pointer (approximately), reducing the possibility of the mouse pointer to overlap the tooltip."
-#~ msgstr "Las cajas de información en la interfaz de usuario de Cinnamon están alineadas con la esquina superior izquierda del puntero del ratón. Esto lleva a tener esta información superpuesta por el puntero del ratón. Este ajuste alinea la caja de información sobre herramientas en la esquina inferior derecha del puntero del ratón (aproximadamente), reduciendo la posibilidad de que el puntero del ratón se solape con la caja de información sobre herramientas."
-
-#~ msgid ""
-#~ "This setting affects only the behavior of menus that belongs to applets placed on any panel.\n"
-#~ "\n"
-#~ "Emulate Gnome Shell behavior: When a menu is open on Genome Shell, and then the mouse cursor is moved to another button on the top panel, the menu of the hovered buttons will automatically open without the need to click on them. With this option enabled, that same behavior can be reproduced on Cinnamon.\n"
-#~ "\n"
-#~ "Don't eat clicks: By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open."
-#~ msgstr ""
-#~ "Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los applets colocados en cualquier panel.\n"
-#~ "\n"
-#~ "Emular el comportamiento de los menúes de Gnome Shell: Cuando un menú está abierto en Genome Shell y, a continuación, el cursor del ratón se mueve a otro botón en el panel superior, el menú de los botones por los cuales el cursor del ratón está pasando se abrirán automáticamente sin necesidad de hacer clic en ellos. Con esta opción habilitada, ese mismo comportamiento se puede reproducir en Cinnamon.\n"
-#~ "\n"
-#~ "No consumir clics: de forma predeterminada, cuando se abre el menú de un applet en Cinnamon y luego se hace clic en otro applet para abrir su menú, el primer clic se utiliza para cerrar el primer menú abierto y, a continuación, se debe realizar otro clic para abrir el menú del segundo applet. Con esta opción habilitada, se puede abrir directamente el menú de cualquier applet incluso si otro applet tiene su menú abierto."
-
-#~ msgid "Emulate Gnome Shell menus"
-#~ msgstr "Emular los menús de Gnome Shell"
-
-#~ msgid "Edit custom shadows values"
-#~ msgstr "Editar valores personalizados de sombras"
-
-#~ msgid "Define auto move windows rules"
-#~ msgstr "Definir reglas de ventanas de movimiento automático"
-
-#~ msgid "Warnings related to this specific section"
-#~ msgstr "Advertencias relacionadas con esta sección específica"
-
-#~ msgid "Select a directory to use"
-#~ msgstr "Seleccionar un directorio para usar"
-
-#~ msgid "Select a file"
-#~ msgstr "Seleccionar un archivo"
-
-#~ msgid "Directories"
-#~ msgstr "Directorios"
-
-#~ msgid "Focused windows"
-#~ msgstr "Ventanas enfocadas"
-
-#~ msgid "Unfocused windows"
-#~ msgstr "Ventanas desenfocadas"
-
-#~ msgid "Dialog"
-#~ msgstr "Diálogo"
-
-#~ msgid "Modal dialog"
-#~ msgstr "Diálogo modal"
-
-#~ msgid "Utility"
-#~ msgstr "Utilidad"
-
-#~ msgid "Border"
-#~ msgstr "Borde"
-
-#~ msgid "Menu"
-#~ msgstr "Menú"
-
-#~ msgid "Popup menu"
-#~ msgstr "Menú emergente"
-
-#~ msgid "Dropdown menu"
-#~ msgstr "Menú desplegable"
-
-#~ msgid "Attached"
-#~ msgstr "Adjunta"
-
-#~ msgid "Reset values"
-#~ msgstr "Restablecer valores"
-
-#~ msgid "Reset all values on the current view to their defaults."
-#~ msgstr "Restablecer todos los valores de la vista actual a sus valores predeterminados."
-
-#~ msgid "Apply custom shadow"
-#~ msgstr "Aplicar sombra personalizada"
-
-#~ msgid "Save and apply custom shadow values to see its effects in real time."
-#~ msgstr "Guardar y aplicar valores de sombra personalizados para ver sus efectos en tiempo real."
-
-#~ msgid "Remember to set »Shadow presets« option to »Custom shadows«"
-#~ msgstr "Recordar ajustar la opción »Preajustes de sombra« al valor »Sombras personalizadas«"
-
-#~ msgid "Warning: Trying to reset custom shadows values!!!"
-#~ msgstr "Advertencia: ¡Intentando restablecer valores de sombras personalizadas!"
-
-#~ msgid "Are you sure that you want to reset the shadows values of the current view to their defaults?"
-#~ msgstr "¿Está seguro de que desea restablecer los valores de sombras de la vista actual a sus valores predeterminados?"
-
-#~ msgid "Application Chooser"
-#~ msgstr "Selector de aplicaciones"
-
-#~ msgid "Choose An Application"
-#~ msgstr "Elegir una aplicación"
-
-#~ msgid "Applications list"
-#~ msgstr "Lista de aplicaciones"
-
-#~ msgid "Add Application"
-#~ msgstr "Agregar aplicación"
-
-#~ msgid "Choose one or more applications (Hold Ctrl key)"
-#~ msgstr "Elegir una o más aplicaciones (Mantener pulsada la tecla Ctrl)"
-
-#~ msgid "Auto move windows rules"
-#~ msgstr "Reglas para mover ventanas automáticamente"
-
-#~ msgid "Add Rule"
-#~ msgstr "Agregar regla"
-
-#~ msgid "Shortcut action"
-#~ msgstr "Acción de acceso directo"
-
-#~ msgid "Shortcut"
-#~ msgstr "Acceso directo"
-
-#~ msgid "Click to set a new hotkey."
-#~ msgstr "Hacer clic para establecer un nuevo acceso directo."
-
-#~ msgid "Contributors/Mentions:"
-#~ msgstr "Colaboradores/Menciones:"
-
-#~ msgid "translator-credits"
-#~ msgstr "Odyseus https://gitlab.com/Odyseus"
-
-#~ msgid "Settings marked with (*) needs Cinnamon restart to take effect"
-#~ msgstr "Los ajustes marcados con (*) necesitan que Cinnamon sea reiniciado para surtir efecto"
-
-#~ msgid "Remember window size"
-#~ msgstr "Recordar tamaño de ventana"
-
-#~ msgid "Remember last category"
-#~ msgstr "Recordar la última categoría"
-
-#~ msgid "Restart Cinnamon"
-#~ msgstr "Reiniciar Cinnamon"
-
-#~ msgid "About"
-#~ msgstr "Acerca de"
-
-#~ msgid "Manage settings"
-#~ msgstr "Administrar configuración"
-
-#~ msgid "Warning: Trying to reset all Cinnamon Tweaks settings!!!"
-#~ msgstr "Advertencia: ¡Intentando restablecer todos los ajustes de Cinnamon Tweaks!"
-
-#~ msgid "Reset all Cinnamon Tweaks settings to default?"
-#~ msgstr "¿Restablecer todas las configuraciones de Cinnamon Tweaks por defecto?"
-
-#~ msgid "Select a file to import"
-#~ msgstr "Seleccionar un archivo para importar"
-
-#~ msgid "DCONF files"
-#~ msgstr "Archivos DCONF"
-
-#~ msgid "Cinnamon Tweaks extension preferences"
-#~ msgstr "Preferencias de la extensión Cinnamon Tweaks"
-
-#~ msgid "Display \"Edit applet/desklet main file\" on context menu for applets/desklet:"
-#~ msgstr "Mostrar \"Editar archivo principal del applet/desklet\" en el menú contextual"
-
-#~ msgid "Display \"Open applet/desklet folder\" on context menu for applets/desklets"
-#~ msgstr "Mostrar \"Abrir carpeta del applet/desklet\" en el menú contextual"
-
-#~ msgid "These options will add new menu items to the applets/desklets context menus. The place where this items will be located is chosen by the option **Where to place the menu item?**."
-#~ msgstr "Estas opciones agregarán nuevos ítems a los menúes contextuales de applets/desklets. El lugar donde estos ítems serán colocados puede elegirse con la opción **¿Dónde colocar el elemento...?**."
-
-#~ msgid "Note:"
-#~ msgstr "Nota:"
-
-#~ msgid "Avoid mouse pointer overlapping tooltips:"
-#~ msgstr "Evitar la superposición de puntero del ratón sobre las cajas de información sobre herramientas:"
-
-#~ msgid "Tooltips on Cinnamon's UI are aligned to the top-left corner of the mouse pointer. This leads to having tooltips overlapped by the mouse pointer. This tweak aligns the tooltip to the bottom-right corner of the mouse pointer (approximately), reducing the possibility of the mouse pointer to overlap the tooltip. This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has the position of the tooltips changed."
-#~ msgstr "Las cajas de información en la interfaz de usuario de Cinnamon están alineadas con la esquina superior izquierda del puntero del ratón. Esto lleva a tener esta información superpuesta por el puntero del ratón. Este ajuste alinea la caja de información sobre herramientas en la esquina inferior derecha del puntero del ratón (aproximadamente), reduciendo la posibilidad de que el puntero del ratón se solape con la caja de información sobre herramientas."
-
-#~ msgid "If the application that you want to select doesn't show up on the application chooser dialog, read the section on this help file called **Applications not showing up on the applications chooser dialogs**."
-#~ msgstr "i la aplicación que se quiere seleccionar no se muestra en el diálogo selector de aplicaciones, leer la sección de este archivo de ayuda llamada **Aplicaciones que no aparecen en los cuadros de diálogo de selección de aplicaciones**."
-
-#~ msgid "Xlet's settings window"
-#~ msgstr "Ventana de preferencias del xlet"
-
-#~ msgid "From this xlet settings window, all options can be imported, exported and/or reseted to their defaults."
-#~ msgstr "Desde la ventana de preferencias de este xlet, todas las opciones pueden ser importadas, exportadas y/o restablecidas a sus valores por defecto."
-
-#~ msgid "To be able to perform any of these actions, the settings schema needs to be installed in the system. This is done automatically when the xlet is installed from the Cinnamon xlets manager. But if the xlet was installed manually, the settings schema also needs to be installed manually. This is achieved by simply going to the xlet folder and launch the following command:"
-#~ msgstr "Para poder realizar cualquiera de estas tareas, el esquema de las preferencias necesita estar instalado en el sistema. Esto es realizado automáticamente cuando el xlet es instalado desde el administrador de xlets de Cinnamon. Pero si el xlet fue instalado manualmente, el esquema de las preferencias necesita ser instalado manualmente. Esto se logra simplemente con ir a la carpeta del xlet y ejecutar el siguiente comando:"
-
-#~ msgid "Command to install the settings schema:"
-#~ msgstr "Comando para instalar el esquema de preferencias:"
-
-#~ msgid "Command to uninstall the settings schema:"
-#~ msgstr "Comando para desinstalar el esquema de preferencias:"
-
-#~ msgid "To import/export settings, the **dconf** command needs to be available on the system."
-#~ msgstr "Para importar/exportar preferencias, el comando **dconf** necesita estar disponible en el sistema."
-
-#~ msgid "Open applet folder"
-#~ msgstr "Abrir carpeta del applet"
-
-#~ msgid "Edit applet main file"
-#~ msgstr "Editar el archivo principal del applet"
-
-#~ msgid "Open desklet folder"
-#~ msgstr "Abrir carpeta del desklet"
-
-#~ msgid "Edit desklet main file"
-#~ msgstr "Editar archivo principal del desklet"
-
-#~ msgid "If you updated this extension from an older version, <b>you must check its settings window</b>."
-#~ msgstr "Si actualizó esta extensión desde una versión anterior, <b>usted debe comprobar su ventana de configuración</b>."
-
-#~ msgid "Schema %s could not be found for extension %s."
-#~ msgstr "No se pudo encontrar el esquema %s para la extensión %s."
-
-#~ msgid "Please check your installation."
-#~ msgstr "Compruebe su instalación."
-
-#~ msgid "Are  you sure that you want to reset the shadows values of the current view to their defaults?"
-#~ msgstr "¿Está seguro de que desea restablecer los valores de sombras de la vista actual a sus valores predeterminados?"
-
-#~ msgid "Compatibility"
-#~ msgstr "Compatibilidad"
-
-#~ msgid "Do not install on any other version of Cinnamon."
-#~ msgstr "No instalar en ninguna otra versión de Cinnamon."
-
-#~ msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called **helper.py** from a terminal opened inside the xlet's folder."
-#~ msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado **helper.py** desde una terminal abierta dentro de la carpeta del xlet."
-
-#~ msgid "IMPORTANT!!!"
-#~ msgstr "¡IMPORTANTE!"
-
-#~ msgid "Applets/Desklets/Extensions (a.k.a. xlets) localization"
-#~ msgstr "Localización de applets/desklets/extensiones (también conocidos como xlets)"
-
-#~ msgid "If this xlet has no locale available for your language, you could create it by following the following instructions."
-#~ msgstr "Si este xlet no está disponible en su idioma, la localización puede ser creada siguiendo las siguientes instrucciones."
-
-#~ msgid "Minimum Cinnamon version allowed: 2.8.6"
-#~ msgstr "Versión mínima de CInnamon permitida: 2.8.6"
-
-#~ msgid "Please enter your password to install the required settings schema for %s"
-#~ msgstr "Por favor, introduzca su contraseña para instalar el esquema de configuración necesario para %s"
-
-#~ msgid "Could not install the settings schema for %s.  You will have to perform this step yourself."
-#~ msgstr "No se ha podido instalar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo."
-
-#~ msgid "Please enter your password to remove the settings schema for %s"
-#~ msgstr "Por favor, introduzca su contraseña para eliminar el esquema de configuración para %s"
-
-#~ msgid "Could not remove the settings schema for %s.  You will have to perform this step yourself.  This is not a critical error."
-#~ msgstr "No se pudo eliminar el esquema de configuración para %s. Tendrá que realizar este paso usted mismo. Esto no es un error crítico."
-
-#~ msgid "Emulate Gnome Shell behavior:"
-#~ msgstr "Emular el comportamiento de los menúes de Gnome Shell:"
-
-#~ msgid "When a menu is open on Genome Shell, and then the mouse cursor is moved to another button on the top panel, the menu of the hovered buttons will automatically open without the need to click on them. With this option enabled, that same behavior can be reproduced on Cinnamon."
-#~ msgstr "Cuando un menú está abierto en Gnome Shell y, a continuación, el cursor del ratón se mueve a otro botón en el panel superior, el menú de los botones por los cuales el cursor del ratón está pasando se abrirán automáticamente sin necesidad de hacer clic en ellos. Con esta opción habilitada, ese mismo comportamiento se puede reproducir en Cinnamon."

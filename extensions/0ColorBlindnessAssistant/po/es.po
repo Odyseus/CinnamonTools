@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ColorBlindnessAssistant\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-02-10 20:50-0300\n"
+"POT-Creation-Date: 2020-02-12 04:13-0300\n"
 "PO-Revision-Date: 2020-02-10 21:00-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Information related to this specific section"
 msgstr "Información relacionada con esta sección específica."
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1285
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1298
 msgid "Clear color"
 msgstr "Limpiar color"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1398
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1420
 msgid "Clear path"
 msgstr "Limpiar ruta"
 
@@ -83,7 +83,7 @@ msgstr "Nota"
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1192 ../../__app__/data/python_modules/xlets_settings/__init__.py:1090 ../../__app__/data/python_modules/xlets_settings/__init__.py:1123
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1192 ../../__app__/data/python_modules/xlets_settings/__init__.py:1079 ../../__app__/data/python_modules/xlets_settings/__init__.py:1112
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -119,121 +119,121 @@ msgstr "Agregar nueva entrada"
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1193 ../../__app__/data/python_modules/xlets_settings/__init__.py:1091 ../../__app__/data/python_modules/xlets_settings/__init__.py:1124
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1193 ../../__app__/data/python_modules/xlets_settings/__init__.py:1080 ../../__app__/data/python_modules/xlets_settings/__init__.py:1113
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:497 settings.py:198
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:486 settings.py:198
 msgid "Other"
 msgstr "Otros"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:636
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:625
 msgid "Previous instance"
 msgstr "Instancia previa"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:643
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:632
 msgid "Next instance"
 msgstr "Siguiente instancia"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:683
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
 msgid "Import settings from a file"
 msgstr "Importar preferencias desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:687
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:676
 msgid "Export settings to a file"
 msgstr "Exportar preferencias a un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:691
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:680
 msgid "Reset settings to defaults"
 msgstr "Restablecer preferencias a los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:701 ../../__app__/python_modules/localized_help_creator.py:316 utils.js:55
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:690 ../../__app__/python_modules/localized_help_creator.py:321 utils.js:55
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:722
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:711
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:790 extension.js:597
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:779 extension.js:597
 #, python-format, javascript-format
 msgid "Settings for %s"
 msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1086
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1075
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1096 ../../__app__/data/python_modules/xlets_settings/__init__.py:1128
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1085 ../../__app__/data/python_modules/xlets_settings/__init__.py:1117
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1119
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1108
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1152
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1141
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1154
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1143
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
-#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:317
+#: ../../__app__/python_modules/localized_help_creator.py:322
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318
+#: ../../__app__/python_modules/localized_help_creator.py:323
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:359
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
+#: ../../__app__/python_modules/localized_help_creator.py:379
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:377
+#: ../../__app__/python_modules/localized_help_creator.py:382
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:388
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:400
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:403
+#: ../../__app__/python_modules/localized_help_creator.py:408
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:410
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:421
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:425
+#: ../../__app__/python_modules/localized_help_creator.py:430
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:431
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -7403,75 +7403,3 @@ msgstr "Esta no es la ventana de configuración \"real\" de este xlet."
 #. settings-schema.json->settings_button->description
 msgid "Open the \"real\" preference window"
 msgstr "Abrir la ventana \"real\" de preferencias"
-
-#~ msgid "Choose an Icon"
-#~ msgstr "Elegir un ícono"
-
-#~ msgid "_Open"
-#~ msgstr "_Abrir"
-
-#~ msgid "Image files"
-#~ msgstr "Archivos de imagen"
-
-#~ msgid "Are you sure that you want to remove this item?"
-#~ msgstr "¿Está seguro de que desea remover este ítem?"
-
-#~ msgid "Choose how to add the imported data"
-#~ msgstr "Elegir cómo agregar los datos importados"
-
-#~ msgid "Cinnamon versions bellow 3.6.x"
-#~ msgstr "Versiones de Cinnamon abajo de 3.6.x"
-
-#~ msgid "Cinnamon versions prior to 3.6.x have a design flaw. If an xlet uses an external settings application, and at the same time the file **settings-schema.json** exists inside an xlet folder, all shortcuts to open an xlet settings will not open the external application as it should; they will open the Cinnamon's native settings window. To work around this design flaw, I put in place different mechanisms depending on the xlet type."
-#~ msgstr "Las versiones de Cinnamon anteriores a 3.6.x tienen un defecto de diseño. Si un xlet utiliza una aplicación de configuración externa y al mismo tiempo existe el archivo **settings-schema.json** dentro de la carpeta de un xlet, todos los accesos directos para abrir la configuración del xlet no abrirán la aplicación externa como deberían; se abrirá la ventana de configuración nativa de la Cinnamon. Para evitar este defecto de diseño, instalé diferentes mecanismos según el tipo de xlet."
-
-#~ msgid "If you are seeing this window, you are using a Cinnamon version with a design flaw."
-#~ msgstr "Si se está viendo esta ventana, se está utilizando una versión de Cinnamon con un defecto de diseño."
-
-#~ msgid "This window isn't this extension's \"real\" configuration window."
-#~ msgstr "Esta no es la ventana de configuración \"real\" de esta extensión."
-
-#~ msgid "If on Cinnamon 3.0.x, the button below will not work."
-#~ msgstr "Si se está en Cinnamon 3.0.x, el botón de abajo no funcionará."
-
-#~ msgid "Read HELP.html file (found inside the extension folder) for instructions on how to overcome these limitations."
-#~ msgstr "Leer el archivo HELP.html (que se encuentra dentro de la carpeta de la extensión) para obtener instrucciones sobre cómo superar estas limitaciones."
-
-#~ msgid "Import from a file"
-#~ msgstr "Importar desde un archivo"
-
-#~ msgid "Export to a file"
-#~ msgstr "Exportar hacia un archivo"
-
-#~ msgid "Reset to defaults"
-#~ msgstr "Restablecer a los valores predeterminados"
-
-#~ msgid "Requires Cinnamon restart to enable/disable"
-#~ msgstr "Cinnamon necesita ser reiniciado para habilitar/deshabilitar esta opción."
-
-#~ msgid "Settings shortcut"
-#~ msgstr "Acceso directo de preferencias"
-
-#~ msgid "Generated .desktop files will not be automatically deleted when this extension is disabled/uninstalled."
-#~ msgstr "Los archivos .desktop generados no se eliminarán automáticamente cuando esta extensión se deshabilite/desinstale."
-
-#~ msgid "Create shortcut on desktop"
-#~ msgstr "Crear atajo en el escritorio"
-
-#~ msgid "Create a .desktop file to launch this extension settings from the desktop."
-#~ msgstr "Cree un archivo .desktop para iniciar esta configuración de extensión desde el escritorio."
-
-#~ msgid "Create shortcut on ~/.local/share/applications"
-#~ msgstr "Crear atajo en ~/.local/share/applications"
-
-#~ msgid "Create a .desktop file to launch this extension settings from the applications menu."
-#~ msgstr "Cree un archivo .desktop para iniciar esta configuración de extensión desde el menú de aplicaciones."
-
-#~ msgid "This window isn't this extension \"real\" configuration window."
-#~ msgstr "Esta no es la ventana de configuración \"real\" de esta extensión."
-
-#~ msgid "I don't possess any certified knowledge about color vision deficiency nor the science of color. This extension is provided with the hope that it might be useful to persons with a color vision deficiency pathology. The algorithms used to calculate the simulation/compensation effects for the different pathologies are based on scientific researches, thesis and blog posts that I came across."
-#~ msgstr "No poseo ningún conocimiento certificado sobre la deficiencia de visión del color ni la ciencia del color. Esta extensión se proporciona con la esperanza de que pueda ser útil para personas con una patología por deficiencia de visión del color. Los algoritmos utilizados para calcular los efectos de simulación/compensación para las diferentes patologías se basan en investigaciones científicas, tesis y publicaciones de blog que he encontrado."
-
-#~ msgid "This extension provides mainly of three features."
-#~ msgstr "Esta extensión provee tres características principales:"

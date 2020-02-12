@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList VERSION\n"
-"POT-Creation-Date: 2020-02-11 00:30-0300\n"
+"POT-Creation-Date: 2020-02-12 04:13-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,63 +15,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Make Cinnamon Xlet POT 2018-09-15 01:19:13.335\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:245 ../../__app__/python_modules/localized_help_creator.py:319
+#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:316 applet.js:963
+#: ../../__app__/python_modules/localized_help_creator.py:321 applet.js:963
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:317
+#: ../../__app__/python_modules/localized_help_creator.py:322
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:318
+#: ../../__app__/python_modules/localized_help_creator.py:323
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:354
+#: ../../__app__/python_modules/localized_help_creator.py:359
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:374
+#: ../../__app__/python_modules/localized_help_creator.py:379
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:377
+#: ../../__app__/python_modules/localized_help_creator.py:382
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:383
+#: ../../__app__/python_modules/localized_help_creator.py:388
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:400
+#: ../../__app__/python_modules/localized_help_creator.py:405
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:403
+#: ../../__app__/python_modules/localized_help_creator.py:408
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:410
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:421
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:425
+#: ../../__app__/python_modules/localized_help_creator.py:430
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:431
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 

@@ -59,6 +59,10 @@ sudo pip3 install feedparser
         return ""
 
 
-if __name__ == "__main__":
+def main():
     m = Main(xlet_dir, xlet_slug)
-    m.start()
+    return m.start()
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-10 20:44-0300\n"
+"POT-Creation-Date: 2020-02-12 00:10-0300\n"
 "PO-Revision-Date: 2020-02-10 20:58-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: \n"
@@ -17,85 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: ../../__app__/python_modules/localized_help_creator.py:245
-#: ../../__app__/python_modules/localized_help_creator.py:319
-#, python-format
-msgid "Help for %s"
-msgstr "Ayuda para %s"
-
-#: ../../__app__/python_modules/localized_help_creator.py:316
-msgid "Help"
-msgstr "Ayuda"
-
-#: ../../__app__/python_modules/localized_help_creator.py:317
-msgid "Contributors"
-msgstr "Colaboradores"
-
-#: ../../__app__/python_modules/localized_help_creator.py:318
-msgid "Changelog"
-msgstr "Registro de cambios"
-
-#: ../../__app__/python_modules/localized_help_creator.py:354
-msgid "The following sections are available only in English."
-msgstr "Las siguientes secciones están disponibles sólo en Inglés."
-
-#: ../../__app__/python_modules/localized_help_creator.py:374
-#, python-format
-msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
-msgstr ""
-"Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
-
-#: ../../__app__/python_modules/localized_help_creator.py:377
-#, python-brace-format
-msgid "This xlet is compatible with Cinnamon {0} up to {1}."
-msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
-
-#: ../../__app__/python_modules/localized_help_creator.py:383
-msgid "Cinnamon compatibility"
-msgstr "Compatibilidad con Cinnamon"
-
-#: ../../__app__/python_modules/localized_help_creator.py:400
-msgid "Warning"
-msgstr "Advertencia"
-
-#: ../../__app__/python_modules/localized_help_creator.py:403
-msgid ""
-"Never delete any of the files found inside this xlet folder. It might break "
-"this xlet functionality."
-msgstr ""
-"Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de "
-"este xlet. Podría romper la funcionalidad del xlet."
-
-#: ../../__app__/python_modules/localized_help_creator.py:405
-msgid ""
-"Bug reports, feature requests and contributions should be done on this "
-"xlet's repository linked next."
-msgstr ""
-"Los reportes de fallos, peticiones de características y contribuciones deben "
-"hacerse en el repositorio de este xlet vinculado a continuación."
-
-#: ../../__app__/python_modules/localized_help_creator.py:421
-msgid "Xlets localization"
-msgstr "Localización de xlets"
-
-#: ../../__app__/python_modules/localized_help_creator.py:425
-msgid ""
-"If this xlet was installed from Cinnamon Settings, all of this xlet's "
-"localizations were automatically installed."
-msgstr ""
-"Si este xlet se instaló desde Configuración de Cinnamon, todas las "
-"localizaciones de este xlet se instalaron automáticamente."
-
-#: ../../__app__/python_modules/localized_help_creator.py:426
-msgid ""
-"If this xlet was installed manually and not trough Cinnamon Settings, "
-"localizations can be installed by executing the script called helper.py from "
-"a terminal opened inside the xlet's folder."
-msgstr ""
-"Si este xlet se instaló manualmente y no a través de Configuración de "
-"Cinnamon, las localizaciones se pueden instalar ejecutando el archivo "
-"llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
 #. Context menu items
 #: applet.js:145
@@ -108,9 +29,7 @@ msgstr "Aplicaciones inactivas"
 
 #. metadata.json->description
 msgid "A replacement for the abandoned System Tray Collapsible Cinnamon applet"
-msgstr ""
-"Reemplazo del abandonado applet para Cinnamon llamado System Tray "
-"Collapsible."
+msgstr "Reemplazo del abandonado applet para Cinnamon llamado System Tray Collapsible."
 
 #. metadata.json->name
 msgid "Collapsible Systray (Fork By Odyseus)"
@@ -175,12 +94,8 @@ msgid "Disable hover effect for tray icons"
 msgstr "Deshabilitar efecto al desplazarse sobre los íconos de la bandeja"
 
 #. settings-schema.json->pref_no_hover_for_tray_icons->tooltip
-msgid ""
-"If you have problems with the hover effect or it simply doesn't look good, "
-"you should enable this setting"
-msgstr ""
-"Si se tiene problemas con el efecto al desplazarse o si simplemente no luce "
-"bien, se debería habilitar esta opción."
+msgid "If you have problems with the hover effect or it simply doesn't look good, you should enable this setting"
+msgstr "Si se tiene problemas con el efecto al desplazarse o si simplemente no luce bien, se debería habilitar esta opción."
 
 #. settings-schema.json->pref_horizontal_expand_icon_name->description
 msgid "Horizontal expand icon: "
@@ -213,22 +128,17 @@ msgstr "Nivel de registro (*)"
 
 #. settings-schema.json->pref_logging_level->tooltip
 msgid ""
-"It enables the ability to log the output of several functions used by the "
-"extension.\n"
+"It enables the ability to log the output of several functions used by the extension.\n"
 "\n"
 "Normal: Only log messages caused by non critical errors.\n"
 "Verbose: Additionally log extra output messages and all HTTP responses.\n"
-"Very verbose: Additionally log all method calls from all JavaScript classes/"
-"prototypes along with their execution time."
+"Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
-"Permite la capacidad de registrar la salida de varias funciones utilizadas "
-"por la extensión.\n"
+"Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
 "\n"
 "Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-"Verbal: registra adicionalmente mensajes de salida adicionales y todas las "
-"respuestas HTTP.\n"
-"Muy detallado: registra adicionalmente todas las llamadas de método de todas "
-"las clases/prototipos de JavaScript junto con su tiempo de ejecución."
+"Verbal: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
+"Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
 
 #. settings-schema.json->pref_logging_level->options
 msgid "Normal"
@@ -247,12 +157,8 @@ msgid "Enable debugger (*)"
 msgstr "Habilitar depurador (*)"
 
 #. settings-schema.json->pref_debugger_enabled->tooltip
-msgid ""
-"It enables the ability to catch all exceptions that under normal use would "
-"not be caught."
-msgstr ""
-"Permite la posibilidad de capturar todas las excepciones que, en el uso "
-"normal, no se detectarían."
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
