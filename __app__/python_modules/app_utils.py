@@ -331,6 +331,7 @@ class XletsHelperCore():
         for xlet in self.xlets_meta:
             additional_files_to_scan = []
             xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
+            xlet_pot_file = os.path.join(xlet_root_folder, "po", "{{UUID}}.pot")
             xlet_config_file = os.path.join(xlet_root_folder, "z_config.py")
             create_localized_help_file = os.path.join(
                 xlet_root_folder, "z_create_localized_help.py")
@@ -358,6 +359,7 @@ class XletsHelperCore():
             cmd = [
                 "make-cinnamon-xlet-pot-cli",
                 "--custom-header",
+                "--output=%s" % xlet_pot_file,
                 "--ignored-pattern=__data__/*"
             ] + additional_files_to_scan
             po = cmd_utils.run_cmd(cmd, stdout=None, cwd=xlet_root_folder)
@@ -1111,9 +1113,12 @@ class XletBuilder():
                 self.logger.log_dry_run("**String substitutions will be performed at:**\n%s" %
                                         self._xlet_data["destination"])
             else:
-                string_utils.do_string_substitutions(self._xlet_data["destination"],
-                                                     self._get_replacement_data(),
-                                                     logger=self.logger)
+                string_utils.do_string_substitutions(
+                    self._xlet_data["destination"],
+                    self._get_replacement_data(),
+                    allowed_extensions=(".py", ".bash", ".js", ".json", ".xml", ".pot"),
+                    logger=self.logger
+                )
 
             self._modify_metadata()
             self._compile_schemas()
