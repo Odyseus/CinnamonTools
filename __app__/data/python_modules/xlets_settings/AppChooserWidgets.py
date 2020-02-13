@@ -87,11 +87,11 @@ class ApplicationChooserWidget(Gtk.Dialog):
                          flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                          buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
                                   _("_OK"), Gtk.ResponseType.OK))
-
         self.set_size_request(400, 500)
         self._multi_selection = multi_selection
         self._show_no_display = show_no_display
 
+        self._headerbar = self.get_header_bar()
         content_box = self.get_content_area()
         content_box_grid = BaseGrid()
         content_box_grid.set_property("expand", True)
@@ -193,6 +193,7 @@ class ApplicationChooserWidget(Gtk.Dialog):
             return True if self._show_no_display else not x.get_nodisplay()
 
         self.app_list = list(filter(filter_list, Gio.AppInfo.get_all()))
+        count = 0
 
         for i, app in enumerate(self.app_list):
             if not self._show_no_display and app.get_nodisplay():
@@ -210,8 +211,10 @@ class ApplicationChooserWidget(Gtk.Dialog):
             self.list_store.set(iter,
                                 [0, 1, 2],
                                 [app_name, app_icon, i])
+            count += 1
 
         self.list_store.set_sort_column_id(0, Gtk.SortType.ASCENDING)
+        self._headerbar.set_subtitle(_("Total applications") + ": " + str(count))
 
     def run(self):
         """Run the dialog to get a selected application/s.

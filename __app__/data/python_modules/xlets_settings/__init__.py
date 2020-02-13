@@ -17,10 +17,16 @@ proxy : object
 XLET_SETTINGS_WIDGETS : dict
     Settings widgets map.
 """
+import argparse
 import gi
 import json
 import os
-import traceback
+import sys
+
+from . import exceptions
+
+if sys.version_info < (3, 5):
+    raise exceptions.WrongPythonVersion()
 
 gi.require_version("Gdk", "3.0")
 gi.require_version("GdkPixbuf", "2.0")
@@ -37,10 +43,13 @@ from subprocess import run
 
 from .GSettingsWidgets import *  # noqa
 from .JsonSettingsWidgets import *  # noqa
+from .ansi_colors import Ansi
 from .common import BaseGrid
 from .common import HOME
 from .common import _
 from .common import compare_version
+from .exceptions import MissingRequiredArgument
+from .exceptions import UnkownWidgetType
 
 MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -81,6 +90,7 @@ XLET_SETTINGS_WIDGETS = {
 
 G_SETTINGS_WIDGETS = {
     "gcombobox": "GSettingsComboBox",
+    "gspinbutton": "GSettingsSpinButton",
     "gswitch": "GSettingsSwitch"
 }
 
@@ -152,7 +162,7 @@ class SettingsBox(BaseGrid):
 
                 if "dependency" in section_def:
                     revealer = JSONSettingsRevealer(  # noqa | JsonSettingsWidgets
-                    self._instance_info["settings"], section_def["dependency"]
+                        self._instance_info["settings"], section_def["dependency"]
                     )
                     section_container = page.add_reveal_section(
                         title=section_def.get("section-title", ""),
@@ -170,58 +180,58 @@ class SettingsBox(BaseGrid):
                 section_widgets = section_def["widgets"]
 
                 for i, widget_def in enumerate(section_widgets):
-                    # NOTE: widget_def is modified by adding an instance of JSONSettingsHandler to it.
-                    # widget_def is stored in widget_def_clean so it can be used by json.dumps() when
-                    # is printed to STDOUT for easy reading.
-                    widget_def_clean = widget_def
-
                     # NOTE: Possibility to hide individual widgets depending on a condition defined in
                     # the widgets definition file.
                     if not widget_def.get("compatible", True):
                         continue
 
                     try:
-                        if widget_def["widget-type"] == "label":
-                            widget = Text(**widget_def["widget-kwargs"])  # noqa | JsonSettingsWidgets > SettingsWidgets
-                        elif widget_def["widget-type"] in XLET_SETTINGS_WIDGETS:
-                            widget_def["widget-attrs"]["settings"] = self._instance_info["settings"]
-                            widget = globals()[XLET_SETTINGS_WIDGETS[widget_def["widget-type"]]](
-                                widget_attrs=widget_def["widget-attrs"], widget_kwargs=widget_def["widget-kwargs"])
+                        # NOTE: widget_def is modified by adding an instance of JSONSettingsHandler to it.
+                        # widget_def is stored in widget_def_clean so it can be used by json.dumps() when
+                        # is printed to STDOUT for easy reading. A shallow copy is enough.
+                        widget_def_clean = widget_def.copy()
+                        widget_type = widget_def.get("widget-type", "")
+                        # NOTE: "label"s have no "widget-attrs". That's why I safely obtain it.
+                        # The others are safely obtained due to my OCD. LOL
+                        widget_attrs = widget_def.get("widget-attrs", {})
+                        widget_kwargs = widget_def.get("widget-kwargs", {})
 
-                            if (widget_def["widget-type"] == "list" or widget_def["widget-type"] == "iconfilechooser") and self._main_app is not None:
+                        if widget_type == "label":
+                            widget = Text(**widget_kwargs)  # noqa | JsonSettingsWidgets > SettingsWidgets
+                        elif widget_type in XLET_SETTINGS_WIDGETS:
+                            widget_attrs["settings"] = self._instance_info["settings"]
+                            widget = globals()[XLET_SETTINGS_WIDGETS[widget_type]](
+                                widget_attrs=widget_attrs, widget_kwargs=widget_kwargs)
+
+                            if (widget_type == "list" or widget_type == "iconfilechooser") and self._main_app is not None:
                                 widget.main_app = self._main_app
-                        elif widget_def["widget-type"] in G_SETTINGS_WIDGETS:
-                            widget_def["widget-attrs"]["xlet_meta"] = self._xlet_meta
-                            widget = globals()[G_SETTINGS_WIDGETS[widget_def["widget-type"]]](
-                                widget_attrs=widget_def["widget-attrs"], widget_kwargs=widget_def["widget-kwargs"])
+                        elif widget_type in G_SETTINGS_WIDGETS:
+                            widget_attrs["xlet_meta"] = self._xlet_meta
+                            widget = globals()[G_SETTINGS_WIDGETS[widget_type]](
+                                widget_attrs=widget_attrs, widget_kwargs=widget_kwargs)
                         else:
-                            continue
-                    except Exception:
-                        print("Widget definition")
-
-                        try:
-                            print(json.dumps(widget_def_clean, indent=4))
-                        except Exception:
-                            print(widget_def_clean)
-
-                        print(traceback.format_exc())
+                            raise UnkownWidgetType(widget_type)
+                    except Exception as err:
+                        print(Ansi.DEFAULT("**Widget definition**"))
+                        print(json.dumps(widget_def_clean, indent=4))
+                        print(Ansi.LIGHT_RED(err))
                         continue
 
-                    if widget_def["widget-type"] == "list":
+                    if widget_type == "list":
                         widget.fill_row()
                     else:
                         widget.set_border_width(5)
                         widget.set_margin_start(15)
                         widget.set_margin_end(15)
 
-                    if widget_def["widget-type"] == "button":
+                    if widget_type == "button" or widget_type == "applist":
                         col_span = 2
                     else:
                         col_span = 1
 
-                    if "dependency" in widget_def["widget-kwargs"]:
+                    if "dependency" in widget_kwargs:
                         revealer = JSONSettingsRevealer(  # noqa | JsonSettingsWidgets
-                            self._instance_info["settings"], widget_def["widget-kwargs"]["dependency"])
+                            self._instance_info["settings"], widget_kwargs["dependency"])
                         section_container.add_reveal_row(
                             widget, 0, i + 1, col_span, 1, revealer=revealer)
                     else:
@@ -395,8 +405,7 @@ class MainApplication(Gtk.Application):
         kwargs_keys = set(kwargs.keys())
 
         if not self._required_args.issubset(kwargs_keys):
-            raise SystemExit("Missing required arguments: %s" %
-                             ", ".join(list(self._required_args.difference(kwargs_keys))))
+            raise MissingRequiredArgument(list(self._required_args.difference(kwargs_keys)))
 
         # kwargs attributes.
         self.application_id = ""
@@ -1184,6 +1193,25 @@ class MainApplication(Gtk.Application):
                 pass
 
         self.quit()
+
+
+def cli(pages_definition):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--xlet-type", dest="xlet_type", default="extension", type=str)
+    parser.add_argument("--xlet-instance-id", dest="xlet_instance_id", default=None, type=str)
+    parser.add_argument("--xlet-uuid", dest="xlet_uuid")
+    parser.add_argument("--win-width", dest="win_initial_width", default=800, type=int)
+    parser.add_argument("--win-height", dest="win_initial_height", default=600, type=int)
+    parser.add_argument("--app-id", dest="application_id")
+
+    args = parser.parse_args()
+
+    kwargs = dict(vars(args), **{
+        "pages_definition": pages_definition
+    })
+
+    app = MainApplication(**kwargs)
+    app.run()
 
 
 if __name__ == "__main__":

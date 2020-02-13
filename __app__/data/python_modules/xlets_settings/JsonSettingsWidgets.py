@@ -28,6 +28,9 @@ from .SettingsWidgets import *  # noqa
 from .TreeListWidgets import List  # noqa
 from .common import BaseGrid
 from .common import sort_combo_options
+from .exceptions import CannotBackend
+from .exceptions import MalformedJSONFile
+from .exceptions import MethodNotImplemented
 
 # NOTE: JEESH!!! I hate import *!!!
 __all__ = [
@@ -367,14 +370,14 @@ class JSONSettingsHandler():
         Exception
             Description
         """
-        with open(self.filepath) as settings_file:
+        with open(self.filepath, "r", encoding="UTF-8") as settings_file:
             raw_data = settings_file.read()
 
         try:
             settings = json.loads(raw_data, encoding=None,
                                   object_pairs_hook=collections.OrderedDict)
         except Exception:
-            raise Exception("Failed to parse settings JSON data for file %s" % (self.filepath))
+            raise MalformedJSONFile(self.filepath)
         return settings
 
     def save_settings(self):
@@ -387,7 +390,7 @@ class JSONSettingsHandler():
 
         raw_data = json.dumps(self.settings, indent=4)
 
-        with open(self.filepath, "w+") as settings_file:
+        with open(self.filepath, "w+", encoding="UTF-8") as settings_file:
             settings_file.write(raw_data)
 
         self.resume_monitor()
@@ -457,14 +460,14 @@ class JSONSettingsHandler():
         Exception
             Description
         """
-        with open(filepath) as settings_file:
+        with open(filepath, "r", encoding="UTF-8") as settings_file:
             raw_data = settings_file.read()
 
         try:
             settings = json.loads(raw_data, encoding=None,
                                   object_pairs_hook=collections.OrderedDict)
         except Exception:
-            raise Exception("Failed to parse settings JSON data for file %s" % (self.filepath))
+            raise MalformedJSONFile(filepath)
 
         for key in self.settings:
             if "value" not in self.settings[key]:
@@ -490,7 +493,7 @@ class JSONSettingsHandler():
 
         raw_data = json.dumps(self.settings, indent=4)
 
-        with open(filepath, "w+") as settings_file:
+        with open(filepath, "w+", encoding="UTF-8") as settings_file:
             settings_file.write(raw_data)
 
 
@@ -618,9 +621,6 @@ class JSONSettingsBackend(object):
         if hasattr(self, "set_rounding") and self.settings.has_property(self.pref_key, "round"):
             self.set_rounding(self.settings.get_property(self.pref_key, "round"))
 
-        if hasattr(self, "do_not_bind"):
-            return
-
         if hasattr(self, "bind_object"):
             bind_object = self.bind_object
         else:
@@ -690,10 +690,10 @@ class JSONSettingsBackend(object):
 
         Raises
         ------
-        NotImplementedError
-            Description
+        MethodNotImplemented
+            SettingsWidget classes with no ``bind_dir`` property set must implement this method.
         """
-        raise NotImplementedError("SettingsWidget class must implement on_setting_changed().")
+        raise MethodNotImplemented("on_setting_changed")
 
     def connect_widget_handlers(self, *args):
         """Summary
@@ -705,12 +705,11 @@ class JSONSettingsBackend(object):
 
         Raises
         ------
-        NotImplementedError
-            Description
+        MethodNotImplemented
+            SettingsWidget classes with no ``bind_dir`` property set must implement this method.
         """
         if self.bind_dir is None:
-            raise NotImplementedError(
-                "SettingsWidget classes with no .bind_dir must implement connect_widget_handlers().")
+            raise MethodNotImplemented("connect_widget_handlers")
 
 
 def json_settings_factory(subclass):
@@ -727,7 +726,7 @@ def json_settings_factory(subclass):
         Description
     """
     if subclass not in CAN_BACKEND:  # noqa | SettingsWidgets
-        raise SystemExit()
+        raise CannotBackend(subclass)
 
     class NewClass(globals()[subclass], JSONSettingsBackend):
         """Summary

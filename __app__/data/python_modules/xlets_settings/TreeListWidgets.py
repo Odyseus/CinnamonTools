@@ -40,10 +40,13 @@ from .SettingsWidgets import TextView
 from .SettingsWidgets import _
 from .common import BaseGrid
 from .common import contrast_rgba_color
+from .common import display_message_dialog
 from .common import generate_options_from_paths
 from .common import get_keybinding_display_name
 from .common import import_export
 from .common import sort_combo_options
+from .exceptions import MalformedJSONFile
+from .exceptions import WrongType
 # from SettingsWidgets import SoundFileChooser
 
 LIST_VARIABLE_TYPE_MAP = {
@@ -1130,7 +1133,7 @@ class List(SettingsWidget):
             try:
                 imported_data = json.loads(raw_data, encoding="UTF-8")
             except Exception:
-                raise Exception("Failed to parse settings JSON data for file %s" % filepath)
+                raise MalformedJSONFile(filepath)
 
             existent_data = self.settings.get_value(self.pref_key)
 
@@ -1142,7 +1145,14 @@ class List(SettingsWidget):
 
                 self.on_setting_changed()
             else:
-                raise Exception("Wrong data type found on file %s" % filepath)
+                msg = _("Wrong data type found on file '%s'")
+
+                display_message_dialog(self,
+                                       _("Error importing data"),
+                                       msg % filepath,
+                                       context="error")
+                print(msg % filepath)
+                raise WrongType("list", type(imported_data).__name__)
 
     def _apply_changes(self, *args):
         """Summary

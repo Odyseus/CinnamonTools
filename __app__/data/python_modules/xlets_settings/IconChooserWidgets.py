@@ -19,6 +19,7 @@ from gi.repository import Pango
 
 from .common import BaseGrid
 from .common import _
+from .exceptions import WrongType
 
 
 class IconChooserDialog(Gtk.Dialog):
@@ -479,7 +480,8 @@ class IconChooserDialog(Gtk.Dialog):
             Description
         """
         if not type(size) == int:
-            raise TypeError("must be type int, not " + type(size).__name__)
+            raise WrongType("int", type(size).__name__)
+
         self._icon_size = size
 
     def set_search_term(self, filter_term):
@@ -498,7 +500,8 @@ class IconChooserDialog(Gtk.Dialog):
             Description
         """
         if not type(filter_term) == str:
-            raise TypeError("must be type str, not " + type(filter_term).__name__)
+            raise WrongType("str", type(filter_term).__name__)
+
         self._search_term = filter_term
 
     def set_main_app(self, main_app):
@@ -509,8 +512,6 @@ class IconChooserDialog(Gtk.Dialog):
         main_app : TYPE
             Description
         """
-        # if isinstance(main_app, Gtk.Application):
-        #     raise TypeError("must be type Gtk.Application, not " + type(main_app).__name__)
         self._main_app = main_app
 
 

@@ -19,6 +19,8 @@ from gi.repository import Gio
 
 from .SettingsWidgets import *  # noqa
 from .common import sort_combo_options
+from .exceptions import CannotBackend
+from .exceptions import MethodNotImplemented
 
 
 GioSSS = Gio.SettingsSchemaSource
@@ -28,12 +30,14 @@ GioSSS = Gio.SettingsSchemaSource
 __all__ = [
     # NOTE: Defined in this module.
     "GSettingsComboBox",
+    "GSettingsSpinButton",
     "GSettingsSwitch"
 ]
 
 
 CAN_BACKEND = [
     "ComboBox",
+    "SpinButton",
     "Switch",
     # "ColorChooser",
     # "Entry",
@@ -41,7 +45,6 @@ CAN_BACKEND = [
     # "FontButton",
     # "IconChooser",
     # "Range",
-    # "SpinButton",
     # "TextView",
 ]
 
@@ -205,12 +208,11 @@ Gio.Settings.__setitem__ = __setitem__
 
 
 class GSettingsBackend(object):
-
-    """Summary
+    """gsettings backend.
     """
 
     def attach_backend(self):
-        """Summary
+        """Attach backend.
         """
         if hasattr(self, "set_rounding"):
             vtype = self.settings.get_value(self.pref_key).get_type_string()
@@ -234,7 +236,7 @@ class GSettingsBackend(object):
             self.connect_widget_handlers()
 
     def set_value(self, value):
-        """Summary
+        """Set preference value.
 
         Parameters
         ----------
@@ -244,7 +246,7 @@ class GSettingsBackend(object):
         self.settings[self.pref_key] = value
 
     def get_value(self):
-        """Summary
+        """Get preference value.
 
         Returns
         -------
@@ -254,7 +256,7 @@ class GSettingsBackend(object):
         return self.settings[self.pref_key]
 
     def get_range(self):
-        """Summary
+        """Get min./max. range.
 
         Returns
         -------
@@ -277,10 +279,10 @@ class GSettingsBackend(object):
 
         Raises
         ------
-        NotImplementedError
-            Description
+        MethodNotImplemented
+            SettingsWidget classes with no bind_dir property set must implement this method.
         """
-        raise NotImplementedError("SettingsWidget class must implement on_setting_changed().")
+        raise MethodNotImplemented("on_setting_changed")
 
     def connect_widget_handlers(self, *args):
         """Summary
@@ -292,22 +294,21 @@ class GSettingsBackend(object):
 
         Raises
         ------
-        NotImplementedError
-            Description
+        MethodNotImplemented
+            SettingsWidget classes with no bind_dir property set must implement this method.
         """
         if self.bind_dir is None:
-            raise NotImplementedError(
-                "SettingsWidget classes with no .bind_dir must implement connect_widget_handlers().")
+            raise MethodNotImplemented("connect_widget_handlers")
 
 
 def get_gsettings_schema(schema, xlet_meta={}):
-    """Summary
+    """Get gsettings schema.
 
     Parameters
     ----------
-    schema : TYPE
+    schema : str
         Description
-    xlet_meta : TYPE
+    xlet_meta : dict, optional
         Description
 
     Returns
@@ -352,12 +353,18 @@ def g_settings_factory(subclass):
     subclass : TYPE
         Description
     """
-    class NewClass(globals()[subclass], GSettingsBackend):
+    if subclass not in CAN_BACKEND:  # noqa | SettingsWidgets
+        raise CannotBackend(subclass)
 
+    class NewClass(globals()[subclass], GSettingsBackend):
         """Summary
 
         Attributes
         ----------
+        map_get : TYPE
+            Description
+        map_set : TYPE
+            Description
         pref_key : TYPE
             Description
         settings : TYPE
@@ -365,7 +372,7 @@ def g_settings_factory(subclass):
         """
 
         def __init__(self, widget_attrs={}, widget_kwargs={}):
-            """Summary
+            """Initialization.
 
             Parameters
             ----------

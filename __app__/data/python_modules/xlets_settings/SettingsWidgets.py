@@ -206,7 +206,7 @@ class SettingsPage(BaseGrid):
         return section
 
     def add_reveal_section(self, title=None, subtitle=None, section_info={},
-                           schema=None, key=None, values=None, revealer=None):
+                           schema=None, pref_key=None, values=None, revealer=None):
         """Summary
 
         Parameters
@@ -219,7 +219,7 @@ class SettingsPage(BaseGrid):
             Description
         schema : None, optional
             Description
-        key : None, optional
+        pref_key : None, optional
             Description
         values : None, optional
             Description
@@ -233,8 +233,8 @@ class SettingsPage(BaseGrid):
         """
         section = SettingsSection(title, subtitle, section_info)
 
-        # if revealer is None:
-        #     revealer = SettingsRevealer(schema, key, values)
+        if revealer is None:
+            revealer = SettingsRevealer(schema, pref_key, values)
 
         revealer.add(section)
         section._revealer = revealer
@@ -263,7 +263,7 @@ class SettingsSection(BaseGrid):
         Description
     """
     def __init__(self, title=None, subtitle=None, section_info={}):
-        """Summary
+        """Initialization.
 
         Parameters
         ----------
@@ -374,7 +374,7 @@ class SettingsSection(BaseGrid):
         self.need_separator = True
 
     def add_reveal_row(self, widget, col_pos, row_pos, col_span, row_span,
-                       schema=None, key=None, values=None, check_func=None, revealer=None):
+                       schema=None, pref_key=None, values=None, check_func=None, revealer=None):
         """Summary
 
         Parameters
@@ -391,7 +391,7 @@ class SettingsSection(BaseGrid):
             Description
         schema : None, optional
             Description
-        key : None, optional
+        pref_key : None, optional
             Description
         values : None, optional
             Description
@@ -419,9 +419,8 @@ class SettingsSection(BaseGrid):
 
         list_box.add(row)
 
-        # FIXME: Handle only JSONSettingsRevealer for now.
-        # if revealer is None:
-        #     revealer = SettingsRevealer(schema, key, values, check_func)
+        if revealer is None:
+            revealer = SettingsRevealer(schema, pref_key, values, check_func)
 
         widget.revealer = revealer
         revealer.add(list_box)
@@ -519,14 +518,14 @@ class SettingsRevealer(Gtk.Revealer):
     Not used for now.
     """
 
-    def __init__(self, schema=None, key=None, values=None, check_func=None):
+    def __init__(self, schema=None, pref_key=None, values=None, check_func=None):
         """Initialization.
 
         Parameters
         ----------
         schema : None, optional
             Description
-        key : None, optional
+        pref_key : None, optional
             Description
         values : None, optional
             Description
@@ -547,11 +546,11 @@ class SettingsRevealer(Gtk.Revealer):
             self.settings = Gio.Settings.new(schema)
             # if there aren't values or a function provided to determine visibility we can do a simple bind
             if values is None and check_func is None:
-                self.settings.bind(key, self, "reveal-child", Gio.SettingsBindFlags.GET)
+                self.settings.bind(pref_key, self, "reveal-child", Gio.SettingsBindFlags.GET)
             else:
                 self.values = values
-                self.settings.connect("changed::" + key, self.on_settings_changed)
-                self.on_settings_changed(self.settings, key)
+                self.settings.connect("changed::" + pref_key, self.on_settings_changed)
+                self.on_settings_changed(self.settings, pref_key)
 
     def add(self, widget):
         """Summary
