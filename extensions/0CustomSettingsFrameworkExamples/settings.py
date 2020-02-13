@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import argparse
 import os
 import sys
 
@@ -9,7 +8,7 @@ from html import escape
 XLET_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(XLET_DIR)
 
-from python_modules.xlets_settings import MainApplication
+from python_modules.xlets_settings import cli
 
 
 EXAMPLE_PAGE = {
@@ -495,6 +494,53 @@ KEYBINDINGS_TAB = {
 OTHER_TAB = {
     "page-title": "Other",
     "sections": [{
+        "section-title": "gsettings widgets",
+        "section-notes": [
+            "The settings in this section are the same found in System Settings > Windows > Alt-Tab."
+        ],
+        "widgets": [{
+            "widget-type": "gcombobox",
+            "widget-attrs": {
+                "pref_key": "alttab-switcher-style",
+                "schema": "org.cinnamon"
+            },
+            "widget-kwargs": {
+                "description": "Alt-Tab switcher style",
+                "options": {
+                    "icons": "Icons only",
+                    "thumbnails": "Thumbnails only",
+                    "icons+thumbnails": "Icons and thumbnails",
+                    "icons+preview": "Icons and window preview",
+                    "preview": "Window preview (no icons)",
+                    "coverflow": "Coverflow (3D)",
+                    "timeline": "Timeline (3D)"
+                }
+            }
+        }, {
+            "widget-type": "gswitch",
+            "widget-attrs": {
+                "pref_key": "alttab-switcher-enforce-primary-monitor",
+                "schema": "org.cinnamon"
+            },
+            "widget-kwargs": {
+                "description": "Display the alt-tab switcher on the primary monitor instead of the active one"
+            }
+        }, {
+            "widget-type": "gspinbutton",
+            "widget-attrs": {
+                "pref_key": "alttab-switcher-delay",
+                "schema": "org.cinnamon"
+            },
+            "widget-kwargs": {
+                "description": "Delay before displaying the alt-tab switcher",
+                "min": 0,
+                "max": 1000,
+                "step": 50,
+                "page": 150,
+                "units": "milliseconds"
+            }
+        }]
+    }, {
         "section-title": "Debugging",
         "section-notes": [
             CINN_RESTART,
@@ -530,7 +576,7 @@ OTHER_TAB = {
 }
 
 
-PAGES_OBJECT = [
+PAGES_DEFINITION = [
     GENERIC_TAB,
     CHOOSERS_TAB,
     KEYBINDINGS_TAB,
@@ -542,20 +588,7 @@ PAGES_OBJECT = [
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--xlet-type", dest="xlet_type")
-    parser.add_argument("--xlet-instance-id", dest="xlet_instance_id")
-    parser.add_argument("--xlet-uuid", dest="xlet_uuid")
-
-    args = parser.parse_args()
-
-    app = MainApplication(
-        application_id="org.Cinnamon.Extensions.CustomSettingsFrameworkExamples.Settings",
-        xlet_type=args.xlet_type or "extension",
-        xlet_instance_id=args.xlet_instance_id or None,
-        xlet_uuid=args.xlet_uuid or "{{UUID}}",
-        pages_definition=PAGES_OBJECT,
-        win_initial_width=800,
-        win_initial_height=600,
-    )
-    app.run()
+    # NOTE: I extend sys.argv for extensions so I can call the settings.py script without arguments.
+    sys.argv.extend(("--xlet-uuid={{UUID}}",
+                     "--app-id=org.Cinnamon.Extensions.CustomSettingsFrameworkExamples.Settings"))
+    sys.exit(cli(PAGES_DEFINITION))
