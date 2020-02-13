@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import argparse
 import os
 import sys
 
@@ -11,8 +10,8 @@ MODULES_DIR = os.path.join(XLET_DIR)
 sys.path.append(MODULES_DIR)
 
 from python_modules.xlets_settings import CINNAMON_VERSION
-from python_modules.xlets_settings import MainApplication
 from python_modules.xlets_settings import _
+from python_modules.xlets_settings import cli
 from python_modules.xlets_settings.common import compare_version
 
 CIRCLE = "<b>⚫</b>"
@@ -716,7 +715,7 @@ OTHER_TAB = {
 }
 
 
-PAGES_OBJECT = [
+PAGES_DEFINITION = [
     XLETS_TAB,
     HOTCORNERS_TAB,
     DESKTOP_TAB,
@@ -727,20 +726,7 @@ PAGES_OBJECT = [
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--xlet-type", dest="xlet_type")
-    parser.add_argument("--xlet-instance-id", dest="xlet_instance_id")
-    parser.add_argument("--xlet-uuid", dest="xlet_uuid")
-
-    args = parser.parse_args()
-
-    app = MainApplication(
-        application_id="org.Cinnamon.Extensions.CinnamonTweaks.Settings",
-        xlet_type=args.xlet_type or "extension",
-        xlet_instance_id=args.xlet_instance_id or None,
-        xlet_uuid=args.xlet_uuid or "{{UUID}}",
-        pages_definition=PAGES_OBJECT,
-        win_initial_width=800,
-        win_initial_height=500,
-    )
-    app.run()
+    # NOTE: I extend sys.argv for extensions so I can call the settings.py script without arguments.
+    sys.argv.extend(("--xlet-uuid={{UUID}}",
+                     "--app-id=org.Cinnamon.Extensions.CinnamonTweaks.Settings"))
+    sys.exit(cli(PAGES_DEFINITION))
