@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2020-02-12 04:13-0300\n"
+"POT-Creation-Date: 2020-02-13 17:41-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,161 +19,170 @@ msgstr ""
 msgid "Information related to this specific section"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1298
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1297
 msgid "Clear color"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1420
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1419
 msgid "Clear path"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:501
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:504
 msgid "No app chosen"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:623
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:626
 msgid "Add new item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:631
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:634
 msgid "Remove selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:643
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:646
 msgid "Edit selected item"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:653
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:656
 msgid "Move selected item up"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:661
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:664
 msgid "Move selected item down"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:675
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:678
 msgid "Export data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:688 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1082
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:691 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085
 msgid "Import data"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
 msgid "Apply changes"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:881
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:884
 msgid "Item removal"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:884
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:887
 msgid "Are you sure that you want to remove the selected items?"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:885
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:888
 msgid "Note"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:886
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:889
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1192 ../../__app__/data/python_modules/xlets_settings/__init__.py:1079 ../../__app__/data/python_modules/xlets_settings/__init__.py:1112 python_modules/feeds_importer.py:161
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1088 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1202 ../../__app__/data/python_modules/xlets_settings/__init__.py:1088 ../../__app__/data/python_modules/xlets_settings/__init__.py:1121 python_modules/feeds_importer.py:161
 msgid "_Cancel"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1086
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1089
 msgid "_Overwrite"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1087
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1090
 msgid "_Append"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1107
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1110
 msgid "Overwrite"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1108
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1111
 msgid "replace the current data with the imported data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1109
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1112
 msgid "Append"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1110
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1113
 msgid "add the imported data to the current data."
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1184
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1148
+#, python-format
+msgid "Wrong data type found on file '%s'"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1151
+msgid "Error importing data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1194
 msgid "Add new entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1186
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1196
 msgid "Edit entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1193 ../../__app__/data/python_modules/xlets_settings/__init__.py:1080 ../../__app__/data/python_modules/xlets_settings/__init__.py:1113
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1203 ../../__app__/data/python_modules/xlets_settings/__init__.py:1089 ../../__app__/data/python_modules/xlets_settings/__init__.py:1122
 msgid "_Save"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:486 settings.py:247
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:495 settings.py:246
 msgid "Other"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:625
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:634
 msgid "Previous instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:632
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:641
 msgid "Next instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681
 msgid "Import settings from a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:676
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:685
 msgid "Export settings to a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:680
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:689
 msgid "Reset settings to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:690 ../../__app__/python_modules/localized_help_creator.py:321 applet.js:407
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:699 ../../__app__/python_modules/localized_help_creator.py:321 applet.js:407
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:711
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:720
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:779
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:788
 #, python-format
 msgid "Settings for %s"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1075
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1084
 msgid "Select or enter file to export to"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1085 ../../__app__/data/python_modules/xlets_settings/__init__.py:1117
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1094 ../../__app__/data/python_modules/xlets_settings/__init__.py:1126
 msgid "JSON files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1108
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1117
 msgid "Select a JSON file to import"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1141
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1150
 msgid "Trying to reset all settings!!!"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1143
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1152
 msgid "Reset all settings to their default values?"
 msgstr ""
 
@@ -233,211 +242,211 @@ msgstr ""
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
-#: settings.py:17
+#: settings.py:16
 msgid "Cinnamon needs to be restarted"
 msgstr ""
 
-#: settings.py:22 utils.js:372
+#: settings.py:21 utils.js:372
 msgid "Enabled"
 msgstr ""
 
-#: settings.py:27 utils.js:359
+#: settings.py:26 utils.js:359
 msgid "Notify"
 msgstr ""
 
-#: settings.py:32 utils.js:346
+#: settings.py:31 utils.js:346
 msgid "Show read"
 msgstr ""
 
-#: settings.py:36
+#: settings.py:35
 msgid "Interval"
 msgstr ""
 
-#: settings.py:42 settings.py:150
+#: settings.py:41 settings.py:149
 msgid "minutes"
 msgstr ""
 
-#: settings.py:45
+#: settings.py:44
 msgid "Category"
 msgstr ""
 
-#: settings.py:49
+#: settings.py:48
 msgid "Custom title"
 msgstr ""
 
-#: settings.py:53
+#: settings.py:52
 msgid "URL"
 msgstr ""
 
-#: settings.py:59
+#: settings.py:58
 msgid "It enables the ability to log the output of several functions used by the extension."
 msgstr ""
 
-#: settings.py:61 settings.py:272
+#: settings.py:60 settings.py:271
 msgid "Normal"
 msgstr ""
 
-#: settings.py:61
+#: settings.py:60
 msgid "Only log messages caused by non critical errors."
 msgstr ""
 
-#: settings.py:62
+#: settings.py:61
 msgid "Additionally log extra output messages and all HTTP responses."
 msgstr ""
 
-#: settings.py:62 settings.py:273
+#: settings.py:61 settings.py:272
 msgid "Verbose"
 msgstr ""
 
-#: settings.py:63 settings.py:274
+#: settings.py:62 settings.py:273
 msgid "Very verbose"
 msgstr ""
 
-#: settings.py:64
+#: settings.py:63
 msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
 
-#: settings.py:68 settings.py:226
+#: settings.py:67 settings.py:225
 msgid "Mandatory fields"
 msgstr ""
 
-#: settings.py:72
+#: settings.py:71
 msgid "General"
 msgstr ""
 
-#: settings.py:74
+#: settings.py:73
 msgid "Applet settings"
 msgstr ""
 
-#: settings.py:81
+#: settings.py:80
 msgid "Keyboard shortcut to open and close the menu"
 msgstr ""
 
-#: settings.py:90
+#: settings.py:89
 msgid "Icon used when there are new feeds"
 msgstr ""
 
-#: settings.py:91 settings.py:100
+#: settings.py:90 settings.py:99
 msgid "Select an icon to show in the panel."
 msgstr ""
 
-#: settings.py:99
+#: settings.py:98
 msgid "Icon used when there are not new feeds"
 msgstr ""
 
-#: settings.py:104
+#: settings.py:103
 msgid "Menu settings"
 msgstr ""
 
-#: settings.py:111
+#: settings.py:110
 msgid "Show icons on menu"
 msgstr ""
 
-#: settings.py:119
+#: settings.py:118
 msgid "Minimum article items width"
 msgstr ""
 
-#: settings.py:120
+#: settings.py:119
 msgid "Set a minimum width for article menu items. This is used to prevent the menu to drastically change size when opening/closing sub-menus."
 msgstr ""
 
-#: settings.py:124 settings.py:176
+#: settings.py:123 settings.py:175
 msgid "pixels"
 msgstr ""
 
-#: settings.py:132
+#: settings.py:131
 msgid "Maximum number of articles"
 msgstr ""
 
-#: settings.py:133
+#: settings.py:132
 msgid "Maximum number of article items to display for each feed."
 msgstr ""
 
-#: settings.py:137
+#: settings.py:136
 msgid "articles"
 msgstr ""
 
-#: settings.py:145
+#: settings.py:144
 msgid "Update interval"
 msgstr ""
 
-#: settings.py:146
+#: settings.py:145
 msgid "Interval between checking for new articles."
 msgstr ""
 
-#: settings.py:158
+#: settings.py:157
 msgid "Description maximum length"
 msgstr ""
 
-#: settings.py:159
+#: settings.py:158
 msgid "The maximum numbers of characters that will be displayed in the article tooltip as the article description. With a value of zero the entire article will be displayed."
 msgstr ""
 
-#: settings.py:163
+#: settings.py:162
 msgid "characters"
 msgstr ""
 
-#: settings.py:171
+#: settings.py:170
 msgid "Tooltip maximum width"
 msgstr ""
 
-#: settings.py:172
+#: settings.py:171
 msgid "Set a custom maximum width for the articles tooltips. With a value of zero the maximum width will be set to half the monitor width."
 msgstr ""
 
-#: settings.py:180
+#: settings.py:179
 msgid "Notifications settings"
 msgstr ""
 
-#: settings.py:187
+#: settings.py:186
 msgid "Show notifications for new articles"
 msgstr ""
 
-#: settings.py:188
+#: settings.py:187
 msgid "If enabled, a popup notification will be displayed for new articles."
 msgstr ""
 
-#: settings.py:196
+#: settings.py:195
 msgid "Unified notifications"
 msgstr ""
 
-#: settings.py:197
+#: settings.py:196
 msgid "If enabled, all feeds notifications will use and update one notification."
 msgstr ""
 
-#: settings.py:223
+#: settings.py:222
 msgid "Feeds"
 msgstr ""
 
-#: settings.py:225
+#: settings.py:224
 msgid "Feeds Manager"
 msgstr ""
 
-#: settings.py:249
+#: settings.py:248
 msgid "Third party integrations"
 msgstr ""
 
-#: settings.py:256
+#: settings.py:255
 msgid "Panel Drawer applet integration"
 msgstr ""
 
-#: settings.py:257
+#: settings.py:256
 msgid "Display applet when receiving new articles."
 msgstr ""
 
-#: settings.py:261
+#: settings.py:260
 msgid "Debugging"
 msgstr ""
 
-#: settings.py:269
+#: settings.py:268
 msgid "Logging level"
 msgstr ""
 
-#: settings.py:283
+#: settings.py:282
 msgid "Enable debugger"
 msgstr ""
 
-#: settings.py:284
+#: settings.py:283
 msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
 msgstr ""
 
