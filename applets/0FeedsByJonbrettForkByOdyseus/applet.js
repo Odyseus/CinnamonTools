@@ -873,7 +873,8 @@ FeedsReaderForkByOdyseus.prototype = {
             this.metadata.path + "/settings.py",
             "--xlet-type=applet",
             "--xlet-instance-id=" + this.instance_id,
-            "--xlet-uuid=" + this.metadata.uuid
+            "--xlet-uuid=" + this.metadata.uuid,
+            "--app-id=org.Cinnamon.Applets.FeedsByJonbrettForkByOdyseus.Settings"
         ];
 
         if (aStackID) {
