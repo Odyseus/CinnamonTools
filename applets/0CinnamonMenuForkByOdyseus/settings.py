@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import argparse
 import os
 import sys
 
@@ -10,8 +9,8 @@ XLET_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 modules_dir = os.path.join(XLET_DIR)
 sys.path.append(modules_dir)
 
-from python_modules.xlets_settings import MainApplication
 from python_modules.xlets_settings import _
+from python_modules.xlets_settings import cli
 
 PAD_POSITIONS = ["top", "right", "bottom", "left"]
 
@@ -643,7 +642,7 @@ OTHER_TAB = {
 }
 
 
-PAGES_OBJECT = [
+PAGES_DEFINITION = [
     APPLET_TAB,
     MENU_SETTINGS_TAB,
     MENU_LAYOUT_TAB,
@@ -655,18 +654,4 @@ PAGES_OBJECT = [
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--xlet-type", dest="xlet_type")
-    parser.add_argument("--xlet-instance-id", dest="xlet_instance_id")
-    parser.add_argument("--xlet-uuid", dest="xlet_uuid")
-
-    args = parser.parse_args()
-
-    app = MainApplication(
-        application_id="org.Cinnamon.Applets.CinnamonMenu.Settings",
-        xlet_type=args.xlet_type or "extension",
-        xlet_instance_id=args.xlet_instance_id or None,
-        xlet_uuid=args.xlet_uuid or "{{UUID}}",
-        pages_definition=PAGES_OBJECT
-    )
-    app.run()
+    sys.exit(cli(PAGES_DEFINITION))
