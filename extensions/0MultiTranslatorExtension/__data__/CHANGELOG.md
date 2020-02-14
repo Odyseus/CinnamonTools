@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Fri, 14 Feb 2020 19:08:22 -0300
+- **Commit:** [3ec0d4b](https://gitlab.com/Odyseus/CinnamonTools/commit/3ec0d4b)
+- **Author:** Odyseus
+
+```
+- Fixed `_` variable exported from wrong module.
+
+```
+
+***
+
 - **Date:** Wed, 12 Feb 2020 22:46:26 -0300
 - **Commit:** [da68bc9](https://gitlab.com/Odyseus/CinnamonTools/commit/da68bc9)
 - **Author:** Odyseus

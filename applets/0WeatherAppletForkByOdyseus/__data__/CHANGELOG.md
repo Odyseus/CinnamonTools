@@ -4,6 +4,19 @@
 
 ***
 
+- **Date:** Fri, 14 Feb 2020 19:08:58 -0300
+- **Commit:** [5a7beb0](https://gitlab.com/Odyseus/CinnamonTools/commit/5a7beb0)
+- **Author:** Odyseus
+
+```
+- Fixed `_` variable exported from wrong module.
+- Fixed stric mode error in quantities.js libraries.
+- Implemented a different SHA library that it's strict mode compliant to avoid spamming **~/.xsession-errors** with strict mode errors/warnings.
+
+```
+
+***
+
 - **Date:** Wed, 12 Feb 2020 22:47:25 -0300
 - **Commit:** [56a3f44](https://gitlab.com/Odyseus/CinnamonTools/commit/56a3f44)
 - **Author:** Odyseus

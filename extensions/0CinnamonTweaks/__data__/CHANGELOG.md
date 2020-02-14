@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Fri, 14 Feb 2020 19:08:31 -0300
+- **Commit:** [1c42911](https://gitlab.com/Odyseus/CinnamonTools/commit/1c42911)
+- **Author:** Odyseus
+
+```
+- Fixed error when the tweak **Enable applications drop to the Desktop** is enabled and there is a drag&drop operation that isn't related to the tweak.
+
+```
+
+***
+
 - **Date:** Wed, 12 Feb 2020 22:47:07 -0300
 - **Commit:** [5f9bca2](https://gitlab.com/Odyseus/CinnamonTools/commit/5f9bca2)
 - **Author:** Odyseus
