@@ -285,6 +285,7 @@ class XletsHelperCore():
 
         Generate the CHANGELOG.md files for all xlets.
         """
+        print_separator(self.logger, "#")
         self.logger.info("**Generating xlets change logs...**")
 
         for xlet in self.xlets_meta:
@@ -326,6 +327,7 @@ class XletsHelperCore():
         SystemExit
             Halt execution if the make-cinnamon-xlet-pot-cli command is not found.
         """
+        print_separator(self.logger, "#")
         self.logger.info("**Starting POT files update...**")
 
         for xlet in self.xlets_meta:
@@ -333,6 +335,7 @@ class XletsHelperCore():
             xlet_root_folder = file_utils.get_parent_dir(xlet["meta-path"], 0)
             xlet_pot_file = os.path.join(xlet_root_folder, "po", "{{UUID}}.pot")
             xlet_config_file = os.path.join(xlet_root_folder, "z_config.py")
+            xlet_settings_file = os.path.join(xlet_root_folder, "settings.py")
             create_localized_help_file = os.path.join(
                 xlet_root_folder, "z_create_localized_help.py")
 
@@ -347,6 +350,15 @@ class XletsHelperCore():
             if file_utils.is_real_file(create_localized_help_file):
                 additional_files_to_scan.append(
                     "--scan-additional-file=../../__app__/python_modules/localized_help_creator.py")
+
+            if file_utils.is_real_file(xlet_settings_file):
+                additional_files_to_scan = additional_files_to_scan + [
+                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/__init__.py",
+                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py",
+                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py",
+                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py",
+                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py"
+                ]
 
             self.logger.info(
                 "**Updating localization template for %s...**" % xlet["name"])
@@ -375,6 +387,7 @@ class XletsHelperCore():
         Execute the z_create_localized_help.py script for each xlet to generate their
         HELP.html files.
         """
+        print_separator(self.logger, "#")
         self.logger.info("**Starting localized help creation...**")
 
         for xlet in self.xlets_meta:
@@ -382,6 +395,7 @@ class XletsHelperCore():
             script_file_path = os.path.join(xlet_root_folder, "z_create_localized_help.py")
 
             if os.path.exists(script_file_path):
+                print_separator(self.logger)
                 self.logger.info("**Creating localized help for %s...**" % xlet["name"])
                 po = cmd_utils.run_cmd([script_file_path], stdout=None, cwd=xlet_root_folder)
 
@@ -395,6 +409,7 @@ class XletsHelperCore():
     def update_repository_readme(self):
         """Update repository README file.
         """
+        print_separator(self.logger, "#")
         self.logger.info("**Generating repository README.md file...**")
         applets_list_items = []
         extensions_list_items = []
@@ -440,13 +455,14 @@ class XletsHelperCore():
         SystemExit
             Halt execution if the msgmerge command is not found.
         """
+        print_separator(self.logger, "#")
         self.logger.info("**Generating translation statistics...**")
 
         if not cmd_utils.which("msgmerge"):
             self.logger.error("**MissingCommand:** msgmerge command not found!!!")
             raise SystemExit(1)
 
-        markdown_content = ""
+        markdown_content = []
         po_tmp_storage = os.path.join(root_folder, "tmp", "po_files_updated")
         trans_stats_file = os.path.join(
             root_folder, "tmp", "po_files_untranslated_table.md")
@@ -470,18 +486,20 @@ class XletsHelperCore():
                 xlet_po_list = file_utils.recursive_glob(xlet_po_dir, "*.po")
 
                 if xlet_po_list:
-                    self.logger.info("%s %s" %
-                                     (xlet_type, xlet_slug), date=False)
-                    markdown_content += "\n### %s %s\n" % (
-                        xlet_type, xlet_slug)
-                    markdown_content += "\n"
-                    markdown_content += "|LANGUAGE|UNTRANSLATED|\n"
-                    markdown_content += "|--------|------------|\n"
+                    print_separator(self.logger)
+                    self.logger.info("**%s %s**" % (xlet_type, xlet_slug), date=False)
+                    markdown_content = markdown_content + [
+                        "",
+                        "### %s %s" % (xlet_type, xlet_slug),
+                        "",
+                        "|LANGUAGE|UNTRANSLATED|",
+                        "|--------|------------|",
+                    ]
 
                     for po_file_path in xlet_po_list:
                         po_base_name = os.path.basename(po_file_path)
                         tmp_po_file_path = os.path.join(tmp_xlet_po_dir, po_base_name)
-                        tmp_pot_file_path = os.path.join(xlet_po_dir, "%s.pot" % xlet_slug)
+                        tmp_pot_file_path = os.path.join(xlet_po_dir, "{{UUID}}.pot")
 
                         self.logger.info("**Copying %s to temporary location...**" %
                                          po_base_name, date=False)
@@ -510,12 +528,12 @@ class XletsHelperCore():
                         trans_count_output = cmd_utils.run_cmd(trans_count_cmd % tmp_po_file_path,
                                                                shell=True).stdout
                         trans_count = int(trans_count_output.decode("UTF-8").strip())
-                        markdown_content += "|%s|%d|\n" % (
-                            po_base_name, trans_count - 1 if trans_count > 0 else trans_count)
+                        markdown_content.append("|%s|%d|" % (
+                            po_base_name, trans_count - 1 if trans_count > 0 else trans_count))
 
         if markdown_content:
             with open(trans_stats_file, "w", encoding="UTF-8") as trans_file:
-                trans_file.write(markdown_content)
+                trans_file.write("\n".join(markdown_content))
 
     def update_spanish_localizations(self):
         """Update Spanish localizations.
@@ -527,6 +545,7 @@ class XletsHelperCore():
         SystemExit
             Halt execution if the msgmerge command is not found.
         """
+        print_separator(self.logger, "#")
         self.logger.info("**Updating Spanish localizations...**")
 
         if not cmd_utils.which("msgmerge"):
@@ -544,7 +563,8 @@ class XletsHelperCore():
                                   xlet_type.lower(), xlet_slug, "po")
             po_file = os.path.join(po_dir, "es.po")
 
-            if file_utils.is_real_dir(po_dir) and file_utils.is_real_file(po_file):
+            if file_utils.is_real_file(po_file):
+                print_separator(self.logger)
                 self.logger.info("**Updating localization for %s**" % xlet_slug)
 
                 po = cmd_utils.run_cmd([
@@ -555,7 +575,7 @@ class XletsHelperCore():
                     "--backup=off",             # Never make backups.
                     "--update",                 # Update .po file, do nothing if up to date.
                     "es.po",                    # The .po file to update.
-                    "%s.pot" % xlet_slug        # The template file to update from.
+                    "{{UUID}}.pot"              # The template file to update from.
                 ], stdout=None, cwd=po_dir)
 
                 if po.stderr:
