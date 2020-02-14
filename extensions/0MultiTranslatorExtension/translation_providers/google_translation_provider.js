@@ -14,11 +14,11 @@ if (typeof require === "function") {
 }
 
 const {
-    _,
     Languages
 } = Constants;
 
 const {
+    _,
     escapeHTML
 } = GlobalUtils;
 

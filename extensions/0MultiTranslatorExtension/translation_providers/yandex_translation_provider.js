@@ -16,12 +16,12 @@ if (typeof require === "function") {
 const Main = imports.ui.main;
 
 const {
-    _,
     Languages,
     Settings
 } = Constants;
 
 const {
+    _,
     escapeHTML
 } = GlobalUtils;
 
