@@ -24,6 +24,7 @@ from gi.repository import Gtk
 from gi.repository import Pango
 from html import escape
 
+from . import exceptions
 from .AppChooserWidgets import AppChooser
 from .SettingsWidgets import ColorChooser
 from .SettingsWidgets import ComboBox
@@ -45,8 +46,6 @@ from .common import generate_options_from_paths
 from .common import get_keybinding_display_name
 from .common import import_export
 from .common import sort_combo_options
-from .exceptions import MalformedJSONFile
-from .exceptions import WrongType
 # from SettingsWidgets import SoundFileChooser
 
 LIST_VARIABLE_TYPE_MAP = {
@@ -1065,7 +1064,9 @@ class List(SettingsWidget):
 
         Raises
         ------
-        Exception
+        exceptions.MalformedJSONFile
+            Description
+        exceptions.WrongType
             Description
         """
         filepath = import_export(
@@ -1133,7 +1134,7 @@ class List(SettingsWidget):
             try:
                 imported_data = json.loads(raw_data, encoding="UTF-8")
             except Exception:
-                raise MalformedJSONFile(filepath)
+                raise exceptions.MalformedJSONFile(filepath)
 
             existent_data = self.settings.get_value(self.pref_key)
 
@@ -1152,7 +1153,7 @@ class List(SettingsWidget):
                                        msg % filepath,
                                        context="error")
                 print(msg % filepath)
-                raise WrongType("list", type(imported_data).__name__)
+                raise exceptions.WrongType("list", type(imported_data).__name__)
 
     def _apply_changes(self, *args):
         """Summary

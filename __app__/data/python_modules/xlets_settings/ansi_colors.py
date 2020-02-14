@@ -95,11 +95,6 @@ class ANSIColors():
         ----------
         code : str
             ANSI color code.
-
-        Returns
-        -------
-        function
-            Function to colorize string.
         """
         def f(text):
             """Colorize text.

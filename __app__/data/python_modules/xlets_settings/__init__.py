@@ -41,6 +41,7 @@ from html import escape
 from subprocess import check_output
 from subprocess import run
 
+from . import exceptions
 from .GSettingsWidgets import *  # noqa
 from .JsonSettingsWidgets import *  # noqa
 from .ansi_colors import Ansi
@@ -48,8 +49,6 @@ from .common import BaseGrid
 from .common import HOME
 from .common import _
 from .common import compare_version
-from .exceptions import MissingRequiredArgument
-from .exceptions import UnkownWidgetType
 
 MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -117,6 +116,11 @@ class SettingsBox(BaseGrid):
             See :py:class:`Gtk.Application`.
         xlet_meta : None, optional
             Xlet metadata.
+
+        Raises
+        ------
+        exceptions.UnkownWidgetType
+            Description
         """
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
         self.set_border_width(0)
@@ -210,7 +214,7 @@ class SettingsBox(BaseGrid):
                             widget = globals()[G_SETTINGS_WIDGETS[widget_type]](
                                 widget_attrs=widget_attrs, widget_kwargs=widget_kwargs)
                         else:
-                            raise UnkownWidgetType(widget_type)
+                            raise exceptions.UnkownWidgetType(widget_type)
                     except Exception as err:
                         print(Ansi.DEFAULT("**Widget definition**"))
                         print(json.dumps(widget_def_clean, indent=4))
@@ -399,13 +403,13 @@ class MainApplication(Gtk.Application):
 
         Raises
         ------
-        SystemExit
-            Halt execution if missing required arguments.
+        exceptions.MissingRequiredArgument
+            Description
         """
         kwargs_keys = set(kwargs.keys())
 
         if not self._required_args.issubset(kwargs_keys):
-            raise MissingRequiredArgument(list(self._required_args.difference(kwargs_keys)))
+            raise exceptions.MissingRequiredArgument(list(self._required_args.difference(kwargs_keys)))
 
         # kwargs attributes.
         self.application_id = ""
@@ -1196,6 +1200,13 @@ class MainApplication(Gtk.Application):
 
 
 def cli(pages_definition):
+    """Summary
+
+    Parameters
+    ----------
+    pages_definition : TYPE
+        Description
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("--xlet-type", dest="xlet_type", default="extension", type=str)
     parser.add_argument("--xlet-instance-id", dest="xlet_instance_id", default=None, type=str)

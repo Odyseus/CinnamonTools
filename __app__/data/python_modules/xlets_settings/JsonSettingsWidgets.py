@@ -22,15 +22,13 @@ from gi.repository import GLib
 from gi.repository import Gio
 from gi.repository import Gtk
 
+from . import exceptions
 from .AppChooserWidgets import AppChooser  # noqa
 from .AppChooserWidgets import AppList  # noqa
 from .SettingsWidgets import *  # noqa
 from .TreeListWidgets import List  # noqa
 from .common import BaseGrid
 from .common import sort_combo_options
-from .exceptions import CannotBackend
-from .exceptions import MalformedJSONFile
-from .exceptions import MethodNotImplemented
 
 # NOTE: JEESH!!! I hate import *!!!
 __all__ = [
@@ -367,7 +365,7 @@ class JSONSettingsHandler():
 
         Raises
         ------
-        Exception
+        exceptions.MalformedJSONFile
             Description
         """
         with open(self.filepath, "r", encoding="UTF-8") as settings_file:
@@ -377,7 +375,7 @@ class JSONSettingsHandler():
             settings = json.loads(raw_data, encoding=None,
                                   object_pairs_hook=collections.OrderedDict)
         except Exception:
-            raise MalformedJSONFile(self.filepath)
+            raise exceptions.MalformedJSONFile(self.filepath)
         return settings
 
     def save_settings(self):
@@ -457,7 +455,7 @@ class JSONSettingsHandler():
 
         Raises
         ------
-        Exception
+        exceptions.MalformedJSONFile
             Description
         """
         with open(filepath, "r", encoding="UTF-8") as settings_file:
@@ -467,7 +465,7 @@ class JSONSettingsHandler():
             settings = json.loads(raw_data, encoding=None,
                                   object_pairs_hook=collections.OrderedDict)
         except Exception:
-            raise MalformedJSONFile(filepath)
+            raise exceptions.MalformedJSONFile(filepath)
 
         for key in self.settings:
             if "value" not in self.settings[key]:
@@ -610,11 +608,6 @@ class JSONSettingsBackend(object):
 
     def attach_backend(self):
         """Summary
-
-        Returns
-        -------
-        TYPE
-            Description
         """
         self._saving = False
 
@@ -690,10 +683,10 @@ class JSONSettingsBackend(object):
 
         Raises
         ------
-        MethodNotImplemented
+        exceptions.MethodUnimplemented
             SettingsWidget classes with no ``bind_dir`` property set must implement this method.
         """
-        raise MethodNotImplemented("on_setting_changed")
+        raise exceptions.MethodUnimplemented("on_setting_changed")
 
     def connect_widget_handlers(self, *args):
         """Summary
@@ -705,11 +698,11 @@ class JSONSettingsBackend(object):
 
         Raises
         ------
-        MethodNotImplemented
+        exceptions.MethodUnimplemented
             SettingsWidget classes with no ``bind_dir`` property set must implement this method.
         """
         if self.bind_dir is None:
-            raise MethodNotImplemented("connect_widget_handlers")
+            raise exceptions.MethodUnimplemented("connect_widget_handlers")
 
 
 def json_settings_factory(subclass):
@@ -722,11 +715,11 @@ def json_settings_factory(subclass):
 
     Raises
     ------
-    SystemExit
+    exceptions.CannotBackend
         Description
     """
     if subclass not in CAN_BACKEND:  # noqa | SettingsWidgets
-        raise CannotBackend(subclass)
+        raise exceptions.CannotBackend(subclass)
 
     class NewClass(globals()[subclass], JSONSettingsBackend):
         """Summary

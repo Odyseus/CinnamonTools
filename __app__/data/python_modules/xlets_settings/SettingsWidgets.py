@@ -1331,6 +1331,11 @@ class ColorChooser(SettingsWidget):
 
         Parameters
         ----------
+        color_string : TYPE
+            Description
+
+        Deleted Parameters
+        ------------------
         widget : TYPE
             Description
         """

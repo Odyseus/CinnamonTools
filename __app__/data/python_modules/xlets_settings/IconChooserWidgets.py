@@ -17,9 +17,9 @@ from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 from gi.repository import Pango
 
+from . import exceptions
 from .common import BaseGrid
 from .common import _
-from .exceptions import WrongType
 
 
 class IconChooserDialog(Gtk.Dialog):
@@ -476,11 +476,11 @@ class IconChooserDialog(Gtk.Dialog):
 
         Raises
         ------
-        TypeError
+        exceptions.WrongType
             Description
         """
         if not type(size) == int:
-            raise WrongType("int", type(size).__name__)
+            raise exceptions.WrongType("int", type(size).__name__)
 
         self._icon_size = size
 
@@ -496,11 +496,11 @@ class IconChooserDialog(Gtk.Dialog):
 
         Raises
         ------
-        TypeError
+        exceptions.WrongType
             Description
         """
         if not type(filter_term) == str:
-            raise WrongType("str", type(filter_term).__name__)
+            raise exceptions.WrongType("str", type(filter_term).__name__)
 
         self._search_term = filter_term
 

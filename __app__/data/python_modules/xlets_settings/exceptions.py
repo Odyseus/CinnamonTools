@@ -36,6 +36,8 @@ class ExceptionWhitoutTraceBack(Exception):
         ----------
         msg : str
             Message that the exception should display.
+        exit : bool, optional
+            Description
         """
         # This is an evil spawn that I don't freaking understand!!!
         # It works as intended for now, so moving on.
@@ -91,6 +93,13 @@ class MissingRequiredArgument(ExceptionWhitoutTraceBack):
     """
 
     def __init__(self, args=[]):
+        """Summary
+
+        Parameters
+        ----------
+        args : list, optional
+            Description
+        """
         msg = "Missing required arguments: %s" % ", ".join(args)
         print("")
         super().__init__(msg=msg)
@@ -166,8 +175,8 @@ class UnkownWidgetType(Exception):
         super().__init__(msg)
 
 
-class MethodNotImplemented(Exception):
-    """MethodNotImplemented
+class MethodUnimplemented(Exception):
+    """MethodUnimplemented
     """
 
     def __init__(self, method="", cls=""):
@@ -177,6 +186,8 @@ class MethodNotImplemented(Exception):
         ----------
         method : str, optional
             A method name.
+        cls : str, optional
+            Description
         """
         msg = "The <%s> method in class <%s> needs to be implemented." % (method, cls)
         print("")

@@ -17,11 +17,9 @@ GioSSS : TYPE
 from gi.repository import GLib
 from gi.repository import Gio
 
+from . import exceptions
 from .SettingsWidgets import *  # noqa
 from .common import sort_combo_options
-from .exceptions import CannotBackend
-from .exceptions import MethodNotImplemented
-
 
 GioSSS = Gio.SettingsSchemaSource
 
@@ -279,10 +277,10 @@ class GSettingsBackend(object):
 
         Raises
         ------
-        MethodNotImplemented
-            SettingsWidget classes with no bind_dir property set must implement this method.
+        exceptions.MethodUnimplemented
+            Description
         """
-        raise MethodNotImplemented("on_setting_changed")
+        raise exceptions.MethodUnimplemented("on_setting_changed")
 
     def connect_widget_handlers(self, *args):
         """Summary
@@ -294,11 +292,11 @@ class GSettingsBackend(object):
 
         Raises
         ------
-        MethodNotImplemented
+        exceptions.MethodUnimplemented
             SettingsWidget classes with no bind_dir property set must implement this method.
         """
         if self.bind_dir is None:
-            raise MethodNotImplemented("connect_widget_handlers")
+            raise exceptions.MethodUnimplemented("connect_widget_handlers")
 
 
 def get_gsettings_schema(schema, xlet_meta={}):
@@ -352,9 +350,14 @@ def g_settings_factory(subclass):
     ----------
     subclass : TYPE
         Description
+
+    Raises
+    ------
+    exceptions.CannotBackend
+        Description
     """
     if subclass not in CAN_BACKEND:  # noqa | SettingsWidgets
-        raise CannotBackend(subclass)
+        raise exceptions.CannotBackend(subclass)
 
     class NewClass(globals()[subclass], GSettingsBackend):
         """Summary
