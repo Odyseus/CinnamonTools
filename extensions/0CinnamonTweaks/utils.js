@@ -152,7 +152,7 @@ CT_NemoDesktopArea.prototype = {
     },
 
     acceptDrop: function(source, actor, x, y, time) { // jshint ignore:line
-        let app = source.app;
+        let app = source.hasOwnProperty("app") ? source.app : null;
 
         if (app === null || app.is_window_backed()) {
             return DND.DragMotionResult.NO_DROP;
@@ -184,7 +184,7 @@ CT_NemoDesktopArea.prototype = {
     },
 
     handleDragOver: function(source, actor, x, y, time) { // jshint ignore:line
-        let app = source.app;
+        let app = source.hasOwnProperty("app") ? source.app : null;
 
         if (app === null || app.is_window_backed()) {
             return DND.DragMotionResult.NO_DROP;
