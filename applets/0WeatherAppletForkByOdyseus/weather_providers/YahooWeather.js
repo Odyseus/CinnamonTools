@@ -109,9 +109,11 @@ Provider.prototype = {
             baseURL,
             "GET",
             params);
+        let shaObj = new SHA1.jsSHA("SHA-1", "TEXT");
         let composite_key = $.OAuth.percentEncode(consumerSecret) + "&";
-        let oauth_signature = SHA1.b64_hmac_sha1(composite_key, base_info);
-        oauth["oauth_signature"] = oauth_signature;
+        shaObj.setHMACKey(composite_key, "TEXT");
+        shaObj.update(base_info);
+        oauth["oauth_signature"] = shaObj.getHMAC("B64");
 
         this._query_url_1 = $.OAuth.addToURL(baseURL, query);
         this._headers_1 = {

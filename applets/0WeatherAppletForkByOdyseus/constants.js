@@ -7,9 +7,7 @@ if (typeof require === "function") {
     GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
 }
 
-const {
-    _
-} = GlobalUtils;
+var _ = GlobalUtils._;
 
 // Conditions.
 const Conditions = {

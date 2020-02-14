@@ -2182,7 +2182,7 @@ assign(Qty.prototype, {
 
     // Returns 'true' if the Unit is represented in base units
     isBase: function() {
-        if (this._isBase !== undefined) {
+        if (this.hasOwnProperty("_isBase")) {
             return this._isBase;
         }
         if (this.isDegrees() && this.numerator[0].match(/<(kelvin|temp-K)>/)) {
@@ -2195,7 +2195,7 @@ assign(Qty.prototype, {
                 this._isBase = false;
             }
         }, this);
-        if (this._isBase === false) {
+        if (this.hasOwnProperty("_isBase") && !this._isBase) {
             return this._isBase;
         }
         this._isBase = true;
