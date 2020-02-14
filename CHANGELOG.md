@@ -4,6 +4,193 @@
 
 ***
 
+- **Date:** Thu, 13 Feb 2020 21:21:11 -0300
+- **Commit:** [0001bee](https://gitlab.com/Odyseus/CinnamonTools/commit/0001bee)
+- **Author:** Odyseus
+
+```
+Python modules
+
+- app_utils.py:
+    - When updating localization templates, directly add the `--scan-additional-file` argument with the custom xlets settings framework files instead of using the `make_pot_additional_files` on each xlet z_config.py file.
+    - Use a `list` instead of a `str` when generating the Markdown content for the translations statistics.
+
+```
+
+***
+
+- **Date:** Thu, 13 Feb 2020 17:46:40 -0300
+- **Commit:** [96bd1b4](https://gitlab.com/Odyseus/CinnamonTools/commit/96bd1b4)
+- **Author:** Odyseus
+
+```
+All xlets
+
+- Renamed all POT files and POT option files to {{UUID}}.pot and {{UUID}}.json. This allows for the files to have the exact same name as an xlet UUID when they are built, resulting in a more standard file name (`<xlet_type>/po/<xlet_uuid>.pot`).
+- Updated localization templates.
+
+```
+
+***
+
+- **Date:** Thu, 13 Feb 2020 17:43:11 -0300
+- **Commit:** [b7bdc65](https://gitlab.com/Odyseus/CinnamonTools/commit/b7bdc65)
+- **Author:** Odyseus
+
+```
+Python modules
+
+- app_utils.py:
+    - Included .pot files to the string substitution section of the build xlets process.
+    - Pass the `--output` argument to the `make-cinnamon-xlet-pot-cli` command when updating xlets localization templates so the command can handle POT files that aren't named in a standard way (`<xlet_type>/po/<xlet_uuid>.pot`).
+
+```
+
+***
+
+- **Date:** Wed, 12 Feb 2020 22:46:13 -0300
+- **Commit:** [d1e69ed](https://gitlab.com/Odyseus/CinnamonTools/commit/d1e69ed)
+- **Author:** Odyseus
+
+```
+Xlets settings framework
+
+- General:
+    - Implemented a couple of exceptions without tracebacks to avoid reading a mile of text when debugging.
+    - Moved CLI arguments parsing to `__init__` so I don't have to constantly write the same code in every `settings.py` file.
+- AppChooserWidgets.py:
+    - Added applications count to the applications selector dialog.
+- GSettingsWidgets.py:
+    - Implemented `SpinButton` widget to be used by gsettings.
+- JsonSettingsWidgets.py:
+    - Use of open() with explicit mode and encoding.
+    - Removed check for `do_not_bind` property. I don't use it anymore.
+- SettingsWidgets.py:
+    - Enabled the use of revealers when using gsettings widgets.
+- TreeListWidgets.py:
+    - Added a dialog to display errors when importing data instead of just printing to STDOUT.
+
+```
+
+***
+
+- **Date:** Wed, 12 Feb 2020 04:18:40 -0300
+- **Commit:** [27b0859](https://gitlab.com/Odyseus/CinnamonTools/commit/27b0859)
+- **Author:** Odyseus
+
+```
+All xlets
+
+- Updated localization templates.
+- Updated Spanish localizations.
+- Updated change logs.
+- Updated help pages.
+
+```
+
+***
+
+- **Date:** Wed, 12 Feb 2020 04:17:47 -0300
+- **Commit:** [22032fe](https://gitlab.com/Odyseus/CinnamonTools/commit/22032fe)
+- **Author:** Odyseus
+
+```
+Python modules
+
+- General: Docstrings clean up.
+- app_utils.py:
+    - Improved error handling of all development tasks. Since all development tasks are performed using external commands, it was easy to capture STDERR and store it. All stored errors are then logged at the same time at then end.
+    - Changed `update_spanish_localizations` method to update PO files silently, without wrapping long lines, and without preserving unused translations.
+    - Changed `generate_trans_stats` method to report the correct amount of untranslated strings.
+- localized_help_creator.py: Modifications to capture errors.
+
+```
+
+***
+
+- **Date:** Wed, 12 Feb 2020 04:17:14 -0300
+- **Commit:** [52166ee](https://gitlab.com/Odyseus/CinnamonTools/commit/52166ee)
+- **Author:** Odyseus
+
+```
+Xlets settings framework
+
+- General:
+    - Massive renaming of class attributes (prefixed with `_`) to minimize duplications of docstrings.
+    - Docstrings update/clean up.
+- GSettingsWidgets.py:
+    - Added the possibility to use these widgets with any schema, not just from xlets.
+    - Added `map_get` and `map_set` property setters to the widget factory function.
+- TreeListWidgets.py: Prevent storing string type preferences as null.
+- SettingsWidgets.py:
+    - `IconChooser`:
+        - Added apply delay when changing the entry box to prevent unnecessary *rapid fire*.
+        - Added check for "/" when setting the button image to not trigger os.path.isfile() unnecessarily.
+    - `ColorChooser`: Fixed color not set at application startup.
+    - `FileChooser`: Fixed widget not updated when clearing path.
+
+```
+
+***
+
+- **Date:** Tue, 11 Feb 2020 01:06:59 -0300
+- **Commit:** [30a2efa](https://gitlab.com/Odyseus/CinnamonTools/commit/30a2efa)
+- **Author:** Odyseus
+
+```
+General
+
+- Updated submodules.
+
+```
+
+***
+
+- **Date:** Tue, 11 Feb 2020 01:00:46 -0300
+- **Commit:** [5f26f3c](https://gitlab.com/Odyseus/CinnamonTools/commit/5f26f3c)
+- **Author:** Odyseus
+
+```
+ Merge ref. 'master' of git@gitlab.com:Odyseus/python_utils.git
+
+```
+
+***
+
+- **Date:** Tue, 11 Feb 2020 01:00:46 -0300
+- **Commit:** [5f6a9fb](https://gitlab.com/Odyseus/CinnamonTools/commit/5f6a9fb)
+- **Author:** Odyseus
+
+```
+Squashed '__app__/python_modules/python_utils/' changes from 639a5e5..e60e30e
+
+e60e30e cmd_utils.py
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: e60e30e3defcb721b4fc84230e8c9b23e6e847f0
+
+```
+
+***
+
+- **Date:** Tue, 11 Feb 2020 01:00:11 -0300
+- **Commit:** [f39a9cd](https://gitlab.com/Odyseus/CinnamonTools/commit/f39a9cd)
+- **Author:** Odyseus
+
+```
+General
+
+- Base xlet:
+    - Adaptations due to changes to global JavaScript modules.
+    - Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.
+- Updated change logs.
+- Updated submodules.
+- Updated manual page.
+
+```
+
+***
+
 - **Date:** Tue, 11 Feb 2020 00:34:32 -0300
 - **Commit:** [33252df](https://gitlab.com/Odyseus/CinnamonTools/commit/33252df)
 - **Author:** Odyseus
@@ -203,17 +390,6 @@ Python modules
 ***
 
 - **Date:** Wed, 29 Jan 2020 03:09:54 -0300
-- **Commit:** [d0502a9](https://gitlab.com/Odyseus/CinnamonTools/commit/d0502a9)
-- **Author:** Odyseus
-
-```
- Merge ref. 'master' of git@gitlab.com:Odyseus/python_utils.git
-
-```
-
-***
-
-- **Date:** Wed, 29 Jan 2020 03:09:54 -0300
 - **Commit:** [189c3cd](https://gitlab.com/Odyseus/CinnamonTools/commit/189c3cd)
 - **Author:** Odyseus
 
@@ -224,6 +400,17 @@ Squashed '__app__/python_modules/python_utils/' changes from 0f986ce..639a5e5
 
 git-subtree-dir: __app__/python_modules/python_utils
 git-subtree-split: 639a5e5b4862250dc1b8efeb1afb8de6f72cba7b
+
+```
+
+***
+
+- **Date:** Wed, 29 Jan 2020 03:09:54 -0300
+- **Commit:** [d0502a9](https://gitlab.com/Odyseus/CinnamonTools/commit/d0502a9)
+- **Author:** Odyseus
+
+```
+ Merge ref. 'master' of git@gitlab.com:Odyseus/python_utils.git
 
 ```
 
