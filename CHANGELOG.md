@@ -4,6 +4,66 @@
 
 ***
 
+- **Date:** Fri, 14 Feb 2020 19:14:11 -0300
+- **Commit:** [52594d7](https://gitlab.com/Odyseus/CinnamonTools/commit/52594d7)
+- **Author:** Odyseus
+
+```
+All xlets
+
+- Updated change logs.
+- Updated help pages.
+
+```
+
+***
+
+- **Date:** Fri, 14 Feb 2020 01:52:10 -0300
+- **Commit:** [1f10bea](https://gitlab.com/Odyseus/CinnamonTools/commit/1f10bea)
+- **Author:** Odyseus
+
+```
+General
+
+- Updated submodules.
+- Updated CHANGELOG.md.
+- Updated manual page.
+
+```
+
+***
+
+- **Date:** Fri, 14 Feb 2020 01:50:53 -0300
+- **Commit:** [f8b7e52](https://gitlab.com/Odyseus/CinnamonTools/commit/f8b7e52)
+- **Author:** Odyseus
+
+```
+All xlets
+
+- Removed all paths to the custom xlets settings framework from the `make_pot_additional_files` key inside the xlets z_config.py files.
+- Updated localization templates.
+- Updated Spanish localizations.
+- Updated change logs.
+- Updated help pages.
+
+```
+
+***
+
+- **Date:** Fri, 14 Feb 2020 01:49:50 -0300
+- **Commit:** [f11b23d](https://gitlab.com/Odyseus/CinnamonTools/commit/f11b23d)
+- **Author:** Odyseus
+
+```
+Xlets settings framework
+
+- General:
+    - Renamed an exception from the `exceptions` module so the docstrings do not clash with docstrings from other external modules when building the documentation with Sphinx.
+
+```
+
+***
+
 - **Date:** Thu, 13 Feb 2020 21:21:11 -0300
 - **Commit:** [0001bee](https://gitlab.com/Odyseus/CinnamonTools/commit/0001bee)
 - **Author:** Odyseus
