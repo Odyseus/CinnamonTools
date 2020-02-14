@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-02-12 04:13-0300\n"
+"POT-Creation-Date: 2020-02-14 01:15-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -14,165 +14,243 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:84
+msgid "Application Chooser"
+msgstr "Selector de aplicaciones"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:88 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:59 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:366 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1088 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1202 ../../__app__/data/python_modules/xlets_settings/__init__.py:1088 ../../__app__/data/python_modules/xlets_settings/__init__.py:1121
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:89
+msgid "_OK"
+msgstr "Aceptar"
+
+#. Can be programmatically changed if needed.
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:102 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:612
+msgid "Choose an application"
+msgstr "Elegir una aplicación"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:217
+msgid "Total applications"
+msgstr "Total de aplicaciones"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:324
+msgid "Applications list"
+msgstr "Lista de aplicaciones"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:331
+msgid "Duplicated entries will be automatically removed"
+msgstr "Entradas duplicadas serán removidas automáticamente"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:348
+msgid "Application"
+msgstr "Aplicación"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:379
+msgid "Add Applications"
+msgstr "Agregar Aplicaciones"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:385
+msgid "Remove selected applications"
+msgstr "Remover aplicaciones seleccionadas"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:470
+msgid "Choose one or more applications (Hold Ctrl key)"
+msgstr "Elegir una o más aplicaciones (Mantener pulsada la tecla Ctrl)"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:577
+msgid "Clear application"
+msgstr "Limpiar aplicación"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:635 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:504
+msgid "No app chosen"
+msgstr "Ninguna aplicación elegida"
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:57 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:362
+msgid "Choose an Icon"
+msgstr "Elegir un ícono"
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:60 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:367
+msgid "_Select"
+msgstr "_Seleccionar"
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:114
+msgid "Search..."
+msgstr "Buscar..."
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:116
+msgid "Browse"
+msgstr "Navegar"
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:244
+msgid "Icons shown"
+msgstr "Íconos mostrados"
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:370
+msgid "Image files"
+msgstr "Archivos de imagen"
+
 #: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:304
 msgid "Information related to this specific section"
 msgstr "Información relacionada con esta sección específica."
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1298
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1297
 msgid "Clear color"
 msgstr "Limpiar color"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1420
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1419
 msgid "Clear path"
 msgstr "Limpiar ruta"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:501
-msgid "No app chosen"
-msgstr "Ninguna aplicación elegida"
-
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:623
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:626
 msgid "Add new item"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:631
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:634
 msgid "Remove selected item"
 msgstr "Eliminar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:643
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:646
 msgid "Edit selected item"
 msgstr "Editar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:653
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:656
 msgid "Move selected item up"
 msgstr "Mover ítem seleccionado hacia arriba"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:661
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:664
 msgid "Move selected item down"
 msgstr "Mover ítem seleccionado hacia abajo"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:675
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:678
 msgid "Export data"
 msgstr "Exportar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:688 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1082
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:691 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085
 msgid "Import data"
 msgstr "Importar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:696
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
 msgid "Apply changes"
 msgstr "Aplicar cambios"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:881
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:884
 msgid "Item removal"
 msgstr "Eliminación de ítem"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:884
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:887
 msgid "Are you sure that you want to remove the selected items?"
 msgstr "¿Está seguro de que desea remover los ítems seleccionados?"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:885
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:888
 msgid "Note"
 msgstr "Nota"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:886
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:889
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1192 ../../__app__/data/python_modules/xlets_settings/__init__.py:1079 ../../__app__/data/python_modules/xlets_settings/__init__.py:1112
-msgid "_Cancel"
-msgstr "_Cancelar"
-
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1086
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1089
 msgid "_Overwrite"
 msgstr "_Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1087
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1090
 msgid "_Append"
 msgstr "_Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1107
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1110
 msgid "Overwrite"
 msgstr "Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1108
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1111
 msgid "replace the current data with the imported data."
 msgstr "reemplazar los datos actuales con los datos importados."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1109
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1112
 msgid "Append"
 msgstr "Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1110
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1113
 msgid "add the imported data to the current data."
 msgstr "agregar los datos importados a los datos actuales."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1184
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1148
+#, python-format
+msgid "Wrong data type found on file '%s'"
+msgstr "Se encontró un tipo de datos incorrecto en el archivo '%s'"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1151
+msgid "Error importing data"
+msgstr "¡Error al importar datos!"
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1194
 msgid "Add new entry"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1186
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1196
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1193 ../../__app__/data/python_modules/xlets_settings/__init__.py:1080 ../../__app__/data/python_modules/xlets_settings/__init__.py:1113
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1203 ../../__app__/data/python_modules/xlets_settings/__init__.py:1089 ../../__app__/data/python_modules/xlets_settings/__init__.py:1122
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:486 settings.py:614
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:495 settings.py:613
 msgid "Other"
 msgstr "Otros"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:625
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:634
 msgid "Previous instance"
 msgstr "Instancia previa"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:632
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:641
 msgid "Next instance"
 msgstr "Siguiente instancia"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:672
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681
 msgid "Import settings from a file"
 msgstr "Importar configuración desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:676
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:685
 msgid "Export settings to a file"
 msgstr "Exportar configuración hacia un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:680
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:689
 msgid "Reset settings to defaults"
 msgstr "Restablecer los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:690 ../../__app__/python_modules/localized_help_creator.py:321 applet.js:303
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:699 ../../__app__/python_modules/localized_help_creator.py:321 applet.js:303
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:711
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:720
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:779
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:788
 #, python-format
 msgid "Settings for %s"
 msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1075
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1084
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1085 ../../__app__/data/python_modules/xlets_settings/__init__.py:1117
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1094 ../../__app__/data/python_modules/xlets_settings/__init__.py:1126
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1108
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1117
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1141
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1150
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1143
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1152
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
@@ -232,87 +310,87 @@ msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las loc
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: settings.py:19
+#: settings.py:18
 msgid "Box top padding"
 msgstr "Espacio superior"
 
-#: settings.py:20
+#: settings.py:19
 msgid "Box right padding"
 msgstr "Espacio derecho"
 
-#: settings.py:21
+#: settings.py:20
 msgid "Box bottom padding"
 msgstr "Espacio inferior"
 
-#: settings.py:22
+#: settings.py:21
 msgid "Box left padding"
 msgstr "Espacio a la izquierda"
 
-#: settings.py:37 settings.py:328 settings.py:341 settings.py:354
+#: settings.py:36 settings.py:327 settings.py:340 settings.py:353
 msgid "pixels"
 msgstr "pixeles"
 
-#: settings.py:52
+#: settings.py:51
 msgid "Cinnamon needs to be restarted"
 msgstr "Cinnamon necesita ser reiniciado"
 
-#: settings.py:56
+#: settings.py:55
 msgid "Enabled"
 msgstr "Habilitado"
 
-#: settings.py:61 settings.py:133
+#: settings.py:60 settings.py:132
 msgid "Icon"
 msgstr "Ícono:"
 
-#: settings.py:65
+#: settings.py:64
 msgid "Title"
 msgstr "Título"
 
-#: settings.py:69
+#: settings.py:68
 msgid "Command"
 msgstr "Comando"
 
-#: settings.py:73 z_create_localized_help.py:28
+#: settings.py:72 z_create_localized_help.py:28
 msgid "Description"
 msgstr "Descripción"
 
-#: settings.py:78 settings.py:596
+#: settings.py:77 settings.py:595
 msgid "Mandatory fields"
 msgstr "Campos obligatorios"
 
-#: settings.py:83
+#: settings.py:82
 msgid "It enables the ability to log the output of several functions used by the extension."
 msgstr "Permite la capacidad de registrar la salida de varias funciones utilizadas por el applet."
 
-#: settings.py:85 settings.py:627
+#: settings.py:84 settings.py:626
 msgid "Normal"
 msgstr "Normal"
 
-#: settings.py:85
+#: settings.py:84
 msgid "Only log messages caused by non critical errors."
 msgstr "Solo registrar mensajes causados por errores críticos."
 
-#: settings.py:86
+#: settings.py:85
 msgid "Additionally log extra output messages and all HTTP responses."
 msgstr "Adicionalmente registrar mensajes extra y todas las respuestas HTTP."
 
-#: settings.py:86 settings.py:628
+#: settings.py:85 settings.py:627
 msgid "Verbose"
 msgstr "Detallado"
 
-#: settings.py:87 settings.py:629
+#: settings.py:86 settings.py:628
 msgid "Very verbose"
 msgstr "Muy detallado"
 
-#: settings.py:88
+#: settings.py:87
 msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr "Adicionalmente registrar todas las llamadas de métodos de todas las clases/prototipos de JavaScript y sus tiempos de ejecución."
 
-#: settings.py:99
+#: settings.py:98
 msgid "Save settings"
 msgstr "Guardar preferencias"
 
-#: settings.py:100
+#: settings.py:99
 msgid ""
 "Most settings are not automatically saved when modified.\n"
 "Press this button for the settings to take effect."
@@ -320,107 +398,107 @@ msgstr ""
 "La mayoría de las configuraciones no se guardan automáticamente cuando se modifican.\n"
 "Presionar este botón para que las configuraciones surtan efecto."
 
-#: settings.py:106 settings.py:108
+#: settings.py:105 settings.py:107
 msgid "Applet settings"
 msgstr "Preferencias del applet"
 
-#: settings.py:115
+#: settings.py:114
 msgid "Keyboard shortcut to open and close the menu"
 msgstr "Atajo de teclado para abrir el menú"
 
-#: settings.py:124
+#: settings.py:123
 msgid "Use a custom icon"
 msgstr "Usar un ícono personalizado"
 
-#: settings.py:125
+#: settings.py:124
 msgid "Unchecking this allows the theme to set the icon."
 msgstr "Al deshabilitar esta opción, el tema de CInnamon establecerá el ícono."
 
-#: settings.py:135
+#: settings.py:134
 msgid "Select an icon to show in the panel."
 msgstr "Seleccionar un ícono para mostrar en el panel."
 
-#: settings.py:143
+#: settings.py:142
 msgid "Text"
 msgstr "Texto"
 
-#: settings.py:144
+#: settings.py:143
 msgid "Enter custom text to show in the panel."
 msgstr "Introduzca un texto personalizado para mostrar en el panel."
 
-#: settings.py:151 settings.py:153
+#: settings.py:150 settings.py:152
 msgid "Menu settings"
 msgstr "Preferencias del menú"
 
-#: settings.py:160
+#: settings.py:159
 msgid "Enable autoscrolling in application list"
 msgstr "Habilitar el desplazamiento automático en la lista de aplicaciones"
 
-#: settings.py:161
+#: settings.py:160
 msgid "Choose whether or not to enable smooth autoscrolling in the application list."
 msgstr "Elija si quiere habilitar el desplazamiento automático suave en la lista de aplicaciones."
 
-#: settings.py:169
+#: settings.py:168
 msgid "Use menu animations"
 msgstr "Usar animaciones de menú"
 
-#: settings.py:170
+#: settings.py:169
 msgid "Allow the menu to animate on open and close."
 msgstr "Permitir animación al abrir y cerrar el menú."
 
-#: settings.py:178
+#: settings.py:177
 msgid "Open the menu when I move my mouse over it"
 msgstr "Abrir el menú cuando el ratón pase por encima."
 
-#: settings.py:179
+#: settings.py:178
 msgid "Enable opening the menu when the mouse enters the applet."
 msgstr "Activar abrir el menú cuando el ratón entra en el applet."
 
-#: settings.py:187
+#: settings.py:186
 msgid "Strict search results"
 msgstr "Resultados de búsqueda estrictos"
 
-#: settings.py:188
+#: settings.py:187
 msgid "If enabled, low priority search results will not be displayed."
 msgstr "Con esta opción habilitada, resultados de búsqueda de prioridad baja no serán mostrados."
 
-#: settings.py:196
+#: settings.py:195
 msgid "Menu hover delay"
 msgstr "Retardo del menú al colocar el cursor encima"
 
-#: settings.py:198
+#: settings.py:197
 msgid "Delay before the menu opens when hovered."
 msgstr "Retardo hasta que se abre el menú cuando se coloca el cursor encima."
 
-#: settings.py:202
+#: settings.py:201
 msgid "milliseconds"
 msgstr "milisegundos"
 
-#: settings.py:210
+#: settings.py:209
 msgid "Maximum search results"
 msgstr "Máximos resultados de búsqueda"
 
-#: settings.py:211
+#: settings.py:210
 msgid "Set the maximum amount of search results to be displayed."
 msgstr "Establecer la cantidad máxima de resultados de búsqueda que se mostrarán."
 
-#: settings.py:215
+#: settings.py:214
 msgid "items"
 msgstr "ítems"
 
-#: settings.py:223 settings.py:225
+#: settings.py:222 settings.py:224
 msgid "Menu layout"
 msgstr "Disposición del menú"
 
-#: settings.py:232
+#: settings.py:231
 msgid "Show \"All Applications\" category"
 msgstr "Mostrar la categoría \"Todas las aplicaciones\""
 
-#: settings.py:240
+#: settings.py:239
 msgid "Show \"Recently Used\" category"
 msgstr "Mostrar categoría \"Recientemente Usadas\""
 
-#: settings.py:241
+#: settings.py:240
 msgid ""
 "From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recently Used\" category.\n"
 "Every time this option is disabled, the list of recently used applications will be cleared."
@@ -428,175 +506,175 @@ msgstr ""
 "Desde el momento en que esta opción está activada, todas las aplicaciones lanzadas desde el menú serán almacenadas y estarán listadas en la categoría llamada \"Recientemente Usadas\".\n"
 "Cada vez que esta opción se desactiva, se borrará la lista de aplicaciones usadas recientemente."
 
-#: settings.py:249
+#: settings.py:248
 msgid "Show separator below \"Recently Used\" category"
 msgstr "Mostrar separador debajo de \"Recientemente Usadas\""
 
-#: settings.py:258
+#: settings.py:257
 msgid "Show category icons"
 msgstr "Mostrar íconos de categorías."
 
-#: settings.py:259
+#: settings.py:258
 msgid "Choose whether or not to show icons on categories."
 msgstr "Elegir si desea o no mostrar iconos en categorías."
 
-#: settings.py:267
+#: settings.py:266
 msgid "Show application icons"
 msgstr "Mostrar íconos de aplicaciones"
 
-#: settings.py:268
+#: settings.py:267
 msgid "Choose whether or not to show icons on applications."
 msgstr "Elegir si desea o no mostrar los iconos de aplicaciones."
 
-#: settings.py:276
+#: settings.py:275
 msgid "Hide applications list scrollbar"
 msgstr "Esconder la barra de desplazamiento de la lista de aplicaciones"
 
-#: settings.py:284
+#: settings.py:283
 msgid "Invert menu layout"
 msgstr "Invertir la disposición del menú"
 
-#: settings.py:285
+#: settings.py:284
 msgid "By default, the search box is at the top of the menu and the custom launchers box is at the bottom. Enabling this preference will invert those elements in the menu."
 msgstr "De forma predeterminada, el cuadro de búsqueda se encuentra en la parte superior del menú y el cuadro de lanzadores personalizados se encuentra en la parte inferior. Habilitando esta preferencia invertirá esos elementos en el menú."
 
-#: settings.py:293
+#: settings.py:292
 msgid "Swap categories box"
 msgstr "Intercambiar la lista de categorías"
 
-#: settings.py:294
+#: settings.py:293
 msgid "By default, the categories box is to the left of the applications list. With this option enabled, the categories box will be placed to the right of the applications list."
 msgstr "De forma predeterminada, la lista de categorías está ubicada a la izquierda de la lista de aplicaciones. Con esta opción activada, el cuadro de categorías será colocado a la derecha de la lista de aplicaciones."
 
-#: settings.py:302
+#: settings.py:301
 msgid "Invert custom launches box buttons order"
 msgstr "Invertir el orden de los botones dentro de la caja de lanzadores"
 
-#: settings.py:310
+#: settings.py:309
 msgid "Maximum button width"
 msgstr "Ancho máximo de botones"
 
-#: settings.py:311
+#: settings.py:310
 msgid "Define the maximum width of menu items inside the applications box."
 msgstr "Definir el ancho máximo de elementos de menú dentro del cuadro de aplicaciones."
 
-#: settings.py:323
+#: settings.py:322
 msgid "Categories icon size"
 msgstr "Tamaño de ícono para categorías"
 
-#: settings.py:336
+#: settings.py:335
 msgid "Applications icon size"
 msgstr "Tamaño de ícono para aplicaciones"
 
-#: settings.py:349
+#: settings.py:348
 msgid "Search results icon size"
 msgstr "Tamaño de íconos para resultados de búsqueda"
 
-#: settings.py:362
+#: settings.py:361
 msgid "Custom launchers icon size"
 msgstr "Tamaño de ícono para los lanzadores personalizados"
 
-#: settings.py:374
+#: settings.py:373
 msgid "Custom launchers button alignment"
 msgstr "Alineamiento de los botones en lanzadores personalizados"
 
-#: settings.py:377
+#: settings.py:376
 msgid "Left"
 msgstr "Izquierda"
 
-#: settings.py:378
+#: settings.py:377
 msgid "Middle"
 msgstr "Centro"
 
-#: settings.py:379
+#: settings.py:378
 msgid "Right"
 msgstr "Derecha"
 
-#: settings.py:384
+#: settings.py:383
 msgid "Recent applications"
 msgstr "Aplicaciones recientes"
 
-#: settings.py:392
+#: settings.py:391
 msgid "Ignore Favorites"
 msgstr "Ignorar Favoritos"
 
-#: settings.py:393
+#: settings.py:392
 msgid "If enabled, applications set as Favorite will not be displayed in the list of \"Recent Applications\"."
 msgstr "Con esta opción habilitada, las aplicaciones guardadas en Favoritos no serán almacenadas en la categoría \"Aplicaciones Recientes\"."
 
-#: settings.py:401
+#: settings.py:400
 msgid "Invert recently used applications order"
 msgstr "Invertir el orden de las aplicaciones recientemente usadas"
 
-#: settings.py:402
+#: settings.py:401
 msgid "By default, the most recently used application is at the top of the list. With this option enabled, the most recently used application will be at the bottom of the list."
 msgstr "De forma predeterminada, la aplicación más recientemente utilizada se encuentra el inicio de la lista. Con esta opción habilitada, la aplicación más recientemente usada va a estar en la parte inferior de la lista."
 
-#: settings.py:410
+#: settings.py:409
 msgid "Maximum recently used applications to display"
 msgstr "Número máximo de aplicaciones recientemente usadas a mostrar"
 
-#: settings.py:414
+#: settings.py:413
 msgid "applications"
 msgstr "aplicaciones"
 
-#: settings.py:421 settings.py:423
+#: settings.py:420 settings.py:422
 msgid "Context menu"
 msgstr "Menú contextual"
 
-#: settings.py:430
+#: settings.py:429
 msgid "Show \"Add to panel\" on context"
 msgstr "Mostrar \"Añadir al panel\" en el menú contextual"
 
-#: settings.py:438
+#: settings.py:437
 msgid "Show \"Add to desktop\" on context"
 msgstr "Mostrar \"Añadir al escritorio\" en el menú contextual"
 
-#: settings.py:446
+#: settings.py:445
 msgid "Show \"Add/Remove to/from favorites\" on context"
 msgstr "Mostrar \"Añadir/Remover al/del panel\" en el menú contextual"
 
-#: settings.py:454
+#: settings.py:453
 msgid "Show \"Uninstall\" on context"
 msgstr "Mostrar \"Desinstalar\" en el menú contextual"
 
-#: settings.py:462
+#: settings.py:461
 msgid "Show \"Run with NVIDIA GPU\" on context"
 msgstr "Mostrar \"Ejecutar con GPU NVIDIA\" en el menú contextual"
 
-#: settings.py:470
+#: settings.py:469
 msgid "Show \"Run as root\" on context"
 msgstr "Mostrar \"Ejecutar como root\" en el menú contextual"
 
-#: settings.py:478
+#: settings.py:477
 msgid "Show \"Run from terminal\" on context"
 msgstr "Mostrar \"Ejecutar desde terminal\" en el menú contextual"
 
-#: settings.py:486
+#: settings.py:485
 msgid "Show \"Run from terminal as root\" on context"
 msgstr "Mostrar \"Ejecutar desde terminal como root\" en el menú contextual"
 
-#: settings.py:494
+#: settings.py:493
 msgid "Show \"Open .desktop file folder\" on context"
 msgstr "Mostrar \"Abrir carpeta del archivo .desktop\" en el menú contextual"
 
-#: settings.py:502
+#: settings.py:501
 msgid "Show \"Edit .desktop file\" on context"
 msgstr "Mostrar \"Editar archivo .desktop\" en el menú contextual"
 
-#: settings.py:503
+#: settings.py:502
 msgid "It adds to the applications context menu an entry that will allow you to open the current selected application's .desktop file in a text editor."
 msgstr "Esta opción activada agrega al menú contextual para aplicaciones una nueva entrada que permitirá abrir el archivo .desktop de la aplicación seleccionada en un editor de texto."
 
-#: settings.py:507
+#: settings.py:506
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: settings.py:514
+#: settings.py:513
 msgid "Gain privileges of not owned files"
 msgstr "Ganar privilegios de archivos que no son propiedad del usuario"
 
-#: settings.py:515
+#: settings.py:514
 msgid ""
 "If enabled, this options will open as root .desktop files that aren't owned by the current user.\n"
 "\n"
@@ -606,11 +684,11 @@ msgstr ""
 "\n"
 "Esto no es necesario para todos los editores de texto. Algunos editores de texto permiten abrir y editar archivos que no son propiedad del usuario actual y pedirán la contraseña de root en el momento de guardar los cambios."
 
-#: settings.py:523
+#: settings.py:522
 msgid "Custom text editor"
 msgstr "Editor de texto personalizado"
 
-#: settings.py:524
+#: settings.py:523
 msgid ""
 "Set a custom text editor to open .desktop files (just the name of the text editor executable or the path to it).\n"
 "Leave it blank to let the system decide."
@@ -618,11 +696,11 @@ msgstr ""
 "Establecer un editor de textos para abrir archivos .desktop (sólo el nombre del ejecutable o la ruta de acceso al mismo).\n"
 "Dejar en blanco para que el sistema decida."
 
-#: settings.py:532
+#: settings.py:531
 msgid "Privileges elevator"
 msgstr "Elevador de privilegios"
 
-#: settings.py:533
+#: settings.py:532
 msgid ""
 "The graphical front-end to use to run applications as root.\n"
 "This is used by the \"Open as Root\" context menu and the option \"Gain privileges of not owned files\"."
@@ -630,11 +708,11 @@ msgstr ""
 "La interfaz gráfica que se utilizará para ejecutar aplicaciones como root.\n"
 "Esto es utilizado por las opciones \"ejecutar como root\" del menú contextual y cuando la opción \"Ganar privilegios de archivos que no son propiedad del usuario\" está activada. "
 
-#: settings.py:541
+#: settings.py:540
 msgid "Terminal emulator"
 msgstr "Emulador de terminal:"
 
-#: settings.py:542
+#: settings.py:541
 msgid ""
 "Choose the terminal emulator used by all launch from terminal options.\n"
 "IMPORTANT!!! The terminal emulator has to support the -e argument (execute the argument to this option inside the terminal)."
@@ -642,11 +720,11 @@ msgstr ""
 "Elegir el emulador de terminal utilizado por todas las opciones para iniciar desde  de terminal.\n"
 "¡IMPORTANTE! El emulador de terminal debe soportar el argumento -e (ejecutar el argumento de esta opción dentro del terminal)."
 
-#: settings.py:550
+#: settings.py:549
 msgid "Command interpreter (shell)"
 msgstr "Intérprete de comando (shell)"
 
-#: settings.py:551
+#: settings.py:550
 msgid ""
 "The command interpreter (shell) used when launching programs from a terminal.\n"
 "IMPORTANT!!! The shell has to support the -c argument (take the argument passed by this option as a command to execute.)."
@@ -654,47 +732,47 @@ msgstr ""
 "El intérprete de comandos (shell) utilizado al iniciar programas desde una terminal.\n"
 "¡IMPORTANTE! La shell tiene que soportar el argumento -c (tomar el argumento pasado por esta opción como un comando para ejecutar)."
 
-#: settings.py:558
+#: settings.py:557
 msgid "Appearance"
 msgstr "Apariencia"
 
-#: settings.py:560
+#: settings.py:559
 msgid "Custom launchers box padding"
 msgstr "Espaciado personalizado para los lanzadores personalizados"
 
-#: settings.py:566
+#: settings.py:565
 msgid "Categories box padding"
 msgstr "Espaciado personalizado para la caja de categorías"
 
-#: settings.py:572
+#: settings.py:571
 msgid "Applications box padding"
 msgstr "Espaciado personalizado para la caja de aplicaciones"
 
-#: settings.py:578
+#: settings.py:577
 msgid "Search entry padding"
 msgstr "Espaciado personalizado para la caja de entrada de búsqueda"
 
-#: settings.py:584
+#: settings.py:583
 msgid "Search box padding"
 msgstr "Espaciado personalizado para la caja de búsqueda"
 
-#: settings.py:593 settings.py:595
+#: settings.py:592 settings.py:594
 msgid "Custom launchers"
 msgstr "Lanzadores personalizados"
 
-#: settings.py:616
+#: settings.py:615
 msgid "Debugging"
 msgstr "Configuración de depuración"
 
-#: settings.py:624
+#: settings.py:623
 msgid "Logging level"
 msgstr "Nivel de registro"
 
-#: settings.py:638
+#: settings.py:637
 msgid "Enable debugger"
 msgstr "Habilitar depurador"
 
-#: settings.py:639
+#: settings.py:638
 msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
 msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
 

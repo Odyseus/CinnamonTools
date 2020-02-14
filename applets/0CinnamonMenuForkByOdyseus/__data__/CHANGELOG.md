@@ -4,6 +4,17 @@
 
 ***
 
+- **Date:** Wed, 12 Feb 2020 22:48:07 -0300
+- **Commit:** [30fce2b](https://gitlab.com/Odyseus/CinnamonTools/commit/30fce2b)
+- **Author:** Odyseus
+
+```
+- Adaptations due to changes to the custom settings framework.
+
+```
+
+***
+
 - **Date:** Tue, 11 Feb 2020 00:00:15 -0300
 - **Commit:** [9c2c2e7](https://gitlab.com/Odyseus/CinnamonTools/commit/9c2c2e7)
 - **Author:** Odyseus

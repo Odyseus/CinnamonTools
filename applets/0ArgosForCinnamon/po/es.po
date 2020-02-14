@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-02-12 00:10-0300\n"
-"PO-Revision-Date: 2020-02-10 20:58-0300\n"
+"POT-Creation-Date: 2020-02-14 01:15-0300\n"
+"PO-Revision-Date: 2020-02-13 21:22-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -1194,3 +1194,6 @@ msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+
+#~ msgid "Or the update could be done manually with the Refresh item on this applet context menu."
+#~ msgstr "O la actualización puede realizarse manualmente con el ítem »Refrescar« en el menú contextual de este applet."
