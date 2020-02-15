@@ -22,6 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 /**
  * Tests if a value is a string
  *
@@ -168,18 +169,17 @@ function getFractional(num) {
  */
 function QtyError() {
     var err;
-
     if (!this) { // Allows to instantiate QtyError without new()
         err = Object.create(QtyError.prototype);
         QtyError.apply(err, arguments);
         return err;
     }
-
     err = Error.apply(this, arguments);
     this.name = "QtyError";
     this.message = err.message;
     this.stack = err.stack;
 
+    // NOTE: (Odyseus) Strict warning fix.
     return this;
 }
 QtyError.prototype = Object.create(Error.prototype, {
@@ -417,17 +417,26 @@ var UNITS = {
     "<gallon>": [
         ["gal", "gallon", "gallons"], 0.0037854118, "volume", ["<meter>", "<meter>", "<meter>"]
     ],
+    "<gallon-imp>": [
+        ["galimp", "gallon-imp", "gallons-imp"], 0.0045460900, "volume", ["<meter>", "<meter>", "<meter>"]
+    ],
     "<quart>": [
         ["qt", "quart", "quarts"], 0.00094635295, "volume", ["<meter>", "<meter>", "<meter>"]
     ],
     "<pint>": [
         ["pt", "pint", "pints"], 0.000473176475, "volume", ["<meter>", "<meter>", "<meter>"]
     ],
+    "<pint-imp>": [
+        ["ptimp", "pint-imp", "pints-imp"], 5.6826125e-4, "volume", ["<meter>", "<meter>", "<meter>"]
+    ],
     "<cup>": [
         ["cu", "cup", "cups"], 0.000236588238, "volume", ["<meter>", "<meter>", "<meter>"]
     ],
     "<fluid-ounce>": [
         ["floz", "fluid-ounce", "fluid-ounces"], 2.95735297e-5, "volume", ["<meter>", "<meter>", "<meter>"]
+    ],
+    "<fluid-ounce-imp>": [
+        ["flozimp", "floz-imp", "fluid-ounce-imp", "fluid-ounces-imp"], 2.84130625e-5, "volume", ["<meter>", "<meter>", "<meter>"]
     ],
     "<tablespoon>": [
         ["tb", "tbsp", "tbs", "tablespoon", "tablespoons"], 1.47867648e-5, "volume", ["<meter>", "<meter>", "<meter>"]
@@ -437,6 +446,15 @@ var UNITS = {
     ],
     "<bushel>": [
         ["bu", "bsh", "bushel", "bushels"], 0.035239072, "volume", ["<meter>", "<meter>", "<meter>"]
+    ],
+    "<oilbarrel>": [
+        ["bbl", "oil-barrel", "oil-barrels"], 0.158987294928, "volume", ["<meter>", "<meter>", "<meter>"]
+    ],
+    "<beerbarrel>": [
+        ["bl", "bl-us", "beer-barrel", "beer-barrels"], 0.1173477658, "volume", ["<meter>", "<meter>", "<meter>"]
+    ],
+    "<beerbarrel-imp>": [
+        ["blimp", "bl-imp", "beer-barrel-imp", "beer-barrels-imp"], 0.16365924, "volume", ["<meter>", "<meter>", "<meter>"]
     ],
 
     /* speed */
@@ -1302,6 +1320,7 @@ function Qty(initValue, initUnits) {
         throw new QtyError("Temperatures must not be less than absolute zero");
     }
 
+    // NOTE: (Odyseus) Strict warning fix.
     return this;
 }
 
@@ -1350,7 +1369,6 @@ function updateBaseScalar() {
     if (this.baseScalar) {
         return this.baseScalar;
     }
-
     if (this.isBase()) {
         this.baseScalar = this.scalar;
         this.signature = unitSignature.call(this);
@@ -1360,6 +1378,7 @@ function updateBaseScalar() {
         this.signature = base.signature;
     }
 
+    // NOTE: (Odyseus) Strict warning fix.
     return this;
 }
 
@@ -2109,11 +2128,9 @@ assign(Qty.prototype, {
         if (isString(other)) {
             return this.compareTo(Qty(other));
         }
-
         if (!this.isCompatible(other)) {
             throwIncompatibleUnits(this.units(), other.units());
         }
-
         if (this.baseScalar < other.baseScalar) {
             return -1;
         } else if (this.baseScalar === other.baseScalar) {
@@ -2122,6 +2139,7 @@ assign(Qty.prototype, {
             return 1;
         }
 
+        // NOTE: (Odyseus) Strict warning fix.
         return throwIncompatibleUnits(this.units(), other.units());
     },
 
@@ -2182,6 +2200,7 @@ assign(Qty.prototype, {
 
     // Returns 'true' if the Unit is represented in base units
     isBase: function() {
+        // NOTE: (Odyseus) Strict warning fix.
         if (this.hasOwnProperty("_isBase")) {
             return this._isBase;
         }
@@ -2195,6 +2214,7 @@ assign(Qty.prototype, {
                 this._isBase = false;
             }
         }, this);
+        // NOTE: (Odyseus) Strict warning fix.
         if (this.hasOwnProperty("_isBase") && !this._isBase) {
             return this._isBase;
         }
@@ -2217,6 +2237,7 @@ NestedMap.prototype.get = function(keys) {
 
     return keys.reduce(function(map, key, index) {
             if (map) {
+
                 var childMap = map[key];
 
                 if (index === keys.length - 1) {
@@ -2226,6 +2247,7 @@ NestedMap.prototype.get = function(keys) {
                 }
             }
 
+            // NOTE: (Odyseus) Strict warning fix.
             return undefined;
         },
         this);
@@ -2438,7 +2460,7 @@ function simplify(units) {
     });
 }
 
-Qty.version = "1.7.3";
+Qty.version = "1.7.4";
 
 var quantities = Qty;
 
