@@ -4,6 +4,66 @@
 
 ***
 
+- **Date:** Sun, 16 Feb 2020 02:26:25 -0300
+- **Commit:** [a22cabf](https://gitlab.com/Odyseus/CinnamonTools/commit/a22cabf)
+- **Author:** Odyseus
+
+```
+General
+
+- Updated submodules.
+- Updated manual page.
+
+```
+
+***
+
+- **Date:** Sun, 16 Feb 2020 02:25:24 -0300
+- **Commit:** [4589ccf](https://gitlab.com/Odyseus/CinnamonTools/commit/4589ccf)
+- **Author:** Odyseus
+
+```
+Xlets settings framework
+
+- Docstrings update.
+
+```
+
+***
+
+- **Date:** Sun, 16 Feb 2020 01:15:28 -0300
+- **Commit:** [1034ad1](https://gitlab.com/Odyseus/CinnamonTools/commit/1034ad1)
+- **Author:** Odyseus
+
+```
+Xlets settings framework
+
+- General: Added missing `--stack-id` CLI argument used to open a window with a specific section selected.
+- SettingsWidgets.py:
+    - Added the `get_main_app` and `set_main_app` methods to the `SettingsWidget` class to make it easy to retrieve the main application for widgets that needs it.
+    - Redesigned the `IconChooser` widget for (hopefully) better performance.
+        - It will only create the dialog once instead of every time the dialog is opened.
+        - It will not start with an icon category selected.
+    - Convert unnecessarily declared property of `TextView` (self.scrolledwindow) into a variable (scrolledwindow).
+
+```
+
+***
+
+- **Date:** Fri, 14 Feb 2020 19:14:44 -0300
+- **Commit:** [be3b16c](https://gitlab.com/Odyseus/CinnamonTools/commit/be3b16c)
+- **Author:** Odyseus
+
+```
+General
+
+- Updated submodules.
+- Updated CHANGELOG.md.
+
+```
+
+***
+
 - **Date:** Fri, 14 Feb 2020 19:14:11 -0300
 - **Commit:** [52594d7](https://gitlab.com/Odyseus/CinnamonTools/commit/52594d7)
 - **Author:** Odyseus
