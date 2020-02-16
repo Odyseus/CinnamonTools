@@ -151,139 +151,121 @@ The following sections are available only in English.
 <h2>Panel Drawer (Fork By Odyseus) changelog</h2>
 <p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
 <hr>
+<p><strong>Date:</strong> Mon, 10 Feb 2020 23:22:16 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/1868dfa">1868dfa</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 10 Feb 2020 23:22:16 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/1868dfa">1868dfa</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.</li>
+<li>Implemented the use of the <code>xdgOpen</code> function from the <code>globalUtils.js</code> JavaScript module.</li>
 </ul>
-<pre><code>- Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.
-- Implemented the use of the `xdgOpen` function from the `globalUtils.js` JavaScript module.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Fri, 24 Jan 2020 03:14:23 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/926281a">926281a</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Fri, 24 Jan 2020 03:14:23 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/926281a">926281a</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Added options to set custom icons for collapsed/expanded states.</li>
 </ul>
-<pre><code>- Added options to set custom icons for collapsed/expanded states.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 21 Jan 2020 16:54:44 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ac5312c">ac5312c</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 21 Jan 2020 16:54:44 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ac5312c">ac5312c</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Fixed panel edit mode switch connection.</li>
 </ul>
-<pre><code>- Fixed panel edit mode switch connection.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Sat, 18 Jan 2020 14:46:13 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/09796bf">09796bf</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Sat, 18 Jan 2020 14:46:13 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/09796bf">09796bf</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Modified the applet context menu to display only the Panel edit mode switch since in the latest Cinnamon version the convenience function that allowed to replicate the panel context menu was removed.</li>
 </ul>
-<pre><code>- Modified the applet context menu to display only the Panel edit mode switch since in the latest Cinnamon version the convenience function that allowed to replicate the panel context menu was removed.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 16 Jul 2019 00:51:35 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/831d2bd">831d2bd</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 16 Jul 2019 00:51:35 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/831d2bd">831d2bd</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Added a property to applets handled by this applet to allow handled applets to enable a basic integration with the panel drawer.</li>
 </ul>
-<pre><code>- Added a property to applets handled by this applet to allow handled applets to enable a basic integration with the panel drawer.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Fri, 21 Jun 2019 23:03:47 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5429260">5429260</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<h2>Applet rewrite</h2>
+<p>WARNING: This update is a complete rewrite of the applet and it will reset the settings of an existent instance to their default values. Read the help page for this applet for detailed usage.</p>
 <ul>
-<li><strong>Date:</strong> Fri, 21 Jun 2019 23:03:47 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5429260">5429260</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Added vertical panels support.</li>
+<li>Added multi-instance support. Now it is possible to add an instance of this applet to each existent panel (vertical or horizontal).</li>
+<li>Added all items of a panel context menu into this applet context menu.</li>
+<li>Simplified and cleaned the code.</li>
+<li>Removed workarounds to handle system tray applets. These workarounds were doing <em>more damage than good</em>. DO NOT USE THIS APPLET to hide a system try applet (not the Cinnamon's default nor any other). Simply use a collapsible system tray applet.</li>
 </ul>
-<pre><code>Applet rewrite
---------------
-
-WARNING: This update is a complete rewrite of the applet and it will reset the settings of an existent instance to their default values. Read the help page for this applet for detailed usage.
-
-- Added vertical panels support.
-- Added multi-instance support. Now it is possible to add an instance of this applet to each existent panel (vertical or horizontal).
-- Added all items of a panel context menu into this applet context menu.
-- Simplified and cleaned the code.
-- Removed workarounds to handle system tray applets. These workarounds were doing *more damage than good*. DO NOT USE THIS APPLET to hide a system try applet (not the Cinnamon's default nor any other). Simply use a collapsible system tray applet.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 30 May 2019 03:47:50 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/090e1a9">090e1a9</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 30 May 2019 03:47:50 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/090e1a9">090e1a9</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Minor changes due to changes in global modules.</li>
 </ul>
-<pre><code>- Minor changes due to changes in global modules.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 23 May 2019 02:16:11 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/718c1dd">718c1dd</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 23 May 2019 02:16:11 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/718c1dd">718c1dd</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.</li>
+<li>JavaScript code homogenization.</li>
+<li>Implemented debugger.</li>
 </ul>
-<pre><code>- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
-- JavaScript code homogenization.
-- Implemented debugger.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 21 Feb 2019 10:33:38 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3155c00">3155c00</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 21 Feb 2019 10:33:38 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3155c00">3155c00</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Added call to finalize settings when applet is removed from panel.</li>
 </ul>
-<pre><code>- Added call to finalize settings when applet is removed from panel.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 21 Jan 2019 21:54:37 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/cea22b7">cea22b7</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 21 Jan 2019 21:54:37 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/cea22b7">cea22b7</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Changed applet icon.</li>
 </ul>
-<pre><code>- Changed applet icon.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 15 Jan 2019 22:37:00 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/bdac179">bdac179</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 15 Jan 2019 22:37:00 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/bdac179">bdac179</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).</li>
 </ul>
-<pre><code>- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 7 Aug 2018 03:09:23 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/198c667">198c667</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 7 Aug 2018 03:09:23 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/198c667">198c667</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.</li>
 </ul>
-<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Sat, 4 Aug 2018 05:14:49 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/71e8143">71e8143</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Sat, 4 Aug 2018 05:14:49 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/71e8143">71e8143</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Eradication of <strong>Lang</strong> module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.</li>
 </ul>
-<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Wed, 13 Jun 2018 01:03:24 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e7da167">e7da167</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 13 Jun 2018 01:03:24 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e7da167">e7da167</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.</li>
+<li>Fixed some warnings shown on Cinnamon 3.8.x.</li>
 </ul>
-<pre><code>- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
-- Fixed some warnings shown on Cinnamon 3.8.x.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Wed, 2 May 2018 00:17:26 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/de934e4">de934e4</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 2 May 2018 00:17:26 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/de934e4">de934e4</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Move context menu items insertion into a function and call that function outside <code>Mainloop.idle_add</code> call.</li>
+<li>Minor clean up.</li>
 </ul>
-<pre><code>- Move context menu items insertion into a function and call that function outside `Mainloop.idle_add` call.
-- Minor clean up.
-</code></pre>
 <hr>
 
 </div> <!-- .container.boxed -->

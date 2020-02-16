@@ -199,110 +199,98 @@ The following sections are available only in English.
 <h2>Quick Menu changelog</h2>
 <p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
 <hr>
+<p><strong>Date:</strong> Mon, 10 Feb 2020 23:21:47 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e223984">e223984</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 10 Feb 2020 23:21:47 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e223984">e223984</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.</li>
+<li>Implemented the use of the <code>xdgOpen</code> function from the <code>globalUtils.js</code> JavaScript module.</li>
 </ul>
-<pre><code>- Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.
-- Implemented the use of the `xdgOpen` function from the `globalUtils.js` JavaScript module.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 16 Jul 2019 00:53:10 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/a7cade1">a7cade1</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 16 Jul 2019 00:53:10 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/a7cade1">a7cade1</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Just a couple of typos/grammar corrections.</li>
 </ul>
-<pre><code>- Just a couple of typos/grammar corrections.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Fri, 21 Jun 2019 23:04:11 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/b2b85bf">b2b85bf</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Fri, 21 Jun 2019 23:04:11 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/b2b85bf">b2b85bf</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Corrected typo in settings-schema.json file.</li>
+<li>Attempt to remove a warning.</li>
 </ul>
-<pre><code>- Corrected typo in settings-schema.json file.
-- Attempt to remove a warning.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 30 May 2019 03:48:00 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/cdcab86">cdcab86</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 30 May 2019 03:48:00 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/cdcab86">cdcab86</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Minor changes due to changes in global modules.</li>
 </ul>
-<pre><code>- Minor changes due to changes in global modules.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 23 May 2019 02:16:19 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/142fa93">142fa93</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 23 May 2019 02:16:19 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/142fa93">142fa93</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.</li>
+<li>JavaScript code homogenization.</li>
+<li>Implemented debugger.</li>
 </ul>
-<pre><code>- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
-- JavaScript code homogenization.
-- Implemented debugger.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 5 Mar 2019 03:03:43 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/35839a0">35839a0</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 5 Mar 2019 03:03:43 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/35839a0">35839a0</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Fixed keybinding to open/close the menu not being registered on applet initialization.</li>
+<li>Improved the <em>Auto-update menu</em> option by adding more Gio.FileMonitorEvent checks. Still not very useful, but it's better than nothing.</li>
+<li>Removed unnecessary function definitions.</li>
 </ul>
-<pre><code>- Fixed keybinding to open/close the menu not being registered on applet initialization.
-- Improved the *Auto-update menu* option by adding more Gio.FileMonitorEvent checks. Still not very useful, but it's better than nothing.
-- Removed unnecessary function definitions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 15 Jan 2019 22:36:44 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/07f567c">07f567c</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 15 Jan 2019 22:36:44 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/07f567c">07f567c</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).</li>
 </ul>
-<pre><code>- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 23 Aug 2018 02:43:58 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8cb1610">8cb1610</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 23 Aug 2018 02:43:58 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8cb1610">8cb1610</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Implemented a more transparent way of calling <code>Gio.File.load_contents_finish</code>.</li>
 </ul>
-<pre><code>- Implemented a more transparent way of calling `Gio.File.load_contents_finish`.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 7 Aug 2018 03:10:29 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3d58cc3">3d58cc3</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 7 Aug 2018 03:10:29 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3d58cc3">3d58cc3</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.</li>
+<li>Cleaned leftovers from previous cleanup.</li>
 </ul>
-<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
-- Cleaned leftovers from previous cleanup.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Sat, 4 Aug 2018 05:14:27 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5c6797d">5c6797d</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Sat, 4 Aug 2018 05:14:27 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5c6797d">5c6797d</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Eradication of <strong>Lang</strong> module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.</li>
+<li>Simplification of the procedure to set the applet icon.</li>
+<li>Removed support for Cinnamon versions older than 3.0.x.</li>
 </ul>
-<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
-- Simplification of the procedure to set the applet icon.
-- Removed support for Cinnamon versions older than 3.0.x.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Wed, 13 Jun 2018 01:04:30 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0ad1606">0ad1606</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 13 Jun 2018 01:04:30 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0ad1606">0ad1606</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.</li>
 </ul>
-<pre><code>- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 7 May 2018 04:53:29 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/9cc8173">9cc8173</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 7 May 2018 04:53:29 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/9cc8173">9cc8173</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Implemented key bindings common naming.</li>
 </ul>
-<pre><code>- Implemented key bindings common naming.
-</code></pre>
 <hr>
 
 </div> <!-- .container.boxed -->

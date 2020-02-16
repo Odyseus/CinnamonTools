@@ -681,176 +681,160 @@ The following sections are available only in English.
 <h2>Argos for Cinnamon changelog</h2>
 <p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
 <hr>
+<p><strong>Date:</strong> Tue, 11 Feb 2020 00:00:48 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3fa9bdc">3fa9bdc</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 11 Feb 2020 00:00:48 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3fa9bdc">3fa9bdc</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.</li>
+<li>Adaptations due to changes to global JavaScript modules.</li>
 </ul>
-<pre><code>- Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.
-- Adaptations due to changes to global JavaScript modules.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Fri, 21 Jun 2019 23:01:00 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/9b7e3b1">9b7e3b1</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Fri, 21 Jun 2019 23:01:00 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/9b7e3b1">9b7e3b1</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Removed workarounds for older versions of Cinnamon (2.8.x and below).</li>
+<li>Added option to only execute the script assigned to an applet when the menu is opened. This is different from the <strong>ARGOS_MENU_OPEN</strong> environment variable set on execution time and that can be used inside the scripts. For the environment variable to be read, the script has to be executed. For the option set on the applet settings, the script is not executed at all unless the menu is opened.</li>
+<li>Added option to avoid ellipsation of the lines displayed on the applet. Applet text of only 3 characters was being ellipsized, which was ultra-annoying.</li>
+<li>Fixed misbehavior of the menu closing while the mouse cursor was placed over an activatable item in the menu and the menu content was updated. This was misbehaving because; when an item inside a menu is hovered, it has focus; when all items in a menu are removed, the menu loses focus; when a menu loses focus, it closes. I simply moved the focus to the menu itself before removing all its items to prevent the menu from closing.</li>
+<li>Moved the rotation interval selector found in the applet context menu outside the Extras sub-menu to keep it more accessible.</li>
+<li>Corrected not being able to set the script name as the applet label.</li>
 </ul>
-<pre><code>- Removed workarounds for older versions of Cinnamon (2.8.x and below).
-- Added option to only execute the script assigned to an applet when the menu is opened. This is different from the **ARGOS_MENU_OPEN** environment variable set on execution time and that can be used inside the scripts. For the environment variable to be read, the script has to be executed. For the option set on the applet settings, the script is not executed at all unless the menu is opened.
-- Added option to avoid ellipsation of the lines displayed on the applet. Applet text of only 3 characters was being ellipsized, which was ultra-annoying.
-- Fixed misbehavior of the menu closing while the mouse cursor was placed over an activatable item in the menu and the menu content was updated. This was misbehaving because; when an item inside a menu is hovered, it has focus; when all items in a menu are removed, the menu loses focus; when a menu loses focus, it closes. I simply moved the focus to the menu itself before removing all its items to prevent the menu from closing.
-- Moved the rotation interval selector found in the applet context menu outside the Extras sub-menu to keep it more accessible.
-- Corrected not being able to set the script name as the applet label.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 30 May 2019 03:46:35 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ae5e64a">ae5e64a</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 30 May 2019 03:46:35 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ae5e64a">ae5e64a</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Minor changes due to changes in global modules.</li>
 </ul>
-<pre><code>- Minor changes due to changes in global modules.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 23 May 2019 02:14:46 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0806714">0806714</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 23 May 2019 02:14:46 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0806714">0806714</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.</li>
+<li>JavaScript code homogenization.</li>
+<li>Improved debugger.</li>
+<li>Added SVG icon.</li>
 </ul>
-<pre><code>- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
-- JavaScript code homogenization.
-- Improved debugger.
-- Added SVG icon.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 14 May 2019 14:39:50 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8630083">8630083</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 14 May 2019 14:39:50 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8630083">8630083</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Changed the <em>chained module imports</em> approach for a <em>direct module import</em> approach. This is to avoid errors caused by the garbage that is the implementation of <code>require()</code>.</li>
+<li>Better debugging and logging mechanism. Now the debugger is separated from the verbose logging, allowing to see the debugger messages without having to scroll through a million lines of text.</li>
 </ul>
-<pre><code>- Changed the *chained module imports* approach for a *direct module import* approach. This is to avoid errors caused by the garbage that is the implementation of `require()`.
-- Better debugging and logging mechanism. Now the debugger is separated from the verbose logging, allowing to see the debugger messages without having to scroll through a million lines of text.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 21 Feb 2019 10:35:40 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/77f404a">77f404a</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 21 Feb 2019 10:35:40 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/77f404a">77f404a</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Added call to finalize settings when applet is removed from panel.</li>
 </ul>
-<pre><code>- Added call to finalize settings when applet is removed from panel.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 18 Feb 2019 01:28:04 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/491c8b3">491c8b3</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 18 Feb 2019 01:28:04 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/491c8b3">491c8b3</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Made button lines behavior match that of the described by the documentation (<em>...all button lines get a dropdown menu item...</em>). In practice, this applet had the same behavior as the extension is based on; button lines would get a dropdown menu only if there were more than one button line. Argos for Cinnamon now will always create a dropdown item for each button line (respecting the <code>dropdown</code> attribute, of course).</li>
 </ul>
-<pre><code>- Made button lines behavior match that of the described by the documentation (*...all button lines get a dropdown menu item...*). In practice, this applet had the same behavior as the extension is based on; button lines would get a dropdown menu only if there were more than one button line. Argos for Cinnamon now will always create a dropdown item for each button line (respecting the `dropdown` attribute, of course).
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 18 Feb 2019 00:20:47 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/a581b5f">a581b5f</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 18 Feb 2019 00:20:47 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/a581b5f">a581b5f</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Better handling of the <code>tooltip</code> attribute. Now a standard item and an alternate item can each have their own tooltips.</li>
+<li>Made user defined attributes parsing case insensitive. This makes line definitions less strict.</li>
 </ul>
-<pre><code>- Better handling of the `tooltip` attribute. Now a standard item and an alternate item can each have their own tooltips.
-- Made user defined attributes parsing case insensitive. This makes line definitions less strict.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Sun, 17 Feb 2019 02:12:37 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8f2938b">8f2938b</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Sun, 17 Feb 2019 02:12:37 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8f2938b">8f2938b</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Fixed commands execution when terminal is set to false.</li>
+<li>Added the possibility to insert separators inside sub-menus.</li>
+<li>Redesigned applet tooltip for better readability by using a grid.</li>
+<li>Added debug mode for troubleshooting.</li>
+<li>Removing some try{}catch{} blocks. When debug mode is enabled all methods are called with a try{}catch{} block.</li>
+<li>Implemented the use of GLib.get_monotonic_time() to measure execution times more precisely.</li>
+<li>Improved lines parsing by using default parameters. This avoids constantly checking for the existence of an option.</li>
+<li>Cleaned call to log function that was left over.</li>
 </ul>
-<pre><code>- Fixed commands execution when terminal is set to false.
-- Added the possibility to insert separators inside sub-menus.
-- Redesigned applet tooltip for better readability by using a grid.
-- Added debug mode for troubleshooting.
-- Removing some try{}catch{} blocks. When debug mode is enabled all methods are called with a try{}catch{} block.
-- Implemented the use of GLib.get_monotonic_time() to measure execution times more precisely.
-- Improved lines parsing by using default parameters. This avoids constantly checking for the existence of an option.
-- Cleaned call to log function that was left over.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 21 Jan 2019 21:48:00 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/2d5dfec">2d5dfec</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 21 Jan 2019 21:48:00 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/2d5dfec">2d5dfec</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Updated emoji library.</li>
+<li>Changed applet icon.</li>
 </ul>
-<pre><code>- Updated emoji library.
-- Changed applet icon.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 17 Jan 2019 14:00:29 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c910029">c910029</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 17 Jan 2019 14:00:29 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c910029">c910029</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Python files improvements:<ul>
+<li>Simplified localization system.</li>
+<li>Homogenized/Cleaned up code.</li>
 </ul>
-<pre><code>- Python files improvements:
-    - Simplified localization system.
-    - Homogenized/Cleaned up code.
-</code></pre>
+</li>
+</ul>
 <hr>
+<p><strong>Date:</strong> Tue, 15 Jan 2019 22:38:48 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3a99b80">3a99b80</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 15 Jan 2019 22:38:48 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3a99b80">3a99b80</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).</li>
 </ul>
-<pre><code>- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 24 Dec 2018 21:58:49 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/60aefee">60aefee</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 24 Dec 2018 21:58:49 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/60aefee">60aefee</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Now it is possible to specify the shell used to execute commands instead of having Bash hard-coded. A shell can be globally configured in an applet instance or specified individually for each menu item through the <code>shell</code> attribute. The argument used by a shell program that allows to execute a command is also exposed through an applet setting and can also be specified with the <code>shellArgument</code> attribute.</li>
+<li>Exposed as an option the argument used by a terminal program that allows to execute a command inside a terminal window. Workaround due to retarded terminals that keep being dumbed down to the point of uselessness.</li>
+<li>Removed retro compatible code that was left over when removing compatibility with Cinnamon versions older than 3.0.x.</li>
+<li>Implemented a getBoolean function to simplify conditions.</li>
 </ul>
-<pre><code>- Now it is possible to specify the shell used to execute commands instead of having Bash hard-coded. A shell can be globally configured in an applet instance or specified individually for each menu item through the `shell` attribute. The argument used by a shell program that allows to execute a command is also exposed through an applet setting and can also be specified with the `shellArgument` attribute.
-- Exposed as an option the argument used by a terminal program that allows to execute a command inside a terminal window. Workaround due to retarded terminals that keep being dumbed down to the point of uselessness.
-- Removed retro compatible code that was left over when removing compatibility with Cinnamon versions older than 3.0.x.
-- Implemented a getBoolean function to simplify conditions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 7 Aug 2018 03:36:48 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c114f50">c114f50</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 7 Aug 2018 03:36:48 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c114f50">c114f50</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Removed from the example files references to the ~/.cinnamon/glass.log file. This file doesn't exist anymore since Cinnamon version 3.6.x.</li>
 </ul>
-<pre><code>- Removed from the example files references to the ~/.cinnamon/glass.log file. This file doesn't exist anymore since Cinnamon version 3.6.x.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 7 Aug 2018 03:03:20 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8a25f65">8a25f65</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 7 Aug 2018 03:03:20 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/8a25f65">8a25f65</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.</li>
+<li>Moved the <strong>Emojis</strong> variable into its own JavaScript module.</li>
 </ul>
-<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
-- Moved the **Emojis** variable into its own JavaScript module.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Sat, 4 Aug 2018 05:16:23 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/cb6dd7e">cb6dd7e</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Sat, 4 Aug 2018 05:16:23 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/cb6dd7e">cb6dd7e</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Eradication of <strong>Lang</strong> module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.</li>
+<li>Simplification of the procedure to set the applet icon.</li>
+<li>Removed support for Cinnamon versions older than 3.0.x.</li>
 </ul>
-<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
-- Simplification of the procedure to set the applet icon.
-- Removed support for Cinnamon versions older than 3.0.x.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Wed, 13 Jun 2018 00:59:17 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5618e00">5618e00</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 13 Jun 2018 00:59:17 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/5618e00">5618e00</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.</li>
 </ul>
-<pre><code>- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 7 May 2018 04:54:07 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4d36d68">4d36d68</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 7 May 2018 04:54:07 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4d36d68">4d36d68</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Implemented key bindings common naming.</li>
 </ul>
-<pre><code>- Implemented key bindings common naming.
-</code></pre>
 <hr>
 
 </div> <!-- .container.boxed -->

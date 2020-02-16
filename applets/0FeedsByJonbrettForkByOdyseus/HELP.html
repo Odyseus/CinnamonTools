@@ -166,177 +166,160 @@ The following sections are available only in English.
 <h2>Feeds Reader (Fork By Odyseus) changelog</h2>
 <p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
 <hr>
+<p><strong>Date:</strong> Wed, 12 Feb 2020 22:47:55 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ab9d1fc">ab9d1fc</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 12 Feb 2020 22:47:55 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ab9d1fc">ab9d1fc</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Adaptations due to changes to the custom settings framework.</li>
 </ul>
-<pre><code>- Adaptations due to changes to the custom settings framework.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 10 Feb 2020 23:56:24 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/1ed7456">1ed7456</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<h2>Applet rewrite</h2>
+<p>WARNING: This update is a complete rewrite of the applet and it will reset most of the settings of an existent instance to their default values. Read the help page for this applet for detailed usage.</p>
+<p>WARNING: This update will not recognize existent feeds. It is recommended to export all feeds from all profiles of a previous version of this applet so they can be imported into the new version.</p>
 <ul>
-<li><strong>Date:</strong> Mon, 10 Feb 2020 23:56:24 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/1ed7456">1ed7456</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Completely rewritten from scratch to remove unused code, remove unimplemented features and add new features.</li>
+<li>More accessible options. Now each feed on the menu has a context menu that can toggle its options without the need to open the applet settings window.</li>
+<li>Correct localization for plurals.</li>
+<li>Removed the Feeds Manager GUI in favor of using the same custom framework to handle the applet settings that I use in other xlets. Now the feeds are stored in an applet setting and can be managed from the applet settings page.</li>
+<li>Added option to show/hide icons on the menu.</li>
+<li>Added confirmation dialog for when all feeds are marked as read.</li>
 </ul>
-<pre><code>Applet rewrite
---------------
-
-WARNING: This update is a complete rewrite of the applet and it will reset most of the settings of an existent instance to their default values. Read the help page for this applet for detailed usage.
-
-WARNING: This update will not recognize existent feeds. It is recommended to export all feeds from all profiles of a previous version of this applet so they can be imported into the new version.
-
-- Completely rewritten from scratch to remove unused code, remove unimplemented features and add new features.
-- More accessible options. Now each feed on the menu has a context menu that can toggle its options without the need to open the applet settings window.
-- Correct localization for plurals.
-- Removed the Feeds Manager GUI in favor of using the same custom framework to handle the applet settings that I use in other xlets. Now the feeds are stored in an applet setting and can be managed from the applet settings page.
-- Added option to show/hide icons on the menu.
-- Added confirmation dialog for when all feeds are marked as read.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 16 Jul 2019 00:52:14 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/6d9d7f4">6d9d7f4</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 16 Jul 2019 00:52:14 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/6d9d7f4">6d9d7f4</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Added basic integration with Panel Drawer applet.</li>
 </ul>
-<pre><code>- Added basic integration with Panel Drawer applet.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Fri, 21 Jun 2019 23:02:18 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/7d7041a">7d7041a</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Fri, 21 Jun 2019 23:02:18 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/7d7041a">7d7041a</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Corrected typo in settings-schema.json file.</li>
 </ul>
-<pre><code>- Corrected typo in settings-schema.json file.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 30 May 2019 03:47:29 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ffd29d0">ffd29d0</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 30 May 2019 03:47:29 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ffd29d0">ffd29d0</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Minor changes due to changes in global modules.</li>
+<li>Python scripts:<ul>
+<li>Changed the use of cgi.escape to html.escape due to cgi.escape deprecation.</li>
+<li>Changed to Gtk.IconSize.BUTTON constant to specify icon sizes.</li>
+<li>Implemented the use of constants to specify default Gtk CSS classes.</li>
 </ul>
-<pre><code>- Minor changes due to changes in global modules.
-- Python scripts:
-    - Changed the use of cgi.escape to html.escape due to cgi.escape deprecation.
-    - Changed to Gtk.IconSize.BUTTON constant to specify icon sizes.
-    - Implemented the use of constants to specify default Gtk CSS classes.
-</code></pre>
+</li>
+</ul>
 <hr>
+<p><strong>Date:</strong> Thu, 23 May 2019 02:15:54 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/af8e1cf">af8e1cf</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 23 May 2019 02:15:54 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/af8e1cf">af8e1cf</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.</li>
+<li>JavaScript code homogenization.</li>
+<li>Improved debugger.</li>
+<li>Added SVG icon.</li>
 </ul>
-<pre><code>- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
-- JavaScript code homogenization.
-- Improved debugger.
-- Added SVG icon.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 15 Apr 2019 22:00:51 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3c3afc3">3c3afc3</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 15 Apr 2019 22:00:51 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3c3afc3">3c3afc3</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Implemented a tooltip for feed items that automatically positions itself above the cursor when there is no room on the screen to display the tooltip.</li>
+<li>Added clean up of new lines on the tooltip's text.</li>
 </ul>
-<pre><code>- Implemented a tooltip for feed items that automatically positions itself above the cursor when there is no room on the screen to display the tooltip.
-- Added clean up of new lines on the tooltip's text.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 21 Feb 2019 10:34:36 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/245db25">245db25</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 21 Feb 2019 10:34:36 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/245db25">245db25</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Added call to finalize settings when applet is removed from panel.</li>
 </ul>
-<pre><code>- Added call to finalize settings when applet is removed from panel.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 17 Jan 2019 13:59:27 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/927b262">927b262</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 17 Jan 2019 13:59:27 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/927b262">927b262</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Added button to remove profiles to the Feeds Manager GUI (Finally I figured out! LOL).</li>
+<li>Added option to <em>unify</em> notifications.</li>
+<li>Cleaned up inaccurate/unnecessary comments.</li>
+<li>Changed default feeds to include a second profile.</li>
+<li>Python files improvements:<ul>
+<li>Simplified localization system.</li>
+<li>Homogenized/Cleaned up code.</li>
+<li>Docstrings completion/clean up.</li>
 </ul>
-<pre><code>- Added button to remove profiles to the Feeds Manager GUI (Finally I figured out! LOL).
-- Added option to *unify* notifications.
-- Cleaned up inaccurate/unnecessary comments.
-- Changed default feeds to include a second profile.
-- Python files improvements:
-    - Simplified localization system.
-    - Homogenized/Cleaned up code.
-    - Docstrings completion/clean up.
-</code></pre>
+</li>
+</ul>
 <hr>
+<p><strong>Date:</strong> Tue, 15 Jan 2019 22:37:24 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/99f22ba">99f22ba</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 15 Jan 2019 22:37:24 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/99f22ba">99f22ba</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).</li>
 </ul>
-<pre><code>- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 23 Aug 2018 02:46:10 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/7c30cea">7c30cea</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 23 Aug 2018 02:46:10 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/7c30cea">7c30cea</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Implemented a more transparent way of calling <code>Gio.File.load_contents_finish</code>.</li>
 </ul>
-<pre><code>- Implemented a more transparent way of calling `Gio.File.load_contents_finish`.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 7 Aug 2018 03:08:45 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0c43e68">0c43e68</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 7 Aug 2018 03:08:45 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0c43e68">0c43e68</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.</li>
 </ul>
-<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Sat, 4 Aug 2018 05:15:18 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3aecd1d">3aecd1d</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Sat, 4 Aug 2018 05:15:18 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/3aecd1d">3aecd1d</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Eradication of <strong>Lang</strong> module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.</li>
 </ul>
-<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Wed, 18 Jul 2018 00:37:54 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/56ed4bb">56ed4bb</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 18 Jul 2018 00:37:54 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/56ed4bb">56ed4bb</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Fixed an issue that prevented to set and use the default profile when the applet was placed in a panel for the first time.</li>
+<li>Added options to set custom icons for use with the applet.</li>
+<li>Removed some <code>try{} catch{}</code> blocks that were used for debugging.</li>
+<li>Renamed the icons shipped with the applet to be less generic.</li>
 </ul>
-<pre><code>- Fixed an issue that prevented to set and use the default profile when the applet was placed in a panel for the first time.
-- Added options to set custom icons for use with the applet.
-- Removed some `try{} catch{}` blocks that were used for debugging.
-- Renamed the icons shipped with the applet to be less generic.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Wed, 13 Jun 2018 01:01:13 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c586d38">c586d38</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 13 Jun 2018 01:01:13 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c586d38">c586d38</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.</li>
 </ul>
-<pre><code>- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 5 Jun 2018 16:15:19 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e043ddd">e043ddd</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 5 Jun 2018 16:15:19 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/e043ddd">e043ddd</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Re-based from the new applet version from the original author.</li>
+<li>Added keyboard shortcut to be able to open/close the menu.</li>
+<li>Added proper keyboard navigation for the menu.</li>
+<li>Eliminated the need of a stylesheet.css file. The menu will be styled respecting the currently used Cinnamon theme.</li>
+<li>Feeds will only be updated from their online sources if the last check was made after the refresh interval.</li>
+<li>Added missing dependency message.</li>
+<li>Forced the use of Python 3 in all Python modules/scripts.</li>
 </ul>
-<pre><code>- Re-based from the new applet version from the original author.
-- Added keyboard shortcut to be able to open/close the menu.
-- Added proper keyboard navigation for the menu.
-- Eliminated the need of a stylesheet.css file. The menu will be styled respecting the currently used Cinnamon theme.
-- Feeds will only be updated from their online sources if the last check was made after the refresh interval.
-- Added missing dependency message.
-- Forced the use of Python 3 in all Python modules/scripts.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Wed, 2 May 2018 00:40:33 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/aec58b6">aec58b6</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 2 May 2018 00:40:33 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/aec58b6">aec58b6</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Fixed preference name type.</li>
 </ul>
-<pre><code>- Fixed preference name type.
-</code></pre>
 <hr>
 
 </div> <!-- .container.boxed -->

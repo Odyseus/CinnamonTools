@@ -4,94 +4,72 @@
 
 ***
 
-- **Date:** Fri, 14 Feb 2020 19:08:31 -0300
-- **Commit:** [1c42911](https://gitlab.com/Odyseus/CinnamonTools/commit/1c42911)
-- **Author:** Odyseus
+**Date:** Fri, 14 Feb 2020 19:08:31 -0300<br/>
+**Commit:** [1c42911](https://gitlab.com/Odyseus/CinnamonTools/commit/1c42911)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Fixed error when the tweak **Enable applications drop to the Desktop** is enabled and there is a drag&drop operation that isn't related to the tweak.
 
-```
-
 ***
 
-- **Date:** Wed, 12 Feb 2020 22:47:07 -0300
-- **Commit:** [5f9bca2](https://gitlab.com/Odyseus/CinnamonTools/commit/5f9bca2)
-- **Author:** Odyseus
+**Date:** Wed, 12 Feb 2020 22:47:07 -0300<br/>
+**Commit:** [5f9bca2](https://gitlab.com/Odyseus/CinnamonTools/commit/5f9bca2)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Adaptations due to changes to the custom settings framework.
 
-```
-
 ***
 
-- **Date:** Mon, 10 Feb 2020 23:05:37 -0300
-- **Commit:** [d3492bc](https://gitlab.com/Odyseus/CinnamonTools/commit/d3492bc)
-- **Author:** Odyseus
+**Date:** Mon, 10 Feb 2020 23:05:37 -0300<br/>
+**Commit:** [d3492bc](https://gitlab.com/Odyseus/CinnamonTools/commit/d3492bc)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Adaptations due to changes to the custom settings framework.
 - Adaptations due to changes to the `debugManager.js` JavaScript module.
 
-```
-
 ***
 
-- **Date:** Mon, 27 Jan 2020 20:27:08 -0300
-- **Commit:** [4a83c5e](https://gitlab.com/Odyseus/CinnamonTools/commit/4a83c5e)
-- **Author:** Odyseus
+**Date:** Mon, 27 Jan 2020 20:27:08 -0300<br/>
+**Commit:** [4a83c5e](https://gitlab.com/Odyseus/CinnamonTools/commit/4a83c5e)<br/>
+**Author:** Odyseus<br/>
 
-```
 Countermeasures for using an external settings application
 ----------------------------------------------------------
 
 - Removed condition used to selectively generate a .desktop file to open the extension's settings window. Now the .desktop file will be created in all Cinnamon version the extension is installed.
 
-```
-
 ***
 
-- **Date:** Fri, 21 Jun 2019 23:06:57 -0300
-- **Commit:** [6b9cf1e](https://gitlab.com/Odyseus/CinnamonTools/commit/6b9cf1e)
-- **Author:** Odyseus
+**Date:** Fri, 21 Jun 2019 23:06:57 -0300<br/>
+**Commit:** [6b9cf1e](https://gitlab.com/Odyseus/CinnamonTools/commit/6b9cf1e)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Selectively disabled the xlets tweaks section from the settings window (confirmation dialogs for applets/desklets removal) in Cinnamon version greater than 4.2.x since that feature was added to Cinnamon.
 - Minor changes to the settings application due to changes in the custom settings framework.
 
-```
-
 ***
 
-- **Date:** Wed, 5 Jun 2019 19:52:53 -0300
-- **Commit:** [126e856](https://gitlab.com/Odyseus/CinnamonTools/commit/126e856)
-- **Author:** Odyseus
+**Date:** Wed, 5 Jun 2019 19:52:53 -0300<br/>
+**Commit:** [126e856](https://gitlab.com/Odyseus/CinnamonTools/commit/126e856)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Corrected events return values.
 - Minor changes due to changes in global modules.
 
-```
-
 ***
 
-- **Date:** Sun, 2 Jun 2019 12:35:29 -0300
-- **Commit:** [c78bee1](https://gitlab.com/Odyseus/CinnamonTools/commit/c78bee1)
-- **Author:** Odyseus
+**Date:** Sun, 2 Jun 2019 12:35:29 -0300<br/>
+**Commit:** [c78bee1](https://gitlab.com/Odyseus/CinnamonTools/commit/c78bee1)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Changed some translatable strings for easier localization.
 
-```
-
 ***
 
-- **Date:** Sat, 1 Jun 2019 04:47:18 -0300
-- **Commit:** [854e3d3](https://gitlab.com/Odyseus/CinnamonTools/commit/854e3d3)
-- **Author:** Odyseus
+**Date:** Sat, 1 Jun 2019 04:47:18 -0300<br/>
+**Commit:** [854e3d3](https://gitlab.com/Odyseus/CinnamonTools/commit/854e3d3)<br/>
+**Author:** Odyseus<br/>
 
-```
 Extension rewrite
 =================
 
@@ -146,100 +124,74 @@ Popup menus tweaks
     1. Gnome Shell is light years apart from Cinnamon and it currently uses a totally different mechanism to handle grab focus.
     2. And Cinnamon implementation is a total nightmare.
 
-```
-
 ***
 
-- **Date:** Thu, 17 Jan 2019 14:17:49 -0300
-- **Commit:** [1bc1bc4](https://gitlab.com/Odyseus/CinnamonTools/commit/1bc1bc4)
-- **Author:** Odyseus
+**Date:** Thu, 17 Jan 2019 14:17:49 -0300<br/>
+**Commit:** [1bc1bc4](https://gitlab.com/Odyseus/CinnamonTools/commit/1bc1bc4)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Python files improvements:
     - Simplified localization system.
     - Homogenized/Cleaned up code.
 
-```
-
 ***
 
-- **Date:** Thu, 23 Aug 2018 02:40:12 -0300
-- **Commit:** [f50c0a8](https://gitlab.com/Odyseus/CinnamonTools/commit/f50c0a8)
-- **Author:** Odyseus
+**Date:** Thu, 23 Aug 2018 02:40:12 -0300<br/>
+**Commit:** [f50c0a8](https://gitlab.com/Odyseus/CinnamonTools/commit/f50c0a8)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Set the **Cancel** button in the `ConfirmationDialog` prototype as focused by default.
 
-```
-
 ***
 
-- **Date:** Tue, 7 Aug 2018 03:14:28 -0300
-- **Commit:** [e794665](https://gitlab.com/Odyseus/CinnamonTools/commit/e794665)
-- **Author:** Odyseus
+**Date:** Tue, 7 Aug 2018 03:14:28 -0300<br/>
+**Commit:** [e794665](https://gitlab.com/Odyseus/CinnamonTools/commit/e794665)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Fixed notifications close buttons not working. This was caused by an unbound callback after the elimiation of the **Lang** module usage.
 - Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 
-```
-
 ***
 
-- **Date:** Sat, 4 Aug 2018 05:12:26 -0300
-- **Commit:** [340e7de](https://gitlab.com/Odyseus/CinnamonTools/commit/340e7de)
-- **Author:** Odyseus
+**Date:** Sat, 4 Aug 2018 05:12:26 -0300<br/>
+**Commit:** [340e7de](https://gitlab.com/Odyseus/CinnamonTools/commit/340e7de)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Eradication of **Lang** module usage in favor of arrow/standard functions. Also removed Cjs JS class notation in favor of prototypes. First step towards moving all JavaScript code to ES6.
 - Removed support for Cinnamon versions older than 3.0.x.
 
-```
-
 ***
 
-- **Date:** Wed, 18 Jul 2018 08:09:09 -0300
-- **Commit:** [81ec82e](https://gitlab.com/Odyseus/CinnamonTools/commit/81ec82e)
-- **Author:** Odyseus
+**Date:** Wed, 18 Jul 2018 08:09:09 -0300<br/>
+**Commit:** [81ec82e](https://gitlab.com/Odyseus/CinnamonTools/commit/81ec82e)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Finally fixed issues when handling gsettings (probably ¬¬).
 
-```
-
 ***
 
-- **Date:** Tue, 12 Jun 2018 00:13:52 -0300
-- **Commit:** [85054cc](https://gitlab.com/Odyseus/CinnamonTools/commit/85054cc)
-- **Author:** Odyseus
+**Date:** Tue, 12 Jun 2018 00:13:52 -0300<br/>
+**Commit:** [85054cc](https://gitlab.com/Odyseus/CinnamonTools/commit/85054cc)<br/>
+**Author:** Odyseus<br/>
 
-```
 - gksu deprecation mitigation:
     - Removed gsettings schema installation/removal from the settings.py script. To avoid dealing with retarded policies (pkexec), I moved the installation process to a helper file (common to all xlets) that uses the good old sudo.
 - Cleaned some comments/commented lines.
 
-```
-
 ***
 
-- **Date:** Mon, 14 May 2018 07:12:36 -0300
-- **Commit:** [53d5934](https://gitlab.com/Odyseus/CinnamonTools/commit/53d5934)
-- **Author:** Odyseus
+**Date:** Mon, 14 May 2018 07:12:36 -0300<br/>
+**Commit:** [53d5934](https://gitlab.com/Odyseus/CinnamonTools/commit/53d5934)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Fixed use of undefined variable.
 
-```
-
 ***
 
-- **Date:** Sun, 6 May 2018 03:29:16 -0300
-- **Commit:** [ecff4ab](https://gitlab.com/Odyseus/CinnamonTools/commit/ecff4ab)
-- **Author:** Odyseus
+**Date:** Sun, 6 May 2018 03:29:16 -0300<br/>
+**Commit:** [ecff4ab](https://gitlab.com/Odyseus/CinnamonTools/commit/ecff4ab)<br/>
+**Author:** Odyseus<br/>
 
-```
 - Revamped settings system. Switched to a JavaScript class which automatically generates getters/setters based on the schema keys.
-
-```
 
 ***

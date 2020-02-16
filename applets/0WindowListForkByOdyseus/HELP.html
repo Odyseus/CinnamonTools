@@ -150,143 +150,129 @@ The following sections are available only in English.
 <h2>Window list (Fork By Odyseus) changelog</h2>
 <p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
 <hr>
+<p><strong>Date:</strong> Mon, 10 Feb 2020 23:08:51 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/42738eb">42738eb</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 10 Feb 2020 23:08:51 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/42738eb">42738eb</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.</li>
+<li>Implemented the use of the <code>xdgOpen</code> function from the <code>globalUtils.js</code> javaScript module.</li>
 </ul>
-<pre><code>- Removed leftover code of xlets initialization using a Cinnamon feature that thankfully wasn't implemented.
-- Implemented the use of the `xdgOpen` function from the `globalUtils.js` javaScript module.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 27 Jan 2020 20:22:57 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/a189739">a189739</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 27 Jan 2020 20:22:57 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/a189739">a189739</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Rebased from upstream to take advantage of bug fixes and improvements and to make the applet compatible with all Cinnamon versions in existence.</li>
+<li>Changed default settings to suit my needs.</li>
+<li>Removed the need to restart Cinnamon when hiding/showing the buttons labels.</li>
 </ul>
-<pre><code>- Rebased from upstream to take advantage of bug fixes and improvements and to make the applet compatible with all Cinnamon versions in existence.
-- Changed default settings to suit my needs.
-- Removed the need to restart Cinnamon when hiding/showing the buttons labels.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Fri, 21 Jun 2019 23:06:14 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/877291f">877291f</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Fri, 21 Jun 2019 23:06:14 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/877291f">877291f</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Corrected typo in settings-schema.json file.</li>
 </ul>
-<pre><code>- Corrected typo in settings-schema.json file.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Wed, 5 Jun 2019 19:57:00 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/d6c6f9e">d6c6f9e</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 5 Jun 2019 19:57:00 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/d6c6f9e">d6c6f9e</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Fix skip_taskbar call on meta window. Upstream fix.</li>
+<li><em>Strictified</em> conditions.</li>
 </ul>
-<pre><code>- Fix skip_taskbar call on meta window. Upstream fix.
-- *Strictified* conditions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 30 May 2019 03:48:50 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4441640">4441640</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 30 May 2019 03:48:50 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/4441640">4441640</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Minor changes due to changes in global modules.</li>
 </ul>
-<pre><code>- Minor changes due to changes in global modules.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 23 May 2019 02:17:09 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/f703c1a">f703c1a</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 23 May 2019 02:17:09 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/f703c1a">f703c1a</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.</li>
+<li>JavaScript code homogenization.</li>
+<li>Implemented debugger.</li>
 </ul>
-<pre><code>- JavaScript modules globalization. Moved functions/classes out of the xlet itself into global modules added at build time to minimize duplicated code across all xlets and facilitate maintenance.
-- JavaScript code homogenization.
-- Implemented debugger.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Fri, 26 Apr 2019 02:51:04 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ad6f29a">ad6f29a</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Fri, 26 Apr 2019 02:51:04 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ad6f29a">ad6f29a</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Fixed windows thumbnails not showing up due to upstream fix that caused more problems than solutions.</li>
 </ul>
-<pre><code>- Fixed windows thumbnails not showing up due to upstream fix that caused more problems than solutions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 5 Mar 2019 03:16:33 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/beeb461">beeb461</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 5 Mar 2019 03:16:33 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/beeb461">beeb461</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Back-ported fixes and features from upstream.<ul>
+<li>Correct handling of icon sizes.</li>
+<li>Added option to disable window minimization on left click. ¬¬</li>
+<li>Fixed icons not appearing for some applications.</li>
+<li>Ensure minimized window button menus update on monitor change.</li>
 </ul>
-<pre><code>- Back-ported fixes and features from upstream.
-    - Correct handling of icon sizes.
-    - Added option to disable window minimization on left click. ¬¬
-    - Fixed icons not appearing for some applications.
-    - Ensure minimized window button menus update on monitor change.
-</code></pre>
+</li>
+</ul>
 <hr>
+<p><strong>Date:</strong> Thu, 28 Feb 2019 20:06:55 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0ddf56b">0ddf56b</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 28 Feb 2019 20:06:55 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0ddf56b">0ddf56b</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Updated CONTRIBUTORS.md file to properly give credit.</li>
 </ul>
-<pre><code>- Updated CONTRIBUTORS.md file to properly give credit.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Thu, 21 Feb 2019 10:33:10 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0f5d82f">0f5d82f</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Thu, 21 Feb 2019 10:33:10 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/0f5d82f">0f5d82f</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Added call to finalize settings when applet is removed from panel.</li>
 </ul>
-<pre><code>- Added call to finalize settings when applet is removed from panel.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 15 Jan 2019 22:35:43 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/f09fd6f">f09fd6f</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 15 Jan 2019 22:35:43 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/f09fd6f">f09fd6f</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).</li>
 </ul>
-<pre><code>- Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Fri, 21 Dec 2018 13:07:21 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ae83195">ae83195</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Fri, 21 Dec 2018 13:07:21 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/ae83195">ae83195</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Removed usage of Applet._scaleMode calls due to its deprecation and to avoid a myriad of warnings. ¬¬</li>
 </ul>
-<pre><code>- Removed usage of Applet._scaleMode calls due to its deprecation and to avoid a myriad of warnings. ¬¬
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Mon, 29 Oct 2018 13:43:27 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/a50966d">a50966d</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Mon, 29 Oct 2018 13:43:27 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/a50966d">a50966d</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Some upstream fixes.</li>
 </ul>
-<pre><code>- Some upstream fixes.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Tue, 7 Aug 2018 03:13:17 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c868f1f">c868f1f</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Tue, 7 Aug 2018 03:13:17 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c868f1f">c868f1f</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.</li>
 </ul>
-<pre><code>- Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Sat, 4 Aug 2018 05:13:28 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/dee7ff0">dee7ff0</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Sat, 4 Aug 2018 05:13:28 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/dee7ff0">dee7ff0</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Eradication of <strong>Lang</strong> module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.</li>
 </ul>
-<pre><code>- Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
-</code></pre>
 <hr>
+<p><strong>Date:</strong> Wed, 13 Jun 2018 01:05:52 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c880ee1">c880ee1</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
 <ul>
-<li><strong>Date:</strong> Wed, 13 Jun 2018 01:05:52 -0300</li>
-<li><strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/c880ee1">c880ee1</a></li>
-<li><strong>Author:</strong> Odyseus</li>
+<li>Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.</li>
 </ul>
-<pre><code>- Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
-</code></pre>
 <hr>
 
 </div> <!-- .container.boxed -->
