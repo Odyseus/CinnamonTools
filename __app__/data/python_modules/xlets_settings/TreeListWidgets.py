@@ -4,12 +4,12 @@
 
 Attributes
 ----------
-LIST_CLASS_TYPE_MAP : TYPE
-    Description
-LIST_PROPERTIES_MAP : TYPE
-    Description
-LIST_VARIABLE_TYPE_MAP : TYPE
-    Description
+LIST_CLASS_TYPE_MAP : dict
+    Widget JSON name to class name map.
+LIST_PROPERTIES_MAP : dict
+    JSON attribute to Python keywords argument map used by the settings widgets.
+LIST_VARIABLE_TYPE_MAP : dict
+    Widget JSON name to value type map.
 """
 import gi
 import json
@@ -119,36 +119,37 @@ LIST_PROPERTIES_MAP = {
 }
 
 
-def list_edit_factory(options, xlet_settings):
-    """Summary
+def list_edit_factory(col_def, xlet_settings):
+    """Edit dialog widgets factory.
 
     Parameters
     ----------
-    options : TYPE
-        Description
-    xlet_settings : TYPE
-        Description
+    col_def : dict
+        Column definition.
+    xlet_settings : object
+        :py:class:`JSONSettingsHandler`.
 
     Returns
     -------
-    TYPE
-        Description
+    object
+        New widget.
     """
     kwargs = {}
 
-    if "options-from-paths" in options:
-        options["options"] = generate_options_from_paths(
-            options["options-from-paths"], xlet_settings)
+    # TODO: Implemente this also for "normal widgets".
+    if "options-from-paths" in col_def:
+        col_def["options"] = generate_options_from_paths(
+            col_def["options-from-paths"], xlet_settings)
 
-    if "options" in options:
-        kwargs["valtype"] = LIST_VARIABLE_TYPE_MAP[options["type"]]
+    if "options" in col_def:
+        kwargs["valtype"] = LIST_VARIABLE_TYPE_MAP[col_def["type"]]
 
-        if options["type"] == "keybinding-with-options":
+        if col_def["type"] == "keybinding-with-options":
             widget_type = KeybindingWithOptions
         else:
             widget_type = ComboBox
 
-        options_list = options["options"]
+        options_list = col_def["options"]
 
         # NOTE: Sort both types of options. Otherwise, items will appear in
         # different order every single time the widget is re-built.
@@ -157,16 +158,16 @@ def list_edit_factory(options, xlet_settings):
         else:
             kwargs["options"] = zip(options_list, options_list)
 
-        kwargs["options"] = sort_combo_options(kwargs["options"], options.get("first-option", ""))
+        kwargs["options"] = sort_combo_options(kwargs["options"], col_def.get("first-option", ""))
     else:
-        widget_type = LIST_CLASS_TYPE_MAP[options["type"]]
+        widget_type = LIST_CLASS_TYPE_MAP[col_def["type"]]
 
     class Widget(widget_type):
         """Summary
 
         Attributes
         ----------
-        widget_value : TYPE
+        widget_value : int, str, list, dict, float
             Description
         """
 
@@ -251,9 +252,9 @@ def list_edit_factory(options, xlet_settings):
                     return self.bind_object.get_property(self.bind_prop)
                 return self.content_widget.get_property(self.bind_prop)
 
-    for prop in options:
+    for prop in col_def:
         if prop in LIST_PROPERTIES_MAP:
-            kwargs[LIST_PROPERTIES_MAP[prop]] = options[prop]
+            kwargs[LIST_PROPERTIES_MAP[prop]] = col_def[prop]
 
     return Widget(**kwargs)
 
@@ -266,8 +267,6 @@ class List(SettingsWidget):
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : TYPE
-        Description
-    main_app : TYPE
         Description
     model : TYPE
         Description
@@ -302,8 +301,6 @@ class List(SettingsWidget):
         self.set_spacing(0, 0)
         self.set_hexpand(True)
         self.set_vexpand(True)
-
-        self.main_app = None
 
         self._columns = columns
         self._immutable = immutable
@@ -1173,10 +1170,10 @@ class List(SettingsWidget):
         self.settings.set_value(self.apply_key,
                                 not self.settings.get_value(self.apply_key))
 
-        if self.main_app is not None:
-            if self._apply_and_quit and self.main_app.window is not None and \
-                    isinstance(self.main_app.window, Gtk.ApplicationWindow):
-                self.main_app.window.emit("destroy")
+        if self._main_app is not None:
+            if self._apply_and_quit and self._main_app.window is not None and \
+                    isinstance(self._main_app.window, Gtk.ApplicationWindow):
+                self._main_app.window.emit("destroy")
 
     def _open_add_edit_dialog(self, info=None):
         """Summary
@@ -1251,7 +1248,7 @@ class List(SettingsWidget):
                 settings_box.connect("row-activated", widget.focus_the_retarded_text_view)
 
             if isinstance(widget, IconChooser):
-                widget.main_app = self.main_app
+                widget.set_main_app(self.get_main_app())
 
             widgets.append(widget)
             content.attach(settings_box, 0, i, 1, 1)
@@ -1308,7 +1305,7 @@ class List(SettingsWidget):
         self._update_button_sensitivity()
 
     def on_setting_changed(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.on_setting_changed`.
 
         Parameters
         ----------

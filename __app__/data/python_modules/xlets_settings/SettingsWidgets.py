@@ -4,12 +4,12 @@
 
 Attributes
 ----------
-CAN_BACKEND : TYPE
-    Description
-JSON_SETTINGS_PROPERTIES_MAP : TYPE
-    Description
+CAN_BACKEND : list
+    List of widgets that can be used to control settings.
+JSON_SETTINGS_PROPERTIES_MAP : dict
+    JSON attribute to Python keywords argument map used by the settings widgets.
 settings_objects : dict
-    Description
+    Storage for instantiated :py:class:`Gio.Settings` instances.
 """
 import gi
 
@@ -150,12 +150,12 @@ settings_objects = {}
 
 
 class SettingsStack(Gtk.Stack):
-    """Summary
+    """The stack used to switch xlets instances.
 
     Attributes
     ----------
     expand : bool
-        Description
+        Expand.
     """
 
     def __init__(self):
@@ -168,7 +168,7 @@ class SettingsStack(Gtk.Stack):
 
 
 class SettingsPage(BaseGrid):
-    """Summary
+    """Settings sections holder.
     """
 
     def __init__(self):
@@ -181,21 +181,21 @@ class SettingsPage(BaseGrid):
         self.set_border_width(0)
 
     def add_section(self, title=None, subtitle=None, section_info={}):
-        """Summary
+        """Add section to page.
 
         Parameters
         ----------
         title : None, optional
-            Description
+            Section title.
         subtitle : None, optional
-            Description
+            Section subtitle.
         section_info : dict, optional
-            Description
+            See :any:`SettingsSection`, "section_info".
 
         Returns
         -------
-        TYPE
-            Description
+        object
+            :any:`SettingsSection`.
         """
         section = SettingsSection(title, subtitle, section_info)
         self.add(section)
@@ -204,29 +204,30 @@ class SettingsPage(BaseGrid):
 
     def add_reveal_section(self, title=None, subtitle=None, section_info={},
                            schema=None, pref_key=None, values=None, revealer=None):
-        """Summary
+        """Add reveal section to page.
 
         Parameters
         ----------
         title : None, optional
-            Description
+            Section title.
         subtitle : None, optional
-            Description
+            Section subtitle.
         section_info : dict, optional
-            Description
+            See :any:`SettingsSection`.
         schema : None, optional
-            Description
+            See :py:class:`SettingsRevealer`.
         pref_key : None, optional
-            Description
+            See :py:class:`SettingsRevealer`.
         values : None, optional
-            Description
+            See :py:class:`SettingsRevealer`.
         revealer : None, optional
-            Description
+            The revealer that will be attached to the section and to which the widget will
+            be attached to.
 
         Returns
         -------
-        TYPE
-            Description
+        object
+            :any:`SettingsSection`.
         """
         section = SettingsSection(title, subtitle, section_info)
 
@@ -241,35 +242,39 @@ class SettingsPage(BaseGrid):
 
 
 class SettingsSection(BaseGrid):
-
-    """Summary
+    """Settings section.
 
     Attributes
     ----------
     always_show : bool
-        Description
-    box : TYPE
-        Description
-    frame : TYPE
-        Description
+        Always show.
+    box : object
+        An instance of :any:`BaseGrid` that will contain all widgets in a section.
+    frame : object
+        An instance of :py:class:`Gtk.Frame` that will contain self.box for aesthetic purposes.
     need_separator : bool
-        Description
+        Flag that indicates if there is a need to insert a separator after a widget.
     revealers : list
-        Description
-    size_group : TYPE
-        Description
+        A list were to store a created :py:class:`Gtk.Revealer` inside a section.
+    size_group : object
+        :py:class:`Gtk.SizeGroup`.
     """
+
     def __init__(self, title=None, subtitle=None, section_info={}):
         """Initialization.
 
         Parameters
         ----------
         title : None, optional
-            Description
+            Section title.
         subtitle : None, optional
-            Description
+            Section subtitle.
         section_info : dict, optional
-            Description
+            Data used to create a button at the end of the section title that opens a dialog.
+            The dictionary can contain two keys. The "context" key can have one of three values
+            ("information" (default), "error" or"warning") and it will be used to decide which icon
+            the button will have. And a "message" key that will store the text in valid markup
+            that will be used on the displayed message.
         """
         super().__init__()
         self.set_spacing(10, 10)
@@ -328,20 +333,20 @@ class SettingsSection(BaseGrid):
         self.need_separator = False
 
     def add_row(self, widget, col_pos, row_pos, col_span, row_span):
-        """Summary
+        """Add a row to the section.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        col_pos : TYPE
-            Description
-        row_pos : TYPE
-            Description
-        col_span : TYPE
-            Description
-        row_span : TYPE
-            Description
+        widget : object
+            Widget to insert in a section row.
+        col_pos : int
+            At which column to insert a widget.
+        row_pos : int
+            At which row to insert a widget.
+        col_span : int
+            How many columns a widget will occupy.
+        row_span : int
+            How many rows a widget will occupy.
         """
         list_box = Gtk.ListBox(can_focus=False)
         list_box.set_selection_mode(Gtk.SelectionMode.NONE)
@@ -372,35 +377,38 @@ class SettingsSection(BaseGrid):
 
     def add_reveal_row(self, widget, col_pos, row_pos, col_span, row_span,
                        schema=None, pref_key=None, values=None, check_func=None, revealer=None):
-        """Summary
+        """Add a reveal row to the section.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        col_pos : TYPE
-            Description
-        row_pos : TYPE
-            Description
-        col_span : TYPE
-            Description
-        row_span : TYPE
-            Description
+        widget : object
+            Widget to insert in a section row.
+        col_pos : int
+            At which column to insert a widget.
+        row_pos : int
+            At which row to insert a widget.
+        col_span : int
+            How many columns a widget will occupy.
+        row_span : int
+            How many rows a widget will occupy.
         schema : None, optional
-            Description
+            See :py:class:`SettingsRevealer`.
         pref_key : None, optional
-            Description
+            See :py:class:`SettingsRevealer`.
         values : None, optional
-            Description
+            See :py:class:`SettingsRevealer`.
         check_func : None, optional
-            Description
+            See :py:class:`SettingsRevealer`.
         revealer : None, optional
-            Description
+            The revealer that will be attached to the section and to which the widget will
+            be attached to.
 
         Returns
         -------
-        TYPE
-            Description
+        object
+            :any:`JSONSettingsRevealer`.
+        object
+            :any:`SettingsRevealer`.
         """
         list_box = Gtk.ListBox(can_focus=False)
         list_box.set_selection_mode(Gtk.SelectionMode.NONE)
@@ -428,23 +436,23 @@ class SettingsSection(BaseGrid):
         self.revealers.append(revealer)
 
         if not self.always_show:
-            revealer.notify_id = revealer.connect('notify::child-revealed', self.check_reveal_state)
+            revealer.notify_id = revealer.connect("notify::child-revealed", self.check_reveal_state)
             self.check_reveal_state()
 
         return revealer
 
     def add_note(self, text):
-        """Summary
+        """Add a note to a section.
 
         Parameters
         ----------
-        text : TYPE
-            Description
+        text : str
+            The note text.
 
         Returns
         -------
-        TYPE
-            Description
+        object
+            :py:class:`Gtk.Label`.
         """
         label = Gtk.Label()
         label.set_property("wrap", True)
@@ -457,12 +465,12 @@ class SettingsSection(BaseGrid):
         return label
 
     def update_always_show_state(self):
-        """Summary
+        """Update always show state.
 
         Returns
         -------
-        TYPE
-            Description
+        None
+            Halt execution.
         """
         if self.always_show:
             return
@@ -475,17 +483,17 @@ class SettingsSection(BaseGrid):
             revealer.disconnect(revealer.notify_id)
 
     def check_reveal_state(self, *args):
-        """Summary
+        """Check reveal state.
 
         Parameters
         ----------
         *args
-            Description
+            Arguments.
 
         Returns
         -------
-        TYPE
-            Description
+        None
+            Halt execution.
         """
         for revealer in self.revealers:
             if revealer.props.child_revealed:
@@ -497,22 +505,21 @@ class SettingsSection(BaseGrid):
 
 
 class SettingsRevealer(Gtk.Revealer):
-    """Summary
+    """Settings revealer widget.
 
     Attributes
     ----------
-    box : TYPE
-        Description
-    check_func : TYPE
-        Description
-    settings : TYPE
-        Description
-    values : TYPE
-        Description
-
-    Note
-    ----
-    Not used for now.
+    box : object
+        An instance of :any:`BaseGrid` that will contain all widgets inside a revealer.
+    check_func : object
+        A function that when executed will return the condition that will decide
+        if the revealer is shown or hidden. It receives two arguments. The first argument is
+        the current value of the pref_key preference. The second argument is a list of values
+        that could be used to check the current value against.
+    settings : object
+        :py:class:`Gio.Settings`.
+    values : list
+        See :py:class:`SettingsRevealer.check_func`.
     """
 
     def __init__(self, schema=None, pref_key=None, values=None, check_func=None):
@@ -521,13 +528,13 @@ class SettingsRevealer(Gtk.Revealer):
         Parameters
         ----------
         schema : None, optional
-            Description
+            gsettings schema used to instantiate :py:class:`SettingsRevealer.settings`.
         pref_key : None, optional
-            Description
+            The preference key whose value will determine if the revealer is shown or hidden.
         values : None, optional
-            Description
+            See :py:class:`SettingsRevealer.values`.
         check_func : None, optional
-            Description
+            See :py:class:`SettingsRevealer.check_func`.
         """
         Gtk.Revealer.__init__(self)
 
@@ -550,7 +557,7 @@ class SettingsRevealer(Gtk.Revealer):
                 self.on_settings_changed(self.settings, pref_key)
 
     def add(self, widget):
-        """Summary
+        """Add widget to revealer.
 
         Parameters
         ----------
@@ -560,17 +567,17 @@ class SettingsRevealer(Gtk.Revealer):
         self.box.attach(widget, 0, 0, 1, 1)
 
     # only used when checking values
-    def on_settings_changed(self, settings, key):
-        """Summary
+    def on_settings_changed(self, settings, pref_key):
+        """Function to set the revealer visibility.
 
         Parameters
         ----------
-        settings : TYPE
-            Description
-        key : TYPE
-            Description
+        settings : object
+            :py:class:`Gio.Settings`.
+        pref_key : str
+            The preference key whose value will determine if the revealer is shown or hidden.
         """
-        value = settings.get_value(key).unpack()
+        value = settings.get_value(pref_key).unpack()
         if self.check_func is None:
             self.set_reveal_child(value in self.values)
         else:
@@ -578,7 +585,7 @@ class SettingsRevealer(Gtk.Revealer):
 
 
 class SettingsWidget(BaseGrid):
-    """Summary
+    """Main class to generate all types of widgets (be them gsettings widgets or xlets widgets).
     """
 
     def __init__(self, dep_key=None):
@@ -587,21 +594,25 @@ class SettingsWidget(BaseGrid):
         Parameters
         ----------
         dep_key : None, optional
-            Description
+            A string on the format "gsettings.schema/gsetting-key".
         """
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
         self.set_spacing(5, 5)
+        self._main_app = None
 
         if dep_key:
             self.set_dep_key(dep_key)
 
     def set_dep_key(self, dep_key):
-        """Summary
+        """Set dependency key.
+
+        This is used by gsettings widgets. It works by setting a widget sensitivity instead of
+        using a revealer. dep_key is a string in the format "gsettings.schema/gsetting-key".
 
         Parameters
         ----------
-        dep_key : TYPE
-            Description
+        dep_key : str
+            A string on the format "gsettings.schema/gsetting-key".
         """
         flag = Gio.SettingsBindFlags.GET
         if dep_key[0] == "!":
@@ -613,34 +624,34 @@ class SettingsWidget(BaseGrid):
         dep_settings.bind(split[1], self, "sensitive", flag)
 
     def add_to_size_group(self, group):
-        """Summary
+        """Add widget to :py:class:`Gtk.SizeGroup`.
 
         Parameters
         ----------
-        group : TYPE
-            Description
+        group : object
+            :py:class:`Gtk.SizeGroup`.
         """
         group.add_widget(self.content_widget)
 
     def fill_row(self):
-        """Summary
+        """Fill row.
         """
         self.set_border_width(0)
         self.set_margin_start(0)
         self.set_margin_end(0)
 
     def get_settings(self, schema):
-        """Summary
+        """Get :py:class:`Gio.Settings` instance.
 
         Parameters
         ----------
-        schema : TYPE
-            Description
+        schema : str
+            gsettings schema.
 
         Returns
         -------
-        TYPE
-            Description
+        object
+            :py:class:`Gio.Settings`.
         """
         global settings_objects
         try:
@@ -671,14 +682,14 @@ class SettingsWidget(BaseGrid):
 
 
 class Text(SettingsWidget):
-    """Summary
+    """A simple widget to display informative text.
 
     Attributes
     ----------
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     def __init__(self, label, align=Gtk.Align.START, use_markup=False):
@@ -686,12 +697,12 @@ class Text(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
-        align : TYPE, optional
-            Description
+        label : str
+            The label text.
+        align : int, optional
+            :py:class:`Gtk.Align`.
         use_markup : bool, optional
-            Description
+            Whether or not to use markup in the label.
         """
         super().__init__()
         self.label = label
@@ -722,16 +733,16 @@ class Text(SettingsWidget):
 
 
 class Button(SettingsWidget):
-    """Summary
+    """A button widget that when pressed bill toggle a boolean preference.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     bind_dir = None
@@ -741,10 +752,10 @@ class Button(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__()
         self.label = label
@@ -756,7 +767,7 @@ class Button(SettingsWidget):
         self.set_tooltip_text(tooltip)
 
     def _on_button_clicked(self, *args):
-        """Summary
+        """On button clicked.
 
         Parameters
         ----------
@@ -766,28 +777,18 @@ class Button(SettingsWidget):
         self.set_value(not self.get_value())
 
     def set_label(self, label):
-        """Summary
+        """Set label.
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         """
         self.label = label
         self.content_widget.set_label(label)
 
-    def connect_widget_handlers(self, *args):
-        """Summary
-
-        Parameters
-        ----------
-        *args
-            Arguments.
-        """
-        self.content_widget.connect("clicked", self._on_button_clicked)
-
     def on_setting_changed(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.on_setting_changed`.
 
         Parameters
         ----------
@@ -796,9 +797,19 @@ class Button(SettingsWidget):
         """
         pass
 
+    def connect_widget_handlers(self, *args):
+        """See :any:`JSONSettingsBackend.connect_widget_handlers`.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        self.content_widget.connect("clicked", self._on_button_clicked)
+
 
 class SettingsLabel(Gtk.Label):
-    """Summary
+    """A label widget that will be used as description for each created widget.
     """
 
     def __init__(self, text=None, use_markup=False):
@@ -807,9 +818,9 @@ class SettingsLabel(Gtk.Label):
         Parameters
         ----------
         text : None, optional
-            Description
+            Label text.
         use_markup : bool, optional
-            Description
+            Whether or not to insert the text as markup.
         """
         super().__init__()
 
@@ -823,45 +834,41 @@ class SettingsLabel(Gtk.Label):
         self.set_property("wrap-mode", Pango.WrapMode.WORD)
 
     def set_label_text(self, text):
-        """Summary
+        """Set label text.
 
         Parameters
         ----------
-        text : TYPE
-            Description
+        text : str
+            Label text.
         """
         self.set_label(text)
 
     def set_label_markup(self, markup):
-        """Summary
+        """Set label markup.
 
         Parameters
         ----------
-        markup : TYPE
-            Description
+        markup : str
+            Label markup.
         """
         self.set_markup(markup)
 
 
 class IconChooser(SettingsWidget):
-    """Summary
+    """A widget to choose named icons or icon files.
 
     Attributes
     ----------
-    bind_dir : int
-        See :py:class:`Gio.SettingsBindFlags`.
-    bind_object : TYPE
-        Description
+    bind_dir : int, None
+        See :any:`JSONSettingsBackend`.
+    bind_object : object
+        See :any:`JSONSettingsBackend`.
     bind_prop : str
-        Description
-    content_widget : TYPE
-        Description
-    handler : TYPE
-        Description
-    label : TYPE
-        Description
-    main_app : TYPE
-        Description
+        See :any:`JSONSettingsBackend`.
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     bind_prop = "icon"
@@ -872,16 +879,14 @@ class IconChooser(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
-        expand_width : bool, optional
-            Description
+        label : str
+            The label text.
         size_group : None, optional
-            Description
+            :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
         self._timer = None
@@ -952,18 +957,18 @@ class IconChooser(SettingsWidget):
 
 
 class Entry(SettingsWidget):
-    """Summary
+    """An editable entry to store text into a preference.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
     bind_prop : str
-        Description
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
+        See :any:`JSONSettingsBackend.attach_backend`.
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     bind_prop = "text"
@@ -974,16 +979,16 @@ class Entry(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         expand_width : bool, optional
-            Description
+            If True, expand the widget to all available space.
         size_group : None, optional
-            Description
+            :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
 
@@ -1001,22 +1006,20 @@ class Entry(SettingsWidget):
 
 
 class TextView(SettingsWidget):
-    """Summary
+    """An editable entry to store text in multiple lines into a preference.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    bind_object : TYPE
-        Description
+    bind_object : object
+        See :any:`JSONSettingsBackend.attach_backend`.
     bind_prop : str
-        Description
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
-    scrolledwindow : TYPE
-        Description
+        See :any:`JSONSettingsBackend.attach_backend`.
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     bind_prop = "text"
@@ -1027,16 +1030,17 @@ class TextView(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         height : int, optional
-            Description
+            Minimum list widget height.
         accept_tabs : bool, optional
-            Description
+            Whether the :kbd:`Tab` key inserts a tab character (accept_tabs = True)
+            or the keyboard focus is moved (accept_tabs = False).
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
 
@@ -1062,7 +1066,9 @@ class TextView(SettingsWidget):
         self.set_tooltip_text(tooltip)
 
     def focus_the_retarded_text_view(self, *args):
-        """Summary
+        """Focus the :py:class:`Gtk.TextView` when clicked.
+
+        This is a workaround for :py:class:`Gtk.TextView` elements.
 
         Parameters
         ----------
@@ -1071,26 +1077,26 @@ class TextView(SettingsWidget):
 
         Returns
         -------
-        TYPE
-            Description
+        int
+            See :py:class:`Gdk.EVENT_STOP`.
         """
         self.content_widget.grab_focus()
-        return False
+        return Gdk.EVENT_STOP
 
 
 class Switch(SettingsWidget):
-    """Summary
+    """A switch widget to toggle a boolean preference.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
     bind_prop : str
-        Description
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
+        See :any:`JSONSettingsBackend.attach_backend`.
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     bind_prop = "active"
@@ -1101,12 +1107,12 @@ class Switch(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
 
@@ -1120,7 +1126,7 @@ class Switch(SettingsWidget):
         self.set_tooltip_text(tooltip)
 
     def clicked(self, *args):
-        """Summary
+        """Clicked.
 
         Parameters
         ----------
@@ -1132,20 +1138,20 @@ class Switch(SettingsWidget):
 
 
 class ComboBox(SettingsWidget):
-    """Summary
+    """A combo box widget from which to choose any of the predefined values.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
-    model : TYPE
-        Description
-    value : TYPE
-        Description
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
+    model : Gtk.ListStore
+        The model used as storage by this widget.
+    value : str, int, float
+        The preference stored value used to set the current combo box item.
     """
 
     bind_dir = None
@@ -1155,18 +1161,19 @@ class ComboBox(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         options : list, optional
-            Description
+            A list of tuples of two elements representing the options used to build
+            a :any:`ComboBox` widget and its derivatives.
         valtype : None, optional
-            Description
+            The type used to coerce a specific option type.
         size_group : None, optional
-            Description
+            :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__()
 
@@ -1192,12 +1199,12 @@ class ComboBox(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def _on_my_value_changed(self, widget):
-        """Summary
+        """On value changed.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
+        widget : Gtk.ComboBox
+            The widget combo box.
         """
         tree_iter = widget.get_active_iter()
         if tree_iter is not None:
@@ -1205,12 +1212,12 @@ class ComboBox(SettingsWidget):
             self.set_value(self.value)
 
     def _set_options(self, options):
-        """Summary
+        """Set options
 
         Parameters
         ----------
-        options : TYPE
-            Description
+        options : list
+            See :any:`ComboBox` ``options`` argument.
         """
         if self._valtype is not None:
             var_type = self._valtype
@@ -1228,7 +1235,7 @@ class ComboBox(SettingsWidget):
         self.content_widget.set_id_column(0)
 
     def on_setting_changed(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.on_setting_changed`.
 
         Parameters
         ----------
@@ -1242,7 +1249,7 @@ class ComboBox(SettingsWidget):
             self.content_widget.set_active_iter(None)
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.connect_widget_handlers`.
 
         Parameters
         ----------
@@ -1253,16 +1260,16 @@ class ComboBox(SettingsWidget):
 
 
 class ColorChooser(SettingsWidget):
-    """Summary
+    """Widget to choose a color.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     bind_dir = None
@@ -1272,16 +1279,16 @@ class ColorChooser(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         use_alpha : bool, optional
-            Description
+            Whether the widget is be able to specify opacity.
         size_group : None, optional
-            Description
+            :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
 
@@ -1305,7 +1312,7 @@ class ColorChooser(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def _on_clear_button_clicked(self, *args):
-        """Summary
+        """On clear button clicked.
 
         Parameters
         ----------
@@ -1315,37 +1322,32 @@ class ColorChooser(SettingsWidget):
         self.set_value("")
         self._set_widget_color("")
 
-    def _on_color_set(self, widget):
-        """Summary
+    def _on_color_set(self, *args):
+        """On color set.
 
         Parameters
         ----------
-        widget : TYPE
+        *args
             Description
         """
         self.set_value(self.content_widget.get_rgba().to_string())
 
     def _set_widget_color(self, color_string):
-        """Summary
+        """Set widget color.
 
         Parameters
         ----------
-        color_string : TYPE
-            Description
-
-        Deleted Parameters
-        ------------------
-        widget : TYPE
-            Description
+        color_string : str
+            The string color.
         """
-        # NOTE: Luckyly, empty strings will set the color to white.
+        # NOTE: Luckily, empty strings will set the color to white.
         rgba = Gdk.RGBA()
         rgba.parse(color_string)
         # NOTE: set_rgba sets RGBA and RGB.
         self.content_widget.set_rgba(rgba)
 
     def clicked(self, *args):
-        """Summary
+        """On clicked.
 
         Parameters
         ----------
@@ -1355,7 +1357,7 @@ class ColorChooser(SettingsWidget):
         self.content_widget.do_clicked(self.content_widget)
 
     def on_setting_changed(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.on_setting_changed`.
 
         Parameters
         ----------
@@ -1365,7 +1367,7 @@ class ColorChooser(SettingsWidget):
         self._set_widget_color(self.get_value())
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.connect_widget_handlers`.
 
         Parameters
         ----------
@@ -1377,16 +1379,16 @@ class ColorChooser(SettingsWidget):
 
 
 class FileChooser(SettingsWidget):
-    """Summary
+    """A widget to choose and store a path to a file or directory into a preference.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     bind_dir = None
@@ -1396,16 +1398,17 @@ class FileChooser(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         dir_select : bool, optional
-            Description
+            If True, enable folder selection on the file chooser. If False,
+            enable file selection.
         size_group : None, optional
-            Description
+            :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
         if dir_select:
@@ -1432,7 +1435,7 @@ class FileChooser(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def _on_file_selected(self, *args):
-        """Summary
+        """On file selected.
 
         Parameters
         ----------
@@ -1442,7 +1445,7 @@ class FileChooser(SettingsWidget):
         self.set_value(self.content_widget.get_uri())
 
     def _on_clear_button_clicked(self, *args):
-        """Summary
+        """On clear button clicked.
 
         Parameters
         ----------
@@ -1453,7 +1456,7 @@ class FileChooser(SettingsWidget):
         self.content_widget.set_uri("")
 
     def on_setting_changed(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.on_setting_changed`.
 
         Parameters
         ----------
@@ -1463,7 +1466,7 @@ class FileChooser(SettingsWidget):
         self.content_widget.set_uri(self.get_value())
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.connect_widget_handlers`.
 
         Parameters
         ----------
@@ -1475,18 +1478,18 @@ class FileChooser(SettingsWidget):
 
 
 class SpinButton(SettingsWidget):
-    """Summary
+    """A widget to choose and store an integer or float value into a preference.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
     bind_prop : str
-        Description
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
+        See :any:`JSONSettingsBackend.attach_backend`.
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     bind_prop = "value"
@@ -1497,24 +1500,24 @@ class SpinButton(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         units : str, optional
-            Description
+            Unit type description.
         mini : None, optional
-            Description
+            Minimum value.
         maxi : None, optional
-            Description
-        step : int, optional
-            Description
+            Maximum value.
+        step : int, float, optional
+            Adjustment amount.
         page : None, optional
-            Description
+            Adjustment amount when using the Page Up/Down keys.
         size_group : None, optional
-            Description
+            :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
 
@@ -1566,13 +1569,14 @@ class SpinButton(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def _apply_later(self, *args):
-        """Summary
+        """Delayed apply.
 
         Parameters
         ----------
         *args
             Arguments.
         """
+
         def apply(self):
             """Delayed apply.
             """
@@ -1586,16 +1590,16 @@ class SpinButton(SettingsWidget):
 
 
 class Keybinding(SettingsWidget):
-    """Summary
+    """A widget to set and store a keybinding into a preference.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
     """
 
     bind_dir = None
@@ -1605,16 +1609,16 @@ class Keybinding(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         num_bind : int, optional
-            Description
+            Number of keybinding widgets.
         size_group : None, optional
-            Description
+            :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
 
@@ -1647,7 +1651,7 @@ class Keybinding(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def _on_kb_changed(self, *args):
-        """Summary
+        """On keybinding changed.
 
         Parameters
         ----------
@@ -1663,7 +1667,7 @@ class Keybinding(SettingsWidget):
         self.set_value("::".join(bindings))
 
     def on_setting_changed(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.on_setting_changed`.
 
         Parameters
         ----------
@@ -1677,7 +1681,7 @@ class Keybinding(SettingsWidget):
             self._kb_buttons[x].set_accel_string(bindings[x])
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.connect_widget_handlers`.
 
         Parameters
         ----------
@@ -1688,20 +1692,20 @@ class Keybinding(SettingsWidget):
 
 
 class KeybindingWithOptions(SettingsWidget):
-    """Summary
+    """A widget to choose a keybinding and bind it to an option from a combo box.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
-    model : TYPE
-        Description
-    value : TYPE
-        Description
+    content_widget : object
+        The main widget that will be used to represent a setting value.
+    label : object
+        The label widget.
+    model : Gtk.ListStore
+        The model used as storage by this widget.
+    value : str, int, float
+        The preference stored value used to set the current combo box item.
     """
 
     bind_dir = None
@@ -1711,18 +1715,19 @@ class KeybindingWithOptions(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         options : list, optional
-            Description
+            A list of tuples of two elements representing the options used to build
+            a :any:`ComboBox` widget and its derivatives.
         valtype : None, optional
-            Description
+            The type used to coerce a specific option type.
         size_group : None, optional
-            Description
+            :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
-            Description
+            See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
 
@@ -1762,7 +1767,7 @@ class KeybindingWithOptions(SettingsWidget):
             self.add_to_size_group(size_group)
 
     def _on_kb_changed(self, *args):
-        """Summary
+        """On keybinding changed.
 
         Parameters
         ----------
@@ -1777,12 +1782,12 @@ class KeybindingWithOptions(SettingsWidget):
         self.set_value(self._kb_button.get_accel_string() + "::" + opt)
 
     def _on_combo_value_changed(self, combo):
-        """Summary
+        """On combo box changed.
 
         Parameters
         ----------
-        combo : TYPE
-            Description
+        combo : Gtk.ComboBox
+            The widget combo box.
         """
         tree_iter = combo.get_active_iter()
 
@@ -1791,12 +1796,12 @@ class KeybindingWithOptions(SettingsWidget):
             self.set_value(self.value)
 
     def _set_options(self, options):
-        """Summary
+        """Set options.
 
         Parameters
         ----------
-        options : TYPE
-            Description
+        options : list
+            See :any:`ComboBox` ``options`` argument.
         """
         if self._valtype is not None:
             var_type = self._valtype
@@ -1813,7 +1818,7 @@ class KeybindingWithOptions(SettingsWidget):
         self._combo_button.set_id_column(0)
 
     def on_setting_changed(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.on_setting_changed`.
 
         Parameters
         ----------
@@ -1835,7 +1840,7 @@ class KeybindingWithOptions(SettingsWidget):
             self._combo_button.set_active_iter(None)
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.connect_widget_handlers`.
 
         Parameters
         ----------

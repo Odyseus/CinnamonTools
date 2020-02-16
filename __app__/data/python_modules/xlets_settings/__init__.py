@@ -6,7 +6,7 @@ Attributes
 ----------
 CINNAMON_VERSION : str
     Cinnamon version.
-G_SETTINGS_WIDGETS : TYPE
+G_SETTINGS_WIDGETS : dict
     gsettings widgets map.
 GTK_VERSION : str
     Gtk version.
@@ -113,14 +113,18 @@ class SettingsBox(BaseGrid):
         instance_info : dict, optional
             Xlet instance information.
         main_app : None, optional
-            See :py:class:`Gtk.Application`.
+            The :any:`MainApplication` that some widgets need to get some data from. For example,
+            the :any:`IconChooser` widget needs the list of icons from the current icon theme.
+            Instead of generating that data every single time an :any:`IconChooserDialog` is opened,
+            it will be generated once the first time such dialogs is opened and succesive openings
+            from any other :any:`IconChooser` widget will use the same data.
         xlet_meta : None, optional
             Xlet metadata.
 
         Raises
         ------
         exceptions.UnkownWidgetType
-            Description
+            Inform that the widget type is non existent.
         """
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
         self.set_border_width(0)
@@ -404,12 +408,13 @@ class MainApplication(Gtk.Application):
         Raises
         ------
         exceptions.MissingRequiredArgument
-            Description
+            Halt execution if any of the required arguments weren't passed.
         """
         kwargs_keys = set(kwargs.keys())
 
         if not self._required_args.issubset(kwargs_keys):
-            raise exceptions.MissingRequiredArgument(list(self._required_args.difference(kwargs_keys)))
+            raise exceptions.MissingRequiredArgument(
+                list(self._required_args.difference(kwargs_keys)))
 
         # kwargs attributes.
         self.application_id = ""
@@ -568,6 +573,7 @@ class MainApplication(Gtk.Application):
 
             settings = JSONSettingsHandler(  # noqa | JsonSettingsWidgets
                 filepath=os.path.join(config_path, item),
+                # notify_callback=self.notify_dbus,
                 xlet_meta=self._xlet_meta
             )
             settings.instance_id = instance_id
@@ -605,6 +611,11 @@ class MainApplication(Gtk.Application):
             self.instance_switcher_box.show()
 
         self.set_visible_stack_for_page()
+
+    # NOTE: Investigate if this is needed or not.
+    # def notify_dbus(self, handler, key, value):
+    #     if proxy:
+    #         proxy.updateSetting("(ssss)", self.xlet_uuid, handler.instance_id, key, json.dumps(value))
 
     def build_window(self):
         """Build window.
@@ -1200,12 +1211,12 @@ class MainApplication(Gtk.Application):
 
 
 def cli(pages_definition):
-    """Summary
+    """CLI interface.
 
     Parameters
     ----------
-    pages_definition : TYPE
-        Description
+    pages_definition : dict
+        Window pages definitions used to generate widgets.
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("--xlet-type", dest="xlet_type", default="extension", type=str)

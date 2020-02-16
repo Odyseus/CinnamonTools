@@ -79,7 +79,7 @@ OPERATIONS_MAP = {"<": operator.lt, "<=": operator.le, ">": operator.gt,
 
 
 class JSONSettingsHandler():
-    """Summary
+    """Xlets settings backend.
 
     Attributes
     ----------
@@ -91,8 +91,8 @@ class JSONSettingsHandler():
         Description
     file_obj : TYPE
         Description
-    filepath : TYPE
-        Description
+    filepath : str
+        Path to an xlet JSON configuration file.
     handler : TYPE
         Description
     listeners : dict
@@ -104,7 +104,7 @@ class JSONSettingsHandler():
     settings : TYPE
         Description
     xlet_meta : TYPE
-        Description
+        Xlet metadata.
     """
 
     def __init__(self, filepath, notify_callback=None, xlet_meta=None):
@@ -112,12 +112,12 @@ class JSONSettingsHandler():
 
         Parameters
         ----------
-        filepath : TYPE
-            Description
+        filepath : str
+            Path to an xlet JSON configuration file.
         notify_callback : None, optional
             Description
         xlet_meta : None, optional
-            Description
+            Xlet metadata.
         """
         super().__init__()
 
@@ -674,7 +674,9 @@ class JSONSettingsBackend(object):
         return [min, max]
 
     def on_setting_changed(self, *args):
-        """Summary
+        """This method triggers at widget creation time and when a preference value was changed
+        externally. Its execution should update the widget (or widgets, if it's a multi-widget
+        widget, like the keybinding widget) using the data of the new preference value.
 
         Parameters
         ----------
@@ -684,12 +686,13 @@ class JSONSettingsBackend(object):
         Raises
         ------
         exceptions.MethodUnimplemented
-            SettingsWidget classes with no ``bind_dir`` property set must implement this method.
+            :any:`SettingsWidget` classes must implement this method.
         """
         raise exceptions.MethodUnimplemented("on_setting_changed")
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """This method triggers once when the widget factory function creates a new widget class
+        from an instance of :any:`SettingsWidget` and :any:`JSONSettingsBackend`.
 
         Parameters
         ----------
@@ -699,24 +702,24 @@ class JSONSettingsBackend(object):
         Raises
         ------
         exceptions.MethodUnimplemented
-            SettingsWidget classes with no ``bind_dir`` property set must implement this method.
+            :any:`SettingsWidget` classes with no bind_dir property set must implement this method.
         """
         if self.bind_dir is None:
             raise exceptions.MethodUnimplemented("connect_widget_handlers")
 
 
 def json_settings_factory(subclass):
-    """Summary
+    """JSONSettings wigets factory.
 
     Parameters
     ----------
-    subclass : TYPE
-        Description
+    subclass : str
+        A :any:`SettingsWidgets` instance.
 
     Raises
     ------
     exceptions.CannotBackend
-        Description
+        The widget cannot be backended.
     """
     if subclass not in CAN_BACKEND:  # noqa | SettingsWidgets
         raise exceptions.CannotBackend(subclass)

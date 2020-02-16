@@ -50,8 +50,10 @@ class IconChooserDialog(Gtk.Dialog):
 
         Parameters
         ----------
-        transient_for : TYPE
-            Description
+        transient_for : Gtk.Window
+            The window the dialog will be transient for.
+        main_app : None, optional
+            The main application.
         """
         super().__init__(transient_for=transient_for,
                          use_header_bar=True,
@@ -153,7 +155,7 @@ class IconChooserDialog(Gtk.Dialog):
         self._populate_sidebar()
 
     def _populate_sidebar(self):
-        """Summary
+        """Populate the dialog sidebar.
         """
         self._main_app.init_icon_chooser_data()
 
@@ -177,8 +179,8 @@ class IconChooserDialog(Gtk.Dialog):
 
         Parameters
         ----------
-        context : TYPE
-            Description
+        context : str
+            A string identifying a particular type of icon.
         """
         for icon in self._main_app.icon_chooser_icons.get(context, []):
             flow_child = Gtk.FlowBoxChild()
@@ -213,7 +215,7 @@ class IconChooserDialog(Gtk.Dialog):
         Parameters
         ----------
         *args
-            Description
+            Arguments.
         """
         self._search_term = self._search_entry.get_text()
         flow_box_children = self._flow_box.get_children()
@@ -237,12 +239,12 @@ class IconChooserDialog(Gtk.Dialog):
             self._update_subtitle(icons_count)
 
     def _update_subtitle(self, count):
-        """Summary
+        """Update dialog subttle.
 
         Parameters
         ----------
-        count : TYPE
-            Description
+        count : int
+            The currently displayed amount of icons.
         """
         self._headerbar.set_subtitle(_("Icons shown") + ": " + str(count))
 
@@ -252,12 +254,12 @@ class IconChooserDialog(Gtk.Dialog):
         Parameters
         ----------
         *args
-            Description
+            Arguments.
 
         Returns
         -------
-        TYPE
-            Description
+        None
+            Halt execution.
         """
         selection = self._sidebar.get_selected_rows()
 
@@ -288,12 +290,12 @@ class IconChooserDialog(Gtk.Dialog):
         Parameters
         ----------
         *args
-            Description
+            Arguments.
 
         Returns
         -------
-        TYPE
-            Description
+        None
+            Halt execution.
         """
         selection = self._flow_box.get_selected_children()
 
@@ -308,10 +310,10 @@ class IconChooserDialog(Gtk.Dialog):
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        event : TYPE
-            Description
+        widget : Gtk.SearchEntry
+            The search entry.
+        event : gi.overrides.Gdk.EventKey
+            The event triggered.
         """
         if event.keyval == Gdk.KEY_Escape:
             if self._search_term:
@@ -320,14 +322,14 @@ class IconChooserDialog(Gtk.Dialog):
                 GLib.idle_add(self.response, Gtk.ResponseType.CANCEL)
 
     def update_icon_preview_cb(self, dialog, preview):
-        """Summary
+        """Update the image preview when browsing for image files.
 
         Parameters
         ----------
-        dialog : TYPE
-            Description
-        preview : TYPE
-            Description
+        dialog : Gtk.FileChooserDialog
+            The dialog to browser for images.
+        preview : Gtk.Image
+            The selected image in the dialog.
         """
         filename = dialog.get_preview_filename()
         dialog.set_preview_widget_active(False)
@@ -353,14 +355,14 @@ class IconChooserDialog(Gtk.Dialog):
                         dialog.set_preview_widget_active(True)
 
     def _on_browse_button_clicked(self, widget, dir_path="/usr/share/icons"):
-        """Summary
+        """On brose button clicked.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
+        widget : Gtk.Button
+            The button clicked.
         dir_path : str, optional
-            Description
+            The path to a folder for the dialog to use as a start folder.
         """
         dialog = Gtk.FileChooserDialog(title=_("Choose an Icon"),
                                        action=Gtk.FileChooserAction.OPEN,
@@ -404,8 +406,8 @@ class IconChooserDialog(Gtk.Dialog):
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            An icon name or path.
         """
         self._select_button.set_sensitive(False)
 
@@ -430,7 +432,7 @@ class IconChooserDialog(Gtk.Dialog):
 
         Returns
         -------
-        TYPE
+        int
             Size to display icons in, in pixels.
         """
         return self._icon_size
@@ -440,7 +442,7 @@ class IconChooserDialog(Gtk.Dialog):
 
         Returns
         -------
-        TYPE
+        str
             String used for filtering icons by name.
         """
         return self._search_term
@@ -450,18 +452,18 @@ class IconChooserDialog(Gtk.Dialog):
 
         Returns
         -------
-        TYPE
+        str
             Name of the currently selected icon.
         """
         return self._selected_icon
 
     def get_main_app(self):
-        """Summary
+        """Get main application.
 
         Returns
         -------
-        TYPE
-            Description
+        Gtk.Application
+            See ``main_app`` of :any:`SettingsBox`.
         """
         return self._main_app
 
@@ -472,13 +474,13 @@ class IconChooserDialog(Gtk.Dialog):
 
         Parameters
         ----------
-        size : TYPE
+        size : int
             Size to display icons in, in pixels.
 
         Raises
         ------
         exceptions.WrongType
-            Description
+            Wrong value type.
         """
         if not type(size) == int:
             raise exceptions.WrongType("int", type(size).__name__)
@@ -492,13 +494,13 @@ class IconChooserDialog(Gtk.Dialog):
 
         Parameters
         ----------
-        filter_term : TYPE
+        filter_term : str
             String used for filtering icons by name.
 
         Raises
         ------
         exceptions.WrongType
-            Description
+            Wrong value type.
         """
         if not type(filter_term) == str:
             raise exceptions.WrongType("str", type(filter_term).__name__)
@@ -506,12 +508,13 @@ class IconChooserDialog(Gtk.Dialog):
         self._search_term = filter_term
 
     def set_main_app(self, main_app):
-        """Summary
+        """Get main application.
 
         Parameters
         ----------
-        main_app : TYPE
-            Description
+        main_app : Gtk.Application
+            See ``main_app`` of :any:`SettingsBox`.
+        """
         self._main_app = main_app
 
 
@@ -663,6 +666,11 @@ class IconChooserButton(Gtk.Button):
 
     def _show_dialog(self, *args):
         """Called when the button is clicked to show a selection dialog.
+
+        Parameters
+        ----------
+        *args
+            Description
         """
         self.ensure_dialog()
         self.dialog.set_transient_for(self.get_toplevel())
@@ -780,10 +788,10 @@ class _IconPreview(BaseGrid):
 
         Parameters
         ----------
-        name : TYPE
-            Description
-        size : TYPE
-            Description
+        name : str
+            Icon name.
+        size : int
+            Icon size.
         """
         super().__init__(tooltip=name)
         self.set_hexpand(True)
@@ -818,7 +826,7 @@ class _IconPreview(BaseGrid):
 
         Returns
         -------
-        TYPE
+        str
             Name of the icon.
         """
         return self._icon_name

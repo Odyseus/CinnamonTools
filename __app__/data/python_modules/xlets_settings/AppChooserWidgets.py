@@ -270,16 +270,16 @@ class ApplicationChooserWidget(Gtk.Dialog):
 
 
 class AppList(SettingsWidget):
-    """Summary
+    """Applicacions list widget.
 
     Attributes
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : TYPE
-        Description
+    content_widget : object
+        The content widget.
     label : str
-        Widget text.
+        The widget label.
     """
     bind_dir = None
     _columns = {
@@ -294,11 +294,11 @@ class AppList(SettingsWidget):
         Parameters
         ----------
         label : str
-            Widget text.
+            Widget label text.
         dep_key : None, optional
             Dependency key/s.
         tooltip : str, optional
-            Widget tooltip.
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
         self.label = label
@@ -490,10 +490,10 @@ class AppList(SettingsWidget):
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        tree : TYPE
-            Description
+        widget : object
+            :py:class:`Gtk.Button`.
+        tree : object
+            :py:class:`Gtk.TreeView`.
         """
         selection = tree.get_selection()
         tree_model, paths = selection.get_selected_rows()
@@ -542,10 +542,10 @@ class AppChooser(SettingsWidget):
     ----------
     bind_dir : int
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : TYPE
-        Description
-    label : TYPE
-        Description
+    content_widget : object
+        The content widget.
+    label : object
+        The label widget.
     """
     bind_dir = None
 
@@ -554,14 +554,14 @@ class AppChooser(SettingsWidget):
 
         Parameters
         ----------
-        label : TYPE
-            Description
+        label : str
+            The label text.
         size_group : None, optional
-            Description
+            :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
-            Description
+            Dependency key/s.
         tooltip : str, optional
-            Description
+            Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
 
@@ -589,7 +589,7 @@ class AppChooser(SettingsWidget):
         self._set_button_data()
 
     def _on_clear_button_clicked(self, *args):
-        """Summary
+        """Clear button action.
 
         Parameters
         ----------
@@ -600,7 +600,7 @@ class AppChooser(SettingsWidget):
         self._set_button_data()
 
     def _open_app_chooser(self, *args):
-        """Summary
+        """Open Applications chooser dialog.
 
         Parameters
         ----------
@@ -617,18 +617,18 @@ class AppChooser(SettingsWidget):
             self._on_app_selected(app_info.get_id())
 
     def _on_app_selected(self, apps_id):
-        """Summary
+        """On application selected.
 
         Parameters
         ----------
-        apps_id : TYPE
-            Description
+        apps_id : str
+            An application ID.
         """
         self.set_value(apps_id)
         self._set_button_data()
 
     def _set_button_data(self):
-        """Summary
+        """Set button data.
         """
         image = Gtk.Image.new_from_gicon(
             Gio.Icon.new_for_string("image-missing"), Gtk.IconSize.BUTTON)

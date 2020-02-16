@@ -9,10 +9,10 @@ It can handle schemas that aren't installed on a system.
 
 Attributes
 ----------
-CAN_BACKEND : TYPE
-    Description
-GioSSS : TYPE
-    Description
+CAN_BACKEND : list
+    List of widgets that can be used to control settings.
+GioSSS : Gio.SettingsSchemaSource
+    :py:class:`Gio.SettingsSchemaSource`.
 """
 from gi.repository import GLib
 from gi.repository import Gio
@@ -50,11 +50,11 @@ CAN_BACKEND = [
 
 
 def __setitem__(self, key, value):
-    """Summary
+    """Override :py:class:`Gio.Settings`'s ``__setitem__`` method.
 
     Parameters
     ----------
-    key : TYPE
+    key : str
         Description
     value : TYPE
         Description
@@ -97,7 +97,7 @@ def __setitem__(self, key, value):
 
 
 def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
-    """Summary
+    """Override :py:class:`Gio.Settings`'s ``bind_with_mapping`` method.
 
     Parameters
     ----------
@@ -268,32 +268,35 @@ class GSettingsBackend(object):
             return None
 
     def on_setting_changed(self, *args):
-        """Summary
+        """This method triggers at widget creation time and when a preference value was changed
+        externally. Its execution should update the widget (or widgets, if it's a multi-widget
+        widget, like the keybinding widget) using the data of the new preference value.
 
         Parameters
         ----------
         *args
-            Description
+            Arguments.
 
         Raises
         ------
         exceptions.MethodUnimplemented
-            Description
+            :any:`SettingsWidget` classes must implement this method.
         """
         raise exceptions.MethodUnimplemented("on_setting_changed")
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """This method triggers once when the widget factory function creates a new widget class
+        from an instance of :any:`SettingsWidget` and :any:`GSettingsBackend`.
 
         Parameters
         ----------
         *args
-            Description
+            Arguments.
 
         Raises
         ------
         exceptions.MethodUnimplemented
-            SettingsWidget classes with no bind_dir property set must implement this method.
+            :any:`SettingsWidget` classes with no bind_dir property set must implement this method.
         """
         if self.bind_dir is None:
             raise exceptions.MethodUnimplemented("connect_widget_handlers")
@@ -305,19 +308,19 @@ def get_gsettings_schema(schema, xlet_meta={}):
     Parameters
     ----------
     schema : str
-        Description
+        A gsettings schema.
     xlet_meta : dict, optional
-        Description
+        An xlet metadata.
 
     Returns
     -------
-    TYPE
-        Description
+    object
+        :py:class:`Gio.Settings`.
 
     Raises
     ------
     Exception
-        Description
+        Schema not found.
     """
     xlet_path = xlet_meta.get("path", "")
     xlet_uuid = xlet_meta.get("uuid", "")
@@ -344,34 +347,36 @@ def get_gsettings_schema(schema, xlet_meta={}):
 
 
 def g_settings_factory(subclass):
-    """Summary
+    """GSettings widgets factory.
 
     Parameters
     ----------
-    subclass : TYPE
-        Description
+    subclass : str
+        A :any:`SettingsWidgets` instance.
 
     Raises
     ------
     exceptions.CannotBackend
-        Description
+        The widget cannot be backended.
     """
     if subclass not in CAN_BACKEND:  # noqa | SettingsWidgets
         raise exceptions.CannotBackend(subclass)
 
     class NewClass(globals()[subclass], GSettingsBackend):
-        """Summary
+        """New backended widget class.
 
         Attributes
         ----------
-        map_get : TYPE
-            Description
-        map_set : TYPE
-            Description
-        pref_key : TYPE
-            Description
-        settings : TYPE
-            Description
+        map_get : function
+            See ``map_set``.
+        map_set : function
+            A function to map between setting and bound attribute.
+            May also be passed as a keyword argument during instantiation.
+            These methods will be ignored if ``bind_dir = None``.
+        pref_key : str
+            Preference key.
+        settings : object
+            :py:class:`Gio.Settings`.
         """
 
         def __init__(self, widget_attrs={}, widget_kwargs={}):
@@ -380,20 +385,20 @@ def g_settings_factory(subclass):
             Parameters
             ----------
             widget_attrs : dict, optional
-                Description
+                Widget attributes.
             widget_kwargs : dict, optional
-                Description
+                Widget keyword arguments.
 
             Returns
             -------
-            TYPE
-                Description
+            None
+                Dummy docstring. The auto-docstrings plugin put this here erroneously.
             """
             self.pref_key = widget_attrs.get("pref_key")
             schema = widget_attrs.get("schema", "")
 
             if schema not in settings_objects:  # noqa | SettingsWidgets
-                settings_objects[schema] = get_gsettings_schema(schema, widget_attrs.get("xlet_meta"))  # noqa | SettingsWidgets
+                settings_objects[schema] = get_gsettings_schema(schema, widget_attrs.get("xlet_meta", {}))  # noqa | SettingsWidgets
 
             self.settings = settings_objects[schema]  # noqa | SettingsWidgets
 

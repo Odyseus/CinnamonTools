@@ -29,7 +29,7 @@ _ = gettext.gettext
 
 
 class BaseGrid(Gtk.Grid):
-    """Summary
+    """The base of all grids.
     """
 
     def __init__(self, tooltip="", orientation=Gtk.Orientation.VERTICAL):
@@ -38,23 +38,23 @@ class BaseGrid(Gtk.Grid):
         Parameters
         ----------
         tooltip : str, optional
-            Description
-        orientation : TYPE, optional
-            Description
+            Tooltip text.
+        orientation : Gtk.Orientation, optional
+            The widget orientation.
         """
         super().__init__()
         self.set_orientation(orientation)
         self.set_tooltip_text(tooltip)
 
     def set_spacing(self, col, row):
-        """Summary
+        """Set columns/rows spacing.
 
         Parameters
         ----------
-        col : TYPE
-            Description
-        row : TYPE
-            Description
+        col : int
+            Spacing to set to columns.
+        row : int
+            Spacing to set to rows.
         """
         self.set_column_spacing(col)
         self.set_row_spacing(row)
@@ -109,14 +109,14 @@ def compare_version(version1, version2):
 
     Parameters
     ----------
-    version1 : TYPE
+    version1 : str
         Description
-    version2 : TYPE
+    version2 : str
         Description
 
     Returns
     -------
-    TYPE
+    int
         Description
     """
     def chn(x):
@@ -283,17 +283,17 @@ def compare_version(version1, version2):
 
 
 def contrast_rgba_color(rgba):
-    """Summary
+    """Determine font color based on background color.
 
     Parameters
     ----------
-    rgba : TYPE
-        Description
+    rgba : Gdk.RGBA
+        The :py:class:`Gdk.RGBA` color from which to get its luminance.
 
     Returns
     -------
-    TYPE
-        Description
+    Gdk.RGBA
+        Black or white.
     """
     # <3 https://stackoverflow.com/a/1855903
     # StackOverflow to the rescue!!!
@@ -307,30 +307,30 @@ def contrast_rgba_color(rgba):
     return Gdk.RGBA(d, d, d, 1.0)
 
 
-def import_export(parent, type, last_dir):
-    """Summary
+def import_export(parent, action_type, last_dir):
+    """Import/Export data from/to a :any:`List` widget.
 
     Parameters
     ----------
-    parent : TYPE
-        Description
-    type : TYPE
-        Description
-    last_dir : TYPE
-        Description
+    parent : List
+        The parent widget to get the top level window from.
+    action_type : str
+        Which action to perform (export or import).
+    last_dir : str
+        The last selected directory to be able to open the dialog from that location.
 
     Returns
     -------
-    TYPE
-        Description
+    str
+        The selected file path.
     """
-    if type == "export":
-        mode = Gtk.FileChooserAction.SAVE
+    if action_type == "export":
+        action_mode = Gtk.FileChooserAction.SAVE
         string = _("Select or enter file to export to")
         btns = (_("_Cancel"), Gtk.ResponseType.CANCEL,
                 _("_Save"), Gtk.ResponseType.ACCEPT)
-    elif type == "import":
-        mode = Gtk.FileChooserAction.OPEN
+    elif action_type == "import":
+        action_mode = Gtk.FileChooserAction.OPEN
         string = _("Select a file to import")
         btns = (_("_Cancel"), Gtk.ResponseType.CANCEL,
                 _("_Open"), Gtk.ResponseType.OK)
@@ -338,13 +338,13 @@ def import_export(parent, type, last_dir):
     dialog = Gtk.FileChooserDialog(transient_for=parent.get_toplevel(),
                                    title=string,
                                    use_header_bar=True,
-                                   action=mode,
+                                   action=action_mode,
                                    buttons=btns)
 
     if last_dir is not None:
         dialog.set_current_folder(last_dir)
 
-    if type == "export":
+    if action_type == "export":
         dialog.set_do_overwrite_confirmation(True)
 
     filter_text = Gtk.FileFilter()
@@ -359,7 +359,7 @@ def import_export(parent, type, last_dir):
     if response == Gtk.ResponseType.ACCEPT or response == Gtk.ResponseType.OK:
         filepath = dialog.get_filename()
 
-        if type == "export" and ".json" not in filepath:
+        if action_type == "export" and ".json" not in filepath:
             filepath = filepath + ".json"
 
     dialog.destroy()
@@ -368,31 +368,41 @@ def import_export(parent, type, last_dir):
 
 
 def generate_options_from_paths(opts, xlet_settings):
-    """Summary
+    """Generate options from paths.
+
+    This function dynamically generates the ``options`` option for :any:`KeybindingWithOptions` and
+    :any:`ComboBox` widgets based on files found inside a folder.
 
     Parameters
     ----------
-    opts : TYPE
-        Description
-    xlet_settings : TYPE
-        Description
+    opts : dict
+        Options used to scan a path to look for files. Possible options are:
+
+            - file-patterns (required): A file pattern to look for files with.
+            - path-in-xlet (optional): A path relative to an xlet folder.
+            - path-in-setting (optional): An xlet setting that stores an absolute path.
+
+        File names found in ``path-in-xlet`` path will be prefixed by ``::``.
+
+    xlet_settings : dict
+        Used when ``path-in-setting`` has a path stored.
 
     Returns
     -------
-    TYPE
-        Description
+    list
+        The list of options.
     """
     options = []
 
     def scan_and_generate(folder_path, add_prefix):
-        """Summary
+        """Scan path and generate options.
 
         Parameters
         ----------
-        folder_path : TYPE
-            Description
-        add_prefix : TYPE
-            Description
+        folder_path : str
+            Path to a folder.
+        add_prefix : bool
+            Whether to add a prefix.
         """
         for pattern in opts.get("file-patterns"):
             for file_name in fnmatch.filter(os.listdir(folder_path), pattern):
@@ -416,18 +426,18 @@ def generate_options_from_paths(opts, xlet_settings):
 
 
 def display_message_dialog(widget, title, message, context="information"):
-    """Summary
+    """Display a message dialog.
 
     Parameters
     ----------
-    widget : TYPE
-        Description
-    title : TYPE
-        Description
-    message : TYPE
-        Description
+    widget : object
+        The widget to get the top level window from.
+    title : str
+        The title of the dialog.
+    message : str
+        The message of the dialog.
     context : str, optional
-        Description
+        One of "information", "error" or "warning".
     """
     if context == "warning":
         message_type = Gtk.MessageType.WARNING
@@ -462,10 +472,9 @@ def sort_combo_options(options, first_option=""):
     Parameters
     ----------
     options : list
-        A list of tuples of two elements representing the options used to build
-        a :any:`ComboBox` widget and its derivatives.
+        See :any:`ComboBox` ``options`` argument.
     first_option : str, optional
-        Description
+        The key to exclude from sorting and place always at the top.
 
     Returns
     -------
@@ -485,17 +494,20 @@ def sort_combo_options(options, first_option=""):
 
 
 def get_keybinding_display_name(accel_string):
-    """Summary
+    """Get keybinding display name.
+
+    Converts an accelerator keyval and modifier mask into a (possibly translated) string that can
+    be displayed to a user.
 
     Parameters
     ----------
     accel_string : str
-        Description
+        Accel. string.
 
     Returns
     -------
     str
-        Description
+        Accel. string display name.
     """
     text = accel_string
 
