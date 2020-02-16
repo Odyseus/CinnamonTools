@@ -12,20 +12,17 @@ settings_objects : dict
     Description
 """
 import gi
-import os
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
-gi.require_version("GdkPixbuf", "2.0")
 
 from gi.repository import GLib
 from gi.repository import Gdk
-from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import Pango
 
-from .IconChooserWidgets import IconChooserDialog
+from .IconChooserWidgets import IconChooserButton
 from .KeybindingWidgets import ButtonKeybinding
 from .common import BaseGrid
 from .common import _
@@ -652,6 +649,26 @@ class SettingsWidget(BaseGrid):
             settings_objects[schema] = Gio.Settings.new(schema)
             return settings_objects[schema]
 
+    def get_main_app(self):
+        """Get main application.
+
+        Returns
+        -------
+        Gtk.Application
+            See ``main_app`` of :any:`SettingsBox`.
+        """
+        return self._main_app
+
+    def set_main_app(self, main_app):
+        """Set main application.
+
+        Parameters
+        ----------
+        main_app : Gtk.Application
+            See ``main_app`` of :any:`SettingsBox`.
+        """
+        self._main_app = main_app
+
 
 class Text(SettingsWidget):
     """Summary
@@ -847,10 +864,10 @@ class IconChooser(SettingsWidget):
         Description
     """
 
-    bind_prop = "text"
+    bind_prop = "icon"
     bind_dir = Gio.SettingsBindFlags.DEFAULT
 
-    def __init__(self, label, expand_width=True, size_group=None, dep_key=None, tooltip=""):
+    def __init__(self, label, size_group=None, dep_key=None, tooltip=""):
         """Initialization.
 
         Parameters
@@ -868,88 +885,70 @@ class IconChooser(SettingsWidget):
         """
         super().__init__(dep_key=dep_key)
         self._timer = None
-        self.main_app = None
-        valid, self.width, self.height = Gtk.icon_size_lookup(Gtk.IconSize.BUTTON)
+        self._setting_icon = False
 
         self.label = SettingsLabel(label)
 
-        self.content_widget = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
-        self.content_widget.set_spacing(5, 0)
+        self.content_widget = Gtk.Entry()
+        value = self.get_value()
+        self.content_widget.set_text(value if value is not None else "")
         self.content_widget.set_hexpand(True)
-        self.content_widget.set_valign(Gtk.Align.CENTER)
-        self.bind_object = Gtk.Entry()
-        self.bind_object.set_hexpand(True)
-        button = Gtk.Button()
-
-        self._preview_image = Gtk.Image.new()
-        button.set_image(self._preview_image)
-
-        self.content_widget.attach(self.bind_object, 0, 0, 1, 1)
-        self.content_widget.attach(button, 1, 0, 1, 1)
+        self.bind_object = IconChooserButton(self)
 
         self.attach(self.label, 0, 0, 1, 1)
         self.attach(self.content_widget, 1, 0, 1, 1)
+        self.attach(self.bind_object, 2, 0, 1, 1)
 
-        button.connect("clicked", self._on_button_pressed)
-        self.handler = self.bind_object.connect("changed", self._set_widget_icon)
+        self.content_widget.connect("changed", self._on_entry_changed)
+        self.bind_object.connect("icon-selected", self._on_icon_selected)
 
         self.set_tooltip_text(tooltip)
 
         if size_group:
             self.add_to_size_group(size_group)
 
-        self._set_widget_icon()
+    def set_main_app(self, main_app):
+        """Set main application.
 
-    def _set_widget_icon(self, *args):
-        """Set widget icon.
+        This overrides the method on the root class because the widget that actually needs it is
+        self.bind_object, not its container.
+
+        Parameters
+        ----------
+        main_app : Gtk.Application
+            See ``main_app`` of :any:`SettingsBox`.
+        """
+        self.bind_object.set_main_app(main_app)
+
+    def _on_entry_changed(self, *args):
+        """On text entry changed.
 
         Parameters
         ----------
         *args
             Arguments.
         """
-        def apply(self):
-            """Delayed apply.
-            """
-            val = self.bind_object.get_text().strip()
+        if not self._setting_icon:
+            value = self.content_widget.get_text().strip()
+            self.bind_object.set_icon(value)
+            self.set_value(value)
 
-            if val:
-                # NOTE: Check for the existence of "/" first so os.path.isfile() is not called unnecessarily.
-                if "/" in val and os.path.isfile(val):
-                    img = GdkPixbuf.Pixbuf.new_from_file_at_size(val, self.width, self.height)
-                    self._preview_image.set_from_pixbuf(img)
-                else:
-                    self._preview_image.set_from_icon_name(val, Gtk.IconSize.BUTTON)
-            else:
-                self._preview_image.set_from_icon_name("image-missing", Gtk.IconSize.BUTTON)
-
-            self._timer = None
-
-        if self._timer:
-            GLib.source_remove(self._timer)
-
-        self._timer = GLib.timeout_add(300, apply, self)
-
-    def _on_button_pressed(self, widget):
-        """Summary
+    def _on_icon_selected(self, widget, icon):
+        """On icon selected.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
+        widget : IconChooserButton
+            The icon chooser button.
+        icon : str
+            The icon name or path to set into the text entry.
         """
-        dialog = IconChooserDialog(transient_for=self.get_toplevel())
-        dialog.set_main_app(self.main_app)
-        search_term = self.get_value() if self.get_value() is not None else ""
-        dialog.set_search_term(search_term)
+        self._setting_icon = True
 
-        response = dialog.run()  # Return either an icon name, an icon path or None.
+        if icon is not None:
+            self.content_widget.set_text(icon)
 
-        if response is not None:
-            self.bind_object.set_text(response)
-            self.set_value(response)
-
-        dialog.destroy()
+        self._setting_icon = False
 
 
 class Entry(SettingsWidget):
@@ -1044,11 +1043,11 @@ class TextView(SettingsWidget):
         self.label = SettingsLabel(label)
         self.label.set_alignment(0.5, 0.5)
 
-        self.scrolledwindow = Gtk.ScrolledWindow(hadjustment=None, vadjustment=None)
-        self.scrolledwindow.set_size_request(width=-1, height=height)
-        self.scrolledwindow.set_policy(hscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
-                                       vscrollbar_policy=Gtk.PolicyType.AUTOMATIC)
-        self.scrolledwindow.set_shadow_type(type=Gtk.ShadowType.ETCHED_IN)
+        scrolledwindow = Gtk.ScrolledWindow(hadjustment=None, vadjustment=None)
+        scrolledwindow.set_size_request(width=-1, height=height)
+        scrolledwindow.set_policy(hscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
+                                  vscrollbar_policy=Gtk.PolicyType.AUTOMATIC)
+        scrolledwindow.set_shadow_type(type=Gtk.ShadowType.ETCHED_IN)
         self.content_widget = Gtk.TextView()
         self.content_widget.set_accepts_tab(accept_tabs)
         self.content_widget.set_border_width(3)
@@ -1057,8 +1056,8 @@ class TextView(SettingsWidget):
         self.bind_object = self.content_widget.get_buffer()
 
         self.attach(self.label, 0, 0, 1, 1)
-        self.attach(self.scrolledwindow, 0, 1, 1, 1)
-        self.scrolledwindow.add(self.content_widget)
+        self.attach(scrolledwindow, 0, 1, 1, 1)
+        scrolledwindow.add(self.content_widget)
 
         self.set_tooltip_text(tooltip)
 

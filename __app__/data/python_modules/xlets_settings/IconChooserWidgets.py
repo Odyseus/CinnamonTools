@@ -12,6 +12,7 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("GdkPixbuf", "2.0")
 
 from gi.repository import GLib
+from gi.repository import GObject
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gtk
@@ -44,7 +45,7 @@ class IconChooserDialog(Gtk.Dialog):
     Not all memory created by the dialog seems to be released.
     """
 
-    def __init__(self, transient_for=None):
+    def __init__(self, transient_for=None, main_app=None):
         """Initialization.
 
         Parameters
@@ -74,7 +75,7 @@ class IconChooserDialog(Gtk.Dialog):
         self._search_term = ""
         self._selected_icon = ""
         self._timer = None
-        self._main_app = None
+        self._main_app = main_app
 
         # Widgets start here
         self._headerbar = self.get_header_bar()
@@ -149,9 +150,13 @@ class IconChooserDialog(Gtk.Dialog):
         self._sidebar.connect("selected-rows-changed", self._on_category_selected)
         self._flow_box.connect("selected-children-changed", self._on_icon_selected)
 
+        self._populate_sidebar()
+
     def _populate_sidebar(self):
         """Summary
         """
+        self._main_app.init_icon_chooser_data()
+
         for label, context in self._main_app.icon_chooser_store:
             row = Gtk.ListBoxRow()
             row.get_style_context().add_class("sidebar-item")
@@ -161,8 +166,6 @@ class IconChooserDialog(Gtk.Dialog):
             cat_label.set_margin_end(6)
             row.add(cat_label)
             self._sidebar.add(row)
-
-        self._sidebar.select_row(self._sidebar.get_row_at_index(0))
 
     def _create_icon_previews(self, context):
         """Create icon previews to be placed in the dialog's icon box.
@@ -262,7 +265,7 @@ class IconChooserDialog(Gtk.Dialog):
             return
 
         self._select_button.set_sensitive(False)
-        self._selected_icon = None
+        self._selected_icon = ""
 
         for child in self._flow_box.get_children():
             child.destroy()
@@ -404,10 +407,7 @@ class IconChooserDialog(Gtk.Dialog):
         TYPE
             Description
         """
-        self._main_app.init_icon_chooser_data()
-
         self._select_button.set_sensitive(False)
-        self._populate_sidebar()
 
         self.show_all()
 
@@ -416,6 +416,7 @@ class IconChooserDialog(Gtk.Dialog):
                 self._on_browse_button_clicked(None, dir_path=os.path.dirname(self._search_term))
             else:
                 self._search_entry.set_text(self._search_term)
+                GLib.idle_add(self._filter_icons)
 
         response = super().run()
 
@@ -511,6 +512,261 @@ class IconChooserDialog(Gtk.Dialog):
         ----------
         main_app : TYPE
             Description
+        self._main_app = main_app
+
+
+class IconChooserButton(Gtk.Button):
+    """GTK + 3 Button to open dialog allowing selection of a themed icon.
+
+    The name of the selected icon is emitted via the "icon-selected" signal
+    once the dialog is closed, or via the get_selected_icon_name method.
+
+    NOTE: The icon preview in the dialog and on the button may differ since
+    icons can have a different appearance at different sizes.By default the
+    dialog uses a larger size (32px) than the button (16px).
+    set_dialog_icon_size(16) can be used to get the dialog to display the same
+    icon that will be shown on the button, if you desire.
+
+    Attributes
+    ----------
+    dialog : IconChooserDialog
+        The icon chooser dialog.
+    icon : str
+        The icon name or path currently stored in a preference.
+    """
+    __gsignals__ = {
+        "icon-selected": (GObject.SignalFlags.RUN_FIRST,
+                          GObject.TYPE_NONE,
+                          [GObject.TYPE_STRING])
+    }
+
+    __gproperties__ = {
+        "icon": (str,
+                 _("Icon"),
+                 _("The string representing the icon."),
+                 "",
+                 GObject.ParamFlags.READWRITE | GObject.ParamFlags.EXPLICIT_NOTIFY)
+    }
+
+    def __init__(self, parent_widget):
+        """Initialization.
+
+        Parameters
+        ----------
+        parent_widget : IconChooser
+            The main widget to which this widget is tied to.
+        """
+        super().__init__()
+        GLib.threads_init()
+
+        self._parent_widget = parent_widget
+        self._timer = None
+        self._main_app = None
+        self._dialog_icon_size = 32
+        self._search_term = ""
+        self.icon = ""
+        self.dialog = None
+
+        self._icon = Gtk.Image.new()
+        self.set_image(self._icon)
+
+        self.connect("clicked", self._show_dialog)
+
+        GLib.idle_add(self.ensure_dialog)
+
+    def do_get_property(self, prop):
+        """get property override.
+
+        Parameters
+        ----------
+        prop : GObject.ParamSpec
+            The property to handle.
+
+        Returns
+        -------
+        str
+            The icon string.
+
+        Raises
+        ------
+        AttributeError
+            Wrong attribute.
+        """
+        if prop.name == "icon":
+            return self.icon
+        else:
+            raise AttributeError("Unknown property '%s'" % prop.name)
+
+    def do_set_property(self, prop, value):
+        """Set property override.
+
+        Parameters
+        ----------
+        prop : GObject.ParamSpec
+            The property to handle.
+        value : str
+            The property value.
+
+        Raises
+        ------
+        AttributeError
+            Wrong attribute.
+        """
+        if prop.name == "icon":
+            if value and value != self.icon:
+                self.icon = value
+                self.set_icon(value)
+        else:
+            raise AttributeError("Unknown property '%s'" % prop.name)
+
+    def ensure_dialog(self):
+        """Ensure that the dialog is created once.
+
+        Returns
+        -------
+        None
+            Halt execution.
+        """
+        if self.dialog is not None:
+            return
+
+        self.dialog = IconChooserDialog(main_app=self.get_main_app())
+
+    def set_icon(self, icon):
+        """Set button icon.
+
+        Parameters
+        ----------
+        icon : str
+            The icon name or path.
+        """
+        def apply(self):
+            """Delayed apply.
+            """
+            if icon:
+                # NOTE: Check for the existence of "/" first so os.path.isfile() is not called unnecessarily.
+                if "/" in icon and os.path.isfile(icon):
+                    valid, width, height = Gtk.icon_size_lookup(Gtk.IconSize.BUTTON)
+                    img = GdkPixbuf.Pixbuf.new_from_file_at_size(icon, width, height)
+                    self._icon.set_from_pixbuf(img)
+                else:
+                    self._icon.set_from_icon_name(icon, Gtk.IconSize.BUTTON)
+            else:
+                self._icon.set_from_icon_name("image-missing", Gtk.IconSize.BUTTON)
+
+            self._timer = None
+
+        if self._timer:
+            GLib.source_remove(self._timer)
+
+        self._timer = GLib.timeout_add(300, apply, self)
+
+    def _show_dialog(self, *args):
+        """Called when the button is clicked to show a selection dialog.
+        """
+        self.ensure_dialog()
+        self.dialog.set_transient_for(self.get_toplevel())
+        self.dialog.set_icon_size(self._dialog_icon_size)
+        icon = self._parent_widget.get_value()
+        self.dialog.set_search_term(icon if icon is not None else "")
+
+        self.icon = self.dialog.run()
+
+        if self.icon is not None:
+            self.set_icon(self.icon)
+
+        self.dialog.hide()
+
+        self.emit("icon-selected", self.icon)
+
+    def get_dialog_icon_size(self):
+        """Get the pixel size to display icons in.
+
+        Returns
+        -------
+        int
+            Size to display icons in pixels.
+        """
+        return self._dialog_icon_size
+
+    def get_search_term(self):
+        """Get the string used for filtering icons by name.
+
+        Returns
+        -------
+        str
+            String used for filtering icons by name.
+        """
+        return self._search_term
+
+    def get_selected_icon_name(self):
+        """Get the name of the icon selected in the dialog.
+
+        Returns
+        -------
+        str
+            Name or path of the currently selected icon.
+        """
+        return self.icon
+
+    def get_main_app(self):
+        """Get the main application.
+
+        Returns
+        -------
+        Gtk.Application
+            See ``main_app`` of :any:`SettingsBox`.
+        """
+        return self._main_app
+
+    def set_dialog_icon_size(self, size):
+        """Set the pixel size to display icons in.
+
+        Dialog will not update the icon size once it has been shown.
+
+        Parameters
+        ----------
+        size : int
+            The dialog icons size.
+
+        Raises
+        ------
+        exceptions.WrongType
+            Wrong value type.
+        """
+        if not type(size) == int:
+            raise exceptions.WrongType("int", type(size).__name__)
+        self._dialog_icon_size = size
+
+    def set_search_term(self, search_term):
+        """Set the string used for filtering icons by name.
+
+        If use_regex is True, the provided string will be used as the pattern
+        for a regex match, otherwise basic case-insensitive matching is used.
+
+        Dialog will not update the filter term once it has been shown.
+
+        Parameters
+        ----------
+        search_term : str
+            String used for filtering icons by name.
+
+        Raises
+        ------
+        exceptions.WrongType
+            Wrong value type.
+        """
+        if not type(search_term) == str:
+            raise exceptions.WrongType("str", type(search_term).__name__)
+        self._search_term = search_term
+
+    def set_main_app(self, main_app):
+        """Set main application.
+
+        Parameters
+        ----------
+        main_app : Gtk.Application
+            See ``main_app`` of :any:`SettingsBox`.
         """
         self._main_app = main_app
 

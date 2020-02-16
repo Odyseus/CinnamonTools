@@ -208,7 +208,7 @@ class SettingsBox(BaseGrid):
                                 widget_attrs=widget_attrs, widget_kwargs=widget_kwargs)
 
                             if (widget_type == "list" or widget_type == "iconfilechooser") and self._main_app is not None:
-                                widget.main_app = self._main_app
+                                widget.set_main_app(self._main_app)
                         elif widget_type in G_SETTINGS_WIDGETS:
                             widget_attrs["xlet_meta"] = self._xlet_meta
                             widget = globals()[G_SETTINGS_WIDGETS[widget_type]](
@@ -1214,6 +1214,7 @@ def cli(pages_definition):
     parser.add_argument("--win-width", dest="win_initial_width", default=800, type=int)
     parser.add_argument("--win-height", dest="win_initial_height", default=600, type=int)
     parser.add_argument("--app-id", dest="application_id")
+    parser.add_argument("--stack-id", dest="win_initial_stack")
 
     args = parser.parse_args()
 
