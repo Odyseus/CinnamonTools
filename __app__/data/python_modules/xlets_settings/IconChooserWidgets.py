@@ -312,7 +312,7 @@ class IconChooserDialog(Gtk.Dialog):
         ----------
         widget : Gtk.SearchEntry
             The search entry.
-        event : gi.overrides.Gdk.EventKey
+        event : Gdk.EventKey
             The event triggered.
         """
         if event.keyval == Gdk.KEY_Escape:

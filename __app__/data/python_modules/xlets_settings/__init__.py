@@ -12,7 +12,7 @@ GTK_VERSION : str
     Gtk version.
 MODULE_PATH : str
     Path to the root of this module.
-proxy : object
+proxy : Gio.DBusProxy
     See :py:class:`Gio.DBusProxy`.
 XLET_SETTINGS_WIDGETS : dict
     Settings widgets map.
@@ -99,7 +99,7 @@ class SettingsBox(BaseGrid):
 
     Attributes
     ----------
-    stack : object
+    stack : Gtk.Stack
         :py:class:`Gtk.Stack`.
     """
 
@@ -320,42 +320,47 @@ class MainApplication(Gtk.Application):
     ----------
     all_instances_info : list
         Storage for all xlets instances information.
-    app_image : object
-        See :py:class:`Gtk.Button`.
+    app_image : Gtk.Button
+        The button containing an image that it is displayed in the header bar when an xlet isn't
+        multi-instance.
     application_id : str
-        A base application ID that will be used to generate the real application ID.
+        The application ID needed to instantiate this :py:class:`Gtk.Application`.
     application_title : str
         A custom application title.
-    cinnamon_gsettings : object
-        See :py:class:`Gio.Settings`.
+    cinnamon_gsettings : Gio.Settings
+        Cinnamon's gsettings settings (schema ``org.cinnamon``) to get the list of enabled xlets.
     display_settings_handling : bool
-        Whether to display settings handler item in the header bar menu.
-    gtk_icon_theme : object
-        See :py:class:`Gtk.IconTheme`.
+        Whether to display settings handler items in the header bar menu.
+    gtk_icon_theme : Gtk.IconTheme
+        This is used to append entra folders to :py:class:`Gtk.IconTheme` to use icons by name insted
+        of by path. It is also used by the :any:`IconChooser` widgets to get the list of icons in an
+        icon theme.
     gtk_icon_theme_changed : bool
         "Flag" used to conditionally force the update of self.icon_chooser_store.
-    header_bar : object
-        See :py:class:`Gtk.HeaderBar`.
+    header_bar : Gtk.HeaderBar
+        The header bar used by this application.
     help_file_path : str
-        Path to the xlet help file.
+        Path to an xlet help file.
     icon_chooser_icons : dict
         The complete list of icons from the current icon theme.
-    icon_chooser_store : object
-        See :py:class:`Gtk.ListStore`.
-    instance_stack : object
-        See :py:class:`Gtk.Stack`.
-    instance_switcher : object
-        See :py:class:`Gtk.StackSwitcher`.
-    instance_switcher_box : object
-        See :py:class:`BaseGrid`.
+    icon_chooser_store : Gtk.ListStore
+        The place where the icon theme contexts are stored. Each element on this list has two elements.
+        The translated icon context name (for display purposes) at index 0 and the icon context name
+        (used to retrieve from the icon theme all icons from such context) at index 1.
+    instance_stack : Gtk.Stack
+        The stack where every :any:`SettingsBox` for each xlet instance are added.
+    instance_switcher : Gtk.StackSwitcher
+        The stack switcher for ``self.instance_stack``.
+    instance_switcher_box : BaseGrid
+        The ``self.instance_switcher`` container.
     legacy_xlet_highlighting : bool
         Whether to use the "old way" of highlighting an xlet instance.
-    next_button : object
-        See :py:class:`Gtk.Button`.
+    next_button : Gtk.Button
+        Next xlet instance selector.
     pages_definition : list
         The list containing the data to generate all window widgets.
-    prev_button : object
-        See :py:class:`Gtk.Button`.
+    prev_button : Gtk.Button
+        Previous xlet instance selector.
     selected_instance : dict
         The information of the currently selected instance.
     win_current_height : int
@@ -365,7 +370,7 @@ class MainApplication(Gtk.Application):
     win_initial_height : int
         Window initial height.
     win_initial_stack : string
-        Initial stack ID to to open the window with this stack selected.
+        Initial stack ID to open the window with this stack selected.
     win_initial_width : int
         Window initial width.
     win_is_maximized : bool
@@ -374,8 +379,8 @@ class MainApplication(Gtk.Application):
         The name of each selected stack of each xlet instance.
     win_state_cache_file : str
         Path to the file where the window state is stored.
-    window : object
-        See :py:class:`Gtk.ApplicationWindow`.
+    window : Gtk.ApplicationWindow
+        The window used by this application.
     xlet_dir : str
         Path to where the xlet is installed.
     xlet_help_file_exists : bool
@@ -809,9 +814,9 @@ class MainApplication(Gtk.Application):
 
         Parameters
         ----------
-        obj : object
+        obj : Gio.DBusProxy
             See :py:class:`Gio.DBusProxy`.
-        result : object
+        result : Gio.Task
             See :py:class:`Gio.Task`.
         data : None, optional
             User data.
@@ -887,8 +892,8 @@ class MainApplication(Gtk.Application):
 
         Parameters
         ----------
-        window : object
-            See :py:class:`Gtk.ApplicationWindow`.
+        window : Gtk.ApplicationWindow
+            This application window.
         *args
             Arguments.
         """
@@ -911,9 +916,9 @@ class MainApplication(Gtk.Application):
 
         Parameters
         ----------
-        window : object
+        window : Gtk.ApplicationWindow
             See :py:class:`Gtk.ApplicationWindow`.
-        event : object
+        event : Gdk.EventWindowState
             See :py:class:`Gdk.EventWindowState`.
         """
         if event.new_window_state & Gdk.WindowState.MAXIMIZED:
@@ -969,15 +974,15 @@ class MainApplication(Gtk.Application):
         ----------
         text : str
             Text for the menu item.
-        callback : function
+        callback : method
             Callback function to be executed when the menu item is activated.
         *args
             Arguments.
 
         Returns
         -------
-        object
-            See :py:class:`Gtk.MenuItem`.
+        Gtk.MenuItem
+            The created menu item.
         """
         item = Gtk.MenuItem(text)
 

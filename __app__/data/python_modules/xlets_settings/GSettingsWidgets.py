@@ -56,7 +56,7 @@ def __setitem__(self, key, value):
     ----------
     key : str
         Description
-    value : TYPE
+    value : int, str, list
         Description
 
     Raises
@@ -101,17 +101,17 @@ def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
 
     Parameters
     ----------
-    key : TYPE
+    key : str
         Description
-    widget : TYPE
+    widget : Gtk.Widget
         Description
-    prop : TYPE
+    prop : str
         Description
-    flags : TYPE
+    flags : Gio.SettingsBindFlags
         Description
-    key_to_prop : TYPE
+    key_to_prop : method
         Description
-    prop_to_key : TYPE
+    prop_to_key : method
         Description
     """
     self._ignore_key_changed = False
@@ -121,15 +121,15 @@ def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
 
         Parameters
         ----------
-        settings : TYPE
+        settings : Gio.Settings
             Description
-        key : TYPE
+        key : str
             Description
 
         Returns
         -------
-        TYPE
-            Description
+        None
+            Halt execution.
         """
         if self._ignore_key_changed:
             return
@@ -143,15 +143,15 @@ def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
 
         Parameters
         ----------
-        widget : TYPE
+        widget : Gtk.Widget
             Description
-        param : TYPE
+        param : str
             Description
 
         Returns
         -------
-        TYPE
-            Description
+        None
+            Halt execution.
         """
         if self._ignore_prop_changed:
             return
@@ -238,7 +238,7 @@ class GSettingsBackend(object):
 
         Parameters
         ----------
-        value : TYPE
+        value : str, int, list
             Description
         """
         self.settings[self.pref_key] = value
@@ -248,7 +248,7 @@ class GSettingsBackend(object):
 
         Returns
         -------
-        TYPE
+        str, int, list
             Description
         """
         return self.settings[self.pref_key]
@@ -258,7 +258,7 @@ class GSettingsBackend(object):
 
         Returns
         -------
-        TYPE
+        list, None
             Description
         """
         range = self.settings.get_range(self.pref_key)
@@ -367,15 +367,15 @@ def g_settings_factory(subclass):
 
         Attributes
         ----------
-        map_get : function
+        map_get : method
             See ``map_set``.
-        map_set : function
+        map_set : method
             A function to map between setting and bound attribute.
             May also be passed as a keyword argument during instantiation.
             These methods will be ignored if ``bind_dir = None``.
         pref_key : str
             Preference key.
-        settings : object
+        settings : Gio.Settings
             :py:class:`Gio.Settings`.
         """
 

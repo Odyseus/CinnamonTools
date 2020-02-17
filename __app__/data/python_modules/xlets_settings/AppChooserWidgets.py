@@ -25,6 +25,20 @@ class ApplicationChooserWidget(Gtk.Dialog):
     :py:class:`Gtk.AppChooserDialog` does not seem to provide any way to allow selection from all
     installed applications, so this dialog serves as a replacement.
 
+    Attributes
+    ----------
+    app_list : list
+        The list of all installed applications.
+    label : Gtk.Label
+        The widget containing information. Usually it would be if just one application can be
+        selected or multiple applications.
+    list_store : Gtk.ListStore
+        Applications data storage.
+    selected_apps : list
+        List of selected applications.
+    tree_view : Gtk.TreeView
+        The widget that will display the data stored in ``self.list_store``.
+
     Example
     -------
 
@@ -54,19 +68,6 @@ class ApplicationChooserWidget(Gtk.Dialog):
         if applications is not None and len(applications) > 0:
             for app in applications:
                 print(app.get_id())
-
-    Attributes
-    ----------
-    app_list : list
-        The list of all installed applications.
-    label : str
-        A string used as a title for the applications chooser dialog.
-    list_store : object
-        See :py:class:`Gtk.ListStore`.
-    selected_apps : list
-        List of selected applications.
-    tree_view : object
-        See :py:class:`Gtk.TreeView`.
     """
 
     def __init__(self, transient_for=None, multi_selection=False, show_no_display=True):
@@ -174,7 +175,7 @@ class ApplicationChooserWidget(Gtk.Dialog):
 
             Parameters
             ----------
-            x : :py:class:`Gio.DesktopAppInfo`
+            x : Gio.DesktopAppInfo
                 The applicaction to filter.
 
             Returns
@@ -221,12 +222,8 @@ class ApplicationChooserWidget(Gtk.Dialog):
 
         Returns
         -------
-        list
-            All selected applications.
-        :py:class:`Gio.AppInfo`
-            One selected application.
-        None
-            No selected applications.
+        list, Gio.AppInfo, None
+            Selected application/s or None.
         """
         self._populate_app_list()
         self.show_all()
@@ -274,9 +271,9 @@ class AppList(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : object
+    content_widget : Gtk.Button
         The content widget.
     label : str
         The widget label.
@@ -393,8 +390,8 @@ class AppList(SettingsWidget):
 
             Parameters
             ----------
-            sel : object
-                See :py:class:`Gtk.TreeSelection`.
+            sel : Gtk.TreeSelection
+                THe selection containing the selected applications.
             """
             del_button.set_sensitive(sel.count_selected_rows() != 0)
 
@@ -490,9 +487,9 @@ class AppList(SettingsWidget):
 
         Parameters
         ----------
-        widget : object
-            :py:class:`Gtk.Button`.
-        tree : object
+        widget : Gtk.ToolButton
+            :py:class:`Gtk.ToolButton`.
+        tree : Gtk.TreeView
             :py:class:`Gtk.TreeView`.
         """
         selection = tree.get_selection()
@@ -540,11 +537,11 @@ class AppChooser(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : object
+    content_widget : Gtk.Button
         The content widget.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     """
     bind_dir = None

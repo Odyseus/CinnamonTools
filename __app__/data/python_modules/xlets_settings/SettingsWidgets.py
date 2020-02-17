@@ -194,8 +194,8 @@ class SettingsPage(BaseGrid):
 
         Returns
         -------
-        object
-            :any:`SettingsSection`.
+        SettingsSection
+            The settings section.
         """
         section = SettingsSection(title, subtitle, section_info)
         self.add(section)
@@ -226,8 +226,8 @@ class SettingsPage(BaseGrid):
 
         Returns
         -------
-        object
-            :any:`SettingsSection`.
+        SettingsSection
+            The settings section.
         """
         section = SettingsSection(title, subtitle, section_info)
 
@@ -405,10 +405,8 @@ class SettingsSection(BaseGrid):
 
         Returns
         -------
-        object
-            :any:`JSONSettingsRevealer`.
-        object
-            :any:`SettingsRevealer`.
+        JSONSettingsRevealer, SettingsRevealer
+            The revealer.
         """
         list_box = Gtk.ListBox(can_focus=False)
         list_box.set_selection_mode(Gtk.SelectionMode.NONE)
@@ -451,8 +449,8 @@ class SettingsSection(BaseGrid):
 
         Returns
         -------
-        object
-            :py:class:`Gtk.Label`.
+        Gtk.Label
+            The note to add to a section.
         """
         label = Gtk.Label()
         label.set_property("wrap", True)
@@ -650,8 +648,8 @@ class SettingsWidget(BaseGrid):
 
         Returns
         -------
-        object
-            :py:class:`Gio.Settings`.
+        Gio.Settings
+            An instantiated :py:class:`Gio.Settings` instance.
         """
         global settings_objects
         try:
@@ -737,7 +735,7 @@ class Button(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : object
         The main widget that will be used to represent a setting value.
@@ -859,7 +857,7 @@ class IconChooser(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int, None
+    bind_dir : Gio.SettingsBindFlags, None
         See :any:`JSONSettingsBackend`.
     bind_object : object
         See :any:`JSONSettingsBackend`.
@@ -961,7 +959,7 @@ class Entry(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     bind_prop : str
         See :any:`JSONSettingsBackend.attach_backend`.
@@ -1010,7 +1008,7 @@ class TextView(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     bind_object : object
         See :any:`JSONSettingsBackend.attach_backend`.
@@ -1089,7 +1087,7 @@ class Switch(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     bind_prop : str
         See :any:`JSONSettingsBackend.attach_backend`.
@@ -1142,7 +1140,7 @@ class ComboBox(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : object
         The main widget that will be used to represent a setting value.
@@ -1264,7 +1262,7 @@ class ColorChooser(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : object
         The main widget that will be used to represent a setting value.
@@ -1383,7 +1381,7 @@ class FileChooser(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : object
         The main widget that will be used to represent a setting value.
@@ -1482,7 +1480,7 @@ class SpinButton(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     bind_prop : str
         See :any:`JSONSettingsBackend.attach_backend`.
@@ -1594,7 +1592,7 @@ class Keybinding(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : object
         The main widget that will be used to represent a setting value.
@@ -1696,7 +1694,7 @@ class KeybindingWithOptions(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : object
         The main widget that will be used to represent a setting value.

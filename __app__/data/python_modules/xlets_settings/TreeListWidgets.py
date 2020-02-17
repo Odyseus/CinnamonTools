@@ -264,7 +264,7 @@ class List(SettingsWidget):
 
     Attributes
     ----------
-    bind_dir : int
+    bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : TYPE
         Description
