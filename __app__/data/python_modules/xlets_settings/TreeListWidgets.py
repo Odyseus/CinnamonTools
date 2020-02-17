@@ -231,6 +231,10 @@ def list_edit_factory(col_def, xlet_settings):
             else:
                 if hasattr(self, "bind_object"):
                     self.bind_object.set_property(self.bind_prop, value)
+
+                    # NOTE: Needed for special IconChooser case.
+                    if hasattr(self, "bind_content_widget_entry"):
+                        self.content_widget.set_text(value)
                 else:
                     self.content_widget.set_property(self.bind_prop, value)
 
@@ -1247,7 +1251,7 @@ class List(SettingsWidget):
             if isinstance(widget, TextView):
                 settings_box.connect("row-activated", widget.focus_the_retarded_text_view)
 
-            if isinstance(widget, IconChooser):
+            if isinstance(widget, (IconChooser, AppChooser)):
                 widget.set_main_app(self.get_main_app())
 
             widgets.append(widget)

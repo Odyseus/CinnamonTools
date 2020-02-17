@@ -857,6 +857,12 @@ class IconChooser(SettingsWidget):
 
     Attributes
     ----------
+    bind_content_widget_entry : bool
+        Since I had the _great_ idea of creating this setting widget with two widgets bound to the
+        setting, I had to come up with this. This attribute is used by the
+        :any:`TreeListWidgets.list_edit_factory` method to identify :any:`IconChooser` widget
+        so in addition to call ``set_property`` on ``self.bind_object``, it also calls ``set_text``
+        on ``self.content_widget`` (a :py:class:`Gtk.Entry`) to keep both widgets in sync.
     bind_dir : Gio.SettingsBindFlags, None
         See :any:`JSONSettingsBackend`.
     bind_object : object
@@ -871,6 +877,7 @@ class IconChooser(SettingsWidget):
 
     bind_prop = "icon"
     bind_dir = Gio.SettingsBindFlags.DEFAULT
+    bind_content_widget_entry = True
 
     def __init__(self, label, size_group=None, dep_key=None, tooltip=""):
         """Initialization.
@@ -888,7 +895,6 @@ class IconChooser(SettingsWidget):
         """
         super().__init__(dep_key=dep_key)
         self._timer = None
-        self._setting_icon = False
 
         self.label = SettingsLabel(label)
 
@@ -931,10 +937,9 @@ class IconChooser(SettingsWidget):
         *args
             Arguments.
         """
-        if not self._setting_icon:
-            value = self.content_widget.get_text().strip()
-            self.bind_object.set_icon(value)
-            self.set_value(value)
+        value = self.content_widget.get_text().strip()
+        self.bind_object.set_icon(value)
+        self.set_value(value)
 
     def _on_icon_selected(self, widget, icon):
         """On icon selected.
@@ -946,12 +951,8 @@ class IconChooser(SettingsWidget):
         icon : str
             The icon name or path to set into the text entry.
         """
-        self._setting_icon = True
-
         if icon is not None:
             self.content_widget.set_text(icon)
-
-        self._setting_icon = False
 
 
 class Entry(SettingsWidget):
@@ -1326,7 +1327,7 @@ class ColorChooser(SettingsWidget):
         Parameters
         ----------
         *args
-            Description
+            Arguments.
         """
         self.set_value(self.content_widget.get_rgba().to_string())
 

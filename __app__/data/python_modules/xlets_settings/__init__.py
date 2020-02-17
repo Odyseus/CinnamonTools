@@ -102,6 +102,12 @@ class SettingsBox(BaseGrid):
     stack : Gtk.Stack
         :py:class:`Gtk.Stack`.
     """
+    _should_set_main_app = [
+        "list",
+        "iconfilechooser",
+        "applist",
+        "appchooser",
+    ]
 
     def __init__(self, pages_definition=[], instance_info={}, main_app=None, xlet_meta=None):
         """Initialization.
@@ -211,7 +217,7 @@ class SettingsBox(BaseGrid):
                             widget = globals()[XLET_SETTINGS_WIDGETS[widget_type]](
                                 widget_attrs=widget_attrs, widget_kwargs=widget_kwargs)
 
-                            if (widget_type == "list" or widget_type == "iconfilechooser") and self._main_app is not None:
+                            if (widget_type in self._should_set_main_app) and self._main_app is not None:
                                 widget.set_main_app(self._main_app)
                         elif widget_type in G_SETTINGS_WIDGETS:
                             widget_attrs["xlet_meta"] = self._xlet_meta
@@ -318,6 +324,8 @@ class MainApplication(Gtk.Application):
 
     Attributes
     ----------
+    all_applications_list : list
+        The list of all installed applications on a system.
     all_instances_info : list
         Storage for all xlets instances information.
     app_image : Gtk.Button
@@ -331,12 +339,20 @@ class MainApplication(Gtk.Application):
         Cinnamon's gsettings settings (schema ``org.cinnamon``) to get the list of enabled xlets.
     display_settings_handling : bool
         Whether to display settings handler items in the header bar menu.
+    gtk_app_info_monitor : Gio.AppInfoMonitor
+        The :py:class:`Gio.AppInfoMonitor` used to monitor system applications changes.
+    gtk_app_info_monitor_uptodate : bool
+        _Flag_ used to conditionally force the update of self.all_applications_list.
+    gtk_app_info_monitor_signal : int
+        Signal ID for ``self.gtk_app_info_monitor`` connection.
     gtk_icon_theme : Gtk.IconTheme
         This is used to append entra folders to :py:class:`Gtk.IconTheme` to use icons by name insted
         of by path. It is also used by the :any:`IconChooser` widgets to get the list of icons in an
         icon theme.
-    gtk_icon_theme_changed : bool
-        "Flag" used to conditionally force the update of self.icon_chooser_store.
+    gtk_icon_theme_uptodate : bool
+        _Flag_ used to conditionally force the update of self.icon_chooser_store.
+    gtk_icon_theme_signal : int
+        Signal ID for ``self.gtk_icon_theme`` connection.
     header_bar : Gtk.HeaderBar
         The header bar used by this application.
     help_file_path : str
@@ -435,13 +451,19 @@ class MainApplication(Gtk.Application):
         self.xlet_uuid = ""
         # Other attributes.
         self.selected_instance = None
-        self.gtk_icon_theme_changed = False
+        self.gtk_icon_theme_uptodate = False
+        self.gtk_app_info_monitor_uptodate = False
+        self.all_applications_list = []
         self.icon_chooser_store = Gtk.ListStore(str, str)
         self.icon_chooser_icons = dict()
         self.cinnamon_gsettings = Gio.Settings.new("org.cinnamon")
         self.all_instances_info = []
+        self.gtk_app_info_monitor = Gio.AppInfoMonitor.get()
+        self.gtk_app_info_monitor_signal = self.gtk_app_info_monitor.connect(
+            "changed", self.on_gtk_app_info_monitor_changed)
         self.gtk_icon_theme = Gtk.IconTheme.get_default()
-        self.gtk_icon_theme.connect("changed", self.on_gtk_icon_theme_changed)
+        self.gtk_icon_theme_signal = self.gtk_icon_theme.connect(
+            "changed", self.on_gtk_icon_theme_changed)
         # NOTE: Append the "icons" folder found in the framework.
         self.gtk_icon_theme.append_search_path(os.path.join(MODULE_PATH, "icons"))
 
@@ -472,6 +494,16 @@ class MainApplication(Gtk.Application):
             flags=Gio.ApplicationFlags.FLAGS_NONE,
         )
 
+    def on_gtk_app_info_monitor_changed(self, *args):
+        """Set self.gtk_app_info_monitor_changed to true to force stored applications update.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        self.gtk_app_info_monitor_uptodate = False
+
     def on_gtk_icon_theme_changed(self, *args):
         """Set self.gtk_icon_theme_changed to true to force stored icons update.
 
@@ -480,7 +512,44 @@ class MainApplication(Gtk.Application):
         *args
             Arguments.
         """
-        self.gtk_icon_theme_changed = True
+        self.gtk_icon_theme_uptodate = False
+
+    def init_apps_chooser_data(self):
+        """Initialize applications chooser data.
+        """
+        if self.gtk_app_info_monitor_uptodate:
+            return
+
+        self.all_applications_list.clear()
+        app_blacklist = set(("screensavers-", "kde4-"))
+
+        # I added this filter because there are more that 200 screen savers in Linux Mint. ¬¬
+        # They were unnecessarily slowing the heck out the loading of the list of applications.
+        # At this point in time, none of the tweaks that makes use of this ApplicationChooserDialog
+        # would require to choose a screen saver from the list, so I happily ignore them for now.
+        def filter_list(x):
+            """Filter application list.
+
+            Parameters
+            ----------
+            x : Gio.DesktopAppInfo
+                The applicaction to filter.
+
+            Returns
+            -------
+            bool
+                If the application should be included in the list of applications.
+            """
+            lowered = str(x.get_id()).lower()
+
+            # I think that is more precise to check the start of the app ID. (?)
+            # The following condition filters out all .desktop files that
+            # are inside a folders called "screensavers" and "kde4".
+            return lowered[:13] not in app_blacklist and lowered[:5] not in app_blacklist
+
+        self.all_applications_list = list(filter(filter_list, Gio.AppInfo.get_all()))
+
+        self.gtk_app_info_monitor_uptodate = True
 
     def init_icon_chooser_data(self):
         """Initialize icon chooser data.
@@ -488,32 +557,34 @@ class MainApplication(Gtk.Application):
         This data is generated and stored in :any:`MainApplication` so the
         tasks aren't performed for each :any:`IconChooserDialog` created.
         """
-        if not self.gtk_icon_theme_changed:
-            self.icon_chooser_store.clear()
-            self.icon_chooser_icons.clear()
+        if self.gtk_icon_theme_uptodate:
+            return
 
-            icon_contexts = [[_(context), context]
-                             for context in self.gtk_icon_theme.list_contexts()]
-            icon_contexts.sort()
+        self.icon_chooser_store.clear()
+        self.icon_chooser_icons.clear()
 
-            all_icons_set = set(self.gtk_icon_theme.list_icons(None))
+        icon_contexts = [[_(context), context]
+                         for context in self.gtk_icon_theme.list_contexts()]
+        icon_contexts.sort()
 
-            for l, context in icon_contexts:
-                icons = self.gtk_icon_theme.list_icons(context)
-                self.icon_chooser_icons[context] = icons
-                all_icons_set = all_icons_set - set(icons)
+        all_icons_set = set(self.gtk_icon_theme.list_icons(None))
 
-            other_icons = list(all_icons_set)
-            other_icons.sort()
+        for l, context in icon_contexts:
+            icons = self.gtk_icon_theme.list_icons(context)
+            self.icon_chooser_icons[context] = icons
+            all_icons_set = all_icons_set - set(icons)
 
-            icon_contexts += [[_("Other"), "other"]]
+        other_icons = list(all_icons_set)
+        other_icons.sort()
 
-            self.icon_chooser_icons["other"] = other_icons
+        icon_contexts += [[_("Other"), "other"]]
 
-            for ctx in icon_contexts:
-                self.icon_chooser_store.append(ctx)
+        self.icon_chooser_icons["other"] = other_icons
 
-            self.gtk_icon_theme_changed = True
+        for ctx in icon_contexts:
+            self.icon_chooser_store.append(ctx)
+
+        self.gtk_icon_theme_uptodate = True
 
     def load_xlet_data(self):
         """Load xlet data.
@@ -618,9 +689,20 @@ class MainApplication(Gtk.Application):
         self.set_visible_stack_for_page()
 
     # NOTE: Investigate if this is needed or not.
-    # def notify_dbus(self, handler, key, value):
-    #     if proxy:
-    #         proxy.updateSetting("(ssss)", self.xlet_uuid, handler.instance_id, key, json.dumps(value))
+    def notify_dbus(self, handler, key, value):
+        """Notify ``cinnamonDBus.js``.
+
+        Parameters
+        ----------
+        handler : JSONSettingsHandler
+            The settings handler.
+        key : str
+            The setting key.
+        value : int, str, bool, list, dict
+            The setting value.
+        """
+        if proxy:
+            proxy.updateSetting("(ssss)", self.xlet_uuid, handler.instance_id, key, json.dumps(value))
 
     def build_window(self):
         """Build window.
@@ -1206,6 +1288,9 @@ class MainApplication(Gtk.Application):
             except Exception:
                 pass
 
+        self.gtk_icon_theme.disconnect(self.gtk_icon_theme_signal)
+        self.gtk_app_info_monitor.disconnect(self.gtk_app_info_monitor_signal)
+
         self.quit()
 
 
@@ -1226,7 +1311,8 @@ def cli(pages_definition):
     parser.add_argument("--app-id", dest="application_id", default="", type=str)
     parser.add_argument("--app-title", dest="application_title", default="", type=str)
     parser.add_argument("--stack-id", dest="win_initial_stack", default="", type=str)
-    parser.add_argument("--hide-settings-handling", dest="display_settings_handling", action="store_false")
+    parser.add_argument("--hide-settings-handling",
+                        dest="display_settings_handling", action="store_false")
 
     args = parser.parse_args()
 

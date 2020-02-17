@@ -6,6 +6,7 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 
+from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gio
 from gi.repository import Gtk
@@ -16,8 +17,8 @@ from .common import BaseGrid
 from .common import _
 
 
-class ApplicationChooserWidget(Gtk.Dialog):
-    """Application chooser widget.
+class ApplicationChooserDialog(Gtk.Dialog):
+    """Application chooser dialog.
 
     Source: https://stackoverflow.com/a/41985006
 
@@ -38,43 +39,15 @@ class ApplicationChooserWidget(Gtk.Dialog):
         List of selected applications.
     tree_view : Gtk.TreeView
         The widget that will display the data stored in ``self.list_store``.
-
-    Example
-    -------
-
-    .. code:: python
-
-        # Multi selection disabled.
-        # Hidden applications not included.
-        app_chooser = ApplicationChooserWidget(transient_for=None,  # Set accordingly.
-                                               multi_selection=False,
-                                               show_no_display=False)
-        # Open application chooser dialog.
-        application = app_chooser.run()
-
-        if application is not None:
-            application.launch()
-
-    .. code:: python
-
-        # Multi selection enabled.
-        # Hidden applications included.
-        app_chooser = ApplicationChooserWidget(transient_for=None,  # Set accordingly.
-                                               multi_selection=True,
-                                               show_no_display=True)
-        # Open application chooser dialog.
-        applications = app_chooser.run()
-
-        if applications is not None and len(applications) > 0:
-            for app in applications:
-                print(app.get_id())
     """
 
-    def __init__(self, transient_for=None, multi_selection=False, show_no_display=True):
+    def __init__(self, main_app=None, transient_for=None, multi_selection=False, show_no_display=True):
         """Initialization.
 
         Parameters
         ----------
+        main_app : None, optional
+            See ``main_app`` of :any:`SettingsBox`.
         transient_for : None, optional
             See :py:class:`Gtk.Window`.
         multi_selection : bool, optional
@@ -88,9 +61,11 @@ class ApplicationChooserWidget(Gtk.Dialog):
                          flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                          buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
                                   _("_OK"), Gtk.ResponseType.OK))
+        GLib.threads_init()
         self.set_size_request(400, 500)
         self._multi_selection = multi_selection
         self._show_no_display = show_no_display
+        self._main_app = main_app
 
         self._headerbar = self.get_header_bar()
         content_box = self.get_content_area()
@@ -143,6 +118,7 @@ class ApplicationChooserWidget(Gtk.Dialog):
         self.app_list = []
 
         self._update_ok_button_sensitivity()
+        GLib.idle_add(self._populate_app_list)
 
     def _update_ok_button_sensitivity(self, *args):
         """Update OK button sensitivity.
@@ -155,7 +131,7 @@ class ApplicationChooserWidget(Gtk.Dialog):
         tree_model, paths = self.tree_view.get_selection().get_selected_rows()
         self._ok_button.set_sensitive(len(paths) != 0)
 
-    def _populate_app_list(self):
+    def _populate_app_list(self, repopulate=False):
         """Populate the list of applications with all installed applications.
 
         <strikethrough>Icons are provided by icon-name, however some applications may return a full
@@ -166,10 +142,12 @@ class ApplicationChooserWidget(Gtk.Dialog):
         :py:class:`Gio.AppInfo` provides and the icon is practically guaranteed to show up
         be it a named icon or a path to an image.
         """
-        # I added this filter because there are more that 200 screen savers in Linux Mint. ¬¬
-        # They were unnecessarily slowing the heck out the loading of the list of applications.
-        # At this point in time, none of the tweaks that makes use of this ApplicationChooserWidget
-        # would require to choose a screen saver from the list, so I happily ignore them for now.
+        if repopulate:
+            self.app_list.clear()
+            self.list_store.clear()
+
+        self._main_app.init_apps_chooser_data()
+
         def filter_list(x):
             """Filter application list.
 
@@ -183,17 +161,9 @@ class ApplicationChooserWidget(Gtk.Dialog):
             bool
                 If the application should be included in the list of applications.
             """
-            lowered = str(x.get_id()).lower()
-
-            # I think that is more precise to check the start of the app ID. (?)
-            # The following condition filters out all .desktop files that
-            # are inside a folders called "screensavers" and "kde4".
-            if lowered.startswith("screensavers-") or lowered.startswith("kde4-"):
-                return False
-
             return True if self._show_no_display else not x.get_nodisplay()
 
-        self.app_list = list(filter(filter_list, Gio.AppInfo.get_all()))
+        self.app_list = list(filter(filter_list, self._main_app.all_applications_list))
         count = 0
 
         for i, app in enumerate(self.app_list):
@@ -225,7 +195,13 @@ class ApplicationChooserWidget(Gtk.Dialog):
         list, Gio.AppInfo, None
             Selected application/s or None.
         """
-        self._populate_app_list()
+        if not self._main_app.gtk_app_info_monitor_uptodate:
+            self._populate_app_list(True)
+        # NOTE: Since the dialog isn't destroyed but hidden...
+        # Clear selected_apps so the previously selected apps. are removed.
+        self.selected_apps.clear()
+        # Unselect all so the previously selected rows are unselected.
+        self.tree_view.get_selection().unselect_all()
         self.show_all()
         response = super().run()
 
@@ -267,10 +243,12 @@ class ApplicationChooserWidget(Gtk.Dialog):
 
 
 class AppList(SettingsWidget):
-    """Applicacions list widget.
+    """Applications list widget.
 
     Attributes
     ----------
+    app_chooser_dialog : ApplicationChooserDialog
+        The applications chooser dialog.
     bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : Gtk.Button
@@ -298,6 +276,8 @@ class AppList(SettingsWidget):
             Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
+        GLib.threads_init()
+        self.app_chooser_dialog = None
         self.label = label
         self.content_widget = Gtk.Button(label=label, valign=Gtk.Align.CENTER)
         self.content_widget.set_hexpand(True)
@@ -307,6 +287,19 @@ class AppList(SettingsWidget):
 
         self._app_store = Gtk.ListStore()
         self._app_store.set_column_types([Gio.AppInfo, GObject.TYPE_STRING, Gio.Icon])
+
+        GLib.idle_add(self.ensure_app_chooser_dialog)
+
+    def _on_destroy(self, *args):
+        """On widget destroyed.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        if self.app_chooser_dialog is not None:
+            self.app_chooser_dialog.destroy()
 
     def _open_applications_list(self, *args):
         """Open applications list.
@@ -406,6 +399,21 @@ class AppList(SettingsWidget):
         dialog.destroy()
         self._list_changed()
 
+    def ensure_app_chooser_dialog(self):
+        """Ensure that the dialog is created once.
+
+        Returns
+        -------
+        None
+            Halt execution.
+        """
+        if self.app_chooser_dialog is not None:
+            return
+
+        self.app_chooser_dialog = ApplicationChooserDialog(main_app=self.get_main_app(),
+                                                           multi_selection=True)
+        self.app_chooser_dialog.set_label(_("Choose one or more applications (Hold Ctrl key)"))
+
     def _populate_app_list(self, *args):
         """Populate applications list.
 
@@ -462,14 +470,17 @@ class AppList(SettingsWidget):
         *args
             Arguments.
         """
-        app_chooser = ApplicationChooserWidget(transient_for=self.get_toplevel(),
-                                               multi_selection=True)
-        app_chooser.set_label(_("Choose one or more applications (Hold Ctrl key)"))
-        apps_info = app_chooser.run()
-        app_chooser.destroy()
+        self.ensure_app_chooser_dialog()
+        self.app_chooser_dialog.set_transient_for(self.get_toplevel())
+        apps_info = self.app_chooser_dialog.run()
+        self.app_chooser_dialog.hide()
 
         if apps_info is not None and len(apps_info) > 0:
+            current_applications = set(self.get_value())
             for a_i in apps_info:
+                if a_i.get_id() in current_applications:
+                    continue
+
                 iter = self._app_store.append()
 
                 self._app_store.set(iter, [
@@ -530,6 +541,7 @@ class AppList(SettingsWidget):
             Arguments.
         """
         self.content_widget.connect("clicked", self._open_applications_list)
+        self.connect("destroy", self._on_destroy)
 
 
 class AppChooser(SettingsWidget):
@@ -537,6 +549,8 @@ class AppChooser(SettingsWidget):
 
     Attributes
     ----------
+    app_chooser_dialog : ApplicationChooserDialog
+        The applications chooser dialog.
     bind_dir : Gio.SettingsBindFlags, None
         See :py:class:`Gio.SettingsBindFlags`.
     content_widget : Gtk.Button
@@ -561,7 +575,8 @@ class AppChooser(SettingsWidget):
             Widget tooltip text.
         """
         super().__init__(dep_key=dep_key)
-
+        GLib.threads_init()
+        self.app_chooser_dialog = None
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
         self.content_widget = Gtk.Button(valign=Gtk.Align.CENTER)
@@ -585,6 +600,34 @@ class AppChooser(SettingsWidget):
 
         self._set_button_data()
 
+        GLib.idle_add(self.ensure_app_chooser_dialog)
+
+    def _on_destroy(self, *args):
+        """On widget destroyed.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        if self.app_chooser_dialog is not None:
+            self.app_chooser_dialog.destroy()
+
+    def ensure_app_chooser_dialog(self):
+        """Ensure that the dialog is created once.
+
+        Returns
+        -------
+        None
+            Halt execution.
+        """
+        if self.app_chooser_dialog is not None:
+            return
+
+        self.app_chooser_dialog = ApplicationChooserDialog(main_app=self.get_main_app(),
+                                                           multi_selection=False)
+        self.app_chooser_dialog.set_label(_("Choose an application"))
+
     def _on_clear_button_clicked(self, *args):
         """Clear button action.
 
@@ -604,11 +647,10 @@ class AppChooser(SettingsWidget):
         *args
             Arguments.
         """
-        app_chooser = ApplicationChooserWidget(transient_for=self.get_toplevel(),
-                                               multi_selection=False)
-        app_chooser.set_label(_("Choose an application"))
-        app_info = app_chooser.run()
-        app_chooser.destroy()
+        self.ensure_app_chooser_dialog()
+        self.app_chooser_dialog.set_transient_for(self.get_toplevel())
+        app_info = self.app_chooser_dialog.run()
+        self.app_chooser_dialog.hide()
 
         if app_info is not None:
             self._on_app_selected(app_info.get_id())
@@ -627,13 +669,10 @@ class AppChooser(SettingsWidget):
     def _set_button_data(self):
         """Set button data.
         """
-        image = Gtk.Image.new_from_gicon(
-            Gio.Icon.new_for_string("image-missing"), Gtk.IconSize.BUTTON)
-        label = _("No app chosen")
-        extra_info = ""
+        current_app = self.get_value()
 
         try:
-            app_info = Gio.DesktopAppInfo.new(self.get_value())
+            app_info = Gio.DesktopAppInfo.new(current_app)
         except Exception:
             app_info = None
 
@@ -644,6 +683,16 @@ class AppChooser(SettingsWidget):
                 image = Gtk.Image.new_from_gicon(app_info.get_icon(), Gtk.IconSize.BUTTON)
             except Exception:
                 pass
+        else:
+            image = Gtk.Image.new_from_gicon(
+                Gio.Icon.new_for_string(
+                    "dialog-error-symbolic" if current_app else "edit-find-symbolic"),
+                Gtk.IconSize.BUTTON
+            )
+            label = _("Invalid app") if current_app else _("No app chosen")
+            extra_info = "\n%s" % _(
+                "The application with ID '%s' might not be installed anymore.") % current_app \
+                if current_app else ""
 
         self.content_widget.set_image(image)
         self.content_widget.set_label(label)
@@ -669,6 +718,7 @@ class AppChooser(SettingsWidget):
         """
         self.content_widget.connect("clicked", self._open_app_chooser)
         self._clear_button.connect("clicked", self._on_clear_button_clicked)
+        self.connect("destroy", self._on_destroy)
 
 
 if __name__ == "__main__":

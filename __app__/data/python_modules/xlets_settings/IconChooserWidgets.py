@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""Dialog for selecting themed icons.
+"""Widgets for selecting themed icons.
 """
 import gi
 import os
@@ -28,19 +28,19 @@ class IconChooserDialog(Gtk.Dialog):
 
     Based on `python-gtk-themed-icon-chooser \
     <https://github.com/Tomha/python-gtk-themed-icon-chooser>`__ and
-    Cinnamon's native widget.
+    XApp's native widget.
 
     The name of the selection icon is made available as a result of the run
     method, or by the get_selected_icon_name method.
 
-    NOTE
+    Note
     ----
     If 1000s of icons are displayed this is 1000s of widgets. They are
     loaded asynchronously to prevent blocking the main thread, but they must
     still be show()n from the main thread, which may momentarily block it. This
     can be limited by filtering the available icon selection beforehand.
 
-    TODO
+    Todo
     ----
     Not all memory created by the dialog seems to be released.
     """
@@ -152,11 +152,44 @@ class IconChooserDialog(Gtk.Dialog):
         self._sidebar.connect("selected-rows-changed", self._on_category_selected)
         self._flow_box.connect("selected-children-changed", self._on_icon_selected)
 
-        self._populate_sidebar()
+        GLib.idle_add(self._populate_sidebar)
 
-    def _populate_sidebar(self):
+    def run(self):
+        """Run dialog to select a themed icon.
+
+        Returns
+        -------
+        str
+            An icon name or path.
+        """
+        if self._main_app.gtk_icon_theme_uptodate:
+            self._populate_sidebar(True)
+
+        self._select_button.set_sensitive(False)
+
+        self.show_all()
+
+        if self._search_term:
+            if "/" in self._search_term and os.path.isdir(os.path.dirname(self._search_term)):
+                self._on_browse_button_clicked(None, dir_path=os.path.dirname(self._search_term))
+            else:
+                self._search_entry.set_text(self._search_term)
+                GLib.idle_add(self._filter_icons)
+
+        response = super().run()
+
+        if response == Gtk.ResponseType.OK:
+            return self.get_selected_icon_name()
+
+        return None
+
+    def _populate_sidebar(self, repopulate=False):
         """Populate the dialog sidebar.
         """
+        if repopulate:
+            for child in self._sidebar.get_children():
+                child.destroy()
+
         self._main_app.init_icon_chooser_data()
 
         for label, context in self._main_app.icon_chooser_store:
@@ -397,36 +430,6 @@ class IconChooserDialog(Gtk.Dialog):
 
         dialog.destroy()
 
-    def run(self):
-        """Run dialog to select a themed icon.
-
-        This loads a the current icon theme, gets and filters available
-        contexts, then filters/displays icon previews for the first
-        (alphabetically) context.
-
-        Returns
-        -------
-        str
-            An icon name or path.
-        """
-        self._select_button.set_sensitive(False)
-
-        self.show_all()
-
-        if self._search_term:
-            if "/" in self._search_term and os.path.isdir(os.path.dirname(self._search_term)):
-                self._on_browse_button_clicked(None, dir_path=os.path.dirname(self._search_term))
-            else:
-                self._search_entry.set_text(self._search_term)
-                GLib.idle_add(self._filter_icons)
-
-        response = super().run()
-
-        if response == Gtk.ResponseType.OK:
-            return self.get_selected_icon_name()
-
-        return None
-
     def get_icon_size(self):
         """Get the pixel size to display icons in.
 
@@ -574,8 +577,20 @@ class IconChooserButton(Gtk.Button):
         self.set_image(self._icon)
 
         self.connect("clicked", self._show_dialog)
+        self.connect("destroy", self._on_destroy)
 
         GLib.idle_add(self.ensure_dialog)
+
+    def _on_destroy(self, *args):
+        """On widget destroy.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        if self.dialog is not None:
+            self.dialog.destroy()
 
     def do_get_property(self, prop):
         """get property override.
@@ -654,8 +669,10 @@ class IconChooserButton(Gtk.Button):
                     self._icon.set_from_pixbuf(img)
                 else:
                     self._icon.set_from_icon_name(icon, Gtk.IconSize.BUTTON)
+
+                self.set_property("icon", icon)
             else:
-                self._icon.set_from_icon_name("image-missing", Gtk.IconSize.BUTTON)
+                self._icon.set_from_icon_name("edit-find-symbolic", Gtk.IconSize.BUTTON)
 
             self._timer = None
 
@@ -670,7 +687,7 @@ class IconChooserButton(Gtk.Button):
         Parameters
         ----------
         *args
-            Description
+            Arguments.
         """
         self.ensure_dialog()
         self.dialog.set_transient_for(self.get_toplevel())
@@ -682,10 +699,9 @@ class IconChooserButton(Gtk.Button):
 
         if self.icon is not None:
             self.set_icon(self.icon)
+            self.emit("icon-selected", self.icon)
 
         self.dialog.hide()
-
-        self.emit("icon-selected", self.icon)
 
     def get_dialog_icon_size(self):
         """Get the pixel size to display icons in.
