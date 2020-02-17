@@ -1,5 +1,6 @@
 {
     "name": "Custom Settings Framework Examples",
+    "external-configuration-app": "settings.py",
     "description": "Custom settings framework playground.",
     "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 }
