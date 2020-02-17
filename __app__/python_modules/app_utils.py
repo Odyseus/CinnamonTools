@@ -209,7 +209,7 @@ _changelog_header_xlets = """## {xlet_name} changelog
 _git_log_cmd_repo = 'git log --no-merges --grep="{all_xlets_slugs}" --invert-grep --pretty=format:"\
 **Date:** %aD<br/>%n\
 **Commit:** [%h]({repo_url}/commit/%h)<br/>%n\
-**Author:** %aN<br/>%n%n%B%n***%n" \
+**Author:** %aN<br/>%n%n#### %B%n***%n" \
 -- {relative_path} ":(exclude)themes" {append_or_override} "{log_path}"'
 
 _changelog_header_repo = """## Repository changelog
