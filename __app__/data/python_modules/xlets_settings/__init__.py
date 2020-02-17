@@ -428,7 +428,7 @@ class MainApplication(Gtk.Application):
         self.pages_definition = []
         self.win_initial_height = 600
         self.win_initial_width = 800
-        self.win_initial_stack = None
+        self.win_initial_stack = ""
         self.xlet_dir = ""
         self.xlet_instance_id = ""
         self.xlet_type = ""
@@ -1034,24 +1034,18 @@ class MainApplication(Gtk.Application):
         """Set visible stack for page.
         """
         if self.selected_instance["id"] in self.win_stacks_state or self.win_initial_stack:
-            # NOTE: Keep the try/catch block!!!
-            # When I add/remove pages to an xlet settings page, the already stored
-            # stacks IDs might not exist. In which case, the first stack is always selected.
-            try:
-                instance_stack = self.instance_stack.get_visible_child()
-                page_stack = instance_stack.get_page_stack()
-                page = page_stack.get_child_by_name(
-                    self.win_initial_stack if
-                    self.win_initial_stack else
-                    self.win_stacks_state[self.selected_instance["id"]]
-                )
+            instance_stack = self.instance_stack.get_visible_child()
+            page_stack = instance_stack.get_page_stack()
+            page = page_stack.get_child_by_name(
+                self.win_initial_stack if
+                self.win_initial_stack else
+                self.win_stacks_state[self.selected_instance["id"]]
+            )
 
-                if page is not None:
-                    page_stack.set_visible_child(page)
-            except Exception as err:
-                print(err)
+            if page is not None:
+                page_stack.set_visible_child(page)
 
-            self.win_initial_stack = None
+            self.win_initial_stack = ""
 
     def previous_instance(self, *args):
         """Select previous instance.
@@ -1225,12 +1219,14 @@ def cli(pages_definition):
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("--xlet-type", dest="xlet_type", default="extension", type=str)
-    parser.add_argument("--xlet-instance-id", dest="xlet_instance_id", default=None, type=str)
-    parser.add_argument("--xlet-uuid", dest="xlet_uuid")
+    parser.add_argument("--xlet-instance-id", dest="xlet_instance_id", default="", type=str)
+    parser.add_argument("--xlet-uuid", dest="xlet_uuid", default="", type=str)
     parser.add_argument("--win-width", dest="win_initial_width", default=800, type=int)
     parser.add_argument("--win-height", dest="win_initial_height", default=600, type=int)
-    parser.add_argument("--app-id", dest="application_id")
-    parser.add_argument("--stack-id", dest="win_initial_stack")
+    parser.add_argument("--app-id", dest="application_id", default="", type=str)
+    parser.add_argument("--app-title", dest="application_title", default="", type=str)
+    parser.add_argument("--stack-id", dest="win_initial_stack", default="", type=str)
+    parser.add_argument("--hide-settings-handling", dest="display_settings_handling", action="store_false")
 
     args = parser.parse_args()
 
