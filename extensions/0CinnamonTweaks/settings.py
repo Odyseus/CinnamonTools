@@ -537,7 +537,7 @@ WINDOWS_TAB = {
                     "pref_window_shadows_tweaks_enabled"
                 ],
                 "immutable": {
-                    "read_only_keys": ["win_type"]
+                    "read-only-keys": ["win_type"]
                 },
                 "height": 300,
                 "move-buttons": False
