@@ -4,11 +4,124 @@
 
 ***
 
+**Date:** Tue, 18 Feb 2020 05:04:00 -0300<br/>
+**Commit:** [c20a2d7](https://gitlab.com/Odyseus/CinnamonTools/commit/c20a2d7)<br/>
+**Author:** Odyseus<br/>
+
+#### All xlets
+
+- Updated localization templates.
+- Updated Spanish localizations.
+- Updated change logs.
+- Updated help pages.
+
+***
+
+**Date:** Tue, 18 Feb 2020 04:49:00 -0300<br/>
+**Commit:** [31faa50](https://gitlab.com/Odyseus/CinnamonTools/commit/31faa50)<br/>
+**Author:** Odyseus<br/>
+
+#### Xlets settings framework
+
+- Doctrings completion.
+
+***
+
+**Date:** Tue, 18 Feb 2020 04:48:17 -0300<br/>
+**Commit:** [c7c8739](https://gitlab.com/Odyseus/CinnamonTools/commit/c7c8739)<br/>
+**Author:** Odyseus<br/>
+
+#### Xlets settings framework
+
+- General:
+    - Changed some instances of Gtk.MessageDialog to be modal and destroyed with their parents.
+    - Renamed the `restore_settings` method to `import_settings` because that's what it does exactly.
+- GSettingsWidgets.py:
+    - Smacked some sense to the `Gio.Settings.bind_with_mapping` override function. Just renamed some parameters to use the same names used in other modules.
+- IconChooserWidgets.py:
+    - Finally figured out what was wrong with the `IconChooserButton` not saving its value to the preference. Since the *icon* property for this widget is initialized with the `GObject.ParamFlags.EXPLICIT_NOTIFY` flag, every change to the property should be manually notified.
+- TreeListWidgets.py:
+    - Changed the `List` class name to `TreeList`. I never liked its short name and in the future its name might clash with type hinting (?).
+    - Changed the name of the `allow_edition` and `read_only_keys` to `allow-edition` and `read-only-keys` respectively for the `immutable` option for `TreeList` widgets. Since these keys aren't mapped to class parameters, I wanted to have consistency for JSON key names (only use `-` for word separator).
+    - Changed the cell renderer label for the `app` type of widgets for `TreeList` widgets to inform that the currently selected applications not valid (might have been uninstalled).
+    - Renamed a parameter to be *contextually more accurate*.
+    - Switched some loops to `enumerate(obj)` instead of `range(len(obj))`.
+- KeybindingWidgets.py:
+    - Added to the dialog informing of a not allowed key the `transient_for` parameter to get rid of Gtk warning.
+    - Changed all `return True` to `return Gdk.EVENT_STOP` inside the `CellRendererKeybinding.on_key_release`.
+- JsonSettingsWidgets.py:
+    - Smacked some sense to the file monitor handling of the `JSONSettingsHandler` class.
+    - Cleaned unused attribute on the `JSONSettingsRevealer` class and added a right type check for the `dep_key` parameter.
+
+***
+
+**Date:** Mon, 17 Feb 2020 10:38:56 -0300<br/>
+**Commit:** [1ff6d55](https://gitlab.com/Odyseus/CinnamonTools/commit/1ff6d55)<br/>
+**Author:** Odyseus<br/>
+
+#### Python modules
+
+- Slightly changed the styling of the repository CHANGELOG.md.
+
+***
+
+**Date:** Mon, 17 Feb 2020 10:38:04 -0300<br/>
+**Commit:** [6609a9b](https://gitlab.com/Odyseus/CinnamonTools/commit/6609a9b)<br/>
+**Author:** Odyseus<br/>
+
+#### Xlets settings framework
+
+- General:
+    - Slightly changed the logic for storing the icons theme data to something that actually works. Also added storage for the connected signal so it can be disconnected on exit.
+- AppChooserWidgets.py:
+    - Changed the `ApplicationChooserWidget` class name to `ApplicationChooserDialog` because that's what it is. Also removed the example code from its docstring because it isn't anymore an *standalone* widget.
+    - Converted all icon chooser widgets into using *persistent dialogs*. This allows to call `Gio.AppInfo.get_all()` only once when the first application chooser widget opens a `ApplicationChooserDialog` dialog and successive openings will use the stores list of applications. If there are changes on the system applications (installed/uninstalled), the next time that an application chooser widget opens a `ApplicationChooserDialog` dialog will force an update of the stored applications list.
+- IconChooserWidgets.py:
+    - Changed the image used when there is no icon selected from **image-missing** to **edit-find-symbolic**.
+- SettingsWidgets.py:
+    - `IconChooser`: Fixed widgets values out of sync with the preference value.
+- TreeListWidgets.py:
+    - `IconChooser`: Fixed widgets values out of sync with the preference value. The widget created for **list**s widgets had a similar problem that the *master* widget.
+
+***
+
+**Date:** Mon, 17 Feb 2020 00:30:59 -0300<br/>
+**Commit:** [35151ee](https://gitlab.com/Odyseus/CinnamonTools/commit/35151ee)<br/>
+**Author:** Odyseus<br/>
+
+#### Xlets settings framework
+
+- General:
+    - Added `--hide-settings-handling` and `--app-title` CLI arguments used to respectively set the `display_settings_handling` and `application_title` arguments for the main application. These arguments are used when the framework is used to create applications that aren't used for controlling xlets settings.
+    - Removed the `try/catch` block from the main application's `set_visible_stack_for_page` method since it isn't needed anymore.
+
+***
+
+**Date:** Mon, 17 Feb 2020 00:16:17 -0300<br/>
+**Commit:** [e73c867](https://gitlab.com/Odyseus/CinnamonTools/commit/e73c867)<br/>
+**Author:** Odyseus<br/>
+
+#### Xlets settings framework
+
+- Docstrings update.
+
+***
+
+**Date:** Sun, 16 Feb 2020 08:03:12 -0300<br/>
+**Commit:** [689271d](https://gitlab.com/Odyseus/CinnamonTools/commit/689271d)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated change logs.
+
+***
+
 **Date:** Sun, 16 Feb 2020 08:02:37 -0300<br/>
 **Commit:** [5ca0079](https://gitlab.com/Odyseus/CinnamonTools/commit/5ca0079)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated help pages.
@@ -19,7 +132,7 @@ All xlets
 **Commit:** [669020b](https://gitlab.com/Odyseus/CinnamonTools/commit/669020b)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - app_utils.py: Changed the styling of all the generated CHANGELOG.md files. Instead of showing a commit body message inside code blocks, display them raw since I use Markdown formatting for the commit messages.
 
@@ -29,7 +142,7 @@ Python modules
 **Commit:** [c9484f4](https://gitlab.com/Odyseus/CinnamonTools/commit/c9484f4)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated CHANGELOG.md.
 - Updated submodules.
@@ -41,7 +154,7 @@ General
 **Commit:** [4589ccf](https://gitlab.com/Odyseus/CinnamonTools/commit/4589ccf)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - Docstrings update.
 
@@ -51,7 +164,7 @@ Xlets settings framework
 **Commit:** [1034ad1](https://gitlab.com/Odyseus/CinnamonTools/commit/1034ad1)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - General: Added missing `--stack-id` CLI argument used to open a window with a specific section selected.
 - SettingsWidgets.py:
@@ -67,7 +180,7 @@ Xlets settings framework
 **Commit:** [be3b16c](https://gitlab.com/Odyseus/CinnamonTools/commit/be3b16c)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated submodules.
 - Updated CHANGELOG.md.
@@ -78,7 +191,7 @@ General
 **Commit:** [52594d7](https://gitlab.com/Odyseus/CinnamonTools/commit/52594d7)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated help pages.
@@ -89,7 +202,7 @@ All xlets
 **Commit:** [1f10bea](https://gitlab.com/Odyseus/CinnamonTools/commit/1f10bea)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated submodules.
 - Updated CHANGELOG.md.
@@ -101,7 +214,7 @@ General
 **Commit:** [f8b7e52](https://gitlab.com/Odyseus/CinnamonTools/commit/f8b7e52)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Removed all paths to the custom xlets settings framework from the `make_pot_additional_files` key inside the xlets z_config.py files.
 - Updated localization templates.
@@ -115,7 +228,7 @@ All xlets
 **Commit:** [f11b23d](https://gitlab.com/Odyseus/CinnamonTools/commit/f11b23d)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - General:
     - Renamed an exception from the `exceptions` module so the docstrings do not clash with docstrings from other external modules when building the documentation with Sphinx.
@@ -126,7 +239,7 @@ Xlets settings framework
 **Commit:** [0001bee](https://gitlab.com/Odyseus/CinnamonTools/commit/0001bee)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - app_utils.py:
     - When updating localization templates, directly add the `--scan-additional-file` argument with the custom xlets settings framework files instead of using the `make_pot_additional_files` on each xlet z_config.py file.
@@ -138,7 +251,7 @@ Python modules
 **Commit:** [96bd1b4](https://gitlab.com/Odyseus/CinnamonTools/commit/96bd1b4)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Renamed all POT files and POT option files to {{UUID}}.pot and {{UUID}}.json. This allows for the files to have the exact same name as an xlet UUID when they are built, resulting in a more standard file name (`<xlet_type>/po/<xlet_uuid>.pot`).
 - Updated localization templates.
@@ -149,7 +262,7 @@ All xlets
 **Commit:** [b7bdc65](https://gitlab.com/Odyseus/CinnamonTools/commit/b7bdc65)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - app_utils.py:
     - Included .pot files to the string substitution section of the build xlets process.
@@ -161,7 +274,7 @@ Python modules
 **Commit:** [d1e69ed](https://gitlab.com/Odyseus/CinnamonTools/commit/d1e69ed)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - General:
     - Implemented a couple of exceptions without tracebacks to avoid reading a mile of text when debugging.
@@ -184,7 +297,7 @@ Xlets settings framework
 **Commit:** [27b0859](https://gitlab.com/Odyseus/CinnamonTools/commit/27b0859)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localizations.
@@ -197,7 +310,7 @@ All xlets
 **Commit:** [22032fe](https://gitlab.com/Odyseus/CinnamonTools/commit/22032fe)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - General: Docstrings clean up.
 - app_utils.py:
@@ -212,7 +325,7 @@ Python modules
 **Commit:** [52166ee](https://gitlab.com/Odyseus/CinnamonTools/commit/52166ee)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - General:
     - Massive renaming of class attributes (prefixed with `_`) to minimize duplications of docstrings.
@@ -234,7 +347,7 @@ Xlets settings framework
 **Commit:** [30a2efa](https://gitlab.com/Odyseus/CinnamonTools/commit/30a2efa)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated submodules.
 
@@ -244,7 +357,7 @@ General
 **Commit:** [5f6a9fb](https://gitlab.com/Odyseus/CinnamonTools/commit/5f6a9fb)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from 639a5e5..e60e30e
+#### Squashed '__app__/python_modules/python_utils/' changes from 639a5e5..e60e30e
 
 e60e30e cmd_utils.py
 
@@ -257,7 +370,7 @@ git-subtree-split: e60e30e3defcb721b4fc84230e8c9b23e6e847f0
 **Commit:** [f39a9cd](https://gitlab.com/Odyseus/CinnamonTools/commit/f39a9cd)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Base xlet:
     - Adaptations due to changes to global JavaScript modules.
@@ -272,7 +385,7 @@ General
 **Commit:** [33252df](https://gitlab.com/Odyseus/CinnamonTools/commit/33252df)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Corrected typo of the word "Additionally" found across all xlets files.
 - Compressed all images used by the xlets help pages.
@@ -287,7 +400,7 @@ All xlets
 **Commit:** [9524824](https://gitlab.com/Odyseus/CinnamonTools/commit/9524824)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - localized_help_creator.py: Fixed the formatting of a localizable string that prevented to correctly being extracted by gettext.
 - app_utils.py: Added the new file_chooser_dialog Python module for docstrings extraction when generating the documentation.
@@ -298,7 +411,7 @@ Python modules
 **Commit:** [bacfc8e](https://gitlab.com/Odyseus/CinnamonTools/commit/bacfc8e)<br/>
 **Author:** Odyseus<br/>
 
-JavaScript modules
+#### JavaScript modules
 
 - customTooltips.js:
     - Added options to override the max. width of the tooltip and to override the tooltip text alignment.
@@ -312,7 +425,7 @@ JavaScript modules
 **Commit:** [1f56dc3](https://gitlab.com/Odyseus/CinnamonTools/commit/1f56dc3)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - General:
     - Added the possibility to open the settings window with a specific section selected.
@@ -352,7 +465,7 @@ Xlets settings framework
 **Commit:** [a417d7f](https://gitlab.com/Odyseus/CinnamonTools/commit/a417d7f)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Added the file_chooser_dialog Python module to be used by xlets to be able to open a file dialog chooser.
 
@@ -362,7 +475,7 @@ General
 **Commit:** [e1afec0](https://gitlab.com/Odyseus/CinnamonTools/commit/e1afec0)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated changelogs.
 
@@ -372,7 +485,7 @@ General
 **Commit:** [88651c7](https://gitlab.com/Odyseus/CinnamonTools/commit/88651c7)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Modified themes changelog generation to ignore the themes/CHANGELOG.md file.
 
@@ -382,7 +495,7 @@ Python modules
 **Commit:** [943df52](https://gitlab.com/Odyseus/CinnamonTools/commit/943df52)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated changelogs.
 - Updated Bash completions.
@@ -393,7 +506,7 @@ General
 **Commit:** [ee6dba6](https://gitlab.com/Odyseus/CinnamonTools/commit/ee6dba6)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Modified repository changelog generation to ignore the themes folder.
 - Added themes changelog generation.
@@ -404,7 +517,7 @@ Python modules
 **Commit:** [c2edfd0](https://gitlab.com/Odyseus/CinnamonTools/commit/c2edfd0)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules
 
@@ -414,7 +527,7 @@ General
 **Commit:** [cdd2bfe](https://gitlab.com/Odyseus/CinnamonTools/commit/cdd2bfe)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated changelog.
 
@@ -424,7 +537,7 @@ General
 **Commit:** [1c0975d](https://gitlab.com/Odyseus/CinnamonTools/commit/1c0975d)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - cli.py: Implemented a better way to decide when the log file should be printed.
 
@@ -434,7 +547,7 @@ Python modules
 **Commit:** [189c3cd](https://gitlab.com/Odyseus/CinnamonTools/commit/189c3cd)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from 0f986ce..639a5e5
+#### Squashed '__app__/python_modules/python_utils/' changes from 0f986ce..639a5e5
 
 639a5e5 cli_utils.py
 
@@ -447,7 +560,7 @@ git-subtree-split: 639a5e5b4862250dc1b8efeb1afb8de6f72cba7b
 **Commit:** [5591e57](https://gitlab.com/Odyseus/CinnamonTools/commit/5591e57)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - All modules: Some tweaks to docstrings references.
 - localized_help_creator.py: Modified the Cinnamon compatibility block to display the min. and max. version overrides declared on an xlet z_config.py file.
@@ -464,7 +577,7 @@ Python modules
 **Commit:** [b7765ea](https://gitlab.com/Odyseus/CinnamonTools/commit/b7765ea)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Added CHANGELOG.md.
 - Updated Bash completions.
@@ -475,7 +588,7 @@ General
 **Commit:** [b79d40b](https://gitlab.com/Odyseus/CinnamonTools/commit/b79d40b)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Added mechanism to generate a CHANGELOG file for the repository.
 - Removed changelog_handler.py module.
@@ -486,7 +599,7 @@ Python modules
 **Commit:** [efc03f2](https://gitlab.com/Odyseus/CinnamonTools/commit/efc03f2)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - app_utils.py: Added the xlets settings framework to the documentation building process.
 
@@ -496,7 +609,7 @@ Python modules
 **Commit:** [831ef71](https://gitlab.com/Odyseus/CinnamonTools/commit/831ef71)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - AppChooserWidgets.py
     - Fixed sensitivity of the delete button of the `applist` widget.
@@ -511,7 +624,7 @@ Xlets settings framework
 **Commit:** [c1917b2](https://gitlab.com/Odyseus/CinnamonTools/commit/c1917b2)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -522,7 +635,7 @@ General
 **Commit:** [b91cdf4](https://gitlab.com/Odyseus/CinnamonTools/commit/b91cdf4)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Removed `indent` key from all settings-schema.json files.
 - Updated localization templates.
@@ -536,7 +649,7 @@ All xlets
 **Commit:** [2e774b8](https://gitlab.com/Odyseus/CinnamonTools/commit/2e774b8)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from efb13da..0f986ce
+#### Squashed '__app__/python_modules/python_utils/' changes from efb13da..0f986ce
 
 0f986ce General
 27ad57d All modules
@@ -552,7 +665,7 @@ git-subtree-split: 0f986ce8790ac1699bc3d86402527f2d834d079e
 **Commit:** [0a18db5](https://gitlab.com/Odyseus/CinnamonTools/commit/0a18db5)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - Suppressed some warnings by using the proper CSS selectors depending on the Gtk 3 version the application runs in.
 
@@ -562,7 +675,7 @@ Xlets settings framework
 **Commit:** [b3126fb](https://gitlab.com/Odyseus/CinnamonTools/commit/b3126fb)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Don't exit when there is no specified build output location. Directly use the temporary location.
 
@@ -572,7 +685,7 @@ Python modules
 **Commit:** [cc674b9](https://gitlab.com/Odyseus/CinnamonTools/commit/cc674b9)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Fixed .gitignore ignores that prevented correct tracking of the themes folder.
 
@@ -582,7 +695,7 @@ General
 **Commit:** [4fe0522](https://gitlab.com/Odyseus/CinnamonTools/commit/4fe0522)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - app_utils.py: Implemented min/max Cinnamon version overrides for individual xlets. This allows to generate the cinnamon-version key of a metadata.json file for specific xlets to min/max values other than the ones hardcoded in the Python application.
 
@@ -592,7 +705,7 @@ Python modules
 **Commit:** [f80e2cf](https://gitlab.com/Odyseus/CinnamonTools/commit/f80e2cf)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated submodules.
 - Updated README.
@@ -607,7 +720,7 @@ General
 **Commit:** [b59ba06](https://gitlab.com/Odyseus/CinnamonTools/commit/b59ba06)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Removed xlet settings initialization argument that was added in preparation for a change in Cinnamon that luckily didn't make it into production.
 - Updated localization templates.
@@ -621,7 +734,7 @@ All xlets
 **Commit:** [f50d3af](https://gitlab.com/Odyseus/CinnamonTools/commit/f50d3af)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - app_utils.py:
     - Added support for building the Cinnamon theme with compatibility for latest Cinnamon version.
@@ -636,7 +749,7 @@ Python modules
 **Commit:** [0c043c5](https://gitlab.com/Odyseus/CinnamonTools/commit/0c043c5)<br/>
 **Author:** Odyseus<br/>
 
-JavaScript modules
+#### JavaScript modules
 
 - Fixed some typos inside some comments and added some comments.
 
@@ -646,7 +759,7 @@ JavaScript modules
 **Commit:** [725b7c6](https://gitlab.com/Odyseus/CinnamonTools/commit/725b7c6)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -657,7 +770,7 @@ General
 **Commit:** [71ad269](https://gitlab.com/Odyseus/CinnamonTools/commit/71ad269)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localizations.
@@ -671,7 +784,7 @@ All xlets
 **Commit:** [7359152](https://gitlab.com/Odyseus/CinnamonTools/commit/7359152)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Modified the handling of the metadata.json file for xlets. Now this file is modified at xlet build time to avoid having to manually keep it up to date (the cinnamon-version key more than anything).
 - Simplified the compatibility data displayed in all xlets help pages. It was pointless to display the specific Cinnamon versions (read from the metadata.json file) since all my xlets are *compatible* with a minimum Cinnamon version up to the latest version.
@@ -683,7 +796,7 @@ Python modules
 **Commit:** [89422aa](https://gitlab.com/Odyseus/CinnamonTools/commit/89422aa)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Modified the logic when handling stored settings of xlets/themes building processes. Up to now, every time that I added/removed/modified the options of either build process, I simply reseted the existing settings to their default values. This forced users to constantly re-set their personalized values. From now on, every time that I add/remove/modify an option, existing options stored from a previous build process will remain untouched.
 - Corrected a typo in a keyword name (do_not_cofirm to do_not_confirm).
@@ -694,7 +807,7 @@ Python modules
 **Commit:** [937fb0a](https://gitlab.com/Odyseus/CinnamonTools/commit/937fb0a)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated README.
 - Updated issue template.
@@ -708,7 +821,7 @@ General
 **Commit:** [251781d](https://gitlab.com/Odyseus/CinnamonTools/commit/251781d)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localizations.
@@ -721,7 +834,7 @@ All xlets
 **Commit:** [da13ab4](https://gitlab.com/Odyseus/CinnamonTools/commit/da13ab4)<br/>
 **Author:** Odyseus<br/>
 
-JavaScript modules
+#### JavaScript modules
 
 - debugManager.js: Added possibility to pass extra options.
 - xletsSettingsUtils.js: Removed CustomAppletSettings class since I don't use it and it's only useful for single instance applets.
@@ -732,7 +845,7 @@ JavaScript modules
 **Commit:** [f4baf44](https://gitlab.com/Odyseus/CinnamonTools/commit/f4baf44)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 Complete redesign
 -----------------
@@ -753,7 +866,7 @@ Taking advantage of the redesign done upstream to the Cinnamons's settings style
 **Commit:** [c923846](https://gitlab.com/Odyseus/CinnamonTools/commit/c923846)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Fixed error on the theme building process when there is no previous build data.
 
@@ -763,7 +876,7 @@ Python modules
 **Commit:** [d3657c8](https://gitlab.com/Odyseus/CinnamonTools/commit/d3657c8)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Adapted xlets build mechanism to the removed flatly_bootstrap_theme sub-module.
 - Added missing information dialog to one of the interactive stages of the xlets build process.
@@ -775,7 +888,7 @@ Python modules
 **Commit:** [8755d92](https://gitlab.com/Odyseus/CinnamonTools/commit/8755d92)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Removed the flatly_bootstrap_theme repository as a sub-module in favor of directly using the needed CSS file. This is to avoid forcing a user to deep clone the repository to be able to build xlets. In fact, `git` shouldn't be needed at all, just downloading the zipped repository is needed to buid the xlets and deep cloning should be needed only to perform development tasks.
 
@@ -785,7 +898,7 @@ General
 **Commit:** [1b1f711](https://gitlab.com/Odyseus/CinnamonTools/commit/1b1f711)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 
@@ -795,7 +908,7 @@ General
 **Commit:** [9979807](https://gitlab.com/Odyseus/CinnamonTools/commit/9979807)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -807,7 +920,7 @@ General
 **Commit:** [de5acba](https://gitlab.com/Odyseus/CinnamonTools/commit/de5acba)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated help pages.
@@ -818,7 +931,7 @@ All xlets
 **Commit:** [0df8dc1](https://gitlab.com/Odyseus/CinnamonTools/commit/0df8dc1)<br/>
 **Author:** Odyseus<br/>
 
-JavaScript modules
+#### JavaScript modules
 
 - Renamed extensionSettingsUtils.js module to xletsSettingsUtils.js since now it can handle applets settings too, not just extensions settings.
 
@@ -828,7 +941,7 @@ JavaScript modules
 **Commit:** [c6e2502](https://gitlab.com/Odyseus/CinnamonTools/commit/c6e2502)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Added `--install-localizations` CLI option to the xlets building process to install xlets localizations. This option can also be specified from the interactive menu.
 - Added `--extra-files=<dir>` CLI option to the xlets building process to allow to copy extra files into a built xlet directory. For users that want to make their own modifications to the xlets on the repository is very easy to create a branch in their forks and rebase when needed...if they are `git` experts. Read the documentation for details. This option can also be specified from the interactive menu.
@@ -840,7 +953,7 @@ Python modules
 **Commit:** [a8579bb](https://gitlab.com/Odyseus/CinnamonTools/commit/a8579bb)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from 106f577..efb13da
+#### Squashed '__app__/python_modules/python_utils/' changes from 106f577..efb13da
 
 efb13da simple_validators.py
 7915f2c Added simple_validators.py module
@@ -855,7 +968,7 @@ git-subtree-split: efb13dafc2bac8360025fa0a1bf096b70fbff10e
 **Commit:** [178210d](https://gitlab.com/Odyseus/CinnamonTools/commit/178210d)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Modified all SignalManagers of all xlets to ALWAYS and WITHOUT exceptions use bound normal functions.
 
@@ -865,7 +978,7 @@ All xlets
 **Commit:** [644beac](https://gitlab.com/Odyseus/CinnamonTools/commit/644beac)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated README. Corrected links to parts of the documentation.
@@ -876,7 +989,7 @@ General
 **Commit:** [6ed5b37](https://gitlab.com/Odyseus/CinnamonTools/commit/6ed5b37)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Fixed chosen domain name not recognized when building xlets in interactive mode (from the menu).
 - Corrected interactivity of the themes building process. When re-implementing interactivity in a previous commit, I forgot to adapt the themes building process.
@@ -888,7 +1001,7 @@ Python modules
 **Commit:** [10d02b7](https://gitlab.com/Odyseus/CinnamonTools/commit/10d02b7)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from befc87b..106f577
+#### Squashed '__app__/python_modules/python_utils/' changes from befc87b..106f577
 
 106f577 cli_utils.py
 
@@ -901,7 +1014,7 @@ git-subtree-split: 106f577ba3fca608080300729bddfca6c34b601e
 **Commit:** [a33c927](https://gitlab.com/Odyseus/CinnamonTools/commit/a33c927)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Base xlet: Removed unnecessary file listed in the **make_pot_additional_files** option of the z_config.py file.
 - Updated sub-modules.
@@ -914,7 +1027,7 @@ General
 **Commit:** [0a731cd](https://gitlab.com/Odyseus/CinnamonTools/commit/0a731cd)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 INFO: All users that take advantage of the Python application's executable being installed into their systems need to reinstall the executable to be able to update the Bash completions.
 
@@ -927,7 +1040,7 @@ INFO: All users that take advantage of the Python application's executable being
 **Commit:** [735a41c](https://gitlab.com/Odyseus/CinnamonTools/commit/735a41c)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Removed unnecessary file listed in the **make_pot_additional_files** option of the z_config.py file.
 - Updated localization templates.
@@ -941,7 +1054,7 @@ All xlets
 **Commit:** [ffb61c6](https://gitlab.com/Odyseus/CinnamonTools/commit/ffb61c6)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from ad13980..befc87b
+#### Squashed '__app__/python_modules/python_utils/' changes from ad13980..befc87b
 
 befc87b cli_utils.py
 
@@ -954,7 +1067,7 @@ git-subtree-split: befc87b737955eb7ea1350b0cac199ff9b12dd7b
 **Commit:** [5a588a5](https://gitlab.com/Odyseus/CinnamonTools/commit/5a588a5)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -966,7 +1079,7 @@ General
 **Commit:** [1c3e1a7](https://gitlab.com/Odyseus/CinnamonTools/commit/1c3e1a7)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - app_utils.py: Get replacement data dynamically when building xlets.
 
@@ -976,7 +1089,7 @@ Python modules
 **Commit:** [c0a7065](https://gitlab.com/Odyseus/CinnamonTools/commit/c0a7065)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -989,7 +1102,7 @@ All xlets
 **Commit:** [468cac2](https://gitlab.com/Odyseus/CinnamonTools/commit/468cac2)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - Modified settings dependency system. Now it is possible for the display of a setting to depend on the values of more than one setting.
 - Added application chooser widgets:
@@ -1007,7 +1120,7 @@ Xlets settings framework
 **Commit:** [09bef81](https://gitlab.com/Odyseus/CinnamonTools/commit/09bef81)<br/>
 **Author:** Odyseus<br/>
 
-JavaScript modules
+#### JavaScript modules
 
 - customDialogs.js: Fixed not working callback.
 - customTooltips.js: Tweaked InteligentTooltip.
@@ -1030,7 +1143,7 @@ JavaScript modules
 **Commit:** [7b5a934](https://gitlab.com/Odyseus/CinnamonTools/commit/7b5a934)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 
@@ -1040,7 +1153,7 @@ General
 **Commit:** [4946be9](https://gitlab.com/Odyseus/CinnamonTools/commit/4946be9)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1051,7 +1164,7 @@ General
 **Commit:** [3c6e5a7](https://gitlab.com/Odyseus/CinnamonTools/commit/3c6e5a7)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1064,7 +1177,7 @@ All xlets
 **Commit:** [6c0f10e](https://gitlab.com/Odyseus/CinnamonTools/commit/6c0f10e)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Global JavaScript modules implementation to be used by all xlets. I was using a lot of duplicated functions/classes across all xlets. When I needed to update or fix something, I had to make changes across several files. These global modules "fixes" all of these "problems".
 - JavaScript polyfills implementation. I don't really like to use polyfills, but they are comfortable to use (they just need to be imported once and when it is time to stop using them, just remove the polyfill without changing the actual code).
@@ -1077,7 +1190,7 @@ General
 **Commit:** [aacaff4](https://gitlab.com/Odyseus/CinnamonTools/commit/aacaff4)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Added extra data to be replaced in the strings substitution phase of the xlet building process.
 - Changed the default values for the client-side decorated shadows when building the Gtk+ 3 themes.
@@ -1088,7 +1201,7 @@ Python modules
 **Commit:** [81a3f66](https://gitlab.com/Odyseus/CinnamonTools/commit/81a3f66)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1099,7 +1212,7 @@ General
 **Commit:** [92b85ca](https://gitlab.com/Odyseus/CinnamonTools/commit/92b85ca)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1112,7 +1225,7 @@ All xlets
 **Commit:** [a2b1b35](https://gitlab.com/Odyseus/CinnamonTools/commit/a2b1b35)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated README.
 - Updated sub-modules.
@@ -1123,7 +1236,7 @@ General
 **Commit:** [f5787df](https://gitlab.com/Odyseus/CinnamonTools/commit/f5787df)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 
@@ -1133,7 +1246,7 @@ All xlets
 **Commit:** [15b7919](https://gitlab.com/Odyseus/CinnamonTools/commit/15b7919)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated README.
 - Updated sub-modules.
@@ -1147,7 +1260,7 @@ General
 **Commit:** [07d783b](https://gitlab.com/Odyseus/CinnamonTools/commit/07d783b)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1160,7 +1273,7 @@ All xlets
 **Commit:** [f0cccc9](https://gitlab.com/Odyseus/CinnamonTools/commit/f0cccc9)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - Added sorting for the options in a "combobox" widget because it was getting on my nerves having its options completely scrambled every time the widget was re-built! LOL
 - Added comments to each element in JSON_SETTINGS_PROPERTIES_MAP to inform by which widget every property is used.
@@ -1175,7 +1288,7 @@ Xlets settings framework
 **Commit:** [95fdf21](https://gitlab.com/Odyseus/CinnamonTools/commit/95fdf21)<br/>
 **Author:** Odyseus<br/>
 
-0ExtensionsManager
+#### 0ExtensionsManager
 
 DEPRECATED
 
@@ -1187,7 +1300,7 @@ See https://gitlab.com/Odyseus/CinnamonToolsLegacy.
 **Commit:** [7ae7e4e](https://gitlab.com/Odyseus/CinnamonTools/commit/7ae7e4e)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 DEPRECATED
 
@@ -1199,7 +1312,7 @@ See https://gitlab.com/Odyseus/CinnamonToolsLegacy.
 **Commit:** [0335dde](https://gitlab.com/Odyseus/CinnamonTools/commit/0335dde)<br/>
 **Author:** Odyseus<br/>
 
-0WallpaperChangerApplet
+#### 0WallpaperChangerApplet
 
 DEPRECATED
 
@@ -1211,7 +1324,7 @@ See https://gitlab.com/Odyseus/CinnamonToolsLegacy.
 **Commit:** [096ffc5](https://gitlab.com/Odyseus/CinnamonTools/commit/096ffc5)<br/>
 **Author:** Odyseus<br/>
 
-0CinnamonMaximusForkByOdyseus
+#### 0CinnamonMaximusForkByOdyseus
 
 DEPRECATED
 
@@ -1223,7 +1336,7 @@ See https://gitlab.com/Odyseus/CinnamonToolsLegacy.
 **Commit:** [ae67d90](https://gitlab.com/Odyseus/CinnamonTools/commit/ae67d90)<br/>
 **Author:** Odyseus<br/>
 
-0WindowDemandsAttentionBehavior
+#### 0WindowDemandsAttentionBehavior
 
 DEPRECATED
 
@@ -1235,7 +1348,7 @@ See https://gitlab.com/Odyseus/CinnamonToolsLegacy.
 **Commit:** [b7a69a4](https://gitlab.com/Odyseus/CinnamonTools/commit/b7a69a4)<br/>
 **Author:** Odyseus<br/>
 
-Xlet settings framework
+#### Xlet settings framework
 
 - Finally fixed TextView annoyance!!!
 - Added "immutable" setting to "list" widget. An "immutable" widget can be edited, but items in the list cannot be added nor removed.
@@ -1251,7 +1364,7 @@ Xlet settings framework
 **Commit:** [bd31eb8](https://gitlab.com/Odyseus/CinnamonTools/commit/bd31eb8)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1262,7 +1375,7 @@ General
 **Commit:** [a2d620c](https://gitlab.com/Odyseus/CinnamonTools/commit/a2d620c)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1275,7 +1388,7 @@ All xlets
 **Commit:** [29381df](https://gitlab.com/Odyseus/CinnamonTools/commit/29381df)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - Implemented a mechanism to add extra information on specific sections of a window. It adds a button to a section title that when pressed will display a message dialog. This allows to have basic info always at hand without occupying window space and without depending on Gtk tooltips that will show up whenever the hell they want (if at all). ¬¬
 
@@ -1285,7 +1398,7 @@ Xlets settings framework
 **Commit:** [100c4bf](https://gitlab.com/Odyseus/CinnamonTools/commit/100c4bf)<br/>
 **Author:** Odyseus<br/>
 
-Xlets settings framework
+#### Xlets settings framework
 
 - Fixed an exception thrown when using a generic setting to control a `spinbutton` widget.
 - Inverted the definition of the `options` option for the `combobox` widget.
@@ -1296,7 +1409,7 @@ Xlets settings framework
 **Commit:** [97c2099](https://gitlab.com/Odyseus/CinnamonTools/commit/97c2099)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated README.
 - Updated sub-modules.
@@ -1308,7 +1421,7 @@ General
 **Commit:** [cb7b195](https://gitlab.com/Odyseus/CinnamonTools/commit/cb7b195)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1321,7 +1434,7 @@ All xlets
 **Commit:** [919d8b3](https://gitlab.com/Odyseus/CinnamonTools/commit/919d8b3)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - app_utils.py: Corrected reference to non existent property.
 
@@ -1331,7 +1444,7 @@ Python modules
 **Commit:** [c177fe6](https://gitlab.com/Odyseus/CinnamonTools/commit/c177fe6)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Added a framework to create custom xlet settings windows. It's a simplified version of Cinnamon's native settings widgets, but more configurable and with more widget types, amongst other improvements.
 - Corrected a grammar error on one of the base xlet template files.
@@ -1342,7 +1455,7 @@ General
 **Commit:** [2ff3e95](https://gitlab.com/Odyseus/CinnamonTools/commit/2ff3e95)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - app_utils.py:
     - Added option to the themes building process to configure the shadows of client side decorated window on the Gtk3 theme.
@@ -1358,7 +1471,7 @@ Python modules
 **Commit:** [add69c3](https://gitlab.com/Odyseus/CinnamonTools/commit/add69c3)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1369,7 +1482,7 @@ General
 **Commit:** [85b12dc](https://gitlab.com/Odyseus/CinnamonTools/commit/85b12dc)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1382,7 +1495,7 @@ All xlets
 **Commit:** [56b0905](https://gitlab.com/Odyseus/CinnamonTools/commit/56b0905)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Removed files that weren't used by xlets nor the xlet building process. Most of them were leftovers from the old repository.
 - Renamed all instances of the applet's main prototypes. For applets with verbose logging enabled, it was very annoying to see the logs of prototypes with names of more than 20 characters.
@@ -1393,7 +1506,7 @@ All xlets
 **Commit:** [476c40e](https://gitlab.com/Odyseus/CinnamonTools/commit/476c40e)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1404,7 +1517,7 @@ General
 **Commit:** [6485498](https://gitlab.com/Odyseus/CinnamonTools/commit/6485498)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1417,7 +1530,7 @@ All xlets
 **Commit:** [dcfd2d7](https://gitlab.com/Odyseus/CinnamonTools/commit/dcfd2d7)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated README.
@@ -1429,7 +1542,7 @@ General
 **Commit:** [8157661](https://gitlab.com/Odyseus/CinnamonTools/commit/8157661)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1442,7 +1555,7 @@ All xlets
 **Commit:** [7433742](https://gitlab.com/Odyseus/CinnamonTools/commit/7433742)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1453,7 +1566,7 @@ General
 **Commit:** [e20b560](https://gitlab.com/Odyseus/CinnamonTools/commit/e20b560)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1466,7 +1579,7 @@ All xlets
 **Commit:** [b19a637](https://gitlab.com/Odyseus/CinnamonTools/commit/b19a637)<br/>
 **Author:** Odyseus<br/>
 
-Base xlet
+#### Base xlet
 
 - Switched to a little more precise way of checking if an object is an object.
 
@@ -1476,7 +1589,7 @@ Base xlet
 **Commit:** [d7b7815](https://gitlab.com/Odyseus/CinnamonTools/commit/d7b7815)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1487,7 +1600,7 @@ General
 **Commit:** [99443e1](https://gitlab.com/Odyseus/CinnamonTools/commit/99443e1)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1500,7 +1613,7 @@ All xlets
 **Commit:** [e9a1091](https://gitlab.com/Odyseus/CinnamonTools/commit/e9a1091)<br/>
 **Author:** Odyseus<br/>
 
-Base xlet
+#### Base xlet
 
 - Added call to finalize settings when applet is removed from panel.
 
@@ -1510,7 +1623,7 @@ Base xlet
 **Commit:** [17e89c7](https://gitlab.com/Odyseus/CinnamonTools/commit/17e89c7)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1521,7 +1634,7 @@ General
 **Commit:** [f6779bd](https://gitlab.com/Odyseus/CinnamonTools/commit/f6779bd)<br/>
 **Author:** Odyseus<br/>
 
-All xelts
+#### All xelts
 
 - Updated change logs.
 - Updated localization templates.
@@ -1534,7 +1647,7 @@ All xelts
 **Commit:** [a7c88cc](https://gitlab.com/Odyseus/CinnamonTools/commit/a7c88cc)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 - Added call to finalize settings when applet is removed from panel.
 
@@ -1544,7 +1657,7 @@ All xelts
 **Commit:** [a0cdc9f](https://gitlab.com/Odyseus/CinnamonTools/commit/a0cdc9f)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Removed call to function that added the folder called **icons** into Gtk.IconTheme's search path (to be able to use by name the icons shipped with an xlet). This call was needed on older versions of Cinnamon. But since all versions of Cinnamon that I support (in theory) already add said folder into Gtk.IconTheme's search path, I don't need to add it in any of my xlets anymore.
 
@@ -1554,7 +1667,7 @@ All xlets
 **Commit:** [5394cd1](https://gitlab.com/Odyseus/CinnamonTools/commit/5394cd1)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual pages.
@@ -1565,7 +1678,7 @@ General
 **Commit:** [8c25e00](https://gitlab.com/Odyseus/CinnamonTools/commit/8c25e00)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1578,7 +1691,7 @@ All xlets
 **Commit:** [a4b454e](https://gitlab.com/Odyseus/CinnamonTools/commit/a4b454e)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1589,7 +1702,7 @@ General
 **Commit:** [7612643](https://gitlab.com/Odyseus/CinnamonTools/commit/7612643)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - localized_help_utils.py:
     - Cleaned up unused imports.
@@ -1601,7 +1714,7 @@ Python modules
 **Commit:** [f49e859](https://gitlab.com/Odyseus/CinnamonTools/commit/f49e859)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1612,7 +1725,7 @@ General
 **Commit:** [a9c9824](https://gitlab.com/Odyseus/CinnamonTools/commit/a9c9824)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - z_create_localized_help.py script: Use *args instead of named parameters to avoid collisions with variable names.
 - Updated change logs.
@@ -1626,7 +1739,7 @@ All xlets
 **Commit:** [83760f5](https://gitlab.com/Odyseus/CinnamonTools/commit/83760f5)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1639,7 +1752,7 @@ All xlets
 **Commit:** [9d2c7ee](https://gitlab.com/Odyseus/CinnamonTools/commit/9d2c7ee)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated README.
 - Updated sub-modules.
@@ -1651,7 +1764,7 @@ General
 **Commit:** [f999313](https://gitlab.com/Odyseus/CinnamonTools/commit/f999313)<br/>
 **Author:** Odyseus<br/>
 
-Base xlet
+#### Base xlet
 
 - Added a couple of utility functions and improved existent ones.
 
@@ -1661,7 +1774,7 @@ Base xlet
 **Commit:** [5c53ecc](https://gitlab.com/Odyseus/CinnamonTools/commit/5c53ecc)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Modified xlets help pages build process to use external assets instead of in-line ones. This allows smaller HELP.html files and a smaller footprint of these files on the repository size.
 
@@ -1671,7 +1784,7 @@ Python modules
 **Commit:** [a6ae6e6](https://gitlab.com/Odyseus/CinnamonTools/commit/a6ae6e6)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1682,7 +1795,7 @@ General
 **Commit:** [fd6c70e](https://gitlab.com/Odyseus/CinnamonTools/commit/fd6c70e)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Removed all version fields from metadata.json files. I never remember to update them and newer version of Cinnamon doesn't even use this field anymore.
 - Python files clean up/homogenization.
@@ -1697,7 +1810,7 @@ All xlets
 **Commit:** [8b49e1e](https://gitlab.com/Odyseus/CinnamonTools/commit/8b49e1e)<br/>
 **Author:** Odyseus<br/>
 
-0ExtensionsManager
+#### 0ExtensionsManager
 
 - Changed applet icon.
 
@@ -1707,7 +1820,7 @@ All xlets
 **Commit:** [8004853](https://gitlab.com/Odyseus/CinnamonTools/commit/8004853)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1718,7 +1831,7 @@ General
 **Commit:** [512c345](https://gitlab.com/Odyseus/CinnamonTools/commit/512c345)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1731,7 +1844,7 @@ All xlets
 **Commit:** [460ccc0](https://gitlab.com/Odyseus/CinnamonTools/commit/460ccc0)<br/>
 **Author:** Odyseus<br/>
 
-BaseXlet
+#### BaseXlet
 
 - Homogenized/Cleaned up code.
 - Added method to benchmark function invocations within a given class or prototype.
@@ -1743,7 +1856,7 @@ BaseXlet
 **Commit:** [83966c3](https://gitlab.com/Odyseus/CinnamonTools/commit/83966c3)<br/>
 **Author:** Odyseus<br/>
 
-0WallpaperChangerApplet
+#### 0WallpaperChangerApplet
 
 - Python files improvements:
     - Simplified localization system.
@@ -1755,7 +1868,7 @@ BaseXlet
 **Commit:** [040fe52](https://gitlab.com/Odyseus/CinnamonTools/commit/040fe52)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 - Python files improvements:
     - Simplified localization system.
@@ -1767,7 +1880,7 @@ BaseXlet
 **Commit:** [6c88fce](https://gitlab.com/Odyseus/CinnamonTools/commit/6c88fce)<br/>
 **Author:** Odyseus<br/>
 
-0ExtensionsManager
+#### 0ExtensionsManager
 
 - Python files improvements:
     - Simplified localization system.
@@ -1779,7 +1892,7 @@ BaseXlet
 **Commit:** [2ccca02](https://gitlab.com/Odyseus/CinnamonTools/commit/2ccca02)<br/>
 **Author:** Odyseus<br/>
 
-0ExtensionsManager
+#### 0ExtensionsManager
 
 - Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
 
@@ -1789,7 +1902,7 @@ BaseXlet
 **Commit:** [bd43310](https://gitlab.com/Odyseus/CinnamonTools/commit/bd43310)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 - Modified applet initialization code in preparation for asynchronous settings initialization that will be available in the next Cinnamon version (4.2.x?).
 
@@ -1799,7 +1912,7 @@ BaseXlet
 **Commit:** [7e0b3b5](https://gitlab.com/Odyseus/CinnamonTools/commit/7e0b3b5)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1810,7 +1923,7 @@ General
 **Commit:** [bc08c54](https://gitlab.com/Odyseus/CinnamonTools/commit/bc08c54)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1823,7 +1936,7 @@ All xlets
 **Commit:** [35dc780](https://gitlab.com/Odyseus/CinnamonTools/commit/35dc780)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Implemented assignments destructuring for all imports. A completely unnecessary change implemented for the sole purpose of getting used to this JavaScript feature.
 
@@ -1833,7 +1946,7 @@ All xlets
 **Commit:** [862da4d](https://gitlab.com/Odyseus/CinnamonTools/commit/862da4d)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from 8569483..ad13980
+#### Squashed '__app__/python_modules/python_utils/' changes from 8569483..ad13980
 
 ad13980 mistune_utils.py
 ba65e36 json_schema_utils.py
@@ -1848,7 +1961,7 @@ git-subtree-split: ad139808b4cf9c17033c1c39e8b17bc6054e36a0
 **Commit:** [6c3ae09](https://gitlab.com/Odyseus/CinnamonTools/commit/6c3ae09)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates, Spanish localizations and help pages.
 
@@ -1858,7 +1971,7 @@ All xlets
 **Commit:** [9877e66](https://gitlab.com/Odyseus/CinnamonTools/commit/9877e66)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1869,7 +1982,7 @@ General
 **Commit:** [94cfb4c](https://gitlab.com/Odyseus/CinnamonTools/commit/94cfb4c)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated change logs.
 - Updated localization templates.
@@ -1883,7 +1996,7 @@ All xlets
 **Commit:** [f3cb8c8](https://gitlab.com/Odyseus/CinnamonTools/commit/f3cb8c8)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1895,7 +2008,7 @@ General
 **Commit:** [a77b913](https://gitlab.com/Odyseus/CinnamonTools/commit/a77b913)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Updated xlets help page template footer.
 - Blacklisted jsonschema Python module when generating documentation.
@@ -1906,7 +2019,7 @@ Python modules
 **Commit:** [6223ecb](https://gitlab.com/Odyseus/CinnamonTools/commit/6223ecb)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Added paths completion to the Bash completions script.
 
@@ -1916,7 +2029,7 @@ General
 **Commit:** [2248f0a](https://gitlab.com/Odyseus/CinnamonTools/commit/2248f0a)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from 699056e..8569483
+#### Squashed '__app__/python_modules/python_utils/' changes from 699056e..8569483
 
 8569483 template_utils.py
 c01c0d4 string_utils.py
@@ -1932,7 +2045,7 @@ git-subtree-split: 8569483f1f0dafca898fb58f3009646ab04df07b
 **Commit:** [0b08f75](https://gitlab.com/Odyseus/CinnamonTools/commit/0b08f75)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Cosmetic tweaks due to changes to the python_utils.ansi_colors.py module.
 - app_utils.py module:
@@ -1948,7 +2061,7 @@ Python modules
 **Commit:** [8493bf3](https://gitlab.com/Odyseus/CinnamonTools/commit/8493bf3)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from a85ed7f..699056e
+#### Squashed '__app__/python_modules/python_utils/' changes from a85ed7f..699056e
 
 699056e git_utils.py
 64f5075 mail_system.py
@@ -1974,7 +2087,7 @@ git-subtree-split: 699056ecc3e79a1e746a8ec22957748bbbb47932
 **Commit:** [a1afdc0](https://gitlab.com/Odyseus/CinnamonTools/commit/a1afdc0)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from 32f916b..a85ed7f
+#### Squashed '__app__/python_modules/python_utils/' changes from 32f916b..a85ed7f
 
 a85ed7f Updated README
 ab11c25 mistune_utils.py
@@ -1988,7 +2101,7 @@ git-subtree-split: a85ed7f9e80a4d2f6cac663485dd3e2e9f9fadfe
 **Commit:** [dfda8f2](https://gitlab.com/Odyseus/CinnamonTools/commit/dfda8f2)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -1999,7 +2112,7 @@ General
 **Commit:** [721b53b](https://gitlab.com/Odyseus/CinnamonTools/commit/721b53b)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - localized_help_creator.py module:
     - Implemented the use of the new python_utils.mistune_utils module.
@@ -2010,7 +2123,7 @@ Python modules
 **Commit:** [9598609](https://gitlab.com/Odyseus/CinnamonTools/commit/9598609)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' changes from 87d1c2c..32f916b
+#### Squashed '__app__/python_modules/python_utils/' changes from 87d1c2c..32f916b
 
 32f916b Added mistune_utils.py module
 0ad9296 mistune.py
@@ -2032,7 +2145,7 @@ git-subtree-split: 32f916b66253389a537f0995dddac7ab2d894812
 **Commit:** [ebbaf2d](https://gitlab.com/Odyseus/CinnamonTools/commit/ebbaf2d)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated README.
 - Updated sub-modules.
@@ -2043,7 +2156,7 @@ General
 **Commit:** [5b0709c](https://gitlab.com/Odyseus/CinnamonTools/commit/5b0709c)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localizations.
@@ -2056,7 +2169,7 @@ All xlets
 **Commit:** [61a2aff](https://gitlab.com/Odyseus/CinnamonTools/commit/61a2aff)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Implemented --dry-run CLI option. Not used for development tasks, just for "end-users tasks".
 - Removed some unnecessary calls to super().
@@ -2072,7 +2185,7 @@ Python modules
 **Commit:** [f78d29d](https://gitlab.com/Odyseus/CinnamonTools/commit/f78d29d)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -2084,7 +2197,7 @@ General
 **Commit:** [1849b4f](https://gitlab.com/Odyseus/CinnamonTools/commit/1849b4f)<br/>
 **Author:** Odyseus<br/>
 
-Squashed '__app__/python_modules/python_utils/' content from commit 87d1c2c
+#### Squashed '__app__/python_modules/python_utils/' content from commit 87d1c2c
 
 git-subtree-dir: __app__/python_modules/python_utils
 git-subtree-split: 87d1c2c3b61ac837797fbcd9c6549a955e8607fa
@@ -2095,7 +2208,7 @@ git-subtree-split: 87d1c2c3b61ac837797fbcd9c6549a955e8607fa
 **Commit:** [feb5d95](https://gitlab.com/Odyseus/CinnamonTools/commit/feb5d95)<br/>
 **Author:** Odyseus<br/>
 
-Reset python_utils subtree
+#### Reset python_utils subtree
 
 ***
 
@@ -2103,7 +2216,7 @@ Reset python_utils subtree
 **Commit:** [87d1c2c](https://gitlab.com/Odyseus/CinnamonTools/commit/87d1c2c)<br/>
 **Author:** Odyseus<br/>
 
-git_utils.py
+#### git_utils.py
 
 - Corrected submodule command formatting.
 
@@ -2113,7 +2226,7 @@ git_utils.py
 **Commit:** [473ea71](https://gitlab.com/Odyseus/CinnamonTools/commit/473ea71)<br/>
 **Author:** Odyseus<br/>
 
-git_utils.py
+#### git_utils.py
 
 - Corrected erroneous reference.
 
@@ -2123,7 +2236,7 @@ git_utils.py
 **Commit:** [02a7181](https://gitlab.com/Odyseus/CinnamonTools/commit/02a7181)<br/>
 **Author:** Odyseus<br/>
 
-Updated README
+#### Updated README
 
 ***
 
@@ -2131,7 +2244,7 @@ Updated README
 **Commit:** [bdff73b](https://gitlab.com/Odyseus/CinnamonTools/commit/bdff73b)<br/>
 **Author:** Odyseus<br/>
 
-git_utils.py
+#### git_utils.py
 
 - Modified the manage_repo method to use the git-subtree command to handle sub-tree repositories instead of using the subtree merge strategy.
 - Added dry_run parameter to the manage_repo method and switched to use the cmd_utils module instead of using subprocess.call.
@@ -2142,7 +2255,7 @@ git_utils.py
 **Commit:** [83aefbe](https://gitlab.com/Odyseus/CinnamonTools/commit/83aefbe)<br/>
 **Author:** Odyseus<br/>
 
-Updated tqdm module from upstream
+#### Updated tqdm module from upstream
 
 ***
 
@@ -2150,7 +2263,7 @@ Updated tqdm module from upstream
 **Commit:** [d3b7ef5](https://gitlab.com/Odyseus/CinnamonTools/commit/d3b7ef5)<br/>
 **Author:** Odyseus<br/>
 
-Updated pyperclip module from upstream
+#### Updated pyperclip module from upstream
 
 ***
 
@@ -2158,7 +2271,7 @@ Updated pyperclip module from upstream
 **Commit:** [1455c96](https://gitlab.com/Odyseus/CinnamonTools/commit/1455c96)<br/>
 **Author:** Odyseus<br/>
 
-Updated bottle module from upstream
+#### Updated bottle module from upstream
 
 ***
 
@@ -2166,7 +2279,7 @@ Updated bottle module from upstream
 **Commit:** [dbbdb1b](https://gitlab.com/Odyseus/CinnamonTools/commit/dbbdb1b)<br/>
 **Author:** Odyseus<br/>
 
-Removed pyuca module
+#### Removed pyuca module
 
 ***
 
@@ -2174,7 +2287,7 @@ Removed pyuca module
 **Commit:** [a07ca85](https://gitlab.com/Odyseus/CinnamonTools/commit/a07ca85)<br/>
 **Author:** Odyseus<br/>
 
-git_utils.py
+#### git_utils.py
 
 - Reverted the addition of the --squash parameter when updating sub-trees. It causes more damage than good. I CAN'T CATCH A BREAK!!!
 
@@ -2184,7 +2297,7 @@ git_utils.py
 **Commit:** [94949af](https://gitlab.com/Odyseus/CinnamonTools/commit/94949af)<br/>
 **Author:** Odyseus<br/>
 
-git_utils.py
+#### git_utils.py
 
 - Added --squash parameter to squash commits when updating sub-trees.
 
@@ -2194,7 +2307,7 @@ git_utils.py
 **Commit:** [ae16273](https://gitlab.com/Odyseus/CinnamonTools/commit/ae16273)<br/>
 **Author:** Odyseus<br/>
 
-log_system.py
+#### log_system.py
 
 - Changed approach to handle logging levels.
 
@@ -2204,7 +2317,7 @@ log_system.py
 **Commit:** [abc14a2](https://gitlab.com/Odyseus/CinnamonTools/commit/abc14a2)<br/>
 **Author:** Odyseus<br/>
 
-log_system.py
+#### log_system.py
 
 - Fixed erroneous default attribute call.
 - Renamed parameter named type to log_type to avoid problems.
@@ -2215,7 +2328,7 @@ log_system.py
 **Commit:** [5eca64b](https://gitlab.com/Odyseus/CinnamonTools/commit/5eca64b)<br/>
 **Author:** Odyseus<br/>
 
-mail_system.py
+#### mail_system.py
 
 - Removed unnecessary call to super().
 
@@ -2225,7 +2338,7 @@ mail_system.py
 **Commit:** [2f3b5e2](https://gitlab.com/Odyseus/CinnamonTools/commit/2f3b5e2)<br/>
 **Author:** Odyseus<br/>
 
-log_system.py
+#### log_system.py
 
 - Simplified _update_log method.
 
@@ -2235,7 +2348,7 @@ log_system.py
 **Commit:** [fd0b251](https://gitlab.com/Odyseus/CinnamonTools/commit/fd0b251)<br/>
 **Author:** Odyseus<br/>
 
-log_system.py
+#### log_system.py
 
 - Added log_dry_run method.
 
@@ -2245,7 +2358,7 @@ log_system.py
 **Commit:** [c24faf3](https://gitlab.com/Odyseus/CinnamonTools/commit/c24faf3)<br/>
 **Author:** Odyseus<br/>
 
-sphinx_docs_utils.py
+#### sphinx_docs_utils.py
 
 - Usage of the cmd_utils module.
 - Made coverage docs building optional.
@@ -2257,7 +2370,7 @@ sphinx_docs_utils.py
 **Commit:** [f22c18c](https://gitlab.com/Odyseus/CinnamonTools/commit/f22c18c)<br/>
 **Author:** Odyseus<br/>
 
-exceptions.py
+#### exceptions.py
 
 - Added new exception.
 
@@ -2267,7 +2380,7 @@ exceptions.py
 **Commit:** [8dea2a0](https://gitlab.com/Odyseus/CinnamonTools/commit/8dea2a0)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 
@@ -2277,7 +2390,7 @@ General
 **Commit:** [3593cd2](https://gitlab.com/Odyseus/CinnamonTools/commit/3593cd2)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Implemented the use of methods declared in the cmd_utils module.
 - Updated docstrings.
@@ -2290,7 +2403,7 @@ Python modules
 **Commit:** [3ef9471](https://gitlab.com/Odyseus/CinnamonTools/commit/3ef9471)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated README.
 - Updated manual page.
@@ -2303,7 +2416,7 @@ General
 **Commit:** [b03d503](https://gitlab.com/Odyseus/CinnamonTools/commit/b03d503)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localizations.
@@ -2315,7 +2428,7 @@ All xlets
 **Commit:** [a1db2d7](https://gitlab.com/Odyseus/CinnamonTools/commit/a1db2d7)<br/>
 **Author:** Odyseus<br/>
 
-mail_system.py
+#### mail_system.py
 
 - Made the keyring module optional.
 - Added password prompt feature.
@@ -2327,7 +2440,7 @@ mail_system.py
 **Commit:** [14d5156](https://gitlab.com/Odyseus/CinnamonTools/commit/14d5156)<br/>
 **Author:** Odyseus<br/>
 
-Docstrings update
+#### Docstrings update
 
 ***
 
@@ -2335,7 +2448,7 @@ Docstrings update
 **Commit:** [c86cf4f](https://gitlab.com/Odyseus/CinnamonTools/commit/c86cf4f)<br/>
 **Author:** Odyseus<br/>
 
-mistune.py
+#### mistune.py
 
 - Added upstream fixes.
 - Added blockquote class to the blockquote tag.
@@ -2346,7 +2459,7 @@ mistune.py
 **Commit:** [ce476df](https://gitlab.com/Odyseus/CinnamonTools/commit/ce476df)<br/>
 **Author:** Odyseus<br/>
 
-misc_utils.py
+#### misc_utils.py
 
 - Added method to merge two dictionaries.
 
@@ -2356,7 +2469,7 @@ misc_utils.py
 **Commit:** [d6b2c6e](https://gitlab.com/Odyseus/CinnamonTools/commit/d6b2c6e)<br/>
 **Author:** Odyseus<br/>
 
-log_system.py
+#### log_system.py
 
 - Added method to get path to the log file.
 - Changed default log file name.
@@ -2368,7 +2481,7 @@ log_system.py
 **Commit:** [1d10309](https://gitlab.com/Odyseus/CinnamonTools/commit/1d10309)<br/>
 **Author:** Odyseus<br/>
 
-file_utils.py
+#### file_utils.py
 
 - Use is_real_dir instead of os.path.exists inside custom_copy2 method.
 
@@ -2378,7 +2491,7 @@ file_utils.py
 **Commit:** [da74d40](https://gitlab.com/Odyseus/CinnamonTools/commit/da74d40)<br/>
 **Author:** Odyseus<br/>
 
-cmd_utils.py
+#### cmd_utils.py
 
 - Added parameters to set and unset environment variables to the get_environment method.
 - Added the env parameter to the run_cmd method.
@@ -2389,7 +2502,7 @@ cmd_utils.py
 **Commit:** [576dfea](https://gitlab.com/Odyseus/CinnamonTools/commit/576dfea)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `cli.py` module:
     - Corrected logs storage path.
@@ -2400,7 +2513,7 @@ Python modules
 **Commit:** [afff7f1](https://gitlab.com/Odyseus/CinnamonTools/commit/afff7f1)<br/>
 **Author:** Odyseus<br/>
 
-cmd_utils.py
+#### cmd_utils.py
 
 - Added some default parameters to the run_cmd method.
 
@@ -2410,7 +2523,7 @@ cmd_utils.py
 **Commit:** [328e8a0](https://gitlab.com/Odyseus/CinnamonTools/commit/328e8a0)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -2422,7 +2535,7 @@ General
 **Commit:** [c293c7c](https://gitlab.com/Odyseus/CinnamonTools/commit/c293c7c)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `cli.py` and `app_utils.py` modules:
     - Added method and CLI command to print xlets slugs. This is used only by the Bash completions script.
@@ -2433,7 +2546,7 @@ Python modules
 **Commit:** [dc2d4c7](https://gitlab.com/Odyseus/CinnamonTools/commit/dc2d4c7)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localization.
@@ -2446,7 +2559,7 @@ All xlets
 **Commit:** [7ef1100](https://gitlab.com/Odyseus/CinnamonTools/commit/7ef1100)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 - Fixed handling of clipboard for Cinnamon versions greater than 3.6.x due to API changes.
 
@@ -2456,7 +2569,7 @@ All xlets
 **Commit:** [eab372f](https://gitlab.com/Odyseus/CinnamonTools/commit/eab372f)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -2467,7 +2580,7 @@ General
 **Commit:** [243e8e6](https://gitlab.com/Odyseus/CinnamonTools/commit/243e8e6)<br/>
 **Author:** Odyseus<br/>
 
-log_system.py
+#### log_system.py
 
 - Added obfuscation of User's home folder path when printing "on screen".
 
@@ -2477,7 +2590,7 @@ log_system.py
 **Commit:** [c147856](https://gitlab.com/Odyseus/CinnamonTools/commit/c147856)<br/>
 **Author:** Odyseus<br/>
 
-hash_utils.py
+#### hash_utils.py
 
 - New module with utilities to get the checksum of a file or a folder.
 
@@ -2487,7 +2600,7 @@ hash_utils.py
 **Commit:** [39beaeb](https://gitlab.com/Odyseus/CinnamonTools/commit/39beaeb)<br/>
 **Author:** Odyseus<br/>
 
-file_utils.py
+#### file_utils.py
 
 - Added expand_path method used to expand environment variables used in a path.
 - Renamed copy_symlink method to copy_create_symlink.
@@ -2499,7 +2612,7 @@ file_utils.py
 **Commit:** [22d71e6](https://gitlab.com/Odyseus/CinnamonTools/commit/22d71e6)<br/>
 **Author:** Odyseus<br/>
 
-cmd_utils.py
+#### cmd_utils.py
 
 - Added run_cmd method.
 
@@ -2509,7 +2622,7 @@ cmd_utils.py
 **Commit:** [122051d](https://gitlab.com/Odyseus/CinnamonTools/commit/122051d)<br/>
 **Author:** Odyseus<br/>
 
-All modules
+#### All modules
 
 - Standardized organization of import statements.
 
@@ -2519,7 +2632,7 @@ All modules
 **Commit:** [3e90dbf](https://gitlab.com/Odyseus/CinnamonTools/commit/3e90dbf)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated link to image in README.
@@ -2530,7 +2643,7 @@ General
 **Commit:** [16a109c](https://gitlab.com/Odyseus/CinnamonTools/commit/16a109c)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Updated all modules to an standardized organization of import statements.
 
@@ -2540,7 +2653,7 @@ Python modules
 **Commit:** [2f9cfd0](https://gitlab.com/Odyseus/CinnamonTools/commit/2f9cfd0)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -2553,7 +2666,7 @@ General
 **Commit:** [c2f6942](https://gitlab.com/Odyseus/CinnamonTools/commit/c2f6942)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated help pages.
@@ -2565,7 +2678,7 @@ All xlets
 **Commit:** [2e50226](https://gitlab.com/Odyseus/CinnamonTools/commit/2e50226)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `cli.py` module:
     - Redesigned to use the python_utils.cli_utils module.
@@ -2577,7 +2690,7 @@ Python modules
 **Commit:** [10553a9](https://gitlab.com/Odyseus/CinnamonTools/commit/10553a9)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -2588,7 +2701,7 @@ General
 **Commit:** [1da11b1](https://gitlab.com/Odyseus/CinnamonTools/commit/1da11b1)<br/>
 **Author:** Odyseus<br/>
 
-cli_utils.py
+#### cli_utils.py
 
 - Corrected logic of the _cli_header_blacklist handling.
 
@@ -2598,7 +2711,7 @@ cli_utils.py
 **Commit:** [14043ff](https://gitlab.com/Odyseus/CinnamonTools/commit/14043ff)<br/>
 **Author:** Odyseus<br/>
 
-cli_utils.py
+#### cli_utils.py
 
 - Updated docstrings.
 
@@ -2608,7 +2721,7 @@ cli_utils.py
 **Commit:** [6c75b77](https://gitlab.com/Odyseus/CinnamonTools/commit/6c75b77)<br/>
 **Author:** Odyseus<br/>
 
-exceptions.py
+#### exceptions.py
 
 - Added new exception.
 
@@ -2618,7 +2731,7 @@ exceptions.py
 **Commit:** [4998a84](https://gitlab.com/Odyseus/CinnamonTools/commit/4998a84)<br/>
 **Author:** Odyseus<br/>
 
-cli_utils.py
+#### cli_utils.py
 
 - Modified to pass individual parameters instead of passing an imported module. Because Python can be as retarded as JavaScript sometimes. ¬¬
 
@@ -2628,7 +2741,7 @@ cli_utils.py
 **Commit:** [9bbdfbb](https://gitlab.com/Odyseus/CinnamonTools/commit/9bbdfbb)<br/>
 **Author:** Odyseus<br/>
 
-Added new cli_utils.py module
+#### Added new cli_utils.py module
 
 ***
 
@@ -2636,7 +2749,7 @@ Added new cli_utils.py module
 **Commit:** [3d68176](https://gitlab.com/Odyseus/CinnamonTools/commit/3d68176)<br/>
 **Author:** Odyseus<br/>
 
-exceptions.py
+#### exceptions.py
 
 - Removed unnecessary parameters when calling super().
 - Added new exceptions.
@@ -2647,7 +2760,7 @@ exceptions.py
 **Commit:** [199ad08](https://gitlab.com/Odyseus/CinnamonTools/commit/199ad08)<br/>
 **Author:** Odyseus<br/>
 
-mail_system.py
+#### mail_system.py
 
 - Removed unnecessary parameters when calling super().
 
@@ -2657,7 +2770,7 @@ mail_system.py
 **Commit:** [3f916e0](https://gitlab.com/Odyseus/CinnamonTools/commit/3f916e0)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated manual page.
@@ -2669,7 +2782,7 @@ General
 **Commit:** [061373c](https://gitlab.com/Odyseus/CinnamonTools/commit/061373c)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `app_utils.py` module:
     - Changed the way the man page is built to be more simple.
@@ -2684,7 +2797,7 @@ Python modules
 **Commit:** [3eafddb](https://gitlab.com/Odyseus/CinnamonTools/commit/3eafddb)<br/>
 **Author:** Odyseus<br/>
 
-docopt.py
+#### docopt.py
 
 - Added a basic Markdown parsing for highlighting the help message with bold text.
 
@@ -2694,7 +2807,7 @@ docopt.py
 **Commit:** [6249f82](https://gitlab.com/Odyseus/CinnamonTools/commit/6249f82)<br/>
 **Author:** Odyseus<br/>
 
-cmd_utils.py
+#### cmd_utils.py
 
 - Allow not using any output stream in the popen method.
 - Changed the name of the working_directory in the exec_command method to cwd.
@@ -2705,7 +2818,7 @@ cmd_utils.py
 **Commit:** [dd56954](https://gitlab.com/Odyseus/CinnamonTools/commit/dd56954)<br/>
 **Author:** Odyseus<br/>
 
-git_utils.py
+#### git_utils.py
 
 - Added do_not_confirm parameter to manage_repo method to avoid halts when executing from a loop.
 
@@ -2715,7 +2828,7 @@ git_utils.py
 **Commit:** [f26808f](https://gitlab.com/Odyseus/CinnamonTools/commit/f26808f)<br/>
 **Author:** Odyseus<br/>
 
-template_utils.py
+#### template_utils.py
 
 - Added user and variables expansions of the selected system executable storage path to the system_executable_generation method.
 
@@ -2725,7 +2838,7 @@ template_utils.py
 **Commit:** [ee755a5](https://gitlab.com/Odyseus/CinnamonTools/commit/ee755a5)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated README.
 - Created manual page.
@@ -2738,7 +2851,7 @@ General
 **Commit:** [cb5d98a](https://gitlab.com/Odyseus/CinnamonTools/commit/cb5d98a)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `__init__.py` module:
     - Defined __appdescription__ so it can be re-used across all modules.
@@ -2756,7 +2869,7 @@ Python modules
 **Commit:** [d279c12](https://gitlab.com/Odyseus/CinnamonTools/commit/d279c12)<br/>
 **Author:** Odyseus<br/>
 
-sphinx_docs_utils.py
+#### sphinx_docs_utils.py
 
 - Added generate_man_pages method.
 
@@ -2766,7 +2879,7 @@ sphinx_docs_utils.py
 **Commit:** [a16a991](https://gitlab.com/Odyseus/CinnamonTools/commit/a16a991)<br/>
 **Author:** Odyseus<br/>
 
-template_utils.py
+#### template_utils.py
 
 - Updated system_executable_generation method to be more portable,
 - Simplified generate_from_template method.
@@ -2777,7 +2890,7 @@ template_utils.py
 **Commit:** [230804e](https://gitlab.com/Odyseus/CinnamonTools/commit/230804e)<br/>
 **Author:** Odyseus<br/>
 
-sphinx_docs_utils.py
+#### sphinx_docs_utils.py
 
 - Updated generate_docs method to be more portable.
 
@@ -2787,7 +2900,7 @@ sphinx_docs_utils.py
 **Commit:** [31c5a46](https://gitlab.com/Odyseus/CinnamonTools/commit/31c5a46)<br/>
 **Author:** Odyseus<br/>
 
-misc_utils.py
+#### misc_utils.py
 
 - Added new return format to the get_date_time method.
 
@@ -2797,7 +2910,7 @@ misc_utils.py
 **Commit:** [1d4da2d](https://gitlab.com/Odyseus/CinnamonTools/commit/1d4da2d)<br/>
 **Author:** Odyseus<br/>
 
-file_utils.py
+#### file_utils.py
 
 - Added is_real_dir and is_real_file methods.
 
@@ -2807,7 +2920,7 @@ file_utils.py
 **Commit:** [225f5a2](https://gitlab.com/Odyseus/CinnamonTools/commit/225f5a2)<br/>
 **Author:** Odyseus<br/>
 
-exceptions.py
+#### exceptions.py
 
 - Added new exceptions.
 
@@ -2817,7 +2930,7 @@ exceptions.py
 **Commit:** [9b7f1d5](https://gitlab.com/Odyseus/CinnamonTools/commit/9b7f1d5)<br/>
 **Author:** Odyseus<br/>
 
-New module cmd_utils.py.
+#### New module cmd_utils.py.
 
 ***
 
@@ -2825,7 +2938,7 @@ New module cmd_utils.py.
 **Commit:** [818d7dc](https://gitlab.com/Odyseus/CinnamonTools/commit/818d7dc)<br/>
 **Author:** Odyseus<br/>
 
-New module mail_system.py.
+#### New module mail_system.py.
 
 ***
 
@@ -2833,7 +2946,7 @@ New module mail_system.py.
 **Commit:** [b220e04](https://gitlab.com/Odyseus/CinnamonTools/commit/b220e04)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 
@@ -2843,7 +2956,7 @@ General
 **Commit:** [2530f26](https://gitlab.com/Odyseus/CinnamonTools/commit/2530f26)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated help files due to changes in their source files.
 
@@ -2853,7 +2966,7 @@ All xlets
 **Commit:** [7f32dd9](https://gitlab.com/Odyseus/CinnamonTools/commit/7f32dd9)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `localized_help_utils.py` module:
     - Added some missing punctuation marks to the help pages template footer.
@@ -2864,7 +2977,7 @@ Python modules
 **Commit:** [8231659](https://gitlab.com/Odyseus/CinnamonTools/commit/8231659)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 - Updated Sublime Text project files to make the HELP.html files visible.
@@ -2875,7 +2988,7 @@ General
 **Commit:** [44cff5c](https://gitlab.com/Odyseus/CinnamonTools/commit/44cff5c)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 
@@ -2885,7 +2998,7 @@ General
 **Commit:** [dcc0f28](https://gitlab.com/Odyseus/CinnamonTools/commit/dcc0f28)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 
@@ -2895,7 +3008,7 @@ General
 **Commit:** [fd8dd52](https://gitlab.com/Odyseus/CinnamonTools/commit/fd8dd52)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `cli.py` module:
     - Corrected relative import.
@@ -2906,7 +3019,7 @@ Python modules
 **Commit:** [5c927a6](https://gitlab.com/Odyseus/CinnamonTools/commit/5c927a6)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Implemented the documentation repository as a sub-module. I was reluctant to do this because it forces me to push the changes made to the sub-module. But it turned out to be not as complex as I thought it would be.
 - Updated .gitignore.
@@ -2917,7 +3030,7 @@ General
 **Commit:** [d73edfb](https://gitlab.com/Odyseus/CinnamonTools/commit/d73edfb)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated help files.
@@ -2928,7 +3041,7 @@ All xlets
 **Commit:** [a7bf7bf](https://gitlab.com/Odyseus/CinnamonTools/commit/a7bf7bf)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated README to use the new documentation location.
 
@@ -2938,7 +3051,7 @@ General
 **Commit:** [4c0a0d9](https://gitlab.com/Odyseus/CinnamonTools/commit/4c0a0d9)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `app_utils.py` module:
     - Updated README generation to use the new documentation location.
@@ -2951,7 +3064,7 @@ Python modules
 **Commit:** [0b76669](https://gitlab.com/Odyseus/CinnamonTools/commit/0b76669)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `app_utils.py` module:
     - Corrected path to docs sources.
@@ -2962,7 +3075,7 @@ Python modules
 **Commit:** [1af2460](https://gitlab.com/Odyseus/CinnamonTools/commit/1af2460)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated .gitignore.
 
@@ -2972,7 +3085,7 @@ General
 **Commit:** [a67088d](https://gitlab.com/Odyseus/CinnamonTools/commit/a67088d)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `app_utils.py` module:
     - Moved the location of the **domain_name** and **theme_name** files into the repository's **tmp** folder to avoid clutter at the root of the repository.
@@ -2983,7 +3096,7 @@ Python modules
 **Commit:** [fa92003](https://gitlab.com/Odyseus/CinnamonTools/commit/fa92003)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Documentation removal. Moved the documentation into its own repository to avoid exponential growth of repository history and data.
 - Removed sub-modules that were used by the documentation.
@@ -2995,7 +3108,7 @@ General
 **Commit:** [84e99a0](https://gitlab.com/Odyseus/CinnamonTools/commit/84e99a0)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `app_utils.py` module:
     - Changed the `get_xlets_dirs` function to ignore xlets whose folder name start with 0z. These xlets aren't functional.
@@ -3007,7 +3120,7 @@ Python modules
 **Commit:** [2804167](https://gitlab.com/Odyseus/CinnamonTools/commit/2804167)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3017,7 +3130,7 @@ Documentation
 **Commit:** [8171770](https://gitlab.com/Odyseus/CinnamonTools/commit/8171770)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `cli.py` module:
     - Added new CLI commands to perform repository's complex tasks and updated Bash completions file.
@@ -3030,7 +3143,7 @@ Python modules
 **Commit:** [8f2ca5e](https://gitlab.com/Odyseus/CinnamonTools/commit/8f2ca5e)<br/>
 **Author:** Odyseus<br/>
 
-Added new modules.
+#### Added new modules.
 
 ***
 
@@ -3038,7 +3151,7 @@ Added new modules.
 **Commit:** [c184f8f](https://gitlab.com/Odyseus/CinnamonTools/commit/c184f8f)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3048,7 +3161,7 @@ Documentation
 **Commit:** [dd4434f](https://gitlab.com/Odyseus/CinnamonTools/commit/dd4434f)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3058,7 +3171,7 @@ Documentation
 **Commit:** [a5252da](https://gitlab.com/Odyseus/CinnamonTools/commit/a5252da)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Moved all common Python utilities into their own repository and included that repository as a sub-module using the sub-tree merge strategy.
 
@@ -3068,7 +3181,7 @@ Python modules
 **Commit:** [33a944c](https://gitlab.com/Odyseus/CinnamonTools/commit/33a944c)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated .gitignore.
 - Updated sub-modules.
@@ -3080,7 +3193,7 @@ General
 **Commit:** [d969756](https://gitlab.com/Odyseus/CinnamonTools/commit/d969756)<br/>
 **Author:** Odyseus<br/>
 
-Added licenses.
+#### Added licenses.
 
 ***
 
@@ -3088,7 +3201,7 @@ Added licenses.
 **Commit:** [79b4030](https://gitlab.com/Odyseus/CinnamonTools/commit/79b4030)<br/>
 **Author:** Odyseus<br/>
 
-Initial commit.
+#### Initial commit.
 
 ***
 
@@ -3096,7 +3209,7 @@ Initial commit.
 **Commit:** [a5f9c61](https://gitlab.com/Odyseus/CinnamonTools/commit/a5f9c61)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3106,7 +3219,7 @@ Documentation
 **Commit:** [fc2bac3](https://gitlab.com/Odyseus/CinnamonTools/commit/fc2bac3)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated help files due to changes in the building process.
 
@@ -3116,7 +3229,7 @@ All xlets
 **Commit:** [255c550](https://gitlab.com/Odyseus/CinnamonTools/commit/255c550)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Updated some docstrings.
 - `localized_help_utils.py` and `localized_help_creator.py` modules:
@@ -3131,7 +3244,7 @@ Python modules
 **Commit:** [2814cf6](https://gitlab.com/Odyseus/CinnamonTools/commit/2814cf6)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Added Bootstrap theme sub-module. It's part of the HTML assets used by the help pages generation process.
 - Removed HTML assets that aren't used anymore.
@@ -3144,7 +3257,7 @@ General
 **Commit:** [b4c34f4](https://gitlab.com/Odyseus/CinnamonTools/commit/b4c34f4)<br/>
 **Author:** Odyseus<br/>
 
-Genera
+#### Genera
 
 - Updated sub-modules.
 
@@ -3154,7 +3267,7 @@ Genera
 **Commit:** [2f4fd5c](https://gitlab.com/Odyseus/CinnamonTools/commit/2f4fd5c)<br/>
 **Author:** Odyseus<br/>
 
-Genera
+#### Genera
 
 - Updated sub-modules.
 
@@ -3164,7 +3277,7 @@ Genera
 **Commit:** [c5b82f7](https://gitlab.com/Odyseus/CinnamonTools/commit/c5b82f7)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3174,7 +3287,7 @@ Documentation
 **Commit:** [075410d](https://gitlab.com/Odyseus/CinnamonTools/commit/075410d)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sphinx_extensions sub-module.
 - Implemented a new sphinx extension to specifically handle docopt docstrings inside the documentation.
@@ -3185,7 +3298,7 @@ General
 **Commit:** [fbe9356](https://gitlab.com/Odyseus/CinnamonTools/commit/fbe9356)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 
@@ -3195,7 +3308,7 @@ General
 **Commit:** [718f7dd](https://gitlab.com/Odyseus/CinnamonTools/commit/718f7dd)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3205,7 +3318,7 @@ Documentation
 **Commit:** [c586f0b](https://gitlab.com/Odyseus/CinnamonTools/commit/c586f0b)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `localized_help_utils.py` module:
     - Reverted back to saving the generated HELP.html files for on-line hosting into the **docs_sources** folder instead of the **docs** folder. It forced me to re-create all help files every time that I re-built the documentation. And I kept forgetting to do it resulting in broken links on the repository README.
@@ -3216,7 +3329,7 @@ Python modules
 **Commit:** [c4df481](https://gitlab.com/Odyseus/CinnamonTools/commit/c4df481)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated sub-modules.
 
@@ -3226,7 +3339,7 @@ General
 **Commit:** [311f873](https://gitlab.com/Odyseus/CinnamonTools/commit/311f873)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3236,7 +3349,7 @@ Documentation
 **Commit:** [dc7f72c](https://gitlab.com/Odyseus/CinnamonTools/commit/dc7f72c)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `app_utils.py` and `cli.py` modules:
     - Added the CLI option --force-clean-build to force the clearing of the doctree cache and the destination folder when building the documentation.
@@ -3250,7 +3363,7 @@ Python modules
 **Commit:** [aec7fd5](https://gitlab.com/Odyseus/CinnamonTools/commit/aec7fd5)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Removed Sphinx extensions and re-implemented them as a git sub-module.
 - Re-organized/improved the documentation to be more concise and straight to the point.
@@ -3263,7 +3376,7 @@ General
 **Commit:** [5058ba6](https://gitlab.com/Odyseus/CinnamonTools/commit/5058ba6)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated repository README.md.
 
@@ -3273,7 +3386,7 @@ General
 **Commit:** [5ebdb3f](https://gitlab.com/Odyseus/CinnamonTools/commit/5ebdb3f)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated help files.
@@ -3285,7 +3398,7 @@ All xlets
 **Commit:** [f3a39a3](https://gitlab.com/Odyseus/CinnamonTools/commit/f3a39a3)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated .gitignore.
 - Cleaned tracked files that are now ignored.
@@ -3297,7 +3410,7 @@ General
 **Commit:** [bb593d0](https://gitlab.com/Odyseus/CinnamonTools/commit/bb593d0)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Switched to a modified version of sphinx-rtd-theme.
 - Documentation rebuilt.
@@ -3308,7 +3421,7 @@ Documentation
 **Commit:** [1b42a59](https://gitlab.com/Odyseus/CinnamonTools/commit/1b42a59)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated the repository README.md file to be a little less verbose.
 - Removed Sphinx theme and re-implemented it as a git sub-module.
@@ -3321,7 +3434,7 @@ General
 **Commit:** [4bfb7e1](https://gitlab.com/Odyseus/CinnamonTools/commit/4bfb7e1)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Switched to a modified version of sphinx-rtd-theme.
 - Documentation rebuilt.
@@ -3332,7 +3445,7 @@ Documentation
 **Commit:** [d233ca8](https://gitlab.com/Odyseus/CinnamonTools/commit/d233ca8)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3342,7 +3455,7 @@ Documentation
 **Commit:** [efd4e13](https://gitlab.com/Odyseus/CinnamonTools/commit/efd4e13)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated help files.
@@ -3353,7 +3466,7 @@ All xlets
 **Commit:** [33f6c00](https://gitlab.com/Odyseus/CinnamonTools/commit/33f6c00)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated the repository README.md file.
 - Re-formatted some CSS files used by the help pages and the documentation.
@@ -3365,7 +3478,7 @@ General
 **Commit:** [c2a782e](https://gitlab.com/Odyseus/CinnamonTools/commit/c2a782e)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - Cleaned up docstrings.
 - Cleaned up unused/unnecessary methods.
@@ -3378,7 +3491,7 @@ Python modules
 **Commit:** [4ac1d1b](https://gitlab.com/Odyseus/CinnamonTools/commit/4ac1d1b)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3388,7 +3501,7 @@ Documentation
 **Commit:** [9f8cb8e](https://gitlab.com/Odyseus/CinnamonTools/commit/9f8cb8e)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Re-generated the repository README.md file with correct links to help pages.
 
@@ -3398,7 +3511,7 @@ General
 **Commit:** [16e8101](https://gitlab.com/Odyseus/CinnamonTools/commit/16e8101)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Added missing help pages inside the **\_static** folder.
 
@@ -3408,7 +3521,7 @@ Documentation
 **Commit:** [4e96b88](https://gitlab.com/Odyseus/CinnamonTools/commit/4e96b88)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `app_utils.py` module:
     - Corrected URL for README.md file xlet help pages list items.
@@ -3419,7 +3532,7 @@ Python modules
 **Commit:** [47bf75e](https://gitlab.com/Odyseus/CinnamonTools/commit/47bf75e)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Removed xlet help pages index from the documentation since the list of help pages is now part of the repository README.md file.
 - Removed all help pages from the **\_static** folder since they are now copied directly into the **docs** folder._
@@ -3433,7 +3546,7 @@ Documentation
 **Commit:** [401c006](https://gitlab.com/Odyseus/CinnamonTools/commit/401c006)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Added template to generate the repository README.md file.
 - Generated the repository README.md file.
@@ -3444,7 +3557,7 @@ General
 **Commit:** [e8531bf](https://gitlab.com/Odyseus/CinnamonTools/commit/e8531bf)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localizations.
@@ -3457,7 +3570,7 @@ All xlets
 **Commit:** [ad39413](https://gitlab.com/Odyseus/CinnamonTools/commit/ad39413)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Removed all hard-coded repository URLs in favor of using a placeholder that will be replaced by the actual URL on xlet build time.
 - Cleaned up and modified some of the `z_create_localized_help.py` scripts to use newly created HTML templates from the `localized_help_utils.py` module.
@@ -3468,7 +3581,7 @@ All xlets
 **Commit:** [5ead8b6](https://gitlab.com/Odyseus/CinnamonTools/commit/5ead8b6)<br/>
 **Author:** Odyseus<br/>
 
-HTML assets for help pages
+#### HTML assets for help pages
 
 - Switched from Bootstrap 3 to Bootstrap 4.
 - Cleaned up unused styles.
@@ -3480,7 +3593,7 @@ HTML assets for help pages
 **Commit:** [2dc7dbd](https://gitlab.com/Odyseus/CinnamonTools/commit/2dc7dbd)<br/>
 **Author:** Odyseus<br/>
 
-Python modules
+#### Python modules
 
 - `app_utils.py` module:
     - More detailed description of the bash completion creation process.
@@ -3507,7 +3620,7 @@ Python modules
 **Commit:** [4ab065a](https://gitlab.com/Odyseus/CinnamonTools/commit/4ab065a)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3517,7 +3630,7 @@ Documentation
 **Commit:** [4026075](https://gitlab.com/Odyseus/CinnamonTools/commit/4026075)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Changed the .gitlab-ci.yml file to trigger the build of pages when the title of a commit is "Documentation".
 
@@ -3527,7 +3640,7 @@ General
 **Commit:** [9cff425](https://gitlab.com/Odyseus/CinnamonTools/commit/9cff425)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Cleaned up all help page creator scripts.
     - Removed all on-line hosted images in favor of in-line Base64 encoded images.
@@ -3542,7 +3655,7 @@ All xlets
 **Commit:** [781d840](https://gitlab.com/Odyseus/CinnamonTools/commit/781d840)<br/>
 **Author:** Odyseus<br/>
 
-BaseXlet
+#### BaseXlet
 
 - Set the **Cancel** button in the `ConfirmationDialog` prototype as focused by default.
 
@@ -3552,7 +3665,7 @@ BaseXlet
 **Commit:** [9c831e6](https://gitlab.com/Odyseus/CinnamonTools/commit/9c831e6)<br/>
 **Author:** Odyseus<br/>
 
-0ExtensionsManager
+#### 0ExtensionsManager
 
 - Implemented a more transparent way of calling `Gio.File.load_contents_finish`.
 - Set the **Cancel** button in the `ConfirmationDialog` prototype as focused by default.
@@ -3563,7 +3676,7 @@ BaseXlet
 **Commit:** [9a40db2](https://gitlab.com/Odyseus/CinnamonTools/commit/9a40db2)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 - Implemented a more transparent way of calling `Gio.File.load_contents_finish`.
 - Changed the styling of the buttons inside the main menu to actually look like button.
@@ -3574,7 +3687,7 @@ BaseXlet
 **Commit:** [cd4f58f](https://gitlab.com/Odyseus/CinnamonTools/commit/cd4f58f)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - GitHub eradication. New home is GitLab.
 - Updated documentation's development notes.
@@ -3587,7 +3700,7 @@ General
 **Commit:** [4782063](https://gitlab.com/Odyseus/CinnamonTools/commit/4782063)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3597,7 +3710,7 @@ Documentation
 **Commit:** [5d2d76a](https://gitlab.com/Odyseus/CinnamonTools/commit/5d2d76a)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localizations.
@@ -3609,7 +3722,7 @@ All xlets
 **Commit:** [49add35](https://gitlab.com/Odyseus/CinnamonTools/commit/49add35)<br/>
 **Author:** Odyseus<br/>
 
-Main Python application
+#### Main Python application
 
 - Added to the helper.py script the ability to clean up an xlet gsettings leftovers. Since I couldn't find a clear way of clearing the leftover gsettings keys of an xlet programmatically, I had to resort to the use of an external command (`dconf`).
 
@@ -3619,7 +3732,7 @@ Main Python application
 **Commit:** [5577120](https://gitlab.com/Odyseus/CinnamonTools/commit/5577120)<br/>
 **Author:** Odyseus<br/>
 
-BaseXlet
+#### BaseXlet
 
 - Cleaned leftovers from previous cleanup.
 
@@ -3629,7 +3742,7 @@ BaseXlet
 **Commit:** [5c10856](https://gitlab.com/Odyseus/CinnamonTools/commit/5c10856)<br/>
 **Author:** Odyseus<br/>
 
-0CinnamonMaximusForkByOdyseus
+#### 0CinnamonMaximusForkByOdyseus
 
 - Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 
@@ -3639,7 +3752,7 @@ BaseXlet
 **Commit:** [780aaf6](https://gitlab.com/Odyseus/CinnamonTools/commit/780aaf6)<br/>
 **Author:** Odyseus<br/>
 
-0WallpaperChangerApplet
+#### 0WallpaperChangerApplet
 
 - Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 - Cleaned leftovers from previous cleanup.
@@ -3650,7 +3763,7 @@ BaseXlet
 **Commit:** [e2d20e3](https://gitlab.com/Odyseus/CinnamonTools/commit/e2d20e3)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 - Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 
@@ -3660,7 +3773,7 @@ BaseXlet
 **Commit:** [e093145](https://gitlab.com/Odyseus/CinnamonTools/commit/e093145)<br/>
 **Author:** Odyseus<br/>
 
-0ExtensionsManager
+#### 0ExtensionsManager
 
 - Second step towards moving all JavaScript code to ES6. Convert all functions (that can be converted) to arrow functions.
 
@@ -3670,7 +3783,7 @@ BaseXlet
 **Commit:** [1c1aa7b](https://gitlab.com/Odyseus/CinnamonTools/commit/1c1aa7b)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated .jshintrc and .gitignore files.
 
@@ -3680,7 +3793,7 @@ General
 **Commit:** [8c2b1c7](https://gitlab.com/Odyseus/CinnamonTools/commit/8c2b1c7)<br/>
 **Author:** Odyseus<br/>
 
-0ExtensionsManager
+#### 0ExtensionsManager
 
 - Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 - Simplification of the procedure to set the applet icon.
@@ -3692,7 +3805,7 @@ General
 **Commit:** [e680392](https://gitlab.com/Odyseus/CinnamonTools/commit/e680392)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 - Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 - Simplification of the procedure to set the applet icon.
@@ -3704,7 +3817,7 @@ General
 **Commit:** [931fd03](https://gitlab.com/Odyseus/CinnamonTools/commit/931fd03)<br/>
 **Author:** Odyseus<br/>
 
-0WallpaperChangerApplet
+#### 0WallpaperChangerApplet
 
 - Eradication of **Lang** module usage in favor of arrow/standard functions. First step towards moving all JavaScript code to ES6.
 - Simplification of the procedure to set the applet icon.
@@ -3715,7 +3828,7 @@ General
 **Commit:** [0be81cb](https://gitlab.com/Odyseus/CinnamonTools/commit/0be81cb)<br/>
 **Author:** Odyseus<br/>
 
-0CinnamonMaximusForkByOdyseus
+#### 0CinnamonMaximusForkByOdyseus
 
 - Removed support for Cinnamon versions older than 3.0.x.
 
@@ -3725,7 +3838,7 @@ General
 **Commit:** [a01e724](https://gitlab.com/Odyseus/CinnamonTools/commit/a01e724)<br/>
 **Author:** Odyseus<br/>
 
-0WindowDemandsAttentionBehavior
+#### 0WindowDemandsAttentionBehavior
 
 - Eradication of **Lang** module usage in favor of arrow/standard functions. Also removed Cjs JS class notation in favor of prototypes. First step towards moving all JavaScript code to ES6.
 - Removed support for Cinnamon versions older than 3.0.x.
@@ -3736,7 +3849,7 @@ General
 **Commit:** [c08ffc8](https://gitlab.com/Odyseus/CinnamonTools/commit/c08ffc8)<br/>
 **Author:** Odyseus<br/>
 
-BaseXlet
+#### BaseXlet
 
 - Eradication of **Lang** module usage in favor of arrow/standard functions. Also removed Cjs JS class notation in favor of prototypes. First step towards moving all JavaScript code to ES6.
 - Removed support for Cinnamon versions older than 3.0.x.
@@ -3747,7 +3860,7 @@ BaseXlet
 **Commit:** [8db2696](https://gitlab.com/Odyseus/CinnamonTools/commit/8db2696)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3757,7 +3870,7 @@ Documentation
 **Commit:** [3f5fe0d](https://gitlab.com/Odyseus/CinnamonTools/commit/3f5fe0d)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localizations.
@@ -3769,7 +3882,7 @@ All xlets
 **Commit:** [18d4dd0](https://gitlab.com/Odyseus/CinnamonTools/commit/18d4dd0)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Updated .gitignore.
 
@@ -3779,7 +3892,7 @@ General
 **Commit:** [169473f](https://gitlab.com/Odyseus/CinnamonTools/commit/169473f)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 - Update README.
 
@@ -3789,7 +3902,7 @@ General
 **Commit:** [5565439](https://gitlab.com/Odyseus/CinnamonTools/commit/5565439)<br/>
 **Author:** Odyseus<br/>
 
-General
+#### General
 
 Added issue templates for GitHub and GitLab.
 
@@ -3799,7 +3912,7 @@ Added issue templates for GitHub and GitLab.
 **Commit:** [ee53956](https://gitlab.com/Odyseus/CinnamonTools/commit/ee53956)<br/>
 **Author:** Odyseus<br/>
 
-0WallpaperChangerApplet
+#### 0WallpaperChangerApplet
 
 - Finally fixed issues when handling gsettings (probably ¬¬).
 
@@ -3809,7 +3922,7 @@ Added issue templates for GitHub and GitLab.
 **Commit:** [cbfb4fd](https://gitlab.com/Odyseus/CinnamonTools/commit/cbfb4fd)<br/>
 **Author:** Odyseus<br/>
 
-Themes
+#### Themes
 
 - Added options to choose on build time the font family/size used by the Cinnamon theme.
 
@@ -3819,7 +3932,7 @@ Themes
 **Commit:** [4295411](https://gitlab.com/Odyseus/CinnamonTools/commit/4295411)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 - Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
 
@@ -3829,7 +3942,7 @@ Themes
 **Commit:** [d3e1ad8](https://gitlab.com/Odyseus/CinnamonTools/commit/d3e1ad8)<br/>
 **Author:** Odyseus<br/>
 
-0ExtensionsManager
+#### 0ExtensionsManager
 
 - Corrected settings changed callback function due to different amount of arguments passed by different Cinnamon versions.
 
@@ -3839,7 +3952,7 @@ Themes
 **Commit:** [1be3fb3](https://gitlab.com/Odyseus/CinnamonTools/commit/1be3fb3)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3849,7 +3962,7 @@ Documentation
 **Commit:** [da472d2](https://gitlab.com/Odyseus/CinnamonTools/commit/da472d2)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates.
 - Updated Spanish localizations.
@@ -3861,7 +3974,7 @@ All xlets
 **Commit:** [08bed3a](https://gitlab.com/Odyseus/CinnamonTools/commit/08bed3a)<br/>
 **Author:** Odyseus<br/>
 
-Main Python application
+#### Main Python application
 
 - Renamed the vars.md file inside the base xlet template directory to README.md.
 - Re-implemented the localizations.bash script into a Python script. Renamed to helper.py and added functions to install/remove gsettings schemas to mitigate gksu deprecation.
@@ -3875,7 +3988,7 @@ Main Python application
 **Commit:** [3bcc8ee](https://gitlab.com/Odyseus/CinnamonTools/commit/3bcc8ee)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Added/Improved some function's docstrings.
 
@@ -3885,7 +3998,7 @@ All xlets
 **Commit:** [d3625b9](https://gitlab.com/Odyseus/CinnamonTools/commit/d3625b9)<br/>
 **Author:** Odyseus<br/>
 
-0WallpaperChangerApplet
+#### 0WallpaperChangerApplet
 
 - gksu deprecation mitigation:
     - Removed gsettings schema installation/removal from the settings.py script. To avoid dealing with retarded policies (pkexec), I moved the installation process to a helper file (common to all xlets) that uses the good old sudo.
@@ -3897,7 +4010,7 @@ All xlets
 **Commit:** [be476ba](https://gitlab.com/Odyseus/CinnamonTools/commit/be476ba)<br/>
 **Author:** Odyseus<br/>
 
-Added .gitlab-ci.yml
+#### Added .gitlab-ci.yml
 
 - Preparing for the move to GitLab.
 
@@ -3907,7 +4020,7 @@ Added .gitlab-ci.yml
 **Commit:** [6ec0f1a](https://gitlab.com/Odyseus/CinnamonTools/commit/6ec0f1a)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Documentation rebuilt.
 
@@ -3917,7 +4030,7 @@ Documentation
 **Commit:** [9ef05cf](https://gitlab.com/Odyseus/CinnamonTools/commit/9ef05cf)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated localization templates, Spanish localizations and help files.
 
@@ -3927,7 +4040,7 @@ All xlets
 **Commit:** [449233a](https://gitlab.com/Odyseus/CinnamonTools/commit/449233a)<br/>
 **Author:** Odyseus<br/>
 
-All JavaScript files
+#### All JavaScript files
 
 - General formatting corrections.
 
@@ -3937,7 +4050,7 @@ All JavaScript files
 **Commit:** [7ccddf1](https://gitlab.com/Odyseus/CinnamonTools/commit/7ccddf1)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Uber simplification of the applet settings bindings.
 
@@ -3947,7 +4060,7 @@ All xlets
 **Commit:** [e18bdd7](https://gitlab.com/Odyseus/CinnamonTools/commit/e18bdd7)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Updated and re-built documentation.
 
@@ -3957,7 +4070,7 @@ Documentation
 **Commit:** [2317a73](https://gitlab.com/Odyseus/CinnamonTools/commit/2317a73)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated POT files, Spanish localizations and help pages.
 
@@ -3967,7 +4080,7 @@ All xlets
 **Commit:** [a5a0cba](https://gitlab.com/Odyseus/CinnamonTools/commit/a5a0cba)<br/>
 **Author:** Odyseus<br/>
 
-Development application
+#### Development application
 
 - Moved the files CHANGELOG-OLD.md and CONTRIBUTORS.md into the xlet's __data__ folder so they are not included when an xlet is built.
 
@@ -3977,7 +4090,7 @@ Development application
 **Commit:** [d0ed517](https://gitlab.com/Odyseus/CinnamonTools/commit/d0ed517)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated POT files and Spanish localizations.
 - Renamed all JavaScript files inside __data__ folders bask to .js since now the update POT files function ignores that folder.
@@ -3988,7 +4101,7 @@ All xlets
 **Commit:** [49645a9](https://gitlab.com/Odyseus/CinnamonTools/commit/49645a9)<br/>
 **Author:** Odyseus<br/>
 
-Development application
+#### Development application
 
 - Added .sass-cache folder to .gitignore.
 - Added missing argument to bash completions file.
@@ -4000,7 +4113,7 @@ Development application
 **Commit:** [7f167a2](https://gitlab.com/Odyseus/CinnamonTools/commit/7f167a2)<br/>
 **Author:** Odyseus<br/>
 
-0PopupTranslator
+#### 0PopupTranslator
 
 - Implemented key bindings common naming.
 
@@ -4010,7 +4123,7 @@ Development application
 **Commit:** [130cad8](https://gitlab.com/Odyseus/CinnamonTools/commit/130cad8)<br/>
 **Author:** Odyseus<br/>
 
-0WallpaperChangerApplet
+#### 0WallpaperChangerApplet
 
 - Revamped/simplified settings system.
 
@@ -4020,7 +4133,7 @@ Development application
 **Commit:** [51cd53d](https://gitlab.com/Odyseus/CinnamonTools/commit/51cd53d)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Changed from a specific nomenclature for defining xlets metadata to a generic nomenclature.
 
@@ -4030,7 +4143,7 @@ All xlets
 **Commit:** [1b6b1d5](https://gitlab.com/Odyseus/CinnamonTools/commit/1b6b1d5)<br/>
 **Author:** Odyseus<br/>
 
-Documentation
+#### Documentation
 
 - Updated and re-built documentation.
 
@@ -4040,7 +4153,7 @@ Documentation
 **Commit:** [7a537fe](https://gitlab.com/Odyseus/CinnamonTools/commit/7a537fe)<br/>
 **Author:** Odyseus<br/>
 
-All xlets
+#### All xlets
 
 - Updated all POT files.
 - Updated Spanish localizations.
@@ -4053,7 +4166,7 @@ All xlets
 **Commit:** [725eeea](https://gitlab.com/Odyseus/CinnamonTools/commit/725eeea)<br/>
 **Author:** Odyseus<br/>
 
-Development application
+#### Development application
 
 - Updated the docstrings of all Python modules.
 - Clean up Python modules comments.
@@ -4064,7 +4177,7 @@ Development application
 **Commit:** [e4d26b6](https://gitlab.com/Odyseus/CinnamonTools/commit/e4d26b6)<br/>
 **Author:** Odyseus<br/>
 
-Development application
+#### Development application
 
 - cli.py
     - Use set() (to remove duplicated items) before sorting the list, not after. This fixes the wrong order of execution of certain CLI arguments.
@@ -4094,7 +4207,7 @@ Development application
 **Commit:** [a320955](https://gitlab.com/Odyseus/CinnamonTools/commit/a320955)<br/>
 **Author:** Odyseus<br/>
 
-Development application
+#### Development application
 
 Updated the Python modules README.
 
@@ -4104,7 +4217,7 @@ Updated the Python modules README.
 **Commit:** [c376488](https://gitlab.com/Odyseus/CinnamonTools/commit/c376488)<br/>
 **Author:** Odyseus<br/>
 
-Documentation update.
+#### Documentation update.
 
 ***
 
@@ -4112,6 +4225,6 @@ Documentation update.
 **Commit:** [e0bd9c2](https://gitlab.com/Odyseus/CinnamonTools/commit/e0bd9c2)<br/>
 **Author:** Odyseus<br/>
 
-Initial commit.
+#### Initial commit.
 
 ***
