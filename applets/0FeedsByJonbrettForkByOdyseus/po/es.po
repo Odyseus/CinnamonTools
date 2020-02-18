@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-02-14 01:15-0300\n"
-"PO-Revision-Date: 2020-02-13 19:14-0300\n"
+"POT-Creation-Date: 2020-02-18 04:55-0300\n"
+"PO-Revision-Date: 2020-02-18 04:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -19,243 +19,260 @@ msgstr ""
 "Generated-By: Make Cinnamon Xlet POT 2018-05-08 23:52:32.717\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:84
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:58
 msgid "Application Chooser"
 msgstr "Selector de aplicaciones"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:88 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:59 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:366 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1088 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1202 ../../__app__/data/python_modules/xlets_settings/__init__.py:1088 ../../__app__/data/python_modules/xlets_settings/__init__.py:1121 python_modules/feeds_importer.py:161
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:409 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1105 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1225 ../../__app__/data/python_modules/xlets_settings/__init__.py:1194 ../../__app__/data/python_modules/xlets_settings/__init__.py:1227 python_modules/feeds_importer.py:161
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:89
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:63
 msgid "_OK"
 msgstr "Aceptar"
 
 #. Can be programmatically changed if needed.
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:102 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:612
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:78 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:638
 msgid "Choose an application"
 msgstr "Elegir una aplicación"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:217
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:197
 msgid "Total applications"
 msgstr "Total de aplicaciones"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:324
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:323
 msgid "Applications list"
 msgstr "Lista de aplicaciones"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:331
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:330
 msgid "Duplicated entries will be automatically removed"
 msgstr "Entradas duplicadas serán removidas automáticamente"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:348
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:347
 msgid "Application"
 msgstr "Aplicación"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:379
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:378
 msgid "Add Applications"
 msgstr "Agregar Aplicaciones"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:385
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:384
 msgid "Remove selected applications"
 msgstr "Remover aplicaciones seleccionadas"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:470
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:424
 msgid "Choose one or more applications (Hold Ctrl key)"
 msgstr "Elegir una o más aplicaciones (Mantener pulsada la tecla Ctrl)"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:577
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:598
 msgid "Clear application"
 msgstr "Limpiar aplicación"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:635 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:504
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:701 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:515
+msgid "Invalid app"
+msgstr "Aplicación inválida"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:701 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:515
 msgid "No app chosen"
 msgstr "Ninguna aplicación elegida"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:57 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:362
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:703
+#, python-format
+msgid "The application with ID '%s' might not be installed anymore."
+msgstr "La aplicación con ID '%s' puede que ya no esté instalada."
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:60 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:405
 msgid "Choose an Icon"
 msgstr "Elegir un ícono"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:60 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:367
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:63 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:410
 msgid "_Select"
 msgstr "_Seleccionar"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:114
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:117
 msgid "Search..."
 msgstr "Buscar..."
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:116
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:119
 msgid "Browse"
 msgstr "Navegar"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:244
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:287
 msgid "Icons shown"
 msgstr "Íconos mostrados"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:370
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:413
 msgid "Image files"
 msgstr "Archivos de imagen"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:304
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:556
+msgid "Icon"
+msgstr "Ícono"
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:557
+msgid "The string representing the icon."
+msgstr "La cadena de texto que representa al ícono."
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:306
 msgid "Information related to this specific section"
 msgstr "Información relacionada con esta sección específica."
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1297
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1308
 msgid "Clear color"
 msgstr "Limpiar color"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1419
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1431
 msgid "Clear path"
 msgstr "Limpiar ruta"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:626
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:637
 msgid "Add new item"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:634
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:645
 msgid "Remove selected item"
 msgstr "Eliminar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:646
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:657
 msgid "Edit selected item"
 msgstr "Editar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:656
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:667
 msgid "Move selected item up"
 msgstr "Mover ítem seleccionado hacia arriba"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:664
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:675
 msgid "Move selected item down"
 msgstr "Mover ítem seleccionado hacia abajo"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:678
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:689
 msgid "Export data"
 msgstr "Exportar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:691 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1102
 msgid "Import data"
 msgstr "Importar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:710
 msgid "Apply changes"
 msgstr "Aplicar cambios"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:884
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:899
 msgid "Item removal"
 msgstr "Eliminación de ítem"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:887
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:902
 msgid "Are you sure that you want to remove the selected items?"
 msgstr "¿Está seguro de que desea remover los ítems seleccionados?"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:888
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:903
 msgid "Note"
 msgstr "Nota"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:889
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:904
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1089
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1106
 msgid "_Overwrite"
 msgstr "_Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1090
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1107
 msgid "_Append"
 msgstr "_Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1110
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1127
 msgid "Overwrite"
 msgstr "Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1111
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1128
 msgid "replace the current data with the imported data."
 msgstr "reemplazar los datos actuales con los datos importados."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1112
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1129
 msgid "Append"
 msgstr "Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1113
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1130
 msgid "add the imported data to the current data."
 msgstr "agregar los datos importados a los datos actuales."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1148
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1165
 #, python-format
 msgid "Wrong data type found on file '%s'"
 msgstr "Se encontró un tipo de datos incorrecto en el archivo '%s'"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1151
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1168
 msgid "Error importing data"
 msgstr "¡Error al importar datos!"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1194
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1217
 msgid "Add new entry"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1196
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1219
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1203 ../../__app__/data/python_modules/xlets_settings/__init__.py:1089 ../../__app__/data/python_modules/xlets_settings/__init__.py:1122
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226 ../../__app__/data/python_modules/xlets_settings/__init__.py:1195 ../../__app__/data/python_modules/xlets_settings/__init__.py:1228
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:495 settings.py:246
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:590 settings.py:246
 msgid "Other"
 msgstr "Otros"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:634
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:746
 msgid "Previous instance"
 msgstr "Instancia previa"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:641
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:753
 msgid "Next instance"
 msgstr "Siguiente instancia"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:793
 msgid "Import settings from a file"
 msgstr "Importar configuración desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:685
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:797
 msgid "Export settings to a file"
 msgstr "Exportar configuración hacia un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:689
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:801
 msgid "Reset settings to defaults"
 msgstr "Restablecer los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:699 ../../__app__/python_modules/localized_help_creator.py:321 applet.js:407
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:811 ../../__app__/python_modules/localized_help_creator.py:321 applet.js:407
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:720
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:832
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:788
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:900
 #, python-format
 msgid "Settings for %s"
 msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1084
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1190
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1094 ../../__app__/data/python_modules/xlets_settings/__init__.py:1126
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1200 ../../__app__/data/python_modules/xlets_settings/__init__.py:1232
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1117
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1223
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1150
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1256
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1152
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1258
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 

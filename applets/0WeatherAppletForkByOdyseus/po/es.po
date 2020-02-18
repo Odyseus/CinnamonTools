@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WeatherAppletForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-02-14 01:15-0300\n"
-"PO-Revision-Date: 2020-02-13 19:14-0300\n"
+"POT-Creation-Date: 2020-02-18 04:55-0300\n"
+"PO-Revision-Date: 2020-02-18 04:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Español; Castellano <zodiac_es@yahoo.es>\n"
 "Language: es\n"
@@ -18,243 +18,260 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:84
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:58
 msgid "Application Chooser"
 msgstr "Selector de aplicaciones"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:88 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:59 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:366 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1088 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1202 ../../__app__/data/python_modules/xlets_settings/__init__.py:1088 ../../__app__/data/python_modules/xlets_settings/__init__.py:1121
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:409 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1105 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1225 ../../__app__/data/python_modules/xlets_settings/__init__.py:1194 ../../__app__/data/python_modules/xlets_settings/__init__.py:1227
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:89
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:63
 msgid "_OK"
 msgstr "Aceptar"
 
 #. Can be programmatically changed if needed.
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:102 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:612
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:78 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:638
 msgid "Choose an application"
 msgstr "Elegir una aplicación"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:217
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:197
 msgid "Total applications"
 msgstr "Total de aplicaciones"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:324
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:323
 msgid "Applications list"
 msgstr "Lista de aplicaciones"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:331
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:330
 msgid "Duplicated entries will be automatically removed"
 msgstr "Entradas duplicadas serán removidas automáticamente"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:348
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:347
 msgid "Application"
 msgstr "Aplicación"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:379
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:378
 msgid "Add Applications"
 msgstr "Agregar Aplicaciones"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:385
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:384
 msgid "Remove selected applications"
 msgstr "Remover aplicaciones seleccionadas"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:470
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:424
 msgid "Choose one or more applications (Hold Ctrl key)"
 msgstr "Elegir una o más aplicaciones (Mantener pulsada la tecla Ctrl)"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:577
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:598
 msgid "Clear application"
 msgstr "Limpiar aplicación"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:635 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:504
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:701 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:515
+msgid "Invalid app"
+msgstr "Aplicación inválida"
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:701 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:515
 msgid "No app chosen"
 msgstr "Ninguna aplicación elegida"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:57 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:362
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:703
+#, python-format
+msgid "The application with ID '%s' might not be installed anymore."
+msgstr "La aplicación con ID '%s' puede que ya no esté instalada."
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:60 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:405
 msgid "Choose an Icon"
 msgstr "Elegir un ícono"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:60 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:367
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:63 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:410
 msgid "_Select"
 msgstr "_Seleccionar"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:114
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:117
 msgid "Search..."
 msgstr "Buscar..."
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:116
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:119
 msgid "Browse"
 msgstr "Navegar"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:244
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:287
 msgid "Icons shown"
 msgstr "Íconos mostrados"
 
-#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:370
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:413
 msgid "Image files"
 msgstr "Archivos de imagen"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:304
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:556
+msgid "Icon"
+msgstr "Ícono"
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:557
+msgid "The string representing the icon."
+msgstr "La cadena de texto que representa al ícono."
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:306
 msgid "Information related to this specific section"
 msgstr "Información relacionada con esta sección específica."
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1297
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1308
 msgid "Clear color"
 msgstr "Limpiar color"
 
-#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1419
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1431
 msgid "Clear path"
 msgstr "Limpiar ruta"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:626
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:637
 msgid "Add new item"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:634
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:645
 msgid "Remove selected item"
 msgstr "Eliminar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:646
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:657
 msgid "Edit selected item"
 msgstr "Editar ítem seleccionado"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:656
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:667
 msgid "Move selected item up"
 msgstr "Mover ítem seleccionado hacia arriba"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:664
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:675
 msgid "Move selected item down"
 msgstr "Mover ítem seleccionado hacia abajo"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:678
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:689
 msgid "Export data"
 msgstr "Exportar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:691 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1085
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:702 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1102
 msgid "Import data"
 msgstr "Importar datos"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:699
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:710
 msgid "Apply changes"
 msgstr "Aplicar cambios"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:884
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:899
 msgid "Item removal"
 msgstr "Eliminación de ítem"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:887
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:902
 msgid "Are you sure that you want to remove the selected items?"
 msgstr "¿Está seguro de que desea remover los ítems seleccionados?"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:888
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:903
 msgid "Note"
 msgstr "Nota"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:889
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:904
 msgid "Press and hold Control key to remove items without confirmation."
 msgstr "Mantener presionada la tecla Control para eliminar ítems sin confirmación."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1089
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1106
 msgid "_Overwrite"
 msgstr "_Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1090
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1107
 msgid "_Append"
 msgstr "_Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1110
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1127
 msgid "Overwrite"
 msgstr "Sobrescribir"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1111
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1128
 msgid "replace the current data with the imported data."
 msgstr "reemplazar los datos actuales con los datos importados."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1112
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1129
 msgid "Append"
 msgstr "Adjuntar"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1113
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1130
 msgid "add the imported data to the current data."
 msgstr "agregar los datos importados a los datos actuales."
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1148
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1165
 #, python-format
 msgid "Wrong data type found on file '%s'"
 msgstr "Se encontró un tipo de datos incorrecto en el archivo '%s'"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1151
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1168
 msgid "Error importing data"
 msgstr "¡Error al importar datos!"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1194
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1217
 msgid "Add new entry"
 msgstr "Agregar nueva entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1196
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1219
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1203 ../../__app__/data/python_modules/xlets_settings/__init__.py:1089 ../../__app__/data/python_modules/xlets_settings/__init__.py:1122
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226 ../../__app__/data/python_modules/xlets_settings/__init__.py:1195 ../../__app__/data/python_modules/xlets_settings/__init__.py:1228
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:495
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:590
 msgid "Other"
 msgstr "Otros"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:634
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:746
 msgid "Previous instance"
 msgstr "Instancia previa"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:641
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:753
 msgid "Next instance"
 msgstr "Siguiente instancia"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:681
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:793
 msgid "Import settings from a file"
 msgstr "Importar configuración desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:685
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:797
 msgid "Export settings to a file"
 msgstr "Exportar configuración hacia un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:689
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:801
 msgid "Reset settings to defaults"
 msgstr "Restablecer los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:699 ../../__app__/python_modules/localized_help_creator.py:321 applet.js:267 utils.js:77
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:811 ../../__app__/python_modules/localized_help_creator.py:321 applet.js:267 utils.js:77
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:720
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:832
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:788
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:900
 #, python-format
 msgid "Settings for %s"
 msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1084
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1190
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1094 ../../__app__/data/python_modules/xlets_settings/__init__.py:1126
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1200 ../../__app__/data/python_modules/xlets_settings/__init__.py:1232
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1117
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1223
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1150
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1256
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1152
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1258
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
@@ -629,7 +646,7 @@ msgstr "Mostrar condición en el panel"
 msgid "Credentials"
 msgstr "Credenciales"
 
-#: settings.py:442 z_create_localized_help.py:71 constants.js:211
+#: settings.py:442 z_create_localized_help.py:71 constants.js:209
 msgid "Dark Sky"
 msgstr "Dark Sky"
 
@@ -637,7 +654,7 @@ msgstr "Dark Sky"
 msgid "Secret Key"
 msgstr "Clave secreta"
 
-#: settings.py:453 z_create_localized_help.py:76 constants.js:213
+#: settings.py:453 z_create_localized_help.py:76 constants.js:211
 msgid "OpenWeatherMap"
 msgstr "OpenWeatherMap"
 
@@ -645,11 +662,11 @@ msgstr "OpenWeatherMap"
 msgid "API Key"
 msgstr "Clave de API"
 
-#: settings.py:464 z_create_localized_help.py:81 constants.js:214
+#: settings.py:464 z_create_localized_help.py:81 constants.js:212
 msgid "WeatherBit"
 msgstr "WeatherBit"
 
-#: settings.py:475 z_create_localized_help.py:86 constants.js:212
+#: settings.py:475 z_create_localized_help.py:86 constants.js:210
 msgid "Yahoo! Weather"
 msgstr "Yahoo! Clima"
 
@@ -1038,572 +1055,572 @@ msgstr "Error de análisis de hoja de estilo"
 msgid "Error unloading stylesheet"
 msgstr "Error al descargar la hoja de estilos"
 
-#: constants.js:16
+#: constants.js:14
 msgid "Blowing snow"
 msgstr "Viento nevado"
 
-#: constants.js:17
+#: constants.js:15
 msgid "Blustery"
 msgstr "Ráfagas de viento"
 
-#: constants.js:18 weather_providers/DarkSky.js:111
+#: constants.js:16 weather_providers/DarkSky.js:111
 msgid "Clear"
 msgstr "Despejado"
 
-#: constants.js:19
+#: constants.js:17
 msgid "Cloudy"
 msgstr "Nublado"
 
-#: constants.js:20
+#: constants.js:18
 msgid "Cold"
 msgstr "Frío"
 
-#: constants.js:21
+#: constants.js:19
 msgid "Drizzle"
 msgstr "Llovizna"
 
-#: constants.js:22
+#: constants.js:20
 msgid "Dust"
 msgstr "Polvo"
 
-#: constants.js:23
+#: constants.js:21
 msgid "Fair"
 msgstr "Despejado"
 
-#: constants.js:24
+#: constants.js:22
 msgid "Foggy"
 msgstr "Niebla"
 
-#: constants.js:25
+#: constants.js:23
 msgid "Freezing drizzle"
 msgstr "Llovizna con heladas"
 
-#: constants.js:26
+#: constants.js:24
 msgid "Freezing rain"
 msgstr "Lluvia con heladas"
 
-#: constants.js:27
+#: constants.js:25
 msgid "Hail"
 msgstr "Granizo"
 
-#: constants.js:28
+#: constants.js:26
 msgid "Haze"
 msgstr "Neblina"
 
-#: constants.js:29
+#: constants.js:27
 msgid "Heavy snow"
 msgstr "Fuerte nevada"
 
-#: constants.js:30
+#: constants.js:28
 msgid "Hot"
 msgstr "Caluroso"
 
-#: constants.js:31
+#: constants.js:29
 msgid "Hurricane"
 msgstr "Huracán"
 
-#: constants.js:32
+#: constants.js:30
 msgid "Isolated thundershowers"
 msgstr "Tormentas aisladas"
 
-#: constants.js:33
+#: constants.js:31
 msgid "Isolated thunderstorms"
 msgstr "Tormentas locales"
 
-#: constants.js:34
+#: constants.js:32
 msgid "Light snow showers"
 msgstr "Nieve ligera"
 
-#: constants.js:35
+#: constants.js:33
 msgid "Mixed rain and hail"
 msgstr "Lluvia y granizo"
 
-#: constants.js:36
+#: constants.js:34
 msgid "Mixed rain and sleet"
 msgstr "Granizo y lluvia"
 
-#: constants.js:37
+#: constants.js:35
 msgid "Mixed rain and snow"
 msgstr "Lluvia y nieve"
 
-#: constants.js:38
+#: constants.js:36
 msgid "Mixed snow and sleet"
 msgstr "Granizo y nieve"
 
-#: constants.js:39
+#: constants.js:37
 msgid "Mostly cloudy"
 msgstr "Muy nublado"
 
-#: constants.js:40
+#: constants.js:38
 msgid "Partly cloudy"
 msgstr "Parcialmente nublado"
 
-#: constants.js:41
+#: constants.js:39
 msgid "Scattered showers"
 msgstr "Lluvias aisladas"
 
-#: constants.js:42
+#: constants.js:40
 msgid "Scattered snow showers"
 msgstr "Nevadas aisladas"
 
-#: constants.js:43
+#: constants.js:41
 msgid "Scattered thunderstorms"
 msgstr "Tormentas aisladas"
 
-#: constants.js:44
+#: constants.js:42
 msgid "Severe thunderstorms"
 msgstr "Tormentas severas"
 
-#: constants.js:45
+#: constants.js:43
 msgid "Showers"
 msgstr "Lluvias"
 
-#: constants.js:46
+#: constants.js:44
 msgid "Sleet"
 msgstr "Aguanieve"
 
-#: constants.js:47
+#: constants.js:45
 msgid "Smoky"
 msgstr "Ahumado"
 
-#: constants.js:48
+#: constants.js:46
 msgid "Snow flurries"
 msgstr "Nieve"
 
-#: constants.js:49
+#: constants.js:47
 msgid "Snow showers"
 msgstr "Nevadas"
 
-#: constants.js:50
+#: constants.js:48
 msgid "Snow"
 msgstr "Nieve"
 
-#: constants.js:51
+#: constants.js:49
 msgid "Sunny"
 msgstr "Soleado"
 
-#: constants.js:52
+#: constants.js:50
 msgid "Thundershowers"
 msgstr "Tormentas"
 
-#: constants.js:53
+#: constants.js:51
 msgid "Thunderstorms"
 msgstr "Tormentas"
 
-#: constants.js:54
+#: constants.js:52
 msgid "Tornado"
 msgstr "Tornado"
 
-#: constants.js:55
+#: constants.js:53
 msgid "Tropical storm"
 msgstr "Tormenta tropical"
 
-#: constants.js:56
+#: constants.js:54
 msgid "Windy"
 msgstr "Ventoso"
 
-#: constants.js:58
+#: constants.js:56
 msgid "Thunderstorm with light rain"
 msgstr "Tormenta con lluvia ligera"
 
-#: constants.js:59
+#: constants.js:57
 msgid "Thunderstorm with rain"
 msgstr "Tormenta con lluvia"
 
-#: constants.js:60
+#: constants.js:58
 msgid "Thunderstorm with heavy rain"
 msgstr "Tormenta con fuertes lluvias"
 
-#: constants.js:61
+#: constants.js:59
 msgid "Light thunderstorm"
 msgstr "Tormenta ligera"
 
-#: constants.js:62
+#: constants.js:60
 msgid "Thunderstorm"
 msgstr "Tormenta"
 
-#: constants.js:63
+#: constants.js:61
 msgid "Heavy thunderstorm"
 msgstr "Fuerte tormenta"
 
-#: constants.js:64
+#: constants.js:62
 msgid "Ragged thunderstorm"
 msgstr "Tormenta irregular"
 
-#: constants.js:65
+#: constants.js:63
 msgid "Thunderstorm with light drizzle"
 msgstr "Tormenta con llovizna ligera"
 
-#: constants.js:66
+#: constants.js:64
 msgid "Thunderstorm with drizzle"
 msgstr "Tormenta con llovizna"
 
-#: constants.js:67
+#: constants.js:65
 msgid "Thunderstorm with heavy drizzle"
 msgstr "Tormenta con fuerte llovizna"
 
-#: constants.js:68
+#: constants.js:66
 msgid "Light intensity drizzle"
 msgstr "Llovizna ligera"
 
-#: constants.js:69
+#: constants.js:67
 msgid "Heavy intensity drizzle"
 msgstr "Llovizna de gran intensidad"
 
-#: constants.js:70
+#: constants.js:68
 msgid "Light intensity drizzle rain"
 msgstr "Llovizna de intensidad ligera"
 
-#: constants.js:71
+#: constants.js:69
 msgid "Drizzle rain"
 msgstr "Llovizna"
 
-#: constants.js:72
+#: constants.js:70
 msgid "Heavy intensity drizzle rain"
 msgstr "Llovizna de intensidad intensa"
 
-#: constants.js:73
+#: constants.js:71
 msgid "Shower rain and drizzle"
 msgstr "Lluvia y llovizna"
 
-#: constants.js:74
+#: constants.js:72
 msgid "Heavy shower rain and drizzle"
 msgstr "Fuerte lluvia y llovizna"
 
-#: constants.js:75
+#: constants.js:73
 msgid "Shower drizzle"
 msgstr "Llovizna"
 
-#: constants.js:76
+#: constants.js:74
 msgid "Light rain"
 msgstr "Lluvia ligera"
 
-#: constants.js:77
+#: constants.js:75
 msgid "Moderate rain"
 msgstr "Lluvia moderada"
 
-#: constants.js:78
+#: constants.js:76
 msgid "Heavy intensity rain"
 msgstr "Lluvia fuerte"
 
-#: constants.js:79
+#: constants.js:77
 msgid "Very heavy rain"
 msgstr "Lluvia muy fuerte"
 
-#: constants.js:80
+#: constants.js:78
 msgid "Extreme rain"
 msgstr "Lluvia extrema"
 
-#: constants.js:81
+#: constants.js:79
 msgid "Light intensity shower rain"
 msgstr "Lluvia de intensidad ligera"
 
-#: constants.js:82
+#: constants.js:80
 msgid "Shower rain"
 msgstr "Aguacero"
 
-#: constants.js:83
+#: constants.js:81
 msgid "Heavy intensity shower rain"
 msgstr "Aguacero intenso"
 
-#: constants.js:84
+#: constants.js:82
 msgid "Ragged shower rain"
 msgstr "Aguacero irregular"
 
-#: constants.js:85
+#: constants.js:83
 msgid "Light snow"
 msgstr "Nieve ligera"
 
-#: constants.js:86
+#: constants.js:84
 msgid "Shower sleet"
 msgstr "Aguanieve"
 
-#: constants.js:87
+#: constants.js:85
 msgid "Light rain and snow"
 msgstr "Lluvia ligera y nieve"
 
-#: constants.js:88
+#: constants.js:86
 msgid "Rain and snow"
 msgstr "Lluvia y nieve"
 
-#: constants.js:89
+#: constants.js:87
 msgid "Light shower snow"
 msgstr "Nevada ligera"
 
-#: constants.js:90
+#: constants.js:88
 msgid "Shower snow"
 msgstr "Nevada"
 
-#: constants.js:91
+#: constants.js:89
 msgid "Heavy shower snow"
 msgstr "Nevada fuerte"
 
-#: constants.js:92
+#: constants.js:90
 msgid "Mist"
 msgstr "Niebla"
 
-#: constants.js:93
+#: constants.js:91
 msgid "Smoke"
 msgstr "Humo"
 
-#: constants.js:94
+#: constants.js:92
 msgid "Sand, dust whirls"
 msgstr "Arena, remolinos de polvo"
 
-#: constants.js:95
+#: constants.js:93
 msgid "Fog"
 msgstr "Bruma"
 
-#: constants.js:96
+#: constants.js:94
 msgid "Sand"
 msgstr "Arena"
 
-#: constants.js:97
+#: constants.js:95
 msgid "Volcanic ash"
 msgstr "Ceniza volcánica"
 
-#: constants.js:98
+#: constants.js:96
 msgid "Squalls"
 msgstr "Chubascos"
 
-#: constants.js:99
+#: constants.js:97
 msgid "Clear sky"
 msgstr "Cielo despejado"
 
-#: constants.js:100
+#: constants.js:98
 msgid "Few clouds"
 msgstr "Pocas nubes"
 
-#: constants.js:101
+#: constants.js:99
 msgid "Scattered clouds"
 msgstr "Nubes dispersas"
 
-#: constants.js:102
+#: constants.js:100
 msgid "Broken clouds"
 msgstr "Cielo nuboso"
 
-#: constants.js:103
+#: constants.js:101
 msgid "Overcast clouds"
 msgstr "Con claros y nubes"
 
-#: constants.js:105
+#: constants.js:103
 msgid "Thunderstorm with Hail"
 msgstr "Tormenta con Granizo"
 
-#: constants.js:106
+#: constants.js:104
 msgid "Freezing Fog"
 msgstr "Niebla Helada"
 
-#: constants.js:112
+#: constants.js:110
 msgid "km"
 msgstr "km"
 
-#: constants.js:113
+#: constants.js:111
 msgid "mile"
 msgstr "milla"
 
-#: constants.js:114
+#: constants.js:112
 msgid "atm"
 msgstr "atm"
 
-#: constants.js:115
+#: constants.js:113
 msgid "hPa"
 msgstr "hPa"
 
-#: constants.js:116
+#: constants.js:114
 msgid "inHg"
 msgstr "inHg"
 
-#: constants.js:117
+#: constants.js:115
 msgid "kPa"
 msgstr "kPa"
 
-#: constants.js:118
+#: constants.js:116
 msgid "mbar"
 msgstr "mbar"
 
-#: constants.js:119
+#: constants.js:117
 msgid "mmHg"
 msgstr "mmHg"
 
-#: constants.js:120
+#: constants.js:118
 msgid "Pa"
 msgstr "Pa"
 
-#: constants.js:121
+#: constants.js:119
 msgid "psi"
 msgstr "psi"
 
-#: constants.js:122
+#: constants.js:120
 msgid "knots"
 msgstr "nudos"
 
-#: constants.js:123
+#: constants.js:121
 msgid "kph"
 msgstr "kph"
 
-#: constants.js:124
+#: constants.js:122
 msgid "mph"
 msgstr "mph"
 
-#: constants.js:125
+#: constants.js:123
 msgid "m/s"
 msgstr "m/s"
 
-#: constants.js:157
+#: constants.js:155
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: constants.js:161
+#: constants.js:159
 msgid "Unable to resolve destination host name"
 msgstr "No se puede resolver el nombre de host de destino"
 
-#: constants.js:162
+#: constants.js:160
 msgid "Temporary redirect"
 msgstr "Redireccionamiento temporal"
 
-#: constants.js:163
+#: constants.js:161
 msgid "Unable to resolve proxy host name"
 msgstr "No se puede resolver el nombre del servidor proxy"
 
-#: constants.js:164
+#: constants.js:162
 msgid "Bad request"
 msgstr "Solicitud incorrecta"
 
-#: constants.js:165
+#: constants.js:163
 msgid "Unauthorized"
 msgstr "No autorizado"
 
-#: constants.js:166
+#: constants.js:164
 msgid "Payment required"
 msgstr "Pago requerido"
 
-#: constants.js:167
+#: constants.js:165
 msgid "Not found"
 msgstr "No encontrado"
 
-#: constants.js:168
+#: constants.js:166
 msgid "Proxy authentication required"
 msgstr "Se requiere autenticación proxy"
 
-#: constants.js:169
+#: constants.js:167
 msgid "Request timeout"
 msgstr "Agotado el tiempo de espera"
 
-#: constants.js:170
+#: constants.js:168
 msgid "Unable to connect to remote host"
 msgstr "No se puede conectar al host remoto"
 
-#: constants.js:171
+#: constants.js:169
 msgid "Internal server error"
 msgstr "Error interno del servidor"
 
-#: constants.js:172
+#: constants.js:170
 msgid "Bad Gateway"
 msgstr "Bad Gateway"
 
-#: constants.js:173
+#: constants.js:171
 msgid "Service unavailable"
 msgstr "Servicio no disponible"
 
-#: constants.js:174
+#: constants.js:172
 msgid "Gateway Timeout"
 msgstr "Gateway Timeout"
 
-#: constants.js:175
+#: constants.js:173
 msgid "Unable to connect to proxy"
 msgstr "No se puede conectar al proxy"
 
-#: constants.js:176
+#: constants.js:174
 msgid "SSL/TLS negotiation failed"
 msgstr "Fallo de negociación SSL/TLS"
 
-#: constants.js:177
+#: constants.js:175
 msgid "A network error occurred, or the other end closed the connection unexpectedly"
 msgstr "Se produjo un error en la red, o el otro extremo cerró la conexión inesperadamente"
 
-#: constants.js:182
+#: constants.js:180
 msgid "Missing credentials for weather provider!"
 msgstr "¡Faltan credenciales para proveedor de clima!"
 
-#: constants.js:183
+#: constants.js:181
 msgid "Wrong location ID format!"
 msgstr "¡Formato de ID de ubicación incorrecto!"
 
-#: constants.js:184
+#: constants.js:182
 msgid "Selected language not supported by weather provider!"
 msgstr "¡Idioma seleccionado no soportado por el proveedor del tiempo!"
 
-#: constants.js:185
+#: constants.js:183
 #, javascript-format
 msgid "Error getting data! Status code: %s"
 msgstr "¡Error al obtener los datos! Código de estado: %s"
 
-#: constants.js:186
+#: constants.js:184
 msgid "Error parsing weather data."
 msgstr "Error al analizar los datos meteorológicos."
 
-#: constants.js:191
+#: constants.js:189
 msgid "Sunday"
 msgstr "Domingo"
 
-#: constants.js:192
+#: constants.js:190
 msgid "Monday"
 msgstr "Lunes"
 
-#: constants.js:193
+#: constants.js:191
 msgid "Tuesday"
 msgstr "Martes"
 
-#: constants.js:194
+#: constants.js:192
 msgid "Wednesday"
 msgstr "Miércoles"
 
-#: constants.js:195
+#: constants.js:193
 msgid "Thursday"
 msgstr "Jueves"
 
-#: constants.js:196
+#: constants.js:194
 msgid "Friday"
 msgstr "Viernes"
 
-#: constants.js:197
+#: constants.js:195
 msgid "Saturday"
 msgstr "Sábado"
 
-#: constants.js:264
+#: constants.js:262
 msgid "Temperature"
 msgstr "Temperatura"
 
-#: constants.js:265
+#: constants.js:263
 msgid "Humidity"
 msgstr "Humedad"
 
-#: constants.js:266
+#: constants.js:264
 msgid "Pressure"
 msgstr "Presión"
 
-#: constants.js:267
+#: constants.js:265
 msgid "Wind"
 msgstr "Viento"
 
-#: constants.js:268
+#: constants.js:266
 msgid "Wind chill"
 msgstr "Temperatura percibida"
 
-#: constants.js:269
+#: constants.js:267
 msgid "Visibility"
 msgstr "Visibilidad"
 
-#: constants.js:270
+#: constants.js:268
 msgid "Sunrise"
 msgstr "Amanecer"
 
-#: constants.js:271
+#: constants.js:269
 msgid "Sunset"
 msgstr "Puesta del sol"
 
-#: constants.js:272
+#: constants.js:270
 msgid "Moon phase"
 msgstr "Fase lunar"
 
@@ -1675,15 +1692,15 @@ msgstr "Cuarto Menguante"
 msgid "Waning Crescent"
 msgstr "Lúnula Creciente"
 
-#: weather_providers/DarkSky.js:100 weather_providers/OpenWeatherMap.js:129 weather_providers/SKEL.js:121 weather_providers/WeatherBit.js:124 weather_providers/YahooWeather.js:132
+#: weather_providers/DarkSky.js:100 weather_providers/OpenWeatherMap.js:129 weather_providers/SKEL.js:121 weather_providers/WeatherBit.js:124 weather_providers/YahooWeather.js:134
 msgid "Coordinates"
 msgstr "Coordenadas"
 
-#: weather_providers/DarkSky.js:103 weather_providers/SKEL.js:124 weather_providers/WeatherBit.js:127 weather_providers/YahooWeather.js:135
+#: weather_providers/DarkSky.js:103 weather_providers/SKEL.js:124 weather_providers/WeatherBit.js:127 weather_providers/YahooWeather.js:137
 msgid "Time zone"
 msgstr "Zona horaria"
 
-#: weather_providers/OpenWeatherMap.js:128 weather_providers/SKEL.js:120 weather_providers/YahooWeather.js:131
+#: weather_providers/OpenWeatherMap.js:128 weather_providers/SKEL.js:120 weather_providers/YahooWeather.js:133
 msgid "City ID"
 msgstr "ID de ciudad"
 

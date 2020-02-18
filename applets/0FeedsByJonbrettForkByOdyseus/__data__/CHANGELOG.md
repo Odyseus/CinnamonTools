@@ -4,6 +4,14 @@
 
 ***
 
+**Date:** Mon, 17 Feb 2020 10:40:52 -0300<br/>
+**Commit:** [85ea0ca](https://gitlab.com/Odyseus/CinnamonTools/commit/85ea0ca)<br/>
+**Author:** Odyseus<br/>
+
+- Fixed formatting of translatable string.
+
+***
+
 **Date:** Wed, 12 Feb 2020 22:47:55 -0300<br/>
 **Commit:** [ab9d1fc](https://gitlab.com/Odyseus/CinnamonTools/commit/ab9d1fc)<br/>
 **Author:** Odyseus<br/>
