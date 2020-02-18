@@ -285,7 +285,7 @@ TRANSLATORS_TAB = {
             "widget-kwargs": {
                 "columns": TRANSLATORS_COLUMNS,
                 "immutable": {
-                    "read_only_keys": ["provider_name"]
+                    "read-only-keys": ["provider_name"]
                 },
                 "height": 300,
                 "move-buttons": False
