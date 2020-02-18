@@ -125,6 +125,10 @@ LIST_1_COLUMNS = [{
 }]
 
 LIST_2_COLUMNS = [{
+    "id": "title",
+    "title": "Title",
+    "type": "string"
+},{
     "id": "enabled",
     "title": "Enabled",
     "default": True,
@@ -133,11 +137,7 @@ LIST_2_COLUMNS = [{
     "id": "icon",
     "title": "Icon",
     "type": "icon"
-}, {
-    "id": "title",
-    "title": "Title",
-    "type": "string"
-}, {
+},  {
     "id": "command",
     "title": "Command",
     "type": "string"
@@ -326,6 +326,7 @@ LIST_2_TAB = {
             "widget-kwargs": {
                 "columns": LIST_2_COLUMNS,
                 "immutable": {
+                    "read-only-keys": ["title"],
                     "allow-edition": True
                 },
                 "height": 200,
