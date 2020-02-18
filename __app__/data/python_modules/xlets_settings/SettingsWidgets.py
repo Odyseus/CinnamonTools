@@ -109,7 +109,7 @@ JSON_SETTINGS_PROPERTIES_MAP = {
     "dialog-info-labels": "dialog_info_labels",
     # colorchooser: Whether to be able to specify opacity.
     "use-alpha": "use_alpha",
-    # list: A dictionary that can be empty and accepts one key called ``read_only_keys``.
+    # list: A dictionary that can be empty and accepts one key called ``read-only-keys``.
     # A list of column IDs whose created widgets should be set as nonsensitive.
     # An immutable list widget has a fixed amount of items.
     # Items cannot be added nor removed but they do can be edited.
@@ -190,11 +190,11 @@ class SettingsPage(BaseGrid):
         subtitle : None, optional
             Section subtitle.
         section_info : dict, optional
-            See :any:`SettingsSection`, "section_info".
+            See :any:`SettingsWidgets.SettingsSection`, "section_info".
 
         Returns
         -------
-        SettingsSection
+        SettingsWidgets.SettingsSection
             The settings section.
         """
         section = SettingsSection(title, subtitle, section_info)
@@ -213,20 +213,20 @@ class SettingsPage(BaseGrid):
         subtitle : None, optional
             Section subtitle.
         section_info : dict, optional
-            See :any:`SettingsSection`.
+            See :any:`SettingsWidgets.SettingsSection`.
         schema : None, optional
-            See :py:class:`SettingsRevealer`.
+            See :any:`SettingsRevealer`.
         pref_key : None, optional
-            See :py:class:`SettingsRevealer`.
+            See :any:`SettingsRevealer`.
         values : None, optional
-            See :py:class:`SettingsRevealer`.
+            See :any:`SettingsRevealer`.
         revealer : None, optional
             The revealer that will be attached to the section and to which the widget will
             be attached to.
 
         Returns
         -------
-        SettingsSection
+        SettingsWidgets.SettingsSection
             The settings section.
         """
         section = SettingsSection(title, subtitle, section_info)
@@ -248,16 +248,16 @@ class SettingsSection(BaseGrid):
     ----------
     always_show : bool
         Always show.
-    box : object
-        An instance of :any:`BaseGrid` that will contain all widgets in a section.
-    frame : object
-        An instance of :py:class:`Gtk.Frame` that will contain self.box for aesthetic purposes.
+    box : BaseGrid
+        An instance of ``BaseGrid`` that will contain all widgets in a section.
+    frame : Gtk.Frame
+        An instance of ``Gtk.Frame`` that will contain self.box for aesthetic purposes.
     need_separator : bool
         Flag that indicates if there is a need to insert a separator after a widget.
     revealers : list
         A list were to store a created :py:class:`Gtk.Revealer` inside a section.
-    size_group : object
-        :py:class:`Gtk.SizeGroup`.
+    size_group : Gtk.SizeGroup
+        A ``Gtk.SizeGroup``.
     """
 
     def __init__(self, title=None, subtitle=None, section_info={}):
@@ -337,7 +337,7 @@ class SettingsSection(BaseGrid):
 
         Parameters
         ----------
-        widget : object
+        widget : Gtk.Widget
             Widget to insert in a section row.
         col_pos : int
             At which column to insert a widget.
@@ -381,7 +381,7 @@ class SettingsSection(BaseGrid):
 
         Parameters
         ----------
-        widget : object
+        widget : Gtk.Widget
             Widget to insert in a section row.
         col_pos : int
             At which column to insert a widget.
@@ -392,20 +392,20 @@ class SettingsSection(BaseGrid):
         row_span : int
             How many rows a widget will occupy.
         schema : None, optional
-            See :py:class:`SettingsRevealer`.
+            See :any:`xlets_settings.SettingsWidgets.SettingsRevealer`.
         pref_key : None, optional
-            See :py:class:`SettingsRevealer`.
+            See :any:`xlets_settings.SettingsWidgets.SettingsRevealer`.
         values : None, optional
-            See :py:class:`SettingsRevealer`.
+            See :any:`xlets_settings.SettingsWidgets.SettingsRevealer`.
         check_func : None, optional
-            See :py:class:`SettingsRevealer`.
+            See :any:`xlets_settings.SettingsWidgets.SettingsRevealer`.
         revealer : None, optional
             The revealer that will be attached to the section and to which the widget will
             be attached to.
 
         Returns
         -------
-        JSONSettingsRevealer, SettingsRevealer
+        JSONSettingsRevealer, xlets_settings.SettingsWidgets.SettingsRevealer
             The revealer.
         """
         list_box = Gtk.ListBox(can_focus=False)
@@ -507,17 +507,17 @@ class SettingsRevealer(Gtk.Revealer):
 
     Attributes
     ----------
-    box : object
-        An instance of :any:`BaseGrid` that will contain all widgets inside a revealer.
-    check_func : object
+    box : BaseGrid
+        An instance of ``BaseGrid`` that will contain all widgets inside a revealer.
+    check_func : method
         A function that when executed will return the condition that will decide
         if the revealer is shown or hidden. It receives two arguments. The first argument is
         the current value of the pref_key preference. The second argument is a list of values
         that could be used to check the current value against.
-    settings : object
-        :py:class:`Gio.Settings`.
+    settings : Gio.Settings
+        A ``Gio.Settings`` instance.
     values : list
-        See :py:class:`SettingsRevealer.check_func`.
+        See :any:`SettingsRevealer.check_func`.
     """
 
     def __init__(self, schema=None, pref_key=None, values=None, check_func=None):
@@ -526,13 +526,13 @@ class SettingsRevealer(Gtk.Revealer):
         Parameters
         ----------
         schema : None, optional
-            gsettings schema used to instantiate :py:class:`SettingsRevealer.settings`.
+            gsettings schema used to instantiate :any:`SettingsRevealer.settings`.
         pref_key : None, optional
             The preference key whose value will determine if the revealer is shown or hidden.
         values : None, optional
-            See :py:class:`SettingsRevealer.values`.
+            See :any:`SettingsRevealer.values`.
         check_func : None, optional
-            See :py:class:`SettingsRevealer.check_func`.
+            See :any:`SettingsRevealer.check_func`.
         """
         Gtk.Revealer.__init__(self)
 
@@ -559,8 +559,8 @@ class SettingsRevealer(Gtk.Revealer):
 
         Parameters
         ----------
-        widget : object
-            See : :py:class:`Gtk.Widget`.
+        widget : Gtk.Widget
+            The widget to add to the revealer.
         """
         self.box.attach(widget, 0, 0, 1, 1)
 
@@ -570,8 +570,8 @@ class SettingsRevealer(Gtk.Revealer):
 
         Parameters
         ----------
-        settings : object
-            :py:class:`Gio.Settings`.
+        settings : Gio.Settings
+            A ``Gio.Settings`` instance.
         pref_key : str
             The preference key whose value will determine if the revealer is shown or hidden.
         """
@@ -622,12 +622,12 @@ class SettingsWidget(BaseGrid):
         dep_settings.bind(split[1], self, "sensitive", flag)
 
     def add_to_size_group(self, group):
-        """Add widget to :py:class:`Gtk.SizeGroup`.
+        """Add widget to A ``Gtk.SizeGroup``.
 
         Parameters
         ----------
-        group : object
-            :py:class:`Gtk.SizeGroup`.
+        group : Gtk.SizeGroup
+            A ``Gtk.SizeGroup``.
         """
         group.add_widget(self.content_widget)
 
@@ -649,7 +649,7 @@ class SettingsWidget(BaseGrid):
         Returns
         -------
         Gio.Settings
-            An instantiated :py:class:`Gio.Settings` instance.
+            An instantiated ``Gio.Settings`` instance.
         """
         global settings_objects
         try:
@@ -684,9 +684,9 @@ class Text(SettingsWidget):
 
     Attributes
     ----------
-    content_widget : object
+    content_widget : Gtk.Label
         The main widget that will be used to represent a setting value.
-    label : object
+    label : str
         The label widget.
     """
 
@@ -736,10 +736,10 @@ class Button(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : object
+        ``Gio.SettingsBindFlags`` flags.
+    content_widget : Gtk.Button
         The main widget that will be used to represent a setting value.
-    label : object
+    label : str
         The label widget.
     """
 
@@ -858,20 +858,20 @@ class IconChooser(SettingsWidget):
     Attributes
     ----------
     bind_content_widget_entry : bool
-        Since I had the _great_ idea of creating this setting widget with two widgets bound to the
+        Since I had the *great* idea of creating this setting widget with two widgets bound to the
         setting, I had to come up with this. This attribute is used by the
         :any:`TreeListWidgets.list_edit_factory` method to identify :any:`IconChooser` widget
         so in addition to call ``set_property`` on ``self.bind_object``, it also calls ``set_text``
         on ``self.content_widget`` (a :py:class:`Gtk.Entry`) to keep both widgets in sync.
     bind_dir : Gio.SettingsBindFlags, None
         See :any:`JSONSettingsBackend`.
-    bind_object : object
+    bind_object : IconChooserButton
         See :any:`JSONSettingsBackend`.
     bind_prop : str
         See :any:`JSONSettingsBackend`.
-    content_widget : object
+    content_widget : Gtk.Entry
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     """
 
@@ -887,7 +887,7 @@ class IconChooser(SettingsWidget):
         label : str
             The label text.
         size_group : None, optional
-            :py:class:`Gtk.SizeGroup`.
+            A ``Gtk.SizeGroup``.
         dep_key : None, optional
             See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
@@ -967,12 +967,12 @@ class Entry(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
+        ``Gio.SettingsBindFlags`` flags.
     bind_prop : str
         See :any:`JSONSettingsBackend.attach_backend`.
-    content_widget : object
+    content_widget : Gtk.Entry
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     """
 
@@ -989,7 +989,7 @@ class Entry(SettingsWidget):
         expand_width : bool, optional
             If True, expand the widget to all available space.
         size_group : None, optional
-            :py:class:`Gtk.SizeGroup`.
+            A ``Gtk.SizeGroup``.
         dep_key : None, optional
             See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
@@ -1016,14 +1016,14 @@ class TextView(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
-    bind_object : object
+        ``Gio.SettingsBindFlags`` flags.
+    bind_object : Gtk.EntryBuffer
         See :any:`JSONSettingsBackend.attach_backend`.
     bind_prop : str
         See :any:`JSONSettingsBackend.attach_backend`.
-    content_widget : object
+    content_widget : Gtk.TextView
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     """
 
@@ -1073,7 +1073,7 @@ class TextView(SettingsWidget):
     def focus_the_retarded_text_view(self, *args):
         """Focus the :py:class:`Gtk.TextView` when clicked.
 
-        This is a workaround for :py:class:`Gtk.TextView` elements.
+        This is a workaround for ``Gtk.TextView`` elements.
 
         Parameters
         ----------
@@ -1095,12 +1095,12 @@ class Switch(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
+        ``Gio.SettingsBindFlags`` flags.
     bind_prop : str
         See :any:`JSONSettingsBackend.attach_backend`.
-    content_widget : object
+    content_widget : Gtk.Switch
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     """
 
@@ -1148,10 +1148,10 @@ class ComboBox(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : object
+        ``Gio.SettingsBindFlags`` flags.
+    content_widget : Gtk.ComboBox
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     model : Gtk.ListStore
         The model used as storage by this widget.
@@ -1174,7 +1174,7 @@ class ComboBox(SettingsWidget):
         valtype : None, optional
             The type used to coerce a specific option type.
         size_group : None, optional
-            :py:class:`Gtk.SizeGroup`.
+            A ``Gtk.SizeGroup``.
         dep_key : None, optional
             See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
@@ -1270,10 +1270,10 @@ class ColorChooser(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : object
+        ``Gio.SettingsBindFlags`` flags.
+    content_widget : Gtk.ColorButton
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     """
 
@@ -1289,7 +1289,7 @@ class ColorChooser(SettingsWidget):
         use_alpha : bool, optional
             Whether the widget is be able to specify opacity.
         size_group : None, optional
-            :py:class:`Gtk.SizeGroup`.
+            A ``Gtk.SizeGroup``.
         dep_key : None, optional
             See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
@@ -1389,10 +1389,10 @@ class FileChooser(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : object
+        ``Gio.SettingsBindFlags`` flags.
+    content_widget : Gtk.FileChooserButton
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     """
 
@@ -1409,7 +1409,7 @@ class FileChooser(SettingsWidget):
             If True, enable folder selection on the file chooser. If False,
             enable file selection.
         size_group : None, optional
-            :py:class:`Gtk.SizeGroup`.
+            A ``Gtk.SizeGroup``.
         dep_key : None, optional
             See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
@@ -1488,12 +1488,12 @@ class SpinButton(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
+        ``Gio.SettingsBindFlags`` flags.
     bind_prop : str
         See :any:`JSONSettingsBackend.attach_backend`.
-    content_widget : object
+    content_widget : Gtk.SpinButton
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     """
 
@@ -1518,7 +1518,7 @@ class SpinButton(SettingsWidget):
         page : None, optional
             Adjustment amount when using the Page Up/Down keys.
         size_group : None, optional
-            :py:class:`Gtk.SizeGroup`.
+            A ``Gtk.SizeGroup``.
         dep_key : None, optional
             See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
@@ -1600,10 +1600,10 @@ class Keybinding(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : object
+        ``Gio.SettingsBindFlags`` flags.
+    content_widget : Gtk.Frame
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     """
 
@@ -1619,7 +1619,7 @@ class Keybinding(SettingsWidget):
         num_bind : int, optional
             Number of keybinding widgets.
         size_group : None, optional
-            :py:class:`Gtk.SizeGroup`.
+            A ``Gtk.SizeGroup``.
         dep_key : None, optional
             See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional
@@ -1702,10 +1702,10 @@ class KeybindingWithOptions(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : object
+        ``Gio.SettingsBindFlags`` flags.
+    content_widget : BaseGrid
         The main widget that will be used to represent a setting value.
-    label : object
+    label : SettingsWidgets.SettingsLabel
         The label widget.
     model : Gtk.ListStore
         The model used as storage by this widget.
@@ -1728,7 +1728,7 @@ class KeybindingWithOptions(SettingsWidget):
         valtype : None, optional
             The type used to coerce a specific option type.
         size_group : None, optional
-            :py:class:`Gtk.SizeGroup`.
+            A ``Gtk.SizeGroup``.
         dep_key : None, optional
             See :any:`SettingsWidget.set_dep_key`.
         tooltip : str, optional

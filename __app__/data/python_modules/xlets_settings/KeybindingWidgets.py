@@ -4,8 +4,8 @@
 
 Attributes
 ----------
-FORBIDDEN_KEYVALS : TYPE
-    Description
+FORBIDDEN_KEYVALS : list
+    Forbidden key values.
 """
 import gettext
 import gi
@@ -69,16 +69,16 @@ FORBIDDEN_KEYVALS = [
 
 
 class ButtonKeybinding(Gtk.TreeView):
-    """Summary
+    """Button keybinding.
 
     Attributes
     ----------
     accel_string : str
-        Description
-    entry_store : TYPE
-        Description
-    keybinding_cell : TYPE
-        Description
+        The widget value.
+    entry_store : Gtk.ListStore
+        The ``Gtk.ListStore`` for ``self``.
+    keybinding_cell : CellRendererKeybinding
+        The widget that will display the stored keybinding.
     """
     __gsignals__ = {
         "accel-edited": (GObject.SignalFlags.RUN_LAST, None, (str, str)),
@@ -122,51 +122,51 @@ class ButtonKeybinding(Gtk.TreeView):
         self.connect("focus-out-event", self.on_focus_lost)
 
     def on_cell_edited(self, cell, path, accel_string, accel_label):
-        """Summary
+        """On cell edited.
 
         Parameters
         ----------
-        cell : TYPE
-            Description
-        path : TYPE
-            Description
-        accel_string : TYPE
-            Description
-        accel_label : TYPE
-            Description
+        cell : CellRendererKeybinding
+            The object which received the signal.
+        path : Gtk.TreePath
+            String representation of :py:class:`Gtk.TreePath` describing the event location.
+        accel_string : str
+            The widget value.
+        accel_label : str
+            The widget display value.
         """
         self.accel_string = accel_string
         self.emit("accel-edited", accel_string, accel_label)
         self.load_model()
 
     def on_cell_cleared(self, cell, path):
-        """Summary
+        """On cell cleared.
 
         Parameters
         ----------
-        cell : TYPE
-            Description
-        path : TYPE
-            Description
+        cell : CellRendererKeybinding
+            The object which received the signal.
+        path : Gtk.TreePath
+            String representation of :py:class:`Gtk.TreePath` describing the event location.
         """
         self.accel_string = ""
         self.emit("accel-cleared")
         self.load_model()
 
     def on_focus_lost(self, widget, event):
-        """Summary
+        """On focus lost-
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        event : TYPE
-            Description
+        widget : ButtonKeybinding
+            The object which received the signal.
+        event : Gdk.EventFocus
+            The ``Gdk.EventFocus`` which triggered this signal.
         """
         self.get_selection().unselect_all()
 
     def load_model(self):
-        """Summary
+        """Load model.
         """
         if self.entry_store:
             self.entry_store.clear()
@@ -177,22 +177,22 @@ class ButtonKeybinding(Gtk.TreeView):
         self.set_model(self.entry_store)
 
     def do_get_property(self, prop):
-        """Summary
+        """Get property override.
 
         Parameters
         ----------
-        prop : TYPE
-            Description
+        prop : str
+            The property to handle.
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            The accel. string.
 
         Raises
         ------
         AttributeError
-            Description
+            Wrong attribute.
         """
         if prop.name == "accel-string":
             return self.accel_string
@@ -200,19 +200,19 @@ class ButtonKeybinding(Gtk.TreeView):
             raise AttributeError("unknown property %s" % prop.name)
 
     def do_set_property(self, prop, value):
-        """Summary
+        """Set property override.
 
         Parameters
         ----------
-        prop : TYPE
-            Description
-        value : TYPE
-            Description
+        prop : str
+            The property to handle.
+        value : str
+            The property value.
 
         Raises
         ------
         AttributeError
-            Description
+            Wrong attribute.
         """
         if prop.name == "accel-string":
             if value != self.accel_string:
@@ -222,54 +222,54 @@ class ButtonKeybinding(Gtk.TreeView):
             raise AttributeError("unknown property %s" % prop.name)
 
     def get_accel_string(self):
-        """Summary
+        """Get accel. string.
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            The accel. string.
         """
         return self.accel_string
 
     def set_accel_string(self, accel_string):
-        """Summary
+        """Set accel. string.
 
         Parameters
         ----------
-        accel_string : TYPE
-            Description
+        accel_string : str
+            The accel. string.
         """
         self.accel_string = accel_string
         self.load_model()
 
 
 class CellRendererKeybinding(Gtk.CellRendererText):
-    """Summary
+    """Cell renderer keybinding.
 
     Attributes
     ----------
-    a_widget : TYPE
-        Description
-    accel_editable : TYPE
-        Description
-    accel_string : TYPE
-        Description
+    a_widget : ButtonKeybinding
+        This widget container.
+    accel_editable : Gtk.CellEditable
+        The ``Gtk.CellEditable`` for the widget.
+    accel_string : str
+        The accel. string.
     focus_id : int
-        Description
-    keyboard : TYPE
-        Description
-    path : TYPE
-        Description
-    press_event : TYPE
-        Description
+        Storage for the ``focus-out-event`` signal connection.
+    keyboard : Gdk.InputSource
+        The device from which to grab events.
+    path : Gtk.TreePath
+        String representation of :py:class:`Gtk.TreePath` describing the event location.
+    press_event : Gdk.Event
+        Press event storage.
     press_event_id : int
-        Description
+        Storage for the ``key-press-event`` signal connection.
     release_event_id : int
-        Description
+        Storage for the ``key-release-event`` signal connection.
     teaching : bool
-        Description
-    TOOLTIP_TEXT : TYPE
-        Description
+        *Flag* used to know when this widget is in *keyboard capture mode*.
+    TOOLTIP_TEXT : str
+        Tooltip text for the button that will contain this widget.
     """
     __gsignals__ = {
         "accel-edited": (GObject.SignalFlags.RUN_LAST, None, (str, str, str)),
@@ -293,10 +293,10 @@ class CellRendererKeybinding(Gtk.CellRendererText):
 
         Parameters
         ----------
-        a_widget : TYPE
-            Description
+        a_widget : ButtonKeybinding
+            This widget container.
         accel_string : None, optional
-            Description
+            The accel. string.
         """
         super().__init__()
         self.connect("editing-started", self.editing_started)
@@ -314,22 +314,22 @@ class CellRendererKeybinding(Gtk.CellRendererText):
         self.update_label()
 
     def do_get_property(self, prop):
-        """Summary
+        """Get property override.
 
         Parameters
         ----------
-        prop : TYPE
-            Description
+        prop : str
+            The property to handle.
 
         Returns
         -------
-        TYPE
-            Description
+        str
+            The accel. string.
 
         Raises
         ------
         AttributeError
-            Description
+            Wrong attribute.
         """
         if prop.name == "accel-string":
             return self.accel_string
@@ -337,19 +337,19 @@ class CellRendererKeybinding(Gtk.CellRendererText):
             raise AttributeError("unknown property %s" % prop.name)
 
     def do_set_property(self, prop, value):
-        """Summary
+        """Set property override.
 
         Parameters
         ----------
-        prop : TYPE
-            Description
-        value : TYPE
-            Description
+        prop : str
+            The property to handle.
+        value : str
+            The property value.
 
         Raises
         ------
         AttributeError
-            Description
+            Wrong attribute.
         """
         if prop.name == "accel-string":
             if value != self.accel_string:
@@ -359,7 +359,7 @@ class CellRendererKeybinding(Gtk.CellRendererText):
             raise AttributeError("unknown property %s" % prop.name)
 
     def update_label(self):
-        """Summary
+        """Update widget label.
         """
         text = _("unassigned")
 
@@ -369,26 +369,26 @@ class CellRendererKeybinding(Gtk.CellRendererText):
         self.set_property("text", text)
 
     def set_value(self, accel_string=None):
-        """Summary
+        """Set widget value.
 
         Parameters
         ----------
         accel_string : None, optional
-            Description
+            The accel. string.
         """
         self.set_property("accel-string", accel_string)
 
     def editing_started(self, renderer, editable, path):
-        """Summary
+        """Cell editing started.
 
         Parameters
         ----------
-        renderer : TYPE
-            Description
-        editable : TYPE
-            Description
-        path : TYPE
-            Description
+        renderer : CellRendererKeybinding
+            The object which received the signal.
+        editable : Gtk.CellEditable
+            The ``Gtk.CellEditable``.
+        path : str
+            The path identifying the edited cell.
         """
         if not self.teaching:
             self.path = path
@@ -420,54 +420,52 @@ class CellRendererKeybinding(Gtk.CellRendererText):
             self.update_label()
             self.teaching = False
 
-    def on_focus_out(self, widget, event):
-        """Summary
+    def on_focus_out(self, *args):
+        """On focus out callback.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        event : TYPE
-            Description
+        *args
+            Arguments.
         """
         self.teaching = False
         self.ungrab()
 
     def on_key_press(self, widget, event):
-        """Summary
+        """On key press callback.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        event : TYPE
-            Description
+        widget : Gtk.CellEditable
+            The ``Gtk.CellEditable`` for the widget.
+        event : Gdk.EventKey
+            The ``Gdk.EventKey`` which triggered this signal.
 
         Returns
         -------
-        TYPE
-            Description
+        bool
+            Whether to propagate the event or not.
         """
         if self.teaching:
             self.press_event = event.copy()
-            return True
+            return Gdk.EVENT_STOP
 
-        return False
+        return Gdk.EVENT_PROPAGATE
 
     def on_key_release(self, widget, event):
-        """Summary
+        """On key release callback.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        event : TYPE
-            Description
+        widget : Gtk.CellEditable
+            The ``Gtk.CellEditable`` for the widget.
+        event : Gdk.EventKey
+            The ``Gdk.EventKey`` which triggered this signal.
 
         Returns
         -------
-        TYPE
-            Description
+        bool
+            Whether to propagate the event or not.
         """
         if self.press_event is not None:
             self.ungrab()
@@ -566,7 +564,7 @@ class CellRendererKeybinding(Gtk.CellRendererText):
         return Gdk.EVENT_STOP
 
     def ungrab(self):
-        """Summary
+        """Clean up events.
         """
         self.keyboard.ungrab(Gdk.CURRENT_TIME)
         if self.release_event_id > 0:

@@ -13,7 +13,7 @@ GTK_VERSION : str
 MODULE_PATH : str
     Path to the root of this module.
 proxy : Gio.DBusProxy
-    See :py:class:`Gio.DBusProxy`.
+    A ``Gio.DBusProxy``.
 XLET_SETTINGS_WIDGETS : dict
     Settings widgets map.
 """
@@ -75,7 +75,7 @@ XLET_SETTINGS_WIDGETS = {
     "iconfilechooser": "JSONSettingsIconChooser",
     "keybinding": "JSONSettingsKeybinding",
     "keybinding-with-options": "JSONSettingsKeybindingWithOptions",
-    "list": "JSONSettingsList",
+    "list": "JSONSettingsTreeList",
     "spinbutton": "JSONSettingsSpinButton",
     "switch": "JSONSettingsSwitch",
     "textview": "JSONSettingsTextView",
@@ -100,7 +100,7 @@ class SettingsBox(BaseGrid):
     Attributes
     ----------
     stack : Gtk.Stack
-        :py:class:`Gtk.Stack`.
+        A ``Gtk.Stack``.
     """
     _should_set_main_app = [
         "list",
@@ -340,19 +340,19 @@ class MainApplication(Gtk.Application):
     display_settings_handling : bool
         Whether to display settings handler items in the header bar menu.
     gtk_app_info_monitor : Gio.AppInfoMonitor
-        The :py:class:`Gio.AppInfoMonitor` used to monitor system applications changes.
-    gtk_app_info_monitor_uptodate : bool
-        _Flag_ used to conditionally force the update of self.all_applications_list.
+        The ``Gio.AppInfoMonitor`` used to monitor system applications changes.
     gtk_app_info_monitor_signal : int
         Signal ID for ``self.gtk_app_info_monitor`` connection.
+    gtk_app_info_monitor_uptodate : bool
+        *Flag* used to conditionally force the update of self.all_applications_list.
     gtk_icon_theme : Gtk.IconTheme
-        This is used to append entra folders to :py:class:`Gtk.IconTheme` to use icons by name insted
+        This is used to append extra folders to ``Gtk.IconTheme`` to use icons by name instead
         of by path. It is also used by the :any:`IconChooser` widgets to get the list of icons in an
         icon theme.
-    gtk_icon_theme_uptodate : bool
-        _Flag_ used to conditionally force the update of self.icon_chooser_store.
     gtk_icon_theme_signal : int
         Signal ID for ``self.gtk_icon_theme`` connection.
+    gtk_icon_theme_uptodate : bool
+        *Flag* used to conditionally force the update of self.icon_chooser_store.
     header_bar : Gtk.HeaderBar
         The header bar used by this application.
     help_file_path : str
@@ -516,6 +516,11 @@ class MainApplication(Gtk.Application):
 
     def init_apps_chooser_data(self):
         """Initialize applications chooser data.
+
+        Returns
+        -------
+        None
+            Halt execution.
         """
         if self.gtk_app_info_monitor_uptodate:
             return
@@ -533,7 +538,7 @@ class MainApplication(Gtk.Application):
             Parameters
             ----------
             x : Gio.DesktopAppInfo
-                The applicaction to filter.
+                The application to filter.
 
             Returns
             -------
@@ -556,6 +561,11 @@ class MainApplication(Gtk.Application):
 
         This data is generated and stored in :any:`MainApplication` so the
         tasks aren't performed for each :any:`IconChooserDialog` created.
+
+        Returns
+        -------
+        None
+            Halt execution.
         """
         if self.gtk_icon_theme_uptodate:
             return
@@ -897,9 +907,9 @@ class MainApplication(Gtk.Application):
         Parameters
         ----------
         obj : Gio.DBusProxy
-            See :py:class:`Gio.DBusProxy`.
+            A ``Gio.DBusProxy``.
         result : Gio.Task
-            See :py:class:`Gio.Task`.
+            A ``Gio.Task``.
         data : None, optional
             User data.
         """
@@ -999,9 +1009,9 @@ class MainApplication(Gtk.Application):
         Parameters
         ----------
         window : Gtk.ApplicationWindow
-            See :py:class:`Gtk.ApplicationWindow`.
+            A ``Gtk.ApplicationWindow``.
         event : Gdk.EventWindowState
-            See :py:class:`Gdk.EventWindowState`.
+            A ``Gdk.EventWindowState``.
         """
         if event.new_window_state & Gdk.WindowState.MAXIMIZED:
             self.win_is_maximized = window.is_maximized()

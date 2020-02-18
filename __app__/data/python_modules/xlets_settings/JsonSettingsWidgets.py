@@ -5,9 +5,9 @@
 Attributes
 ----------
 OPERATIONS : list
-    Description
+    Comparison operations.
 OPERATIONS_MAP : dict
-    Description
+    Comparison operations map.
 """
 
 import collections
@@ -84,26 +84,26 @@ class JSONSettingsHandler():
     Attributes
     ----------
     bindings : dict
-        Description
+        All the bindings stored when calling ``self.bind()``.
     deps : dict
-        Description
-    file_monitor : TYPE
-        Description
-    file_obj : TYPE
-        Description
+        Dependency keys.
+    file_monitor : Gio.FileMonitor
+        A ``Gio.FileMonitor`` for the given ``self``, or None on error.
+    file_monitor_signal : int
+        Where the connection for the file monitor's ``changed`` signal is stored.
+    file_obj : Gio.File
+        A new Gio.File for the path ``self.filepath``.
     filepath : str
         Path to an xlet JSON configuration file.
-    handler : TYPE
-        Description
     listeners : dict
-        Description
-    notify_callback : TYPE
-        Description
-    resume_timeout : TYPE
-        Description
-    settings : TYPE
-        Description
-    xlet_meta : TYPE
+        See :any:`JSONSettingsHandler.listen`.
+    notify_callback : method
+        See :any:`MainApplication.notify_dbus`.
+    resume_timeout : int
+        The ID (greater than 0) of the event source.
+    settings : dict
+        An xlet settings file content.
+    xlet_meta : dict
         Xlet metadata.
     """
 
@@ -115,7 +115,7 @@ class JSONSettingsHandler():
         filepath : str
             Path to an xlet JSON configuration file.
         notify_callback : None, optional
-            Description
+            See :any:`MainApplication.notify_dbus`.
         xlet_meta : None, optional
             Xlet metadata.
         """
@@ -137,32 +137,32 @@ class JSONSettingsHandler():
         self.settings = self.get_settings()
 
     def get_xlet_meta(self):
-        """Summary
+        """Get xlet metadata.
 
         Returns
         -------
-        TYPE
-            Description
+        dict
+            Xlet metadata.
         """
         return self.xlet_meta
 
     def bind(self, key, obj, prop, direction, map_get=None, map_set=None):
-        """Summary
+        """Bind a preference to a widget property.
 
         Parameters
         ----------
-        key : TYPE
-            Description
-        obj : TYPE
-            Description
-        prop : TYPE
-            Description
-        direction : TYPE
-            Description
-        map_get : None, optional
-            Description
-        map_set : None, optional
-            Description
+        key : str
+            The preference key.
+        obj : Gtk.Widget
+            The widget to bind.
+        prop : str
+            The widget property.
+        direction : Gio.SettingsBindFlags
+            The ``Gio.SettingsBindFlags`` flag.
+        map_get : method, None, optional
+            A function to map between setting and bound attribute.
+        map_set : method, None, optional
+            A function to map between setting and bound attribute.
         """
         if direction & (Gio.SettingsBindFlags.SET | Gio.SettingsBindFlags.GET) == 0:
             direction |= Gio.SettingsBindFlags.SET | Gio.SettingsBindFlags.GET
@@ -179,43 +179,44 @@ class JSONSettingsHandler():
             binding_info["oid"] = obj.connect("notify::" + prop, self.object_value_changed, key)
 
     def listen(self, key, callback):
-        """Summary
+        """Preference key _listeners_. Store a callback to be executed every time a preference
+        changes its value.
 
         Parameters
         ----------
-        key : TYPE
-            Description
-        callback : TYPE
-            Description
+        key : str
+            The preference key.
+        callback : method
+            The function to call.
         """
         if key not in self.listeners:
             self.listeners[key] = []
         self.listeners[key].append(callback)
 
     def get_value(self, key):
-        """Summary
+        """Get preference value.
 
         Parameters
         ----------
-        key : TYPE
-            Description
+        key : str
+            The preference key.
 
         Returns
         -------
-        TYPE
-            Description
+        int, str, list, float, dict
+            The preference value.
         """
         return self.get_property(key, "value")
 
     def set_value(self, key, value):
-        """Summary
+        """Set preference value.
 
         Parameters
         ----------
-        key : TYPE
-            Description
-        value : TYPE
-            Description
+        key : str
+            The preference key.
+        value : int, str, list, float, dict
+            The preference value.
         """
         if value != self.settings[key]["value"]:
             self.settings[key]["value"] = value
@@ -232,66 +233,68 @@ class JSONSettingsHandler():
                     callback(key, value)
 
     def get_property(self, key, prop):
-        """Summary
+        """Get ``self.settings`` property.
 
         Parameters
         ----------
-        key : TYPE
-            Description
-        prop : TYPE
-            Description
+        key : str
+            The preference key.
+        prop : str
+            The property to get.
 
         Returns
         -------
-        TYPE
-            Description
+        int, str, list, float, dict
+            The property value.
         """
         props = self.settings[key]
         return props[prop]
 
     def has_property(self, key, prop):
-        """Summary
+        """Check if ``self.settings`` has a property.
 
         Parameters
         ----------
-        key : TYPE
-            Description
-        prop : TYPE
-            Description
+        key : str
+            The preference key.
+        prop : str
+            The property to check.
 
         Returns
         -------
-        TYPE
-            Description
+        bool
+            If the property exist.
         """
         return prop in self.settings[key]
 
     def has_key(self, key):
-        """Summary
+        """Check if ``self.settings`` has a preference key.
 
         Parameters
         ----------
-        key : TYPE
-            Description
+        key : str
+            The preference key.
 
         Returns
         -------
-        TYPE
-            Description
+        bool
+            If the preference exist.
         """
         return key in self.settings
 
     def object_value_changed(self, obj, value, key):
-        """Summary
+        """On object value changed.
+
+        Callback connected to the ``obj`` ``notify::<bind_prop>`` signal.
 
         Parameters
         ----------
-        obj : TYPE
-            Description
-        value : TYPE
-            Description
-        key : TYPE
-            Description
+        obj : Gtk.Widget
+            A widget whose monitored property has changed.
+        value : str, int, float
+            The widget's property value.
+        key : str
+            The preference handled by the widget.
         """
         for info in self.bindings[key]:
             if obj == info["obj"]:
@@ -309,19 +312,19 @@ class JSONSettingsHandler():
                 callback(key, value)
 
     def set_object_value(self, info, value):
-        """Summary
+        """Set widget property.
 
         Parameters
         ----------
-        info : TYPE
-            Description
-        value : TYPE
-            Description
+        info : dict
+            Binding information.
+        value : str, int, float
+            The new value for the widget's property.
 
         Returns
         -------
-        TYPE
-            Description
+        None
+            Halt execution.
         """
         if info["dir"] & Gio.SettingsBindFlags.GET == 0:
             return
@@ -333,7 +336,9 @@ class JSONSettingsHandler():
                 info["obj"].set_property(info["prop"], value)
 
     def check_settings(self, *args):
-        """Summary
+        """Check settings file.
+
+        Check if the settings stored in a settings file has changed and update all widgets.
 
         Parameters
         ----------
@@ -356,17 +361,17 @@ class JSONSettingsHandler():
                     callback(key, new_value)
 
     def get_settings(self):
-        """Summary
+        """Get settings from settings file.
 
         Returns
         -------
-        TYPE
-            Description
+        dict
+            The settings file data.
 
         Raises
         ------
         exceptions.MalformedJSONFile
-            Description
+            Malformed JOSN file.
         """
         with open(self.filepath, "r", encoding="UTF-8") as settings_file:
             raw_data = settings_file.read()
@@ -379,7 +384,7 @@ class JSONSettingsHandler():
         return settings
 
     def save_settings(self):
-        """Summary
+        """Save settings to file.
         """
         self.pause_monitor()
 
@@ -394,7 +399,7 @@ class JSONSettingsHandler():
         self.resume_monitor()
 
     def pause_monitor(self):
-        """Summary
+        """Pause settings file monitor.
         """
         if self.file_monitor_signal:
             self.file_monitor.disconnect(self.file_monitor_signal)
@@ -403,19 +408,19 @@ class JSONSettingsHandler():
         self.file_monitor_signal = None
 
     def resume_monitor(self):
-        """Summary
+        """Delayed resume of settings file monitor.
         """
         if self.resume_timeout:
             GLib.source_remove(self.resume_timeout)
         self.resume_timeout = GLib.timeout_add(2000, self.do_resume)
 
     def do_resume(self):
-        """Summary
+        """Resume settings file monitor.
 
         Returns
         -------
-        TYPE
-            Description
+        bool
+            Break loop execution.
         """
         self.file_monitor = self.file_obj.monitor_file(Gio.FileMonitorFlags.SEND_MOVED, None)
         self.file_monitor_signal = self.file_monitor.connect("changed", self.check_settings)
@@ -423,7 +428,7 @@ class JSONSettingsHandler():
         return GLib.SOURCE_REMOVE
 
     def reset_to_defaults(self):
-        """Summary
+        """Reset settings to their default values.
         """
         for key in self.settings:
             if "value" in self.settings[key]:
@@ -433,12 +438,12 @@ class JSONSettingsHandler():
         self.save_settings()
 
     def do_key_update(self, key):
-        """Summary
+        """Do preference key update.
 
         Parameters
         ----------
-        key : TYPE
-            Description
+        key : str
+            A preference key.
         """
         if key in self.bindings:
             for info in self.bindings[key]:
@@ -449,17 +454,17 @@ class JSONSettingsHandler():
                 callback(key, self.settings[key]["value"])
 
     def load_from_file(self, filepath):
-        """Summary
+        """Load settings from file.
 
         Parameters
         ----------
-        filepath : TYPE
-            Description
+        filepath : str
+            Path to a settings file.
 
         Raises
         ------
         exceptions.MalformedJSONFile
-            Description
+            Malformed JOSN file.
         """
         with open(filepath, "r", encoding="UTF-8") as settings_file:
             raw_data = settings_file.read()
@@ -482,12 +487,12 @@ class JSONSettingsHandler():
         self.save_settings()
 
     def save_to_file(self, filepath):
-        """Summary
+        """Save settings to file.
 
         Parameters
         ----------
-        filepath : TYPE
-            Description
+        filepath : str
+            The path to a file to save the settings into.
         """
         if os.path.exists(filepath):
             os.remove(filepath)
@@ -499,20 +504,18 @@ class JSONSettingsHandler():
 
 
 class JSONSettingsRevealer(Gtk.Revealer):
-    """Summary
+    """JSON settings revealer.
 
     Attributes
     ----------
-    box : TYPE
-        Description
+    box : BaseGrid
+        The container for the widgets that are going to be added to the revealer.
     dep_keys : dict
-        Description
+        Dependency keys storage.
     ops : dict
-        Description
-    settings : TYPE
-        Description
-    value : TYPE
-        Description
+        Comparison operations storage.
+    settings : JSONSettingsHandler
+        The xlets settings handler.
     """
 
     def __init__(self, settings, dep_key):
@@ -520,10 +523,15 @@ class JSONSettingsRevealer(Gtk.Revealer):
 
         Parameters
         ----------
-        settings : TYPE
-            Description
-        dep_key : TYPE
-            Description
+        settings : JSONSettingsHandler
+            The xlets settings handler.
+        dep_key : str, list
+            Dependency key/s.
+
+        Raises
+        ------
+        exceptions.WrongType
+            Wrong type for ``dep_key``.
         """
         if not isinstance(dep_key, (str, list)):
             raise exceptions.WrongType("str, list", type(dep_key).__name__)
@@ -550,7 +558,7 @@ class JSONSettingsRevealer(Gtk.Revealer):
                     operator_found = True
                     break
 
-            # If an operator is used, continue to the next dep. key.
+            # If an operator is used, continue to the next dependency key.
             if operator_found:
                 continue
 
@@ -571,17 +579,17 @@ class JSONSettingsRevealer(Gtk.Revealer):
         self.key_changed()
 
     def add(self, widget):
-        """Summary
+        """Add widget to revealer.
 
         Parameters
         ----------
-        widget : object
-            See :py:class:`Gtk.Widget`.
+        widget : Gtk.Widget
+            A ``Gtk.Widget`` to add to the revealer.
         """
         self.box.attach(widget, 0, 0, 1, 1)
 
     def key_changed(self, *args):
-        """Summary
+        """On key value changed.
 
         Parameters
         ----------
@@ -608,11 +616,11 @@ class JSONSettingsRevealer(Gtk.Revealer):
 
 
 class JSONSettingsBackend(object):
-    """Summary
+    """JSON settings backend.
     """
 
     def attach_backend(self):
-        """Summary
+        """Attach backend.
         """
         self._saving = False
 
@@ -634,45 +642,45 @@ class JSONSettingsBackend(object):
             self.connect_widget_handlers()
 
     def set_value(self, value):
-        """Summary
+        """Set preference value.
 
         Parameters
         ----------
-        value : TYPE
-            Description
+        value : int, str, float, list
+            The new value for the preference.
         """
         self._saving = True
         self.settings.set_value(self.pref_key, value)
         self._saving = False
 
     def _settings_changed_callback(self, *args):
-        """Summary
+        """Proxy function for ``self.on_setting_changed``.
 
         Parameters
         ----------
         *args
-            Description
+            Arguments.
         """
         if not self._saving:
             self.on_setting_changed(*args)
 
     def get_value(self):
-        """Summary
+        """Get preference value.
 
         Returns
         -------
-        TYPE
-            Description
+        int, str, float, list
+            The current preference value.
         """
         return self.settings.get_value(self.pref_key)
 
     def get_range(self):
-        """Summary
+        """Get minimum/maximum range for a preference.
 
         Returns
         -------
-        TYPE
-            Description
+        list
+            A list with two elements. Minimum value at index 0 and maximum value at index 1.
         """
         min = self.settings.get_property(self.pref_key, "min")
         max = self.settings.get_property(self.pref_key, "max")
@@ -714,7 +722,7 @@ class JSONSettingsBackend(object):
 
 
 def json_settings_factory(subclass):
-    """JSONSettings wigets factory.
+    """JSONSettings widgets factory.
 
     Parameters
     ----------
@@ -730,18 +738,18 @@ def json_settings_factory(subclass):
         raise exceptions.CannotBackend(subclass)
 
     class NewClass(globals()[subclass], JSONSettingsBackend):
-        """Summary
+        """New super class.
 
         Attributes
         ----------
-        apply_key : TYPE
-            Description
-        imp_exp_path_key : TYPE
-            Description
-        pref_key : TYPE
-            Description
-        settings : TYPE
-            Description
+        apply_key : str
+            See :any:`TreeList._apply_changes`.
+        imp_exp_path_key : str
+            See :any:`TreeList._export_data` and :any:`TreeList._import_data` .
+        pref_key : str
+            The preference key that this widget will control.
+        settings : JSONSettingsHandler
+            The xlets settings handler.
         """
 
         def __init__(self, widget_attrs={}, widget_kwargs={}):
@@ -750,14 +758,14 @@ def json_settings_factory(subclass):
             Parameters
             ----------
             widget_attrs : dict, optional
-                Description
+                Widget attributes.
             widget_kwargs : dict, optional
-                Description
+                Widget keyword arguments.
 
             Returns
             -------
-            TYPE
-                Description
+            None
+                Dummy docstring. The auto-docstrings plugin put this here erroneously.
             """
             self.pref_key = widget_attrs.get("pref_key")
             self.apply_key = widget_attrs.get("apply_key")

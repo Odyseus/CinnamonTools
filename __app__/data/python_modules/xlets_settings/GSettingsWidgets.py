@@ -12,7 +12,7 @@ Attributes
 CAN_BACKEND : list
     List of widgets that can be used to control settings.
 GioSSS : Gio.SettingsSchemaSource
-    :py:class:`Gio.SettingsSchemaSource`.
+    A ``Gio.SettingsSchemaSource``.
 """
 from gi.repository import GLib
 from gi.repository import Gio
@@ -55,16 +55,16 @@ def __setitem__(self, key, value):
     Parameters
     ----------
     key : str
-        Description
+        A gsettings key.
     value : int, str, list
-        Description
+        A value for a gsetting.
 
     Raises
     ------
     KeyError
-        Description
+        Unkmown key.
     ValueError
-        Description
+        Wrong value type.
     """
     # set_value() aborts the program on an unknown key
     if key not in self:
@@ -101,18 +101,20 @@ def bind_with_mapping(self, pref_key, widget, prop, flags, map_get, map_set):
 
     Parameters
     ----------
-    key : str
-        Description
+    pref_key : str
+        A gsettings key.
     widget : Gtk.Widget
-        Description
+        An object to bind.
     prop : str
-        Description
+        The widget property to bind.
     flags : Gio.SettingsBindFlags
-        Description
-    key_to_prop : method
-        Description
-    prop_to_key : method
-        Description
+        ``Gio.SettingsBindFlags`` flags.
+    map_get : method
+        See ``map_set``.
+    map_set : method
+        A function to map between setting and bound attribute.
+        May also be passed as a keyword argument during instantiation.
+        These methods will be ignored if ``bind_dir = None``.
     """
     self._ignore_key_changed = False
 
@@ -121,10 +123,8 @@ def bind_with_mapping(self, pref_key, widget, prop, flags, map_get, map_set):
 
         Parameters
         ----------
-        settings : Gio.Settings
-            Description
-        key : str
-            Description
+        *args
+            Arguments.
 
         Returns
         -------
@@ -144,9 +144,9 @@ def bind_with_mapping(self, pref_key, widget, prop, flags, map_get, map_set):
         Parameters
         ----------
         widget : Gtk.Widget
-            Description
-        param : str
-            Description
+            The widget to get the property value from.
+        *args
+            Arguments.
 
         Returns
         -------
@@ -239,7 +239,7 @@ class GSettingsBackend(object):
         Parameters
         ----------
         value : str, int, list
-            Description
+            The new preference value.
         """
         self.settings[self.pref_key] = value
 
@@ -249,17 +249,17 @@ class GSettingsBackend(object):
         Returns
         -------
         str, int, list
-            Description
+            The current preference value.
         """
         return self.settings[self.pref_key]
 
     def get_range(self):
-        """Get min./max. range.
+        """Get minimum/maximum range for a preference.
 
         Returns
         -------
-        list, None
-            Description
+        list
+            A list with two elements. Minimum value at index 0 and maximum value at index 1.
         """
         range = self.settings.get_range(self.pref_key)
         if range[0] == "range":
@@ -314,8 +314,8 @@ def get_gsettings_schema(schema, xlet_meta={}):
 
     Returns
     -------
-    object
-        :py:class:`Gio.Settings`.
+    Gio.Settings
+        A ``Gio.Settings``.
 
     Raises
     ------
@@ -352,7 +352,7 @@ def g_settings_factory(subclass):
     Parameters
     ----------
     subclass : str
-        A :any:`SettingsWidgets` instance.
+        The class name of a :any:`SettingsWidgets` instance.
 
     Raises
     ------
@@ -376,7 +376,7 @@ def g_settings_factory(subclass):
         pref_key : str
             Preference key.
         settings : Gio.Settings
-            :py:class:`Gio.Settings`.
+            A ``Gio.Settings`` instance.
         """
 
         def __init__(self, widget_attrs={}, widget_kwargs={}):

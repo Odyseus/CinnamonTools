@@ -126,8 +126,8 @@ def list_edit_factory(col_def, xlet_settings):
     ----------
     col_def : dict
         Column definition.
-    xlet_settings : object
-        :py:class:`JSONSettingsHandler`.
+    xlet_settings : JSONSettingsHandler
+        A ``JSONSettingsHandler``.
 
     Returns
     -------
@@ -163,12 +163,12 @@ def list_edit_factory(col_def, xlet_settings):
         widget_type = LIST_CLASS_TYPE_MAP[col_def["type"]]
 
     class Widget(widget_type):
-        """Summary
+        """New list widget.
 
         Attributes
         ----------
-        widget_value : int, str, list, dict, float
-            Description
+        widget_value : int, str, float
+            The list widget value.
         """
 
         def __init__(self, **kwargs):
@@ -185,32 +185,32 @@ def list_edit_factory(col_def, xlet_settings):
                 self.connect_widget_handlers()
 
         def get_range(self):
-            """Summary
+            """Get range.
 
             Returns
             -------
-            TYPE
-                Description
+            None
+                None.
             """
             return None
 
         def set_value(self, value):
-            """Summary
+            """Set value.
 
             Parameters
             ----------
-            value : TYPE
-                Description
+            value : int, str, float
+                The widget value.
             """
             self.widget_value = value
 
         def get_value(self):
-            """Summary
+            """Get value.
 
             Returns
             -------
-            TYPE
-                Description
+            int, str, float
+                The widget value.
             """
             if hasattr(self, "widget_value"):
                 return self.widget_value
@@ -218,12 +218,12 @@ def list_edit_factory(col_def, xlet_settings):
                 return None
 
         def set_widget_value(self, value):
-            """Summary
+            """Set widget value.
 
             Parameters
             ----------
-            value : TYPE
-                Description
+            value : int, str, float
+                The widget value.
             """
             if self.bind_dir is None:
                 self.widget_value = value
@@ -239,12 +239,12 @@ def list_edit_factory(col_def, xlet_settings):
                     self.content_widget.set_property(self.bind_prop, value)
 
         def get_widget_value(self):
-            """Summary
+            """Get widget value.
 
             Returns
             -------
-            TYPE
-                Description
+            int, str, float
+                The widget value.
             """
             if self.bind_dir is None:
                 try:
@@ -269,11 +269,11 @@ class TreeList(SettingsWidget):
     Attributes
     ----------
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
-    content_widget : TYPE
-        Description
-    model : TYPE
-        Description
+        ``Gio.SettingsBindFlags`` flags.
+    content_widget : Gtk.TreeView
+        The main widget that will be used to represent a setting value.
+    model : Gtk.ListStore
+        The model used as storage by this widget.
     """
 
     bind_dir = None
@@ -285,21 +285,33 @@ class TreeList(SettingsWidget):
         Parameters
         ----------
         columns : None, optional
-            Description
-        immutable : dict, optional
-            Description
-        dialog_info_labels : None, optional
-            Description
+            The columns definitions used to build ``self.content_widget``.
+        immutable : dict, bool, optional
+            Whether items in the list can be removed or new ones can be added. If a
+            :py:class:`dict`, two options are available. The ``read-only-keys`` key will
+            allow to specify a list of column IDs whose created widgets should be set as
+            insensitive to not allow edition. The ``allow-edition`` key can be set to True or False.
+            If set to True, all columns in the list will be editable, except those whose IDs are
+            specified in the ``read-only-keys`` key. If set to False, none of the widgets on the
+            list will be editable.
+        dialog_info_labels : list, None, optional
+            A list of strings. It allows to display informative labels on the edit/add dialog.
+            This allows to keep the window clean and at the same time keep basic information at hand.
         height : int, optional
-            Description
+            A fixed height for the tree.
         move_buttons : bool, optional
-            Description
+            Whether to display the move items up/down buttons.
         multi_select : bool, optional
-            Description
+            It allows to select multiple rows inside the widget.
+            Mostly useful for mass deletions of items.
         dialog_width : int, optional
-            Description
+            A minimum width for the add/edit dialog,
         apply_and_quit : bool, optional
-            Description
+            It allows to exit the settings window when the apply button on the widget is clicked.
+
+        Todo
+        ----
+        Find a way to make the tree expand to the available space inside its page.
         """
         super().__init__()
         self.set_spacing(0, 0)
@@ -357,16 +369,16 @@ class TreeList(SettingsWidget):
                 renderer = Gtk.CellRendererToggle()
 
                 def toggle_checkbox(widget, path, col):
-                    """Summary
+                    """Toggle checkbox.
 
                     Parameters
                     ----------
-                    widget : TYPE
-                        Description
-                    path : TYPE
-                        Description
-                    col : TYPE
-                        Description
+                    widget : Gtk.CellRendererToggle
+                        The toggle widget.
+                    path : str
+                        String representation of :py:class:`Gtk.TreePath` describing the event location.
+                    col : int
+                        Column index.
                     """
                     self.model[path][col] = not self.model[path][col]
                     self._list_changed()
@@ -396,18 +408,18 @@ class TreeList(SettingsWidget):
                         digits = len(str(step).split(".")[1])
 
                 def edit_spin(widget, path, value, data):
-                    """Summary
+                    """Edit spin button.
 
                     Parameters
                     ----------
-                    widget : TYPE
-                        Description
-                    path : TYPE
-                        Description
-                    value : TYPE
-                        Description
-                    data : TYPE
-                        Description
+                    widget : Gtk.CellRendererSpin
+                        The spin widget.
+                    path : str
+                        String representation of :py:class:`Gtk.TreePath` describing the event location.
+                    value : int, float
+                        The widget value.
+                    data : dict
+                        Data holding row information.
                     """
                     # NOTE: Stupid internationalization!
                     # float(value) will fail when value is a comma-separated float. ¬¬
@@ -446,20 +458,20 @@ class TreeList(SettingsWidget):
 
             if column_def["type"] == "color":
                 def set_color_func(col, rend, model, row_iter, data):
-                    """Summary
+                    """Function to set color.
 
                     Parameters
                     ----------
-                    col : TYPE
-                        Description
-                    rend : TYPE
-                        Description
-                    model : TYPE
-                        Description
-                    row_iter : TYPE
-                        Description
-                    data : TYPE
-                        Description
+                    col : Gtk.CellLayout
+                        A ``Gtk.CellLayout``.
+                    rend : Gtk.CellRenderer
+                        The cell renderer whose value is to be set.
+                    model : Gtk.TreeModel
+                        The model.
+                    row_iter : Gtk.TreeIter
+                        A ``Gtk.TreeIter`` indicating the row to set the value for.
+                    data : dict
+                        User data passed to ``Gtk.CellLayout.set_cell_data_func()``.
                     """
                     value = model[row_iter][data["col_index"]]
 
@@ -475,20 +487,20 @@ class TreeList(SettingsWidget):
                 })
             elif column_def["type"] == "app":
                 def set_app_func(col, rend, model, row_iter, data):
-                    """Summary
+                    """Function to set application.
 
                     Parameters
                     ----------
-                    col : TYPE
-                        Description
-                    rend : TYPE
-                        Description
-                    model : TYPE
-                        Description
-                    row_iter : TYPE
-                        Description
-                    data : TYPE
-                        Description
+                    col : Gtk.CellLayout
+                        A ``Gtk.CellLayout``.
+                    rend : Gtk.CellRenderer
+                        The cell renderer whose value is to be set.
+                    model : Gtk.TreeModel
+                        The model.
+                    row_iter : Gtk.TreeIter
+                        A ``Gtk.TreeIter`` indicating the row to set the value for.
+                    data : dict
+                        User data passed to ``Gtk.CellLayout.set_cell_data_func()``.
                     """
                     value = model[row_iter][data["col_index"]]
 
@@ -508,20 +520,20 @@ class TreeList(SettingsWidget):
 
             if has_option_map:
                 def map_func(col, rend, model, row_iter, data):
-                    """Summary
+                    """Map function.
 
                     Parameters
                     ----------
-                    col : TYPE
-                        Description
-                    rend : TYPE
-                        Description
-                    model : TYPE
-                        Description
-                    row_iter : TYPE
-                        Description
-                    data : TYPE
-                        Description
+                    col : Gtk.CellLayout
+                        A ``Gtk.CellLayout``.
+                    rend : Gtk.CellRenderer
+                        The cell renderer whose value is to be set.
+                    model : Gtk.TreeModel
+                        The model.
+                    row_iter : Gtk.TreeIter
+                        A ``Gtk.TreeIter`` indicating the row to set the value for.
+                    data : dict
+                        User data passed to ``Gtk.CellLayout.set_cell_data_func()``.
                     """
                     value = model[row_iter][data["col_index"]]
 
@@ -557,20 +569,20 @@ class TreeList(SettingsWidget):
             else:
                 if column_def["type"] == "keybinding":
                     def kb_map_func(col, rend, model, row_iter, data):
-                        """Summary
+                        """Map function.
 
                         Parameters
                         ----------
-                        col : TYPE
-                            Description
-                        rend : TYPE
-                            Description
-                        model : TYPE
-                            Description
-                        row_iter : TYPE
-                            Description
-                        data : TYPE
-                            Description
+                        col : Gtk.CellLayout
+                            A ``Gtk.CellLayout``.
+                        rend : Gtk.CellRenderer
+                            The cell renderer whose value is to be set.
+                        model : Gtk.TreeModel
+                            The model.
+                        row_iter : Gtk.TreeIter
+                            A ``Gtk.TreeIter`` indicating the row to set the value for.
+                        data : dict
+                            User data passed to ``Gtk.CellLayout.set_cell_data_func()``.
                         """
                         value = model[row_iter][data["col_index"]]
 
@@ -705,25 +717,27 @@ class TreeList(SettingsWidget):
         self._update_button_sensitivity()
 
     def query_tooltip_cb(self, widget, x, y, keyboard_tip, tooltip):
-        """Summary
+        """Query tooltip callback function.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        x : TYPE
-            Description
-        y : TYPE
-            Description
-        keyboard_tip : TYPE
-            Description
-        tooltip : TYPE
-            Description
+        widget : Gtk.TreeView
+            The object which received the signal.
+        x : int
+            The x coordinate of the cursor position where the request has been emitted,
+            relative to widget’s left side.
+        y : int
+            The y coordinate of the cursor position where the request has been emitted,
+            relative to widget’s top.
+        keyboard_tip : bool
+            True if the tooltip was triggered using the keyboard
+        tooltip : Gtk.Tooltip
+            A ``Gtk.Tooltip``.
 
         Returns
         -------
-        TYPE
-            Description
+        bool
+            True if tooltip should be shown right now, False otherwise.
         """
         ctx = widget.get_tooltip_context(x, y, keyboard_tip)
 
@@ -744,19 +758,20 @@ class TreeList(SettingsWidget):
             return False
 
     def _on_key_press_cb(self, widget, event):
-        """Summary
+        """On keyboard press event.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        event : TYPE
-            Description
+        widget : Gtk.TreeView
+            The object which received the signal.
+        event : Gdk.EventKey
+            The ``Gdk.EventKey`` which triggered this signal.
 
         Returns
         -------
-        TYPE
-            Description
+        bool
+            True to stop other handlers from being invoked for the event.
+            False to propagate the event further.
         """
         state = event.get_state() & Gdk.ModifierType.CONTROL_MASK
         ctrl = state == Gdk.ModifierType.CONTROL_MASK
@@ -784,7 +799,7 @@ class TreeList(SettingsWidget):
         return False
 
     def _update_button_sensitivity(self, *args):
-        """Summary
+        """Update button sensitivity.
 
         Parameters
         ----------
@@ -832,7 +847,7 @@ class TreeList(SettingsWidget):
                 self._export_button.set_sensitive(True)
 
     def _on_row_activated(self, *args):
-        """Summary
+        """On row activated.
 
         Parameters
         ----------
@@ -843,7 +858,7 @@ class TreeList(SettingsWidget):
             self._edit_item()
 
     def _add_item(self, *args):
-        """Summary
+        """Add a new item.
 
         Parameters
         ----------
@@ -857,26 +872,26 @@ class TreeList(SettingsWidget):
             self._list_changed()
 
     def _on_remove_item_cb(self, widget, event):
-        """Summary
+        """On item removed callback function.
 
         Parameters
         ----------
-        widget : TYPE
-            Description
-        event : TYPE
-            Description
+        widget : Gtk.ToolButton
+            The object which received the signal.
+        event : Gdk.EventButton
+            The ``Gdk.EventButton`` which triggered this signal.
 
         Returns
         -------
-        TYPE
-            Description
+        bool
+            True to stop other handlers from being invoked for the event.
+            False to propagate the event further.
         """
         state = event.get_state() & Gdk.ModifierType.CONTROL_MASK
         confirm_removal = state != Gdk.ModifierType.CONTROL_MASK
 
         if confirm_removal:
             dialog = Gtk.MessageDialog(transient_for=self.get_toplevel(),
-                                       modal=True,
                                        flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                                        message_type=Gtk.MessageType.WARNING,
                                        buttons=Gtk.ButtonsType.YES_NO)
@@ -900,7 +915,7 @@ class TreeList(SettingsWidget):
             self._remove_item()
 
     def _remove_item(self):
-        """Summary
+        """Remove item.
         """
         if self._multi_select:
             model, paths = self.content_widget.get_selection().get_selected_rows()
@@ -916,7 +931,7 @@ class TreeList(SettingsWidget):
             self._list_changed()
 
     def _edit_item(self, *args):
-        """Summary
+        """Edit existent item.
 
         Parameters
         ----------
@@ -947,7 +962,7 @@ class TreeList(SettingsWidget):
                 self._list_changed()
 
     def _move_item_up(self, *args):
-        """Summary
+        """Move item up.
 
         Parameters
         ----------
@@ -967,7 +982,7 @@ class TreeList(SettingsWidget):
             self._list_changed()
 
     def _move_item_to_first_position(self, *args):
-        """Summary
+        """Move item to first position.
 
         Parameters
         ----------
@@ -986,7 +1001,7 @@ class TreeList(SettingsWidget):
             self._list_changed()
 
     def _move_item_down(self, *args):
-        """Summary
+        """Move item down.
 
         Parameters
         ----------
@@ -1006,7 +1021,7 @@ class TreeList(SettingsWidget):
             self._list_changed()
 
     def _move_item_to_last_position(self, *args):
-        """Summary
+        """Move item to last position.
 
         Parameters
         ----------
@@ -1025,7 +1040,7 @@ class TreeList(SettingsWidget):
             self._list_changed()
 
     def _export_data(self, *args):
-        """Summary
+        """Export data.
 
         Parameters
         ----------
@@ -1051,7 +1066,7 @@ class TreeList(SettingsWidget):
                                         os.path.dirname(filepath))
 
     def _import_data(self, *args):
-        """Summary
+        """Import data.
 
         Parameters
         ----------
@@ -1060,15 +1075,15 @@ class TreeList(SettingsWidget):
 
         Returns
         -------
-        TYPE
-            Description
+        None
+            Halt execution.
 
         Raises
         ------
         exceptions.MalformedJSONFile
-            Description
+            The exported file is malformed.
         exceptions.WrongType
-            Description
+            The file contains wrong data type.
         """
         filepath = import_export(
             self,
@@ -1157,14 +1172,20 @@ class TreeList(SettingsWidget):
                 raise exceptions.WrongType("list", type(imported_data).__name__)
 
     def _apply_changes(self, *args):
-        """Summary
+        """Apply changes.
 
         Parameters
         ----------
         *args
             Arguments.
+
+        Note
+        ----
+        This preference widget should not have a callback attached to it (equality comparison between
+        objects and all that jazz). So this function is attached to another xlet preference that
+        can be bound to a function that can re-apply the changes made to this widget value.
         """
-        # NOTE: The setting controlled by this widget (List) is saved in real time.
+        # NOTE: The setting controlled by this widget (TreeList) is saved in real time.
         # This _apply_changes function simply toggles a setting that can have a
         # callback attached (on the JavaScript side) so it can be triggered on demand
         # when the Apply changes button is pressed and not every time the data in the
@@ -1180,17 +1201,17 @@ class TreeList(SettingsWidget):
                 self._main_app.window.emit("destroy")
 
     def _open_add_edit_dialog(self, tree_row=None):
-        """Summary
+        """Open add/edit dialog.
 
         Parameters
         ----------
-        info : None, optional
-            Description
+        tree_row : None, optional
+            A :py:class:`Gtk.TreeModelRow`.
 
         Returns
         -------
-        TYPE
-            Description
+        list
+            List of values to be saved as a new column definition.
         """
         if tree_row is None:
             title = _("Add new entry")
@@ -1293,7 +1314,7 @@ class TreeList(SettingsWidget):
         return None
 
     def _list_changed(self):
-        """Summary
+        """List changed.
         """
         data = []
         for row in self.model:
@@ -1336,7 +1357,7 @@ class TreeList(SettingsWidget):
         self.content_widget.columns_autosize()
 
     def connect_widget_handlers(self, *args):
-        """Summary
+        """See :any:`JSONSettingsBackend.connect_widget_handlers`.
 
         Parameters
         ----------

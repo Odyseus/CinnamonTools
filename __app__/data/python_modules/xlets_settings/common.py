@@ -288,7 +288,7 @@ def contrast_rgba_color(rgba):
     Parameters
     ----------
     rgba : Gdk.RGBA
-        The :py:class:`Gdk.RGBA` color from which to get its luminance.
+        The ``Gdk.RGBA`` color from which to get its luminance.
 
     Returns
     -------
@@ -308,11 +308,11 @@ def contrast_rgba_color(rgba):
 
 
 def import_export(parent, action_type, last_dir):
-    """Import/Export data from/to a :any:`List` widget.
+    """Import/Export data from/to a :any:`TreeList` widget.
 
     Parameters
     ----------
-    parent : List
+    parent : TreeList
         The parent widget to get the top level window from.
     action_type : str
         Which action to perform (export or import).
@@ -430,7 +430,7 @@ def display_message_dialog(widget, title, message, context="information"):
 
     Parameters
     ----------
-    widget : object
+    widget : Gtk.Widget
         The widget to get the top level window from.
     title : str
         The title of the dialog.

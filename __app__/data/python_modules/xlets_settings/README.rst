@@ -43,7 +43,7 @@ Widget changes made
     + Added ``immutable`` option. An *immutable* ``list`` widget can be edited, but items in the list cannot be removed nor new ones be added.
 
         * This setting can be a boolean or a dictionary.
-        * If a dictionary, the ``read_only_keys`` key will allow to specify a list of column IDs whose created widgets should be set as insensitive.
+        * If a dictionary, the ``read-only-keys`` key will allow to specify a list of column IDs whose created widgets should be set as insensitive.
 
     + Added ability to export and import the content of the list.
     + Added ``apply_key`` and ``imp_exp_path_key`` arguments.

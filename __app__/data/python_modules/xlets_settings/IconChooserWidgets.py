@@ -185,6 +185,11 @@ class IconChooserDialog(Gtk.Dialog):
 
     def _populate_sidebar(self, repopulate=False):
         """Populate the dialog sidebar.
+
+        Parameters
+        ----------
+        repopulate : bool, optional
+            Whether to repopulate the icons storage due to changes outside of the application.
         """
         if repopulate:
             for child in self._sidebar.get_children():
@@ -593,7 +598,7 @@ class IconChooserButton(Gtk.Button):
             self.dialog.destroy()
 
     def do_get_property(self, prop):
-        """get property override.
+        """Get property override.
 
         Parameters
         ----------

@@ -134,11 +134,20 @@ class ApplicationChooserDialog(Gtk.Dialog):
     def _populate_app_list(self, repopulate=False):
         """Populate the list of applications with all installed applications.
 
-        <strikethrough>Icons are provided by icon-name, however some applications may return a full
-        path to a custom icon rather than a themed-icon name, or even no name
-        at all. In these cases the generic "gtk-missing-icon" icon is used.</strikethrough>
+        .. rst-class:: wy-text-strike
 
-        NOTE: (by Odyseus) I switched to a :py:class:`Gio.Icon`. Simply because that's what
+            Icons are provided by icon-name, however some applications may return a full
+            path to a custom icon rather than a themed-icon name, or even no name
+            at all. In these cases the generic "gtk-missing-icon" icon is used.
+
+        Parameters
+        ----------
+        repopulate : bool, optional
+            Whether to repopulate the applications storage due to changes outside of the application.
+
+        Note
+        ----
+        I (Odyseus) switched to a :py:class:`Gio.Icon`. Simply because that's what
         :py:class:`Gio.AppInfo` provides and the icon is practically guaranteed to show up
         be it a named icon or a path to an image.
         """
@@ -154,7 +163,7 @@ class ApplicationChooserDialog(Gtk.Dialog):
             Parameters
             ----------
             x : Gio.DesktopAppInfo
-                The applicaction to filter.
+                The application to filter.
 
             Returns
             -------
@@ -250,7 +259,7 @@ class AppList(SettingsWidget):
     app_chooser_dialog : ApplicationChooserDialog
         The applications chooser dialog.
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
+        ``Gio.SettingsBindFlags`` flags.
     content_widget : Gtk.Button
         The content widget.
     label : str
@@ -499,9 +508,9 @@ class AppList(SettingsWidget):
         Parameters
         ----------
         widget : Gtk.ToolButton
-            :py:class:`Gtk.ToolButton`.
+            A ``Gtk.ToolButton``.
         tree : Gtk.TreeView
-            :py:class:`Gtk.TreeView`.
+            A ``Gtk.TreeView``.
         """
         selection = tree.get_selection()
         tree_model, paths = selection.get_selected_rows()
@@ -552,7 +561,7 @@ class AppChooser(SettingsWidget):
     app_chooser_dialog : ApplicationChooserDialog
         The applications chooser dialog.
     bind_dir : Gio.SettingsBindFlags, None
-        See :py:class:`Gio.SettingsBindFlags`.
+        ``Gio.SettingsBindFlags`` flags.
     content_widget : Gtk.Button
         The content widget.
     label : SettingsWidgets.SettingsLabel
@@ -568,7 +577,7 @@ class AppChooser(SettingsWidget):
         label : str
             The label text.
         size_group : None, optional
-            :py:class:`Gtk.SizeGroup`.
+            A :py:class:`Gtk.SizeGroup`.
         dep_key : None, optional
             Dependency key/s.
         tooltip : str, optional
