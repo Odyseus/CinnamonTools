@@ -611,7 +611,7 @@ class IconChooserButton(Gtk.Button):
             Wrong attribute.
         """
         if prop.name == "icon":
-            return self.icon
+            return getattr(self, prop.name)
         else:
             raise AttributeError("Unknown property '%s'" % prop.name)
 
@@ -632,7 +632,7 @@ class IconChooserButton(Gtk.Button):
         """
         if prop.name == "icon":
             if value and value != self.icon:
-                self.icon = value
+                setattr(self, prop.name, value)
                 self.set_icon(value)
         else:
             raise AttributeError("Unknown property '%s'" % prop.name)
@@ -670,7 +670,8 @@ class IconChooserButton(Gtk.Button):
                 else:
                     self._icon.set_from_icon_name(icon, Gtk.IconSize.BUTTON)
 
-                self.set_property("icon", icon)
+                self.notify("icon")
+                self.emit("icon-selected", self.icon)
             else:
                 self._icon.set_from_icon_name("edit-find-symbolic", Gtk.IconSize.BUTTON)
 
@@ -699,7 +700,6 @@ class IconChooserButton(Gtk.Button):
 
         if self.icon is not None:
             self.set_icon(self.icon)
-            self.emit("icon-selected", self.icon)
 
         self.dialog.hide()
 

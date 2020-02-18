@@ -512,16 +512,16 @@ class CellRendererKeybinding(Gtk.CellRendererText):
                 self.teaching = False
                 self.path = None
                 self.press_event = None
-                return True
+                return Gdk.EVENT_STOP
             elif accel_key == Gdk.KEY_BackSpace:
                 self.teaching = False
                 self.press_event = None
                 self.set_value(None)
                 self.emit("accel-cleared", self.path)
                 self.path = None
-                return True
+                return Gdk.EVENT_STOP
             elif accel_key == Gdk.KEY_Return or accel_key == Gdk.KEY_space:
-                return True
+                return Gdk.EVENT_STOP
 
         accel_string = Gtk.accelerator_name_with_keycode(
             None, accel_key, event.hardware_keycode, Gdk.ModifierType(accel_mods))
@@ -543,11 +543,11 @@ class CellRendererKeybinding(Gtk.CellRendererText):
                 (keyval >= Gdk.KEY_Hangul and keyval <= Gdk.KEY_Hangul_Special) or
                 (keyval >= Gdk.KEY_Hangul_Kiyeog and keyval <= Gdk.KEY_Hangul_J_YeorinHieuh) or
                     keyval in FORBIDDEN_KEYVALS):
-                dialog = Gtk.MessageDialog(None,
-                                           Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                           Gtk.MessageType.ERROR,
-                                           Gtk.ButtonsType.OK,
-                                           None)
+                dialog = Gtk.MessageDialog(transient_for=self.a_widget.get_toplevel(),
+                                           flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                                           message_type=Gtk.MessageType.ERROR,
+                                           buttons=Gtk.ButtonsType.OK)
+
                 dialog.set_default_size(400, 200)
                 msg = _(
                     "\nThis key combination, \'<b>%s</b>\' cannot be used because it would become impossible to type using this key.\n\n")
@@ -556,14 +556,14 @@ class CellRendererKeybinding(Gtk.CellRendererText):
                 dialog.show_all()
                 dialog.run()
                 dialog.destroy()
-                return True
+                return Gdk.EVENT_STOP
 
         self.press_event = None
         self.set_value(accel_string)
         self.emit("accel-edited", self.path, accel_string, accel_label)
         self.path = None
 
-        return True
+        return Gdk.EVENT_STOP
 
     def ungrab(self):
         """Summary

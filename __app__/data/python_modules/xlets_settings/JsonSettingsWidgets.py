@@ -26,7 +26,7 @@ from . import exceptions
 from .AppChooserWidgets import AppChooser  # noqa
 from .AppChooserWidgets import AppList  # noqa
 from .SettingsWidgets import *  # noqa
-from .TreeListWidgets import List  # noqa
+from .TreeListWidgets import TreeList  # noqa
 from .common import BaseGrid
 from .common import sort_combo_options
 
@@ -48,7 +48,7 @@ __all__ = [
     "JSONSettingsIconChooser",
     "JSONSettingsKeybinding",
     "JSONSettingsKeybindingWithOptions",
-    "JSONSettingsList",
+    "JSONSettingsTreeList",
     "JSONSettingsSpinButton",
     "JSONSettingsSwitch",
     "JSONSettingsTextView",
@@ -69,7 +69,7 @@ __all__ = [
 
 CAN_BACKEND.append("AppChooser")  # noqa | SettingsWidgets
 CAN_BACKEND.append("AppList")  # noqa | SettingsWidgets
-CAN_BACKEND.append("List")  # noqa | SettingsWidgets
+CAN_BACKEND.append("TreeList")  # noqa | SettingsWidgets
 
 
 OPERATIONS = ["<=", ">=", "<", ">", "!=", "="]
@@ -128,7 +128,7 @@ class JSONSettingsHandler():
         self.filepath = filepath
         self.file_obj = Gio.File.new_for_path(self.filepath)
         self.file_monitor = self.file_obj.monitor_file(Gio.FileMonitorFlags.SEND_MOVED, None)
-        self.file_monitor.connect("changed", self.check_settings)
+        self.file_monitor_signal = self.file_monitor.connect("changed", self.check_settings)
 
         self.bindings = {}
         self.listeners = {}
@@ -396,8 +396,11 @@ class JSONSettingsHandler():
     def pause_monitor(self):
         """Summary
         """
+        if self.file_monitor_signal:
+            self.file_monitor.disconnect(self.file_monitor_signal)
+
         self.file_monitor.cancel()
-        self.handler = None
+        self.file_monitor_signal = None
 
     def resume_monitor(self):
         """Summary
@@ -415,9 +418,9 @@ class JSONSettingsHandler():
             Description
         """
         self.file_monitor = self.file_obj.monitor_file(Gio.FileMonitorFlags.SEND_MOVED, None)
-        self.handler = self.file_monitor.connect("changed", self.check_settings)
+        self.file_monitor_signal = self.file_monitor.connect("changed", self.check_settings)
         self.resume_timeout = None
-        return False
+        return GLib.SOURCE_REMOVE
 
     def reset_to_defaults(self):
         """Summary
@@ -522,6 +525,9 @@ class JSONSettingsRevealer(Gtk.Revealer):
         dep_key : TYPE
             Description
         """
+        if not isinstance(dep_key, (str, list)):
+            raise exceptions.WrongType("str, list", type(dep_key).__name__)
+
         super().__init__()
         self.settings = settings
 
@@ -532,7 +538,6 @@ class JSONSettingsRevealer(Gtk.Revealer):
 
         self.dep_keys = {}
         self.ops = {}
-        self.value = None
 
         for d_k in dep_keys:
             operator_found = False

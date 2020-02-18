@@ -134,7 +134,7 @@ CAN_BACKEND = [
     "IconChooser",
     "Keybinding",
     "KeybindingWithOptions",
-    "List",
+    "TreeList",
     "SpinButton",
     "Switch",
     "TextView",
@@ -895,6 +895,7 @@ class IconChooser(SettingsWidget):
         """
         super().__init__(dep_key=dep_key)
         self._timer = None
+        self._setting_entry_text = False
 
         self.label = SettingsLabel(label)
 
@@ -937,9 +938,10 @@ class IconChooser(SettingsWidget):
         *args
             Arguments.
         """
-        value = self.content_widget.get_text().strip()
-        self.bind_object.set_icon(value)
-        self.set_value(value)
+        if not self._setting_entry_text:
+            value = self.content_widget.get_text().strip()
+            self.bind_object.set_icon(value)
+            self.set_value(value)
 
     def _on_icon_selected(self, widget, icon):
         """On icon selected.
@@ -951,8 +953,12 @@ class IconChooser(SettingsWidget):
         icon : str
             The icon name or path to set into the text entry.
         """
+        self._setting_entry_text = True
+
         if icon is not None:
             self.content_widget.set_text(icon)
+
+        self._setting_entry_text = False
 
 
 class Entry(SettingsWidget):

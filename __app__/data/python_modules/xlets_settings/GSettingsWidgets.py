@@ -96,7 +96,7 @@ def __setitem__(self, key, value):
         raise ValueError("value '%s' for key '%s' is outside of valid range" % (value, key))
 
 
-def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
+def bind_with_mapping(self, pref_key, widget, prop, flags, map_get, map_set):
     """Override :py:class:`Gio.Settings`'s ``bind_with_mapping`` method.
 
     Parameters
@@ -116,8 +116,8 @@ def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
     """
     self._ignore_key_changed = False
 
-    def key_changed(settings, key):
-        """Summary
+    def key_changed(*args):
+        """Key changed callback.
 
         Parameters
         ----------
@@ -135,11 +135,11 @@ def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
             return
 
         self._ignore_prop_changed = True
-        widget.set_property(prop, key_to_prop(self[key]))
+        widget.set_property(prop, map_get(self[pref_key]))
         self._ignore_prop_changed = False
 
-    def prop_changed(widget, param):
-        """Summary
+    def prop_changed(widget, *args):
+        """On widget property changed.
 
         Parameters
         ----------
@@ -157,23 +157,23 @@ def bind_with_mapping(self, key, widget, prop, flags, key_to_prop, prop_to_key):
             return
 
         self._ignore_key_changed = True
-        self[key] = prop_to_key(widget.get_property(prop))
+        self[pref_key] = map_set(widget.get_property(prop))
         self._ignore_key_changed = False
 
     if not (flags & (Gio.SettingsBindFlags.SET | Gio.SettingsBindFlags.GET)):  # ie Gio.SettingsBindFlags.DEFAULT
         flags |= Gio.SettingsBindFlags.SET | Gio.SettingsBindFlags.GET
 
     if flags & Gio.SettingsBindFlags.GET:
-        key_changed(self, key)
+        key_changed(self, pref_key)
 
         if not (flags & Gio.SettingsBindFlags.GET_NO_CHANGES):
-            self.connect("changed::" + key, key_changed)
+            self.connect("changed::" + pref_key, key_changed)
 
     if flags & Gio.SettingsBindFlags.SET:
         widget.connect("notify::" + prop, prop_changed)
 
     if not (flags & Gio.SettingsBindFlags.NO_SENSITIVITY):
-        self.bind_writable(key, widget, "sensitive", False)
+        self.bind_writable(pref_key, widget, "sensitive", False)
 
 
 Gio.Settings.bind_with_mapping = bind_with_mapping

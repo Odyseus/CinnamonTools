@@ -448,7 +448,7 @@ def display_message_dialog(widget, title, message, context="information"):
 
     dialog = Gtk.MessageDialog(transient_for=widget.get_toplevel(),
                                title=title,
-                               modal=True,
+                               flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                                message_type=message_type,
                                buttons=Gtk.ButtonsType.OK)
 

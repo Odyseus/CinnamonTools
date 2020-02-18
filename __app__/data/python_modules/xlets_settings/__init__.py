@@ -649,7 +649,7 @@ class MainApplication(Gtk.Application):
 
             settings = JSONSettingsHandler(  # noqa | JsonSettingsWidgets
                 filepath=os.path.join(config_path, item),
-                # notify_callback=self.notify_dbus,
+                notify_callback=self.notify_dbus,
                 xlet_meta=self._xlet_meta
             )
             settings.instance_id = instance_id
@@ -781,7 +781,7 @@ class MainApplication(Gtk.Application):
             if self.display_settings_handling:
                 menu_popup.append(
                     self.create_menu_item(text=_("Import settings from a file"),
-                                          callback=self.restore_settings)
+                                          callback=self.import_settings)
                 )
                 menu_popup.append(
                     self.create_menu_item(text=_("Export settings to a file"),
@@ -1202,8 +1202,8 @@ class MainApplication(Gtk.Application):
 
         dialog.destroy()
 
-    def restore_settings(self, *args):
-        """Restore xlet settings.
+    def import_settings(self, *args):
+        """Import xlet settings.
 
         Parameters
         ----------

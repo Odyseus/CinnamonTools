@@ -263,8 +263,8 @@ def list_edit_factory(col_def, xlet_settings):
     return Widget(**kwargs)
 
 
-class List(SettingsWidget):
-    """Summary
+class TreeList(SettingsWidget):
+    """Tree list widget.
 
     Attributes
     ----------
@@ -317,7 +317,7 @@ class List(SettingsWidget):
         self._tooltips_storage = {}
 
         self._allow_edition = not self._immutable or \
-            (isinstance(self._immutable, dict) and self._immutable.get("allow_edition", True))
+            (isinstance(self._immutable, dict) and self._immutable.get("allow-edition", True))
 
         self._add_button = None
         self._remove_button = None
@@ -344,8 +344,7 @@ class List(SettingsWidget):
 
         types = []
 
-        for i in range(len(columns)):
-            column_def = columns[i]
+        for i, column_def in enumerate(columns):
             types.append(LIST_VARIABLE_TYPE_MAP[column_def["type"]])
 
             if column_def.get("tooltip"):
@@ -501,7 +500,7 @@ class List(SettingsWidget):
                     if isinstance(app_info, Gio.DesktopAppInfo):
                         rend.set_property("text", app_info.get_display_name())
                     else:
-                        rend.set_property("text", _("No app chosen"))
+                        rend.set_property("text", _("Invalid app") if value else _("No app chosen"))
 
                 column.set_cell_data_func(renderer, set_app_func, {
                     "col_index": i
@@ -878,6 +877,7 @@ class List(SettingsWidget):
         if confirm_removal:
             dialog = Gtk.MessageDialog(transient_for=self.get_toplevel(),
                                        modal=True,
+                                       flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                                        message_type=Gtk.MessageType.WARNING,
                                        buttons=Gtk.ButtonsType.YES_NO)
 
@@ -1179,7 +1179,7 @@ class List(SettingsWidget):
                     isinstance(self._main_app.window, Gtk.ApplicationWindow):
                 self._main_app.window.emit("destroy")
 
-    def _open_add_edit_dialog(self, info=None):
+    def _open_add_edit_dialog(self, tree_row=None):
         """Summary
 
         Parameters
@@ -1192,7 +1192,7 @@ class List(SettingsWidget):
         TYPE
             Description
         """
-        if info is None:
+        if tree_row is None:
             title = _("Add new entry")
         else:
             title = _("Edit entry")
@@ -1226,19 +1226,19 @@ class List(SettingsWidget):
         widgets = []
         last_widget_pos = 0
 
-        for i in range(len(self._columns)):
+        for i, col_def in enumerate(self._columns):
             if len(widgets) != 0:
                 content.add(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
 
             settings_box = Gtk.ListBox()
             settings_box.set_selection_mode(Gtk.SelectionMode.NONE)
 
-            widget = list_edit_factory(self._columns[i], self.settings)
+            widget = list_edit_factory(col_def, self.settings)
             widget.set_border_width(5)
 
             if isinstance(self._immutable, dict):
-                widget.set_sensitive(self._columns[i]["id"]
-                                     not in self._immutable.get("read_only_keys", []))
+                widget.set_sensitive(col_def["id"]
+                                     not in self._immutable.get("read-only-keys", []))
 
             if isinstance(widget, (Switch, ColorChooser)):
                 settings_box.connect("row-activated", widget.clicked)
@@ -1258,10 +1258,10 @@ class List(SettingsWidget):
             content.attach(settings_box, 0, i, 1, 1)
             settings_box.add(widget)
 
-            if info is not None and info[i] is not None:
-                widget.set_widget_value(info[i])
-            elif "default" in self._columns[i]:
-                widget.set_widget_value(self._columns[i]["default"])
+            if tree_row is not None and tree_row[i] is not None:
+                widget.set_widget_value(tree_row[i])
+            elif "default" in col_def:
+                widget.set_widget_value(col_def["default"])
 
             last_widget_pos += 1
 
