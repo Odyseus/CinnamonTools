@@ -87,7 +87,7 @@ GENERAL_TAB = {
             "widget-kwargs": {
                 "columns": IDS_COLUMN,
                 "immutable": {
-                    "allow_edition": False
+                    "allow-edition": False
                 }
             }
         }]
