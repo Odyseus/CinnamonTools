@@ -1,7 +1,10 @@
+//{{IMPORTER}}
+
 let customSettingsFrameworkExamples = null,
     XletMeta = null,
     G,
     D,
+    $,
     CustomFileUtils,
     DesktopNotificationsUtils,
     Settings;
@@ -105,21 +108,11 @@ function init(aXletMeta) {
      * attempting to initialize the settings outside init() fails because the stupid
      * extension isn't loaded yet. ¬¬
      */
-
-    // Mark for deletion on EOL. Cinnamon 3.6.x+
-    if (typeof require === "function") {
-        G = require("./globalUtils.js");
-        D = require("./debugManager.js");
-        $ = require("./utils.js");
-        CustomFileUtils = require("./customFileUtils.js");
-        DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-    } else {
-        G = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-        D = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
-        $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
-        CustomFileUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].customFileUtils;
-        DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
-    }
+    G = __import("globalUtils.js");
+    D = __import("debugManager.js");
+    $ = __import("utils.js");
+    CustomFileUtils = __import("customFileUtils.js");
+    DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
 
     Settings = $.Settings;
 

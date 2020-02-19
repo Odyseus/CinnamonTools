@@ -1,17 +1,8 @@
-let $,
-    GlobalUtils,
-    DebugManager;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    $ = require("./utils.js");
-    GlobalUtils = require("./globalUtils.js");
-    DebugManager = require("./debugManager.js");
-} else {
-    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-}
+const $ = __import("utils.js");
+const GlobalUtils = __import("globalUtils.js");
+const DebugManager = __import("debugManager.js");
 
 const {
     _,

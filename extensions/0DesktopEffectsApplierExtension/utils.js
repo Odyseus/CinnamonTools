@@ -1,8 +1,6 @@
-let XletMeta,
-    Constants,
-    DesktopNotificationsUtils,
-    DebugManager,
-    GlobalUtils;
+//{{IMPORTER}}
+
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -11,18 +9,9 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    DebugManager = require("./debugManager.js");
-    Constants = require("./constants.js");
-    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-} else {
-    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-    DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
-    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-    DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
-}
+const GlobalUtils = __import("globalUtils.js");
+const DebugManager = __import("debugManager.js");
+const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
 
 const {
     _,
@@ -58,7 +47,6 @@ var Notification = new CustomNotification({
         }
     }
 });
-
 
 /* exported Notification
  */

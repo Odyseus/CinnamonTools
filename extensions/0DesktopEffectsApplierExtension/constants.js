@@ -1,14 +1,6 @@
-let GlobalUtils,
-    XletsSettingsUtils;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    XletsSettingsUtils = require("./xletsSettingsUtils.js");
-} else {
-    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-    XletsSettingsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].xletsSettingsUtils;
-}
+const XletsSettingsUtils = __import("xletsSettingsUtils.js");
 
 var BOUND_SETTINGS_ARRAY = [
     "pref_desktop_file_generated",

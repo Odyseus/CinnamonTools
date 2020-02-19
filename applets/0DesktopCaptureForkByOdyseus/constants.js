@@ -1,5 +1,6 @@
-let GlobalUtils,
-    dummy;
+//{{IMPORTER}}
+
+let dummy;
 
 // Mark for deletion on EOL. Cinnamon 4.0.x
 // Remove polyfill usage.
@@ -9,12 +10,7 @@ if (typeof require === "function") {
     dummy = imports.ui.appletManager.applets["{{UUID}}"]["lib"].String_padStart;
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-} else {
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-}
+const GlobalUtils = __import("globalUtils.js");
 
 const {
     _

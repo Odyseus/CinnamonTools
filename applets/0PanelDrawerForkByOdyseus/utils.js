@@ -1,7 +1,6 @@
-let XletMeta,
-    GlobalUtils,
-    DesktopNotificationsUtils,
-    DebugManager;
+//{{IMPORTER}}
+
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -10,16 +9,9 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-    DebugManager = require("./debugManager.js");
-} else {
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
-    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-}
+const GlobalUtils = __import("globalUtils.js");
+const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
+const DebugManager = __import("debugManager.js");
 
 const {
     ui: {

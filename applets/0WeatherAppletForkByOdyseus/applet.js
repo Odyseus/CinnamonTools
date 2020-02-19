@@ -8,35 +8,24 @@
  * fed up with all the nonsense that happen in Cinnamon, so why the hell bother!
  */
 
-let $,
-    Constants,
-    GlobalConstants,
-    GlobalUtils,
-    DebugManager,
-    CustomTooltips,
-    Qty,
-    DesktopNotificationsUtils;
+//{{IMPORTER}}
+
+let Qty;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof require === "function") {
-    $ = require("./utils.js");
-    GlobalConstants = require("./globalConstants.js");
-    GlobalUtils = require("./globalUtils.js");
-    Constants = require("./constants.js");
-    DebugManager = require("./debugManager.js");
-    CustomTooltips = require("./customTooltips.js");
     Qty = require("./lib/quantities.js").Qty;
-    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
 } else {
-    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
-    GlobalConstants = imports.ui.appletManager.applets["{{UUID}}"].globalConstants;
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
-    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
     Qty = imports.ui.appletManager.applets["{{UUID}}"].lib.quantities.Qty;
-    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
 }
+
+const $ = __import("utils.js");
+const GlobalConstants = __import("globalConstants.js");
+const GlobalUtils = __import("globalUtils.js");
+const Constants = __import("constants.js");
+const DebugManager = __import("debugManager.js");
+const CustomTooltips = __import("customTooltips.js");
+const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
 
 const {
     gi: {

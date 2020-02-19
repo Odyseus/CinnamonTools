@@ -1,6 +1,6 @@
-let XletMeta,
-    GlobalUtils,
-    XletsSettingsUtils;
+//{{IMPORTER}}
+
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -9,14 +9,8 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    XletsSettingsUtils = require("./xletsSettingsUtils.js");
-} else {
-    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-    XletsSettingsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].xletsSettingsUtils;
-}
+const GlobalUtils = __import("globalUtils.js");
+const XletsSettingsUtils = __import("xletsSettingsUtils.js");
 
 const {
     _

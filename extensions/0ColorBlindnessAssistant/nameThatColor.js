@@ -1,14 +1,7 @@
-let GlobalUtils,
-    Constants;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    Constants = require("./constants.js");
-} else {
-    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-}
+const GlobalUtils = __import("globalUtils.js");
+const Constants = __import("constants.js");
 
 const {
     ELLIPSIS

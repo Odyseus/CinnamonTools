@@ -1,20 +1,9 @@
-let GlobalUtils,
-    DebugManager,
-    DesktopNotificationsUtils,
-    $;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    DebugManager = require("./debugManager.js");
-    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-    $ = require("./utils.js");
-} else {
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
-    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
-}
+const GlobalUtils = __import("globalUtils.js");
+const DebugManager = __import("debugManager.js");
+const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
+const $ = __import("utils.js");
 
 const {
     gi: {

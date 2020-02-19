@@ -1,8 +1,6 @@
-let XletMeta,
-    Constants,
-    GlobalUtils,
-    DebugManager,
-    DesktopNotificationsUtils;
+//{{IMPORTER}}
+
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -11,18 +9,10 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    Constants = require("./constants.js");
-    GlobalUtils = require("./globalUtils.js");
-    DebugManager = require("./debugManager.js");
-    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-} else {
-    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
-}
+const Constants = __import("constants.js");
+const GlobalUtils = __import("globalUtils.js");
+const DebugManager = __import("debugManager.js");
+const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
 
 const {
     gi: {
@@ -287,8 +277,8 @@ Provider.prototype = {
         this._text = "";
     },
 
-    setRefreshRate: function (aRefreshRate) {
-       this._refresh_rate = aRefreshRate;
+    setRefreshRate: function(aRefreshRate) {
+        this._refresh_rate = aRefreshRate;
     },
 
     get id() {

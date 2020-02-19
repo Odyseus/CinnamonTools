@@ -1,23 +1,10 @@
-let $,
-    GlobalUtils,
-    Constants,
-    DebugManager,
-    NameThatColor;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    $ = require("./utils.js");
-    GlobalUtils = require("./globalUtils.js");
-    Constants = require("./constants.js");
-    DebugManager = require("./debugManager.js");
-    NameThatColor = require("./nameThatColor.js");
-} else {
-    $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
-    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-    DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
-    NameThatColor = imports.ui.extensionSystem.extensions["{{UUID}}"].nameThatColor;
-}
+const $ = __import("utils.js");
+const GlobalUtils = __import("globalUtils.js");
+const Constants = __import("constants.js");
+const DebugManager = __import("debugManager.js");
+const NameThatColor = __import("nameThatColor.js");
 
 const {
     gi: {
@@ -39,8 +26,7 @@ const {
 
 const {
     ColorInspectorInfoBannerLabels,
-    ELLIPSIS,
-    Settings
+    ELLIPSIS
 } = Constants;
 
 const {

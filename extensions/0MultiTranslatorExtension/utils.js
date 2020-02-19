@@ -1,9 +1,6 @@
-let XletMeta,
-    GlobalUtils,
-    DebugManager,
-    Constants,
-    SpawnUtils,
-    DesktopNotificationsUtils;
+//{{IMPORTER}}
+
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -12,20 +9,11 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    DebugManager = require("./debugManager.js");
-    Constants = require("./constants.js");
-    SpawnUtils = require("./spawnUtils.js");
-    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-} else {
-    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-    DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
-    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-    SpawnUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].spawnUtils;
-    DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
-}
+const GlobalUtils = __import("globalUtils.js");
+const DebugManager = __import("debugManager.js");
+const Constants = __import("constants.js");
+const SpawnUtils = __import("spawnUtils.js");
+const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
 
 const {
     gi: {

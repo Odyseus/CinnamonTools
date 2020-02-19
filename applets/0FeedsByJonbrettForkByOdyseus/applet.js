@@ -1,29 +1,11 @@
-let GlobalUtils,
-    Constants,
-    $,
-    DebugManager,
-    DesktopNotificationsUtils,
-    CustomDialogs,
-    CustomTooltips;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    Constants = require("./constants.js");
-    $ = require("./utils.js");
-    DebugManager = require("./debugManager.js");
-    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-    CustomDialogs = require("./customDialogs.js");
-    CustomTooltips = require("./customTooltips.js");
-} else {
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
-    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
-    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
-    CustomDialogs = imports.ui.appletManager.applets["{{UUID}}"].customDialogs;
-    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
-}
+const GlobalUtils = __import("globalUtils.js");
+const $ = __import("utils.js");
+const DebugManager = __import("debugManager.js");
+const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
+const CustomDialogs = __import("customDialogs.js");
+const CustomTooltips = __import("customTooltips.js");
 
 const {
     gi: {

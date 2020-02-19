@@ -1,20 +1,10 @@
-let Constants,
-    GlobalUtils,
-    DebugManager,
-    CustomTooltips;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    Constants = require("./constants.js");
-    DebugManager = require("./debugManager.js");
-    GlobalUtils = require("./globalUtils.js");
-    CustomTooltips = require("./customTooltips.js");
-} else {
-    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
-    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
-}
+const Constants = __import("constants.js");
+const DebugManager = __import("debugManager.js");
+const GlobalUtils = __import("globalUtils.js");
+const CustomTooltips = __import("customTooltips.js");
+
 const {
     gi: {
         Clutter,

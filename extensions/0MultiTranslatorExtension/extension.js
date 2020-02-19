@@ -1,3 +1,5 @@
+//{{IMPORTER}}
+
 let translator = null,
     XletMeta,
     C,
@@ -1392,26 +1394,14 @@ function init(aXletMeta) {
      * extension isn't loaded yet. ¬¬
      */
 
-    // Mark for deletion on EOL. Cinnamon 3.6.x+
-    if (typeof require === "function") {
-        G = require("./globalUtils.js");
-        D = require("./debugManager.js");
-        C = require("./constants.js");
-        UI = require("./ui.js");
-        SpawnUtils = require("./spawnUtils.js");
-        CustomFileUtils = require("./customFileUtils.js");
-        $ = require("./utils.js");
-        DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-    } else {
-        G = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-        D = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
-        C = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-        UI = imports.ui.extensionSystem.extensions["{{UUID}}"].ui;
-        SpawnUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].spawnUtils;
-        CustomFileUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].customFileUtils;
-        $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
-        DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
-    }
+    G = __import("globalUtils.js");
+    D = __import("debugManager.js");
+    C = __import("constants.js");
+    UI = __import("ui.js");
+    SpawnUtils = __import("spawnUtils.js");
+    CustomFileUtils = __import("customFileUtils.js");
+    $ = __import("utils.js");
+    DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
 
     _ = G._;
     Settings = C.Settings;

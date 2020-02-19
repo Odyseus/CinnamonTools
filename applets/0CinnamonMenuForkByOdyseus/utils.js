@@ -1,8 +1,6 @@
-let XletMeta,
-    GlobalUtils,
-    Constants,
-    DebugManager,
-    CustomTooltips;
+//{{IMPORTER}}
+
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -11,18 +9,10 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    Constants = require("./constants.js");
-    DebugManager = require("./debugManager.js");
-    CustomTooltips = require("./customTooltips.js");
-} else {
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
-    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
-}
+const GlobalUtils = __import("globalUtils.js");
+const Constants = __import("constants.js");
+const DebugManager = __import("debugManager.js");
+const CustomTooltips = __import("customTooltips.js");
 
 const {
     gi: {

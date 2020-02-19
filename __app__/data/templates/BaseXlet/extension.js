@@ -1,12 +1,8 @@
-let XletMeta = null,
-    GlobalUtils;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-} else {
-    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-}
+let XletMeta = null;
+
+const GlobalUtils = __import("globalUtils.js");
 
 const {
     _

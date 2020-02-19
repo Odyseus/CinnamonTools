@@ -1,11 +1,6 @@
-let DebugManager;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    DebugManager = require("./debugManager.js");
-} else {
-    DebugManager = imports.ui.$$XLET_MANAGER$$.$$XLET_TYPE$$s["{{UUID}}"].debugManager;
-}
+const DebugManager = __import("debugManager.js");
 
 var Debugger = new DebugManager.DebugManager();
 

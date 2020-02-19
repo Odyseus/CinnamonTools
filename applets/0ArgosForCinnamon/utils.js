@@ -1,10 +1,6 @@
-let XletMeta,
-    Emojis,
-    Constants,
-    GlobalUtils,
-    DebugManager,
-    CustomTooltips,
-    DesktopNotificationsUtils;
+//{{IMPORTER}}
+
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -13,22 +9,12 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    Emojis = require("./emojis.js").Emojis;
-    Constants = require("./constants.js");
-    DebugManager = require("./debugManager.js");
-    GlobalUtils = require("./globalUtils.js");
-    CustomTooltips = require("./customTooltips.js");
-    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-} else {
-    Emojis = imports.ui.appletManager.applets["{{UUID}}"].emojis.Emojis;
-    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
-    DebugManager = imports.ui.appletManager.applets["{{UUID}}"].debugManager;
-    GlobalUtils = imports.ui.appletManager.applets["{{UUID}}"].globalUtils;
-    CustomTooltips = imports.ui.appletManager.applets["{{UUID}}"].customTooltips;
-    DesktopNotificationsUtils = imports.ui.appletManager.applets["{{UUID}}"].desktopNotificationsUtils;
-}
+const Emojis = __import("emojis.js").Emojis;
+const Constants = __import("constants.js");
+const DebugManager = __import("debugManager.js");
+const GlobalUtils = __import("globalUtils.js");
+const CustomTooltips = __import("customTooltips.js");
+const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
 
 const {
     gi: {

@@ -1,8 +1,6 @@
-let XletMeta,
-    GlobalUtils,
-    DebugManager,
-    XletsSettingsUtils,
-    DesktopNotificationsUtils;
+//{{IMPORTER}}
+
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -11,18 +9,10 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    GlobalUtils = require("./globalUtils.js");
-    DebugManager = require("./debugManager.js");
-    DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-    XletsSettingsUtils = require("./xletsSettingsUtils.js");
-} else {
-    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-    DebugManager = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
-    DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
-    XletsSettingsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].xletsSettingsUtils;
-}
+let GlobalUtils = __import("globalUtils.js");
+let DebugManager = __import("debugManager.js");
+let DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
+let XletsSettingsUtils = __import("xletsSettingsUtils.js");
 
 const {
     wrapObjectMethods

@@ -1,11 +1,6 @@
-let $;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    $ = require("./utils.js");
-} else {
-    $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
-}
+const $ = __import("utils.js");
 
 function Translator() {
     this._init.apply(this, arguments);

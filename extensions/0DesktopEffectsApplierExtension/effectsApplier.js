@@ -1,5 +1,6 @@
-let XletMeta,
-    Constants;
+//{{IMPORTER}}
+
+let XletMeta;
 
 // Mark for deletion on EOL. Cinnamon 3.6.x+
 if (typeof __meta === "object") {
@@ -8,12 +9,7 @@ if (typeof __meta === "object") {
     XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
 }
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    Constants = require("./constants.js");
-} else {
-    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-}
+const Constants = __import("constants.js");
 
 const {
     DEFAULT_SHADER_FILE_RE,

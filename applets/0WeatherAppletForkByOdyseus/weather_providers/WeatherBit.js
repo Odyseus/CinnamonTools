@@ -1,14 +1,7 @@
-let $,
-    Constants;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    $ = require("./utils.js");
-    Constants = require("./constants.js");
-} else {
-    $ = imports.ui.appletManager.applets["{{UUID}}"].utils;
-    Constants = imports.ui.appletManager.applets["{{UUID}}"].constants;
-}
+const $ = __import("utils.js");
+const Constants = __import("constants.js");
 
 const {
     misc: {

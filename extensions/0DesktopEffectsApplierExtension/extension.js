@@ -1,3 +1,5 @@
+//{{IMPORTER}}
+
 let desktopEffects = null;
 
 let XletMeta,
@@ -645,24 +647,13 @@ DesktopEffectsApplier.prototype = {
 function init(aXletMeta) {
     XletMeta = aXletMeta;
 
-    // Mark for deletion on EOL. Cinnamon 3.6.x+
-    if (typeof require === "function") {
-        C = require("./constants.js");
-        G = require("./globalUtils.js");
-        D = require("./debugManager.js");
-        CustomFileUtils = require("./customFileUtils.js");
-        $ = require("./utils.js");
-        DesktopNotificationsUtils = require("./desktopNotificationsUtils.js");
-        EffectsApplier = require("./effectsApplier.js");
-    } else {
-        C = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-        G = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-        D = imports.ui.extensionSystem.extensions["{{UUID}}"].debugManager;
-        CustomFileUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].customFileUtils;
-        $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
-        DesktopNotificationsUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].desktopNotificationsUtils;
-        EffectsApplier = imports.ui.extensionSystem.extensions["{{UUID}}"].effectsApplier;
-    }
+    C = __import("constants.js");
+    G = __import("globalUtils.js");
+    D = __import("debugManager.js");
+    CustomFileUtils = __import("customFileUtils.js");
+    $ = __import("utils.js");
+    DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
+    EffectsApplier = __import("effectsApplier.js");
 
     _ = G._;
     Settings = C.Settings;

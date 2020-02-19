@@ -1,17 +1,8 @@
-let $,
-    GlobalUtils,
-    Constants;
+//{{IMPORTER}}
 
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof require === "function") {
-    $ = require("./utils.js");
-    GlobalUtils = require("./globalUtils.js");
-    Constants = require("./constants.js");
-} else {
-    $ = imports.ui.extensionSystem.extensions["{{UUID}}"].utils;
-    GlobalUtils = imports.ui.extensionSystem.extensions["{{UUID}}"].globalUtils;
-    Constants = imports.ui.extensionSystem.extensions["{{UUID}}"].constants;
-}
+const $ = __import("utils.js");
+const GlobalUtils = __import("globalUtils.js");
+const Constants = __import("constants.js");
 
 const Main = imports.ui.main;
 
