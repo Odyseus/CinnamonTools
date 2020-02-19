@@ -205,7 +205,7 @@ function generateDesktopFile(aParams) {
 
     saveToFileAsync(data, desktopFile, () => {
         if (FileUtils.hasOwnProperty("changeModeGFile")) {
-            FileUtils.changeModeGFile(desktopFile.get_path(), 755);
+            FileUtils.changeModeGFile(desktopFile, 755);
         } else {
             Util.spawnCommandLine('chmod +x "' + desktopFile.get_path() + '"');
         }
