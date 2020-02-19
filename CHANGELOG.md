@@ -4,6 +4,67 @@
 
 ***
 
+**Date:** Wed, 19 Feb 2020 05:18:08 -0300<br/>
+**Commit:** [cc24c41](https://gitlab.com/Odyseus/CinnamonTools/commit/cc24c41)<br/>
+**Author:** Odyseus<br/>
+
+#### All xlets
+
+- Implemented an importer function. The implementation of this function has several advantages.
+    1. Cleaner local imports declarations.
+    2. Exposure of unused variables (because JavaScript linters are the dumbest of them all).
+    3. And when it's time for switching to use `require()`, a simple mass substitution will get the job done in no time.ime.
+- Cleaned unused declared variables.
+
+***
+
+**Date:** Wed, 19 Feb 2020 05:17:34 -0300<br/>
+**Commit:** [6a9647b](https://gitlab.com/Odyseus/CinnamonTools/commit/6a9647b)<br/>
+**Author:** Odyseus<br/>
+
+#### JavaScript modules
+
+- customFileUtils.js: Fixed wrong argument passed to the `FileUtils.changeModeGFile()` function. It receives a file object as a first argument, not a file path.
+
+***
+
+**Date:** Wed, 19 Feb 2020 05:17:18 -0300<br/>
+**Commit:** [a56f84b](https://gitlab.com/Odyseus/CinnamonTools/commit/a56f84b)<br/>
+**Author:** Odyseus<br/>
+
+#### Python modules
+
+- Updated docstrings.
+- Moved from the `app_utils.py` modules all variables storing static data into a new module called `app_data.py`.
+- app_utils.py:
+    - Added missing list of ignored patterns for the `--extra-files` option.
+    - Implemented a new placeholder for when the build xlets task is in the strings substitution phase that will allow me to insert an *import module function* (that I named __import) into any JavaScript file.
+
+***
+
+**Date:** Wed, 19 Feb 2020 05:16:00 -0300<br/>
+**Commit:** [aa93e49](https://gitlab.com/Odyseus/CinnamonTools/commit/aa93e49)<br/>
+**Author:** Odyseus<br/>
+
+#### Xlets settings framework
+
+- Struck from my thoughts the use of the `notify_dbus` function.
+- Tweaked some docstrings.
+
+***
+
+**Date:** Tue, 18 Feb 2020 05:06:21 -0300<br/>
+**Commit:** [34f05b3](https://gitlab.com/Odyseus/CinnamonTools/commit/34f05b3)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated submodules.
+- Updated CHANGELOG.md.
+- Updated manual page.
+
+***
+
 **Date:** Tue, 18 Feb 2020 05:04:00 -0300<br/>
 **Commit:** [c20a2d7](https://gitlab.com/Odyseus/CinnamonTools/commit/c20a2d7)<br/>
 **Author:** Odyseus<br/>

@@ -24,12 +24,14 @@
     "typed": true,
     "worker": true,
     "exported": {
+        "EXPORTED_SYMBOLS": true,
         "main": true,
         "init": true,
         "disable": true,
         "enable": true
     },
     "globals": {
+        "__import": true,
         "ChromeUtils": true,
         "require": true,
         "__meta": true,

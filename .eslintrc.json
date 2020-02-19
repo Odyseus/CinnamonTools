@@ -34,6 +34,7 @@
         "ngettext": false,
         "send_results": false,
         "get_locale_string": false,
+        "__import": false,
         "__dirname": false,
         "__filename": false,
         "__meta": false
