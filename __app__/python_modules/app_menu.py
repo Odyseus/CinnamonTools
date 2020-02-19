@@ -15,10 +15,10 @@ class CLIMenu():
 
     Attributes
     ----------
-    logger : object
-        See :any:`LogSystem`.
-    main_menu : object
-        Main menu. See :any:`menu.Menu`.
+    logger : LogSystem
+        The logger.
+    main_menu : Menu
+        Main menu.
     """
 
     def __init__(self, logger=None):
@@ -26,8 +26,8 @@ class CLIMenu():
 
         Parameters
         ----------
-        logger : object
-            See :any:`LogSystem`.
+        logger : LogSystem
+            The logger.
         """
         self.logger = logger
 

@@ -30,7 +30,7 @@ import time
 
 from datetime import datetime
 
-from . import app_utils
+from . import app_data
 from .python_utils import polib
 from .python_utils.ansi_colors import Ansi
 
@@ -127,7 +127,7 @@ HTML_DOC = """<!DOCTYPE html>
 </body>
 </html>
 """ % (datetime.today().year,
-       app_utils.URLS["repo"])
+       app_data.URLS["repo"])
 
 BOXED_CONTAINER = """<div class="container boxed my-3 py-3">
 {0}
@@ -321,9 +321,9 @@ def validate_po_file(pofile_path, lang_name, xlet_meta, xlet_slug):
         po_file.metadata["Language"] = po_file.metadata["Language"].replace("-", "_")
 
     # Add the Report-Msgid-Bugs- field to the header.
-    if "Report-Msgid-Bugs-To" not in po_file.metadata or po_file.metadata["Report-Msgid-Bugs-To"] != app_utils.URLS["repo"]:
+    if "Report-Msgid-Bugs-To" not in po_file.metadata or po_file.metadata["Report-Msgid-Bugs-To"] != app_data.URLS["repo"]:
         do_save = True
-        po_file.metadata["Report-Msgid-Bugs-To"] = app_utils.URLS["repo"]
+        po_file.metadata["Report-Msgid-Bugs-To"] = app_data.URLS["repo"]
 
     # Add the Language-Team field to the header to STFU all msgfmt warnings.
     if "Language-Team" not in po_file.metadata or po_file.metadata["Language-Team"] == "":

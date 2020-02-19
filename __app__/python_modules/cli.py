@@ -6,7 +6,7 @@
 Attributes
 ----------
 docopt_doc : str
-    Used to store/define the docstring that will be passed to docopt as the "doc" argument.
+    Used to store/define the docstring that will be passed to ``docopt`` as the ``doc`` argument.
 """
 
 import os
@@ -129,16 +129,16 @@ Options:
 class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
     """Command line tool.
 
-    It handles the arguments parsed by the docopt module.
+    It handles the arguments parsed by the ``docopt`` module.
 
     Attributes
     ----------
     a : dict
-        Where docopt_args is stored.
+        Where ``docopt_args`` is stored.
     action : method
         Set the method that will be executed when calling CommandLineInterface.run().
     dev_args_order : list
-        List used as a gude to execute functions in the order they need to.
+        List used as a guide to execute functions in the order they need to.
     func_names : list
         A list of function names that will be used to execute those functions
         in the order they were defined (passed as arguments).
@@ -146,8 +146,8 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         Which action to perform on a repository.
     xlets_display_names : list
         The complete or partial list of xlets as returned by :any:`get_xlets_display_names`.
-    xlets_helper : object
-        See :any:`app_utils.XletsHelperCore`.
+    xlets_helper : XletsHelperCore
+        An instantiated ``XletsHelperCore`` instance.
     """
     action = None
     func_names = []
@@ -168,7 +168,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
         Parameters
         ----------
         docopt_args : dict
-            The dictionary of arguments as returned by docopt parser.
+            The dictionary of arguments as returned by ``docopt`` parser.
         """
         self.a = docopt_args
         self._cli_header_blacklist = [

@@ -4,25 +4,13 @@
 
 Attributes
 ----------
-PATHS : dict
-    Paths storage.
 root_folder : str
     The main folder containing the application. All commands must be executed from this location
     without exceptions.
-SUPPORTED_CINNAMON_VERSION_MAX : float
-    Maximum Cinnamon version number.
-SUPPORTED_CINNAMON_VERSION_MIN : float
-    Minimum Cinnamon version number.
-URLS : dict
-    URLs storage.
-validate_options_1_2 : function
+validate_options_1_2 : method
     Function to validate numeric input.
-validate_options_1_to_5 : function
+validate_options_1_to_5 : method
     Function to validate numeric input.
-XLET_META : dict
-    Xlet meta type.
-XLET_SYSTEM : dict
-    Xlet system type.
 """
 import json
 import os
@@ -43,194 +31,13 @@ from .python_utils.ansi_colors import Ansi
 from .python_utils.simple_validators import generate_numeral_options_validator
 from .python_utils.simple_validators import validate_output_path
 
+from . import app_data
 
 validate_options_1_2 = generate_numeral_options_validator(2)
 validate_options_1_to_5 = generate_numeral_options_validator(5)
 
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
     os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
-
-SUPPORTED_CINNAMON_VERSION_MIN = 3.0
-
-SUPPORTED_CINNAMON_VERSION_MAX = 7.0
-
-URLS = {
-    "repo": "https://gitlab.com/Odyseus/CinnamonTools",
-    "repo_pages": "https://odyseus.gitlab.io/CinnamonTools",
-    "repo_docs": "https://odyseus.gitlab.io/cinnamon_tools_docs"
-}
-
-PATHS = {
-    "xlets_install_location": file_utils.expand_path(os.path.join("~", ".local", "share", "cinnamon")),
-    "docs_sources": os.path.join(root_folder, "__app__", "cinnamon_tools_docs"),
-    "docs_built": os.path.join(root_folder, "__app__", "cinnamon_tools_docs", "docs"),
-    "domain_storage_file": os.path.join(root_folder, "tmp", "domain_name"),
-    "theme_name_storage_file": os.path.join(root_folder, "tmp", "theme_name"),
-    "all_xlets_meta_file": os.path.join(root_folder, "tmp", "xlets_metadata.json"),
-    "theme_latest_build_data_file": os.path.join(root_folder, "tmp", "theme_latest_default_data.json"),
-    "xlets_latest_build_data_file": os.path.join(root_folder, "tmp", "xlets_latest_default_data.json")
-}
-
-XLET_SYSTEM = {
-    "applet": "appletManager",
-    "extension": "extensionSystem",
-}
-
-XLET_META = {
-    "applet": "appletMeta",
-    "extension": "extensionMeta",
-}
-
-_supported_cinnamon_theme_versions = [
-    "3.0",
-    "3.4",
-    "4.0",
-    "4.2",
-    "4.4"
-]
-
-_missing_theme_or_domain_name_msg = """**{capital}NameNotSet:**
-
-The command line option **--{lower}-name=<name>** should be used to define a {lower}
-name for use when building {types}.
-
-Or a file named **{lower}_name** should be created inside a folder named **tmp** at
-the root of the repository whose only content should be the desired {lower} name.
-
-The `--{lower}-name` command line option has precedence over the {lower} name found
-inside the **{lower}_name** file.
-"""
-
-_existent_xlet_destination_msg = """**Destination folder exists!!!**
-{path}
-
-Choosing to proceed will completely remove the existent folder.
-"""
-
-_not_specified_output_location = """**No output location specified!!!**
-
-Choose a location that you own.
-"""
-
-_xlet_dir_ignored_patterns = [
-    "__pycache__",
-    "__data__",
-    "*~",
-    "*.bak",
-    "*.pyc",
-    "z_*"
-]
-
-_xlet_extra_files_ignored_patterns = [
-    "*.js",
-    "*.py",
-    "*.xml",
-    "*.pot",
-    "*.json"
-]
-
-_extra_common_files = [{
-    "source_path": root_folder,
-    "file_name": "LICENSE.md",
-}, {
-    "source_path": os.path.join(root_folder, "__app__", "data", "python_scripts"),
-    "file_name": "helper.py",
-}, {
-    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "js"),
-    "destination_path": "assets/js",
-    "file_name": "localizations-handler.min.js",
-    "depends_on": "HELP.html",
-}, {
-    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
-    "destination_path": "assets/css",
-    "file_name": "bootstrap-tweaks.css",
-    "depends_on": "HELP.html",
-}, {
-    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
-    "destination_path": "assets/css",
-    "file_name": "flatly_bootstrap_theme.min.css",
-    "depends_on": "HELP.html",
-}]
-
-_common_help_assets = [{
-    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "js"),
-    "destination_path": "js",
-    "file_name": "localizations-handler.min.js"
-}, {
-    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
-    "destination_path": "css",
-    "file_name": "bootstrap-tweaks.css"
-}, {
-    "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
-    "destination_path": "css",
-    "file_name": "flatly_bootstrap_theme.min.css"
-}]
-
-_readme_list_item_template = "- [{xlet_name}](%s/_static/xlets_help_pages/{xlet_slug}/index.html)" % (
-    URLS["repo_docs"])
-
-_theme_build_data = """
-**Cinnamon version:**            {cinnamon_version}
-**Cinnamon font size:**          {cinnamon_font_size}
-**Cinnamon font family:**        {cinnamon_font_family}
-**Gtk3 version:**                {gtk3_version}
-**Gtk3 CSD shadow:**             {gtk3_csd_shadow}
-**Gtk3 CSD backdrop shadow:**    {gtk3_csd_backdrop_shadow}
-**Theme name:**                  {theme_name}
-**Output directory:**            {build_output}
-**Ask overwrite confirmation:**  {do_not_confirm}
-**Dry run:**                     {dry_run}
-"""
-
-_xlets_build_data = """
-**Domain name:**                 {domain_name}
-**Output directory:**            {build_output}
-**Install localizations:**       {install_localizations}
-**Extra files from:**            {extra_files}
-**Ask overwrite confirmation:**  {do_not_confirm}
-**Dry run:**                     {dry_run}
-"""
-
-_git_log_cmd_xlets = 'git log --grep={xlet_slug} --pretty=format:"\
-**Date:** %aD<br/>%n\
-**Commit:** [%h]({repo_url}/commit/%h)<br/>%n\
-**Author:** %aN<br/>%n%n%b%n***%n" \
--- {relative_path} {append_or_override} "{log_path}"'
-
-_changelog_header_xlets = """## {xlet_name} changelog
-
-**This change log is only valid for the version of the xlet hosted on [its original repository]({repo_url}).**
-
-***
-
-"""
-
-# Making 'git log' ignore changes for certain paths: https://stackoverflow.com/a/21079437
-_git_log_cmd_repo = 'git log --no-merges --grep="{all_xlets_slugs}" --invert-grep --pretty=format:"\
-**Date:** %aD<br/>%n\
-**Commit:** [%h]({repo_url}/commit/%h)<br/>%n\
-**Author:** %aN<br/>%n%n#### %B%n***%n" \
--- {relative_path} ":(exclude)themes" {append_or_override} "{log_path}"'
-
-_changelog_header_repo = """## Repository changelog
-
-**The changelogs for xlets can be found inside each xlet folder and/or in their help pages. The changelog for themes can be found inside the *themes* folder.**
-
-***
-
-"""
-
-_git_log_cmd_themes = 'git log --pretty=format:"\
-**Date:** %aD<br/>%n\
-**Commit:** [%h]({repo_url}/commit/%h)<br/>%n\
-**Author:** %aN<br/>%n%n%b%n***%n" \
--- {relative_path} ":(exclude)themes/CHANGELOG.md" {append_or_override} "{log_path}"'
-
-_changelog_header_themes = """## Themes changelog
-
-***
-
-"""
 
 
 class XletsHelperCore():
@@ -240,8 +47,8 @@ class XletsHelperCore():
     ----------
     all_xlets_meta : list
         All xlets meta data.
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     xlets_display_names : list
         The complete list of xlets as returned by :any:`get_xlets_display_names`.
     xlets_meta : dict
@@ -255,8 +62,8 @@ class XletsHelperCore():
         ----------
         xlets_display_names : list, optional
             The complete list of xlets as returned by :any:`get_xlets_display_names`.
-        logger : object
-            See :any:`LogSystem`.
+        logger : LogSystem
+            The logger.
         """
         self.logger = logger
         self.xlets_display_names = xlets_display_names
@@ -296,19 +103,19 @@ class XletsHelperCore():
             os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
             with open(log_path, "w") as f:
-                f.write(_changelog_header_xlets.format(
+                f.write(app_data.CHANGELOG_HEADER_XLETS.format(
                     xlet_name=xlet["name"],
-                    repo_url=URLS["repo"]
+                    repo_url=app_data.URLS["repo"]
                 ))
 
             # Generate change log from current repository paths.
             relative_path = "./" + xlet["type"] + "s/" + xlet["slug"]
-            cmd = _git_log_cmd_xlets.format(
+            cmd = app_data.GIT_LOG_CMD_XLETS.format(
                 xlet_slug=xlet["slug"],
                 relative_path=relative_path,
                 append_or_override=">>",
                 log_path=log_path,
-                repo_url=URLS["repo"]
+                repo_url=app_data.URLS["repo"]
             )
             po = cmd_utils.run_cmd(cmd, stdout=None, cwd=root_folder, shell=True)
 
@@ -344,21 +151,16 @@ class XletsHelperCore():
                 extra_paths = extra_settings.get("make_pot_additional_files")
 
                 if extra_paths is not None:
-                    additional_files_to_scan = [
-                        "--scan-additional-file=%s" % p for p in extra_paths]
+                    additional_files_to_scan.extend(
+                        ["--scan-additional-file=%s" % p for p in extra_paths])
 
             if file_utils.is_real_file(create_localized_help_file):
                 additional_files_to_scan.append(
                     "--scan-additional-file=../../__app__/python_modules/localized_help_creator.py")
 
             if file_utils.is_real_file(xlet_settings_file):
-                additional_files_to_scan = additional_files_to_scan + [
-                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/__init__.py",
-                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py",
-                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py",
-                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py",
-                    "--scan-additional-file=../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py"
-                ]
+                additional_files_to_scan.extend(
+                    app_data.SETTINGS_FRAMEWORK_ADDITIONAL_FILES_TO_SCAN)
 
             self.logger.info(
                 "**Updating localization template for %s...**" % xlet["name"])
@@ -420,7 +222,7 @@ class XletsHelperCore():
 
             if os.path.exists(script_file_path):
                 # Store list items for later creating the README.md file.
-                list_item = _readme_list_item_template.format(
+                list_item = app_data.README_LIST_ITEM_TEMPLATE.format(
                     xlet_name=xlet["name"],
                     xlet_slug=xlet["slug"]
                 )
@@ -441,8 +243,8 @@ class XletsHelperCore():
                 readme_file.write(template.format(
                     applets_help_pages="\n".join(sorted(applets_list_items)),
                     extensions_help_pages="\n".join(sorted(extensions_list_items)),
-                    repo_url=URLS["repo"],
-                    repo_docs_url=URLS["repo_docs"]
+                    repo_url=app_data.URLS["repo"],
+                    repo_docs_url=app_data.URLS["repo_docs"]
                 ))
 
     def generate_trans_stats(self):
@@ -488,13 +290,15 @@ class XletsHelperCore():
                 if xlet_po_list:
                     print_separator(self.logger)
                     self.logger.info("**%s %s**" % (xlet_type, xlet_slug), date=False)
-                    markdown_content = markdown_content + [
-                        "",
-                        "### %s %s" % (xlet_type, xlet_slug),
-                        "",
-                        "|LANGUAGE|UNTRANSLATED|",
-                        "|--------|------------|",
-                    ]
+                    markdown_content.extend(
+                        [
+                            "",
+                            "### %s %s" % (xlet_type, xlet_slug),
+                            "",
+                            "|LANGUAGE|UNTRANSLATED|",
+                            "|--------|------------|",
+                        ]
+                    )
 
                     for po_file_path in xlet_po_list:
                         po_base_name = os.path.basename(po_file_path)
@@ -645,8 +449,8 @@ class AllXletsMetadata():
     def __init__(self):
         """Initialization.
         """
-        if os.path.exists(PATHS["all_xlets_meta_file"]):
-            with open(PATHS["all_xlets_meta_file"], "r", encoding="UTF-8") as xlets_metadata:
+        if os.path.exists(app_data.PATHS["all_xlets_meta_file"]):
+            with open(app_data.PATHS["all_xlets_meta_file"], "r", encoding="UTF-8") as xlets_metadata:
                 self.meta_list = list(json.loads(xlets_metadata.read()))
         else:
             self.meta_list = generate_meta_file()
@@ -711,7 +515,7 @@ def generate_meta_file(return_data=True):
 
             xlet_meta.append(json_meta)
 
-    with open(PATHS["all_xlets_meta_file"], "w", encoding="UTF-8") as outfile:
+    with open(app_data.PATHS["all_xlets_meta_file"], "w", encoding="UTF-8") as outfile:
         json.dump(xlet_meta, outfile, indent=4, ensure_ascii=False)
 
     if return_data:
@@ -726,9 +530,9 @@ def supported_cinnamon_versions_range(start, stop):
 
     Parameters
     ----------
-    start : float/int
+    start : float, int
         The start version number.
-    stop : float/int
+    stop : float, int
         The end version number.
 
     Returns
@@ -780,8 +584,8 @@ def build_xlets(xlets_display_names=[],
         Path to a folder containing files that will be copied into an xlet folder at build time.
     dry_run : bool, optional
         See :any:`XletBuilder`.
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     from_menu : bool, optional
         Whether this function was called from the CLI menu or not.
 
@@ -792,14 +596,14 @@ def build_xlets(xlets_display_names=[],
     """
     # NOTE: o_m_l_v a.k.a. options_map_latest_used_values
     try:
-        with open(PATHS["xlets_latest_build_data_file"], "r", encoding="UTF-8") as f:
+        with open(app_data.PATHS["xlets_latest_build_data_file"], "r", encoding="UTF-8") as f:
             o_m_l_v = json.loads(f.read())
     except Exception:
         o_m_l_v = None
 
     if not domain_name:
         try:
-            with open(PATHS["domain_storage_file"], "r", encoding="UTF-8") as domain_file:
+            with open(app_data.PATHS["domain_storage_file"], "r", encoding="UTF-8") as domain_file:
                 domain_name = domain_file.read().strip()
         except Exception:
             domain_name = "domain.com"
@@ -834,9 +638,10 @@ def build_xlets(xlets_display_names=[],
     if interactive and o_m_l_v is not None and options_map_defaults != o_m_l_v:
         print_separator(logger)
         inform("Build data from a previous xlet build found at:")
-        logger.info("**%s**" % PATHS["xlets_latest_build_data_file"], date=False, to_file=False)
+        logger.info("**%s**" %
+                    app_data.PATHS["xlets_latest_build_data_file"], date=False, to_file=False)
         inform("Details:")
-        logger.info(_xlets_build_data.format(
+        logger.info(app_data.XLETS_BUILD_DATA.format(
             domain_name=o_m_l_v["domain_name"],
             build_output=o_m_l_v["build_output"],
             do_not_confirm=str(not options_map["do_not_confirm"][o_m_l_v["do_not_confirm"]]),
@@ -900,7 +705,7 @@ def build_xlets(xlets_display_names=[],
                 misc_utils.micro_to_milli(misc_utils.get_date_time("filename"))
             )
         elif answer == "2":
-            options_map_defaults["build_output"] = PATHS["xlets_install_location"]
+            options_map_defaults["build_output"] = app_data.PATHS["xlets_install_location"]
         else:
             # Ask for output directory.
             print_separator(logger)
@@ -941,7 +746,7 @@ def build_xlets(xlets_display_names=[],
 
         # NOTE: Do not ask to install localizations if the output location
         # is not Cinnamon's install location for xlets.
-        if options_map_defaults["build_output"].startswith(PATHS["xlets_install_location"]):
+        if options_map_defaults["build_output"].startswith(app_data.PATHS["xlets_install_location"]):
             # Ask for localizations installation.
             print_separator(logger)
             inform("Choose if you want to install xlets localizations.")
@@ -987,9 +792,9 @@ def build_xlets(xlets_display_names=[],
 
     # TODO: Implement a "domain name validator" function.
     if not options_map_defaults["domain_name"].strip():
-        logger.warning(_missing_theme_or_domain_name_msg.format(capital="Domain",
-                                                                lower="domain",
-                                                                types="xlets"), date=False, to_file=False)
+        logger.warning(app_data.MISSING_THEME_OR_DOMAIN_NAME_MSG.format(capital="Domain",
+                                                                        lower="domain",
+                                                                        types="xlets"), date=False, to_file=False)
         raise SystemExit(1)
 
     if options_map_defaults["build_output"].startswith(get_base_temp_folder()) or \
@@ -1059,12 +864,12 @@ def build_xlets(xlets_display_names=[],
             logger.log_dry_run("**Built xlets will be saved at:**\n%s" %
                                options_map_defaults["build_output"])
             logger.log_dry_run("**Xlets build data will be saved at:**\n%s" %
-                               PATHS["xlets_latest_build_data_file"])
+                               app_data.PATHS["xlets_latest_build_data_file"])
         else:
             print("")
             logger.info("**Built xlets saved at:**\n%s" % options_map_defaults["build_output"])
 
-            with open(PATHS["xlets_latest_build_data_file"], "w", encoding="UTF-8") as outfile:
+            with open(app_data.PATHS["xlets_latest_build_data_file"], "w", encoding="UTF-8") as outfile:
                 json.dump(options_map_defaults, outfile, indent=4, ensure_ascii=False)
 
 
@@ -1073,8 +878,8 @@ class XletBuilder():
 
     Attributes
     ----------
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     """
 
     def __init__(self, xlet_data,
@@ -1097,8 +902,8 @@ class XletBuilder():
             Path to a folder containing files that will be copied into an xlet folder at build time.
         dry_run : bool
             Log an action without actually performing it.
-        logger : object
-            See :any:`LogSystem`.
+        logger : LogSystem
+            The logger.
         """
         self._xlet_data = xlet_data
         self._do_not_confirm = do_not_confirm
@@ -1159,10 +964,13 @@ class XletBuilder():
             The list of replacements.
         """
         return [
+            # NOTE: KEEP ON TOP!!!
+            # app_data.IMPORT_JS_FUNCTION contains placeholders on its own too.
+            ("//{{IMPORTER}}", app_data.IMPORT_JS_FUNCTION),
             ("{{UUID}}", self._xlet_data.get("uuid", "")),
-            ("{{XLET_SYSTEM}}", XLET_SYSTEM[self._xlet_data.get("type", "")]),
-            ("{{XLET_META}}", XLET_META[self._xlet_data.get("type", "")]),
-            ("{{REPO_URL}}", URLS["repo"]),
+            ("{{XLET_SYSTEM}}", app_data.XLET_SYSTEM[self._xlet_data.get("type", "")]),
+            ("{{XLET_META}}", app_data.XLET_META[self._xlet_data.get("type", "")]),
+            ("{{REPO_URL}}", app_data.URLS["repo"]),
             ("{{XLET_TYPE}}", self._xlet_data.get("type", "")),
             # Yes, include the escaped double quotes to keep the template file without errors.
             # The replacement data will be a "Python boolean" (True or False).
@@ -1189,7 +997,7 @@ class XletBuilder():
 
         if file_utils.is_real_dir(self._xlet_data["destination"]):
             if not self._do_not_confirm:
-                self.logger.warning(_existent_xlet_destination_msg.format(
+                self.logger.warning(app_data.EXISTENT_XLET_DESTINATION_MSG.format(
                     path=self._xlet_data["destination"]
                 ), date=False, to_file=False)
 
@@ -1212,11 +1020,11 @@ class XletBuilder():
             self.logger.log_dry_run("**Will be copied into:** %s" % self._xlet_data["destination"])
         else:
             copytree(self._xlet_data["source"], self._xlet_data["destination"], symlinks=False,
-                     ignore=ignore_patterns(*_xlet_dir_ignored_patterns),
+                     ignore=ignore_patterns(*app_data.XLET_DIR_IGNORED_PATTERNS),
                      ignore_dangling_symlinks=True)
 
         self.logger.info("**Copying common xlet files...**")
-        for extra in _extra_common_files:
+        for extra in app_data.EXTRA_COMMON_FILES:
             src = os.path.join(extra["source_path"], extra["file_name"])
             dst = os.path.join(self._xlet_data["destination"], extra.get(
                 "destination_path", ""), extra["file_name"])
@@ -1322,15 +1130,15 @@ class XletBuilder():
 
             supported_versions = supported_cinnamon_versions_range(
                 self._min_cinnamon_version_override if self._min_cinnamon_version_override is not None
-                else SUPPORTED_CINNAMON_VERSION_MIN,
+                else app_data.SUPPORTED_CINNAMON_VERSION_MIN,
                 self._max_cinnamon_version_override if self._max_cinnamon_version_override is not None
-                else SUPPORTED_CINNAMON_VERSION_MAX
+                else app_data.SUPPORTED_CINNAMON_VERSION_MAX
             )
 
             xlet_metadata["cinnamon-version"] = supported_versions
             xlet_metadata["uuid"] = self._xlet_data["uuid"]
-            xlet_metadata["website"] = URLS["repo"]
-            xlet_metadata["url"] = URLS["repo"]
+            xlet_metadata["website"] = app_data.URLS["repo"]
+            xlet_metadata["url"] = app_data.URLS["repo"]
 
             with open(meta_path, "w", encoding="UTF-8") as new:
                 json.dump(xlet_metadata, new, indent=4, ensure_ascii=False)
@@ -1375,11 +1183,12 @@ class XletBuilder():
             self.logger.log_dry_run("**Files located at:**\n%s" % extra_files_for_xlet)
             self.logger.log_dry_run("**Destination:**\n%s" % self._xlet_data["destination"])
         else:
+            ignored_patterns = app_data.XLET_DIR_IGNORED_PATTERNS + app_data.XLET_EXTRA_FILES_IGNORED_PATTERNS
             file_utils.custom_copytree(extra_files_for_xlet,
                                        self._xlet_data["destination"],
                                        logger=self.logger,
                                        log_copied_file=True,
-                                       ignored_patterns=_xlet_dir_ignored_patterns,
+                                       ignored_patterns=ignored_patterns,
                                        overwrite=True)
 
     def _set_executable(self):
@@ -1417,7 +1226,7 @@ class XletBuilder():
         if not self._install_localizations:
             return
 
-        if not self._xlet_data["destination"].startswith(PATHS["xlets_install_location"]):
+        if not self._xlet_data["destination"].startswith(app_data.PATHS["xlets_install_location"]):
             self.logger.warning(
                 "**Localizations can only be installed when the xlets are built into Cinnamon's install location for xlets.**")
             return
@@ -1523,8 +1332,8 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
         Whether to ask for overwrite confirmation when a theme destination exists or not.
     dry_run : bool, optional
         See :any:`XletBuilder`.
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     from_menu : bool, optional
         Whether this function was called from the CLI menu or not.
 
@@ -1535,14 +1344,14 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
     """
     # NOTE: o_m_l_v a.k.a. options_map_latest_used_values
     try:
-        with open(PATHS["theme_latest_build_data_file"], "r", encoding="UTF-8") as f:
+        with open(app_data.PATHS["theme_latest_build_data_file"], "r", encoding="UTF-8") as f:
             o_m_l_v = json.loads(f.read())
     except Exception:
         o_m_l_v = None
 
     if not theme_name:
         try:
-            with open(PATHS["theme_name_storage_file"], "r", encoding="UTF-8") as theme_file:
+            with open(app_data.PATHS["theme_name_storage_file"], "r", encoding="UTF-8") as theme_file:
                 theme_name = theme_file.read().strip()
         except Exception:
             theme_name = "MyThemeName"
@@ -1588,9 +1397,10 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
     if o_m_l_v is not None and options_map_defaults != o_m_l_v:
         print_separator(logger)
         inform("Build data from a previous theme build found at:")
-        logger.info("**%s**" % PATHS["theme_latest_build_data_file"], date=False, to_file=False)
+        logger.info("**%s**" %
+                    app_data.PATHS["theme_latest_build_data_file"], date=False, to_file=False)
         inform("Details:")
-        logger.info(_theme_build_data.format(
+        logger.info(app_data.THEME_BUILD_DATA.format(
             cinnamon_version=options_map["cinnamon_version"][
                 o_m_l_v.get("cinnamon_version", options_map_defaults["cinnamon_version"])
             ],
@@ -1806,7 +1616,7 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
                           options_map_defaults["theme_name"])
 
     if not options_map_defaults["theme_name"].strip():
-        logger.warning(_missing_theme_or_domain_name_msg.format(
+        logger.warning(app_data.MISSING_THEME_OR_DOMAIN_NAME_MSG.format(
             capital="Theme",
             lower="theme",
             types="themes"
@@ -1855,7 +1665,7 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
 
         if file_utils.is_real_dir(destination_folder):
             if not do_not_confirm:
-                logger.warning(_existent_xlet_destination_msg.format(path=destination_folder),
+                logger.warning(app_data.EXISTENT_XLET_DESTINATION_MSG.format(path=destination_folder),
                                date=False)
 
             if do_not_confirm or prompts.confirm(prompt="Proceed?", response=False):
@@ -1871,7 +1681,7 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
 
         variant_folder = os.path.join(themes_sources, "_variants", variant)
         variant_config = run_path(os.path.join(variant_folder, "config.py"))["settings"]
-        variant_config["replacement_data"].append(("@repo_url@", URLS["repo"]))
+        variant_config["replacement_data"].append(("@repo_url@", app_data.URLS["repo"]))
         variant_config["replacement_data"].append(
             ("@theme_name@", options_map_defaults["theme_name"].strip()))
         variant_config["replacement_data"].append(("@theme_variant@", variant))
@@ -1998,12 +1808,12 @@ def build_themes(theme_name="", build_output="", do_not_confirm=False,
         logger.log_dry_run("**Built themes will be saved at %s**" %
                            options_map_defaults["build_output"])
         logger.log_dry_run("**Theme build data will be saved at:**\n%s" %
-                           PATHS["theme_latest_build_data_file"])
+                           app_data.PATHS["theme_latest_build_data_file"])
     else:
         print("")
         logger.info("**Built themes saved at %s**" % options_map_defaults["build_output"])
 
-        with open(PATHS["theme_latest_build_data_file"], "w", encoding="UTF-8") as outfile:
+        with open(app_data.PATHS["theme_latest_build_data_file"], "w", encoding="UTF-8") as outfile:
             json.dump(options_map_defaults, outfile, indent=4, ensure_ascii=False)
 
 
@@ -2021,8 +1831,8 @@ class BaseXletGenerator():
     ----------
     base_xlet_path : str
         Path to the base application (the template).
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     new_xlet_destination : str
         The path to the new generated application.
     xlet_data : dict
@@ -2034,8 +1844,8 @@ class BaseXletGenerator():
 
         Parameters
         ----------
-        logger : object
-            See :any:`LogSystem`.
+        logger : LogSystem
+            The logger.
         """
         self.logger = logger
         self.xlet_data = {}
@@ -2158,8 +1968,8 @@ def generate_docs(generate_api_docs=False,
         See :any:`sphinx_docs_utils.generate_docs`.
     force_clean_build : bool, optional
         See :any:`sphinx_docs_utils.generate_docs`.
-    logger : None, optional
-        See :any:`LogSystem`.
+    logger : LogSystem, None, optional
+        The logger.
     """
     from .python_utils import sphinx_docs_utils
 
@@ -2223,17 +2033,17 @@ def copy_help_pages_to_docs(logger):
 
     Parameters
     ----------
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     """
     logger.info("**Copying xlets help pages into docs folder...**")
 
     xlets_list = AllXletsMetadata().meta_list
 
     # NOTE: Copy only once the asset files into the root of the _static folder.
-    for asset in _common_help_assets:
+    for asset in app_data.COMMON_HELP_ASSETS:
         src = os.path.join(asset["source_path"], asset["file_name"])
-        dst = os.path.join(PATHS["docs_built"], "_static",
+        dst = os.path.join(app_data.PATHS["docs_built"], "_static",
                            asset["destination_path"], asset["file_name"])
 
         # NOTE: Be carefull. Do not remove folders, just files.
@@ -2255,7 +2065,7 @@ def copy_help_pages_to_docs(logger):
 
         xlet_assets_folder = os.path.join(xlet_folder, "assets")
         xlet_icon = os.path.join(xlet_folder, "icon.png")
-        dest_path = os.path.join(PATHS["docs_built"], "_static",
+        dest_path = os.path.join(app_data.PATHS["docs_built"], "_static",
                                  "xlets_help_pages", xlet["slug"])
         dest_html_file = os.path.join(dest_path, "index.html")
         dest_icon_file = os.path.join(dest_path, "icon.png")
@@ -2281,7 +2091,7 @@ def copy_help_pages_to_docs(logger):
         ("./assets/js", "../../js"),
     ]
 
-    string_utils.do_string_substitutions(os.path.join(PATHS["docs_built"],
+    string_utils.do_string_substitutions(os.path.join(app_data.PATHS["docs_built"],
                                                       "_static", "xlets_help_pages"),
                                          replacement_data,
                                          allowed_extensions=(".html"),
@@ -2325,8 +2135,8 @@ def print_separator(logger, sep="-"):
 
     Parameters
     ----------
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     sep : str, optional
         Separator character.
     """
@@ -2340,8 +2150,8 @@ def parse_sass(dry_run, logger):
     ----------
     dry_run : bool, optional
         See :any:`XletBuilder`.
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
 
     Raises
     ------
@@ -2387,7 +2197,7 @@ def parse_sass(dry_run, logger):
             logger.error(err)
             continue
 
-        for cinnamon_version in _supported_cinnamon_theme_versions:
+        for cinnamon_version in app_data.SUPPORTED_CINNAMON_THEME_VERSIONS:
             logger.info("**Processing SASS files for Cinnamon version: %s**" % cinnamon_version)
             sass_file_path = os.path.join(sass_path, "cinnamon", "%s-%s.scss" %
                                           (variant_name, cinnamon_version))
@@ -2449,8 +2259,8 @@ def generate_repo_changelog(logger):
 
     Parameters
     ----------
-    logger : object
-        See :any:`LogSystem`-
+    logger : LogSystem
+        The logger.
     """
     xlets_list = AllXletsMetadata().meta_list
     all_xlets_slugs = [xlet["slug"] for xlet in xlets_list]
@@ -2458,14 +2268,14 @@ def generate_repo_changelog(logger):
 
     try:
         with open(log_path, "w") as f:
-            f.write(_changelog_header_repo)
+            f.write(app_data.CHANGELOG_HEADER_REPO)
 
-        cmd = _git_log_cmd_repo.format(
+        cmd = app_data.GIT_LOG_CMD_REPO.format(
             all_xlets_slugs="\\|".join(all_xlets_slugs),
             relative_path="./",
             append_or_override=">>",
             log_path=log_path,
-            repo_url=URLS["repo"]
+            repo_url=app_data.URLS["repo"]
         )
         cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=root_folder, shell=True)
         logger.info("**Changelog generated at:**\n%s" % log_path)
@@ -2478,20 +2288,20 @@ def generate_themes_changelog(logger):
 
     Parameters
     ----------
-    logger : object
-        See :any:`LogSystem`-
+    logger : LogSystem
+        The logger.
     """
     log_path = os.path.join(root_folder, "themes", "CHANGELOG.md")
 
     try:
         with open(log_path, "w") as f:
-            f.write(_changelog_header_themes)
+            f.write(app_data.CHANGELOG_HEADER_THEMES)
 
-        cmd = _git_log_cmd_themes.format(
+        cmd = app_data.GIT_LOG_CMD_THEMES.format(
             relative_path="./themes",
             append_or_override=">>",
             log_path=log_path,
-            repo_url=URLS["repo"]
+            repo_url=app_data.URLS["repo"]
         )
         cmd_utils.run_cmd(cmd, stdout=None, stderr=None, cwd=root_folder, shell=True)
         logger.info("**Changelog generated at:**\n%s" % log_path)

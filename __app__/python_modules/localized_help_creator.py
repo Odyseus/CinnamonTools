@@ -11,21 +11,17 @@ Attributes
 ----------
 repo_folder : str
     The main repository folder. All commands must be executed from this location without exceptions.
-translations : object
+translations : Translations
     See :any:`localized_help_utils.Translations`.
-utils : object
-    See :any:`localized_help_utils`.
 """
 
 import os
 import sys
 
-from . import localized_help_utils
+from . import localized_help_utils as utils
 from .locale_list import locale_list
 from .python_utils import cmd_utils
 from .python_utils.mistune_utils import md
-
-utils = localized_help_utils
 
 try:
     from pyuca import Collator
@@ -370,12 +366,12 @@ class LocalizedHelpCreator():
         min_ver_override = self.xlet_config.get("min_cinnamon_version_override", None)
         max_ver_override = self.xlet_config.get("max_cinnamon_version_override", None)
         min_ver = min_ver_override if min_ver_override else \
-            utils.app_utils.SUPPORTED_CINNAMON_VERSION_MIN
+            utils.app_data.SUPPORTED_CINNAMON_VERSION_MIN
         max_ver = max_ver_override if max_ver_override else \
-            utils.app_utils.SUPPORTED_CINNAMON_VERSION_MAX
+            utils.app_data.SUPPORTED_CINNAMON_VERSION_MAX
 
-        if max_ver == utils.app_utils.SUPPORTED_CINNAMON_VERSION_MAX and \
-                min_ver == utils.app_utils.SUPPORTED_CINNAMON_VERSION_MIN:
+        if max_ver == utils.app_data.SUPPORTED_CINNAMON_VERSION_MAX and \
+                min_ver == utils.app_data.SUPPORTED_CINNAMON_VERSION_MIN:
             body = _("This xlet is compatible with Cinnamon %s up to latest Cinnamon version.") % \
                 str(min_ver)
         else:
@@ -408,7 +404,7 @@ class LocalizedHelpCreator():
                     "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."),
                 line2=_(
                     "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."),
-                repo_url=utils.app_utils.URLS["repo"]
+                repo_url=utils.app_data.URLS["repo"]
             )
         )
 
