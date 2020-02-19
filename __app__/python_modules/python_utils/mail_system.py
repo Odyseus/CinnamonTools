@@ -33,9 +33,12 @@ sender's e-mail password. This method supersedes the unattended method.
 
 
 class EmptyMailSubjectOrBody(ExceptionWhitoutTraceBack):
-    """EmptyMailSubjectOrBody"""
+    """EmptyMailSubjectOrBody
+    """
 
     def __init__(self):
+        """Initialization.
+        """
         msg = "Neither e-mail subject nor e-mail body can be left blank."
         super().__init__(msg)
 
@@ -45,8 +48,8 @@ class MailSystem():
 
     Attributes
     ----------
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     """
 
     def __init__(self, mail_settings={}, logger=None):
@@ -56,8 +59,8 @@ class MailSystem():
         ----------
         mail_settings : dict
             Where all the data to send the email/s is stored.
-        logger : object
-            See :any:`LogSystem`.
+        logger : LogSystem
+            The logger.
         """
         self._config = mail_settings
         self.logger = logger
@@ -104,13 +107,23 @@ class MailSystem():
             The e-mail subject.
         mail_body : str
             The e-mail body.
+
+        Returns
+        -------
+        None
+            Halt execution.
+
+        Raises
+        ------
+        EmptyMailSubjectOrBody
+            Do not send an empty mail.
         """
         sender_password = self._get_password()
 
         if not sender_password:
             self.logger.warning("**No password could be obtained. Aborted.**")
             self.logger.warning(__pass_setup_msg)
-            return True
+            return
 
         if not mail_subject or not mail_body:
             raise EmptyMailSubjectOrBody()

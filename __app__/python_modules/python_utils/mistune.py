@@ -116,9 +116,9 @@ class BlockGrammar(object):
     newline = re.compile(r'^\n+')
     block_code = re.compile(r'^( {4}[^\n]+\n*)+')
     fences = re.compile(
-        r'^ *(`{3,}|~{3,}) *([^`\s]+)? *\n'  # ```lang
-        r'([\s\S]+?)\s*'
-        r'\1 *(?:\n+|$)'  # ```
+        r'^( *)(`{3,}|~{3,}) *([^`\s]+)? *\n'  # ```lang
+        r'([\s\S]*?)\n'
+        r'\1\2 *(?:\n+|$)',  # ```
     )
     hrule = re.compile(r'^ {0,3}[-*_](?: *[-*_]){2,} *(?:\n+|$)')
     heading = re.compile(r'^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)')
@@ -150,7 +150,7 @@ class BlockGrammar(object):
         r'^((?:[^\n]+\n?(?!'
         r'%s|%s|%s|%s|%s|%s|%s|%s|%s'
         r'))+)\n*' % (
-            _pure_pattern(fences).replace(r'\1', r'\2'),
+            _pure_pattern(fences).replace(r'\2', r'\3').replace(r'\1', r'\2'),
             _pure_pattern(list_block).replace(r'\1', r'\3'),
             _pure_pattern(hrule),
             _pure_pattern(heading),
@@ -210,6 +210,7 @@ class BlockLexer(object):
         self._max_recursive_depth = kwargs.get('max_recursive_depth', 6)
         self._list_depth = 0
         self._blockquote_depth = 0
+        self.default_rules = self.default_rules[:]
 
     def __call__(self, text, rules=None):
         return self.parse(text, rules)
@@ -255,8 +256,8 @@ class BlockLexer(object):
     def parse_fences(self, m):
         self.tokens.append({
             'type': 'code',
-            'lang': m.group(2),
-            'text': m.group(3),
+            'lang': m.group(3),
+            'text': m.group(4),
         })
 
     def parse_heading(self, m):
@@ -434,7 +435,7 @@ class BlockLexer(object):
         for i, line in enumerate(cells):
             for c, cell in enumerate(line):
                 # de-escape any pipe inside the cell here
-                cells[i][c] = re.sub('\\\\\|', '|', cell)
+                cells[i][c] = re.sub(r'\\\|', '|', cell)
 
         return cells
 
@@ -549,6 +550,8 @@ class InlineLexer(object):
         self._in_link = False
         self._in_footnote = False
         self._parse_inline_html = kwargs.get('parse_inline_html')
+        self.default_rules = self.default_rules[:]
+        self.inline_html_rules = self.inline_html_rules[:]
 
     def __call__(self, text, rules=None):
         return self.output(text, rules)

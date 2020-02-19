@@ -55,19 +55,19 @@ def validate(instance, schema,
         Text to be displayed as "CLI header".
     extra_types : dict, optional
         Extra type checks.
-    logger : object
-        See :any:`LogSystem`.
-
-    Raises
-    ------
-    SchemaValidationError
-        See :any:`SchemaValidationError`.
+    logger : LogSystem
+        The logger.
 
     Returns
     -------
     int
         1 (one) if errors were found. 0 (zero) if no errors were found.
         It only returns if raise_error is False.
+
+    Raises
+    ------
+    SchemaValidationError
+        See :any:`SchemaValidationError`.
     """
     # Just in case, use a copy of instance to validate, not the original.
     try:

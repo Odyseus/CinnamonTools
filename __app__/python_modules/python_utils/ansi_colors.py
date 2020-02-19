@@ -4,8 +4,8 @@
 
 Attributes
 ----------
-Ansi : object
-    :any:`ANSIColors` class initialization.
+Ansi : ANSIColors
+    An ``ANSIColors`` instance.
 color_table : dict
     ANSI color table.
 """
@@ -95,11 +95,6 @@ class ANSIColors():
         ----------
         code : str
             ANSI color code.
-
-        Returns
-        -------
-        function
-            Function to colorize string.
         """
         def f(text):
             """Colorize text.

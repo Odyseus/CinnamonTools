@@ -26,19 +26,6 @@ def confirm(prompt=None, response=False):
     bool
         True for "yes" or False for "no".
 
-    Examples
-    --------
-
-    >>> confirm(prompt='Create Directory?', response=True)
-    Create Directory? [Y|n]:
-    True
-    >>> confirm(prompt='Create Directory?', response=False)
-    Create Directory? [N|y]:
-    False
-    >>> confirm(prompt='Create Directory?', response=False)
-    Create Directory? [N|y]: y
-    True
-
     Raises
     ------
     exceptions.KeyboardInterruption
@@ -53,6 +40,19 @@ def confirm(prompt=None, response=False):
 
     - Eradicated Python 2 code and added *transparent handling* of \
     upper/lower case input responses.
+
+    Examples
+    --------
+
+    >>> confirm(prompt='Create Directory?', response=True)
+    Create Directory? [Y|n]:
+    True
+    >>> confirm(prompt='Create Directory?', response=False)
+    Create Directory? [N|y]:
+    False
+    >>> confirm(prompt='Create Directory?', response=False)
+    Create Directory? [N|y]: y
+    True
     """
 
     if prompt is None:

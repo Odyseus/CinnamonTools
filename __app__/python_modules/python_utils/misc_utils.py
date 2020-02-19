@@ -21,15 +21,15 @@ def get_system_tempdir():
 def get_date_time(type="date"):
     """Get date time.
 
-    Returns
-    -------
-    str
-        The current time formatted by the "type" passed.
-
     Parameters
     ----------
     type : str, optional
         The time "type" to return (Default: date).
+
+    Returns
+    -------
+    str
+        The current time formatted by the "type" passed.
     """
     if type == "appid":
         return datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")
@@ -98,8 +98,8 @@ def merge_dict(first, second, logger=None):
         A dictionary to which to merge a second dictinary.
     second : dict
         A dictionary to merge into another dictionary.
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
 
     Returns
     -------

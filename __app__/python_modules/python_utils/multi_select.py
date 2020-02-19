@@ -40,17 +40,21 @@ class MultiSelect():
         The amount of selected menu items.
     selected : int
         The index of the menu item on the current cursor position.
-    stdscr : object
-        See :any:`curses.initscr`.
+    stdscr : curses.initscr
+        Initialize the library.
     title : str
         A title to use on the menu.
-    win : object
-        See :any:`curses.newwin`.
+    win : curses.newwin
+        A new window object.
     window_height : int
         The height of the terminal window.
     window_width : int
         The width of the terminal window.
 
+
+    Note
+    ----
+    Based on: `picker Python module <https://github.com/MSchuwalow/picker>`__.
 
     Example
     -------
@@ -68,10 +72,6 @@ class MultiSelect():
             print("Aborted!")
         else:
             print(opts)
-
-    Note
-    ----
-    Based on: `picker Python module <https://github.com/MSchuwalow/picker>`__.
     """
 
     def __init__(self, menu_items=[], title="", arrow="==>",
@@ -227,7 +227,7 @@ class MultiSelect():
         Parameters
         ----------
         stdscr : object
-            See :any:`curses.initscr`.
+            A curses window object.
 
         Raises
         ------
