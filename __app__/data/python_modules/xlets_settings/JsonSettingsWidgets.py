@@ -98,7 +98,7 @@ class JSONSettingsHandler():
     listeners : dict
         See :any:`JSONSettingsHandler.listen`.
     notify_callback : method
-        See :any:`MainApplication.notify_dbus`.
+        See ``MainApplication.notify_dbus`` (**Not used**).
     resume_timeout : int
         The ID (greater than 0) of the event source.
     settings : dict
@@ -115,7 +115,7 @@ class JSONSettingsHandler():
         filepath : str
             Path to an xlet JSON configuration file.
         notify_callback : None, optional
-            See :any:`MainApplication.notify_dbus`.
+            See ``MainApplication.notify_dbus`` (**Not used**).
         xlet_meta : None, optional
             Xlet metadata.
         """

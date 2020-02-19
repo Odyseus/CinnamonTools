@@ -659,7 +659,7 @@ class MainApplication(Gtk.Application):
 
             settings = JSONSettingsHandler(  # noqa | JsonSettingsWidgets
                 filepath=os.path.join(config_path, item),
-                notify_callback=self.notify_dbus,
+                # notify_callback=self.notify_dbus,
                 xlet_meta=self._xlet_meta
             )
             settings.instance_id = instance_id
@@ -698,21 +698,30 @@ class MainApplication(Gtk.Application):
 
         self.set_visible_stack_for_page()
 
-    # NOTE: Investigate if this is needed or not.
-    def notify_dbus(self, handler, key, value):
-        """Notify ``cinnamonDBus.js``.
+    # WARNING: Investigate if this is needed or not.
+    # This is kind of useless and wasteful.
+    # 1. First, up to Cinnamon 3.2 the JavaScript side of this is broken. The last parameter
+    # in the updateSetting call will mangle a setting object. It sets the value to the preference
+    # key, not to the "value" key of the preference object.
+    # 2. Second, in newer Cinnamon versions, the last two parameters in the updateSetting call
+    # are not used at all anywhere. So the call to json.dumps() is a waste.
+    # 3. And finally, the XletSettingsBase._checkSettings() triggers 5 (!!!) times when a single
+    # setting changes value from a Cinnamon native settings system window and 4 (!!!) times from
+    # this custom framework.
+    # def notify_dbus(self, handler, key, value):
+    #     """Notify ``cinnamonDBus.js``.
 
-        Parameters
-        ----------
-        handler : JSONSettingsHandler
-            The settings handler.
-        key : str
-            The setting key.
-        value : int, str, bool, list, dict
-            The setting value.
-        """
-        if proxy:
-            proxy.updateSetting("(ssss)", self.xlet_uuid, handler.instance_id, key, json.dumps(value))
+    #     Parameters
+    #     ----------
+    #     handler : JSONSettingsHandler
+    #         The settings handler.
+    #     key : str
+    #         The setting key.
+    #     value : int, str, bool, list, dict
+    #         The setting value.
+    #     """
+    #     if proxy:
+    #         proxy.updateSetting("(ssss)", self.xlet_uuid, handler.instance_id, key, json.dumps(value))
 
     def build_window(self):
         """Build window.
