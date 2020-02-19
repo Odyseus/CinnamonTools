@@ -82,8 +82,8 @@ def do_string_substitutions(dir_path, replacement_data,
         Data used to perform string substitutions.
     allowed_extensions : tuple, optional
         A tuple of file extensions that are allowed to be modified.
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     """
     logger.info("**Performing string substitutions...**")
 
@@ -200,12 +200,6 @@ def get_valid_filename(string, separator="_"):
     althogh it cannot be anything other than a dash, an underscore or a dot).
     - Removes anything that is not an alphanumeric, dash, underscore, or dot.
 
-    Example
-    -------
-
-    >>> get_valid_filename("john's portrait in 2004.jpg")
-    "johns_portrait_in_2004.jpg"
-
     Parameters
     ----------
     string : str
@@ -221,6 +215,12 @@ def get_valid_filename(string, separator="_"):
     Note
     ----
     Based on: Utilities found in `Django Web framework <https://github.com/django/django>`__
+
+    Example
+    -------
+
+    >>> get_valid_filename("john's portrait in 2004.jpg")
+    "johns_portrait_in_2004.jpg"
     """
     string = re.sub(r"\s+", separator, str(string).strip())
     return re.sub(r"(?u)[^-\w.]", "", string)
@@ -234,12 +234,6 @@ def slugify(string, allow_unicode=False):
     - Remove characters that aren't alphanumerics, underscores, or hyphens.
     - Convert to lowercase.
     - Strip leading and trailing whitespace.
-
-    Example
-    -------
-
-    >>> slugify("john's portrait in 2004.jpg")
-    "johns-portrait-in-2004jpg"
 
     Parameters
     ----------
@@ -256,6 +250,12 @@ def slugify(string, allow_unicode=False):
     Note
     ----
     Based on: Utilities found in `Django Web framework <https://github.com/django/django>`__
+
+    Example
+    -------
+
+    >>> slugify("john's portrait in 2004.jpg")
+    "johns-portrait-in-2004jpg"
     """
     string = str(string)
 

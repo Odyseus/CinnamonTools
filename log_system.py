@@ -85,12 +85,7 @@ class LogSystem():
         Parameters
         ----------
         log_level : str
-            See :any:`LogSystem._update_log` > log_level
-
-        Returns
-        -------
-        function
-            Function to log messages.
+            See :any:`LogSystem._update_log` > ``log_level``.
         """
         def f(msg, term=True, date=True, to_file=True):
             """Log message.
@@ -98,11 +93,18 @@ class LogSystem():
             Parameters
             ----------
             msg : str
-                See :any:`LogSystem._update_log` > msg
+                See :any:`LogSystem._update_log` > ``msg``.
             term : bool, optional
-                See :any:`LogSystem._update_log` > term
+                See :any:`LogSystem._update_log` > ``term``.
             date : bool, optional
-                See :any:`LogSystem._update_log` > date
+                See :any:`LogSystem._update_log` > ``date``.
+            to_file : bool, optional
+                Whether to log message to log file.
+
+            Returns
+            -------
+            None
+                Dummy docstring. The auto-docstrings plugin put this here erroneously.
             """
             self._update_log(msg, log_level=log_level, term=term, date=date, to_file=to_file)
 
@@ -124,7 +126,7 @@ class LogSystem():
         Parameters
         ----------
         msg : str
-            See :any:`LogSystem._update_log` > msg
+            See :any:`LogSystem._update_log` > ``msg``.
         """
         self._update_log("**[DRY_RUN]** %s" % str(msg), log_level="LIGHT_MAGENTA", date=False)
 
@@ -143,6 +145,8 @@ class LogSystem():
         date : bool, optional
             Log the date. If set to False, the current date will not be attached to the logged
             message.
+        to_file : bool, optional
+            Whether to log message to log file.
         """
         now = "%s: " % micro_to_milli(get_date_time())
         m = str(msg)
@@ -180,11 +184,6 @@ class LogSystem():
 def generate_log_path(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_"):
     """Generate log file name.
 
-    Returns
-    -------
-    str
-        The log file to be used by :any:`LogSystem`.
-
     Parameters
     ----------
     storage_dir : str, optional
@@ -195,6 +194,11 @@ def generate_log_path(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_
         String at the end of the file name.
     delimiter : str, optional
         Character to separate the different parts of the files name.
+
+    Returns
+    -------
+    str
+        The log file to be used by :any:`LogSystem`.
     """
     filename = "{prefix}{date}{subfix}.log".format(
         prefix=prefix + delimiter if prefix is not "" else "",

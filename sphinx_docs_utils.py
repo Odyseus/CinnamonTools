@@ -32,8 +32,8 @@ def check_inventories_existence(update_inventories=False,
     docs_sources_path : str, optional
         Path to the documentation source files that will be used to store the
         downloaded inventories.
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
 
     Raises
     ------
@@ -54,6 +54,7 @@ def check_inventories_existence(update_inventories=False,
             inv_path = os.path.join(docs_sources_path, inv)
 
             if update_inventories or not os.path.exists(inv_path):
+                os.makedirs(os.path.dirname(inv_path), exist_ok=True)
                 logger.info("**Downloading inventory file...**")
                 logger.info("**Download URL:**")
                 logger.info(inv_url, date=False)
@@ -112,8 +113,8 @@ def generate_docs(root_folder="",
         Remove destination and doctrees directories before building the documentation.
     build_coverage : bool, optional
         If True, build Sphinx coverage documents.
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     """
     doctree_temp_location = os.path.join(get_system_tempdir(),
                                          doctree_temp_location_rel_to_sys_temp)
@@ -185,8 +186,8 @@ def generate_man_pages(root_folder="",
     doctree_temp_location_rel_to_sys_temp : str, optional
         Name of a temporary folder that will be used to create a path relative to the
         system temporary folder.
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     """
     logger.info(shell_utils.get_cli_separator("-"), date=False)
     logger.info("**Generating manual pages...**")

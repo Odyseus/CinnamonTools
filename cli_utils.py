@@ -22,8 +22,8 @@ class CommandLineInterfaceSuper():
 
     Attributes
     ----------
-    logger : object
-        See :any:`LogSystem`.
+    logger : LogSystem
+        The logger.
     """
     _cli_header_blacklist = []
     _print_log_blacklist = []
@@ -102,12 +102,6 @@ class CommandLineInterfaceSuper():
 def run_cli(flag_file="", docopt_doc="", app_name="", app_version="", app_status="", cli_class=None):
     """Initialize main command line interface.
 
-    Raises
-    ------
-    exceptions.BadExecutionLocation
-        Do not allow to run any command if the "flag" file isn't found where it should be.
-        See :any:`exceptions.BadExecutionLocation`.
-
     Parameters
     ----------
     flag_file : str
@@ -120,8 +114,14 @@ def run_cli(flag_file="", docopt_doc="", app_name="", app_version="", app_status
         Application version.
     app_status : str, optional
         Application status.
-    cli_class : class
-        See :any:`CommandLineInterfaceSuper`.
+    cli_class : cli_utils.CommandLineInterfaceSuper
+        An instance of ``cli_utils.CommandLineInterfaceSuper``.
+
+    Raises
+    ------
+    exceptions.BadExecutionLocation
+        Do not allow to run any command if the *flag* file isn't found where it should be.
+        See :any:`exceptions.BadExecutionLocation`.
     """
     if not os.path.exists(flag_file):
         raise exceptions.BadExecutionLocation()

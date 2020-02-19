@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+"""Simple validator functions.
+"""
 import re
 
 from ipaddress import ip_address
