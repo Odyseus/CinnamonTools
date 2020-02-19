@@ -4,6 +4,49 @@
 
 ***
 
+**Date:** Wed, 19 Feb 2020 12:19:21 -0300<br/>
+**Commit:** [9fde278](https://gitlab.com/Odyseus/CinnamonTools/commit/9fde278)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from a96d049..392c472
+
+392c472 Removed jsonschema module
+a80133c json_schema_utils.py
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 392c472792de54556e80290f22bea2742e84c82e
+
+***
+
+**Date:** Wed, 19 Feb 2020 05:42:58 -0300<br/>
+**Commit:** [202edc0](https://gitlab.com/Odyseus/CinnamonTools/commit/202edc0)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from e60e30e..a96d049
+
+a96d049 bottle.py
+31f0f13 sphinx_docs_utils.py
+4a6400f All modules
+74b9cb5 mistune.py
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: a96d0497008bdd6d1003c755baf1542999525309
+
+***
+
+**Date:** Wed, 19 Feb 2020 05:23:54 -0300<br/>
+**Commit:** [1f202f1](https://gitlab.com/Odyseus/CinnamonTools/commit/1f202f1)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated submodules.
+- Updated CHANGELOG.md.
+- Updated manual page.
+- Updated JavaScript linters configuration files.
+
+***
+
 **Date:** Wed, 19 Feb 2020 05:18:08 -0300<br/>
 **Commit:** [cc24c41](https://gitlab.com/Odyseus/CinnamonTools/commit/cc24c41)<br/>
 **Author:** Odyseus<br/>
