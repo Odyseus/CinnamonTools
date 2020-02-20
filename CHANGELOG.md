@@ -4,6 +4,43 @@
 
 ***
 
+**Date:** Thu, 20 Feb 2020 03:07:29 -0300<br/>
+**Commit:** [0c36044](https://gitlab.com/Odyseus/CinnamonTools/commit/0c36044)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from 392c472..4085ef1
+
+4085ef1 cmd_utils.py
+3ae1376 ansi_colors.py
+1eb6882 ansi_colors.py
+a65f36c All modules
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 4085ef10284be77d754e56275fc3072480b314ad
+
+***
+
+**Date:** Thu, 20 Feb 2020 02:13:30 -0300<br/>
+**Commit:** [0f2a770](https://gitlab.com/Odyseus/CinnamonTools/commit/0f2a770)<br/>
+**Author:** Odyseus<br/>
+
+#### Xlets settings framework
+
+- Docstrings update.
+- Tweaked the bold RegEx to be a little more precise.
+
+***
+
+**Date:** Wed, 19 Feb 2020 12:21:19 -0300<br/>
+**Commit:** [e537f12](https://gitlab.com/Odyseus/CinnamonTools/commit/e537f12)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated CHANGELOG.md.
+
+***
+
 **Date:** Wed, 19 Feb 2020 12:19:21 -0300<br/>
 **Commit:** [9fde278](https://gitlab.com/Odyseus/CinnamonTools/commit/9fde278)<br/>
 **Author:** Odyseus<br/>
