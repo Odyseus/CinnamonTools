@@ -727,7 +727,12 @@ def json_settings_factory(subclass):
     Parameters
     ----------
     subclass : str
-        A :any:`SettingsWidgets` instance.
+        The class name of a :any:`SettingsWidgets` based instance.
+
+    Returns
+    -------
+    class
+        A new class based on ``subclass`` and ``JSONSettingsBackend``.
 
     Raises
     ------
@@ -761,11 +766,6 @@ def json_settings_factory(subclass):
                 Widget attributes.
             widget_kwargs : dict, optional
                 Widget keyword arguments.
-
-            Returns
-            -------
-            None
-                Dummy docstring. The auto-docstrings plugin put this here erroneously.
             """
             self.pref_key = widget_attrs.get("pref_key")
             self.apply_key = widget_attrs.get("apply_key")

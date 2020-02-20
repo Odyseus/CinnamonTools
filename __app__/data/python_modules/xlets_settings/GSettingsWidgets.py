@@ -352,7 +352,12 @@ def g_settings_factory(subclass):
     Parameters
     ----------
     subclass : str
-        The class name of a :any:`SettingsWidgets` instance.
+        The class name of a :any:`SettingsWidgets` based instance.
+
+    Returns
+    -------
+    class
+        A new class based on ``subclass`` and ``GSettingsBackend``.
 
     Raises
     ------
@@ -388,11 +393,6 @@ def g_settings_factory(subclass):
                 Widget attributes.
             widget_kwargs : dict, optional
                 Widget keyword arguments.
-
-            Returns
-            -------
-            None
-                Dummy docstring. The auto-docstrings plugin put this here erroneously.
             """
             self.pref_key = widget_attrs.get("pref_key")
             schema = widget_attrs.get("schema", "")

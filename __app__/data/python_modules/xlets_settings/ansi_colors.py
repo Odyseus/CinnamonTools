@@ -4,8 +4,8 @@
 
 Attributes
 ----------
-Ansi : object
-    :any:`ANSIColors` class initialization.
+Ansi : ANSIColors
+    An ``ANSIColors`` instance.
 color_table : dict
     ANSI color table.
 """
@@ -49,7 +49,7 @@ color_table = {
 }
 
 
-_bold_markdown_re = re.compile(r"\*\*([^\*\*]*)\*\*")
+_bold_markdown_re = re.compile(r"\*\*([^\*\*].*?)\*\*")
 _bold_placeholder = r"\033[0m\033[1;49;{code}m\1\033[0m\033[0;49;{code}m"
 
 
@@ -95,6 +95,11 @@ class ANSIColors():
         ----------
         code : str
             ANSI color code.
+
+        Returns
+        -------
+        method
+            A function that will be dynamically attached to ``self``.
         """
         def f(text):
             """Colorize text.
@@ -106,8 +111,8 @@ class ANSIColors():
 
             Returns
             -------
-            str
-                ANSI formatted string.
+            method
+                The ``self._colorize`` function with a specific ANSI color code attached.
             """
             return self._colorize(text, code)
 
