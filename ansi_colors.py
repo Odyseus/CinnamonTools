@@ -48,8 +48,8 @@ color_table = {
     {"fg": "97", "bg": "107"},
 }
 
-
-_bold_markdown_re = re.compile(r"\*\*([^\*\*].*?)\*\*")
+# NOTE: DO NOT TOUCH THIS! It works good enough. Do not ever try to tweak it again. NEEVER!!!
+_bold_markdown_re = re.compile(r"\*{2}([\s\S]+?)\*{2}")
 _bold_placeholder = r"\033[0m\033[1;49;{code}m\1\033[0m\033[0;49;{code}m"
 
 
