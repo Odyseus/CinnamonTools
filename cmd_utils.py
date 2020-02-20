@@ -125,7 +125,8 @@ def exec_command(cmd, cwd=None, do_wait=True, do_log=True, logger=None):
             if po.returncode:
                 logger.error(error_output)
             else:
-                logger.debug(output)
+                if output:
+                    logger.debug(output)
     except OSError as err:
         logger.error("Execution failed!!!")
         logger.error(err)

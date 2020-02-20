@@ -109,11 +109,16 @@ def generate_numeral_options_validator(num, stringify=True):
     Parameters
     ----------
     num : int
-        The number of numbers that the list of numeral options should have. Stating
+        The number of numbers that the list of numeral options should have. Starting
         from 1 and ending at and including num.
     stringify : bool, optional
         Whether the list of numbers should be converted and compared to numbers
         represented as strings.
+
+    Returns
+    -------
+    method
+        A function to validate a number.
     """
     options_list = [str(n + 1) if stringify else n + 1 for n in list(range(num))]
 
