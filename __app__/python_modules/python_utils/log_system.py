@@ -86,6 +86,11 @@ class LogSystem():
         ----------
         log_level : str
             See :any:`LogSystem._update_log` > ``log_level``.
+
+        Returns
+        -------
+        method
+            A function that will be dynamically attached to ``self``.
         """
         def f(msg, term=True, date=True, to_file=True):
             """Log message.
@@ -100,11 +105,6 @@ class LogSystem():
                 See :any:`LogSystem._update_log` > ``date``.
             to_file : bool, optional
                 Whether to log message to log file.
-
-            Returns
-            -------
-            None
-                Dummy docstring. The auto-docstrings plugin put this here erroneously.
             """
             self._update_log(msg, log_level=log_level, term=term, date=date, to_file=to_file)
 

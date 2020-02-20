@@ -73,6 +73,8 @@ def validate(instance, schema,
 
     Raises
     ------
+    MissingDependencyModule
+        Module ``jsonschema`` not installed.
     SchemaValidationError
         See :any:`SchemaValidationError`.
     """
