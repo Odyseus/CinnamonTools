@@ -2,6 +2,16 @@
 
 ***
 
+**Date:** Thu, 20 Feb 2020 22:42:07 -0300<br/>
+**Commit:** [e45c0e0](https://gitlab.com/Odyseus/CinnamonTools/commit/e45c0e0)<br/>
+**Author:** Odyseus<br/>
+
+- Updated sub-modules.
+- Updated manual page.
+- Updated docstrings.
+
+***
+
 **Date:** Mon, 10 Feb 2020 22:49:20 -0300<br/>
 **Commit:** [212a45b](https://gitlab.com/Odyseus/CinnamonTools/commit/212a45b)<br/>
 **Author:** Odyseus<br/>

@@ -4,6 +4,80 @@
 
 ***
 
+**Date:** Thu, 20 Feb 2020 23:25:32 -0300<br/>
+**Commit:** [8ad41ce](https://gitlab.com/Odyseus/CinnamonTools/commit/8ad41ce)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from 9d71d37..63cfefc
+
+63cfefc Docstrings update
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 63cfefce1b613baa78ebfe797c8e64f5e3162b09
+
+***
+
+**Date:** Thu, 20 Feb 2020 23:25:06 -0300<br/>
+**Commit:** [33395bc](https://gitlab.com/Odyseus/CinnamonTools/commit/33395bc)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated sub-modules.
+- Updated manual page.
+- Updated docstrings.
+
+***
+
+**Date:** Thu, 20 Feb 2020 22:42:33 -0300<br/>
+**Commit:** [16839e9](https://gitlab.com/Odyseus/CinnamonTools/commit/16839e9)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from 2fd381d..9d71d37
+
+9d71d37 Docstrings update
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 9d71d37ec8fefb2dc19c137f41b0cb040b9b2605
+
+***
+
+**Date:** Thu, 20 Feb 2020 22:42:07 -0300<br/>
+**Commit:** [e45c0e0](https://gitlab.com/Odyseus/CinnamonTools/commit/e45c0e0)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated sub-modules.
+- Updated manual page.
+- Updated docstrings.
+
+***
+
+**Date:** Thu, 20 Feb 2020 13:50:37 -0300<br/>
+**Commit:** [05164af](https://gitlab.com/Odyseus/CinnamonTools/commit/05164af)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from 4085ef1..2fd381d
+
+2fd381d ansi_colors.py
+1cd5754 ansi_colors.py
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 2fd381de468e12ba54156050d0317dbfabb4e99b
+
+***
+
+**Date:** Thu, 20 Feb 2020 03:08:40 -0300<br/>
+**Commit:** [252030c](https://gitlab.com/Odyseus/CinnamonTools/commit/252030c)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated CHANGELOG.md.
+
+***
+
 **Date:** Thu, 20 Feb 2020 03:07:29 -0300<br/>
 **Commit:** [0c36044](https://gitlab.com/Odyseus/CinnamonTools/commit/0c36044)<br/>
 **Author:** Odyseus<br/>
