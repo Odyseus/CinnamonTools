@@ -220,7 +220,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
             self.logger.info("**Building all themes.**")
         elif self.a["parse_sass"]:
             self.action = self.parse_sass
-            self.logger.info("**Parsing SASS files.**")
+            self.logger.info("**Parsing Sass files.**")
         elif self.a["dev"]:
             # NOTE: Deduplicate arguments. Workaround docopt issue:
             # https://github.com/docopt/docopt/issues/134

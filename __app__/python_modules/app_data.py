@@ -35,7 +35,7 @@ root_folder : str
 SETTINGS_FRAMEWORK_ADDITIONAL_FILES_TO_SCAN : list
     A list of CLI arguments with relative paths to the xlets custom settings framework.
 SUPPORTED_CINNAMON_THEME_VERSIONS : list
-    A list of Cinnamon versions used when parsing SASS sources.
+    A list of Cinnamon versions used when parsing |Sass| sources.
 SUPPORTED_CINNAMON_VERSION_MAX : float
     Maximum Cinnamon version number.
 SUPPORTED_CINNAMON_VERSION_MIN : float

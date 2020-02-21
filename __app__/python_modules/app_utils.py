@@ -2144,7 +2144,7 @@ def print_separator(logger, sep="-"):
 
 
 def parse_sass(dry_run, logger):
-    """Parse SASS.
+    """Parse |Sass|.
 
     Parameters
     ----------
@@ -2183,7 +2183,7 @@ def parse_sass(dry_run, logger):
         template_data = template_file.read()
 
     for variant_name in variants:
-        logger.info("**Attempting to parse SASS files for variant: %s**" % variant_name)
+        logger.info("**Attempting to parse Sass files for variant: %s**" % variant_name)
         variant_config_path = os.path.join(variants_path, variant_name, "config.py")
 
         if not os.path.exists(variant_config_path):
@@ -2198,10 +2198,10 @@ def parse_sass(dry_run, logger):
             continue
 
         for cinnamon_version in app_data.SUPPORTED_CINNAMON_THEME_VERSIONS:
-            logger.info("**Processing SASS files for Cinnamon version: %s**" % cinnamon_version)
+            logger.info("**Processing Sass files for Cinnamon version: %s**" % cinnamon_version)
             sass_file_path = os.path.join(sass_path, "cinnamon", "%s-%s.scss" %
                                           (variant_name, cinnamon_version))
-            # NOTE: Replace the dot to be able to store an integer since I don't trust SASS comparisons.
+            # NOTE: Replace the dot to be able to store an integer since I don't trust Sass comparisons.
             # In fact, I don't trust floats in any programming language in existence.
             # Also replace all placeholders including the double quotes to be able to store "raw data".
             sass_file_data = template_data.replace(

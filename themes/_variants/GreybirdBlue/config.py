@@ -10,7 +10,7 @@ link_color = "#0000ee"
 # For this file to be usable, the settings variable should be declared and
 # all data inside the settings dictionary is mandatory.
 settings = {
-    # The following 4 keys are used when parsing the Cinnamon theme SASS files.
+    # The following 4 keys are used when parsing the Cinnamon theme Sass files.
     "selected_bg_color": selected_bg_color,
     "warning_color": warning_color,
     "error_color": error_color,
