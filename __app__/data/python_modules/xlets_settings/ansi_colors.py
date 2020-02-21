@@ -4,7 +4,7 @@
 
 Attributes
 ----------
-Ansi : xlets_settings.ANSIColors
+Ansi : xlets_settings.ansi_colors.ANSIColors
     An ``ANSIColors`` instance.
 color_table : dict
     ANSI color table.

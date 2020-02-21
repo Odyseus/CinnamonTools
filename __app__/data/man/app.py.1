@@ -88,7 +88,7 @@ git clone \-\-recurse\-submodules \-\-shallow\-submodules <cinnamon_tools_reposi
 .UNINDENT
 .UNINDENT
 .sp
-\fB\-\-\-\-recurse\-submodules\fP argument is also clone the sub\-modules and all sub\-modules that a sub\-module might have.
+\fB\-\-recurse\-submodules\fP argument will also clone the sub\-modules and all sub\-modules that a sub\-module might have.
 \fB\-\-shallow\-submodules\fP argument is to clone the sub\-modules to a depth of one commit to avoid downloading a huge amount of \fBgit\fP history.
 .SS Documentation building requirements
 .INDENT 0.0
@@ -104,11 +104,7 @@ git clone \-\-recurse\-submodules \-\-shallow\-submodules <cinnamon_tools_reposi
 .IP \(bu 2
 \fBPython 3.5+\fP
 .IP \(bu 2
-\fBsass\fP: Either of the following implementations can be used to parse 
-.nf
-|Sass|
-.fi
- files.
+\fBsass\fP: Either of the following implementations can be used to parse Sass files.
 .INDENT 2.0
 .INDENT 3.5
 .INDENT 0.0
@@ -242,11 +238,7 @@ There is actually one theme in this repository, but infinite variants (color acc
 .UNINDENT
 .SS app.py parse_sass
 .sp
-This command parses the 
-.nf
-|Sass|
-.fi
- files needed to create the themes found in this repository. It\(aqs only usefull for people that wants to create their own themes variants. See requirements\&.
+This command parses the Sass files needed to create the themes found in this repository. It\(aqs only usefull for people that wants to create their own themes variants. See requirements\&.
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
