@@ -4,7 +4,7 @@
 
 Attributes
 ----------
-Ansi : python_utils.ANSIColors
+Ansi : python_utils.ansi_colors.ANSIColors
     An ``ANSIColors`` instance.
 color_table : dict
     ANSI color table.
