@@ -2,44 +2,33 @@
 <html>
 
 <head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>Help for Weather (Fork By Odyseus)</title>
-<link rel="shortcut icon" type="image/x-icon" href="./icon.png">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript" src="./assets/js/localizations-handler.min.js"></script>
-<link type="text/css" rel="stylesheet" href="./assets/css/flatly_bootstrap_theme.min.css">
-<link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
-<style type="text/css">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>Help for Weather (Fork By Odyseus)</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
+    <style type="text/css">
 
-</style>
+    </style>
 </head>
 
 <body>
-<noscript>
-<div class="alert alert-warning" role="alert">
-<p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
-<p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
-<p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
-</div>
-<!-- .alert.alert-warning -->
-</noscript>
 <div id="mainarea">
-    <nav class="text-bold py-0 py-md-0 navbar navbar-expand-sm navbar-light fixed-top bg-light" role="navigation">
+    <nav class="text-bold py-0 navbar navbar-expand-sm navbar-dark bg-gradient-primary fixed-top" role="navigation">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <ul class="nav navbar-nav">
-                    <!-- The preventDefault() calls are to avoid changing the address in the address bar. -->
-                    <li><a id="nav-xlet-help" class="navbar-brand" onclick="event.preventDefault();" href="#xlet-help">Help</a></li>
-                    <li><a id="nav-xlet-contributors" class="navbar-brand" onclick="event.preventDefault();" href="#xlet-contributors">Contributors</a></li>
-                    <li><a id="nav-xlet-changelog" class="navbar-brand" onclick="event.preventDefault();" href="#xlet-changelog">Changelog</a></li>
-                </ul>
+            <div class="nav navbar-nav mr-auto">
+                <!-- The preventDefault() calls are to avoid changing the address in the address bar. -->
+                <a id="nav-xlet-help" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-help">Help</a>
+                <a id="nav-xlet-contributors" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-contributors">Contributors</a>
+                <a id="nav-xlet-changelog" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-changelog">Changelog</a>
             </div>
             <form class="form-inline">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="input-group-text" for="localization-switch">🌐</span>
                     </div>
-                    <select class="custom-select custom-select-sm text-bold" id="localization-switch" onchange="self.toggleLocalizationVisibility(value, this);">
+                    <select class="custom-select custom-select-sm text-bold" id="localization-switch">
 <!-- English --><option selected data-title="Help for Weather (Fork By Odyseus)" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
 <!-- Español --><option data-title="Ayuda para Clima (Modificado por Odyseus)" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
                     </select>
@@ -49,6 +38,14 @@
     </nav>
 <span id="xlet-help">
 <div class="container boxed my-3 py-3">
+<noscript>
+    <div class="alert alert-danger" role="alert">
+        <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
+        <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
+        <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
+    </div>
+    <!-- .alert.alert-danger -->
+</noscript>
 
 <div id="es" class="localization-content" hidden="true">
 <h1>Ayuda para Clima (Modificado por Odyseus)</h1>
@@ -668,18 +665,18 @@ The following sections are available only in English.
 
 </div> <!-- #mainarea -->
 <!--Footer-->
-<footer class="page-footer text-bold bg-light pt-4 mt-4">
+<footer class="text-bold text-white navbar-dark bg-gradient-primary px-3 pt-4 mt-4">
     <!--Footer Links-->
     <div class="container-fluid text-left">
         <ul class="list-unstyled">
             <li>
-                <p>Page created with <a href="https://getbootstrap.com"><b>Bootstrap</b></a>.</p>
+                <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
             </li>
             <li>
-                <p><a href="https://gitlab.com/Odyseus/flatly_bootstrap_theme"><b>Boostrap theme</b></a> based on <a href="https://bootswatch.com"><b>Bootswatch</b></a>'s <a href="https://bootswatch.com/flatly"><b>Flatly theme</b></a>.</p>
+                <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
             </li>
             <li>
-                <p><a href="https://github.com/julienetie/smooth-scroll"><b>Smooth Scroll plugin</b></a> provided by <a href="https://github.com/julienetie"><b>Julien Etienne</b></a>.</p>
+                <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
             </li>
         </ul>
     </div>
@@ -693,7 +690,8 @@ The following sections are available only in English.
     <!--/.Copyright-->
 </footer>
 <!--/.Footer-->
-<script type="text/javascript">toggleLocalizationVisibility(null);
+<script type="text/javascript" defer src="./assets/js/localizations-handler.min.js"></script>
+<script type="text/javascript">
 
 </script>
 </body>
