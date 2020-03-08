@@ -4,6 +4,55 @@
 
 ***
 
+**Date:** Sun, 8 Mar 2020 12:55:08 -0300<br/>
+**Commit:** [80ef94c](https://gitlab.com/Odyseus/CinnamonTools/commit/80ef94c)<br/>
+**Author:** Odyseus<br/>
+
+#### All xlets
+
+- Updated help pages.
+
+***
+
+**Date:** Sun, 8 Mar 2020 12:53:13 -0300<br/>
+**Commit:** [190371d](https://gitlab.com/Odyseus/CinnamonTools/commit/190371d)<br/>
+**Author:** Odyseus<br/>
+
+#### Python modules
+
+- General adaptations due to changes to the HTML assets.
+- Revamped help pages HTML template.
+    - Latest Bootstrap version markup conformance.
+    - Moved the loading of the `localizations-handler.js` script at the bottom of the page and with the `defer` attribute set to *guarantee* its correct loading.
+    - Went back to a dark navbar and footer. I don't like it, but it has better contrast than a light navbar with dark text.
+
+***
+
+**Date:** Sun, 8 Mar 2020 12:52:58 -0300<br/>
+**Commit:** [b792cd5](https://gitlab.com/Odyseus/CinnamonTools/commit/b792cd5)<br/>
+**Author:** Odyseus<br/>
+
+#### Help pages HTML assets
+
+- Updated stylesheet and renamed to bootstrap.min.css.
+- localizations-handler.js:
+    - Removed `localStorage` polyfill. If a browser doesn't support it, tough luck.
+    - Removed all global variables/functions. It wasn't really needed for any of them to be globally declared.
+    - Handling of the language selector through a listener instead of a *event attribute* to avoid global declarations.
+
+***
+
+**Date:** Thu, 20 Feb 2020 23:59:41 -0300<br/>
+**Commit:** [4b77f64](https://gitlab.com/Odyseus/CinnamonTools/commit/4b77f64)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated sub-modules.
+- Updated changelogs.
+
+***
+
 **Date:** Thu, 20 Feb 2020 23:25:32 -0300<br/>
 **Commit:** [8ad41ce](https://gitlab.com/Odyseus/CinnamonTools/commit/8ad41ce)<br/>
 **Author:** Odyseus<br/>
