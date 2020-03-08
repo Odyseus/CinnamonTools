@@ -164,7 +164,7 @@ EXTRA_COMMON_FILES = [{
 }, {
     "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
     "destination_path": "assets/css",
-    "file_name": "flatly_bootstrap_theme.min.css",
+    "file_name": "bootstrap.min.css",
     "depends_on": "HELP.html",
 }]
 
@@ -179,7 +179,7 @@ COMMON_HELP_ASSETS = [{
 }, {
     "source_path": os.path.join(root_folder, "__app__", "data", "html_assets", "css"),
     "destination_path": "css",
-    "file_name": "flatly_bootstrap_theme.min.css"
+    "file_name": "bootstrap.min.css"
 }]
 
 SETTINGS_FRAMEWORK_ADDITIONAL_FILES_TO_SCAN = [
