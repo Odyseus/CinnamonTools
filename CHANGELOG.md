@@ -4,6 +4,47 @@
 
 ***
 
+**Date:** Fri, 20 Mar 2020 22:59:32 -0300<br/>
+**Commit:** [2603fde](https://gitlab.com/Odyseus/CinnamonTools/commit/2603fde)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from 8346a64..5969fd6
+
+5969fd6 Updated README.md
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 5969fd64821334baf9e074f15a71548d93af60b1
+
+***
+
+**Date:** Fri, 20 Mar 2020 22:22:15 -0300<br/>
+**Commit:** [34a3432](https://gitlab.com/Odyseus/CinnamonTools/commit/34a3432)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from 63cfefc..8346a64
+
+8346a64 bottle_utils.py
+44cac46 cmd_utils.py
+138f395 Added bottle_utils.py module
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 8346a6431674384f40f8069a37f6f26c26986f75
+
+***
+
+**Date:** Sun, 8 Mar 2020 12:56:15 -0300<br/>
+**Commit:** [cf6beb8](https://gitlab.com/Odyseus/CinnamonTools/commit/cf6beb8)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated CHANGELOG.md.
+- Updated sub-modules.
+- Updated manual page.
+- Removed unused file.
+
+***
+
 **Date:** Sun, 8 Mar 2020 12:55:08 -0300<br/>
 **Commit:** [80ef94c](https://gitlab.com/Odyseus/CinnamonTools/commit/80ef94c)<br/>
 **Author:** Odyseus<br/>
