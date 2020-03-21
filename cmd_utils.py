@@ -12,10 +12,12 @@ STREAM_STDOUT : int
     1
 """
 import os
+import platform
 
 from subprocess import DEVNULL
 from subprocess import PIPE
 from subprocess import Popen
+from subprocess import call
 from subprocess import run
 
 
@@ -247,6 +249,22 @@ def run_cmd(cmd, stdout=PIPE, stderr=PIPE, env=True, **kwargs):
         env = get_environment()
 
     return run(cmd, stdout=stdout, stderr=stderr, env=env, **kwargs)
+
+
+def launch_default_for_file(filepath):
+    """Launch file with default application.
+
+    Parameters
+    ----------
+    filepath : str
+        File path.
+    """
+    if platform.system() == "Darwin":       # MacOS
+        call(("open", filepath))
+    elif platform.system() == "Windows":    # Windows
+        os.startfile(filepath)
+    else:                                   # Linux variants
+        call(("xdg-open", filepath))
 
 
 if __name__ == "__main__":
