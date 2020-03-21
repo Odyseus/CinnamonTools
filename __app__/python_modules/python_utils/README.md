@@ -7,7 +7,6 @@
 - **docopt:** Slightly modified version of the [docopt](https://github.com/docopt/docopt) Python module.
     - Print help "headers" in bold.
     - Re-declared some strings as raw strings (``r"..."``) to avoid some invalid escape sequence linter warnings.
-- **jsonschema:** The [jsonschema](https://github.com/Julian/jsonschema) module is an implementation of [JSON Schema](https://json-schema.org/) for Python.
 - **menu:** Slightly modified version of the [Menu](https://pypi.python.org/pypi/Menu) Python module to easily create CLI menus.
     - Changed some default values to suit my needs.
     - Some aesthetic changes for better readability of the menu items on the screen.
