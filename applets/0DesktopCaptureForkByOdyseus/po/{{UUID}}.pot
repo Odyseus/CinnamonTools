@@ -6,72 +6,72 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopCaptureForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2020-02-18 04:55-0300\n"
+"POT-Creation-Date: 2020-04-04 15:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2020-02-14 03:47:21.876\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-03-20 21:47:57.129\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
+#: ../../__app__/python_modules/localized_help_creator.py:246 ../../__app__/python_modules/localized_help_creator.py:320
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:321 applet.js:276
+#: ../../__app__/python_modules/localized_help_creator.py:317 applet.js:261
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:322
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:323
+#: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:379
+#: ../../__app__/python_modules/localized_help_creator.py:375
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:382
+#: ../../__app__/python_modules/localized_help_creator.py:378
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:388
+#: ../../__app__/python_modules/localized_help_creator.py:384
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:408
+#: ../../__app__/python_modules/localized_help_creator.py:404
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:422
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:430
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:431
+#: ../../__app__/python_modules/localized_help_creator.py:427
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -139,7 +139,7 @@ msgstr ""
 msgid "The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program."
 msgstr ""
 
-#: z_create_localized_help.py:48 applet.js:221
+#: z_create_localized_help.py:48 applet.js:206
 msgid "Programs support"
 msgstr ""
 
@@ -463,7 +463,7 @@ msgstr ""
 msgid "The selected window class title."
 msgstr ""
 
-#: z_create_localized_help.py:251 applet.js:228
+#: z_create_localized_help.py:251 applet.js:213
 msgid "Cinnamon recorder profiles"
 msgstr ""
 
@@ -528,11 +528,11 @@ msgstr ""
 msgid "Cinnamon 3.0.x and its built-in screenshot mechanism"
 msgstr ""
 
-#: z_create_localized_help.py:323 applet.js:1967
+#: z_create_localized_help.py:323 applet.js:1952
 msgid "The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"
 msgstr ""
 
-#: z_create_localized_help.py:326 applet.js:1968
+#: z_create_localized_help.py:326 applet.js:1953
 msgid "Do not use it or Cinnamon will crash!"
 msgstr ""
 
@@ -545,342 +545,342 @@ msgstr ""
 msgid "To permanently dismiss the critical notification displayed when the applet is used under Cinnamon 3.0.x, enable the option found in this applet settings window called \"I read the disclaimer and I'm aware of the consequences\", under the \"Disclaimer\" section."
 msgstr ""
 
-#: applet.js:170
+#: applet.js:155
 msgid "Open screenshots folder"
 msgstr ""
 
-#: applet.js:180
+#: applet.js:165
 msgid "Open screencasts folder"
 msgstr ""
 
-#: applet.js:222
+#: applet.js:207
 msgid "Export programs"
 msgstr ""
 
-#: applet.js:223
+#: applet.js:208
 msgid "Import programs"
 msgstr ""
 
-#: applet.js:224
+#: applet.js:209
 msgid "Reset programs"
 msgstr ""
 
-#: applet.js:225
+#: applet.js:210
 msgid "Remove all programs"
 msgstr ""
 
-#: applet.js:229
+#: applet.js:214
 msgid "Export profiles"
 msgstr ""
 
-#: applet.js:230
+#: applet.js:215
 msgid "Import profiles"
 msgstr ""
 
-#: applet.js:231
+#: applet.js:216
 msgid "Reset profiles"
 msgstr ""
 
-#: applet.js:232
+#: applet.js:217
 msgid "Remove all profiles"
 msgstr ""
 
-#: applet.js:410
+#: applet.js:395
 msgid "Error trying to get theme"
 msgstr ""
 
-#: applet.js:417
+#: applet.js:402
 msgid "Stylesheet parse error"
 msgstr ""
 
-#: applet.js:427
+#: applet.js:412
 msgid "Error unloading stylesheet"
 msgstr ""
 
-#: applet.js:760
+#: applet.js:745
 msgid "Choose camera"
 msgstr ""
 
-#: applet.js:761
+#: applet.js:746
 msgid "Choose recorder"
 msgstr ""
 
-#: applet.js:766
+#: applet.js:751
 msgid "Latest capture"
 msgstr ""
 
-#: applet.js:796
+#: applet.js:781
 msgid "Screencast"
 msgstr ""
 
-#: applet.js:796
+#: applet.js:781
 msgid "Screenshot"
 msgstr ""
 
-#: applet.js:807
+#: applet.js:792
 msgid "Assign a title to your program!!!"
 msgstr ""
 
-#: applet.js:811 constants.js:43
+#: applet.js:796 constants.js:39
 msgid "Disabled"
 msgstr ""
 
-#: applet.js:882
+#: applet.js:867
 msgid "Include cursor"
 msgstr ""
 
-#: applet.js:889
+#: applet.js:874
 msgid "Whether to include mouse cursor in screenshot."
 msgstr ""
 
-#: applet.js:903
+#: applet.js:888
 #, javascript-format
 msgid "Monitor %d"
 msgstr ""
 
-#: applet.js:916
+#: applet.js:901
 msgid "Auto copy image"
 msgstr ""
 
-#: applet.js:932 applet.js:1028
+#: applet.js:917 applet.js:1013
 msgid "Repeat last"
 msgstr ""
 
-#: applet.js:949
+#: applet.js:934
 msgid "Capture delay"
 msgstr ""
 
 #. TO TRANSLATORS:
 #. sec. = abbreviation of "second"
 #. secs. = abbreviation of "seconds"
-#: applet.js:963
+#: applet.js:948
 msgid "sec."
 msgid_plural "secs."
 msgstr[0] ""
 msgstr[1] ""
 
-#: applet.js:971
+#: applet.js:956
 msgid "How many seconds to wait before taking a screenshot."
 msgstr ""
 
-#: applet.js:983 utils.js:414
+#: applet.js:968 utils.js:402
 msgid "Profile"
 msgstr ""
 
-#: applet.js:992
+#: applet.js:977
 msgid "Choose Cinnamon recorder profile"
 msgstr ""
 
-#: applet.js:998 applet.js:1355
+#: applet.js:983 applet.js:1340
 msgid "Start recording"
 msgstr ""
 
-#: applet.js:1011
+#: applet.js:996
 msgid "Record sound"
 msgstr ""
 
-#: applet.js:1018
+#: applet.js:1003
 msgid "Whether to record sound."
 msgstr ""
 
-#: applet.js:1044 applet.js:1352
+#: applet.js:1029 applet.js:1337
 msgid "Stop recording"
 msgstr ""
 
-#: applet.js:1061 applet.js:1080
+#: applet.js:1046 applet.js:1065
 msgid "Frames per second"
 msgstr ""
 
-#: applet.js:1072
+#: applet.js:1057
 msgid "FPS"
 msgstr ""
 
-#: applet.js:1093
+#: applet.js:1078
 msgid "Device options"
 msgstr ""
 
-#: applet.js:1284 utils.js:2342
+#: applet.js:1269 utils.js:2330
 msgid "File path copied to clipboard."
 msgstr ""
 
-#: applet.js:1288 utils.js:2338
+#: applet.js:1273 utils.js:2326
 msgid "Image data copied to clipboard."
 msgstr ""
 
-#: applet.js:1364
+#: applet.js:1349
 msgid "Selected storage folder doesn't exist!"
 msgstr ""
 
-#: applet.js:1372
+#: applet.js:1357
 msgid "Selected storage folder is not a directory!"
 msgstr ""
 
-#: applet.js:1390
+#: applet.js:1375
 msgid "File cannot be created!"
 msgstr ""
 
-#: applet.js:1614 applet.js:1674
+#: applet.js:1599 applet.js:1659
 msgid "Displaying command that will be executed"
 msgstr ""
 
-#: applet.js:1705
+#: applet.js:1690
 msgid "Command exited with error status"
 msgstr ""
 
-#: applet.js:1846
+#: applet.js:1831
 msgid "Possibly malformed JSON file."
 msgstr ""
 
-#: applet.js:1847
+#: applet.js:1832
 msgid "Check the logs."
 msgstr ""
 
-#: applet.js:1905
+#: applet.js:1890
 msgid "Do you really want to reset this preference to its default value?"
 msgstr ""
 
-#: applet.js:1944
+#: applet.js:1929
 msgid "Do you really want to empty this preference?"
 msgstr ""
 
-#: applet.js:1969
+#: applet.js:1954
 msgid "Read this applet help page (Known issues) for more details on the matter."
 msgstr ""
 
-#: applet.js:1970
+#: applet.js:1955
 msgid "You will keep seeing this notification until you follow the instructions found on the help page."
 msgstr ""
 
-#: applet.js:1981
+#: applet.js:1966
 msgid "Operation aborted!"
 msgstr ""
 
-#: constants.js:44
+#: constants.js:40
 msgid "Area"
 msgstr ""
 
-#: constants.js:45
+#: constants.js:41
 msgid "Cinnamon UI"
 msgstr ""
 
-#: constants.js:46
+#: constants.js:42
 msgid "Current Window"
 msgstr ""
 
-#: constants.js:47
+#: constants.js:43
 msgid "Monitor"
 msgstr ""
 
-#: constants.js:48
+#: constants.js:44
 msgid "Screen"
 msgstr ""
 
-#: constants.js:49
+#: constants.js:45
 msgid "Tooltip"
 msgstr ""
 
-#: constants.js:50
+#: constants.js:46
 msgid "Window Menu"
 msgstr ""
 
-#: constants.js:51
+#: constants.js:47
 msgid "Window Section"
 msgstr ""
 
-#: constants.js:52
+#: constants.js:48
 msgid "Window"
 msgstr ""
 
 #. settings-schema.json->pref_copy_to_clipboard->options
-#: utils.js:547
+#: utils.js:535
 msgid "Off"
 msgstr ""
 
-#: utils.js:983
+#: utils.js:971
 msgid "Select an area by clicking and dragging"
 msgstr ""
 
-#: utils.js:985
+#: utils.js:973
 msgid "Use arrow keys to move the selection"
 msgstr ""
 
-#: utils.js:987
+#: utils.js:975
 msgid "Use SHIFT and arrow keys to resize the selection"
 msgstr ""
 
-#: utils.js:989
+#: utils.js:977
 msgid "Press ENTER to confirm or ESC to cancel"
 msgstr ""
 
-#: utils.js:993
+#: utils.js:981
 msgid "Select a UI element by moving the mouse"
 msgstr ""
 
-#: utils.js:995
+#: utils.js:983
 msgid "Use mouse wheel to traverse hierarchy"
 msgstr ""
 
-#: utils.js:997
+#: utils.js:985
 msgid "Hold SHIFT to allow clicking UI element"
 msgstr ""
 
-#: utils.js:999
+#: utils.js:987
 msgid "Click to complete the capture, or ESC to cancel"
 msgstr ""
 
-#: utils.js:2159
+#: utils.js:2147
 msgid "File no longer available"
 msgstr ""
 
-#: utils.js:2178
+#: utils.js:2166
 msgid "Delete"
 msgstr ""
 
-#: utils.js:2179
+#: utils.js:2167
 msgid "Delete captured file from file system."
 msgstr ""
 
-#: utils.js:2183
+#: utils.js:2171
 msgid "Copy data"
 msgstr ""
 
-#: utils.js:2184
+#: utils.js:2172
 msgid "Copy image data to clipboard."
 msgstr ""
 
-#: utils.js:2188
+#: utils.js:2176
 msgid "Copy path"
 msgstr ""
 
-#: utils.js:2189
+#: utils.js:2177
 msgid "Copy image path to clipboard."
 msgstr ""
 
-#: utils.js:2306
+#: utils.js:2294
 msgid "Do you really want to delete this file?"
 msgstr ""
 
-#: utils.js:2329
+#: utils.js:2317
 msgid "Failed copying image data."
 msgstr ""
 
-#: utils.js:2378
+#: utils.js:2366
 msgid "Left click"
 msgstr ""
 
-#: utils.js:2378
+#: utils.js:2366
 msgid "Open image file."
 msgstr ""
 
-#: utils.js:2379
+#: utils.js:2367
 msgid "Open folder."
 msgstr ""
 
-#: utils.js:2379
+#: utils.js:2367
 msgid "Right click"
 msgstr ""
 
-#: utils.js:2426
+#: utils.js:2414
 msgid "WARNING!!!"
 msgstr ""
 

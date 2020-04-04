@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0DesktopHandler\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-02-14 01:15-0300\n"
+"POT-Creation-Date: 2020-04-04 15:23-0300\n"
 "PO-Revision-Date: 2020-02-10 20:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -18,63 +18,63 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
+#: ../../__app__/python_modules/localized_help_creator.py:246 ../../__app__/python_modules/localized_help_creator.py:320
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:321 applet.js:528
+#: ../../__app__/python_modules/localized_help_creator.py:317 applet.js:517
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:322
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:323
+#: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:379
+#: ../../__app__/python_modules/localized_help_creator.py:375
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:382
+#: ../../__app__/python_modules/localized_help_creator.py:378
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
 
-#: ../../__app__/python_modules/localized_help_creator.py:388
+#: ../../__app__/python_modules/localized_help_creator.py:384
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:408
+#: ../../__app__/python_modules/localized_help_creator.py:404
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:422
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:430
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:431
+#: ../../__app__/python_modules/localized_help_creator.py:427
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -100,12 +100,12 @@ msgid "Scroll over applet actions:"
 msgstr "Acciones al desplazarse sobre el applet:"
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:35 applet.js:772
+#: z_create_localized_help.py:35 applet.js:761
 msgid "Switch between workspaces"
 msgstr "Alternar entre espacios de trabajo"
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:36 applet.js:773
+#: z_create_localized_help.py:36 applet.js:762
 msgid "Adjust opacity of windows"
 msgstr "Ajustar opacidad de ventanas"
 
@@ -119,7 +119,7 @@ msgid "Toggle Show desktop"
 msgstr "Activar Mostrar escritorio"
 
 #. settings-schema.json->pref_scroll_action->options
-#: z_create_localized_help.py:38 applet.js:775
+#: z_create_localized_help.py:38 applet.js:764
 msgid "Switch between windows"
 msgstr "Cambiar entre ventanas"
 
@@ -139,7 +139,7 @@ msgstr "Acciones para los desplazamientos arriba/abajo y/o los clics izquierdo/c
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:42 applet.js:465 applet.js:756
+#: z_create_localized_help.py:42 applet.js:454 applet.js:745
 msgid "Expo"
 msgstr "Visualizar áreas de trabajo"
 
@@ -147,7 +147,7 @@ msgstr "Visualizar áreas de trabajo"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:43 applet.js:757
+#: z_create_localized_help.py:43 applet.js:746
 msgid "Overview"
 msgstr "Visión general"
 
@@ -155,7 +155,7 @@ msgstr "Visión general"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:44 applet.js:758
+#: z_create_localized_help.py:44 applet.js:747
 msgid "Launch App Switcher"
 msgstr "Lanzar conmutador de aplicaciones"
 
@@ -167,7 +167,7 @@ msgstr "Mostrar Escritorio"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:46 applet.js:759
+#: z_create_localized_help.py:46 applet.js:748
 msgid "Run 1st Custom Command"
 msgstr "Ejecutar 1.º comando personalizado"
 
@@ -175,7 +175,7 @@ msgstr "Ejecutar 1.º comando personalizado"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:47 applet.js:760
+#: z_create_localized_help.py:47 applet.js:749
 msgid "Run 2nd Custom Command"
 msgstr "Ejecutar 2.º comando personalizado"
 
@@ -183,7 +183,7 @@ msgstr "Ejecutar 2.º comando personalizado"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:48 applet.js:761
+#: z_create_localized_help.py:48 applet.js:750
 msgid "Run 3rd Custom Command"
 msgstr "Ejecutar 3.º comando personalizado"
 
@@ -191,7 +191,7 @@ msgstr "Ejecutar 3.º comando personalizado"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: z_create_localized_help.py:49 applet.js:762
+#: z_create_localized_help.py:49 applet.js:751
 msgid "Run 4rd Custom Command"
 msgstr "Ejecutar 4.º comando personalizado"
 
@@ -207,45 +207,45 @@ msgstr "Clic Izquierdo/Medio/Derecho en el applet se puede configurar para abrir
 msgid "Desktop peek functionality with configurable levels of opacity."
 msgstr "Funcionalidad Desktop Peek con niveles configurables de opacidad."
 
-#: applet.js:367 applet.js:433
+#: applet.js:356 applet.js:422
 msgid "Close window"
 msgstr "Cerrar ventana"
 
-#: applet.js:402
+#: applet.js:391
 msgid "Close all windows from this wrokspace"
 msgstr "Cerrar todas las ventanas de este espacio de trabajo"
 
-#: applet.js:452
+#: applet.js:441
 msgid "No open windows"
 msgstr "No hay ventanas abiertas"
 
-#: applet.js:474
+#: applet.js:463
 msgid "Close all windows from all workspaces"
 msgstr "Cerrar todas las ventanas de todos los espacios de trabajo"
 
-#: applet.js:537
+#: applet.js:526
 msgid "About..."
 msgstr "Acerca de..."
 
-#: applet.js:545
+#: applet.js:534
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: applet.js:557
+#: applet.js:546
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
 
-#: applet.js:565
+#: applet.js:554
 #, javascript-format
 msgid "Are you sure that you want to remove '%s' from your panel?"
 msgstr "¿Está seguro de que desea remover '%s' del panel?"
 
-#: applet.js:567
+#: applet.js:556
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: applet.js:568
+#: applet.js:557
 msgid "OK"
 msgstr "Aceptar"
 
@@ -254,82 +254,82 @@ msgstr "Aceptar"
 #. settings-schema.json->pref_scroll_down_action->options
 #. settings-schema.json->pref_left_click_action->options
 #. settings-schema.json->pref_middle_click_action->options
-#: applet.js:763
+#: applet.js:752
 msgid "None"
 msgstr "Ninguna"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:764
+#: applet.js:753
 msgid "Icons only"
 msgstr "Sólo íconos"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:765
+#: applet.js:754
 msgid "Thumbnails only"
 msgstr "Sólo miniaturas"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:766
+#: applet.js:755
 msgid "Icons and thumbnails"
 msgstr "Íconos y miniaturas"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:767
+#: applet.js:756
 msgid "Icons and window preview"
 msgstr "Íconos y vista previa de ventana"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:768
+#: applet.js:757
 msgid "Window preview (no icons)"
 msgstr "Vista previa de ventana (sin íconos)"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:769
+#: applet.js:758
 msgid "Coverflow (3D)"
 msgstr "Coverflow (3D)"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:770
+#: applet.js:759
 msgid "Timeline (3D)"
 msgstr "Timeline (3D)"
 
 #. settings-schema.json->pref_switcher_style->options
-#: applet.js:771
+#: applet.js:760
 msgid "System default"
 msgstr "Predeterminado por el sistema"
 
-#: applet.js:774
+#: applet.js:763
 msgid "Toggle show desktop"
 msgstr "Activar Mostrar escritorio"
 
-#: applet.js:776
+#: applet.js:765
 msgid "Open windows list menu"
 msgstr "Abrir el menú de lista de ventanas"
 
-#: applet.js:794
+#: applet.js:783
 msgid "Scroll Up"
 msgstr "Desplazar hacia arriba"
 
-#: applet.js:795
+#: applet.js:784
 msgid "Scroll Down"
 msgstr "Desplazar hacia abajo"
 
-#: applet.js:797
+#: applet.js:786
 msgid "Scroll"
 msgstr "Desplazamiento del ratón"
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:804
+#: applet.js:793
 msgid "Left click"
 msgstr "Botón izquierdo"
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:810
+#: applet.js:799
 msgid "Middle click"
 msgstr "Botón central"
 
 #. settings-schema.json->pref_button_to_open_menu->options
-#: applet.js:814
+#: applet.js:803
 msgid "Right click"
 msgstr "Botón derecho"
 

@@ -6,20 +6,20 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0FeedsByJonbrettForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2020-02-18 04:55-0300\n"
+"POT-Creation-Date: 2020-04-04 15:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2020-02-14 03:47:21.876\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-03-20 21:47:57.129\n"
 
 #: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:58
 msgid "Application Chooser"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:409 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1105 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1225 ../../__app__/data/python_modules/xlets_settings/__init__.py:1194 ../../__app__/data/python_modules/xlets_settings/__init__.py:1227 python_modules/feeds_importer.py:161
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:409 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1105 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1225 ../../__app__/data/python_modules/xlets_settings/__init__.py:1203 ../../__app__/data/python_modules/xlets_settings/__init__.py:1236 python_modules/feeds_importer.py:161
 msgid "_Cancel"
 msgstr ""
 
@@ -210,7 +210,7 @@ msgstr ""
 msgid "Edit entry"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226 ../../__app__/data/python_modules/xlets_settings/__init__.py:1195 ../../__app__/data/python_modules/xlets_settings/__init__.py:1228
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226 ../../__app__/data/python_modules/xlets_settings/__init__.py:1204 ../../__app__/data/python_modules/xlets_settings/__init__.py:1237
 msgid "_Save"
 msgstr ""
 
@@ -218,113 +218,113 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:746
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:755
 msgid "Previous instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:753
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:762
 msgid "Next instance"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:793
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:802
 msgid "Import settings from a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:797
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:806
 msgid "Export settings to a file"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:801
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:810
 msgid "Reset settings to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:811 ../../__app__/python_modules/localized_help_creator.py:321 applet.js:407
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:820 ../../__app__/python_modules/localized_help_creator.py:317 applet.js:389
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:832
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:841
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:900
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:909
 #, python-format
 msgid "Settings for %s"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1190
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1199
 msgid "Select or enter file to export to"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1200 ../../__app__/data/python_modules/xlets_settings/__init__.py:1232
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1209 ../../__app__/data/python_modules/xlets_settings/__init__.py:1241
 msgid "JSON files"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1223
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1232
 msgid "Select a JSON file to import"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1256
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1265
 msgid "Trying to reset all settings!!!"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1258
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1267
 msgid "Reset all settings to their default values?"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
+#: ../../__app__/python_modules/localized_help_creator.py:246 ../../__app__/python_modules/localized_help_creator.py:320
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:322
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:323
+#: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:379
+#: ../../__app__/python_modules/localized_help_creator.py:375
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:382
+#: ../../__app__/python_modules/localized_help_creator.py:378
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:388
+#: ../../__app__/python_modules/localized_help_creator.py:384
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:408
+#: ../../__app__/python_modules/localized_help_creator.py:404
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:422
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:430
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:431
+#: ../../__app__/python_modules/localized_help_creator.py:427
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -332,15 +332,15 @@ msgstr ""
 msgid "Cinnamon needs to be restarted"
 msgstr ""
 
-#: settings.py:21 utils.js:372
+#: settings.py:21 utils.js:360
 msgid "Enabled"
 msgstr ""
 
-#: settings.py:26 utils.js:359
+#: settings.py:26 utils.js:347
 msgid "Notify"
 msgstr ""
 
-#: settings.py:31 utils.js:346
+#: settings.py:31 utils.js:334
 msgid "Show read"
 msgstr ""
 
@@ -581,96 +581,96 @@ msgstr ""
 msgid "Install with `pip` (Cinnamon needs to be restarted after installing feedparser if the applet was already placed in a panel):"
 msgstr ""
 
-#: applet.js:112
+#: applet.js:94
 msgid "Feeds reader"
 msgstr ""
 
-#: applet.js:243
+#: applet.js:225
 msgid "Missing dependency!!!"
 msgstr ""
 
-#: applet.js:244
+#: applet.js:226
 msgid "This applet needs the feedparser Python 3 module installed on your system for it to work."
 msgstr ""
 
-#: applet.js:245
+#: applet.js:227
 msgid "Read this applet help for more details (Applet context menu > Help item)."
 msgstr ""
 
-#: applet.js:246
+#: applet.js:228
 msgid "Restart Cinnamon after satisfying all dependencies."
 msgstr ""
 
-#: applet.js:314
+#: applet.js:296
 msgid "Mark all feeds as read"
 msgstr ""
 
-#: applet.js:320
+#: applet.js:302
 msgid "Are you sure that you want to mark as read all articles from all feeds?"
 msgstr ""
 
-#: applet.js:321
+#: applet.js:303
 msgid "Cancel"
 msgstr ""
 
-#: applet.js:322
+#: applet.js:304
 msgid "OK"
 msgstr ""
 
-#: applet.js:336
+#: applet.js:318
 msgid "Mark all articles from all feeds as read."
 msgstr ""
 
-#: applet.js:341
+#: applet.js:323
 msgid "Reload"
 msgstr ""
 
-#: applet.js:351
+#: applet.js:333
 msgid "Update feeds from their on-line sources."
 msgstr ""
 
-#: applet.js:356
+#: applet.js:338
 msgid "Manage feeds"
 msgstr ""
 
 #. Extras submenu
-#: applet.js:367
+#: applet.js:349
 msgid "Extras"
 msgstr ""
 
-#: applet.js:371
+#: applet.js:353
 msgid "Import feeds in old format"
 msgstr ""
 
-#: applet.js:385
+#: applet.js:367
 msgid "Import feeds from an old version of this applet."
 msgstr ""
 
-#: applet.js:390
+#: applet.js:372
 msgid "Import feeds from OPML file"
 msgstr ""
 
-#: applet.js:419
+#: applet.js:401
 msgid "Configure..."
 msgstr ""
 
-#: applet.js:521
+#: applet.js:503
 msgid "No unread feeds"
 msgstr ""
 
-#: applet.js:689
+#: applet.js:671
 msgid "Feeds successfully imported."
 msgstr ""
 
-#: applet.js:690
+#: applet.js:672
 msgid "All imported feeds are disabled."
 msgstr ""
 
-#: applet.js:694
+#: applet.js:676
 msgid "Error importing feeds file!"
 msgstr ""
 
-#: applet.js:695
+#: applet.js:677
 msgid "Look at the logs for details."
 msgstr ""
 
@@ -722,67 +722,67 @@ msgstr ""
 msgid "Feed marked Gone, please remove and stop trying."
 msgstr ""
 
-#: utils.js:114 utils.js:1120
+#: utils.js:102 utils.js:1108
 msgid "Loading..."
 msgstr ""
 
-#: utils.js:252
+#: utils.js:240
 msgid "Right Click to display extra options"
 msgstr ""
 
 #. Only one page of items to read, no need to display mark all posts option.
-#: utils.js:315
+#: utils.js:303
 msgid "Mark All Articles as Read"
 msgstr ""
 
-#: utils.js:326
+#: utils.js:314
 #, javascript-format
 msgid "Mark %d Article as Read"
 msgid_plural "Mark the Next %d Articles as Read"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:335
+#: utils.js:323
 msgid "Update Feed URL"
 msgstr ""
 
-#: utils.js:340
+#: utils.js:328
 msgid "Visit Feed URL"
 msgstr ""
 
-#: utils.js:501 utils.js:507
+#: utils.js:489 utils.js:495
 msgid "Published"
 msgstr ""
 
-#: utils.js:575
+#: utils.js:563
 msgid "Mark Article as Read"
 msgstr ""
 
-#: utils.js:579
+#: utils.js:567
 msgid "Copy Article URL"
 msgstr ""
 
-#: utils.js:614
+#: utils.js:602
 msgid "d"
 msgstr ""
 
-#: utils.js:616 utils.js:618
+#: utils.js:604 utils.js:606
 msgid "h"
 msgstr ""
 
-#: utils.js:618
+#: utils.js:606
 #, javascript-format
 msgid "(<1%s) "
 msgstr ""
 
-#: utils.js:966
+#: utils.js:954
 #, javascript-format
 msgid "%d unread article!"
 msgid_plural "%d unread articles!"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:1104
+#: utils.js:1092
 msgid "Fail to load feed"
 msgstr ""
 

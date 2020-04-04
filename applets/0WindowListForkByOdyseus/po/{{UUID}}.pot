@@ -6,72 +6,72 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2020-02-18 04:55-0300\n"
+"POT-Creation-Date: 2020-04-04 15:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2020-02-14 03:47:21.876\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-03-20 21:47:57.129\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
+#: ../../__app__/python_modules/localized_help_creator.py:246 ../../__app__/python_modules/localized_help_creator.py:320
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:321 utils.js:1252
+#: ../../__app__/python_modules/localized_help_creator.py:317 utils.js:1243
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:322
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:323
+#: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:379
+#: ../../__app__/python_modules/localized_help_creator.py:375
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:382
+#: ../../__app__/python_modules/localized_help_creator.py:378
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:388
+#: ../../__app__/python_modules/localized_help_creator.py:384
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:408
+#: ../../__app__/python_modules/localized_help_creator.py:404
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:422
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:430
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:431
+#: ../../__app__/python_modules/localized_help_creator.py:427
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -111,73 +111,73 @@ msgstr ""
 msgid "Inverted menu on top panel"
 msgstr ""
 
-#: utils.js:1104
+#: utils.js:1095
 msgid "Preferences"
 msgstr ""
 
-#: utils.js:1118
+#: utils.js:1109
 msgid "Move to the other monitor"
 msgstr ""
 
-#: utils.js:1129
+#: utils.js:1120
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr ""
 
-#: utils.js:1140
+#: utils.js:1131
 msgid "Only on this workspace"
 msgstr ""
 
-#: utils.js:1146
+#: utils.js:1137
 msgid "Visible on all workspaces"
 msgstr ""
 
-#: utils.js:1152
+#: utils.js:1143
 msgid "Move to another workspace"
 msgstr ""
 
 #. Close all/others
-#: utils.js:1182
+#: utils.js:1173
 msgid "Close all"
 msgstr ""
 
-#: utils.js:1192
+#: utils.js:1183
 msgid "Close others"
 msgstr ""
 
-#: utils.js:1207
+#: utils.js:1198
 msgid "Restore to full opacity"
 msgstr ""
 
-#: utils.js:1215
+#: utils.js:1206
 msgid "Restore"
 msgstr ""
 
-#: utils.js:1220
+#: utils.js:1211
 msgid "Minimize"
 msgstr ""
 
-#: utils.js:1228
+#: utils.js:1219
 msgid "Unmaximize"
 msgstr ""
 
-#: utils.js:1233
+#: utils.js:1224
 msgid "Maximize"
 msgstr ""
 
-#: utils.js:1240
+#: utils.js:1231
 msgid "Close"
 msgstr ""
 
-#: utils.js:1259
+#: utils.js:1250
 msgid "About..."
 msgstr ""
 
-#: utils.js:1266
+#: utils.js:1257
 msgid "Configure..."
 msgstr ""
 
-#: utils.js:1282
+#: utils.js:1273
 #, javascript-format
 msgid "Remove '%s'"
 msgstr ""

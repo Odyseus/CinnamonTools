@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonTweaks\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-02-18 04:55-0300\n"
+"POT-Creation-Date: 2020-04-04 15:24-0300\n"
 "PO-Revision-Date: 2020-02-18 04:59-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Application Chooser"
 msgstr "Selector de aplicaciones"
 
-#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:409 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1105 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1225 ../../__app__/data/python_modules/xlets_settings/__init__.py:1194 ../../__app__/data/python_modules/xlets_settings/__init__.py:1227
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:62 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:409 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1105 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1225 ../../__app__/data/python_modules/xlets_settings/__init__.py:1203 ../../__app__/data/python_modules/xlets_settings/__init__.py:1236
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -213,7 +213,7 @@ msgstr "Agregar nueva entrada"
 msgid "Edit entry"
 msgstr "Editar entrada"
 
-#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226 ../../__app__/data/python_modules/xlets_settings/__init__.py:1195 ../../__app__/data/python_modules/xlets_settings/__init__.py:1228
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226 ../../__app__/data/python_modules/xlets_settings/__init__.py:1204 ../../__app__/data/python_modules/xlets_settings/__init__.py:1237
 msgid "_Save"
 msgstr "_Guardar"
 
@@ -221,112 +221,112 @@ msgstr "_Guardar"
 msgid "Other"
 msgstr "Otros"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:746
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:755
 msgid "Previous instance"
 msgstr "Instancia previa"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:753
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:762
 msgid "Next instance"
 msgstr "Siguiente instancia"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:793
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:802
 msgid "Import settings from a file"
 msgstr "Importar configuración desde un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:797
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:806
 msgid "Export settings to a file"
 msgstr "Exportar configuración hacia un archivo"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:801
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:810
 msgid "Reset settings to defaults"
 msgstr "Restablecer los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:811 ../../__app__/python_modules/localized_help_creator.py:321 utils.js:82
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:820 ../../__app__/python_modules/localized_help_creator.py:317 utils.js:70
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:832
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:841
 #, python-format
 msgid "Momentarily highlight the %s on your desktop"
 msgstr "Resaltar momentáneamente el %s en el escritorio"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:900 extension.js:1112
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:909 extension.js:1114
 #, python-format, javascript-format
 msgid "Settings for %s"
 msgstr "Preferencias para %s"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1190
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1199
 msgid "Select or enter file to export to"
 msgstr "Seleccionar o ingresar el archivo hacia el cual exportar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1200 ../../__app__/data/python_modules/xlets_settings/__init__.py:1232
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1209 ../../__app__/data/python_modules/xlets_settings/__init__.py:1241
 msgid "JSON files"
 msgstr "Archivos JSON"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1223
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1232
 msgid "Select a JSON file to import"
 msgstr "Seleccionar un archivo JSON para importar"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1256
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1265
 msgid "Trying to reset all settings!!!"
 msgstr "¡Intentando restablecer todos los ajustes!"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1258
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1267
 msgid "Reset all settings to their default values?"
 msgstr "¿Restablecer todas las configuraciones a sus valores por defecto?"
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
+#: ../../__app__/python_modules/localized_help_creator.py:246 ../../__app__/python_modules/localized_help_creator.py:320
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:322
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:323
+#: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Changelog"
 msgstr "Registro de cambios"
 
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:379
+#: ../../__app__/python_modules/localized_help_creator.py:375
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:382
+#: ../../__app__/python_modules/localized_help_creator.py:378
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
 
-#: ../../__app__/python_modules/localized_help_creator.py:388
+#: ../../__app__/python_modules/localized_help_creator.py:384
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:408
+#: ../../__app__/python_modules/localized_help_creator.py:404
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:422
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:430
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:431
+#: ../../__app__/python_modules/localized_help_creator.py:427
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
@@ -1241,56 +1241,56 @@ msgstr "Para todos los xlets"
 msgid "If the *wrong* settings window is opened, a button to open the *right* settings window will be available."
 msgstr "Si se abre la ventana de configuración *incorrecta*, estará disponible un botón para abrir la ventana de configuración *correcta*."
 
-#: extension.js:111
+#: extension.js:113
 msgid "Applet removal"
 msgstr "Eliminación de applet"
 
-#: extension.js:112 extension.js:170
+#: extension.js:114 extension.js:172
 #, javascript-format
 msgid "Are you sure you want to remove %s?"
 msgstr "¿Está seguro de que desea remover '%s'?"
 
-#: extension.js:114 extension.js:172
+#: extension.js:116 extension.js:174
 msgid "Instance ID"
 msgstr "ID de instancia"
 
-#: extension.js:115 extension.js:173
+#: extension.js:117 extension.js:175
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: extension.js:116 extension.js:174
+#: extension.js:118 extension.js:176
 msgid "OK"
 msgstr "Aceptar"
 
-#: extension.js:169
+#: extension.js:171
 msgid "Desklet removal"
 msgstr "Eliminación de desklet"
 
-#: extension.js:531
+#: extension.js:533
 msgid "Hotcorners tweaks"
 msgstr "Ajustes de esquinas activas"
 
-#: extension.js:1012
+#: extension.js:1014
 msgid "If you updated this extension from an older version, you must check its settings window."
 msgstr "Si actualizó esta extensión desde una versión anterior, <b>usted debe comprobar su ventana de configuración</b>."
 
-#: extension.js:1013
+#: extension.js:1015
 msgid "Some preferences may have been changed to their default values."
 msgstr "Es posible que algunas preferencias hayan sido cambiadas a sus valores predeterminados."
 
-#: extension.js:1014
+#: extension.js:1016
 msgid "This message will not be displayed again."
 msgstr "Este mensaje no se volverá a mostrar."
 
-#: extension.js:1118
+#: extension.js:1120
 msgid "A shortcut to open this extension settings has been generated."
 msgstr "Se ha generado un acceso directo para abrir la configuración de esta extensión."
 
-#: extension.js:1119
+#: extension.js:1121
 msgid "Search for it on your applications menu."
 msgstr "Buscarlo en el menú de aplicaciones."
 
-#: extension.js:1120
+#: extension.js:1122
 msgid "Read this extension help page for more details."
 msgstr "Leer la página de ayuda de esta extensión para más detalles."
 
@@ -1298,31 +1298,31 @@ msgstr "Leer la página de ayuda de esta extensión para más detalles."
 msgid "Invalid overview options: Incorrect number of corners"
 msgstr "Opciones de resumen no válidas: número incorrecto de esquinas"
 
-#: utils.js:98
+#: utils.js:86
 msgid "Tweak activation aborted!!!"
 msgstr "¡¡¡Activación del ajuste abortada!!!"
 
-#: utils.js:99 utils.js:129
+#: utils.js:87 utils.js:117
 msgid "Your Cinnamon version may not be compatible!!!"
 msgstr "¡¡¡Su versión de Cinnamon puede que no sea compatible!!!"
 
-#: utils.js:105
+#: utils.js:93
 msgid "This is a test notification"
 msgstr "Esta es una notificación de prueba"
 
-#: utils.js:122
+#: utils.js:110
 msgid "Cinnamon needs to be restarted."
 msgstr "Cinnamon necesita ser reiniciado."
 
-#: utils.js:128
+#: utils.js:116
 msgid "Extension activation aborted!!!"
 msgstr "¡¡¡Activación de la extensión abortada!!!"
 
-#: utils.js:130
+#: utils.js:118
 msgid "Minimum Cinnamon version allowed: 3.0.x"
 msgstr "Versión mínima de Cinnamon permitida: 3.0.x"
 
-#: utils.js:1268
+#: utils.js:1256
 msgid "No windows in the queue."
 msgstr "No hay ventanas en la cola."
 

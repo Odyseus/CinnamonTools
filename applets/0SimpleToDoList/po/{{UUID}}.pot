@@ -6,72 +6,72 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0SimpleToDoList VERSION\n"
-"POT-Creation-Date: 2020-02-18 04:55-0300\n"
+"POT-Creation-Date: 2020-04-04 15:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2020-02-14 03:47:21.876\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-03-20 21:47:57.129\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
+#: ../../__app__/python_modules/localized_help_creator.py:246 ../../__app__/python_modules/localized_help_creator.py:320
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:321 applet.js:963
+#: ../../__app__/python_modules/localized_help_creator.py:317 applet.js:948
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:322
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:323
+#: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:379
+#: ../../__app__/python_modules/localized_help_creator.py:375
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:382
+#: ../../__app__/python_modules/localized_help_creator.py:378
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:388
+#: ../../__app__/python_modules/localized_help_creator.py:384
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:408
+#: ../../__app__/python_modules/localized_help_creator.py:404
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:422
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:430
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:431
+#: ../../__app__/python_modules/localized_help_creator.py:427
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -274,171 +274,171 @@ msgstr ""
 msgid "The only way to fix this (that I could find) is by editing the Cinnamon theme that one is using and remove those fixed sizes. The CSS selectors that needs to be edited are **.menu StEntry**, **.menu StEntry:focus**, **.popup-menu StEntry** and **.popup-menu StEntry:focus**. Depending on the Cinnamon version the theme was created for, one might find just the first two selectors or the last two or all of them. The CSS properties that need to be edited are **width** and **height**. They could be removed, but the sensible thing to do is to rename them to **min-width** and **min-height** respectively. After editing the theme's file and restarting Cinnamon, the entries inside this applet will look and work like they should."
 msgstr ""
 
-#: applet.js:140 applet.js:200
+#: applet.js:125 applet.js:185
 msgid "New tasks list..."
 msgstr ""
 
-#: applet.js:859
+#: applet.js:844
 msgid "Save as TODO"
 msgstr ""
 
-#: applet.js:867
+#: applet.js:852
 msgid "Save all current tasks lists as a TODO file."
 msgstr ""
 
-#: applet.js:877
+#: applet.js:862
 msgid "Export tasks"
 msgstr ""
 
-#: applet.js:885
+#: applet.js:870
 msgid "Export all current tasks lists into a JSON file."
 msgstr ""
 
-#: applet.js:886 applet.js:904
+#: applet.js:871 applet.js:889
 msgid "JSON files exported by this applet can be imported back into the applet and the tasks list found inside the files are added to the tasks lists currently loaded into the applet."
 msgstr ""
 
-#: applet.js:896
+#: applet.js:881
 msgid "Import tasks"
 msgstr ""
 
-#: applet.js:903
+#: applet.js:888
 msgid "Import tasks lists from a previously exported JSON file into this applet."
 msgstr ""
 
-#: applet.js:913
+#: applet.js:898
 msgid "Restore example tasks"
 msgstr ""
 
-#: applet.js:929
+#: applet.js:914
 msgid "Restore the example tasks list that were present when the applet was first loaded."
 msgstr ""
 
-#: applet.js:935
+#: applet.js:920
 msgid "Reset tasks"
 msgstr ""
 
-#: applet.js:941 applet.js:954
+#: applet.js:926 applet.js:939
 msgid "WARNING!!!"
 msgstr ""
 
-#: applet.js:942
+#: applet.js:927
 msgid "Do you really want to remove all your current tasks?"
 msgstr ""
 
-#: applet.js:943 applet.js:954
+#: applet.js:928 applet.js:939
 msgid "This operation cannot be reverted!!!"
 msgstr ""
 
-#: applet.js:953
+#: applet.js:938
 msgid "Remove all currently loaded tasks lists from this applet."
 msgstr ""
 
-#: applet.js:967
+#: applet.js:952
 msgid "Open this applet help file."
 msgstr ""
 
-#: constants.js:24
+#: constants.js:19
 msgid "Tasks list - Some examples"
 msgstr ""
 
-#: constants.js:30
+#: constants.js:25
 msgid "Tasks can be \"tagged\" by simply writing \"@tagname\" as part of the task text. For now, there are 5 priority tags available."
 msgstr ""
 
-#: constants.js:33
+#: constants.js:28
 msgid "This is a @critical priority task"
 msgstr ""
 
-#: constants.js:36
+#: constants.js:31
 msgid "This is a @high priority task"
 msgstr ""
 
-#: constants.js:39
+#: constants.js:34
 msgid "This is a @medium priority task"
 msgstr ""
 
-#: constants.js:42
+#: constants.js:37
 msgid "This is a @today priority task"
 msgstr ""
 
-#: constants.js:45
+#: constants.js:40
 msgid "This is a @low priority task"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:181
+#: utils.js:171
 msgid "low"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:183
+#: utils.js:173
 msgid "today"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:185
+#: utils.js:175
 msgid "medium"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:187
+#: utils.js:177
 msgid "high"
 msgstr ""
 
 #. TO TRANSLATORS: This is a priority tag.
-#: utils.js:189
+#: utils.js:179
 msgid "critical"
 msgstr ""
 
-#: utils.js:560
+#: utils.js:550
 msgid "New task..."
 msgstr ""
 
-#: utils.js:571
+#: utils.js:561
 msgid "Tasks list options"
 msgstr ""
 
-#: utils.js:625
+#: utils.js:615
 msgid "Export this tasks list"
 msgstr ""
 
-#: utils.js:630
+#: utils.js:620
 msgid "Save this tasks list as TODO"
 msgstr ""
 
-#: utils.js:635
+#: utils.js:625
 msgid "Sort tasks alphabetically"
 msgstr ""
 
-#: utils.js:640 utils.js:650
+#: utils.js:630 utils.js:640
 msgid "Takes effect after closing and re-opening the main menu."
 msgstr ""
 
-#: utils.js:645
+#: utils.js:635
 msgid "Sort tasks by completed state"
 msgstr ""
 
-#: utils.js:655
+#: utils.js:645
 msgid "Display remove tasks buttons"
 msgstr ""
 
-#: utils.js:660 utils.js:670
+#: utils.js:650 utils.js:660
 msgid "Takes effect immediately."
 msgstr ""
 
-#: utils.js:665
+#: utils.js:655
 msgid "Keep completed tasks hidden"
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence.
 #. "Remove this section/task"
-#: utils.js:1517
+#: utils.js:1507
 #, javascript-format
 msgid "Remove this %s"
 msgstr ""
 
-#: utils.js:1520
+#: utils.js:1510
 msgid "(Hold Ctrl key)"
 msgstr ""
 

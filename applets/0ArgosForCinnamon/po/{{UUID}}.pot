@@ -6,72 +6,72 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0ArgosForCinnamon VERSION\n"
-"POT-Creation-Date: 2020-02-18 04:55-0300\n"
+"POT-Creation-Date: 2020-04-04 15:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2020-02-14 03:47:21.876\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-03-20 21:47:57.129\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:250 ../../__app__/python_modules/localized_help_creator.py:324
+#: ../../__app__/python_modules/localized_help_creator.py:246 ../../__app__/python_modules/localized_help_creator.py:320
 #, python-format
 msgid "Help for %s"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:321 applet.js:809 utils.js:102
+#: ../../__app__/python_modules/localized_help_creator.py:317 applet.js:794 utils.js:88
 msgid "Help"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:322
+#: ../../__app__/python_modules/localized_help_creator.py:318
 msgid "Contributors"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:323
+#: ../../__app__/python_modules/localized_help_creator.py:319
 msgid "Changelog"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:359
+#: ../../__app__/python_modules/localized_help_creator.py:355
 msgid "The following sections are available only in English."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:379
+#: ../../__app__/python_modules/localized_help_creator.py:375
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:382
+#: ../../__app__/python_modules/localized_help_creator.py:378
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:388
+#: ../../__app__/python_modules/localized_help_creator.py:384
 msgid "Cinnamon compatibility"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:405
+#: ../../__app__/python_modules/localized_help_creator.py:401
 msgid "Warning"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:408
+#: ../../__app__/python_modules/localized_help_creator.py:404
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr ""
 
 #. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:410
+#: ../../__app__/python_modules/localized_help_creator.py:406
 msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:422
 msgid "Xlets localization"
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:430
+#: ../../__app__/python_modules/localized_help_creator.py:426
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:431
+#: ../../__app__/python_modules/localized_help_creator.py:427
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr ""
 
@@ -527,166 +527,166 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: applet.js:175
+#: applet.js:160
 msgid "Script file is not executable."
 msgstr ""
 
-#: applet.js:177
+#: applet.js:162
 msgid "The script file can be made executable from this applet context menu."
 msgstr ""
 
-#: applet.js:183 applet.js:794
+#: applet.js:168 applet.js:779
 msgid "Script file isn't a file, but a directory."
 msgstr ""
 
-#: applet.js:193 applet.js:800
+#: applet.js:178 applet.js:785
 msgid "Script file doesn't exists."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to execute file 'FileName':"
-#: applet.js:300
+#: applet.js:285
 #, javascript-format
 msgid "Unable to execute file '%s':"
 msgstr ""
 
-#: applet.js:304 applet.js:680 applet.js:706
+#: applet.js:289 applet.js:665 applet.js:691
 msgid "Script file not set, cannot be found or it isn't an executable."
 msgstr ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Invalid menu level for line 'LineWithTheError'"
-#: applet.js:413
+#: applet.js:398
 #, javascript-format
 msgid "Invalid menu level for line '%s'"
 msgstr ""
 
-#: applet.js:505
+#: applet.js:490
 msgid "No script set"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval->description
-#: applet.js:567 utils.js:1204
+#: applet.js:552 utils.js:1190
 msgid "Execution interval"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->tooltip
-#: applet.js:568
+#: applet.js:553
 msgid "Choose the time unit for the script execution interval."
 msgstr ""
 
-#: applet.js:584
+#: applet.js:569
 msgid "Set the script execution interval."
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval->description
-#: applet.js:603 utils.js:1209
+#: applet.js:588 utils.js:1195
 msgid "Rotation interval"
 msgstr ""
 
 #. settings-schema.json->pref_rotation_interval_units->tooltip
-#: applet.js:604
+#: applet.js:589
 msgid "Choose the time unit for the applet text rotation interval."
 msgstr ""
 
-#: applet.js:620
+#: applet.js:605
 msgid "Set the applet text rotation interval."
 msgstr ""
 
-#: applet.js:640
+#: applet.js:625
 msgid "Choose script"
 msgstr ""
 
-#: applet.js:667
+#: applet.js:652
 msgid "Choose a script file."
 msgstr ""
 
-#: applet.js:673
+#: applet.js:658
 msgid "Edit script"
 msgstr ""
 
-#: applet.js:691
+#: applet.js:676
 msgid "Edit the script file with your prefered text editor."
 msgstr ""
 
-#: applet.js:692
+#: applet.js:677
 msgid "After saving the changes made, the applet will update its data automatically if there is an interval set."
 msgstr ""
 
-#: applet.js:693
+#: applet.js:678
 msgid "Or the update could be done manually with the »Refresh« item on this applet context menu."
 msgstr ""
 
-#: applet.js:699
+#: applet.js:684
 msgid "Refresh"
 msgstr ""
 
-#: applet.js:714
+#: applet.js:699
 msgid "This will re-run on demand the script assigned to this applet for the purpose of updating its output."
 msgstr ""
 
-#: applet.js:715
+#: applet.js:700
 msgid "This is only needed when there is no update interval set (or the interval is too long), so the update needs to be done manually in case the script is edited."
 msgstr ""
 
 #. Extras submenu
-#: applet.js:722
+#: applet.js:707
 msgid "Extras"
 msgstr ""
 
-#: applet.js:729
+#: applet.js:714
 msgid "Clear script"
 msgstr ""
 
-#: applet.js:735 applet.js:753
+#: applet.js:720 applet.js:738
 msgid "This operation will remove the current script from this applet leaving it \"blank\"."
 msgstr ""
 
-#: applet.js:736
+#: applet.js:721
 msgid "The current applet settings will be untouched and the actual script file will not be deleted."
 msgstr ""
 
-#: applet.js:737
+#: applet.js:722
 msgid "Do you want to proceed?"
 msgstr ""
 
-#: applet.js:759
+#: applet.js:744
 msgid "Make script executable"
 msgstr ""
 
-#: applet.js:765
+#: applet.js:750
 msgid "Make the script file executable so it can be used by this applet."
 msgstr ""
 
-#: applet.js:788
+#: applet.js:773
 msgid "Script file is already executable."
 msgstr ""
 
-#: applet.js:813
+#: applet.js:798
 msgid "Open this applet help file."
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: constants.js:128
+#: constants.js:123
 msgid "Seconds"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: constants.js:131
+#: constants.js:126
 msgid "Minutes"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: constants.js:134
+#: constants.js:129
 msgid "Hours"
 msgstr ""
 
 #. settings-schema.json->pref_update_interval_units->options
 #. settings-schema.json->pref_rotation_interval_units->options
-#: constants.js:137
+#: constants.js:132
 msgid "Days"
 msgstr ""
 
@@ -887,31 +887,31 @@ msgstr ""
 msgid "Error underline"
 msgstr ""
 
-#: utils.js:116
+#: utils.js:102
 msgid "millisecond"
 msgid_plural "milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:118
+#: utils.js:104
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:120
+#: utils.js:106
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:122
+#: utils.js:108
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: utils.js:124
+#: utils.js:110
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
@@ -919,52 +919,52 @@ msgstr[1] ""
 
 #. TO TRANSLATORS: Full sentence:
 #. "Unable to load image from Base64 representation: ErrorMessage"
-#: utils.js:441
+#: utils.js:427
 #, javascript-format
 msgid "Unable to load image from Base64 representation: %s"
 msgstr ""
 
-#: utils.js:697
+#: utils.js:683
 msgid "Error opening URL/URI."
 msgstr ""
 
-#: utils.js:698 utils.js:712 utils.js:775
+#: utils.js:684 utils.js:698 utils.js:761
 msgid "A detailed error has been logged."
 msgstr ""
 
-#: utils.js:700
+#: utils.js:686
 msgid "Defined URL/URI"
 msgstr ""
 
-#: utils.js:701 utils.js:778
+#: utils.js:687 utils.js:764
 msgid "Executed command"
 msgstr ""
 
-#: utils.js:711
+#: utils.js:697
 msgid "Error evaluating code."
 msgstr ""
 
-#: utils.js:714
+#: utils.js:700
 msgid "Evaluated code"
 msgstr ""
 
-#: utils.js:774
+#: utils.js:760
 msgid "Error executing command."
 msgstr ""
 
-#: utils.js:777
+#: utils.js:763
 msgid "Defined command"
 msgstr ""
 
-#: utils.js:1199
+#: utils.js:1185
 msgid "Script file name"
 msgstr ""
 
-#: utils.js:1214
+#: utils.js:1200
 msgid "Script execution time"
 msgstr ""
 
-#: utils.js:1219
+#: utils.js:1205
 msgid "Output process time"
 msgstr ""
 
