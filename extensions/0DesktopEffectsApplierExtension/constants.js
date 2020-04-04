@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 const XletsSettingsUtils = __import("xletsSettingsUtils.js");
 

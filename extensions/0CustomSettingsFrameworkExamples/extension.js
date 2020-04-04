@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 let customSettingsFrameworkExamples = null,
     XletMeta = null,
@@ -14,7 +14,7 @@ const {
         Gio,
         GLib
     },
-    mainloop: Mainloop,
+    mainloop: Mainloop
 } = imports;
 
 function CustomSettingsFrameworkExamples() {

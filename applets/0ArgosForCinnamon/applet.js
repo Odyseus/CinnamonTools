@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 const GlobalUtils = __import("globalUtils.js");
 const Constants = __import("constants.js");
@@ -611,7 +611,7 @@ Argos.prototype = {
             }.bind(this),
             drag_end_cb: function(aSlider) {
                 this.onSliderReleased(aSlider);
-            }.bind(this),
+            }.bind(this)
         });
 
         this._applet_context_menu.addMenuItem(this.rotationIntervalSlider);

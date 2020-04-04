@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 let XletMeta;
 
@@ -177,7 +177,7 @@ function ellipsize(aString, aMaxLen) {
 
 DebugManager.wrapObjectMethods(Debugger, {
     AccountMenu: AccountMenu,
-    MailItem: MailItem,
+    MailItem: MailItem
 });
 
 /* exported ellipsize

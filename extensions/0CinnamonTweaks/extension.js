@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 let cinnamonTweaks = null,
     XletMeta,

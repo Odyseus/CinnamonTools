@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 let XletMeta;
 
@@ -681,7 +681,7 @@ ArgosMenuItem.prototype = {
                     } catch (aErr) {
                         Notification.notify([
                             escapeHTML(_("Error opening URL/URI.")),
-                            escapeHTML(_("A detailed error has been logged.")),
+                            escapeHTML(_("A detailed error has been logged."))
                         ]);
                         global.logError("%s: %s".format(_("Defined URL/URI"), activeLine.href));
                         global.logError("%s: %s".format(_("Executed command"), argv.join(" ")));
@@ -695,7 +695,7 @@ ArgosMenuItem.prototype = {
                     } catch (aErr) {
                         Notification.notify([
                             escapeHTML(_("Error evaluating code.")),
-                            escapeHTML(_("A detailed error has been logged.")),
+                            escapeHTML(_("A detailed error has been logged."))
                         ]);
                         global.logError("%s: %s".format(_("Evaluated code"), activeLine.eval));
                         global.logError(aErr);
@@ -758,7 +758,7 @@ ArgosMenuItem.prototype = {
                          */
                         Notification.notify([
                             escapeHTML(_("Error executing command.")),
-                            escapeHTML(_("A detailed error has been logged.")),
+                            escapeHTML(_("A detailed error has been logged."))
                         ]);
                         global.logError("%s: %s".format(_("Defined command"), cmd));
                         global.logError("%s: %s".format(_("Executed command"), argv.join(" ")));

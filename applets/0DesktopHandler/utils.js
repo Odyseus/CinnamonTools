@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 const DebugManager = __import("debugManager.js");
 

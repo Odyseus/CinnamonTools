@@ -8,7 +8,7 @@
  * fed up with all the nonsense that happen in Cinnamon, so why the hell bother!
  */
 
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 let Qty;
 
@@ -1334,7 +1334,7 @@ Weather.prototype = {
         let hh = aTimeStr.substr(0, s);
         let mm = aTimeStr.substring(s + 1, t);
 
-        if (parseInt(hh) < 10) { // pad
+        if (parseInt(hh, 10) < 10) { // pad
             hh = "0" + hh;
         }
 

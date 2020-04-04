@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 const GlobalUtils = __import("globalUtils.js");
 const $ = __import("utils.js");

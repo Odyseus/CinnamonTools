@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 let XletMeta;
 
@@ -422,7 +422,6 @@ NetData.prototype = {
             // No idea why this error happens, but this workaround works.
             "".match(/./);
         } catch (e) {}
-
         [this.down_last, this.up_last] = this.getNetLoad();
     },
 

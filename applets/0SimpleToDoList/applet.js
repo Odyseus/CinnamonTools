@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 const Constants = __import("constants.js");
 const DebugManager = __import("debugManager.js");

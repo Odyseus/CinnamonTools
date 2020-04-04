@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 const GlobalUtils = __import("globalUtils.js");
 const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");

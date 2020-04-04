@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 const $ = __import("utils.js");
 const Constants = __import("constants.js");

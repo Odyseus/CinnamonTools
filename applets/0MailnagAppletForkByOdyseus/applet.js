@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 const GlobalConstants = __import("globalConstants.js");
 const GlobalUtils = __import("globalUtils.js");

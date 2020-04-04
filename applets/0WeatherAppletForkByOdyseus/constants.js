@@ -1,4 +1,4 @@
-//{{IMPORTER}}
+// {{IMPORTER}}
 
 const GlobalUtils = __import("globalUtils.js");
 
@@ -115,7 +115,7 @@ const UnitAbbreviations = [
     _("knots"),
     _("kph"),
     _("mph"),
-    _("m/s"),
+    _("m/s")
 ];
 
 var URLs = {
