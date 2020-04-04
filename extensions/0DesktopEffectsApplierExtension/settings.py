@@ -102,7 +102,7 @@ SHADERS_COLUMNS = [{
     "title": _("Shader"),
     "type": "string",
     "options-from-paths": {
-        "file-patterns": ["*.frag.glsl"],
+        "file-patterns": ["*.shader.glsl"],
         "path-in-xlet": "shaders",
         "path-in-setting": "pref_extra_shaders_path",
     }
