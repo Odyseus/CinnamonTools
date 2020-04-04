@@ -159,6 +159,14 @@ The following sections are available only in English.
 <h2>Desktop Effects Applier changelog</h2>
 <p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
 <hr>
+<p><strong>Date:</strong> Sat, 4 Apr 2020 18:19:02 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/73b77bc">73b77bc</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<p>WARNING: This update requires that all shader files in use that aren't shipped with the extension to be renamed from <code>.frag.glsl</code> to <code>.shader.glsl</code>. It's also required that all shader effects in this extension settings window to be edited so they use the renamed shaders. If there are too many effects listed to be edited from the GUI, just do a mass string substitution on the settings file (<strong>~/.cinnamon/configs/0DesktopEffectsApplierExtension@domain.com/0DesktopEffectsApplierExtension@domain.com.json</strong>).</p>
+<ul>
+<li>Renamed all shader files from <code>.frag.glsl</code> to <code>.shader.glsl</code>. The reason for this is that the only GLSL validator that seems to exist (<a href="https://github.com/KhronosGroup/glslang">glslangValidator</a>) will report errors (false positives) on all shader files when they are named <code>.frag.glsl</code>.</li>
+</ul>
+<hr>
 <p><strong>Date:</strong> Wed, 12 Feb 2020 22:46:36 -0300<br/>
 <strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/49dc7f5">49dc7f5</a><br/>
 <strong>Author:</strong> Odyseus<br/></p>

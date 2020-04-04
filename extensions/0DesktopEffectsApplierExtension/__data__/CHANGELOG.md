@@ -4,6 +4,16 @@
 
 ***
 
+**Date:** Sat, 4 Apr 2020 18:19:02 -0300<br/>
+**Commit:** [73b77bc](https://gitlab.com/Odyseus/CinnamonTools/commit/73b77bc)<br/>
+**Author:** Odyseus<br/>
+
+WARNING: This update requires that all shader files in use that aren't shipped with the extension to be renamed from `.frag.glsl` to `.shader.glsl`. It's also required that all shader effects in this extension settings window to be edited so they use the renamed shaders. If there are too many effects listed to be edited from the GUI, just do a mass string substitution on the settings file (**~/.cinnamon/configs/0DesktopEffectsApplierExtension@domain.com/0DesktopEffectsApplierExtension@domain.com.json**).
+
+- Renamed all shader files from `.frag.glsl` to `.shader.glsl`. The reason for this is that the only GLSL validator that seems to exist ([glslangValidator](https://github.com/KhronosGroup/glslang)) will report errors (false positives) on all shader files when they are named `.frag.glsl`.
+
+***
+
 **Date:** Wed, 12 Feb 2020 22:46:36 -0300<br/>
 **Commit:** [49dc7f5](https://gitlab.com/Odyseus/CinnamonTools/commit/49dc7f5)<br/>
 **Author:** Odyseus<br/>
