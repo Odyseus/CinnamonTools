@@ -4,6 +4,58 @@
 
 ***
 
+**Date:** Sat, 4 Apr 2020 15:43:57 -0300<br/>
+**Commit:** [ff6097d](https://gitlab.com/Odyseus/CinnamonTools/commit/ff6097d)<br/>
+**Author:** Odyseus<br/>
+
+#### All xlets
+
+- Updated localization templates.
+- Updated Spanish localizations.
+
+***
+
+**Date:** Sat, 4 Apr 2020 13:47:25 -0300<br/>
+**Commit:** [0e7ff28](https://gitlab.com/Odyseus/CinnamonTools/commit/0e7ff28)<br/>
+**Author:** Odyseus<br/>
+
+#### HTML assets
+
+- Updated Bootstrap theme.
+
+***
+
+**Date:** Sat, 4 Apr 2020 13:46:54 -0300<br/>
+**Commit:** [95e6be0](https://gitlab.com/Odyseus/CinnamonTools/commit/95e6be0)<br/>
+**Author:** Odyseus<br/>
+
+#### All xlets
+
+- Reformatted all JavaScript code.
+
+***
+
+**Date:** Sat, 4 Apr 2020 13:44:40 -0300<br/>
+**Commit:** [dea9ec9](https://gitlab.com/Odyseus/CinnamonTools/commit/dea9ec9)<br/>
+**Author:** Odyseus<br/>
+
+#### Python modules
+
+- Changed the use of the ".." string to the `os.pardir` constant.
+- Added the `// {{IMPORTER}}` placeholder as replacement data for the xlets building process. I kept the previously used placeholder (`//{{IMPORTER}}`) just in case. The change is due to the fact that I use a JavaScript code formatter that add a space after line comments.
+
+***
+
+**Date:** Fri, 20 Mar 2020 23:06:09 -0300<br/>
+**Commit:** [a4a8267](https://gitlab.com/Odyseus/CinnamonTools/commit/a4a8267)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated CHANGELOG.md.
+
+***
+
 **Date:** Fri, 20 Mar 2020 22:59:32 -0300<br/>
 **Commit:** [2603fde](https://gitlab.com/Odyseus/CinnamonTools/commit/2603fde)<br/>
 **Author:** Odyseus<br/>
