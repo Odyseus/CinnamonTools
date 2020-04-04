@@ -37,7 +37,7 @@ validate_options_1_2 = generate_numeral_options_validator(2)
 validate_options_1_to_5 = generate_numeral_options_validator(5)
 
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
-    os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
+    os.path.normpath(os.path.join(os.path.dirname(__file__), *([os.pardir] * 2))))))
 
 
 class XletsHelperCore():
@@ -967,6 +967,7 @@ class XletBuilder():
             # NOTE: KEEP ON TOP!!!
             # app_data.IMPORT_JS_FUNCTION contains placeholders on its own too.
             ("//{{IMPORTER}}", app_data.IMPORT_JS_FUNCTION),
+            ("// {{IMPORTER}}", app_data.IMPORT_JS_FUNCTION),
             ("{{UUID}}", self._xlet_data.get("uuid", "")),
             ("{{XLET_SYSTEM}}", app_data.XLET_SYSTEM[self._xlet_data.get("type", "")]),
             ("{{XLET_META}}", app_data.XLET_META[self._xlet_data.get("type", "")]),

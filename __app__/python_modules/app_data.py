@@ -61,7 +61,7 @@ import os
 from .python_utils import file_utils
 
 root_folder = os.path.realpath(os.path.abspath(os.path.join(
-    os.path.normpath(os.path.join(os.path.dirname(__file__), *([".."] * 2))))))
+    os.path.normpath(os.path.join(os.path.dirname(__file__), *([os.pardir] * 2))))))
 
 SUPPORTED_CINNAMON_VERSION_MIN = 3.0
 

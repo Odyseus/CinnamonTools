@@ -30,7 +30,7 @@ except (ImportError, SystemError):
     pyuca_collator = None
 
 repo_folder = os.path.normpath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), *([".."] * 2)))
+    os.path.dirname(os.path.abspath(__file__)), *([os.pardir] * 2)))
 
 translations = utils.Translations()
 
