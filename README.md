@@ -5,9 +5,8 @@ Applets/Extensions/Themes for the [Cinnamon desktop environment](https://github.
 
 [GitLabLogo]: https://i.imgur.com/Z4XcUKe.png "GitLab"
 [GitHubLogo]: https://i.imgur.com/J015ugC.png "GitHub"
-[BitBucketLogo]: https://i.imgur.com/igK1F8b.png "BitBucket"
 
-**Bug reports, feature requests and contributions must be done in GitLab [![GitLabLogo][GitLabLogo]](https://gitlab.com/Odyseus/CinnamonTools)**. Repository mirrors: [![GitHubLogo][GitHubLogo]](https://github.com/Odyseus/CinnamonTools ) [![BitBucketLogo][BitBucketLogo]](https://bitbucket.org/Odyseus/CinnamonTools )
+**Bug reports, feature requests and contributions must be done in GitLab [![GitLabLogo][GitLabLogo]](https://gitlab.com/Odyseus/CinnamonTools)**. Repository mirror: [![GitHubLogo][GitHubLogo]](https://github.com/Odyseus/CinnamonTools )
 
 ## Dependencies
 
