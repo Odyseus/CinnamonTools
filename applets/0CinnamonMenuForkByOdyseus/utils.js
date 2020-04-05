@@ -586,11 +586,19 @@ GenericApplicationButton.prototype = {
             }
         } else if (shiftKey && !ctrlKey) {
             try {
-                Util.spawnCommandLine(this.applet.pref_privilege_elevator +
-                    " gtk-launch " + this.app.get_id());
+                // The garbage of pkexec will not work with any spawn* function!!!
+                // Tried with Util.spawn_async, GLib.spawn_async, GLib.spawn_command_line_async and
+                // GLib.spawn_async. NOTHING F*CKING WORKS!!!!
+                // So, let's leave a REAL programing language (Python) do the F*CKING job!!!
+                Util.spawn_async([
+                    this.applet.metadata.path + "/launcher.py",
+                    this.applet.pref_privilege_elevator,
+                    "gtk-launch",
+                    this.app.get_id()
+                ], null);
                 likelyHasSucceeded = true;
             } catch (aErr) {
-                Main.notify(_(this._appButton.applet.metadata.name), aErr.message);
+                Main.notify(_(this.applet.metadata.name), aErr.message);
                 global.logError(aErr.message);
                 likelyHasSucceeded = false;
             }

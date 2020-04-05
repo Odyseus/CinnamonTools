@@ -741,9 +741,9 @@ CinnamonMenuForkByOdyseus.prototype = {
         });
     },
 
-    _navigateContextMenu: function(button, symbol, ctrlKey) {
+    _navigateContextMenu: function(button, symbol, altKey) {
         if (symbol === Clutter.KEY_Menu || symbol === Clutter.Escape ||
-            (ctrlKey && (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter))) {
+            (altKey && (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter))) {
             if (this._activeContainer._vis_iter) {
                 this._selectedItemIndex = this._activeContainer._vis_iter.getAbsoluteIndexOfChild(this._activeActor);
             }
@@ -824,6 +824,7 @@ CinnamonMenuForkByOdyseus.prototype = {
         index = this._selectedItemIndex;
 
         let ctrlKey = modifierState & Clutter.ModifierType.CONTROL_MASK;
+        let altKey = modifierState & Clutter.ModifierType.MOD1_MASK;
 
         // If a context menu is open, hijack keyboard navigation and concentrate on the context menu.
         if (this._activeContextMenuParent &&
@@ -838,7 +839,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                 case Clutter.KEY_Page_Up:
                 case Clutter.KEY_Page_Down:
                 case Clutter.Escape:
-                    this._navigateContextMenu(this._activeContextMenuParent, symbol, ctrlKey);
+                    this._navigateContextMenu(this._activeContextMenuParent, symbol, altKey);
                     break;
                 case Clutter.KEY_Right:
                 case Clutter.KEY_Left:
@@ -1110,10 +1111,10 @@ CinnamonMenuForkByOdyseus.prototype = {
             index = item_actor.get_parent()._vis_iter.getAbsoluteIndexOfChild(item_actor);
         } else {
             if (this._activeContainer !== this.categoriesBox && (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter)) {
-                if (!ctrlKey) {
+                if (!altKey) {
                     item_actor = this._activeContainer.get_child_at_index(this._selectedItemIndex);
                     item_actor._delegate.activate();
-                } else if (ctrlKey && this._activeContainer === this.applicationsBox) {
+                } else if (altKey && this._activeContainer === this.applicationsBox) {
                     item_actor = this.applicationsBox.get_child_at_index(this._selectedItemIndex);
                     this.toggleContextMenu(item_actor._delegate);
                 }
