@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "APP.PY" "1" "Apr 04, 2020" "" "Cinnamon Tools"
+.TH "APP.PY" "1" "Apr 05, 2020" "" "Cinnamon Tools"
 .SH NAME
 app.py \- CLI utility to build xlets/themes and to perform development tasks on Cinnamon Tools' repository.
 .
@@ -138,7 +138,7 @@ SassC: Install from your distribution repositories.
 This command starts a CLI menu from which xlets and themes can be built interactively.
 .SS app.py build
 .sp
-This command is used to build all or specifics xlets. All xlets found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. \fIBuilding\fP an xlet just means that the \fIraw xlet\fP (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (\fBxlet_name@custom_domain_name\fP) to all files (files content and file names). It will also compile the \fBgsettings\fP files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, global modules, etc.).
+This command is used to build all or specific xlets. All xlets found in Cinnamon Tools\(aq repository aren\(aqt directly usable, they need to be \fIbuilt\fP\&. \fIBuilding\fP an xlet just means that the \fIraw xlet\fP (as found in the repository) will be copied into another location (chosen when performing the building) and a string substitution will be done that will apply a generated UUID (\fBxlet_name@custom_domain_name\fP) to all files (files content and file names). It will also compile the \fBgsettings\fP files (if an xlet contains such files) and copy files common to all xlets (LICENSE.md, localizations installer script, global modules, etc.).
 .SS Options
 .INDENT 0.0
 .IP \(bu 2
@@ -175,7 +175,7 @@ Example usage: \fBapp.py build \-x 0ArgosForCinnamon \-d example.com\fP
 .IP \(bu 2
 Example usage: \fBapp.py build \-x 0ArgosForCinnamon \-o /home/user_name/.local/share/cinnamon\fP
 .IP \(bu 2
-This command will build the Argos for Cinnamon applet directly into the Cinnamon\(aqs install location for xlets.
+This command will build the Argos for Cinnamon applet directly into Cinnamon\(aqs install location for xlets.
 .UNINDENT
 .UNINDENT
 .UNINDENT
@@ -261,7 +261,7 @@ This command is used to perform development tasks.
 .IP \(bu 2
 \fBgenerate_trans_stats\fP: Generates a simple table with information about missing translated strings inside the PO files.
 .IP \(bu 2
-\fBupdate_pot_files\fP: It re\-generates all xlets POT files to reflect the changes made to the translatable strings on them.
+\fBupdate_pot_files\fP: It re\-generates all xlets\(aq POT files to reflect the changes made to the translatable strings on them.
 .IP \(bu 2
 \fBupdate_spanish_localizations\fP: It updates the \fBes.po\fP files from all xlets from their respective POT files.
 .IP \(bu 2

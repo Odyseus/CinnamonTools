@@ -4,6 +4,38 @@
 
 ***
 
+**Date:** Sun, 5 Apr 2020 04:30:45 -0300<br/>
+**Commit:** [044729d](https://gitlab.com/Odyseus/CinnamonTools/commit/044729d)<br/>
+**Author:** Odyseus<br/>
+
+#### Xlets settings framework
+
+- Updated README.
+
+***
+
+**Date:** Sun, 5 Apr 2020 04:27:05 -0300<br/>
+**Commit:** [82a7294](https://gitlab.com/Odyseus/CinnamonTools/commit/82a7294)<br/>
+**Author:** Odyseus<br/>
+
+#### All xlets
+
+- Updated change logs.
+- Updated help pages.
+
+***
+
+**Date:** Sat, 4 Apr 2020 18:29:56 -0300<br/>
+**Commit:** [f8188a6](https://gitlab.com/Odyseus/CinnamonTools/commit/f8188a6)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated CHANGELOG.
+- Updated sub-modules.
+
+***
+
 **Date:** Sat, 4 Apr 2020 18:26:32 -0300<br/>
 **Commit:** [190561f](https://gitlab.com/Odyseus/CinnamonTools/commit/190561f)<br/>
 **Author:** Odyseus<br/>
