@@ -4,6 +4,28 @@
 
 ***
 
+**Date:** Sun, 5 Apr 2020 04:38:32 -0300<br/>
+**Commit:** [861c063](https://gitlab.com/Odyseus/CinnamonTools/commit/861c063)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated README.
+
+***
+
+**Date:** Sun, 5 Apr 2020 04:31:32 -0300<br/>
+**Commit:** [7ea382d](https://gitlab.com/Odyseus/CinnamonTools/commit/7ea382d)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated CHANGELOG.
+- Updated sub-modules.
+- Updated manual page.
+
+***
+
 **Date:** Sun, 5 Apr 2020 04:30:45 -0300<br/>
 **Commit:** [044729d](https://gitlab.com/Odyseus/CinnamonTools/commit/044729d)<br/>
 **Author:** Odyseus<br/>
