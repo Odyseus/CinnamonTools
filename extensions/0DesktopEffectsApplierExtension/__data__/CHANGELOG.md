@@ -4,6 +4,16 @@
 
 ***
 
+**Date:** Sun, 5 Apr 2020 16:14:01 -0300<br/>
+**Commit:** [02e2827](https://gitlab.com/Odyseus/CinnamonTools/commit/02e2827)<br/>
+**Author:** Odyseus<br/>
+
+WARNING: Undo/Ignore the warning in previous commit (73b77bc).
+
+- Reverted previous changes to shader files.
+
+***
+
 **Date:** Sat, 4 Apr 2020 18:19:02 -0300<br/>
 **Commit:** [73b77bc](https://gitlab.com/Odyseus/CinnamonTools/commit/73b77bc)<br/>
 **Author:** Odyseus<br/>
