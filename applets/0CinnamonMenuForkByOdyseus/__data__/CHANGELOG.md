@@ -4,6 +4,15 @@
 
 ***
 
+**Date:** Sun, 5 Apr 2020 01:10:55 -0300<br/>
+**Commit:** [a8238f4](https://gitlab.com/Odyseus/CinnamonTools/commit/a8238f4)<br/>
+**Author:** Odyseus<br/>
+
+- Corrected not being able to open the context menu for applications with the [[Alt]] + [[Enter]] key combination.
+- Corrected not being able to execute an application as root with the [[Shift]] + [[Enter]] key combination when the *privilege elevator command* is `pkexec`.
+
+***
+
 **Date:** Wed, 12 Feb 2020 22:48:07 -0300<br/>
 **Commit:** [30fce2b](https://gitlab.com/Odyseus/CinnamonTools/commit/30fce2b)<br/>
 **Author:** Odyseus<br/>
