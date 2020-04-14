@@ -54,8 +54,8 @@
         # - unordered_arguments can have missing items.
         # - unordered_arguments cannot have items that aren't present in order_reference.
 """
-import sys
 import re
+import sys
 
 
 __all__ = ['docopt']
@@ -107,12 +107,12 @@ class Pattern(object):
         either = [list(c.children) for c in self.either.children]
         for case in either:
             for e in [c for c in case if case.count(c) > 1]:
-                if type(e) is Argument or type(e) is Option and e.argcount:
+                if isinstance(e, Argument) or isinstance(e, Option) and e.argcount:
                     if e.value is None:
                         e.value = []
-                    elif type(e.value) is not list:
+                    elif not isinstance(e.value, list):
                         e.value = e.value.split()
-                if type(e) is Command or type(e) is Option and e.argcount == 0:
+                if isinstance(e, Command) or isinstance(e, Option) and e.argcount == 0:
                     e.value = 0
         return self
 
@@ -127,24 +127,24 @@ class Pattern(object):
             children = groups.pop(0)
             types = [type(c) for c in children]
             if Either in types:
-                either = [c for c in children if type(c) is Either][0]
+                either = [c for c in children if isinstance(c, Either)][0]
                 children.pop(children.index(either))
                 for c in either.children:
                     groups.append([c] + children)
             elif Required in types:
-                required = [c for c in children if type(c) is Required][0]
+                required = [c for c in children if isinstance(c, Required)][0]
                 children.pop(children.index(required))
                 groups.append(list(required.children) + children)
             elif Optional in types:
-                optional = [c for c in children if type(c) is Optional][0]
+                optional = [c for c in children if isinstance(c, Optional)][0]
                 children.pop(children.index(optional))
                 groups.append(list(optional.children) + children)
             elif AnyOptions in types:
-                optional = [c for c in children if type(c) is AnyOptions][0]
+                optional = [c for c in children if isinstance(c, AnyOptions)][0]
                 children.pop(children.index(optional))
                 groups.append(list(optional.children) + children)
             elif OneOrMore in types:
-                oneormore = [c for c in children if type(c) is OneOrMore][0]
+                oneormore = [c for c in children if isinstance(c, OneOrMore)][0]
                 children.pop(children.index(oneormore))
                 groups.append(list(oneormore.children) * 2 + children)
             else:
@@ -172,10 +172,10 @@ class ChildPattern(Pattern):
         left_ = left[:pos] + left[pos + 1:]
         same_name = [a for a in collected if a.name == self.name]
         if type(self.value) in (int, list):
-            if type(self.value) is int:
+            if isinstance(self.value, int):
                 increment = 1
             else:
-                increment = ([match.value] if type(match.value) is str
+                increment = ([match.value] if isinstance(match.value, str)
                              else match.value)
             if not same_name:
                 match.value = increment
@@ -204,7 +204,7 @@ class Argument(ChildPattern):
 
     def single_match(self, left):
         for n, p in enumerate(left):
-            if type(p) is Argument:
+            if isinstance(p, Argument):
                 return n, Argument(self.name, p.value)
         return None, None
 
@@ -223,7 +223,7 @@ class Command(Argument):
 
     def single_match(self, left):
         for n, p in enumerate(left):
-            if type(p) is Argument:
+            if isinstance(p, Argument):
                 if p.value == self.name:
                     return n, Command(self.name, True)
                 else:
@@ -275,7 +275,7 @@ class Required(ParentPattern):
 
     def match(self, left, collected=None):
         collected = [] if collected is None else collected
-        l = left
+        l = left  # noqa
         c = collected
         for p in self.children:
             matched, l, c = p.match(l, c)
@@ -303,7 +303,7 @@ class OneOrMore(ParentPattern):
     def match(self, left, collected=None):
         assert len(self.children) == 1
         collected = [] if collected is None else collected
-        l = left
+        l = left  # noqa
         c = collected
         l_ = None
         matched = True

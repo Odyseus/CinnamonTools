@@ -250,7 +250,8 @@ def custom_copy2(source, destination, logger=None, log_copied_file=False, relati
         logger.error(err)
 
 
-def copy_create_symlink(source, destination, source_is_symlink=False, logger=None, follow_symlinks=False):
+def copy_create_symlink(source, destination, source_is_symlink=False,
+                        logger=None, follow_symlinks=False):
     """Copy symlinks avoiding at all cost throwing errors.
 
     This function is always triggered when "source" is a symlink. It will create the symlink only

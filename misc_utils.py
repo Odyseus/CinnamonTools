@@ -86,7 +86,7 @@ def get_time_diff(s, e):
     return "%d hr/s, %d min/s, %d sec/s, %d msec/s" % (h, m, s, ms)
 
 
-def merge_dict(first, second, logger=None):
+def merge_dict(first, second, logger=None, extend_lists=True, append_to_lists=True):
     """Merges **second** dictionary into **first** dictionary and return merged result.
 
     It *deep merges* keys of type :any:`dict` and :any:`list`.
@@ -100,6 +100,10 @@ def merge_dict(first, second, logger=None):
         A dictionary to merge into another dictionary.
     logger : LogSystem
         The logger.
+    extend_lists : bool, optional
+        When dealing with lists, extend the ``first`` list one with the ``second`` one.
+    append_to_lists : bool, optional
+        If ``first`` is a list and ``second`` isn't, append ``second`` to ``first``.
 
     Returns
     -------
@@ -110,18 +114,24 @@ def merge_dict(first, second, logger=None):
     try:
         if isinstance(first, list):
             # Lists can be only appended.
-            if isinstance(second, list):
+            if isinstance(second, list) and extend_lists:
                 # Merge lists.
                 first.extend(second)
-            else:
+            elif append_to_lists:
                 # Append to list.
                 first.append(second)
+            else:
+                # Overwrite list.
+                first = second
         elif isinstance(first, dict):
             # Dictionaries must be merged.
             if isinstance(second, dict):
                 for key in second:
                     if key in first:
-                        first[key] = merge_dict(first[key], second[key])
+                        first[key] = merge_dict(first[key], second[key],
+                                                extend_lists=extend_lists,
+                                                append_to_lists=append_to_lists,
+                                                logger=logger)
                     else:
                         first[key] = second[key]
             else:

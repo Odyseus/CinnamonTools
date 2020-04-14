@@ -70,9 +70,10 @@ class MailSystem():
     def _validate_config(self):
         """Validate mail settings.
         """
-        json_schema_utils.validate(
-            self._config, settings_schema,
-            logger=self.logger)
+        if json_schema_utils.JSONSCHEMA_INSTALLED:
+            json_schema_utils.validate(
+                self._config, settings_schema,
+                logger=self.logger)
 
     def _get_password(self):
         """Get password.
@@ -94,7 +95,8 @@ class MailSystem():
         elif ask_for_password:
             import getpass
 
-            sender_password = getpass.getpass(prompt=Ansi.DEFAULT("**Enter Sender E-Mail Password:** "))
+            sender_password = getpass.getpass(
+                prompt=Ansi.DEFAULT("**Enter Sender E-Mail Password:** "))
 
         return sender_password
 
