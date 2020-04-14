@@ -201,9 +201,9 @@ def generate_log_path(storage_dir="tmp/logs", prefix="", subfix="", delimiter="_
         The log file to be used by :any:`LogSystem`.
     """
     filename = "{prefix}{date}{subfix}.log".format(
-        prefix=prefix + delimiter if prefix is not "" else "",
+        prefix=prefix + delimiter if prefix != "" else "",
         date=micro_to_milli(get_date_time("filename")),
-        subfix=delimiter + subfix if subfix is not "" else ""
+        subfix=delimiter + subfix if subfix != "" else ""
     )
     return os.path.abspath(os.path.join(storage_dir, filename))
 

@@ -13,12 +13,7 @@ STREAM_STDOUT : int
 """
 import os
 import platform
-
-from subprocess import DEVNULL
-from subprocess import PIPE
-from subprocess import Popen
-from subprocess import call
-from subprocess import run
+import subprocess
 
 
 STREAM_STDOUT = 1
@@ -26,8 +21,19 @@ STREAM_STDERR = 2
 STREAM_BOTH = STREAM_STDOUT + STREAM_STDERR
 
 
+def get_startup_info():
+    if platform.system() == "Windows":
+        info = subprocess.STARTUPINFO()
+        info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        info.wShowWindow = subprocess.SW_HIDE
+
+        return info
+
+    return None
+
+
 def popen(cmd, stdout=None, stderr=None, output_stream=STREAM_BOTH,
-          env=None, cwd=None, logger=None):
+          env=None, cwd=None, logger=None, **kwargs):
     """Open a pipe to an external process and return a Popen object.
 
     Parameters
@@ -52,33 +58,32 @@ def popen(cmd, stdout=None, stderr=None, output_stream=STREAM_BOTH,
     subprocess.Popen
         Popen object.
     """
-    info = None
-
     if output_stream == STREAM_BOTH:
-        stdout = stdout or PIPE
-        stderr = stderr or PIPE
+        stdout = stdout or subprocess.PIPE
+        stderr = stderr or subprocess.PIPE
     elif output_stream == STREAM_STDOUT:
-        stdout = stdout or PIPE
-        stderr = DEVNULL
+        stdout = stdout or subprocess.PIPE
+        stderr = subprocess.DEVNULL
     elif output_stream == STREAM_STDERR:
-        stdout = DEVNULL
-        stderr = stderr or PIPE
+        stdout = subprocess.DEVNULL
+        stderr = stderr or subprocess.PIPE
     else:
-        stdout = DEVNULL
-        stderr = DEVNULL
+        stdout = subprocess.DEVNULL
+        stderr = subprocess.DEVNULL
 
     if env is None:
         env = get_environment()
 
     try:
-        return Popen(
+        return subprocess.Popen(
             cmd,
-            stdin=PIPE,
+            stdin=subprocess.PIPE,
             stdout=stdout,
             stderr=stderr,
-            startupinfo=info,
+            startupinfo=get_startup_info(),
             env=env,
             cwd=cwd,
+            **kwargs
         )
     except Exception as err:
         if logger:
@@ -108,13 +113,14 @@ def exec_command(cmd, cwd=None, do_wait=True, do_log=True, logger=None):
         The logger.
     """
     try:
-        po = Popen(
+        po = subprocess.Popen(
             cmd,
             shell=True,
-            stdout=PIPE,
+            stdout=subprocess.PIPE,
             stdin=None,
             universal_newlines=True,
             env=get_environment(),
+            startupinfo=get_startup_info(),
             cwd=cwd
         )
 
@@ -221,7 +227,7 @@ def find_executables(executable):
     return None
 
 
-def run_cmd(cmd, stdout=PIPE, stderr=PIPE, env=True, **kwargs):
+def run_cmd(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=True, **kwargs):
     """See :any:`subprocess.run`.
 
     Parameters
@@ -248,7 +254,7 @@ def run_cmd(cmd, stdout=PIPE, stderr=PIPE, env=True, **kwargs):
     if env is True:
         env = get_environment()
 
-    return run(cmd, stdout=stdout, stderr=stderr, env=env, **kwargs)
+    return subprocess.run(cmd, stdout=stdout, stderr=stderr, env=env, **kwargs)
 
 
 def launch_default_for_file(filepath):
@@ -260,11 +266,11 @@ def launch_default_for_file(filepath):
         File path.
     """
     if platform.system() == "Darwin":       # MacOS
-        call(("open", filepath))
+        subprocess.call(("open", filepath))
     elif platform.system() == "Windows":    # Windows
         os.startfile(filepath)
     else:                                   # Linux variants
-        call(("xdg-open", filepath))
+        subprocess.call(("xdg-open", filepath))
 
 
 if __name__ == "__main__":

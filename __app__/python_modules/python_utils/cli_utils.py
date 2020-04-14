@@ -27,6 +27,7 @@ class CommandLineInterfaceSuper():
     """
     _cli_header_blacklist = []
     _print_log_blacklist = []
+    _inhibit_logger_list = []
 
     def __init__(self, app_name, logs_storage_dir="UserData/logs"):
         """Initialization.
@@ -39,25 +40,28 @@ class CommandLineInterfaceSuper():
             Log files storage location.
         """
         self._app_name = app_name
+        self.logger = None
 
-        log_file = log_system.generate_log_path(storage_dir=logs_storage_dir,
-                                                prefix="CLI")
-        file_utils.remove_surplus_files(logs_storage_dir, "CLI*")
-        self.logger = log_system.LogSystem(log_file, verbose=True)
+        if not self._inhibit_logger_list or not any(self._inhibit_logger_list):
+            log_file = log_system.generate_log_path(storage_dir=logs_storage_dir,
+                                                    prefix="CLI")
+            file_utils.remove_surplus_files(logs_storage_dir, "CLI*")
+            self.logger = log_system.LogSystem(log_file, verbose=True)
 
         self._display_cli_header()
 
     def _display_cli_header(self):
         """Display CLI header.
         """
-        if not self._cli_header_blacklist or not any(self._cli_header_blacklist):
-            self.logger.info("**%s**" % shell_utils.get_cli_header(self._app_name), date=False, to_file=False)
+        if self.logger and (not self._cli_header_blacklist or not any(self._cli_header_blacklist)):
+            self.logger.info("**%s**" % shell_utils.get_cli_header(self._app_name),
+                             date=False, to_file=False)
             print("")
 
     def print_log_file(self):
         """Print the path to the log file used by the current logger.
         """
-        if not self._print_log_blacklist or not any(self._print_log_blacklist):
+        if self.logger and (not self._print_log_blacklist or not any(self._print_log_blacklist)):
             print()
             self.logger.info(shell_utils.get_cli_separator("-"), date=False, to_file=False)
             self.logger.warning("**Log file location:**", date=False, to_file=False)
@@ -99,7 +103,8 @@ class CommandLineInterfaceSuper():
         run(["man", man_page_path])
 
 
-def run_cli(flag_file="", docopt_doc="", app_name="", app_version="", app_status="", cli_class=None):
+def run_cli(flag_file="", docopt_doc="", app_name="",
+            app_version="", app_status="", cli_class=None):
     """Initialize main command line interface.
 
     Parameters
