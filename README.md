@@ -1,3 +1,7 @@
+![Platform: GNU/Linux](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/Platform-name.svg "Platform: GNU/Linux")
+![Cinnamon: 3.0+](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/Cinnamon-version.svg "Cinnamon: 3.0+")
+![Gtk+: 3.18+](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/Gtk-version.svg "Gtk+: 3.18+")
+![Python: 3.5+](https://odyseus.gitlab.io/cinnamon_tools_docs/_static/images/Python-version.svg "Python: 3.5+")
 
 ## Cinnamon Tools
 

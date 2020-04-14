@@ -1,3 +1,7 @@
+![Platform: GNU/Linux]({repo_docs_url}/_static/images/Platform-name.svg "Platform: GNU/Linux")
+![Cinnamon: 3.0+]({repo_docs_url}/_static/images/Cinnamon-version.svg "Cinnamon: 3.0+")
+![Gtk+: 3.18+]({repo_docs_url}/_static/images/Gtk-version.svg "Gtk+: 3.18+")
+![Python: 3.5+]({repo_docs_url}/_static/images/Python-version.svg "Python: 3.5+")
 
 ## Cinnamon Tools
 

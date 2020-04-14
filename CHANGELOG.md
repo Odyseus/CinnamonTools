@@ -4,6 +4,17 @@
 
 ***
 
+**Date:** Tue, 14 Apr 2020 02:01:14 -0300<br/>
+**Commit:** [29b6461](https://gitlab.com/Odyseus/CinnamonTools/commit/29b6461)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated CHANGELOG.
+- Updated sub-modules.
+
+***
+
 **Date:** Tue, 14 Apr 2020 01:58:44 -0300<br/>
 **Commit:** [aecfad7](https://gitlab.com/Odyseus/CinnamonTools/commit/aecfad7)<br/>
 **Author:** Odyseus<br/>
