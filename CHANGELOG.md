@@ -4,6 +4,54 @@
 
 ***
 
+**Date:** Tue, 14 Apr 2020 01:58:44 -0300<br/>
+**Commit:** [aecfad7](https://gitlab.com/Odyseus/CinnamonTools/commit/aecfad7)<br/>
+**Author:** Odyseus<br/>
+
+#### Python modules
+
+- Corrected some warnings when using Python 3.8.
+
+***
+
+**Date:** Tue, 14 Apr 2020 01:55:45 -0300<br/>
+**Commit:** [85be886](https://gitlab.com/Odyseus/CinnamonTools/commit/85be886)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from 5969fd6..1f78d0f
+
+1f78d0f Various formatting changes
+0f4b91e Corrected comparison warning on git_utils.py
+08ca914 Corrected comparison warning on log_system.py
+119d228 Corrected warning on a RegEx string in titlecase.py
+de8c156 Removed all Python 2 compatibility from polib.py
+0083aab Updated tqdm to version 4.45.0
+dcc8b18 Updated pyperclip to version 1.8.0 and removed all Python 2 compatibility
+6aac1f7 cli_utils.py
+10a4bba mail_system.py
+0f54907 Added diff_match_patch module
+f448f35 cmd_utils.py
+d0038f9 Make `parse_case` function of the case_conversion module "public"
+c4e5366 Added case_conversion module
+71c45d9 misc_utils.py
+b5f7609 cmd_utils.py
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 1f78d0f8903ad476a199857f0a749217696e59b2
+
+***
+
+**Date:** Sun, 5 Apr 2020 16:17:11 -0300<br/>
+**Commit:** [b4b5d9c](https://gitlab.com/Odyseus/CinnamonTools/commit/b4b5d9c)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated CHANGELOG.
+- Updated sub-modules.
+
+***
+
 **Date:** Sun, 5 Apr 2020 04:38:32 -0300<br/>
 **Commit:** [861c063](https://gitlab.com/Odyseus/CinnamonTools/commit/861c063)<br/>
 **Author:** Odyseus<br/>
