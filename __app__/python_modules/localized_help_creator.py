@@ -242,7 +242,7 @@ class LocalizedHelpCreator():
 
             section = utils.LOCALE_SECTION.format(
                 language_code=current_language,
-                hidden="" if current_language is "en" else 'hidden="true"',
+                hidden="" if current_language == "en" else 'hidden="true"',
                 title=md("# %s" % (_("Help for %s") % _(self.xlet_meta["name"]))),
                 warning=self._get_warning_block(),
                 compatibility=self._get_compatibility_block(),
@@ -332,7 +332,7 @@ class LocalizedHelpCreator():
             return utils.OPTION.format(
                 endonym=endonym,
                 language_name=language_name,
-                selected="selected " if current_language is "en" else "",
+                selected="selected " if current_language == "en" else "",
                 language_code=current_language,
                 xlet_help=xlet_help,
                 xlet_contributors=xlet_contributors,

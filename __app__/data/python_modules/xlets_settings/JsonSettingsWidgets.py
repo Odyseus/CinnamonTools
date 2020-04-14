@@ -31,7 +31,7 @@ from .common import BaseGrid
 from .common import sort_combo_options
 
 # NOTE: JEESH!!! I hate import *!!!
-__all__ = [
+__all__ = [  # noqa
     # NOTE: Defined in this module.
     "JSONSettingsHandler",
     "JSONSettingsRevealer",
@@ -482,7 +482,9 @@ class JSONSettingsHandler():
                 self.settings[key]["value"] = settings[key]["value"]
                 self.do_key_update(key)
             else:
-                print("Skipping key %s: the key does not exist in %s or has no value" % (key, filepath))
+                print(
+                    "Skipping key %s: the key does not exist in %s or has no value" %
+                    (key, filepath))
 
         self.save_settings()
 

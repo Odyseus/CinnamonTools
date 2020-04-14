@@ -25,7 +25,7 @@ GioSSS = Gio.SettingsSchemaSource
 
 
 # NOTE: JEESH!!! I hate import *!!!
-__all__ = [
+__all__ = [  # noqa
     # NOTE: Defined in this module.
     "GSettingsComboBox",
     "GSettingsSpinButton",
@@ -160,7 +160,8 @@ def bind_with_mapping(self, pref_key, widget, prop, flags, map_get, map_set):
         self[pref_key] = map_set(widget.get_property(prop))
         self._ignore_key_changed = False
 
-    if not (flags & (Gio.SettingsBindFlags.SET | Gio.SettingsBindFlags.GET)):  # ie Gio.SettingsBindFlags.DEFAULT
+    if not (flags & (Gio.SettingsBindFlags.SET | Gio.SettingsBindFlags.GET)
+            ):  # ie Gio.SettingsBindFlags.DEFAULT
         flags |= Gio.SettingsBindFlags.SET | Gio.SettingsBindFlags.GET
 
     if flags & Gio.SettingsBindFlags.GET:
