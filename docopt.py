@@ -107,12 +107,12 @@ class Pattern(object):
         either = [list(c.children) for c in self.either.children]
         for case in either:
             for e in [c for c in case if case.count(c) > 1]:
-                if isinstance(e, Argument) or isinstance(e, Option) and e.argcount:
+                if type(e) is Argument or type(e) is Option and e.argcount:
                     if e.value is None:
                         e.value = []
                     elif not isinstance(e.value, list):
                         e.value = e.value.split()
-                if isinstance(e, Command) or isinstance(e, Option) and e.argcount == 0:
+                if type(e) is Command or type(e) is Option and e.argcount == 0:
                     e.value = 0
         return self
 
@@ -127,24 +127,24 @@ class Pattern(object):
             children = groups.pop(0)
             types = [type(c) for c in children]
             if Either in types:
-                either = [c for c in children if isinstance(c, Either)][0]
+                either = [c for c in children if type(c) is Either][0]
                 children.pop(children.index(either))
                 for c in either.children:
                     groups.append([c] + children)
             elif Required in types:
-                required = [c for c in children if isinstance(c, Required)][0]
+                required = [c for c in children if type(c) is Required][0]
                 children.pop(children.index(required))
                 groups.append(list(required.children) + children)
             elif Optional in types:
-                optional = [c for c in children if isinstance(c, Optional)][0]
+                optional = [c for c in children if type(c) is Optional][0]
                 children.pop(children.index(optional))
                 groups.append(list(optional.children) + children)
             elif AnyOptions in types:
-                optional = [c for c in children if isinstance(c, AnyOptions)][0]
+                optional = [c for c in children if type(c) is AnyOptions][0]
                 children.pop(children.index(optional))
                 groups.append(list(optional.children) + children)
             elif OneOrMore in types:
-                oneormore = [c for c in children if isinstance(c, OneOrMore)][0]
+                oneormore = [c for c in children if type(c) is OneOrMore][0]
                 children.pop(children.index(oneormore))
                 groups.append(list(oneormore.children) * 2 + children)
             else:
@@ -204,7 +204,7 @@ class Argument(ChildPattern):
 
     def single_match(self, left):
         for n, p in enumerate(left):
-            if isinstance(p, Argument):
+            if type(p) is Argument:
                 return n, Argument(self.name, p.value)
         return None, None
 
@@ -223,7 +223,7 @@ class Command(Argument):
 
     def single_match(self, left):
         for n, p in enumerate(left):
-            if isinstance(p, Argument):
+            if type(p) is Argument:
                 if p.value == self.name:
                     return n, Command(self.name, True)
                 else:
