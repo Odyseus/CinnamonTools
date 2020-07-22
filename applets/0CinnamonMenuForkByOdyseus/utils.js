@@ -23,6 +23,7 @@ const {
         Pango,
         St
     },
+    mainloop: Mainloop,
     misc: {
         fileUtils: FileUtils,
         params: Params,
@@ -293,6 +294,7 @@ SimpleMenuItem.prototype = {
     }
 };
 
+
 function ApplicationContextMenuItem() {
     this._init.apply(this, arguments);
 }
@@ -481,10 +483,31 @@ ApplicationContextMenuItem.prototype = {
                 }
                 break;
             default:
-                return true;
+                if (this._appButton.appInfo !== null) {
+                    this._appButton.applet.closeMainMenu();
+
+                    // NOTE: The call to Mainloop.idle_add() is to add an "artificial delay" so the
+                    // menu itself doesn't interfere with the application action being launched.
+                    // For example, without the delay, the absolutely retarded gnome-screenshot will
+                    // capture the menu when taking a screenshot of the screen or the current window.
+                    Mainloop.idle_add(() => {
+                        try {
+                            this._appButton.appInfo.launch_action(this._action,
+                                global.create_app_launch_context());
+                        } catch (aErr) {
+                            global.logError(aErr);
+                        }
+
+                        return GLib.SOURCE_REMOVE;
+                    });
+                }
+
+                return Clutter.EVENT_STOP;
         }
+
         this._appButton.applet.toggleContextMenu(this._appButton);
-        return false;
+
+        return Clutter.EVENT_PROPAGATE;
     },
 
     _openDesktopFileFolder: function(aDirPath) {
@@ -551,6 +574,8 @@ GenericApplicationButton.prototype = {
                 app: params.app
             }
         );
+
+        this.appInfo = null;
     },
 
     activate: function(event) { // jshint ignore:line
@@ -614,8 +639,52 @@ GenericApplicationButton.prototype = {
         }
     },
 
+    // NOTE: This is defined here in the GenericApplicationButton class so it can be used by all
+    // applications buttons ("normal" application buttons, search result buttons and recent app.
+    // buttons).
+    _addAdditionalActions: function(aMenu) {
+        this.appInfo = this.app.get_app_info();
+
+        let actions = this.appInfo ? this.appInfo.list_actions() : [];
+
+        if (actions.length) {
+            let applicationActions = actions.map((aActionName) => {
+                return {
+                    localized_name: this.appInfo.get_action_name(aActionName),
+                    name: aActionName
+                };
+            }).sort((a, b) => {
+                a = Util.latinise(a.localized_name.toLowerCase());
+                b = Util.latinise(b.localized_name.toLowerCase());
+                return a > b;
+            });
+
+            let menuItem;
+            let i = 0,
+                iLen = applicationActions.length;
+            for (; i < iLen; i++) {
+                menuItem = new ApplicationContextMenuItem(
+                    this,
+                    // NOTE: The call to _() (gettext) is kind of redundant since the localized
+                    // name should be provided by the desktop file. But it doesn't hurt having it.
+                    _(applicationActions[i].localized_name),
+                    applicationActions[i].name,
+                    null
+                );
+                menuItem._tooltip.set_text(_(applicationActions[i].localized_name));
+                aMenu.addMenuItem(menuItem);
+            }
+
+            aMenu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+        }
+    },
+
     populateMenu: function(aMenu) {
         let menuItem;
+
+        if (this.applet.pref_context_show_additional_application_actions) {
+            this._addAdditionalActions(aMenu);
+        }
 
         if (this.applet.pref_context_show_add_to_panel) {
             menuItem = new ApplicationContextMenuItem(

@@ -248,6 +248,7 @@ CinnamonMenuForkByOdyseus.prototype = {
             "pref_search_box_padding_left",
             "pref_custom_launchers_box_invert_buttons_order",
             "pref_invert_menu_layout",
+            "pref_context_show_additional_application_actions",
             "pref_context_show_add_to_panel",
             "pref_context_show_add_to_desktop",
             "pref_context_show_add_remove_favorite",
@@ -752,57 +753,86 @@ CinnamonMenuForkByOdyseus.prototype = {
             return;
         }
 
-        let minIndex = 0;
-        let goUp = symbol === Clutter.KEY_Up;
-        let nextActive = null;
+        let navigationKey = true;
+        let whichWay = "none";
         let menuItems = this.contextMenu._getMenuItems(); // The context menu items
-        let menuItemsLength = menuItems.length;
+        let firstItemIndex = 0;
+        let lastItemIndex = menuItems.length - 1;
+        let activeIndex = this._activeContextMenuItem ?
+            menuItems.indexOf(this._activeContextMenuItem) :
+            firstItemIndex;
 
         switch (symbol) {
+            case Clutter.KEY_Up:
+                whichWay = "up";
+                break;
+            case Clutter.KEY_Down:
+                whichWay = "down";
+                break;
             case Clutter.KEY_Page_Up:
-                this._activeContextMenuItem = menuItems[minIndex];
-                this._activeContextMenuItem.setActive(true);
-                return;
+                whichWay = "top";
+                break;
             case Clutter.KEY_Page_Down:
-                this._activeContextMenuItem = menuItems[menuItemsLength - 1];
-                this._activeContextMenuItem.setActive(true);
-                return;
+                whichWay = "bottom";
+                break;
+            default:
+                navigationKey = false;
         }
 
-        if (!this._activeContextMenuItem) {
-            if (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter) {
-                button.activate();
-            } else {
-                this._activeContextMenuItem = menuItems[goUp ? menuItemsLength - 1 : minIndex];
-                this._activeContextMenuItem.setActive(true);
+        if (navigationKey) {
+            switch (whichWay) {
+                case "up":
+                    if (this._activeContextMenuItem) {
+                        activeIndex = activeIndex === 0 ? lastItemIndex : activeIndex - 1;
+                        this._activeContextMenuItem = menuItems[activeIndex];
+                    } else {
+                        this._activeContextMenuItem = menuItems[lastItemIndex];
+                    }
+                    break;
+                case "down":
+                    if (this._activeContextMenuItem) {
+                        activeIndex = activeIndex === lastItemIndex ? firstItemIndex : activeIndex + 1;
+                        this._activeContextMenuItem = menuItems[activeIndex];
+                    } else {
+                        this._activeContextMenuItem = menuItems[firstItemIndex];
+                    }
+                    break;
+                case "top":
+                    this._activeContextMenuItem = menuItems[firstItemIndex];
+                    break;
+                case "bottom":
+                    this._activeContextMenuItem = menuItems[lastItemIndex];
+                    break;
             }
-            return;
-        } else if (this._activeContextMenuItem &&
-            (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter)) {
-            this._activeContextMenuItem.activate();
-            this._activeContextMenuItem = null;
-            return;
-        }
 
-        // DO NOT USE INVERSE LOOP HERE!!!
-        let i = minIndex;
-        for (; i < menuItemsLength; i++) {
-            if (menuItems[i] === this._activeContextMenuItem) {
-                let nextActiveIndex = (goUp ? i - 1 : i + 1);
-
-                if (nextActiveIndex < minIndex) {
-                    nextActiveIndex = menuItemsLength - 1;
-                } else if (nextActiveIndex > menuItemsLength - 1) {
-                    nextActiveIndex = minIndex;
+            if (this._activeContextMenuItem) {
+                if (this._activeContextMenuItem instanceof PopupMenu.PopupSeparatorMenuItem) {
+                    switch (whichWay) {
+                        case "up":
+                            this._activeContextMenuItem = menuItems[activeIndex - 1];
+                            break;
+                        case "down":
+                            this._activeContextMenuItem = menuItems[activeIndex + 1];
+                            break;
+                    }
                 }
 
-                nextActive = menuItems[nextActiveIndex];
-                nextActive.setActive(true);
-                this._activeContextMenuItem = nextActive;
-
-                break;
+                this._activeContextMenuItem.setActive(true);
+            } else {
+                return Clutter.EVENT_PROPAGATE;
             }
+        } else {
+            if (this._activeContextMenuItem &&
+                (symbol === Clutter.KEY_Return || symbol === Clutter.KP_Enter)) {
+                this._activeContextMenuItem.activate();
+                this._activeContextMenuItem = null;
+                return Clutter.EVENT_STOP;
+            }
+
+            return Clutter.EVENT_PROPAGATE;
         }
+
+        return Clutter.EVENT_STOP;
     },
 
     _onMenuKeyPress: function(actor, event) {
@@ -823,7 +853,7 @@ CinnamonMenuForkByOdyseus.prototype = {
 
         index = this._selectedItemIndex;
 
-        let ctrlKey = modifierState & Clutter.ModifierType.CONTROL_MASK;
+        // let ctrlKey = modifierState & Clutter.ModifierType.CONTROL_MASK;
         let altKey = modifierState & Clutter.ModifierType.MOD1_MASK;
 
         // If a context menu is open, hijack keyboard navigation and concentrate on the context menu.
@@ -2442,16 +2472,13 @@ CinnamonMenuForkByOdyseus.prototype = {
                             // returns an array.
                             Array.isArray(keywords) ?
                             keywords.filter(Boolean) :
-                            keywords.match(/\b(\w+)/g).filter(Boolean) :
-                            [];
+                            keywords.match(/\b(\w+)/g).filter(Boolean) : [];
                         break;
                     case "generic_name":
                         /* NOTE: I don't trust this thing. That's why the try{}catch{} block.
                          */
                         try {
-                            haystack = aApp.get_app_info().get_generic_name() ?
-                                [aApp.get_app_info().get_generic_name()] :
-                                [];
+                            haystack = aApp.get_app_info().get_generic_name() ? [aApp.get_app_info().get_generic_name()] : [];
                         } catch (aErr) {
                             haystack = [];
                         }
@@ -2470,9 +2497,7 @@ CinnamonMenuForkByOdyseus.prototype = {
                          */
                     case "name":
                     case "description":
-                        haystack = aApp["get_" + context]() ?
-                            [aApp["get_" + context]()] :
-                            [];
+                        haystack = aApp["get_" + context]() ? [aApp["get_" + context]()] : [];
                         break;
                 }
 

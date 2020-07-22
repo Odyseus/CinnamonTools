@@ -120,6 +120,10 @@
         "type": "generic",
         "default": 20
     },
+    "pref_context_show_additional_application_actions": {
+        "type": "generic",
+        "default": true
+    },
     "pref_context_show_add_to_panel": {
         "type": "generic",
         "default": false
