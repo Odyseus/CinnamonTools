@@ -189,6 +189,7 @@ WindowList.prototype = {
             "pref_window_preview_scale",
             "pref_hide_tooltips",
             "pref_hide_labels",
+            "pref_show_additional_application_actions",
             "pref_invert_menu_items_order",
             "pref_sub_menu_placement",
             "pref_logging_level",
@@ -585,15 +586,15 @@ WindowList.prototype = {
 
     acceptDrop: function(source, actor, x, y, time) { // jshint ignore:line
         if (!(source instanceof $.AppMenuButton)) {
-            return false;
+            return DND.DragMotionResult.NO_DROP;
         }
         if (this._dragPlaceholderPos === undefined) {
-            return false;
+            return DND.DragMotionResult.NO_DROP;
         }
 
         this.manager_container.set_child_at_index(source.actor, this._dragPlaceholderPos);
 
-        return true;
+        return DND.DragMotionResult.CONTINUE;
     },
 
     clearDragPlaceholder: function() {

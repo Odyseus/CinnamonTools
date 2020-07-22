@@ -67,6 +67,11 @@
         "default": true,
         "description": "Hide labels in the window list buttons"
     },
+    "pref_show_additional_application_actions": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Display additional application actions"
+    },
     "pref_invert_menu_items_order": {
         "type": "checkbox",
         "default": false,

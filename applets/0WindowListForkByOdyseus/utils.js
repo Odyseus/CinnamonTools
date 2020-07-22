@@ -8,6 +8,7 @@ const {
     gi: {
         Cinnamon,
         Clutter,
+        GLib,
         Meta,
         St
     },
@@ -587,7 +588,7 @@ AppMenuButton.prototype = {
     },
 
     acceptDrop: function(source, actor, x, y, time) { // jshint ignore:line
-        return false;
+        return DND.DragMotionResult.NO_DROP;
     },
 
     setDisplayTitle: function() {
@@ -697,7 +698,7 @@ AppMenuButton.prototype = {
             if (event.get_button() === 1) {
                 this._toggleWindow(false);
             }
-            return false;
+            return Clutter.EVENT_PROPAGATE;
         }
 
         if (event.get_button() === 1) {
@@ -709,7 +710,7 @@ AppMenuButton.prototype = {
         } else if (event.get_button() === 2 && this._applet.pref_middle_click_close) {
             this.metaWindow.delete(global.get_current_time());
         }
-        return true;
+        return Clutter.EVENT_STOP;
     },
 
     _onButtonPress: function(actor, event) {
@@ -1039,7 +1040,7 @@ AppMenuButton.prototype = {
 
         Mainloop.timeout_add(FLASH_INTERVAL, () => {
             if (!this._needsAttention) {
-                return false;
+                return GLib.SOURCE_REMOVE;
             }
 
             if (this.actor.has_style_class_name(sc)) {
@@ -1051,6 +1052,39 @@ AppMenuButton.prototype = {
             counter++;
             return result;
         });
+    }
+};
+
+
+function ApplicationActionMenuItem() {
+    this._init.apply(this, arguments);
+}
+
+ApplicationActionMenuItem.prototype = {
+    __proto__: PopupMenu.PopupMenuItem.prototype,
+
+    _init: function(aAppButton, aLabel, aAction) {
+        PopupMenu.PopupMenuItem.prototype._init.call(this, aLabel);
+
+        this._appButton = aAppButton;
+        this._action = aAction;
+    },
+
+    activate: function(event) { // jshint ignore:line
+        if (this._appButton.appInfo !== null) {
+            // NOTE: The call to Mainloop.idle_add() is to add an "artificial delay" so the
+            // menu itself doesn't interfere with the application action being launched.
+            // For example, without the delay, the absolutely retarded gnome-screenshot will
+            // capture the menu when taking a screenshot of the screen or the current window.
+            Mainloop.idle_add(() => {
+                this._appButton.appInfo.launch_action(this._action,
+                    global.create_app_launch_context());
+
+                return GLib.SOURCE_REMOVE;
+            });
+        }
+
+        PopupMenu.PopupMenuItem.prototype.activate.call(this);
     }
 };
 
@@ -1080,6 +1114,52 @@ AppMenuButtonRightClickMenu.prototype = {
 
         this.orientation = orientation;
         this.metaWindow = metaWindow;
+        this.appInfo = null;
+    },
+
+    _addAdditionalActions: function() {
+        // FIXME: The app. returned by Cinnamon.WindowTracker.get_window_app() not always contains
+        // the Gio.DesktopAppInfo instance required to get an app. actions. As far as I can tell,
+        // the problem seems to be that the returned app. doesn't have the actual app. ID (its
+        // desktop file name) of an application, but an "artificial ID" (window:[number]).
+        // As far as I could tolerate reading the code of the GWL abomination, the app/appinfo is
+        // obtained using various "tricks" that I prefer not to implement.
+        // I will wait until I'm willing to use (if ever) a newer version of Cinnamon as my main
+        // system to see if the problem persist and if it can be fixed.
+        let tracker = Cinnamon.WindowTracker.get_default();
+        let app = tracker ? tracker.get_window_app(this.metaWindow) : null;
+
+        this.appInfo = app ? app.get_app_info() : null;
+        let actions = this.appInfo ? this.appInfo.list_actions() : [];
+
+        if (actions.length) {
+            let applicationActions = actions.map((aActionName) => {
+                return {
+                    localized_name: this.appInfo.get_action_name(aActionName),
+                    name: aActionName
+                };
+            }).sort((a, b) => {
+                a = Util.latinise(a.localized_name.toLowerCase());
+                b = Util.latinise(b.localized_name.toLowerCase());
+                return a > b;
+            });
+
+            let menuItem;
+            let i = 0,
+                iLen = applicationActions.length;
+            for (; i < iLen; i++) {
+                menuItem = new ApplicationActionMenuItem(
+                    this,
+                    // NOTE: The call to _() (gettext) is kind of redundant since the localized
+                    // name should be provided by the desktop file. But it doesn't hurt having it.
+                    _(applicationActions[i].localized_name),
+                    applicationActions[i].name
+                );
+                this.addMenuItem(menuItem);
+            }
+
+            this.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+        }
     },
 
     _populateMenu: function() {
@@ -1169,25 +1249,31 @@ AppMenuButtonRightClickMenu.prototype = {
 
         this.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
+        if (this._launcher._applet.pref_show_additional_application_actions) {
+            this._addAdditionalActions();
+        }
+
         // Close all/others
         item = new PopupMenu.PopupIconMenuItem(_("Close all"), "application-exit", St.IconType.SYMBOLIC);
         this._signals.connect(item, "activate", function() {
-            for (let window of this._windows)
+            for (let window of this._windows) {
                 if (window.actor.visible &&
                     !window._needsAttention) {
                     window.metaWindow.delete(global.get_current_time());
                 }
+            }
         }.bind(this));
         this.addMenuItem(item);
 
         item = new PopupMenu.PopupIconMenuItem(_("Close others"), "window-close", St.IconType.SYMBOLIC);
         this._signals.connect(item, "activate", function() {
-            for (let window of this._windows)
+            for (let window of this._windows) {
                 if (window.actor.visible &&
                     window.metaWindow !== this.metaWindow &&
                     !window._needsAttention) {
                     window.metaWindow.delete(global.get_current_time());
                 }
+            }
         });
         this.addMenuItem(item);
 
@@ -1316,6 +1402,7 @@ AppMenuButtonRightClickMenu.prototype = {
 };
 
 DebugManager.wrapObjectMethods(Debugger, {
+    ApplicationActionMenuItem: ApplicationActionMenuItem,
     AppMenuButton: AppMenuButton,
     AppMenuButtonRightClickMenu: AppMenuButtonRightClickMenu,
     WindowPreview: WindowPreview
