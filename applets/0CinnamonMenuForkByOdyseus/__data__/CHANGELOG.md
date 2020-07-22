@@ -4,6 +4,14 @@
 
 ***
 
+**Date:** Wed, 22 Jul 2020 19:58:06 -0300<br/>
+**Commit:** [d91521f](https://gitlab.com/Odyseus/CinnamonTools/commit/d91521f)<br/>
+**Author:** Odyseus<br/>
+
+- Added ability to launch applications' actions from their context menu.
+
+***
+
 **Date:** Sun, 5 Apr 2020 01:10:55 -0300<br/>
 **Commit:** [a8238f4](https://gitlab.com/Odyseus/CinnamonTools/commit/a8238f4)<br/>
 **Author:** Odyseus<br/>

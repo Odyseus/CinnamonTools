@@ -4,6 +4,15 @@
 
 ***
 
+**Date:** Wed, 22 Jul 2020 19:57:57 -0300<br/>
+**Commit:** [49e22e3](https://gitlab.com/Odyseus/CinnamonTools/commit/49e22e3)<br/>
+**Author:** Odyseus<br/>
+
+- Added ability to launch applications' actions from their context menu.
+- Replaced some boolean return values by the corresponding constants.
+
+***
+
 **Date:** Mon, 10 Feb 2020 23:08:51 -0300<br/>
 **Commit:** [42738eb](https://gitlab.com/Odyseus/CinnamonTools/commit/42738eb)<br/>
 **Author:** Odyseus<br/>
