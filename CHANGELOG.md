@@ -4,6 +4,62 @@
 
 ***
 
+**Date:** Wed, 22 Jul 2020 19:59:38 -0300<br/>
+**Commit:** [cc9bc43](https://gitlab.com/Odyseus/CinnamonTools/commit/cc9bc43)<br/>
+**Author:** Odyseus<br/>
+
+#### All xlets
+
+- Updated changelogs.
+- Updated help pages.
+
+***
+
+**Date:** Sat, 18 Apr 2020 14:10:54 -0300<br/>
+**Commit:** [195482b](https://gitlab.com/Odyseus/CinnamonTools/commit/195482b)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from 1f78d0f..9e1b1b0
+
+9e1b1b0 docopt.py
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 9e1b1b0ecbfbbc79939ef89f3d664d77027e8bc0
+
+***
+
+**Date:** Tue, 14 Apr 2020 03:51:00 -0300<br/>
+**Commit:** [b77e646](https://gitlab.com/Odyseus/CinnamonTools/commit/b77e646)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated sub-modules.
+
+***
+
+**Date:** Tue, 14 Apr 2020 03:43:46 -0300<br/>
+**Commit:** [a76ca00](https://gitlab.com/Odyseus/CinnamonTools/commit/a76ca00)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated CHANGELOG.
+- Updated README.
+- Updated sub-modules.
+
+***
+
+**Date:** Tue, 14 Apr 2020 03:42:58 -0300<br/>
+**Commit:** [82191f7](https://gitlab.com/Odyseus/CinnamonTools/commit/82191f7)<br/>
+**Author:** Odyseus<br/>
+
+#### All xlets
+
+- Updated change logs.
+
+***
+
 **Date:** Tue, 14 Apr 2020 02:01:14 -0300<br/>
 **Commit:** [29b6461](https://gitlab.com/Odyseus/CinnamonTools/commit/29b6461)<br/>
 **Author:** Odyseus<br/>
