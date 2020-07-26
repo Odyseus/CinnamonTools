@@ -1976,11 +1976,13 @@ def generate_docs(generate_api_docs=False,
 
     ignored_apidoc_modules = [
         os.path.join("__app__", "python_modules", "python_utils", "bottle.py"),
+        os.path.join("__app__", "python_modules", "python_utils", "diff_match_patch"),
         os.path.join("__app__", "python_modules", "python_utils", "docopt.py"),
         os.path.join("__app__", "python_modules", "python_utils", "jsonschema"),
         os.path.join("__app__", "python_modules", "python_utils", "mistune.py"),
         os.path.join("__app__", "python_modules", "python_utils", "polib.py"),
         os.path.join("__app__", "python_modules", "python_utils", "pyperclip"),
+        os.path.join("__app__", "python_modules", "python_utils", "sublime_text_utils"),
         os.path.join("__app__", "python_modules", "python_utils", "titlecase.py"),
         os.path.join("__app__", "python_modules", "python_utils", "tqdm"),
         # The following module has perfectly valid docstrings, but Sphinx is being a
