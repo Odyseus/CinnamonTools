@@ -218,7 +218,6 @@ Weather.prototype = {
             "pref_weather_data",
             "pref_logging_level",
             "pref_debugger_enabled",
-            "pref_darksky_credential_app_id",
             "pref_open_weather_map_credential_app_id",
             "pref_weatherbit_credential_app_id",
             "pref_yahoo_credential_app_id",
@@ -825,9 +824,6 @@ Weather.prototype = {
             if (currentWeather.cur_cond_text === null) {
                 conditionText = _(this._getConditionData("name", currentWeather.cur_cond_code));
             } else {
-                /* NOTE: It isn't possible to provide translations for DarkSky conditions.
-                 * They are provided from the server side.
-                 */
                 conditionText = currentWeather.cur_cond_text;
             }
 

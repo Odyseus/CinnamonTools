@@ -1,52 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-dark_sky = [
-    "ar",
-    "az",
-    "be",
-    "bg",
-    "bs",
-    "ca",
-    "cs",
-    "da",
-    "de",
-    "el",
-    "en",
-    "es",
-    "et",
-    "fi",
-    "fr",
-    "he",
-    "hr",
-    "hu",
-    "id",
-    "is",
-    "it",
-    "ja",
-    "ka",
-    "ko",
-    "kw",
-    "lv",
-    "nb",
-    "nl",
-    "no",
-    "pl",
-    "pt",
-    "ro",
-    "ru",
-    "sk",
-    "sl",
-    "sr",
-    "sv",
-    "tet",
-    "tr",
-    "uk",
-    "x-pig-latin",
-    "zh",
-    "zh-tw",
-]
-
 open_weather_map = [
     "ar",
     "bg",
@@ -121,13 +75,12 @@ weather_bit = [
     "zh-tw"
 ]
 
-all = set(open_weather_map + dark_sky + weather_bit)
+all = set(open_weather_map + weather_bit)
 
 
 if __name__ == "__main__":
     for lang in all:
-        suffix = " %s%s%s" % (
-            ("(D)" if lang in dark_sky else ""),
+        suffix = " %s%s" % (
             ("(O)" if lang in open_weather_map else ""),
             ("(W)" if lang in weather_bit else "")
         )

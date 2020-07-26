@@ -123,8 +123,6 @@ var URLs = {
     YAHOO_API_INSTRUCTIONS: "https://developer.yahoo.com/weather",
     OPEN_WEATHER_MAP_FIND: "https://openweathermap.org/find",
     OPEN_WEATHER_MAP_API_INSTRUCTIONS: "https://openweathermap.org/appid",
-    DARK_SKY_API_FIND: "https://darksky.net/forecast",
-    DARK_SKY_API_INSTRUCTIONS: "https://darksky.net/dev"
 };
 
 var OrnamentType = {
@@ -201,7 +199,6 @@ var DayNamesByIndex = {
 };
 
 var WeatherProviderNames = {
-    DarkSky: _("Dark Sky"),
     YahooWeather: _("Yahoo! Weather"),
     OpenWeatherMap: _("OpenWeatherMap"),
     WeatherBit: _("WeatherBit")
@@ -887,47 +884,6 @@ WeatherBitConditionData[751] = {
     name: Conditions.FREEZING_FOG
 };
 
-var DarkSkyConditionData = {
-    "clear-day": {
-        icon: [Icons.CLEAR]
-    },
-    "clear-night": {
-        icon: [Icons.CLEAR_NIGHT]
-    },
-    "cloudy": {
-        icon: [Icons.OVERCAST]
-    },
-    "fog": {
-        icon: [Icons.FOG]
-    },
-    "hail": {
-        icon: [Icons.SNOW]
-    },
-    "partly-cloudy-day": {
-        icon: [Icons.CLOUDS, Icons.FEW_CLOUDS, Icons.OVERCAST]
-    },
-    "partly-cloudy-night": {
-        icon: [Icons.CLOUDS_NIGHT, Icons.FEW_CLOUDS_NIGHT, Icons.OVERCAST]
-    },
-    "rain": {
-        icon: [Icons.SHOWERS]
-    },
-    "sleet": {
-        icon: [Icons.SNOW_RAIN, Icons.SNOW]
-    },
-    "snow": {
-        icon: [Icons.SNOW]
-    },
-    "thunderstorm": {
-        icon: [Icons.STORM]
-    },
-    "tornado": {
-        icon: [Icons.SEVERE_ALERT]
-    },
-    "wind": {
-        icon: [Icons.FEW_CLOUDS]
-    }
-};
 
 var OpenWeatherMapSupportedLanguages = new Set([
     "ar",
@@ -965,51 +921,6 @@ var OpenWeatherMapSupportedLanguages = new Set([
     "zh_tw"
 ]);
 
-var DarkSkySupportedLanguages = new Set([
-    "ar",
-    "az",
-    "be",
-    "bg",
-    "bs",
-    "ca",
-    "cs",
-    "da",
-    "de",
-    "el",
-    "en",
-    "es",
-    "et",
-    "fi",
-    "fr",
-    "he",
-    "hr",
-    "hu",
-    "id",
-    "is",
-    "it",
-    "ja",
-    "ka",
-    "ko",
-    "kw",
-    "lv",
-    "nb",
-    "nl",
-    "no",
-    "pl",
-    "pt",
-    "ro",
-    "ru",
-    "sk",
-    "sl",
-    "sr",
-    "sv",
-    "tet",
-    "tr",
-    "uk",
-    "x-pig-latin",
-    "zh",
-    "zh-tw"
-]);
 
 var WeatherBitSupportedLanguages = new Set([
     "ar",
@@ -1051,8 +962,6 @@ var WeatherBitSupportedLanguages = new Set([
 
 /* exported CssClasses,
             UnitAbbreviations,
-            DarkSkyConditionData,
-            DarkSkySupportedLanguages,
             DayNamesByIndex,
             DebugManagerSchema,
             ErrorMessages,

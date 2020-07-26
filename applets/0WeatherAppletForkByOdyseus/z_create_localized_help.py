@@ -68,11 +68,6 @@ class Main(LocalizedHelpCreator):
                 "API credentials instructions"), _("Location finder")),
             "| -- | -- | -- |",
             "| %s | [%s](%s) | [%s](%s) |" % (
-                _("Dark Sky"),
-                _("Get credentials"), "https://darksky.net/dev",
-                _("Find location"), "https://darksky.net/forecast",
-            ),
-            "| %s | [%s](%s) | [%s](%s) |" % (
                 _("OpenWeatherMap"),
                 _("Get credentials"), "https://openweathermap.org/appid",
                 _("Find location"), "https://openweathermap.org/find",
@@ -133,12 +128,11 @@ class Main(LocalizedHelpCreator):
                 _("Location ID"),
                 _("A city/region ID used by the weather service providers to identify a location.")
             ),
-            "   - %s" % _("Dark Sky uses only coordinates."),
             "   - %s" % _("Open Weather Map uses city IDs (the number at the end of a location URL) and coordinates."),
             "   - %s" % _("Yahoo! Weather uses WOEIDs and coordinates."),
             "- **%s**: %s" % (
                 _("Language"),
-                _("Weather conditions localization. Languages are only used by DarkSky and OpenWeatherMap providers and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available).")
+                _("Weather conditions localization. Languages are only used by OpenWeatherMap provider and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available).")
             ),
             "- **%s**: %s" % (
                 _("Forecast days"),

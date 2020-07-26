@@ -116,7 +116,7 @@ Provider.prototype = {
 
         this._query_url_1 = $.OAuth.addToURL(baseURL, query);
         this._headers_1 = {
-            "Yahoo-App-Id": appID,
+            "X-Yahoo-App-Id": appID,
             "Authorization": $.OAuth.buildAuthorizationHeader(oauth),
             "Content-Type": "application/json"
         };
