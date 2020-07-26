@@ -4,6 +4,53 @@
 
 ***
 
+**Date:** Sat, 25 Jul 2020 22:07:17 -0300<br/>
+**Commit:** [66c6b39](https://gitlab.com/Odyseus/CinnamonTools/commit/66c6b39)<br/>
+**Author:** Odyseus<br/>
+
+#### Python modules
+
+- Updated list of ignored modules when building the documentation.
+
+***
+
+**Date:** Sat, 25 Jul 2020 21:57:11 -0300<br/>
+**Commit:** [3d1a3b8](https://gitlab.com/Odyseus/CinnamonTools/commit/3d1a3b8)<br/>
+**Author:** Odyseus<br/>
+
+#### Squashed '__app__/python_modules/python_utils/' changes from 9e1b1b0..5a8ac36
+
+5a8ac36 Added sublime_text_utils; an assortment of utilities for use with Sublime Text plugins
+df574e2 mistune_utils.py
+9bb3558 Added fix_imports.py module
+
+git-subtree-dir: __app__/python_modules/python_utils
+git-subtree-split: 5a8ac36ad112f57ecaf49c304a55d70eb543d596
+
+***
+
+**Date:** Sat, 25 Jul 2020 21:51:32 -0300<br/>
+**Commit:** [a0a45ca](https://gitlab.com/Odyseus/CinnamonTools/commit/a0a45ca)<br/>
+**Author:** Odyseus<br/>
+
+#### All xlets
+
+- Updated change logs.
+- Updated localizations.
+- Updated help pages.
+
+***
+
+**Date:** Wed, 22 Jul 2020 20:01:23 -0300<br/>
+**Commit:** [50bfbb3](https://gitlab.com/Odyseus/CinnamonTools/commit/50bfbb3)<br/>
+**Author:** Odyseus<br/>
+
+#### General
+
+- Updated changelog.
+
+***
+
 **Date:** Wed, 22 Jul 2020 19:59:38 -0300<br/>
 **Commit:** [cc9bc43](https://gitlab.com/Odyseus/CinnamonTools/commit/cc9bc43)<br/>
 **Author:** Odyseus<br/>
