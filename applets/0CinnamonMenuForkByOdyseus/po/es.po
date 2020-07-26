@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-04-04 15:23-0300\n"
+"POT-Creation-Date: 2020-07-25 21:38-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
@@ -237,7 +237,7 @@ msgstr "Exportar configuración hacia un archivo"
 msgid "Reset settings to defaults"
 msgstr "Restablecer los valores predeterminados"
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:820 ../../__app__/python_modules/localized_help_creator.py:317 applet.js:292
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:820 ../../__app__/python_modules/localized_help_creator.py:317 applet.js:293
 msgid "Help"
 msgstr "Ayuda"
 
@@ -1110,131 +1110,131 @@ msgstr "Si se abre la ventana de configuración *incorrecta*, estará disponible
 msgid "Menu"
 msgstr "Menú"
 
-#: applet.js:287
+#: applet.js:288
 msgid "Open the menu editor"
 msgstr "Abrir el editor de menús"
 
-#: applet.js:303
+#: applet.js:304
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: applet.js:1458
+#: applet.js:1489
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: applet.js:1484
+#: applet.js:1515
 msgid "Recently Used"
 msgstr "Recientemente Usadas"
 
-#: applet.js:1514
+#: applet.js:1545
 msgid "All Applications"
 msgstr "Todas las aplicaciones"
 
-#: applet.js:1596
+#: applet.js:1627
 msgid "No search results"
 msgstr "No hay resultados de búsqueda"
 
-#: applet.js:1618
+#: applet.js:1649
 msgid "No recent applications"
 msgstr "Sin aplicaciones recientes"
 
-#: applet.js:1626
+#: applet.js:1657
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: applet.js:1798
+#: applet.js:1829
 msgid "Type to search..."
 msgstr "Escriba para buscar..."
 
-#: applet.js:2531 applet.js:2541
+#: applet.js:2557 applet.js:2567
 msgid "Categories"
 msgstr "Categorías"
 
-#: utils.js:615
+#: utils.js:692
 msgid "Add to panel"
 msgstr "Añadir al panel"
 
-#: utils.js:619
+#: utils.js:696
 msgid "Add this application to the Panel launchers applet."
 msgstr "Agregar esta aplicación a los Lanzadores del panel."
 
-#: utils.js:626
+#: utils.js:703
 msgid "Add to desktop"
 msgstr "Añadir al escritorio"
 
-#: utils.js:630
+#: utils.js:707
 msgid "Add this application to the Desktop."
 msgstr "Agregar un acceso directo a esta aplicación en el Escritorio."
 
-#: utils.js:638
+#: utils.js:715
 msgid "Remove from favorites"
 msgstr "Quitar de favoritos"
 
-#: utils.js:642
+#: utils.js:719
 msgid "Remove application from your favorites."
 msgstr "Quitar aplicación de favoritos."
 
-#: utils.js:647
+#: utils.js:724
 msgid "Add to favorites"
 msgstr "Añadir a favoritos"
 
-#: utils.js:651
+#: utils.js:728
 msgid "Add application to your favorites."
 msgstr "Añadir esta aplicación a los favoritos."
 
-#: utils.js:659
+#: utils.js:736
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: utils.js:663
+#: utils.js:740
 msgid "Uninstall application from your system."
 msgstr "Desinstalar aplicación de su sistema."
 
-#: utils.js:670
+#: utils.js:747
 msgid "Run with NVIDIA GPU"
 msgstr "Ejecutar con GPU NVIDIA"
 
-#: utils.js:674
+#: utils.js:751
 msgid "Run application through optirun command (Bumblebee)."
 msgstr "Ejecutar aplicación a través del comando optirun (Bumblebee)."
 
-#: utils.js:681
+#: utils.js:758
 msgid "Run as root"
 msgstr "Ejecutar como root"
 
-#: utils.js:685
+#: utils.js:762
 msgid "Run application as root."
 msgstr "Ejecutar esta aplicación como root."
 
-#: utils.js:692
+#: utils.js:769
 msgid "Edit .desktop file"
 msgstr "Editar archivo .desktop"
 
-#: utils.js:696
+#: utils.js:773
 msgid "Edit this application .desktop file with a text editor."
 msgstr "Editar el archivo .desktop de esta aplicación con un editor de textos."
 
-#: utils.js:703
+#: utils.js:780
 msgid "Open .desktop file folder"
 msgstr "Abrir carpeta del archivo .desktop"
 
-#: utils.js:707
+#: utils.js:784
 msgid "Open the folder containg this application .desktop file."
 msgstr "Abrir la carpeta que contiene el archivo .desktop de esta aplicación."
 
-#: utils.js:714
+#: utils.js:791
 msgid "Run from terminal"
 msgstr "Ejecutar desde terminal"
 
-#: utils.js:718
+#: utils.js:795
 msgid "Run application from a terminal."
 msgstr "Ejecutar aplicación desde una terminal."
 
-#: utils.js:725
+#: utils.js:802
 msgid "Run from terminal as root"
 msgstr "Ejecutar desde terminal como root"
 
-#: utils.js:729
+#: utils.js:806
 msgid "Run application from a terminal as root."
 msgstr "Ejecutar aplicación desde una terminal como root."
 

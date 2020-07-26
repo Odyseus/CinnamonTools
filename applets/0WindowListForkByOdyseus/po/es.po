@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0WindowListForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-04-04 15:23-0300\n"
-"PO-Revision-Date: 2020-02-10 20:58-0300\n"
+"POT-Creation-Date: 2020-07-25 21:38-0300\n"
+"PO-Revision-Date: 2020-07-25 21:41-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:317 utils.js:1243
+#: ../../__app__/python_modules/localized_help_creator.py:317 utils.js:1329
 msgid "Help"
 msgstr "Ayuda"
 
@@ -114,73 +114,73 @@ msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 
-#: utils.js:1095
+#: utils.js:1175
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: utils.js:1109
+#: utils.js:1189
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: utils.js:1120
+#: utils.js:1200
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: utils.js:1131
+#: utils.js:1211
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: utils.js:1137
+#: utils.js:1217
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: utils.js:1143
+#: utils.js:1223
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: utils.js:1173
+#: utils.js:1257
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: utils.js:1183
+#: utils.js:1268
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: utils.js:1198
+#: utils.js:1284
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: utils.js:1206
+#: utils.js:1292
 msgid "Restore"
 msgstr "Restaurar"
 
-#: utils.js:1211
+#: utils.js:1297
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: utils.js:1219
+#: utils.js:1305
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: utils.js:1224
+#: utils.js:1310
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: utils.js:1231
+#: utils.js:1317
 msgid "Close"
 msgstr "Cerrar"
 
-#: utils.js:1250
+#: utils.js:1336
 msgid "About..."
 msgstr "Acerca de..."
 
-#: utils.js:1257
+#: utils.js:1343
 msgid "Configure..."
 msgstr "Configurar..."
 
-#: utils.js:1273
+#: utils.js:1359
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
@@ -252,6 +252,10 @@ msgstr "No mostrar caja de herramientas"
 #. settings-schema.json->pref_hide_labels->description
 msgid "Hide labels in the window list buttons"
 msgstr "Ocultar etiquetas de los botones de la lista de ventanas"
+
+#. settings-schema.json->pref_show_additional_application_actions->description
+msgid "Display additional application actions"
+msgstr "Mostrar acciones de aplicación adicionales"
 
 #. settings-schema.json->pref_invert_menu_items_order->description
 msgid "Invert context menu items order"

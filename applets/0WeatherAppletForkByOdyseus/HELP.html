@@ -103,11 +103,6 @@
 </thead>
 <tbody>
 <tr>
-<td>Dark Sky</td>
-<td><a href="https://darksky.net/dev">Obtener credenciales</a></td>
-<td><a href="https://darksky.net/forecast">Buscar ubicación</a></td>
-</tr>
-<tr>
 <td>OpenWeatherMap</td>
 <td><a href="https://openweathermap.org/appid">Obtener credenciales</a></td>
 <td><a href="https://openweathermap.org/find">Buscar ubicación</a></td>
@@ -147,12 +142,11 @@
 </div><ul>
 <li><strong>Nombre de la ubicación</strong>: Este es un campo informativo y no se utiliza para recuperar datos meteorológicos. Se utiliza para identificar los datos mostrados en el menú y para generar los elementos dentro del menú de selección de ubicaciones.</li>
 <li><strong>ID de la ubicación</strong>: Una identificación de ciudad/región utilizada por los proveedores de servicios meteorológicos para identificar una ubicación.<ul>
-<li>Dark Sky usa solo coordenadas.</li>
 <li>OpenWeatherMap usa IDs de ciudad (el número al final de una URL de ubicación) y coordenadas.</li>
 <li>Yahoo! Clima usa WOEIDs y coordenadas.</li>
 </ul>
 </li>
-<li><strong>Lenguaje</strong>: Localización de condiciones climatológicas. Solo los proveedores DarkSky y OpenWeatherMap usan los idiomas y solo afectan el texto de las condiciones meteorológicas. Cualquier otro texto de la UI del applet es localizado por el propio applet (si está disponible).</li>
+<li><strong>Lenguaje</strong>: Localización de condiciones climatológicas. Solo el proveedor OpenWeatherMap usa idiomas y solo afectan el texto de las condiciones meteorológicas. Cualquier otro texto de la UI del applet es localizado por el propio applet (si está disponible).</li>
 <li><strong>Días de previsión</strong>: La cantidad de pronósticos a mostrar en el menú.</li>
 <li><strong>Filas/Columnas de pronóstico</strong>: La cantidad de files/columnas en las cuales mostrar los pronósticos.</li>
 <li><strong>Proveedor</strong>: Proveedor de datos meteorológicos. Todos los proveedores de clima requieren credenciales adecuadas para funcionar.</li>
@@ -259,11 +253,6 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </thead>
 <tbody>
 <tr>
-<td>Dark Sky</td>
-<td><a href="https://darksky.net/dev">Get credentials</a></td>
-<td><a href="https://darksky.net/forecast">Find location</a></td>
-</tr>
-<tr>
 <td>OpenWeatherMap</td>
 <td><a href="https://openweathermap.org/appid">Get credentials</a></td>
 <td><a href="https://openweathermap.org/find">Find location</a></td>
@@ -303,12 +292,11 @@ Las siguientes secciones están disponibles sólo en Inglés.
 </div><ul>
 <li><strong>Location name</strong>: This is an informative field and it isn't used to retrieve weather data. It is used to identify the displayed data in the menu and to generate the items inside the locations selector menu.</li>
 <li><strong>Location ID</strong>: A city/region ID used by the weather service providers to identify a location.<ul>
-<li>Dark Sky uses only coordinates.</li>
 <li>Open Weather Map uses city IDs (the number at the end of a location URL) and coordinates.</li>
 <li>Yahoo! Weather uses WOEIDs and coordinates.</li>
 </ul>
 </li>
-<li><strong>Language</strong>: Weather conditions localization. Languages are only used by DarkSky and OpenWeatherMap providers and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available).</li>
+<li><strong>Language</strong>: Weather conditions localization. Languages are only used by OpenWeatherMap provider and it only affect weather conditions text. Any other text of the applet UI is localized by the applet itself (if available).</li>
 <li><strong>Forecast days</strong>: The amount of forecasts to display in the menu.</li>
 <li><strong>Forecast rows/columns</strong>: The amount of rows/cols to display the forecast days in.</li>
 <li><strong>Provider</strong>: Weather data provider. All weather providers require proper credentials to function.</li>
@@ -374,6 +362,14 @@ The following sections are available only in English.
 <div class="container boxed my-3 py-3">
 <h2>Weather (Fork By Odyseus) changelog</h2>
 <p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<hr>
+<p><strong>Date:</strong> Sat, 25 Jul 2020 21:46:53 -0300<br/>
+<strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/f9eb61d">f9eb61d</a><br/>
+<strong>Author:</strong> Odyseus<br/></p>
+<ul>
+<li>Changed "Yahoo-App-Id" header to "X-Yahoo-App-Id" due to changes in Yahoo! Weather API.</li>
+<li>Removed DarkSky weather provider. Piece of s<strong><em> corporations (forgive the redundancy) continue f</em>cking us right up the a</strong> relentlessly!!!</li>
+</ul>
 <hr>
 <p><strong>Date:</strong> Fri, 14 Feb 2020 21:30:10 -0300<br/>
 <strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/88cb363">88cb363</a><br/>

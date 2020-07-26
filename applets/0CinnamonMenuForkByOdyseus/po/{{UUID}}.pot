@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0CinnamonMenuForkByOdyseus VERSION\n"
-"POT-Creation-Date: 2020-04-04 15:40-0300\n"
+"POT-Creation-Date: 2020-07-25 21:49-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Make Cinnamon Xlet POT 2020-03-20 21:47:57.129\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-04-11 06:23:52.163\n"
 
 #: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:58
 msgid "Application Chooser"
@@ -238,7 +238,7 @@ msgstr ""
 msgid "Reset settings to defaults"
 msgstr ""
 
-#: ../../__app__/data/python_modules/xlets_settings/__init__.py:820 ../../__app__/python_modules/localized_help_creator.py:317 applet.js:292
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:820 ../../__app__/python_modules/localized_help_creator.py:317 applet.js:293
 msgid "Help"
 msgstr ""
 
@@ -1096,131 +1096,131 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: applet.js:287
+#: applet.js:288
 msgid "Open the menu editor"
 msgstr ""
 
-#: applet.js:303
+#: applet.js:304
 msgid "Configure..."
 msgstr ""
 
-#: applet.js:1458
+#: applet.js:1489
 msgid "Favorites"
 msgstr ""
 
-#: applet.js:1484
+#: applet.js:1515
 msgid "Recently Used"
 msgstr ""
 
-#: applet.js:1514
+#: applet.js:1545
 msgid "All Applications"
 msgstr ""
 
-#: applet.js:1596
+#: applet.js:1627
 msgid "No search results"
 msgstr ""
 
-#: applet.js:1618
+#: applet.js:1649
 msgid "No recent applications"
 msgstr ""
 
-#: applet.js:1626
+#: applet.js:1657
 msgid "Clear list"
 msgstr ""
 
-#: applet.js:1798
+#: applet.js:1829
 msgid "Type to search..."
 msgstr ""
 
-#: applet.js:2531 applet.js:2541
+#: applet.js:2557 applet.js:2567
 msgid "Categories"
 msgstr ""
 
-#: utils.js:615
+#: utils.js:692
 msgid "Add to panel"
 msgstr ""
 
-#: utils.js:619
+#: utils.js:696
 msgid "Add this application to the Panel launchers applet."
 msgstr ""
 
-#: utils.js:626
+#: utils.js:703
 msgid "Add to desktop"
 msgstr ""
 
-#: utils.js:630
+#: utils.js:707
 msgid "Add this application to the Desktop."
 msgstr ""
 
-#: utils.js:638
+#: utils.js:715
 msgid "Remove from favorites"
 msgstr ""
 
-#: utils.js:642
+#: utils.js:719
 msgid "Remove application from your favorites."
 msgstr ""
 
-#: utils.js:647
+#: utils.js:724
 msgid "Add to favorites"
 msgstr ""
 
-#: utils.js:651
+#: utils.js:728
 msgid "Add application to your favorites."
 msgstr ""
 
-#: utils.js:659
+#: utils.js:736
 msgid "Uninstall"
 msgstr ""
 
-#: utils.js:663
+#: utils.js:740
 msgid "Uninstall application from your system."
 msgstr ""
 
-#: utils.js:670
+#: utils.js:747
 msgid "Run with NVIDIA GPU"
 msgstr ""
 
-#: utils.js:674
+#: utils.js:751
 msgid "Run application through optirun command (Bumblebee)."
 msgstr ""
 
-#: utils.js:681
+#: utils.js:758
 msgid "Run as root"
 msgstr ""
 
-#: utils.js:685
+#: utils.js:762
 msgid "Run application as root."
 msgstr ""
 
-#: utils.js:692
+#: utils.js:769
 msgid "Edit .desktop file"
 msgstr ""
 
-#: utils.js:696
+#: utils.js:773
 msgid "Edit this application .desktop file with a text editor."
 msgstr ""
 
-#: utils.js:703
+#: utils.js:780
 msgid "Open .desktop file folder"
 msgstr ""
 
-#: utils.js:707
+#: utils.js:784
 msgid "Open the folder containg this application .desktop file."
 msgstr ""
 
-#: utils.js:714
+#: utils.js:791
 msgid "Run from terminal"
 msgstr ""
 
-#: utils.js:718
+#: utils.js:795
 msgid "Run application from a terminal."
 msgstr ""
 
-#: utils.js:725
+#: utils.js:802
 msgid "Run from terminal as root"
 msgstr ""
 
-#: utils.js:729
+#: utils.js:806
 msgid "Run application from a terminal as root."
 msgstr ""
 

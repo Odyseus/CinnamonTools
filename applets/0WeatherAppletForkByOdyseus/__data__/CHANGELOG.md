@@ -4,6 +4,15 @@
 
 ***
 
+**Date:** Sat, 25 Jul 2020 21:46:53 -0300<br/>
+**Commit:** [f9eb61d](https://gitlab.com/Odyseus/CinnamonTools/commit/f9eb61d)<br/>
+**Author:** Odyseus<br/>
+
+- Changed "Yahoo-App-Id" header to "X-Yahoo-App-Id" due to changes in Yahoo! Weather API.
+- Removed DarkSky weather provider. Piece of s*** corporations (forgive the redundancy) continue f*cking us right up the a** relentlessly!!!
+
+***
+
 **Date:** Fri, 14 Feb 2020 21:30:10 -0300<br/>
 **Commit:** [88cb363](https://gitlab.com/Odyseus/CinnamonTools/commit/88cb363)<br/>
 **Author:** Odyseus<br/>
