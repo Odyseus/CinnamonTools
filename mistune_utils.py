@@ -12,9 +12,9 @@
 """
 import re
 
-from mistune import InlineLexer
-from mistune import Markdown
-from mistune import Renderer
+from .mistune import InlineLexer
+from .mistune import Markdown
+from .mistune import Renderer
 
 
 class MistuneCustomRenderer(Renderer):
