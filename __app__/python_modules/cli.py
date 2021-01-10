@@ -304,7 +304,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     threads.append(t)
 
                     for thread in threads:
-                        if thread is not None and thread.isAlive():
+                        if thread is not None and thread.is_alive():
                             thread.join()
 
             if self.action:
@@ -314,7 +314,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                 threads.append(t)
 
                 for thread in threads:
-                    if thread is not None and thread.isAlive():
+                    if thread is not None and thread.is_alive():
                         thread.join()
 
             self.print_log_file()
@@ -332,7 +332,7 @@ class CommandLineInterface(cli_utils.CommandLineInterfaceSuper):
                     threads.append(t)
 
                     for thread in threads:
-                        if thread is not None and thread.isAlive():
+                        if thread is not None and thread.is_alive():
                             thread.join()
 
     def display_main_menu(self):
