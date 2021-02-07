@@ -1042,8 +1042,10 @@ function parseLine(aLineString) {
         line.markup = "<span " + markupAttributes.join(" ") + ">" + line.markup + "</span>";
     }
 
-    for (let x in ["bash", "command"]) {
-        if (line[x]) {
+    for (let a = Constants.EXEC_ATTRIBUTES.length - 1; a >= 0; a--) {
+        let x = Constants.EXEC_ATTRIBUTES[a];
+
+        if (line.hasOwnProperty(x) && line[x]) {
             // Append BitBar's legacy "paramN" attributes to the bash command
             // (Argos allows placing arguments directly in the command string)
             let i = 1;

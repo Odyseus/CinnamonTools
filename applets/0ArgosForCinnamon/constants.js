@@ -133,6 +133,8 @@ var UNITS_MAP = {
     }
 };
 
+var EXEC_ATTRIBUTES = ["bash", "command"];
+
 /* exported AnsiColors,
             SLIDER_SCALE,
             UNITS_MAP,
@@ -145,5 +147,6 @@ var UNITS_MAP = {
             UnitSelectorSubMenuItemParams,
             CustomPopupSliderMenuItemParams,
             ArgosMenuItemParams,
-            UnitsMultiplicationFactor
+            UnitsMultiplicationFactor,
+            EXEC_ATTRIBUTES
  */
