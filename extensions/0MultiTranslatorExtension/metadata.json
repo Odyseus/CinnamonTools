@@ -1,7 +1,0 @@
-{
-    "external-configuration-app": "settings.py",
-    "contributors": "See this xlet help file.",
-    "description": "Translation of text by different translation providers (currently Google, Yandex, Bing, and Apertium).",
-    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "name": "Multi Translator"
-}

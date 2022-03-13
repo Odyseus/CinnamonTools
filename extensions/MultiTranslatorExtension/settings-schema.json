@@ -1,0 +1,161 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "open_translator_dialog_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "translate_from_clipboard_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "translate_from_selection_keybinding": {
+        "type": "generic",
+        "default": ""
+    },
+    "default_translator": {
+        "type": "generic",
+        "default": "Google.Translate"
+    },
+    "translators_prefs": {
+        "type": "generic",
+        "default": {}
+    },
+    "translators_prefs_defaults_control": {
+        "type": "generic",
+        "default": 1
+    },
+    "ui_animation_time": {
+        "type": "generic",
+        "default": 200
+    },
+    "translators_prefs_defaults_apply": {
+        "type": "generic",
+        "default": false
+    },
+    "trigger_date_format_syntax_info": {
+        "type": "generic",
+        "default": false
+    },
+    "translators_prefs_defaults": {
+        "type": "generic",
+        "default": [{
+            "provider_name": "Apertium.TS",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Bing.TranslatorTS",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Google.TranslateTS",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Google.Translate",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Yandex.Translate",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }, {
+            "provider_name": "Yandex.TranslateTS",
+            "default_source": "auto",
+            "default_target": "en",
+            "remember_last_lang": true
+        }]
+    },
+    "languages_stats": {
+        "type": "generic",
+        "default": {}
+    },
+    "last_translator": {
+        "type": "generic",
+        "default": ""
+    },
+    "remember_last_translator": {
+        "type": "generic",
+        "default": true
+    },
+    "auto_translate_when_switching_language": {
+        "type": "generic",
+        "default": false
+    },
+    "show_most_used": {
+        "type": "generic",
+        "default": true
+    },
+    "sync_entries_scrolling": {
+        "type": "generic",
+        "default": false
+    },
+    "width_percents": {
+        "type": "generic",
+        "default": 80
+    },
+    "height_percents": {
+        "type": "generic",
+        "default": 60
+    },
+    "font_size": {
+        "type": "generic",
+        "default": 1.20
+    },
+    "dialog_theme": {
+        "type": "generic",
+        "default": "default"
+    },
+    "dialog_theme_custom": {
+        "type": "generic",
+        "default": ""
+    },
+    "history_enabled": {
+        "type": "generic",
+        "default": true
+    },
+    "history_timestamp": {
+        "type": "generic",
+        "default": "custom"
+    },
+    "history_timestamp_custom": {
+        "type": "generic",
+        "default": "%Y-%m-%d %H:%M:%S"
+    },
+    "history_width_to_trigger_word_wrap": {
+        "type": "generic",
+        "default": 300
+    },
+    "yandex_api_keys": {
+        "type": "generic",
+        "default": ""
+    },
+    "loggin_save_history_indented": {
+        "type": "generic",
+        "default": false
+    },
+    "keep_source_entry_text_selected": {
+        "type": "generic",
+        "default": true
+    },
+    "informed_about_dependencies": {
+        "type": "generic",
+        "default": false
+    },
+    "desktop_file_generated": {
+        "type": "generic",
+        "default": false
+    }
+}

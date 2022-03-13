@@ -1,0 +1,5 @@
+{
+    "external-configuration-app": "settings.py",
+    "description": "Translation of text by different translation providers (currently Google, Yandex, Bing, and Apertium).",
+    "name": "Multi Translator"
+}
