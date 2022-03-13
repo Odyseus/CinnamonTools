@@ -1,6 +1,18 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Widgets for selecting themed icons.
+
+TODO
+----
+- IconChooserDialog
+
+    1. Investigate if it would be possible to use a single instance of IconChooserDialog for all
+        IconChooser instances found in a window. Right now the IconChooserDialog is created for every
+        IconChooser widget and re-used after is closed.
+    2. If the first point can be achieved, investigate if I can implement the use of a Gtk.StackSidebar.
+        Right now I'm using a single Gtk.FlowBox and destroying all of its children on category selection.
+        Maybe I can implement a Gtk.FlowBox for every category and make all their Gtk.FlowBoxChild elements
+        persistent but created/displayed in chunks?
 """
 import gi
 import os
@@ -21,6 +33,8 @@ from gi.repository import Pango
 from . import exceptions
 from .common import BaseGrid
 from .common import _
+from .common import get_global
+from .common import get_toplevel_window
 
 
 class IconChooserDialog(Gtk.Dialog):
@@ -45,56 +59,53 @@ class IconChooserDialog(Gtk.Dialog):
     Not all memory created by the dialog seems to be released.
     """
 
-    def __init__(self, transient_for=None, main_app=None):
+    def __init__(self, transient_for=None):
         """Initialization.
 
         Parameters
         ----------
         transient_for : Gtk.Window
             The window the dialog will be transient for.
-        main_app : None, optional
-            The main application.
         """
-        super().__init__(transient_for=transient_for,
-                         use_header_bar=True,
-                         title=_("Choose an Icon"),
-                         flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                         buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
-                                  _("_Select"), Gtk.ResponseType.OK)
-                         )
+        super().__init__(
+            transient_for=transient_for,
+            use_header_bar=get_global("USE_HEADER_BARS_ON_DIALOGS"),
+            title=_("Choose an Icon"),
+            flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+            buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
+                     _("_Select"), Gtk.ResponseType.OK)
+        )
         GLib.threads_init()
 
         self.set_default_size(800, 600)
 
-        # Mark for deletion on EOL. Gtk 3.18.
-        # Keep call to set_css_name without the try/catch.
-        try:
-            self.set_css_name("stacksidebar")
-        except Exception:
-            pass
-
         self._icon_size = 32
         self._search_term = ""
         self._selected_icon = ""
-        self._timer = None
-        self._main_app = main_app
+        self._main_app = get_global("MAIN_APP")
 
         # Widgets start here
         self._headerbar = self.get_header_bar()
         self._sidebar = Gtk.ListBox()
         self._sidebar.set_vexpand(True)
+        c = self._sidebar.get_style_context()
+        # Mark for deletion on EOL. Gtk4
+        # Replace Gtk.StyleContext.add_class with Gtk.Widget.add_css_class.
+        c.add_class(Gtk.STYLE_CLASS_SIDEBAR)
+        c.add_class("cinnamon-xlet-settings-app")
+        c.add_class("icon-chooser-dialog-sidebar")
         sidebar_frame = Gtk.Frame()
+        # Mark for deletion on EOL. Gtk4
+        # Stop using set_shadow_type and set the boolean property has-frame.
         sidebar_frame.set_shadow_type(Gtk.ShadowType.IN)
         sidebar_frame.add(self._sidebar)
         sidebar_box_scroller = Gtk.ScrolledWindow(hadjustment=None, vadjustment=None)
-        sidebar_box_scroller.get_style_context().add_class(Gtk.STYLE_CLASS_SIDEBAR)
         sidebar_box_scroller.set_policy(hscrollbar_policy=Gtk.PolicyType.NEVER,
                                         vscrollbar_policy=Gtk.PolicyType.AUTOMATIC)
         sidebar_box_scroller.add(sidebar_frame)
 
         self._flow_box = Gtk.FlowBox()
-        self._flow_box.set_vexpand(True)
-        self._flow_box.set_hexpand(True)
+        self._flow_box.set_property("expand", True)
         self._flow_box.set_orientation(Gtk.Orientation.HORIZONTAL)
         self._flow_box.set_column_spacing(8)
         self._flow_box.set_row_spacing(8)
@@ -108,7 +119,11 @@ class IconChooserDialog(Gtk.Dialog):
 
         self._flow_box_frame = Gtk.Frame()
         self._flow_box_frame.set_hexpand(True)
+        # Mark for deletion on EOL. Gtk4
+        # Stop using set_shadow_type and set the boolean property has-frame.
         self._flow_box_frame.set_shadow_type(Gtk.ShadowType.IN)
+        # Mark for deletion on EOL. Gtk4
+        # Replace Gtk.StyleContext.add_class with Gtk.Widget.add_css_class.
         self._flow_box_frame.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW)
         self._flow_box_frame.add(self._flow_box_scroller)
 
@@ -116,24 +131,24 @@ class IconChooserDialog(Gtk.Dialog):
         self._search_entry.set_hexpand(True)
         self._search_entry.set_placeholder_text(_("Search..."))
 
-        browse_image_button = Gtk.Button(label=_("Browse"), valign=Gtk.Align.CENTER)
-        browse_image_button.get_style_context().add_class("text-button")
+        browse_image_button = Gtk.Button(label=_("Browse"))
 
         search_box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
+        # Mark for deletion on EOL. Gtk4
+        # Replace Gtk.StyleContext.add_class with Gtk.Widget.add_css_class.
+        search_box.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED)
         search_box.attach(self._search_entry, 0, 0, 1, 1)
         search_box.attach(browse_image_button, 1, 0, 1, 1)
 
         icon_selector_box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
-        icon_selector_box.set_hexpand(True)
-        icon_selector_box.set_vexpand(True)
+        icon_selector_box.set_property("expand", True)
         icon_selector_box.attach(sidebar_box_scroller, 0, 0, 1, 1)
         icon_selector_box.attach(self._flow_box_frame, 1, 0, 1, 1)
 
         # Spinner
         self._spinner = Gtk.Spinner()
         self._spinner.set_size_request(48, 48)
-        self._spinner.set_hexpand(False)
-        self._spinner.set_vexpand(False)
+        self._spinner.set_property("expand", False)
         self._spinner.set_halign(Gtk.Align.CENTER)
         self._spinner.set_valign(Gtk.Align.CENTER)
 
@@ -147,6 +162,8 @@ class IconChooserDialog(Gtk.Dialog):
 
         # Connect Signals
         self._search_entry.connect("changed", self._filter_icons)
+        # Mark for deletion on EOL. Gtk4
+        # Use Gtk.EventControllerKey instead of key-press-event.
         self._search_entry.connect("key-press-event", self._on_search_entry_key_pressed)
         browse_image_button.connect("clicked", self._on_browse_button_clicked)
         self._sidebar.connect("selected-rows-changed", self._on_category_selected)
@@ -197,8 +214,11 @@ class IconChooserDialog(Gtk.Dialog):
 
         self._main_app.init_icon_chooser_data()
 
-        for label, context in self._main_app.icon_chooser_store:
+        for label, context in self._main_app.icon_chooser_contexts_store:
             row = Gtk.ListBoxRow()
+            # Mark for deletion on EOL. Gtk4
+            # Replace Gtk.StyleContext.add_class with Gtk.Widget.add_css_class.
+            # NOTE: Class added to be able to style these items as elements of a Gtk.StackSidebar.
             row.get_style_context().add_class("sidebar-item")
             cat_label = Gtk.Label(label)
             cat_label.set_xalign(0.0)
@@ -219,8 +239,21 @@ class IconChooserDialog(Gtk.Dialog):
         ----------
         context : str
             A string identifying a particular type of icon.
+
+        NOTE
+        ----
+        FIXME: I'm forced to use a Gtk.ListStore to store ALL icons for the Gtk.EntryCompletion.
+        I used to store ALL icons in a dictionary to be able to iterate icons under
+        a specific category. Having the EXACT SAME DATA stored twice didn't seem appropiate, so here
+        I re-use the Gtk.ListStore (self._main_app.icon_chooser_icons_store).
+        The thing is that having to iterate through THE ENTIRE ICONS DATABASE is as bad as having
+        the data stored twice. I don't know how the f*ck to iterate the icon_chooser_icons_store
+        Gtk.ListStore selectively.
         """
-        for icon in self._main_app.icon_chooser_icons.get(context, []):
+        for ctc, icon in self._main_app.icon_chooser_icons_store:
+            if ctc != context:
+                continue
+
             flow_child = Gtk.FlowBoxChild()
             flow_child.add(_IconPreview(icon, self._icon_size))
             GLib.idle_add(self._flow_box.insert, flow_child, -1)
@@ -236,6 +269,7 @@ class IconChooserDialog(Gtk.Dialog):
         to my knowledge.
         """
         self._spinner.stop()
+        self._spinner.hide()
         self._flow_box_frame.remove(self._flow_box_frame.get_children()[0])
         self._flow_box_frame.add(self._flow_box_scroller)
         self._flow_box_scroller.show_all()
@@ -284,7 +318,8 @@ class IconChooserDialog(Gtk.Dialog):
         count : int
             The currently displayed amount of icons.
         """
-        self._headerbar.set_subtitle(_("Icons shown") + ": " + str(count))
+        if self._headerbar:
+            self._headerbar.set_subtitle(_("Icons shown") + f": {str(count)}")
 
     def _on_category_selected(self, *args):
         """When the context is changed, display the approprite icons.
@@ -313,10 +348,13 @@ class IconChooserDialog(Gtk.Dialog):
         # Place a spinner in the icon section while icons are loaded.
         self._flow_box_frame.remove(self._flow_box_frame.get_children()[0])
         self._flow_box_frame.add(self._spinner)
+        # NOTE: Starting the spinner whon't display it. ¬¬
+        self._spinner.show()
         self._spinner.start()
 
         # Load icon previews for the new context asynchronously.
-        context_label, context = self._main_app.icon_chooser_store[selection[0].get_index()]
+        context_label, context = self._main_app.icon_chooser_contexts_store[selection[0].get_index(
+        )]
 
         thread = Thread(target=self._create_icon_previews, args=(context,))
         thread.setDaemon(True)
@@ -402,12 +440,14 @@ class IconChooserDialog(Gtk.Dialog):
         dir_path : str, optional
             The path to a folder for the dialog to use as a start folder.
         """
-        dialog = Gtk.FileChooserDialog(title=_("Choose an Icon"),
-                                       action=Gtk.FileChooserAction.OPEN,
-                                       transient_for=self,
-                                       use_header_bar=True,
-                                       buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
-                                                _("_Select"), Gtk.ResponseType.OK))
+        dialog = Gtk.FileChooserDialog(
+            title=_("Choose an Icon"),
+            action=Gtk.FileChooserAction.OPEN,
+            transient_for=get_toplevel_window(self),
+            use_header_bar=get_global("USE_HEADER_BARS_ON_DIALOGS"),
+            buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
+                     _("_Select"), Gtk.ResponseType.OK)
+        )
 
         filter_text = Gtk.FileFilter()
         filter_text.set_name(_("Image files"))
@@ -465,16 +505,6 @@ class IconChooserDialog(Gtk.Dialog):
         """
         return self._selected_icon
 
-    def get_main_app(self):
-        """Get main application.
-
-        Returns
-        -------
-        Gtk.Application
-            See ``main_app`` of :any:`SettingsBox`.
-        """
-        return self._main_app
-
     def set_icon_size(self, size):
         """Set the pixel size to display icons in.
 
@@ -515,18 +545,8 @@ class IconChooserDialog(Gtk.Dialog):
 
         self._search_term = filter_term
 
-    def set_main_app(self, main_app):
-        """Get main application.
 
-        Parameters
-        ----------
-        main_app : Gtk.Application
-            See ``main_app`` of :any:`SettingsBox`.
-        """
-        self._main_app = main_app
-
-
-class IconChooserButton(Gtk.Button):
+class _IconChooserButton(Gtk.Button):
     """GTK + 3 Button to open dialog allowing selection of a themed icon.
 
     The name of the selected icon is emitted via the "icon-selected" signal
@@ -618,7 +638,7 @@ class IconChooserButton(Gtk.Button):
         if prop.name == "icon":
             return getattr(self, prop.name)
         else:
-            raise AttributeError("Unknown property '%s'" % prop.name)
+            raise AttributeError(f"Unknown property '{prop.name}'")
 
     def do_set_property(self, prop, value):
         """Set property override.
@@ -640,7 +660,7 @@ class IconChooserButton(Gtk.Button):
                 setattr(self, prop.name, value)
                 self.set_icon(value)
         else:
-            raise AttributeError("Unknown property '%s'" % prop.name)
+            raise AttributeError(f"Unknown property '{prop.name}'")
 
     def ensure_dialog(self):
         """Ensure that the dialog is created once.
@@ -653,7 +673,40 @@ class IconChooserButton(Gtk.Button):
         if self.dialog is not None:
             return
 
-        self.dialog = IconChooserDialog(main_app=self.get_main_app())
+        self.dialog = IconChooserDialog(get_toplevel_window(self))
+
+    def _set_icon(self, icon):
+        """Set button icon.
+
+        Parameters
+        ----------
+        icon : str
+            The icon name or path.
+
+        Returns
+        -------
+        bool
+            Remove source.
+        """
+        if icon:
+            # NOTE: Check for the existence of "/" first so os.path.isfile() is not
+            # called unnecessarily.
+            if "/" in icon and os.path.isfile(icon):
+                valid, width, height = Gtk.icon_size_lookup(Gtk.IconSize.BUTTON)
+                img = GdkPixbuf.Pixbuf.new_from_file_at_size(icon, width, height)
+                self._icon.set_from_pixbuf(img)
+            else:
+                self._icon.set_from_icon_name(icon, Gtk.IconSize.BUTTON)
+
+            self.icon = icon
+            self.notify("icon")
+            self.emit("icon-selected", self.icon)
+        else:
+            self._icon.set_from_icon_name("edit-find-symbolic", Gtk.IconSize.BUTTON)
+
+        self._timer = None
+
+        return GLib.SOURCE_REMOVE
 
     def set_icon(self, icon):
         """Set button icon.
@@ -663,29 +716,10 @@ class IconChooserButton(Gtk.Button):
         icon : str
             The icon name or path.
         """
-        def apply(self):
-            """Delayed apply.
-            """
-            if icon:
-                # NOTE: Check for the existence of "/" first so os.path.isfile() is not called unnecessarily.
-                if "/" in icon and os.path.isfile(icon):
-                    valid, width, height = Gtk.icon_size_lookup(Gtk.IconSize.BUTTON)
-                    img = GdkPixbuf.Pixbuf.new_from_file_at_size(icon, width, height)
-                    self._icon.set_from_pixbuf(img)
-                else:
-                    self._icon.set_from_icon_name(icon, Gtk.IconSize.BUTTON)
-
-                self.notify("icon")
-                self.emit("icon-selected", self.icon)
-            else:
-                self._icon.set_from_icon_name("edit-find-symbolic", Gtk.IconSize.BUTTON)
-
-            self._timer = None
-
         if self._timer:
             GLib.source_remove(self._timer)
 
-        self._timer = GLib.timeout_add(300, apply, self)
+        self._timer = GLib.timeout_add(300, self._set_icon, icon)
 
     def _show_dialog(self, *args):
         """Called when the button is clicked to show a selection dialog.
@@ -696,7 +730,7 @@ class IconChooserButton(Gtk.Button):
             Arguments.
         """
         self.ensure_dialog()
-        self.dialog.set_transient_for(self.get_toplevel())
+        self.dialog.set_transient_for(get_toplevel_window(self))
         self.dialog.set_icon_size(self._dialog_icon_size)
         icon = self._parent_widget.get_value()
         self.dialog.set_search_term(icon if icon is not None else "")
@@ -737,16 +771,6 @@ class IconChooserButton(Gtk.Button):
             Name or path of the currently selected icon.
         """
         return self.icon
-
-    def get_main_app(self):
-        """Get the main application.
-
-        Returns
-        -------
-        Gtk.Application
-            See ``main_app`` of :any:`SettingsBox`.
-        """
-        return self._main_app
 
     def set_dialog_icon_size(self, size):
         """Set the pixel size to display icons in.
@@ -789,15 +813,126 @@ class IconChooserButton(Gtk.Button):
             raise exceptions.WrongType("str", type(search_term).__name__)
         self._search_term = search_term
 
-    def set_main_app(self, main_app):
-        """Set main application.
+
+GObject.type_register(_IconChooserButton)
+
+
+class IconChooserButton(BaseGrid):
+    """Icon chooser button.
+
+    Attributes
+    ----------
+    button : _IconChooserButton
+        The button.
+    entry : Gtk.Entry
+        The entry.
+    parent_widget : SettingsWidgets.IconChooser
+        The parent widget.
+
+    TODO
+    ----
+    Improve the synchronization of all widget values. Between the entry changes triggering icon
+    selection, icon selection triggering entry changes and Gtk.EntryCompletion triggering both;
+    I barely can keep up with the synchronization mechanism. Sometimes the cursor moves itself to the
+    beginning of the entry while typing.
+    """
+
+    def __init__(self, parent_widget):
+        """Initialization.
 
         Parameters
         ----------
-        main_app : Gtk.Application
-            See ``main_app`` of :any:`SettingsBox`.
+        parent_widget : SettingsWidgets.IconChooser
+            The parent widget.
         """
-        self._main_app = main_app
+        super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
+        self.set_spacing(0, 0)
+        # Mark for deletion on EOL. Gtk4
+        # Replace Gtk.StyleContext.add_class with Gtk.Widget.add_css_class.
+        self.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED)
+
+        self._main_app = get_global("MAIN_APP")
+        self._timer = None
+        self._completion = None
+        self._setting_entry_text = False
+        self.parent_widget = parent_widget
+        self.entry = Gtk.Entry()
+        self.entry.set_hexpand(True)
+        self.button = _IconChooserButton(parent_widget)
+
+        self.attach(self.entry, 0, 0, 1, 1)
+        self.attach(self.button, 1, 0, 1, 1)
+
+        self.entry.connect("changed", self.on_entry_changed)
+        self.button.connect("icon-selected", self.on_icon_selected)
+
+    def _on_entry_changed(self, widget):
+        """On entry changed delayed.
+
+        Parameters
+        ----------
+        widget : Gtk.Entry
+            The changed entry.
+
+        Returns
+        -------
+        bool
+            Remove source.
+        """
+        if not self._completion and self._main_app.gtk_icon_theme_uptodate:
+            self._completion = Gtk.EntryCompletion()
+            # NOTE: Auto complete matches when navigation the completions popup.
+            self._completion.set_inline_selection(True)
+            # NOTE: Limit the width of the completions popupt to the width of the entry tied to it.
+            self._completion.set_popup_set_width(True)
+            # NOTE: The Gtk.ListStore were all icons are stored.
+            self._completion.set_model(self._main_app.icon_chooser_icons_store)
+            # NOTE: The second column of the Gtk.ListStorage is the one containing the icons. The
+            # first one has the icons categories.
+            self._completion.set_text_column(1)
+            # NOTE: Trigger auto completions after typimng 3 or more characters.
+            self._completion.set_minimum_key_length(3)
+            widget.set_completion(self._completion)
+
+        if not self._setting_entry_text:
+            value = widget.get_text().strip()
+            self.button.set_icon(value)
+            self.parent_widget.set_value(value)
+
+        self._timer = None
+
+        return GLib.SOURCE_REMOVE
+
+    def on_entry_changed(self, widget):
+        """On entry changed.
+
+        Parameters
+        ----------
+        widget : Gtk.Entry
+            The changed entry.
+        """
+        if self._timer:
+            GLib.source_remove(self._timer)
+
+        self._timer = GLib.timeout_add(300, self._on_entry_changed, widget)
+
+    def on_icon_selected(self, widget, icon):
+        """On icon selected.
+
+        Parameters
+        ----------
+        widget : _IconChooserButton
+            The icon chooser button.
+        icon : str
+            The icon.
+        """
+        self._setting_entry_text = True
+
+        if icon is not None:
+            self.entry.set_text(icon)
+            self.parent_widget.set_value(icon)
+
+        self._setting_entry_text = False
 
 
 class _IconPreview(BaseGrid):
@@ -821,9 +956,9 @@ class _IconPreview(BaseGrid):
         self._icon_name = name
 
         icon = Gtk.Image.new_from_icon_name(name, Gtk.IconSize.DIALOG)
-        # Gtk.Image.new_from_icon_name seems to sometimes ignore the set size,
-        #   leading to inconsistent icon sizes. Solution is to force a size
-        #   using set_pixel_size.
+        # NOTE: Gtk.Image.new_from_icon_name seems to sometimes ignore the set size,
+        # leading to inconsistent icon sizes. Solution is to force a size
+        # using set_pixel_size.
         icon.set_pixel_size(size)
         icon.set_hexpand(True)
         icon.set_vexpand(True)

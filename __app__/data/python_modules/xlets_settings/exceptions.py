@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Miscellaneous exceptions.
 """
@@ -73,21 +73,6 @@ class ExceptionWhitoutTraceBackWarning(Exception):
         sys.exit(self)
 
 
-class WrongPythonVersion(ExceptionWhitoutTraceBack):
-    """WrongPythonVersion
-    """
-
-    def __init__(self, msg="Minimum Python version supported: 3.5"):
-        """Initialization.
-
-        Parameters
-        ----------
-        msg : str, optional
-            Message that the exception should display.
-        """
-        super().__init__(msg=msg)
-
-
 class MissingRequiredArgument(ExceptionWhitoutTraceBack):
     """MissingRequiredArgument
     """
@@ -119,7 +104,7 @@ class WrongType(ExceptionWhitoutTraceBack):
         received : str, optional
             Received type.
         """
-        msg = "%s expected, %s received" % (expected, received)
+        msg = f'{expected} expected, {received} received.'
         print("")
         super().__init__(msg=msg, exit=False)
 
@@ -136,7 +121,7 @@ class MalformedJSONFile(ExceptionWhitoutTraceBack):
         file_path : str, optional
             A file path.
         """
-        msg = "Failed to parse JSON data for file <%s>." % file_path
+        msg = f'Failed to parse JSON data for file <{file_path}>.'
         print("")
         super().__init__(msg=msg)
 
@@ -153,9 +138,20 @@ class CannotBackend(ExceptionWhitoutTraceBack):
         subclass : str, optional
             A property name.
         """
-        msg = "The <%s> subclass cannot be backended." % subclass
+        msg = f'The <{subclass}> subclass cannot be backended.'
         print("")
         super().__init__(msg=msg)
+
+
+class PEBCAK(ExceptionWhitoutTraceBack):
+    """CannotBackend
+    """
+
+    def __init__(self):
+        """Initialization.
+        """
+        print("")
+        super().__init__(msg="PEBCAK")
 
 
 class UnkownWidgetType(Exception):
@@ -170,13 +166,30 @@ class UnkownWidgetType(Exception):
         widget_type : str, optional
             A property name.
         """
-        msg = "**The <%s> widget type doesn't exist.**" % widget_type
+        msg = f"UnkownWidgetType: The <{widget_type}> widget type doesn't exist."
         print("")
         super().__init__(msg)
 
 
-class MethodUnimplemented(Exception):
-    """MethodUnimplemented
+class MissingPreferenceKey(Exception):
+    """CannotBackend
+    """
+
+    def __init__(self, widget_pref_key=""):
+        """Initialization.
+
+        Parameters
+        ----------
+        widget_pref_key : str, optional
+            The missing preference key.
+        """
+        msg = f'MissingPreferenceKey: <{widget_pref_key}> preference key is not defined in settings-schema.json file.'
+        print("")
+        super().__init__(msg)
+
+
+class MethodNotimplemented(ExceptionWhitoutTraceBack):
+    """MethodNotimplemented
     """
 
     def __init__(self, method="", cls=""):
@@ -189,7 +202,7 @@ class MethodUnimplemented(Exception):
         cls : str, optional
             A class name.
         """
-        msg = "The <%s> method in class <%s> needs to be implemented." % (method, cls)
+        msg = f'The <{method}> method in class <{cls}> needs to be implemented.'
         print("")
         super().__init__(msg)
 

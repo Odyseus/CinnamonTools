@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Keybinding widgets.
 
@@ -17,6 +17,7 @@ from gi.repository import GObject
 from gi.repository import Gdk
 from gi.repository import Gtk
 
+from .common import display_message_dialog
 from .common import get_keybinding_display_name
 
 # NOTE: All translatable strings used in this module are available in Cinnamon.
@@ -197,7 +198,7 @@ class ButtonKeybinding(Gtk.TreeView):
         if prop.name == "accel-string":
             return self.accel_string
         else:
-            raise AttributeError("unknown property %s" % prop.name)
+            raise AttributeError(f"Unknown property {prop.name}")
 
     def do_set_property(self, prop, value):
         """Set property override.
@@ -219,7 +220,7 @@ class ButtonKeybinding(Gtk.TreeView):
                 self.accel_string = value
                 self.keybinding_cell.set_value(value)
         else:
-            raise AttributeError("unknown property %s" % prop.name)
+            raise AttributeError(f"Unknown property {prop.name}")
 
     def get_accel_string(self):
         """Get accel. string.
@@ -241,6 +242,9 @@ class ButtonKeybinding(Gtk.TreeView):
         """
         self.accel_string = accel_string
         self.load_model()
+
+
+GObject.type_register(ButtonKeybinding)
 
 
 class CellRendererKeybinding(Gtk.CellRendererText):
@@ -334,7 +338,7 @@ class CellRendererKeybinding(Gtk.CellRendererText):
         if prop.name == "accel-string":
             return self.accel_string
         else:
-            raise AttributeError("unknown property %s" % prop.name)
+            raise AttributeError(f"Unknown property {prop.name}")
 
     def do_set_property(self, prop, value):
         """Set property override.
@@ -356,7 +360,7 @@ class CellRendererKeybinding(Gtk.CellRendererText):
                 self.accel_string = value
                 self.update_label()
         else:
-            raise AttributeError("unknown property %s" % prop.name)
+            raise AttributeError(f"Unknown property {prop.name}")
 
     def update_label(self):
         """Update widget label.
@@ -410,9 +414,13 @@ class CellRendererKeybinding(Gtk.CellRendererText):
             editable.set_hexpand(True)
             self.accel_editable = editable
 
+            # Mark for deletion on EOL. Gtk4
+            # Use Gtk.EventControllerKey instead of key-press-event and key-release-event.
             self.release_event_id = self.accel_editable.connect(
                 "key-release-event", self.on_key_release)
             self.press_event_id = self.accel_editable.connect("key-press-event", self.on_key_press)
+            # Mark for deletion on EOL. Gtk4
+            # Use Gtk.EventControllerFocus instead of focus-out-event.
             self.focus_id = self.accel_editable.connect("focus-out-event", self.on_focus_out)
             self.teaching = True
         else:
@@ -518,7 +526,7 @@ class CellRendererKeybinding(Gtk.CellRendererText):
                 self.emit("accel-cleared", self.path)
                 self.path = None
                 return Gdk.EVENT_STOP
-            elif accel_key == Gdk.KEY_Return or accel_key == Gdk.KEY_space:
+            elif accel_key == Gdk.KEY_Return or accel_key == Gdk.KEY_KP_Enter or accel_key == Gdk.KEY_space:
                 return Gdk.EVENT_STOP
 
         accel_string = Gtk.accelerator_name_with_keycode(
@@ -541,19 +549,11 @@ class CellRendererKeybinding(Gtk.CellRendererText):
                 (keyval >= Gdk.KEY_Hangul and keyval <= Gdk.KEY_Hangul_Special) or
                 (keyval >= Gdk.KEY_Hangul_Kiyeog and keyval <= Gdk.KEY_Hangul_J_YeorinHieuh) or
                     keyval in FORBIDDEN_KEYVALS):
-                dialog = Gtk.MessageDialog(transient_for=self.a_widget.get_toplevel(),
-                                           flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                                           message_type=Gtk.MessageType.ERROR,
-                                           buttons=Gtk.ButtonsType.OK)
-
-                dialog.set_default_size(400, 200)
                 msg = _(
                     "\nThis key combination, \'<b>%s</b>\' cannot be used because it would become impossible to type using this key.\n\n")
                 msg += _("Please try again with a modifier key such as Control, Alt or Super (Windows key) at the same time.\n")
-                dialog.set_markup(msg % (accel_label))
-                dialog.show_all()
-                dialog.run()
-                dialog.destroy()
+                display_message_dialog(self.a_widget, "", msg, "error")
+
                 return Gdk.EVENT_STOP
 
         self.press_event = None
@@ -581,6 +581,9 @@ class CellRendererKeybinding(Gtk.CellRendererText):
             self.accel_editable.remove_widget()
         except Exception:
             pass
+
+
+GObject.type_register(CellRendererKeybinding)
 
 
 if __name__ == "__main__":

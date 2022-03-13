@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Applications chooser widgets.
 """
@@ -14,10 +14,14 @@ from gi.repository import Gtk
 from .SettingsWidgets import SettingsLabel
 from .SettingsWidgets import SettingsWidget
 from .common import BaseGrid
+from .common import IntelligentGtkDialog
 from .common import _
+from .common import display_message_dialog
+from .common import get_global
+from .common import get_toplevel_window
 
 
-class ApplicationChooserDialog(Gtk.Dialog):
+class ApplicationChooserDialog(IntelligentGtkDialog):
     """Application chooser dialog.
 
     Source: https://stackoverflow.com/a/41985006
@@ -41,13 +45,14 @@ class ApplicationChooserDialog(Gtk.Dialog):
         The widget that will display the data stored in ``self.list_store``.
     """
 
-    def __init__(self, main_app=None, transient_for=None, multi_selection=False, show_no_display=True):
+    def __init__(self, parent_widget, transient_for=None,
+                 multi_selection=False, show_no_display=True):
         """Initialization.
 
         Parameters
         ----------
-        main_app : None, optional
-            See ``main_app`` of :any:`SettingsBox`.
+        parent_widget : SettingsWidgets.SettingsWidget
+            The parent widget.
         transient_for : None, optional
             See :py:class:`Gtk.Window`.
         multi_selection : bool, optional
@@ -55,17 +60,17 @@ class ApplicationChooserDialog(Gtk.Dialog):
         show_no_display : bool, optional
             Show hidden applications.
         """
-        super().__init__(title=_("Application Chooser"),
-                         use_header_bar=True,
+        super().__init__(parent_widget,
+                         title=_("Application Chooser"),
+                         use_header_bar=get_global("USE_HEADER_BARS_ON_DIALOGS"),
                          transient_for=transient_for,
                          flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                          buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
                                   _("_OK"), Gtk.ResponseType.OK))
         GLib.threads_init()
-        self.set_size_request(400, 500)
         self._multi_selection = multi_selection
         self._show_no_display = show_no_display
-        self._main_app = main_app
+        self._main_app = get_global("MAIN_APP")
 
         self._headerbar = self.get_header_bar()
         content_box = self.get_content_area()
@@ -104,6 +109,8 @@ class ApplicationChooserDialog(Gtk.Dialog):
 
         scroll_window = Gtk.ScrolledWindow()
         scroll_window.set_property("expand", True)
+        # Mark for deletion on EOL. Gtk4
+        # Stop using set_shadow_type and set the boolean property has-frame.
         scroll_window.set_shadow_type(type=Gtk.ShadowType.IN)
         scroll_window.add(self.tree_view)
         content_box_grid.attach(scroll_window, 0, 1, 1, 1)
@@ -194,7 +201,9 @@ class ApplicationChooserDialog(Gtk.Dialog):
             count += 1
 
         self.list_store.set_sort_column_id(0, Gtk.SortType.ASCENDING)
-        self._headerbar.set_subtitle(_("Total applications") + ": " + str(count))
+
+        if self._headerbar:
+            self._headerbar.set_subtitle(_("Total applications") + f": {str(count)}")
 
     def run(self):
         """Run the dialog to get a selected application/s.
@@ -262,6 +271,10 @@ class AppList(SettingsWidget):
         ``Gio.SettingsBindFlags`` flags.
     content_widget : Gtk.Button
         The content widget.
+    dialog_height : int
+        Height of the dialog tied to the widget.
+    dialog_width : int
+        Width of the dialog tied to the widget.
     label : str
         The widget label.
     """
@@ -286,11 +299,17 @@ class AppList(SettingsWidget):
         """
         super().__init__(dep_key=dep_key)
         GLib.threads_init()
+        self.dialog_width = 400
+        self.dialog_height = 500
         self.app_chooser_dialog = None
         self.label = label
         self.content_widget = Gtk.Button(label=label, valign=Gtk.Align.CENTER)
         self.content_widget.set_hexpand(True)
         self.attach(self.content_widget, 0, 0, 2, 1)
+        self._changed_pref_key = f'{self.pref_key}_changed'
+
+        if self._changed_pref_key not in self.settings.settings:
+            self._changed_pref_key = None
 
         self.set_tooltip_text(tooltip)
 
@@ -318,21 +337,21 @@ class AppList(SettingsWidget):
         *args
             Arguments.
         """
-        dialog = Gtk.Dialog(transient_for=self.get_toplevel(),
-                            use_header_bar=True,
-                            title=_("Applications list"),
-                            flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT)
+        dialog = IntelligentGtkDialog(
+            self,
+            transient_for=get_toplevel_window(self),
+            use_header_bar=get_global("USE_HEADER_BARS_ON_DIALOGS"),
+            title=_("Applications list"),
+            flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT
+        )
 
         content_area = dialog.get_content_area()
         content_area_grid = BaseGrid()
         content_area.add(content_area_grid)
 
-        label = Gtk.Label(_("Duplicated entries will be automatically removed"))
-        label.set_margin_bottom(6)
-        content_area_grid.attach(label, 0, 0, 1, 1)
-
         scrolled = Gtk.ScrolledWindow(hadjustment=None, vadjustment=None)
-        scrolled.set_size_request(width=300, height=300)
+        # Mark for deletion on EOL. Gtk4
+        # Stop using set_shadow_type and set the boolean property has-frame.
         scrolled.set_shadow_type(type=Gtk.ShadowType.IN)
         scrolled.set_policy(hscrollbar_policy=Gtk.PolicyType.NEVER,
                             vscrollbar_policy=Gtk.PolicyType.AUTOMATIC)
@@ -347,7 +366,6 @@ class AppList(SettingsWidget):
         app_column.set_title(_("Application"))
         app_column.set_property("expand", True)
         app_column.set_sort_column_id(self._columns["DISPLAY_NAME"])
-        app_column.set_sort_indicator(True)
 
         icon_renderer = Gtk.CellRendererPixbuf()
         app_column.pack_start(icon_renderer, False)
@@ -359,31 +377,41 @@ class AppList(SettingsWidget):
 
         scrolled.add(tree_view)
 
-        toolbar = Gtk.Toolbar()
-        toolbar.set_icon_size(Gtk.IconSize.MENU)
-        toolbar.set_hexpand(True)
+        toolbar = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
         toolbar.set_halign(Gtk.Align.FILL)
+        toolbar.set_hexpand(True)
+        # Mark for deletion on EOL. Gtk4
+        # Replace Gtk.StyleContext.add_class with Gtk.Widget.add_css_class.
         toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
-        content_area_grid.attach(toolbar, 0, 2, 1, 1)
-
-        button_holder = Gtk.ToolItem()
-        button_holder.set_expand(True)
-        toolbar.add(button_holder)
         buttons_box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
         buttons_box.set_halign(Gtk.Align.CENTER)
-        button_holder.add(buttons_box)
+        buttons_box.set_hexpand(True)
+        toolbar.attach(buttons_box, 0, 1, 1, 1)
+        content_area_grid.attach(toolbar, 0, 2, 1, 1)
 
-        new_button = Gtk.ToolButton()
-        new_button.set_icon_name("list-add-symbolic")
+        new_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+            "list-add-symbolic",
+            Gtk.IconSize.LARGE_TOOLBAR
+        ))
         new_button.set_tooltip_text(_("Add Applications"))
         new_button.connect("clicked", self._add_applications)
         buttons_box.add(new_button)
 
-        del_button = Gtk.ToolButton()
-        del_button.set_icon_name("edit-delete-symbolic")
+        del_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+            "edit-delete-symbolic",
+            Gtk.IconSize.LARGE_TOOLBAR
+        ))
         del_button.set_tooltip_text(_("Remove selected applications"))
         del_button.connect("clicked", self._delete_selected_applications, tree_view)
         buttons_box.add(del_button)
+
+        help_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+            "dialog-information-symbolic",
+            Gtk.IconSize.LARGE_TOOLBAR
+        ))
+        help_button.set_tooltip_text(_("Help"))
+        help_button.connect("clicked", self._display_help, dialog)
+        buttons_box.add(help_button)
 
         selection = tree_view.get_selection()
 
@@ -408,6 +436,22 @@ class AppList(SettingsWidget):
         dialog.destroy()
         self._list_changed()
 
+    def _display_help(self, widget, dialog):
+        """Displayhelp message.
+
+        Parameters
+        ----------
+        widget : Gtk.Button
+            The help button.
+        dialog : IntelligentGtkDialog
+            The dialog to use in the ``transient_for`` parameter of the message dialog that will be displayed.
+        """
+        msg = [
+            _("Duplicated entries will be automatically removed."),
+            _("Entries will be also sorted alphabetically.")
+        ]
+        display_message_dialog(dialog, _("Basic information"), msg)
+
     def ensure_app_chooser_dialog(self):
         """Ensure that the dialog is created once.
 
@@ -419,8 +463,11 @@ class AppList(SettingsWidget):
         if self.app_chooser_dialog is not None:
             return
 
-        self.app_chooser_dialog = ApplicationChooserDialog(main_app=self.get_main_app(),
-                                                           multi_selection=True)
+        self.app_chooser_dialog = ApplicationChooserDialog(
+            self,
+            transient_for=get_toplevel_window(self),
+            multi_selection=True
+        )
         self.app_chooser_dialog.set_label(_("Choose one or more applications (Hold Ctrl key)"))
 
     def _populate_app_list(self, *args):
@@ -480,7 +527,7 @@ class AppList(SettingsWidget):
             Arguments.
         """
         self.ensure_app_chooser_dialog()
-        self.app_chooser_dialog.set_transient_for(self.get_toplevel())
+        self.app_chooser_dialog.set_transient_for(get_toplevel_window(self))
         apps_info = self.app_chooser_dialog.run()
         self.app_chooser_dialog.hide()
 
@@ -507,15 +554,15 @@ class AppList(SettingsWidget):
 
         Parameters
         ----------
-        widget : Gtk.ToolButton
-            A ``Gtk.ToolButton``.
+        widget : Gtk.Button
+            A ``Gtk.Button``.
         tree : Gtk.TreeView
             A ``Gtk.TreeView``.
         """
         selection = tree.get_selection()
         tree_model, paths = selection.get_selected_rows()
 
-        # Iterate in reverse so the right rows are removed. ¬¬
+        # Iterate in reverse so the right rows are removed.
         for path in reversed(paths):
             tree_iter = tree_model.get_iter(path)
             tree_model.remove(tree_iter)
@@ -529,7 +576,15 @@ class AppList(SettingsWidget):
         for app in self._app_store:
             data.add(app[self._columns["APPINFO"]].get_id())
 
-        self.set_value(list(data))
+        # NOTE: Do not unnecessarily save data if the list of applications hasn't changed.
+        if data != set(self.get_value()):
+            self.set_value(list(data))
+
+            if self._changed_pref_key:
+                self.settings.set_value(
+                    self._changed_pref_key,
+                    not self.settings.get_value(
+                        self._changed_pref_key))
 
     def on_setting_changed(self, *args):
         """See :any:`JSONSettingsBackend.on_setting_changed`.
@@ -564,6 +619,10 @@ class AppChooser(SettingsWidget):
         ``Gio.SettingsBindFlags`` flags.
     content_widget : Gtk.Button
         The content widget.
+    dialog_height : int
+        Height of the dialog tied to the widget.
+    dialog_width : int
+        Width of the dialog tied to the widget.
     label : SettingsWidgets.SettingsLabel
         The label widget.
     """
@@ -585,22 +644,30 @@ class AppChooser(SettingsWidget):
         """
         super().__init__(dep_key=dep_key)
         GLib.threads_init()
+        self.dialog_width = 400
+        self.dialog_height = 500
         self.app_chooser_dialog = None
         self.label = SettingsLabel(label)
         self.label.set_hexpand(True)
-        self.content_widget = Gtk.Button(valign=Gtk.Align.CENTER)
-        self.content_widget.set_always_show_image(True)
+
+        container = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
+        container.set_spacing(0, 0)
+        # Mark for deletion on EOL. Gtk4
+        # Replace Gtk.StyleContext.add_class with Gtk.Widget.add_css_class.
+        container.get_style_context().add_class(Gtk.STYLE_CLASS_LINKED)
 
         self._clear_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
             "edit-clear-symbolic",
             Gtk.IconSize.BUTTON
         ))
         self._clear_button.set_tooltip_text(_("Clear application"))
-        self._clear_button.set_valign(Gtk.Align.CENTER)
+        self.content_widget = Gtk.Button()
+        self.content_widget.set_always_show_image(True)
 
         self.attach(self.label, 0, 0, 1, 1)
-        self.attach(self._clear_button, 1, 0, 1, 1)
-        self.attach(self.content_widget, 2, 0, 1, 1)
+        container.attach(self._clear_button, 0, 0, 1, 1)
+        container.attach(self.content_widget, 1, 0, 1, 1)
+        self.attach(container, 1, 0, 1, 1)
 
         self.set_tooltip_text(tooltip)
 
@@ -633,8 +700,11 @@ class AppChooser(SettingsWidget):
         if self.app_chooser_dialog is not None:
             return
 
-        self.app_chooser_dialog = ApplicationChooserDialog(main_app=self.get_main_app(),
-                                                           multi_selection=False)
+        self.app_chooser_dialog = ApplicationChooserDialog(
+            self,
+            transient_for=get_toplevel_window(self),
+            multi_selection=False
+        )
         self.app_chooser_dialog.set_label(_("Choose an application"))
 
     def _on_clear_button_clicked(self, *args):
@@ -657,7 +727,7 @@ class AppChooser(SettingsWidget):
             Arguments.
         """
         self.ensure_app_chooser_dialog()
-        self.app_chooser_dialog.set_transient_for(self.get_toplevel())
+        self.app_chooser_dialog.set_transient_for(get_toplevel_window(self))
         app_info = self.app_chooser_dialog.run()
         self.app_chooser_dialog.hide()
 
@@ -688,7 +758,7 @@ class AppChooser(SettingsWidget):
         if isinstance(app_info, Gio.DesktopAppInfo):
             try:
                 label = app_info.get_display_name()
-                extra_info = "\n%s" % app_info.get_id()
+                extra_info = f"\n{app_info.get_id()}"
                 image = Gtk.Image.new_from_gicon(app_info.get_icon(), Gtk.IconSize.BUTTON)
             except Exception:
                 pass

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Tree list widget.
 
@@ -34,19 +34,21 @@ from .SettingsWidgets import IconChooser
 from .SettingsWidgets import Keybinding
 from .SettingsWidgets import KeybindingWithOptions
 from .SettingsWidgets import SettingsWidget
+from .SettingsWidgets import SoundFileChooser
 from .SettingsWidgets import SpinButton
 from .SettingsWidgets import Switch
 from .SettingsWidgets import Text
 from .SettingsWidgets import TextView
-from .SettingsWidgets import _
 from .common import BaseGrid
+from .common import IntelligentGtkDialog
+from .common import _
 from .common import contrast_rgba_color
 from .common import display_message_dialog
-from .common import generate_options_from_paths
+from .common import get_global
 from .common import get_keybinding_display_name
+from .common import get_toplevel_window
+from .common import handle_combobox_options
 from .common import import_export
-from .common import sort_combo_options
-# from SettingsWidgets import SoundFileChooser
 
 LIST_VARIABLE_TYPE_MAP = {
     # appchooser
@@ -70,7 +72,7 @@ LIST_VARIABLE_TYPE_MAP = {
     # textview
     "multistring": str,
     # soundfilechooser
-    # "sound": str,
+    "sound": str,
     # entry
     "string": str,
 }
@@ -86,8 +88,8 @@ LIST_CLASS_TYPE_MAP = {
     "keybinding": Keybinding,
     "keybinding-with-options": KeybindingWithOptions,
     "multistring": TextView,
+    "sound": SoundFileChooser,
     "string": Entry,
-    # "sound": SoundFileChooser,
 }
 
 LIST_PROPERTIES_MAP = {
@@ -100,6 +102,8 @@ LIST_PROPERTIES_MAP = {
     # filechooser: If true, enable folder selection of the file chooser. If false,
     # enable file selection.
     "select-dir": "dir_select",
+    "pattern-filters": "pattern_filters",
+    "mimetype-filters": "mimetype_filters",
     # spinbutton: Adjustment amount.
     "step": "step",
     # spinbutton: How many digits to handle.
@@ -116,6 +120,9 @@ LIST_PROPERTIES_MAP = {
     "num-bind": "num_bind",
     # colorchooser: Whether to be able to specify opacity.
     "use-alpha": "use_alpha",
+    # soundfilechooser: If True, only wav and ogg sound files will be filtered in
+    # the file chooser dialog. If set to False, all sound files will be displayed.
+    "event-sounds": "event_sounds",
 }
 
 
@@ -136,11 +143,6 @@ def list_edit_factory(col_def, xlet_settings):
     """
     kwargs = {}
 
-    # TODO: Implemente this also for "normal widgets".
-    if "options-from-paths" in col_def:
-        col_def["options"] = generate_options_from_paths(
-            col_def["options-from-paths"], xlet_settings)
-
     if "options" in col_def:
         kwargs["valtype"] = LIST_VARIABLE_TYPE_MAP[col_def["type"]]
 
@@ -149,16 +151,11 @@ def list_edit_factory(col_def, xlet_settings):
         else:
             widget_type = ComboBox
 
-        options_list = col_def["options"]
-
-        # NOTE: Sort both types of options. Otherwise, items will appear in
-        # different order every single time the widget is re-built.
-        if isinstance(options_list, dict):
-            kwargs["options"] = [(a, b) for a, b in options_list.items()]
-        else:
-            kwargs["options"] = zip(options_list, options_list)
-
-        kwargs["options"] = sort_combo_options(kwargs["options"], col_def.get("first-option", ""))
+        kwargs["options"] = handle_combobox_options(
+            options=col_def["options"],
+            first_option=col_def.get("first-option", ""),
+            xlet_settings=xlet_settings
+        )
     else:
         widget_type = LIST_CLASS_TYPE_MAP[col_def["type"]]
 
@@ -171,15 +168,15 @@ def list_edit_factory(col_def, xlet_settings):
             The list widget value.
         """
 
-        def __init__(self, **kwargs):
+        def __init__(self, **ka):
             """Initialization.
 
             Parameters
             ----------
-            **kwargs
+            **ka
                 Keyword argumets.
             """
-            super().__init__(**kwargs)
+            super().__init__(**ka)
 
             if self.bind_dir is None:
                 self.connect_widget_handlers()
@@ -231,10 +228,6 @@ def list_edit_factory(col_def, xlet_settings):
             else:
                 if hasattr(self, "bind_object"):
                     self.bind_object.set_property(self.bind_prop, value)
-
-                    # NOTE: Needed for special IconChooser case.
-                    if hasattr(self, "bind_content_widget_entry"):
-                        self.content_widget.set_text(value)
                 else:
                     self.content_widget.set_property(self.bind_prop, value)
 
@@ -268,17 +261,25 @@ class TreeList(SettingsWidget):
 
     Attributes
     ----------
+    apply_key : str
+        The preference key bound to the Apply changes button on a :any:`TreeList` widget.
     bind_dir : Gio.SettingsBindFlags, None
         ``Gio.SettingsBindFlags`` flags.
     content_widget : Gtk.TreeView
         The main widget that will be used to represent a setting value.
+    dialog_height : int
+        Height of the dialog tied to the widget.
+    dialog_width : int
+        Width of the dialog tied to the widget.
+    imp_exp_path_key : str
+        The preference key where the last selected path used on the import/export file chooser dialog.
     model : Gtk.ListStore
         The model used as storage by this widget.
     """
 
     bind_dir = None
 
-    def __init__(self, columns=None, immutable={}, dialog_info_labels=None, height=200,
+    def __init__(self, columns=None, immutable=False, dialog_info_labels=None, height=200,
                  move_buttons=True, multi_select=False, dialog_width=450, apply_and_quit=False):
         """Initialization.
 
@@ -318,18 +319,21 @@ class TreeList(SettingsWidget):
         self.set_hexpand(True)
         self.set_vexpand(True)
 
+        self.dialog_width = dialog_width
+        self.dialog_height = -1
         self._columns = columns
-        self._immutable = immutable
+        self._immutable = bool(immutable)
+        self._immutable_options = immutable if isinstance(immutable, dict) else {}
+        self._read_only_keys = self._immutable_options.get("read-only-keys", [])
         self._dialog_info_labels = dialog_info_labels
         self._move_buttons = move_buttons
-        self._dialog_width = dialog_width
         self._multi_select = multi_select
         self._apply_and_quit = apply_and_quit
         self._timer = None
         self._tooltips_storage = {}
 
         self._allow_edition = not self._immutable or \
-            (isinstance(self._immutable, dict) and self._immutable.get("allow-edition", True))
+            self._immutable_options.get("allow-edition", True)
 
         self._add_button = None
         self._remove_button = None
@@ -337,6 +341,19 @@ class TreeList(SettingsWidget):
         self._move_up_button = None
         self._move_down_button = None
         self._export_button = None
+        self.apply_key = f'{self.pref_key}_apply'
+        self.imp_exp_path_key = f'{self.pref_key}_imp_exp_path'
+
+        if self.apply_key not in self.settings.settings:
+            self.apply_key = None
+
+        if self.imp_exp_path_key not in self.settings.settings:
+            self.imp_exp_path_key = None
+
+        # NOTE: If an imp_exp_path_key doesn't exists for a specific instance of this widget,
+        # attempt to locate a global one.
+        if not self.imp_exp_path_key and "imp_exp_last_selected_directory" in self.settings.settings:
+            self.imp_exp_path_key = None
 
         self.content_widget = Gtk.TreeView()
         self.content_widget.set_grid_lines(Gtk.TreeViewGridLines.BOTH)
@@ -344,6 +361,8 @@ class TreeList(SettingsWidget):
         if self._multi_select:
             self.content_widget.get_selection().set_mode(Gtk.SelectionMode.MULTIPLE)
 
+        # Mark for deletion on EOL. Gtk4
+        # Use Gtk.EventControllerKey instead of key-press-event.
         self.content_widget.connect("key-press-event", self._on_key_press_cb)
 
         scrollbox = Gtk.ScrolledWindow()
@@ -362,9 +381,13 @@ class TreeList(SettingsWidget):
             if column_def.get("tooltip"):
                 self._tooltips_storage[column_def["title"]] = column_def["tooltip"]
 
-            has_option_map = "options" in column_def and isinstance(column_def["options"], dict)
+            has_option_map = "options" in column_def
+            # has_option_map = "options" in column_def and isinstance(column_def["options"], dict)
             render_type = "string" if has_option_map else column_def["type"]
 
+            # NOTE: About read-only-keys option in an immutable list widget.
+            # I'm preventing the renderers of type boolean, integer and float from being "in-line editable"
+            # when the column it belongs to is set to be read only.
             if render_type == "boolean":
                 renderer = Gtk.CellRendererToggle()
 
@@ -383,11 +406,13 @@ class TreeList(SettingsWidget):
                     self.model[path][col] = not self.model[path][col]
                     self._list_changed()
 
-                renderer.connect("toggled", toggle_checkbox, i)
+                if column_def["id"] not in self._read_only_keys:
+                    renderer.connect("toggled", toggle_checkbox, i)
+
                 prop_name = "active"
             elif render_type == "integer" or render_type == "float":
                 renderer = Gtk.CellRendererSpin()
-                renderer.set_property("editable", True)
+                renderer.set_property("editable", column_def["id"] not in self._read_only_keys)
                 digits = 0
 
                 adjustment = Gtk.Adjustment()
@@ -421,14 +446,14 @@ class TreeList(SettingsWidget):
                     data : dict
                         Data holding row information.
                     """
+                    val = str(value)
+                    num_parser = int
+
                     # NOTE: Stupid internationalization!
                     # float(value) will fail when value is a comma-separated float. ¬¬
                     # int(value) will fail when value is a comma/dot separated integer. ¬¬
                     # It might not be needed to use replace() for integers, but it doesn't hurt
                     # to have it. So, leave it.
-                    val = str(value)
-                    num_parser = int
-
                     if data["num_parser"] == "float":
                         val = val.replace(",", ".")
                         num_parser = float
@@ -481,6 +506,14 @@ class TreeList(SettingsWidget):
                         fg_rgba = contrast_rgba_color(bg_rgba)
                         rend.set_property("background-rgba", bg_rgba)
                         rend.set_property("foreground-rgba", fg_rgba)
+                    else:
+                        # NOTE: I was having "residual colors" set in new list items.
+                        # When I added a new list item with a color set and then added another
+                        # new item but with the color not set, the newly added item's cell would
+                        # have the same color than the previously added item's cell.
+                        # Setting the following two properties fixed that.
+                        rend.set_property("background-set", False)
+                        rend.set_property("foreground-set", False)
 
                 column.set_cell_data_func(renderer, set_color_func, {
                     "col_index": i
@@ -536,9 +569,14 @@ class TreeList(SettingsWidget):
                         User data passed to ``Gtk.CellLayout.set_cell_data_func()``.
                     """
                     value = model[row_iter][data["col_index"]]
+                    options_tuples = handle_combobox_options(
+                        options=data["column_def"]["options"],
+                        first_option=data["column_def"].get("first-option", ""),
+                        xlet_settings=data["xlet_settings"]
+                    )
 
-                    for val, key in data["options"].items():
-                        if data["col_def_type"] == "keybinding-with-options":
+                    for val, key in options_tuples:
+                        if data["column_def"]["type"] == "keybinding-with-options":
                             try:
                                 kb, opt = value.split("::")
                             except Exception:
@@ -549,22 +587,26 @@ class TreeList(SettingsWidget):
                             if kb and val == opt:
                                 rend.set_property(
                                     "text",
-                                    get_keybinding_display_name(kb) + "::" + key
+                                    f"{get_keybinding_display_name(kb)}::{key}"
                                 )
                                 break
                             else:
                                 rend.set_property("text", "")
                         else:
                             if val == value:
-                                rend.set_property("text", key)
+                                # NOTE: If the options definition is a dictionary, localize the
+                                # display value.
+                                loc_key = _(key) if isinstance(
+                                    data["column_def"]["options"], dict) else key
+                                rend.set_property("text", loc_key)
                                 break
                             else:
                                 rend.set_property("text", "")
 
                 column.set_cell_data_func(renderer, map_func, {
-                    "options": column_def["options"],
-                    "col_index": i,
-                    "col_def_type": column_def["type"]
+                    "column_def": column_def,
+                    "xlet_settings": self.settings,
+                    "col_index": i
                 })
             else:
                 if column_def["type"] == "keybinding":
@@ -605,7 +647,7 @@ class TreeList(SettingsWidget):
             if "align" in column_def:
                 renderer.set_alignment(column_def["align"], 0.5)
 
-            column.set_resizable(True)
+            column.set_resizable(column_def.get("col-resize", True))
             self.content_widget.append_column(column)
 
         if len(self._tooltips_storage) > 0:
@@ -615,36 +657,33 @@ class TreeList(SettingsWidget):
         self.model = Gtk.ListStore(*types)
         self.content_widget.set_model(self.model)
 
-        button_toolbar = Gtk.Toolbar()
-        button_toolbar.set_icon_size(Gtk.IconSize.MENU)
-        button_toolbar.set_halign(Gtk.Align.FILL)
-        button_toolbar.set_hexpand(True)
-        button_toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
-        self.attach(button_toolbar, 0, 1, 1, 1)
-
-        button_holder = Gtk.ToolItem()
-        button_holder.set_expand(True)
-        button_toolbar.add(button_holder)
         buttons_box = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
         buttons_box.set_halign(Gtk.Align.CENTER)
-        button_holder.add(buttons_box)
+        buttons_box.set_hexpand(True)
 
+        # NOTE: This is used as button position inside a Gtk.Grid and also as buttons count.
         button_position = 0
 
         if not self._immutable:
-            self._add_button = Gtk.ToolButton(None, None)
-            self._add_button.set_icon_name("list-add-symbolic")
+            self._add_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                "list-add-symbolic",
+                Gtk.IconSize.LARGE_TOOLBAR
+            ))
             self._add_button.set_tooltip_text(_("Add new item"))
             self._add_button.connect("clicked", self._add_item)
 
             buttons_box.attach(self._add_button, button_position, 0, 1, 1)
             button_position += 1
 
-            self._remove_button = Gtk.ToolButton(None, None)
-            self._remove_button.set_icon_name("list-remove-symbolic")
+            self._remove_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                "list-remove-symbolic",
+                Gtk.IconSize.LARGE_TOOLBAR
+            ))
             self._remove_button.set_tooltip_text(_("Remove selected item"))
             # NOTE: Using button-release-event to be able to catch events.
             # clicked event doesn't pass the event. ¬¬
+            # Mark for deletion on EOL. Gtk4
+            # Use Gtk.GestureClick instead of button-release-event.
             self._remove_button.connect("button-release-event", self._on_remove_item_cb)
             self._remove_button.set_sensitive(False)
 
@@ -652,8 +691,10 @@ class TreeList(SettingsWidget):
             button_position += 1
 
         if self._allow_edition:
-            self._edit_button = Gtk.ToolButton(None, None)
-            self._edit_button.set_icon_name("view-list-symbolic")
+            self._edit_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                "view-list-symbolic",
+                Gtk.IconSize.LARGE_TOOLBAR
+            ))
             self._edit_button.set_tooltip_text(_("Edit selected item"))
             self._edit_button.connect("clicked", self._edit_item)
             self._edit_button.set_sensitive(False)
@@ -662,16 +703,20 @@ class TreeList(SettingsWidget):
             button_position += 1
 
         if self._move_buttons:
-            self._move_up_button = Gtk.ToolButton(None, None)
-            self._move_up_button.set_icon_name("go-up-symbolic")
+            self._move_up_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                "go-up-symbolic",
+                Gtk.IconSize.LARGE_TOOLBAR
+            ))
             self._move_up_button.set_tooltip_text(_("Move selected item up"))
             self._move_up_button.connect("clicked", self._move_item_up)
             self._move_up_button.set_sensitive(False)
             buttons_box.attach(self._move_up_button, button_position, 0, 1, 1)
             button_position += 1
 
-            self._move_down_button = Gtk.ToolButton(None, None)
-            self._move_down_button.set_icon_name("go-down-symbolic")
+            self._move_down_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                "go-down-symbolic",
+                Gtk.IconSize.LARGE_TOOLBAR
+            ))
             self._move_down_button.set_tooltip_text(_("Move selected item down"))
             self._move_down_button.connect("clicked", self._move_item_down)
             self._move_down_button.set_sensitive(False)
@@ -679,12 +724,12 @@ class TreeList(SettingsWidget):
             button_position += 1
 
         if self.imp_exp_path_key:
-            self._export_button = Gtk.ToolButton(None, None)
-
-            if Gtk.IconTheme.get_default().has_icon("document-export-symbolic"):
-                self._export_button.set_icon_name("document-export-symbolic")
-            else:
-                self._export_button.set_icon_name("custom-export-data-symbolic")
+            self._export_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                "document-export-symbolic"
+                if Gtk.IconTheme.get_default().has_icon("document-export-symbolic") else
+                "xlets-settings-export-data-symbolic",
+                Gtk.IconSize.LARGE_TOOLBAR
+            ))
 
             self._export_button.set_tooltip_text(_("Export data"))
             self._export_button.connect("clicked", self._export_data)
@@ -692,12 +737,12 @@ class TreeList(SettingsWidget):
             buttons_box.attach(self._export_button, button_position, 0, 1, 1)
             button_position += 1
 
-            import_button = Gtk.ToolButton(None, None)
-
-            if Gtk.IconTheme.get_default().has_icon("document-import-symbolic"):
-                import_button.set_icon_name("document-import-symbolic")
-            else:
-                import_button.set_icon_name("custom-import-data-symbolic")
+            import_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                "document-import-symbolic"
+                if Gtk.IconTheme.get_default().has_icon("document-import-symbolic") else
+                "xlets-settings-import-data-symbolic",
+                Gtk.IconSize.LARGE_TOOLBAR
+            ))
 
             import_button.set_tooltip_text(_("Import data"))
             import_button.connect("clicked", self._import_data)
@@ -705,11 +750,26 @@ class TreeList(SettingsWidget):
             button_position += 1
 
         if self.apply_key:
-            apply_button = Gtk.ToolButton(None, None)
-            apply_button.set_icon_name("document-save-symbolic")
+            apply_button = Gtk.Button(image=Gtk.Image.new_from_icon_name(
+                "document-save-symbolic",
+                Gtk.IconSize.LARGE_TOOLBAR
+            ))
             apply_button.set_tooltip_text(_("Apply changes"))
             apply_button.connect("clicked", self._apply_changes)
             buttons_box.attach(apply_button, button_position, 0, 1, 1)
+
+        # NOTE: If no buttons were added to buttons_box, destroy it.
+        if button_position > 0:
+            toolbar = BaseGrid(orientation=Gtk.Orientation.HORIZONTAL)
+            toolbar.set_halign(Gtk.Align.FILL)
+            toolbar.set_hexpand(True)
+            # Mark for deletion on EOL. Gtk4
+            # Replace Gtk.StyleContext.add_class with Gtk.Widget.add_css_class.
+            toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
+            toolbar.attach(buttons_box, 0, 1, 1, 1)
+            self.attach(toolbar, 0, 1, 1, 1)
+        else:
+            buttons_box.destroy()
 
         self.content_widget.get_selection().connect("changed", self._update_button_sensitivity)
         self.content_widget.set_activate_on_single_click(False)
@@ -876,7 +936,7 @@ class TreeList(SettingsWidget):
 
         Parameters
         ----------
-        widget : Gtk.ToolButton
+        widget : Gtk.Button
             The object which received the signal.
         event : Gdk.EventButton
             The ``Gdk.EventButton`` which triggered this signal.
@@ -891,7 +951,7 @@ class TreeList(SettingsWidget):
         confirm_removal = state != Gdk.ModifierType.CONTROL_MASK
 
         if confirm_removal:
-            dialog = Gtk.MessageDialog(transient_for=self.get_toplevel(),
+            dialog = Gtk.MessageDialog(transient_for=get_toplevel_window(self),
                                        flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                                        message_type=Gtk.MessageType.WARNING,
                                        buttons=Gtk.ButtonsType.YES_NO)
@@ -1098,19 +1158,20 @@ class TreeList(SettingsWidget):
 
         if filepath:
             dialog = Gtk.Dialog(
-                transient_for=self.get_toplevel(),
+                transient_for=get_toplevel_window(self),
                 title=_("Import data"),
                 flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                use_header_bar=True,
+                use_header_bar=get_global("USE_HEADER_BARS_ON_DIALOGS"),
                 buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
                          _("_Overwrite"), Gtk.ResponseType.OK,
                          _("_Append"), Gtk.ResponseType.YES)
             )
 
             dialog.set_default_response(Gtk.ResponseType.CANCEL)
-            dialog.set_size_request(500, -1)
-            buttons_box = dialog.get_action_area()
-            buttons_box.set_property("halign", Gtk.Align.CENTER)
+            # NOTE: Enforcing a minimum width to avoid the title of the dialog to ellipsize. ¬¬
+            # I WILL NOT build from scratch an entire titlebar just to make its title behave
+            # as it f*cking should!!!
+            dialog.set_default_size(500, -1)
 
             # Make Cancel button the default.
             # https://stackoverflow.com/q/23983975
@@ -1148,7 +1209,7 @@ class TreeList(SettingsWidget):
                 raw_data = data_file.read()
 
             try:
-                imported_data = json.loads(raw_data, encoding="UTF-8")
+                imported_data = json.loads(raw_data)
             except Exception:
                 raise exceptions.MalformedJSONFile(filepath)
 
@@ -1162,7 +1223,7 @@ class TreeList(SettingsWidget):
 
                 self.on_setting_changed()
             else:
-                msg = _("Wrong data type found on file '%s'")
+                msg = _("Wrong data type found on file '{%s}'")
 
                 display_message_dialog(self,
                                        _("Error importing data"),
@@ -1195,10 +1256,12 @@ class TreeList(SettingsWidget):
         self.settings.set_value(self.apply_key,
                                 not self.settings.get_value(self.apply_key))
 
-        if self._main_app is not None:
-            if self._apply_and_quit and self._main_app.window is not None and \
-                    isinstance(self._main_app.window, Gtk.ApplicationWindow):
-                self._main_app.window.emit("destroy")
+        main_app = get_global("MAIN_APP")
+
+        if main_app is not None:
+            if self._apply_and_quit and main_app.window is not None and \
+                    isinstance(main_app.window, Gtk.ApplicationWindow):
+                main_app.window.emit("destroy")
 
     def _open_add_edit_dialog(self, tree_row=None):
         """Open add/edit dialog.
@@ -1218,13 +1281,15 @@ class TreeList(SettingsWidget):
         else:
             title = _("Edit entry")
 
-        dialog = Gtk.Dialog(transient_for=self.get_toplevel(),
-                            use_header_bar=True,
-                            title=title,
-                            flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                            buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
-                                     _("_Save"), Gtk.ResponseType.OK)
-                            )
+        dialog = IntelligentGtkDialog(
+            self,
+            transient_for=get_toplevel_window(self),
+            use_header_bar=get_global("USE_HEADER_BARS_ON_DIALOGS"),
+            title=title,
+            flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+            buttons=(_("_Cancel"), Gtk.ResponseType.CANCEL,
+                     _("_Save"), Gtk.ResponseType.OK)
+        )
 
         # Make OK button the default.
         # https://stackoverflow.com/q/23983975
@@ -1232,12 +1297,15 @@ class TreeList(SettingsWidget):
         ok_button.set_can_default(True)
         ok_button.grab_default()
 
-        dialog.set_size_request(width=self._dialog_width, height=-1)
         content_area = dialog.get_content_area()
         content_area.set_border_width(5)
 
         frame = Gtk.Frame()
+        # Mark for deletion on EOL. Gtk4
+        # Stop using set_shadow_type and set the boolean property has-frame.
         frame.set_shadow_type(Gtk.ShadowType.IN)
+        # Mark for deletion on EOL. Gtk4
+        # Replace Gtk.StyleContext.add_class with Gtk.Widget.add_css_class.
         frame.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW)
         content_area.add(frame)
 
@@ -1257,9 +1325,7 @@ class TreeList(SettingsWidget):
             widget = list_edit_factory(col_def, self.settings)
             widget.set_border_width(5)
 
-            if isinstance(self._immutable, dict):
-                widget.set_sensitive(col_def["id"]
-                                     not in self._immutable.get("read-only-keys", []))
+            widget.set_sensitive(col_def["id"] not in self._read_only_keys)
 
             if isinstance(widget, (Switch, ColorChooser)):
                 settings_box.connect("row-activated", widget.clicked)
@@ -1271,9 +1337,6 @@ class TreeList(SettingsWidget):
             # be accessed with a single click.
             if isinstance(widget, TextView):
                 settings_box.connect("row-activated", widget.focus_the_retarded_text_view)
-
-            if isinstance(widget, (IconChooser, AppChooser)):
-                widget.set_main_app(self.get_main_app())
 
             widgets.append(widget)
             content.attach(settings_box, 0, i, 1, 1)
@@ -1300,6 +1363,7 @@ class TreeList(SettingsWidget):
                 last_widget_pos += 1
 
         content_area.show_all()
+
         response = dialog.run()
 
         if response == Gtk.ResponseType.OK:

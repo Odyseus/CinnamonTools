@@ -1,19 +1,11 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Xlets settings widgets factory.
-
-Attributes
-----------
-OPERATIONS : list
-    Comparison operations.
-OPERATIONS_MAP : dict
-    Comparison operations map.
 """
 
 import collections
 import gi
 import json
-import operator
 import os
 
 gi.require_version("Gtk", "3.0")
@@ -23,59 +15,56 @@ from gi.repository import Gio
 from gi.repository import Gtk
 
 from . import exceptions
-from .AppChooserWidgets import AppChooser  # noqa
-from .AppChooserWidgets import AppList  # noqa
-from .SettingsWidgets import *  # noqa
-from .TreeListWidgets import TreeList  # noqa
+from .AppChooserWidgets import AppChooser                                 # noqa
+from .AppChooserWidgets import AppList                                    # noqa
+from .SettingsWidgets import *                                            # noqa
+from .TreeListWidgets import TreeList                                     # noqa
 from .common import BaseGrid
-from .common import sort_combo_options
+from .common import OPERATIONS
+from .common import OPERATIONS_MAP
+from .common import handle_combobox_options
 
 # NOTE: JEESH!!! I hate import *!!!
 __all__ = [  # noqa
-    # NOTE: Defined in this module.
-    "JSONSettingsHandler",
-    "JSONSettingsRevealer",
-    "JSONSettingsBackend",
-    # NOTE: Defined in SettingsWidgets module.
+    "ButtonsGroup",
     "CAN_BACKEND",
     "JSONSettingsAppChooser",
     "JSONSettingsAppList",
+    "JSONSettingsBackend",
     "JSONSettingsButton",
     "JSONSettingsColorChooser",
     "JSONSettingsComboBox",
     "JSONSettingsEntry",
     "JSONSettingsFileChooser",
+    "JSONSettingsHandler",
     "JSONSettingsIconChooser",
     "JSONSettingsKeybinding",
     "JSONSettingsKeybindingWithOptions",
-    "JSONSettingsTreeList",
+    "JSONSettingsRange",
+    "JSONSettingsRevealer",
+    "JSONSettingsSoundFileChooser",
     "JSONSettingsSpinButton",
+    "JSONSettingsStringsList",
     "JSONSettingsSwitch",
     "JSONSettingsTextView",
-    "SettingsSection",
+    "JSONSettingsTextViewButton",
+    "JSONSettingsTreeList",
     "SettingsLabel",
     "SettingsPage",
     "SettingsRevealer",
+    "SettingsSection",
     "SettingsStack",
     "SettingsWidget",
-    "Text"
+    "Text",
     # "JSONSettingsDateChooser",
     # "JSONSettingsEffectChooser",
     # "JSONSettingsFontButton",
-    # "JSONSettingsRange",
-    # "JSONSettingsSoundFileChooser",
-    # "JSONSettingsTweenChooser"
+    # "JSONSettingsTweenChooser",
 ]
 
-CAN_BACKEND.append("AppChooser")  # noqa | SettingsWidgets
-CAN_BACKEND.append("AppList")  # noqa | SettingsWidgets
-CAN_BACKEND.append("TreeList")  # noqa | SettingsWidgets
-
-
-OPERATIONS = ["<=", ">=", "<", ">", "!=", "="]
-
-OPERATIONS_MAP = {"<": operator.lt, "<=": operator.le, ">": operator.gt,
-                  ">=": operator.ge, "!=": operator.ne, "=": operator.eq}
+CAN_BACKEND.append("AppChooser")                        # noqa | SettingsWidgets
+CAN_BACKEND.append("AppList")                           # noqa | SettingsWidgets
+CAN_BACKEND.append("TreeList")                          # noqa | SettingsWidgets
 
 
 class JSONSettingsHandler():
@@ -85,6 +74,8 @@ class JSONSettingsHandler():
     ----------
     bindings : dict
         All the bindings stored when calling ``self.bind()``.
+    check_settings_timeout : int
+        The ID (greater than 0) of the event source.
     deps : dict
         Dependency keys.
     file_monitor : Gio.FileMonitor
@@ -95,6 +86,8 @@ class JSONSettingsHandler():
         A new Gio.File for the path ``self.filepath``.
     filepath : str
         Path to an xlet JSON configuration file.
+    instance_id : str
+        Xlet instance ID.
     listeners : dict
         See :any:`JSONSettingsHandler.listen`.
     notify_callback : method
@@ -107,7 +100,7 @@ class JSONSettingsHandler():
         Xlet metadata.
     """
 
-    def __init__(self, filepath, notify_callback=None, xlet_meta=None):
+    def __init__(self, filepath, notify_callback=None, xlet_meta=None, instance_id=None):
         """Initialization.
 
         Parameters
@@ -118,12 +111,16 @@ class JSONSettingsHandler():
             See ``MainApplication.notify_dbus`` (**Not used**).
         xlet_meta : None, optional
             Xlet metadata.
+        instance_id : None, optional
+            Xlet instance ID.
         """
         super().__init__()
 
         self.resume_timeout = None
+        self.check_settings_timeout = None
         self.notify_callback = notify_callback
         self.xlet_meta = xlet_meta
+        self.instance_id = instance_id
 
         self.filepath = filepath
         self.file_obj = Gio.File.new_for_path(self.filepath)
@@ -176,7 +173,7 @@ class JSONSettingsHandler():
         if direction & Gio.SettingsBindFlags.GET != 0:
             self.set_object_value(binding_info, self.get_value(key))
         if direction & Gio.SettingsBindFlags.SET != 0:
-            binding_info["oid"] = obj.connect("notify::" + prop, self.object_value_changed, key)
+            binding_info["oid"] = obj.connect(f"notify::{prop}", self.object_value_changed, key)
 
     def listen(self, key, callback):
         """Preference key _listeners_. Store a callback to be executed every time a preference
@@ -248,6 +245,7 @@ class JSONSettingsHandler():
             The property value.
         """
         props = self.settings[key]
+
         return props[prop]
 
     def has_property(self, key, prop):
@@ -335,7 +333,7 @@ class JSONSettingsHandler():
             if value != info["obj"].get_property(info["prop"]) and value is not None:
                 info["obj"].set_property(info["prop"], value)
 
-    def check_settings(self, *args):
+    def do_check_settings(self, *args):
         """Check settings file.
 
         Check if the settings stored in a settings file has changed and update all widgets.
@@ -344,6 +342,11 @@ class JSONSettingsHandler():
         ----------
         *args
             Arguments.
+
+        Returns
+        -------
+        bool
+            Remove source.
         """
         old_settings = self.settings
         self.settings = self.get_settings()
@@ -359,6 +362,22 @@ class JSONSettingsHandler():
             if new_value != old_settings[key]["value"]:
                 for callback in callback_list:
                     callback(key, new_value)
+
+        return GLib.SOURCE_REMOVE
+
+    def check_settings(self, *args, **kwargs):
+        """Delayed resume of settings file monitor.
+
+        Note
+        ----
+        I had to implement the timeout because in some slow systems (e.g. a virtual machine running
+        Cinnamon in software rendering mode), when a settings file was manually edited and saved,
+        the settings window would crash when calling self.get_settings and trying to parse the JSON file.
+        """
+        if self.check_settings_timeout:
+            GLib.source_remove(self.check_settings_timeout)
+
+        self.check_settings_timeout = GLib.timeout_add(500, self.do_check_settings)
 
     def get_settings(self):
         """Get settings from settings file.
@@ -377,10 +396,10 @@ class JSONSettingsHandler():
             raw_data = settings_file.read()
 
         try:
-            settings = json.loads(raw_data, encoding=None,
-                                  object_pairs_hook=collections.OrderedDict)
+            settings = json.loads(raw_data, object_pairs_hook=collections.OrderedDict)
         except Exception:
             raise exceptions.MalformedJSONFile(self.filepath)
+
         return settings
 
     def save_settings(self):
@@ -412,6 +431,7 @@ class JSONSettingsHandler():
         """
         if self.resume_timeout:
             GLib.source_remove(self.resume_timeout)
+
         self.resume_timeout = GLib.timeout_add(2000, self.do_resume)
 
     def do_resume(self):
@@ -420,11 +440,12 @@ class JSONSettingsHandler():
         Returns
         -------
         bool
-            Break loop execution.
+            Remove source.
         """
         self.file_monitor = self.file_obj.monitor_file(Gio.FileMonitorFlags.SEND_MOVED, None)
         self.file_monitor_signal = self.file_monitor.connect("changed", self.check_settings)
         self.resume_timeout = None
+
         return GLib.SOURCE_REMOVE
 
     def reset_to_defaults(self):
@@ -470,8 +491,7 @@ class JSONSettingsHandler():
             raw_data = settings_file.read()
 
         try:
-            settings = json.loads(raw_data, encoding=None,
-                                  object_pairs_hook=collections.OrderedDict)
+            settings = json.loads(raw_data, object_pairs_hook=collections.OrderedDict)
         except Exception:
             raise exceptions.MalformedJSONFile(filepath)
 
@@ -700,10 +720,10 @@ class JSONSettingsBackend(object):
 
         Raises
         ------
-        exceptions.MethodUnimplemented
+        exceptions.MethodNotimplemented
             :any:`SettingsWidget` classes must implement this method.
         """
-        raise exceptions.MethodUnimplemented("on_setting_changed")
+        raise exceptions.MethodNotimplemented("on_setting_changed")
 
     def connect_widget_handlers(self, *args):
         """This method triggers once when the widget factory function creates a new widget class
@@ -716,11 +736,11 @@ class JSONSettingsBackend(object):
 
         Raises
         ------
-        exceptions.MethodUnimplemented
+        exceptions.MethodNotimplemented
             :any:`SettingsWidget` classes with no bind_dir property set must implement this method.
         """
         if self.bind_dir is None:
-            raise exceptions.MethodUnimplemented("connect_widget_handlers")
+            raise exceptions.MethodNotimplemented("connect_widget_handlers")
 
 
 def json_settings_factory(subclass):
@@ -749,30 +769,26 @@ def json_settings_factory(subclass):
 
         Attributes
         ----------
-        apply_key : str
-            See :any:`TreeList._apply_changes`.
-        imp_exp_path_key : str
-            See :any:`TreeList._export_data` and :any:`TreeList._import_data` .
         pref_key : str
             The preference key that this widget will control.
         settings : JSONSettingsHandler
             The xlets settings handler.
         """
 
-        def __init__(self, widget_attrs={}, widget_kwargs={}):
+        def __init__(self, pref_key="", settings=None, widget_kwargs={}):
             """Initialization.
 
             Parameters
             ----------
-            widget_attrs : dict, optional
-                Widget attributes.
+            pref_key : str, optional
+                The preference key to handle.
+            settings : None, optional
+                An instance of :any:`JSONSettingsHandler`.
             widget_kwargs : dict, optional
                 Widget keyword arguments.
             """
-            self.pref_key = widget_attrs.get("pref_key")
-            self.apply_key = widget_attrs.get("apply_key")
-            self.imp_exp_path_key = widget_attrs.get("imp_exp_path_key")
-            self.settings = widget_attrs.get("settings")
+            self.pref_key = pref_key
+            self.settings = settings
 
             kwargs = {}
 
@@ -780,17 +796,11 @@ def json_settings_factory(subclass):
                 if k in JSON_SETTINGS_PROPERTIES_MAP:  # noqa | SettingsWidgets
                     kwargs[JSON_SETTINGS_PROPERTIES_MAP[k]] = widget_kwargs[k]  # noqa | SettingsWidgets
                 elif k == "options":
-                    options_list = widget_kwargs[k]
-
-                    # NOTE: Sort both types of options. Otherwise, items will appear in
-                    # different order every single time the widget is re-built.
-                    if isinstance(options_list, dict):
-                        kwargs["options"] = [(a, b) for a, b in options_list.items()]
-                    else:
-                        kwargs["options"] = zip(options_list, options_list)
-
-                    kwargs["options"] = sort_combo_options(
-                        kwargs["options"], widget_kwargs.get("first-option", ""))
+                    kwargs["options"] = handle_combobox_options(
+                        options=widget_kwargs[k],
+                        first_option=widget_kwargs.get("first-option", ""),
+                        xlet_settings=self.settings
+                    )
 
             super().__init__(**kwargs)
             self.attach_backend()
@@ -799,7 +809,7 @@ def json_settings_factory(subclass):
 
 
 for setting_widget in CAN_BACKEND:  # noqa | SettingsWidgets
-    globals()["JSONSettings" + setting_widget] = json_settings_factory(setting_widget)
+    globals()[f"JSONSettings{setting_widget}"] = json_settings_factory(setting_widget)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Common utilities.
 
@@ -6,26 +6,52 @@ Attributes
 ----------
 HOME : str
     Path to user home.
+MAIN_APP : MainApplication
+    The main application.
+OPERATIONS : list
+    Comparison operations.
+OPERATIONS_MAP : dict
+    Comparison operations map.
+USE_HEADER_BARS_ON_DIALOGS : bool
+    Whether to use header bars on dialogs.
 """
 import fnmatch
 import gettext
 import gi
+import operator
 import os
 import re
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 
+from gi.repository import GLib
 from gi.repository import Gdk
 from gi.repository import Gtk
 from itertools import chain
-from operator import itemgetter
 
+MAIN_APP = None
+# NOTE: This variable is in place for when a global setting is available on Cinnamon (with any luck)
+# like it's available now on Mate.
+USE_HEADER_BARS_ON_DIALOGS = True
 HOME = os.path.expanduser("~")
 
-gettext.bindtextdomain("{{UUID}}", HOME + "/.local/share/locale")
+gettext.bindtextdomain("{{UUID}}", f"{HOME}/.local/share/locale")
 gettext.textdomain("{{UUID}}")
 _ = gettext.gettext
+
+
+# CRITICAL: Do not change the order of the items inside this list.
+OPERATIONS = ["<=", ">=", "<", ">", "!=", "="]
+
+OPERATIONS_MAP = {
+    "!=": operator.ne,
+    "<": operator.lt,
+    "<=": operator.le,
+    "=": operator.eq,
+    ">": operator.gt,
+    ">=": operator.ge
+}
 
 
 class BaseGrid(Gtk.Grid):
@@ -58,6 +84,72 @@ class BaseGrid(Gtk.Grid):
         """
         self.set_column_spacing(col)
         self.set_row_spacing(row)
+
+
+class IntelligentGtkDialog(Gtk.Dialog):
+    """Intelligent dialog.
+
+    An instance of :any:`Gtk.Dialog` that remembers the size it had the last time it was opened.
+    """
+
+    def __init__(self, parent_widget, **kwargs):
+        """Initialization.
+
+        Parameters
+        ----------
+        parent_widget : SettingsWidget.
+            The widget used to store the size of the dialog. The widget has to have the
+            ``dialog_width`` and ``dialog_height`` properties set to set a default size for the dialog.
+        **kwargs
+            Keyword arguments.
+        """
+        super().__init__(**kwargs)
+        self._timer = None
+        self._parent_widget = parent_widget
+        self.set_default_size(width=parent_widget.dialog_width,
+                              height=parent_widget.dialog_height)
+        self.connect("check-resize", self.on_check_resize)
+
+    def _on_check_resize(self, *args):
+        """``check-resize`` signal callback delayed.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+
+        Returns
+        -------
+        bool
+            Remove source.
+        """
+        width, height = self.get_size()
+
+        if self._parent_widget.dialog_width != width:
+            self._parent_widget.dialog_width = width
+
+        if self._parent_widget.dialog_height != height:
+            self._parent_widget.dialog_height = height
+
+        self._timer = None
+
+        return GLib.SOURCE_REMOVE
+
+    def on_check_resize(self, *args):
+        """``check-resize`` signal callback.
+
+        Attempt to store the current dialog size when the dialog is re-sized. Delayed to avoid
+        executing code a trillion times per second.
+
+        Parameters
+        ----------
+        *args
+            Arguments.
+        """
+        if self._timer:
+            GLib.source_remove(self._timer)
+
+        self._timer = GLib.timeout_add(300, self._on_check_resize)
 
 
 def compare_version(version1, version2):
@@ -110,9 +202,9 @@ def compare_version(version1, version2):
     Parameters
     ----------
     version1 : str
-        Description
+        The first version to be compared.
     version2 : str
-        Description
+        The second version to be compared.
 
     Returns
     -------
@@ -282,6 +374,36 @@ def compare_version(version1, version2):
     return res
 
 
+def check_version(version1, op, version2):
+    """Check version.
+
+    This function is a proxy to the compare_version function to allow a more "natural" usage.
+
+    Parameters
+    ----------
+    version1 : str
+        The first version to be compared.
+    op : str
+        The comparison operator.
+    version2 : str
+        The second version to be compared.
+
+    Returns
+    -------
+    bool
+        The result of the comparison.
+
+    Raises
+    ------
+    err
+        Halt execution.
+    """
+    try:
+        return OPERATIONS_MAP[op](compare_version(version1, version2), 0)
+    except Exception as err:
+        raise err
+
+
 def contrast_rgba_color(rgba):
     """Determine font color based on background color.
 
@@ -335,11 +457,13 @@ def import_export(parent, action_type, last_dir):
         btns = (_("_Cancel"), Gtk.ResponseType.CANCEL,
                 _("_Open"), Gtk.ResponseType.OK)
 
-    dialog = Gtk.FileChooserDialog(transient_for=parent.get_toplevel(),
-                                   title=string,
-                                   use_header_bar=True,
-                                   action=action_mode,
-                                   buttons=btns)
+    dialog = Gtk.FileChooserDialog(
+        transient_for=get_toplevel_window(parent),
+        title=string,
+        use_header_bar=get_global("USE_HEADER_BARS_ON_DIALOGS"),
+        action=action_mode,
+        buttons=btns
+    )
 
     if last_dir is not None:
         dialog.set_current_folder(last_dir)
@@ -360,7 +484,7 @@ def import_export(parent, action_type, last_dir):
         filepath = dialog.get_filename()
 
         if action_type == "export" and ".json" not in filepath:
-            filepath = filepath + ".json"
+            filepath = f"{filepath}.json"
 
     dialog.destroy()
 
@@ -404,9 +528,11 @@ def generate_options_from_paths(opts, xlet_settings):
         add_prefix : bool
             Whether to add a prefix.
         """
+        prefix = "::" if add_prefix else ""
+
         for pattern in opts.get("file-patterns"):
             for file_name in fnmatch.filter(os.listdir(folder_path), pattern):
-                options.append(("::" if add_prefix else "") + file_name)
+                options.append((prefix + file_name, prefix + file_name))
 
     if opts.get("path-in-xlet"):
         path_in_xlet = os.path.join(xlet_settings.get_xlet_meta()["path"], opts.get("path-in-xlet"))
@@ -419,13 +545,52 @@ def generate_options_from_paths(opts, xlet_settings):
         setting_value = setting_value[7:] if setting_value.startswith("file://") else setting_value
 
         # NOTE: Failsafe. Do not allow user's home to be added.
-        if setting_value and setting_value != os.path.expanduser("~") and os.path.isdir(setting_value):
+        if setting_value and setting_value != os.path.expanduser(
+                "~") and os.path.isdir(setting_value):
             scan_and_generate(setting_value, False)
 
     return options
 
 
-def display_message_dialog(widget, title, message, context="information"):
+def handle_combobox_options(options=None, first_option="", xlet_settings=None, sort_options=True):
+    """Handle combobox options.
+
+    Parameters
+    ----------
+    options : None, optional
+        The options key of a combobox widget definition.
+    first_option : str, optional
+        The option that should always be listed first in the combobox.
+    xlet_settings : None, optional
+        A :any:`JSONSettingsHandler` instance.
+    sort_options : bool, optional
+        If the options should be sorted.
+
+    Returns
+    -------
+    list
+        Handled combobox options.
+    """
+    handled_options = []
+
+    if isinstance(options, list):
+        handled_options = zip(options, options)
+    elif isinstance(options, dict):
+        if "file-patterns" in options and isinstance(options["file-patterns"], list):
+            handled_options = generate_options_from_paths(options, xlet_settings)
+        else:
+            handled_options = [(a, b) for a, b in options.items()]
+
+    # NOTE: Sort options. Otherwise, items will appear in
+    # different order every single time the widget is re-built.
+    if sort_options:
+        return sort_combo_options(handled_options, first_option)
+
+    # NOTE: Do not sort if it isn't needed.
+    return handled_options
+
+
+def display_message_dialog(widget, title, message, context="info"):
     """Display a message dialog.
 
     Parameters
@@ -443,14 +608,21 @@ def display_message_dialog(widget, title, message, context="information"):
         message_type = Gtk.MessageType.WARNING
     elif context == "error":
         message_type = Gtk.MessageType.ERROR
-    else:
+    elif context == "question":
+        message_type = Gtk.MessageType.QUESTION
+    elif context == "info":
         message_type = Gtk.MessageType.INFO
+    else:
+        message_type = Gtk.MessageType.OTHER
 
-    dialog = Gtk.MessageDialog(transient_for=widget.get_toplevel(),
-                               title=title,
-                               flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                               message_type=message_type,
-                               buttons=Gtk.ButtonsType.OK)
+    dialog = Gtk.MessageDialog(
+        transient_for=get_toplevel_window(widget),
+        use_header_bar=get_global("USE_HEADER_BARS_ON_DIALOGS"),
+        title=title,
+        flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+        message_type=message_type,
+        buttons=Gtk.ButtonsType.OK
+    )
 
     if isinstance(message, list):
         message = "\n".join(message)
@@ -490,7 +662,7 @@ def sort_combo_options(options, first_option=""):
                 del options[i]
                 break
 
-    return only_first + sorted(options, key=itemgetter(1))
+    return only_first + sorted(options, key=operator.itemgetter(1))
 
 
 def get_keybinding_display_name(accel_string):
@@ -517,6 +689,74 @@ def get_keybinding_display_name(accel_string):
             text = Gtk.accelerator_get_label_with_keycode(None, key, codes[0], mods)
 
     return text
+
+
+def set_global(key, value):
+    """Set global variable.
+
+    Parameters
+    ----------
+    key : str
+        The variable name.
+    value : Any
+        The variable value.
+    """
+    globals()[key] = value
+
+
+def get_global(key):
+    """Get global variable.
+
+    Parameters
+    ----------
+    key : str
+        The variable name.
+
+    Returns
+    -------
+    Any
+        The value stored in the global variable.
+    """
+    return globals()[key]
+
+
+def get_main_app():
+    """get main application.
+
+    Returns
+    -------
+    MainApplication
+        The main application.
+    """
+    return MAIN_APP
+
+
+def get_toplevel_window(widget):
+    """Get a top level window.
+
+    This is mainly used for setting the ``transient_for`` parameter when creating instances of
+    a :any:`Gtk.Dialog`. Since some widgets on this framework open dialogs from another dialogs,
+    I can't set dialogs to always use the main application window.
+
+    Parameters
+    ----------
+    widget : Gtk.Widget
+        A widget from which to get a top level window.
+
+    Returns
+    -------
+    MainApplication
+        The main application.
+    """
+    try:
+        toplevel = widget.get_toplevel()
+
+        if isinstance(toplevel, (Gtk.ApplicationWindow, Gtk.Window)):
+            return toplevel
+    except Exception:
+        pass
+
+    return MAIN_APP.window
 
 
 if __name__ == "__main__":

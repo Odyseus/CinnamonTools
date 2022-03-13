@@ -1,0 +1,32 @@
+/**
+ * NOTE: Styles kept in this stylesheet instead of loading them in-line from the Python code to
+ * avoid CSS errors. In this CSS file I have syntax highlighting and linting. In the Python code I
+ * have plain text.
+ */
+
+/**
+ * Style for the button with an icon displayed in the main application window titlebar/headerbar.
+ * This button is only shown when an xlet has only one instance. If an xlet has more than one
+ * instance, the instance switcher buttons will be displayed instead.
+ */
+.cinnamon-xlet-settings-app.title-button image:disabled {
+    opacity: 1;
+    -gtk-icon-effect: none;
+}
+
+/**
+ * Styles for the IconChooser's dialog.
+ * The element with the icon-chooser-dialog-sidebar class is a Gtk.ListBox that also has the
+ * class sidebar set to capture other styles.
+ * The element with the class sidebar-item is a Gtk.ListBoxRow.
+ * These styles are an approximation of the styles used by most themes for a Gtk.StackSidebar
+ * (stacksidebar tag) element with the sidebar class.
+ */
+.cinnamon-xlet-settings-app.icon-chooser-dialog-sidebar .sidebar-item {
+    padding: 10px 4px;
+}
+
+.cinnamon-xlet-settings-app.icon-chooser-dialog-sidebar .sidebar-item > label {
+    padding-left: 6px;
+    padding-right: 6px;
+}

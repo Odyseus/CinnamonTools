@@ -1,8 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Slimmed down and functional module to handle gsettings from an xlet settings window.
 
-Only implemented a limited set of widgets (Switch and ComboBox). I will add more if
+Only exposed a limited set of widgets (Switch and ComboBox). I will add more if
 the need arises.
 
 It can handle schemas that aren't installed on a system.
@@ -18,8 +18,13 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 from . import exceptions
-from .SettingsWidgets import *  # noqa
-from .common import sort_combo_options
+# NOTE: Only import __all__ when I expose more widgets.
+# from .SettingsWidgets import *                                          # noqa
+from .SettingsWidgets import ComboBox                                     # noqa
+from .SettingsWidgets import JSON_SETTINGS_PROPERTIES_MAP                 # noqa
+from .SettingsWidgets import Switch                                       # noqa
+from .SettingsWidgets import gsettings_objects                            # noqa
+from .common import handle_combobox_options
 
 GioSSS = Gio.SettingsSchemaSource
 
@@ -28,21 +33,29 @@ GioSSS = Gio.SettingsSchemaSource
 __all__ = [  # noqa
     # NOTE: Defined in this module.
     "GSettingsComboBox",
-    "GSettingsSpinButton",
-    "GSettingsSwitch"
+    "GSettingsSwitch",
+    # "GSettingsColorChooser",
+    # "GSettingsEntry",
+    # "GSettingsFileChooser",
+    # "GSettingsIconChooser",
+    # "GSettingsRange",
+    # "GSettingsSoundFileChooser",
+    # "GSettingsSpinButton",
+    # "GSettingsTextView",
 ]
 
-
+# NOTE: Do not enable widgets that I don't use for now.
+# I only use the ComboBox and Switch widgets for the Debugging section of my xlets.
 CAN_BACKEND = [
     "ComboBox",
-    "SpinButton",
     "Switch",
     # "ColorChooser",
     # "Entry",
     # "FileChooser",
-    # "FontButton",
     # "IconChooser",
     # "Range",
+    # "SoundFileChooser",
+    # "SpinButton",
     # "TextView",
 ]
 
@@ -93,7 +106,7 @@ def __setitem__(self, key, value):
         type_str = v.get_child_value(0).get_type_string()[1]
 
     if not self.set_value(key, GLib.Variant(type_str, value)):
-        raise ValueError("value '%s' for key '%s' is outside of valid range" % (value, key))
+        raise ValueError(f"value '{value}' for key '{key}' is outside of valid range")
 
 
 def bind_with_mapping(self, pref_key, widget, prop, flags, map_get, map_set):
@@ -168,10 +181,10 @@ def bind_with_mapping(self, pref_key, widget, prop, flags, map_get, map_set):
         key_changed(self, pref_key)
 
         if not (flags & Gio.SettingsBindFlags.GET_NO_CHANGES):
-            self.connect("changed::" + pref_key, key_changed)
+            self.connect(f"changed::{pref_key}", key_changed)
 
     if flags & Gio.SettingsBindFlags.SET:
-        widget.connect("notify::" + prop, prop_changed)
+        widget.connect(f"notify::{prop}", prop_changed)
 
     if not (flags & Gio.SettingsBindFlags.NO_SENSITIVITY):
         self.bind_writable(pref_key, widget, "sensitive", False)
@@ -229,7 +242,7 @@ class GSettingsBackend(object):
         elif self.bind_dir is not None:
             self.settings.bind(self.pref_key, bind_object, self.bind_prop, self.bind_dir)
         else:
-            self.settings.connect("changed::" + self.pref_key, self.on_setting_changed)
+            self.settings.connect(f"changed::{self.pref_key}", self.on_setting_changed)
             self.settings.bind_writable(self.pref_key, bind_object, "sensitive", False)
             self.on_setting_changed()
             self.connect_widget_handlers()
@@ -280,10 +293,10 @@ class GSettingsBackend(object):
 
         Raises
         ------
-        exceptions.MethodUnimplemented
+        exceptions.MethodNotimplemented
             :any:`SettingsWidget` classes must implement this method.
         """
-        raise exceptions.MethodUnimplemented("on_setting_changed")
+        raise exceptions.MethodNotimplemented("on_setting_changed")
 
     def connect_widget_handlers(self, *args):
         """This method triggers once when the widget factory function creates a new widget class
@@ -296,11 +309,11 @@ class GSettingsBackend(object):
 
         Raises
         ------
-        exceptions.MethodUnimplemented
+        exceptions.MethodNotimplemented
             :any:`SettingsWidget` classes with no bind_dir property set must implement this method.
         """
         if self.bind_dir is None:
-            raise exceptions.MethodUnimplemented("connect_widget_handlers")
+            raise exceptions.MethodNotimplemented("connect_widget_handlers")
 
 
 def get_gsettings_schema(schema, xlet_meta={}):
@@ -323,25 +336,26 @@ def get_gsettings_schema(schema, xlet_meta={}):
     Exception
         Schema not found.
     """
+    schema_source = None
     xlet_path = xlet_meta.get("path", "")
     xlet_uuid = xlet_meta.get("uuid", "")
 
     # NOTE: If the schema contains the xlet UUID, search for it inside the xlet folder.
     if xlet_path and xlet_uuid in schema:
         schema_source = GioSSS.new_from_directory(
-            xlet_path + "/schemas",
+            f"{xlet_path}/schemas",
             GioSSS.get_default(),
             False
         )
-    else:
+
+    if not schema_source:
         schema_source = GioSSS.get_default()
 
     schema_obj = schema_source.lookup(schema, False)
 
     if not schema_obj:
         raise Exception(
-            "Schema '%s' could not be found for xlet '%s'. Please check your installation."
-            % (schema, xlet_uuid)
+            f"Schema '{schema}' could not be found for xlet '{xlet_uuid}'. Please check your installation."
         )
 
     return Gio.Settings(settings_schema=schema_obj)
@@ -365,7 +379,7 @@ def g_settings_factory(subclass):
     exceptions.CannotBackend
         The widget cannot be backended.
     """
-    if subclass not in CAN_BACKEND:  # noqa | SettingsWidgets
+    if subclass not in CAN_BACKEND:
         raise exceptions.CannotBackend(subclass)
 
     class NewClass(globals()[subclass], GSettingsBackend):
@@ -385,23 +399,27 @@ def g_settings_factory(subclass):
             A ``Gio.Settings`` instance.
         """
 
-        def __init__(self, widget_attrs={}, widget_kwargs={}):
+        def __init__(self, pref_key={}, schema="", xlet_meta={}, widget_kwargs={}):
             """Initialization.
 
             Parameters
             ----------
-            widget_attrs : dict, optional
-                Widget attributes.
+            pref_key : dict, optional
+                The preference key to handle.
+            schema : str, optional
+                Schema to which pref_key belongs to.
+            xlet_meta : dict, optional
+                Xlet metadata.
             widget_kwargs : dict, optional
                 Widget keyword arguments.
             """
-            self.pref_key = widget_attrs.get("pref_key")
-            schema = widget_attrs.get("schema", "")
+            self.pref_key = pref_key
+            schema = schema
 
-            if schema not in settings_objects:  # noqa | SettingsWidgets
-                settings_objects[schema] = get_gsettings_schema(schema, widget_attrs.get("xlet_meta", {}))  # noqa | SettingsWidgets
+            if schema not in gsettings_objects:
+                gsettings_objects[schema] = get_gsettings_schema(schema, xlet_meta)
 
-            self.settings = settings_objects[schema]  # noqa | SettingsWidgets
+            self.settings = gsettings_objects[schema]
 
             if "map_get" in widget_kwargs:
                 self.map_get = widget_kwargs["map_get"]
@@ -413,20 +431,14 @@ def g_settings_factory(subclass):
             kwargs = {}
 
             for k in widget_kwargs:
-                if k in JSON_SETTINGS_PROPERTIES_MAP:  # noqa | SettingsWidgets
-                    kwargs[JSON_SETTINGS_PROPERTIES_MAP[k]] = widget_kwargs[k]  # noqa | SettingsWidgets
+                if k in JSON_SETTINGS_PROPERTIES_MAP:
+                    kwargs[JSON_SETTINGS_PROPERTIES_MAP[k]] = widget_kwargs[k]
                 elif k == "options":
-                    options_list = widget_kwargs[k]
-
-                    # NOTE: Sort both types of options. Otherwise, items will appear in
-                    # different order every single time the widget is re-built.
-                    if isinstance(options_list, dict):
-                        kwargs["options"] = [(a, b) for a, b in options_list.items()]
-                    else:
-                        kwargs["options"] = zip(options_list, options_list)
-
-                    kwargs["options"] = sort_combo_options(
-                        kwargs["options"], widget_kwargs.get("first-option", ""))
+                    kwargs["options"] = handle_combobox_options(
+                        options=widget_kwargs[k],
+                        first_option=widget_kwargs.get("first-option", ""),
+                        xlet_settings=self.settings
+                    )
 
             super().__init__(**kwargs)
             self.attach_backend()
@@ -435,7 +447,7 @@ def g_settings_factory(subclass):
 
 
 for widget in CAN_BACKEND:
-    globals()["GSettings" + widget] = g_settings_factory(widget)
+    globals()[f"GSettings{widget}"] = g_settings_factory(widget)
 
 
 if __name__ == "__main__":
