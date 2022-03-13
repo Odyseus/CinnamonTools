@@ -1,15 +1,10 @@
-// {{IMPORTER}}
-
-const GlobalUtils = __import("globalUtils.js");
-const Constants = __import("constants.js");
-
 const {
     ELLIPSIS
-} = Constants;
+} = require("js_modules/constants.js");
 
 const {
     _
-} = GlobalUtils;
+} = require("js_modules/globalUtils.js");
 
 var NameThatColor = {
     /* Name that Color JavaScript library created by Chirag Mehta.
@@ -35,25 +30,40 @@ var NameThatColor = {
      *
      *     let n_match  = ntc.name("#6195ED");
      *     // This is the color value of the closest matching color in hexadecimal notation.
-     *     let n_hex        = n_match.hex;
+     *     let n_hex        = n_match.detected_hex;
      *     // This is the color value of the closest matching color in RGB notation.
-     *     let n_rgb        = n_match.rgb;
+     *     let n_rgb        = n_match.detected_rgb;
      *     // This is the text string for the name of the match.
-     *     let n_name       = n_match.name;
+     *     let n_name       = n_match.detected_name;
      *     // This is the RGB value of the closest hue matching color.
-     *     let n_hue_hex       = n_match.hueHex;
+     *     let n_hue_hex       = n_match.hue_hex;
      *     // This is the text string for the name of the hue match.
-     *     let n_hue_name       = n_match.hueName;
+     *     let n_hue_name       = n_match.hue_name;
      *     // True if exact color match, False if close-match.
      *     let n_exactmatch = n_match.exact_match;
      *
      *     global.log(n_match.toSource());
      */
+    get names_length() {
+        return this._names_length;
+    },
+    set names_length(aLength) {
+        this._names_length = aLength;
+    },
+    get shades_length() {
+        return this._shades_length;
+    },
+    set shades_length(aLength) {
+        this._shades_length = aLength;
+    },
     init: function() {
+        this.names_length = this.names.length;
+        this.shades_length = this.shades.length;
+
         let color,
             rgb,
             hsl;
-        let i = this.names.length;
+        let i = this.names_length;
         while (i--) {
             color = "#" + this.names[i][0];
             rgb = this.rgb(color);
@@ -62,40 +72,40 @@ var NameThatColor = {
         }
     },
 
-    name: function(color) {
-        color = color.toUpperCase();
+    name: function(aHEX) {
+        const hex = aHEX.toUpperCase();
 
         /* NOTE: All these checks are suppressed because in my use case the input
          * color will always be in the format #000000.
          */
-        // if (color.length < 3 || color.length > 7) {
+        // if (hex.length < 3 || hex.length > 7) {
         //     return {
-        //         input: color,
+        //         input: hex,
         //         name: _("Invalid Color"),
         //         hex: ELLIPSIS,
         //         rgb: ELLIPSIS,
-        //         hueName: _("Invalid Color"),
-        //         hueHex: ELLIPSIS,
+        //         hue_name: _("Invalid Color"),
+        //         hue_hex: ELLIPSIS,
         //         exact_match: false
         //     };
         // }
 
-        // if (color.length % 3 === 0) {
-        //     color = "#" + color;
+        // if (hex.length % 3 === 0) {
+        //     hex = "#" + hex;
         // }
 
-        // if (color.length === 4) {
-        //     color = "#" + color.substr(1, 1) + color.substr(1, 1) +
-        //         color.substr(2, 1) + color.substr(2, 1) +
-        //         color.substr(3, 1) + color.substr(3, 1);
+        // if (hex.length === 4) {
+        //     hex = "#" + hex.substr(1, 1) + hex.substr(1, 1) +
+        //         hex.substr(2, 1) + hex.substr(2, 1) +
+        //         hex.substr(3, 1) + hex.substr(3, 1);
         // }
 
-        let rgb = this.rgb(color);
-        let r = rgb[0],
+        const rgb = this.rgb(hex);
+        const r = rgb[0],
             g = rgb[1],
             b = rgb[2];
-        let hsl = this.hsl(color);
-        let h = hsl[0],
+        const hsl = this.hsl(hex);
+        const h = hsl[0],
             s = hsl[1],
             l = hsl[2];
         let ndf1 = 0;
@@ -104,17 +114,19 @@ var NameThatColor = {
         let cl = -1,
             df = -1;
 
-        let i = this.names.length;
+        let i = this.names_length;
         while (i--) {
-            if (color === "#" + this.names[i][0]) {
+            if (hex === "#" + this.names[i][0]) {
                 return {
-                    input: color,
-                    name: this.names[i][1],
-                    hex: "#" + this.names[i][0],
-                    rgb: "rgb(%d, %d, %d)".format(this.names[i][3],
-                        this.names[i][4], this.names[i][5]),
-                    hueName: this.names[i][2],
-                    hueHex: this.shadergb(this.names[i][2]),
+                    input_hex: hex,
+                    detected_name: this.names[i][1],
+                    detected_hex: "#" + this.names[i][0],
+                    detected_rgb: `rgb(${this.names[i][3]}, ${this.names[i][4]}, ${this.names[i][5]})`,
+                    detected_hsl: `hsl(${this.names[i][6]}°, ${this.names[i][7]}%, ${this.names[i][8]}%)`,
+                    hue_name: this.names[i][2],
+                    hue_hex: this.shade_color(this.names[i][2], "hex"),
+                    hue_rgb: this.shade_color(this.names[i][2], "rgb"),
+                    hue_hsl: this.shade_color(this.names[i][2], "hsl"),
                     exact_match: true
                 };
             }
@@ -133,32 +145,37 @@ var NameThatColor = {
         }
 
         return (cl < 0 ? {
-            input: color,
-            name: _("Invalid Color"),
-            hex: ELLIPSIS,
-            rgb: ELLIPSIS,
-            hueName: _("Invalid Color"),
-            hueHex: ELLIPSIS,
+            input_hex: hex,
+            detected_name: _("Invalid Color"),
+            detected_hex: ELLIPSIS,
+            detected_rgb: ELLIPSIS,
+            detected_hsl: ELLIPSIS,
+            hue_name: _("Invalid Color"),
+            hue_hex: ELLIPSIS,
+            hue_rgb: ELLIPSIS,
+            hue_hsl: ELLIPSIS,
             exact_match: false
         } : {
-            input: color,
-            name: this.names[cl][1],
-            hex: "#" + this.names[cl][0],
-            rgb: "rgb(%d, %d, %d)".format(this.names[cl][3],
-                this.names[cl][4], this.names[cl][5]),
-            hueName: this.names[cl][2],
-            hueHex: this.shadergb(this.names[cl][2]),
+            input_hex: hex,
+            detected_name: this.names[cl][1],
+            detected_hex: "#" + this.names[cl][0],
+            detected_rgb: `rgb(${this.names[cl][3]}, ${this.names[cl][4]}, ${this.names[cl][5]})`,
+            detected_hsl: `hsl(${this.names[cl][6]}°, ${this.names[cl][7]}%, ${this.names[cl][8]}%)`,
+            hue_name: this.names[cl][2],
+            hue_hex: this.shade_color(this.names[cl][2], "hex"),
+            hue_rgb: this.shade_color(this.names[cl][2], "rgb"),
+            hue_hsl: this.shade_color(this.names[cl][2], "hsl"),
             exact_match: false
         });
     },
 
     // Adopted from: Farbtastic 1.2.
     // http://acko.net/dev/farbtastic
-    hsl: function(color) {
-        let rgb = [
-            parseInt("0x" + color.substring(1, 3), 16) / 255,
-            parseInt("0x" + color.substring(3, 5), 16) / 255,
-            parseInt("0x" + color.substring(5, 7), 16) / 255
+    hsl: function(aHex, aReturnStr = false) {
+        const rgb = [
+            parseInt("0x" + aHex.substring(1, 3), 16) / 255,
+            parseInt("0x" + aHex.substring(3, 5), 16) / 255,
+            parseInt("0x" + aHex.substring(5, 7), 16) / 255
         ];
         let min,
             max,
@@ -166,7 +183,7 @@ var NameThatColor = {
             h,
             s,
             l;
-        let r = rgb[0],
+        const r = rgb[0],
             g = rgb[1],
             b = rgb[2];
 
@@ -182,54 +199,71 @@ var NameThatColor = {
 
         h = 0;
         if (delta > 0) {
-            if (max === r && max != g) {
+            if (max === r && max !== g) {
                 h += (g - b) / delta;
             }
-            if (max === g && max != b) {
+            if (max === g && max !== b) {
                 h += (2 + (b - r) / delta);
             }
-            if (max === b && max != r) {
+            if (max === b && max !== r) {
                 h += (4 + (r - g) / delta);
             }
             h /= 6;
         }
-        return [
-            parseInt(h * 255, 10),
-            parseInt(s * 255, 10),
-            parseInt(l * 255, 10)
-        ];
+        return aReturnStr ?
+            `hsl(${parseInt(h * 255, 10)}°, ${parseInt(s * 255, 10)}%, ${parseInt(l * 255, 10)}%)` : [
+                parseInt(h * 255, 10),
+                parseInt(s * 255, 10),
+                parseInt(l * 255, 10)
+            ];
     },
 
     // Adopted from: Farbtastic 1.2.
     // http://acko.net/dev/farbtastic
-    rgb: function(color) {
+    rgb: function(aHex) {
         return [
-            parseInt("0x" + color.substring(1, 3), 16),
-            parseInt("0x" + color.substring(3, 5), 16),
-            parseInt("0x" + color.substring(5, 7), 16)
+            parseInt("0x" + aHex.substring(1, 3), 16),
+            parseInt("0x" + aHex.substring(3, 5), 16),
+            parseInt("0x" + aHex.substring(5, 7), 16)
         ];
     },
 
-    shadergb: function(shadename) {
-        for (let i = 0; i < this.shades.length; i++) {
-            if (shadename === this.shades[i][1]) {
-                return "#" + this.shades[i][0];
+    shade_color: function(aShadeName, aFormat) {
+        let i = this.shades_length;
+        while (i--) {
+            if (aShadeName === this.shades[i][1]) {
+                switch (aFormat) {
+                    case "rgb":
+                        return this.shades[i][2];
+                    case "hsl":
+                        return this.shades[i][3];
+                    default:
+                        return "#" + this.shades[i][0];
+                }
             }
         }
-        return "#000000";
+
+        switch (aFormat) {
+            case "rgb":
+                return "rgb(0, 0, 0)";
+            case "hsl":
+                return "hsl(0, 0%, 0%)";
+            default:
+                return "#000000";
+        }
     },
 
     shades: [
-        ["FF0000", _("Red")],
-        ["FFA500", _("Orange")],
-        ["FFFF00", _("Yellow")],
-        ["008000", _("Green")],
-        ["0000FF", _("Blue")],
-        ["EE82EE", _("Violet")],
-        ["A52A2A", _("Brown")],
-        ["000000", _("Black")],
-        ["808080", _("Grey")],
-        ["FFFFFF", _("White")]
+        ["FF0000", _("Red"), "rgb(255, 0, 0)", "hsl(0, 100%, 50%)"],
+        ["FFA500", _("Orange"), "rgb(255, 165, 0)", "hsl(39, 100%, 50%)"],
+        ["FFFF00", _("Yellow"), "rgb(255, 255, 0)", "hsl(60, 100%, 50%)"],
+        ["008000", _("Green"), "rgb(0, 128, 0)", "hsl(120, 100%, 25%)"],
+        ["0000FF", _("Blue"), "rgb(0, 0, 255)", "hsl(240, 100%, 50%)"],
+        ["EE82EE", _("Violet"), "rgb(238, 130, 238)", "hsl(300, 76%, 72%)"],
+        ["A52A2A", _("Brown"), "rgb(165, 42, 42)", "hsl(0, 59%, 41%)"],
+        ["000000", _("Black"), "rgb(0, 0, 0)", "hsl(0, 0%, 0%)"],
+        ["808080", _("Grey"), "rgb(128, 128, 128)", "hsl(0, 0%, 50%)"],
+        ["FFFFFF", _("White"), "rgb(255, 255, 255)", "hsl(0, 0%, 100%)"],
     ],
 
     names: [

@@ -1,3 +1,9 @@
+/**
+ * NOTES:
+ *
+ * - The "cba-" prefix that all classes have stands for Color Blindness Assistant.
+ */
+
 /* Color inspector IDs and classes.
  *
  * IDs:
@@ -9,13 +15,15 @@
  * cba-info-box
  * cba-header
  * cba-footer
- * cba-info-feedback
- * cba-info-value
  * cba-info-title
+ * cba-info-feedback
+ * cba-info-color-button
+ *     modal-dialog-button
+ * cba-info-color-button-label
  */
 
 /* This ID has the cba-box and modal-dialog classes set. */
-#ColorInspectorBanner {
+#ColorInspectorBanner.cba-box {
     padding: 10px;
 }
 
@@ -26,7 +34,10 @@
 }
 
 #ColorInspectorBanner .cba-info-title {
-    padding: 0 10px 0 10px;
+    /* Setting a top/bottom padding because I still can't figure out how in all hells
+     * to align an St.Label in the middle of a Clutter.GridLayout cell. ¬¬
+     */
+    padding: 5px 10px;
     font-weight: bold;
 }
 
@@ -48,8 +59,15 @@
 #ColorInspectorBanner .cba-footer {
     font-size: 0.9em;
     font-style: italic;
-    text-align: center;
     padding-top: 5px;
+}
+
+/* Center text only on Daltonizer footers, not on ColorInspectorBanner's.
+ * This is because the labels stay centered whenever the f**k they want
+ * in the ColorInspectorBanner!!!
+ */
+#Daltonizer .cba-footer {
+    text-align: center;
 }
 
 /* Daltonizer IDs and classes.
@@ -75,10 +93,13 @@
  *     cba-effect-names
  *     cba-actors
  *     cba-color-spaces
+ *
+ * All Daltonizer elements can also have the class "compact" when the setting "daltonizer_compact_ui"
+ * is set to true.
  */
 
 /* This ID has the cba-box and modal-dialog classes set. */
-#Daltonizer {
+#Daltonizer.cba-box {
     /* To avoid huge size due to possible very long window titles. */
     max-width: 500px;
     padding: 10px;
@@ -107,9 +128,20 @@
 
 #Daltonizer .cba-check-button {
     /* Since these buttons' containers are set to be homogeneous, short button
-       labels can force the display of ellipsis in buttons with long labels.
+       labels can force the display of ellipsis in buttons with longer labels.
        Setting a minimum width for the buttons will help minimize the risk of this.
     */
     min-width: 150px;
 }
 
+#Daltonizer .cba-check-button.compact {
+    /* Since these buttons' containers are set to be homogeneous, short button
+       labels can force the display of ellipsis in buttons with longer labels.
+       Setting a minimum width for the buttons will help minimize the risk of this.
+    */
+    min-width: 50px;
+}
+
+#Daltonizer .cba-title-box.compact {
+    max-width: 200px;
+}

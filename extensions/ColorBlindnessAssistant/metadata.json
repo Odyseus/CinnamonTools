@@ -1,0 +1,5 @@
+{
+    "external-configuration-app": "settings.py",
+    "name": "Color Blindness Assistant",
+    "description": "Tools to assist users with color vision deficiency (CVD)."
+}

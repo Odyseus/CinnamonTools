@@ -1,0 +1,95 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "usage_notified": {
+        "type": "generic",
+        "default": false
+    },
+    "effects_list": {
+        "type": "generic",
+        "default": []
+    },
+    "daltonizer_wizard_kb": {
+        "type": "generic",
+        "default": ""
+    },
+    "daltonizer_compact_ui": {
+        "type": "generic",
+        "default": false
+    },
+    "daltonizer_animation_time": {
+        "type": "generic",
+        "default": 200
+    },
+    "daltonizer_show_actors_box": {
+        "type": "generic",
+        "default": true
+    },
+    "daltonizer_show_colorspaces_box": {
+        "type": "generic",
+        "default": false
+    },
+    "color_inspector_kb": {
+        "type": "generic",
+        "default": ""
+    },
+    "color_inspector_positioning_mode": {
+        "type": "generic",
+        "default": "follow"
+    },
+    "color_inspector_hex_visible": {
+        "type": "generic",
+        "default": true
+    },
+    "color_inspector_rgb_visible": {
+        "type": "generic",
+        "default": true
+    },
+    "color_inspector_hsl_visible": {
+        "type": "generic",
+        "default": true
+    },
+    "color_inspector_always_copy_to_clipboard_lc": {
+        "type": "generic",
+        "default": "disabled"
+    },
+    "color_inspector_always_copy_to_clipboard_rc": {
+        "type": "generic",
+        "default": "disabled"
+    },
+    "color_inspector_always_copy_to_clipboard_notify": {
+        "type": "generic",
+        "default": true
+    },
+    "color_inspector_animation_time": {
+        "type": "generic",
+        "default": 200
+    },
+    "theme": {
+        "type": "generic",
+        "default": "default"
+    },
+    "theme_path_custom": {
+        "type": "generic",
+        "default": ""
+    },
+    "apply_cinnamon_injections": {
+        "type": "generic",
+        "default": true
+    },
+    "effects_list_apply": {
+        "type": "generic",
+        "default": false
+    },
+    "imp_exp_last_selected_directory": {
+        "type": "generic",
+        "default": ""
+    }
+}

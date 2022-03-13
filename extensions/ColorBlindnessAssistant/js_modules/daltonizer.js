@@ -1,26 +1,8 @@
-// {{IMPORTER}}
-
-let XletMeta;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
-} else {
-    XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
-}
-
-const $ = __import("utils.js");
-const GlobalUtils = __import("globalUtils.js");
-const DebugManager = __import("debugManager.js");
-const Constants = __import("constants.js");
-const CustomTooltips = __import("customTooltips.js");
-
 const {
     gi: {
         Cinnamon,
         St
     },
-    mainloop: Mainloop,
     misc: {
         signalManager: SignalManager
     },
@@ -35,51 +17,56 @@ const {
     EFFECT_PROP_NAME,
     DaltonizerWizardLabels,
     DaltonizerWizardTooltips
-} = Constants;
+} = require("js_modules/constants.js");
 
 const {
-    _
-} = GlobalUtils;
+    _,
+    arrayEach,
+    KeybindingsManager,
+    ScheduleManager
+} = require("js_modules/globalUtils.js");
 
 const {
     IntelligentTooltip
-} = CustomTooltips;
+} = require("js_modules/customTooltips.js");
 
 const {
-    wrapObjectMethods
-} = DebugManager;
+    Debugger,
+    getDaltonizerClass,
+    Settings
+} = require("js_modules/utils.js");
 
-function CheckButton() {
-    this._init.apply(this, arguments);
-}
-
-CheckButton.prototype = {
-    _init: function(aDaltonizer, aCheckPropertyValue) {
+const CheckButton = class CheckButton {
+    constructor(aDaltonizer, aCheckPropertyValue) {
         this.daltonizer = aDaltonizer;
-        this.text = DaltonizerWizardLabels[aCheckPropertyValue];
+        this.text = DaltonizerWizardLabels[aCheckPropertyValue][
+            Settings.daltonizer_compact_ui ?
+            "compact" :
+            "normal"
+        ];
         this.checkPropertyValue = aCheckPropertyValue;
         this.checkPropertyName = null;
         this.actor = new St.Button({
-            style_class: "cba-check-button",
+            style_class: getDaltonizerClass("cba-check-button"),
             label: this.text,
             reactive: true,
             can_focus: true,
             track_hover: true
         });
 
-        this.actor.add_style_class_name("modal-dialog-button");
+        this.actor.add_style_class_name(getDaltonizerClass("modal-dialog-button"));
         this.actor.connect("button-press-event", () => this._onButtonPress());
         this.tooltip = new IntelligentTooltip(this.actor, DaltonizerWizardTooltips[aCheckPropertyValue]);
-    },
+    }
 
-    updateCheckedState: function(aActor, aCheckProp) {
+    updateCheckedState(aActor, aCheckProp) {
         this.actor.change_style_pseudo_class(
             "checked",
             aCheckProp === this.checkPropertyValue
         );
-    },
+    }
 
-    _onButtonPress: function() {
+    _onButtonPress() {
         /* NOTE: Do not trigger signals and function calls when the button is
          * already checked. Otherwise, it will toggle the effect without updating
          * the checked state of the button.
@@ -101,28 +88,23 @@ CheckButton.prototype = {
 };
 Signals.addSignalMethods(CheckButton.prototype);
 
-function CheckGroup() {
-    this._init.apply(this, arguments);
-}
-
-CheckGroup.prototype = {
-    _init: function(aDaltonizer, aCheckPropertyName) {
+const CheckGroup = class CheckGroup {
+    constructor(aDaltonizer, aCheckPropertyName) {
         this.actors = [];
         this.daltonizer = aDaltonizer;
         this.checkPropertyName = aCheckPropertyName;
-    },
+    }
 
-    registerActor: function(aActor) {
+    registerActor(aActor) {
         aActor.connect("checked-state-changed",
             (aActor) => this.updateCheckedState(aActor));
         aActor.checkPropertyName = this.checkPropertyName;
         this.actors.push(aActor);
-    },
+    }
 
-    updateCheckedState: function() {
-        let i = this.actors.length;
-        while (i--) {
-            this.actors[i].updateCheckedState(
+    updateCheckedState() {
+        for (const actor of this.actors) {
+            actor.updateCheckedState(
                 null,
                 this.daltonizer.getEffectIdDef()[this.checkPropertyName]
             );
@@ -130,38 +112,34 @@ CheckGroup.prototype = {
     }
 };
 
-function DaltonizerTitleBox() {
-    this._init.apply(this, arguments);
-}
-
-DaltonizerTitleBox.prototype = {
-    _init: function(aDaltonizer, aTitleText) {
+const DaltonizerTitleBox = class DaltonizerTitleBox {
+    constructor(aDaltonizer, aTitleText) {
         this.daltonizer = aDaltonizer;
 
         this.actor = new St.BoxLayout({
-            style_class: "cba-title-box"
+            style_class: getDaltonizerClass("cba-title-box")
         });
         this._titleText = aTitleText;
 
         this._label = new St.Label({
-            style_class: "cba-title-box-label",
+            style_class: getDaltonizerClass("cba-title-box-label"),
             text: this._titleText
         });
 
         this._iconBin = new St.Bin({
-            style_class: "cba-title-box-app-icon",
+            style_class: getDaltonizerClass("cba-title-box-app-icon"),
             x_fill: false,
             y_fill: false
         });
 
-        let _closeIcon = new St.Icon({
+        const _closeIcon = new St.Icon({
             icon_name: "window-close",
             icon_size: 24,
             icon_type: St.IconType.SYMBOLIC,
-            style_class: "cba-title-box-close-icon"
+            style_class: getDaltonizerClass("cba-title-box-close-icon")
         });
         this._closeButton = new St.Button({
-            style_class: "cba-title-box-close-button",
+            style_class: getDaltonizerClass("cba-title-box-close-button"),
             child: _closeIcon
         });
 
@@ -178,74 +156,71 @@ DaltonizerTitleBox.prototype = {
             x_fill: false,
             expand: false
         });
-    },
+    }
 
-    set_title: function(aTitle) {
+    set_title(aTitle) {
         this._titleText = aTitle;
         this._label.text = this._titleText;
-    },
+    }
 
-    set_app: function(aApp, aTitle) {
-        this._titleText = aApp.get_name() + " - " + aTitle;
+    set_app(aApp, aTitle) {
+        const iconSize = Settings.daltonizer_compact_ui ? 16 : 24;
+        this._titleText = Settings.daltonizer_compact_ui ? "" : `${aApp.get_name()} - ${aTitle}`;
         this._label.text = this._titleText;
-        this._icon = aApp.create_icon_texture(24);
+        this._icon = aApp.create_icon_texture(iconSize);
 
-        this._iconBin.set_size(24, 24);
+        this._iconBin.set_size(iconSize, iconSize);
         this._iconBin.child = this._icon;
-    },
+    }
 
-    _onCloseButtonClicked: function() {
+    _onCloseButtonClicked() {
         this.daltonizer.toggleUI();
     }
 };
 
-function DaltonizerWizard() {
-    this._init.apply(this, arguments);
-}
+const DaltonizerWizard = class DaltonizerWizard {
+    constructor(aDaltonizer, aTitle) {
+        /* NOTE: The order of _effects is important so they are "symmetrically"
+         * displayed in the wizard.
+         */
+        this._effects = [
+            "none",
+            "acromatopia_rod_simulation",
+            "acromatopia_blue_cone_simulation",
+            "protanopia_compensation",
+            "deuteranopia_compensation",
+            "tritanopia_compensation",
+            "protanopia_simulation",
+            "deuteranopia_simulation",
+            "tritanopia_simulation"
+        ];
 
-DaltonizerWizard.prototype = {
-    /* NOTE: The order of _effects is important so they are "symmetrically"
-     * displayed in the wizard.
-     */
-    _effects: [
-        "none",
-        "acromatopia_rod_simulation",
-        "acromatopia_blue_cone_simulation",
-        "protanopia_compensation",
-        "deuteranopia_compensation",
-        "tritanopia_compensation",
-        "protanopia_simulation",
-        "deuteranopia_simulation",
-        "tritanopia_simulation"
-    ],
+        this._actors = [
+            "focused_window",
+            "screen"
+        ];
 
-    _actors: [
-        "focused_window",
-        "screen"
-    ],
+        this._colorSpaces = [
+            "srgb",
+            "cie"
+        ];
 
-    _colorSpaces: [
-        "srgb",
-        "cie"
-    ],
-
-    _init: function(aDaltonizer, aTitle) {
-        this.keybinding_name = XletMeta.uuid + "-close-daltonizer-keybinding";
         this.daltonizer = aDaltonizer;
         this.title = aTitle;
         this.x = 0;
         this.y = 0;
         this.interceptHide = false;
+        this.keybinding_manager = new KeybindingsManager();
 
         this.actor = new St.BoxLayout({
             name: "Daltonizer",
-            style_class: "cba-box",
+            style_class: getDaltonizerClass("cba-box"),
             vertical: true,
             reactive: true,
             can_focus: true,
             track_hover: true
         });
-        this.actor.add_style_class_name("modal-dialog");
+        this.actor.add_style_class_name(getDaltonizerClass("modal-dialog"));
         this.actor.set_opacity(0);
         this.actor.hide();
 
@@ -254,24 +229,24 @@ DaltonizerWizard.prototype = {
 
         this.titleBox = new DaltonizerTitleBox(this.daltonizer, aTitle);
 
-        let sectionOnj = {
+        const sectionOnj = {
             homogeneous: true,
-            style_class: "cba-section",
+            style_class: getDaltonizerClass("cba-section"),
             can_focus: true,
             track_hover: true,
             reactive: true
         };
 
         this.effectNamesBox = new St.Table(sectionOnj);
-        this.effectNamesBox.add_style_class_name("cba-effect-names");
+        this.effectNamesBox.add_style_class_name(getDaltonizerClass("cba-effect-names"));
         this.actorsBox = new St.Table(sectionOnj);
-        this.actorsBox.add_style_class_name("cba-actors");
+        this.actorsBox.add_style_class_name(getDaltonizerClass("cba-actors"));
         this.colorSpacesBox = new St.Table(sectionOnj);
-        this.colorSpacesBox.add_style_class_name("cba-color-spaces");
+        this.colorSpacesBox.add_style_class_name(getDaltonizerClass("cba-color-spaces"));
 
         this.additionalInfoText = new St.Label({
             text: _("Press Escape or the close button to exit"),
-            style_class: "cba-footer"
+            style_class: getDaltonizerClass("cba-footer")
         });
 
         this.actor.add(this.titleBox.actor, {
@@ -291,14 +266,14 @@ DaltonizerWizard.prototype = {
         });
 
         this._populateUI();
-    },
+    }
 
-    _populateUI: function() {
+    _populateUI() {
         this.effectsGroup = new CheckGroup(this.daltonizer, "base_name");
         this.actorsGroup = new CheckGroup(this.daltonizer, "actor");
         this.colorSpacesGroup = new CheckGroup(this.daltonizer, "color_space");
 
-        let titleSecColDef = {
+        const titleSecColDef = {
             row: 0,
             col: 0,
             col_span: 3,
@@ -309,18 +284,16 @@ DaltonizerWizard.prototype = {
         // Effects names section.
         let titleSecLabel = new St.Label({
             text: _("Effect Name"),
-            style_class: "cba-section-title"
+            style_class: getDaltonizerClass("cba-section-title")
         });
-        titleSecLabel.add_style_class_name("cba-effect-names");
+        titleSecLabel.add_style_class_name(getDaltonizerClass("cba-effect-names"));
 
         this.effectNamesBox.add(titleSecLabel, titleSecColDef);
-        let breakPoint = 3;
+        const breakPoint = 3;
         let row = 1;
         let col = 0;
-        let e = 0,
-            iLen = this._effects.length;
-        for (; e < iLen; e++) {
-            let check = new CheckButton(this.daltonizer, this._effects[e]);
+        for (const effect of this._effects) {
+            const check = new CheckButton(this.daltonizer, effect);
 
             this.effectNamesBox.add(check.actor, {
                 row: row,
@@ -338,7 +311,7 @@ DaltonizerWizard.prototype = {
             }
         }
 
-        /* NOTE: The following two sections (tables) contain only to elements (columns).
+        /* NOTE: The following two sections (tables) contain only two elements (columns).
          * So, span the title (the first row in the table) up to two columns.
          */
         titleSecColDef["col_span"] = 2;
@@ -346,53 +319,49 @@ DaltonizerWizard.prototype = {
         // Actors section.
         titleSecLabel = new St.Label({
             text: _("Actor"),
-            style_class: "cba-section-title"
+            style_class: getDaltonizerClass("cba-section-title")
         });
-        titleSecLabel.add_style_class_name("cba-actors");
+        titleSecLabel.add_style_class_name(getDaltonizerClass("cba-actors"));
 
         this.actorsBox.add(titleSecLabel, titleSecColDef);
-        let a = 0,
-            aLen = this._actors.length;
-        for (; a < aLen; a++) {
-            let check = new CheckButton(this.daltonizer, this._actors[a]);
+        arrayEach(this._actors, (aActor, aIdx) => {
+            const check = new CheckButton(this.daltonizer, aActor);
             this.actorsBox.add(check.actor, {
                 row: 1,
-                col: a,
+                col: aIdx,
                 x_fill: true,
                 y_fill: false
             });
             this.actorsGroup.registerActor(check);
-        }
+        });
 
         // Color spaces section.
         titleSecLabel = new St.Label({
             text: _("Color Space"),
-            style_class: "cba-section-title"
+            style_class: getDaltonizerClass("cba-section-title")
         });
-        titleSecLabel.add_style_class_name("cba-color-spaces");
+        titleSecLabel.add_style_class_name(getDaltonizerClass("cba-color-spaces"));
 
         this.colorSpacesBox.add(titleSecLabel, titleSecColDef);
-        let c = 0,
-            cLen = this._colorSpaces.length;
-        for (; c < cLen; c++) {
-            let check = new CheckButton(this.daltonizer, this._colorSpaces[c]);
+        arrayEach(this._colorSpaces, (aColorSpace, aIdx) => {
+            const check = new CheckButton(this.daltonizer, aColorSpace);
             this.colorSpacesBox.add(check.actor, {
                 row: 1,
-                col: c,
+                col: aIdx,
                 x_fill: true,
                 y_fill: false
             });
             this.colorSpacesGroup.registerActor(check);
-        }
-    },
+        });
+    }
 
-    set_position: function(x, y) {
+    set_position(x, y) {
         this.x = x;
         this.y = y;
         this.actor.set_position(x, y);
-    },
+    }
 
-    show: function() {
+    show() {
         this.interceptHide = true;
 
         /* FIXME: I'm using the same trick used by the Cinnamon gTile extension.
@@ -400,11 +369,15 @@ DaltonizerWizard.prototype = {
          * As it is now, the keybinding is added when the wizard is shown and
          * removed when the wizard is hidden. It works perfectly, but I don't
          * think that this is "the right way".
+         * NOTE: I tried connecting the "captured-event" event to global.stage just like I do with
+         * the ColorInspector class of the colorInspector.js module. But that module
+         * uses a modal for its UI, this one doesn't. When doing it in this module, the event
+         * source isn't this extension's UI, it's whatever has focus behind it.
          */
-        Main.keybindingManager.addHotKey(
-            this.keybinding_name,
+        this.keybinding_manager.addKeybinding(
+            "close_wizard",
             "Escape",
-            () => this.daltonizer.hideUI()
+            this.daltonizer.hideUI.bind(this.daltonizer)
         );
 
         this.updateCheckedState();
@@ -415,9 +388,10 @@ DaltonizerWizard.prototype = {
         this.actor.scale_y = 0;
         this.actor.scale_x = 0;
         this.actor.set_pivot_point(0.5, 0.5);
+        const animationTime = Settings.daltonizer_animation_time / 1000;
 
         Tweener.addTween(this.actor, {
-            time: this.daltonizer.animationTime === 0 ? 0.01 : this.daltonizer.animationTime,
+            time: animationTime === 0 ? 0.01 : animationTime,
             opacity: 255,
             visible: true,
             transition: "easeOutQuad",
@@ -428,12 +402,12 @@ DaltonizerWizard.prototype = {
         });
 
         this.interceptHide = false;
-    },
+    }
 
-    hide: function(aImmediate) {
-        Main.keybindingManager.removeHotKey(this.keybinding_name);
+    hide(aImmediate) {
+        this.keybinding_manager.clearAllKeybindings();
 
-        if (this.daltonizer.animationTime === 0) {
+        if (Settings.daltonizer_animation_time === 0) {
             aImmediate = true;
         }
 
@@ -448,23 +422,25 @@ DaltonizerWizard.prototype = {
             onComplete: this._onHideComplete,
             onCompleteScope: this
         });
-    },
+    }
 
-    updateCheckedState: function() {
+    updateCheckedState() {
         this.effectsGroup.updateCheckedState();
         this.actorsGroup.updateCheckedState();
         this.colorSpacesGroup.updateCheckedState();
-    },
+    }
 
-    _onHideComplete: function() {
+    _onHideComplete() {
         if (!this.interceptHide && this.actor) {
             Main.layoutManager.removeChrome(this.actor);
         }
 
         Main.layoutManager._chrome.updateRegions();
-    },
+    }
 
-    destroy: function() {
+    destroy() {
+        this.keybinding_manager.clearAllKeybindings();
+
         this.titleBox.actor.destroy();
         this.effectNamesBox.destroy();
         this.actorsBox.destroy();
@@ -475,28 +451,27 @@ DaltonizerWizard.prototype = {
     }
 };
 
-function WindowTracker() {
-    this._init.apply(this, arguments);
-}
-
-WindowTracker.prototype = {
-    _init: function(aDaltonizer) {
-        this.sigMan = new SignalManager.SignalManager(null);
+const WindowTracker = class WindowTracker {
+    constructor(aDaltonizer) {
+        this.signal_manager = new SignalManager.SignalManager();
+        this.schedule_manager = new ScheduleManager();
         this.daltonizer = aDaltonizer;
         this.focusMetaWindow = null;
         this.forceScreen = false;
         this._tracker = Cinnamon.WindowTracker.get_default();
-        this._onFocusId = 0;
-        this.sigMan.connect(this._tracker, "notify::focus-app", function() {
-            this._onFocus();
-        }.bind(this));
-    },
+        this.signal_manager.connect(
+            this._tracker,
+            "notify::focus-app",
+            this._onFocus.bind(this)
+        );
+    }
 
-    destroy: function() {
-        this.sigMan.disconnectAllSignals();
-    },
+    destroy() {
+        this.signal_manager.disconnectAllSignals();
+        this.schedule_manager.clearAllSchedules();
+    }
 
-    _onFocus: function() {
+    _onFocus() {
         if (!this.daltonizer.daltonizerActive) {
             return;
         }
@@ -504,49 +479,38 @@ WindowTracker.prototype = {
         /* NOTE: Some signals (possibly "notify::focus-app" or "notify::title"; who the hell knows)
          * force the trigger of _onFocus a million times per second! ¬¬
          * Put a stop to it!!!
-         * 200 milliseconds is fast enough to for the changes to the wizard to seem instant
+         * 200 milliseconds is fast enough for the changes to the wizard to seem instant
          * and slow enough to avoid triggering the function from different signals at
          * the same time.
          */
-        if (this._onFocusId > 0) {
-            Mainloop.source_remove(this._onFocusId);
-            this._onFocusId = 0;
-        }
-
-        this._onFocusId = Mainloop.timeout_add(200, () => {
+        this.schedule_manager.setTimeout("on_focus", () => {
             this.resetFocusMetaWindow();
-            let window = this.focusMetaWindow = (this.forceScreen ? null : this.getFocusApp());
-            let winType = window ? window.get_window_type() : 1;
+            const window = this.focusMetaWindow = (this.forceScreen ? null : this.getFocusApp());
+            const winType = window ? window.get_window_type() : 1;
             let actor;
             let actorRepr;
 
             if (window && winType !== 1) {
-                this.sigMan.connect(window, "notify::title", function() {
-                    this._onFocus();
-                }.bind(this));
+                this.signal_manager.connect(window, "notify::title", this._onFocus.bind(this));
 
                 actor = window.get_compositor_private();
 
                 if (actor) {
-                    this.sigMan.connect(actor, "size-changed",
-                        function() {
-                            this.daltonizer.moveUI();
-                        }.bind(this.daltonizer)
+                    this.signal_manager.connect(actor, "size-changed",
+                        this.daltonizer.moveUI.bind(this.daltonizer)
                     );
-                    this.sigMan.connect(actor, "position-changed",
-                        function() {
-                            this.daltonizer.moveUI();
-                        }.bind(this.daltonizer)
+                    this.signal_manager.connect(actor, "position-changed",
+                        this.daltonizer.moveUI.bind(this.daltonizer)
                     );
                 }
 
-                let app = this._tracker.get_window_app(window);
-                let title = window.get_title();
+                const app = this._tracker.get_window_app(window);
+                const title = window.get_title();
 
                 if (app) {
                     this.daltonizer.wizard.titleBox.set_app(app, title);
                 } else {
-                    this.daltonizer.wizard.titleBox.set_title(title);
+                    this.daltonizer.wizard.titleBox.set_title(Settings.daltonizer_compact_ui ? "" : title);
                 }
 
                 actorRepr = "focused_window";
@@ -569,22 +533,21 @@ WindowTracker.prototype = {
             this.daltonizer.moveUI();
             this.daltonizer.setEffectIdDefProperty("actor", actorRepr);
             this.daltonizer.wizard.updateCheckedState();
-            this._onFocusId = 0;
-        });
-    },
+        }, 200);
+    }
 
-    resetFocusMetaWindow: function() {
-        this.sigMan.disconnect("notify::title");
-        this.sigMan.disconnect("size-changed");
-        this.sigMan.disconnect("position-changed");
+    resetFocusMetaWindow() {
+        this.signal_manager.disconnect("notify::title");
+        this.signal_manager.disconnect("size-changed");
+        this.signal_manager.disconnect("position-changed");
         this.focusMetaWindow = null;
-    },
+    }
 
-    getFocusApp: function() {
+    getFocusApp() {
         return global.display.focus_window;
-    },
+    }
 
-    getCurrentMonitor: function() {
+    getCurrentMonitor() {
         return Main.layoutManager.currentMonitor;
     }
 };
@@ -600,41 +563,33 @@ WindowTracker.prototype = {
  * HINT: Could it be related to something called "circular references"? Too
  * advanced a concept for me to even start thinking about it.
  */
-
-function Daltonizer() {
-    this._init.apply(this, arguments);
-}
-
-Daltonizer.prototype = {
-    _init: function(aToggleEffectCallback, aAnimationTime, aShowActorsBox, aShowColorspacesBox) {
+var Daltonizer = class Daltonizer {
+    constructor(aToggleEffectCallback) {
         this._effectIdDef = this.defaultEffectIdDef;
         this.toggleEffectCallback = aToggleEffectCallback;
-        this.animationTime = aAnimationTime;
-        this.showActorsBox = aShowActorsBox;
-        this.showColorspacesBox = aShowColorspacesBox;
         this.daltonizerActive = false;
         this.wizard = new DaltonizerWizard(this, _("Daltonizer"));
         this.winTracker = new WindowTracker(this);
-    },
+    }
 
-    toggleEffect: function() {
-        let effectIdDef = this.getEffectIdDef();
+    toggleEffect() {
+        const effectIdDef = this.getEffectIdDef();
         this.toggleEffectCallback({
             base_name: effectIdDef.base_name,
             actor: effectIdDef.actor,
             color_space: effectIdDef.color_space,
             keybinding: "",
-            id: "%s:%s:%s".format(effectIdDef.base_name, effectIdDef.actor, effectIdDef.color_space)
+            id: `${effectIdDef.base_name}:${effectIdDef.actor}:${effectIdDef.color_space}`
         });
-    },
+    }
 
-    initUI: function() {
+    initUI() {
         Main.layoutManager.addChrome(this.wizard.actor, {
             visibleInFullscreen: true
         });
-    },
+    }
 
-    destroyUI: function() {
+    destroyUI() {
         this.wizard.hide(true);
         Main.layoutManager.removeChrome(this.wizard.actor);
 
@@ -647,23 +602,23 @@ Daltonizer.prototype = {
             this.wizard.destroy();
             this.wizard = null;
         }
-    },
+    }
 
-    _calcFinalPosition: function(aPosX, aPosY) {
+    _calcFinalPosition(aPosX, aPosY) {
         return [
             Math.floor(aPosX - this.wizard.actor.width / 2),
             Math.floor(aPosY - this.wizard.actor.height / 2)
         ];
 
-    },
+    }
 
-    moveUI: function() {
+    moveUI() {
         if (!this.daltonizerActive) {
             return;
         }
 
-        let window = this.winTracker.focusMetaWindow;
-        let currentMonitor = this.winTracker.getCurrentMonitor();
+        const window = this.winTracker.focusMetaWindow;
+        const currentMonitor = this.winTracker.getCurrentMonitor();
         let pos_x = currentMonitor.x + currentMonitor.width / 2;
         let pos_y = currentMonitor.y + currentMonitor.height / 2;
 
@@ -687,30 +642,31 @@ Daltonizer.prototype = {
         } else {
             [pos_x, pos_y] = this._calcFinalPosition(pos_x, pos_y);
         }
+        const animationTime = Settings.daltonizer_animation_time / 1000;
 
         Tweener.addTween(this.wizard.actor, {
-            time: this.animationTime === 0 ? 0.01 : this.animationTime,
+            time: animationTime === 0 ? 0.01 : animationTime,
             x: pos_x,
             y: pos_y,
             transition: "easeOutQuad",
             onComplete: Main.layoutManager._chrome.updateRegions,
             onCompleteScope: Main.layoutManager._chrome
         });
-    },
+    }
 
-    showUI: function() {
-        let window = this.winTracker.focusMetaWindow = this.winTracker.getFocusApp();
-        let currentMonitor = this.winTracker.getCurrentMonitor();
+    showUI() {
+        const window = this.winTracker.focusMetaWindow = this.winTracker.getFocusApp();
+        const currentMonitor = this.winTracker.getCurrentMonitor();
         /* NOTE: winType 1 = Desktop
          */
-        let winType = window ? window.get_window_type() : 1;
+        const winType = window ? window.get_window_type() : 1;
         let pos_x = currentMonitor.x + currentMonitor.width / 2;
         let pos_y = currentMonitor.y + currentMonitor.height / 2;
         let actor;
         let actorRepr;
 
         if (window && winType !== 1) {
-            let layer = window.get_layer();
+            const layer = window.get_layer();
 
             if (window && layer > 0) {
                 if (window.get_monitor() === currentMonitor.index) {
@@ -741,49 +697,49 @@ Daltonizer.prototype = {
         /* NOTE: It's easier to just set their visibility than to selectively
          * create/destroy them.
          */
-        this.wizard.actorsBox[this.showActorsBox ? "show" : "hide"]();
-        this.wizard.colorSpacesBox[this.showColorspacesBox ? "show" : "hide"]();
+        this.wizard.actorsBox[Settings.daltonizer_show_actors_box ? "show" : "hide"]();
+        this.wizard.colorSpacesBox[Settings.daltonizer_show_colorspaces_box ? "show" : "hide"]();
 
         this.wizard.show();
         this.daltonizerActive = true;
         this.winTracker._onFocus();
 
         this.moveUI();
-    },
+    }
 
-    hideUI: function() {
+    hideUI() {
         this.wizard.hide(false);
         this.winTracker.resetFocusMetaWindow();
         this.daltonizerActive = false;
         Main.layoutManager._chrome.updateRegions();
-    },
+    }
 
-    toggleUI: function() {
+    toggleUI() {
         if (this.daltonizerActive) {
             this.hideUI();
         } else {
             this.showUI();
         }
-    },
+    }
 
-    getEffectIdDef: function() {
+    getEffectIdDef() {
         return this._effectIdDef;
-    },
+    }
 
-    setEffectIdDef: function(aEffectID = null) {
+    setEffectIdDef(aEffectID = null) {
         if (aEffectID === null) {
             this._effectIdDef = this.defaultEffectIdDef;
         } else {
-            let [base_name, actor, color_space] = aEffectID.split(":");
+            const [base_name, actor, color_space] = aEffectID.split(":");
             this._effectIdDef["base_name"] = base_name;
             this._effectIdDef["actor"] = actor;
             this._effectIdDef["color_space"] = color_space;
         }
-    },
+    }
 
-    setEffectIdDefProperty: function(aProperty, aValue) {
+    setEffectIdDefProperty(aProperty, aValue) {
         this._effectIdDef[aProperty] = aValue;
-    },
+    }
 
     get defaultEffectIdDef() {
         return {
@@ -794,7 +750,7 @@ Daltonizer.prototype = {
     }
 };
 
-wrapObjectMethods($.Debugger, {
+Debugger.wrapObjectMethods({
     CheckButton: CheckButton,
     CheckGroup: CheckGroup,
     Daltonizer: Daltonizer,
