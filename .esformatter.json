@@ -1,0 +1,49 @@
+{
+    "root": true,
+
+    "plugins": [
+        "esformatter-braces",
+        "esformatter-literal-notation",
+        "esformatter-parseint",
+        "esformatter-quote-props",
+        "esformatter-quotes",
+        "esformatter-remove-trailing-commas",
+        "esformatter-semicolons",
+        "esformatter-spaced-lined-comment"
+    ],
+    "quotes": {
+        "type": "double",
+        "avoidEscape": true
+    },
+
+    "esformatter": {
+        "allowShebang": true
+    },
+
+    "indent": {
+        "value": "    ",
+        "alignComments": false
+    },
+
+    "lineBreak": {
+        "value": "\n",
+        "before": {
+            "ObjectPatternClosingBrace": "<2"
+        },
+        "after": {
+            "ObjectPatternClosingBrace": 1,
+            "ObjectPatternComma": "<2",
+            "ObjectPatternOpeningBrace": "<2"
+        }
+    },
+
+    "whiteSpace": {
+        "value": " ",
+        "before": {
+            "ObjectPatternComma": 0
+        },
+        "after": {
+            "ObjectPatternComma": 1
+        }
+    }
+}

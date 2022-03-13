@@ -35,6 +35,7 @@
         "send_results": false,
         "get_locale_string": false,
         "__import": false,
+        "URLSearchParams": false,
         "__dirname": false,
         "__filename": false,
         "__meta": false

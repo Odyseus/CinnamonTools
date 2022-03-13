@@ -2,8 +2,11 @@
 # Project specific ignores #
 ############################
 
-# Ignore xlets whose directory name starts with 0z. These are non-functional.
-/*/0z*/
+# The Python virtual environment.
+/.venv
+
+# Ignore xlets whose directory name starts with z_. These are non-functional.
+/*/z_*/
 
 # The "temp" folder at the root of the repository.
 /tmp
@@ -11,7 +14,17 @@
 # This is a place were users can create their own theme variants.
 /themes/_variants/*
 !/themes/_variants/README.md
+!/themes/_variants/Aluminium
+!/themes/_variants/Apple
+!/themes/_variants/Chocolate
+!/themes/_variants/Crimson
+!/themes/_variants/Denim
+!/themes/_variants/Flamingo
 !/themes/_variants/GreybirdBlue
+!/themes/_variants/Orchid
+!/themes/_variants/Penumbra
+!/themes/_variants/Saffron
+!/themes/_variants/Violet
 
 ##################
 # Global ignores #

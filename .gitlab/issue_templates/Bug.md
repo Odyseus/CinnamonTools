@@ -19,12 +19,11 @@
 2. [Second Step]
 3. [and so on...]
 
-**Expected behavior:** [What you expect to happen]
+**Expected behavior:** [What is expected to happen]
 
 **Actual behavior:** [What actually happens]
 
 **Reproduces how often:** [What percentage of the time does it reproduce?]
-
 
 ### System information
 
@@ -34,7 +33,6 @@ Paste bellow the output given by the following command run on a terminal.
 inxi -xxxSc0 -! 31
 -->
 
-
 ### Relevant logs, configurations and/or screenshots
 
 <!--
@@ -42,9 +40,7 @@ Paste bellow the URLs given by the following two commands run on a terminal.
 Or just upload the content of the files to any "pastebin" service (dpaste.com, for example).
 Check the content of the log files for sensible information BEFORE running the commands.
 Life span of single paste on termbin.com is one month. Older pastes are deleted.
-The ~/.cinnamon/glass.log file doesn't exists in newer Cinnamon versions. So, don't worry if it cannot be found.
 
-cat ~/.cinnamon/glass.log | nc termbin.com 9999
 cat ~/.xsession-errors | nc termbin.com 9999
 -->
 

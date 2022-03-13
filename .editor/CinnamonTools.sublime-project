@@ -4,11 +4,12 @@
             "*.png",
             "*.po",
             "*.pot",
-            "*.svg",
+            // "*.svg",
             "LICENSE.md"
         ],
         "folder_exclude_patterns": [
-            "*/icons",
+            ".venv",
+            "* /icons",
             "__app__/docs_sources/_static",
             "__app__/docs_sources/coverage",
             "__app__/docs_sources/images",
@@ -22,7 +23,7 @@
     }],
     "settings": {
         "python_fiximports": {
-            "autofix_on_save": true
-        }
-    }
+            "autofix_on_save": true,
+        },
+    },
 }
