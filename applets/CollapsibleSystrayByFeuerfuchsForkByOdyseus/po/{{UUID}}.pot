@@ -1,130 +1,135 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This is a template file for translating the CollapsibleSystrayByFeuerfuchsForkByOdyseus package.
+# Copyright (C) 2017-2022
+# This file is distributed under the same license as the CollapsibleSystrayByFeuerfuchsForkByOdyseus package.
+# Odyseus <EMAIL@ADDRESS>, 2017-2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-04 15:23-0300\n"
-"PO-Revision-Date: 2020-02-10 20:58-0300\n"
-"Last-Translator: Odyseus\n"
-"Language-Team: \n"
-"Language: es\n"
+"Project-Id-Version: CollapsibleSystrayByFeuerfuchsForkByOdyseus VERSION\n"
+"POT-Creation-Date: 2022-03-10 23:50-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-04-11 06:23:52.163\n"
+
+#: ../../__app__/python_modules/app_data.py:316
+msgid "See this xlet help file."
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:317
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
 
 #. Context menu items
-#: applet.js:136
+#: applet.js:118
 msgid "Active applications"
-msgstr "Aplicaciones activas"
+msgstr ""
 
-#: applet.js:137
+#: applet.js:119
 msgid "Inactive applications"
-msgstr "Aplicaciones inactivas"
+msgstr ""
 
 #. metadata.json->description
 msgid "A replacement for the abandoned System Tray Collapsible Cinnamon applet"
-msgstr "Reemplazo del abandonado applet para Cinnamon llamado System Tray Collapsible."
+msgstr ""
 
 #. metadata.json->name
 msgid "Collapsible Systray (Fork By Odyseus)"
-msgstr "Bandeja de Sistema Colapsable (Modificado por Odyseus)"
+msgstr ""
 
 #. settings-schema.json->behavior-header->description
 msgid "Behavior"
-msgstr "Comportamiento"
+msgstr ""
 
 #. settings-schema.json->pref_animation_duration->units
 #. settings-schema.json->pref_expand_on_hover_delay->units
 #. settings-schema.json->pref_collapse_on_leave_delay->units
 msgid "milliseconds"
-msgstr "milisegundos"
+msgstr ""
 
 #. settings-schema.json->pref_animation_duration->description
 msgid "Animation duration: "
-msgstr "Duración de animación:"
+msgstr ""
 
 #. settings-schema.json->pref_expand_on_hover->description
 msgid "Expand on hover"
-msgstr "Expandir al desplazarse"
+msgstr ""
 
 #. settings-schema.json->pref_expand_on_hover_delay->description
 msgid "Expand on hover delay: "
-msgstr "Retraso al expandir al desplazarse:"
+msgstr ""
 
 #. settings-schema.json->pref_collapse_on_leave->description
 msgid "Collapse on un-hover"
-msgstr "Contraer en desalojar"
+msgstr ""
 
 #. settings-schema.json->pref_collapse_on_leave_delay->description
 msgid "Collapse on un-hover delay: "
-msgstr "Retraso al contraer al desalojar:"
+msgstr ""
 
 #. settings-schema.json->pref_init_delay->units
 msgid "seconds"
-msgstr "segundos"
+msgstr ""
 
 #. settings-schema.json->pref_init_delay->description
 msgid "Startup collapse delay: "
-msgstr "Retraso inicial al colapsar:"
+msgstr ""
 
 #. settings-schema.json->pref_init_delay->tooltip
 msgid "The delay until the applet automatically collapses upon startup"
-msgstr "El retraso hasta que el applet inicia se colapsa automáticamente."
+msgstr ""
 
 #. settings-schema.json->appearance-header->description
 msgid "Appearance"
-msgstr "Apariencia"
+msgstr ""
 
 #. settings-schema.json->pref_sort_icons->description
 msgid "Sort icons by name"
-msgstr "Ordenar íconos alfabéticamente"
+msgstr ""
 
 #. settings-schema.json->pref_sort_icons->tooltip
 msgid "If unchecked, the order of the icons will be pretty much random"
-msgstr "Si no se selecciona, el orden de los iconos será aleatorio."
+msgstr ""
 
 #. settings-schema.json->pref_no_hover_for_tray_icons->description
 msgid "Disable hover effect for tray icons"
-msgstr "Deshabilitar efecto al desplazarse sobre los íconos de la bandeja"
+msgstr ""
 
 #. settings-schema.json->pref_no_hover_for_tray_icons->tooltip
 msgid "If you have problems with the hover effect or it simply doesn't look good, you should enable this setting"
-msgstr "Si se tiene problemas con el efecto al desplazarse o si simplemente no luce bien, se debería habilitar esta opción."
+msgstr ""
 
 #. settings-schema.json->pref_horizontal_expand_icon_name->description
 msgid "Horizontal expand icon: "
-msgstr "Ícono de expansión horizontal:"
+msgstr ""
 
 #. settings-schema.json->pref_horizontal_expand_icon_name->tooltip
 #. settings-schema.json->pref_horizontal_collapse_icon_name->tooltip
 msgid "Enter either the icon's qualified name or it's full path"
-msgstr "Ingresar el nombre calificado del ícono o su ruta completa."
+msgstr ""
 
 #. settings-schema.json->pref_horizontal_collapse_icon_name->description
 msgid "Horizontal collapse icon: "
-msgstr "Ícono de colapsamiento horizontal:"
+msgstr ""
 
 #. settings-schema.json->pref_tray_icon_padding->units
 msgid "px"
-msgstr "px"
+msgstr ""
 
 #. settings-schema.json->pref_tray_icon_padding->description
 msgid "Padding of tray icons: "
-msgstr "Espaciado de los íconos de la bandeja:"
+msgstr ""
 
 #. settings-schema.json->debugging-header->description
 msgid "Debugging"
-msgstr "Configuración de depuración"
+msgstr ""
 
 #. settings-schema.json->pref_logging_level->description
 msgid "Logging level (*)"
-msgstr "Nivel de registro (*)"
+msgstr ""
 
 #. settings-schema.json->pref_logging_level->tooltip
 msgid ""
@@ -134,36 +139,31 @@ msgid ""
 "Verbose: Additionally log extra output messages and all HTTP responses.\n"
 "Very verbose: Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
 msgstr ""
-"Permite la capacidad de registrar la salida de varias funciones utilizadas por la extensión.\n"
-"\n"
-"Normal: solo registra los mensajes causados ​​por errores no críticos.\n"
-"Verbal: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
-"Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
 
 #. settings-schema.json->pref_logging_level->options
 msgid "Normal"
-msgstr "Normal"
+msgstr ""
 
 #. settings-schema.json->pref_logging_level->options
 msgid "Verbose"
-msgstr "Detallado"
+msgstr ""
 
 #. settings-schema.json->pref_logging_level->options
 msgid "Very verbose"
-msgstr "Muy detallado"
+msgstr ""
 
 #. settings-schema.json->pref_debugger_enabled->description
 msgid "Enable debugger (*)"
-msgstr "Habilitar depurador (*)"
+msgstr ""
 
 #. settings-schema.json->pref_debugger_enabled->tooltip
 msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
-msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
+msgstr ""
 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
-msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+msgstr ""
 
 #. settings-schema.json->pref_icon_visibility_list->description
 msgid "Internal use"
-msgstr "Uso interno"
+msgstr ""

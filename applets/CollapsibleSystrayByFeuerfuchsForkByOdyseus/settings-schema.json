@@ -13,7 +13,7 @@
         "description": "Animation duration: "
     },
     "pref_expand_on_hover": {
-        "type": "checkbox",
+        "type": "switch",
         "default": false,
         "description": "Expand on hover"
     },
@@ -28,7 +28,7 @@
         "description": "Expand on hover delay: "
     },
     "pref_collapse_on_leave": {
-        "type": "checkbox",
+        "type": "switch",
         "default": false,
         "description": "Collapse on un-hover"
     },
@@ -60,13 +60,13 @@
         "description": "Appearance"
     },
     "pref_sort_icons": {
-        "type": "checkbox",
+        "type": "switch",
         "default": true,
         "description": "Sort icons by name",
         "tooltip": "If unchecked, the order of the icons will be pretty much random"
     },
     "pref_no_hover_for_tray_icons": {
-        "type": "checkbox",
+        "type": "switch",
         "default": false,
         "description": "Disable hover effect for tray icons",
         "tooltip": "If you have problems with the hover effect or it simply doesn't look good, you should enable this setting"
@@ -108,7 +108,7 @@
         }
     },
     "pref_debugger_enabled": {
-        "type": "checkbox",
+        "type": "switch",
         "description": "Enable debugger (*)",
         "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
         "default": false

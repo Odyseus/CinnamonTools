@@ -1,8 +1,3 @@
-// {{IMPORTER}}
-
-const GlobalUtils = __import("globalUtils.js");
-const DebugManager = __import("debugManager.js");
-
 const {
     gi: {
         Clutter,
@@ -22,25 +17,25 @@ const {
 
 const {
     CINNAMON_VERSION,
-    versionCompare
-} = GlobalUtils;
+    check_version
+} = require("js_modules/globalUtils.js");
 
-var Debugger = new DebugManager.DebugManager();
+const {
+    DebugManager
+} = require("js_modules/debugManager.js");
+
+var Debugger = new DebugManager.DebugManager(`org.cinnamon.applets.${__meta.uuid}`);
 
 const ICON_SCALE_FACTOR = 0.8; // for custom panel heights, 20 (default icon size) / 25 (default panel height)
 const DEFAULT_ICON_SIZE = 20;
 const DEFAULT_PANEL_HEIGHT = Applet.DEFAULT_PANEL_HEIGHT;
 const PANEL_SYMBOLIC_ICON_DEFAULT_HEIGHT = Applet.PANEL_SYMBOLIC_ICON_DEFAULT_HEIGHT;
-const CINN_3_2_PLUS = versionCompare(CINNAMON_VERSION, "3.2.0") >= 0;
-const CINN_3_4_PLUS = versionCompare(CINNAMON_VERSION, "3.4.0") >= 0;
-const CINN_4_0_PLUS = versionCompare(CINNAMON_VERSION, "4.0.0") >= 0;
+const CINN_3_2_PLUS = check_version(CINNAMON_VERSION, ">=", "3.2.0");
+const CINN_3_4_PLUS = check_version(CINNAMON_VERSION, ">=", "3.4.0");
+const CINN_4_0_PLUS = check_version(CINNAMON_VERSION, ">=", "4.0.0");
 
-function CSCollapseBtn() {
-    this._init.apply(this, arguments);
-}
-
-CSCollapseBtn.prototype = {
-    _init: function(applet) {
+var CSCollapseBtn = class CSCollapseBtn {
+    constructor(applet) {
         this._applet = applet;
         this.actor = new St.Button({
             style_class: "applet-box"
@@ -54,21 +49,21 @@ CSCollapseBtn.prototype = {
         this.actor.set_child(this.icon);
 
         this.setIsExpanded(true);
-    },
+    }
 
     /*
      * Set the icon using it's qualified name
      */
-    setIcon: function(name) {
+    setIcon(name) {
         this.icon.set_icon_name(name);
         this.icon.set_icon_type(St.IconType.SYMBOLIC);
         this._setStyle();
-    },
+    }
 
     /*
      * Set the icon using a file path
      */
-    setIconFile: function(iconFile) {
+    setIconFile(iconFile) {
         try {
             this.icon.set_gicon(new Gio.FileIcon({
                 file: iconFile
@@ -78,12 +73,12 @@ CSCollapseBtn.prototype = {
         } catch (e) {
             global.log(e);
         }
-    },
+    }
 
     /*
      *
      */
-    _setStyle: function() {
+    _setStyle() {
         try {
             let symb_scaleup = ((this._applet._panelHeight / DEFAULT_PANEL_HEIGHT) * PANEL_SYMBOLIC_ICON_DEFAULT_HEIGHT) / global.ui_scale;
             this.icon.set_icon_size(this._applet._legacyScaleMode ? symb_scaleup : -1);
@@ -92,12 +87,12 @@ CSCollapseBtn.prototype = {
         }
 
         this.icon.set_style_class_name("system-status-icon");
-    },
+    }
 
     /*
      * Set expanded state and refresh the icon
      */
-    setIsExpanded: function(state) {
+    setIsExpanded(state) {
         let iconName = state ? this._applet.collapseIcon : this._applet.expandIcon;
         if (!iconName) {
             return;
@@ -112,15 +107,9 @@ CSCollapseBtn.prototype = {
     }
 };
 
-function CSRemovableSwitchMenuItem() {
-    this._init.apply(this, arguments);
-}
-
-CSRemovableSwitchMenuItem.prototype = {
-    __proto__: PopupMenu.PopupSwitchMenuItem.prototype,
-
-    _init: function(text, active, params) {
-        PopupMenu.PopupSwitchMenuItem.prototype._init.call(this, text, active, params);
+var CSRemovableSwitchMenuItem = class CSRemovableSwitchMenuItem extends PopupMenu.PopupSwitchMenuItem {
+    constructor(text, active, params) {
+        super(text, active, params);
 
         let iconDelete = new St.Icon({
             icon_name: "edit-delete",
@@ -147,64 +136,49 @@ CSRemovableSwitchMenuItem.prototype = {
         });
         this._statusBin.add(this._switch.actor);
         this._statusBin.add(this.deleteButton);
-    },
+    }
 
     /*
      * User clicked the "remove" button
      */
-    remove: function() {
+    remove() {
         this.emit("remove");
         this.destroy();
     }
 };
 
 // Override the factory and create an AppletPopupMenu instead of a PopupMenu
-function IndicatorMenuFactory() {
-    this._init.apply(this, arguments);
-}
+var IndicatorMenuFactory = class IndicatorMenuFactory extends PopupMenu.PopupMenuFactory {
+    constructor() {
+        super();
+    }
 
-IndicatorMenuFactory.prototype = {
-    __proto__: PopupMenu.PopupMenuFactory.prototype,
-
-    _init: function() {
-        PopupMenu.PopupMenuFactory.prototype._init.call(this);
-    },
-
-    _createShellItem: function(factoryItem, launcher, orientation) {
+    _createShellItem(factoryItem, launcher, orientation) {
         // Decide whether it's a submenu or not
         let shellItem = null;
         let item_type = factoryItem.getFactoryType();
-        if (item_type == PopupMenu.FactoryClassTypes.RootMenuClass) {
+        if (item_type === PopupMenu.FactoryClassTypes.RootMenuClass) {
             shellItem = new Applet.AppletPopupMenu(launcher, orientation);
         }
-        if (item_type == PopupMenu.FactoryClassTypes.SubMenuMenuItemClass) {
+        if (item_type === PopupMenu.FactoryClassTypes.SubMenuMenuItemClass) {
             shellItem = new PopupMenu.PopupSubMenuMenuItem("FIXME");
-        } else if (item_type == PopupMenu.FactoryClassTypes.MenuSectionMenuItemClass) {
+        } else if (item_type === PopupMenu.FactoryClassTypes.MenuSectionMenuItemClass) {
             shellItem = new PopupMenu.PopupMenuSection();
-        } else if (item_type == PopupMenu.FactoryClassTypes.SeparatorMenuItemClass) {
+        } else if (item_type === PopupMenu.FactoryClassTypes.SeparatorMenuItemClass) {
             shellItem = new PopupMenu.PopupSeparatorMenuItem("");
-        } else if (item_type == PopupMenu.FactoryClassTypes.MenuItemClass) {
+        } else if (item_type === PopupMenu.FactoryClassTypes.MenuItemClass) {
             shellItem = new PopupMenu.PopupIndicatorMenuItem("FIXME");
         }
         return shellItem;
     }
 };
 
-function CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet() {
-    this._init.apply(this, arguments);
-}
+var CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet = class CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet extends Applet.Applet {
 
-CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
-    __proto__: Applet.Applet.prototype,
+    constructor(metadata, orientation, panel_height, instance_id) {
+        super(orientation, panel_height, instance_id);
 
-    _init: function(metadata, orientation, panel_height, instance_id) {
-        Applet.Applet.prototype._init.call(this, orientation, panel_height, instance_id);
-
-        // Condition needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        if (Applet.hasOwnProperty("AllowedLayout")) {
-            this.setAllowedLayout(Applet.AllowedLayout.BOTH);
-        }
+        this.setAllowedLayout(Applet.AllowedLayout.BOTH);
 
         this.actor.remove_style_class_name("applet-box");
 
@@ -215,12 +189,12 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             this.actor.style = "spacing: 5px;";
         }
 
-        this._signalManager = new SignalManager.SignalManager(null);
+        this._signalManager = new SignalManager.SignalManager();
         let manager;
 
         this.orientation = orientation;
 
-        if (this.orientation == St.Side.TOP || this.orientation == St.Side.BOTTOM) {
+        if (this.orientation === St.Side.TOP || this.orientation === St.Side.BOTTOM) {
             manager = new Clutter.BoxLayout({
                 spacing: 2 * global.ui_scale,
                 orientation: Clutter.Orientation.HORIZONTAL
@@ -244,9 +218,9 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         this.menuManager = new PopupMenu.PopupMenuManager(this);
         this._signalAdded = 0;
         this._signalRemoved = 0;
-    },
+    }
 
-    _addIndicatorSupport: function() {
+    _addIndicatorSupport() {
         let manager = Main.indicatorManager;
 
         // Blacklist some of the icons
@@ -290,9 +264,9 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
                 (manager, appIndicator) => this._onIndicatorRemoved(manager, appIndicator)
             );
         }
-    },
+    }
 
-    _onIndicatorAddedNew: function(manager, appIndicator) {
+    _onIndicatorAddedNew(manager, appIndicator) {
         if (!(appIndicator.id in this._shellIndicators)) {
             let size = null;
             if (this._legacyScaleMode) {
@@ -326,9 +300,9 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
                 }
             });
         }
-    },
+    }
 
-    _removeIndicatorSupport: function() {
+    _removeIndicatorSupport() {
         if (this.signalAdded) {
             Main.indicatorManager.disconnect(this.signalAdded);
             this.signalAdded = 0;
@@ -344,11 +318,11 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
 
         this._shellIndicators = {};
 
-    },
+    }
 
     // Needed for retro-compatibility.
     // Mark for deletion on EOL. Cinnamon 3.2.x+
-    _onIndicatorAddedOld: function(manager, appIndicator) {
+    _onIndicatorAddedOld(manager, appIndicator) {
         if (!(appIndicator.id in this._shellIndicators)) {
             let hiddenIcons = Main.systrayManager.getRoles();
 
@@ -382,7 +356,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
                 }
             });
         }
-    },
+    }
 
     // Needed for retro-compatibility.
     // Mark for deletion on EOL. Cinnamon 4.0.x+
@@ -392,33 +366,33 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         } else {
             return this._scaleMode;
         }
-    },
+    }
 
-    _getIndicatorSize: function(appIndicator) { // jshint ignore:line
+    _getIndicatorSize(appIndicator) { // jshint ignore:line
         if (this._legacyScaleMode) {
             return this._panelHeight * ICON_SCALE_FACTOR / global.ui_scale;
         }
         return 16;
-    },
+    }
 
-    _onEnterEvent: function(actor, event) { // jshint ignore:line
+    _onEnterEvent(actor, event) { // jshint ignore:line
         this.set_applet_tooltip(actor._delegate.getToolTip());
-    },
+    }
 
-    _onLeaveEvent: function(actor, event) { // jshint ignore:line
+    _onLeaveEvent(actor, event) { // jshint ignore:line
         this.set_applet_tooltip("");
-    },
+    }
 
-    _onIndicatorIconDestroy: function(actor) {
+    _onIndicatorIconDestroy(actor) {
         for (let id in this._shellIndicators) {
-            if (this._shellIndicators[id].actor == actor) {
+            if (this._shellIndicators[id].actor === actor) {
                 delete this._shellIndicators[id];
                 break;
             }
         }
-    },
+    }
 
-    _getIconSize: function() {
+    _getIconSize() {
         let size;
         let disp_size = this._panelHeight * ICON_SCALE_FACTOR;
         if (disp_size < 22) {
@@ -431,40 +405,42 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             size = 48;
         }
         return size;
-    },
+    }
 
-    _onIndicatorRemoved: function(manager, appIndicator) {
+    _onIndicatorRemoved(manager, appIndicator) {
         if (appIndicator.id in this._shellIndicators) {
             let indicatorActor = this._shellIndicators[appIndicator.id];
             delete this._shellIndicators[appIndicator.id];
             indicatorActor.destroy();
         }
-    },
+    }
 
-    on_applet_clicked: function(event) {}, // jshint ignore:line
+    on_applet_clicked(event) { // jshint ignore:line
+
+    }
 
     //
     // override getDisplayLayout to declare that this applet is suitable for both horizontal and
     // vertical orientations
     //
-    getDisplayLayout: function() {
+    getDisplayLayout() {
         return Applet.DisplayLayout.BOTH;
-    },
+    }
 
-    on_orientation_changed: function(neworientation) {
-        if (neworientation == St.Side.TOP || neworientation == St.Side.BOTTOM) {
+    on_orientation_changed(neworientation) {
+        if (neworientation === St.Side.TOP || neworientation === St.Side.BOTTOM) {
             this.manager.set_vertical(false);
         } else {
             this.manager.set_vertical(true);
         }
-    },
+    }
 
-    on_applet_removed_from_panel: function() {
+    on_applet_removed_from_panel() {
         this._signalManager.disconnectAllSignals();
         this._removeIndicatorSupport();
-    },
+    }
 
-    on_applet_added_to_panel: function() {
+    on_applet_added_to_panel() {
         Main.statusIconDispatcher.start(this.actor.get_parent().get_parent());
 
         this._signalManager.connect(Main.statusIconDispatcher, "status-icon-added",
@@ -488,9 +464,9 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             }.bind(Main.statusIconDispatcher)
         );
         this._addIndicatorSupport();
-    },
+    }
 
-    on_panel_height_changed: function() {
+    on_panel_height_changed() {
         Main.statusIconDispatcher.redisplay();
 
         if (CINN_3_2_PLUS) {
@@ -515,9 +491,9 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
                 }
             }
         }
-    },
+    }
 
-    _onBeforeRedisplay: function() {
+    _onBeforeRedisplay() {
         // Mark all icons as obsolete
         // There might still be pending delayed operations to insert/resize of them
         // And that would crash Cinnamon
@@ -534,9 +510,9 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         for (let i = 0; i < children.length; i++) {
             children[i].destroy();
         }
-    },
+    }
 
-    _onTrayIconAdded: function(o, icon, role) {
+    _onTrayIconAdded(o, icon, role) {
         try {
             let hiddenIcons = Main.systrayManager.getRoles();
 
@@ -577,29 +553,29 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
         } catch (e) {
             global.logError(e);
         }
-    },
+    }
 
-    _insertStatusItemLater: function(role, icon, position, delay) {
+    _insertStatusItemLater(role, icon, position, delay) {
         // Inserts an icon in the systray after a delay (useful for buggy icons)
         // Delaying the insertion of pidgin by 10 seconds for instance is known to fix it on empty disk cache
         let timerId = Mainloop.timeout_add(delay, () => {
             this._insertStatusItem(role, icon, position);
             Mainloop.source_remove(timerId);
         });
-    },
+    }
 
-    _onTrayIconRemoved: function(o, icon) {
+    _onTrayIconRemoved(o, icon) {
         icon.obsolete = true;
         for (let i = 0; i < this._statusItems.length; i++) {
-            if (this._statusItems[i] == icon) {
+            if (this._statusItems[i] === icon) {
                 this._statusItems.splice(i, 1);
             }
         }
         this.manager_container.remove_child(icon);
         icon.destroy();
-    },
+    }
 
-    _insertStatusItem: function(role, icon, position) {
+    _insertStatusItem(role, icon, position) {
         if (icon.obsolete === true) {
             return;
         }
@@ -616,7 +592,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
                 break;
             }
         }
-        if (i == -1) {
+        if (i === -1) {
             // If we didn't find a position, we must be first
             this.manager_container.insert_child_at_index(icon, 0);
         }
@@ -632,9 +608,9 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
             icon.set_scale((DEFAULT_ICON_SIZE * global.ui_scale) / icon.width,
                 (DEFAULT_ICON_SIZE * global.ui_scale) / icon.height);
         }
-    },
+    }
 
-    _resizeStatusItem: function(role, icon) {
+    _resizeStatusItem(role, icon) {
         if (icon.obsolete === true) {
             return;
         }
@@ -651,7 +627,7 @@ CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype = {
 
 };
 
-DebugManager.wrapObjectMethods(Debugger, {
+Debugger.wrapObjectMethods({
     CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet: CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet,
     CSCollapseBtn: CSCollapseBtn,
     CSRemovableSwitchMenuItem: CSRemovableSwitchMenuItem,

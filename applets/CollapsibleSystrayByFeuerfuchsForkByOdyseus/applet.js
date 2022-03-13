@@ -1,8 +1,5 @@
-// {{IMPORTER}}
-
-const GlobalUtils = __import("globalUtils.js");
-const DebugManager = __import("debugManager.js");
-const $ = __import("utils.js");
+const $ = require("js_modules/utils.js");
+const GlobalUtils = require("js_modules/globalUtils.js");
 
 const {
     gi: {
@@ -34,14 +31,10 @@ const APPLET_DIRECTION = {
     VERTICAL: 1
 };
 
-function CollapsibleSystray() {
-    this._init.apply(this, arguments);
-}
+class CollapsibleSystray extends $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet {
+    constructor(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
+        super(aMetadata, aOrientation, aPanelHeight, aInstanceId);
 
-CollapsibleSystray.prototype = {
-    __proto__: $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype,
-
-    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
         this.metadata = aMetadata;
         this.instance_id = aInstanceId;
         this._direction = (aOrientation === St.Side.TOP || aOrientation === St.Side.BOTTOM) ? APPLET_DIRECTION.HORIZONTAL : APPLET_DIRECTION.VERTICAL;
@@ -66,17 +59,6 @@ CollapsibleSystray.prototype = {
                 }
             });
 
-            //
-            // Initialize Cinnamon applet
-
-            $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype._init.call(
-                this,
-                aMetadata,
-                aOrientation,
-                aPanelHeight,
-                aInstanceId
-            );
-
             this.actor.add_style_class_name("ff-collapsible-systray");
 
             this.actor.remove_actor(this.manager_container);
@@ -84,7 +66,7 @@ CollapsibleSystray.prototype = {
             //
             // Variables
 
-            this._signalManager = new SignalManager.SignalManager(null);
+            this._signalManager = new SignalManager.SignalManager();
             this._hovering = false;
             this._hoverTimerID = null;
             this._registeredAppIcons = {};
@@ -161,9 +143,9 @@ CollapsibleSystray.prototype = {
         }, () => {
             //
         });
-    },
+    }
 
-    _initializeSettings: function(aDirectCallback, aIdleCallback) {
+    _initializeSettings(aDirectCallback, aIdleCallback) {
         this.settings = new Settings.AppletSettings(
             this,
             this.metadata.uuid,
@@ -178,16 +160,9 @@ CollapsibleSystray.prototype = {
 
             return GLib.SOURCE_REMOVE;
         });
-    },
+    }
 
-    _bindSettings: function() {
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        let bD = {
-            IN: 1,
-            OUT: 2,
-            BIDIRECTIONAL: 3
-        };
+    _bindSettings() {
         let prefKeysArray = [
             "pref_icon_visibility_list",
             "pref_init_delay",
@@ -204,18 +179,10 @@ CollapsibleSystray.prototype = {
             "pref_logging_level",
             "pref_debugger_enabled"
         ];
-        let newBinding = typeof this.settings.bind === "function";
         for (let pref_key of prefKeysArray) {
-            // Condition needed for retro-compatibility.
-            // Mark for deletion on EOL. Cinnamon 3.2.x+
-            // Abandon this.settings.bindProperty and keep this.settings.bind.
-            if (newBinding) {
-                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
-            } else {
-                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key, this._onSettingsChanged, pref_key);
-            }
+            this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
         }
-    },
+    }
 
     /*
      * Get the correct collapse icon according to the user settings and the applet orientation
@@ -226,7 +193,7 @@ CollapsibleSystray.prototype = {
         } else {
             return this.verticalCollapseIconName;
         }
-    },
+    }
 
     /*
      * Get the correct expand icon according to the user settings and the applet orientation
@@ -237,22 +204,22 @@ CollapsibleSystray.prototype = {
         } else {
             return this.verticalExpandIconName;
         }
-    },
+    }
 
     /*
      * Add all necessary menu items to the context menu
      */
-    _populateMenus: function() {
+    _populateMenus() {
         let i = -1;
         this._applet_context_menu.addMenuItem(this.cmitemActiveItems, ++i);
         this._applet_context_menu.addMenuItem(this.cmitemInactiveItems, ++i);
         this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(), ++i);
-    },
+    }
 
     /*
      * Add the specified icon to the item list and create a menu entry
      */
-    _registerAppIcon: function(id, actor) {
+    _registerAppIcon(id, actor) {
         if (!this._registeredAppIcons.hasOwnProperty(id)) {
             this._registeredAppIcons[id] = [];
         }
@@ -292,12 +259,12 @@ CollapsibleSystray.prototype = {
         }
 
         this._addApplicationMenuItem(id, MENU.ACTIVE_APPLICATIONS);
-    },
+    }
 
     /*
      * Remove the icon from the list and move the menu entry to the list of inactive applications
      */
-    _unregisterAppIcon: function(id, actor) {
+    _unregisterAppIcon(id, actor) {
 
         let instanceArray = this._registeredAppIcons[id];
         let iconIndex = instanceArray.indexOf(actor);
@@ -313,12 +280,12 @@ CollapsibleSystray.prototype = {
             delete this._registeredAppIcons[id];
             this._addApplicationMenuItem(id, MENU.INACTIVE_APPLICATIONS);
         }
-    },
+    }
 
     /*
      * Create a menu entry for the specified icon in the "active applications" section
      */
-    _addApplicationMenuItem: function(id, menu) {
+    _addApplicationMenuItem(id, menu) {
         let curMenuItems = menu === MENU.ACTIVE_APPLICATIONS ? this._activeMenuItems : this._inactiveMenuItems;
         let curMenu = menu === MENU.ACTIVE_APPLICATIONS ? this.cmitemActiveItems.menu : this.cmitemInactiveItems.menu;
         let otherMenuItems = menu === MENU.ACTIVE_APPLICATIONS ? this._inactiveMenuItems : this._activeMenuItems;
@@ -369,12 +336,12 @@ CollapsibleSystray.prototype = {
 
         curMenu.addMenuItem(menuItem, index);
         curMenuItems[id] = menuItem;
-    },
+    }
 
     /*
      * Hide all icons that are marked as hidden
      */
-    _hideAppIcons: function(animate) {
+    _hideAppIcons(animate) {
         if (animate && this._animating) {
             return;
         }
@@ -421,12 +388,12 @@ CollapsibleSystray.prototype = {
             }
             onFinished();
         }
-    },
+    }
 
     /*
      * Unhide all icons that are marked as hidden
      */
-    _showAppIcons: function(animate) {
+    _showAppIcons(animate) {
         if (animate && this._animating) {
             return;
         }
@@ -493,12 +460,12 @@ CollapsibleSystray.prototype = {
             }
             onFinished();
         }
-    },
+    }
 
     /*
      * Update the specified icon's visibility state and (un)hide it if necessary
      */
-    _updateAppIconVisibility: function(id, state) {
+    _updateAppIconVisibility(id, state) {
 
         this.iconVisibilityList[id] = state;
 
@@ -534,15 +501,14 @@ CollapsibleSystray.prototype = {
         }
 
         this._saveAppIconVisibilityList();
-    },
+    }
 
     /*
      * Update the tray icons' padding
      */
-    _updateTrayIconPadding: function() {
-        this.shownIconsContainer.get_children()
-            .concat(this.hiddenIconsContainer.get_children())
-            .filter((iconWrapper) => {
+    _updateTrayIconPadding() {
+        [...this.shownIconsContainer.get_children(), ...this.hiddenIconsContainer.get_children()]
+        .filter((iconWrapper) => {
                 return iconWrapper.isIndicator !== true;
             })
             .forEach((iconWrapper, index) => { // jshint ignore:line
@@ -552,12 +518,12 @@ CollapsibleSystray.prototype = {
                     iconWrapper.set_style("padding-top: " + this.pref_tray_icon_padding + "px; padding-bottom: " + this.pref_tray_icon_padding + "px;");
                 }
             });
-    },
+    }
 
     /*
      * Load the list of hidden icons from the settings
      */
-    _loadAppIconVisibilityList: function() {
+    _loadAppIconVisibilityList() {
         try {
             this.iconVisibilityList = JSON.parse(this.pref_icon_visibility_list);
 
@@ -566,28 +532,20 @@ CollapsibleSystray.prototype = {
                     this._addApplicationMenuItem(id, MENU.INACTIVE_APPLICATIONS);
                 }
             }
-        } catch (e) {
+        } catch (aErr) {
             this.iconVisibilityList = {};
         }
-    },
+    }
 
     /*
      * Save the list of hidden icons
      */
-    _saveAppIconVisibilityList: function() {
+    _saveAppIconVisibilityList() {
         this.pref_icon_visibility_list = JSON.stringify(this.iconVisibilityList);
-    },
+    }
 
-    _onSettingsChanged: function(aPrefValue, aPrefKey) {
-        // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
-        // settings callback instead of just one as in older versions. The first one is the
-        // setting value and the second one is the user data. To workaround this nonsense,
-        // check if the second argument is undefined to decide which
-        // argument to use as the pref key depending on the Cinnamon version.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        // Remove the following variable and directly use the second argument.
-        let pref_key = aPrefKey || aPrefValue;
-        switch (pref_key) {
+    _onSettingsChanged(aPrefValue, aPrefKey) {
+        switch (aPrefKey) {
             case "pref_icon_visibility_list":
                 this._loadAppIconVisibilityList();
                 break;
@@ -600,13 +558,13 @@ CollapsibleSystray.prototype = {
                 $.Debugger.debugger_enabled = this.pref_debugger_enabled;
                 break;
         }
-    },
+    }
 
     //
     // Events
     // ---------------------------------------------------------------------------------
 
-    _onEnter: function() {
+    _onEnter() {
         this._hovering = true;
 
         if (this._hoverTimerID) {
@@ -635,9 +593,9 @@ CollapsibleSystray.prototype = {
                 }
             }
         );
-    },
+    }
 
-    _onLeave: function() {
+    _onLeave() {
         this._hovering = false;
 
         if (this._hoverTimerID) {
@@ -666,7 +624,7 @@ CollapsibleSystray.prototype = {
                 }
             }
         );
-    },
+    }
 
     //
     // Overrides
@@ -676,9 +634,9 @@ CollapsibleSystray.prototype = {
      * Disable the collapse/expand button if the panel is in edit mode so the user can
      * perform drag and drop on that button
      */
-    _setAppletReactivity: function() {
+    _setAppletReactivity() {
 
-        $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype._setAppletReactivity.call(this);
+        super._setAppletReactivity.call(this);
 
         this.collapseBtn.actor.set_reactive(this._draggable.inhibit);
 
@@ -686,21 +644,19 @@ CollapsibleSystray.prototype = {
             Mainloop.source_remove(this._hoverTimerID);
             this._hoverTimerID = null;
         }
-    },
+    }
 
     /*
      * The Cinnamon applet invalidates all tray icons if this event occurs, so I have to
      * unregister all tray icons when this happens
      */
-    _onBeforeRedisplay: function() {
-
-        $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype._onBeforeRedisplay.call(this);
+    _onBeforeRedisplay() {
+        super._onBeforeRedisplay.call(this);
 
         this._showAppIcons(false);
 
-        this.shownIconsContainer.get_children()
-            .concat(this.hiddenIconsContainer.get_children())
-            .filter((iconWrapper) => {
+        [...this.shownIconsContainer.get_children(), ...this.hiddenIconsContainer.get_children()]
+        .filter((iconWrapper) => {
                 return iconWrapper.isIndicator !== true;
             })
             .forEach((iconWrapper, index) => { // jshint ignore:line
@@ -721,18 +677,18 @@ CollapsibleSystray.prototype = {
                 }
             }
         );
-    },
+    }
 
     /*
      * Remove icon from tray, wrap it in an applet-box and re-add it. This way,
      * tray icons are displayed like applets and thus integrate nicely in the panel.
      */
-    _insertStatusItem: function(role, icon, position) {
+    _insertStatusItem(role, icon, position) {
         if (icon.obsolete === true) {
             return;
         }
 
-        $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype._insertStatusItem.call(this, role, icon, position);
+        super._insertStatusItem(role, icon, position);
 
         this.manager_container.remove_child(icon);
 
@@ -797,14 +753,13 @@ CollapsibleSystray.prototype = {
         icon.connect("destroy", () => this._unregisterAppIcon(role, iconWrap));
 
         this._registerAppIcon(role, iconWrap);
-    },
+    }
 
     /*
      * An AppIndicator has been added; prepare its actor and register the icon
      */
-    _onIndicatorAdded: function(manager, appIndicator) {
-
-        $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype._onIndicatorAdded.call(this, manager, appIndicator);
+    _onIndicatorAdded(manager, appIndicator) {
+        super._onIndicatorAdded.call(this, manager, appIndicator);
 
         if (appIndicator.id in this._shellIndicators) {
             let iconActor = this._shellIndicators[appIndicator.id];
@@ -824,14 +779,13 @@ CollapsibleSystray.prototype = {
 
             this._registerAppIcon(appIndicator.id, iconActor.actor);
         }
-    },
+    }
 
     /*
      * The applet's orientation changed; adapt accordingly
      */
-    on_orientation_changed: function(orientation) {
-
-        $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype.on_orientation_changed.call(this, orientation);
+    on_orientation_changed(orientation) {
+        super.on_orientation_changed.call(this, orientation);
 
         this.orientation = orientation;
         this._direction = (orientation === St.Side.TOP || orientation === St.Side.BOTTOM) ? APPLET_DIRECTION.HORIZONTAL : APPLET_DIRECTION.VERTICAL;
@@ -845,14 +799,13 @@ CollapsibleSystray.prototype = {
             this.hiddenIconsContainer.set_vertical(false);
             this.shownIconsContainer.set_vertical(false);
         }
-    },
+    }
 
     /*
      * The applet has been added to the panel; save settings
      */
-    on_applet_added_to_panel: function() {
-
-        $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype.on_applet_added_to_panel.call(this);
+    on_applet_added_to_panel() {
+        super.on_applet_added_to_panel.call(this);
 
         // Automatically collapse after X seconds
         this._initialCollapseTimerID = Mainloop.timeout_add(this.pref_init_delay * 1000,
@@ -864,23 +817,22 @@ CollapsibleSystray.prototype = {
                 }
             }
         );
-    },
+    }
 
     /*
      * The applet has been removed from the panel; save settings
      */
-    on_applet_removed_from_panel: function() {
+    on_applet_removed_from_panel() {
+        super.on_applet_removed_from_panel.call(this);
 
-        $.CollapsibleSystrayByFeuerfuchsForkByOdyseusApplet.prototype.on_applet_removed_from_panel.call(this);
-
-        this.settings.finalize();
+        this.settings && this.settings.finalize();
     }
-};
+}
 
-function main(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-    DebugManager.wrapObjectMethods($.Debugger, {
+function main() {
+    $.Debugger.wrapObjectMethods({
         CollapsibleSystray: CollapsibleSystray
     });
 
-    return new CollapsibleSystray(aMetadata, aOrientation, aPanelHeight, aInstanceId);
+    return new CollapsibleSystray(...arguments);
 }
