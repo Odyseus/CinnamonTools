@@ -1,0 +1,138 @@
+.nemo-window {
+    .sidebar {
+        .view {
+            background-color: $sidebar_bg;
+            color: $fg_color;
+            text-shadow: none;
+            -gtk-icon-shadow: none;
+
+            & .view.cell:hover {
+                background-color: rgba($base_color, 0.5);
+            }
+
+            &:selected {
+                border-color: $sidebar_bg;
+                border-radius: 0; // NOTE: I had to add this because I was seeing artifacts on selected items.
+                color: $selected_fg_color;
+                text-shadow: 1px 1px rgba(black, 0.2);
+                -gtk-icon-shadow: 1px 1px rgba(black, 0.2);
+            }
+        }
+
+        .expander {
+            &:selected {
+                border-color: $selected_fg_color;
+                color: $selected_fg_color;
+            }
+        }
+
+        .scrollbar {
+            min-width: 10px;
+        }
+
+        scrollbar.overlay-indicator {
+            &:not(.dragging) {
+                &:not(.hovering) {
+                    slider {
+                        background-color: $bg_color;
+                    }
+                }
+            }
+        }
+
+        separator {
+            border: none;
+        }
+
+        .frame {
+            border: none;
+        }
+    }
+
+    .places-treeview {
+        -NemoPlacesTreeView-disk-full-bg-color: darken($base_color, 15%);
+        -NemoPlacesTreeView-disk-full-fg-color: darken($selected_bg_color, 10%);
+        -NemoPlacesTreeView-disk-full-bar-width: 2px;
+        -NemoPlacesTreeView-disk-full-bar-radius: 1px;
+        -NemoPlacesTreeView-disk-full-bottom-padding: 2px;
+
+        &:selected {
+            -NemoPlacesTreeView-disk-full-bg-color: lighten($selected_fg_color, 10%);
+            -NemoPlacesTreeView-disk-full-fg-color: $selected_bg_color;
+        }
+    }
+
+    widget {
+        .toolbar {
+            button {
+                padding: 0 5px;
+            }
+            padding: 0 6px 0 6px;
+        }
+    }
+
+    .nemo-window-pane {
+        // NOTE: Make tabbed views look like standard notebooks. There is no reason to make them
+        // look like anything else.
+        > notebook box.vertical > overlay {
+            > scrolledwindow,
+            > scrolledwindow treeview.view {
+                background-color: $notebook_bg;
+            }
+        }
+
+        // NOTE: Darken inactive pane.
+        &.nemo-inactive-pane > notebook {
+            box.vertical > overlay {
+                > scrolledwindow,
+                > scrolledwindow treeview.view {
+                    background-color: darken($notebook_bg, 5%);
+
+                    &:selected {
+                        background-color: rgba($selected_bg_color, 0.85);
+                        color: $selected_fg_color;
+                    }
+                }
+
+                .nautilus-canvas-item {
+                    &:selected {
+                        background-color: rgba($selected_bg_color, 0.85);
+                        color: $selected_fg_color;
+                    }
+                }
+            }
+
+            // NOTE: Match checked tab background with its pane background.
+            > header {
+                > tabs {
+                    > tab {
+                        &:checked {
+                            background-color: darken($notebook_bg, 5%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    toolbar.primary-toolbar {
+        margin-bottom: -1px;
+    }
+}
+
+// NOTE: Cinnamon settings primary window.
+.cs-category-view {
+    background-color: transparent;
+
+    .view {
+        background-color: transparent;
+
+        &:hover {
+            @if ($gtk4) {
+                -gtk-icon-filter: brightness(1.2);
+            } @else {
+                -gtk-icon-effect: highlight;
+            }
+        }
+    }
+}

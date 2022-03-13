@@ -7,5 +7,5 @@ Encoding=UTF-8
 [X-GNOME-Metatheme]
 GtkTheme=@theme_name@-@theme_variant@
 MetacityTheme=@theme_name@-@theme_variant@
-IconTheme=Mint-X
+IconTheme=Faenza
 CursorTheme=default

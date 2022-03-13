@@ -1,0 +1,106 @@
+/* =============================================================================
+ * Views
+ * ============================================================================= */
+viewport {
+    background-color: transparent;
+}
+
+viewport.frame {
+    border-width: 0;
+}
+
+.view,
+%view {
+    color: $text_color;
+    background-color: $base_color;
+
+    &:disabled {
+        color: $insensitive_fg_color;
+        background-color: $insensitive_bg_color;
+    }
+
+    &:selected {
+        &:focus,
+        & {
+            @extend %selected_items;
+
+            border-radius: 3px;
+        }
+    }
+}
+
+textview {
+    // TEST: Direct child selector.
+    > text {
+        @extend %view;
+
+        > selection {
+            &,
+            &:focus {
+                @extend %selected_items;
+            }
+        }
+    }
+
+    // TEST: Direct child selector.
+    > border {
+        background-color: mix($bg_color, $base_color, 50%);
+    }
+
+    &:drop(active) {
+        caret-color: $drop_target_color;
+    }
+}
+
+iconview {
+    @extend .view;
+
+    @include focus_ring();
+
+    &:drop(active) {
+        box-shadow: none;
+    }
+
+    > dndtarget:drop(active) {
+        border-style: solid;
+        border-width: 1px;
+        border-color: $selected_borders_color;
+    }
+}
+
+iconview.cell {
+    padding: 0;
+
+    &:selected,
+    &:selected:focus {
+        border: 1px solid mix($selected_bg_color, $borders_color, 75%);
+        border-radius: $button_radius;
+        background-image: linear-gradient(to bottom, $iconview_selected_a, $iconview_selected_b);
+    }
+}
+
+// TEST: See result on a Gtk4 environment when I have the chance.
+// The box spacing/margin seems a bit much to me.
+@if ($gtk4) {
+    gridview {
+        > rubberband {
+            @extend rubberband;
+        }
+
+        > child {
+            padding: 3px;
+
+            @include focus_ring();
+
+            &:selected {
+                @extend %selected_items;
+            }
+
+            box {
+                //cells
+                border-spacing: 8px; //label separation
+                margin: 12px;
+            }
+        }
+    }
+}

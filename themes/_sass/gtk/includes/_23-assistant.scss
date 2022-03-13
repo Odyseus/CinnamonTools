@@ -1,0 +1,34 @@
+/* =============================================================================
+ * Assistant
+ * ============================================================================= */
+assistant,
+window.assistant {
+    .sidebar {
+        border-top: 1px solid $borders_color;
+        background-color: $base_color;
+        color: $fg_color;
+
+        &:dir(ltr) {
+            border-right: 1px solid $borders_color;
+        }
+
+        &:dir(rtl) {
+            border-left: 1px solid $borders_color;
+        }
+
+        // TEST: Direct child selector.
+        > label {
+            padding: 6px 12px;
+        }
+
+        // TEST: Direct child selector.
+        > label.highlight {
+            background-color: $selected_bg_color;
+            color: $selected_fg_color;
+        }
+    }
+
+    &.csd .sidebar {
+        border-top-style: none;
+    }
+}

@@ -1,0 +1,14 @@
+// NOTE: Sass mix() uses percentages. Gtk mix() uses fractions 0 to 1.
+@function gtkmix($c1, $c2, $a) {
+    @return unquote("mix($c1, $c2, $a);");
+}
+
+// NOTE: Sass alpha() uses one argument and is used to get the alpha of a color.
+// Gtk alpha() uses two arguments and uses fractions of 0 to 1 to set the alpha of a color.
+@function gtkalpha($c, $a) {
+    @return unquote("alpha(#{$c}, #{$a})");
+}
+
+@function gtkshade($c, $s) {
+    @return unquote("shade(#{$c}, #{$s})");
+}

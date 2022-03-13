@@ -1,0 +1,112 @@
+/* =============================================================================
+ * Switches
+ * ============================================================================= */
+switch {
+    font-weight: bold;
+    font-size: smaller;
+    margin-top: 6px;
+    margin-bottom: 6px;
+
+    // similar to the .scale
+    border: 1px solid;
+    border-color: $borders_color;
+    border-radius: 18px;
+    // NOTE: fg_color is to high contrast.
+    color: $borders_color;
+    background-color: $dark_fill;
+    // NOTE: I added the images to the switch just to see if I was able to make the switch look
+    // like the image based switches used by the Mint-Y theme. I was surprised with the positive
+    // result, so I kept the images. They make the switches less plain. After all, a switch it's
+    // just a fancy checkbox. This also saves me from changing the images for Cinnamon's switches.
+    background-image: image(
+        -gtk-recolor(url("../common-assets/switch/cross-symbolic.svg")),
+        -gtk-recolor(url("../common-assets/switch/cross-symbolic.symbolic.png"))
+    );
+    background-repeat: no-repeat;
+    background-position: 90% 50%;
+
+    &:checked {
+        color: $selected_fg_color;
+        border-color: $progressbar_border;
+        background-color: $selected_bg_color;
+        background-image: image(
+            -gtk-recolor(url("../common-assets/radio-check/check-symbolic.svg")),
+            -gtk-recolor(url("../common-assets/radio-check/check-symbolic.symbolic.png"))
+        );
+        background-repeat: no-repeat;
+        background-position: 10% 50%;
+    }
+
+    &:disabled {
+        color: $insensitive_fg_color;
+        border-color: $borders_color;
+        background-color: $insensitive_bg_color;
+        text-shadow: none;
+    }
+
+    > slider {
+        @include button(normal, $b_radius: 50%);
+
+        // NOTE: I don't like the Awaita nor the Mint-X switches.
+        // So I changed the size from 24px to 18px and added some internal margins to it.
+        margin: -1px 4px -1px -1px;
+        min-width: 18px;
+        min-height: 18px;
+        // NOTE: Override border color set by button mixin.
+        border-color: $borders_color;
+
+        // NOTE: I can't, for the life of me, make the switch outline visible.
+        // Additionally, clicking the switch doesn't focus it. So, I wasted my time clicking
+        // the f*cking thing a trillion times waiting for it to recieve the focus state.
+        @include focus_ring($offset: -4px, $radius: 50%);
+    }
+
+    // NOTE: I could just remove this transparency to make the images visible. But the problem is
+    // that I don't know who/what/where/when the images comes from. In some themes I see I/O,
+    // in some other themes I see ON/OFF. ON/OFF is gigantic for this switch, so I hard-code the
+    // images to a check and a cross. They are contextually good enough to make the switch less
+    // plain. Furthermore, I don't know what the hell is "the accessible theme". For what I can gather,
+    // it might be another abstract concept like "prefer dark theme". The "accessible theme" might
+    // just be the high contrast variant of the theme.
+    > image {
+        color: transparent;
+    }
+
+    &:hover > slider {
+        @include button(hover, $b_radius: 50%);
+
+        // NOTE: Override radius set by button mixin.
+        @if (not $gtk4) {
+            -gtk-outline-radius: 50%;
+        }
+    }
+
+    &:checked > slider {
+        margin: -1px -1px -1px 4px;
+        border-color: $progressbar_border;
+        // NOTE: Override color set by currentColor CSS variable.
+        // NOTE: Build time definition.
+        outline-color: gtkalpha($fg_color, "@outline_opacity@");
+    }
+
+    &:disabled > slider {
+        @include button(insensitive);
+    }
+
+    // NOTE: Invert the colors of a checked switch when its container has the accent color
+    // as its background. Keep not checked switches untouched.
+    modelbutton:hover &,
+    menuitem:hover &,
+    row:selected &,
+    infobar & {
+        &,
+        &:checked {
+            border-color: $progressbar_border;
+        }
+
+        &:checked {
+            color: $selected_bg_color;
+            background-color: $selected_fg_color;
+        }
+    }
+}

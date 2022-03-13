@@ -1,0 +1,606 @@
+%selected_items {
+    background-color: $selected_bg_color;
+
+    @at-root %nobg_selected_items,
+        & {
+        color: $selected_fg_color;
+
+        @at-root %selected_items_disabled,
+            &:disabled {
+            color: mix($selected_fg_color, $selected_bg_color, 50%);
+        }
+
+        @at-root %selected_items_backdrop,
+            &:backdrop {
+            color: $backdrop_selected_fg_color;
+
+            &:disabled {
+                color: mix($backdrop_selected_fg_color, $selected_bg_color, 30%);
+            }
+        }
+    }
+}
+
+/* =============================================================================
+ * Application notifications
+ * ============================================================================= */
+.app-notification,
+.app-notification.frame {
+    @extend %osd;
+
+    border-top-width: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    border {
+        border: none;
+    }
+}
+
+/* =============================================================================
+ * Calendar
+ * ============================================================================= */
+calendar {
+    color: $fg_color;
+    background-color: $bg_color;
+    border: 1px solid $borders_color;
+    border-radius: $button_radius;
+    padding: 2px;
+
+    &:selected {
+        background-color: $selected_bg_color;
+        color: $selected_fg_color;
+        border-radius: 1.5px;
+    }
+
+    &.header {
+        color: $fg_color;
+        border: none;
+    }
+
+    &.button {
+        color: rgba($fg_color, 0.45);
+        border: none;
+        background-image: none;
+        background-color: transparent;
+
+        &:focus {
+            color: rgba($fg_color, 0.45);
+            border: none;
+            background-image: none;
+            background-color: transparent;
+        }
+
+        &:hover {
+            color: $fg_color;
+        }
+
+        &:disabled {
+            color: $insensitive_fg_color;
+        }
+
+        &:indeterminate {
+            color: gtkalpha(currentColor, 0.55);
+        }
+
+        &.highlight {
+            color: $fg_color;
+        }
+    }
+}
+
+@if ($gtk4) {
+    dropdown > popover.menu.background > contents {
+        padding: 0;
+    } //allow search entries with no margin
+
+    dropdown > button > box {
+        border-spacing: 6px;
+
+        > stack > row.activatable:hover {
+            background: none;
+            box-shadow: none;
+        }
+    }
+}
+
+/* =============================================================================
+ * Comboboxes
+ * ============================================================================= */
+dropdown,
+combobox {
+    arrow {
+        -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+        min-height: 16px;
+        min-width: 16px;
+    }
+
+    // NOTE: Without this padding, combo boxes are taller than buttons.
+    button.combo {
+        padding: 2px 4px;
+    }
+
+    // NOTE: Add the border and shadow an entry has to the button linked to it.
+    entry + button.combo,
+    entry + button.combo:checked {
+        @include entry(entry-button);
+    }
+
+    // align menu labels with the button label
+    > popover.menu > contents modelbutton {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+    // NOTE: I don't know if this has any effect. I will keep it until I'm absolutelly sure it
+    // isn't needed.
+    .separator,
+    separator {
+        -GtkWidget-horizontal-separator: 0;
+        -GtkWidget-vertical-separator: 0;
+    }
+
+    &:drop(active) {
+        // FIXME: untested
+        box-shadow: none;
+
+        button.combo {
+            @extend %button_basic_drop_active;
+        }
+    }
+
+    // newstyle
+    popover {
+        margin-top: 6px;
+        padding: 0;
+
+        listview {
+            margin: 8px 0;
+
+            > row.activatable {
+                padding: 8px;
+
+                &:selected {
+                    &,
+                    &:hover {
+                        color: $text_color;
+                        background-color: $menu_bg;
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+
+        // drodowns with searchboxes on top
+        .dropdown-searchbar {
+            padding: 6px;
+            border-bottom: 1px solid $borders_color;
+        }
+    }
+
+    // NOTE: This is a workaround. I always found the combobox menu items taller than any other
+    // menu item.
+    & menu > menuitem {
+        padding: 2px 4px;
+    }
+}
+
+.content-view {
+    background-color: $base_color;
+
+    &:hover {
+        @if ($gtk4) {
+            -gtk-icon-filter: brightness(1.2);
+        } @else {
+            -gtk-icon-effect: highlight;
+        }
+    }
+
+    // TEST: I have no idea what the hell this is.
+    .tile {
+        margin: 2px;
+        background-color: transparent;
+        border-radius: 0;
+        padding: 0;
+
+        &:active,
+        &:selected {
+            background-color: transparent;
+        }
+
+        &:disabled {
+            background-color: transparent;
+        }
+    }
+
+    > .rubberband,
+    > rubberband {
+        @extend %rubberband;
+    }
+}
+
+// TEST: I have no idea what the hell this is.
+@if ($gtk4) {
+    coverflow cover {
+        color: $text_color;
+        background-color: $base_color;
+        border: 1px solid black;
+    }
+}
+
+expander {
+    arrow {
+        min-width: 16px;
+        min-height: 16px;
+        -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
+
+        &:dir(rtl) {
+            -gtk-icon-source: -gtk-icontheme("pan-end-symbolic-rtl");
+        }
+
+        &:checked {
+            -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+        }
+
+        &:hover {
+            color: $fg_color;
+        }
+    }
+}
+
+flowbox {
+    // TEST: Direct child selector.
+    > flowboxchild {
+        padding: 3px;
+        border-radius: $button_radius;
+
+        @include focus_ring();
+
+        &:selected {
+            @extend %selected_items;
+
+            outline-offset: -2px;
+        }
+    }
+
+    // TEST: Direct child selector.
+    > rubberband {
+        @extend %rubberband;
+    }
+}
+
+frame {
+    > border {
+        padding: 0;
+        border: 1px solid $borders_color;
+        border-radius: 0;
+    }
+
+    > border.flat {
+        border: none;
+    }
+
+    &.flat {
+        > border {
+            border: none;
+        }
+    }
+}
+
+.frame {
+    padding: 0;
+    border: 1px solid $borders_color;
+    border-radius: 0;
+
+    &.flat {
+        border: none;
+    }
+}
+
+scrolledwindow {
+    viewport.frame {
+        // avoid double borders when viewport inside scrolled window
+        border-style: none;
+    }
+
+    @each $position in "top", "bottom", "left", "right" {
+        // NOTE: This is used when content is touch-dragged past boundaries.
+        // draws a box on top of the content, the size changes programmatically.
+        overshoot {
+            &.#{$position} {
+                @include overshoot(#{$position});
+            }
+        }
+
+        undershoot {
+            &.#{$position} {
+                @include undershoot(#{$position});
+            }
+        }
+    }
+}
+
+separator {
+    min-height: 0;
+    min-width: 0;
+    border: 1px solid transparent;
+    border-top-color: rgba(black, 0.08);
+    border-bottom-color: rgba(white, 0.35);
+
+    &:first-child {
+        + {
+            headerbar {
+                border-top-left-radius: $window_radius;
+
+                &:backdrop {
+                    border-top-left-radius: $window_radius;
+                }
+            }
+        }
+    }
+
+    &.vertical {
+        border: 1px solid transparent;
+        border-left-color: rgba(black, 0.08);
+        border-right-color: rgba(white, 0.35);
+    }
+}
+
+.background {
+    background-color: $bg_color;
+    color: $fg_color;
+
+    .titlebar {
+        border-top-left-radius: $window_radius;
+        border-top-right-radius: $window_radius;
+
+        &:backdrop {
+            border-top-left-radius: $window_radius;
+            border-top-right-radius: $window_radius;
+        }
+    }
+
+    &.osd {
+        background-color: $osd_bg_color;
+        color: $osd_fg_color;
+    }
+
+    &.tiled .titlebar,
+    &.tiled-top .titlebar,
+    &.tiled-right .titlebar,
+    &.tiled-bottom .titlebar,
+    &.tiled-left .titlebar,
+    &.maximized .titlebar,
+    &.solid-csd .titlebar {
+        &:backdrop,
+        & {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+
+    // Needed to make the border-radius of menus work
+    // otherwise the background bleeds out of the menu edges
+    &.popup {
+        background-color: transparent;
+    }
+}
+
+window.background {
+    &:not(.csd) {
+        headerbar {
+            box-shadow: none;
+            background-color: transparent;
+            background-image: linear-gradient(to bottom, $toolbar_bg_a, $toolbar_bg_b);
+
+            &:backdrop {
+                background-color: transparent;
+                background-image: linear-gradient(to bottom, $toolbar_bg_a, $toolbar_bg_b);
+            }
+        }
+    }
+}
+
+list {
+    background-color: $base_color;
+}
+
+row.activatable {
+    &:hover {
+        background-color: darken($base_color, 5%);
+    }
+}
+
+row {
+    @include focus_ring();
+
+    &:selected {
+        color: $selected_fg_color;
+        background-color: $selected_bg_color;
+
+        &:hover {
+            color: $selected_fg_color;
+            background-color: $selected_bg_color;
+        }
+
+        label {
+            background-color: $selected_bg_color;
+            color: $selected_fg_color;
+
+            &:disabled {
+                color: mix($selected_fg_color, $selected_bg_color, 30%);
+                text-shadow: none;
+            }
+        }
+    }
+}
+
+paned.horizontal {
+    > notebook {
+        > header {
+            > tabs {
+                margin-right: -2px;
+
+                &:dir(rtl) {
+                    margin-left: -2px;
+                    padding-right: 2px;
+                }
+            }
+        }
+    }
+
+    > separator.wide {
+        background-size: 2px 24px;
+        background-image: -gtk-scaled(
+            url("../common-assets/paned/pane-separator-grip-vertical.png"),
+            url("../common-assets/paned/pane-separator-grip-vertical@2.png")
+        );
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    > separator {
+        margin: 0 -3px 0 -3px;
+        padding: 0 3px 0 3px;
+        background-repeat: repeat-y;
+        background-position: center;
+    }
+}
+
+paned {
+    > separator {
+        min-width: 1px;
+        min-height: 1px;
+        -gtk-icon-source: none;
+        border-style: none;
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, $borders_color, $borders_color);
+        background-size: 1px 1px;
+    }
+
+    > separator.wide {
+        min-width: 5px;
+        min-height: 5px;
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+    }
+
+    .sidebar {
+        border-style: none;
+
+        &:dir(ltr) {
+            border-style: none;
+        }
+
+        &:dir(rtl) {
+            border-style: none;
+        }
+    }
+
+    .sidebar.left {
+        border-style: none;
+
+        &:dir(rtl) {
+            border-style: none;
+        }
+    }
+
+    .sidebar.right {
+        border-style: none;
+    }
+
+    &.vertical {
+        > separator.wide {
+            background-size: 24px 2px;
+            background-image: -gtk-scaled(
+                url("../common-assets/paned/pane-separator-grip.png"),
+                url("../common-assets/paned/pane-separator-grip@2.png")
+            );
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        > separator {
+            margin: -3px 0 -3px 0;
+            padding: 3px 0 3px 0;
+            background-repeat: repeat-x;
+            background-position: center;
+        }
+    }
+}
+
+/* =============================================================================
+ * Symbolic images
+ * ============================================================================= */
+.image {
+    color: $internal_element_color;
+
+    &:selected {
+        color: $selected_fg_color;
+
+        &:hover {
+            color: $selected_fg_color;
+        }
+    }
+
+    &:hover {
+        color: $internal_element_prelight;
+    }
+}
+
+.tooltip,
+tooltip {
+    * {
+        background-color: transparent;
+        color: $tooltip_fg_color;
+    }
+
+    &.background {
+        // NOTE: Build time definition.
+        border: "@tooltip_border_definition@";
+        background-color: "@tooltip_background_rgba_color@";
+        background-clip: padding-box;
+    }
+
+    padding: 3px;
+    border-radius: $tooltip_radius;
+    box-shadow: none;
+}
+
+.monospace {
+    font-family: monospace;
+}
+
+cursor-handle {
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+    border-style: none;
+
+    &.top {
+        -gtk-icon-source: -gtk-icontheme("selection-start-symbolic");
+    }
+
+    &.bottom {
+        -gtk-icon-source: -gtk-icontheme("selection-end-symbolic");
+    }
+}
+
+.keycap {
+    min-width: 16px;
+    min-height: 20px;
+    padding: 3px 6px 4px 6px;
+    color: $fg_color;
+    background-color: lighten($bg_color, 10%);
+    border: 1px solid $borders_color;
+    border-radius: $button_radius;
+    box-shadow: inset 0 -2px 0 rgba(black, 0.1);
+}
+
+:not(decoration):not(window):drop(active):focus,
+:not(decoration):not(window):drop(active) {
+    border-color: $drop_target_color;
+    box-shadow: inset 0 0 0 1px $drop_target_color;
+    caret-color: $drop_target_color;
+}

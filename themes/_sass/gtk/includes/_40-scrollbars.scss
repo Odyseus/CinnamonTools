@@ -1,0 +1,174 @@
+/* =============================================================================
+ * Scrollbars
+ * ============================================================================= */
+scrollbar {
+    @at-root * {
+        // NOTE: Build time definition.
+        -GtkScrollbar-has-backward-stepper: "@display_gtk_3_scrollbar_arrows@";
+        // NOTE: Build time definition.
+        -GtkScrollbar-has-forward-stepper: "@display_gtk_3_scrollbar_arrows@";
+    }
+
+    slider {
+        min-width: 10px;
+        min-height: 10px;
+        margin: -1px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        border: 1px solid $borders_color;
+        border-radius: 8px;
+        background-clip: padding-box;
+        background-color: transparent;
+        background-image: linear-gradient(to right, lighten($bg_color, 12%), darken($bg_color, 5%));
+        box-shadow: 1px 0 rgba(white, 0.5);
+    }
+
+    slider.fine-tune {
+        min-width: 4px;
+        min-height: 4px;
+    }
+
+    button {
+        min-width: 10px;
+        min-height: 10px;
+        border: 1px solid $borders_color;
+        border-radius: $button_radius;
+    }
+
+    &.vertical {
+        border-style: solid;
+        border-color: rgba($borders_color, 0.5);
+        border-width: 0 0 0 1px;
+        background-image: linear-gradient(to right, $bg_color, $base_color);
+
+        slider {
+            min-height: 40px;
+
+            &:hover {
+                background-image: linear-gradient(
+                    to right,
+                    lighten($bg_color, 5%),
+                    darken($bg_color, 11%)
+                );
+            }
+        }
+
+        button.up {
+            padding: 2px 0;
+            -gtk-icon-source: -gtk-icontheme("pan-up-symbolic");
+        }
+
+        button.down {
+            padding: 2px 0;
+            -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+        }
+    }
+
+    &.horizontal {
+        border-style: solid;
+        border-color: rgba($borders_color, 0.5);
+        border-width: 1px 0 0 0;
+        background-image: linear-gradient(to bottom, $bg_color, $base_color);
+
+        slider {
+            margin: -1px;
+            margin-left: 2px;
+            margin-right: 2px;
+            background-image: linear-gradient(
+                to bottom,
+                lighten($bg_color, 12%),
+                darken($bg_color, 5%)
+            );
+            min-width: 40px;
+
+            &:hover {
+                background-image: linear-gradient(
+                    to bottom,
+                    lighten($bg_color, 5%),
+                    darken($bg_color, 11%)
+                );
+            }
+        }
+
+        button.down {
+            padding: 0 2px;
+            -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
+        }
+
+        button.up {
+            padding: 0 2px;
+            -gtk-icon-source: -gtk-icontheme("pan-start-symbolic");
+        }
+    }
+
+    &.right {
+        border-left: 1px solid rgba($borders_color, 0.5);
+    }
+
+    &.left {
+        border-right: 1px solid rgba($borders_color, 0.5);
+    }
+
+    &.top {
+        border-bottom: 1px solid rgba($borders_color, 0.5);
+    }
+
+    &.bottom {
+        border-top: 1px solid rgba($borders_color, 0.5);
+    }
+
+    &.overlay-indicator {
+        &:not(.dragging) {
+            &:not(.hovering) {
+                border-color: transparent;
+                opacity: 0.4;
+                background-color: transparent;
+                background-image: none;
+
+                slider {
+                    margin: 0;
+                    min-width: 4px;
+                    min-height: 4px;
+                    background-color: darken($bg_color, 40%);
+                    background-image: none;
+                }
+
+                button {
+                    color: transparent;
+                    border-color: transparent;
+                    border-image: none;
+                    background-color: transparent;
+                    background-image: none;
+                    -gtk-icon-source: none;
+                }
+            }
+
+            &:not(.hovering).vertical {
+                slider {
+                    margin: 2px 0;
+                    min-height: 40px;
+                }
+            }
+
+            &:not(.hovering).horizontal {
+                slider {
+                    margin: 0 2px;
+                    min-width: 40px;
+                }
+            }
+        }
+    }
+
+    &.vertical.fine-tune {
+        slider {
+            min-width: 4px;
+            margin-left: 3px;
+            margin-right: 3px;
+        }
+    }
+}
+
+treeview ~ scrollbar.vertical {
+    border-top: 1px solid $borders_color;
+    margin-top: -1px;
+}

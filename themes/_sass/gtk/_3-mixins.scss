@@ -1,0 +1,363 @@
+@mixin scale_trough_disabled {
+    border-color: lighten($borders_color, 10%);
+    background-color: darken($bg_color, 2%);
+    background-image: none;
+    box-shadow: none;
+}
+
+@mixin disabled_text_shadow($c: white, $o: 0.4) {
+    text-shadow: 0 1px rgba($c, $o);
+}
+
+@mixin disabled_icon_effect() {
+    @if ($gtk4) {
+        -gtk-icon-filter: opacity(0.5);
+    } @else {
+        -gtk-icon-effect: dim;
+    }
+}
+
+@mixin disabled_effect() {
+    color: $insensitive_fg_color;
+    text-shadow: 0 1px rgba(white, 0.4);
+
+    @if ($gtk4) {
+        -gtk-icon-filter: opacity(0.5);
+    } @else {
+        -gtk-icon-effect: dim;
+    }
+}
+
+// =============================================================================
+// Focus ring
+// =============================================================================
+// Helper mixin for drawing visible focus rings
+//
+// If $target is specified, the focus ring is applied to the specified child element.
+// If $outer is true, the focus ring extends outward. Otherwise, it extends inward.
+//
+// NOTE: Adwaita uses a totally different concept when displaying outlines.
+// For starters, the outlines are twice as thick, are solid and are placed right next to a
+// widget's border, not separated. I tried it and it seems a really nice concept.
+// It would be easy to implement the same concept in the Cinnamon theme. But the bottleneck is
+// the Gtk2 theme. In short, I prefer to eat glass before dealing with that monstrosity.
+// Furthermore, I hope that the micromanaging added by the use of this mixin just to avoid using
+// the * wild-card is worth it.
+@mixin focus_ring($width: 1px, $offset: -3px, $radius: $button_radius) {
+    outline: $width dashed $outline_color;
+    outline-offset: $offset;
+
+    // NOTE: This was removed in Gtk4. Supposedly, outlines uses the border radius now.
+    // I can't wait to see in how many ways this will f*ck me over.
+    @if (not $gtk4) {
+        -gtk-outline-radius: $radius;
+    }
+}
+
+// =============================================================================
+// Check and Radio buttons
+// =============================================================================
+@mixin check($type, $color: $bg_color, $text_color: $fg_color, $checked: false) {
+    // NOTE: Based on Adwaita's checks/radios.
+    // Check/Radio drawing function
+    //
+    // $type:           check/radio type,
+    // $color:          base button color for colored* types
+    // $text_color:     optional text color for colored* types
+    // $checked:        bool to chose between checked/unchecked
+    //
+    // possible $type values:
+    // normal, hover, active, insensitive
+    $_border_color: if($color == $selected_bg_color, $color, $alt_borders_color);
+
+    @if $type == normal {
+        background-clip: if($checked, border-box, padding-box);
+        background-image: linear-gradient(to bottom, lighten($color, 5%) 20%, $color 90%);
+        border-color: $_border_color;
+        box-shadow: 0 1px rgba(black, 0.05);
+        color: $text_color;
+    } @else if $type == hover {
+        background-image: if(
+            $color == white,
+            image(darken($color, 5%)),
+            linear-gradient(to bottom, lighten($color, 9%) 10%, lighten($color, 4%) 90%)
+        );
+    } @else if $type == active {
+        box-shadow: inset 0 1px 1px 0px rgba(0, 0, 0, 0.2);
+    } @else if $type == insensitive {
+        // NOTE: In the Adwaita theme, an unchecked disabled check/radio is
+        // indistinguishable from an "enabled" one.
+        background-image: if(
+            $color == white,
+            image(darken($color, 10%)),
+            linear-gradient(to bottom, darken($color, 9%) 10%, darken($color, 4%) 90%)
+        );
+        border-color: rgba($_border_color, 0.7);
+        color: rgba($text_color, 0.7);
+    }
+}
+
+// =============================================================================
+// Entries
+// =============================================================================
+@mixin entry($e_type, $focus_color: $selected_bg_color) {
+    //
+    // Entries drawing function
+    //
+    // $e_type: entry type
+    // $focus_color: focus color
+    //
+    // possible $e_type values:
+    // normal, focus, insensitive
+    //
+    @if $e_type == normal {
+        color: $text_color;
+        border-color: darken($button_border, 10%);
+        box-shadow: inset 0 1px rgba(black, 0.1), inset 1px 0 rgba(black, 0.04),
+            inset -1px 0 rgba(black, 0.04), inset 0 -1px rgba(black, 0.02), 0 1px rgba(white, 0.4);
+        background-color: $base_color;
+        background-image: linear-gradient(to bottom, $entry_bg_a, $entry_bg_b);
+    } @else if $e_type == entry-button {
+        border-color: darken($button_border, 10%);
+        box-shadow: inset 0 1px rgba(black, 0.1), inset 1px 0 rgba(black, 0.04),
+            inset -1px 0 rgba(black, 0.04), inset 0 -1px rgba(black, 0.02), 0 1px rgba(white, 0.4);
+    } @else if $e_type == focus {
+        box-shadow: inset 0 1px 2px rgba($focus_color, 0.2), inset 1px 0 2px rgba($focus_color, 0.2),
+            inset -1px 0 2px rgba($focus_color, 0.2), inset 0 -1px 2px rgba($focus_color, 0.2),
+            0 1px rgba(white, 0.4);
+        border-color: mix($focus_color, $button_border, 90%);
+    } @else if $e_type == insensitive {
+        color: $insensitive_fg_color;
+        border-color: $button_border;
+        background-color: $insensitive_bg_color;
+        box-shadow: none;
+        background-image: none;
+
+        @include disabled_effect();
+    }
+}
+
+// =============================================================================
+// Buttons
+// =============================================================================
+@mixin button($b_type, $b_radius: $button_radius) {
+    @if $b_type == titlebutton {
+        color: transparent;
+        background-color: transparent;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-width: 0;
+    } @else if $b_type == normal {
+        border: 1px solid darken($button_border, 5%);
+        border-top-color: $button_border;
+        border-bottom-color: darken($button_border, 10%);
+        border-radius: $b_radius;
+        box-shadow: inset 0 1px rgba(white, 1), inset 1px 0 rgba(white, 0.4),
+            inset -1px 0 rgba(white, 0.4), inset 0 -1px rgba(white, 0.2), 1px 0 rgba(black, 0.05),
+            -1px 0 rgba(black, 0.05), 0 1px rgba(black, 0.1);
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, $button_bg_a, $button_bg_b);
+    } @else if $b_type == active {
+        border: 1px solid darken($button_border, 5%);
+        border-top-color: $button_border;
+        border-bottom-color: darken($button_border, 10%);
+        border-radius: $b_radius;
+        box-shadow: inset 0 1px rgba(black, 0.1), inset 1px 0 rgba(black, 0.08),
+            inset -1px 0 rgba(black, 0.08), inset 0 -1px rgba(black, 0.06);
+        background-color: transparent;
+        background-image: linear-gradient(
+            to bottom,
+            $button_active_bg_a,
+            $button_active_bg_b 30%,
+            $button_active_bg_c
+        );
+    } @else if $b_type == active-hover {
+        background-color: transparent;
+        background-image: linear-gradient(
+            to bottom,
+            $button_active_hover_bg_a,
+            $button_active_hover_bg_b 30%,
+            $button_active_hover_bg_c
+        );
+    } @else if $b_type == hover {
+        border: 1px solid darken($button_border, 10%);
+        border-top-color: darken($button_border, 5%);
+        border-bottom-color: darken($button_border, 15%);
+        border-radius: $b_radius;
+        box-shadow: inset 0 1px rgba(black, 0.1), inset 1px 0 rgba(black, 0.08),
+            inset -1px 0 rgba(black, 0.08), inset 0 -1px rgba(black, 0.06), 1px 0 rgba(white, 0.01),
+            -1px 0 rgba(white, 0.01), 0 1px rgba(white, 0.3);
+    } @else if $b_type == insensitive-active {
+        box-shadow: inset 0 1px rgba(black, 0.1), inset 1px 0 rgba(black, 0.08),
+            inset -1px 0 rgba(black, 0.08), inset 0 -1px rgba(black, 0.06);
+
+        // @include disabled_text_shadow();
+        @include disabled_effect();
+    } @else if $b_type == insensitive {
+        box-shadow: inset 0 1px rgba(white, 0.3), inset 1px 0 rgba(white, 0.15),
+            inset -1px 0 rgba(white, 0.15), inset 0 -1px rgba(white, 0.06);
+
+        // @include disabled_text_shadow();
+        @include disabled_effect();
+    } @else if $b_type == undecorated {
+        border-color: transparent;
+        border-image: none;
+        box-shadow: none;
+        background-color: transparent;
+        background-image: none;
+    }
+
+    @if $b_type == forbar-normal {
+        border: 1px solid darken($button_border, 10%);
+        border-top-color: darken($button_border, 5%);
+        border-bottom-color: darken($button_border, 15%);
+        border-radius: $b_radius;
+        box-shadow: inset 0 1px rgba(white, 1), inset 1px 0 rgba(white, 0.2),
+            inset -1px 0 rgba(white, 0.2), inset 0 -1px rgba(white, 0.05), 1px 0 rgba(white, 0.01),
+            -1px 0 rgba(white, 0.01), 0 1px rgba(white, 0.3);
+    } @else if $b_type == forbar-active {
+        border: 1px solid darken($button_border, 10%);
+        border-top-color: darken($button_border, 5%);
+        border-bottom-color: darken($button_border, 15%);
+        border-radius: $b_radius;
+        box-shadow: inset 0 1px rgba(black, 0.1), inset 1px 0 rgba(black, 0.08),
+            inset -1px 0 rgba(black, 0.08), inset 0 -1px rgba(black, 0.06), 1px 0 rgba(white, 0.01),
+            -1px 0 rgba(white, 0.01), 0 1px rgba(white, 0.3);
+    }
+
+    @if $b_type == notebook-header-normal {
+        min-height: 20px;
+        min-width: 20px;
+        padding: 1px;
+        border: none;
+        border-image: none;
+        background-color: transparent;
+        background-image: none;
+        color: gtkalpha(currentColor, 0.3);
+        -gtk-icon-shadow: none;
+        box-shadow: none;
+    } @else if $b_type == notebook-header-hover {
+        padding: 1px;
+        border: none;
+        border-image: none;
+        background-color: transparent;
+        background-image: none;
+        color: currentColor;
+        box-shadow: none;
+    } @else if $b_type == notebook-header-active-hover {
+        padding: 1px;
+        border: none;
+        border-image: none;
+        background-color: darken($bg_color, 15%);
+        background-image: none;
+        color: currentColor;
+        box-shadow: none;
+    }
+}
+
+// =============================================================================
+// Overshoots
+// =============================================================================
+// NOTE: Extracted from Mint-Y.
+// It's more subtle than the one used by Adwaita and infinitely more simple.
+@mixin overshoot($p, $c: $selected_bg_color) {
+    // $p: position
+    // $c: base color
+    //
+    // possible $p values:
+    // top, bottom, right, left
+    //
+
+    $_big_gradient_length: 60%;
+
+    $_position: center top;
+    $_big_gradient_size: 100% $_big_gradient_length;
+
+    @if $p == bottom {
+        $_position: center bottom;
+    } @else if $p == right {
+        $_position: right center;
+        $_big_gradient_size: $_big_gradient_length 100%;
+    } @else if $p == left {
+        $_position: left center;
+        $_big_gradient_size: $_big_gradient_length 100%;
+    }
+
+    background-image: if(
+        $gtk4,
+        radial-gradient(farthest-side at $p, $c 85%, rgba($c, 0)),
+        -gtk-gradient(radial, $_position, 0, $_position, 0.6, from(rgba($c, 0.2)), to(rgba($c, 0)))
+    );
+
+    background-size: $_big_gradient_size;
+    background-repeat: no-repeat;
+    background-position: $_position;
+
+    // NOTE: Reset some properties to be sure to not inherit them somehow.
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+// =============================================================================
+// Undershoots
+// =============================================================================
+@mixin undershoot($position) {
+    // $position: position
+    //
+    // possible $position values:
+    // top, bottom, right, left
+    //
+    background-color: transparent;
+    // NOTE: Build time definition.
+    padding-#{$position}: "@undershoots_padding_definition@";
+    background-origin: content-box;
+
+    @if $position == top or $position == bottom {
+        background-size: 10px 1px;
+        background-repeat: repeat-x;
+        // NOTE: Build time definition.
+        background-image: "@undershoots_tb_back_image_definition@";
+        background-position: center $position;
+    } @else {
+        background-size: 1px 10px;
+        background-repeat: repeat-y;
+        // NOTE: Build time definition.
+        background-image: "@undershoots_lr_back_image_definition@";
+        background-position: $position center;
+    }
+}
+
+// =============================================================================
+// Notebooks tabs
+// =============================================================================
+@mixin notebook_tab($position) {
+    padding: 2px 10px;
+    min-width: 28px;
+    min-height: 28px;
+    border: 1px solid $borders_color;
+    color: $fg_color;
+    background-color: transparent;
+
+    @if $position == top or $position == bottom {
+        margin-right: 2px;
+    } @else {
+        margin-bottom: 2px;
+    }
+
+    @if $position == bottom {
+        background-image: linear-gradient(to top, $notebook_tab_bg_a, $notebook_tab_bg_b);
+    } @else {
+        background-image: linear-gradient(to bottom, $notebook_tab_bg_a, $notebook_tab_bg_b);
+    }
+
+    @if $position == top {
+        border-radius: $button_radius $button_radius 0 0;
+    } @else if $position == bottom {
+        border-radius: 0 0 $button_radius $button_radius;
+    } @else if $position == left {
+        border-radius: $button_radius 0 0 $button_radius;
+    } @else if $position == right {
+        border-radius: 0 $button_radius $button_radius 0;
+    }
+}

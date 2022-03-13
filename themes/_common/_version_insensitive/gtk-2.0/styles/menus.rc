@@ -11,7 +11,7 @@ style "menubar"
         gradient_shades = {1.0, 1.0, 1.0, 1.0}
         highlight_shade = 1.0
         menubarstyle = 0
-        #menubaritemstyle = 1
+        menubaritemstyle = 1
         textstyle = 1
     }
 }
@@ -27,9 +27,9 @@ style "menubar-menuitem"
 
     engine "murrine"
     {
-        contrast = .0
+        contrast = 0.8
         roundness = 3
-        border_shades = { 0.8, 0.8 }
+        border_shades = { 1.3, 1.3 }
         gradient_shades = {1.0, 1.0, 0.85, 0.85}
         highlight_shade = 1.0
         menubaritemstyle = 1
@@ -71,21 +71,250 @@ style "menu"
     }
 }
 
+# NOTE: Old style.
+# style "menu-item"
+# {
+#     xthickness = 4
+#     ythickness = 4
+
+#     bg[SELECTED] = shade (0.95, @selected_bg_color)
+#     bg[PRELIGHT] = shade (0.95, @selected_bg_color)
+#     fg[PRELIGHT] = @selected_fg_color
+
+#     engine "murrine"
+#     {
+#         border_shades = {1.3, 1.3}
+#         contrast = 0.8
+#         roundness = 0
+#         textstyle = 0
+#     }
+# }
+
+# NOTE: New style based on Adwaita's.
 style "menu-item"
 {
     xthickness = 4
     ythickness = 4
 
-    bg[SELECTED] = shade (0.95, @selected_bg_color)
-    bg[PRELIGHT] = shade (0.95, @selected_bg_color)
-    fg[PRELIGHT] = @selected_fg_color
+    bg[PRELIGHT]   = shade (0.95, @selected_bg_color)
+    # Chromium uses this setting
+    bg[SELECTED]   = shade (0.95, @selected_bg_color)
 
-    engine "murrine"
-    {
-        border_shades = {1.0, 1.0}
-        contrast = 0.8
-        roundness = 0
-        textstyle = 0
+    fg[PRELIGHT]   = @selected_fg_color
+    # Some widgets use text, we need to handle that
+    text[NORMAL]   = @fg_color
+    text[PRELIGHT] = @selected_fg_color
+
+    # Unfortunately we can't tell regular and menu checks/radios apart
+    # Without the heirarchy
+    engine "pixmap" {
+        image {
+            function        = BOX
+            state           = PRELIGHT
+            file            = "images/menus/menuitem.svg"
+            border          = {1, 0, 1, 0}
+            stretch         = TRUE
+        }
+
+    #################
+    # Check Buttons #
+    #################
+
+        image {
+            function        = CHECK
+            state           = NORMAL
+            shadow          = OUT
+            overlay_file    = "images/menus/menu-checkbox.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = PRELIGHT
+            shadow          = OUT
+            overlay_file    = "images/menus/menu-checkbox-hover.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = ACTIVE
+            shadow          = OUT
+            overlay_file    = "images/menus/menu-checkbox.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = INSENSITIVE
+            shadow          = OUT
+            overlay_file    = "images/menus/menu-checkbox-insensitive.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = NORMAL
+            shadow          = IN
+            overlay_file    = "images/menus/menu-checkbox-checked.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = PRELIGHT
+            shadow          = IN
+            overlay_file    = "images/menus/menu-checkbox-checked-hover.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = ACTIVE
+            shadow          = IN
+            overlay_file    = "images/menus/menu-checkbox-checked.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = INSENSITIVE
+            shadow          = IN
+            overlay_file    = "images/menus/menu-checkbox-checked-insensitive.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = NORMAL
+            shadow          = ETCHED_IN
+            overlay_file    = "images/menus/menu-checkbox-mixed.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = PRELIGHT
+            shadow          = ETCHED_IN
+            overlay_file    = "images/menus/menu-checkbox-mixed-hover.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = ACTIVE
+            shadow          = ETCHED_IN
+            overlay_file    = "images/menus/menu-checkbox-mixed.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = CHECK
+            state           = INSENSITIVE
+            shadow          = ETCHED_IN
+            overlay_file    = "images/menus/menu-checkbox-mixed-insensitive.png"
+            overlay_stretch = FALSE
+        }
+
+        #################
+        # Radio Buttons #
+        #################
+
+        image {
+            function        = OPTION
+            state           = NORMAL
+            shadow          = OUT
+            overlay_file    = "images/menus/menu-radio.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = PRELIGHT
+            shadow          = OUT
+            overlay_file    = "images/menus/menu-radio-hover.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = ACTIVE
+            shadow          = OUT
+            overlay_file    = "images/menus/menu-radio.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = INSENSITIVE
+            shadow          = OUT
+            overlay_file    = "images/menus/menu-radio-insensitive.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = NORMAL
+            shadow          = IN
+            overlay_file    = "images/menus/menu-radio-checked.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = PRELIGHT
+            shadow          = IN
+            overlay_file    = "images/menus/menu-radio-checked-hover.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = ACTIVE
+            shadow          = IN
+            overlay_file    = "images/menus/menu-radio-checked.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = INSENSITIVE
+            shadow          = IN
+            overlay_file    = "images/menus/menu-radio-checked-insensitive.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = NORMAL
+            shadow          = ETCHED_IN
+            overlay_file    = "images/menus/menu-radio-mixed.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = PRELIGHT
+            shadow          = ETCHED_IN
+            overlay_file    = "images/menus/menu-radio-mixed-hover.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = ACTIVE
+            shadow          = ETCHED_IN
+            overlay_file    = "images/menus/menu-radio-mixed.png"
+            overlay_stretch = FALSE
+        }
+
+        image {
+            function        = OPTION
+            state           = INSENSITIVE
+            shadow          = ETCHED_IN
+            overlay_file    = "images/menus/menu-radio-mixed-insensitive.png"
+            overlay_stretch = FALSE
+        }
     }
 }
 

@@ -1,0 +1,52 @@
+/* =============================================================================
+ * Stack switchers
+ * ============================================================================= */
+.stack-switcher,
+stackswitcher {
+    > button {
+        // to position the needs attention dot, padding is added to the button
+        // child, a label needs just lateral padding while an icon needs vertical
+        // padding added too.
+
+        // needs to be set or it gets overridden by GtkRadioButton outline-offset
+        outline-offset: -3px;
+
+        // NOTE: This makes stackswitcher buttons somewhat homogeneous.
+        // I use 80px instead of 100px because it's just a waste of space and on switchers
+        // with more than 4-5 buttons it just prevent a window to be tiled. Not everybody uses
+        // a 40 inches TV as a f*cking monitor.
+        // Circular buttons are excluded because I like how they look like.
+        &.text-button:not(.circular) {
+            min-width: 50px;
+        }
+
+        > label {
+            padding: 0 6px;
+            margin: 0 -6px;
+        }
+
+        > image {
+            padding: 3px 6px;
+            margin: -3px -6px;
+        }
+
+        &.needs-attention {
+            > label,
+            > image {
+                @extend %needs_attention;
+            }
+        }
+    }
+}
+
+.stack-switcher.circular,
+stackswitcher.circular {
+    @if ($gtk4) {
+        border-spacing: 12px;
+    }
+
+    > button.circular,
+    > button.text-button.circular {
+        @extend %circular_button;
+    }
+}

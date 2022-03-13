@@ -1,0 +1,37 @@
+.caja-canvas-item,
+.nemo-canvas-item,
+.nautilus-canvas-item {
+    border-radius: 3px;
+}
+
+.caja-desktop.caja-canvas-item,
+.nemo-desktop.nemo-canvas-item,
+.nautilus-desktop.nautilus-canvas-item {
+    color: $desktop_item_fg;
+    text-shadow: 1px 1px $desktop_item_text_shadow;
+
+    &:active {
+        background-color: $desktop_item_selected_fg;
+        background-image: none;
+        color: $fg_color;
+        text-shadow: none;
+    }
+
+    &:selected {
+        background-color: rgba($selected_bg_color, 0.8);
+        background-image: none;
+        color: $selected_fg_color;
+        text-shadow: none;
+    }
+
+    &:hover {
+        text-shadow: none;
+    }
+}
+
+vte-terminal,
+vte-terminal.terminal-screen {
+    -TerminalScreen-background-darkness: 1;
+    background-color: #3f3f3f;
+    color: #fff;
+}

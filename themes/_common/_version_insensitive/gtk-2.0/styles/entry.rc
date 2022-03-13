@@ -15,7 +15,7 @@ style "entry"
         focus_color = shade(0.8, @selected_bg_color)
         lightborder_shade = 1.05
         lightborderstyle = 0
-        focusstyle = 0
+        focusstyle = 1
         roundness = 3
     }
 }

@@ -1,0 +1,279 @@
+/* =============================================================================
+ * Toolbars
+ * ============================================================================= */
+.primary-toolbar button {
+    -gtk-icon-shadow: none;
+} // tango icons don't need shadows
+
+// all the following is for the +|- buttons on inline toolbars, that way
+// should really be deprecated...
+.inline-toolbar toolbutton > button {
+    // redefining the button look is
+    // needed since those are flat...
+    @include button(normal);
+
+    &:hover {
+        @include button(hover);
+    }
+
+    &:active,
+    &:checked {
+        @include button(active);
+    }
+
+    &:disabled {
+        @include button(insensitive);
+
+        &:active,
+        &:checked {
+            @include button(insensitive-active);
+        }
+    }
+}
+
+toolbar {
+    -GtkWidget-window-dragging: true;
+    padding: 6px;
+    border-style: none;
+    background-color: $bg_color;
+
+    separator {
+        border-color: transparent;
+    }
+
+    // toolbar separators
+    &.horizontal separator {
+        margin: 0 7px 1px 6px;
+        border-left-color: rgba(black, 0.2);
+        border-right-color: rgba(white, 0.3);
+    }
+    &.vertical separator {
+        margin: 6px 1px 7px 0;
+        border-top-color: rgba(black, 0.2);
+        border-bottom-color: rgba(white, 0.3);
+    }
+
+    &:not(.inline-toolbar):not(.osd) {
+        // workaround: add margins to the children of tool items to simulate
+        // spacing, ignore the overflow button (.toggle) and the overflow menu
+        // (.popup)
+        > *:not(.toggle):not(.popup) > * {
+            margin-right: 1px;
+            margin-bottom: 1px;
+        }
+    }
+}
+
+// NOTE: It seems that the purpose of this style is to make certain toolbars look like
+// oversized headerbars. I have seen this styling only in Mint themes.
+// The primary-toolbar CSS class is not styled in Adwaita 3.24.x and completelly
+// removed in Adwaita 4.0.x.
+toolbar.primary-toolbar {
+    -GtkWidget-window-dragging: true;
+    padding: 6px;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: $borders_color;
+    color: $fg_color;
+    text-shadow: 0 1px $button_text_shadow;
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, $toolbar_bg_a, $toolbar_bg_b);
+
+    &:disabled {
+        text-shadow: none;
+    }
+
+    button {
+        @include button(forbar-normal);
+
+        // outline-offset: -3px;
+        padding: 6px;
+
+        image {
+            color: #505050;
+            -gtk-icon-shadow: 0 1px rgba(white, 0.9);
+        }
+
+        &:hover {
+            @include button(hover);
+        }
+
+        &:active,
+        &:checked {
+            @include button(forbar-active);
+
+            &:hover {
+                @include button(active-hover);
+            }
+
+            &:disabled {
+                @include button(insensitive-active);
+            }
+        }
+    }
+
+    button.image-button {
+        padding: 6px;
+        color: #505050;
+        -gtk-icon-shadow: 0 1px rgba(white, 0.9);
+
+        &:active,
+        &:checked {
+            -gtk-icon-shadow: 0 1px rgba(white, 0.4);
+
+            &:hover {
+                -gtk-icon-shadow: 0 1px rgba(white, 0.4);
+            }
+        }
+
+        &:disabled {
+            color: $insensitive_fg_color;
+            -gtk-icon-shadow: none;
+
+            label {
+                color: $insensitive_fg_color;
+                -gtk-icon-shadow: none;
+            }
+
+            image {
+                color: $insensitive_fg_color;
+                -gtk-icon-shadow: none;
+            }
+        }
+    }
+
+    button.text-button {
+        padding: 6px 16px;
+    }
+
+    button.image-button.flat {
+        -gtk-icon-shadow: 0 1px rgba(white, 0.4);
+        text-shadow: 0 1px rgba(white, 0.2);
+
+        label {
+            color: $fg_color;
+        }
+    }
+
+    scale,
+    scale.vertical {
+        &:disabled {
+            trough {
+                border-color: $borders_color;
+                background-color: darken($bg_color, 10%);
+                background-image: none;
+                box-shadow: none;
+            }
+
+            highlight {
+                border-color: $borders_color;
+                background-color: darken($bg_color, 10%);
+                background-image: none;
+                box-shadow: none;
+            }
+        }
+    }
+
+    scale {
+        trough {
+            background-color: darken($bg_color, 15%);
+        }
+    }
+
+    scale.vertical {
+        trough {
+            background-color: darken($bg_color, 5%);
+            background-image: none;
+        }
+    }
+
+    button.flat {
+        border: 1px solid transparent;
+        border-radius: $button_radius;
+        box-shadow: none;
+
+        &:hover {
+            @include button(hover);
+        }
+
+        &:active,
+        &:checked {
+            @include button(forbar-active);
+        }
+
+        &:disabled {
+            box-shadow: none;
+        }
+    }
+
+    .button {
+        &:disabled {
+            box-shadow: inset 0 1px rgba(white, 0.3), inset 1px 0 rgba(white, 0.15),
+                inset -1px 0 rgba(white, 0.15), inset 0 -1px rgba(white, 0.06),
+                0 1px rgba(white, 0.3);
+        }
+    }
+
+    button.raised,
+    .raised button {
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, $button_raised_bg_a, $button_raised_bg_b);
+
+        &:active,
+        &:checked {
+            background-color: transparent;
+            background-image: linear-gradient(
+                to bottom,
+                $button_active_bg_a,
+                $button_active_bg_b 30%,
+                $button_active_bg_c
+            );
+
+            &:hover {
+                @include button(active-hover);
+            }
+        }
+
+        &:hover {
+            background-color: transparent;
+            background-image: linear-gradient(
+                to bottom,
+                $button_hover_raised_bg_a,
+                $button_hover_raised_bg_b
+            );
+        }
+
+        &:disabled {
+            background-color: transparent;
+            background-image: linear-gradient(
+                to bottom,
+                $button_insensitive_bg_a,
+                $button_insensitive_bg_b
+            );
+        }
+    }
+}
+
+.inline-toolbar {
+    padding: 2px;
+    border: 1px solid $borders_color;
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, $inline_toolbar_bg_a, $inline_toolbar_bg_b);
+}
+
+searchbar > revealer > box,
+.location-bar {
+    @extend .inline-toolbar;
+
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+searchbar > revealer > box {
+    // workaround: undo the GtkContainer:border-width and use CSS padding instead
+    margin: -6px;
+    padding: 6px;
+}

@@ -1,0 +1,202 @@
+/* =============================================================================
+ * Menus
+ * ============================================================================= */
+%menuitem_separator,
+menuitem.separator,
+.menuitem.separator {
+    background-color: rgba(black, 0.1);
+    border: none;
+    color: rgba(black, 0.1);
+    min-height: 1px;
+    min-width: 1px;
+}
+
+menubar,
+.menubar {
+    -GtkWidget-window-dragging: true;
+    padding: 0px;
+    background-color: $bg_color;
+    color: $fg_color;
+
+    &:backdrop {
+        color: rgba($fg_color, 0.7);
+    }
+
+    > menuitem {
+        padding: 4px 6px;
+        border: 1px solid transparent;
+        text-shadow: 0 1px rgba(white, 0.4);
+
+        &:hover {
+            border-color: mix($selected_bg_color, $borders_color, 75%);
+            border-radius: 3px 3px 0 0;
+            background-color: transparent;
+            background-image: linear-gradient(
+                to bottom,
+                $selected_bg_color,
+                darken($selected_bg_color, 15%)
+            );
+            color: $selected_fg_color;
+            text-shadow: none;
+        }
+    }
+}
+
+menu,
+.menu {
+    margin: 4px;
+    padding: 0;
+    border: 1px solid $borders_color;
+    border-radius: 0;
+    background-color: $menu_bg;
+
+    .csd & {
+        padding: 0;
+        border-radius: 0;
+        border: none;
+    }
+
+    separator,
+    .csd & separator {
+        @extend %menuitem_separator;
+    }
+
+    > separator {
+        @extend %menuitem_separator;
+    }
+
+    // NOTE: Firefox workaround
+    .separator:not(label),
+    .csd & .separator:not(label) {
+        @extend %menuitem_separator;
+    }
+    // Firefox workaround end
+
+    menuitem {
+        min-height: 16px;
+        min-width: 40px;
+        padding: 4px;
+        border: 1px solid transparent;
+        text-shadow: none;
+
+        &:hover {
+            color: $selected_fg_color;
+            border-color: mix($selected_bg_color, $borders_color, 75%);
+            background-image: linear-gradient(
+                to bottom,
+                $selected_bg_color,
+                darken($selected_bg_color, 15%)
+            );
+        }
+
+        &:disabled {
+            color: mix($menu_fg, $menu_bg, 60%);
+        }
+
+        // NOTE: Submenu indicators
+        arrow {
+            min-height: 16px;
+            min-width: 16px;
+
+            &:dir(ltr) {
+                -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
+                margin-left: 10px;
+            }
+
+            &:dir(rtl) {
+                -gtk-icon-source: -gtk-icontheme("pan-end-symbolic-rtl");
+                margin-right: 10px;
+            }
+        }
+
+        @at-root menuitem {
+            accelerator {
+                color: gtkalpha(currentColor, 0.55);
+            }
+
+            check,
+            radio {
+                min-height: 16px;
+                min-width: 16px;
+
+                &:dir(ltr) {
+                    margin-right: 6px;
+                    margin-left: 2px;
+                }
+
+                &:dir(rtl) {
+                    margin-left: 6px;
+                    margin-right: 2px;
+                }
+            }
+        }
+    }
+
+    // overflow buttons
+    > arrow {
+        @include button(undecorated);
+
+        min-height: 16px;
+        min-width: 16px;
+        padding: 2px;
+        background-color: darken($menu_bg, 10%);
+        color: $menu_fg;
+
+        &.top {
+            margin-top: -6px;
+            border-bottom: 1px solid $borders_color;
+            -gtk-icon-source: -gtk-icontheme("pan-up-symbolic");
+        }
+
+        &.bottom {
+            margin-bottom: -6px;
+            border-top: 1px solid $borders_color;
+            -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+        }
+
+        &:hover {
+            background-color: $menu_bg;
+        }
+
+        &:disabled {
+            color: $insensitive_fg_color;
+        }
+    }
+
+    &.button {
+        border: 1px solid $borders_color;
+        border-radius: 0;
+        border-image: none;
+        background-color: darken($menu_bg, 10%);
+        background-image: none;
+        color: $menu_fg;
+
+        &:hover {
+            border: 1px solid $borders_color;
+            border-radius: 0;
+            border-image: none;
+            background-color: mix(darken($menu_bg, 10%), $selected_bg_color, 40%);
+            background-image: none;
+            color: $menu_fg;
+        }
+
+        &:disabled {
+            border: 1px solid $borders_color;
+            border-radius: 0;
+            border-image: none;
+            background-color: $menu_bg;
+            background-image: none;
+            color: $insensitive_fg_color;
+        }
+    }
+}
+
+.context-menu {
+    font: initial;
+
+    @extend .menu;
+
+    .csd & {
+        border: none;
+    }
+}

@@ -1,0 +1,42 @@
+%YAML 1.1
+---
+# To override these defaults, make a copy of this file into REPOSITORY_FOLDER/tmp and
+# modify the values on the copied file.
+
+# Opacity values range: 0 (fully transparent) to 1 (fully opaque).
+# Spread/Distance values range in pixels: Any positive integer.
+
+# CSD (Client Side Decorations) shadows.
+# Affects Gtk3+ themes only.
+csd_shadow_spread: 0
+csd_shadow_opacity: 0.4
+csd_backdrop_shadow_spread: 0
+csd_backdrop_shadow_opacity: 0.2
+
+# Popovers shadows.
+# Affects Gtk3+ themes only.
+popover_shadow_spread: 1
+popover_shadow_opacity: 0.2
+
+# Visual hints that happen where content is "scrolled off" and can be made visible by scrolling.
+# Affects Gtk3+ themes only.
+# Set to zero to get rid of it.
+undershoots_opacity: 0.2
+# Distance in pixels from a scrolled view border.
+undershoots_distance: 0
+
+# Tooltips opacity.
+# Affects all themes.
+tooltip_background_opacity: 1
+# Affects Cinnamon and Gtk3+ themes only.
+tooltip_border_opacity: 0.3
+
+# Focus outline.
+# Affects all Gtk themes.
+outline_opacity: 0.3
+
+# Display scrollbar arrows.
+# true or 1 to display arrows.
+# false or 0 to hide them.
+# Affects all Gtk themes.
+display_scrollbar_arrows: true

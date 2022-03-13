@@ -1,0 +1,16 @@
+<svg id="svg2" width="16" height="16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <defs id="defs4">
+  <linearGradient id="linearGradient3780" x1="8.0293484" x2="8.0293484" y1="1038.4275" y2="1050.3295" gradientTransform="matrix(1.142791,0,0,1.1427928,-1.1400007,-1185.4872)" gradientUnits="userSpaceOnUse">
+   <stop id="stop3769" style="stop-color:#000000;stop-opacity:.06" offset="0"/>
+   <stop id="stop3771" style="stop-color:#000000;stop-opacity:.02" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient3791" x1="7.9598212" x2="7.9598212" y1="1038.447" y2="1041.3032" gradientTransform="matrix(1.142791,0,0,1.142791,-1.1400008,-1185.4854)" gradientUnits="userSpaceOnUse">
+   <stop id="stop3786" style="stop-color:#000000;stop-opacity:.08" offset="0"/>
+   <stop id="stop3789" style="stop-color:#000000;stop-opacity:0" offset="1"/>
+  </linearGradient>
+ </defs>
+ <rect id="rect3788" x="1.1455814" y="1.145564" width="13.713153" height="13.713513" rx="1.7182267" ry="1.7243302" style="fill:#f5f5f5"/>
+ <rect id="rect3755" x=".57185841" y=".57185841" width="14.856283" height="14.856283" rx="2.2855823" ry="2.2855823" style="fill:none;stroke-width:1.143;stroke:#f5f5f5"/>
+ <rect id="rect3782" x="1.1455814" y="1.145564" width="13.713153" height="13.713513" rx="1.7182267" ry="1.7243302" style="fill:url(#linearGradient3791)"/>
+ <rect id="rect3765" x="1.7169768" y="1.7169594" width="12.570701" height="12.57072" rx="1.0794461" ry="1.1530943" style="fill:none;stroke-width:1.1427912;stroke:url(#linearGradient3780)"/>
+</svg>

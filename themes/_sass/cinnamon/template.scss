@@ -1,19 +1,15 @@
-$cinnamon_version: "@cinnamon_version@";
-$variant: "@variant@";
-
-// Colors
-$white: white;
-
-$selected_fg_color: $white;
-$selected_bg_color: "@selected_bg_color@";
-$bg_color: #e1e1e1;
-$fg_color: #464646;
-$border_color: #ababab;
-$tooltip_bg_color: #fbeaa0;
-$tooltip_fg_color: #212121;
-$warning_color: "@warning_color@";
-$error_color: "@error_color@";
-$link_color: "@link_color@";
+$cinnamon_version: @version@;
+$variant: @variant@;
+$selected_fg_color: @selected_fg_color@;
+$selected_bg_color: @selected_bg_color@;
+$tooltip_bg_color: @tooltip_bg_color@;
+$tooltip_fg_color: @tooltip_fg_color@;
+$warning_color: @warning_color@;
+$error_color: @error_color@;
+$link_color: @link_color@;
+$bg_color: lighten(#d6d6d6, 4%);
+$fg_color: lighten(#212121, 15%);
+$borders_color: darken(#d6d6d6, 17%);
 
 $button_bg_a: lighten($bg_color, 6%);
 $button_bg_b: darken($bg_color, 2%);
@@ -24,10 +20,10 @@ $button_focus_bg_b: darken($bg_color, 4%);
 $button_active_bg_a: darken($bg_color, 19%);
 $button_active_bg_b: darken($bg_color, 16%);
 
-$border_button: darken($border_color, 1%);
-$border_button_hover: lighten($border_color, 1%);
-$border_button_active: darken($border_color, 13%);
+$border_button: darken($borders_color, 1%);
+$border_button_hover: lighten($borders_color, 1%);
+$border_button_active: darken($borders_color, 13%);
 
 
-@import "_drawings";
-@import "_common";
+@import "mixins";
+@import "common";

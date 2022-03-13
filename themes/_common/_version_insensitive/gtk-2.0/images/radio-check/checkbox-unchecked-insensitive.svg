@@ -1,0 +1,11 @@
+<svg id="svg2" width="16" height="16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <defs id="defs4">
+  <linearGradient id="linearGradient3791" x1="7.9598212" x2="7.9598212" y1="1038.447" y2="1041.3032" gradientTransform="matrix(1.1422766,0,0,1.1428372,-1.1341389,-1185.5358)" gradientUnits="userSpaceOnUse">
+   <stop id="stop3786" style="stop-color:#000000;stop-opacity:.08" offset="0"/>
+   <stop id="stop3789" style="stop-color:#000000;stop-opacity:0" offset="1"/>
+  </linearGradient>
+ </defs>
+ <rect id="rect3788" x="1.1504143" y="1.1431056" width="13.70698" height="13.714066" rx="1.7174532" ry="1.7243998" style="fill:#e0e0e0"/>
+ <rect id="rect3782" x="1.1504143" y="1.1431056" width="13.70698" height="13.714066" rx="1.7174532" ry="1.7243998" style="fill:url(#linearGradient3791)"/>
+ <rect id="rect3755" x=".57927603" y=".57168698" width="14.849596" height="14.856884" rx="2.2845533" ry="2.2856743" style="fill:none;stroke-width:1.1425568px;stroke:#b0b0b0"/>
+</svg>

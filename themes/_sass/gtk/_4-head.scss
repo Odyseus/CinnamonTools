@@ -1,0 +1,287 @@
+// WARNING:
+// - Be very careful when copying/implementing new styles. Some Sass functions with
+// the exact same name as Gtk theming functions perform totally different tasks.
+// See _0-functions.scss file.
+// - I always forget that blur affects performance. KEEP THIS WARNING HERE!!!
+// - Gtk CSS properties are case sensitive. Or at least, some of them are. Who the hell knows!
+// TODO:
+// - Maybe add borders to checks/radios? This is just a very minuscule detail and these are small
+//   images, so their "flatness" isn't so out of place for the style of this theme. The checks/radios
+//   used on selected states do have borders though.
+//   - DONE: I implemented the checks/radios used by Adwaita. They don't use images luckily, so they
+//     are more customizable with CSS. And finally some consistency; all checks/radios are the same,
+//     whether they are in menu items or any other widget. I even modified the checks/radios used
+//     by the Gtk2 version of the theme to look exactly (well, close enough) like the ones used by Gtk3.
+// - Decide what to do with OSD. All themes handle this nonsense by using a different background color
+//   than the one defined in bg_color and then define different styles for every single f*cking
+//   widget when they are placed inside an OSD. I WILL NEVER DO THAT!!! Enough time I'm wasting
+//   maintaining this theme, so I will not waste even more time defining twice the styles for each
+//   widget.
+//   - DONE: I eradicated all widgets styles that targeted the osd class. I have chosen the colors
+//   used by the Cinnamon theme to act as the OSD theme.
+// FIXME:
+// - DONE: Deal with linked spinbuttons. Neither Mint-X nor Mint-Y from upstream handle this widget
+//   inside linked containers. The Adwaita theme does handle it. I tried to give it a go, but I broke
+//   more things than I fixed (LOL). In addition, the Adwaita theme highlights the entire horizontal
+//   widget's border when focused, not just the entry. The vertical spinbutton only highlights the
+//   entry borders.
+// - DONE: Deal with border colors of linked entries. ¬¬
+// - There seems to be a missing border for notebooks or maybe expanders. I can see it in the third
+//   page notebook example of the gtk3-widget-factory interface. The borders were there before the
+//   conversion of the upstream theme to Gtk 3.20. Additionally, the tabs of this widget have different
+//   sizes in both Mint-X and Mint-Y themes. In short, this widget is a freaking mess.
+//   - DONE: I "half-fixed" this. When the upstream theme was updated to work with Gtk 3.20+, the
+//     wrong CSS properties were specified to set a border transparent (e.g. border-bottom instead of
+//     border-bottom-color). I said "half-fixed" because fixing this exposed a new problem. The
+//     transparent border created a 1px gap between the border of a tab and the border of its page.
+//     I have no idea how I'm going to fix this.
+// - Handle focus-visible, focus-within, and any other new garbage added solely to waste everybody's time!!!
+// TEST:
+// - Direct child selector. In the Adwaita 4.0.x theme some selectors were changed from descendant
+//   selectors to direct child selectors. Let's test if this works right on Gtk3 so I don't have to
+//   use duplicated code in conditions or placeholders all over the place. This was supposedly done
+//   for performance reasons.
+// NOTES:
+// - I'm using the same Sass sources for Gtk 3 and 4. It would seem complicated to have all these
+//   conditions, but it beats having to maintain separated Sass sources for both themes.
+//   The Gtk4 part of the code isn't finished yet and the theme isn't parsed from Sass
+//   nor built when building themes.
+// - In some places, like the toolbars, things might get complicated. I'm thinking of
+//   putting all styles for Gtk4 in one @mixin and the rest in another @mixin and then call
+//   @include conditionally. This would be infinitely easier if conditional imports would
+//   be possible in Sass. I already added a mechanism that will allow me to selectively import
+//   an include depending on which Gtk version is being used.
+// - I use Prettier to format SCSS code that uses what it seems to be the only SCSS parser
+//   in existence (Stylelint). Stylelint has the option called property-case that either
+//   lowercases or uppercases ALL CSS/SCSS properties. It doesn't have the option
+//   "DO NOT TOUCH THE F*CKING CASE OF THE F*CKING PROPERTY NAMES"!!!
+//   The thing is, this isn't a f*cking web page, nor "software" designed by Microsoft's or Apple's
+//   "developers" that after more than 30 f*cking years still can't understand that
+//   *THIS* is not equal to *this*!!!
+$button_radius: 3px;
+$tooltip_radius: 4px;
+$window_radius: $button_radius + 3;
+$popover_radius: $button_radius + 2;
+
+* {
+    padding: 0;
+
+    @if (not $gtk4) {
+        -GtkDialog-action-area-border: 6;
+        -GtkDialog-button-spacing: 6;
+        -GtkDialog-content-area-border: 6;
+        -GtkScrolledWindow-scrollbar-spacing: 0;
+        -GtkTextView-error-underline-color: $error_color;
+        -GtkToolButton-icon-spacing: 6;
+        -WnckTasklist-fade-overlay-rect: 0;
+        // NOTE: Extracted from Mint-Y
+        -GtkToolItemGroup-expander-size: 11;
+        -GtkWidget-text-handle-width: 20;
+        -GtkWidget-text-handle-height: 20;
+
+        -gtk-secondary-caret-color: $selected_bg_color;
+    }
+}
+
+@if ($gtk4) {
+    dnd {
+        color: $fg-color;
+    }
+
+    .normal-icons {
+        -gtk-icon-size: 16px;
+    }
+
+    .large-icons {
+        -gtk-icon-size: 32px;
+    }
+
+    image.drag-icon {
+        -gtk-icon-size: 32px;
+    }
+}
+
+@if (not $gtk4) {
+    .gtkstyle-fallback {
+        background-color: $bg_color;
+        color: $fg_color;
+
+        &:active {
+            background-color: darken($bg_color, 10%);
+            color: $fg_color;
+        }
+
+        &:selected {
+            background-color: $selected_bg_color;
+            color: $selected_fg_color;
+        }
+
+        &:disabled {
+            background-color: lighten(darken($bg_color, 5%), 5%);
+            color: mix($fg_color, $bg_color, 40%);
+        }
+
+        &:hover {
+            background-color: lighten($bg_color, 10%);
+            color: $fg_color;
+        }
+    }
+}
+
+/* =============================================================================
+ * General Typography
+ * ============================================================================= */
+.large-title {
+    font-weight: 300;
+    font-size: 24pt;
+}
+
+.title-1 {
+    font-weight: 800;
+    font-size: 20pt;
+}
+
+.title-2 {
+    font-weight: 800;
+    font-size: 15pt;
+}
+
+.title-3 {
+    font-weight: 700;
+    font-size: 15pt;
+}
+
+.title-4 {
+    font-weight: 700;
+    font-size: 13pt;
+}
+
+.heading {
+    font-weight: 700;
+    font-size: 11pt;
+}
+
+.body {
+    font-weight: 400;
+    font-size: 11pt;
+}
+
+.caption-heading {
+    font-weight: 700;
+    font-size: 9pt;
+}
+
+.caption {
+    font-weight: 400;
+    font-size: 9pt;
+}
+
+%rubberband,
+rubberband,
+.view.rubberband,
+.rubberband {
+    border: 1px solid $selected_bg_color;
+    border-radius: 0;
+    background-color: rgba($selected_bg_color, 0.3);
+}
+
+/* =============================================================================
+ * Spinner animation
+ * ============================================================================= */
+@keyframes spin {
+    to {
+        // NOTE: In Gtk4 the standard CSS transform can be used.
+        @if ($gtk4) {
+            transform: rotate(1turn);
+        } @else {
+            -gtk-icon-transform: rotate(1turn);
+        }
+    }
+}
+
+spinner {
+    background-image: none;
+    opacity: 0;
+    -gtk-icon-source: -gtk-icontheme("process-working-symbolic");
+
+    &:checked {
+        opacity: 1;
+        animation: spin 1s linear infinite;
+
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
+}
+
+@keyframes needs_attention {
+    from {
+        // NOTE: In Gtk4 the standard CSS radial-gradient can be used.
+        @if ($gtk4) {
+            background-image: radial-gradient(
+                farthest-side,
+                $selected_bg_color 0%,
+                rgba($selected_bg_color, 0) 0%
+            );
+        } @else {
+            background-image: -gtk-gradient(
+                radial,
+                center center,
+                0,
+                center center,
+                0.01,
+                to($selected_bg_color),
+                to(transparent)
+            );
+        }
+    }
+    to {
+        @if ($gtk4) {
+            background-image: radial-gradient(
+                farthest-side,
+                $selected_bg_color 95%,
+                rgba($selected_bg_color, 0)
+            );
+        } @else {
+            background-image: -gtk-gradient(
+                radial,
+                center center,
+                0,
+                center center,
+                0.5,
+                to($selected_bg_color),
+                to(transparent)
+            );
+        }
+    }
+}
+
+%needs_attention {
+    animation: needs_attention 150ms ease-in;
+
+    @if ($gtk4) {
+        background-image: radial-gradient(
+            farthest-side,
+            $selected_bg_color 95%,
+            rgba($selected_bg_color, 0)
+        );
+    } @else {
+        background-image: -gtk-gradient(
+            radial,
+            center center,
+            0,
+            center center,
+            0.5,
+            to($selected_bg_color),
+            to(transparent)
+        );
+    }
+
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    background-position: right 3px, right 4px;
+
+    &:dir(rtl) {
+        background-position: left 3px, left 4px;
+    }
+}

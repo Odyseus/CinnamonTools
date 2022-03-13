@@ -1,0 +1,201 @@
+/* =============================================================================
+ * Notebooks
+ * ============================================================================= */
+notebook {
+    padding: 0;
+
+    border: 1px solid $borders_color;
+
+    > header {
+        margin: -1px;
+    }
+
+    > header.top {
+        > tabs {
+            margin: 0px;
+            margin-right: -2px;
+        }
+
+        margin-bottom: 0;
+        padding-left: 0;
+        padding-right: 0;
+
+        &:dir(rtl) {
+            margin-bottom: 0;
+            padding-left: 0px;
+            padding-right: 2px;
+        }
+    }
+
+    > header.bottom {
+        margin-top: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    > header.left {
+        margin-right: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    > header.right {
+        margin-left: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    > stack {
+        &:not(:only-child) {
+            background-color: $notebook_bg;
+        }
+    }
+}
+
+notebook {
+    > header {
+        padding: 0;
+        background-color: $bg_color;
+
+        > tabs {
+            > tab {
+                button.flat,
+                button.sidebar-button {
+                    @include button(notebook-header-normal);
+
+                    &:hover {
+                        @include button(notebook-header-hover);
+                    }
+
+                    &:active,
+                    &:active:hover {
+                        @include button(notebook-header-active-hover);
+                    }
+                }
+            }
+        }
+    }
+
+    > header.top {
+        box-shadow: inset 0 -1px $borders_color;
+        padding-bottom: 0;
+
+        > tabs {
+            > tab {
+                @include notebook_tab(top);
+
+                &:dir(rtl) {
+                    margin-right: 0;
+                    margin-left: 2px;
+                }
+            }
+
+            > arrow.up {
+                -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
+            }
+
+            > arrow.down {
+                -gtk-icon-source: -gtk-icontheme("pan-start-symbolic");
+            }
+        }
+    }
+
+    > header.bottom {
+        box-shadow: inset 0 1px $borders_color;
+        padding-top: 0;
+
+        > tabs {
+            > tab {
+                @include notebook_tab(bottom);
+
+                &:dir(rtl) {
+                    margin-right: 0;
+                    margin-left: 2px;
+                }
+            }
+
+            > arrow.up {
+                -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
+            }
+
+            > arrow.down {
+                -gtk-icon-source: -gtk-icontheme("pan-start-symbolic");
+            }
+        }
+    }
+
+    > header.left {
+        box-shadow: inset -1px 0 $borders_color;
+        padding-right: 0;
+
+        > tabs {
+            > tab {
+                @include notebook_tab(left);
+            }
+
+            > arrow.up {
+                -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+            }
+
+            > arrow.down {
+                -gtk-icon-source: -gtk-icontheme("pan-up-symbolic");
+            }
+        }
+    }
+
+    > header.right {
+        box-shadow: inset 1px 0 $borders_color;
+        padding-left: 0;
+
+        > tabs {
+            > tab {
+                @include notebook_tab(right);
+            }
+
+            > arrow.up {
+                -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+            }
+
+            > arrow.down {
+                -gtk-icon-source: -gtk-icontheme("pan-up-symbolic");
+            }
+        }
+    }
+}
+
+notebook {
+    > header {
+        > tabs {
+            > tab {
+                &:checked {
+                    background-color: $notebook_bg;
+                    background-image: none;
+
+                    @include focus_ring($offset: -4px);
+                }
+            }
+        }
+    }
+
+    @each $pos, $counter_pos in ("top", "bottom"), ("bottom", "top"), ("left", "right"),
+        ("right", "left")
+    {
+        > header.#{$pos} {
+            > tabs {
+                > tab {
+                    &:checked {
+                        // NOTE: Setting only the color to transparent will leave a gap between the
+                        // notebook header and the box.
+                        border-#{$counter_pos}: none;
+
+                        // NOTE: Removing the border makes the label dance. ¬¬
+                        // IMPORTANT: Use desendant selector instead of direct child selector.
+                        label {
+                            padding-#{$counter_pos}: 1px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,368 @@
+/* =============================================================================
+ * Titlebars
+ * ============================================================================= */
+%titlebar,
+headerbar {
+    min-height: 42px;
+    padding: 0 7px;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    border-color: $borders_color;
+    background-color: transparent;
+    background-image: linear-gradient(
+        to bottom,
+        lighten($bg_color, 8%),
+        $bg_color 50%,
+        darken($bg_color, 5%)
+    );
+    box-shadow: inset 0 2px rgba(white, 0.3), inset 0 1px rgba(white, 0.8);
+
+    button {
+        @include button(forbar-normal);
+
+        padding: 8px;
+
+        &:active,
+        &:checked {
+            @include button(forbar-active);
+
+            &:disabled {
+                @include button(insensitive-active);
+            }
+        }
+
+        &:disabled {
+            @include button(insensitive);
+        }
+    }
+
+    button.image-button {
+        padding: 8px;
+    }
+
+    button.titlebutton.appmenu {
+        padding: 8px;
+        border: 1px solid transparent;
+        border-radius: $button_radius;
+        box-shadow: none;
+
+        &:hover {
+            @include button(hover);
+
+            background-color: transparent;
+            background-image: linear-gradient(to bottom, $button_bg_a, $button_bg_b);
+        }
+
+        &:active,
+        &:checked {
+            @include button(forbar-active);
+
+            background-color: transparent;
+            background-image: linear-gradient(
+                to bottom,
+                $button_active_bg_a,
+                $button_active_bg_b 30%,
+                $button_active_bg_c
+            );
+
+            &:hover {
+                @include button(active-hover);
+            }
+        }
+
+        &:disabled {
+            box-shadow: none;
+        }
+    }
+
+    button.titlebutton {
+        padding: 8px 1px 8px 1px;
+
+        &,
+        &:active,
+        &:checked,
+        &:hover {
+            -gtk-icon-shadow: 0 1px lighten($bg_color, 30%);
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+            background-image: none;
+        }
+
+        &:backdrop {
+            color: #b2b2b2;
+            -gtk-icon-shadow: none;
+        }
+
+        &,
+        &:active,
+        &:checked {
+            color: #999999;
+        }
+
+        &:hover {
+            color: #666666;
+        }
+    }
+
+    button.text-button {
+        padding: 6px 16px;
+    }
+
+    &:backdrop {
+        background-image: linear-gradient(
+            to bottom,
+            $bg_color,
+            $bg_color 50%,
+            darken($bg_color, 5%)
+        );
+        box-shadow: none;
+    }
+
+    &:first-child {
+        border-top-left-radius: $window_radius;
+
+        &:backdrop {
+            border-top-left-radius: $window_radius;
+        }
+    }
+
+    &:last-child {
+        border-top-right-radius: $window_radius;
+
+        &:backdrop {
+            border-top-right-radius: $window_radius;
+        }
+    }
+
+    .title {
+        color: darken($bg_color, 50%);
+        font-weight: bold;
+        padding: 0 12px;
+        text-shadow: 0 1px lighten($bg_color, 30%);
+    }
+
+    .subtitle {
+        font-size: smaller;
+        padding: 0 12px;
+
+        @extend .dim-label;
+    }
+
+    scale {
+        trough {
+            background-color: darken($bg_color, 15%);
+        }
+    }
+
+    button.flat {
+        border: 1px solid transparent;
+        border-radius: $button_radius;
+        box-shadow: none;
+
+        &:hover {
+            @include button(hover);
+        }
+
+        &:active,
+        &:checked {
+            @include button(forbar-active);
+        }
+
+        &:disabled {
+            box-shadow: none;
+        }
+    }
+
+    button.toggle {
+        &:hover {
+            @include button(hover);
+        }
+
+        &:active,
+        &:checked {
+            @include button(forbar-active);
+        }
+    }
+
+    @each $btn in "close", "maximize", "minimize" {
+        button.titlebutton.#{$btn} {
+            &,
+            &:active,
+            &:active:hover {
+                @include button(titlebutton);
+
+                background-image: -gtk-scaled(
+                    url("../common-assets/titlebar/titlebutton-#{$btn}-normal.png"),
+                    url("../common-assets/titlebar/titlebutton-#{$btn}-normal@2.png")
+                );
+            }
+
+            &:backdrop {
+                background-image: -gtk-scaled(
+                    url("../common-assets/titlebar/titlebutton-#{$btn}-backdrop.png"),
+                    url("../common-assets/titlebar/titlebutton-#{$btn}-backdrop@2.png")
+                );
+            }
+
+            &:hover {
+                background-image: -gtk-scaled(
+                    url("../common-assets/titlebar/titlebutton-#{$btn}-hover.png"),
+                    url("../common-assets/titlebar/titlebutton-#{$btn}-hover@2.png")
+                );
+            }
+        }
+    }
+
+    // squared corners when the window is maximized, tiled, or fullscreen
+    .tiled &,
+    .tiled-top &,
+    .tiled-right &,
+    .tiled-bottom &,
+    .tiled-left &,
+    .maximized &,
+    .fullscreen & {
+        &:backdrop,
+        & {
+            border-radius: 0;
+        }
+    }
+
+    &.titlebar headerbar:not(.titlebar) {
+        // Drop the background of non-titlebar nested headerbars. This is needed to
+        // work around headerbar sliding animation issues without refactoring
+        // Adwaita's support of titlebars and headerbars as it may break
+        // applications.
+        // See https://gitlab.gnome.org/GNOME/gtk/issues/1264 for more information.
+        background: none;
+        box-shadow: none;
+    }
+}
+
+// NOTE: Add vertical margins to common widgets on the headerbar to avoid them spanning the whole height.
+headerbar {
+    entry,
+    spinbutton,
+    separator:not(.sidebar),
+    button,
+    menubutton {
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+
+    // TEST
+    switch {
+        // NOTE: I changed from 10px margin to 14px because I made switches smaller in height.
+        margin-top: 14px;
+        margin-bottom: 14px;
+        // NOTE: Scales and switches on headerbars lack contrast.
+        // https://gitlab.gnome.org/GNOME/gtk/-/issues/3504
+        // This isn't needed at all. This theme's titlebars are lighter than Adwaita's and
+        // the switches are darker. If anything, they might have too much contrast.
+        // background-color: darken($dark_fill, 8%);
+    }
+
+    // Reset margins for buttons inside menubutton
+    menubutton > button {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.titlebar.default-decoration {
+    &,
+    .csd & {
+        &,
+        &:backdrop {
+            background-image: linear-gradient(to bottom, lighten($bg_color, 8%), $bg_color);
+            min-height: 28px;
+            padding: 0 6px;
+            border-bottom-width: 0;
+        }
+    }
+
+    button.titlebutton {
+        padding-top: 0;
+        padding-bottom: 0;
+        min-width: 0;
+        min-height: 0;
+        margin: 0;
+    }
+}
+
+// NOTE: I don't remember why I added this here since most of the styles are already defined,
+// although without window as parent.
+headerbar {
+    // headerbar border rounding
+
+    window separator:first-child + &,
+    window &:first-child {
+        &:backdrop,
+        & {
+            border-top-left-radius: $window_radius;
+        }
+    }
+    window &:last-child {
+        &:backdrop,
+        & {
+            border-top-right-radius: $window_radius;
+        }
+    }
+
+    window stack & {
+        // tackles the stacked headerbars case
+        &:first-child,
+        &:last-child {
+            &:backdrop,
+            & {
+                border-top-left-radius: $window_radius;
+                border-top-right-radius: $window_radius;
+            }
+        }
+    }
+
+    window.tiled &,
+    window.tiled-top &,
+    window.tiled-right &,
+    window.tiled-bottom &,
+    window.tiled-left &,
+    window.maximized &,
+    window.fullscreen &,
+    window.solid-csd & {
+        &,
+        &:backdrop {
+            &,
+            &:first-child,
+            &:last-child,
+            &:only-child {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+        }
+    }
+}
+
+.titlebar:not(headerbar) {
+    window.csd > & {
+        // in csd we assume every titlebar is a headerbar so reset anything, this is needed for split toolbars cases
+        padding: 0;
+        background-color: transparent;
+        background-image: none;
+        border-style: none;
+        border-color: transparent;
+        box-shadow: none;
+    }
+
+    separator {
+        background-color: $borders_color;
+    } // FIXME: use darker border?
+
+    @extend %titlebar;
+}
+
+.header-bar {
+    &:disabled {
+        text-shadow: none;
+    }
+}

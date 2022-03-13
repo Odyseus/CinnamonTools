@@ -1,0 +1,249 @@
+/* =============================================================================
+ * Linked widgets
+ * ============================================================================= */
+dropdown.linked,
+combobox.linked {
+    button:nth-child(2) {
+        &:dir(ltr) {
+            @extend %linked_not_left;
+        }
+        &:dir(rtl) {
+            @extend %linked_not_right;
+        }
+    }
+}
+
+// NOTE: The Adwaita theme NEVER had support for the filechooserbutton widget inside
+// a linked container. They removed the filechooserbutton widget in Gtk4 and they
+// added support for the filechooserbutton inside linked containers.
+// And Adwaita 3.24.x STILL DOESN'T HAVE SUPPORT FOR IT!!!
+// Can anyone say that that has any f*cking sense whatsof*ckingever!?!?!?
+.linked:not(.vertical) > filechooserbutton > combobox,
+.linked:not(.vertical) > appchooserbutton > combobox,
+.linked:not(.vertical) > combobox {
+    &:dir(ltr) {
+        &:not(:first-child) > box > button.combo {
+            @extend %linked_not_left;
+        }
+        &:not(:last-child) > box > button.combo {
+            @extend %linked_not_right;
+        }
+    }
+
+    &:dir(rtl) {
+        &:not(:first-child) > box > button.combo {
+            @extend %linked_not_right;
+        }
+        &:not(:last-child) > box > button.combo {
+            @extend %linked_not_left;
+        }
+    }
+}
+
+.linked.vertical > filechooserbutton > combobox,
+.linked.vertical > appchooserbutton > combobox,
+.linked.vertical > combobox {
+    &:not(:first-child) > box > button.combo {
+        @extend %linked_not_top;
+    }
+    &:not(:last-child) > box > button.combo {
+        @extend %linked_not_bottom;
+    }
+}
+
+// linked entries
+.linked:not(.vertical) > spinbutton:not(.vertical),
+.linked:not(.vertical) > entry {
+    @extend %linked;
+
+    @each $ctx_class, $ctx_color in ("", $selected_bg_color), (".warning", $warning_color),
+        (".error", $error_color)
+    {
+        &:focus#{$ctx_class} + &,
+        &:focus#{$ctx_class} + button,
+        &:focus#{$ctx_class} + combobox > box > button.combo {
+            border-left-color: mix($ctx_color, $button_border, 90%);
+        }
+    }
+
+    &:drop(active) + spinbutton:not(.vertical),
+    &:drop(active) + entry,
+    &:drop(active) + button,
+    &:drop(active) + menubutton > button,
+    &:drop(active) + dropdown > button,
+    &:drop(active) + colorbutton > button,
+    &:drop(active) + fontbutton > button,
+    &:drop(active) + filechooserbutton > button,
+    &:drop(active) + filechooserbutton > combobox > box > button.combo,
+    &:drop(active) + appchooserbutton > combobox > box > button.combo,
+    &:drop(active) + combobox > box > button.combo {
+        border-left-color: $drop_target_color;
+    }
+}
+
+// Vertically linked entries
+// FIXME: take care of "colored" entries
+.linked.vertical > spinbutton:not(.vertical),
+.linked.vertical > entry {
+    @extend %linked_vertical;
+
+    // brighter border between linked entries
+    &:not(:disabled) + entry:not(:disabled),
+    &:not(:disabled) + %entry:not(:disabled) {
+        border-top-color: mix($borders_color, $base_color, 30%);
+    }
+
+    // brighter border between linked insensitive entries
+    &:disabled + %entry:disabled,
+    &:disabled + entry:disabled {
+        border-top-color: mix($borders_color, $base_color, 30%);
+    }
+
+    + %entry:drop(active):not(:only-child),
+    + entry:drop(active):not(:only-child) {
+        border-top-color: $drop_target_color;
+    }
+
+    &:drop(active):not(:only-child) {
+        + %entry,
+        + spinbutton:not(.vertical),
+        + entry,
+        + button,
+        + menubutton > button,
+        + dropdown > button,
+        + colorbutton > button,
+        + fontbutton > button,
+        + filechooserbutton > button,
+        + filechooserbutton > combobox > box > button.combo,
+        + appchooserbutton > combobox > box > button.combo,
+        + combobox > box > button.combo {
+            border-top-color: $drop_target_color;
+        }
+    }
+
+    // color back the top border of a linked focused entry following another entry.
+    // :not(:only-child) is a specificity bump hack.
+    @each $ctx_class, $ctx_color in ("", $selected_bg_color), (".warning", $warning_color),
+        (".error", $error_color)
+    {
+        + %entry:focus#{$ctx_class}:not(:only-child),
+        + entry:focus#{$ctx_class}:not(:only-child) {
+            border-top-color: mix($ctx_color, $button_border, 90%);
+        }
+
+        // this takes care of coloring the top border of the focused entry subsequent widget.
+        // :not(:only-child) is a specificity bump hack.
+        &:focus#{$ctx_class}:not(:only-child) {
+            + %entry,
+            + entry,
+            + button,
+            + combobox > box > button.combo {
+                border-top-color: mix($ctx_color, $button_border, 90%);
+            }
+        }
+    }
+}
+
+.linked:not(.vertical) > button {
+    @extend %linked;
+}
+
+.linked.vertical > button {
+    @extend %linked_vertical;
+}
+
+%linked_not_left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+%linked_not_right {
+    border-right-style: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+// 1st/last child are at text start/end
+%linked {
+    &:dir(ltr) {
+        &:not(:first-child) {
+            @extend %linked_not_left;
+        }
+        &:not(:last-child) {
+            @extend %linked_not_right;
+        }
+    }
+
+    &:dir(rtl) {
+        &:not(:first-child) {
+            @extend %linked_not_right;
+        }
+        &:not(:last-child) {
+            @extend %linked_not_left;
+        }
+    }
+}
+
+%linked_not_top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+%linked_not_bottom {
+    border-bottom-style: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+%linked_vertical {
+    &:not(:first-child) {
+        @extend %linked_not_top;
+    }
+
+    &:not(:last-child) {
+        @extend %linked_not_bottom;
+    }
+}
+
+.linked:not(.vertical) > menubutton,
+.linked:not(.vertical) > dropdown,
+.linked:not(.vertical) > colorbutton,
+.linked:not(.vertical) > fontbutton,
+.linked:not(.vertical) > filechooserbutton {
+    &:dir(ltr) {
+        &:not(:first-child) > button {
+            @extend %linked_not_left;
+        }
+        &:not(:last-child) > button {
+            @extend %linked_not_right;
+        }
+    }
+
+    &:dir(rtl) {
+        &:not(:first-child) > button {
+            @extend %linked_not_right;
+        }
+        &:not(:last-child) > button {
+            @extend %linked_not_left;
+        }
+    }
+}
+
+.linked.vertical > menubutton,
+.linked.vertical > dropdown,
+.linked.vertical > colorbutton,
+.linked.vertical > fontbutton,
+.linked.vertical > filechooserbutton {
+    &:not(:first-child) > button {
+        @extend %linked_not_top;
+    }
+    &:not(:last-child) > button {
+        @extend %linked_not_bottom;
+    }
+}
+
+@if (not $gtk4) {
+    .inline-toolbar button {
+        @extend %linked;
+    }
+}

@@ -1,0 +1,10 @@
+<svg id="svg3806" width="16" height="16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <defs id="defs3808">
+  <linearGradient id="linearGradient3849" x1="8" x2="8" y1=".46156871" y2="4.5000501" gradientTransform="matrix(.9795918 0 0 .97959444 .16326505 .16323174)" gradientUnits="userSpaceOnUse">
+   <stop id="stop3845" style="stop-color:#000000;stop-opacity:.08" offset="0"/>
+   <stop id="stop3847" style="stop-color:#000000;stop-opacity:0" offset="1"/>
+  </linearGradient>
+ </defs>
+ <ellipse id="path4328" cx="7.9999995" cy="8" rx="7.4285712" ry="7.4285722" style="fill:#e0e0e0;stroke-width:1.1428567;stroke:#b0b0b0"/>
+ <ellipse id="path3841" cx="7.9999995" cy="7.9999876" rx="6.8571424" ry="6.857161" style="fill:url(#linearGradient3849)"/>
+</svg>

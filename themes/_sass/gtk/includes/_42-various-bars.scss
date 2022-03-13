@@ -1,0 +1,285 @@
+/* =============================================================================
+ * Various bars
+ * ============================================================================= */
+actionbar {
+    padding: 4px;
+    border-top: 1px solid $borders_color;
+    background-color: $bg_color;
+    background-image: none;
+
+    > revealer {
+        > box {
+            padding: 4px;
+            border-width: 1px 0 0;
+        }
+    }
+}
+
+.floating-bar {
+    border: 1px solid $borders_color;
+    border-radius: $button_radius;
+    background-image: linear-gradient(to bottom, $floating_bar_a, $floating_bar_b);
+
+    .button {
+        border: 1px solid $borders_color;
+        background-color: transparent;
+        background-image: none;
+    }
+
+    &.top {
+        border-top-width: 0;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+    &.right {
+        border-right-width: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    &.bottom {
+        border-bottom-width: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    &.left {
+        border-left-width: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
+
+pathbar > button,
+.path-bar > button {
+    &,
+    &.text-button,
+    &.image-button {
+        padding-left: 4px;
+        padding-right: 4px;
+
+        label {
+            &:last-child {
+                padding-right: 8px;
+            }
+
+            &:first-child {
+                padding-left: 8px;
+            }
+        }
+    }
+
+    &.text-button.image-button label {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    &,
+    &.text-button.image-button {
+        label:last-child {
+            padding-right: 8px;
+        }
+
+        label:first-child {
+            padding-left: 8px;
+        }
+    }
+
+    image {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    &.slider-button {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+infobar {
+    border: none;
+
+    @each $ctx, $ctx_bg_color, $ctx_label_color in ("info", $info_color, $info_fg_color),
+        ("question", $question_color, $question_fg_color),
+        ("warning", $warning_color, $warning_fg_color), ("error", $error_color, $error_fg_color)
+    {
+        &.#{$ctx} {
+            background-color: $ctx_bg_color;
+
+            // NOTE: Only deal with selections on info context. Just invert the colors used.
+            @if $ctx == info {
+                selection {
+                    background-color: $ctx_label_color;
+                    color: $ctx_bg_color;
+                }
+            }
+
+            label {
+                color: $ctx_label_color;
+            }
+
+            button {
+                label {
+                    color: $button_fg;
+                }
+
+                &:disabled {
+                    label {
+                        @include disabled_text_shadow();
+                        color: $insensitive_fg_color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+levelbar {
+    block {
+        min-width: 34px;
+        min-height: 3px;
+        border: 1px solid rgba($fg_color, 0.2);
+        border-radius: 2px;
+
+        &:not(.empty) {
+            border-color: $selected_bg_color;
+            background-color: $selected_bg_color;
+        }
+    }
+
+    trough {
+        border: 1px solid $borders_color;
+        border-radius: $button_radius;
+        padding: 3px;
+        background-color: $base_color;
+    }
+
+    block.low {
+        border-color: $warning_color;
+        background-color: $warning_color;
+    }
+
+    block.high {
+        border-color: $selected_bg_color;
+        background-color: $selected_bg_color;
+    }
+
+    block.full {
+        border-color: $success_color;
+        background-color: $success_color;
+    }
+
+    block.empty {
+        border-color: rgba($fg_color, 0.2);
+        background-color: transparent;
+    }
+
+    &.vertical {
+        block {
+            min-width: 3px;
+            min-height: 34px;
+        }
+    }
+
+    &.horizontal.discrete {
+        block {
+            margin: 0 1px;
+        }
+    }
+
+    &.vertical.discrete {
+        block {
+            margin: 1px 0;
+        }
+    }
+}
+
+progressbar {
+    // NOTE: Min. height/width set to 12 pixels because the background is a gradient, and 2px isn't
+    // enough to display a gradient. Furthermore, a 2 pixels progress bar is too similar to a
+    // range/scale widget.
+    &.horizontal {
+        > trough {
+            min-width: 150px;
+
+            &,
+            > progress {
+                min-height: 12px;
+            }
+        }
+    }
+
+    &.vertical {
+        > trough {
+            min-height: 80px;
+
+            &,
+            > progress {
+                min-width: 12px;
+            }
+        }
+    }
+
+    &.horizontal > trough > progress {
+        margin: 0 -1px;
+    } // the progress node is positioned after the trough border
+
+    &.vertical > trough > progress {
+        margin: -1px 0;
+    } // this moves it over it.
+
+    font-size: smaller;
+    padding: 0;
+    color: $fg_color;
+    // FIXME: Find out what the heck this is and if I should keep it.
+    font-feature-settings: "tnum";
+
+    &:backdrop {
+        box-shadow: none;
+    }
+
+    > trough {
+        padding: 0;
+        border: 1px solid $borders_color;
+        border-radius: $button_radius;
+        background-image: linear-gradient(to bottom, $progressbar_trough_a, $progressbar_trough_b);
+    }
+
+    > trough > progress {
+        border: 1px solid $progressbar_border;
+        border-radius: $button_radius;
+        background-image: linear-gradient(to bottom, $progressbar_a, $progressbar_b);
+        box-shadow: 0 1px rgba(white, 0.15);
+    }
+
+    &.vertical {
+        > trough {
+            background-image: linear-gradient(
+                to right,
+                $progressbar_trough_a,
+                $progressbar_trough_b
+            );
+        }
+
+        > trough > progress {
+            background-image: linear-gradient(to right, $progressbar_a, $progressbar_b);
+            box-shadow: 1px 0 rgba(white, 0.15);
+        }
+    }
+
+    > trough.empty progress {
+        all: unset;
+    } // makes the progress indicator disappear, when the fraction is 0
+}
+
+statusbar {
+    padding: 1px;
+    color: $fg_color;
+
+    frame {
+        > border {
+            border: none;
+        }
+    }
+}

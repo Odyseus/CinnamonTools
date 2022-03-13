@@ -1,0 +1,212 @@
+/* =============================================================================
+ * Check and Radio items
+ * ============================================================================= */
+// NOTE: Based on Adwaita's checks/radios.
+// I removed all backdrop states. Just because the whole backdrop concept is
+// the apex of useless micromanagement. And of course, I obliterated the transitions too.
+// Selection mode.
+@each $check_state, $check_icon, $check_color,
+    $check_background in ("", "none", "transparent", $selected_bg_color),
+    (":hover", "none", "transparent", $selected_bg_color),
+    (":active", "none", "transparent", $selected_bg_color),
+    (":checked", "-gtk-icontheme('object-select-symbolic')", $osd_fg_color, $selected_bg_color),
+    (
+        ":checked:hover",
+        "-gtk-icontheme('object-select-symbolic')",
+        $osd_fg_color,
+        $selected_bg_color
+    ),
+    (
+        ":checked:active",
+        "-gtk-icontheme('object-select-symbolic')",
+        $osd_fg_color,
+        $selected_bg_color
+    )
+{
+    .view.content-view.check#{$check_state}:not(list),
+    .content-view:not(list) check#{$check_state} {
+        margin: 4px;
+        min-width: 32px;
+        min-height: 32px;
+        color: #{$check_color};
+        background-color: #{$check_background};
+        border-radius: 5px;
+        background-image: none;
+        box-shadow: none;
+        border-width: 0;
+        -gtk-icon-source: #{$check_icon};
+        -gtk-icon-shadow: none;
+    }
+}
+
+checkbutton.text-button,
+radiobutton.text-button {
+    // this is for a nice focus on check and radios text
+    padding: 2px 0;
+
+    @include focus_ring($offset: 2px);
+
+    label:not(:only-child) {
+        &:first-child {
+            margin-left: 4px;
+        }
+        &:last-child {
+            margin-right: 4px;
+        }
+    }
+}
+
+check,
+radio {
+    margin: 0 4px;
+
+    &:only-child {
+        margin: 0;
+    }
+
+    popover & {
+        // NOTE: When in a popover add more space between the label and the check, reset the other side margin.
+        // See https://bugzilla.gnome.org/show_bug.cgi?id=779570 for details.
+        &.left:dir(rtl) {
+            margin-left: 0;
+            margin-right: 12px;
+        }
+
+        &.right:dir(ltr) {
+            margin-left: 12px;
+            margin-right: 0;
+        }
+    }
+
+    min-height: 14px;
+    min-width: 14px;
+    border: 1px solid;
+    -gtk-icon-source: none;
+
+    & {
+        // NOTE: For unchecked.
+        @each $state, $type in ("", "normal"), (":hover", "hover"), (":active", "active"),
+            (":disabled", "insensitive")
+        {
+            &#{$state} {
+                @include check($type, white);
+            }
+        }
+    }
+
+    & {
+        // NOTE: For checked.
+        @each $checked_state in (":checked"), (":indeterminate") {
+            &#{$checked_state} {
+                @each $state, $type in ("", "normal"), (":hover", "hover"), (":active", "active"),
+                    (":disabled", "insensitive")
+                {
+                    &#{$state} {
+                        @include check(
+                            $type,
+                            $selected_bg_color,
+                            $selected_fg_color,
+                            $checked: true
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    menu menuitem & {
+        // NOTE: This is a workaround for a menu check/radio size allocation issue.
+        margin: 0;
+
+        // NOTE: This makes checks/radios monochrome in menu items.
+        &,
+        &:checked,
+        &:indeterminate {
+            &,
+            &:hover,
+            &:disabled {
+                min-height: 14px;
+                min-width: 14px;
+                background-image: none;
+                background-color: transparent;
+                box-shadow: none;
+                -gtk-icon-shadow: none;
+                color: inherit;
+                border-color: currentColor;
+            }
+        }
+    }
+}
+
+// NOTE: I have chosen to invert all the colors involved when rendering checks/radios of selected items.
+// Furthermore, checks/radios in menu items are inverted when selected. So...consistency.
+// I also handle checks/radios in more places because this theme uses the accent
+// color as background in more places. Adwaita is almost monochromatic. ¬¬
+@each $checked_state in (":checked"), (":indeterminate") {
+    @each $widget in "check", "radio" {
+        modelbutton #{$widget}#{$checked_state}:hover,
+        .view #{$widget}#{$checked_state}:selected,
+        treeview.#{$widget}#{$checked_state}:selected,
+        row:selected #{$widget}#{$checked_state},
+        infobar #{$widget}#{$checked_state} {
+            @include check(normal, $selected_fg_color, $selected_bg_color, $checked: true);
+        }
+    }
+}
+
+treeview.view check,
+treeview.view radio {
+    &:selected {
+        &:focus,
+        & {
+            color: $selected_bg_color;
+            border-color: lighten($selected_bg_color, 20%);
+        }
+    }
+}
+
+%check,
+check {
+    border-radius: 3px;
+
+    &:checked {
+        -gtk-icon-source: image(
+            -gtk-recolor(url("../common-assets/radio-check/check-symbolic.svg")),
+            -gtk-recolor(url("../common-assets/radio-check/check-symbolic.symbolic.png"))
+        );
+    }
+
+    &:indeterminate {
+        -gtk-icon-source: image(
+            -gtk-recolor(url("../common-assets/radio-check/dash-symbolic.svg")),
+            -gtk-recolor(url("../common-assets/radio-check/dash-symbolic.symbolic.png"))
+        );
+    }
+}
+
+%radio,
+radio {
+    border-radius: 100%;
+
+    &:checked {
+        -gtk-icon-source: image(
+            -gtk-recolor(url("../common-assets/radio-check/bullet-symbolic.svg")),
+            -gtk-recolor(url("../common-assets/radio-check/bullet-symbolic.symbolic.png"))
+        );
+    }
+
+    &:indeterminate {
+        -gtk-icon-source: image(
+            -gtk-recolor(url("../common-assets/radio-check/dash-symbolic.svg")),
+            -gtk-recolor(url("../common-assets/radio-check/dash-symbolic.symbolic.png"))
+        );
+    }
+}
+
+// NOTE: This is a workaround. Who the hell knows for what.
+treeview.view radio:selected {
+    &:focus,
+    & {
+        @extend %radio;
+    }
+}

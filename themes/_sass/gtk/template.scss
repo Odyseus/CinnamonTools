@@ -1,0 +1,30 @@
+$gtk_version: @version@;
+$gtk4: if($gtk_version >= 400, true, false);
+$includes_suffix: if($gtk4, "-gtk4", "");
+$variant: @variant@;
+// NOTE: Colors.
+$selected_bg_color: @selected_bg_color@;
+$selected_fg_color: @selected_fg_color@;
+$tooltip_bg_color: @tooltip_bg_color@;
+$tooltip_fg_color: @tooltip_fg_color@;
+$link_color: @link_color@;
+$info_color: @info_color@;
+$info_fg_color: @info_fg_color@;
+$question_color: @question_color@;
+$question_fg_color: @question_fg_color@;
+$warning_color: @warning_color@;
+$warning_fg_color: @warning_fg_color@;
+$error_color: @error_color@;
+$error_fg_color: @error_fg_color@;
+$success_color: @success_color@;
+$success_fg_color: @success_fg_color@;
+
+@import "0-functions";
+@import "1-colors";
+// NOTE: I want to be able to use these color variables in my own theme, not just make them available
+// for applications to use.
+@import "2-colors-public";
+@import "3-mixins";
+@import "4-head";
+@import "includes/__index__.scss";
+@import "99-tail";

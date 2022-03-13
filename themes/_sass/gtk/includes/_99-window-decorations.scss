@@ -1,0 +1,112 @@
+/* =============================================================================
+ * Window decorations
+ * ============================================================================= */
+$_wm_border: darken($bg_color, 30%);
+
+decoration {
+    // NOTE: Trick to get rounded borders regardless of CSD use.
+    border-width: 0;
+    border-radius: $window_radius $window_radius 0 0;
+    // NOTE: Build time definition.
+    box-shadow: "@csd_shadow_definition@", 0 0 0 1px $_wm_border; //doing borders with box-shadow
+    // box-shadow: 0 3px 5px 0 rgba(black, 0.4), 0 0 0 1px $_wm_border;
+    margin: 10px;
+    // NOTE: The transparent shadow here is to enforce that the shadow extents don't
+    // change when we go to backdrop, to prevent jumping windows
+    &:backdrop {
+        // NOTE: Build time definition.
+        box-shadow: "@csd_backdrop_shadow_definition@", 0 0 0 1px $_wm_border;
+        // box-shadow: 0 3px 5px 0 rgba(black, 0.2), 0 0 0 1px $_wm_border;
+    }
+
+    .maximized &,
+    .fullscreen & {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .tiled &,
+    .tiled-top &,
+    .tiled-right &,
+    .tiled-bottom &,
+    .tiled-left & {
+        border-radius: 0;
+    }
+
+    .popup & {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    // server-side decorations as used by mutter/muffin
+    // just doing borders, wm draws actual shadows
+    .ssd & {
+        box-shadow: 0 0 0 1px $_wm_border;
+    }
+
+    .csd.popup & {
+        border-radius: 0;
+        box-shadow: 0 1px 2px 1px rgba($borders_color, 0.5), 0 0 0 1px $borders_color;
+    }
+
+    tooltip.csd & {
+        border-radius: $tooltip_radius;
+        box-shadow: none;
+    }
+
+    messagedialog.csd & {
+        border-radius: $window_radius;
+    }
+
+    .solid-csd & {
+        margin: 0;
+        padding: 4px;
+        background-color: $borders_color;
+        border: solid 1px $borders_color;
+        border-radius: 0;
+        box-shadow: inset 0 0 0 3px red, inset 0 1px $top_hilight;
+    }
+}
+
+.maximized,
+.tiled {
+    separator {
+        &:first-child {
+            + {
+                headerbar {
+                    border-radius: 0;
+
+                    &:backdrop {
+                        border-radius: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    headerbar {
+        &:first-child {
+            border-radius: 0;
+
+            &:backdrop {
+                border-radius: 0;
+            }
+        }
+
+        &:last-child {
+            border-radius: 0;
+
+            &:backdrop {
+                border-radius: 0;
+            }
+        }
+    }
+
+    .titlebar {
+        border-radius: 0;
+    }
+
+    .header-bar {
+        border-radius: 0;
+    }
+}

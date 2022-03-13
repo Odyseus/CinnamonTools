@@ -1,0 +1,153 @@
+/* =============================================================================
+ * Entries
+ * ============================================================================= */
+%entry,
+entry {
+    %entry_basic,
+    & {
+        background-clip: padding-box;
+        min-height: 28px;
+        padding-left: 4px;
+        padding-right: 4px;
+        border: 1px solid;
+        border-radius: $button_radius;
+
+        @include entry(normal);
+
+        @include focus_ring();
+
+        image {
+            // icons inside the entry
+            &.left {
+                margin-right: 6px;
+            }
+            &.right {
+                margin-left: 6px;
+            }
+        }
+
+        &:drop(active) {
+            &:focus,
+            & {
+                border-color: $drop_target_color;
+                box-shadow: inset 0 0 0 1px $drop_target_color;
+            }
+        }
+
+        &.flat {
+            &:focus,
+            &:disabled,
+            & {
+                min-height: 0;
+                padding: 2px;
+                background-color: transparent;
+                border-color: transparent;
+                border-radius: 0;
+            }
+        }
+
+        &:focus {
+            @include entry(focus);
+        }
+
+        &:disabled {
+            @include entry(insensitive);
+        }
+
+        selection {
+            @extend %selected_items;
+        }
+
+        // entry error and warning style
+        @each $ctx, $ctx_color,
+            $ctx_selected_color in ("warning", $warning_color, $warning_fg_color),
+            ("error", $error_color, $error_fg_color)
+        {
+            &.#{$ctx} {
+                // NOTE: Not worth the trouble to set the text color same as the context color since
+                // the entry background is white. Setting the border color as context is more than enough.
+                color: $text_color;
+                border-color: mix($ctx_color, $button_border, 90%);
+
+                &:focus {
+                    @include entry(focus, $ctx_color);
+                }
+
+                // TEST: Direct child selector.
+                > selection {
+                    color: $ctx_selected_color;
+                    background-color: $ctx_color;
+                }
+            }
+        }
+
+        // TEST: Direct child selector.
+        > image {
+            // entry icons colors
+            color: lighten($fg_color, 5%);
+
+            &:hover {
+                color: $fg_color;
+            }
+
+            &:active {
+                color: $selected_bg_color;
+            }
+        }
+
+        &.password image.caps-lock-indicator {
+            color: mix($backdrop_fg_color, $backdrop_base_color, 80%);
+        }
+    }
+
+    // TEST: Direct child selector.
+    > progress {
+        &,
+        &:focus {
+            margin-left: 2px;
+            margin-right: 2px;
+            border-image: none;
+            border-style: none;
+            background-color: transparent;
+            background-image: linear-gradient(
+                to top,
+                transparent 2px,
+                white 2px,
+                white 3px,
+                darken($selected_bg_color, 10%) 3px,
+                darken($selected_bg_color, 10%) 5px,
+                transparent 5px
+            );
+            background-size: auto;
+            box-shadow: none;
+        }
+    }
+
+    &.error {
+        color: $error_color;
+    }
+}
+
+.entry {
+    progress.pulse,
+    progress.pulse:focus {
+        background-image: linear-gradient(
+            to top,
+            transparent 2px,
+            white 2px,
+            white 3px,
+            $borders_color 3px,
+            $borders_color 5px,
+            transparent 5px
+        );
+    }
+}
+
+/////////////////////
+// Editable Labels //
+/////////////////////
+@if ($gtk4) {
+    editablelabel > stack > text {
+        @include entry(normal);
+    }
+}

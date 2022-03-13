@@ -1,0 +1,194 @@
+/* =============================================================================
+ * Buttons
+ * ============================================================================= */
+button {
+    min-height: 18px;
+    min-width: 14px;
+    padding: 4px 7px;
+    color: $button_fg;
+    text-shadow: 0 1px $button_text_shadow;
+    -gtk-icon-shadow: 0 1px $button_text_shadow;
+
+    @include button(normal);
+
+    @include focus_ring();
+
+    &:hover {
+        background-color: transparent;
+        background-image: linear-gradient(to bottom, $button_hover_bg_a, $button_hover_bg_b);
+    }
+
+    &:active,
+    &:checked {
+        @include button(active);
+
+        &:hover {
+            @include button(active-hover);
+        }
+
+        &:disabled {
+            @include button(insensitive-active);
+        }
+    }
+
+    &:disabled {
+        @include button(insensitive);
+
+        // color: $insensitive_fg_color;
+        // text-shadow: none;
+        // -gtk-icon-shadow: none;
+        background-color: transparent;
+        background-image: linear-gradient(
+            to bottom,
+            $button_insensitive_bg_a,
+            $button_insensitive_bg_b
+        );
+
+        &:active,
+        &:checked {
+            background-color: transparent;
+            background-image: linear-gradient(
+                to bottom,
+                $button_insensitive_active_bg_a,
+                $button_insensitive_active_bg_b
+            );
+        }
+    }
+
+    // NOTE: I want these separators visible.
+    // &.font,
+    // &.file {
+    //     separator {
+    //         background-color: transparent;
+    //         border: none;
+    //     }
+    // }
+
+    // NOTE: This sets the font size in the font selector button to bold.
+    &.font {
+        > box > box > label {
+            font-weight: bold;
+        }
+    }
+
+    &.menuitem.menubar {
+        min-height: 18px;
+        min-width: 14px;
+        padding: 4px 7px;
+    }
+
+    &.image-button {
+        padding: 4px;
+    }
+
+    &.text-button {
+        padding: 4px 16px;
+    }
+
+    &.text-button.image-button {
+        padding: 4px 7px;
+    }
+
+    &.flat {
+        @include button(undecorated);
+
+        &:hover {
+            @include button(normal);
+        }
+
+        &:active,
+        &:checked {
+            @include button(active);
+        }
+
+        &:disabled {
+            @include button(undecorated);
+        }
+    }
+
+    &.sidebar-button {
+        &,
+        &:disabled {
+            @include button(undecorated);
+        }
+    }
+
+    @at-root %circular_button,
+        menubutton.circular &,
+        &.circular {
+        &,
+        &:hover,
+        &:checked,
+        &:active {
+            // force circular button shape
+            min-width: 32px;
+            min-height: 32px;
+            padding: 0;
+            border-radius: 9999px;
+
+            // NOTE: See note in focus_ring mixin.
+            @if (not $gtk4) {
+                -gtk-outline-radius: 9999px;
+            }
+
+            label {
+                padding: 0;
+            }
+        }
+    }
+
+    // Suggested and Destructive Action buttons
+    // NOTE: This looks horrible in all Gtk themes in existence. So, I K.I.S.S.'d it.
+    // I just add a colored border and move on. This way, I don't have to
+    // deal with different colors for the labels and icons are visible no matter which color they are.
+    // The very example for a destructive button in the gtk3-widget-factory interface is a button
+    // with a red icon. Neither in the Adwaita or Mint-Y themes the icon is noticeable.
+    @each $b_type, $b_color in (suggested-action, $selected_bg_color),
+        (destructive-action, lighten($error_color, 10%))
+    {
+        &.#{$b_type},
+        &.default.#{$b_type} {
+            outline-offset: -4px;
+            border-color: $b_color;
+            box-shadow: inset 0 1px $b_color, inset 1px 0 $b_color, inset -1px 0 $b_color,
+                inset 0 -1px $b_color;
+
+            &.flat {
+                @include button(undecorated);
+                color: $b_color;
+            }
+        }
+    }
+
+    @at-root %button_basic_drop_active,
+        &:drop(active) {
+        color: $drop_target_color;
+        border-color: $drop_target_color;
+        box-shadow: inset 0 0 0 1px $drop_target_color;
+    }
+}
+
+.button {
+    &:link {
+        color: $link_color;
+    }
+
+    &:visited {
+        color: rgba($link_color, 0.5);
+    }
+
+    .separator {
+        border-color: transparent;
+    }
+}
+
+@if ($gtk4) {
+    filechooserbutton > button > box {
+        border-spacing: 6px;
+    }
+}
+
+filechooserbutton:drop(active) {
+    box-shadow: none;
+    border-color: transparent;
+}

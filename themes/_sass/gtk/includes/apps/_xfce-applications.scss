@@ -1,0 +1,48 @@
+////////////
+// Thunar //
+////////////
+.thunar {
+    .sidebar {
+        .view,
+        iconview {
+            background-color: #ececec;
+        }
+    }
+
+    .horizontal.inline-toolbar,
+    toolbar.horizontal {
+        button {
+            image {
+                -gtk-icon-transform: scale(0.9);
+            }
+        }
+    }
+}
+
+////////////////
+// Xfce Panel //
+////////////////
+.xfce4-panel.panel {
+    frame {
+        > border {
+            border: none;
+        }
+    }
+
+    label {
+        font-weight: normal;
+    }
+
+    button {
+        border-radius: 0;
+        border: none;
+        margin-left: 1px;
+
+        &:active,
+        &:checked,
+        label,
+        image {
+            border: none;
+        }
+    }
+}

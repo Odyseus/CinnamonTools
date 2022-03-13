@@ -1,7 +1,9 @@
-// NOTE: stage rule is added at theme build time. This is to allow to build the
-// theme without specifying a font family/size since newer Cinnamon versions can
-// now use the font specified in System Settings > Fonts > Default font.
+$button_radius: 3px;
+$menu_radius: 4px;
 
+/* =============================================================================
+ * Hyperlinks
+ * ============================================================================= */
 .cinnamon-link {
     color: $link_color;
     text-decoration: underline;
@@ -11,10 +13,13 @@
     }
 
     &:hover {
-        color: transparentize($link_color, 0.5);
+        color: rgba($link_color, 0.5);
     }
 }
 
+/* =============================================================================
+ * Scrollbars
+ * ============================================================================= */
 StScrollBar {
     padding: 0;
 
@@ -23,14 +28,7 @@ StScrollBar {
     }
 
     StButton {
-        &#vhandle {
-            @include scrollbar-handle(normal);
-
-            &:hover {
-                @include scrollbar-handle(hover);
-            }
-        }
-
+        &#vhandle,
         &#hhandle {
             @include scrollbar-handle(normal);
 
@@ -52,11 +50,16 @@ StScrollView {
     }
 }
 
+/* =============================================================================
+ * Tooltips
+ * ============================================================================= */
 #Tooltip {
     padding: 3px 6px;
-    border: 1px solid lighten($border_color, 17%);
-    border-radius: 4px;
-    background-color: $tooltip_bg_color;
+    // NOTE: Build time definition.
+    border: "@tooltip_border_definition@";
+    border-radius: $menu_radius;
+    // NOTE: Build time definition.
+    background-color: "@tooltip_background_rgba_color@";
     color: $tooltip_fg_color;
     box-shadow: none;
     font-size: 1em;
@@ -67,15 +70,23 @@ StScrollView {
  * Switches (to be used in menus)
  * ============================================================================= */
 .toggle-switch {
-    width: 55px;
+    width: 49px;
     height: 22px;
 
     &-us,
     &-intl {
-        border-image: url("assets/switch-off.svg") 4;
+        border-image: url("../common-assets/switch/switch.svg") 4;
+
+        .popup-menu-item:active & {
+            border-image: url("../common-assets/switch/switch-selected.svg") 4;
+        }
 
         &:checked {
-            border-image: url("assets/switch-on.svg") 4;
+            border-image: url("../common-assets/switch/switch-active.svg") 4;
+
+            .popup-menu-item:active & {
+                border-image: url("../common-assets/switch/switch-active-selected.svg") 4;
+            }
         }
     }
 }
@@ -88,40 +99,43 @@ StScrollView {
 .notification-icon {
     &-button {
         @include button(normal);
-        padding: 4px 8px;
+
         font-size: 1.1em;
         font-weight: normal;
         text-align: center;
 
         &:hover {
             @include button(hover);
-            padding: 4px 8px;
         }
 
         &:focus {
             @include button(focus);
-            padding: 4px 8px;
 
             &:hover {
                 @include button(focus-hover);
-                padding: 4px 8px;
-            }
-
-            &:checked,
-            &:active {
-                @include button(active);
-                padding: 4px 8px;
             }
         }
 
         &:active,
-        &:checked {
+        &:checked,
+        &:focus:active,
+        &:focus:checked {
             @include button(active);
-            padding: 4px 8px;
         }
 
         &:disabled {
-            color: transparentize($fg_color, 0.2);
+            color: rgba($fg_color, 0.8);
+        }
+
+        &,
+        &:hover,
+        &:checked,
+        &:active,
+        &:focus,
+        &:focus:hover,
+        &:focus:checked,
+        &:focus:active,
+        &:disabled {
             padding: 4px 8px;
         }
     }
@@ -131,80 +145,53 @@ StScrollView {
  * PopupMenu (/usr/share/cinnamon/js/ui/popupMenu.js)
  * ============================================================================= */
 
-// Mark for deletion on EOL. Cinnamon 3.2.x+
-// Remove condition and rule/s.
-@if $cinnamon_version == 30 {
-    .popup-menu-boxpointer {
-        -arrow-border-radius: 4px;
-        -arrow-background-color: lighten($bg_color, 4%);
-        -arrow-border-width: 1px;
-        -arrow-border-color: transparentize(darken($border_color, 51%), 0.7);
-        -arrow-base: 18px;
-        -arrow-rise: 10px;
-        -st-shadow: 0 -1px 2px 0 transparentize(white, 0.1);
-        -boxpointer-gap: 2px;
-    }
-
-    .popup-menu {
-        color: $fg_color;
-        min-width: 100px;
-
-        StEntry {
-            @include entry;
-
-            &:focus {
-                @include entry($state: focus);
-            }
-
-            &:hover {
-                @include entry($state: hover);
-            }
-        }
-    }
-}
-
+// NOTE: Not declaring font-size fucks up everything. It ellipsizes menu labels
+// innecesarily and cuts off labels whose text has been modified with markup.
+// This problem is observed with all official themes except the one called Linux Mint.
 .menu {
     background-color: lighten($bg_color, 4%);
-    border: 1px solid transparentize(darken($border_color, 51%), 0.7);
+    border: 1px solid rgba(darken($borders_color, 51%), 0.3);
     color: $fg_color;
+    font-size: 1em;
     min-width: 100px;
 
     &.top {
-        border-radius: 0 0 4px 4px;
+        border-radius: 0 0 $menu_radius $menu_radius;
     }
 
     &.bottom {
-        border-radius: 4px 4px 0 0;
+        border-radius: $menu_radius $menu_radius 0 0;
     }
 
     &.left {
-        border-radius: 0 4px 4px 0;
+        border-radius: 0 $menu_radius $menu_radius 0;
     }
 
     &.right {
-        border-radius: 4px 0 0 4px;
+        border-radius: $menu_radius 0 0 $menu_radius;
     }
 
     StEntry {
         @include entry;
 
-        &:focus {
-            @include entry($state: focus);
+        &:focus,
+        &:focus:hover {
+            @include entry(focus);
         }
 
         &:hover {
-            @include entry($state: hover);
+            @include entry(hover);
         }
     }
 }
 
-/* .popup-submenu-menu-item:open {
- *}
- */
+// .popup-submenu-menu-item:open {
+// }
+
 .popup-sub-menu {
     background-color: darken($bg_color, 2%);
-    border-top: 2px solid lighten($border_color, 13%);
-    border-bottom: 2px solid lighten($border_color, 32%);
+    border-top: 2px solid lighten($borders_color, 13%);
+    border-bottom: 2px solid lighten($borders_color, 32%);
     padding: 0.5em 0;
 
     .popup-menu-item {
@@ -238,14 +225,13 @@ StScrollView {
 
 .popup-combo-menu {
     background-color: lighten($bg_color, 4%);
-    border: 1px solid transparentize(darken($border_color, 51%), 0.7);
+    border: 1px solid rgba(darken($borders_color, 51%), 0.3);
     color: $fg_color;
-    border-radius: 4px;
+    border-radius: $menu_radius;
 }
 
-/* The remaining popup-menu sizing is all done in ems, so that if you
- * override .popup-menu.font-size, everything else will scale with it.
- */
+// NOTE: The remaining popup-menu sizing is all done in ems, so that if you
+// override .popup-menu.font-size, everything else will scale with it.
 .popup-menu-content {
     padding: 1em 0;
 }
@@ -258,7 +244,7 @@ StScrollView {
         background-gradient-direction: vertical;
         background-gradient-start: $selected_bg_color;
         background-gradient-end: darken($selected_bg_color, 10%);
-        box-shadow: inset 0 0 1px 1px $border_color;
+        box-shadow: inset 0 0 1px 1px mix($selected_bg_color, $borders_color, 75%);
         color: $selected_fg_color;
     }
 
@@ -332,163 +318,96 @@ StScrollView {
     padding: 0;
 }
 
-#panelLeft,
-#panelCenter {
-    spacing: 4px;
-}
-
-#panelLeft:dnd {
-    background-color: transparentize(red, 0.9);
-}
-
-#panelCenter:dnd {
-    background-color: transparentize(green, 0.9);
-}
-
-#panelRight:dnd {
-    background-color: transparentize(blue, 0.9);
-}
-
-#panelLeft {
-    &:ltr {
-        padding-right: 4px;
+// NOTE: panelLeft, panelCenter and panelRight are actually the boxes inside a panel.
+#panel {
+    &Left,
+    &Center {
+        spacing: 4px;
     }
 
-    &:rtl {
-        padding-left: 4px;
-    }
-}
-
-#panelRight {
-    &:ltr {
-        padding-left: 0;
-        spacing: 0;
+    &Left:dnd {
+        background-color: rgba(red, 0.1);
     }
 
-    &:rtl {
-        padding-right: 0;
-        spacing: 0;
-    }
-}
-
-#panelLeft.vertical {
-    &:ltr {
-        padding-right: 0;
+    &Center:dnd {
+        background-color: rgba(green, 0.1);
     }
 
-    &:rtl {
-        padding-left: 0;
+    &Right:dnd {
+        background-color: rgba(blue, 0.1);
+    }
+
+    &Left {
+        &:ltr {
+            padding-right: 4px;
+        }
+
+        &:rtl {
+            padding-left: 4px;
+        }
+
+        &.vertical {
+            &:ltr {
+                padding-right: 0;
+            }
+
+            &:rtl {
+                padding-left: 0;
+            }
+        }
+    }
+
+    &Right {
+        &:ltr {
+            padding-left: 0;
+            spacing: 0;
+        }
+
+        &:rtl {
+            padding-right: 0;
+            spacing: 0;
+        }
     }
 }
 
 .panel {
-    &-top {
-        @include panel-background(top);
+    @each $pos, $counter_pos in ("top", "bottom"), ("bottom", "top"), ("left", "right"),
+        ("right", "left")
+    {
+        &-#{$pos} {
+            @include panel-background(#{$pos});
 
-        /* I replaced the window-list-item class from using the border-image property
-         * to use the background-gradient-* properties. The images had a 1 pixel
-         * transparent border so, to imitate the same effect, I added a 1 pixel
-         * transparent border to all three panel boxes from all panels.
-         */
-        #panelLeft,
-        #panelRight,
-        #panelCenter {
-            border-bottom: 1px solid transparent;
-        }
+            // I replaced the window-list-item class from using the border-image property
+            // to use the background-gradient-* properties. The images had a 1 pixel
+            // transparent border so, to imitate the same effect, I added a 1 pixel
+            // transparent border to all three panel boxes from all panels.
+            #panelLeft,
+            #panelRight,
+            #panelCenter {
+                border-#{$counter_pos}: 1px solid transparent;
+            }
 
-        &:highlight {
-            @include panel-background(top, $highlighted: true);
-        }
-    }
-
-    &-bottom {
-        @include panel-background(bottom);
-
-        #panelLeft,
-        #panelRight,
-        #panelCenter {
-            border-top: 1px solid transparent;
-        }
-
-        &:highlight {
-            @include panel-background(bottom, $highlighted: true);
-        }
-    }
-
-    &-left {
-        @include panel-background(left);
-
-        #panelLeft,
-        #panelRight,
-        #panelCenter {
-            border-right: 1px solid transparent;
-            spacing: 0;
-        }
-
-        &:highlight {
-            @include panel-background(left, $highlighted: true);
-        }
-    }
-
-    &-right {
-        @include panel-background(right);
-
-        #panelLeft,
-        #panelRight,
-        #panelCenter {
-            border-left: 1px solid transparent;
-            spacing: 0;
-        }
-
-        &:highlight {
-            @include panel-background(right, $highlighted: true);
+            &:highlight {
+                @include panel-background(#{$pos}, $highlighted: true);
+            }
         }
     }
 
     &-dummy {
         border: 1px solid $selected_bg_color;
-        background-color: transparentize($selected_bg_color, 0.4);
+        background-color: rgba($selected_bg_color, 0.6);
 
         &:entered {
-            background-color: transparentize($selected_bg_color, 0.1);
+            background-color: rgba($selected_bg_color, 0.9);
         }
     }
 }
 
-.system-status-icon {
-    padding-left: 0;
-    padding-right: 0;
-    spacing: 0;
-    margin: 0;
-    icon-size: 1.14em;
+// #appMenu {
+// }
 
-    // Mark for deletion on EOL. Cinnamon 3.4.x+
-    // Remove condition only.
-    @if $cinnamon_version >= 34 {
-        /* #####################################################################
-         * Added in Cinnamon 3.4
-         *
-         * The new warning/error colors used on .system-status-icon are
-         * currently used by the power applet to warn the user when their
-         * battery is low.
-         * ##################################################################### */
-        &.warning {
-            color: $warning_color;
-        }
-
-        &.error {
-            color: $error_color;
-        }
-    }
-}
-
-/* #appMenu {
- * }
- */
-
-/* .popup-menu-item-dot {
- * }
- */
+// .popup-menu-item-dot {
+// }
 
 /* =============================================================================
  * Overview (/usr/share/cinnamon/js/ui/overview.js)
@@ -501,13 +420,9 @@ StScrollView {
     background-color: transparent;
 }
 
-// Mark for deletion on EOL. Cinnamon 3.4.x+
-// Remove condition only.
-@if $cinnamon_version >= 40 {
-    .overview-empty-placeholder {
-        color: $white;
-        font-size: 2em;
-    }
+.overview-empty-placeholder {
+    color: $selected_fg_color;
+    font-size: 2em;
 }
 
 /* =============================================================================
@@ -520,15 +435,26 @@ StScrollView {
 }
 
 .workspace-close-button {
-    background-image: url("assets/close.svg");
-    height: 35px;
-    width: 35px;
+    background-image: url("../metacity-1/close-focus.svg");
+    background-size: 24px;
+    background-color: $button_bg_a;
+    border: 1px solid $border_button;
+    border-radius: 32px;
+    height: 32px;
+    width: 32px;
     -cinnamon-close-overlap: 25px;
-    transition-duration: 150;
 
     &:hover {
-        background-image: url("assets/close-hover.svg");
-        transition-duration: 150;
+        background-image: url("../metacity-1/close-focus-none.svg");
+        background-color: $button_hover_bg_a;
+        border-color: $border_button_hover;
+    }
+
+    &:active,
+    &:active:hover {
+        background-image: url("../metacity-1/close-focus.svg");
+        background-color: $button_active_bg_a;
+        border-color: $border_button_active;
     }
 }
 
@@ -545,25 +471,10 @@ StScrollView {
 .expo-workspaces-name-entry {
     @include entry($for_expo: true);
 
-    &#selected {
+    &:focus,
+    &#selected,
+    &#selected:focus {
         color: $selected_fg_color;
-        transition-duration: 150;
-
-        &:focus {
-            color: $selected_fg_color;
-            transition-duration: 150;
-        }
-    }
-
-    &:focus {
-        color: $selected_fg_color;
-        transition-duration: 150;
-    }
-}
-
-@if $cinnamon_version > 44 {
-    .restart-osd {
-        font-size: 1.6em;
     }
 }
 
@@ -571,24 +482,33 @@ StScrollView {
  * Overview (/usr/share/cinnamon/js/ui/expo.js)
  * ============================================================================= */
 .workspace-add-button {
-    background-image: url("assets/plus.png");
+    background-image: url("../metacity-1/maximize-focus.svg");
+    background-size: 24px;
+    background-color: $button_bg_a;
+    border-color: $border_button;
     height: 200px;
-    width: 35px;
-    transition-duration: 100;
+    width: 34px;
 
     &:hover {
-        background-image: url("assets/plus-hover.png");
-        transition-duration: 100;
+        background-image: url("../metacity-1/maximize-focus-none.svg");
+        background-color: $button_hover_bg_a;
+        border-color: $border_button_hover;
+    }
+
+    &:active {
+        background-image: url("../metacity-1/maximize-focus.svg");
+        background-color: $button_active_bg_a;
+        border-color: $border_button_active;
     }
 }
 
 .window-close-area {
-    background-image: url("assets/trash.svg");
-    background-color: $bg_color;
-    border: 1px solid darken($border_color, 27%);
-    border-radius: 4px 4px 0 0;
-    height: 150px;
-    width: 226px;
+    @include background(base-frame, bottom, $menu_radius);
+
+    background-image: url("../metacity-1/minimize-focus.svg");
+    background-size: 24px;
+    height: 34px;
+    width: 200px;
 }
 
 .expo-background {
@@ -599,62 +519,39 @@ StScrollView {
 /* =============================================================================
  * Overview (/usr/share/cinnamon/js/ui/workspace.js)
  * ============================================================================= */
-.window-caption {
-    @include background(base-frame, null, 4px);
-    font-weight: bold;
-    spacing: 25px;
-    font-size: 1em;
-    padding: 6px 8px;
-    -cinnamon-caption-spacing: 10px;
+.window {
+    &-caption {
+        @include background(base-frame, null, $menu_radius);
 
-    // Mark for deletion on EOL. Cinnamon 4.0.x+
-    // Remove condition and rule.
-    @if $cinnamon_version < 40 {
-        &#selected {
-            @include background(app-selected, null, 4px);
-            font-weight: bold;
-            spacing: 25px;
-        }
-    }
+        font-weight: bold;
+        spacing: 25px;
+        font-size: 1em;
+        padding: 6px 8px;
+        -cinnamon-caption-spacing: 10px;
 
-    // Mark for deletion on EOL. Cinnamon 4.0.x+
-    // Remove condition only.
-    @if $cinnamon_version >= 40 {
         &:focus {
-            @include background(app-selected, null, 4px);
+            @include background(app-selected, null, $menu_radius);
+            // NOTE: Override border set by base-frame mixin.
+            border: 1px solid mix($selected_bg_color, $borders_color, 75%);
         }
     }
-}
 
-.window-close {
-    background-image: url("assets/close.svg");
-    height: 35px;
-    width: 35px;
-    -cinnamon-close-overlap: 16px;
-    transition-duration: 150;
+    &-close {
+        @extend .workspace-close-button;
 
-    &:hover {
-        background-image: url("assets/close-hover.svg");
-        transition-duration: 150;
+        -cinnamon-close-overlap: 16px;
     }
 
-    // Mark for deletion on EOL. Cinnamon 4.0.x+
-    // Remove condition and rule.
-    @if $cinnamon_version < 40 {
-        &:rtl {
-            -st-background-image-shadow: 2px 2px 6px transparentize(black, 0.5);
-        }
-    }
-}
-
-// Mark for deletion on EOL. Cinnamon 4.0.x+
-// Remove condition only.
-@if $cinnamon_version >= 40 {
-    .window-border {
+    &-border {
         border: 3px $selected_bg_color;
-        border-radius: 4px;
-        background-color: rgba(255, 255, 255, 0.05); /* Cover rounded corners and some bad adjustment gaps */
-        box-shadow: 0 0 0 1px $selected_bg_color inset;
+        border-radius: $menu_radius;
+        background-color: rgba(
+            255,
+            255,
+            255,
+            0.05
+        ); /* Cover rounded corners and some bad adjustment gaps */
+        box-shadow: inset 0 0 0 1px $selected_bg_color;
     }
 }
 
@@ -664,55 +561,56 @@ StScrollView {
 .desklet {
     color: $fg_color;
 
-    &:highlight {
-        background-color: $selected_bg_color;
-    }
-
+    &:highlight,
     &-with-borders:highlight,
     &-with-borders-and-header:highlight {
         background-color: $selected_bg_color;
     }
 
     &-with-borders {
-        @include background(base-frame, null, 4px);
+        @include background(base-frame, null, $menu_radius);
         font-weight: bold;
         padding: 8px;
     }
 
     &-with-borders-and-header {
         background-color: $bg_color;
-        border: 1px solid $border_color;
-        border-radius: 0 0 4px 4px;
+        border: 1px solid $borders_color;
+        border-radius: 0 0 $menu_radius $menu_radius;
         color: $fg_color;
         padding: 8px;
     }
 
     &-header {
         background-color: $bg_color;
-        border: 1px solid $border_color;
+        border: 1px solid $borders_color;
         border-bottom-width: 0;
-        border-radius: 4px 4px 0 0;
+        border-radius: $menu_radius $menu_radius 0 0;
         font-size: 1em;
         font-weight: bold;
-        text-shadow: lighten($border_color, 26%) 0 0 0;
+        text-shadow: lighten($borders_color, 26%) 0 0 0;
         color: $fg_color;
         padding: 8px;
     }
 
     &-drag-placeholder {
-        border: 0 solid lighten($border_color, 13%);
+        border: 0 solid lighten($borders_color, 13%);
         border-radius: 0;
         background: none;
     }
 }
 
-/* Class used by the default desklet called "Digital photo frame" (photoframe@cinnamon.org) */
+/* =============================================================================
+ * Digital photo frame desklet (/usr/share/cinnamon/applets/photoframe@cinnamon.org/desklet.js)
+ * ============================================================================= */
 .photoframe-box {
-    @include background(base-frame, null, 4px);
+    @include background(base-frame, null, $menu_radius);
     padding: 10px;
 }
 
-/* Class used by the default desklet called "Clock desklet" (clock@cinnamon.org) */
+/* =============================================================================
+ * Clock desklet (/usr/share/cinnamon/applets/clock@cinnamon.org/desklet.js)
+ * ============================================================================= */
 .clock-desklet-label {
     color: $fg_color;
 }
@@ -721,9 +619,19 @@ StScrollView {
  * Looking Glass (/usr/share/cinnamon/js/ui/lookingGlass.js)
  * ============================================================================= */
 #LookingGlassDialog {
-    @include background(base-frame, null, 4px);
-    transition-duration: 300;
+    @include background(base-frame, null, $menu_radius);
     padding: 8px;
+}
+
+/* =============================================================================
+ * Power applet (/usr/share/cinnamon/applets/power@cinnamon.org/applet.js)
+ * ============================================================================= */
+.system-status-icon {
+    padding-left: 0;
+    padding-right: 0;
+    spacing: 0;
+    margin: 0;
+    icon-size: 1.14em;
 }
 
 /* =============================================================================
@@ -745,13 +653,11 @@ StScrollView {
     &-change-month-forward:rtl {
         height: 20px;
         width: 20px;
-        transition-duration: 200;
         border: 1px transparent;
         background-image: url("assets/calendar-arrow-left.svg");
     }
 
     &-change-month-back:hover {
-        transition-duration: 150;
         background-image: url("assets/calendar-arrow-left-hover.svg");
     }
 
@@ -759,13 +665,11 @@ StScrollView {
     &-change-month-back:rtl {
         height: 20px;
         width: 20px;
-        transition-duration: 200;
         border: 1px transparent;
         background-image: url("assets/calendar-arrow-right.svg");
     }
 
     &-change-month-forward:hover {
-        transition-duration: 150;
         background-image: url("assets/calendar-arrow-right-hover.svg");
     }
 
@@ -777,7 +681,7 @@ StScrollView {
 
         &:active {
             background: $selected_bg_color;
-            box-shadow: inset 0 1px 2px 0 transparentize(black, 0.9);
+            box-shadow: inset 0 1px 2px 0 rgba(black, 0.1);
             color: $selected_fg_color;
         }
     }
@@ -789,18 +693,18 @@ StScrollView {
     }
 
     &-week-number {
-        color: transparentize(black, 0.5);
+        color: rgba(black, 0.5);
         font-size: 1em;
     }
 
     &-day {
-        border: 1px transparentize(black, 0.8);
-        color: transparentize(black, 0.3);
+        border: 1px rgba(black, 0.2);
+        color: rgba(black, 0.7);
         border-top-width: 0;
         border-left-width: 0;
         padding-left: 1px;
         padding-top: 1px;
-        background-color: transparentize(white, 0.9);
+        background-color: rgba(white, 0.1);
     }
 
     &-day-top {
@@ -812,7 +716,7 @@ StScrollView {
     }
 
     &-nonwork-day {
-        background-color: transparentize(lighten(black, 50%), 0.9);
+        background-color: rgba(lighten(black, 50%), 0.1);
     }
 
     &-today {
@@ -821,13 +725,15 @@ StScrollView {
     }
 
     &-other-month-day {
-        color: transparentize(lighten(black, 20%), 0.7);
-        box-shadow: inset 0 2px 3px 0 transparentize(black, 0.9);
-        background-color: transparentize(lighten(black, 20%), 0.9);
+        color: rgba(lighten(black, 20%), 0.3);
+        box-shadow: inset 0 2px 3px 0 rgba(black, 0.1);
+        background-color: rgba(lighten(black, 20%), 0.1);
     }
 }
 
-/* Calendar applet (/usr/share/cinnamon/applets/calendar@cinnamon.org/applet.js) */
+/* =============================================================================
+ * Calendar applet (/usr/share/cinnamon/applets/calendar@cinnamon.org/applet.js)
+ * ============================================================================= */
 .datemenu-date-label {
     padding: 0.5em 0 1em;
     font-weight: bold;
@@ -836,10 +742,10 @@ StScrollView {
 }
 
 /* =============================================================================
- * Notifications    (/usr/share/cinnamon/js/ui/messageTray.js)
+ * Notifications (/usr/share/cinnamon/js/ui/messageTray.js)
  * ============================================================================= */
 #notification {
-    @include background(base-frame, null, 4px);
+    @include background(base-frame, null, $menu_radius);
     font-size: 0.95em;
     padding: 8px;
     spacing-rows: 10px;
@@ -856,11 +762,11 @@ StScrollView {
         @include entry;
 
         &:focus {
-            @include entry($state: focus);
+            @include entry(focus);
         }
 
         &:hover {
-            @include entry($state: hover);
+            @include entry(hover);
         }
     }
 
@@ -896,51 +802,33 @@ StScrollView {
         spacing: 10px;
     }
 
-    /* For the links inside notifications.
-     * These URLs are already underlined with Pango markup.
-     */
+    // NOTE: For the links inside notifications.
+    // These URLs are already underlined with Pango markup.
     .url-highlighter {
         link-color: $link_color;
     }
 }
 
-/* We use row-span = 2 for the image cell, which prevents its height preferences to be
- * taken into account during allocation, so its height ends up being limited by the height
- * of the content in the other rows. To avoid showing a stretched image, we set the minimum
- * height of the table to be ICON_SIZE + IMAGE_SIZE + spacing-rows = 24 + 125 + 10 = 159
- */
+// NOTE: We use row-span = 2 for the image cell, which prevents its height preferences to be
+// taken into account during allocation, so its height ends up being limited by the height
+// of the content in the other rows. To avoid showing a stretched image, we set the minimum
+// height of the table to be ICON_SIZE + IMAGE_SIZE + spacing-rows = 24 + 125 + 10 = 159
 .notification-with-image {
     min-height: 159px;
     color: $fg_color;
 }
 
-/* Override padding for this class so the button is squared. */
+// NOTE: Override padding for this class so the button is squared.
 .notification-icon-button {
-    padding: 4px;
-
-    &:hover {
-        padding: 4px;
-    }
-
-    &:focus {
-        padding: 4px;
-
-        &:hover {
-            padding: 4px;
-        }
-
-        &:checked,
-        &:active {
-            padding: 4px;
-        }
-    }
-
+    &,
     &:active,
-    &:checked {
-        padding: 4px;
-    }
-
-    &:disabled {
+    &:checked,
+    &:focus,
+    &:hover,
+    &:disabled,
+    &:focus:hover,
+    &:focus:checked,
+    &:focus:active {
         padding: 4px;
     }
 
@@ -950,7 +838,7 @@ StScrollView {
 }
 
 /* =============================================================================
- * Alt Tab    (/usr/share/cinnamon/js/ui/appSwitcher/classicSwitcher.js)
+ * Alt Tab (/usr/share/cinnamon/js/ui/appSwitcher/classicSwitcher.js)
  * ============================================================================= */
 #altTabPopup {
     padding: 8px;
@@ -958,7 +846,7 @@ StScrollView {
 }
 
 .switcher-list {
-    @include background(base-frame, null, 4px);
+    @include background(base-frame, null, $menu_radius);
     padding: 20px;
     font-size: 1em;
     font-weight: bold;
@@ -974,7 +862,7 @@ StScrollView {
         }
 
         &:selected {
-            @include background(app-selected, null, 4px);
+            @include background(app-selected, null, $menu_radius);
         }
     }
 
@@ -989,7 +877,7 @@ StScrollView {
 
     .separator {
         width: 1px;
-        background: transparentize(white, 0.77);
+        background: rgba(white, 0.33);
     }
 }
 
@@ -998,7 +886,7 @@ StScrollView {
 }
 
 .thumbnail-scroll-gradient-left {
-    background-color: transparentize(lighten(black, 20%), 0.5);
+    background-color: rgba(lighten(black, 20%), 0.5);
     border-radius: 24px;
     border-radius-topright: 0;
     border-radius-bottomright: 0;
@@ -1006,7 +894,7 @@ StScrollView {
 }
 
 .thumbnail-scroll-gradient-right {
-    background-color: transparentize(lighten(black, 20%), 0.5);
+    background-color: rgba(lighten(black, 20%), 0.5);
     border-radius: 24px;
     border-radius-topleft: 0;
     border-radius-bottomleft: 0;
@@ -1024,7 +912,7 @@ StScrollView {
 }
 
 .switcher-preview-backdrop {
-    background-color: transparentize(lighten(black, 10%), 0.35);
+    background-color: rgba(lighten(black, 10%), 0.65);
 }
 
 /* =============================================================================
@@ -1034,17 +922,17 @@ StScrollView {
 .ripple-box:rtl {
     width: 100px;
     height: 100px;
-    border-radius: 50px; /* 50% is not recognized. */
-    background-gradient-direction: radial; /* start=center, end=edges */
-    background-gradient-start: transparentize($selected_bg_color, 0.7);
-    background-gradient-end: transparentize($selected_bg_color, 0.8);
+    border-radius: 50px; // NOTE: 50% is not recognized.
+    background-gradient-direction: radial; // NOTE: start=center, end=edges
+    background-gradient-start: rgba($selected_bg_color, 0.3);
+    background-gradient-end: rgba($selected_bg_color, 0.2);
 }
 
 /* =============================================================================
  * Modal dialogs    (/usr/share/cinnamon/js/ui/modalDialog.js)
  * ============================================================================= */
 .modal-dialog {
-    @include background(base-frame, null, 4px);
+    @include background(base-frame, null, $menu_radius);
     font-size: 1.1em;
     padding: 30px;
 
@@ -1078,12 +966,13 @@ StScrollView {
     &-entry {
         @include entry;
 
-        &:focus {
-            @include entry($state: focus);
+        &:focus,
+        &:focus:hover {
+            @include entry(focus);
         }
 
         &:hover {
-            @include entry($state: hover);
+            @include entry(hover);
         }
     }
 
@@ -1097,7 +986,7 @@ StScrollView {
  * Lightbox (/usr/share/cinnamon/js/ui/lightbox.js)
  * ============================================================================= */
 .lightbox {
-    background-color: transparentize(black, 0.6);
+    background-color: rgba(black, 0.4);
 }
 
 /* =============================================================================
@@ -1108,98 +997,10 @@ StScrollView {
 }
 
 /* =============================================================================
- * CinnamonMountOperation Dialogs (/usr/share/cinnamon/js/ui/cinnamonMountOperation.js)
- * ============================================================================= */
-.cinnamon-mount-operation-icon {
-    icon-size: 48px;
-}
-
-.mount-password-reask {
-    color: $error_color;
-}
-
-.show-processes-dialog,
-.mount-question-dialog {
-    spacing: 24px;
-}
-
-.show-processes-dialog-subject,
-.mount-question-dialog-subject {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: $fg_color;
-    padding-top: 10px;
-    padding-left: 17px;
-    padding-bottom: 6px;
-}
-
-.show-processes-dialog-subject:rtl,
-.mount-question-dialog-subject:rtl {
-    padding-left: 0;
-    padding-right: 17px;
-}
-
-.show-processes-dialog-description,
-.mount-question-dialog-description {
-    font-size: 1.1em;
-    color: $fg_color;
-    padding-left: 17px;
-    width: 28em;
-}
-
-.show-processes-dialog-description:rtl,
-.mount-question-dialog-description:rtl {
-    padding-right: 17px;
-}
-
-.show-processes-dialog-app-list {
-    font-size: 1.1em;
-    max-height: 200px;
-    padding-top: 24px;
-    padding-left: 49px;
-    padding-right: 32px;
-
-    &:rtl {
-        padding-right: 49px;
-        padding-left: 32px;
-    }
-}
-
-.show-processes-dialog-app-list-item {
-    color: $fg_color;
-
-    &:hover {
-        color: lighten($fg_color, 20%);
-    }
-
-    &:ltr {
-        padding-right: 1em;
-    }
-
-    &:rtl {
-        padding-left: 1em;
-    }
-}
-
-.show-processes-dialog-app-list-item-icon {
-    &:ltr {
-        padding-right: 17px;
-    }
-
-    &:rtl {
-        padding-left: 17px;
-    }
-}
-
-.show-processes-dialog-app-list-item-name {
-    font-size: 1.1em;
-}
-
-/* =============================================================================
  * Magnifier (/usr/share/cinnamon/js/ui/magnifier.js)
  * ============================================================================= */
 .magnifier-zoom-region {
-    border: 2px solid maroon;
+    border: 2px solid mix($selected_bg_color, $borders_color, 75%);
 
     &.full-screen {
         border-width: 0;
@@ -1211,68 +1012,72 @@ StScrollView {
  * ============================================================================= */
 #keyboard {
     background-color: $bg_color;
-    box-shadow: inset 0 1px darken($border_color, 48%);
+    box-shadow: inset 0 1px darken($borders_color, 48%);
 }
 
-.keyboard-layout {
-    spacing: 10px;
-    padding: 10px;
-}
+.keyboard {
+    &-layout {
+        spacing: 10px;
+        padding: 10px;
+    }
 
-.keyboard-row {
-    spacing: 15px;
-}
+    &-row {
+        spacing: 15px;
+    }
 
-.keyboard-key {
-    @include button(normal);
-    min-height: 30px;
-    min-width: 30px;
-    font-size: 1.5em;
-    font-weight: bold;
-
-    &:grayed {
+    &-key {
         @include button(normal);
+        min-height: 30px;
+        min-width: 30px;
+        font-size: 1.5em;
+        font-weight: bold;
+
+        &:grayed {
+            @include button(normal);
+        }
+
+        &:checked,
+        &:hover {
+            @include button(hover);
+        }
+
+        &:active {
+            @include button(active);
+        }
     }
 
-    &:checked,
-    &:hover {
-        @include button(hover);
+    &-subkeys {
+        color: $fg_color;
+        padding: 5px;
+        -arrow-border-radius: $menu_radius;
+        -arrow-background-color: lighten($bg_color, 4%);
+        -arrow-border-width: 1px;
+        -arrow-border-color: rgba(darken($borders_color, 51%), 0.3);
+        -arrow-base: 18px;
+        -arrow-rise: 10px;
+        -st-shadow: 0 -1px 2px 0 rgba(white, 0.9);
+        -boxpointer-gap: 2px;
     }
-
-    &:active {
-        @include button(active);
-    }
-}
-
-.keyboard-subkeys {
-    color: $fg_color;
-    padding: 5px;
-    -arrow-border-radius: 4px;
-    -arrow-background-color: lighten($bg_color, 4%);
-    -arrow-border-width: 1px;
-    -arrow-border-color: transparentize(darken($border_color, 51%), 0.7);
-    -arrow-base: 18px;
-    -arrow-rise: 10px;
-    -st-shadow: 0 -1px 2px 0 transparentize(white, 0.1);
-    -boxpointer-gap: 2px;
 }
 
 /* =============================================================================
  * Menu applet (/usr/share/cinnamon/applets/menu@cinnamon.org/applet.js)
  * ============================================================================= */
-.menu-favorites-box {
-    background-color: lighten($bg_color, 4%);
-    border: 1px solid silver;
-    border-radius: 4px;
-    padding: 0.5em;
-}
+.menu-favorites {
+    &-box {
+        background-color: lighten($bg_color, 4%);
+        border: 1px solid silver;
+        border-radius: $menu_radius;
+        padding: 0.5em;
+    }
 
-.menu-favorites-button {
-    padding: 0.9em 1em;
-    border-radius: 4px;
+    &-button {
+        padding: 0.9em 1em;
+        border-radius: $menu_radius;
 
-    &:hover {
-        @include background(app-selected, null, 4px);
+        &:hover {
+            @include background(app-selected, null, $menu_radius);
+        }
     }
 }
 
@@ -1290,101 +1095,102 @@ StScrollView {
     max-width: 10px;
 
     &:highlighted {
-        /* This style is used in menu application buttons for applications which were newly installed. */
+        // NOTE: This style is used in menu application buttons for applications which were newly installed.
         font-weight: bold;
     }
-}
 
-.menu-application-button-selected {
-    @include background(app-selected, null, 4px);
-    padding: 7px;
+    &-selected {
+        @include background(app-selected, null, $menu_radius);
+        padding: 7px;
 
-    &:highlighted {
-        font-weight: bold; /* This style is used in menu application buttons for applications which were newly installed. */
-    }
-}
-
-.menu-application-button-label {
-    &:ltr {
-        padding-left: 5px;
+        &:highlighted {
+            // NOTE: This style is used in menu application buttons for applications which were newly installed.
+            font-weight: bold;
+        }
     }
 
-    &:rtl {
-        padding-right: 5px;
+    &-label {
+        &:ltr {
+            padding-left: 5px;
+        }
+
+        &:rtl {
+            padding-right: 5px;
+        }
     }
 }
 
 .menu-category-button {
     padding: 7px;
-}
 
-.menu-category-button-greyed {
-    padding: 7px;
-    color: lighten($fg_color, 25%);
-}
-
-.menu-category-button-selected {
-    @include background(app-selected, null, 4px);
-    padding: 7px;
-}
-
-.menu-category-button-label {
-    &:ltr {
-        padding-left: 5px;
+    &-greyed {
+        padding: 7px;
+        color: lighten($fg_color, 25%);
     }
 
-    &:rtl {
-        padding-right: 5px;
+    &-selected {
+        @include background(app-selected, null, $menu_radius);
+        padding: 7px;
+    }
+
+    &-label {
+        &:ltr {
+            padding-left: 5px;
+        }
+
+        &:rtl {
+            padding-right: 5px;
+        }
     }
 }
 
-/* Name and description of the currently hovered item in the menu.
- * This appears on the bottom right hand corner of the menu.
- */
-.menu-selected-app-box {
-    padding-right: 30px;
-    padding-left: 28px;
-    text-align: right;
+// NOTE: Name and description of the currently hovered item in the menu.
+// This appears on the bottom right hand corner of the menu.
+.menu-selected-app {
+    &-box {
+        padding-right: 30px;
+        padding-left: 28px;
+        text-align: right;
+    }
+
+    &-title {
+        font-weight: bold;
+    }
+
+    &-description {
+        max-width: 150px;
+    }
 }
 
-.menu-selected-app-title {
-    font-weight: bold;
-}
+.menu-search {
+    &-box {
+        padding-left: 30px;
+    }
 
-.menu-selected-app-description {
-    max-width: 150px;
-}
-
-.menu-search-box {
-    padding-left: 30px;
+    &-entry-icon {
+        icon-size: 1em;
+        color: $fg_color;
+    }
 }
 
 #menu-search-entry {
     @include entry;
 
-    &:focus {
-        @include entry($state: focus);
+    &:focus,
+    &:focus:hover {
+        @include entry(focus);
     }
 
     &:hover {
-        @include entry($state: hover);
+        @include entry(hover);
     }
 }
 
-.menu-search-entry-icon {
-    icon-size: 1em;
-    color: $fg_color;
-}
+// .menu-context-menu    {
+// }
 
-/* .menu-context-menu    {
- *
- * }
- */
-
-/* .menu-background    {
- *
- * }
- */
+// .menu-background    {
+// }
 
 /* =============================================================================
  * Window list applet (/usr/share/cinnamon/applets/window-list@cinnamon.org/applet.js)
@@ -1408,319 +1214,187 @@ StScrollView {
     }
 
     &-item-box {
-        @include background(normal, bottom);
-        font-weight: bold;
-        padding: 1px 4px;
+        @each $pos in "top", "bottom", "right", "left" {
+            .panel-#{$pos} & {
+                @include background(normal, #{$pos});
+                font-weight: bold;
+                text-align: left;
+                border-image: none;
 
-        &:active,
-        &:checked,
-        &:focus,
-        &:checked:hover,
-        &:focus:hover,
-        &:active:hover {
-            @include background(pressed, bottom);
-            font-weight: bold;
-        }
-
-        &:hover {
-            @include background(hover, bottom);
-        }
-
-        /* #####################################################################
-         * Class "progress" (window list items progress overlay):Added in Cinnamon 3.4
-         * ##################################################################### */
-
-        // Mark for deletion on EOL. Cinnamon 3.6.x+
-        // Remove condition only.
-        @if $cinnamon_version >= 34 {
-            .progress {
-                border-radius: 3px 3px 0 0;
-                background-gradient-direction: vertical;
-                background-gradient-start: transparentize($selected_bg_color, 0.5);
-                background-gradient-end: transparentize($selected_bg_color, 0.1);
-            }
-        }
-
-        .panel-top & {
-            @include background(normal, top);
-
-            &:active,
-            &:checked,
-            &:focus,
-            &:checked:hover,
-            &:focus:hover,
-            &:active:hover {
-                @include background(pressed, top);
-            }
-
-            &:hover {
-                @include background(hover, top);
-            }
-
-            // Mark for deletion on EOL. Cinnamon 3.6.x+
-            // Remove condition only.
-            @if $cinnamon_version >= 34 {
-                .progress {
-                    border-radius: 0 0 3px 3px;
+                @if $pos == top or $pos == bottom {
+                    padding: 1px 4px;
+                } @else if $pos == right or $pos == left {
+                    padding: 4px 1px;
                 }
-            }
-        }
 
-        .panel-left & {
-            @include background(normal, left);
-            padding-left: 0;
-            padding-right: 0;
-
-            &:active,
-            &:checked,
-            &:focus,
-            &:checked:hover,
-            &:focus:hover,
-            &:active:hover {
-                @include background(pressed, left);
-            }
-
-            &:hover {
-                @include background(hover, left);
-            }
-
-            // Mark for deletion on EOL. Cinnamon 3.6.x+
-            // Remove condition only.
-            @if $cinnamon_version >= 34 {
-                .progress {
-                    border-radius: 0 3px 3px 0;
+                &:active,
+                &:checked,
+                &:focus,
+                &:checked:hover,
+                &:focus:hover,
+                &:active:hover {
+                    @include background(pressed, #{$pos});
+                    font-weight: bold;
                 }
-            }
-        }
 
-        .panel-right & {
-            @include background(normal, right);
-            padding-left: 0;
-            padding-right: 0;
+                &:hover {
+                    @include background(hover, #{$pos});
+                    font-weight: bold;
+                }
 
-            &:active,
-            &:checked,
-            &:focus,
-            &:checked:hover,
-            &:focus:hover,
-            &:active:hover {
-                @include background(pressed, right);
-            }
-
-            &:hover {
-                @include background(hover, right);
-            }
-
-            // Mark for deletion on EOL. Cinnamon 3.6.x+
-            // Remove condition only.
-            @if $cinnamon_version >= 34 {
                 .progress {
-                    border-radius: 3px 0 0 3px;
+                    background-gradient-direction: vertical;
+                    background-gradient-start: rgba($selected_bg_color, 0.5);
+                    background-gradient-end: rgba($selected_bg_color, 0.9);
+
+                    @if $pos == top {
+                        border-radius: 0 0 $button_radius $button_radius;
+                    } @else if $pos == bottom {
+                        border-radius: $button_radius $button_radius 0 0;
+                    } @else if $pos == right {
+                        border-radius: $button_radius 0 0 $button_radius;
+                    } @else if $pos == left {
+                        border-radius: 0 $button_radius $button_radius 0;
+                    }
                 }
             }
         }
     }
 
     &-item-demands-attention {
-        @include background(attention, bottom);
-
-        .panel-top & {
-            @include background(attention, top);
-        }
-
-        .panel-left & {
-            @include background(attention, left);
-        }
-
-        .panel-right & {
-            @include background(attention, right);
+        @each $pos in "top", "bottom", "right", "left" {
+            .panel-#{$pos} & {
+                @include background(attention, #{$pos});
+            }
         }
     }
 
-    // Mark for deletion on EOL. Cinnamon 3.6.x+
-    // Remove condition only.
-    @if $cinnamon_version >= 34 {
-        /* #########################################################################
-         * Class "window-list-preview":Added in Cinnamon 3.6
-         * ######################################################################### */
-        &-preview {
-            @include background(base-frame, null, 4px);
+    &-preview {
+        @include background(base-frame, null, $menu_radius);
 
-            /* The class itself doesn't respond to the set paddings. */
+        /* The class itself doesn't respond to the set paddings. */
 
-            // padding: 6px 12px 12px;
-            font-size: 1em;
-            font-weight: bold;
-            text-shadow: white 0 0 2px;
+        // padding: 6px 12px 12px;
+        font-size: 1em;
+        font-weight: bold;
+        text-shadow: white 0 0 2px;
 
-            & StBin {
-                padding: 5px;
-            }
+        & StBin {
+            padding: 5px;
         }
     }
 }
 
-// Mark for deletion on EOL. Cinnamon 4.0.x+
-// Remove condition only.
-@if $cinnamon_version >= 40 {
-    /* =============================================================================
-     * Grouped window list applet (/usr/share/cinnamon/applets/grouped-window-list@cinnamon.org
-     * ============================================================================= */
-
-    .grouped-window-list {
-        &-item-box {
-            @include background(normal, bottom);
-            text-align: left;
-            font-weight: bold;
-            padding: 1px 0 4px 4px;
-            border-image: none;
-
-            &:hover {
-                @include background(hover, bottom);
-            }
-
-            &:focus:hover,
-            &:focus:active:hover,
-            &:focus {
-                @include background(pressed, bottom);
+/* =============================================================================
+ * Grouped window list applet (/usr/share/cinnamon/applets/grouped-window-list@cinnamon.org
+ * ============================================================================= */
+.grouped-window-list {
+    &-item-box {
+        @each $pos in "top", "bottom", "right", "left" {
+            .panel-#{$pos} & {
+                @include background(normal, #{$pos});
+                text-align: left;
                 font-weight: bold;
-            }
+                padding: 1px 0 4px 4px;
+                border-image: none;
 
-            .progress {
-                border-radius: 3px 3px 0 0;
-                background-gradient-direction: vertical;
-                background-gradient-start: transparentize($selected_bg_color, 0.5);
-                background-gradient-end: transparentize($selected_bg_color, 0.1);
-            }
-
-            .panel-top & {
-                @include background(normal, top);
-
-                &:hover {
-                    @include background(hover, top);
+                @if $pos == top or $pos == bottom {
+                    padding: 1px 0 4px 4px;
+                } @else if $pos == right or $pos == left {
+                    padding: 1px 0 4px 0;
                 }
 
                 &:focus:hover,
                 &:focus:active:hover,
                 &:focus {
-                    @include background(pressed, top);
+                    @include background(pressed, #{$pos});
+                    font-weight: bold;
                 }
-
-                .progress {
-                    border-radius: 0 0 3px 3px;
-                }
-            }
-
-            .panel-left & {
-                @include background(normal, left);
-                padding-left: 0;
-                padding-right: 0;
 
                 &:hover {
-                    @include background(hover, left);
-                }
-
-                &:focus:hover,
-                &:focus:active:hover,
-                &:focus {
-                    @include background(pressed, left);
+                    @include background(hover, #{$pos});
+                    font-weight: bold;
                 }
 
                 .progress {
-                    border-radius: 0 3px 3px 0;
-                }
-            }
+                    background-gradient-direction: vertical;
+                    background-gradient-start: rgba($selected_bg_color, 0.5);
+                    background-gradient-end: rgba($selected_bg_color, 0.9);
 
-            .panel-right & {
-                @include background(normal, right);
-                padding-left: 0;
-                padding-right: 0;
-
-                &:hover {
-                    @include background(hover, right);
-                }
-
-                &:focus:hover,
-                &:focus:active:hover,
-                &:focus {
-                    @include background(pressed, right);
-                }
-
-                .progress {
-                    border-radius: 3px 0 0 3px;
+                    @if $pos == top {
+                        border-radius: 0 0 $button_radius $button_radius;
+                    } @else if $pos == bottom {
+                        border-radius: $button_radius $button_radius 0 0;
+                    } @else if $pos == right {
+                        border-radius: $button_radius 0 0 $button_radius;
+                    } @else if $pos == left {
+                        border-radius: 0 $button_radius $button_radius 0;
+                    }
                 }
             }
         }
+    }
 
-        &-item-demands-attention {
-            @include background(attention, bottom);
-
-            .panel-top & {
-                @include background(attention, top);
-            }
-
-            .panel-left & {
-                @include background(attention, left);
-            }
-
-            .panel-right & {
-                @include background(attention, right);
+    &-item-demands-attention {
+        @each $pos in "top", "bottom", "right", "left" {
+            .panel-#{$pos} & {
+                @include background(attention, #{$pos});
             }
         }
+    }
 
-        &-thumbnail-menu {
-            @include background(base-frame, null, 4px);
-            padding: 0;
-            font-size: 1em;
-            font-weight: bold;
+    &-thumbnail-menu {
+        @include background(base-frame, null, $menu_radius);
+        padding: 0;
+        font-size: 1em;
+        font-weight: bold;
 
-            .item-box {
-                padding: 10px;
-                border: 1px solid transparent;
-                border-radius: 0;
-                spacing: 4px;
+        .item-box {
+            padding: 10px;
+            border: 1px solid transparent;
+            border-radius: 0;
+            spacing: 4px;
 
-                &:outlined {
-                    padding: 6px;
-                    border: 2px solid rgba(85, 85, 85, 0);
-                }
-
-                &:selected {
-                    @include background(app-selected, null, 4px);
-                }
+            &:outlined {
+                padding: 6px;
+                border: 2px solid rgba(85, 85, 85, 0);
             }
 
-            .thumbnail {
-                width: 256px;
-            }
-
-            .separator {
-                width: 1px;
-                background: transparentize($white, 0.77);
+            &:selected {
+                @include background(app-selected, null, $menu_radius);
             }
         }
 
-        &-thumbnail-label {
-            padding-left: 4px;
+        .thumbnail {
+            width: 256px;
         }
 
-        &-number-label {
-            z-index: 99;
-            color: $fg_color;
+        .separator {
+            width: 1px;
+            background: rgba($selected_fg_color, 0.33);
         }
+    }
 
-        &-badge {
-            border-radius: 256px;
-            background-color: $white;
-        }
+    &-thumbnail-label {
+        padding-left: 4px;
+    }
 
-        &-button-label {
-            padding-left: 4px;
-        }
+    &-number-label {
+        z-index: 99;
+        color: $fg_color;
+    }
 
-        &-thumbnail-alert {
-            background: transparentize(red, 0.9);
-        }
+    &-badge {
+        border-radius: 256px;
+        background-color: $selected_fg_color;
+    }
+
+    &-button-label {
+        padding-left: 4px;
+    }
+
+    &-thumbnail-alert {
+        background: rgba(red, 0.1);
     }
 }
 
@@ -1736,7 +1410,7 @@ StScrollView {
 
         &:small {
             border: 1px solid transparent;
-            border-radius: 3px;
+            border-radius: $button_radius;
             width: 16px;
             height: 16px;
 
@@ -1759,7 +1433,7 @@ StScrollView {
 
         &:hover,
         &:active {
-            color: transparentize($fg_color, 0.6);
+            color: rgba($fg_color, 0.4);
         }
     }
 
@@ -1784,15 +1458,15 @@ StScrollView {
         padding: 0 16px 8px;
 
         &:first-child {
-            border: 1px solid lighten($border_color, 9%);
-            border-top: 0;
-            border-right: 0;
-            border-left: 0;
+            border: 1px solid lighten($borders_color, 9%);
+            border-top: none;
+            border-right: none;
+            border-left: none;
         }
     }
 
     &-overlay {
-        border-top: 1px solid lighten($border_color, 9%);
+        border-top: 1px solid lighten($borders_color, 9%);
         width: 300px;
         height: 70px;
         padding: 16px;
@@ -1806,117 +1480,86 @@ StScrollView {
     }
 
     &-generic-coverart {
-        background: transparentize(black, 0.8);
+        background: rgba(black, 0.2);
     }
 }
 
-// Mark for deletion on EOL. Cinnamon 4.2.x+
-// Remove condition only.
-@if $cinnamon_version >= 42 {
-    /* =============================================================================
-     * Spacer applet (/usr/share/cinnamon/applets/spacer@cinnamon.org)
-     * ============================================================================= */
-
-    .spacer-box {
-        &:highlight {
-            @include background(highlight, bottom);
-        }
-
-        .panel-top & {
+/* =============================================================================
+ * Spacer applet (/usr/share/cinnamon/applets/spacer@cinnamon.org)
+ * ============================================================================= */
+.spacer-box {
+    @each $pos in "top", "bottom", "right", "left" {
+        .panel-#{$pos} & {
             &:highlight {
-                @include background(highlight, top);
+                @include background(highlight, #{$pos});
             }
         }
-
-        .panel-left & {
-            &:highlight {
-                @include background(highlight, left);
-            }
-        }
-
-        .panel-right & {
-            &:highlight {
-                @include background(highlight, right);
-            }
-        }
-
-        // &.vertical {}
-
-        // &.edit-mode {}
     }
+
+    // &.vertical {}
+
+    // &.edit-mode {}
 }
 
 /* =============================================================================
  * Workspace Switcher applet (/usr/share/cinnamon/applets/workspace-switcher@cinnamon.org/applet.js)
  * ============================================================================= */
-.workspace-button {
-    width: 20px;
-    height: 6px;
-    color: $fg_color;
-    border: 0;
-    border-color: lighten($border_color, 11%);
-    padding: 3px;
-    padding-right: 1px;
-    font-weight: bold;
-    padding-top: 5px;
+// NOTE: Controls the style when using the "Simple buttons" option.
+.workspace-switcher {
+    padding-left: 3px;
+    padding-right: 3px;
 
-    &.vertical {
+    .panel-left &,
+    .panel-right & {
         padding: 0;
     }
 
-    &:hover {
-        @include background(hover, bottom);
-        border-color: lighten($border_color, 11%);
-    }
+    .workspace-button {
+        width: 20px;
+        height: 14px;
+        color: $fg_color;
+        border: 0;
+        border-color: lighten($borders_color, 11%);
+        padding: 3px;
+        padding-top: 4px;
+        font-weight: bold;
 
-    &:outlined {
-        @include background(pressed, bottom);
-    }
-
-    .panel-top & {
-        &:hover {
-            @include background(hover, top);
+        &.vertical {
+            height: 1.5em;
+            width: 24px;
+            padding: 0;
+            padding-top: 3px;
+            padding-bottom: 3px;
         }
 
-        &:outlined {
-            @include background(pressed, top);
-        }
-    }
+        @each $pos in "top", "bottom", "right", "left" {
+            .panel-#{$pos} & {
+                &:hover {
+                    @include background(hover, #{$pos});
+                    border-color: lighten($borders_color, 11%);
+                }
 
-    .panel-left & {
-        &:hover {
-            @include background(hover, left);
-        }
-
-        &:outlined {
-            @include background(pressed, left);
-        }
-    }
-
-    .panel-right & {
-        &:hover {
-            @include background(hover, right);
-        }
-
-        &:outlined {
-            @include background(pressed, right);
+                &:outlined {
+                    @include background(pressed, #{$pos});
+                }
+            }
         }
     }
 }
 
-/* Controls the style when using the "Visual representation" option. */
+// NOTE: Controls the style when using the "Visual representation" option.
 .workspace-graph {
     padding: 3px 4px;
     spacing: 4px;
 
     .workspace {
-        border: 1px solid darken($border_color, 60%);
+        border: 1px solid darken($borders_color, 60%);
         background-gradient-direction: vertical;
         background-gradient-start: darken($bg_color, 62%);
         background-gradient-end: darken($bg_color, 52%);
 
         &:active {
-            border: 1px solid lighten($border_color, 13%);
+            border: 1px solid lighten($borders_color, 13%);
             background-gradient-direction: vertical;
             background-gradient-start: darken($bg_color, 68%);
             background-gradient-end: darken($bg_color, 52%);
@@ -1924,16 +1567,16 @@ StScrollView {
 
         .windows {
             -active-window-background: darken($bg_color, 33%);
-            -active-window-border: transparentize(black, 0.3);
+            -active-window-border: rgba(black, 0.7);
             -inactive-window-background: darken($bg_color, 33%);
-            -inactive-window-border: transparentize(black, 0.3);
+            -inactive-window-border: rgba(black, 0.7);
         }
 
         &:active .windows {
             -active-window-background: $selected_bg_color;
-            -active-window-border: transparentize(black, 0.1);
+            -active-window-border: rgba(black, 0.9);
             -inactive-window-background: darken($bg_color, 22%);
-            -inactive-window-border: transparentize(black, 0.3);
+            -inactive-window-border: rgba(black, 0.7);
         }
     }
 }
@@ -1941,51 +1584,28 @@ StScrollView {
 /* =============================================================================
  * Panel Launchers applet (/usr/share/cinnamon/applets/panel-launchers@cinnamon.org/applet.js)
  * ============================================================================= */
-
-// Mark for deletion on EOL. Cinnamon 3.2.x+
-// Remove condition and rule.
-@if $cinnamon_version == 30 {
-    #panel-launchers-box {
-        padding-left: 0;
-    }
-
-    .panel-launcher {
-        margin: 1px;
-        padding: 2px;
-
-        &:hover {
-            @include background(hover, null, 3px);
-        }
-    }
-}
-
 .panel-launchers {
     spacing: 0;
 
     .launcher {
         border: 1px solid transparent;
         padding: 0 2px;
-        border-radius: 3px;
-        border-top: 0;
+        border-radius: $button_radius;
 
         &:hover {
-            @include background(hover, null, 3px);
+            @include background(hover, null, $button_radius);
         }
 
         .icon-box {
             padding: 0;
         }
 
-        .panel-top & {
-            border-bottom: 0;
-        }
-
-        .panel-left & {
-            border-right: 0;
-        }
-
-        .panel-right & {
-            border-left: 0;
+        @each $pos, $counter_pos in ("top", "bottom"), ("bottom", "top"), ("left", "right"),
+            ("right", "left")
+        {
+            .panel-#{$pos} & {
+                border-#{$counter_pos}: 0;
+            }
         }
     }
 
@@ -2010,75 +1630,34 @@ StScrollView {
             padding: 4px 0;
         }
 
-        &:highlight,
-        &:checked,
-        &:hover {
-            @include background(hover, bottom);
+        // &:checked > .applet-icon,
+        // &:hover > .applet-icon {
+        // }
+
+        // &:active {
+        // }
+
+        // NOTE: Added in Cinnamon 3.4
+        //
+        // The Cinnamon St library now reacts to margin, but that also has the
+        // effect of overriding the margin that was put in programmatically for
+        // TextIcon applets between the icon and the label.
+        // This restores some suitable spacing between icons and their labels.
+        .panel-top &,
+        .panel-bottom & {
+            spacing: 3px;
         }
 
-        &:highlight {
-            @include background(highlight, bottom);
-        }
+        @each $pos in "top", "bottom", "right", "left" {
+            .panel-#{$pos} & {
+                &:checked,
+                &:hover {
+                    @include background(hover, #{$pos});
+                }
 
-        /* &:checked > .applet-icon,
-         * &:hover > .applet-icon {
-         * }
-         */
-
-        /* &:active {
-         * }
-         */
-
-        // Mark for deletion on EOL. Cinnamon 3.4.x+
-        // Remove condition only.
-        @if $cinnamon_version >= 34 {
-            /* #########################################################################
-             * Added in Cinnamon 3.4
-             *
-             * The Cinnamon St library now reacts to margin, but that also has the
-             * effect of overriding the margin that was put in programmatically for
-             * TextIcon applets between the icon and the label.
-             * This restores some suitable spacing between icons and their labels.
-             * ######################################################################### */
-            .panel-top &,
-            .panel-bottom & {
-                spacing: 3px;
-            }
-        }
-
-        .panel-top & {
-            &:highlight,
-            &:checked,
-            &:hover {
-                @include background(hover, top);
-            }
-
-            &:highlight {
-                @include background(highlight, top);
-            }
-        }
-
-        .panel-left & {
-            &:highlight,
-            &:checked,
-            &:hover {
-                @include background(hover, left);
-            }
-
-            &:highlight {
-                @include background(highlight, left);
-            }
-        }
-
-        .panel-right & {
-            &:highlight,
-            &:checked,
-            &:hover {
-                @include background(hover, right);
-            }
-
-            &:highlight {
-                @include background(highlight, right);
+                &:highlight {
+                    @include background(highlight, #{$pos});
+                }
             }
         }
     }
@@ -2091,15 +1670,17 @@ StScrollView {
         &:hover {
             font-weight: bold;
         }
+
+        .applet-box:highlight & {
+            color: $selected_fg_color;
+        }
     }
 
     &-icon {
         icon-size: 22px;
-        // DUMMY
 
-        /* &:hover,
-         * &:checked    {}
-         */
+        // &:hover,
+        // &:checked    {}
     }
 
     /* =========================================================================
@@ -2124,7 +1705,7 @@ StScrollView {
  * Workspace OSD (/usr/share/cinnamon/js/ui/windowManager.js)
  * ============================================================================= */
 .workspace-osd {
-    @include background(base-frame, null, 4px);
+    @include background(base-frame, null, $menu_radius);
     padding: 9px 15px;
     font-weight: bold;
     font-size: 2.8em;
@@ -2140,49 +1721,43 @@ StScrollView {
 /* =============================================================================
  * Check Boxes
  * ============================================================================= */
+@each $asset, $w_class in ("checkbox", "check-box"), ("radio", "radiobutton") {
+    .#{$w_class} {
+        CinnamonGenericContainer {
+            spacing: 0.2em;
+            min-height: 18px;
+            padding-top: 2px;
+        }
+
+        & StBin,
+        &:focus StBin {
+            width: 16px;
+            height: 16px;
+            background-image: url("../gtk-2.0/images/radio-check/#{$asset}-unchecked.svg");
+
+            .popup-menu-item:active & {
+                background-image: url("../gtk-2.0/images/radio-check/#{$asset}-unchecked-selected.svg");
+            }
+        }
+
+        &:checked StBin,
+        &:focus:checked StBin {
+            background-image: url("../gtk-2.0/images/radio-check/#{$asset}-checked.svg");
+
+            .popup-menu-item:active & {
+                background-image: url("../gtk-2.0/images/radio-check/#{$asset}-checked-selected.svg");
+            }
+        }
+    }
+}
+
 .check-box {
-    CinnamonGenericContainer {
-        spacing: 0.2em;
-        min-height: 18px;
-        padding-top: 2px;
-    }
-
-    StBin,
-    &:focus StBin {
-        width: 16px;
-        height: 16px;
-        background-image: url("assets/checkbox-unchecked.svg");
-    }
-
-    &:checked StBin,
-    &:focus:checked StBin {
-        background-image: url("assets/checkbox-checked.svg");
-    }
-
     StLabel {
         font-weight: normal;
     }
 }
 
 .radiobutton {
-    CinnamonGenericContainer {
-        spacing: 0.2em;
-        height: 18px;
-        padding-top: 2px;
-    }
-
-    StBin,
-    &:focus StBin {
-        width: 16px;
-        height: 16px;
-        background-image: url("assets/radio-unselected.svg");
-    }
-
-    &:checked StBin,
-    &:focus:checked StBin {
-        background-image: url("assets/radio-selected.svg");
-    }
-
     StLabel {
         padding-top: 4px;
         font-size: 0.9em;
@@ -2193,96 +1768,44 @@ StScrollView {
 /* =============================================================================
  * User applet (/usr/share/cinnamon/applets/user@cinnamon.org/applet.js)
  * ============================================================================= */
-.user-icon {
-    background-color: lighten($bg_color, 4%);
-    border: 1px solid lighten($border_color, 8%);
-    border-radius: 4px;
-    padding: 0.2em;
-}
+.user {
+    &-icon {
+        background-color: lighten($bg_color, 4%);
+        border: 1px solid lighten($borders_color, 8%);
+        border-radius: $menu_radius;
+        padding: 0.2em;
+    }
 
-.user-label {
-    color: $fg_color;
-    font-size: 1.3em;
-    margin: 6px;
-}
-
-// Mark for deletion on EOL. Cinnamon 4.4.x+
-// Remove condition and rule/s.
-// About dialog for xlets were converted into GTK+ dialogs.
-@if $cinnamon_version < 44 {
-    /* =============================================================================
-     * About Dialog (/usr/share/cinnamon/js/ui/modalDialog.js)
-     * ============================================================================= */
-    .about {
-        &-content {
-            width: 550px;
-            height: 250px;
-            spacing: 8px;
-            padding-bottom: 16px;
-        }
-
-        &-title {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-
-        &-uuid {
-            font-size: 0.8em;
-        }
-
-        &-icon {
-            padding-right: 20px;
-        }
-
-        &-scrollBox {
-            @include background(base-frame, null, 4px);
-        }
-
-        &-scrollBox-innerBox {
-            padding: 1.2em;
-            spacing: 1.2em;
-        }
-
-        &-description {
-            padding-top: 4px;
-            // DUMMY
-
-            /* Let the description text wrap at least for two
-             * lines until it "touches" the about-scrollBox.
-             */
-            padding-bottom: 20px;
-        }
-
-        &-version {
-            padding-left: 7px;
-        }
+    &-label {
+        color: $fg_color;
+        font-size: 1.3em;
+        margin: 6px;
     }
 }
 
 /* =============================================================================
- * OSD Popups
+ * OSD widnow (/usr/share/cinnamon/js/ui/modalDialog.js)
  * ============================================================================= */
 .info-osd {
-    @include background(base-frame, null, 4px);
+    @include background(base-frame, null, $menu_radius);
     font-size: 2em;
     padding: 12px;
     text-align: center;
 }
 
+/* =============================================================================
+ * OSD widnow (/usr/share/cinnamon/js/ui/osdWindow.js)
+ * ============================================================================= */
 .osd-window {
-    @include background(base-frame, null, 4px);
+    @include background(base-frame, null, $menu_radius);
     padding: 20px;
     spacing: 1em;
 
-    // Mark for deletion on EOL. Cinnamon 3.4.x+
-    // Remove condition only.
-    @if $cinnamon_version >= 34 {
-        /*level-bar class added in Cinnamon 3.4.x.*/
-        .level-bar {
-            height: 0.7em;
-            border-radius: 0.3em;
-            background-color: $selected_bg_color;
-        }
+    // level-bar class added in Cinnamon 3.4.x.
+    .level-bar {
+        height: 0.7em;
+        border-radius: 0.3em;
+        background-color: $selected_bg_color;
     }
 
     .level {
@@ -2293,23 +1816,22 @@ StScrollView {
 }
 
 /* =============================================================================
- * Snap/Tile Chrome (/usr/share/cinnamon/js/ui/windowManager.js)
+ * Restart OSD (/usr/share/cinnamon/js/ui/main.js)
  * ============================================================================= */
-.tile-preview {
-    background-color: transparentize($selected_bg_color, 0.6);
-    border: 1px solid transparentize($selected_bg_color, 0.2);
-
-    &.snap {
-        background-color: transparentize($selected_bg_color, 0.2);
-    }
+.restart-osd {
+    font-size: 1.6em;
 }
 
+/* =============================================================================
+ * Snap/Tile Chrome (/usr/share/cinnamon/js/ui/windowManager.js)
+ * ============================================================================= */
+.tile-preview,
 .tile-hud {
-    background-color: transparentize($selected_bg_color, 0.6);
-    border: 1px solid transparentize($selected_bg_color, 0.2);
+    background-color: rgba($selected_bg_color, 0.4);
+    border: 1px solid rgba($selected_bg_color, 0.8);
 
     &.snap {
-        background-color: transparentize($selected_bg_color, 0.2);
+        background-color: rgba($selected_bg_color, 0.8);
     }
 
     &:top {
@@ -2357,17 +1879,12 @@ StScrollView {
     }
 }
 
-// Mark for deletion on EOL. Cinnamon 3.4.x+
-// Remove condition only.
-@if $cinnamon_version >= 34 {
-    /* #########################################################################
-     * Systray Applet - Added in Cinnamon 3.4
-     *
-     * .systray is for theming to be applied to the systray as a whole.
-     * .applet-box is used for indicators (not tray icons) within the systray.
-     * Tray icons are not themed.
-     * ######################################################################### */
-    .systray {
-        spacing: 5px;
-    }
+/* =============================================================================
+ * System Tray applet (/usr/share/cinnamon/applets/systray@cinnamon.org/applet.js)
+ * ============================================================================= */
+// NOTE: .systray is for theming to be applied to the systray as a whole.
+// .applet-box is used for indicators (not tray icons) within the systray.
+// Tray icons are not themed.
+.systray {
+    spacing: 5px;
 }

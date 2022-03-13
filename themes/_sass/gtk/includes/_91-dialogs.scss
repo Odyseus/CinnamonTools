@@ -1,0 +1,97 @@
+/* =============================================================================
+ * Dialogs
+ * ============================================================================= */
+.dialog-action-area {
+    button.text-button {
+        padding: 6px 16px;
+    }
+}
+
+@if ($gtk4) {
+    window.aboutdialog image.large-icons {
+        -gtk-icon-size: 128px;
+    }
+}
+
+printdialog {
+    paper {
+        color: $fg_color;
+        border: 1px solid $borders_color;
+        background: white;
+        padding: 0;
+
+        &:backdrop {
+            color: $backdrop_fg_color;
+            border-color: $backdrop_borders_color;
+        }
+    }
+
+    .dialog-action-box {
+        margin: 12px;
+    }
+}
+
+messagedialog,
+window.dialog.message {
+    // Message Dialog styling
+    .titlebar {
+        min-height: 20px;
+        background-image: none;
+        background-color: $bg_color;
+        border-style: none;
+        border-top-left-radius: $window_radius + 1;
+        border-top-right-radius: $window_radius + 1;
+    }
+
+    // TEST: I wanted to add just a bottom padding, but the Adwaita theme has "full padding" set
+    // of 10px. 10px is just too much for my taste.
+    box.dialog-vbox.vertical {
+        @if ($gtk4) {
+            border-spacing: 4px;
+        } @else {
+            padding: 4px;
+        }
+    }
+
+    & label.title {
+        font-weight: 800;
+        font-size: 15pt;
+    }
+
+    &.csd {
+        // rounded bottom border styling for csd version
+        &.background {
+            // bigger radius for better antialiasing
+            border-bottom-left-radius: $window_radius + 1;
+            border-bottom-right-radius: $window_radius + 1;
+        }
+
+        .dialog-action-area button {
+            padding: 10px 14px; // labels are not vertically centered on message dialog, this is a workaround
+            border-radius: 0;
+            border-left-style: solid;
+            border-right-style: none;
+            border-bottom-style: none;
+
+            &:first-child {
+                border-left-style: none;
+                border-bottom-left-radius: $window_radius + 1;
+            }
+
+            &:last-child {
+                border-bottom-right-radius: $window_radius + 1;
+            }
+        }
+    }
+}
+
+filechooser {
+    .dialog-action-box {
+        border-top: 1px solid $borders_color;
+    }
+
+    #pathbarbox {
+        background-color: $bg_color;
+        border-bottom: 1px solid $borders_color;
+    }
+}

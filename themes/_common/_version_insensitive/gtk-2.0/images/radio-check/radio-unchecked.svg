@@ -1,0 +1,15 @@
+<svg id="svg3806" width="16" height="16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <defs id="defs3808">
+  <linearGradient id="linearGradient4338" x1="9" x2="9" y1="2.5454545" y2="13.454545" gradientTransform="matrix(1.2573893,0,0,1.2568965,-3.3180853,-2.0535768)" gradientUnits="userSpaceOnUse">
+   <stop id="stop4334" style="stop-color:#000000;stop-opacity:.06" offset="0"/>
+   <stop id="stop4336" style="stop-color:#000000;stop-opacity:.02" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient4397" x1="8" x2="8" y1="1.0000643" y2="4.5000558" gradientTransform="matrix(.97978389 0 0 .97940222 .16014747 .16633102)" gradientUnits="userSpaceOnUse">
+   <stop id="stop4393" style="stop-color:#000000;stop-opacity:.08" offset="0"/>
+   <stop id="stop4395" style="stop-color:#000000;stop-opacity:0" offset="1"/>
+  </linearGradient>
+ </defs>
+ <ellipse id="path4328" cx="7.9984188" cy="8.0015717" rx="7.430028" ry="7.427124" style="fill:#f5f5f5;stroke-width:1.1428573;stroke:#999999"/>
+ <ellipse id="path4330" cx="7.9984188" cy="8.0015955" rx="6.2869468" ry="6.2844825" style="fill:none;stroke-width:1.1428572;stroke:url(#linearGradient4338)"/>
+ <ellipse id="path4389" cx="7.9984188" cy="8.0015488" rx="6.8584871" ry="6.8558154" style="fill:url(#linearGradient4397)"/>
+</svg>

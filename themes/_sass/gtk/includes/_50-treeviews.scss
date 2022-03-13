@@ -1,0 +1,281 @@
+/* =============================================================================
+ * Tree views
+ * ============================================================================= */
+$_treeview_borders_color: mix($borders_color, $base_color, 80%);
+$_treeview_backdrop_borders_color: mix($backdrop_borders_color, $base_color, 80%);
+
+columnview.view,
+treeview.view {
+    @if (not $gtk4) {
+        @at-root * {
+            -GtkTreeView-horizontal-separator: 2;
+            -GtkTreeView-vertical-separator: 0;
+            -GtkTreeView-grid-line-width: 1;
+            -GtkTreeView-grid-line-pattern: "";
+            -GtkTreeView-tree-line-width: 1;
+            -GtkTreeView-tree-line-pattern: "";
+            -GtkTreeView-expander-size: 12;
+        }
+    }
+
+    border-left-color: $_treeview_borders_color; // this is actually the tree lines color,
+    border-top-color: $_treeview_borders_color; // while this is the grid lines color, better then nothing
+    padding: 1px;
+
+    @include focus_ring();
+
+    > rubberband {
+        @extend %rubberband;
+    } // to avoid borders being overridden by the previously set props
+
+    &:selected,
+    &:selected:focus {
+        border-style: solid;
+        border-width: 1px 0 1px 0;
+        border-radius: 0;
+        border-color: mix($selected_bg_color, $borders_color, 75%);
+        background-color: transparent;
+        background-image: linear-gradient(
+            to bottom,
+            $selected_bg_color,
+            darken($selected_bg_color, 15%)
+        );
+        outline-color: $alt_focus_border_color;
+
+        @extend %selected_items;
+    }
+
+    &:disabled {
+        color: $insensitive_fg_color;
+
+        &:selected {
+            color: mix($selected_fg_color, $selected_bg_color, 40%);
+
+            &:backdrop {
+                color: mix($backdrop_selected_fg_color, $selected_bg_color, 30%);
+            }
+        }
+    }
+
+    &.separator {
+        min-height: 2px;
+        color: $_treeview_borders_color;
+    }
+
+    &:backdrop {
+        border-left-color: $_treeview_backdrop_borders_color;
+        border-top: $_treeview_backdrop_borders_color;
+    }
+
+    &:drop(active) {
+        box-shadow: none;
+    }
+
+    > dndtarget:drop(active) {
+        border-style: solid none;
+        border-width: 1px;
+        border-color: $selected_borders_color;
+
+        &.after {
+            border-top-style: none;
+        }
+
+        &.before {
+            border-bottom-style: none;
+        }
+    }
+
+    &.expander {
+        // GtkTreeView uses the larger of the expander’s min-width and min-height
+        min-width: 16px;
+        min-height: 16px;
+        -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
+
+        &:dir(rtl) {
+            -gtk-icon-source: -gtk-icontheme("pan-end-symbolic-rtl");
+        }
+
+        color: mix($text_color, $base_color, 70%);
+
+        &:hover {
+            color: $text_color;
+        }
+
+        &:selected {
+            color: mix($selected_fg_color, $selected_bg_color, 70%);
+
+            &:hover {
+                color: $selected_fg_color;
+            }
+        }
+
+        &:checked {
+            -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+        }
+    }
+
+    &.progressbar {
+        color: $selected_fg_color;
+        border: 1px solid $progressbar_border;
+        border-radius: $button_radius;
+        background-image: linear-gradient(to bottom, $progressbar_a, $progressbar_b);
+        box-shadow: 0 1px rgba(white, 0.15);
+
+        &:selected,
+        &:selected:focus {
+            color: $selected_fg_color;
+            border: 1px solid $progressbar_border;
+            border-radius: $button_radius;
+            background-image: linear-gradient(to bottom, $progressbar_a, $progressbar_b);
+            box-shadow: 0 1px rgba(white, 0.15);
+        }
+    }
+
+    &.trough {
+        color: $fg_color;
+        padding: 0;
+        border: 1px solid $borders_color;
+        border-radius: $button_radius;
+        background-image: linear-gradient(to bottom, $progressbar_trough_a, $progressbar_trough_b);
+
+        &:selected,
+        &:selected:focus {
+            color: $fg_color;
+            padding: 0;
+            border: 1px solid $borders_color;
+            border-radius: $button_radius;
+            background-image: linear-gradient(
+                to bottom,
+                $progressbar_trough_a,
+                $progressbar_trough_b
+            );
+        }
+    }
+
+    > header {
+        > button {
+            $_column_header_color: mix($fg_color, $base_color, 50%);
+
+            @extend %column_header_button;
+
+            color: $fg_color;
+            background-color: transparent;
+            background-image: linear-gradient(
+                to bottom,
+                $column_header_bg_a,
+                $column_header_bg_b 50%,
+                $column_header_bg_c
+            );
+            text-shadow: none;
+            box-shadow: none;
+            -gtk-icon-shadow: none;
+
+            &:hover {
+                @extend %column_header_button;
+
+                color: $fg_color;
+                box-shadow: none;
+            }
+
+            &:active {
+                @extend %column_header_button;
+
+                color: $fg_color;
+            }
+
+            sort-indicator {
+                &.ascending {
+                    -gtk-icon-source: -gtk-icontheme("pan-up-symbolic");
+                }
+
+                &.descending {
+                    -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+                }
+
+                min-height: 16px;
+                min-width: 16px;
+            }
+        }
+    }
+
+    // NOTE: for treeview-like derive widgets
+    button.dnd,
+    header.button.dnd {
+        &,
+        &:active,
+        &:selected,
+        &:hover {
+            padding: 4px 6px;
+            color: $selected_fg_color;
+            background-image: linear-gradient(
+                to bottom,
+                $selected_bg_color,
+                darken($selected_bg_color, 15%)
+            );
+            background-color: transparent;
+            border-style: none;
+            border-radius: 0;
+            box-shadow: inset 0 0 0 1px $base_color;
+            text-shadow: none;
+            -gtk-icon-shadow: none;
+            transition: none;
+        }
+    }
+
+    acceleditor > label {
+        background-color: $selected_bg_color;
+    } // see tests/testaccel to test
+}
+
+columnview,
+treeview {
+    text,
+    entry {
+        &,
+        &.flat {
+            border-radius: 0;
+            background-color: $base_color;
+
+            &:focus {
+                border-color: $selected_bg_color;
+            }
+        }
+    }
+
+    .view {
+        > header {
+            > button {
+                padding: 4px 6px;
+                color: $fg_color;
+                text-shadow: none;
+                -gtk-icon-shadow: none;
+            }
+        }
+    }
+}
+
+%column_header_button {
+    padding: 4px 6px;
+    border-style: none solid solid none;
+    border-color: $_treeview_borders_color;
+    border-radius: 0;
+    text-shadow: none;
+    border-image: none;
+
+    &:disabled {
+        border-color: $bg_color;
+        background-image: none;
+    }
+
+    &:last-child {
+        &:backdrop,
+        & {
+            border-right-style: none;
+        }
+    }
+}
+
+treeview ~ scrollbar.vertical {
+    border-top: 1px solid $borders_color;
+    margin-top: -1px;
+}

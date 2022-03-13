@@ -1,0 +1,125 @@
+/*********
+ * Scale *
+ *********/
+scale {
+    min-height: 16px;
+    min-width: 16px;
+    padding: 3px;
+
+    slider {
+        min-height: 16px;
+        min-width: 16px;
+        margin: -7px;
+        border: 1px solid $borders_color;
+        border-radius: 50%;
+        background-image: linear-gradient(
+            to bottom,
+            lighten($button_bg_a, 10%),
+            lighten($button_bg_b, 10%)
+        );
+
+        &:active {
+            border-color: $progressbar_border;
+        }
+
+        &:disabled {
+            border-color: lighten($borders_color, 10%);
+            background-image: linear-gradient(to bottom, lighten($bg_color, 5%), $bg_color);
+        }
+    }
+
+    trough {
+        border: 1px solid $borders_color;
+        border-radius: $button_radius;
+        background-color: darken($bg_color, 5%);
+        background-image: none;
+        box-shadow: inset 1px 1px rgba(black, 0.1), 0 1px rgba(white, 0.5);
+
+        @include focus_ring($offset: 1px);
+    }
+
+    highlight {
+        border-radius: $button_radius;
+        background-image: linear-gradient(to bottom, $scale_fill_a, $scale_fill_b);
+        box-shadow: 0 1px rgba(white, 0.05);
+    }
+
+    &:disabled {
+        trough,
+        highlight {
+            @include scale_trough_disabled;
+        }
+    }
+
+    marks {
+        color: $borders_color;
+    }
+
+    marks.bottom {
+        margin-top: 4px;
+        margin-bottom: -4px;
+    }
+
+    marks.top {
+        margin-top: -4px;
+        margin-bottom: 4px;
+    }
+
+    marks.left {
+        margin-left: -4px;
+        margin-right: 4px;
+    }
+
+    marks.right {
+        margin-left: 4px;
+        margin-right: -4px;
+    }
+
+    &.fine-tune {
+        slider {
+            margin: -5px;
+        }
+
+        trough {
+            border-radius: 5px;
+        }
+    }
+
+    &.vertical {
+        trough {
+            background-color: darken($bg_color, 5%);
+            background-image: none;
+            box-shadow: inset 1px 1px rgba(black, 0.1), 1px 0 rgba(white, 0.5);
+        }
+
+        highlight {
+            background-image: linear-gradient(to right, $scale_fill_a, $scale_fill_b);
+            box-shadow: 1px 0 rgba(white, 0.05);
+        }
+
+        &:disabled {
+            trough,
+            highlight {
+                @include scale_trough_disabled;
+            }
+        }
+
+        indicator {
+            min-width: 5px;
+            min-height: 1px;
+        }
+    }
+
+    &.horizontal {
+        indicator {
+            min-width: 1px;
+            min-height: 5px;
+        }
+    }
+
+    // FIXME: Find out what the heck this is and if I should keep it.
+    marks,
+    value {
+        font-feature-settings: "tnum";
+    }
+}

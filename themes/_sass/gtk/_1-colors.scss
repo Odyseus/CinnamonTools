@@ -1,0 +1,161 @@
+// Default Color Scheme
+$bg_color: #d6d6d6;
+$fg_color: #212121;
+$base_color: #f7f7f7;
+$text_color: #212121;
+
+// Misc Colors
+$borders_color: darken($bg_color, 30%);
+$alt_borders_color: darken($bg_color, 36%);
+$internal_element_color: darken($fg_color, 30%);
+$internal_element_prelight: darken($fg_color, 10%);
+$selected_borders_color: darken($selected_bg_color, 15%);
+$focus_border_color: rgba($selected_bg_color, 0.5);
+$alt_focus_border_color: rgba(white, 0.8);
+//insensitive state derived colors
+$insensitive_fg_color: darken($bg_color, 40%);
+// $insensitive_fg_color: mix($fg_color, $bg_color, 50%);
+$insensitive_bg_color: mix($bg_color, $base_color, 60%);
+$insensitive_borders_color: $borders_color;
+// NOTE: Build time definition.
+$outline_color: gtkalpha(currentColor, "@outline_opacity@");
+// NOTE: Build time definition.
+$selected_outline_color: gtkalpha($selected_borders_color, "@outline_opacity@");
+
+// Buttons
+$button_border: darken($bg_color, 14%);
+$button_bg_a: lighten($bg_color, 16%);
+$button_bg_b: darken($bg_color, 2%);
+$button_raised_bg_a: lighten($bg_color, 20%);
+$button_raised_bg_b: darken($bg_color, 5%);
+$button_hover_bg_a: lighten($bg_color, 20%);
+$button_hover_bg_b: lighten($bg_color, 2%);
+$button_hover_raised_bg_a: lighten($bg_color, 24%);
+$button_hover_raised_bg_b: darken($bg_color, 1%);
+// TEST: About 25% lighter active state.
+$button_active_bg_a: darken($bg_color, 16%);
+$button_active_bg_b: darken($bg_color, 11%);
+$button_active_bg_c: darken($bg_color, 11%);
+$button_active_hover_bg_a: darken($bg_color, 22%);
+$button_active_hover_bg_b: darken($bg_color, 17%);
+$button_active_hover_bg_c: darken($bg_color, 17%);
+$button_insensitive_bg_a: $bg_color;
+$button_insensitive_bg_b: darken($bg_color, 3%);
+$button_insensitive_active_bg_a: darken($bg_color, 16%);
+$button_insensitive_active_bg_b: darken($bg_color, 7%);
+// $button_active_bg_a: darken($bg_color, 22%);
+// $button_active_bg_b: darken($bg_color, 15%);
+// $button_active_bg_c: darken($bg_color, 15%);
+// $button_active_hover_bg_a: darken($bg_color, 30%);
+// $button_active_hover_bg_b: darken($bg_color, 23%);
+// $button_active_hover_bg_c: darken($bg_color, 23%);
+// $button_insensitive_bg_a: $bg_color;
+// $button_insensitive_bg_b: darken($bg_color, 5%);
+// $button_insensitive_active_bg_a: darken($bg_color, 22%);
+// $button_insensitive_active_bg_b: darken($bg_color, 10%);
+$column_header_bg_a: $base_color;
+$column_header_bg_b: darken($base_color, 5%);
+$column_header_bg_c: $bg_color;
+$button_fg: $fg_color;
+$button_text_shadow: rgba(white, 0.4);
+
+// Entry
+$entry_bg_a: darken($base_color, 6%);
+$entry_bg_b: $base_color;
+
+// Menus
+$menu_bg: $base_color;
+$menu_fg: $fg_color;
+
+// Notebooks
+$notebook_bg: lighten($bg_color, 10%);
+$notebook_tab_bg_a: lighten($bg_color, 5%);
+$notebook_tab_bg_b: darken($bg_color, 2%);
+
+// Progress Bars
+$progressbar_a: lighten($selected_bg_color, 15%);
+$progressbar_b: darken($selected_bg_color, 5%);
+$progressbar_border: darken($selected_bg_color, 10%);
+$progressbar_trough_a: darken($bg_color, 5%);
+$progressbar_trough_b: lighten($bg_color, 15%);
+
+// Scale
+$scale_slider_a: lighten($bg_color, 20%);
+$scale_slider_b: lighten($bg_color, 5%);
+$scale_slider_hover_a: lighten($bg_color, 15%);
+$scale_slider_hover_b: darken($bg_color, 5%);
+$scale_slider_insensitive_a: lighten($bg_color, 5%);
+$scale_slider_insensitive_b: darken($bg_color, 10%);
+$scale_trough_a: darken($bg_color, 20%);
+$scale_trough_b: $bg_color;
+$scale_fill_a: lighten($selected_bg_color, 10%);
+$scale_fill_b: darken($selected_bg_color, 6%);
+
+// Scrollbars
+$scroll_trough_border: darken($bg_color, 20%);
+$scroll_trough_a: rgba(black, 0.15);
+$scroll_trough_b: rgba(black, 0.05);
+$scroll_slider_a: lighten($bg_color, 10%);
+$scroll_slider_b: lighten($bg_color, 2%);
+$scroll_slider_c: darken($bg_color, 4%);
+
+// Toolbars
+$toolbar_bg_a: $bg_color;
+$toolbar_bg_b: darken($bg_color, 12%);
+$inline_toolbar_bg_a: darken($bg_color, 7%);
+$inline_toolbar_bg_b: $bg_color;
+
+// Views
+$iconview_selected_a: lighten($selected_bg_color, 10%);
+$iconview_selected_b: darken($selected_bg_color, 10%);
+$floating_bar_a: lighten($bg_color, 20%);
+$floating_bar_b: darken($bg_color, 10%);
+$sidebar_bg: $bg_color;
+
+// Desktop Items
+$desktop_item_fg: lighten($bg_color, 9%);
+$desktop_item_selected_fg: $selected_fg_color;
+$desktop_item_text_shadow: rgba(black, 0.8);
+
+// Error/Warning/...
+$link_visited_color: lighten($link_color, 30%);
+// NOTE: Testing a darker yellow to be able to be more visible on white backgrounds like entries have.
+// Too "orangy" is not an option since it might be too close to red.
+// $warning_color: #fdde76;
+$infobar_fg_color: white;
+$infobar_text_shadow: rgba(black, 0.3);
+
+// OSD
+// NOTE: These are the colors used by the Cinnamon theme.
+// So the Gtk OSD elements match the Cinnamon's shell.
+$osd_bg_color: lighten($bg_color, 4%);
+$osd_fg_color: lighten($fg_color, 15%);
+$osd_borders_color: darken($bg_color, 17%);
+
+$drop_target_color: lighten($success_color, 5%);
+
+//colors for the backdrop state, derived from the main colors.
+$backdrop_base_color: darken($base_color, 1%);
+$backdrop_text_color: mix($text_color, $backdrop_base_color, 80%);
+$backdrop_bg_color: $bg_color;
+$backdrop_fg_color: mix($fg_color, $backdrop_bg_color, 50%);
+$backdrop_insensitive_color: darken($backdrop_bg_color, 15%);
+$backdrop_selected_fg_color: $backdrop_base_color;
+$backdrop_borders_color: mix($borders_color, $bg_color, 80%);
+$backdrop_dark_fill: mix($backdrop_borders_color, $backdrop_bg_color, 35%);
+$backdrop_sidebar_bg_color: mix($backdrop_bg_color, $backdrop_base_color, 50%);
+$backdrop_scrollbar_bg_color: darken($backdrop_bg_color, 3%);
+$backdrop_scrollbar_slider_color: mix($backdrop_fg_color, $backdrop_bg_color, 40%);
+$backdrop_menu_color: $backdrop_base_color;
+//special cased widget colors
+$suggested_bg_color: $selected_bg_color;
+$suggested_border_color: $selected_borders_color;
+$progress_bg_color: $selected_bg_color;
+$progress_border_color: $selected_borders_color;
+$checkradio_bg_color: $selected_bg_color;
+$checkradio_fg_color: $selected_fg_color;
+$checkradio_borders_color: darken($checkradio_bg_color, 20%);
+
+$borders_edge: rgba(white, 0.8);
+$top_hilight: $borders_edge;
+$dark_fill: mix($borders_color, $bg_color, 50%);

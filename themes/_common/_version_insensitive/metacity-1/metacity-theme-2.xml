@@ -130,83 +130,179 @@
     </draw_ops>
     <!-- menu icon -->
     <draw_ops name="menu_button_normal">
-        <image filename="menu-focus-normal.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="menu-focus-normal.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="menu_button_prelight">
-        <image filename="menu-focus.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="menu-focus.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="menu_button_unfocused">
-        <image filename="menu-focus-none.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="menu-focus-none.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <!-- close icon -->
     <draw_ops name="close_button_normal">
-        <image filename="close-focus-normal.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="close-focus-normal.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="close_button_prelight">
-        <image filename="close-focus.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="close-focus.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="close_button_unfocused">
-        <image filename="close-focus-none.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="close-focus-none.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <!-- maximize icon -->
     <draw_ops name="maximize_button_normal">
-        <image filename="maximize-focus-normal.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="maximize-focus-normal.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="maximize_button_prelight">
-        <image filename="maximize-focus.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="maximize-focus.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="maximize_button_unfocused">
-        <image filename="maximize-focus-none.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="maximize-focus-none.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <!-- minimize icon -->
     <draw_ops name="minimize_button_normal">
-        <image filename="minimize-focus-normal.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="minimize-focus-normal.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="minimize_button_prelight">
-        <image filename="minimize-focus.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="minimize-focus.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="minimize_button_unfocused">
-        <image filename="minimize-focus-none.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="minimize-focus-none.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <!-- shade icon -->
     <draw_ops name="shade_button_normal">
-        <image filename="shade-focus-normal.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="shade-focus-normal.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="shade_button_prelight">
-        <image filename="shade-focus.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="shade-focus.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="shade_button_unfocused">
-        <image filename="shade-focus-none.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="shade-focus-none.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <!-- unshade icon -->
     <draw_ops name="unshade_button_normal">
-        <image filename="unshade-focus-normal.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="unshade-focus-normal.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="unshade_button_prelight">
-        <image filename="unshade-focus.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="unshade-focus.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="unshade_button_unfocused">
-        <image filename="unshade-focus-none.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="unshade-focus-none.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <!-- stick icon -->
     <draw_ops name="stick_button_normal">
-        <image filename="stick-focus-normal.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="stick-focus-normal.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="stick_button_prelight">
-        <image filename="stick-focus.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="stick-focus.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="stick_button_unfocused">
-        <image filename="stick-focus-none.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="stick-focus-none.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <!-- unstick icon -->
     <draw_ops name="unstick_button_normal">
-        <image filename="unstick-focus-normal.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="unstick-focus-normal.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="unstick_button_prelight">
-        <image filename="unstick-focus.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="unstick-focus.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="unstick_button_unfocused">
-        <image filename="unstick-focus-none.svg" x="(width - object_width) / 2" y="(height - object_height) / 2" width="object_width" height="object_height" />
+        <image filename="unstick-focus-none.svg"
+            x="(width - object_width) / 2"
+            y="(height - object_height) / 2"
+            width="object_width"
+            height="object_height" />
     </draw_ops>
     <draw_ops name="blank">
         <!-- nothing -->

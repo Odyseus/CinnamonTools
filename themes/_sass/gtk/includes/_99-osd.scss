@@ -1,0 +1,60 @@
+/* =============================================================================
+ * OSD
+ * ============================================================================= */
+%osd,
+.osd {
+    color: $osd_fg_color;
+    border: 1px solid $osd_borders_color;
+    border-radius: $window_radius;
+    background-color: $osd_bg_color;
+    background-clip: padding-box;
+    padding: 10px;
+    text-shadow: 0 1px rgba(black, 0.2);
+    -gtk-icon-shadow: 0 1px rgba(black, 0.2);
+
+    &:backdrop {
+        text-shadow: none;
+        -gtk-icon-shadow: none;
+    }
+}
+
+.osd {
+    &.trough,
+    .trough {
+        background-color: rgba($osd_bg_color, 0.6);
+    }
+
+    &.progressbar,
+    .progressbar {
+        background-color: $osd_fg_color;
+    }
+
+    // on OSD
+    & toolbar {
+        background-color: transparent;
+    }
+}
+
+// stand-alone OSD toolbars
+toolbar.osd {
+    @extend %osd;
+
+    &.left,
+    &.right,
+    &.top,
+    &.bottom {
+        border-radius: 0;
+    } // positional classes for `attached` osd toolbars
+}
+
+// NOTE: I don't want transparency ANYWHERE. Even with this, I see a transparency in the
+// gtk3-widget-factory OSD example in the third page displayed when clicking the notebooks pages.
+// I don't know what sorcery is applied to this crap, but not only the background has transparency,
+// but also EVERY SINGLE WIDGET IT CONTAINS.
+.osd,
+.background.osd,
+overlay.osd,
+toolbar.osd {
+    opacity: 1;
+    background-color: $osd_bg_color;
+}

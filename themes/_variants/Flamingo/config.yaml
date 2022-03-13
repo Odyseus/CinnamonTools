@@ -1,0 +1,20 @@
+%YAML 1.1
+---
+# All colors can only be a color in hexadecimal notation.
+# Shorthands (e.g. #fff) and alpha values (e.g. #000000ff) are not allowed.
+# All colors MUST be defined; no exceptions.
+selected_bg_color: "#da4816" # Orange
+selected_fg_color: "#f5f5f5" # White
+tooltip_bg_color: "#212121" # Black
+tooltip_fg_color: "#f5f5f5" # White
+link_color: "#0000ee" # Blue
+info_color: "#398ee7" # Bright blue
+info_fg_color: "#f5f5f5" # White
+question_color: "#55c1ec" # Light blue
+question_fg_color: "#004166" # Dark blue
+warning_color: "#fdde76" # Yellow
+warning_fg_color: "#212121" # Black
+error_color: "#cc0000" # Red
+error_fg_color: "#f5f5f5" # White
+success_color: "#4e9a06" # Green
+success_fg_color: "#f5f5f5" # Green
