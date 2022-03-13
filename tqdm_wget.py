@@ -49,6 +49,7 @@ def download(url, filename):
     """
     with TqdmUpTo(unit="B", unit_scale=True, unit_divisor=1024, miniters=1) as t:
         urlretrieve(url, filename=filename, reporthook=t.update_to, data=None)
+        t.total = t.n
 
 
 if __name__ == "__main__":

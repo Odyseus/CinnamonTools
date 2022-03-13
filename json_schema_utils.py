@@ -2,14 +2,16 @@
 # -*- coding: utf-8 -*-
 """Utilities to validate data from JSON schemas.
 """
+import json
+
 from collections import Callable
 from copy import deepcopy
 
 from . import shell_utils
+from . import yaml_utils
 
 from .exceptions import ExceptionWhitoutTraceBack
 from .exceptions import MissingDependencyModule
-
 
 try:
     from jsonschema import Draft7Validator as schema_validator
@@ -52,8 +54,8 @@ def validate(instance, schema,
     ----------
     instance : dict|list
         The data to validate.
-    schema : dict
-        The schema to use for validation.
+    schema : dict, str
+        The schema to use for validation. It can also be a path to a JSON or YAML file.
     raise_error : bool, optional
         Whether or not to raise an exception.
     error_message_extra_info : str, optional
@@ -87,6 +89,18 @@ def validate(instance, schema,
     except Exception as err:
         instance_copy = instance
         logger.warning(err)
+
+    if isinstance(schema, str):
+        try:
+            if schema.endswith(".yaml") or schema.endswith(".yml"):
+                with open(schema, "r") as yaml_file:
+                    schema = yaml_utils.load(yaml_file)
+            elif schema.endswith(".json"):
+                with open(schema, "r") as json_file:
+                    schema = json.load(json_file)
+        except IOError as err:
+            print(err)
+            raise SystemExit(1)
 
     v = schema_validator(schema,
                          types={**extra_types, **_extra_types},

@@ -65,8 +65,6 @@ def _pofile_or_mofile(f, type, **kwargs):
     instance = parser.parse()
     instance.wrapwidth = kwargs.get('wrapwidth', 78)
     return instance
-# }}}
-# _is_file {{{
 
 
 def _is_file(filename_or_contents):
@@ -83,8 +81,6 @@ def _is_file(filename_or_contents):
         return os.path.exists(filename_or_contents)
     except (ValueError, UnicodeEncodeError):
         return False
-# }}}
-# function pofile() {{{
 
 
 def pofile(pofile, **kwargs):
@@ -115,8 +111,6 @@ def pofile(pofile, **kwargs):
         instance).
     """
     return _pofile_or_mofile(pofile, 'pofile', **kwargs)
-# }}}
-# function mofile() {{{
 
 
 def mofile(mofile, **kwargs):
@@ -148,8 +142,6 @@ def mofile(mofile, **kwargs):
         instance).
     """
     return _pofile_or_mofile(mofile, 'mofile', **kwargs)
-# }}}
-# function detect_encoding() {{{
 
 
 def detect_encoding(file, binary_mode=False):
@@ -200,8 +192,6 @@ def detect_encoding(file, binary_mode=False):
                     return enc
         f.close()
     return default_encoding
-# }}}
-# function escape() {{{
 
 
 def escape(st):
@@ -214,8 +204,6 @@ def escape(st):
              .replace('\r', r'\r')\
              .replace('\n', r'\n')\
              .replace('\"', r'\"')
-# }}}
-# function unescape() {{{
 
 
 def unescape(st):
@@ -235,8 +223,6 @@ def unescape(st):
             return '\\'
         return m  # handles escaped double quote
     return re.sub(r'\\(\\|n|t|r|")', unescape_repl, st)
-# }}}
-# function natural_sort() {{{
 
 
 def natural_sort(lst):
@@ -251,9 +237,6 @@ def natural_sort(lst):
         return [convert(c) for c in re.split('([0-9]+)', key)]
 
     return sorted(lst, key=alphanum_key)
-
-# }}}
-# class _BaseFile {{{
 
 
 class _BaseFile(list):
@@ -586,8 +569,6 @@ class _BaseFile(list):
         if isinstance(mixed, str):
             mixed = mixed.encode(self.encoding)
         return mixed
-# }}}
-# class POFile {{{
 
 
 class POFile(_BaseFile):
@@ -694,8 +675,6 @@ class POFile(_BaseFile):
         for entry in self:
             if entry.msgid_with_context not in refpot_msgids:
                 entry.obsolete = True
-# }}}
-# class MOFile {{{
 
 
 class MOFile(_BaseFile):
@@ -767,8 +746,6 @@ class MOFile(_BaseFile):
         Convenience method to keep the same interface with POFile instances.
         """
         return []
-# }}}
-# class _BaseEntry {{{
 
 
 class _BaseEntry(object):
@@ -888,8 +865,6 @@ class _BaseEntry(object):
         for line in lines:
             ret.append('%s"%s"' % (delflag, escape(line)))
         return ret
-# }}}
-# class POEntry {{{
 
 
 class POEntry(_BaseEntry):
@@ -1134,8 +1109,6 @@ class POEntry(_BaseEntry):
 
     def __hash__(self):
         return hash((self.msgid, self.msgstr))
-# }}}
-# class MOEntry {{{
 
 
 class MOEntry(_BaseEntry):
@@ -1171,9 +1144,6 @@ class MOEntry(_BaseEntry):
 
     def __hash__(self):
         return hash((self.msgid, self.msgstr))
-
-# }}}
-# class _POFileParser {{{
 
 
 class _POFileParser(object):
@@ -1599,8 +1569,6 @@ class _POFileParser(object):
             self.current_entry.previous_msgctxt += token
         # don't change the current state
         return False
-# }}}
-# class _MOFileParser {{{
 
 
 class _MOFileParser(object):
@@ -1745,8 +1713,6 @@ class _MOFileParser(object):
         if len(tup) == 1:
             return tup[0]
         return tup
-# }}}
-# class TextWrapper {{{
 
 
 class TextWrapper(textwrap.TextWrapper):
@@ -1829,8 +1795,6 @@ class TextWrapper(textwrap.TextWrapper):
                 lines.append(indent + ''.join(cur_line))
 
         return lines
-# }}}
-# function wrap() {{{
 
 
 def wrap(text, width=70, **kwargs):
@@ -1840,5 +1804,3 @@ def wrap(text, width=70, **kwargs):
     if sys.version_info < (2, 6):
         return TextWrapper(width=width, **kwargs).wrap(text)
     return textwrap.wrap(text, width=width, **kwargs)
-
-# }}}

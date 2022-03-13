@@ -382,6 +382,11 @@ def reload_plugins(prefix):
         sublime_plugin.reload_plugin(name)
 
 
+'''
+NOTE: This classes won't work anymore in Sublime Text 4.
+In Sublime Text 3 I was able to declare it here and sub-class it in a top-level plugin.
+In Sublime Text 4 I'm forced to declare it in a top-level plugin.
+
 class ProjectSettingsController():
     @distinct_until_buffer_changed
     def on_post_save_async(self, view):
@@ -416,6 +421,7 @@ class SublimeConsoleController():
                 not view.settings().get("edit_settings_view") and \
                 view.window() and view.window().active_panel() != "console":
             view.window().run_command("show_panel", {"panel": "console"})
+'''
 
 
 class CompletionsSuperClass():
