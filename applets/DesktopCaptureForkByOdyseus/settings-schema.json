@@ -1,0 +1,331 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "applet_icon": {
+        "type": "generic",
+        "default": "desktop-capture-camera-photo-symbolic"
+    },
+    "applet_icon_recording": {
+        "type": "generic",
+        "default": "desktop-capture-media-record-symbolic"
+    },
+    "display_device_options_in_sub_menu": {
+        "type": "generic",
+        "default": true
+    },
+    "camera_save_dir": {
+        "type": "generic",
+        "default": ""
+    },
+    "camera_save_prefix": {
+        "type": "generic",
+        "default": "Screenshot-%TYPE-%Y-%M-%D-%H%I%S"
+    },
+    "copy_to_clipboard": {
+        "type": "generic",
+        "default": 0
+    },
+    "recorder_save_dir": {
+        "type": "generic",
+        "default": ""
+    },
+    "recorder_save_prefix": {
+        "type": "generic",
+        "default": "Screencast-%Y-%M-%D-%H%I%S"
+    },
+    "key_camera_window": {
+        "type": "generic",
+        "default": ""
+    },
+    "key_camera_area": {
+        "type": "generic",
+        "default": ""
+    },
+    "key_camera_cinnamon_ui": {
+        "type": "generic",
+        "default": ""
+    },
+    "key_camera_screen": {
+        "type": "generic",
+        "default": ""
+    },
+    "key_camera_monitor_0": {
+        "type": "generic",
+        "default": ""
+    },
+    "key_camera_monitor_1": {
+        "type": "generic",
+        "default": ""
+    },
+    "key_camera_monitor_2": {
+        "type": "generic",
+        "default": ""
+    },
+    "key_camera_repeat": {
+        "type": "generic",
+        "default": ""
+    },
+    "key_recorder_stop_toggle": {
+        "type": "generic",
+        "default": ""
+    },
+    "key_recorder_repeat": {
+        "type": "generic",
+        "default": ""
+    },
+    "timer_display_on_screen": {
+        "type": "generic",
+        "default": true
+    },
+    "capture_window_as_area": {
+        "type": "generic",
+        "default": false
+    },
+    "include_window_frame": {
+        "type": "generic",
+        "default": true
+    },
+    "use_camera_flash": {
+        "type": "generic",
+        "default": true
+    },
+    "include_styles": {
+        "type": "generic",
+        "default": false
+    },
+    "play_shutter_sound": {
+        "type": "generic",
+        "default": true
+    },
+    "play_timer_interval_sound": {
+        "type": "generic",
+        "default": true
+    },
+    "show_copy_toggle": {
+        "type": "generic",
+        "default": false
+    },
+    "auto_copy_data_auto_off": {
+        "type": "generic",
+        "default": false
+    },
+    "auto_copy_data": {
+        "type": "generic",
+        "default": false
+    },
+    "theme_selector": {
+        "type": "generic",
+        "default": "dark"
+    },
+    "theme_custom": {
+        "type": "generic",
+        "default": ""
+    },
+    "record_sound": {
+        "type": "generic",
+        "default": 0
+    },
+    "cinn_rec_current_profile": {
+        "type": "generic",
+        "default": "default"
+    },
+    "cinn_rec_profiles": {
+        "type": "generic",
+        "default": {
+            "x264enc": {
+                "title": "H264",
+                "description": "Encoder: H264\nMuxer: Matroska\nFile extension: mkv",
+                "file-extension": "mkv",
+                "pipeline": "x264enc ! queue ! matroskamux"
+            }
+        }
+    },
+    "program_support": {
+        "type": "generic",
+        "default": {
+            "camera": {
+                "gnome-screenshot": {
+                    "title": "GNOME Screenshot",
+                    "timer": true,
+                    "cursor": {
+                        "on": "--include-pointer",
+                        "off": ""
+                    },
+                    "append-1": "{{CURSOR}} --file={{DIRECTORY}}/{{FILENAME}}.{{EXT}}png{{EXT}}",
+                    "menuitems": {
+                        "Open GUI": "gnome-screenshot --interactive",
+                        "---": "",
+                        "Area": "gnome-screenshot --area {{APPEND_1}}",
+                        "Current Window": "gnome-screenshot --delay {{DELAY}} --window {{APPEND_1}}",
+                        "Screen": "gnome-screenshot --delay {{DELAY}} {{APPEND_1}}"
+                    }
+                },
+                "shutter": {
+                    "title": "Shutter",
+                    "timer": true,
+                    "cursor": {
+                        "on": "--include_cursor",
+                        "off": "--remove_cursor"
+                    },
+                    "append-1": "--profile=test --exit_after_capture {{CURSOR}} --delay={{DELAY}} --output={{DIRECTORY}}/{{FILENAME}}.{{EXT}}png{{EXT}} --min_at_startup --disable_systray --exit_after_capture",
+                    "menuitems": {
+                        "Area": "shutter --select {{APPEND_1}}",
+                        "Current Window": "shutter --active {{APPEND_1}}",
+                        "Screen": "shutter --full {{APPEND_1}}",
+                        "Tooltip": "shutter --tooltip {{APPEND_1}}",
+                        "Window Menu": "shutter --menu {{APPEND_1}}",
+                        "Window Section": "shutter --section {{APPEND_1}}",
+                        "Window": "shutter --window {{APPEND_1}}"
+                    }
+                },
+                "xwd": {
+                    "title": "XWD",
+                    "append-1": "{{DIRECTORY}}/{{FILENAME}}.{{EXT}}png{{EXT}}",
+                    "menuitems": {
+                        "Screen": "bash -c \"xwd -root | convert - {{APPEND_1}}\"",
+                        "Window": "#INTERACTIVE_WINDOW_HELPER# bash -c \"xwd -id {{I_X_WINDOW_ID}} | convert - {{APPEND_1}}\""
+                    }
+                },
+                "imagemagick": {
+                    "title": "ImageMagick",
+                    "append-1": "{{DIRECTORY}}/{{FILENAME}}.{{EXT}}png{{EXT}}",
+                    "menuitems": {
+                        "Area": "#INTERACTIVE_AREA_HELPER# magick import -window root -crop {{I_WIDTH}}x{{I_HEIGHT}}+{{I_X}}+{{I_Y}} {{APPEND_1}}",
+                        "Root window": "magick import -window root {{APPEND_1}}",
+                        "Screen": "magick import -window root -display :0.0 -screen {{APPEND_1}}",
+                        "Window": "#INTERACTIVE_WINDOW_HELPER# magick import -window root -crop {{I_WIDTH}}x{{I_HEIGHT}}+{{I_X}}+{{I_Y}} {{APPEND_1}}"
+                    }
+                },
+                "kazam": {
+                    "title": "Kazam",
+                    "menuitems": {
+                        "Open GUI": "kazam",
+                        "Preferences": "kazam --preferences",
+                        "---": "",
+                        "Area": "kazam --area",
+                        "Current Window": "kazam --window",
+                        "Screen": "kazam --fullscreen",
+                        "Window": "kazam --select"
+                    }
+                }
+            },
+            "recorder": {
+                "ffmpeg": {
+                    "title": "FFmpeg",
+                    "sound": {
+                        "on": "-f alsa -ac 2 -i pulse",
+                        "off": ""
+                    },
+                    "append-1": "{{DIRECTORY}}/{{FILENAME}}.{{EXT}}mkv{{EXT}}",
+                    "menuitems": {
+                        "Area": "#INTERACTIVE_AREA_HELPER# bash -c \"ffmpeg {{SOUND}} -f x11grab -s {{I_WIDTH}}x{{I_HEIGHT}} -r 30 -i :0.0+{{I_X}},{{I_Y}} {{APPEND_1}}\"",
+                        "Screen": "bash -c \"ffmpeg {{SOUND}} -f x11grab -s {{SCREEN_WIDTH}}x{{SCREEN_HEIGHT}} -r 30 -i :0.0 {{APPEND_1}}\"",
+                        "Window": "#INTERACTIVE_WINDOW_HELPER# bash -c \"ffmpeg {{SOUND}} -f x11grab -s {{I_WIDTH}}x{{I_HEIGHT}} -r 30 -i :0.0+{{I_X}},{{I_Y}} {{APPEND_1}}\""
+                    },
+                    "stop-command": "killall ffmpeg"
+                },
+                "recordmydesktop": {
+                    "title": "RecordMyDesktop",
+                    "sound": {
+                        "on": "",
+                        "off": "--no-sound"
+                    },
+                    "append-1": "-o {{DIRECTORY}}/{{FILENAME}}.{{EXT}}ogv{{EXT}}",
+                    "menuitems": {
+                        "#Open GUI": "gtk-recordmydesktop",
+                        "---": "",
+                        "Area": "#INTERACTIVE_AREA_HELPER# recordmydesktop {{SOUND}} -x {{I_X}} -y {{I_Y}} --width {{I_WIDTH}} --height {{I_HEIGHT}} {{APPEND_1}}",
+                        "Screen": "recordmydesktop {{SOUND}} -x 0 -y 0 --width {{SCREEN_WIDTH}} --height {{SCREEN_HEIGHT}} {{APPEND_1}}",
+                        "Window": "#INTERACTIVE_WINDOW_HELPER# recordmydesktop {{SOUND}} --windowid {{I_X_WINDOW_ID}} {{APPEND_1}}"
+                    },
+                    "stop-command": "killall recordmydesktop"
+                },
+                "byzanz-gif": {
+                    "title": "Byzanz GIF",
+                    "cursor": {
+                        "on": "--cursor",
+                        "off": ""
+                    },
+                    "append-1": "byzanz-record --exec='sleep 191449' {{CURSOR}}",
+                    "append-2": "-x {{I_X}} -y {{I_Y}} --width={{I_WIDTH}} --height={{I_HEIGHT}}",
+                    "append-3": "{{DIRECTORY}}/{{FILENAME}}.{{EXT}}gif{{EXT}}",
+                    "menuitems": {
+                        "Area": "#INTERACTIVE_AREA_HELPER# {{APPEND_1}} {{APPEND_2}} {{APPEND_3}}",
+                        "Screen": "{{APPEND_1}} -x 0 -y 0 --width={{SCREEN_WIDTH}} --height={{SCREEN_HEIGHT}} {{APPEND_3}}",
+                        "Window": "#INTERACTIVE_WINDOW_HELPER# {{APPEND_1}} {{APPEND_2}} {{APPEND_3}}"
+                    },
+                    "stop-command": "pkill -nf 'sleep 191449'"
+                },
+                "byzanz-ogv": {
+                    "title": "Byzanz OGV",
+                    "sound": {
+                        "on": "--audio",
+                        "off": ""
+                    },
+                    "cursor": {
+                        "on": "--cursor",
+                        "off": ""
+                    },
+                    "append-1": "byzanz-record --exec='sleep 191449' {{CURSOR}} {{SOUND}}",
+                    "append-2": "-x {{I_X}} -y {{I_Y}} --width={{I_WIDTH}} --height={{I_HEIGHT}}",
+                    "append-3": "{{DIRECTORY}}/{{FILENAME}}.{{EXT}}ogv{{EXT}}",
+                    "menuitems": {
+                        "Area": "#INTERACTIVE_AREA_HELPER# {{APPEND_1}} {{APPEND_2}} {{APPEND_3}}",
+                        "Screen": "{{APPEND_1}} -x 0 -y 0 --width={{SCREEN_WIDTH}} --height={{SCREEN_HEIGHT}} {{APPEND_3}}",
+                        "Window": "#INTERACTIVE_WINDOW_HELPER# {{APPEND_1}} {{APPEND_2}} {{APPEND_3}}"
+                    },
+                    "stop-command": "pkill -nf 'sleep 191449'"
+                },
+                "kazam": {
+                    "title": "Kazam",
+                    "menuitems": {
+                        "#Open GUI": "kazam"
+                    }
+                }
+            }
+        }
+    },
+    "camera_program": {
+        "type": "generic",
+        "default": "cinnamon"
+    },
+    "recorder_program": {
+        "type": "generic",
+        "default": "cinnamon"
+    },
+    "include_cursor": {
+        "type": "generic",
+        "default": false
+    },
+    "timer_delay": {
+        "type": "generic",
+        "default": 2
+    },
+    "recorder_fps": {
+        "type": "generic",
+        "default": 30
+    },
+    "imp_exp_last_selected_directory": {
+        "type": "generic",
+        "default": ""
+    },
+    "last_camera_capture": {
+        "type": "generic",
+        "default": {}
+    },
+    "last_recorder_capture": {
+        "type": "generic",
+        "default": {}
+    },
+    "save_keybindings": {
+        "type": "generic",
+        "default": true
+    }
+}

@@ -1,20 +1,3 @@
-// {{IMPORTER}}
-
-let XletMeta;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
-} else {
-    XletMeta = imports.ui.appletManager.appletMeta["{{UUID}}"];
-}
-
-const GlobalConstants = __import("globalConstants.js");
-const GlobalUtils = __import("globalUtils.js");
-const Constants = __import("constants.js");
-const DebugManager = __import("debugManager.js");
-const CustomTooltips = __import("customTooltips.js");
-
 const {
     gi: {
         Cinnamon,
@@ -39,18 +22,19 @@ const {
 
 const {
     UNICODE_SYMBOLS
-} = GlobalConstants;
+} = require("js_modules/globalConstants.js");
 
 const {
     _,
+    copyToClipboard,
     getKeybindingDisplayName,
     tokensReplacer,
-    copyToClipboard
-} = GlobalUtils;
+    tryFn
+} = require("js_modules/globalUtils.js");
 
 const {
     IntelligentTooltip
-} = CustomTooltips;
+} = require("js_modules/customTooltips.js");
 
 const {
     SOUND_ID,
@@ -59,53 +43,54 @@ const {
     HANDLE_NAMES,
     HANDLE_SIZE,
     SelectionTypeStr
-} = Constants;
+} = require("js_modules/constants.js");
 
 const {
+    DebugManager,
     LoggingLevel
-} = DebugManager;
+} = require("js_modules/debugManager.js");
 
-var Debugger = new DebugManager.DebugManager();
+const {
+    File
+} = require("js_modules/customFileUtils.js");
+
+var Debugger = new DebugManager(`org.cinnamon.applets.${__meta.uuid}`);
 
 function runtimeInfo(aMsg) {
     Debugger.logging_level !== LoggingLevel.NORMAL && aMsg &&
-        global.log("[DesktopCapture] " + aMsg);
+        global.log(`[DesktopCapture] ${aMsg}`);
 }
 
 function runtimeError(aMsg) {
-    aMsg && global.logError("[DesktopCapture] " + aMsg);
+    aMsg && global.logError(`[DesktopCapture] ${aMsg}`);
 }
 
-function CustomPopupMenuSection() {
-    this._init.apply(this, arguments);
-}
+var CustomPopupMenuSection = class CustomPopupMenuSection extends PopupMenu.PopupMenuSection {
+    constructor() {
+        super();
+    }
 
-CustomPopupMenuSection.prototype = {
-    __proto__: PopupMenu.PopupMenuSection.prototype,
-
-    _init: function() {
-        PopupMenu.PopupMenuSection.prototype._init.call(this);
-    },
-
-    addAction: function(aTitle, aCallback, aDetailText, aCustomClass) {
-        let menuItem = PopupMenu.PopupMenuSection.prototype.addAction.call(this, aTitle, aCallback);
+    addAction(aTitle, aCallback, aDetailText, aCustomClass) {
+        const menuItem = super.addAction(aTitle, aCallback);
 
         return extendMenuItem(menuItem, aDetailText, aCustomClass);
     }
 };
 
+// NOTE: I can't remember why on earth did I defined this function outside the CustomPopupMenuSection
+// class.
 function extendMenuItem(aMenuItem, aDetailText, aCustomclass) {
     aCustomclass && aMenuItem.actor.add_style_class_name(aCustomclass);
 
     if (aDetailText) {
-        let bin = new St.Bin({
+        const bin = new St.Bin({
             x_align: St.Align.END
         });
-        let label = new St.Label();
+        const label = new St.Label();
         let keybinding = aDetailText;
 
         if (keybinding.indexOf("::") !== -1) {
-            let parts = keybinding.split("::");
+            const parts = keybinding.split("::");
 
             if (parts[1].length !== 0) {
                 keybinding = parts.map((aKB) => {
@@ -134,14 +119,8 @@ function extendMenuItem(aMenuItem, aDetailText, aCustomclass) {
  * A modified PopupSwitchMenuItem item that allows to press Space bar
  * to toggle the switch without closing the menu that contains it.
  */
-function CustomSwitchMenuItem() {
-    this._init.apply(this, arguments);
-}
-
-CustomSwitchMenuItem.prototype = {
-    __proto__: PopupMenu.PopupSwitchMenuItem.prototype,
-
-    activate: function(event) {
+var CustomSwitchMenuItem = class CustomSwitchMenuItem extends PopupMenu.PopupSwitchMenuItem {
+    activate(event) {
         if (this._switch.actor.mapped) {
             this.toggle();
         }
@@ -154,22 +133,16 @@ CustomSwitchMenuItem.prototype = {
     }
 };
 
-function RadioSelectorMenuItem() {
-    this._init.apply(this, arguments);
-}
-
-RadioSelectorMenuItem.prototype = {
-    __proto__: PopupMenu.PopupIndicatorMenuItem.prototype,
-
-    _init: function(aSubMenu, aParams) {
-        let params = Params.parse(aParams, {
+var RadioSelectorMenuItem = class RadioSelectorMenuItem extends PopupMenu.PopupIndicatorMenuItem {
+    constructor(aSubMenu, aParams) {
+        const params = Params.parse(aParams, {
             item_label: "",
             item_tooltip: "",
             item_value: "",
             pref_key: false,
             extra_params: {}
         });
-        PopupMenu.PopupIndicatorMenuItem.prototype._init.call(this, params.item_label);
+        super(params.item_label);
         this._subMenu = aSubMenu;
         this._applet = aSubMenu._applet;
         this._value = params.item_value;
@@ -187,31 +160,27 @@ RadioSelectorMenuItem.prototype = {
         this._handler_id = this.connect("activate",
             (aActor, aEvent) => this._doActivate(aActor, aEvent));
 
-        this._ornament.child._delegate.setToggleState(this._applet[this._prefKey] === this._value);
-    },
+        this._ornament.child._delegate.setToggleState(this._applet.$._[this._prefKey] === this._value);
+    }
 
-    destroy: function() {
+    destroy() {
         this.disconnect(this._handler_id);
-        PopupMenu.PopupIndicatorMenuItem.prototype.destroy.call(this);
-    },
+        super.destroy();
+    }
 
-    _doActivate: function(aActor, aEvent) { // jshint ignore:line
-        this._applet[this._prefKey] = this._value;
+    _doActivate(aActor, aEvent) { // jshint ignore:line
+        this._applet.$._[this._prefKey] = this._value;
         this._subMenu.setCheckedState();
     }
 };
 
-function RadioSelectorSubMenuItem() {
-    this._init.apply(this, arguments);
-}
+var RadioSelectorSubMenuItem = class RadioSelectorSubMenuItem extends PopupMenu.PopupSubMenuMenuItem {
+    constructor(aApplet, aParams) {
+        super(null);
 
-RadioSelectorSubMenuItem.prototype = {
-    __proto__: PopupMenu.PopupSubMenuMenuItem.prototype,
-
-    _init: function(aApplet, aParams) {
         this._applet = aApplet;
 
-        let params = Params.parse(aParams, {
+        const params = Params.parse(aParams, {
             skip_auto_close: false,
             item_label: "",
             pref_key: false,
@@ -224,8 +193,6 @@ RadioSelectorSubMenuItem.prototype = {
         this._device = params.device_name;
         this._prefKey = params.pref_key;
         this._extraParams = params.extra_params;
-
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this);
 
         this._triangle = null;
 
@@ -279,49 +246,43 @@ RadioSelectorSubMenuItem.prototype = {
                 this._subMenuOpenStateChanged(aMenu, aOpen);
                 onSubMenuOpenStateChanged(aMenu, aOpen);
             });
-    },
+    }
 
-    setLabel: function(aLabel) {
+    setLabel(aLabel) {
         this.label.clutter_text.set_text(aLabel);
-    },
+    }
 
-    _populateMenu: function() {
+    _populateMenu() {
         throw "Should be overridden.";
-    },
+    }
 
-    setCheckedState: function() {
-        let children = this.menu._getMenuItems();
+    setCheckedState() {
+        const children = this.menu._getMenuItems();
 
         for (let i = children.length - 1; i >= 0; i--) {
-            let item = children[i];
+            const item = children[i];
             if (item instanceof RadioSelectorMenuItem) { // Just in case
                 item._ornament.child._delegate.setToggleState(
-                    this._applet[this._prefKey] === item._value);
+                    this._applet.$._[this._prefKey] === item._value);
             }
         }
     }
 };
 
-function ProgramSelectorSubMenuItem() {
-    this._init.apply(this, arguments);
-}
-
-ProgramSelectorSubMenuItem.prototype = {
-    __proto__: RadioSelectorSubMenuItem.prototype,
-
-    _init: function(aApplet, aParams) {
-        RadioSelectorSubMenuItem.prototype._init.call(this, aApplet, aParams);
+var ProgramSelectorSubMenuItem = class ProgramSelectorSubMenuItem extends RadioSelectorSubMenuItem {
+    constructor(aApplet, aParams) {
+        super(aApplet, aParams);
 
         this._populateMenu();
-    },
+    }
 
-    _populateMenu: function() {
+    _populateMenu() {
         this.label.grab_key_focus();
         this.menu.removeAll();
 
-        let programs = this._extraParams.device_programs;
+        const programs = this._extraParams.device_programs;
 
-        for (let p in programs) {
+        for (const p in programs) {
             this.menu.addMenuItem(new ProgramSelectorMenuItem(
                 this, {
                     item_label: programs[p].title,
@@ -336,43 +297,31 @@ ProgramSelectorSubMenuItem.prototype = {
     }
 };
 
-function ProgramSelectorMenuItem() {
-    this._init.apply(this, arguments);
-}
+var ProgramSelectorMenuItem = class ProgramSelectorMenuItem extends RadioSelectorMenuItem {
+    constructor(aSubMenu, aParams) {
+        super(aSubMenu, aParams);
+    }
 
-ProgramSelectorMenuItem.prototype = {
-    __proto__: RadioSelectorMenuItem.prototype,
-
-    _init: function(aSubMenu, aParams) {
-        RadioSelectorMenuItem.prototype._init.call(this, aSubMenu, aParams);
-    },
-
-    _doActivate: function(aActor, aEvent) {
-        RadioSelectorMenuItem.prototype._doActivate.call(this, aActor, aEvent);
+    _doActivate(aActor, aEvent) {
+        super._doActivate(aActor, aEvent);
         this._applet._rebuildDeviceSection(this._extraParams.device);
         return true; // Avoid closing the sub menu.
     }
 };
 
-function CinnamonRecorderProfileSelector() {
-    this._init.apply(this, arguments);
-}
-
-CinnamonRecorderProfileSelector.prototype = {
-    __proto__: RadioSelectorSubMenuItem.prototype,
-
-    _init: function(aApplet, aParams) {
-        RadioSelectorSubMenuItem.prototype._init.call(this, aApplet, aParams);
+var CinnamonRecorderProfileSelector = class CinnamonRecorderProfileSelector extends RadioSelectorSubMenuItem {
+    constructor(aApplet, aParams) {
+        super(aApplet, aParams);
 
         this._populateMenu();
-    },
+    }
 
-    _populateMenu: function() {
+    _populateMenu() {
         this.label.grab_key_focus();
         this.menu.removeAll();
 
-        let profiles = this._applet.cinnamonRecorderProfiles;
-        for (let p in profiles) {
+        const profiles = this._applet.cinnamonRecorderProfiles;
+        for (const p in profiles) {
             this.menu.addMenuItem(new CinnamonRecorderProfileItem(
                 this, {
                     item_label: profiles[p].title,
@@ -385,24 +334,15 @@ CinnamonRecorderProfileSelector.prototype = {
     }
 };
 
-function CinnamonRecorderProfileItem() {
-    this._init.apply(this, arguments);
-}
+var CinnamonRecorderProfileItem = class CinnamonRecorderProfileItem extends RadioSelectorMenuItem {
+    constructor(aSubMenu, aParams) {
+        super(aSubMenu, aParams);
+    }
 
-CinnamonRecorderProfileItem.prototype = {
-    __proto__: RadioSelectorMenuItem.prototype,
-
-    _init: function(aSubMenu, aParams) {
-        RadioSelectorMenuItem.prototype._init.call(this, aSubMenu, aParams);
-    },
-
-    _doActivate: function(aActor, aEvent) {
-        RadioSelectorMenuItem.prototype._doActivate.call(this, aActor, aEvent);
-
-        this._subMenu.setLabel(_("Profile") + ": " +
-            this._applet.cinnamonRecorderProfiles[
-                this._applet[this._prefKey]
-            ]["title"]);
+    _doActivate(aActor, aEvent) {
+        super._doActivate(aActor, aEvent);
+        const title = this._applet.cinnamonRecorderProfiles[this._applet[this._prefKey]]["title"];
+        this._subMenu.setLabel(`${_("Profile")}: ${title}`);
 
         return true; // Avoid closing the sub menu.
     }
@@ -412,13 +352,13 @@ CinnamonRecorderProfileItem.prototype = {
    exponentially for a lot of other things!! */
 function onSubMenuOpenStateChanged(aMenu, aOpen) {
     if (aOpen) {
-        let children = aMenu._getTopMenu()._getMenuItems();
-        let extraChildren = [];
-        let tryToCloseMenus = (aChildren, aHandlingTopMenu) => {
-            for (let child of aChildren) {
+        const children = aMenu._getTopMenu()._getMenuItems();
+        const extraChildren = [];
+        const tryToCloseMenus = (aChildren, aHandlingTopMenu) => {
+            for (const child of aChildren) {
                 if (aHandlingTopMenu &&
                     child instanceof CustomPopupMenuSection) {
-                    for (let childItem of child._getMenuItems()) {
+                    for (const childItem of child._getMenuItems()) {
                         if (childItem instanceof PopupMenu.PopupSubMenuMenuItem) {
                             extraChildren.push(childItem);
                         }
@@ -436,30 +376,34 @@ function onSubMenuOpenStateChanged(aMenu, aOpen) {
             }
         };
 
-        try {
+        tryFn(() => {
             tryToCloseMenus(children, true);
-        } finally {
+        }, (aErr) => { // jshint ignore:line
             tryToCloseMenus(extraChildren, false);
-        }
+        });
     }
 }
 
-/*
-A custom PopupSliderMenuItem element whose value is changed by a step of 1.
-*/
-function CustomPopupSliderMenuItem() {
-    this._init.apply(this, arguments);
-}
+/* TODO: See if I can implement a global/multi-purpose CustomPopupSliderMenuItem like I did with the
+ * one used by the ArgosForCinnamon applet.
+ *
+ * A custom PopupSliderMenuItem element whose value is changed by a step of 1.
+ */
+var CustomPopupSliderMenuItem = class CustomPopupSliderMenuItem extends PopupMenu.PopupSliderMenuItem {
+    constructor(aApplet, aParams) {
+        super(0);
+        // NOTE: Remove all the connections added by PopupBaseMenuItem since I cannot initialize
+        // PopupSubMenuMenuItem with parameters that should be passed to PopupBaseMenuItem.
+        this._signals.disconnect("notify::hover", this.actor);
+        this._signals.disconnect("button-release-event", this.actor);
+        this._signals.disconnect("key-press-event", this.actor);
+        this._signals.disconnect("key-focus-in", this.actor);
+        this._signals.disconnect("key-focus-out", this.actor);
 
-CustomPopupSliderMenuItem.prototype = {
-    __proto__: PopupMenu.PopupSliderMenuItem.prototype,
+        // Just in case, murder this too.
+        this._activatable = false;
 
-    _init: function(aApplet, aParams) {
-        PopupMenu.PopupBaseMenuItem.prototype._init.call(this, {
-            activate: false
-        });
-
-        let params = Params.parse(aParams, {
+        const params = Params.parse(aParams, {
             slider_value: 0,
             item_value: "",
             pref_key: false,
@@ -507,16 +451,16 @@ CustomPopupSliderMenuItem.prototype = {
             (aSlider, aVal) => aSlider.emit("value-changed", aVal));
         this.connect("value-changed",
             (aSlider, aValue) => {
-                let value = Math.max(0, Math.min(1, parseFloat(aValue)));
+                const value = Math.max(0, Math.min(1, parseFloat(aValue)));
 
-                let newValue = parseInt(Math.floor(value * this._maxVal), 10);
+                const newValue = parseInt(Math.floor(value * this._maxVal), 10);
 
                 // Prevent Nan values. Otherwise, Cinnamons settings system
-                // screws up because it moght try to set the save function
+                // screws up because it might try to set the save function
                 // to null/undefined. ¬¬
                 if (!isNaN(newValue)) {
                     // This doesn't trigger the callback!!!!!
-                    this._applet[this._prefKey] = newValue;
+                    this._applet.$._[this._prefKey] = newValue;
                 }
 
                 this._syncHeader();
@@ -525,23 +469,22 @@ CustomPopupSliderMenuItem.prototype = {
 
         this._releaseId = this._motionId = 0;
         this._dragging = false;
-    },
+    }
 
-    _syncHeader: function() {
-        let children = this._header.actor.get_children();
-        let label = children[children.length - 1].get_children()[0];
+    _syncHeader() {
+        const children = this._header.actor.get_children();
+        const label = children[children.length - 1].get_children()[0];
 
-        if (this._applet[this._prefKey] <= 0) {
+        if (this._applet.$._[this._prefKey] <= 0) {
             label.set_text(_("Off"));
-        } else if (this._applet[this._prefKey] >= 1) {
-            label.set_text(this._applet[this._prefKey] +
-                " " + this._infoLabelCallback());
+        } else if (this._applet.$._[this._prefKey] >= 1) {
+            label.set_text(`${this._applet.$._[this._prefKey]} ${this._infoLabelCallback()}`);
         }
-    },
+    }
 
-    _onScrollEvent: function(aActor, aEvent) {
-        let direction = aEvent.get_scroll_direction();
-        let scale = 1 / this._maxVal;
+    _onScrollEvent(aActor, aEvent) {
+        const direction = aEvent.get_scroll_direction();
+        const scale = 1 / this._maxVal;
 
         if (direction === Clutter.ScrollDirection.DOWN) {
             this._value = Math.max(0, this._value - scale);
@@ -551,30 +494,26 @@ CustomPopupSliderMenuItem.prototype = {
 
         this._slider.queue_repaint();
         this.emit("value-changed", this._value);
-    },
+    }
 
-    _onKeyPressEvent: function(aActor, aEvent) {
-        let key = aEvent.get_key_symbol();
-        let scale = 1 / this._maxVal;
+    _onKeyPressEvent(aActor, aEvent) {
+        const key = aEvent.get_key_symbol();
+        const scale = 1 / this._maxVal;
 
         if (key === Clutter.KEY_Right || key === Clutter.KEY_Left) {
-            let delta = key === Clutter.KEY_Right ? scale : -scale;
+            const delta = key === Clutter.KEY_Right ? scale : -scale;
             this._value = Math.max(0, Math.min(this._value + delta, 1));
             this._slider.queue_repaint();
             this.emit("value-changed", this._value);
             this.emit("drag-end");
-            return true;
+            return Clutter.EVENT_STOP;
         }
-        return false;
+        return Clutter.EVENT_PROPAGATE;
     }
 };
 
-function ScreenshotHelper() {
-    this._init.apply(this, arguments);
-}
-
-ScreenshotHelper.prototype = {
-    _init: function(selectionType, callback, params) {
+var ScreenshotHelper = class ScreenshotHelper {
+    constructor(selectionType, callback, params) {
         this._capturedEventId = null;
         this._selectionType = selectionType;
         this._callback = callback;
@@ -607,14 +546,14 @@ ScreenshotHelper.prototype = {
         if (selectionType !== null) {
             this.runCaptureMode(selectionType);
         }
-    },
+    }
 
-    playSound: function(effect) {
+    playSound(effect) {
         global.cancel_sound(SOUND_ID);
         global.play_theme_sound(SOUND_ID, effect);
-    },
+    }
 
-    runCaptureMode: function(mode) {
+    runCaptureMode(mode) {
         this._selectionType = mode;
 
         if (mode === SelectionType.WINDOW) {
@@ -628,17 +567,17 @@ ScreenshotHelper.prototype = {
         } else if (mode === SelectionType.MONITOR) {
             this.selectMonitor();
         }
-    },
+    }
 
-    getModifier: function(symbol) {
+    getModifier(symbol) {
         return this._modifiers[symbol] || false;
-    },
+    }
 
-    setModifier: function(symbol, value) {
+    setModifier(symbol, value) {
         this._modifiers[symbol] = value;
-    },
+    }
 
-    captureTimer: function(options, onFinished, onInterval) {
+    captureTimer(options, onFinished, onInterval) {
         let timeoutId;
 
         if (options.useTimer && options.timerDuration > 0) {
@@ -664,7 +603,7 @@ ScreenshotHelper.prototype = {
                     }
 
                     if (this._timeout > 0) {
-                        this._timer.set_text("" + this._timeout);
+                        this._timer.set_text(`${this._timeout}`);
 
                         if (options.playTimerSound) {
                             this.playSound(options.timerSound);
@@ -683,9 +622,9 @@ ScreenshotHelper.prototype = {
         } else {
             onFinished();
         }
-    },
+    }
 
-    _setTimer: function(timeout) {
+    _setTimer(timeout) {
         if (timeout === 0) {
             if (this._timer) {
                 Main.uiGroup.remove_actor(this._timer);
@@ -716,13 +655,13 @@ ScreenshotHelper.prototype = {
                 this._timer.set_anchor_point_from_gravity(Clutter.Gravity.CENTER);
             }
 
-            this._timer.set_text("" + timeout);
+            this._timer.set_text(`${timeout}`);
         }
 
         this._timeout = timeout;
-    },
+    }
 
-    _fadeOutTimer: function() {
+    _fadeOutTimer() {
         this._timer.opacity = 255;
         this._timer.scale_x = 1.0;
         this._timer.scale_y = 1.0;
@@ -735,10 +674,10 @@ ScreenshotHelper.prototype = {
             time: 0.700,
             transition: "linear"
         });
-    },
+    }
 
-    flash: function(x, y, width, height) {
-        let flashspot = new Flashspot.Flashspot({
+    flash(x, y, width, height) {
+        const flashspot = new Flashspot.Flashspot({
             x: x,
             y: y,
             width: width,
@@ -746,17 +685,17 @@ ScreenshotHelper.prototype = {
         });
         global.f = flashspot;
         flashspot.fire();
-    },
+    }
 
-    selectScreen: function() {
+    selectScreen() {
         this.captureTimer(this._params, () => this.screenshotScreen());
-    },
+    }
 
-    selectMonitor: function() {
+    selectMonitor() {
         this.captureTimer(this._params, () => this.screenshotMonitor());
-    },
+    }
 
-    selectCinnamon: function() {
+    selectCinnamon() {
         this._modal = true;
         this._target = null;
         this._pointerTarget = null;
@@ -784,11 +723,11 @@ ScreenshotHelper.prototype = {
         this.showInstructions("ui");
         this._capturedEventId = global.stage.connect("captured-event",
             (aActor, aEvent) => this._onCapturedEvent(aActor, aEvent));
-    },
+    }
 
-    _updateCinnamon: function(event) {
-        let [stageX, stageY] = event.get_coords();
-        let target = global.stage.get_actor_at_pos(Clutter.PickMode.REACTIVE,
+    _updateCinnamon(event) {
+        const [stageX, stageY] = event.get_coords();
+        const target = global.stage.get_actor_at_pos(Clutter.PickMode.REACTIVE,
             stageX,
             stageY);
 
@@ -809,13 +748,13 @@ ScreenshotHelper.prototype = {
 
             this.showActorOutline(this._target);
         }
-    },
+    }
 
-    _onDestroy: function() {
+    _onDestroy() {
         this.reset();
-    },
+    }
 
-    selectArea: function() {
+    selectArea() {
         this._modal = true;
         this._mouseDown = false;
         this._isMoving = false;
@@ -830,7 +769,7 @@ ScreenshotHelper.prototype = {
         this._screenWidth = global.screen_width;
         this._screenHeight = global.screen_height;
 
-        this.container = new St.Group({
+        this.container = new St.Widget({
             reactive: true,
             style_class: "desktop-capture-capture-area-selection",
             x_align: St.Align.START,
@@ -875,7 +814,7 @@ ScreenshotHelper.prototype = {
         this.container.add_actor(this.border3);
         this.container.add_actor(this.border4);
 
-        for (let handleName of HANDLE_NAMES) {
+        for (const handleName of HANDLE_NAMES) {
             this[handleName] = new St.Bin({
                 style_class: "desktop-capture-handle",
                 name: handleName,
@@ -893,23 +832,23 @@ ScreenshotHelper.prototype = {
 
         this._capturedEventId = global.stage.connect("captured-event",
             (aActor, aEvent) => this._onCapturedEvent(aActor, aEvent));
-    },
+    }
 
-    instructionsShowing: function() {
+    instructionsShowing() {
         return this.instructionsContainer && this.instructionsContainer !== null;
-    },
+    }
 
-    maybeHideInstructions: function() {
+    maybeHideInstructions() {
         if (this._selectionType === SelectionType.CINNAMON) {
-            let [x, y, mask] = global.get_pointer(); // jshint ignore:line
+            const [x, y, mask] = global.get_pointer(); // jshint ignore:line
 
             if (Math.abs(x - this._initX) > 200 || Math.abs(y - this._initY) > 200) {
                 this.hideInstructions();
             }
         }
-    },
+    }
 
-    hideInstructions: function() {
+    hideInstructions() {
         if (this.instructionsShowing()) {
             Main.uiGroup.remove_actor(this.instructionsContainer);
             this.instructionsContainer.destroy();
@@ -918,30 +857,30 @@ ScreenshotHelper.prototype = {
         } else {
             return false;
         }
-    },
+    }
 
-    showInstructions: function(cssExtra) {
-        let [x, y, mask] = global.get_pointer(); // jshint ignore:line
+    showInstructions(cssExtra) {
+        const [x, y, mask] = global.get_pointer(); // jshint ignore:line
         this._initX = x;
         this._initY = y;
 
-        this.instructionsContainer = new St.Group({
+        this.instructionsContainer = new St.Widget({
             reactive: false,
-            style_class: "desktop-capture-instructions-container" + " " + cssExtra
+            style_class: `desktop-capture-instructions-container ${cssExtra}`
         });
 
         Main.uiGroup.add_actor(this.instructionsContainer);
 
-        let monitor = Main.layoutManager.primaryMonitor;
+        const monitor = Main.layoutManager.primaryMonitor;
         let [startX, startY] = [monitor.x + 50, monitor.height / 2 + monitor.y + 50];
 
-        let labelWidth = monitor.width - 100;
+        const labelWidth = monitor.width - 100;
 
         this.instructionsContainer.set_size(monitor.width, monitor.height);
         this.instructionsContainer.set_position(monitor.x, monitor.y);
 
         function instructionHeader(container, labelText) {
-            let label = new St.Label({
+            const label = new St.Label({
                 text: labelText,
                 style_class: "desktop-capture-instructions-label-header"
             });
@@ -955,7 +894,7 @@ ScreenshotHelper.prototype = {
 
         function instructionSub(container, labelText) {
             subCount++;
-            let label = new St.Label({
+            const label = new St.Label({
                 text: labelText,
                 style_class: "desktop-capture-instructions-label-text"
             });
@@ -986,10 +925,10 @@ ScreenshotHelper.prototype = {
             instructionSub(this.instructionsContainer,
                 _("Click to complete the capture, or ESC to cancel"));
         }
-    },
+    }
 
-    initializeShadow: function() {
-        this.shadowContainer = new St.Group({
+    initializeShadow() {
+        this.shadowContainer = new St.Widget({
             reactive: false,
             style_class: "desktop-capture-shadow-container"
         });
@@ -1021,9 +960,9 @@ ScreenshotHelper.prototype = {
         this.shadowContainer.add_actor(this.coverRight);
         this.shadowContainer.add_actor(this.coverTop);
         this.shadowContainer.add_actor(this.coverBottom);
-    },
+    }
 
-    selectWindow: function() {
+    selectWindow() {
         this._modal = true;
         this._mouseDown = false;
         this._outlineBackground = null;
@@ -1050,10 +989,10 @@ ScreenshotHelper.prototype = {
 
         this._capturedEventId = global.stage.connect("captured-event",
             (aActor, aEvent) => this._onCapturedEvent(aActor, aEvent));
-    },
+    }
 
-    getFilename: function(options) {
-        let date = new Date();
+    getFilename(options) {
+        const date = new Date();
         return tokensReplacer(options["filename"], {
             "%Y": date.getFullYear(),
             "%M": String(date.getMonth() + 1).padStart(2, "0"),
@@ -1064,24 +1003,24 @@ ScreenshotHelper.prototype = {
             "%m": String(date.getMilliseconds()).padStart(2, "0"),
             "%TYPE": this.getSelectionTypeStr(this._selectionType)
         });
-    },
+    }
 
-    getSelectionTypeStr: function() {
+    getSelectionTypeStr() {
         return SelectionTypeStr[this._selectionType];
-    },
+    }
 
-    getParams: function(options) {
+    getParams(options) {
         if (options) {
             return Params.parse(this._params, options);
         }
 
         return this._params;
-    },
+    }
 
-    screenshotScreen: function(options) {
-        let opts = this.getParams(options);
-        let filename = this.getFilename(opts);
-        let screenshot = new Cinnamon.Screenshot();
+    screenshotScreen(options) {
+        const opts = this.getParams(options);
+        const filename = this.getFilename(opts);
+        const screenshot = new Cinnamon.Screenshot();
         screenshot.screenshot(opts.includeCursor, filename,
             () => {
                 this.runCallback({
@@ -1091,11 +1030,11 @@ ScreenshotHelper.prototype = {
             });
 
         return true;
-    },
+    }
 
-    screenshotMonitor: function(options) {
-        let opts = this.getParams(options);
-        let filename = this.getFilename(opts);
+    screenshotMonitor(options) {
+        const opts = this.getParams(options);
+        const filename = this.getFilename(opts);
 
         let monitor;
 
@@ -1105,7 +1044,7 @@ ScreenshotHelper.prototype = {
             monitor = Main.layoutManager.primaryMonitor;
         }
 
-        let screenshot = new Cinnamon.Screenshot();
+        const screenshot = new Cinnamon.Screenshot();
         screenshot.screenshot_area(opts.includeCursor,
             monitor.x, monitor.y,
             monitor.width, monitor.height,
@@ -1122,9 +1061,9 @@ ScreenshotHelper.prototype = {
             });
 
         return true;
-    },
+    }
 
-    screenshotCinnamon: function(actor, stageX, stageY, options) {
+    screenshotCinnamon(actor, stageX, stageY, options) {
         if (actor.get_paint_visibility() === false) {
             runtimeInfo("Actor is not visible. Cancelling screenshot to prevent empty output.");
             this.reset();
@@ -1133,14 +1072,14 @@ ScreenshotHelper.prototype = {
 
         // Reset after a short delay so we don't activate the actor we
         // have clicked.
-        let timeoutId = Mainloop.timeout_add(200, () => {
+        const timeoutId = Mainloop.timeout_add(200, () => {
             this.reset();
             Mainloop.source_remove(timeoutId);
             return false;
         });
 
-        let opts = this.getParams(options);
-        let filename = this.getFilename(opts);
+        const opts = this.getParams(options);
+        const filename = this.getFilename(opts);
 
         // If we don't use a short timer here, we end up capturing any
         // CSS styles we're applying to the selection. So use a short timer,
@@ -1151,13 +1090,13 @@ ScreenshotHelper.prototype = {
             captureTimer = 0;
         }
 
-        let captureTimeoutId = Mainloop.timeout_add(captureTimer, () => {
+        const captureTimeoutId = Mainloop.timeout_add(captureTimer, () => {
             Mainloop.source_remove(captureTimeoutId);
 
-            let [x, y] = actor.get_transformed_position();
-            let [width, height] = actor.get_transformed_size();
+            const [x, y] = actor.get_transformed_position();
+            const [width, height] = actor.get_transformed_size();
 
-            let screenshot = new Cinnamon.Screenshot();
+            const screenshot = new Cinnamon.Screenshot();
             screenshot.screenshot_area(opts.includeCursor, x, y, width, height, filename,
                 () => {
                     this.runCallback({
@@ -1175,13 +1114,13 @@ ScreenshotHelper.prototype = {
         });
 
         return true;
-    },
+    }
 
-    screenshotArea: function(x, y, width, height, options) {
+    screenshotArea(x, y, width, height, options) {
         this.reset();
 
-        let opts = this.getParams(options);
-        let filename = this.getFilename(opts);
+        const opts = this.getParams(options);
+        const filename = this.getFilename(opts);
 
         if (this._callback && opts.selectionHelper) {
             this._callback({
@@ -1195,7 +1134,7 @@ ScreenshotHelper.prototype = {
             return false;
         }
 
-        let screenshot = new Cinnamon.Screenshot();
+        const screenshot = new Cinnamon.Screenshot();
         this.captureTimer(opts, () => {
             screenshot.screenshot_area(opts.includeCursor, x, y, width, height, filename,
                 () => {
@@ -1211,13 +1150,13 @@ ScreenshotHelper.prototype = {
         });
 
         return true;
-    },
+    }
 
-    screenshotWindow: function(window, options) {
+    screenshotWindow(window, options) {
         if (!window.get_meta_window().has_focus()) {
-            let tracker = Cinnamon.WindowTracker.get_default();
-            let focusEventId = tracker.connect("notify::focus-app", () => {
-                let timeoutId = Mainloop.timeout_add(1, () => {
+            const tracker = Cinnamon.WindowTracker.get_default();
+            const focusEventId = tracker.connect("notify::focus-app", () => {
+                const timeoutId = Mainloop.timeout_add(1, () => {
                     this.screenshotWindow(window, options);
                     Mainloop.source_remove(timeoutId);
                     return false;
@@ -1231,15 +1170,15 @@ ScreenshotHelper.prototype = {
             return true;
         }
 
-        let rect = window.get_meta_window().get_outer_rect();
-        let [width, height, x, y] = [rect.width, rect.height, rect.x, rect.y];
+        const rect = window.get_meta_window().get_outer_rect();
+        const [width, height, x, y] = [rect.width, rect.height, rect.x, rect.y];
 
         this.reset();
 
-        let opts = this.getParams(options);
-        let filename = this.getFilename(opts);
+        const opts = this.getParams(options);
+        const filename = this.getFilename(opts);
 
-        let screenshot = new Cinnamon.Screenshot();
+        const screenshot = new Cinnamon.Screenshot();
 
         if (this._callback && opts.selectionHelper) {
             this._callback({
@@ -1288,13 +1227,13 @@ ScreenshotHelper.prototype = {
         });
 
         return true;
-    },
+    }
 
-    runCallback: function(screenshot) {
+    runCallback(screenshot) {
         screenshot.selectionType = this._selectionType;
         screenshot.selectionTypeVerbose = this.getSelectionTypeStr(this._selectionType);
 
-        let fileCapture = Gio.file_new_for_path(screenshot.file);
+        const fileCapture = Gio.file_new_for_path(screenshot.file);
         screenshot.outputFilename = fileCapture.get_basename();
         screenshot.outputDirectory = fileCapture.get_parent().get_path();
 
@@ -1303,7 +1242,7 @@ ScreenshotHelper.prototype = {
                 screenshot.window.get_meta_window().get_window_type() !==
                 Meta.WindowType.DESKTOP &&
                 screenshot.options.padWindowFlash) {
-                let pad = 1;
+                const pad = 1;
                 this.flash(screenshot.x - pad, screenshot.y - pad, screenshot.width + (2 * pad), screenshot.height + (2 * pad));
             } else if (this._selectionType === SelectionType.SCREEN) {
                 this.flash(0, 0, global.screen_width, global.screen_height);
@@ -1321,14 +1260,14 @@ ScreenshotHelper.prototype = {
         }
 
         return true;
-    },
+    }
 
-    abort: function() {
+    abort() {
         this.reset();
         return true;
-    },
+    }
 
-    reset: function() {
+    reset() {
         // Mode-specific resets
         if (this._selectionType === SelectionType.WINDOW) {
             if (this._windowSelected) {
@@ -1384,24 +1323,24 @@ ScreenshotHelper.prototype = {
             global.stage.disconnect(this._capturedEventId);
             this._capturedEventId = null;
         }
-    },
+    }
 
-    drawBorders: function(width, height) {
-        for (let borderName of BORDER_NAMES) {
-            let m = this._calcBorderMeasures(borderName, width, height);
+    drawBorders(width, height) {
+        for (const borderName of BORDER_NAMES) {
+            const m = this._calcBorderMeasures(borderName, width, height);
             this[borderName].set_clip(0, 0, m.clip_w, m.clip_h);
             this[borderName].set_position(m.pos_x, m.pos_y);
             this[borderName].set_size(m.size_w, m.size_h);
         }
 
-        for (let handleName of HANDLE_NAMES) {
-            let pos = this._calcHandlePos(handleName, width, height);
+        for (const handleName of HANDLE_NAMES) {
+            const pos = this._calcHandlePos(handleName, width, height);
             this[handleName].set_position(pos.x, pos.y);
             this[handleName].set_size(HANDLE_SIZE, HANDLE_SIZE);
         }
-    },
+    }
 
-    drawShadows: function(x, y, width, height) {
+    drawShadows(x, y, width, height) {
         this.coverLeft.set_position(0, 0);
         this.coverLeft.set_size(x, this._screenHeight);
 
@@ -1413,11 +1352,11 @@ ScreenshotHelper.prototype = {
 
         this.coverBottom.set_position(x, y + height);
         this.coverBottom.set_size(width, (this._screenHeight - (y + height)));
-    },
+    }
 
-    redrawAreaSelection: function(x, y) {
-        let width = Math.abs(this._xEnd - this._xStart);
-        let height = Math.abs(this._yEnd - this._yStart);
+    redrawAreaSelection(x, y) {
+        const width = Math.abs(this._xEnd - this._xStart);
+        const height = Math.abs(this._yEnd - this._yStart);
 
         // Constrain selection area to screen dimensions
         if (x + width > this._screenWidth) {
@@ -1433,37 +1372,37 @@ ScreenshotHelper.prototype = {
 
         this.drawBorders(width, height);
         this.drawShadows(x, y, width, height);
-    },
+    }
 
-    _onCapturedEvent: function(actor, aEvent) {
-        let eventType = aEvent.type();
-        let symbol = aEvent.get_key_symbol();
+    _onCapturedEvent(actor, aEvent) {
+        const eventType = aEvent.type();
+        const symbol = aEvent.get_key_symbol();
 
         if (eventType === Clutter.EventType.KEY_PRESS) {
             this.hideInstructions();
 
-            if (symbol === Clutter.Escape) {
+            if (symbol === Clutter.KEY_Escape) {
                 runtimeInfo("Aborting screenshot.");
                 this.abort();
-                return true;
-            } else if (symbol === Clutter.Shift_L) {
+                return Clutter.EVENT_STOP;
+            } else if (symbol === Clutter.KEY_Shift_L) {
                 this.setModifier(symbol, true);
-                return true;
+                return Clutter.EVENT_STOP;
             } else if (this._selectionType === SelectionType.AREA) {
                 if (this._selectionMade && (symbol === Clutter.KEY_Return ||
                         symbol === Clutter.KEY_KP_Enter)) {
-                    let [x, y] = this.container.get_position();
-                    let [w, h] = this.container.get_size();
-                    runtimeInfo("Selection area is " + x + "," + y + " - " + w + " x " + h);
+                    const [x, y] = this.container.get_position();
+                    const [w, h] = this.container.get_size();
+                    runtimeInfo(`Selection area is ${x},${y} - ${w} x ${h}`);
                     this.screenshotArea(x, y, w, h);
-                    return true;
+                    return Clutter.EVENT_STOP;
                 } else if (this._selectionMade) {
-                    let isMovementKey = (symbol === Clutter.KEY_Up ||
+                    const isMovementKey = (symbol === Clutter.KEY_Up ||
                         symbol === Clutter.KEY_Down || symbol === Clutter.KEY_Left ||
                         symbol === Clutter.KEY_Right);
 
                     if (isMovementKey) {
-                        if (this.getModifier(Clutter.Shift_L)) {
+                        if (this.getModifier(Clutter.KEY_Shift_L)) {
                             // Resize selection
                             switch (symbol) {
                                 case Clutter.KEY_Up:
@@ -1509,15 +1448,15 @@ ScreenshotHelper.prototype = {
                             }
                         }
 
-                        let x = Math.min(this._xEnd, this._xStart);
-                        let y = Math.min(this._yEnd, this._yStart);
+                        const x = Math.min(this._xEnd, this._xStart);
+                        const y = Math.min(this._yEnd, this._yStart);
                         this.redrawAreaSelection(x, y);
-                        return true;
+                        return Clutter.EVENT_STOP;
                     }
                 }
             }
         } else if (eventType === Clutter.EventType.KEY_RELEASE) {
-            if (symbol === Clutter.Shift_L) {
+            if (symbol === Clutter.KEY_Shift_L) {
                 this.setModifier(symbol, false);
             }
         } else if (eventType === Clutter.EventType.BUTTON_PRESS) {
@@ -1525,14 +1464,14 @@ ScreenshotHelper.prototype = {
                 this.hideInstructions();
             }
 
-            let button = aEvent.get_button();
-            if (button === Clutter.BUTTON_LEFT || button === Clutter.BUTTON_RIGHT) {
-                return true;
+            const button = aEvent.get_button();
+            if (button !== Clutter.BUTTON_PRIMARY && button !== Clutter.BUTTON_SECONDARY) {
+                return Clutter.EVENT_STOP;
             }
 
-            let [xMouse, yMouse, mask] = global.get_pointer(); // jshint ignore:line
+            const [xMouse, yMouse, mask] = global.get_pointer(); // jshint ignore:line
 
-            let eventSource = aEvent.get_source();
+            const eventSource = aEvent.get_source();
 
             if (aEvent.get_source() === this.container) {
                 this._isMoving = true;
@@ -1556,7 +1495,7 @@ ScreenshotHelper.prototype = {
                 this._isResizing = true;
                 this._mouseDown = true;
                 this._resizeActor = eventSource;
-                return true;
+                return Clutter.EVENT_STOP;
             } else {
                 this._isMoving = false;
                 this._mouseDown = true;
@@ -1567,14 +1506,14 @@ ScreenshotHelper.prototype = {
             }
 
             if (this._selectionMade) {
-                return true;
+                return Clutter.EVENT_STOP;
             }
 
             if (this._selectionType === SelectionType.AREA) {
                 this.container.set_position(this._xStart, this._yStart);
                 this.container.set_size(1, 1);
             } else if (this._selectionType === SelectionType.CINNAMON) {
-                if (this.getModifier(Clutter.Shift_L)) {
+                if (this.getModifier(Clutter.KEY_Shift_L)) {
                     if (this._capturedEventId) {
                         global.stage.disconnect(this._capturedEventId);
                         this._capturedEventId = null;
@@ -1584,25 +1523,25 @@ ScreenshotHelper.prototype = {
                             global.set_cursor(Cinnamon.Cursor.POINTING_HAND);
                             this._capturedEventId = global.stage.connect("captured-event",
                                 (aActor, aEvent) => this._onCapturedEvent(aActor, aEvent));
-                            return false;
+                            return GLib.SOURCE_REMOVE;
                         });
                     }
 
-                    return false;
+                    return Clutter.EVENT_PROPAGATE;
                 } else if (this._target) {
-                    let [stageX, stageY] = aEvent.get_coords();
+                    const [stageX, stageY] = aEvent.get_coords();
                     this.screenshotCinnamon(this._target, stageX, stageY);
-                    return true;
+                    return Clutter.EVENT_STOP;
                 }
-                return true;
+                return Clutter.EVENT_STOP;
             }
         } else if (eventType === Clutter.EventType.MOTION &&
             this._selectionType === SelectionType.WINDOW) {
-            let [x, y, mask] = global.get_pointer(); // jshint ignore:line
+            const [x, y, mask] = global.get_pointer(); // jshint ignore:line
 
-            let windows = this._windows.filter((w) => {
-                let [_w, _h] = w.get_size();
-                let [_x, _y] = w.get_position();
+            const windows = this._windows.filter((w) => {
+                const [_w, _h] = w.get_size();
+                const [_x, _y] = w.get_position();
 
                 return (w["get_meta_window"] && w.visible && _x <= x && _x + _w >= x && _y <= y && _y + _h >= y);
             });
@@ -1618,7 +1557,7 @@ ScreenshotHelper.prototype = {
                 this.showWindowOutline(this._windowSelected);
             }
 
-            return true;
+            return Clutter.EVENT_STOP;
         } else if (eventType === Clutter.EventType.MOTION &&
             this._selectionType === SelectionType.CINNAMON) {
             global.set_cursor(Cinnamon.Cursor.POINTING_HAND);
@@ -1629,7 +1568,7 @@ ScreenshotHelper.prototype = {
             switch (aEvent.get_scroll_direction()) {
                 case Clutter.ScrollDirection.UP:
                     // Select parent
-                    let parent = this._target.get_parent();
+                    const parent = this._target.get_parent();
                     if (parent !== null) {
                         this._target = parent;
                         this._updateCinnamon(aEvent);
@@ -1640,7 +1579,7 @@ ScreenshotHelper.prototype = {
                     if (this._target !== this._pointerTarget) {
                         let child = this._pointerTarget;
                         while (child) {
-                            let parent = child.get_parent();
+                            const parent = child.get_parent();
                             if (parent === this._target) {
                                 break;
                             }
@@ -1655,11 +1594,11 @@ ScreenshotHelper.prototype = {
                 default:
                     break;
             }
-            return true;
+            return Clutter.EVENT_STOP;
         } else if (this._mouseDown) {
             if (eventType === Clutter.EventType.MOTION &&
                 this._selectionType === SelectionType.AREA) {
-                let [xMouse, yMouse, mask] = global.get_pointer(); // jshint ignore:line
+                const [xMouse, yMouse, mask] = global.get_pointer(); // jshint ignore:line
 
                 if (xMouse !== this._xStart || yMouse !== this._yStart) {
                     let x,
@@ -1676,7 +1615,7 @@ ScreenshotHelper.prototype = {
                             y = 0;
                         }
                     } else if (this._isResizing) {
-                        let dragName = this._resizeActor.name;
+                        const dragName = this._resizeActor.name;
                         if (dragName === "handleN") {
                             this._yStart = yMouse;
                         } else if (dragName === "handleS") {
@@ -1711,18 +1650,18 @@ ScreenshotHelper.prototype = {
                     this.redrawAreaSelection(x, y);
                 }
             } else if (eventType === Clutter.EventType.BUTTON_RELEASE) {
-                let button = aEvent.get_button();
+                const button = aEvent.get_button();
 
-                if (button === Clutter.BUTTON_LEFT || button === Clutter.BUTTON_RIGHT) {
-                    return true;
+                if (button !== Clutter.BUTTON_PRIMARY && button !== Clutter.BUTTON_SECONDARY) {
+                    return Clutter.EVENT_STOP;
                 }
 
                 if (this._selectionType === SelectionType.WINDOW) {
                     this.screenshotWindow(this._windowSelected);
-                    return true;
+                    return Clutter.EVENT_STOP;
                 } else if (this._selectionType === SelectionType.AREA) {
-                    let width = Math.abs(this._xEnd - this._xStart);
-                    let height = Math.abs(this._yEnd - this._yStart);
+                    const width = Math.abs(this._xEnd - this._xStart);
+                    const height = Math.abs(this._yEnd - this._yStart);
 
                     if (this._isMoving) {
                         this._isMoving = false;
@@ -1738,15 +1677,15 @@ ScreenshotHelper.prototype = {
                     this._mouseDown = false;
 
                     this._selectionMade = true;
-                    return true;
+                    return Clutter.EVENT_STOP;
                 } else if (this._selectionType === SelectionType.CINNAMON) {
-                    return true;
+                    return Clutter.EVENT_STOP;
                 }
             }
         } else if (this._selectionType === SelectionType.AREA &&
             (eventType === Clutter.EventType.ENTER ||
                 eventType === Clutter.EventType.LEAVE)) {
-            let eventSource = aEvent.get_source();
+            const eventSource = aEvent.get_source();
 
             if (eventSource === this.container) {
                 global.set_cursor(Cinnamon.Cursor.DND_MOVE);
@@ -1761,7 +1700,7 @@ ScreenshotHelper.prototype = {
                 }
                 // Keep the try{}catch{} block in case one of the Cinnamon.Cursor
                 // constants "disappears mysteriously".
-                try {
+                tryFn(() => {
                     switch (eventSource.name) {
                         case "handleNw":
                             global.set_cursor(Cinnamon.Cursor.RESIZE_TOP_LEFT);
@@ -1790,19 +1729,19 @@ ScreenshotHelper.prototype = {
                         default:
                             global.set_cursor(Cinnamon.Cursor.CROSSHAIR);
                     }
-                } catch (aErr) {
+                }, (aErr) => {
                     global.logError(aErr);
                     global.set_cursor(Cinnamon.Cursor.CROSSHAIR);
-                }
+                });
             } else {
                 global.set_cursor(Cinnamon.Cursor.CROSSHAIR);
             }
         }
 
-        return true;
-    },
+        return Clutter.EVENT_STOP;
+    }
 
-    clearActorOutline: function() {
+    clearActorOutline() {
         if (this._lightbox) {
             this._lightbox.hide();
         }
@@ -1812,16 +1751,16 @@ ScreenshotHelper.prototype = {
 
         this.container.remove_actor(this._outlineFrame);
         this._outlineFrame.destroy();
-    },
+    }
 
-    showActorOutline: function(actor) {
+    showActorOutline(actor) {
         // Create the actor that will serve as background for the clone.
-        let frameClass = "desktop-capture-capture-outline-frame";
-        let ag = actor.get_allocation_geometry();
-        let [width, height] = [ag.width, ag.height];
-        let [x, y] = actor.get_transformed_position();
+        const frameClass = "desktop-capture-capture-outline-frame";
+        const ag = actor.get_allocation_geometry();
+        const [width, height] = [ag.width, ag.height];
+        const [x, y] = actor.get_transformed_position();
 
-        let childBox = new Clutter.ActorBox();
+        const childBox = new Clutter.ActorBox();
         childBox.x1 = x;
         childBox.x2 = x + width;
         childBox.y1 = y;
@@ -1830,13 +1769,13 @@ ScreenshotHelper.prototype = {
         global.cb = childBox;
 
         // The frame is needed to draw the border round the clone.
-        let frame = this._outlineFrame = new St.Bin({
+        const frame = this._outlineFrame = new St.Bin({
             style_class: frameClass
         });
         this.container.add_actor(frame); // must not be a child of the background
         frame.allocate(childBox, 0); // same dimensions
 
-        this.uiContainer = new St.Group({
+        this.uiContainer = new St.Widget({
             reactive: false,
             x: x,
             y: y,
@@ -1848,9 +1787,9 @@ ScreenshotHelper.prototype = {
         Main.uiGroup.add_actor(this.uiContainer);
 
         this.drawShadows(x, y, width, height);
-    },
+    }
 
-    clearWindowOutline: function() {
+    clearWindowOutline() {
         if (this._lightbox) {
             this._lightbox.hide();
         }
@@ -1866,14 +1805,14 @@ ScreenshotHelper.prototype = {
         this._outlineFrame.destroy();
 
         return true;
-    },
+    }
 
-    showWindowOutline: function(window) {
+    showWindowOutline(window) {
         if (this._outlineBackground) {
             this.clearWindowOutline();
         }
 
-        let metaWindow = window.get_meta_window();
+        const metaWindow = window.get_meta_window();
 
         // Create the actor that will serve as background for the clone.
         let binClass = "desktop-capture-capture-outline-background desktop-capture-capture-outline-frame";
@@ -1884,7 +1823,7 @@ ScreenshotHelper.prototype = {
             frameClass += " desktop";
         }
 
-        let background = new St.Bin({
+        const background = new St.Bin({
             style_class: binClass
         });
         this._outlineBackground = background;
@@ -1894,17 +1833,17 @@ ScreenshotHelper.prototype = {
 
         // We need to know the border width so that we can
         // make the background slightly bigger than the clone window.
-        let themeNode = background.get_theme_node();
-        let borderWidth = themeNode.get_border_width(St.Side.LEFT); // assume same for all sides
-        let borderAdj = borderWidth / 2;
+        const themeNode = background.get_theme_node();
+        const borderWidth = themeNode.get_border_width(St.Side.LEFT); // assume same for all sides
+        const borderAdj = borderWidth / 2;
 
-        let or = metaWindow.get_outer_rect();
+        const or = metaWindow.get_outer_rect();
         or.x -= borderAdj;
         or.y -= borderAdj;
         or.width += borderAdj;
         or.height += borderAdj;
 
-        let childBox = new Clutter.ActorBox();
+        const childBox = new Clutter.ActorBox();
         childBox.x1 = or.x;
         childBox.x2 = or.x + or.width;
         childBox.y1 = or.y;
@@ -1912,7 +1851,7 @@ ScreenshotHelper.prototype = {
         background.allocate(childBox, 0);
 
         // The frame is needed to draw the border round the clone.
-        let frame = this._outlineFrame = new St.Bin({
+        const frame = this._outlineFrame = new St.Bin({
             style_class: frameClass
         });
         this.container.add_actor(frame); // must not be a child of the background
@@ -1921,16 +1860,16 @@ ScreenshotHelper.prototype = {
 
         if (this.bringWindowsToFront) {
             // Show a clone of the target window
-            let outlineClone = new Clutter.Clone({
+            const outlineClone = new Clutter.Clone({
                 source: metaWindow.get_compositor_private().get_texture()
             });
             background.add_actor(outlineClone);
             outlineClone.opacity = 100; // translucent to get a tint from the background color
 
             // The clone's rect is not the same as the window's outer rect
-            let ir = metaWindow.get_input_rect();
-            let diffX = (ir.width - or.width) / 2;
-            let diffY = (ir.height - or.height) / 2;
+            const ir = metaWindow.get_input_rect();
+            const diffX = (ir.width - or.width) / 2;
+            const diffY = (ir.height - or.height) / 2;
 
             childBox.x1 = -diffX;
             childBox.x2 = or.width + diffX;
@@ -1940,7 +1879,7 @@ ScreenshotHelper.prototype = {
             outlineClone.allocate(childBox, 0);
         }
 
-        this.uiContainer = new St.Group({
+        this.uiContainer = new St.Widget({
             reactive: true,
             x: or.x,
             y: or.y,
@@ -1953,8 +1892,8 @@ ScreenshotHelper.prototype = {
 
         Main.uiGroup.add_actor(this.uiContainer);
 
-        let tracker = Cinnamon.WindowTracker.get_default();
-        let app = tracker.get_window_app(metaWindow);
+        const tracker = Cinnamon.WindowTracker.get_default();
+        const app = tracker.get_window_app(metaWindow);
         let icon = null;
         if (app) {
             icon = app.create_icon_texture(22);
@@ -1981,17 +1920,17 @@ ScreenshotHelper.prototype = {
             y_align: St.Align.END
         });
 
-        let sizeInfo = or.width + " " + UNICODE_SYMBOLS.multiplication_sign + " " + or.height;
-        let title = new St.Label({
+        const sizeInfo = `${or.width} ${UNICODE_SYMBOLS.multiplication_sign} ${or.height}`;
+        const title = new St.Label({
             text: metaWindow.get_title(),
             style_class: "desktop-capture-overlay-label-title"
         });
-        let subtitle = new St.Label({
+        const subtitle = new St.Label({
             text: sizeInfo,
             style_class: "desktop-capture-overlay-label-size"
         });
 
-        let box = new St.BoxLayout({
+        const box = new St.BoxLayout({
             vertical: true,
             width: this.uiContainer.width,
             height: this.uiContainer.height
@@ -2002,7 +1941,7 @@ ScreenshotHelper.prototype = {
             y_align: St.Align.END
         });
 
-        let box2 = new St.BoxLayout({
+        const box2 = new St.BoxLayout({
             vertical: true,
             width: this.uiContainer.width,
             height: 50,
@@ -2032,10 +1971,10 @@ ScreenshotHelper.prototype = {
         box.show();
 
         return true;
-    },
+    }
 
-    _calcBorderMeasures: function(aElName, aWidth, aHeight) {
-        let m = {
+    _calcBorderMeasures(aElName, aWidth, aHeight) {
+        const m = {
             clip_w: 0,
             clip_h: 0,
             pos_x: 0,
@@ -2074,10 +2013,10 @@ ScreenshotHelper.prototype = {
         }
 
         return m;
-    },
+    }
 
-    _calcHandlePos: function(aElName, aWidth, aHeight) {
-        let pos = {
+    _calcHandlePos(aElName, aWidth, aHeight) {
+        const pos = {
             x: 0,
             y: 0
         };
@@ -2115,22 +2054,16 @@ ScreenshotHelper.prototype = {
     }
 };
 
-function LastCaptureContainer() {
-    this._init.apply(this, arguments);
-}
+var LastCaptureContainer = class LastCaptureContainer extends PopupMenu.PopupMenuSection {
+    constructor(aApplet, aParams) {
+        super();
 
-LastCaptureContainer.prototype = {
-    __proto__: PopupMenu.PopupMenuSection.prototype,
-
-    _init: function(aApplet, aParams) {
-        PopupMenu.PopupMenuSection.prototype._init.call(this);
-
-        let params = Params.parse(aParams, {
+        const params = Params.parse(aParams, {
             device: ""
         });
 
-        let baseButton = (aLabel) => {
-            let btn = new St.Button({
+        const baseButton = (aLabel) => {
+            const btn = new St.Button({
                 style_class: "notification-button",
                 style: "padding: 2px 5px;"
             });
@@ -2161,7 +2094,7 @@ LastCaptureContainer.prototype = {
             vertical: false
         });
 
-        let toolbarButtons = {
+        const toolbarButtons = {
             delButton: {
                 label: _("Delete"),
                 tooltip: _("Delete captured file from file system."),
@@ -2179,7 +2112,7 @@ LastCaptureContainer.prototype = {
             }
         };
 
-        for (let btn in toolbarButtons) {
+        for (const btn in toolbarButtons) {
             if (params.device === "recorder" &&
                 btn === "copyDataButton") {
                 continue;
@@ -2217,10 +2150,10 @@ LastCaptureContainer.prototype = {
         });
 
         this.connect("file-data-changed", () => this._onFileDataChanged(true));
-    },
+    }
 
-    _onFileDataChanged: function(aSetUnsetThumbnail) {
-        let fileData = this.fileData;
+    _onFileDataChanged(aSetUnsetThumbnail) {
+        const fileData = this.fileData;
 
         if (fileData && fileData.f &&
             GLib.path_is_absolute(fileData.f) &&
@@ -2231,9 +2164,9 @@ LastCaptureContainer.prototype = {
             this._switchVisibility(true);
             aSetUnsetThumbnail && this._unsetThumbnail();
         }
-    },
+    }
 
-    _switchVisibility: function(aEmpty) {
+    _switchVisibility(aEmpty) {
         if (aEmpty) {
             this._mainBox.hide();
             this._emptyLabel.show();
@@ -2241,10 +2174,10 @@ LastCaptureContainer.prototype = {
             this._mainBox.show();
             this._emptyLabel.hide();
         }
-    },
+    }
 
-    _addConnsAndTooltipToActor: function(aParams) {
-        let params = Params.parse(aParams, {
+    _addConnsAndTooltipToActor(aParams) {
+        const params = Params.parse(aParams, {
             self_actor: "",
             tooltip_text: "",
             activation_signal: "clicked",
@@ -2268,9 +2201,9 @@ LastCaptureContainer.prototype = {
             this[params.self_actor].tooltip = new IntelligentTooltip(
                 this[params.self_actor], params.tooltip_text);
         }
-    },
+    }
 
-    _performAction: function(aActor, aEvent, aAction) {
+    _performAction(aActor, aEvent, aAction) {
         this._applet.closeMainMenu();
 
         switch (aAction) {
@@ -2286,28 +2219,25 @@ LastCaptureContainer.prototype = {
                             break;
                     }
 
-                    return false;
+                    return GLib.SOURCE_REMOVE;
                 });
                 break;
             case "delete-file":
                 askForConfirmation({
                     message: _("Do you really want to delete this file?")
                 }, () => {
-                    let file = Gio.file_new_for_path(this.fileData.f);
-
-                    try {
-                        file.delete(null);
+                    const file = new File(this.fileData.f);
+                    file.delete().then(() => {
                         this.fileData = {};
-                    } catch (aErr) {
+                    }).catch((aErr) => {
                         global.log(aErr);
-                        global.log("Could not delete file " + file.get_path());
-                    }
+                        global.log(`Could not delete file "${file.path}"`);
+                    });
                 });
                 break;
             case "copy-image-data":
                 TryExec({
-                    command: this._applet.appletHelper + " copy_image_data " +
-                        this.fileData.f,
+                    command: `${this._applet.appletHelper} copy_image_data "${this.fileData.f}"`,
                     on_failure: (aParams) => {
                         global.logError(aParams.command);
                     },
@@ -2332,9 +2262,9 @@ LastCaptureContainer.prototype = {
             default:
                 break;
         }
-    },
+    }
 
-    _setThumbnail: function() {
+    _setThumbnail() {
         this._unsetThumbnail();
 
         let icon;
@@ -2356,43 +2286,43 @@ LastCaptureContainer.prototype = {
                 file: Gio.file_new_for_path(this.fileData.f)
             });
         }
-        let image = St.TextureCache.get_default().load_gicon(null, icon, 128);
+        const image = St.TextureCache.get_default().load_gicon(null, icon, 128);
 
         this._thumbnail.set_child(image);
         this._thumbnailContainer.set_child(this._thumbnail);
 
         this._addConnsAndTooltipToActor({
             self_actor: "_thumbnail",
-            tooltip_text: "<b>%s</b>: %s".format(_("Left click"), _("Open image file.")) + "\n" +
-                "<b>%s</b>: %s".format(_("Right click"), _("Open folder.")),
+            tooltip_text: `${_("Left click")}: ${_("Open image file.")}` + "\n" +
+                `${_("Right click")}: ${_("Open folder.")}`,
             action: "thumbnail-clicked",
             activation_signal: "button-press-event",
             add_hover_events: true
         });
-    },
+    }
 
-    _unsetThumbnail: function() {
+    _unsetThumbnail() {
         if (this._thumbnail) {
             this._thumbnailContainer.remove_child(this._thumbnail);
             this._thumbnail = null;
         }
-    },
+    }
 
-    _onActorEnterEvent: function(aActor, aEvent) { // jshint ignore:line
+    _onActorEnterEvent(aActor, aEvent) { // jshint ignore:line
         global.set_cursor(Cinnamon.Cursor.POINTING_HAND);
-        return false;
-    },
+        return Clutter.EVENT_PROPAGATE;
+    }
 
-    _onActorLeaveEvent: function(aActor, aEvent) { // jshint ignore:line
+    _onActorLeaveEvent(aActor, aEvent) { // jshint ignore:line
         global.unset_cursor();
-    },
+    }
 
     get fileData() {
         return this._fileData;
-    },
+    }
 
     set fileData(aData) {
-        let data = Params.parse(aData, {
+        const data = Params.parse(aData, {
             d: "",
             f: ""
         });
@@ -2403,23 +2333,23 @@ LastCaptureContainer.prototype = {
 };
 
 function askForConfirmation(aParams, aCallback) {
-    let params = Params.parse(aParams, {
+    const params = Params.parse(aParams, {
         message: "",
         pref_name: "",
         pref_empty_value: ""
     });
 
-    let msg = {
-        title: _(XletMeta.name),
-        message: "<b>" + _("WARNING!!!") + "</b>\n" + params.message
+    const msg = {
+        title: _(__meta.name),
+        message: `<b>${_("WARNING!!!")}</b>\n${params.message}`
     };
 
     // Same as with the displayDialogMessage function.
     // Clutter dialogs (ModalDialog class) are absolute GARBAGE.
     // Avoid them at all cost.
-    Util.spawn_async([XletMeta.path + "/appletHelper.py", "confirm", JSON.stringify(msg)],
+    Util.spawn_async([`${__meta.path}/appletHelper.py`, "confirm", JSON.stringify(msg)],
         (aOutput) => {
-            let response = aOutput.trim();
+            const response = aOutput.trim();
 
             if (response && response !== "_just_do_it_") {
                 return;
@@ -2451,13 +2381,13 @@ function notify(aMsg, aLevel = "info") {
             break;
     }
 
-    let icon = new St.Icon({
+    const icon = new St.Icon({
         icon_name: iconName,
         icon_type: St.IconType.SYMBOLIC,
         icon_size: 48
     });
 
-    Main[fnName](_(XletMeta.name), aMsg.join("\n"), icon);
+    Main[fnName](_(__meta.name), aMsg.join("\n"), icon);
 }
 
 function Exec(cmd) {
@@ -2516,13 +2446,13 @@ function TryExec(aParams) {
     }
 
     if (success && pid !== 0) {
-        let out_reader = new Gio.DataInputStream({
+        const out_reader = new Gio.DataInputStream({
             base_stream: new Gio.UnixInputStream({
                 fd: out_fd
             })
         });
         // Wait for answer
-        runtimeInfo("Spawned process with pid=" + pid);
+        runtimeInfo(`Spawned process with pid=${pid}`);
         typeof p.on_start === "function" && p.on_start({
             is_recording: p.is_recording
         });
@@ -2560,7 +2490,7 @@ function TryExec(aParams) {
     return true;
 }
 
-DebugManager.wrapObjectMethods(Debugger, {
+Debugger.wrapObjectMethods({
     CinnamonRecorderProfileItem: CinnamonRecorderProfileItem,
     CinnamonRecorderProfileSelector: CinnamonRecorderProfileSelector,
     CustomPopupMenuSection: CustomPopupMenuSection,

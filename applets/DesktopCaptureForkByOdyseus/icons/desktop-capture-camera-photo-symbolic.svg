@@ -1,0 +1,5 @@
+<svg id="svg2" width="16" height="16" version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <g id="layer1" transform="translate(0,-6)">
+  <path id="rect2915" transform="translate(0,6)" d="m2 2v1h-1c-0.554 0-1 0.382556-1 0.875v9.25c0 0.492444 0.446 0.875 1 0.875h14c0.554 0 1-0.382556 1-0.875v-9.25c0-0.492444-0.446-0.875-1-0.875h-10v-1zm0 2h3v1h-3zm9 1c2.209139 0 4 1.790861 4 4s-1.790861 4-4 4c-2.2091389 0-4-1.790861-4-4s1.7908611-4 4-4zm0 2c-1.1045693 0-2 0.895431-2 2s0.8954307 2 2 2c1.104569 0 2-0.895431 2-2s-0.895431-2-2-2z" style="fill:#bebebe"/>
+ </g>
+</svg>

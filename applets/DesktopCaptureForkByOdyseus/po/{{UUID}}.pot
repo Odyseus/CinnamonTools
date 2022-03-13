@@ -1,0 +1,1556 @@
+# This is a template file for translating the DesktopCaptureForkByOdyseus package.
+# Copyright (C) 2018-2022
+# This file is distributed under the same license as the DesktopCaptureForkByOdyseus package.
+# Odyseus <EMAIL@ADDRESS>, 2018-2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DesktopCaptureForkByOdyseus VERSION\n"
+"POT-Creation-Date: 2022-03-10 23:50-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-04-11 06:23:52.163\n"
+
+#: ../../__app__/data/javascript_modules/appletsUtils.js:279
+msgid "Configure..."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:64
+msgid "Application Chooser"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:68 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:75 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:448 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1149 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1981 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2836 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1165 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1290 ../../__app__/data/python_modules/xlets_settings/__init__.py:1331 ../../__app__/data/python_modules/xlets_settings/__init__.py:1366 ../../__app__/data/python_modules/xlets_settings/common.py:452 ../../__app__/data/python_modules/xlets_settings/common.py:457 appletHelper.py:31 appletHelper.py:37 appletHelper.py:107
+msgid "_Cancel"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:69 appletHelper.py:109
+msgid "_OK"
+msgstr ""
+
+#. Can be programmatically changed if needed.
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:83 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:708
+msgid "Choose an application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:206
+msgid "Total applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:344
+msgid "Applications list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:366
+msgid "Application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:396
+msgid "Add Applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:404
+msgid "Remove selected applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:412 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2565 ../../__app__/data/python_modules/xlets_settings/__init__.py:413 ../../__app__/python_modules/localized_help_creator.py:324 applet.js:251
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:450 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2603
+msgid "Duplicated entries will be automatically removed."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:451 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2604
+msgid "Entries will be also sorted alphabetically."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:453 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2606
+msgid "Basic information"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:471
+msgid "Choose one or more applications (Hold Ctrl key)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:663
+msgid "Clear application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "Invalid app"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "No app chosen"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:773
+#, python-format
+msgid "The application with ID '%s' might not be installed anymore."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:73 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:444
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:76 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:449 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1982
+msgid "_Select"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:132
+msgid "Search..."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:134
+msgid "Browse"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:322
+msgid "Icons shown"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:453
+msgid "Image files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:576
+msgid "Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:577
+msgid "The string representing the icon."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:292
+msgid "Click to set a new accelerator key."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:293
+msgid "Press Escape or click again to cancel the operation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:294
+msgid "Press Backspace to clear the existing keybinding."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:369
+msgid "unassigned"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:410
+msgid "Pick an accelerator"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:554
+#, python-format
+msgid ""
+"\n"
+"This key combination, '<b>%s</b>' cannot be used because it would become impossible to type using this key.\n"
+"\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:555
+msgid "Please try again with a modifier key such as Control, Alt or Super (Windows key) at the same time.\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:337
+msgid "Information related to this specific section"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1150 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1291 ../../__app__/data/python_modules/xlets_settings/__init__.py:1332 ../../__app__/data/python_modules/xlets_settings/__init__.py:1367 ../../__app__/data/python_modules/xlets_settings/common.py:453 appletHelper.py:32
+msgid "_Save"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1728
+msgid "Clear color"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1863
+msgid "Clear path"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1906
+msgid "Non-existent file/location"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1915
+msgid "(None)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1918 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1970
+msgid "Select a folder"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1920 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1973
+msgid "Select a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1956
+msgid "Any files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2489
+msgid "Strings list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2530
+msgid "Entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2557
+msgid "Remove selected entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2746
+msgid "Clear sound"
+msgstr ""
+
+#. TO TRANSLATORS: Could be left blank.
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2837 ../../__app__/data/python_modules/xlets_settings/common.py:458 appletHelper.py:39
+msgid "_Open"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2853
+msgid "Sound files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2877
+msgid "Non-existent file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2883
+msgid "No sound"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:672
+msgid "Add new item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:682
+msgid "Remove selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698
+msgid "Edit selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:710
+msgid "Move selected item up"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
+msgid "Move selected item down"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:734
+msgid "Export data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:747 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1162
+msgid "Import data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:757
+msgid "Apply changes"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:959
+msgid "Item removal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:962
+msgid "Are you sure that you want to remove the selected items?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:963
+msgid "Note"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:964
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1166
+msgid "_Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1167
+msgid "_Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1188
+msgid "Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1189
+msgid "replace the current data with the imported data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1190
+msgid "Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1191
+msgid "add the imported data to the current data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226
+#, python-format
+msgid "Wrong data type found on file '{%s}'"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1229
+msgid "Error importing data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1280
+msgid "Add new entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1282
+msgid "Edit entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:406
+msgid "Import settings from a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:407
+msgid "Export settings to a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:408
+msgid "Reset settings to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:409
+msgid "Xlet settings"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:419
+msgid "Use headerbars on dialogs"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:421
+msgid "Application preferences"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:468
+msgid "Previous instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:476
+msgid "Next instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:835 settings.py:184
+msgid "Other"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1026
+#, python-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1327 ../../__app__/data/python_modules/xlets_settings/common.py:451 appletHelper.py:29
+msgid "Select or enter file to export to"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1338 ../../__app__/data/python_modules/xlets_settings/__init__.py:1372 ../../__app__/data/python_modules/xlets_settings/common.py:476 appletHelper.py:55
+msgid "JSON files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1362
+msgid "Select a JSON file to import"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1399
+msgid "Trying to reset all settings!!!"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1401
+msgid "Reset all settings to their default values?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:52
+msgid "It enables the ability to log the output of several functions used by the extension."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54 ../../__app__/data/python_modules/xlets_settings/builder.py:246
+msgid "Normal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54
+msgid "Only log messages caused by non critical errors."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55
+msgid "Additionally log extra output messages and all HTTP responses."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55 ../../__app__/data/python_modules/xlets_settings/builder.py:247
+msgid "Verbose"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:56 ../../__app__/data/python_modules/xlets_settings/builder.py:248
+msgid "Very verbose"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:57
+msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:241
+msgid "Debugging"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:243
+msgid "Logging level"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:252
+msgid "Enable debugger"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:253
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/common.py:456 appletHelper.py:35
+msgid "Select a file to import"
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:316
+msgid "See this xlet help file."
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:317 ../../__app__/python_modules/localized_help_creator.py:413
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:327
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:325
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Changelogs"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:362
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:382
+#, python-format
+msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:385
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:391
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:408
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:429
+msgid "Xlets localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:433
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:434
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: settings.py:26
+msgid ""
+"Format for the generated file name. Possible placeholders are:\n"
+"\n"
+"%Y = year\n"
+"%M = month\n"
+"%D = day\n"
+"%H = hours\n"
+"%I = minutes\n"
+"%S = seconds\n"
+"%m = milliseconds\n"
+"%TYPE = area, window, etc. (for screenshots only)."
+msgstr ""
+
+#: settings.py:32
+msgid "Save keybindings"
+msgstr ""
+
+#: settings.py:38 settings.py:39
+msgid "General"
+msgstr ""
+
+#: settings.py:41
+msgid "Normal icon"
+msgstr ""
+
+#: settings.py:42
+msgid "Select an icon to show in the panel."
+msgstr ""
+
+#: settings.py:45
+msgid "Recording icon"
+msgstr ""
+
+#: settings.py:46
+msgid "Select an icon to show in the panel when screencasting is active."
+msgstr ""
+
+#: settings.py:49
+msgid "Display menu quick options in a submenu"
+msgstr ""
+
+#: settings.py:52
+msgid "Screenshots"
+msgstr ""
+
+#: settings.py:53
+msgid "Screenshots general settings"
+msgstr ""
+
+#: settings.py:55 settings.py:116
+msgid "Save location"
+msgstr ""
+
+#: settings.py:57
+msgid "Path to a folder to save new screenshots."
+msgstr ""
+
+#: settings.py:60 settings.py:121
+msgid "File name format"
+msgstr ""
+
+#: settings.py:64
+msgid "CInnamon's built-in screenshots settings"
+msgstr ""
+
+#: settings.py:66
+msgid "Show capture timer"
+msgstr ""
+
+#: settings.py:67
+msgid "Whether to show the timer on the screen."
+msgstr ""
+
+#: settings.py:70
+msgid "Capture windows as area"
+msgstr ""
+
+#: settings.py:71
+msgid "Asking the desktop manager for a screenshot of a window would usually result in a nice image retaining any transparent regions. But depending on the graphics drivers and Cinnamon version it may turn out black or distorted."
+msgstr ""
+
+#: settings.py:74
+msgid "Include window frame"
+msgstr ""
+
+#: settings.py:75
+msgid "Whether to include the window frame and titlebar in window captures."
+msgstr ""
+
+#: settings.py:78
+msgid "Show camera flash"
+msgstr ""
+
+#: settings.py:79
+msgid "Whether to show a bright flash over the capture area."
+msgstr ""
+
+#: settings.py:82
+msgid "Include highlight style on screenshot"
+msgstr ""
+
+#: settings.py:83
+msgid "When taking a screenshot of the Cinnamon UI, include the highlight effect in the captured image. The 'desktop-capture-capture-outline-frame' CSS class is the one that style the highlight effect."
+msgstr ""
+
+#: settings.py:86
+msgid "Play shutter sound"
+msgstr ""
+
+#: settings.py:87
+msgid "Whether to play the shutter sound as the capture is made."
+msgstr ""
+
+#: settings.py:90
+msgid "Play timer interval sound"
+msgstr ""
+
+#: settings.py:91
+msgid "Whether to play the timer interval sound as the timer counts down."
+msgstr ""
+
+#: settings.py:94
+msgid "Show toggle button for copying image to clipboard"
+msgstr ""
+
+#: settings.py:95
+msgid "Whether to show another toggle button in the menu for copying image to clipboard. If you have notifications enabled you probably don't need this set."
+msgstr ""
+
+#: settings.py:98
+msgid "Turn off auto copy image data toggle after capture"
+msgstr ""
+
+#: settings.py:99
+msgid "When set, the copy image to clipboard toggle button override will be turned off after a successful capture."
+msgstr ""
+
+#: settings.py:102
+msgid "Recorder"
+msgstr ""
+
+#: settings.py:103
+msgid "Recorder general settings"
+msgstr ""
+
+#: settings.py:104
+msgid "Not all recorder tools may respect these settings."
+msgstr ""
+
+#: settings.py:106
+msgid "Copy to clipboard"
+msgstr ""
+
+#: settings.py:107
+msgid "Whether to copy the file path or image data of screenshots to clipboard after capture."
+msgstr ""
+
+#: settings.py:110 js_modules/utils.js:479
+msgid "Off"
+msgstr ""
+
+#: settings.py:111
+msgid "File path"
+msgstr ""
+
+#: settings.py:112
+msgid "Image data"
+msgstr ""
+
+#: settings.py:118
+msgid "Path to a folder for new screen recordings."
+msgstr ""
+
+#: settings.py:125
+msgid "Keybindings"
+msgstr ""
+
+#: settings.py:127
+msgid "Screenshot keybindings"
+msgstr ""
+
+#: settings.py:129
+msgid "Capture a window"
+msgstr ""
+
+#: settings.py:132
+msgid "Capture an area"
+msgstr ""
+
+#: settings.py:135
+msgid "Capture a Cinnamon UI element"
+msgstr ""
+
+#: settings.py:136 settings.py:143 settings.py:147 settings.py:151
+msgid "Cinnamon only."
+msgstr ""
+
+#: settings.py:139
+msgid "Capture the screen"
+msgstr ""
+
+#: settings.py:142
+msgid "Capture monitor 1"
+msgstr ""
+
+#: settings.py:146
+msgid "Capture monitor 2"
+msgstr ""
+
+#: settings.py:150
+msgid "Capture monitor 3"
+msgstr ""
+
+#: settings.py:154 settings.py:163
+msgid "Repeat last capture"
+msgstr ""
+
+#: settings.py:157
+msgid "Recorder keybindings"
+msgstr ""
+
+#: settings.py:159
+msgid "Start/stop recording"
+msgstr ""
+
+#: settings.py:160
+msgid "Will start only Cinnamon Recorder. Will stop any recorder using its stop-command."
+msgstr ""
+
+#: settings.py:167
+msgid "Appearance"
+msgstr ""
+
+#: settings.py:168
+msgid "Overlay appearance"
+msgstr ""
+
+#: settings.py:170
+msgid "Overlay theme"
+msgstr ""
+
+#: settings.py:171
+msgid "These themes are used to style the Cinnamon helpers overlay (area selector, window selector, etc.). The built-in themes can be found in APPLET_FOLDER/themes and can be used as a base to create a custom theme."
+msgstr ""
+
+#: settings.py:174
+msgid "Light overlay"
+msgstr ""
+
+#: settings.py:175
+msgid "Dark overlay"
+msgstr ""
+
+#: settings.py:176
+msgid "Custom overlay"
+msgstr ""
+
+#: settings.py:180
+msgid "Path to custom stylesheet"
+msgstr ""
+
+#: __data__/create_localized_help.py:29 __data__/create_localized_help.py:151 __data__/create_localized_help.py:182 __data__/create_localized_help.py:189 __data__/create_localized_help.py:198 __data__/create_localized_help.py:232 __data__/create_localized_help.py:305
+msgid "Description"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:32
+msgid "This applet is a fork of [Desktop Capture](https://github.com/rjanja/desktop-capture) applet by Rob Adams (a.k.a. rjanja)."
+msgstr ""
+
+#: __data__/create_localized_help.py:34
+msgid "Differences with the original applet"
+msgstr ""
+
+#: __data__/create_localized_help.py:36
+msgid "The principal differences of this fork with the original applet are in usability and of the kind 'do more with less code'."
+msgstr ""
+
+#: __data__/create_localized_help.py:38
+msgid "More convenient handling of settings. Most settings can be changed directly from the applet menu or its context menu without the need to constantly open the applet settings window."
+msgstr ""
+
+#: __data__/create_localized_help.py:39
+msgid "Keyboard shortcuts are not only available for Cinnamon's built-in features, but for all screenshot/screencast programs."
+msgstr ""
+
+#: __data__/create_localized_help.py:40
+msgid "Settings are immediately available after changed without the need to restart Cinnamon."
+msgstr ""
+
+#: __data__/create_localized_help.py:41
+msgid "The 'Repeat last' item isn't only available for Cinnamon's screenshots, but for any device and any program."
+msgstr ""
+
+#: __data__/create_localized_help.py:48 applet.js:196
+msgid "Programs support"
+msgstr ""
+
+#: __data__/create_localized_help.py:50
+msgid "In addition to Cinnamon's built-in screenshot/screencast tools, this applet also supports third-party programs to take captures. By default, this applet comes with support for several known programs (Shutter, Gnome Screenshot, XWD, ImageMagic, FFmepg, RecordMyDesktop, Byzanz and Kazam)."
+msgstr ""
+
+#: __data__/create_localized_help.py:53 __data__/create_localized_help.py:257
+msgid "Highlights"
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the words "camera" and "recorder".
+#. MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:64
+msgid "Programs are stored inside an applet preference. They are grouped by devices. A device called **camera** that contains programs that take screenshots. And a device called **recorder** that contains programs that capture screencasts."
+msgstr ""
+
+#: __data__/create_localized_help.py:65
+msgid "Programs can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent programs, modifying the generated JSON file and importing the modified file again."
+msgstr ""
+
+#: __data__/create_localized_help.py:66
+msgid "Commands are exactly that, commands. They are composed of command line arguments , placeholders, and/or flags."
+msgstr ""
+
+#: __data__/create_localized_help.py:69
+msgid "Placeholders are strings specifically formatted with double curly braces (`{{PLACEHOLDER_NAME}}`) and can be placed in any part of a string. These strings are replaced with dynamically generated data (an applet preference, screen coordinates, etc.) when a command is executed."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:71
+msgid "Flags are another type of specifically formatted strings surrounded by hashes (`#FLAG_NAME#`) and they always must be placed at the beginning of a string. Flags indicate that an action must be taken before a command is executed."
+msgstr ""
+
+#: __data__/create_localized_help.py:72
+msgid "The exported JSON file exemplifies almost all the options, flags and placeholders documented below."
+msgstr ""
+
+#: __data__/create_localized_help.py:73
+msgid "The command that will be executed can be previewed before actually executing it by simply right clicking a menu item."
+msgstr ""
+
+#: __data__/create_localized_help.py:79 __data__/create_localized_help.py:269
+msgid "Warnings"
+msgstr ""
+
+#: __data__/create_localized_help.py:85
+msgid "All option names, flags, and placeholders are case sensitive. Command option names are lower cased and use dashes as word separators. Placeholders and flags are upper cased and use low dashes as word separators."
+msgstr ""
+
+#: __data__/create_localized_help.py:86 __data__/create_localized_help.py:274
+msgid "An imported JSON file will overwrite an existent preference."
+msgstr ""
+
+#: __data__/create_localized_help.py:87 __data__/create_localized_help.py:275
+msgid "Importing a malformed/invalid JSON file will cancel the import operation without modifying an existent preference."
+msgstr ""
+
+#: __data__/create_localized_help.py:88
+msgid "There isn't a mechanism to check if a command is available or not on the system the applet is installed. So, use common sense."
+msgstr ""
+
+#: __data__/create_localized_help.py:92 __data__/create_localized_help.py:280
+msgid "Basic example"
+msgstr ""
+
+#: __data__/create_localized_help.py:134
+msgid "Program/Command name"
+msgstr ""
+
+#: __data__/create_localized_help.py:135
+msgid "Name of the program shown on the program selector menu"
+msgstr ""
+
+#: __data__/create_localized_help.py:136
+msgid "Argument to include sound in capture"
+msgstr ""
+
+#: __data__/create_localized_help.py:137
+msgid "Argument to not include sound in capture"
+msgstr ""
+
+#: __data__/create_localized_help.py:138
+msgid "Command to stop recording"
+msgstr ""
+
+#: __data__/create_localized_help.py:139
+msgid "This is a separator"
+msgstr ""
+
+#: __data__/create_localized_help.py:140
+msgid "Argument to include cursor in capture"
+msgstr ""
+
+#: __data__/create_localized_help.py:141
+msgid "Argument to not include cursor in capture"
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the word "APPEND_1".
+#: __data__/create_localized_help.py:143
+msgid "The content here will be used to replace the {{APPEND_1}} placeholder"
+msgstr ""
+
+#: __data__/create_localized_help.py:144
+msgid "Menu item label"
+msgstr ""
+
+#: __data__/create_localized_help.py:145 __data__/create_localized_help.py:180
+msgid "Menu item label flags"
+msgstr ""
+
+#: __data__/create_localized_help.py:145
+#, python-format
+msgid "See %s."
+msgstr ""
+
+#: __data__/create_localized_help.py:146
+msgid "Command to execute when clicking this menu item"
+msgstr ""
+
+#: __data__/create_localized_help.py:149
+msgid "Program options"
+msgstr ""
+
+#: __data__/create_localized_help.py:151 __data__/create_localized_help.py:305
+msgid "Option"
+msgstr ""
+
+#: __data__/create_localized_help.py:151 __data__/create_localized_help.py:198
+msgid "Usage"
+msgstr ""
+
+#: __data__/create_localized_help.py:153 __data__/create_localized_help.py:155 __data__/create_localized_help.py:157
+msgid "Mandatory"
+msgstr ""
+
+#: __data__/create_localized_help.py:154
+msgid "This option will be used as the program name in the program selector sub-menu."
+msgstr ""
+
+#: __data__/create_localized_help.py:156
+msgid "This option contains all the data that will be used to create the menu items for a program."
+msgstr ""
+
+#: __data__/create_localized_help.py:158 __data__/create_localized_help.py:163 __data__/create_localized_help.py:171 __data__/create_localized_help.py:213 __data__/create_localized_help.py:225
+msgid "Recorder only"
+msgstr ""
+
+#: __data__/create_localized_help.py:158
+msgid "The command to stop recording a screencast."
+msgstr ""
+
+#: __data__/create_localized_help.py:159 __data__/create_localized_help.py:206
+msgid "Camera only"
+msgstr ""
+
+#: __data__/create_localized_help.py:159 __data__/create_localized_help.py:163 __data__/create_localized_help.py:167 __data__/create_localized_help.py:171 __data__/create_localized_help.py:175
+msgid "Optional"
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the words "true" and "DELAY".
+#. MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:162
+msgid "This option is used in combination with the `{{DELAY}}` placeholder. If set to **true**, sets the visibility of the **Capture delay** option inside this applet menu."
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the word "true".
+#. MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:166
+msgid "This option, if set to **true**, sets the visibility of the **Frames per second** option inside this applet menu."
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the words "on", "off", and "CURSOR".
+#. MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:170
+msgid "This option is used in combination with the `{{CURSOR}}` placeholder. It must contain two keys named **on** and **off** which respectively must contain a comand line argument for enabling/disabling the display of the mouse cursor on the captured file."
+msgstr ""
+
+#. TO TRANSLATORS: Do not translate the words "on", "off", and "SOUND".
+#. MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:174
+msgid "This option is used in combination with the `{{SOUND}}` placeholder. It must contain two keys named **on** and **off** which respectively must contain a comand line argument for enabling/disabling the inclusion of sound on the captured file."
+msgstr ""
+
+#: __data__/create_localized_help.py:176
+msgid "These options are used in combination with the `{{APPEND_1}}` to `{{APPEND_10}}` placeholders. This is done to avoid repeating the same arguments on all menu items commands."
+msgstr ""
+
+#: __data__/create_localized_help.py:178
+msgid "Flags"
+msgstr ""
+
+#: __data__/create_localized_help.py:182 __data__/create_localized_help.py:189
+msgid "Flag"
+msgstr ""
+
+#: __data__/create_localized_help.py:185
+msgid "The hash (#) character in front of a menu item label is a flag that inhibits the menu item from changing the state of the applet (the change of the applet icon from normal to recording)."
+msgstr ""
+
+#: __data__/create_localized_help.py:187
+msgid "Menu item command flags"
+msgstr ""
+
+#: __data__/create_localized_help.py:192 __data__/create_localized_help.py:194 __data__/create_localized_help.py:230
+msgid "Menu item command interactive placeholders"
+msgstr ""
+
+#: __data__/create_localized_help.py:192
+#, python-format
+msgid "This flag will allow the use of this applet area selector helper. See %s"
+msgstr ""
+
+#: __data__/create_localized_help.py:194
+#, python-format
+msgid "This flag will allow the use of this applet window selector helper. See %s"
+msgstr ""
+
+#: __data__/create_localized_help.py:196
+msgid "Menu item command placeholders"
+msgstr ""
+
+#: __data__/create_localized_help.py:198 __data__/create_localized_help.py:232
+msgid "Placeholder"
+msgstr ""
+
+#: __data__/create_localized_help.py:203
+msgid "Placeholder for the program options `append-1` to `append-10`."
+msgstr ""
+
+#: __data__/create_localized_help.py:205
+msgid "The command line argument used to decide if the capture will display the cursor or not."
+msgstr ""
+
+#: __data__/create_localized_help.py:207
+msgid "Delay in seconds before taking a screenshot."
+msgstr ""
+
+#: __data__/create_localized_help.py:208
+msgid "The directory used as storage for the captures."
+msgstr ""
+
+#: __data__/create_localized_help.py:210
+msgid "The file extension that the generated capture will have. It has to be used in pairs (Example: `{{EXT}}png{{EXT}}`)."
+msgstr ""
+
+#: __data__/create_localized_help.py:212
+msgid "The file name (no extension included) that the generated capture will have."
+msgstr ""
+
+#: __data__/create_localized_help.py:214
+msgid "Frames per second (frame rate)."
+msgstr ""
+
+#: __data__/create_localized_help.py:216
+msgid "The directory used to store the screencast captures."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:219
+msgid "The screen dimensions with format `widthxheight`. Example: `1440x900`"
+msgstr ""
+
+#: __data__/create_localized_help.py:221
+msgid "The screen height."
+msgstr ""
+
+#: __data__/create_localized_help.py:222
+msgid "The screen width."
+msgstr ""
+
+#: __data__/create_localized_help.py:224
+msgid "The directory used to store the screenshot captures."
+msgstr ""
+
+#: __data__/create_localized_help.py:226
+msgid "The command line argument used to decide if the capture include sound or not."
+msgstr ""
+
+#: __data__/create_localized_help.py:234
+msgid "`x` screen coordinates."
+msgstr ""
+
+#: __data__/create_localized_help.py:235
+msgid "`y` screen coordinates."
+msgstr ""
+
+#: __data__/create_localized_help.py:236
+msgid "`x` and `y` screen coordinates separated by a comma."
+msgstr ""
+
+#: __data__/create_localized_help.py:238
+msgid "It could be either the width of a selected area or the width of a selected window."
+msgstr ""
+
+#: __data__/create_localized_help.py:240
+msgid "It could be either the height of a selected area or the height of a selected window."
+msgstr ""
+
+#: __data__/create_localized_help.py:242
+msgid "Same as `I_WIDTH`, but with `1` added to its value."
+msgstr ""
+
+#: __data__/create_localized_help.py:244
+msgid "Same as `I_HEIGHT`, but with `1` added to its value."
+msgstr ""
+
+#: __data__/create_localized_help.py:245
+msgid "The selected window ID."
+msgstr ""
+
+#: __data__/create_localized_help.py:247
+msgid "The 'x-window' property of the selected window."
+msgstr ""
+
+#: __data__/create_localized_help.py:248
+msgid "The selected window class name."
+msgstr ""
+
+#: __data__/create_localized_help.py:249
+msgid "The selected window class title."
+msgstr ""
+
+#: __data__/create_localized_help.py:251 applet.js:203
+msgid "Cinnamon recorder profiles"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:254
+msgid "The built-in Cinnamon recorder uses the GStreamer general-purpose multimedia framework ([GStreamer documentation](https://gstreamer.freedesktop.org/documentation/index.html)). It generates a video file with the `webm` extension using the `vp8enc` encoder and the `webmmux` muxer. This applet exposes the use of the Cinnamon recorder through profiles."
+msgstr ""
+
+#: __data__/create_localized_help.py:262
+msgid "Profiles are stored inside an applet preference."
+msgstr ""
+
+#: __data__/create_localized_help.py:263
+msgid "Profiles can be added/removed/modified as much as needed/wanted from this applet context menu by simply exporting the existent profiles, modifying the generated JSON file and importing the modified file again."
+msgstr ""
+
+#: __data__/create_localized_help.py:276
+msgid "Like everything coming from Gnome, GStreamer is an always-evolving-never-finished-barely-functional piece of software. With that in mind, when using the wrong combination of encoder/muxer, Cinnamon will miserably crash. So, experiment at your own risk."
+msgstr ""
+
+#: __data__/create_localized_help.py:282
+msgid "Below are the two Cinnamon recorder profiles shipped with this applet. The profile named default cannot be modified/deleted."
+msgstr ""
+
+#: __data__/create_localized_help.py:301
+msgid "Profile options"
+msgstr ""
+
+#: __data__/create_localized_help.py:303
+msgid "All profile options are mandatory."
+msgstr ""
+
+#: __data__/create_localized_help.py:307
+msgid "Name of the profile shown on the profile selector menu."
+msgstr ""
+
+#: __data__/create_localized_help.py:309
+msgid "Basic description of the profile that will be displayed as a tooltip."
+msgstr ""
+
+#: __data__/create_localized_help.py:310
+msgid "The file extension of the generated file."
+msgstr ""
+
+#: __data__/create_localized_help.py:311
+msgid "GStreamer pipeline."
+msgstr ""
+
+#: __data__/create_localized_help.py:313
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: __data__/create_localized_help.py:315
+msgid "Keyboard shortcuts are tied to specific capture types."
+msgstr ""
+
+#: __data__/create_localized_help.py:317
+msgid "Known issues"
+msgstr ""
+
+#: __data__/create_localized_help.py:320
+msgid "Cinnamon 3.0.x and its built-in screenshot mechanism"
+msgstr ""
+
+#: __data__/create_localized_help.py:323
+msgid "The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"
+msgstr ""
+
+#: __data__/create_localized_help.py:326
+msgid "Do not use it or Cinnamon will crash!"
+msgstr ""
+
+#: __data__/create_localized_help.py:329
+#, python-format
+msgid "It can only be fixed by building from source the cinnamon package for version 3.0.x with the following patch (%s). Or by simply updating to any other newer version of Cinnamon (3.2.x, 3.4.x, etc.)."
+msgstr ""
+
+#: __data__/create_localized_help.py:332
+msgid "To permanently dismiss the critical notification displayed when the applet is used under Cinnamon 3.0.x, enable the option found in this applet settings window called \"I read the disclaimer and I'm aware of the consequences\", under the \"Disclaimer\" section."
+msgstr ""
+
+#: applet.js:145
+msgid "Open screenshots folder"
+msgstr ""
+
+#: applet.js:155
+msgid "Open screencasts folder"
+msgstr ""
+
+#: applet.js:197
+msgid "Export programs"
+msgstr ""
+
+#: applet.js:198
+msgid "Import programs"
+msgstr ""
+
+#: applet.js:199
+msgid "Reset programs"
+msgstr ""
+
+#: applet.js:200
+msgid "Remove all programs"
+msgstr ""
+
+#: applet.js:204
+msgid "Export profiles"
+msgstr ""
+
+#: applet.js:205
+msgid "Import profiles"
+msgstr ""
+
+#: applet.js:206
+msgid "Reset profiles"
+msgstr ""
+
+#: applet.js:207
+msgid "Remove all profiles"
+msgstr ""
+
+#: applet.js:574
+msgid "Choose camera"
+msgstr ""
+
+#: applet.js:575
+msgid "Choose recorder"
+msgstr ""
+
+#: applet.js:580
+msgid "Latest capture"
+msgstr ""
+
+#: applet.js:610
+msgid "Screencast"
+msgstr ""
+
+#: applet.js:610
+msgid "Screenshot"
+msgstr ""
+
+#: applet.js:620
+msgid "Assign a title to your program!!!"
+msgstr ""
+
+#: applet.js:623 js_modules/constants.js:69
+msgid "Disabled"
+msgstr ""
+
+#: applet.js:693
+msgid "Include cursor"
+msgstr ""
+
+#: applet.js:700
+msgid "Whether to include mouse cursor in screenshot."
+msgstr ""
+
+#: applet.js:714
+#, javascript-format
+msgid "Monitor %d"
+msgstr ""
+
+#: applet.js:727
+msgid "Auto copy image"
+msgstr ""
+
+#: applet.js:743 applet.js:837
+msgid "Repeat last"
+msgstr ""
+
+#: applet.js:760
+msgid "Capture delay"
+msgstr ""
+
+#. TO TRANSLATORS:
+#. sec. = abbreviation of "second"
+#. secs. = abbreviation of "seconds"
+#: applet.js:774
+msgid "sec."
+msgid_plural "secs."
+msgstr[0] ""
+msgstr[1] ""
+
+#: applet.js:782
+msgid "How many seconds to wait before taking a screenshot."
+msgstr ""
+
+#: applet.js:794 js_modules/utils.js:345
+msgid "Profile"
+msgstr ""
+
+#: applet.js:801
+msgid "Choose Cinnamon recorder profile"
+msgstr ""
+
+#: applet.js:807 applet.js:1152
+msgid "Start recording"
+msgstr ""
+
+#: applet.js:820
+msgid "Record sound"
+msgstr ""
+
+#: applet.js:827
+msgid "Whether to record sound."
+msgstr ""
+
+#: applet.js:853 applet.js:1149
+msgid "Stop recording"
+msgstr ""
+
+#: applet.js:870 applet.js:889
+msgid "Frames per second"
+msgstr ""
+
+#: applet.js:881
+msgid "FPS"
+msgstr ""
+
+#: applet.js:902
+msgid "Device options"
+msgstr ""
+
+#: applet.js:1084 js_modules/utils.js:2260
+msgid "File path copied to clipboard."
+msgstr ""
+
+#: applet.js:1088 js_modules/utils.js:2256
+msgid "Image data copied to clipboard."
+msgstr ""
+
+#: applet.js:1161
+msgid "Selected storage folder doesn't exist!"
+msgstr ""
+
+#: applet.js:1169
+msgid "Selected storage folder is not a directory!"
+msgstr ""
+
+#: applet.js:1404 applet.js:1464
+msgid "Displaying command that will be executed"
+msgstr ""
+
+#: applet.js:1631
+msgid "Possibly malformed JSON file."
+msgstr ""
+
+#: applet.js:1632
+msgid "Check the logs."
+msgstr ""
+
+#: applet.js:1682
+msgid "Do you really want to reset this preference to its default value?"
+msgstr ""
+
+#: applet.js:1706
+msgid "Do you really want to empty this preference?"
+msgstr ""
+
+#: applet.js:1727
+msgid "Operation aborted!"
+msgstr ""
+
+#: js_modules/constants.js:70
+msgid "Area"
+msgstr ""
+
+#: js_modules/constants.js:71
+msgid "Cinnamon UI"
+msgstr ""
+
+#: js_modules/constants.js:72
+msgid "Current Window"
+msgstr ""
+
+#: js_modules/constants.js:73
+msgid "Monitor"
+msgstr ""
+
+#: js_modules/constants.js:74
+msgid "Screen"
+msgstr ""
+
+#: js_modules/constants.js:75
+msgid "Tooltip"
+msgstr ""
+
+#: js_modules/constants.js:76
+msgid "Window Menu"
+msgstr ""
+
+#: js_modules/constants.js:77
+msgid "Window Section"
+msgstr ""
+
+#: js_modules/constants.js:78
+msgid "Window"
+msgstr ""
+
+#: js_modules/utils.js:910
+msgid "Select an area by clicking and dragging"
+msgstr ""
+
+#: js_modules/utils.js:912
+msgid "Use arrow keys to move the selection"
+msgstr ""
+
+#: js_modules/utils.js:914
+msgid "Use SHIFT and arrow keys to resize the selection"
+msgstr ""
+
+#: js_modules/utils.js:916
+msgid "Press ENTER to confirm or ESC to cancel"
+msgstr ""
+
+#: js_modules/utils.js:920
+msgid "Select a UI element by moving the mouse"
+msgstr ""
+
+#: js_modules/utils.js:922
+msgid "Use mouse wheel to traverse hierarchy"
+msgstr ""
+
+#: js_modules/utils.js:924
+msgid "Hold SHIFT to allow clicking UI element"
+msgstr ""
+
+#: js_modules/utils.js:926
+msgid "Click to complete the capture, or ESC to cancel"
+msgstr ""
+
+#: js_modules/utils.js:2080
+msgid "File no longer available"
+msgstr ""
+
+#: js_modules/utils.js:2099
+msgid "Delete"
+msgstr ""
+
+#: js_modules/utils.js:2100
+msgid "Delete captured file from file system."
+msgstr ""
+
+#: js_modules/utils.js:2104
+msgid "Copy data"
+msgstr ""
+
+#: js_modules/utils.js:2105
+msgid "Copy image data to clipboard."
+msgstr ""
+
+#: js_modules/utils.js:2109
+msgid "Copy path"
+msgstr ""
+
+#: js_modules/utils.js:2110
+msgid "Copy image path to clipboard."
+msgstr ""
+
+#: js_modules/utils.js:2227
+msgid "Do you really want to delete this file?"
+msgstr ""
+
+#: js_modules/utils.js:2247
+msgid "Failed copying image data."
+msgstr ""
+
+#: js_modules/utils.js:2296
+msgid "Left click"
+msgstr ""
+
+#: js_modules/utils.js:2296
+msgid "Open image file."
+msgstr ""
+
+#: js_modules/utils.js:2297
+msgid "Open folder."
+msgstr ""
+
+#: js_modules/utils.js:2297
+msgid "Right click"
+msgstr ""
+
+#: js_modules/utils.js:2344
+msgid "WARNING!!!"
+msgstr ""
+
+#. metadata.json->description
+msgid "Screenshot and screencasting tools."
+msgstr ""
+
+#. metadata.json->name
+msgid "Desktop Capture (Fork By Odyseus)"
+msgstr ""
+
+#. settings-schema.json->info_label_1->description
+msgid "This window isn't this xlet's \"real\" configuration window."
+msgstr ""
+
+#. settings-schema.json->settings_button->description
+msgid "Open the \"real\" preference window"
+msgstr ""
+
+#. settings-schema.json->x264enc->title
+msgid "H264"
+msgstr ""
+
+#. settings-schema.json->x264enc->description
+msgid ""
+"Encoder: H264\n"
+"Muxer: Matroska\n"
+"File extension: mkv"
+msgstr ""
+
+#. settings-schema.json->gnome-screenshot->title
+msgid "GNOME Screenshot"
+msgstr ""
+
+#. settings-schema.json->shutter->title
+msgid "Shutter"
+msgstr ""
+
+#. settings-schema.json->xwd->title
+msgid "XWD"
+msgstr ""
+
+#. settings-schema.json->imagemagick->title
+msgid "ImageMagick"
+msgstr ""
+
+#. settings-schema.json->kazam->title
+msgid "Kazam"
+msgstr ""
+
+#. settings-schema.json->ffmpeg->title
+msgid "FFmpeg"
+msgstr ""
+
+#. settings-schema.json->recordmydesktop->title
+msgid "RecordMyDesktop"
+msgstr ""
+
+#. settings-schema.json->byzanz-gif->title
+msgid "Byzanz GIF"
+msgstr ""
+
+#. settings-schema.json->byzanz-ogv->title
+msgid "Byzanz OGV"
+msgstr ""

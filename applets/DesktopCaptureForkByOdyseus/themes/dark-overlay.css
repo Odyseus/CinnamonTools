@@ -23,7 +23,6 @@
 /* App icon (St.Icon) overlay (Window capture mode) */
 .desktop-capture-overlay-icon {
     padding: 5px;
-    box-shadow: 5px 5px 5px #000;
     box-shadow: inset 5px 5px 5px #fff;
     border: 1px solid red;
     width: 24px;

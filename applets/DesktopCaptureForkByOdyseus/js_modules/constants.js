@@ -1,21 +1,51 @@
-// {{IMPORTER}}
-
-let dummy;
-
-// Mark for deletion on EOL. Cinnamon 4.0.x
-// Remove polyfill usage.
-if (typeof require === "function") {
-    dummy = require("./lib/String_padStart.js");
-} else {
-    dummy = imports.ui.appletManager.applets["{{UUID}}"]["lib"].String_padStart;
-}
-
-const GlobalUtils = __import("globalUtils.js");
-
 const {
     _
-} = GlobalUtils;
+} = require("js_modules/globalUtils.js");
 
+var APPLET_PREFS = [
+    "applet_icon",
+    "applet_icon_recording",
+    "camera_save_dir",
+    "camera_save_prefix",
+    "include_cursor",
+    "timer_delay",
+    "recorder_fps",
+    "timer_display_on_screen",
+    "key_camera_window",
+    "key_camera_area",
+    "key_camera_cinnamon_ui",
+    "key_camera_screen",
+    "key_camera_repeat",
+    "key_camera_monitor_0",
+    "key_camera_monitor_1",
+    "key_camera_monitor_2",
+    "key_recorder_repeat",
+    "capture_window_as_area",
+    "include_window_frame",
+    "use_camera_flash",
+    "include_styles",
+    "play_shutter_sound",
+    "play_timer_interval_sound",
+    "copy_to_clipboard",
+    "show_copy_toggle",
+    "auto_copy_data_auto_off",
+    "auto_copy_data",
+    "recorder_save_dir",
+    "recorder_save_prefix",
+    "key_recorder_stop_toggle",
+    "record_sound",
+    "theme_selector",
+    "theme_custom",
+    "program_support",
+    "cinn_rec_current_profile",
+    "cinn_rec_profiles",
+    "camera_program",
+    "recorder_program",
+    "imp_exp_last_selected_directory",
+    "display_device_options_in_sub_menu",
+    "last_camera_capture",
+    "last_recorder_capture"
+];
 var SOUND_ID = 1;
 var HANDLE_SIZE = 10;
 var HANDLE_NAMES = [
@@ -145,4 +175,5 @@ var CinnamonRecorderProfilesBase = {
             SelectionTypeStr,
             ProgramSupportBase,
             CinnamonRecorderProfilesBase,
+            APPLET_PREFS
 */

@@ -1,0 +1,6 @@
+{
+    "external-configuration-app": "settings.py",
+    "max-instances": -1,
+    "description": "Screenshot and screencasting tools.",
+    "name": "Desktop Capture (Fork By Odyseus)"
+}

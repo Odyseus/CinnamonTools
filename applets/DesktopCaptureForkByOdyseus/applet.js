@@ -1,12 +1,3 @@
-// {{IMPORTER}}
-
-const GlobalUtils = __import("globalUtils.js");
-const Constants = __import("constants.js");
-const DebugManager = __import("debugManager.js");
-const CustomTooltips = __import("customTooltips.js");
-const CustomFileUtils = __import("customFileUtils.js");
-const $ = __import("utils.js");
-
 const {
     gi: {
         Cinnamon,
@@ -16,87 +7,100 @@ const {
         Meta,
         St
     },
-    mainloop: Mainloop,
     misc: {
-        signalManager: SignalManager,
         util: Util
     },
     ui: {
         applet: Applet,
         main: Main,
-        popupMenu: PopupMenu,
-        settings: Settings
+        popupMenu: PopupMenu
     }
 } = imports;
 
 const {
     _,
-    CINNAMON_VERSION,
-    ngettext,
-    xdgOpen,
-    escapeHTML,
-    isObject,
-    versionCompare,
+    copyToClipboard,
     deepMergeObjects,
+    escapeHTML,
+    getKeybindingDisplayName,
+    isObject,
+    ngettext,
     tokensReplacer,
-    copyToClipboard
-} = GlobalUtils;
+    tryFn,
+    launchUri
+} = require("js_modules/globalUtils.js");
 
 const {
     IntelligentTooltip
-} = CustomTooltips;
+} = require("js_modules/customTooltips.js");
 
 const {
-    saveToFileAsync
-} = CustomFileUtils;
+    File
+} = require("js_modules/customFileUtils.js");
 
 const {
-    SelectionType,
-    KeybindingSupport,
-    Devices,
-    PROGRAMS_SUPPORT_EMPTY,
+    getBaseAppletClass
+} = require("js_modules/appletsUtils.js");
+
+const {
+    APPLET_PREFS,
     CinnamonRecorderProfilesBase,
-    ProgramSupportBase,
-    SelectionTypeStr,
     ClipboardCopyType,
-    InteractiveCallouts
-} = Constants;
+    Devices,
+    InteractiveCallouts,
+    KeybindingSupport,
+    PROGRAMS_SUPPORT_EMPTY,
+    ProgramSupportBase,
+    SelectionType,
+    SelectionTypeStr
+} = require("js_modules/constants.js");
 
-function DesktopCapture() {
-    this._init.apply(this, arguments);
-}
+const {
+    askForConfirmation,
+    CinnamonRecorderProfileSelector,
+    CustomPopupMenuSection,
+    CustomPopupSliderMenuItem,
+    CustomSwitchMenuItem,
+    Debugger,
+    Exec,
+    extendMenuItem,
+    LastCaptureContainer,
+    notify,
+    onSubMenuOpenStateChanged,
+    ProgramSelectorSubMenuItem,
+    runtimeError,
+    runtimeInfo,
+    ScreenshotHelper,
+    TryExec
+} = require("js_modules/utils.js");
 
-DesktopCapture.prototype = {
-    __proto__: Applet.IconApplet.prototype,
+class DesktopCapture extends getBaseAppletClass(Applet.IconApplet) {
+    constructor(aMetadata, aOrientation, aPanelHeight, aInstanceID) {
+        super({
+            metadata: aMetadata,
+            orientation: aOrientation,
+            panel_height: aPanelHeight,
+            instance_id: aInstanceID,
+            pref_keys: APPLET_PREFS
+        });
 
-    _init: function(aMetadata, aOrientation, aPanelHeight, aInstanceId) {
-        Applet.IconApplet.prototype._init.call(this, aOrientation, aPanelHeight, aInstanceId);
+        this._keybinding_base = this.$.metadata.uuid + "-" + this.$.instance_id;
 
-        // Condition needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        if (Applet.hasOwnProperty("AllowedLayout")) {
-            this.setAllowedLayout(Applet.AllowedLayout.BOTH);
-        }
-
-        this.metadata = aMetadata;
-        this.instance_id = aInstanceId;
-        this.orientation = aOrientation;
-        this._keybinding_base = this.metadata.uuid + "-" + this.instance_id;
-
-        this._initializeSettings(() => {
+        this.__initializeApplet(() => {
             this._expandAppletContextMenu();
         }, () => {
-            this.sigMan = new SignalManager.SignalManager(null);
-
-            this.appletHelper = this.metadata.path + "/appletHelper.py";
-            this.cinnamonRecorder = null;
+            this.settings_schema_file = new File(`${this.$.metadata.path}/settings-schema.json`);
+            this.appletHelper = `${this.$.metadata.path}/appletHelper.py`;
+            this.cinnamonRecorder = this.$._.recorder_program === "cinnamon" ?
+                new Cinnamon.Recorder({
+                    stage: global.stage
+                }) :
+                null;
             this.lastCapture = {
                 camera: null,
                 recorder: null
             };
             this.oldStylesheetPath = null;
-            this.rebuild_recorder_section_id = null;
-            this.rebuild_camera_section_id = null;
             this.cameraSection = null;
             this.recorderSection = null;
             this.cameraHeader = null;
@@ -110,47 +114,33 @@ DesktopCapture.prototype = {
             this._cinnamonRecorderProfiles = {};
             this._cameraRedoMenuItem = null;
             this._recorderRedoMenuItem = null;
-            this.load_theme_id = 0;
-
-            if (this.pref_recorder_program === "cinnamon") {
-                this.cinnamonRecorder = new Cinnamon.Recorder({
-                    stage: global.stage
-                });
-            }
-
-            // I'm forced to use a timeout because the absolutely retarded Cinnamon settings
-            // system isn't triggering the f*cking settings changed callbacks!!!!
-            // So, in versions of Cinnamon that doesn't trigger such callback, I have to call them
-            // manually. And in versions of Cinnamon that do trigger such callbacks, they are
-            // triggered manually AND automatically.
-            this._draw_menu_id = 0;
-            this._register_key_bindings_id = 0;
 
             this._setupSaveDirs();
 
-            this.menuManager = new PopupMenu.PopupMenuManager(this);
-
-            this.set_applet_tooltip(_(this.metadata.description));
+            this.set_applet_tooltip(_(this.$.metadata.description));
 
             this._loadTheme();
             this._setupProgramSupport();
             this._setupCinnamonRecorderProfiles();
-
-            // When monitors are connected or disconnected, redraw the menu
-            this.sigMan.connect(Main.layoutManager, "monitors-changed", function() {
-                if (this.pref_camera_program === "cinnamon") {
-                    this.drawMenu();
-                }
-            }.bind(this));
-            this.sigMan.connect(Main.themeManager, "theme-set", function() {
-                this._loadTheme(false);
-            }.bind(this));
-
-            this._disclaimerRead();
         });
-    },
+    }
 
-    _expandAppletContextMenu: function() {
+    __connectSignals() {
+        // When monitors are connected or disconnected, redraw the menu
+        this.$.signal_manager.connect(Main.layoutManager, "monitors-changed", function() {
+            if (this.$._.camera_program === "cinnamon") {
+                this.drawMenu();
+            }
+        }.bind(this));
+        this.$.signal_manager.connect(Main.themeManager, "theme-set", function() {
+            this._loadTheme(false);
+        }.bind(this));
+        this.$.signal_manager.connect(this, "orientation-changed", function() {
+            this.__seekAndDetroyConfigureContext();
+        }.bind(this));
+    }
+
+    _expandAppletContextMenu() {
         let mi = new PopupMenu.PopupIconMenuItem(
             _("Open screenshots folder"),
             "folder",
@@ -173,7 +163,7 @@ DesktopCapture.prototype = {
 
         this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
-        let itemFns = (aType, aPrefName, aPrefEmptyVal) => {
+        const itemFns = (aType, aPrefName, aPrefEmptyVal) => {
             switch (aType) {
                 case "export":
                     return () => this._exportJSONData(aPrefName);
@@ -184,15 +174,15 @@ DesktopCapture.prototype = {
                 case "remove":
                     return () => this._clearPref(aPrefName, aPrefEmptyVal);
                 default:
-                    return (aMenu, aOpen) => $.onSubMenuOpenStateChanged(aMenu, aOpen);
+                    return (aMenu, aOpen) => onSubMenuOpenStateChanged(aMenu, aOpen);
             }
         };
 
-        for (let pref of [{
-                name: "pref_program_support",
+        for (const pref of [{
+                name: "program_support",
                 empty_value: PROGRAMS_SUPPORT_EMPTY
             }, {
-                name: "pref_cinn_rec_profiles",
+                name: "cinn_rec_profiles",
                 empty_value: {}
             }]) {
             let subMLabel,
@@ -202,14 +192,14 @@ DesktopCapture.prototype = {
                 removeLabel;
 
             switch (pref.name) {
-                case "pref_program_support":
+                case "program_support":
                     subMLabel = _("Programs support");
                     exportLabel = _("Export programs");
                     importLabel = _("Import programs");
                     resetLabel = _("Reset programs");
                     removeLabel = _("Remove all programs");
                     break;
-                case "pref_cinn_rec_profiles":
+                case "cinn_rec_profiles":
                     subMLabel = _("Cinnamon recorder profiles");
                     exportLabel = _("Export profiles");
                     importLabel = _("Import profiles");
@@ -218,7 +208,7 @@ DesktopCapture.prototype = {
                     break;
             }
 
-            let subMenu = new PopupMenu.PopupSubMenuMenuItem(subMLabel);
+            const subMenu = new PopupMenu.PopupSubMenuMenuItem(subMLabel);
             subMenu.menu.connect("open-state-changed", itemFns(null, null));
             this._applet_context_menu.addMenuItem(subMenu);
 
@@ -262,229 +252,102 @@ DesktopCapture.prototype = {
             "dialog-information",
             St.IconType.SYMBOLIC
         );
-        mi.connect("activate",
-            () => this._doRunHandler(this.metadata.path + "/HELP.html"));
+        mi.connect("activate", () => this._doRunHandler(`${this.$.metadata.path}/HELP.html`));
         this._applet_context_menu.addMenuItem(mi);
-    },
 
-    _initializeSettings: function(aDirectCallback, aIdleCallback) {
-        this.settings = new Settings.AppletSettings(
-            this,
-            this.metadata.uuid,
-            this.instance_id
-        );
+        this.__seekAndDetroyConfigureContext();
+    }
 
-        this._bindSettings();
-        aDirectCallback();
-
-        Mainloop.idle_add(() => {
-            aIdleCallback();
-
-            return GLib.SOURCE_REMOVE;
-        });
-    },
-
-    _bindSettings: function() {
-        // Needed for retro-compatibility.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        let bD = {
-            IN: 1,
-            OUT: 2,
-            BIDIRECTIONAL: 3
-        };
-        let prefKeysArray = [
-            "pref_custom_icon_for_applet",
-            "pref_custom_icon_for_applet_recording",
-            "pref_camera_save_dir",
-            "pref_camera_save_prefix",
-            "pref_include_cursor",
-            "pref_timer_delay",
-            "pref_recorder_fps",
-            "pref_timer_display_on_screen",
-            "pref_key_camera_window",
-            "pref_key_camera_area",
-            "pref_key_camera_cinnamon_ui",
-            "pref_key_camera_screen",
-            "pref_key_camera_repeat",
-            "pref_key_camera_monitor_0",
-            "pref_key_camera_monitor_1",
-            "pref_key_camera_monitor_2",
-            "pref_key_recorder_repeat",
-            "pref_capture_window_as_area",
-            "pref_include_window_frame",
-            "pref_use_camera_flash",
-            "pref_include_styles",
-            "pref_play_shutter_sound",
-            "pref_play_timer_interval_sound",
-            "pref_copy_to_clipboard",
-            "pref_show_copy_toggle",
-            "pref_auto_copy_data_auto_off",
-            "pref_auto_copy_data",
-            "pref_recorder_save_dir",
-            "pref_recorder_save_prefix",
-            "pref_key_recorder_stop_toggle",
-            "pref_record_sound",
-            "pref_disclaimer_read",
-            "pref_theme_selector",
-            "pref_theme_custom",
-            "pref_program_support",
-            "pref_cinn_rec_current_profile",
-            "pref_cinn_rec_profiles",
-            "pref_camera_program",
-            "pref_recorder_program",
-            "pref_imp_exp_last_selected_directory",
-            "pref_display_device_options_in_sub_menu",
-            "pref_last_camera_capture",
-            "pref_last_recorder_capture",
-            "pref_logging_level",
-            "pref_debugger_enabled"
-        ];
-        let newBinding = typeof this.settings.bind === "function";
-        for (let pref_key of prefKeysArray) {
-            // Condition needed for retro-compatibility.
-            // Mark for deletion on EOL. Cinnamon 3.2.x+
-            // Abandon this.settings.bindProperty and keep this.settings.bind.
-            if (newBinding) {
-                this.settings.bind(pref_key, pref_key, this._onSettingsChanged, pref_key);
-            } else {
-                this.settings.bindProperty(bD.BIDIRECTIONAL, pref_key, pref_key,
-                    this._onSettingsChanged, pref_key);
-            }
-        }
-    },
-
-    _loadTheme: function(aFullReload = false) {
-        if (this.load_theme_id > 0) {
-            Mainloop.source_remove(this.load_theme_id);
-            this.load_theme_id = 0;
-        }
-
-        try {
+    _loadTheme(aFullReload = false) {
+        tryFn(() => {
             this.unloadStylesheet();
-        } catch (aErr) {
+        }, (aErr) => {
             global.logError(aErr);
-        } finally {
-            this.load_theme_id = Mainloop.timeout_add(1000,
-                () => {
-                    try {
-                        /* NOTE: Without calling Main.themeManager._changeTheme() this xlet stylesheet
-                         * doesn't reload correctly. ¬¬
-                         */
-                        if (aFullReload) {
-                            Main.themeManager._changeTheme();
-                        }
-
-                        this.loadStylesheet();
-                    } catch (aErr) {
-                        global.logError(aErr);
+        }, () => {
+            this.$.schedule_manager.setTimeout("load_theme", function() {
+                tryFn(() => {
+                    /* NOTE: Without calling Main.loadTheme() this xlet stylesheet
+                     * doesn't reload correctly. ¬¬
+                     */
+                    if (aFullReload) {
+                        Main.themeManager._changeTheme();
                     }
 
-                    this.load_theme_id = 0;
-                }
-            );
-        }
-    },
+                    this.loadStylesheet();
 
-    loadStylesheet: function() {
+                }, (aErr) => global.logError(aErr));
+            }.bind(this), 1000);
+        });
+    }
+
+    loadStylesheet() {
         this.stylesheet = this._getCssPath();
 
-        try {
-            let themeContext = St.ThemeContext.get_for_stage(global.stage);
+        tryFn(() => {
+            const themeContext = St.ThemeContext.get_for_stage(global.stage);
             this.theme = themeContext.get_theme();
-        } catch (aErr) {
+        }, (aErr) => {
             global.logError(_("Error trying to get theme"));
             global.logError(aErr);
-        }
+        });
 
-        try {
+        tryFn(() => {
             this.theme.load_stylesheet(this.stylesheet);
-        } catch (aErr) {
+        }, (aErr) => {
             global.logError(_("Stylesheet parse error"));
             global.logError(aErr);
-        }
-    },
+        });
+    }
 
-    unloadStylesheet: function() {
+    unloadStylesheet() {
         if (this.theme && this.stylesheet) {
-            try {
+            tryFn(() => {
                 this.theme.unload_stylesheet(this.stylesheet);
-            } catch (aErr) {
+            }, (aErr) => {
                 global.logError(_("Error unloading stylesheet"));
                 global.logError(aErr);
-            } finally {
+            }, () => {
                 this.theme = null;
                 this.stylesheet = null;
-            }
+            });
         }
-    },
+    }
 
-    _getCssPath: function() {
-        let defaultThemepath = this.metadata.path + "/themes/light-overlay.css";
+    _getCssPath() {
+        const defaultThemepath = `${this.$.metadata.path}/themes/light-overlay.css`;
         let cssPath;
 
-        switch (this.pref_theme_selector) {
+        switch (this.$._.theme_selector) {
             case "light":
-                cssPath = this.metadata.path + "/themes/light-overlay.css";
+                cssPath = `${this.$.metadata.path}/themes/light-overlay.css`;
                 break;
             case "dark":
-                cssPath = this.metadata.path + "/themes/dark-overlay.css";
+                cssPath = `${this.$.metadata.path}/themes/dark-overlay.css`;
                 break;
             case "custom":
-                cssPath = this.pref_theme_custom;
+                cssPath = this.$._.theme_custom;
                 break;
         }
 
-        if (/^file:\/\//.test(cssPath)) {
-            cssPath = cssPath.substr(7);
+        const cssFile = new File(cssPath);
+
+        if (cssFile.is_file) {
+            return cssFile.path;
         }
 
-        try {
-            let cssFile = Gio.file_new_for_path(cssPath);
+        return defaultThemepath;
+    }
 
-            if (!cssPath || !cssFile.query_exists(null)) {
-                global.logError("CSS theme file not found. Loading default...");
-                cssPath = defaultThemepath;
-            }
-        } catch (aErr) {
-            global.logError("Error loading CSS theme file. Loading default...");
-            cssPath = defaultThemepath;
-            global.logError(aErr);
-        }
-
-        return cssPath;
-    },
-
-    _setAppletIcon: function(aRecording) {
-        let icon = (aRecording ?
-                this.pref_custom_icon_for_applet_recording :
-                this.pref_custom_icon_for_applet) ||
+    __setAppletIcon(aRecording) {
+        const icon = (aRecording ?
+                this.$._.applet_icon_recording :
+                this.$._.applet_icon) ||
             "desktop-capture-camera-photo-symbolic";
-        let setIcon = (aIcon, aIsPath) => {
-            if (aIcon.search("-symbolic") !== -1) {
-                this[aIsPath ?
-                    "set_applet_icon_symbolic_path" :
-                    "set_applet_icon_symbolic_name"](aIcon);
-            } else {
-                this[aIsPath ?
-                    "set_applet_icon_path" :
-                    "set_applet_icon_name"](aIcon);
-            }
-        };
+        super.__setAppletIcon(icon);
+    }
 
-        if (GLib.path_is_absolute(icon) &&
-            GLib.file_test(icon, GLib.FileTest.EXISTS)) {
-            setIcon(icon, true);
-        } else {
-            try {
-                setIcon(icon);
-            } catch (aErr) {
-                global.logWarning('Could not load icon "' + icon + '" for applet.');
-            }
-        }
-    },
-
-    stopAnyRecorder: function() {
-        let device = "recorder";
+    stopAnyRecorder() {
+        const device = "recorder";
 
         if (this.getDeviceProgram(device) === "cinnamon") {
             this.toggleCinnamonRecorder();
@@ -492,9 +355,9 @@ DesktopCapture.prototype = {
             this.runCommand(
                 this.getDeviceProperty(device, "stop-command"), device, false, false);
         }
-    },
+    }
 
-    _storeNewKeybinding: function(aDevice, aLabel, aCallback) {
+    _storeNewKeybinding(aDevice, aLabel, aCallback) {
         if (!this._newKeybindingsStorage.hasOwnProperty(aDevice)) {
             this._newKeybindingsStorage[aDevice] = [];
         }
@@ -502,38 +365,38 @@ DesktopCapture.prototype = {
         // aLabel can be a property in KeybindingSupport or directly the pref.
         // name suffix. One case of this is when registering the keybinding
         // for Cinnamon's recorder or the stop recorder keybinding.
-        let keyPrefNameSuffix = KeybindingSupport[aDevice].hasOwnProperty(aLabel) ?
+        const keyPrefNameSuffix = KeybindingSupport[aDevice].hasOwnProperty(aLabel) ?
             KeybindingSupport[aDevice][aLabel] : aLabel;
-        let keyPrefName = "pref_key_" + aDevice + "_" + keyPrefNameSuffix;
+        const keyPrefName = `key_${aDevice}_${keyPrefNameSuffix}`;
 
         // Check if keyPrefName is a property of the applet (the actual pref. name)
         // and check if the pref. actually has a keybinding set. Otherwise, do
         // not store the new keybinding into _newKeybindingsStorage.
-        if (this.hasOwnProperty(keyPrefName) && this[keyPrefName]) {
+        if (this.$._.hasOwnProperty(keyPrefName) && this.$._[keyPrefName]) {
             this._newKeybindingsStorage[aDevice].push({
                 keybindingName: this._keybinding_base + "-" + keyPrefName,
-                keyPrefValue: this[keyPrefName],
+                keyPrefValue: this.$._[keyPrefName],
                 callback: aCallback
             });
         }
-    },
+    }
 
-    _registerKeyBindings: function() {
+    _registerKeyBindings() {
         this._removeKeybindings(() => {
             // Define function outside loop.
-            let keyFn = (aKey) => {
+            const keyFn = (aKey) => {
                 return () => {
                     aKey.callback();
                 };
             };
 
-            for (let device of Devices) {
+            for (const device of Devices) {
                 // If the device is disabled, do not bother storing keybindings.
                 if (!this.hasDevice(device)) {
                     continue;
                 }
 
-                let newKeys = this._newKeybindingsStorage.hasOwnProperty(device) ?
+                const newKeys = this._newKeybindingsStorage.hasOwnProperty(device) ?
                     this._newKeybindingsStorage[device] : [];
 
                 // If there isn't new keys, do not continue.
@@ -541,7 +404,7 @@ DesktopCapture.prototype = {
                     continue;
                 }
 
-                for (let key of newKeys) {
+                for (const key of newKeys) {
                     // Store the new keybinding name to _oldKeybindingsNames for
                     // later removal.
                     this._oldKeybindingsNames.push(key.keybindingName);
@@ -557,69 +420,56 @@ DesktopCapture.prototype = {
                 this._newKeybindingsStorage[device] = [];
             }
         });
-    },
+    }
 
-    _removeKeybindings: function(aCallback) {
-        try {
-            for (let keybindingName of this._oldKeybindingsNames) {
+    _removeKeybindings(aCallback) {
+        tryFn(() => {
+            for (const keybindingName of this._oldKeybindingsNames) {
                 Main.keybindingManager.removeHotKey(keybindingName);
             }
-        } finally {
+        }, (aErr) => {}, () => { // jshint ignore:line
             this._oldKeybindingsNames = [];
 
             if (!!aCallback) {
                 aCallback();
             }
-        }
-    },
+        });
+    }
 
-    _setupCinnamonRecorderProfiles: function() {
-        let prefcinnamonRecorderProfilesCopy = JSON.parse(
-            JSON.stringify(this.pref_cinn_rec_profiles));
-
-        // Mark for deletion on EOL. Cinnamon 3.6.x+
-        // Replace JSON trick with Object.assign().
+    _setupCinnamonRecorderProfiles() {
+        // Stick with the JSON trick. Do not use Object.assign().
         this.cinnamonRecorderProfiles = deepMergeObjects(CinnamonRecorderProfilesBase,
-            JSON.parse(JSON.stringify(prefcinnamonRecorderProfilesCopy)));
+            JSON.parse(JSON.stringify(this.$._.cinn_rec_profiles)));
 
         if (!this.cinnamonRecorderProfiles
-            .hasOwnProperty(this.pref_cinn_rec_current_profile)) {
-            this.pref_cinn_rec_current_profile = "default";
+            .hasOwnProperty(this.$._.cinn_rec_current_profile)) {
+            this.$._.cinn_rec_current_profile = "default";
         }
 
         this.drawMenu();
-    },
+    }
 
-    _setupProgramSupport: function() {
-        // Mark for deletion on EOL. Cinnamon 3.6.x+
-        // Replace JSON trick with Object.assign().
+    _setupProgramSupport() {
         // Clone the original object before doing possible modifications.
         // It is to avoid triggering the pref callback.
-        // JSON back and forth conversion because Object.assign isn't available
-        // on the version of Cinnamon that I use and because Object.assign is
-        // just garbage and because it gets rid of functions.
-        let prefProgramSupportCopy = JSON.parse(JSON.stringify(this.pref_program_support));
+        // Stick with the JSON trick. Do not use Object.assign().
+        const prefProgramSupportCopy = JSON.parse(JSON.stringify(this.$._.program_support));
         // If either of the devices in the preference pref_program_support
         // has "disabled" or "cinnamon", remove them.
         // Those two shouldn't be overriden/removed/modified.
-        for (let prop of ["disabled", "cinnamon"]) {
-            for (let device of Devices) {
+        for (const prop of ["disabled", "cinnamon"]) {
+            for (const device of Devices) {
                 if (prefProgramSupportCopy[device].hasOwnProperty(prop)) {
                     delete prefProgramSupportCopy[device][prop];
                 }
             }
         }
 
-        if (prefProgramSupportCopy !== this.pref_program_support) {
-            this.pref_program_support = prefProgramSupportCopy;
+        if (prefProgramSupportCopy !== this.$._.program_support) {
+            this.$._.program_support = prefProgramSupportCopy;
         }
 
-        // Mark for deletion on EOL. Cinnamon 3.6.x+
-        // Replace JSON trick with Object.assign().
-        // Use all this nonsense until the "geniuses" at Mozilla finally decide
-        // on a unique and standard way for deep merging objects.
-        this.programSupport = deepMergeObjects(ProgramSupportBase,
-            JSON.parse(JSON.stringify(prefProgramSupportCopy)));
+        this.programSupport = deepMergeObjects(ProgramSupportBase, prefProgramSupportCopy);
 
         // If the new modified programSupport doesn't contain the currently
         // set program for a device, set the current program to cinnamon.
@@ -628,107 +478,86 @@ DesktopCapture.prototype = {
         // program for a device.
         // Doing it AFTER programSupport has been generated so is checked with
         // "disabled" and "cinnamon" in it.
-        for (let device of Devices) {
+        for (const device of Devices) {
             if (!this.programSupport[device]
-                .hasOwnProperty(this["pref_" + device + "_program"])) {
-                this["pref_" + device + "_program"] = "cinnamon";
+                .hasOwnProperty(this.$._[`${device}_program`])) {
+                this.$._[`${device}_program`] = "cinnamon";
             }
         }
 
         this.drawMenu();
-    },
+    }
 
-    _setupSaveDirs: function() {
-        let prefMap = {
-            pref_camera_save_dir: "_cameraSaveDir",
-            pref_recorder_save_dir: "_recorderSaveDir"
+    _setupSaveDirs() {
+        const prefMap = {
+            camera_save_dir: "_cameraSaveDir",
+            recorder_save_dir: "_recorderSaveDir"
         };
 
-        for (let pref in prefMap) {
-            if (!this[pref].trim()) {
+        for (const pref in prefMap) {
+            if (!this.$._[pref].trim()) {
                 // If the pref is empty, setup default user directories.
-                let defaultDir = GLib.get_user_special_dir(
-                    (pref === "pref_camera_save_dir" ?
+                const defaultDir = GLib.get_user_special_dir(
+                    (pref === "camera_save_dir" ?
                         GLib.UserDirectory.DIRECTORY_PICTURES :
                         GLib.UserDirectory.DIRECTORY_VIDEOS));
-                this[pref] = defaultDir;
+                this.$._[pref] = defaultDir;
                 this[prefMap[pref]] = defaultDir;
-            } else if (/^file:\/\//.test(this[pref])) {
+            } else if (this.$._[pref].startsWith("file://")) {
                 // In case that an URI is used instead of a path.
-                this[pref] = this[pref].replace("file://", "");
-                this[prefMap[pref]] = this[pref].replace("file://", "");
+                this.$._[pref] = this.$._[pref].replace("file://", "");
+                this[prefMap[pref]] = this.$._[pref].replace("file://", "");
             } else {
                 // Leave it as-is.
-                this[prefMap[pref]] = this[pref];
+                this[prefMap[pref]] = this.$._[pref];
             }
         }
-    },
+    }
 
-    _onMenuKeyRelease: function(actor, event) {
-        let symbol = event.get_key_symbol();
+    _onMenuKeyRelease(actor, event) {
+        const symbol = event.get_key_symbol();
 
-        if (symbol === Clutter.Shift_L) {
+        if (symbol === Clutter.KEY_Shift_L) {
             this.setModifier(symbol, false);
         }
 
-        return false;
-    },
+        return Clutter.EVENT_PROPAGATE;
+    }
 
-    _onMenuKeyPress: function(actor, event) {
-        let symbol = event.get_key_symbol();
+    _onMenuKeyPress(actor, event) {
+        const symbol = event.get_key_symbol();
 
-        if (symbol === Clutter.Shift_L) {
+        if (symbol === Clutter.KEY_Shift_L) {
             this.setModifier(symbol, true);
         }
 
-        return false;
-    },
+        return Clutter.EVENT_PROPAGATE;
+    }
 
-    _doRunHandler: function(aURI) {
-        let uri = /^file:\/\//.test(aURI) ?
-            aURI :
-            "file://" + aURI;
+    _doRunHandler(aURI) {
+        runtimeInfo(`Opening "${aURI}"`);
+        launchUri(aURI);
+    }
 
-        // Gio.app_info_launch_default_for_uri returns false in case of error.
-        // If so, try to use xdg-open.
-        if (!Gio.app_info_launch_default_for_uri(uri,
-                new Gio.AppLaunchContext())) {
-            $.runtimeInfo("Spawning xdg-open " + uri);
-            xdgOpen(uri);
-        }
-    },
-
-    drawMenu: function() {
-        this._setAppletIcon();
+    drawMenu() {
+        this.__setAppletIcon();
         this._newKeybindingsStorage = {};
 
-        if (this._draw_menu_id > 0) {
-            Mainloop.source_remove(this._draw_menu_id);
-            this._draw_menu_id = 0;
-        }
+        this.$.schedule_manager.setTimeout("draw_menu", function() {
+            this.__initMainMenu();
 
-        this._draw_menu_id = Mainloop.timeout_add(500, () => {
-            if (this.menu) {
-                this.menuManager.removeMenu(this.menu);
-                this.menu.removeAll(); // Just in case.
-                this.menu.destroy();
-            }
-
-            this.menu = new Applet.AppletPopupMenu(this, this.orientation);
-            this.menuManager.addMenu(this.menu);
-
-            let lastCaptureFn = (aDevive) => {
+            const lastCaptureFn = (aDevive) => {
                 return (aMenu, aOpen) => {
-                    aOpen && this[aDevive + "LastCaptureContent"]._onFileDataChanged();
-                    $.onSubMenuOpenStateChanged(aMenu, aOpen);
+                    aOpen && this[`${aDevive}LastCaptureContent`]._onFileDataChanged();
+                    onSubMenuOpenStateChanged(aMenu, aOpen);
                 };
             };
 
-            for (let device of Devices) {
-                this[device + "Header"] = new $.ProgramSelectorSubMenuItem(
+            for (const device of Devices) {
+                this[`${device}Header`] = new ProgramSelectorSubMenuItem(
                     this, {
                         item_label: " ",
-                        pref_key: "pref_" + device + "_program",
+                        pref_key: `${device}_program`,
                         icon_name: (device === "camera" ?
                             "camera-photo" :
                             "media-record"),
@@ -740,24 +569,24 @@ DesktopCapture.prototype = {
                     }
                 );
                 this[device + "Header"].tooltip = new IntelligentTooltip(
-                    this[device + "Header"].actor,
+                    this[`${device}Header`].actor,
                     (device === "camera" ?
                         _("Choose camera") :
                         _("Choose recorder"))
                 );
 
-                this[device + "Section"] = new $.CustomPopupMenuSection();
+                this[`${device}Section`] = new CustomPopupMenuSection();
 
-                let lastCaptureSubMenu = new PopupMenu.PopupSubMenuMenuItem(_("Latest capture"));
-                this[device + "LastCaptureContent"] = new $.LastCaptureContainer(this, {
+                const lastCaptureSubMenu = new PopupMenu.PopupSubMenuMenuItem(_("Latest capture"));
+                this[`${device}LastCaptureContent`] = new LastCaptureContainer(this, {
                     device: device
                 });
                 lastCaptureSubMenu.menu.connect("open-state-changed", lastCaptureFn(device));
                 lastCaptureSubMenu.label.add_style_class_name("desktop-capture-last-capture-submenu-label");
-                lastCaptureSubMenu.menu.addMenuItem(this[device + "LastCaptureContent"]);
+                lastCaptureSubMenu.menu.addMenuItem(this[`${device}LastCaptureContent`]);
 
-                this.menu.addMenuItem(this[device + "Header"]);
-                this.menu.addMenuItem(this[device + "Section"]);
+                this.menu.addMenuItem(this[`${device}Header`]);
+                this.menu.addMenuItem(this[`${device}Section`]);
                 this.menu.addMenuItem(lastCaptureSubMenu);
 
                 device === "camera" &&
@@ -771,15 +600,15 @@ DesktopCapture.prototype = {
                 (aActor, aEvent) => this._onMenuKeyPress(aActor, aEvent));
             this.menu.actor.connect("key-release-event",
                 (aActor, aEvent) => this._onMenuKeyRelease(aActor, aEvent));
-        });
-    },
+        }.bind(this), 500);
+    }
 
-    _rebuildDeviceSection: function(aDevice) {
+    _rebuildDeviceSection(aDevice) {
         this.lastCapture[aDevice] = null;
-        let sectionHeader = this[aDevice + "Header"];
-        let section = this[aDevice + "Section"];
-        let headerLabel = aDevice === "camera" ? _("Screenshot") : _("Screencast");
-        let deviceOptionItems = [];
+        const sectionHeader = this[`${aDevice}Header`];
+        const section = this[`${aDevice}Section`];
+        const headerLabel = aDevice === "camera" ? _("Screenshot") : _("Screencast");
+        const deviceOptionItems = [];
 
         section.removeAll();
 
@@ -788,12 +617,10 @@ DesktopCapture.prototype = {
             if (this.hasDeviceProperty(aDevice, "title")) {
                 sectionHeader.setLabel(_(this.getDeviceProperty(aDevice, "title")));
             } else {
-                sectionHeader.setLabel(headerLabel + ": " +
-                    _("Assign a title to your program!!!"));
+                sectionHeader.setLabel(`${headerLabel}: ${_("Assign a title to your program!!!")}`);
             }
         } else {
-            sectionHeader.setLabel(headerLabel + ": " +
-                _("Disabled"));
+            sectionHeader.setLabel(`${headerLabel}: ${_("Disabled")}`);
         }
 
         if (!this.hasDevice(aDevice) &&
@@ -802,8 +629,8 @@ DesktopCapture.prototype = {
         }
 
         // Populate device section.
-        let menuItems = this.getDeviceProperty(aDevice, "menuitems");
-        let itemFn = (aDev, aCmdOrAction, aIsRecording) => {
+        const menuItems = this.getDeviceProperty(aDevice, "menuitems");
+        const itemFn = (aDev, aCmdOrAction, aIsRecording) => {
             if (this.getDeviceProgram(aDev) === "cinnamon") {
                 if (aDev === "camera") {
                     return (aE) => {
@@ -823,22 +650,22 @@ DesktopCapture.prototype = {
             return true;
         };
 
-        for (let item in menuItems) {
-            let cmdOrAct = menuItems[item];
+        for (const item in menuItems) {
+            const cmdOrAct = menuItems[item];
 
             // The Cinnamon's "Repeat last" item is treated differently.
             if (cmdOrAct === "REPEAT") {
                 continue;
             }
 
-            // Executing any recorder that isn't Cinnamon's triggers the _setAppletIcon
+            // Executing any recorder that isn't Cinnamon's triggers the __setAppletIcon
             // function. Since I uber-simplified the menu items creation, there
             // isn't an easy way of differentiating the menu items that need to affect
             // the state of the applet icon without complicating things. So, I simply
             // "flag" a menu item's label that doesn't need to reflect a state by changing
             // the applet icon with a # (number or hash character).
-            let flaged = item.charAt(0) === "#";
-            let label = flaged ? item.substr(1) : item;
+            const flaged = item.charAt(0) === "#";
+            const label = flaged ? item.substr(1) : item;
 
             if (label === "---") {
                 section.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
@@ -847,8 +674,7 @@ DesktopCapture.prototype = {
                     _(label),
                     itemFn(aDevice, cmdOrAct, !flaged && aDevice === "recorder"),
                     (label in KeybindingSupport[aDevice]) ?
-                    this["pref_key_" + aDevice + "_" +
-                        KeybindingSupport[aDevice][label]] :
+                    getKeybindingDisplayName(this.$._[`key_${aDevice}_${KeybindingSupport[aDevice][label]}`]) :
                     ""
                 );
 
@@ -863,9 +689,9 @@ DesktopCapture.prototype = {
         }
 
         if (this.hasDeviceProperty(aDevice, "cursor")) {
-            let includeCursorSwitch = new $.CustomSwitchMenuItem(
+            const includeCursorSwitch = new CustomSwitchMenuItem(
                 _("Include cursor"),
-                this.pref_include_cursor, {
+                this.$._.include_cursor, {
                     style_class: "bin"
                 }
             );
@@ -874,7 +700,7 @@ DesktopCapture.prototype = {
                 _("Whether to include mouse cursor in screenshot.")
             );
             includeCursorSwitch.connect("toggled", (aSwitch, aVal) => {
-                this.pref_include_cursor = aVal;
+                this.$._.include_cursor = aVal;
                 return false;
             });
             deviceOptionItems.push(includeCursorSwitch);
@@ -889,34 +715,34 @@ DesktopCapture.prototype = {
                                 (aE) => {
                                     return this.runCinnamonCamera(
                                         SelectionType.MONITOR, aE, aMonitorIndex);
-                                }, "pref_key_" + aDevice + "_monitor_" + aMonitorIndex);
+                                }, getKeybindingDisplayName(`key_${aDevice}_monitor_${aMonitorIndex}`));
                         }
                     }, this);
                 }
 
             }
 
-            if (this.pref_show_copy_toggle) {
-                let copyDataSwitch = new $.CustomSwitchMenuItem(
+            if (this.$._.show_copy_toggle) {
+                const copyDataSwitch = new CustomSwitchMenuItem(
                     _("Auto copy image"),
-                    this.pref_auto_copy_data, {
+                    this.$._.auto_copy_data, {
                         style_class: "bin"
                     }
                 );
                 copyDataSwitch.connect("toggled", (aSwitch, aVal) => {
-                    this.pref_auto_copy_data = aVal;
+                    this.$._.auto_copy_data = aVal;
                     return false;
                 });
                 deviceOptionItems.push(copyDataSwitch);
             } else {
                 // Turn off our hidden setting since the UI can't.
-                this.pref_auto_copy_data = false;
+                this.$._.auto_copy_data = false;
             }
 
             this._cameraRedoMenuItem = section.addAction(
                 _("Repeat last"),
                 () => this.repeatLastCapture(aDevice),
-                this.pref_key_camera_repeat);
+                this.$._.key_camera_repeat);
 
             if (!this.lastCapture[aDevice]) {
                 this._cameraRedoMenuItem.actor.hide();
@@ -930,24 +756,24 @@ DesktopCapture.prototype = {
 
             if (this.hasDeviceProperty(aDevice, "timer") &&
                 this.getDeviceProperty(aDevice, "timer")) {
-                let timerSliderHeader = $.extendMenuItem(
+                const timerSliderHeader = extendMenuItem(
                     new PopupMenu.PopupMenuItem(_("Capture delay")),
                     "detailed_text", "desktop-capture-menu-header"
                 );
                 timerSliderHeader.setSensitive(false);
                 deviceOptionItems.push(timerSliderHeader);
 
-                let timerSlider = new $.CustomPopupSliderMenuItem(
+                const timerSlider = new CustomPopupSliderMenuItem(
                     this, {
-                        pref_key: "pref_timer_delay",
+                        pref_key: "timer_delay",
                         header: timerSliderHeader,
                         info_label_cb: function() {
                             // TO TRANSLATORS:
                             // sec. = abbreviation of "second"
                             // secs. = abbreviation of "seconds"
-                            return ngettext("sec.", "secs.", this.pref_timer_delay);
+                            return ngettext("sec.", "secs.", this.$._.timer_delay);
                         }.bind(this),
-                        slider_value: parseFloat(this.pref_timer_delay / 10),
+                        slider_value: parseFloat(this.$._.timer_delay / 10),
                         slider_value_min: 0,
                         slider_value_max: 10
                     });
@@ -963,12 +789,10 @@ DesktopCapture.prototype = {
                 // Do not add the Cinnamon recorder profile selector
                 // if there are no custom profiles.
                 if (Object.keys(this.cinnamonRecorderProfiles).length > 1) {
-                    let profileSelector = new $.CinnamonRecorderProfileSelector(
+                    const profileSelector = new CinnamonRecorderProfileSelector(
                         this, {
-                            item_label: _("Profile") + ": " +
-                                this.cinnamonRecorderProfiles[
-                                    this.pref_cinn_rec_current_profile]["title"],
-                            pref_key: "pref_cinn_rec_current_profile",
+                            item_label: `${_("Profile")}: ${this.cinnamonRecorderProfiles[this.$._.cinn_rec_current_profile]["title"]}`,
+                            pref_key: "cinn_rec_current_profile",
                             item_style_class: "desktop-capture-cinnamon-recorder-profile-submenu-label"
                         }
                     );
@@ -982,7 +806,7 @@ DesktopCapture.prototype = {
                 this._cinnamonRecorderItem = section.addAction(
                     _("Start recording"),
                     () => this.toggleCinnamonRecorder(),
-                    this.pref_key_recorder_stop_toggle
+                    this.$._.key_recorder_stop_toggle
                 );
 
                 this._storeNewKeybinding(
@@ -992,9 +816,9 @@ DesktopCapture.prototype = {
                 );
             } else {
                 if (this.hasDeviceProperty(aDevice, "sound")) {
-                    let soundSwitch = new $.CustomSwitchMenuItem(
+                    const soundSwitch = new CustomSwitchMenuItem(
                         _("Record sound"),
-                        this.pref_record_sound, {
+                        this.$._.record_sound, {
                             style_class: "bin"
                         }
                     );
@@ -1003,7 +827,7 @@ DesktopCapture.prototype = {
                         _("Whether to record sound.")
                     );
                     soundSwitch.connect("toggled", (aSwitch, aVal) => {
-                        this.pref_record_sound = aVal;
+                        this.$._.record_sound = aVal;
                         return false;
                     });
                     deviceOptionItems.push(soundSwitch);
@@ -1012,7 +836,7 @@ DesktopCapture.prototype = {
                 this._recorderRedoMenuItem = section.addAction(
                     _("Repeat last"),
                     () => this.repeatLastCapture(aDevice),
-                    this.pref_key_recorder_repeat);
+                    this.$._.key_recorder_repeat);
 
                 if (!this.lastCapture[aDevice]) {
                     this._recorderRedoMenuItem.actor.hide();
@@ -1042,21 +866,21 @@ DesktopCapture.prototype = {
 
             if (this.hasDeviceProperty(aDevice, "fps") &&
                 this.getDeviceProperty(aDevice, "fps")) {
-                let fpsSliderHeader = $.extendMenuItem(
+                const fpsSliderHeader = extendMenuItem(
                     new PopupMenu.PopupMenuItem(_("Frames per second")),
                     "detailed_text", "desktop-capture-menu-header"
                 );
                 fpsSliderHeader.setSensitive(false);
                 deviceOptionItems.push(fpsSliderHeader);
 
-                let fpsSlider = new $.CustomPopupSliderMenuItem(
+                const fpsSlider = new CustomPopupSliderMenuItem(
                     this, {
-                        pref_key: "pref_recorder_fps",
+                        pref_key: "recorder_fps",
                         header: fpsSliderHeader,
                         info_label_cb: () => {
                             return _("FPS");
                         },
-                        slider_value: parseFloat(this.pref_recorder_fps / 120),
+                        slider_value: parseFloat(this.$._.recorder_fps / 120),
                         slider_value_min: 10,
                         slider_value_max: 120
                     });
@@ -1074,10 +898,10 @@ DesktopCapture.prototype = {
         if (deviceOptionItems.length > 0) {
             let optionsContainer;
 
-            if (this.pref_display_device_options_in_sub_menu) {
-                let subMenu = new PopupMenu.PopupSubMenuMenuItem(_("Device options"));
+            if (this.$._.display_device_options_in_sub_menu) {
+                const subMenu = new PopupMenu.PopupSubMenuMenuItem(_("Device options"));
                 subMenu.menu.connect("open-state-changed",
-                    (aMenu, aOpen) => $.onSubMenuOpenStateChanged(aMenu, aOpen));
+                    (aMenu, aOpen) => onSubMenuOpenStateChanged(aMenu, aOpen));
                 subMenu.label.add_style_class_name("desktop-capture-device-options-submenu-label");
                 section.addMenuItem(subMenu);
                 optionsContainer = subMenu.menu;
@@ -1085,32 +909,26 @@ DesktopCapture.prototype = {
                 optionsContainer = section;
             }
 
-            for (let optionItem of deviceOptionItems) {
+            for (const optionItem of deviceOptionItems) {
                 optionsContainer.addMenuItem(optionItem);
             }
         }
 
-        if (this._register_key_bindings_id > 0) {
-            Mainloop.source_remove(this._register_key_bindings_id);
-            this._register_key_bindings_id = 0;
-        }
-
-        this._register_key_bindings_id = Mainloop.timeout_add(1000, () => {
+        this.$.schedule_manager.setTimeout("register_keybindings", function() {
             this._registerKeyBindings();
-        });
+        }.bind(this), 1000);
 
-        // Mark for deletion on EOL. Cinnamon 3.6.x+
-        // Replace JSON trick with Object.assign().
-        this[aDevice + "LastCaptureContent"].fileData =
+        // Stick with the JSON trick. Do not use Object.assign().
+        this[`${aDevice}LastCaptureContent`].fileData =
             // Clean up the useless save function bound to the setting property.
-            JSON.parse(JSON.stringify(this["pref_last_" + aDevice + "_capture"]));
+            JSON.parse(JSON.stringify(this.$._[`last_${aDevice}_capture`]));
 
         return true;
-    },
+    }
 
-    getFilenameForDevice: function(aDevice, aType) {
-        let date = new Date();
-        let prefix = this["pref_" + aDevice + "_save_prefix"];
+    getFilenameForDevice(aDevice, aType) {
+        const date = new Date();
+        let prefix = this.$._[`${aDevice}_save_prefix`];
 
         if (!aType) {
             prefix = prefix.replace("%TYPE_", "");
@@ -1118,7 +936,7 @@ DesktopCapture.prototype = {
             prefix = prefix.replace("%TYPE", "");
         }
 
-        let replacements = {
+        const replacements = {
             "%Y": date.getFullYear(),
             "%M": String(date.getMonth() + 1).padStart(2, "0"),
             "%D": String(date.getDate()).padStart(2, "0"),
@@ -1133,34 +951,33 @@ DesktopCapture.prototype = {
         }
 
         return tokensReplacer(prefix, replacements);
-    },
+    }
 
-    repeatLastCapture: function(aDevice) {
-        let lastCapture = this.lastCapture[aDevice];
+    repeatLastCapture(aDevice) {
+        const lastCapture = this.lastCapture[aDevice];
 
         if (lastCapture) {
             let newFilename;
             if (lastCapture.hasOwnProperty("command")) {
-                try {
-                    newFilename = this.getFilenameForDevice(
-                        lastCapture.device);
-                } catch (aErr) {
+                tryFn(() => {
+                    newFilename = this.getFilenameForDevice(lastCapture.device);
+                }, (aErr) => {
                     newFilename = false;
                     global.logError(aErr);
-                }
+                });
 
                 if (!newFilename) {
                     return false;
                 }
 
-                let cmd = lastCapture.command
+                const cmd = lastCapture.command
                     .replace(lastCapture.current_file_name, newFilename);
                 lastCapture.current_file_path = lastCapture.current_file_path.replace(
                     lastCapture.current_file_name,
                     newFilename
                 );
 
-                $.runtimeInfo("Running again command: " + cmd);
+                runtimeInfo(`Running again command: ${cmd}`);
 
                 this.TryExec({
                     command: cmd,
@@ -1174,13 +991,13 @@ DesktopCapture.prototype = {
                     on_complete: (aParams) => this.onProcessComplete(aParams)
                 });
             } else {
-                try {
+                tryFn(() => {
                     newFilename = this._getCreateFilePath(this._cameraSaveDir,
                         this.getFilenameForDevice("camera", lastCapture.selectionType), "png");
-                } catch (aErr) {
+                }, (aErr) => {
                     newFilename = false;
                     global.logError(aErr);
-                }
+                });
 
                 if (!newFilename) {
                     return false;
@@ -1189,11 +1006,11 @@ DesktopCapture.prototype = {
                 lastCapture.options.filename = newFilename;
 
                 this.closeMainMenu();
-                let camera = new $.ScreenshotHelper(null, null,
+                const camera = new ScreenshotHelper(null, null,
                     lastCapture.options);
 
                 // Timeout to not worry about closing menu animation.
-                Mainloop.timeout_add(200, () => {
+                this.$.schedule_manager.setTimeout("repeat_last_capture", function() {
                     switch (lastCapture.selectionType) {
                         case SelectionType.WINDOW:
                             camera.screenshotWindow(
@@ -1216,16 +1033,14 @@ DesktopCapture.prototype = {
                                 lastCapture.options);
                             break;
                     }
-
-                    return GLib.SOURCE_REMOVE;
-                });
+                }.bind(this), 200);
             }
         }
 
         return true;
-    },
+    }
 
-    cinnamonCameraComplete: function(screenshot) {
+    cinnamonCameraComplete(screenshot) {
         screenshot.uploaded = false;
         screenshot.json = null;
         screenshot.extraActionMessage = "";
@@ -1242,136 +1057,133 @@ DesktopCapture.prototype = {
         }
 
         this._handleHistoryAndClipboard("camera", screenshot.file);
-    },
+    }
 
-    _handleHistoryAndClipboard: function(aDevice, aFilePath) {
-        let historyEntry = {
+    _handleHistoryAndClipboard(aDevice, aFilePath) {
+        const historyEntry = {
             d: new Date().getTime(),
             f: aFilePath
         };
 
-        this["pref_last_" + aDevice + "_capture"] = historyEntry;
+        this.$._[`last_${aDevice}_capture`] = historyEntry;
         this[aDevice + "LastCaptureContent"].fileData = historyEntry;
 
         if (aDevice === "camera") {
-            let copyType = this.pref_auto_copy_data ?
+            const copyType = this.$._.auto_copy_data ?
                 ClipboardCopyType.IMAGE_DATA :
-                this.pref_copy_to_clipboard;
+                this.$._.copy_to_clipboard;
 
-            if (this.pref_auto_copy_data && this.pref_auto_copy_data_auto_off) {
-                this.pref_auto_copy_data = false;
+            if (this.$._.auto_copy_data && this.$._.auto_copy_data_auto_off) {
+                this.$._.auto_copy_data = false;
                 this._rebuildDeviceSection("camera");
             }
 
             switch (copyType) {
                 case ClipboardCopyType.IMAGE_PATH:
                     copyToClipboard(aFilePath);
-                    $.notify([_("File path copied to clipboard.")]);
+                    notify([_("File path copied to clipboard.")]);
                     break;
                 case ClipboardCopyType.IMAGE_DATA:
-                    $.Exec(this.appletHelper + " copy_image_data " + aFilePath);
-                    $.notify([_("Image data copied to clipboard.")]);
+                    Exec(`${this.appletHelper} copy_image_data ${aFilePath}`);
+                    notify([_("Image data copied to clipboard.")]);
                     break;
             }
         }
-    },
+    }
 
-    runCinnamonCamera: function(aType, aEvent, aMonitorIndex) {
-        if (!this._disclaimerRead()) {
-            return false;
-        }
-
+    runCinnamonCamera(aType, aEvent, aMonitorIndex) {
         if (aType === SelectionType.REPEAT) {
-            $.runtimeInfo("We shouldn't have reached runCinnamonCamera.");
+            runtimeInfo("We shouldn't have reached runCinnamonCamera.");
             return false;
         }
 
         let filename;
-        try {
+
+        tryFn(() => {
             filename = this._getCreateFilePath(this._cameraSaveDir,
                 this.getFilenameForDevice("camera", aType), "png");
-        } catch (aErr) {
+        }, (aErr) => {
             filename = false;
             global.logError(aErr);
-        }
+        });
 
         if (!filename) {
             return false;
         }
 
-        let fnCapture = () => {
-            new $.ScreenshotHelper(aType,
+        const fnCapture = () => {
+            let helper = new ScreenshotHelper(aType, // jshint ignore:line
                 (aScreenshot) => this.cinnamonCameraComplete(aScreenshot), {
-                    includeCursor: this.pref_include_cursor,
-                    useFlash: this.pref_use_camera_flash,
-                    includeFrame: this.pref_include_window_frame,
-                    includeStyles: this.pref_include_styles,
-                    windowAsArea: this.pref_capture_window_as_area,
-                    playShutterSound: this.pref_play_shutter_sound,
-                    useTimer: this.pref_timer_delay > 0,
-                    showTimer: this.pref_timer_display_on_screen,
-                    playTimerSound: this.pref_play_timer_interval_sound,
-                    timerDuration: this.pref_timer_delay,
+                    includeCursor: this.$._.include_cursor,
+                    useFlash: this.$._.use_camera_flash,
+                    includeFrame: this.$._.include_window_frame,
+                    includeStyles: this.$._.include_styles,
+                    windowAsArea: this.$._.capture_window_as_area,
+                    playShutterSound: this.$._.play_shutter_sound,
+                    useTimer: this.$._.timer_delay > 0,
+                    showTimer: this.$._.timer_display_on_screen,
+                    playTimerSound: this.$._.play_timer_interval_sound,
+                    timerDuration: this.$._.timer_delay,
                     filename: filename,
                     monitorIndex: aMonitorIndex
                 }
             );
-
-            return GLib.SOURCE_REMOVE;
         };
 
         this.closeMainMenu();
         // Timeout to not worry about closing menu animation.
-        Mainloop.timeout_add(200, fnCapture);
+        this.$.schedule_manager.setTimeout("run_cinnamon_camera", function() {
+            fnCapture();
+        }.bind(this), 200);
 
         return true;
-    },
+    }
 
-    closeMainMenu: function() {
+    closeMainMenu() {
         this.menu.close(true);
-    },
+    }
 
-    _updateCinnamonRecorderStatus: function() {
+    _updateCinnamonRecorderStatus() {
         if (this.cinnamonRecorder.is_recording()) {
-            this._setAppletIcon(true);
+            this.__setAppletIcon(true);
             this._cinnamonRecorderItem.label.set_text(_("Stop recording"));
         } else {
-            this._setAppletIcon();
+            this.__setAppletIcon();
             this._cinnamonRecorderItem.label.set_text(_("Start recording"));
         }
-    },
+    }
 
-    _checkSaveFolder: function(aFolderPath) {
-        let folder = Gio.file_new_for_path(aFolderPath);
-        let msg = this.criticalBaseMessage;
+    _checkSaveFolder(aFolderPath) {
+        const folder = Gio.file_new_for_path(aFolderPath);
+        const msg = this.criticalBaseMessage;
 
         if (!folder.query_exists(null)) {
             msg.push(_("Selected storage folder doesn't exist!"));
             msg.push(folder.get_path());
-            $.notify(msg, "error");
+            notify(msg, "error");
             return false;
         } else {
-            let fileType = folder.query_file_type(Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+            const fileType = folder.query_file_type(Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
             // Don't restrict to only directories, just exclude normal files
             if (fileType === Gio.FileType.REGULAR) {
                 msg.push(_("Selected storage folder is not a directory!"));
                 msg.push(folder.get_path());
-                $.notify(msg, "error");
+                notify(msg, "error");
                 return false;
             }
         }
 
         return true;
-    },
+    }
 
-    _getCreateFilePath: function(folderPath, fileName, fileExtension) {
+    _getCreateFilePath(folderPath, fileName, fileExtension) {
         if (!this._checkSaveFolder(folderPath)) {
             return false;
         }
 
-        let msg = this.criticalBaseMessage;
-        let file = Gio.file_new_for_path(folderPath + "/" + fileName + "." + fileExtension);
-        let desiredFilepath = file.get_path();
+        const msg = this.criticalBaseMessage;
+        const file = Gio.file_new_for_path(`${folderPath}/${fileName}.${fileExtension}`);
+        const desiredFilepath = file.get_path();
         msg.push(_("File cannot be created!"));
         msg.push(desiredFilepath);
 
@@ -1379,19 +1191,19 @@ DesktopCapture.prototype = {
             if (file.create(Gio.FileCreateFlags.NONE, null)) {
                 file.delete(null);
             } else {
-                $.notify(msg, "error");
+                notify(msg, "error");
                 return false;
             }
         } catch (aErr) {
             global.logError(aErr);
-            $.notify(msg, "error");
+            notify(msg, "error");
             return false;
         }
 
         return desiredFilepath;
-    },
+    }
 
-    toggleCinnamonRecorder: function() {
+    toggleCinnamonRecorder() {
         if (this.cinnamonRecorder.is_recording()) {
             this.cinnamonRecorder.pause();
             Meta.enable_unredirect_for_screen(global.screen);
@@ -1399,105 +1211,101 @@ DesktopCapture.prototype = {
         } else {
             let file_path;
 
-            try {
+            tryFn(() => {
                 file_path = this._getCreateFilePath(
                     this._recorderSaveDir,
                     this.getFilenameForDevice("recorder"),
-                    this.cinnamonRecorderProfiles[this.pref_cinn_rec_current_profile]["file-extension"]
+                    this.cinnamonRecorderProfiles[this.$._.cinn_rec_current_profile]["file-extension"]
                 );
-            } catch (aErr) {
+            }, (aErr) => {
                 file_path = false;
                 global.logError(aErr);
-            }
+            });
 
             if (!file_path) {
-                $.runtimeInfo("No file name.");
+                runtimeInfo("No file name.");
                 return false;
             }
 
             this.cinnamonRecorder.set_filename(file_path);
-            $.runtimeInfo("Capturing screencast to " + file_path);
+            runtimeInfo(`Capturing screencast to ${file_path}`);
 
-            this.cinnamonRecorder.set_framerate(this.pref_recorder_fps);
+            this.cinnamonRecorder.set_framerate(this.$._.recorder_fps);
 
-            let pipeline = this.cinnamonRecorderProfiles[this.pref_cinn_rec_current_profile]["pipeline"];
+            const pipeline = this.cinnamonRecorderProfiles[this.$._.cinn_rec_current_profile]["pipeline"];
 
             if (!pipeline.match(/^\s*$/)) {
-                $.runtimeInfo("Pipeline is " + pipeline);
+                runtimeInfo(`Pipeline is ${pipeline}`);
                 this.cinnamonRecorder.set_pipeline(pipeline);
             } else {
-                $.runtimeInfo("Pipeline is Cinnamon's default");
+                runtimeInfo("Pipeline is Cinnamon's default");
                 this.cinnamonRecorder.set_pipeline(null);
             }
 
             Meta.disable_unredirect_for_screen(global.screen);
 
             // Timeout to not worry about closing menu animation.
-            Mainloop.timeout_add(200,
-                () => {
-
-                    try {
-                        this.cinnamonRecorder.record();
-                    } catch (aErr) {
-                        global.logError(aErr);
-                    } finally {
-                        this._updateCinnamonRecorderStatus();
-                        this._handleHistoryAndClipboard("recorder", file_path);
-                    }
-
-                    return GLib.SOURCE_REMOVE;
+            this.$.schedule_manager.setTimeout("toggle_cinnamon_recorder", function() {
+                tryFn(() => {
+                    this.cinnamonRecorder.record();
+                }, (aErr) => {
+                    global.logError(aErr);
+                }, () => {
+                    this._updateCinnamonRecorderStatus();
+                    this._handleHistoryAndClipboard("recorder", file_path);
                 });
+            }.bind(this), 200);
         }
 
         return true;
-    },
+    }
 
-    get_cinnamon_recorder_property: function(aProfile, aProperty) {
+    get_cinnamon_recorder_property(aProfile, aProperty) {
         if (this.cinnamonRecorderProfiles.hasOwnProperty(aProfile) &&
             this.cinnamonRecorderProfiles[aProfile].hasOwnProperty(aProperty)) {
             return this.cinnamonRecorderProfiles[aProfile][aProperty];
         }
 
         return CinnamonRecorderProfilesBase["default"][aProperty];
-    },
+    }
 
-    getDevicePrograms: function(aDevice) {
+    getDevicePrograms(aDevice) {
         return this.programSupport[aDevice];
-    },
+    }
 
-    getDeviceProperties: function(aDevice) {
+    getDeviceProperties(aDevice) {
         return this.programSupport[aDevice][this.getDeviceProgram(aDevice)];
-    },
+    }
 
-    getDeviceProgram: function(aDevice) {
-        return this["pref_" + aDevice + "_program"];
-    },
+    getDeviceProgram(aDevice) {
+        return this.$._[`${aDevice}_program`];
+    }
 
-    getDeviceProperty: function(aDevice, aProperty) {
+    getDeviceProperty(aDevice, aProperty) {
         return this.getDeviceProperties(aDevice)[aProperty];
-    },
+    }
 
-    hasDeviceProperty: function(aDevice, aProperty) {
+    hasDeviceProperty(aDevice, aProperty) {
         return this.getDeviceProperties(aDevice).hasOwnProperty(aProperty);
-    },
+    }
 
-    hasDevice: function(aDevice) {
-        return this["pref_" + aDevice + "_program"] !== "disabled";
-    },
+    hasDevice(aDevice) {
+        return this.$._[`${aDevice}_program`] !== "disabled";
+    }
 
-    _applyCommandReplacements: function(aCmd, aDevice) {
+    _applyCommandReplacements(aCmd, aDevice) {
         let cursor = "",
             sound = "";
 
         if (this.hasDeviceProperty(aDevice, "cursor")) {
             cursor = this.getDeviceProperty(aDevice, "cursor")[
-                this.pref_include_cursor ? "on" : "off"
+                this.$._.include_cursor ? "on" : "off"
             ];
         }
 
         if (this.hasDeviceProperty(aDevice, "sound")) {
             sound = this.getDeviceProperty(aDevice, "sound")[
-                this.pref_record_sound ? "on" : "off"
+                this.$._.record_sound ? "on" : "off"
             ];
         }
 
@@ -1506,12 +1314,11 @@ DesktopCapture.prototype = {
         // And this is done differently as the original applet did it so I
         // can use the same object (menuitems) to create items of any kind.
         for (let i = 9; i >= 0; i--) {
-            let idx = i + 1;
-            let prop = "append-" + idx;
+            const idx = i + 1;
+            const prop = `append-${idx}`;
 
             if (this.hasDeviceProperty(aDevice, prop)) {
-                aCmd = aCmd.replace("{{APPEND_" + idx + "}}",
-                    this.getDeviceProperty(aDevice, prop));
+                aCmd = aCmd.replace(`{{APPEND_${idx}}}`, this.getDeviceProperty(aDevice, prop));
             }
         }
 
@@ -1525,17 +1332,16 @@ DesktopCapture.prototype = {
             aCmd = aCmd.replace(/{{EXT}}/g, "");
         }
 
-        let fileName = this.getFilenameForDevice(aDevice);
+        const fileName = this.getFilenameForDevice(aDevice);
 
-        let replacements = {
-            "{{SELF}}": this["pref_" + aDevice + "_program"],
-            "{{DELAY}}": this.pref_timer_delay,
+        const replacements = {
+            "{{SELF}}": this.$._[`${aDevice}_program`],
+            "{{DELAY}}": this.$._.timer_delay,
             "{{CURSOR}}": cursor,
             "{{SOUND}}": sound,
             "{{DIRECTORY}}": aDevice === "camera" ?
                 this._cameraSaveDir : this._recorderSaveDir,
-            "{{SCREEN_DIMENSIONS}}": global.screen_width + "x" +
-                global.screen_height,
+            "{{SCREEN_DIMENSIONS}}": `${global.screen_width}x${global.screen_height}`,
             "{{SCREEN_WIDTH}}": global.screen_width,
             "{{SCREEN_HEIGHT}}": global.screen_height,
             "{{RECORDER_DIR}}": this._recorderSaveDir,
@@ -1543,7 +1349,7 @@ DesktopCapture.prototype = {
             "{{FILENAME}}": fileName
         };
 
-        for (let k in replacements) {
+        for (const k in replacements) {
             aCmd = aCmd.replace(k, replacements[k]);
         }
 
@@ -1558,19 +1364,18 @@ DesktopCapture.prototype = {
             current_file_name: fileName,
             current_file_extension: fileExtension
         };
-    },
+    }
 
-    runCommand: function(aCmd, aDevice, aIsRecording, aUseScreenshotHelper, aEvent) {
-        let cmdObj = this._applyCommandReplacements(aCmd, aDevice);
+    runCommand(aCmd, aDevice, aIsRecording, aUseScreenshotHelper, aEvent) {
+        const cmdObj = this._applyCommandReplacements(aCmd, aDevice);
         let cmd = cmdObj.command;
 
         let helperMode = null;
-        for (let k in InteractiveCallouts) {
+        for (const k in InteractiveCallouts) {
             if (cmd.indexOf(k) !== -1) {
                 if (aUseScreenshotHelper) {
                     helperMode = InteractiveCallouts[k];
-                    $.runtimeInfo('Using screenshot helper from capture mode "' +
-                        SelectionTypeStr[helperMode] + '"');
+                    runtimeInfo(`Using screenshot helper from capture mode "${SelectionTypeStr[helperMode]}"`);
                 }
 
                 cmd = cmd.replace(k, "");
@@ -1581,7 +1386,7 @@ DesktopCapture.prototype = {
 
         if (aUseScreenshotHelper) {
             if (helperMode !== null) {
-                let ss = new $.ScreenshotHelper(helperMode, // jshint ignore:line
+                let ss = new ScreenshotHelper(helperMode, // jshint ignore:line
                     (aVars) => this.runCommandInteractively({
                         command: cmd,
                         event: aEvent,
@@ -1595,15 +1400,15 @@ DesktopCapture.prototype = {
                         selectionHelper: true
                     });
             } else {
-                if (aEvent && aEvent.get_button() === 3) {
-                    this.displayDialogMessage(_("Displaying command that will be executed") +
-                        ":\n\n" + '<span font_desc="monospace 10">' + escapeHTML(cmd) + "</span>",
+                if (aEvent && aEvent.get_button() === Clutter.BUTTON_SECONDARY) {
+                    this.displayDialogMessage(`${_("Displaying command that will be executed")}:` + "\n\n" +
+                        `<span font_desc="monospace 10">${escapeHTML(cmd)}</span>`,
                         "info");
                     return false;
                 }
 
-                this["_" + aDevice + "RedoMenuItem"].actor.hide();
-                $.runtimeInfo("Running command: " + cmd);
+                this[`_${aDevice}RedoMenuItem`].actor.hide();
+                runtimeInfo(`Running command: ${cmd}`);
                 this.TryExec({
                     command: cmd,
                     current_file_path: cmdObj.current_file_path,
@@ -1623,20 +1428,20 @@ DesktopCapture.prototype = {
         }
 
         return false;
-    },
+    }
 
-    runCommandInteractively: function(aParams) {
-        let niceHeight = aParams.vars["height"] % 2 === 0 ?
+    runCommandInteractively(aParams) {
+        const niceHeight = aParams.vars["height"] % 2 === 0 ?
             aParams.vars["height"] :
             aParams.vars["height"] + 1,
             niceWidth = aParams.vars["width"] % 2 === 0 ?
             aParams.vars["width"] :
             aParams.vars["width"] + 1;
 
-        let replacements = {
+        const replacements = {
             "{{I_X}}": aParams.vars["x"],
             "{{I_Y}}": aParams.vars["y"],
-            "{{I_X_Y}}": aParams.vars["x"] + "," + aParams.vars["y"],
+            "{{I_X_Y}}": `${aParams.vars["x"]},${aParams.vars["y"]}`,
             "{{I_WIDTH}}": aParams.vars["width"],
             "{{I_HEIGHT}}": aParams.vars["height"],
             "{{I_NICE_WIDTH}}": niceWidth,
@@ -1651,18 +1456,18 @@ DesktopCapture.prototype = {
             replacements["{{I_WINDOW_TITLE}}"] = aParams.vars.window.get_meta_window().get_title();
         }
 
-        for (let k in replacements) {
+        for (const k in replacements) {
             aParams.command = aParams.command.replace(k, replacements[k]);
         }
 
-        if (aParams.event && aParams.event.get_button() === 3) {
-            this.displayDialogMessage(_("Displaying command that will be executed") +
-                ":\n\n" + '<span font_desc="monospace 10">' + escapeHTML(aParams.command) + "</span>",
+        if (aParams.event && aParams.event.get_button() === Clutter.BUTTON_SECONDARY) {
+            this.displayDialogMessage(`${_("Displaying command that will be executed")}:` + "\n\n" +
+                `<span font_desc="monospace 10">${escapeHTML(aParams.command)}</span>`,
                 "info");
             return false;
         }
 
-        $.runtimeInfo("Interactively running command: " + aParams.command);
+        runtimeInfo(`Interactively running command: ${aParams.command}`);
 
         this.TryExec({
             command: aParams.command,
@@ -1678,27 +1483,27 @@ DesktopCapture.prototype = {
         });
 
         return true;
-    },
+    }
 
-    onProcessSpawned: function(aParams) {
-        aParams.is_recording && this._setAppletIcon(true);
-    },
+    onProcessSpawned(aParams) {
+        aParams.is_recording && this.__setAppletIcon(true);
+    }
 
-    onProcessError: function(aParams) {
-        this._setAppletIcon();
+    onProcessError(aParams) {
+        this.__setAppletIcon();
 
-        this.displayDialogMessage(_("Command exited with error status") +
-            ":\n\n" + '<span font_desc="monospace 10">' + escapeHTML(aParams.command) + "</span>",
+        this.displayDialogMessage(`${_("Command exited with error status")}:` + "\n\n" +
+            `<span font_desc="monospace 10">${escapeHTML(aParams.command)}</span>`,
             "error");
-        aParams.stdout && $.runtimeError(aParams.stdout);
-        aParams.stderr && $.runtimeError(aParams.stderr);
-    },
+        aParams.stdout && runtimeError(aParams.stdout);
+        aParams.stderr && runtimeError(aParams.stderr);
+    }
 
-    onProcessComplete: function(aParams) {
-        $.runtimeInfo("Process exited with status " + aParams.status);
+    onProcessComplete(aParams) {
+        runtimeInfo(`Process exited with status ${aParams.status}`);
 
         if (aParams.status > 0) {
-            $.runtimeError(aParams.stdout);
+            runtimeError(aParams.stdout);
             this.onProcessError({
                 command: aParams.command,
                 stdout: aParams.stdout,
@@ -1708,7 +1513,7 @@ DesktopCapture.prototype = {
             return false;
         }
 
-        this._setAppletIcon();
+        this.__setAppletIcon();
 
         if (aParams.current_file_path) {
             if (aParams.can_repeat) {
@@ -1720,14 +1525,14 @@ DesktopCapture.prototype = {
                     current_file_extension: aParams.current_file_extension,
                     current_file_name: aParams.current_file_name
                 };
-                this["_" + aParams.device + "RedoMenuItem"].actor.show();
+                this[`_${aParams.device}RedoMenuItem`].actor.show();
             }
 
             this._handleHistoryAndClipboard(aParams.device, aParams.current_file_path);
         }
 
         return true;
-    },
+    }
 
     /**
      * [displayDialogMessage description]
@@ -1743,301 +1548,237 @@ DesktopCapture.prototype = {
      * @param {String} aLevel - "error" or "warning"
      * @param {String} aMsg   - The message.
      */
-    displayDialogMessage: function(aMsg, aLevel) {
-        let msg = {
-            title: _(this.metadata.name),
+    displayDialogMessage(aMsg, aLevel) {
+        const msg = {
+            title: _(this.$.metadata.name),
             message: aMsg
         };
 
         Util.spawn_async([this.appletHelper, aLevel, JSON.stringify(msg)], null);
-    },
+    }
 
-    Exec: function(cmd) {
+    Exec(cmd) {
         this.closeMainMenu();
 
         // Timeout to not worry about closing menu animation.
-        return Mainloop.timeout_add(200, () => {
-            $.Exec(cmd);
+        this.$.schedule_manager.setTimeout("exec", function() {
+            Exec(cmd);
+        }.bind(this), 200);
 
-            return GLib.SOURCE_REMOVE;
-        });
-    },
+    }
 
-    TryExec: function(aParams) {
+    TryExec(aParams) {
         this.closeMainMenu();
 
         // Timeout to not worry about closing menu animation.
-        return Mainloop.timeout_add(200,
-            () => {
-                $.TryExec(aParams);
+        this.$.schedule_manager.setTimeout("try_exec", function() {
+            TryExec(aParams);
+        }.bind(this), 200);
+    }
 
-                return GLib.SOURCE_REMOVE;
-            });
-    },
-
-    _exportJSONData: function(aPref) {
+    _exportJSONData(aPref) {
         Util.spawn_async([
                 this.appletHelper,
                 "export",
-                this.pref_imp_exp_last_selected_directory
+                this.$._.imp_exp_last_selected_directory
             ],
             (aOutput) => {
-                let path = aOutput.trim();
+                const path = aOutput.trim();
 
                 if (!Boolean(path)) {
                     return;
                 }
 
-                let rawData = JSON.stringify(this[aPref], null, 4);
-                let file = Gio.file_new_for_path(path);
-                this.pref_imp_exp_last_selected_directory = path;
-                saveToFileAsync(rawData, file);
+                const rawData = JSON.stringify(this.$._[aPref], null, 4);
+                const file = new File(path);
+                this.$._.imp_exp_last_selected_directory = path;
+                file.write(rawData).catch((aErr) => global.logError(aErr));
             }
         );
-    },
+    }
 
-    _importJSONData: function(aPref) {
+    _importJSONData(aPref) {
         Util.spawn_async([
                 this.appletHelper,
                 "import",
-                this.pref_imp_exp_last_selected_directory
+                this.$._.imp_exp_last_selected_directory
             ],
             (aOutput) => {
-                let path = aOutput.trim();
+                const path = aOutput.trim();
 
                 if (!Boolean(path) && GLib.path_is_absolute(path) &&
                     GLib.file_test(path, GLib.FileTest.EXISTS)) {
                     return;
                 }
 
-                let file = Gio.file_new_for_path(path);
-                this.pref_imp_exp_last_selected_directory = path;
-                file.load_contents_async(null, (aFile, aResponce) => {
-                    let rawData;
-                    let jsonData;
+                const file = new File(path);
+                this.$._.imp_exp_last_selected_directory = path;
+                file.read().then((aData) => {
+                    tryFn(() => {
+                        const jsonData = JSON.parse(aData);
 
-                    try {
-                        rawData = aFile.load_contents_finish(aResponce)[1];
-                    } catch (aErr) {
+                        switch (aPref) {
+                            case "program_support":
+                                this._handleImportedPrograms(jsonData);
+                                break;
+                            case "cinn_rec_profiles":
+                                this._handleImportedCinnamonRecorderProfiles(jsonData);
+                                break;
+                        }
+                    }, (aErr) => {
                         global.logError(aErr);
-                        return;
-                    }
-
-                    try {
-                        jsonData = JSON.parse(rawData);
-                    } catch (aErr) {
-                        global.logError(aErr);
-                        $.notify([
+                        notify([
                             _("Possibly malformed JSON file."),
                             _("Check the logs."),
                             "~/.cinnamon/glass.log",
                             "~/.xsession-errors"
                         ], "error");
-                        return;
-                    }
-
-                    switch (aPref) {
-                        case "pref_program_support":
-                            this._handleImportedPrograms(jsonData);
-                            break;
-                        case "pref_cinn_rec_profiles":
-                            this._handleImportedCinnamonRecorderProfiles(jsonData);
-                            break;
-                    }
+                    });
+                }).catch((aErr) => {
+                    global.logError(aErr);
                 });
             }
         );
-    },
+    }
 
-    _handleImportedPrograms: function(aJSONData) {
-        try {
+    _handleImportedPrograms(aJSONData) {
+        tryFn(() => {
             if (isObject(aJSONData)) {
-                for (let device of Devices) {
+                for (const device of Devices) {
                     if (!aJSONData.hasOwnProperty(device)) {
                         aJSONData[device] = {};
                     }
                 }
 
-                this.pref_program_support = aJSONData;
+                this.$._.program_support = aJSONData;
             } else {
-                this.pref_program_support = PROGRAMS_SUPPORT_EMPTY;
+                this.$._.program_support = PROGRAMS_SUPPORT_EMPTY;
             }
-        } catch (aErr) {
+        }, (aErr) => {
             global.logError(aErr);
-            this.pref_program_support = PROGRAMS_SUPPORT_EMPTY;
-        } finally {
+            this.$._.program_support = PROGRAMS_SUPPORT_EMPTY;
+        }, () => {
             this._setupProgramSupport();
-        }
-    },
+        });
+    }
 
-    _handleImportedCinnamonRecorderProfiles: function(aJSONData) {
-        try {
+    _handleImportedCinnamonRecorderProfiles(aJSONData) {
+        tryFn(() => {
             if (isObject(aJSONData)) {
-                this.pref_cinn_rec_profiles = aJSONData;
+                this.$._.cinn_rec_profiles = aJSONData;
             } else {
-                this.pref_cinn_rec_profiles = {};
+                this.$._.cinn_rec_profiles = {};
             }
-        } catch (aErr) {
+        }, (aErr) => {
             global.logError(aErr);
-            this.pref_cinn_rec_profiles = {};
-        } finally {
+            this.$._.cinn_rec_profiles = {};
+        }, () => {
             this._setupCinnamonRecorderProfiles();
-        }
-    },
+        });
+    }
 
-    _resetPrefToDefault: function(aPref) {
-        $.askForConfirmation({
+    _resetPrefToDefault(aPref) {
+        askForConfirmation({
             message: _("Do you really want to reset this preference to its default value?"),
             pref_name: aPref
         }, (aParams) => {
-            let file = Gio.file_new_for_path(this.metadata.path + "/settings-schema.json");
-            file.load_contents_async(null, (aFile, aResponce) => {
-                let success,
-                    contents,
-                    tag;
-
-                try {
-                    [success, contents, tag] = aFile.load_contents_finish(aResponce);
-                } catch (aErr) {
-                    global.logError(aErr.message);
-                    return;
-                }
-
-                if (!success) {
-                    global.logError("Error parsing %s".format(file.get_path()));
-                    return;
-                }
-
-                try {
-                    this[aParams.pref_name] = JSON.parse(contents)[aParams.pref_name].default;
-                } finally {
+            this.settings_schema_file.read().then((aData) => {
+                tryFn(() => {
+                    this.$._[aParams.pref_name] = JSON.parse(aData)[aParams.pref_name].default;
+                }, (aErr) => {
+                    global.logError(aErr);
+                }, () => {
                     switch (aParams.pref_name) {
-                        case "pref_program_support":
+                        case "program_support":
                             this._setupProgramSupport();
                             break;
-                        case "pref_cinn_rec_profiles":
+                        case "cinn_rec_profiles":
                             this._setupCinnamonRecorderProfiles();
                             break;
                     }
-                }
-            });
+                });
+            }).catch((aErr) => global.logError(aErr));
         });
-    },
+    }
 
-    _clearPref: function(aPref, aPrefEmptyVal) {
-        $.askForConfirmation({
+    _clearPref(aPref, aPrefEmptyVal) {
+        askForConfirmation({
             message: _("Do you really want to empty this preference?"),
             pref_name: aPref,
             pref_empty_value: aPrefEmptyVal
         }, (aParams) => {
-            try {
-                this[aParams.pref_name] = aParams.pref_empty_value;
-            } finally {
+            tryFn(() => {
+                this.$._[aParams.pref_name] = aParams.pref_empty_value;
+            }, (aErr) => {}, () => { // jshint ignore:line
                 switch (aParams.pref_name) {
-                    case "pref_program_support":
+                    case "program_support":
                         this._setupProgramSupport();
                         break;
-                    case "pref_cinn_rec_profiles":
+                    case "cinn_rec_profiles":
                         this._setupCinnamonRecorderProfiles();
                         break;
                 }
-            }
+            });
         });
-    },
-
-    _disclaimerRead: function() {
-        if (!this.pref_disclaimer_read &&
-            versionCompare(CINNAMON_VERSION, "3.0.99") <= 0) {
-            let msg = [
-                _("The Cinnamon's 3.0.x built-in screenshot mechanism is broken!"),
-                _("Do not use it or Cinnamon will crash!"),
-                _("Read this applet help page (Known issues) for more details on the matter."),
-                _("You will keep seeing this notification until you follow the instructions found on the help page.")
-            ];
-            $.notify(msg, "error");
-            return false;
-        }
-
-        return true;
-    },
+    }
 
     get criticalBaseMessage() {
         return [
             _("Operation aborted!")
         ];
-    },
+    }
 
     get programSupport() {
         return this._programSupport;
-    },
+    }
 
     set programSupport(aVal) {
         delete this._programSupport;
         this._programSupport = aVal;
-    },
+    }
 
     get cinnamonRecorderProfiles() {
         return this._cinnamonRecorderProfiles;
-    },
+    }
 
     set cinnamonRecorderProfiles(aVal) {
         delete this._cinnamonRecorderProfiles;
         this._cinnamonRecorderProfiles = aVal;
-    },
+    }
 
-    on_applet_clicked: function() {
+    on_applet_clicked() {
         this.menu.toggle();
-    },
+    }
 
-    on_applet_removed_from_panel: function() {
-        this.sigMan.disconnectAllSignals();
+    on_applet_removed_from_panel() {
+        super.on_applet_removed_from_panel();
+    }
 
-        if (this._draw_menu_id > 0) {
-            Mainloop.source_remove(this._draw_menu_id);
-            this._draw_menu_id = 0;
-        }
-
-        if (this._register_key_bindings_id > 0) {
-            Mainloop.source_remove(this._register_key_bindings_id);
-            this._register_key_bindings_id = 0;
-        }
-
-        this.settings && this.settings.finalize();
-    },
-
-    _onSettingsChanged: function(aPrefValue, aPrefKey) { // jshint ignore:line
-        // Note: On Cinnamon versions greater than 3.2.x, two arguments are passed to the
-        // settings callback instead of just one as in older versions. The first one is the
-        // setting value and the second one is the user data. To workaround this nonsense,
-        // check if the second argument is undefined to decide which
-        // argument to use as the pref key depending on the Cinnamon version.
-        // Mark for deletion on EOL. Cinnamon 3.2.x+
-        // Remove the following variable and directly use the second argument.
-        let pref_key = aPrefKey || aPrefValue;
-        switch (pref_key) {
-            case "pref_theme_selector":
-            case "pref_theme_custom":
-                if (pref_key === "pref_theme_custom" &&
-                    this.pref_theme_selector !== "custom") {
+    __onSettingsChanged(aPrefOldValue, aPrefKey) {
+        switch (aPrefKey) {
+            case "theme_selector":
+            case "theme_custom":
+                if (aPrefKey === "theme_custom" &&
+                    this.$._.theme_selector !== "custom") {
                     return;
                 }
 
                 this._loadTheme(true);
                 break;
-            case "pref_custom_icon_for_applet":
-            case "pref_custom_icon_for_applet_recording":
-                this._setAppletIcon();
+            case "applet_icon":
+            case "applet_icon_recording":
+                this.__setAppletIcon();
                 break;
-            case "pref_camera_save_dir":
-            case "pref_recorder_save_dir":
+            case "camera_save_dir":
+            case "recorder_save_dir":
                 this._setupSaveDirs();
                 break;
-            case "pref_show_copy_toggle":
-            case "pref_camera_program":
+            case "show_copy_toggle":
+            case "camera_program":
                 this._rebuildDeviceSection("camera");
                 break;
-            case "pref_recorder_program":
-                if (this.pref_recorder_program === "cinnamon") {
+            case "recorder_program":
+                if (this.$._.recorder_program === "cinnamon") {
                     this.cinnamonRecorder = new Cinnamon.Recorder({
                         stage: global.stage
                     });
@@ -2045,23 +1786,19 @@ DesktopCapture.prototype = {
 
                 this._rebuildDeviceSection("recorder");
                 break;
-            case "pref_display_device_options_in_sub_menu":
+            case "save_keybindings":
+            case "display_device_options_in_sub_menu":
                 this.drawMenu();
-                break;
-            case "pref_logging_level":
-            case "pref_debugger_enabled":
-                $.Debugger.logging_level = this.pref_logging_level;
-                $.Debugger.debugger_enabled = this.pref_debugger_enabled;
                 break;
         }
     }
-};
+}
 
-function main(aMetadata, aOrientation, aPanelheight, aInstanceId) {
-    DebugManager.wrapObjectMethods($.Debugger, {
+function main() {
+    Debugger.wrapObjectMethods({
         DesktopCapture: DesktopCapture,
         IntelligentTooltip: IntelligentTooltip
     });
 
-    return new DesktopCapture(aMetadata, aOrientation, aPanelheight, aInstanceId);
+    return new DesktopCapture(...arguments);
 }
