@@ -1,0 +1,291 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "filechooser_directory_select": {
+        "type": "generic",
+        "default": ""
+    },
+    "filechooser_file_select": {
+        "type": "generic",
+        "default": ""
+    },
+    "iconfilechooser": {
+        "type": "generic",
+        "default": ""
+    },
+    "colorchooser": {
+        "type": "generic",
+        "default": ""
+    },
+    "soundfilechooser": {
+        "type": "generic",
+        "default": ""
+    },
+    "appchooser": {
+        "type": "generic",
+        "default": ""
+    },
+    "applist": {
+        "type": "generic",
+        "default": []
+    },
+    "applist_changed": {
+        "type": "generic",
+        "default": false
+    },
+    "stringslist": {
+        "type": "generic",
+        "default": []
+    },
+    "stringslist_changed": {
+        "type": "generic",
+        "default": false
+    },
+    "list_1": {
+        "type": "generic",
+        "default": []
+    },
+    "list_2": {
+        "type": "generic",
+        "default": []
+    },
+    "list_2_apply": {
+        "type": "generic",
+        "default": false
+    },
+    "list_2_imp_exp_path": {
+        "type": "generic",
+        "default": ""
+    },
+    "list_3": {
+        "type": "generic",
+        "default": [{
+            "command": "gnome-terminal",
+            "title": "Gnome Terminal",
+            "enabled": true,
+            "icon": "terminal"
+        }, {
+            "command": "terminator",
+            "title": "Terminator",
+            "enabled": true,
+            "icon": "terminator"
+        }, {
+            "command": "xterm",
+            "title": "XTerm",
+            "enabled": true,
+            "icon": "xterm-color"
+        }, {
+            "command": "guake",
+            "title": "Guake Terminal",
+            "enabled": true,
+            "icon": "guake"
+        }]
+    },
+    "list_3_apply": {
+        "type": "generic",
+        "default": false
+    },
+    "keybinding_1": {
+        "type": "generic",
+        "default": ""
+    },
+    "keybinding_2": {
+        "type": "generic",
+        "default": ""
+    },
+    "keybinding_with_options": {
+        "type": "generic",
+        "default": "::"
+    },
+    "dependency_1_boolean": {
+        "type": "generic",
+        "default": false
+    },
+    "dependency_1_true": {
+        "type": "generic",
+        "default": ""
+    },
+    "dependency_1_false": {
+        "type": "generic",
+        "default": ""
+    },
+    "dependency_2_comparisons": {
+        "type": "generic",
+        "default": 0
+    },
+    "dependency_2_greater_than": {
+        "type": "generic",
+        "default": ""
+    },
+    "dependency_2_less_than": {
+        "type": "generic",
+        "default": ""
+    },
+    "dependency_2_equal_or_greater_than": {
+        "type": "generic",
+        "default": ""
+    },
+    "dependency_2_equal_or_less_than": {
+        "type": "generic",
+        "default": ""
+    },
+    "dependency_2_equal": {
+        "type": "generic",
+        "default": ""
+    },
+    "dependency_3_multiple_1": {
+        "type": "generic",
+        "default": ""
+    },
+    "dependency_3_multiple_2": {
+        "type": "generic",
+        "default": ""
+    },
+    "switch": {
+        "type": "generic",
+        "default": true
+    },
+    "entry": {
+        "type": "generic",
+        "default": ""
+    },
+    "combobox_string": {
+        "type": "generic",
+        "default": "option_1"
+    },
+    "combobox_integer": {
+        "type": "generic",
+        "default": 1
+    },
+    "path_extra_files_for_combobox": {
+        "type": "generic",
+        "default": ""
+    },
+    "combobox_string_list": {
+        "type": "generic",
+        "default": "option_1"
+    },
+    "combobox_paths": {
+        "type": "generic",
+        "default": "file_1"
+    },
+    "spinbutton": {
+        "type": "generic",
+        "default": 0
+    },
+    "scale_1": {
+        "type": "generic",
+        "default": 125
+    },
+    "scale_2": {
+        "type": "generic",
+        "default": 125
+    },
+    "scale_3": {
+        "type": "generic",
+        "default": 125
+    },
+    "button": {
+        "type": "generic",
+        "default": false
+    },
+    "textview": {
+        "type": "generic",
+        "default": ""
+    },
+    "textviewbutton": {
+        "type": "generic",
+        "default": ""
+    },
+    "filetest_ensureparents": {
+        "type": "generic",
+        "default": ""
+    },
+    "filetest_data_to_write": {
+        "type": "generic",
+        "default": ""
+    },
+    "filetest_instancepath": {
+        "type": "generic",
+        "default": ""
+    },
+    "filetest_secondarypath": {
+        "type": "generic",
+        "default": ""
+    },
+    "filetest_append": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_copy": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_delete": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_destroy": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_exists": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_info": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_init": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_isdirectory": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_isfile": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_isrealdirectory": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_isrealfile": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_issymlink": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_isexecutable": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_listdir": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_read": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_setexecutable": {
+        "type": "generic",
+        "default": false
+    },
+    "filetest_write": {
+        "type": "generic",
+        "default": false
+    }
+}

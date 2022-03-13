@@ -1,0 +1,5 @@
+{
+    "name": "Custom Settings Framework Examples",
+    "external-configuration-app": "settings.py",
+    "description": "Custom settings framework playground."
+}
