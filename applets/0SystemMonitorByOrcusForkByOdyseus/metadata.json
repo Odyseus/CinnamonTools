@@ -1,7 +1,0 @@
-{
-    "max-instances": -1,
-    "name": "System Monitor (Fork By Odyseus)",
-    "contributors": "See this xlet help file.",
-    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "description": "Displays CPU, memory, swap, network usage and load average in graphs."
-}

@@ -1,0 +1,6 @@
+{
+    "external-configuration-app": "settings.py",
+    "max-instances": -1,
+    "name": "System Monitor (Fork By Odyseus)",
+    "description": "Displays CPU, memory, swap, network usage and load average in graphs."
+}
