@@ -246,7 +246,7 @@ function getExtensionClass(aBaseExtension) {
         _registerGlobalKeybindings() {
             this.$.keybinding_manager.clearAllKeybindings();
 
-            for (const kbName of this.fxIDs) {
+            for (const kbName of this._global_kbs) {
                 this.$.keybinding_manager.addKeybinding(
                     kbName,
                     Settings[kbName],

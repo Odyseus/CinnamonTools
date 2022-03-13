@@ -30,7 +30,6 @@ const {
     arrayEach,
     copyToClipboard,
     escapeHTML,
-    objectEach,
     ScheduleManager
 } = require("js_modules/globalUtils.js");
 
@@ -208,22 +207,25 @@ const ColorInspectorBanner = class ColorInspectorBanner {
 
         // Color info.
         let row = 0;
-        objectEach(ColorInspectorInfoBannerLabels, (aID) => {
+
+        for (const id in ColorInspectorInfoBannerLabels) {
             let col = 2;
-            this[`${aID}Title`] = new St.Label({
-                text: ColorInspectorInfoBannerLabels[aID],
-                style_class: "cba-info-title"
+            this[`${id}Title`] = new St.Label({
+                text: ColorInspectorInfoBannerLabels[id],
+                style_class: "cba-info-title",
+                x_expand: true,
+                y_expand: false
             });
 
-            infoGrid.attach(this[`${aID}Title`], 0, row, 1, 1);
-            infoGrid.attach(this[`${aID}Feedback`], 1, row, 1, 1);
+            infoGrid.attach(this[`${id}Title`], 0, row, 1, 1);
+            infoGrid.attach(this[`${id}Feedback`], 1, row, 1, 1);
 
-            objectEach(ColorInspectorInfoBannerColorCodes, (aCode) => {
-                if (!Settings[`color_inspector_${aCode}_visible`]) {
-                    return;
+            for (const code of ColorInspectorInfoBannerColorCodes) {
+                if (!Settings[`color_inspector_${code}_visible`]) {
+                    continue;
                 }
 
-                const baseProp = `${aID}_${aCode}`;
+                const baseProp = `${id}_${code}`;
                 const colorInfoButton = this[`${baseProp}Button`] = new ColorInfoButton(baseProp);
                 this.colorInspector.signal_manager.connect(
                     colorInfoButton.actor,
@@ -234,41 +236,10 @@ const ColorInspectorBanner = class ColorInspectorBanner {
                 this.colorInfoButtons.push(colorInfoButton);
 
                 col++;
-            });
+            }
 
             row++;
-        });
-
-        // for (const id in ColorInspectorInfoBannerLabels) {
-        //     let col = 2;
-        //     this[`${id}Title`] = new St.Label({
-        //         text: ColorInspectorInfoBannerLabels[id],
-        //         style_class: "cba-info-title"
-        //     });
-
-        //     infoGrid.attach(this[`${id}Title`], 0, row, 1, 1);
-        //     infoGrid.attach(this[`${id}Feedback`], 1, row, 1, 1);
-
-        //     for (const code of ColorInspectorInfoBannerColorCodes) {
-        //         if (!Settings[`color_inspector_${code}_visible`]) {
-        //             continue;
-        //         }
-
-        //         const baseProp = `${id}_${code}`;
-        //         const colorInfoButton = this[`${baseProp}Button`] = new ColorInfoButton(baseProp);
-        //         this.colorInspector.signal_manager.connect(
-        //             colorInfoButton.actor,
-        //             "button-release-event",
-        //             this._onColorInfoButtonClicked.bind(this, baseProp)
-        //         );
-        //         infoGrid.attach(colorInfoButton.actor, col, row, 1, 1);
-        //         this.colorInfoButtons.push(colorInfoButton);
-
-        //         col++;
-        //     }
-
-        //     row++;
-        // }
+        }
 
         this.actor.add(this.colorNameLabel);
         this.actor.add(infoBox, {
@@ -688,27 +659,16 @@ var ColorInspector = class ColorInspector {
         this.banner.colorNameLabel.text = colorNameText;
         this.banner.hueTitle.text = ColorInspectorInfoBannerLabels.hue.format(this.colorInfo.hue_name);
 
-        objectEach(ColorInspectorInfoBannerLabels, (aID) => {
-            objectEach(ColorInspectorInfoBannerColorCodes, (aCode) => {
-                if (!Settings[`color_inspector_${aCode}_visible`]) {
-                    return;
+        for (const id in ColorInspectorInfoBannerLabels) {
+            for (const code of ColorInspectorInfoBannerColorCodes) {
+                if (!Settings[`color_inspector_${code}_visible`]) {
+                    continue;
                 }
 
-                const baseProp = `${aID}_${aCode}`;
+                const baseProp = `${id}_${code}`;
                 this.banner[`${baseProp}Button`].set_label(this.colorInfo[baseProp]);
-            });
-        });
-
-        // for (const id in ColorInspectorInfoBannerLabels) {
-        //     for (const code of ColorInspectorInfoBannerColorCodes) {
-        //         if (!Settings[`color_inspector_${code}_visible`]) {
-        //             continue;
-        //         }
-
-        //         const baseProp = `${id}_${code}`;
-        //         this.banner[`${baseProp}Button`].set_label(this.colorInfo[baseProp]);
-        //     }
-        // }
+            }
+        }
     }
 
     getPixelAt(x, y) {
