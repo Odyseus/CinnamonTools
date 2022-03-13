@@ -1,0 +1,5 @@
+{
+    "max-instances": -1,
+    "description": "Fork of the main Cinnamon Window list applet.",
+    "name": "Window list (Fork By Odyseus)"
+}

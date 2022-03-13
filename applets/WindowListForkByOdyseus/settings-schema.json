@@ -1,83 +1,102 @@
 {
-    "pref_show_all_workspaces": {
-        "type": "checkbox",
+    "show_all_workspaces": {
+        "type": "switch",
         "default": false,
         "description": "Show windows from all workspaces"
     },
-    "pref_enable_alerts": {
-        "type": "checkbox",
+    "enable_alerts": {
+        "type": "switch",
         "default": true,
         "description": "Show an alert in the window list when a window from another workspace requires attention"
     },
-    "pref_enable_scrolling": {
-        "type": "checkbox",
+    "enable_scrolling": {
+        "type": "switch",
         "default": false,
         "description": "Enable mouse-wheel scrolling in the window list"
     },
-    "pref_reverse_scrolling": {
-        "type": "checkbox",
-        "dependency": "pref_enable_scrolling",
+    "reverse_scrolling": {
+        "type": "switch",
+        "dependency": "enable_scrolling",
         "default": false,
         "description": "Reverse the direction of mouse-wheel scrolling in the window list"
     },
-    "pref_left_click_minimize": {
-        "type": "checkbox",
+    "left_click_minimize": {
+        "type": "switch",
         "default": true,
         "description": "Left click to minimize window"
     },
-    "pref_middle_click_close": {
-        "type": "checkbox",
+    "middle_click_close": {
+        "type": "switch",
         "default": true,
         "description": "Middle click to close window"
     },
-    "pref_buttons_use_entire_space": {
-        "type": "checkbox",
+    "buttons_use_entire_space": {
+        "type": "switch",
         "default": false,
         "description": "Window buttons can have different sizes and use the entire space available"
     },
-    "pref_window_preview": {
-        "type": "checkbox",
+    "window_preview": {
+        "type": "switch",
         "default": false,
         "description": "Show window thumbnails on hover"
     },
-    "pref_window_preview_show_label": {
-        "type": "checkbox",
+    "window_preview_show_label": {
+        "type": "switch",
         "default": false,
         "description": "Show title above thumbnail",
-        "dependency": "pref_window_preview"
+        "dependency": "window_preview"
     },
-    "pref_window_preview_scale": {
+    "window_preview_scale": {
         "type": "spinbutton",
         "default": 2,
         "min": 0.25,
         "max": 5,
         "step": 0.25,
         "units": "factor",
-        "dependency": "pref_window_preview",
+        "dependency": "window_preview",
         "description": "Window preview scale factor",
         "tooltip": "The default size of the windows preview is 200x150 pixels. A scale factor of 2 will produce previews of 400x300 pixels."
     },
-    "pref_hide_tooltips": {
-        "type": "checkbox",
+    "hide_tooltips": {
+        "type": "switch",
         "default": false,
         "description": "Do not display tooltips"
     },
-    "pref_hide_labels": {
-        "type": "checkbox",
-        "default": true,
-        "description": "Hide labels in the window list buttons"
+    "show_labels": {
+        "type": "switch",
+        "default": false,
+        "description": "Show labels in the window list buttons"
     },
-    "pref_show_additional_application_actions": {
-        "type": "checkbox",
+    "app_button_auto_size_offset": {
+        "type": "spinbutton",
+        "default": -3.0,
+        "min": -10.0,
+        "max": 10.0,
+        "step": 1.0,
+        "units": "pixels",
+        "description": "Application buttons icon size offset"
+    },
+    "app_button_custom_padding": {
+        "type": "spinbutton",
+        "default": -1.0,
+        "min": -1.0,
+        "max": 10.0,
+        "step": 1.0,
+        "units": "pixels",
+        "description": "Application buttons custom padding",
+        "tooltip": "When hiding labels, the style set by the Cinnamon theme used might leave the application button with very little or too much space to display the button's active/hover states styling. Setting this option to anything other than -1 will set the desired padding."
+    },
+    "show_additional_application_actions": {
+        "type": "switch",
         "default": true,
         "description": "Display additional application actions"
     },
-    "pref_invert_menu_items_order": {
-        "type": "checkbox",
+    "invert_menu_items_order": {
+        "type": "switch",
         "default": false,
         "description": "Invert context menu items order"
     },
-    "pref_sub_menu_placement": {
+    "sub_menu_placement": {
         "type": "combobox",
         "default": 1,
         "description": "Where to display the \"Preferences\" sub-menu?",
@@ -88,11 +107,15 @@
             "Bottom of menu": 2
         }
     },
+    "last_window_order": {
+        "type": "generic",
+        "default": ""
+    },
     "debugging-header": {
         "type": "header",
         "description": "Debugging"
     },
-    "pref_logging_level": {
+    "logging_level": {
         "type": "combobox",
         "default": 0,
         "description": "Logging level (*)",
@@ -103,8 +126,8 @@
             "Very verbose": 2
         }
     },
-    "pref_debugger_enabled": {
-        "type": "checkbox",
+    "debugger_enabled": {
+        "type": "switch",
         "description": "Enable debugger (*)",
         "tooltip": "It enables the ability to catch all exceptions that under normal use would not be caught.",
         "default": false

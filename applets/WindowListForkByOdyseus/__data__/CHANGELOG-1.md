@@ -1,16 +1,5 @@
-## Window list (Fork By Odyseus) changelog
-
-**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
-
-***
-
-**Date:** Wed, 22 Jul 2020 19:57:57 -0300<br/>
-**Commit:** [49e22e3](https://gitlab.com/Odyseus/CinnamonTools/commit/49e22e3)<br/>
-**Author:** Odyseus<br/>
-
-- Added ability to launch applications' actions from their context menu.
-- Replaced some boolean return values by the corresponding constants.
-
+<br/>
+<br/>
 ***
 
 **Date:** Mon, 10 Feb 2020 23:08:51 -0300<br/>

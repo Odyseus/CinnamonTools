@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0WindowListForkByOdyseus\n"
+"Project-Id-Version: WindowListForkByOdyseus\n"
 "Report-Msgid-Bugs-To: https://gitlab.com/Odyseus/CinnamonTools\n"
-"POT-Creation-Date: 2020-07-25 21:38-0300\n"
-"PO-Revision-Date: 2020-07-25 21:41-0300\n"
+"POT-Creation-Date: 2022-03-10 23:50-0300\n"
+"PO-Revision-Date: 2020-02-10 20:58-0300\n"
 "Last-Translator: Odyseus\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,176 +18,175 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../../__app__/python_modules/localized_help_creator.py:246 ../../__app__/python_modules/localized_help_creator.py:320
+#: ../../__app__/data/javascript_modules/appletsUtils.js:279 js_modules/utils.js:483
+msgid "Configure..."
+msgstr "Configurar..."
+
+#: ../../__app__/python_modules/app_data.py:316
+msgid "See this xlet help file."
+msgstr "Ver el archivo de ayuda de este xlet."
+
+#: ../../__app__/python_modules/app_data.py:317 ../../__app__/python_modules/localized_help_creator.py:413
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
+
+#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:327
 #, python-format
 msgid "Help for %s"
 msgstr "Ayuda para %s"
 
-#: ../../__app__/python_modules/localized_help_creator.py:317 utils.js:1329
+#: ../../__app__/python_modules/localized_help_creator.py:324 js_modules/utils.js:469
 msgid "Help"
 msgstr "Ayuda"
 
-#: ../../__app__/python_modules/localized_help_creator.py:318
+#: ../../__app__/python_modules/localized_help_creator.py:325
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../../__app__/python_modules/localized_help_creator.py:319
-msgid "Changelog"
-msgstr "Registro de cambios"
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Changelogs"
+msgstr ""
 
-#: ../../__app__/python_modules/localized_help_creator.py:355
+#: ../../__app__/python_modules/localized_help_creator.py:362
 msgid "The following sections are available only in English."
 msgstr "Las siguientes secciones están disponibles sólo en Inglés."
 
-#: ../../__app__/python_modules/localized_help_creator.py:375
+#: ../../__app__/python_modules/localized_help_creator.py:382
 #, python-format
 msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
 msgstr "Este xlet es compatible con Cinnamon %s hasta la última versión de Cinnamon."
 
-#: ../../__app__/python_modules/localized_help_creator.py:378
+#: ../../__app__/python_modules/localized_help_creator.py:385
 #, python-brace-format
 msgid "This xlet is compatible with Cinnamon {0} up to {1}."
 msgstr "Este xlet es compatible con Cinnamon {0} hasta {1}."
 
-#: ../../__app__/python_modules/localized_help_creator.py:384
+#: ../../__app__/python_modules/localized_help_creator.py:391
 msgid "Cinnamon compatibility"
 msgstr "Compatibilidad con Cinnamon"
 
-#: ../../__app__/python_modules/localized_help_creator.py:401
+#: ../../__app__/python_modules/localized_help_creator.py:408
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../../__app__/python_modules/localized_help_creator.py:404
+#: ../../__app__/python_modules/localized_help_creator.py:411
 msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
 msgstr "Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet."
 
-#. metadata.json->comments
-#: ../../__app__/python_modules/localized_help_creator.py:406
-msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
-msgstr "Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación."
-
-#: ../../__app__/python_modules/localized_help_creator.py:422
+#: ../../__app__/python_modules/localized_help_creator.py:429
 msgid "Xlets localization"
 msgstr "Localización de xlets"
 
-#: ../../__app__/python_modules/localized_help_creator.py:426
+#: ../../__app__/python_modules/localized_help_creator.py:433
 msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
 msgstr "Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente."
 
-#: ../../__app__/python_modules/localized_help_creator.py:427
+#: ../../__app__/python_modules/localized_help_creator.py:434
 msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
 msgstr "Si este xlet se instaló manualmente y no a través de Configuración de Cinnamon, las localizaciones se pueden instalar ejecutando el archivo llamado helper.py desde una terminal abierta dentro de la carpeta del xlet."
 
-#: z_create_localized_help.py:27
+#: __data__/create_localized_help.py:27
 msgid "Description"
 msgstr "Descripción"
 
-#: z_create_localized_help.py:29
+#: __data__/create_localized_help.py:29
 msgid "This applet is a fork of the default Window list applet shipped with Cinnamon."
 msgstr "Este applet está basado en el applet Lista de ventanas predeterminado de Cinnamon."
 
-#: z_create_localized_help.py:31
+#: __data__/create_localized_help.py:31
 msgid "Differences with the original applet"
 msgstr "Diferencias con el original"
 
-#: z_create_localized_help.py:33
+#: __data__/create_localized_help.py:33
 msgid "Added option to remove the label from the window list buttons."
 msgstr "Se agregó la opción para eliminar la etiqueta de los botones de lista de ventanas."
 
-#: z_create_localized_help.py:34
+#: __data__/create_localized_help.py:34
 msgid "Added option to remove the tooltips from the window list buttons."
 msgstr "Se agregó la opción para eliminar las sugerencias de los botones de lista de ventanas."
 
-#: z_create_localized_help.py:35
+#: __data__/create_localized_help.py:35
 msgid "Added icons to the window list button's context menu."
 msgstr "Iconos añadidos al menú contextual del botón de lista de ventanas."
 
-#: z_create_localized_help.py:36
+#: __data__/create_localized_help.py:36
 msgid "Added option to invert the contex menu items."
 msgstr "Se agregó la opción para invertir los elementos del menú contextual."
 
-#: z_create_localized_help.py:37
+#: __data__/create_localized_help.py:37
 msgid "Added option to hide/move the **Preferences** sub menu."
 msgstr "Se agregó la opción para ocultar/mover el submenú **Preferencias**."
 
-#: z_create_localized_help.py:42 z_create_localized_help.py:46
+#: __data__/create_localized_help.py:42 __data__/create_localized_help.py:46
 msgid "Inverted menu on top panel"
 msgstr "Menú invertido en el panel superior"
 
-#: utils.js:1175
+#: js_modules/utils.js:314
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: utils.js:1189
+#: js_modules/utils.js:328
 msgid "Move to the other monitor"
 msgstr "Mover hacia el otro monitor"
 
-#: utils.js:1200
+#: js_modules/utils.js:339
 #, javascript-format
 msgid "Move to monitor %d"
 msgstr "Mover hacia el monitor %d"
 
-#: utils.js:1211
+#: js_modules/utils.js:350
 msgid "Only on this workspace"
 msgstr "Sólo en este entorno de trabajo"
 
-#: utils.js:1217
+#: js_modules/utils.js:356
 msgid "Visible on all workspaces"
 msgstr "Visible en todos los entornos de trabajo"
 
-#: utils.js:1223
+#: js_modules/utils.js:362
 msgid "Move to another workspace"
 msgstr "Mover a otro entorno de trabajo"
 
 #. Close all/others
-#: utils.js:1257
+#: js_modules/utils.js:396
 msgid "Close all"
 msgstr "Cerrar todas"
 
-#: utils.js:1268
+#: js_modules/utils.js:407
 msgid "Close others"
 msgstr "Cerrar otras"
 
-#: utils.js:1284
+#: js_modules/utils.js:423
 msgid "Restore to full opacity"
 msgstr "Dummy"
 
-#: utils.js:1292
+#: js_modules/utils.js:431
 msgid "Restore"
 msgstr "Restaurar"
 
-#: utils.js:1297
+#: js_modules/utils.js:436
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: utils.js:1305
+#: js_modules/utils.js:444
 msgid "Unmaximize"
 msgstr "Desmaximizar"
 
-#: utils.js:1310
+#: js_modules/utils.js:449
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: utils.js:1317
+#: js_modules/utils.js:457
 msgid "Close"
 msgstr "Cerrar"
 
-#: utils.js:1336
+#: js_modules/utils.js:476
 msgid "About..."
 msgstr "Acerca de..."
 
-#: utils.js:1343
-msgid "Configure..."
-msgstr "Configurar..."
-
-#: utils.js:1359
+#: js_modules/utils.js:491
 #, javascript-format
 msgid "Remove '%s'"
 msgstr "Remover '%s'"
-
-#. metadata.json->contributors
-msgid "See this xlet help file."
-msgstr "Ver el archivo de ayuda de este xlet."
 
 #. metadata.json->description
 msgid "Fork of the main Cinnamon Window list applet."
@@ -197,87 +196,104 @@ msgstr "Adaptación del applet de Cinnamon llamado Window list"
 msgid "Window list (Fork By Odyseus)"
 msgstr "Lista de ventanas (Fork By Odyseus)"
 
-#. settings-schema.json->pref_show_all_workspaces->description
+#. settings-schema.json->show_all_workspaces->description
 msgid "Show windows from all workspaces"
 msgstr "Mostrar ventanas de todos los espacios de trabajo"
 
-#. settings-schema.json->pref_enable_alerts->description
+#. settings-schema.json->enable_alerts->description
 msgid "Show an alert in the window list when a window from another workspace requires attention"
 msgstr "Mostrar una alerta en la lista de ventanas cuando una ventana de otra área de trabajo requiere atención"
 
-#. settings-schema.json->pref_enable_scrolling->description
+#. settings-schema.json->enable_scrolling->description
 msgid "Enable mouse-wheel scrolling in the window list"
 msgstr "Activar el desplazamiento del ratón en la lista de ventanas"
 
-#. settings-schema.json->pref_reverse_scrolling->description
+#. settings-schema.json->reverse_scrolling->description
 msgid "Reverse the direction of mouse-wheel scrolling in the window list"
 msgstr "Invertir la dirección de desplazamiento del ratón en la lista de ventanas"
 
-#. settings-schema.json->pref_left_click_minimize->description
+#. settings-schema.json->left_click_minimize->description
 msgid "Left click to minimize window"
 msgstr "Minimizar ventana con botón izquierdo del ratón"
 
-#. settings-schema.json->pref_middle_click_close->description
+#. settings-schema.json->middle_click_close->description
 msgid "Middle click to close window"
 msgstr "Cerrar ventana con botón central del ratón"
 
-#. settings-schema.json->pref_buttons_use_entire_space->description
+#. settings-schema.json->buttons_use_entire_space->description
 msgid "Window buttons can have different sizes and use the entire space available"
 msgstr "Los botones de las ventanas pueden tener diferentes tamaños y pueden usar todo el espacio disponible"
 
-#. settings-schema.json->pref_window_preview->description
+#. settings-schema.json->window_preview->description
 msgid "Show window thumbnails on hover"
 msgstr "Mostrar imágenes en miniatura de la ventana al pasar el ratón"
 
-#. settings-schema.json->pref_window_preview_show_label->description
+#. settings-schema.json->window_preview_show_label->description
 msgid "Show title above thumbnail"
 msgstr "Mostrar título arriba de la miniatura"
 
-#. settings-schema.json->pref_window_preview_scale->units
+#. settings-schema.json->window_preview_scale->units
 msgid "factor"
 msgstr "factor"
 
-#. settings-schema.json->pref_window_preview_scale->description
+#. settings-schema.json->window_preview_scale->description
 msgid "Window preview scale factor"
 msgstr "Factor de escala de vista previa de la ventana"
 
-#. settings-schema.json->pref_window_preview_scale->tooltip
+#. settings-schema.json->window_preview_scale->tooltip
 msgid "The default size of the windows preview is 200x150 pixels. A scale factor of 2 will produce previews of 400x300 pixels."
 msgstr "El tamaño predeterminado de la vista previa de ventanas es de 200x150 píxeles. Un factor de escala de 2 producirá vistas previas de 400x300 píxeles."
 
-#. settings-schema.json->pref_hide_tooltips->description
+#. settings-schema.json->hide_tooltips->description
 msgid "Do not display tooltips"
 msgstr "No mostrar caja de herramientas"
 
-#. settings-schema.json->pref_hide_labels->description
-msgid "Hide labels in the window list buttons"
-msgstr "Ocultar etiquetas de los botones de la lista de ventanas"
+#. settings-schema.json->show_labels->description
+msgid "Show labels in the window list buttons"
+msgstr ""
 
-#. settings-schema.json->pref_show_additional_application_actions->description
+#. settings-schema.json->app_button_auto_size_offset->units
+#. settings-schema.json->app_button_custom_padding->units
+msgid "pixels"
+msgstr ""
+
+#. settings-schema.json->app_button_auto_size_offset->description
+msgid "Application buttons icon size offset"
+msgstr ""
+
+#. settings-schema.json->app_button_custom_padding->description
+msgid "Application buttons custom padding"
+msgstr ""
+
+#. settings-schema.json->app_button_custom_padding->tooltip
+msgid "When hiding labels, the style set by the Cinnamon theme used might leave the application button with very little or too much space to display the button's active/hover states styling. Setting this option to anything other than -1 will set the desired padding."
+msgstr ""
+
+#. settings-schema.json->show_additional_application_actions->description
 msgid "Display additional application actions"
-msgstr "Mostrar acciones de aplicación adicionales"
+msgstr ""
 
-#. settings-schema.json->pref_invert_menu_items_order->description
+#. settings-schema.json->invert_menu_items_order->description
 msgid "Invert context menu items order"
 msgstr "Invertir el orden de los ítems en el menú contextual"
 
-#. settings-schema.json->pref_sub_menu_placement->description
+#. settings-schema.json->sub_menu_placement->description
 msgid "Where to display the \"Preferences\" sub-menu?"
 msgstr "¿Dónde mostrar el submenú \"Preferencias\"?"
 
-#. settings-schema.json->pref_sub_menu_placement->tooltip
+#. settings-schema.json->sub_menu_placement->tooltip
 msgid "If the option \"Invert context menu items order\" is enabled, the \"Top of menu\" will actually be the \"Bottom of menu\" and vice versa."
 msgstr "Si la opción \"Invertir el orden de los ítems en el menú contextual\" está activada, la parte superior del menú será realmente la parte inferior y vice versa."
 
-#. settings-schema.json->pref_sub_menu_placement->options
+#. settings-schema.json->sub_menu_placement->options
 msgid "Do not display"
 msgstr "No mostrar"
 
-#. settings-schema.json->pref_sub_menu_placement->options
+#. settings-schema.json->sub_menu_placement->options
 msgid "Top of menu"
 msgstr "En la parte superior del menú"
 
-#. settings-schema.json->pref_sub_menu_placement->options
+#. settings-schema.json->sub_menu_placement->options
 msgid "Bottom of menu"
 msgstr "En la parte inferior del menú"
 
@@ -285,11 +301,11 @@ msgstr "En la parte inferior del menú"
 msgid "Debugging"
 msgstr "Configuración de depuración"
 
-#. settings-schema.json->pref_logging_level->description
+#. settings-schema.json->logging_level->description
 msgid "Logging level (*)"
 msgstr "Nivel de registro (*)"
 
-#. settings-schema.json->pref_logging_level->tooltip
+#. settings-schema.json->logging_level->tooltip
 msgid ""
 "It enables the ability to log the output of several functions used by the extension.\n"
 "\n"
@@ -303,26 +319,32 @@ msgstr ""
 "Verbal: registra adicionalmente mensajes de salida adicionales y todas las respuestas HTTP.\n"
 "Muy detallado: registra adicionalmente todas las llamadas de método de todas las clases/prototipos de JavaScript junto con su tiempo de ejecución."
 
-#. settings-schema.json->pref_logging_level->options
+#. settings-schema.json->logging_level->options
 msgid "Normal"
 msgstr "Normal"
 
-#. settings-schema.json->pref_logging_level->options
+#. settings-schema.json->logging_level->options
 msgid "Verbose"
 msgstr "Detallado"
 
-#. settings-schema.json->pref_logging_level->options
+#. settings-schema.json->logging_level->options
 msgid "Very verbose"
 msgstr "Muy detallado"
 
-#. settings-schema.json->pref_debugger_enabled->description
+#. settings-schema.json->debugger_enabled->description
 msgid "Enable debugger (*)"
 msgstr "Habilitar depurador (*)"
 
-#. settings-schema.json->pref_debugger_enabled->tooltip
+#. settings-schema.json->debugger_enabled->tooltip
 msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
 msgstr "Permite la posibilidad de capturar todas las excepciones que, en el uso normal, no se detectarían."
 
 #. settings-schema.json->label->description
 msgid "(*) Requires Cinnamon restart to enable/disable"
 msgstr "(*) Requiere el reinicio de Cinnamon para habilitar/deshabilitar"
+
+#~ msgid "Changelog"
+#~ msgstr "Registro de cambios"
+
+#~ msgid "Hide labels in the window list buttons"
+#~ msgstr "Ocultar etiquetas de los botones de la lista de ventanas"

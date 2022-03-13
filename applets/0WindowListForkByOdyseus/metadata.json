@@ -1,7 +1,0 @@
-{
-    "contributors": "See this xlet help file.",
-    "max-instances": -1,
-    "description": "Fork of the main Cinnamon Window list applet.",
-    "comments": "Bug reports, feature requests and contributions should be done on this xlet's repository linked next.",
-    "name": "Window list (Fork By Odyseus)"
-}
