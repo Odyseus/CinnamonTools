@@ -5,134 +5,94 @@
     },
     "settings_button": {
         "type": "button",
-        "callback": "openXletSettings",
+        "callback": "__openXletSettings",
         "description": "Open the \"real\" preference window"
     },
-    "pref_desktop_tweaks_enabled": {
+    "desktop_tweaks_enabled": {
         "type": "generic",
         "default": false
     },
-    "pref_desktop_tweaks_allow_drop_to_desktop": {
+    "desktop_tweaks_allow_drop_to_desktop": {
         "type": "generic",
         "default": false
     },
-    "pref_popup_menu_manager_tweaks_enabled": {
+    "popup_menu_manager_tweaks_enabled": {
         "type": "generic",
         "default": false
     },
-    "pref_popup_menu_manager_applets_menus_behavior": {
+    "popup_menu_manager_applets_menus_behavior": {
         "type": "generic",
         "default": "do-not-eat"
     },
-    "pref_applets_tweaks_enabled": {
+    "notifications_enable_tweaks": {
         "type": "generic",
         "default": false
     },
-    "pref_applets_ask_confirmation_applet_removal": {
+    "notifications_enable_animation": {
         "type": "generic",
         "default": true
     },
-    "pref_desklets_tweaks_enabled": {
-        "type": "generic",
-        "default": false
-    },
-    "pref_desklets_ask_confirmation_desklet_removal": {
-        "type": "generic",
-        "default": true
-    },
-    "pref_notifications_enable_tweaks": {
-        "type": "generic",
-        "default": false
-    },
-    "pref_notifications_enable_animation": {
-        "type": "generic",
-        "default": true
-    },
-    "pref_notifications_enable_close_button": {
-        "type": "generic",
-        "default": true
-    },
-    "pref_notifications_position": {
+    "notifications_position": {
         "type": "generic",
         "default": "bottom"
     },
-    "pref_notifications_distance_from_panel": {
+    "notifications_distance_from_panel": {
         "type": "generic",
         "default": 25
     },
-    "pref_notifications_right_margin": {
+    "notifications_right_margin": {
         "type": "generic",
         "default": 20
     },
-    "pref_windows_focus_enable_tweaks": {
+    "windows_focus_enable_tweaks": {
         "type": "generic",
         "default": false
     },
-    "pref_win_demands_attention_activation_mode": {
+    "win_demands_attention_activation_mode": {
         "type": "generic",
         "default": "force"
     },
-    "pref_win_demands_attention_keyboard_shortcut": {
+    "win_demands_attention_keyboard_shortcut": {
         "type": "generic",
         "default": ""
     },
-    "pref_hotcorners_tweaks_enabled": {
+    "tooltips_tweaks_enabled": {
         "type": "generic",
         "default": false
     },
-    "pref_hotcorners_delay_top_left": {
-        "type": "generic",
-        "default": 100
-    },
-    "pref_hotcorners_delay_top_right": {
-        "type": "generic",
-        "default": 100
-    },
-    "pref_hotcorners_delay_bottom_left": {
-        "type": "generic",
-        "default": 100
-    },
-    "pref_hotcorners_delay_bottom_right": {
-        "type": "generic",
-        "default": 100
-    },
-    "pref_tooltips_tweaks_enabled": {
-        "type": "generic",
-        "default": false
-    },
-    "pref_tooltips_inteligent_positioning": {
+    "tooltips_inteligent_positioning": {
         "type": "generic",
         "default": true
     },
-    "pref_tooltips_never_centered": {
+    "tooltips_never_centered": {
         "type": "generic",
         "default": true
     },
-    "pref_tooltips_half_monitor_width": {
+    "tooltips_half_monitor_width": {
         "type": "generic",
         "default": true
     },
-    "pref_tooltips_delay": {
+    "tooltips_delay": {
         "type": "generic",
         "default": 100
     },
-    "pref_initial_load": {
+    "initial_load": {
         "type": "generic",
         "default": false
     },
-    "pref_window_shadows_tweaks_enabled": {
+    "window_shadows_tweaks_enabled": {
         "type": "generic",
         "default": false
     },
-    "pref_window_shadows_preset": {
+    "window_shadows_preset": {
         "type": "generic",
         "default": "default"
     },
-    "trigger_window_shadows_custom_preset": {
+    "window_shadows_preset_apply": {
         "type": "generic",
         "default": false
     },
-    "pref_window_shadows_custom_preset": {
+    "window_shadows_custom_preset": {
         "type": "generic",
         "default": [{
             "win_type": "f_normal",
@@ -262,66 +222,66 @@
             "opacity": 128
         }]
     },
-    "pref_window_auto_move_tweaks_enabled": {
+    "window_auto_move_tweaks_enabled": {
         "type": "generic",
         "default": false
     },
-    "pref_window_auto_move_auto_focus": {
+    "window_auto_move_auto_focus": {
         "type": "generic",
         "default": false
     },
-    "pref_window_auto_move_application_list": {
+    "window_auto_move_application_list": {
         "type": "generic",
         "default": []
     },
-    "pref_window_auto_move_fullscreen_in_own_ws": {
+    "window_auto_move_fullscreen_in_own_ws": {
         "type": "generic",
         "default": false
     },
-    "pref_window_auto_move_fullscreen_in_own_ws_blacklist": {
+    "window_auto_move_fullscreen_in_own_ws_blacklist": {
         "type": "generic",
         "default": []
     },
-    "pref_maximus_enable_tweak": {
+    "maximus_enabled": {
         "type": "generic",
         "default": false
     },
-    "pref_maximus_undecorate_half_maximized": {
+    "maximus_undecorate_half_maximized": {
         "type": "generic",
         "default": true
     },
-    "pref_maximus_undecorate_tiled": {
+    "maximus_undecorate_tiled": {
         "type": "generic",
         "default": true
     },
-    "pref_maximus_is_blacklist": {
+    "maximus_is_blacklist": {
         "type": "generic",
         "default": false
     },
-    "pref_maximus_app_list": {
+    "maximus_app_list": {
         "type": "generic",
         "default": [
             "firefox.desktop",
             "waterfox.desktop"
         ]
     },
-    "pref_maximus_enable_logging": {
+    "maximus_enable_logging": {
         "type": "generic",
         "default": false
     },
-    "pref_maximus_apply_settings": {
+    "maximus_apply_settings": {
         "type": "generic",
         "default": false
     },
-    "pref_maximus_invisible_windows_hack": {
+    "maximus_invisible_windows_hack": {
         "type": "generic",
         "default": false
     },
-    "pref_test_notifications": {
+    "restore_logging_to_glass_log_file": {
         "type": "generic",
         "default": false
     },
-    "pref_desktop_file_generated": {
+    "test_notifications": {
         "type": "generic",
         "default": false
     }

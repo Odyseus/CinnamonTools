@@ -1,10 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os
 import sys
 
-xlet_dir = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
+xlet_dir = os.getcwd()
 xlet_slug = os.path.basename(xlet_dir)
 repo_folder = os.path.normpath(os.path.join(xlet_dir, *([".."] * 2)))
 app_folder = os.path.join(repo_folder, "__app__")
@@ -42,34 +42,20 @@ class Main(LocalizedHelpCreator):
             "",
             "## %s" % _("Table of Content"),
             "",
-            "- [%s](#appletsdesklets-tweaks-{{lhc_lang_id}})" % _("Applets/Desklets tweaks"),
-            "- [%s](#hot-corners-tweaks-{{lhc_lang_id}})" % _("Hot Corners tweaks"),
             "- [%s](#desktop-area-tweaks-{{lhc_lang_id}})" % _("Desktop area tweaks"),
             "- [%s](#popup-menus-tweaks-{{lhc_lang_id}})" % _("Popup menus tweaks"),
             "- [%s](#tooltips-tweaks-{{lhc_lang_id}})" % _("Tooltips tweaks"),
-            "- [%s](#notifications-tweaks-{{lhc_lang_id}})" % _("Notifications tweaks"),
             "- [%s](#window-focus-tweaks-{{lhc_lang_id}})" % _("Window focus tweaks"),
             "- [%s](#window-shadows-tweaks-{{lhc_lang_id}})" % _("Window Shadows tweaks"),
             "- [%s](#auto-move-windows-{{lhc_lang_id}})" % _("Auto move windows"),
             "- [%s](#windows-decorations-removal-{{lhc_lang_id}})" % _(
                 "Windows decorations removal"),
-            "***",
-            '<span id="appletsdesklets-tweaks-{{lhc_lang_id}}"></span>',
-            "### %s" % _("Applets/Desklets tweaks"),
-            "- **%s** %s" % (_("Ask for confirmation on applet/desklet removal:"), _(
-                "Instead of directly remove the applet/desklet from the context menus, it will ask for confirmation. This option doesn't affect the removal of applets/desklets from the Applets/Desklets manager in Cinnamon settings (there will be no confirmation).")),
-            "***",
-            '<span id="hot-corners-tweaks-{{lhc_lang_id}}"></span>',
-            "### %s" % _("Hot Corners tweaks"),
-            _("This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has hot corners delay activation."),
-            "- **%s** %s" % (_("Top left hot corner activation delay:"), _("Crystal clear.")),
-            "- **%s** %s" % (_("Top right hot corner activation delay:"), _("Crystal clear.")),
-            "- **%s** %s" % (_("Bottom left hot corner activation delay:"), _("Crystal clear.")),
-            "- **%s** %s" % (_("Bottom right hot corner activation delay:"), _("Crystal clear.")),
+            "- [%s](#miscellaneous-tweaks-{{lhc_lang_id}})" % _("Miscellaneous tweaks"),
+            "- [%s](#removed-tweaks-{{lhc_lang_id}})" % _("Removed tweaks"),
             "***",
             '<span id="desktop-area-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Desktop area tweaks"),
-            "- **%s** %s" % (_("Enable applications drop to the Desktop:"), _(
+            "- **%s:** %s" % (_("Enable applications drop to the Desktop"), _(
                 "This tweak enables the ability to drag and drop applications from the menu applet and from the panel launchers applet into the desktop.")),
             "***",
             '<span id="popup-menus-tweaks-{{lhc_lang_id}}"></span>',
@@ -81,7 +67,7 @@ class Main(LocalizedHelpCreator):
                     "This setting affects only the behavior of menus that belongs to applets placed on any panel.")
             ),
             "",
-            "- **%s** %s" % (_("Don't eat clicks:"), _("By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open.")),
+            "- **%s:** %s" % (_("Don't eat clicks"), _("By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open.")),
             "***",
             '<span id="tooltips-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Tooltips tweaks"),
@@ -91,36 +77,23 @@ class Main(LocalizedHelpCreator):
                 "Override the centered alignment of tooltips text set by certain Cinnamon themes (all the default ones). With this tweak enabled, the tooltip text will be aligned to the left or right depending on the text direction of the current system language.")),
             "- **%s:** %s" % (_("Restrict tooltips width to half monitor width"),
                               _("Crystal clear.")),
-            "- **%s** %s" % (_("Tooltips show delay:"), _("Crystal clear.")),
-            "***",
-            '<span id="notifications-tweaks-{{lhc_lang_id}}"></span>',
-            "### %s" % _("Notifications tweaks"),
-            "- **%s** %s" % (_("Enable notifications open/close animation:"), _("Crystal clear.")),
-            "- **%s** %s" % (_("Notifications position:"), _(
-                "Notifications can be displayed at the top-right of screen (system default) or at the bottom-right of screen.")),
-            "- **%s**" % (_("Distance from panel:")),
-            "    - **%s** %s" % (_("For notifications displayed at the top-right of screen:"), _(
-                "This is the distance between the bottom border of the top panel (if no top panel, from the top of the screen) to the top border of the notification popup.")),
-            "    - **%s** %s" % (_("For notifications displayed at the bottom-right of screen:"), _(
-                "This is the distance between the top border of the bottom panel (if no bottom panel, from the bottom of the screen) to the bottom border of the notification popup.")),
-            "- **%s** %s" % (_("Notification popup right margin:"), _(
-                "By default, the right margin of the notification popup is defined by the currently used theme. This option, set to any value other than 0 (zero), allows to set a custom right margin, ignoring the defined by the theme.")),
+            "- **%s:** %s" % (_("Tooltips show delay"), _("Crystal clear.")),
             "***",
             '<span id="window-focus-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Window focus tweaks"),
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Tweak based on the gnome-shell extension called [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) by [Valentin Dimitrov](https://github.com/v-dimitrov) and another gnome-shell extension called [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut) by [awamper](https://github.com/awamper)."),
             "",
-            _("Some windows that demands attention will not gain focus regardless of the settings combination on Cinnamon settings. This option will allow you to correct that."),
+            _("Some windows that demand attention will not gain focus regardless of the settings combination on Cinnamon settings. This option will allow you to correct that."),
             "",
-            "- **%s**" % _("The activation of windows demanding attention...:"),
-            "    - **%s** %s" % (_("...is handled by the system:"), _("Crystal clear.")),
-            "    - **%s** %s" % (_("...is immediate:"),
-                                 _("will force windows demanding attention to be focused immediately.")),
-            "    - **%s** %s" % (_("...is performed with a keyboard shortcut:"),
-                                 _("will focus windows demanding attention with a keyboard shortcut.")),
-            "- **%s** %s" % (_("Keyboard shortcut:"),
-                             _("Set a keyboard shortcut for the option **...is performed with a keyboard shortcut**.")),
+            "- **%s:**" % _("The activation of windows demanding attention..."),
+            "    - **%s:** %s" % (_("...is handled by the system"), _("Crystal clear.")),
+            "    - **%s:** %s" % (_("...is immediate"),
+                                  _("will force windows demanding attention to be focused immediately.")),
+            "    - **%s:** %s" % (_("...is performed with a keyboard shortcut"),
+                                  _("will focus windows demanding attention with a keyboard shortcut.")),
+            "- **%s:** %s" % (_("Keyboard shortcut"),
+                              _("Set a keyboard shortcut for the option **...is performed with a keyboard shortcut**.")),
             "***",
             '<span id="window-shadows-tweaks-{{lhc_lang_id}}"></span>',
             "### %s" % _("Window Shadows tweaks"),
@@ -141,7 +114,8 @@ class Main(LocalizedHelpCreator):
             "***",
             '<span id="auto-move-windows-{{lhc_lang_id}}"></span>',
             "### %s" % _("Auto move windows"),
-            _("This tweak is composed of two features that work in conjunction:"),
+            "",
+            "%s:" % _("This tweak is composed of two features that work in conjunction"),
             "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             "1. **%s:** %s" % (
@@ -182,15 +156,15 @@ class Main(LocalizedHelpCreator):
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("This tweak requires two commands available on the system (**xprop** and **xwininfo**) for it to work."),
             "",
-            "- %s %s" % (_("Debian based distributions:"),
-                         # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                         _("These commands are provided by the **x11-utils** package. Linux Mint already has this package installed.")),
-            "- %s %s" % (_("Archlinux based distributions:"),
-                         # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                         _("These commands are provided by the **xorg-xprop** and **xorg-xwininfo** packages.")),
-            "- %s %s" % (_("Fedora based distributions:"),
-                         # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                         _("These commands are provided by the **xorg-x11-utils** package.")),
+            "- %s: %s" % (_("Debian based distributions"),
+                          # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                          _("These commands are provided by the **x11-utils** package. Linux Mint already has this package installed.")),
+            "- %s: %s" % (_("Archlinux based distributions"),
+                          # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                          _("These commands are provided by the **xorg-xprop** and **xorg-xwininfo** packages.")),
+            "- %s: %s" % (_("Fedora based distributions"),
+                          # TO TRANSLATORS: MARKDOWN string. Respect formatting.
+                          _("These commands are provided by the **xorg-x11-utils** package.")),
             "",
             "#### %s" % _("Warnings"),
             "- %s" % _("Client side decorated windows and WINE applications aren't affected by this tweak."),
@@ -198,8 +172,8 @@ class Main(LocalizedHelpCreator):
             "- %s" % _("As a general rule to avoid issues, before enabling and configuring this tweak, close all windows currently opened, enable and configure this tweak and then log out and log back in."),
             "",
             "#### %s" % _("Known issues"),
-            "- **%s** %s" % (_("Invisible windows:"), _("Sometimes, windows of applications that are configured to remove their decorations can become invisible. The application's icon can still be seen in the panel (taskbar) and when clicked to focus its respective window, the invisible window will block the clicks as if it were visible. To fix this, the window needs to be unmaximized (it will become visible again) and then closed. When reopened, the window should behave normally.")),
-            "- **%s** %s" % (_("Applications stuck undecorated:"), _(
+            "- **%s:** %s" % (_("Invisible windows"), _("Sometimes, windows of applications that are configured to remove their decorations can become invisible. The application's icon can still be seen in the panel (taskbar) and when clicked to focus its respective window, the invisible window will block the clicks as if it were visible. To fix this, the window needs to be unmaximized (it will become visible again) and then closed. When reopened, the window should behave normally.")),
+            "- **%s:** %s" % (_("Applications stuck undecorated"), _(
                 "Some times, an application will get stuck undecorated even after unmaximizing it. Restarting the application will recover its ability to decorate and undecorate itself.")),
             "",
             "#### %s" % _("Alternative"),
@@ -252,27 +226,27 @@ class Main(LocalizedHelpCreator):
             "",
             # TO TRANSLATORS: MARKDOWN string. Respect formatting.
             _("Following the [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html), one can create a .desktop file for any application that doesn't appear in the applications list."),
+            "***",
+            '<span id="miscellaneous-tweaks-{{lhc_lang_id}}"></span>',
+            "### %s" % _("Miscellaneous tweaks"),
             "",
-            "## %s" % _("Custom xlet settings system"),
+            "- **%s:** %s" % (_("Restore logging to glass.log file"), _("Originally, this file was located at ~/.cinnamon/glass.log. I changed its location to ~/.local/share/cinnamon/logs/glass.log.")),
+            "***",
+            '<span id="removed-tweaks-{{lhc_lang_id}}"></span>',
+            "### %s" % _("Removed tweaks"),
             "",
-            _("This xlet uses a custom application to handle its settings. Cinnamon's native settings system handles external applications for xlets settings in a very limited way. To work around these limitations, I put in place different mechanisms depending on the xlet type."),
-            "",
-            "- **%s:** %s" % (
-                _("Applets"),
-                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                _("The **Configure...** context menu item is overridden so it opens the proper settings application.")
+            "- %s: %s" % (
+                _("Notifications tweaks"),
+                _("Removed due to Cinnamon now having the option to display notifications at the bottom of the screen and also having a close button.")
             ),
-            "- **%s:** %s" % (
-                _("Extensions"),
-                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                _("A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at **~/.local/share/applications**, so it will make the shortcut available in your applications menu inside the **Preferences** category.")
+            "- %s: %s" % (
+                _("Hot Corners tweaks"),
+                _("The ability to add a delay for the hot corners activation was added to Cinnamon around verison 3.2.x.")
             ),
-            "- **%s:** %s" % (
-                _("For all xlets types"),
-                # TO TRANSLATORS: MARKDOWN string. Respect formatting.
-                _("If the *wrong* settings window is opened, a button to open the *right* settings window will be available.")
-            ),
-            ""
+            "- %s: %s" % (
+                _("Xlets tweaks"),
+                _("A confirmation dialog when deleting applets/desklets was added to Cinnamon around verison 4.2.x.")
+            )
         ])
         ))
 

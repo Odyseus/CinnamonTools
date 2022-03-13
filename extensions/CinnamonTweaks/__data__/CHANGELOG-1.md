@@ -1,7 +1,5 @@
-## Cinnamon Tweaks changelog
-
-**This change log is only valid for the version of the xlet hosted on [its original repository](https://gitlab.com/Odyseus/CinnamonTools).**
-
+<br/>
+<br/>
 ***
 
 **Date:** Tue, 18 Feb 2020 04:54:09 -0300<br/>

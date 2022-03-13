@@ -13,12 +13,8 @@ const {
 
 const LAST_WINDOW_GRACE_TIME = 1000;
 
-function WorkspaceTracker() {
-    this._init.apply(this, arguments);
-}
-
-WorkspaceTracker.prototype = {
-    _init: function(aWm) {
+var WorkspaceTracker = class WorkspaceTracker {
+    constructor(aWm) {
         this._wm = aWm;
 
         this._workspaces = [];
@@ -26,7 +22,7 @@ WorkspaceTracker.prototype = {
 
         this._pauseWorkspaceCheck = false;
 
-        let tracker = Cinnamon.WindowTracker.get_default();
+        const tracker = Cinnamon.WindowTracker.get_default();
         tracker.connect("startup-sequence-changed",
             () => this._queueCheckWorkspaces());
 
@@ -52,34 +48,34 @@ WorkspaceTracker.prototype = {
             () => this._queueCheckWorkspaces());
 
         this._nWorkspacesChanged();
-    },
+    }
 
-    _getWorkspaceSettings: function() {
+    _getWorkspaceSettings() {
         return new Gio.Settings({
             schema_id: "org.cinnamon.muffin"
         });
-    },
+    }
 
-    blockUpdates: function() {
+    blockUpdates() {
         this._pauseWorkspaceCheck = true;
-    },
+    }
 
-    unblockUpdates: function() {
+    unblockUpdates() {
         this._pauseWorkspaceCheck = false;
-    },
+    }
 
-    _checkWorkspaces: function() {
+    _checkWorkspaces() {
         if (!Meta.prefs_get_dynamic_workspaces()) {
             this._checkWorkspacesId = 0;
             return false;
         }
 
-        let emptyWorkspaces = new Array(this._workspaces.length);
+        const emptyWorkspaces = new Array(this._workspaces.length);
 
         let a = 0,
             aLen = this._workspaces.length;
         for (; a < aLen; a++) {
-            let lastRemoved = this._workspaces[a]._lastRemovedWindow;
+            const lastRemoved = this._workspaces[a]._lastRemovedWindow;
             if ((lastRemoved &&
                     (lastRemoved.get_window_type() === Meta.WindowType.SPLASHSCREEN ||
                         lastRemoved.get_window_type() === Meta.WindowType.DIALOG ||
@@ -91,27 +87,27 @@ WorkspaceTracker.prototype = {
             }
         }
 
-        let sequences = Cinnamon.WindowTracker.get_default().get_startup_sequences();
+        const sequences = Cinnamon.WindowTracker.get_default().get_startup_sequences();
         let b = 0,
             bLen = sequences.length;
         for (; b < bLen; b++) {
-            let index = sequences[b].get_workspace();
+            const index = sequences[b].get_workspace();
             if (index >= 0 && index <= global.screen.n_workspaces) {
                 emptyWorkspaces[index] = false;
             }
         }
 
-        let windows = global.get_window_actors();
+        const windows = global.get_window_actors();
         let c = 0,
             cLen = windows.length;
         for (; c < cLen; c++) {
-            let winActor = windows[c];
-            let win = winActor.meta_window;
+            const winActor = windows[c];
+            const win = winActor.meta_window;
             if (win.is_on_all_workspaces()) {
                 continue;
             }
 
-            let workspaceIndex = win.get_workspace().index();
+            const workspaceIndex = win.get_workspace().index();
             emptyWorkspaces[workspaceIndex] = false;
         }
 
@@ -121,8 +117,8 @@ WorkspaceTracker.prototype = {
             emptyWorkspaces.push(false);
         }
 
-        let activeWorkspaceIndex = global.screen.get_active_workspace_index();
-        let removingCurrentWorkspace = (emptyWorkspaces[activeWorkspaceIndex] &&
+        const activeWorkspaceIndex = global.screen.get_active_workspace_index();
+        const removingCurrentWorkspace = (emptyWorkspaces[activeWorkspaceIndex] &&
             activeWorkspaceIndex < emptyWorkspaces.length - 1);
 
         emptyWorkspaces[activeWorkspaceIndex] = false;
@@ -149,9 +145,9 @@ WorkspaceTracker.prototype = {
 
         this._checkWorkspacesId = 0;
         return false;
-    },
+    }
 
-    keepWorkspaceAlive: function(aWorkspace, aDuration) {
+    keepWorkspaceAlive(aWorkspace, aDuration) {
         if (aWorkspace._keepAliveId) {
             Mainloop.source_remove(aWorkspace._keepAliveId);
         }
@@ -162,12 +158,12 @@ WorkspaceTracker.prototype = {
             return GLib.SOURCE_REMOVE;
         });
         GLib.Source.set_name_by_id(aWorkspace._keepAliveId, "[Cinnamon Tweaks] this._queueCheckWorkspaces");
-    },
+    }
 
-    _windowRemoved: function(aWorkspace, aWindow) {
+    _windowRemoved(aWorkspace, aWindow) {
         aWorkspace._lastRemovedWindow = aWindow;
         this._queueCheckWorkspaces();
-        let id = Mainloop.timeout_add(LAST_WINDOW_GRACE_TIME, () => {
+        const id = Mainloop.timeout_add(LAST_WINDOW_GRACE_TIME, () => {
             if (aWorkspace._lastRemovedWindow === aWindow) {
                 aWorkspace._lastRemovedWindow = null;
                 this._queueCheckWorkspaces();
@@ -175,41 +171,41 @@ WorkspaceTracker.prototype = {
             return GLib.SOURCE_REMOVE;
         });
         GLib.Source.set_name_by_id(id, "[Cinnamon Tweaks] this._queueCheckWorkspaces");
-    },
+    }
 
-    _windowLeftMonitor: function(aMetaScreen, aMonitorIndex, aMetaWin) { // jshint ignore:line
+    _windowLeftMonitor(aMetaScreen, aMonitorIndex, aMetaWin) { // jshint ignore:line
         // If the window left the primary monitor, that
         // might make that workspace empty
         if (aMonitorIndex === Main.layoutManager.primaryIndex) {
             this._queueCheckWorkspaces();
         }
-    },
+    }
 
-    _windowEnteredMonitor: function(aMetaScreen, aMonitorIndex, aMetaWin) { // jshint ignore:line
+    _windowEnteredMonitor(aMetaScreen, aMonitorIndex, aMetaWin) { // jshint ignore:line
         // If the window entered the primary monitor, that
         // might make that workspace non-empty
         if (aMonitorIndex === Main.layoutManager.primaryIndex) {
             this._queueCheckWorkspaces();
         }
-    },
+    }
 
-    _windowsRestacked: function() {
+    _windowsRestacked() {
         // Figure out where the pointer is in case we lost track of
         // it during a grab. (In particular, if a trayicon popup menu
         // is dismissed, see if we need to close the message tray.)
         global.sync_pointer();
-    },
+    }
 
-    _queueCheckWorkspaces: function() {
+    _queueCheckWorkspaces() {
         if (this._checkWorkspacesId === 0) {
             this._checkWorkspacesId = Meta.later_add(Meta.LaterType.BEFORE_REDRAW,
                 () => this._checkWorkspaces());
         }
-    },
+    }
 
-    _nWorkspacesChanged: function() {
-        let oldNumWorkspaces = this._workspaces.length;
-        let newNumWorkspaces = global.screen.n_workspaces;
+    _nWorkspacesChanged() {
+        const oldNumWorkspaces = this._workspaces.length;
+        const newNumWorkspaces = global.screen.n_workspaces;
 
         if (oldNumWorkspaces === newNumWorkspaces) {
             return false;
@@ -224,7 +220,7 @@ WorkspaceTracker.prototype = {
             }
 
             for (w = oldNumWorkspaces; w < newNumWorkspaces; w++) {
-                let workspace = this._workspaces[w];
+                const workspace = this._workspaces[w];
                 workspace._windowAddedId = workspace.connect("window-added",
                     () => this._queueCheckWorkspaces());
                 workspace._windowRemovedId = workspace.connect("window-removed",
@@ -234,16 +230,16 @@ WorkspaceTracker.prototype = {
             // Assume workspaces are only removed sequentially
             // (e.g. 2,3,4 - not 2,4,7)
             let removedIndex;
-            let removedNum = oldNumWorkspaces - newNumWorkspaces;
+            const removedNum = oldNumWorkspaces - newNumWorkspaces;
             for (let w = 0; w < oldNumWorkspaces; w++) {
-                let workspace = global.screen.get_workspace_by_index(w);
+                const workspace = global.screen.get_workspace_by_index(w);
                 if (this._workspaces[w] !== workspace) {
                     removedIndex = w;
                     break;
                 }
             }
 
-            let lostWorkspaces = this._workspaces.splice(removedIndex, removedNum);
+            const lostWorkspaces = this._workspaces.splice(removedIndex, removedNum);
             lostWorkspaces.forEach(function(aWorkspace) {
                 aWorkspace.disconnect(aWorkspace._windowAddedId);
                 aWorkspace.disconnect(aWorkspace._windowRemovedId);

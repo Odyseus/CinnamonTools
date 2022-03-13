@@ -1,20 +1,3 @@
-// {{IMPORTER}}
-
-let XletMeta;
-
-// Mark for deletion on EOL. Cinnamon 3.6.x+
-if (typeof __meta === "object") {
-    XletMeta = __meta;
-} else {
-    XletMeta = imports.ui.extensionSystem.extensionMeta["{{UUID}}"];
-}
-
-const GlobalUtils = __import("globalUtils.js");
-const DebugManager = __import("debugManager.js");
-const Constants = __import("constants.js");
-const DesktopNotificationsUtils = __import("desktopNotificationsUtils.js");
-const SpawnUtils = __import("spawnUtils.js");
-
 const {
     gi: {
         Cinnamon,
@@ -37,48 +20,60 @@ const {
 } = imports;
 
 const {
-    Settings,
-    Connections,
+    EXTENSION_PREFS,
+    MIN_CINNAMON_VERSION,
     WIN_MOVER_PROP
-} = Constants;
+} = require("js_modules/constants.js");
 
 const {
     _,
     escapeHTML,
-    xdgOpen
-} = GlobalUtils;
+    tryFn,
+    USER_DESKTOP_PATH,
+    launchUri
+} = require("js_modules/globalUtils.js");
 
 const {
-    wrapObjectMethods
-} = DebugManager;
+    DebugManager
+} = require("js_modules/debugManager.js");
 
 const {
     CustomNotification,
     NotificationUrgency
-} = DesktopNotificationsUtils;
+} = require("js_modules/notificationsUtils.js");
 
-var Debugger = new DebugManager.DebugManager("org.cinnamon.{{XLET_TYPE}}s.{{UUID}}");
+const {
+    SpawnReader
+} = require("js_modules/spawnUtils.js");
 
-wrapObjectMethods(Debugger, {
+const {
+    CustomExtensionSettings
+} = require("js_modules/extensionsUtils.js");
+
+var Debugger = new DebugManager(`org.cinnamon.extensions.${__meta.uuid}`);
+
+var Settings = new CustomExtensionSettings(EXTENSION_PREFS);
+
+Debugger.wrapObjectMethods({
     CustomNotification: CustomNotification
 });
 
 var Notification = new CustomNotification({
-    title: escapeHTML(_(XletMeta.name)),
-    defaultButtons: [{
+    title: escapeHTML(_(__meta.name)),
+    default_buttons: [{
         action: "dialog-information",
         label: escapeHTML(_("Help"))
     }],
-    actionInvokedCallback: (aSource, aAction) => {
+    action_invoked_callback: (aSource, aAction) => {
         switch (aAction) {
             case "dialog-information":
-                xdgOpen(XletMeta.path + "/HELP.html");
+                launchUri(`${__meta.path}/HELP.html`);
                 break;
         }
     }
 });
 
-const OutputReader = new SpawnUtils.SpawnReader();
+const OutputReader = new SpawnReader();
 
 function dealWithRejection(aTweakDescription) {
     Notification.notify([
@@ -88,97 +83,71 @@ function dealWithRejection(aTweakDescription) {
     ], NotificationUrgency.CRITICAL);
 }
 
-function testNotifications() {
-    Notification.notify([
-        escapeHTML(_("This is a test notification")),
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" +
-        "Suspendisse eleifend, lacus ut tempor vehicula, lorem tortor\n" +
-        "suscipit libero, sit amet congue odio libero vitae lacus.\n" +
-        "Sed est nibh, lacinia ac magna non, blandit aliquet est.\n" +
-        "Mauris volutpat est vel lacinia faucibus. Pellentesque\n" +
-        "pulvinar eros at dolor pretium, eget hendrerit leo rhoncus.\n" +
-        "Sed nisl leo, posuere eget risus vel, euismod egestas metus.\n" +
-        "Praesent interdum, dui sit amet convallis rutrum, velit nunc\n" +
-        "sollicitudin erat, ac viverra leo eros in nulla. Morbi feugiat\n" +
-        "feugiat est. Nam non libero dolor. Duis egestas sodales massa\n" +
-        "sit amet lobortis. Donec sit amet nisi turpis. Morbi aliquet\n" +
-        "aliquam ullamcorper."
-    ]);
-}
-
 function informCinnamonRestart() {
     Notification.notify(escapeHTML(_("Cinnamon needs to be restarted.")));
 }
 
 function informAndDisable() {
-    try {
-        let msg = [
+    tryFn(() => {
+        const msg = [
             escapeHTML(_("Extension activation aborted!!!")),
             escapeHTML(_("Your Cinnamon version may not be compatible!!!")),
-            escapeHTML(_("Minimum Cinnamon version allowed: 3.0.x"))
+            escapeHTML(_("Minimum Cinnamon version allowed: %s").format(MIN_CINNAMON_VERSION))
         ];
         global.logError(msg);
         Notification.notify(msg, NotificationUrgency.CRITICAL);
-    } finally {
-        let enabledExtensions = global.settings.get_strv("enabled-extensions");
-        Extension.unloadExtension(XletMeta.uuid, Extension.Type.EXTENSION);
-        enabledExtensions.splice(enabledExtensions.indexOf(XletMeta.uuid), 1);
+    }, null, () => {
+        const enabledExtensions = global.settings.get_strv("enabled-extensions");
+        Extension.unloadExtension(__meta.uuid, Extension.Type.EXTENSION);
+        enabledExtensions.splice(enabledExtensions.indexOf(__meta.uuid), 1);
         global.settings.set_strv("enabled-extensions", enabledExtensions);
-    }
+    });
 }
 
-function CT_NemoDesktopArea() {
-    this._init.apply(this, arguments);
-}
-
-CT_NemoDesktopArea.prototype = {
-    _init: function() {
+var CT_NemoDesktopArea = class CT_NemoDesktopArea {
+    constructor() {
         this.actor = global.stage;
         if (!this.actor.hasOwnProperty("_delegate")) {
             this.actor._delegate = this;
         }
-    },
+    }
 
-    acceptDrop: function(source, actor, x, y, time) { // jshint ignore:line
-        let app = source.hasOwnProperty("app") ? source.app : null;
+    acceptDrop(aSource, aActor, aX, aY, aTime) { // jshint ignore:line
+        const app = aSource.hasOwnProperty("app") ? aSource.app : null;
 
         if (app === null || app.is_window_backed()) {
-            return DND.DragMotionResult.NO_DROP;
+            return Clutter.EVENT_PROPAGATE;
         }
 
-        let backgroundActor = global.stage.get_actor_at_pos(Clutter.PickMode.ALL, x, y);
+        const backgroundActor = global.stage.get_actor_at_pos(Clutter.PickMode.ALL, aX, aY);
 
         if (backgroundActor !== global.window_group) {
-            return DND.DragMotionResult.NO_DROP;
+            return Clutter.EVENT_PROPAGATE;
         }
 
-        let file = Gio.file_new_for_path(app.get_app_info().get_filename());
-        let fPath = FileUtils.getUserDesktopDir() + "/" + app.get_id();
-        let destFile = Gio.file_new_for_path(fPath);
+        const file = Gio.file_new_for_path(app.get_app_info().get_filename());
+        const fPath = `${USER_DESKTOP_PATH}/${app.get_id()}`;
+        const destFile = Gio.file_new_for_path(fPath);
 
         try {
-            file.copy(destFile, 0, null, () => {});
-            if (FileUtils.hasOwnProperty("changeModeGFile")) {
-                FileUtils.changeModeGFile(destFile, 755);
-            } else {
-                Util.spawnCommandLine('chmod +x "' + fPath + '"');
-            }
+            file.copy(destFile, Gio.FileCopyFlags.NONE, null, null);
+            FileUtils.changeModeGFile(destFile, 755);
         } catch (aErr) {
             global.logError(aErr);
-            return DND.DragMotionResult.NO_DROP;
+            return Clutter.EVENT_PROPAGATE;
         }
 
-        return DND.DragMotionResult.CONTINUE;
-    },
+        return Clutter.EVENT_STOP;
+    }
 
-    handleDragOver: function(source, actor, x, y, time) { // jshint ignore:line
-        let app = source.hasOwnProperty("app") ? source.app : null;
+    handleDragOver(aSource, aActor, aX, aY, aTime) { // jshint ignore:line
+        const app = aSource.hasOwnProperty("app") ? aSource.app : null;
 
         if (app === null || app.is_window_backed()) {
             return DND.DragMotionResult.NO_DROP;
         }
 
-        let backgroundActor = global.stage.get_actor_at_pos(Clutter.PickMode.ALL, x, y);
+        const backgroundActor = global.stage.get_actor_at_pos(Clutter.PickMode.ALL, aX, aY);
 
         if (backgroundActor !== global.window_group) {
             return DND.DragMotionResult.NO_DROP;
@@ -188,57 +157,39 @@ CT_NemoDesktopArea.prototype = {
     }
 };
 
-function CT_WindowMover() {
-    this._init.apply(this, arguments);
-}
-
-CT_WindowMover.prototype = {
-
-    _init: function() {
+var CT_WindowMover = class CT_WindowMover {
+    constructor() {
         this._windowTracker = Cinnamon.WindowTracker.get_default();
         this._display = global.screen.get_display();
-        this.sigMan = new SignalManager.SignalManager(null);
+        this.signal_manager = new SignalManager.SignalManager();
         this._autoMovedAppsMap = new Map();
         this._transientWorkspaces = new Set();
-        this._windowCreatedId = 0;
-        this._pref1Id = 0;
-        this._pref2Id = 0;
 
         this.connectSignals();
         this._updateAutoMovedApplicationsMap();
-    },
+    }
 
-    connectSignals: function() {
-        /* NOTE: Do not use SignalManager for the _windowCreatedId connection.
-         * SignalManager has no connect_after method on the Cinnamon version that I use.
-         * This note is here so that you (Odyseus) do not try to implement it
-         * for a third time, dumb arse!!!
-         */
+    connectSignals() {
         // Connect after so the handler from CinnamonWindowTracker has already run
-        // Mark for deletion on EOL. Cinnamon 3.6.x+
-        // Use SignalManager to manage this._windowCreatedId signal.
-        this._windowCreatedId = this._display.connect_after("window-created",
-            (aDisplay, aWindow) => {
-                this._findAppAndMove(aDisplay, aWindow);
-            }
-        );
-
-        this._pref1Id = Settings.connect("pref_window_auto_move_application_list", function() {
-            this._updateAutoMovedApplicationsMap();
+        this.signal_manager.connect(this._display, "window-created", function(...args) {
+            this._findAppAndMove(...args);
         }.bind(this));
 
-        this._pref2Id = Settings.connect("pref_window_auto_move_fullscreen_in_own_ws", function() {
-            this._reconnectFullScreenSignal();
-        }.bind(this));
+        Settings.connect("window_auto_move_application_list",
+            this._updateAutoMovedApplicationsMap.bind(this));
+
+        Settings.connect("window_auto_move_fullscreen_in_own_ws",
+            this._reconnectFullScreenSignal.bind(this));
 
         this._reconnectFullScreenSignal();
-    },
+    }
 
-    _reconnectFullScreenSignal: function() {
-        this.sigMan.disconnectAllSignals();
+    _reconnectFullScreenSignal() {
+        this.signal_manager.disconnect("in-fullscreen-changed", global.screen);
+        this.signal_manager.disconnect("destroy", global.window_manager);
 
-        if (Settings.pref_window_auto_move_fullscreen_in_own_ws) {
-            this.sigMan.connect(global.screen, "in-fullscreen-changed", function(m) {
+        if (Settings.window_auto_move_fullscreen_in_own_ws) {
+            this.signal_manager.connect(global.screen, "in-fullscreen-changed", function(m) {
                 Mainloop.idle_add(() => {
                     this._handleFullscreenState(m);
 
@@ -246,11 +197,11 @@ CT_WindowMover.prototype = {
                 });
             }.bind(this));
 
-            this.sigMan.connect(global.window_manager, "destroy", function() {
+            this.signal_manager.connect(global.window_manager, "destroy", function() {
                 Mainloop.idle_add(() => {
-                    let currentWs = global.screen.get_active_workspace();
-                    let currentWsIndex = currentWs.index();
-                    let winList = currentWs.list_windows().filter((aW) => {
+                    const currentWs = global.screen.get_active_workspace();
+                    const currentWsIndex = currentWs.index();
+                    const winList = currentWs.list_windows().filter((aW) => {
                         return aW.window_type === Meta.WindowType.NORMAL &&
                             !aW.is_on_all_workspaces();
                     });
@@ -271,47 +222,37 @@ CT_WindowMover.prototype = {
                 });
             }.bind(this));
         }
-    },
+    }
 
-    _updateAutoMovedApplicationsMap: function() {
-        let appList = JSON.parse(JSON.stringify(Settings.pref_window_auto_move_application_list));
+    _updateAutoMovedApplicationsMap() {
+        const appList = JSON.parse(JSON.stringify(Settings.window_auto_move_application_list));
 
         if (appList.length > 0) {
             this._autoMovedAppsMap = new Map(appList.map((aEl) => {
                 return [aEl["app_id"], aEl["workspace"]];
             }));
         }
-    },
+    }
 
-    destroy: function() {
-        if (this._windowCreatedId) {
-            global.screen.get_display().disconnect(this._windowCreatedId);
-            this._windowCreatedId = 0;
-        }
+    destroy() {
+        Settings.disconnect("window_auto_move_application_list", this._updateAutoMovedApplicationsMap);
+        Settings.disconnect("window_auto_move_fullscreen_in_own_ws", this._reconnectFullScreenSignal);
 
-        if (this._pref1Id > 0) {
-            Settings.disconnect(this._pref1Id);
-        }
-
-        if (this._pref2Id > 0) {
-            Settings.disconnect(this._pref2Id);
-        }
-
-        this.sigMan.disconnectAllSignals();
+        this.signal_manager.disconnectAllSignals();
 
         this._autoMovedAppsMap.clear();
         this._transientWorkspaces.clear();
-    },
+    }
 
-    _handleFullscreenState: function(aMetaScreen) {
-        let win = aMetaScreen.get_display().focus_window;
+    _handleFullscreenState(aMetaScreen) {
+        const win = aMetaScreen.get_display().focus_window;
 
         if (!win || win.window_type !== Meta.WindowType.NORMAL ||
             global.screen.get_active_workspace().index() !== win.get_workspace().index()) {
             return;
         }
 
-        let winActor = win.get_compositor_private();
+        const winActor = win.get_compositor_private();
 
         if (!winActor) {
             return;
@@ -322,33 +263,33 @@ CT_WindowMover.prototype = {
         } else {
             this._restoreWinToOriginalWS(winActor);
         }
-    },
+    }
 
-    _checkWinAndMove: function(aWinActor) {
-        let win = aWinActor.meta_window;
+    _checkWinAndMove(aWinActor) {
+        const win = aWinActor.meta_window;
 
         if (!win || win.window_type !== Meta.WindowType.NORMAL) {
             return;
         }
 
-        let app = this._windowTracker.get_window_app(win);
+        const app = this._windowTracker.get_window_app(win);
 
         /* NOTE: If the window belongs to an app. that is configured to be opened in its
          * own workspace, let the proper function handle the window.
          */
         if (app) {
-            let appId = app.get_id();
+            const appId = app.get_id();
 
             if (this._autoMovedAppsMap.has(appId)) {
                 this._findAppAndMove(null, win);
 
                 return;
-            } else if (Settings.pref_window_auto_move_fullscreen_in_own_ws_blacklist.indexOf(appId) !== -1) {
+            } else if (Settings.window_auto_move_fullscreen_in_own_ws_blacklist.indexOf(appId) !== -1) {
                 return;
             }
         }
 
-        let otherWinList = win.get_workspace().list_windows().filter((aW) => {
+        const otherWinList = win.get_workspace().list_windows().filter((aW) => {
             return aW !== win &&
                 aW.window_type === Meta.WindowType.NORMAL &&
                 !aW.is_on_all_workspaces();
@@ -382,7 +323,7 @@ CT_WindowMover.prototype = {
             /* NOTE: A workspace will be transient because it had to be created to hold
              * the window and it will be removed when the window leaves the workspace.
              */
-            let workspaceIsTransient = emptyWorkspace >= global.screen.n_workspaces;
+            const workspaceIsTransient = emptyWorkspace >= global.screen.n_workspaces;
 
             if (workspaceIsTransient) {
                 this._transientWorkspaces.add(emptyWorkspace);
@@ -408,19 +349,19 @@ CT_WindowMover.prototype = {
                 return GLib.SOURCE_REMOVE;
             });
         }
-    },
+    }
 
-    _restoreWinToOriginalWS: function(aWinActor) {
-        let win = aWinActor.meta_window;
+    _restoreWinToOriginalWS(aWinActor) {
+        const win = aWinActor.meta_window;
 
         if (!win || win.window_type !== Meta.WindowType.NORMAL) {
             return;
         }
 
-        let currectWinWorkspace = win.get_workspace();
+        const currectWinWorkspace = win.get_workspace();
 
         if (win.hasOwnProperty(WIN_MOVER_PROP)) {
-            let previous = win[WIN_MOVER_PROP].original_workspace;
+            const previous = win[WIN_MOVER_PROP].original_workspace;
 
             if (previous >= global.screen.n_workspaces) {
                 this._ensureAtLeastWorkspaces(previous);
@@ -429,7 +370,7 @@ CT_WindowMover.prototype = {
             Mainloop.idle_add(() => {
                 this._moveWindow(previous, win, true);
 
-                let otherWinsList = currectWinWorkspace.list_windows().filter((aW) => {
+                const otherWinsList = currectWinWorkspace.list_windows().filter((aW) => {
                     return aW.window_type === Meta.WindowType.NORMAL && !aW.is_on_all_workspaces();
                 });
 
@@ -440,20 +381,20 @@ CT_WindowMover.prototype = {
                 return GLib.SOURCE_REMOVE;
             });
         }
-    },
+    }
 
-    _ensureAtLeastWorkspaces: function(aNum) {
+    _ensureAtLeastWorkspaces(aNum) {
         for (let j = global.screen.n_workspaces; j <= aNum; j++) {
             Main._addWorkspace();
         }
-    },
+    }
 
-    _findAppAndMove: function(aDisplay, aWindow, aRecurse = true) {
+    _findAppAndMove(aDisplay, aWindow, aRecurse = true) {
         if (aWindow.skip_taskbar) {
             return;
         }
 
-        let app = this._windowTracker.get_window_app(aWindow);
+        const app = this._windowTracker.get_window_app(aWindow);
 
         if (!app && aRecurse) {
             // Window is not tracked yet. Try one more time.
@@ -470,10 +411,10 @@ CT_WindowMover.prototype = {
             return;
         }
 
-        let app_id = app.get_id();
+        const app_id = app.get_id();
 
         if (this._autoMovedAppsMap.has(app_id)) {
-            let wsIndex = parseInt(this._autoMovedAppsMap.get(app_id), 10) - 1;
+            const wsIndex = parseInt(this._autoMovedAppsMap.get(app_id), 10) - 1;
 
             if (wsIndex >= global.screen.n_workspaces) {
                 this._ensureAtLeastWorkspaces(wsIndex);
@@ -485,14 +426,14 @@ CT_WindowMover.prototype = {
             });
 
         }
-    },
+    }
 
-    _moveWindow: function(aWsIndex, aWin, aForceFocus) {
+    _moveWindow(aWsIndex, aWin, aForceFocus) {
         if (aWin) {
             Main.wm.blockAnimations();
             aWin.change_workspace_by_index(aWsIndex, false, global.get_current_time());
 
-            if (Settings.pref_window_auto_move_auto_focus || aForceFocus) {
+            if (Settings.window_auto_move_auto_focus || aForceFocus) {
 
                 Mainloop.idle_add(() => {
                     aWin.get_workspace().activate_with_focus(aWin, global.get_current_time());
@@ -507,16 +448,11 @@ CT_WindowMover.prototype = {
     }
 };
 
-function CT_MaximusNG() {
-    this._init.apply(this, arguments);
-}
-
-CT_MaximusNG.prototype = {
-
-    _init: function() {
+var CT_MaximusNG = class CT_MaximusNG {
+    constructor() {
         this._windowTracker = Cinnamon.WindowTracker.get_default();
-        this.sigMan = new SignalManager.SignalManager(null);
-        this.workspacesSigMan = new SignalManager.SignalManager(null);
+        this.signal_manager = new SignalManager.SignalManager();
+        this.workspacesSigMan = new SignalManager.SignalManager();
 
         this.shouldFocusWindow = true;
         this.oldFullscreenPref = null;
@@ -527,13 +463,13 @@ CT_MaximusNG.prototype = {
          * been removed in the first place.
          */
         this.use_set_hide_titlebar = false;
-    },
+    }
 
-    log: function(aMsg) {
-        if (Settings.pref_maximus_enable_logging) {
-            global.log("[" + _(XletMeta.name) + "][Maximus] " + aMsg);
+    log(aMsg) {
+        if (Settings.maximus_enable_logging) {
+            global.log(`[${_(__meta.name)}][Maximus] ${aMsg}`);
         }
-    },
+    }
 
     /**
      * Guesses the X ID of a window.
@@ -554,7 +490,7 @@ CT_MaximusNG.prototype = {
      * @param {Meta.Window} win - the window to guess the XID of. You wil get better
      * success if the window's actor (`win.get_compositor_private()`) exists.
      */
-    guessWindowXIDAsync: function(aWin, aCallback) {
+    guessWindowXIDAsync(aWin, aCallback) {
         let id = null;
         /* If window title has non-utf8 characters, get_description() complains
          * "Failed to convert UTF-8 string to JS string: Invalid byte sequence in conversion input",
@@ -571,41 +507,43 @@ CT_MaximusNG.prototype = {
         } catch (err) {}
 
         // Use xwininfo, take first child.
-        let winActor = aWin.get_compositor_private();
+        const winActor = aWin.get_compositor_private();
 
         if (winActor && winActor.hasOwnProperty("x-window")) {
-            OutputReader.spawn("xwininfo -children -id 0x%x"
-                .format(winActor["x-window"]), null, null, GLib.SpawnFlags.DEFAULT, null,
-                (aStandardOutput) => {
-                    let str = aStandardOutput.toString();
+            OutputReader.spawn(null, [
+                "xwininfo",
+                "-children",
+                "-id",
+                "0x%x".format(winActor["x-window"])
+            ], null, (aStandardOutput) => {
+                /* The X ID of the window is the one preceding the target window's title.
+                 * This is to handle cases where the window has no frame and so
+                 * winActor['x-window'] is actually the X ID we want, not the child.
+                 */
+                const regexp = new RegExp('(0x[0-9a-f]+) +"%s"'.format(aWin.title));
+                id = aStandardOutput.match(regexp);
 
-                    /* The X ID of the window is the one preceding the target window's title.
-                     * This is to handle cases where the window has no frame and so
-                     * winActor['x-window'] is actually the X ID we want, not the child.
-                     */
-                    let regexp = new RegExp('(0x[0-9a-f]+) +"%s"'.format(aWin.title));
-                    id = str.match(regexp);
-
-                    if (id) {
-                        aCallback(id[1]);
-                        return;
-                    }
-
-                    // Otherwise, just grab the child and hope for the best
-                    id = str.split(/child(?:ren)?:/)[1].match(/0x[0-9a-f]+/);
-
-                    if (id) {
-                        aCallback(id[0]);
-                    }
-
+                if (id) {
+                    aCallback(id[1]);
                     return;
                 }
-            );
-        }
 
-        this.log("Could not find XID for window with title %s".format(aWin.title));
-        aCallback(null);
-    },
+                // Otherwise, just grab the child and hope for the best
+                id = aStandardOutput.split(/child(?:ren)?:/)[1].match(/0x[0-9a-f]+/);
+
+                if (id) {
+                    aCallback(id[0]);
+                    return;
+                }
+
+                this.log("Could not find XID for window with title %s".format(aWin.title));
+                aCallback(null);
+            });
+        } else {
+            this.log("Could not find XID for window with title %s".format(aWin.title));
+            aCallback(null);
+        }
+    }
 
     /**
      * Undecorates a window.
@@ -635,17 +573,17 @@ CT_MaximusNG.prototype = {
      *
      * @param {Meta.Window} win - window to undecorate.
      */
-    undecorate: function(aWin) {
-        let winApp = this._windowTracker.get_window_app(aWin);
+    undecorate(aWin) {
+        const winApp = this._windowTracker.get_window_app(aWin);
         this.shouldFocusWindow = winApp && !this._autoMovedApps.has(winApp.get_id());
 
         this.guessWindowXIDAsync(aWin, (aWinId) => {
             // Undecorate with xprop
-            let cmd = ["xprop", "-id", aWinId,
+            const cmd = ["xprop", "-id", aWinId,
                 "-f", "_MOTIF_WM_HINTS", "32c",
                 "-set", "_MOTIF_WM_HINTS",
                 "0x2, 0x0, %s, 0x0, 0x0"
-                .format(Settings.pref_maximus_invisible_win_hack ? "0x2" : "0x0")
+                .format(Settings.maximus_invisible_win_hack ? "0x2" : "0x0")
             ];
 
             /* _MOTIF_WM_HINTS: see MwmUtil.h from OpenMotif source (cvs.openmotif.org),
@@ -688,7 +626,7 @@ CT_MaximusNG.prototype = {
                 }
             });
         });
-    },
+    }
 
     /**
      * Decorates a window by setting its `_MOTIF_WM_HINTS` property to ask for
@@ -696,10 +634,10 @@ CT_MaximusNG.prototype = {
      *
      * @param {Meta.Window} win - window to undecorate.
      */
-    decorate: function(aWin) {
+    decorate(aWin) {
         this.guessWindowXIDAsync(aWin, (aWinId) => {
             // Decorate with xprop: 1 === DECOR_ALL
-            let cmd = ["xprop", "-id", aWinId,
+            const cmd = ["xprop", "-id", aWinId,
                 "-f", "_MOTIF_WM_HINTS", "32c",
                 "-set", "_MOTIF_WM_HINTS",
                 "0x2, 0x0, 0x1, 0x0, 0x0"
@@ -726,7 +664,7 @@ CT_MaximusNG.prototype = {
                 });
             });
         });
-    },
+    }
 
     /**
      * Tells the window manager to hide the titlebar on maximised windows.
@@ -748,7 +686,7 @@ CT_MaximusNG.prototype = {
      * find the window's XID, we try one more time to detect the XID, unless this
      * is `true`. Internal use.
      */
-    setHideTitlebar: function(aWin, aHide, aStopAdding) {
+    setHideTitlebar(aWin, aHide, aStopAdding) {
         this.log("setHideTitlebar: " + aWin.get_title() + ": " + aHide + (aStopAdding ? " (2)" : ""));
         this.guessWindowXIDAsync(aWin, (aWinId) => {
             /* Newly-created windows are added to the workspace before
@@ -768,7 +706,7 @@ CT_MaximusNG.prototype = {
             /* Undecorate with xprop. Use _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED.
              * See (eg) mutter/src/window-props.c
              */
-            let cmd = ["xprop", "-id", aWinId,
+            const cmd = ["xprop", "-id", aWinId,
                 "-f", "_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED", "32c",
                 "-set", "_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED",
                 (aHide ? "0x1" : "0x0")
@@ -783,7 +721,7 @@ CT_MaximusNG.prototype = {
             this.log(cmd.join(" "));
             Util.spawn_async(cmd);
         });
-    },
+    }
 
     /**
      * Returns whether we should affect `win`'s decoration at all.
@@ -797,19 +735,19 @@ CT_MaximusNG.prototype = {
      * @returns {boolean} whether the window is originally decorated and not in
      * the blacklist (or in the whitelist).
      */
-    shouldAffect: function(aWin) {
+    shouldAffect(aWin) {
         if (!aWin.__CT_MaximusNG_decoratedOriginal) {
             return false;
         }
 
-        let app = Cinnamon.WindowTracker.get_default().get_window_app(aWin);
-        let appid = (app ? app.get_id() : -1);
-        let inList = Settings.pref_maximus_app_list.length > 0 &&
-            Settings.pref_maximus_app_list.indexOf(appid) >= 0;
+        const app = Cinnamon.WindowTracker.get_default().get_window_app(aWin);
+        const appid = (app ? app.get_id() : -1);
+        const inList = Settings.maximus_app_list.length > 0 &&
+            Settings.maximus_app_list.indexOf(appid) >= 0;
 
-        return !((Settings.pref_maximus_is_blacklist && inList) ||
-            (!Settings.pref_maximus_is_blacklist && !inList));
-    },
+        return !((Settings.maximus_is_blacklist && inList) ||
+            (!Settings.maximus_is_blacklist && !inList));
+    }
 
     /**
      * Checks if `win` should be undecorated, based *purely* off its maximised
@@ -820,17 +758,17 @@ CT_MaximusNG.prototype = {
      *
      * Use with `shouldAffect` to get a full check..
      */
-    shouldBeUndecorated: function(aWin) {
-        let max = aWin.get_maximized();
+    shouldBeUndecorated(aWin) {
+        const max = aWin.get_maximized();
         return (max === (Meta.MaximizeFlags.VERTICAL | Meta.MaximizeFlags.HORIZONTAL) ||
-            (Settings.pref_maximus_undecorate_half_maximized && max > 0));
-    },
+            (Settings.maximus_undecorate_half_maximized && max > 0));
+    }
 
     /**
      * Checks if `aWin` is fully maximised, or half-maximised + undecorateHalfMaximised.
      * If so, undecorates the window.
      */
-    possiblyUndecorate: function(aWin) {
+    possiblyUndecorate(aWin) {
         if (this.shouldBeUndecorated(aWin)) {
             if (aWin.get_compositor_private()) {
                 this.undecorate(aWin);
@@ -842,13 +780,13 @@ CT_MaximusNG.prototype = {
                 });
             }
         }
-    },
+    }
 
     /**
      * Checks if `aWin` is fully maximised, or half-maximised + undecorateHalfMaximised.
      * If *NOT*, redecorates the window.
      */
-    possiblyRedecorate: function(aWin) {
+    possiblyRedecorate(aWin) {
         if (!this.shouldBeUndecorated(aWin)) {
             if (!aWin.get_compositor_private()) {
                 Mainloop.idle_add(() => {
@@ -860,7 +798,7 @@ CT_MaximusNG.prototype = {
                 this.decorate(aWin);
             }
         }
-    },
+    }
 
     /**
      * Called when a window is maximized, including half-maximization.
@@ -872,26 +810,26 @@ CT_MaximusNG.prototype = {
      * It is expected to be maximized (in at least one direction) already - we will
      * not check before undecorating.
      */
-    onMaximise: function(CinnWM, aActor) {
+    onMaximise(CinnWM, aActor) {
         if (!aActor) {
             return false;
         }
 
-        let win = aActor.get_meta_window();
+        const win = aActor.get_meta_window();
 
         if (!this.shouldAffect(win)) {
             return false;
         }
 
-        let max = win.get_maximized();
+        const max = win.get_maximized();
         this.log("onMaximise: " + win.get_title() + " [" + win.get_wm_class() + "]");
 
         /* If this is a partial maximization, and we do not wish to undecorate
          * half-maximized or tiled windows, make sure the window is decorated.
          */
         if (max !== (Meta.MaximizeFlags.VERTICAL | Meta.MaximizeFlags.HORIZONTAL) &&
-            ((!Settings.pref_maximus_undecorate_half_maximized && win.tile_type === 0) ||
-                (!Settings.pref_maximus_undecorate_tiled && win.tile_type > 0))) {
+            ((!Settings.maximus_undecorate_half_maximized && win.tile_type === 0) ||
+                (!Settings.maximus_undecorate_tiled && win.tile_type > 0))) {
             this.decorate(win);
             return false;
         }
@@ -904,7 +842,7 @@ CT_MaximusNG.prototype = {
         });
 
         return false;
-    },
+    }
 
     /**
      * Called when a window is unmaximized.
@@ -915,12 +853,12 @@ CT_MaximusNG.prototype = {
      * @param {Meta.WindowActor} actor - the window actor for the unmaximized window.
      * It is expected to be unmaximized - we will not check before decorating.
      */
-    onUnmaximise: function(CinnWM, aActor) {
+    onUnmaximise(CinnWM, aActor) {
         if (!aActor) {
             return false;
         }
 
-        let win = aActor.meta_window;
+        const win = aActor.meta_window;
 
         if (!this.shouldAffect(win)) {
             return false;
@@ -936,16 +874,16 @@ CT_MaximusNG.prototype = {
          * this is not an issue).
          */
         if (!this.use_set_hide_titlebar && global.display.get_grab_op() === Meta.GrabOp.MOVING) {
-            this.sigMan.connect(global.display, "grab-op-end", function() {
+            this.signal_manager.connect(global.display, "grab-op-end", function() {
                 this.possiblyRedecorate(win);
-                this.sigMan.disconnect("grab-op-end");
+                this.signal_manager.disconnect("grab-op-end");
             }.bind(this));
         } else {
             this.decorate(win);
         }
 
         return false;
-    },
+    }
 
     /**
      * Callback for a window's 'notify::maximized-horizontally' and
@@ -963,7 +901,7 @@ CT_MaximusNG.prototype = {
      *
      * @see onWindowAdded
      */
-    onWindowChangesMaximiseState: function(aWin) {
+    onWindowChangesMaximiseState(aWin) {
         if ((aWin.maximized_horizontally && !aWin.maximized_vertically) ||
             (!aWin.maximized_horizontally && aWin.maximized_vertically)) {
             this.setHideTitlebar(aWin, false);
@@ -971,7 +909,7 @@ CT_MaximusNG.prototype = {
         } else {
             this.setHideTitlebar(aWin, true);
         }
-    },
+    }
 
     /**
      * Callback when a window is added in any of the workspaces.
@@ -998,7 +936,7 @@ CT_MaximusNG.prototype = {
      *
      * @see undecorate
      */
-    onWindowAdded: function(aWorkspace, aWin) {
+    onWindowAdded(aWorkspace, aWin) {
         if (aWin.__CT_MaximusNG_decoratedOriginal) {
             return false;
         }
@@ -1029,7 +967,7 @@ CT_MaximusNG.prototype = {
                 });
             }
 
-            if (!Settings.pref_maximus_undecorate_half_maximized) {
+            if (!Settings.maximus_undecorate_half_maximized) {
                 aWin.__CT_MaximusNG_maxHStateId = aWin.connect("notify::maximized-horizontally",
                     (aW) => this.onWindowChangesMaximiseState(aW));
                 aWin.__CT_MaximusNG_maxVStateId = aWin.connect("notify::maximized-vertically",
@@ -1045,7 +983,7 @@ CT_MaximusNG.prototype = {
         }
 
         return false;
-    },
+    }
 
     /**
      * Callback whenever the number of workspaces changes.
@@ -1055,10 +993,10 @@ CT_MaximusNG.prototype = {
      *
      * @see onWindowAdded
      */
-    onChangeNWorkspaces: function() {
+    onChangeNWorkspaces() {
         this.workspacesSigMan.disconnectAllSignals();
 
-        let maxWinAddedFn = () => {
+        const maxWinAddedFn = () => {
             return function(aWorkspace, aWindow) {
                 /* NOTE: We need to add a Mainloop.idle_add, or else in onWindowAdded the
                  * window's maximized state is not correct yet.
@@ -1073,33 +1011,31 @@ CT_MaximusNG.prototype = {
 
         let i = global.screen.n_workspaces;
         while (i--) {
-            let ws = global.screen.get_workspace_by_index(i);
+            const ws = global.screen.get_workspace_by_index(i);
             this.workspacesSigMan.connect(ws, "window-added", maxWinAddedFn().bind(this));
         }
-    },
+    }
 
     // Start listening to events and undecorate already-existing windows.
-    startUndecorating: function() {
-        Settings.connect("pref_window_auto_move_application_list", function() {
-            this._updateAutoMovedApplicationsList();
-        }.bind(this));
+    startUndecorating() {
+        Settings.connect("window_auto_move_application_list",
+            this._updateAutoMovedApplicationsList.bind(this));
         this._updateAutoMovedApplicationsList();
 
-        this.sigMan.connect(global.screen, "notify::n-workspaces", function() {
-            this.onChangeNWorkspaces();
-        }.bind(this));
+        this.signal_manager.connect(global.screen, "notify::n-workspaces",
+            this.onChangeNWorkspaces.bind(this));
 
         // If we are not using the set_hide_titlebar hint, we must listen to maximize and unmaximize events.
         if (!this.use_set_hide_titlebar) {
-            this.sigMan.connect(global.window_manager, "maximize", function(CinnWM, aActor) {
+            this.signal_manager.connect(global.window_manager, "maximize", function(CinnWM, aActor) {
                 this.onMaximise(CinnWM, aActor);
             }.bind(this));
-            this.sigMan.connect(global.window_manager, "unmaximize", function(CinnWM, aActor) {
+            this.signal_manager.connect(global.window_manager, "unmaximize", function(CinnWM, aActor) {
                 this.onUnmaximise(CinnWM, aActor);
             }.bind(this));
 
-            if (Settings.pref_maximus_undecorate_tiled) {
-                this.sigMan.connect(global.window_manager, "tile", function(CinnWM, aActor) {
+            if (Settings.maximus_undecorate_tiled) {
+                this.signal_manager.connect(global.window_manager, "tile", function(CinnWM, aActor) {
                     this.onMaximise(CinnWM, aActor);
                 }.bind(this));
             }
@@ -1128,15 +1064,13 @@ CT_MaximusNG.prototype = {
          *  these windows will have onMaximise called twice on them.
          */
         this.onetime = Mainloop.idle_add(() => {
-            let winList = global.get_window_actors().map((w) => {
+            const winList = global.get_window_actors().map((w) => {
                 return w.meta_window;
             });
-            let i = winList.length;
 
-            while (i--) {
-                let win = winList[i];
+            for (const win of winList) {
                 if (win.window_type === Meta.WindowType.DESKTOP) {
-                    continue;
+                    return;
                 }
                 this.onWindowAdded(null, win);
             }
@@ -1148,10 +1082,10 @@ CT_MaximusNG.prototype = {
 
             return GLib.SOURCE_REMOVE;
         });
-    },
+    }
 
-    stopUndecorating: function() {
-        this.sigMan.disconnectAllSignals();
+    stopUndecorating() {
+        this.signal_manager.disconnectAllSignals();
         this.workspacesSigMan.disconnectAllSignals();
 
         if (this.onetime > 0) {
@@ -1159,50 +1093,45 @@ CT_MaximusNG.prototype = {
             this.onetime = 0;
         }
 
-        let winList = global.get_window_actors().map((w) => {
+        const winList = global.get_window_actors().map((w) => {
             return w.meta_window;
         });
-        let b = winList.length;
 
-        if (b > 0) {
-            while (b--) {
-                let win = winList[b];
+        for (const win of winList) {
+            if (win.window_type === Meta.WindowType.DESKTOP) {
+                return;
+            }
 
-                if (win.window_type === Meta.WindowType.DESKTOP) {
-                    continue;
-                }
+            this.log("stopUndecorating: " + win.title);
 
-                this.log("stopUndecorating: " + win.title);
-
-                if (win.CT_MaximusNG_decoratedOriginal) {
-                    if (this.use_set_hide_titlebar) {
-                        this.setHideTitlebar(win, false);
-                        if (win.__CT_MaximusNG_maxHStateId) {
-                            win.disconnect(win.__CT_MaximusNG_maxHStateId);
-                            delete win.__CT_MaximusNG_maxHStateId;
-                        }
-
-                        if (win.__CT_MaximusNG_maxVStateId) {
-                            win.disconnect(win.__CT_MaximusNG_maxVStateId);
-                            delete win.__CT_MaximusNG_maxVStateId;
-                        }
+            if (win.CT_MaximusNG_decoratedOriginal) {
+                if (this.use_set_hide_titlebar) {
+                    this.setHideTitlebar(win, false);
+                    if (win.__CT_MaximusNG_maxHStateId) {
+                        win.disconnect(win.__CT_MaximusNG_maxHStateId);
+                        delete win.__CT_MaximusNG_maxHStateId;
                     }
 
-                    this.decorate(win);
+                    if (win.__CT_MaximusNG_maxVStateId) {
+                        win.disconnect(win.__CT_MaximusNG_maxVStateId);
+                        delete win.__CT_MaximusNG_maxVStateId;
+                    }
                 }
 
-                delete win.CT_MaximusNG_decoratedOriginal;
+                this.decorate(win);
             }
+
+            delete win.CT_MaximusNG_decoratedOriginal;
         }
 
         if (this.oldFullscreenPref !== null) {
             Meta.prefs_set_force_fullscreen(this.oldFullscreenPref);
             this.oldFullscreenPref = null;
         }
-    },
+    }
 
-    _updateAutoMovedApplicationsList: function() {
-        let appList = JSON.parse(JSON.stringify(Settings.pref_window_auto_move_application_list));
+    _updateAutoMovedApplicationsList() {
+        const appList = JSON.parse(JSON.stringify(Settings.window_auto_move_application_list));
 
         if (appList.length > 0) {
             this._autoMovedApps = new Set(appList.map((aEl) => {
@@ -1212,121 +1141,13 @@ CT_MaximusNG.prototype = {
     }
 };
 
-function WindowDemandsAttention() {
-    this._init.apply(this, arguments);
-}
-
-WindowDemandsAttention.prototype = {
-    wdae_shortcut_id: XletMeta.uuid + "-window-demands-attention-shortcut",
-
-    _init: function() {
-        this._handlerid = 0;
-
-        if (Settings.pref_win_demands_attention_activation_mode === "hotkey") {
-            this._windows = [];
-            Connections.WDAE_CONNECTION = global.display.connect(
-                "window-demands-attention",
-                (aDisplay, aWin) => {
-                    this._on_window_demands_attention(aDisplay, aWin);
-                }
-            );
-        } else if (Settings.pref_win_demands_attention_activation_mode === "force") {
-            this._tracker = Cinnamon.WindowTracker.get_default();
-            Connections.WDAE_CONNECTION = global.display.connect("window-demands-attention",
-                (aDisplay, aWin) => {
-                    this._on_window_demands_attention(aDisplay, aWin);
-                }
-            );
-        }
-    },
-
-    _on_window_demands_attention: function(aDisplay, aWin) {
-        switch (Settings.pref_win_demands_attention_activation_mode) {
-            case "hotkey":
-                this._windows.push(aWin);
-                break;
-            case "force":
-                Main.activateWindow(aWin);
-                break;
-        }
-    },
-
-    _activate_last_window: function() {
-        if (this._windows.length === 0) {
-            Notification.notify(_("No windows in the queue."));
-            return;
-        }
-
-        let last_window = this._windows.pop();
-        Main.activateWindow(last_window);
-    },
-
-    _add_keybindings: function() {
-        Main.keybindingManager.addHotKey(
-            this.wdae_shortcut_id,
-            Settings.pref_win_demands_attention_keyboard_shortcut + "::",
-            () => this._activate_last_window());
-    },
-
-    _remove_keybindings: function() {
-        Main.keybindingManager.removeHotKey(this.wdae_shortcut_id);
-    },
-
-    enable: function() {
-        if (Settings.pref_win_demands_attention_activation_mode === "hotkey") {
-            this._add_keybindings();
-        }
-    },
-
-    _destroy: function() {
-        if (Connections.WDAE_CONNECTION > 0) {
-            global.display.disconnect(Connections.WDAE_CONNECTION);
-            Connections.WDAE_CONNECTION = 0;
-        }
-
-        this._windows = null;
-        this._remove_keybindings();
-    }
-};
-
-/**
- * queryCollection:
- * @collection (array): an array of objects to query
- * @query (object): key-value pairs to find in the collection
- * @indexOnly (boolean): defaults to false, returns only the matching
- * object's index if true.
- *
- * Returns (object|null): the matched object, or null if no object
- * in the collection matches all conditions of the query.
- *
- * I fed up of the stupid retarded "SpiderMoron" engine belching stric
- * warnings all over the ][{¬½~}] place!!!!
- */
-function queryCollection(collection, query, indexOnly = false) {
-    let queryKeys = Object.keys(query);
-    for (let i = 0; i < collection.length; i++) {
-        let matches = 0;
-        for (let z = 0; z < queryKeys.length; z++) {
-            if (collection[i][queryKeys[z]] === query[queryKeys[z]]) {
-                matches += 1;
-            }
-        }
-        if (matches === queryKeys.length) {
-            return indexOnly ? i : collection[i];
-        }
-    }
-    return indexOnly ? -1 : null;
-}
-
-wrapObjectMethods(Debugger, {
+Debugger.wrapObjectMethods({
     CT_MaximusNG: CT_MaximusNG,
     CT_NemoDesktopArea: CT_NemoDesktopArea,
-    CT_WindowMover: CT_WindowMover,
-    WindowDemandsAttention: WindowDemandsAttention
+    CT_WindowMover: CT_WindowMover
 });
 
 /* exported dealWithRejection,
-            testNotifications,
             informCinnamonRestart,
             informAndDisable,
             CT_MyCheckWorkspaces,

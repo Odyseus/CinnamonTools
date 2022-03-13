@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    <title>Help for Cinnamon Tweaks</title>
-    <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
-    <style type="text/css">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <title>Help for Cinnamon Tweaks</title>
+        <link rel="shortcut icon" type="image/x-icon" href="./icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-tweaks.css">
+        <style type="text/css">
 
-    </style>
-</head>
+        </style>
+    </head>
 
-<body>
-<div id="mainarea">
-    <nav class="text-bold py-0 navbar navbar-expand-sm navbar-dark bg-gradient-primary fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="nav navbar-nav mr-auto">
-                <!-- The preventDefault() calls are to avoid changing the address in the address bar. -->
-                <a id="nav-xlet-help" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-help">Help</a>
-                <a id="nav-xlet-contributors" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-contributors">Contributors</a>
-                <a id="nav-xlet-changelog" class="navbar-brand nav-link" onclick="event.preventDefault();" href="#xlet-changelog">Changelog</a>
-            </div>
-            <form class="form-inline">
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" for="localization-switch">🌐</span>
+    <body>
+        <div id="mainarea">
+            <nav id="main-navbar"
+                 class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top py-0"
+                 role="navigation">
+                <div class="container-fluid">
+                    <div class="nav navbar-nav mr-auto">
+                        <a id="nav-xlet-help"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-help">Help</a>
+                        <a id="nav-xlet-contributors"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-contributors">Contributors</a>
+                        <a id="nav-xlet-changelogs"
+                           class="nav-link"
+                           onclick="event.preventDefault();"
+                           href="#xlet-changelogs">Changelogs</a>
                     </div>
-                    <select class="custom-select custom-select-sm text-bold" id="localization-switch">
-<!-- English --><option selected data-title="Help for Cinnamon Tweaks" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelog" value="en">English (English)</option>
-<!-- Español --><option data-title="Ayuda para Ajustes de Cinnamon" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Registro de cambios" value="es">Español (Spanish)</option>
-                    </select>
+                    <form>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"
+                                  id="localization-switch-image">🌐</span>
+                            <select class="form-select form-select-sm"
+                                    id="localization-switch"
+                                    aria-describedby="localization-switch-image">
+<!-- English --><option selected data-title="Help for Cinnamon Tweaks" data-xlet-help="Help" data-xlet-contributors="Contributors" data-xlet-changelog="Changelogs" value="en">English (English)</option>
+<!-- Español --><option data-title="Ayuda para Ajustes de Cinnamon" data-xlet-help="Ayuda" data-xlet-contributors="Colaboradores" data-xlet-changelog="Changelogs" value="es">Español (Spanish) (84%)</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </nav>
-<span id="xlet-help">
-<div class="container boxed my-3 py-3">
-<noscript>
-    <div class="alert alert-danger" role="alert">
-        <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
-        <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
-        <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
-    </div>
-    <!-- .alert.alert-danger -->
-</noscript>
+            </nav>
+            <div id="no-js-main"
+                 class="alert alert-warning mx-5"
+                 role="alert">
+                <p><strong>Oh snap! This page needs JavaScript enabled to display correctly.</strong></p>
+                <p><strong>This page uses JavaScript only to switch between the available languages, smooth scrolling, etc.</strong></p>
+                <p><strong>There are no tracking services of any kind and never will be (at least, not from my side).</strong></p>
+            </div>
+            <span id="xlet-help"></span>
+            <div class="container boxed my-3 py-3">
 
 <div id="es" class="localization-content" hidden="true">
 <h1>Ayuda para Ajustes de Cinnamon</h1>
 
-<div class="card text-bold my-3 border-warning shadow-sm">
+<div class="card fw-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Advertencia</div>
     <div class="card-body text-warning text-font-size-large"><p>Jamás borrar ninguno de los archivos encontrados dentro de la carpeta de este xlet. Podría romper la funcionalidad del xlet.</p>
 <p>Los reportes de fallos, peticiones de características y contribuciones deben hacerse en el repositorio de este xlet vinculado a continuación. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
-<div class="card text-bold my-3 border-success shadow-sm">
+<div class="card fw-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Compatibilidad con Cinnamon</div>
-    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 3.0 hasta la última versión de Cinnamon.</div>
+    <div class="card-body text-success text-font-size-large">Este xlet es compatible con Cinnamon 5.0 hasta la última versión de Cinnamon.</div>
 </div>
-<div class="card text-bold my-3 border-info shadow-sm">
+<div class="card fw-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Localización de xlets</div>
     <div class="card-body text-info text-font-size-large"><p>Si este xlet se instaló desde Configuración de Cinnamon, todas las localizaciones de este xlet se instalaron automáticamente.</p>
 
@@ -70,37 +80,20 @@
 <p>Esta extensión agrega algunas opciones para modificar el comportamiento predeterminado de ciertas funciones de Cinnamon.</p>
 
 <h2>Detalles de las opciones de la extensión</h2>
-<div class="alert alert-warning text-bold shadow-sm" role="alert">
+<div class="alert alert-warning fw-bold shadow-sm" role="alert">
 
 Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas conocidos que deben ser leídos y entendidos antes de habilitar un ajuste. No preocuparse, nada *fatal* podría suceder.
 </div><h2>Table de Contenido</h2>
 <ul>
-<li><a href="#appletsdesklets-tweaks-es">Ajustes de applets/desklets</a></li>
-<li><a href="#hot-corners-tweaks-es">Ajustes de esquinas activas</a></li>
 <li><a href="#desktop-area-tweaks-es">Ajustes del área de escritorio</a></li>
 <li><a href="#popup-menus-tweaks-es">Ajustes de menúes emergentes</a></li>
 <li><a href="#tooltips-tweaks-es">Ajustes de caja de herramientas</a></li>
-<li><a href="#notifications-tweaks-es">Ajustes de notificaciones</a></li>
 <li><a href="#window-focus-tweaks-es">Ajustes de foco de ventanas</a></li>
 <li><a href="#window-shadows-tweaks-es">Ajustes de sombras de ventana</a></li>
 <li><a href="#auto-move-windows-es">Mover ventanas automáticamente</a></li>
 <li><a href="#windows-decorations-removal-es">Eliminación de decoraciones de ventanas</a></li>
-</ul>
-<hr>
-<p><span id="appletsdesklets-tweaks-es"></span></p>
-<h3>Ajustes de applets/desklets</h3>
-<ul>
-<li><strong>Pedir confirmación al eliminar applet/desklet:</strong> En vez de directamente remover un applet/desklet desde los menúes contextuales, un diálogo de confirmación será mostrado. Esta opción no afecta la eliminación de applets/desklets desde el administrador de applet/desklets dentro de Configuración de Cinnamon (diálogo de confirmación no será mostrado).</li>
-</ul>
-<hr>
-<p><span id="hot-corners-tweaks-es"></span></p>
-<h3>Ajustes de esquinas activas</h3>
-<p>Este ajuste está disponible sólo para versiones de Cinnamon menores a 3.2.x. Cinnamon 3.2.x ya posee retardo de activación para esquinas activas.</p>
-<ul>
-<li><strong>Retardo de activación para la esquina superior izquierda:</strong> Claro como el cristal.</li>
-<li><strong>Retardo de activación para la esquina superior derecha:</strong> Claro como el cristal.</li>
-<li><strong>Retardo de activación para la esquina inferior izquierda:</strong> Claro como el cristal.</li>
-<li><strong>Retardo de activación para la esquina inferior derecha:</strong> Claro como el cristal.</li>
+<li><a href="#miscellaneous-tweaks-es">Miscellaneous tweaks</a></li>
+<li><a href="#removed-tweaks-es">Removed tweaks</a></li>
 </ul>
 <hr>
 <p><span id="desktop-area-tweaks-es"></span></p>
@@ -112,11 +105,11 @@ Algunos ajustes tienen advertencias, dependencias, limitaciones y/o problemas co
 <p><span id="popup-menus-tweaks-es"></span></p>
 <h3>Ajustes de menúes emergentes</h3>
 <h5>Comportamiento de los menúes del panel</h5>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los applets colocados en cualquier panel.
 </div><ul>
-<li><strong>No consumir clics:</strong> De forma predeterminada, cuando se abre el menú de un applet en Cinnamon y luego se hace clic en otro applet para abrir su menú, el primer clic se utiliza para cerrar el primer menú abierto y, a continuación, se debe realizar otro clic para abrir el menú del segundo applet. Con esta opción habilitada, se puede abrir directamente el menú de cualquier applet incluso si otro applet tiene su menú abierto.</li>
+<li><strong>Don't eat clicks:</strong> De forma predeterminada, cuando se abre el menú de un applet en Cinnamon y luego se hace clic en otro applet para abrir su menú, el primer clic se utiliza para cerrar el primer menú abierto y, a continuación, se debe realizar otro clic para abrir el menú del segundo applet. Con esta opción habilitada, se puede abrir directamente el menú de cualquier applet incluso si otro applet tiene su menú abierto.</li>
 </ul>
 <hr>
 <p><span id="tooltips-tweaks-es"></span></p>
@@ -128,23 +121,10 @@ Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los 
 <li><strong>Retardo para mostrar información sobre herramientas:</strong> Claro como el cristal.</li>
 </ul>
 <hr>
-<p><span id="notifications-tweaks-es"></span></p>
-<h3>Ajustes de notificaciones</h3>
-<ul>
-<li><strong>Habilitar animación de notificaciones:</strong> Claro como el cristal.</li>
-<li><strong>Posición de las notificaciones:</strong> Notificaciones pueden ser mostradas en la esquina superior derecha de la pantalla (por defecto del sistema) o en la esquina inferior derecha de la pantalla.</li>
-<li><strong>Distancia desde el panel:</strong><ul>
-<li><strong>Para las notificaciones que se muestran en la parte superior derecha de la pantalla:</strong> Esta es la distancia entre el borde inferior del panel superior (si no hay panel superior, desde la parte superior de la pantalla) hasta el borde superior de la ventana emergente de notificación.</li>
-<li><strong>Para las notificaciones que se muestran en la parte inferior derecha de la pantalla:</strong> Esta es la distancia entre el borde superior del panel inferior (si no hay panel inferior, desde la parte inferior de la pantalla) hasta el borde inferior de la ventana emergente de notificación.</li>
-</ul>
-</li>
-<li><strong>Margen derecho del popup de las notificaciones:</strong> Por defecto, el margen derecho de la notificación es definido por el tema que se usa actualmente. Esta opción, con un valor distinto de 0 (cero), permite establecer un margen derecho personalizado, ignorando el definido por el tema.</li>
-</ul>
-<hr>
 <p><span id="window-focus-tweaks-es"></span></p>
 <h3>Ajustes de foco de ventanas</h3>
 <p>Ajuste basado en la extensión para Gnome Shell llamada <a href="https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus">Steal My Focus</a> por <a href="https://github.com/v-dimitrov">Valentin Dimitrov</a> y otra extensión para Gnome Shell llamada <a href="https://github.com/awamper/window-demands-attention-shortcut">Window Demands Attention Shortcut</a> por <a href="https://github.com/awamper">awamper</a>.</p>
-<p>Algunas ventanas que requieren atención no ganarán enfoque independientemente de la combinación de ajustes en la configuración de Cinnamon. Esta opción nos permitirá corregir esto.</p>
+<p>Some windows that demand attention will not gain focus regardless of the settings combination on Cinnamon settings. This option will allow you to correct that.</p>
 <ul>
 <li><strong>La activación de ventanas que demandan atención...:</strong><ul>
 <li><strong>...es manejada por el sistema:</strong> Claro como el cristal.</li>
@@ -152,12 +132,12 @@ Esta opción sólo afecta al comportamiento de los menúes que pertenecen a los 
 <li><strong>...se lleva a cabo con un atajo de teclado:</strong> Las ventanas que requieren atención serán enfocadas bajo demanda con un atajo de teclado.</li>
 </ul>
 </li>
-<li><strong>Atajo de teclado:</strong> Establecer un atajo de teclado para la opción <strong>...se lleva a cabo con un atajo de teclado</strong>.</li>
+<li><strong>Keyboard shortcut:</strong> Establecer un atajo de teclado para la opción <strong>...se lleva a cabo con un atajo de teclado</strong>.</li>
 </ul>
 <hr>
 <p><span id="window-shadows-tweaks-es"></span></p>
 <h3>Ajustes de sombras de ventana</h3>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 Las ventanas decoradas del lado del cliente no se ven afectadas por este ajuste.
 </div><p>Ajuste basado en la extensión para Cinnamon llamada <a href="https://cinnamon-spices.linuxmint.com/extensions/view/43">Custom Shadows</a> creada por <a href="https://github.com/mikhail-ekzi">mikhail-ekzi</a>. Permite modificar las sombras usadas por el gestor de ventanas de Cinnamon (Muffin).</p>
@@ -171,7 +151,7 @@ Las ventanas decoradas del lado del cliente no se ven afectadas por este ajuste.
 <hr>
 <p><span id="auto-move-windows-es"></span></p>
 <h3>Mover ventanas automáticamente</h3>
-<p>Este ajuste se compone de dos características que trabajan en conjunto:</p>
+<p>This tweak is composed of two features that work in conjunction:</p>
 <ol>
 <li><strong>Auto mover aplicaciones a espacios de trabajo específicos:</strong> Ajuste basado en la extensión para Gnome Shell llamada <a href="https://extensions.gnome.org/extension/16/auto-move-windows/">Auto Move Windows</a> por <a href="https://github.com/fmuellner">Florian Muellner</a>. Permite la creación de reglas para abrir determinadas aplicaciones en áreas de trabajo específicas.</li>
 <li><strong>Mover aplicaciones de pantalla completa a su propio espacio de trabajo:</strong> Ajuste basado en dos extensiones para gnome-shell; una llamada <a href="https://extensions.gnome.org/extension/1502/fullscreen-on-new-workspace">Pantalla completa en nuevo espacio de trabajo</a> por <a href="https://github.com/satran">Satyajit Ranjeev</a> y otra llamada <a href="https://extensions.gnome.org/extension/1181/maximize-to-workspace">Maximizar a espacio de trabajo</a> por <a href="https://github.com/rliang">rliang</a>.</li>
@@ -185,22 +165,22 @@ Las ventanas decoradas del lado del cliente no se ven afectadas por este ajuste.
 <li>Cuando se cierra una aplicación que entró en pantalla completa, se activará el primer espacio de trabajo.</li>
 <li>Si una aplicación necesitó crear un nuevo espacio de trabajo, ese espacio de trabajo se eliminará cuando la aplicación salga de pantalla completa o se cierre, pero solo si no hay otras ventanas en él.</li>
 </ul>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 Ver <a href="#applications-not-showing-up-es">Aplicaciones no aparecen en los cuadros de diálogo de selección de aplicaciones</a>.
 </div><hr>
 <p><span id="windows-decorations-removal-es"></span></p>
 <h3>Eliminación de decoraciones de ventanas</h3>
 <p>Ajuste basado en la extensión para Cinnamon llamada <a href="https://cinnamon-spices.linuxmint.com/extensions/view/29">Cinnamon Maximus</a> por <a href="https://github.com/fatihmete">Fatih Mete</a> con algunas opciones extraídas de la extensión para Gnome Shell llamada <a href="https://github.com/luispabon/maximus-gnome-shell">Maximus NG</a> por <a href="https://github.com/luispabon">Luis Pabon</a>. Este ajuste permite remover las decoraciones de ventanas maximizadas/medio-maximizadas/en mosaico.</p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 Ver <a href="#applications-not-showing-up-es">Aplicaciones no aparecen en los cuadros de diálogo de selección de aplicaciones</a>.
 </div><h4>Dependencias</h4>
 <p>Este ajuste requiere dos comandos disponibles en el sistema (<strong>xprop</strong> y <strong>xwininfo</strong>) para que funcione.</p>
 <ul>
-<li>Distribuciones basadas en Debian: Estos comandos son proporcionados por el paquete <strong>x11-utils</strong>. Linux Mint ya tiene este paquete instalado.</li>
-<li>Distribuciones basadas en Archlinux: Estos comandos son proporcionados por los paquetes <strong>xorg-xprop</strong> y <strong>xorg-xwininfo</strong>.</li>
-<li>Distribuciones basadas en Fedora: Estos comandos son proporcionados por el paquete <strong>xorg-x11-utils</strong>.</li>
+<li>Debian based distributions: Estos comandos son proporcionados por el paquete <strong>x11-utils</strong>. Linux Mint ya tiene este paquete instalado.</li>
+<li>Archlinux based distributions: Estos comandos son proporcionados por los paquetes <strong>xorg-xprop</strong> y <strong>xorg-xwininfo</strong>.</li>
+<li>Fedora based distributions: Estos comandos son proporcionados por el paquete <strong>xorg-x11-utils</strong>.</li>
 </ul>
 <h4>Advertencias</h4>
 <ul>
@@ -210,8 +190,8 @@ Ver <a href="#applications-not-showing-up-es">Aplicaciones no aparecen en los cu
 </ul>
 <h4>Problemas conocidos</h4>
 <ul>
-<li><strong>Ventanas invisibles:</strong> A veces, las ventanas de aplicaciones que están configuradas para que sus decoraciones sean removidas se pueden volver invisibles. El ícono de la aplicación todavía puede verse en el panel (barra de tareas) y cuando se le hace clic para enfocar su ventana respectiva, la ventana invisible va a bloquear los clics como si estuviera normalmente visible. Para arreglar esto, la ventana necesita ser des-maximizada (se volverá visible) y luego cerrada. Cuando se reabre la aplicación, su ventana debería comportarse normalmente.</li>
-<li><strong>Aplicaciones atascadas sin decoraciones:</strong> A veces, una aplicación queda atascada sin decoraciones incluso después de volver a maximizarla. Reiniciado la aplicación hará que su capacidad para cambiar su estado decorada y sin decorar sea recuperada.</li>
+<li><strong>Invisible windows:</strong> A veces, las ventanas de aplicaciones que están configuradas para que sus decoraciones sean removidas se pueden volver invisibles. El ícono de la aplicación todavía puede verse en el panel (barra de tareas) y cuando se le hace clic para enfocar su ventana respectiva, la ventana invisible va a bloquear los clics como si estuviera normalmente visible. Para arreglar esto, la ventana necesita ser des-maximizada (se volverá visible) y luego cerrada. Cuando se reabre la aplicación, su ventana debería comportarse normalmente.</li>
+<li><strong>Applications stuck undecorated:</strong> A veces, una aplicación queda atascada sin decoraciones incluso después de volver a maximizarla. Reiniciado la aplicación hará que su capacidad para cambiar su estado decorada y sin decorar sea recuperada.</li>
 </ul>
 <h4>Alternativa</h4>
 <p>Existe una manera alternativa de remover la barra de título de absolutamente todas las ventanas maximizadas. Editando su tema Metacity (el tema de las decoraciones de ventana). Funciona infinitamente mejor y sin los problemas que este ajuste de esta extensión tiene.</p>
@@ -251,17 +231,24 @@ Ver <a href="#applications-not-showing-up-es">Aplicaciones no aparecen en los cu
 <h3>Aplicaciones no aparecen en los cuadros de diálogo de selección de aplicaciones</h3>
 <p>El selector de aplicaciones usado por la ventana de preferencias de esta extensión lista sólo las aplicaciones que tienen un archivo .desktop disponible. Simplemente porque estas son las aplicaciones que cualquiera de los ajustes que requieren una ID de aplicación (<strong>Mover ventanas automáticamente</strong> y <strong>Eliminación de decoraciones de ventanas</strong>) van a reconocer.</p>
 <p>Siguiendo la <a href="https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html">Especificación para Entradas de Escritorio</a>, uno puede crear un archivo .desktop para cualquier aplicación que no aparece en la lista de aplicaciones.</p>
-<h2>Sistema personalizado de configuración de xlet</h2>
-<p>Este xlet utiliza una aplicación personalizada para manejar su configuración. El sistema de configuración nativo de Cinnamon maneja aplicaciones externas para la configuración de xlets de una manera muy limitada. Para evitar estas limitaciones, establecí diferentes mecanismos según el tipo de xlet.</p>
+<hr>
+<p><span id="miscellaneous-tweaks-es"></span></p>
+<h3>Miscellaneous tweaks</h3>
 <ul>
-<li><strong>Applets:</strong> El elemento del menú contextual <strong>Configurar...</strong> está anulado para abrir la aplicación de configuración adecuada.</li>
-<li><strong>Extensiones:</strong> Al habilitar la extensión, se genera automáticamente un acceso directo (un archivo .desktop) para abrir la aplicación de configuración adecuada y se elimina cuando la extensión se deshabilita. El archivo .desktop se crea en <strong>~/.local/share/applications</strong>, por lo que el acceso directo estará disponible en el menú de aplicaciones dentro de la categoría <strong>Preferencias</strong>.</li>
-<li><strong>Para todos los xlets:</strong> Si se abre la ventana de configuración <em>incorrecta</em>, estará disponible un botón para abrir la ventana de configuración <em>correcta</em>.</li>
+<li><strong>Restore logging to glass.log file:</strong> Originally, this file was located at ~/.cinnamon/glass.log. I changed its location to ~/.local/share/cinnamon/logs/glass.log.</li>
+</ul>
+<hr>
+<p><span id="removed-tweaks-es"></span></p>
+<h3>Removed tweaks</h3>
+<ul>
+<li>Ajustes de notificaciones: Removed due to Cinnamon now having the option to display notifications at the bottom of the screen and also having a close button.</li>
+<li>Ajustes de esquinas activas: The ability to add a delay for the hot corners activation was added to Cinnamon around verison 3.2.x.</li>
+<li>Xlets tweaks: A confirmation dialog when deleting applets/desklets was added to Cinnamon around verison 4.2.x.</li>
 </ul>
 
 </br>
 
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 Las siguientes secciones están disponibles sólo en Inglés.
 </div>
@@ -272,16 +259,16 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <div id="en" class="localization-content" >
 <h1>Help for Cinnamon Tweaks</h1>
 
-<div class="card text-bold my-3 border-warning shadow-sm">
+<div class="card fw-bold my-3 border-warning shadow-sm">
     <div class="card-header bg-warning text-white">Warning</div>
     <div class="card-body text-warning text-font-size-large"><p>Never delete any of the files found inside this xlet folder. It might break this xlet functionality.</p>
 <p>Bug reports, feature requests and contributions should be done on this xlet's repository linked next. <a href="https://gitlab.com/Odyseus/CinnamonTools">GitLab</a></p></div>
 </div>
-<div class="card text-bold my-3 border-success shadow-sm">
+<div class="card fw-bold my-3 border-success shadow-sm">
     <div class="card-header bg-success text-white">Cinnamon compatibility</div>
-    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 3.0 up to latest Cinnamon version.</div>
+    <div class="card-body text-success text-font-size-large">This xlet is compatible with Cinnamon 5.0 up to latest Cinnamon version.</div>
 </div>
-<div class="card text-bold my-3 border-info shadow-sm">
+<div class="card fw-bold my-3 border-info shadow-sm">
     <div class="card-header bg-info text-white">Xlets localization</div>
     <div class="card-body text-info text-font-size-large"><p>If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed.</p>
 
@@ -292,37 +279,20 @@ Las siguientes secciones están disponibles sólo en Inglés.
 <p>This extension adds some options to modify the default behavior of certain Cinnamon features.</p>
 
 <h2>Extension options details</h2>
-<div class="alert alert-warning text-bold shadow-sm" role="alert">
+<div class="alert alert-warning fw-bold shadow-sm" role="alert">
 
 Some tweaks have warnings, dependencies, limitations and or known issues that must be read and understood before a tweak is enabled. No worries, nothing *fatal* could ever happen.
 </div><h2>Table of Content</h2>
 <ul>
-<li><a href="#appletsdesklets-tweaks-en">Applets/Desklets tweaks</a></li>
-<li><a href="#hot-corners-tweaks-en">Hot Corners tweaks</a></li>
 <li><a href="#desktop-area-tweaks-en">Desktop area tweaks</a></li>
 <li><a href="#popup-menus-tweaks-en">Popup menus tweaks</a></li>
 <li><a href="#tooltips-tweaks-en">Tooltips tweaks</a></li>
-<li><a href="#notifications-tweaks-en">Notifications tweaks</a></li>
 <li><a href="#window-focus-tweaks-en">Window focus tweaks</a></li>
 <li><a href="#window-shadows-tweaks-en">Window Shadows tweaks</a></li>
 <li><a href="#auto-move-windows-en">Auto move windows</a></li>
 <li><a href="#windows-decorations-removal-en">Windows decorations removal</a></li>
-</ul>
-<hr>
-<p><span id="appletsdesklets-tweaks-en"></span></p>
-<h3>Applets/Desklets tweaks</h3>
-<ul>
-<li><strong>Ask for confirmation on applet/desklet removal:</strong> Instead of directly remove the applet/desklet from the context menus, it will ask for confirmation. This option doesn't affect the removal of applets/desklets from the Applets/Desklets manager in Cinnamon settings (there will be no confirmation).</li>
-</ul>
-<hr>
-<p><span id="hot-corners-tweaks-en"></span></p>
-<h3>Hot Corners tweaks</h3>
-<p>This tweak is only available for Cinnamon versions lower than 3.2. Cinnamon 3.2.x already has hot corners delay activation.</p>
-<ul>
-<li><strong>Top left hot corner activation delay:</strong> Crystal clear.</li>
-<li><strong>Top right hot corner activation delay:</strong> Crystal clear.</li>
-<li><strong>Bottom left hot corner activation delay:</strong> Crystal clear.</li>
-<li><strong>Bottom right hot corner activation delay:</strong> Crystal clear.</li>
+<li><a href="#miscellaneous-tweaks-en">Miscellaneous tweaks</a></li>
+<li><a href="#removed-tweaks-en">Removed tweaks</a></li>
 </ul>
 <hr>
 <p><span id="desktop-area-tweaks-en"></span></p>
@@ -334,7 +304,7 @@ Some tweaks have warnings, dependencies, limitations and or known issues that mu
 <p><span id="popup-menus-tweaks-en"></span></p>
 <h3>Popup menus tweaks</h3>
 <h5>Panel menus behavior</h5>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 This setting affects only the behavior of menus that belongs to applets placed on any panel.
 </div><ul>
@@ -350,23 +320,10 @@ This setting affects only the behavior of menus that belongs to applets placed o
 <li><strong>Tooltips show delay:</strong> Crystal clear.</li>
 </ul>
 <hr>
-<p><span id="notifications-tweaks-en"></span></p>
-<h3>Notifications tweaks</h3>
-<ul>
-<li><strong>Enable notifications open/close animation:</strong> Crystal clear.</li>
-<li><strong>Notifications position:</strong> Notifications can be displayed at the top-right of screen (system default) or at the bottom-right of screen.</li>
-<li><strong>Distance from panel:</strong><ul>
-<li><strong>For notifications displayed at the top-right of screen:</strong> This is the distance between the bottom border of the top panel (if no top panel, from the top of the screen) to the top border of the notification popup.</li>
-<li><strong>For notifications displayed at the bottom-right of screen:</strong> This is the distance between the top border of the bottom panel (if no bottom panel, from the bottom of the screen) to the bottom border of the notification popup.</li>
-</ul>
-</li>
-<li><strong>Notification popup right margin:</strong> By default, the right margin of the notification popup is defined by the currently used theme. This option, set to any value other than 0 (zero), allows to set a custom right margin, ignoring the defined by the theme.</li>
-</ul>
-<hr>
 <p><span id="window-focus-tweaks-en"></span></p>
 <h3>Window focus tweaks</h3>
 <p>Tweak based on the gnome-shell extension called <a href="https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus">Steal My Focus</a> by <a href="https://github.com/v-dimitrov">Valentin Dimitrov</a> and another gnome-shell extension called <a href="https://github.com/awamper/window-demands-attention-shortcut">Window Demands Attention Shortcut</a> by <a href="https://github.com/awamper">awamper</a>.</p>
-<p>Some windows that demands attention will not gain focus regardless of the settings combination on Cinnamon settings. This option will allow you to correct that.</p>
+<p>Some windows that demand attention will not gain focus regardless of the settings combination on Cinnamon settings. This option will allow you to correct that.</p>
 <ul>
 <li><strong>The activation of windows demanding attention...:</strong><ul>
 <li><strong>...is handled by the system:</strong> Crystal clear.</li>
@@ -379,7 +336,7 @@ This setting affects only the behavior of menus that belongs to applets placed o
 <hr>
 <p><span id="window-shadows-tweaks-en"></span></p>
 <h3>Window Shadows tweaks</h3>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 Client side decorated windows aren't affected by this tweak.
 </div><p>Tweak based on a Cinnamon extension called <a href="https://cinnamon-spices.linuxmint.com/extensions/view/43">Custom Shadows</a> created by <a href="https://github.com/mikhail-ekzi">mikhail-ekzi</a>. It allows to modify the shadows used by Cinnamon's window manager (Muffin).</p>
@@ -407,14 +364,14 @@ Client side decorated windows aren't affected by this tweak.
 <li>When an application that entered into full screen is closed, the first workspace will be activated.</li>
 <li>If an application needed to create a new workspace, that workspace will be removed when the application exits full screen or is closed, but only if there are no other windows in it.</li>
 </ul>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 See <a href="#applications-not-showing-up-en">Applications not showing up on the applications chooser dialogs</a>.
 </div><hr>
 <p><span id="windows-decorations-removal-en"></span></p>
 <h3>Windows decorations removal</h3>
 <p>Tweak based on the extension called <a href="https://cinnamon-spices.linuxmint.com/extensions/view/29">Cinnamon Maximus</a> by <a href="https://github.com/fatihmete">Fatih Mete</a> with some options from the gnome-shell extension called <a href="https://github.com/luispabon/maximus-gnome-shell">Maximus NG</a> by <a href="https://github.com/luispabon">Luis Pabon</a>. This tweak allows to remove the windows decorations from maximized/half-maximized/tiled windows.</p>
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 See <a href="#applications-not-showing-up-en">Applications not showing up on the applications chooser dialogs</a>.
 </div><h4>Dependencies</h4>
@@ -473,25 +430,32 @@ See <a href="#applications-not-showing-up-en">Applications not showing up on the
 <h3>Applications not showing up on the applications chooser dialogs</h3>
 <p>The application chooser dialog used by the settings window of this extension lists only those applications that have available .desktop files. Simply because these applications are the only ones that any of the tweaks that require an application ID (<strong>Auto move windows</strong> and <strong>Windows decorations removal</strong>) will recognize and handle.</p>
 <p>Following the <a href="https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html">Desktop Entry Specification</a>, one can create a .desktop file for any application that doesn't appear in the applications list.</p>
-<h2>Custom xlet settings system</h2>
-<p>This xlet uses a custom application to handle its settings. Cinnamon's native settings system handles external applications for xlets settings in a very limited way. To work around these limitations, I put in place different mechanisms depending on the xlet type.</p>
+<hr>
+<p><span id="miscellaneous-tweaks-en"></span></p>
+<h3>Miscellaneous tweaks</h3>
 <ul>
-<li><strong>Applets:</strong> The <strong>Configure...</strong> context menu item is overridden so it opens the proper settings application.</li>
-<li><strong>Extensions:</strong> A shortcut (a .desktop file) to open the proper settings application is automatically generated upon enabling the extension and it is removed when the extension is disabled. The .desktop file is created at <strong>~/.local/share/applications</strong>, so it will make the shortcut available in your applications menu inside the <strong>Preferences</strong> category.</li>
-<li><strong>For all xlets types:</strong> If the <em>wrong</em> settings window is opened, a button to open the <em>right</em> settings window will be available.</li>
+<li><strong>Restore logging to glass.log file:</strong> Originally, this file was located at ~/.cinnamon/glass.log. I changed its location to ~/.local/share/cinnamon/logs/glass.log.</li>
+</ul>
+<hr>
+<p><span id="removed-tweaks-en"></span></p>
+<h3>Removed tweaks</h3>
+<ul>
+<li>Notifications tweaks: Removed due to Cinnamon now having the option to display notifications at the bottom of the screen and also having a close button.</li>
+<li>Hot Corners tweaks: The ability to add a delay for the hot corners activation was added to Cinnamon around verison 3.2.x.</li>
+<li>Xlets tweaks: A confirmation dialog when deleting applets/desklets was added to Cinnamon around verison 4.2.x.</li>
 </ul>
 
 </br>
 
-<div class="alert alert-info text-bold shadow-sm" role="alert">
+<div class="alert alert-info fw-bold shadow-sm" role="alert">
 
 The following sections are available only in English.
 </div>
 
 </div> <!-- .localization-content -->
 
-</div> <!-- .container.boxed -->
-<span id="xlet-contributors">
+            </div>
+            <span id="xlet-contributors"></span>
 <div class="container boxed my-3 py-3">
 <h2>Contributors/Mentions</h2>
 <ul>
@@ -508,10 +472,19 @@ The following sections are available only in English.
 
 </div> <!-- .container.boxed -->
 
-<span id="xlet-changelog">
+            <span id="xlet-changelogs"></span>
 <div class="container boxed my-3 py-3">
-<h2>Cinnamon Tweaks changelog</h2>
-<p><strong>This change log is only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<h2>Cinnamon Tweaks changelogs</h2>
+<p><strong>These change logs are only valid for the version of the xlet hosted on <a href="https://gitlab.com/Odyseus/CinnamonTools">its original repository</a>.</strong></p>
+<hr>
+
+</div> <!-- .container.boxed -->
+<div class="container boxed my-3 py-3">
+
+<button type="button" class="btn btn-primary collapsible">Display more history</button>
+<div class="collapsible-content">
+<p><br/>
+<br/></p>
 <hr>
 <p><strong>Date:</strong> Tue, 18 Feb 2020 04:54:09 -0300<br/>
 <strong>Commit:</strong> <a href="https://gitlab.com/Odyseus/CinnamonTools/commit/21ccd20">21ccd20</a><br/>
@@ -687,9 +660,6 @@ The following sections are available only in English.
 <li>Revamped settings system. Switched to a JavaScript class which automatically generates getters/setters based on the schema keys.</li>
 </ul>
 <hr>
-
-</div> <!-- .container.boxed -->
-<div class="container boxed my-3 py-3">
 <h2>Old repository history</h2>
 <hr>
 <ul>
@@ -1170,38 +1140,35 @@ README.
 </code></pre>
 <hr>
 
+</div>
+
 </div> <!-- .container.boxed -->
 
-</div> <!-- #mainarea -->
-<!--Footer-->
-<footer class="text-bold text-white navbar-dark bg-gradient-primary px-3 pt-4 mt-4">
-    <!--Footer Links-->
-    <div class="container-fluid text-left">
-        <ul class="list-unstyled">
-            <li>
-                <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
-            </li>
-            <li>
-                <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
-            </li>
-            <li>
-                <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
-            </li>
-        </ul>
-    </div>
-    <!--/.Footer Links-->
-    <!--Copyright-->
-    <div class="text-center py-3">
-        <div class="container-fluid">
-            © 2016-2020 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
         </div>
-    </div>
-    <!--/.Copyright-->
-</footer>
-<!--/.Footer-->
-<script type="text/javascript" defer src="./assets/js/localizations-handler.min.js"></script>
-<script type="text/javascript">
+        <footer class="fw-bold text-white navbar-dark bg-primary px-3 pt-4 mt-4">
+            <div class="container-fluid text-left">
+                <ul class="list-unstyled">
+                    <li>
+                        <p>Page created with <a href="https://getbootstrap.com">Bootstrap</a>.</p>
+                    </li>
+                    <li>
+                        <p>Boostrap theme created with <a href="https://gitlab.com/PythonCLIApplications/BootstrapThemesGenerator">Bootstrap Theme Generator</a> and based on <a href="https://bootswatch.com">Bootswatch</a>'s <a href="https://bootswatch.com/flatly">Flatly theme</a>.</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/julienetie/smooth-scroll">Smooth Scroll plugin</a> provided by <a href="https://github.com/julienetie">Julien Etienne</a>.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-center py-3">
+                <div class="container-fluid">
+                    © 2016-2022 <a href="https://gitlab.com/Odyseus/CinnamonTools">Odyseus</a>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript" defer src="./assets/js/main.js"></script>
+        <script type="text/javascript">
 
-</script>
-</body>
+        </script>
+    </body>
+
 </html>

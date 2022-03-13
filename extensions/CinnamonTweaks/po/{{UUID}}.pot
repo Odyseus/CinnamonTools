@@ -1,0 +1,1171 @@
+# This is a template file for translating the CinnamonTweaks package.
+# Copyright (C) 2016-2022
+# This file is distributed under the same license as the CinnamonTweaks package.
+# Odyseus <EMAIL@ADDRESS>, 2016-2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CinnamonTweaks VERSION\n"
+"POT-Creation-Date: 2022-03-10 23:50-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-04-11 06:23:52.163\n"
+
+#: ../../__app__/data/javascript_modules/extensionsUtils.js:309 ../../__app__/data/python_modules/xlets_settings/__init__.py:1026
+#, python-format, javascript-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/javascript_modules/extensionsUtils.js:316
+msgid "A shortcut to open this extension settings has been generated."
+msgstr ""
+
+#: ../../__app__/data/javascript_modules/extensionsUtils.js:317
+msgid "Search for it on your applications menu."
+msgstr ""
+
+#: ../../__app__/data/javascript_modules/extensionsUtils.js:318
+msgid "Read this extension help page for more details."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:64
+msgid "Application Chooser"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:68 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:75 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:448 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1149 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1981 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2836 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1165 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1290 ../../__app__/data/python_modules/xlets_settings/__init__.py:1331 ../../__app__/data/python_modules/xlets_settings/__init__.py:1366 ../../__app__/data/python_modules/xlets_settings/common.py:452 ../../__app__/data/python_modules/xlets_settings/common.py:457
+msgid "_Cancel"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:69
+msgid "_OK"
+msgstr ""
+
+#. Can be programmatically changed if needed.
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:83 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:708
+msgid "Choose an application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:206
+msgid "Total applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:344
+msgid "Applications list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:366 settings.py:63
+msgid "Application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:396
+msgid "Add Applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:404
+msgid "Remove selected applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:412 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2565 ../../__app__/data/python_modules/xlets_settings/__init__.py:413 ../../__app__/python_modules/localized_help_creator.py:324 js_modules/utils.js:66
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:450 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2603
+msgid "Duplicated entries will be automatically removed."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:451 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2604
+msgid "Entries will be also sorted alphabetically."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:453 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2606
+msgid "Basic information"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:471
+msgid "Choose one or more applications (Hold Ctrl key)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:663
+msgid "Clear application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "Invalid app"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "No app chosen"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:773
+#, python-format
+msgid "The application with ID '%s' might not be installed anymore."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:73 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:444
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:76 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:449 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1982
+msgid "_Select"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:132
+msgid "Search..."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:134
+msgid "Browse"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:322
+msgid "Icons shown"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:453
+msgid "Image files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:576
+msgid "Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:577
+msgid "The string representing the icon."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:292
+msgid "Click to set a new accelerator key."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:293
+msgid "Press Escape or click again to cancel the operation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:294
+msgid "Press Backspace to clear the existing keybinding."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:369
+msgid "unassigned"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:410
+msgid "Pick an accelerator"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:554
+#, python-format
+msgid ""
+"\n"
+"This key combination, '<b>%s</b>' cannot be used because it would become impossible to type using this key.\n"
+"\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:555
+msgid "Please try again with a modifier key such as Control, Alt or Super (Windows key) at the same time.\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:337
+msgid "Information related to this specific section"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1150 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1291 ../../__app__/data/python_modules/xlets_settings/__init__.py:1332 ../../__app__/data/python_modules/xlets_settings/__init__.py:1367 ../../__app__/data/python_modules/xlets_settings/common.py:453
+msgid "_Save"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1728
+msgid "Clear color"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1863
+msgid "Clear path"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1906
+msgid "Non-existent file/location"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1915
+msgid "(None)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1918 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1970
+msgid "Select a folder"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1920 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1973
+msgid "Select a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1956
+msgid "Any files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2489
+msgid "Strings list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2530
+msgid "Entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2557
+msgid "Remove selected entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2746
+msgid "Clear sound"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2837 ../../__app__/data/python_modules/xlets_settings/common.py:458
+msgid "_Open"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2853
+msgid "Sound files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2877
+msgid "Non-existent file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2883
+msgid "No sound"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:672
+msgid "Add new item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:682
+msgid "Remove selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698
+msgid "Edit selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:710
+msgid "Move selected item up"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
+msgid "Move selected item down"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:734
+msgid "Export data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:747 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1162
+msgid "Import data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:757
+msgid "Apply changes"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:959
+msgid "Item removal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:962
+msgid "Are you sure that you want to remove the selected items?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:963
+msgid "Note"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:964
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1166
+msgid "_Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1167
+msgid "_Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1188
+msgid "Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1189
+msgid "replace the current data with the imported data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1190
+msgid "Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1191
+msgid "add the imported data to the current data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226
+#, python-format
+msgid "Wrong data type found on file '{%s}'"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1229
+msgid "Error importing data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1280
+msgid "Add new entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1282
+msgid "Edit entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:406
+msgid "Import settings from a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:407
+msgid "Export settings to a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:408
+msgid "Reset settings to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:409
+msgid "Xlet settings"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:419
+msgid "Use headerbars on dialogs"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:421
+msgid "Application preferences"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:468
+msgid "Previous instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:476
+msgid "Next instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:835 settings.py:318
+msgid "Other"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1327 ../../__app__/data/python_modules/xlets_settings/common.py:451
+msgid "Select or enter file to export to"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1338 ../../__app__/data/python_modules/xlets_settings/__init__.py:1372 ../../__app__/data/python_modules/xlets_settings/common.py:476
+msgid "JSON files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1362
+msgid "Select a JSON file to import"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1399
+msgid "Trying to reset all settings!!!"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1401
+msgid "Reset all settings to their default values?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:52
+msgid "It enables the ability to log the output of several functions used by the extension."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54 ../../__app__/data/python_modules/xlets_settings/builder.py:246
+msgid "Normal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54
+msgid "Only log messages caused by non critical errors."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55
+msgid "Additionally log extra output messages and all HTTP responses."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55 ../../__app__/data/python_modules/xlets_settings/builder.py:247
+msgid "Verbose"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:56 ../../__app__/data/python_modules/xlets_settings/builder.py:248
+msgid "Very verbose"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:57
+msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:241
+msgid "Debugging"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:243
+msgid "Logging level"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:252
+msgid "Enable debugger"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:253
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/common.py:456
+msgid "Select a file to import"
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:316
+msgid "See this xlet help file."
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:317 ../../__app__/python_modules/localized_help_creator.py:413
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:327
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:325
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Changelogs"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:362
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:382
+#, python-format
+msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:385
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:391
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:408
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:429
+msgid "Xlets localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:433
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:434
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: settings.py:30
+msgid "This tweak settings are purposely NOT applied in real time. Click the »Apply windows decorations settings« button to save settings."
+msgstr ""
+
+#: settings.py:34 __data__/create_localized_help.py:170
+msgid "Client side decorated windows and WINE applications aren't affected by this tweak."
+msgstr ""
+
+#: settings.py:38 __data__/create_localized_help.py:171
+msgid "Close all windows that belongs to an application that is going to be added to the applications list and before applying the settings of this tweak."
+msgstr ""
+
+#: settings.py:43
+msgid "Read this extension help for more detailed instructions, list of dependencies and known issues."
+msgstr ""
+
+#: settings.py:49
+msgid "Logging to the ~/.cinnamon/glass.log file was removed around Cinnamon 3.8.x in favor of redirecting the output to .xsession-errors. I added back this feature mainly for two reasons."
+msgstr ""
+
+#: settings.py:52
+msgid "Melange is an absolute chore to use. Even if I were to get used to its less than optimal behavior (always on top by default, not remembering the current tab when Cinnamon is restarted, etc.), I will never tolerate not being able to log objects without having Melange's interface chocking with them."
+msgstr ""
+
+#: settings.py:56
+msgid "I have found some distributions in which the .xsession-errors file doesn't exist. And even if the .xsession-errors file is available, sifting through trillions of logged lines from every single application in the system is more than annoying."
+msgstr ""
+
+#: settings.py:67
+msgid "Workspace"
+msgstr ""
+
+#: settings.py:78
+msgid "Window type"
+msgstr ""
+
+#: settings.py:81 settings.py:82 settings.py:83 settings.py:84 settings.py:85 settings.py:86 settings.py:87 settings.py:88 settings.py:89
+msgid "Focused"
+msgstr ""
+
+#: settings.py:81 settings.py:90
+msgid "normal"
+msgstr ""
+
+#: settings.py:82 settings.py:91
+msgid "dialog"
+msgstr ""
+
+#: settings.py:83 settings.py:92
+msgid "modal dialog"
+msgstr ""
+
+#: settings.py:84 settings.py:93
+msgid "utility"
+msgstr ""
+
+#: settings.py:85 settings.py:94
+msgid "border"
+msgstr ""
+
+#: settings.py:86 settings.py:95
+msgid "menu"
+msgstr ""
+
+#: settings.py:87 settings.py:96
+msgid "popup menu"
+msgstr ""
+
+#: settings.py:88 settings.py:97
+msgid "dropdown menu"
+msgstr ""
+
+#: settings.py:89 settings.py:98
+msgid "attached"
+msgstr ""
+
+#: settings.py:90 settings.py:91 settings.py:92 settings.py:93 settings.py:94 settings.py:95 settings.py:96 settings.py:97 settings.py:98
+msgid "Unfocused"
+msgstr ""
+
+#: settings.py:102
+msgid "Radius"
+msgstr ""
+
+#: settings.py:109
+msgid "Top fade"
+msgstr ""
+
+#: settings.py:116
+msgid "X offset"
+msgstr ""
+
+#: settings.py:123
+msgid "Y offset"
+msgstr ""
+
+#: settings.py:130
+msgid "Opacity"
+msgstr ""
+
+#: settings.py:139
+msgid "Desktop"
+msgstr ""
+
+#: settings.py:140 __data__/create_localized_help.py:45 __data__/create_localized_help.py:57
+msgid "Desktop area tweaks"
+msgstr ""
+
+#: settings.py:142
+msgid "Enable Desktop area tweaks"
+msgstr ""
+
+#: settings.py:145 __data__/create_localized_help.py:58
+msgid "Enable applications drop to the Desktop"
+msgstr ""
+
+#: settings.py:147
+msgid "With this option enabled, applications can be dragged from the menu applet and from the panel launchers applet and dropped into the desktop."
+msgstr ""
+
+#: settings.py:150
+msgid "Tooltips"
+msgstr ""
+
+#: settings.py:151 __data__/create_localized_help.py:47 __data__/create_localized_help.py:73
+msgid "Tooltips tweaks"
+msgstr ""
+
+#: settings.py:153
+msgid "Enable Tooltips tweaks"
+msgstr ""
+
+#: settings.py:156
+msgid "Inteligent positioning"
+msgstr ""
+
+#: settings.py:158
+msgid "Tooltips on Cinnamon's UI are positioned always at the bottom of the mouse cursor; no matter if there is room to display the entire tooltip. This results in cut off tooltips. With this tweak enabled, if there is no room to display the entire tooltip below the mouse cursor, the tooltip will be displayed above the mouse cursor."
+msgstr ""
+
+#: settings.py:161 __data__/create_localized_help.py:76
+msgid "Never center tooltip text"
+msgstr ""
+
+#: settings.py:163 __data__/create_localized_help.py:77
+msgid "Override the centered alignment of tooltips text set by certain Cinnamon themes (all the default ones). With this tweak enabled, the tooltip text will be aligned to the left or right depending on the text direction of the current system language."
+msgstr ""
+
+#: settings.py:166 __data__/create_localized_help.py:78
+msgid "Restrict tooltips width to half monitor width"
+msgstr ""
+
+#: settings.py:170 __data__/create_localized_help.py:80
+msgid "Tooltips show delay"
+msgstr ""
+
+#: settings.py:172
+msgid "Set a delay in milliseconds to display Cinnamon's UI tooltips."
+msgstr ""
+
+#: settings.py:176
+msgid "milliseconds"
+msgstr ""
+
+#: settings.py:179
+msgid "Popup menus"
+msgstr ""
+
+#: settings.py:180 __data__/create_localized_help.py:46 __data__/create_localized_help.py:62
+msgid "Popup menus tweaks"
+msgstr ""
+
+#: settings.py:182
+msgid "Enable Popup menus tweaks"
+msgstr ""
+
+#: settings.py:185 __data__/create_localized_help.py:63
+msgid "Panel menus behavior"
+msgstr ""
+
+#: settings.py:187
+msgid ""
+"This setting affects only the behavior of menus that belongs to applets placed on any panel.\n"
+"\n"
+"Don't eat clicks: By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open."
+msgstr ""
+
+#: settings.py:189
+msgid "Default behavior"
+msgstr ""
+
+#: settings.py:190
+msgid "Don't \"eat\" clicks"
+msgstr ""
+
+#: settings.py:194
+msgid "Windows"
+msgstr ""
+
+#: settings.py:195 __data__/create_localized_help.py:48 __data__/create_localized_help.py:83
+msgid "Window focus tweaks"
+msgstr ""
+
+#: settings.py:197
+msgid "Enable windows focus tweaks"
+msgstr ""
+
+#: settings.py:200 __data__/create_localized_help.py:89
+msgid "The activation of windows demanding attention..."
+msgstr ""
+
+#: settings.py:203 __data__/create_localized_help.py:90
+msgid "...is handled by the system"
+msgstr ""
+
+#: settings.py:204 __data__/create_localized_help.py:91
+msgid "...is immediate"
+msgstr ""
+
+#: settings.py:205 __data__/create_localized_help.py:93
+msgid "...is performed with a keyboard shortcut"
+msgstr ""
+
+#: settings.py:209
+msgid "Activate window demanding attention"
+msgstr ""
+
+#: settings.py:214
+msgid "Window shadows tweaks"
+msgstr ""
+
+#: settings.py:216 __data__/create_localized_help.py:103
+msgid "Client side decorated windows aren't affected by this tweak."
+msgstr ""
+
+#: settings.py:219
+msgid "Enable window shadows tweaks"
+msgstr ""
+
+#: settings.py:220
+msgid "This tweak allows us to customize the shadow of all windows."
+msgstr ""
+
+#: settings.py:223 __data__/create_localized_help.py:109
+msgid "Shadow presets"
+msgstr ""
+
+#: settings.py:226 __data__/create_localized_help.py:110
+msgid "Custom shadows"
+msgstr ""
+
+#: settings.py:227 __data__/create_localized_help.py:111
+msgid "Default shadows"
+msgstr ""
+
+#: settings.py:228 __data__/create_localized_help.py:112
+msgid "No shadows"
+msgstr ""
+
+#: settings.py:229 __data__/create_localized_help.py:113
+msgid "Windows 10 shadows"
+msgstr ""
+
+#: settings.py:245 __data__/create_localized_help.py:50 __data__/create_localized_help.py:116
+msgid "Auto move windows"
+msgstr ""
+
+#: settings.py:247
+msgid "Not all applications can be assigned to be moved. Most applications which can open multiple instances of themselves most likely cannot be configured to be automatically moved."
+msgstr ""
+
+#: settings.py:250
+msgid "Enable auto move windows tweak"
+msgstr ""
+
+#: settings.py:251
+msgid "This tweak enables the ability to set rules to open determined applications on specific workspaces."
+msgstr ""
+
+#: settings.py:254
+msgid "Automatically switch to moved application's workspace"
+msgstr ""
+
+#: settings.py:258 __data__/create_localized_help.py:126
+msgid "Move full screen applications to their own workspace"
+msgstr ""
+
+#: settings.py:262
+msgid "Full screen applications blacklist"
+msgstr ""
+
+#: settings.py:264
+msgid "Applications that should not be moved to a new workspace when they enter in full screen."
+msgstr ""
+
+#: settings.py:271 __data__/create_localized_help.py:52 __data__/create_localized_help.py:146
+msgid "Windows decorations removal"
+msgstr ""
+
+#: settings.py:276
+msgid "Apply windows decorations settings"
+msgstr ""
+
+#: settings.py:279
+msgid "Enable maximized windows decoration removal"
+msgstr ""
+
+#: settings.py:282
+msgid "Undecorate half-maximized windows?"
+msgstr ""
+
+#: settings.py:286
+msgid "Undecorate tiled windows?"
+msgstr ""
+
+#: settings.py:290
+msgid "Applications list is a blacklist?"
+msgstr ""
+
+#: settings.py:292
+msgid ""
+"If enabled, all applications will have their window decorations removed, except those listed in the list of applications.\n"
+"\n"
+"If disabled, only the application from the list of applications will have their decorations removed."
+msgstr ""
+
+#: settings.py:295
+msgid "Enable hack for invisible windows"
+msgstr ""
+
+#: settings.py:297
+msgid "On Cinnamon 3.4 or greater, the windows of the applications configured so that their decorations are removed when maximized, may become invisible. Enabling this option might prevent that, but it might also add a border of about 1 pixel in place of the title bar (it might depend on the metacity theme (Window borders) used)."
+msgstr ""
+
+#: settings.py:300
+msgid "Enable logging"
+msgstr ""
+
+#: settings.py:302
+msgid "For debugging purposes only."
+msgstr ""
+
+#: settings.py:305
+msgid "Edit applications list"
+msgstr ""
+
+#: settings.py:309
+msgid "Miscellaneous"
+msgstr ""
+
+#: settings.py:310
+msgid "Looking Glass"
+msgstr ""
+
+#: settings.py:314 __data__/create_localized_help.py:233
+msgid "Restore logging to glass.log file"
+msgstr ""
+
+#: settings.py:315 __data__/create_localized_help.py:233
+msgid "Originally, this file was located at ~/.cinnamon/glass.log. I changed its location to ~/.local/share/cinnamon/logs/glass.log."
+msgstr ""
+
+#: __data__/create_localized_help.py:28
+msgid "Description"
+msgstr ""
+
+#: __data__/create_localized_help.py:30
+msgid "This extension adds some options to modify the default behavior of certain Cinnamon features."
+msgstr ""
+
+#: __data__/create_localized_help.py:35
+msgid "Extension options details"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:40
+msgid "Some tweaks have warnings, dependencies, limitations and or known issues that must be read and understood before a tweak is enabled. No worries, nothing *fatal* could ever happen."
+msgstr ""
+
+#: __data__/create_localized_help.py:43
+msgid "Table of Content"
+msgstr ""
+
+#: __data__/create_localized_help.py:49 __data__/create_localized_help.py:99
+msgid "Window Shadows tweaks"
+msgstr ""
+
+#: __data__/create_localized_help.py:53 __data__/create_localized_help.py:231
+msgid "Miscellaneous tweaks"
+msgstr ""
+
+#: __data__/create_localized_help.py:54 __data__/create_localized_help.py:236
+msgid "Removed tweaks"
+msgstr ""
+
+#: __data__/create_localized_help.py:59
+msgid "This tweak enables the ability to drag and drop applications from the menu applet and from the panel launchers applet into the desktop."
+msgstr ""
+
+#: __data__/create_localized_help.py:67
+msgid "This setting affects only the behavior of menus that belongs to applets placed on any panel."
+msgstr ""
+
+#: __data__/create_localized_help.py:70
+msgid "By default, when one opens an applet's menu on Cinnamon and then click on another applet to open its menu, the first click is used to close the first opened menu, and then another click has to be performed to open the menu of the second applet. With this option enabled, one can directly open the menu of any applet even if another applet has its menu open."
+msgstr ""
+
+#: __data__/create_localized_help.py:70
+msgid "Don't eat clicks"
+msgstr ""
+
+#: __data__/create_localized_help.py:74
+msgid "Intelligent positioning"
+msgstr ""
+
+#: __data__/create_localized_help.py:75
+msgid "It prevents the mouse cursor overlapping the tooltip and also allows to display a tooltip above the mouse cursor if there is no room on the screen to completely show the tooltip below it."
+msgstr ""
+
+#: __data__/create_localized_help.py:79 __data__/create_localized_help.py:80 __data__/create_localized_help.py:90
+msgid "Crystal clear."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:85
+msgid "Tweak based on the gnome-shell extension called [Steal My Focus](https://github.com/v-dimitrov/gnome-shell-extension-stealmyfocus) by [Valentin Dimitrov](https://github.com/v-dimitrov) and another gnome-shell extension called [Window Demands Attention Shortcut](https://github.com/awamper/window-demands-attention-shortcut) by [awamper](https://github.com/awamper)."
+msgstr ""
+
+#: __data__/create_localized_help.py:87
+msgid "Some windows that demand attention will not gain focus regardless of the settings combination on Cinnamon settings. This option will allow you to correct that."
+msgstr ""
+
+#: __data__/create_localized_help.py:92
+msgid "will force windows demanding attention to be focused immediately."
+msgstr ""
+
+#: __data__/create_localized_help.py:94
+msgid "will focus windows demanding attention with a keyboard shortcut."
+msgstr ""
+
+#: __data__/create_localized_help.py:95
+msgid "Keyboard shortcut"
+msgstr ""
+
+#: __data__/create_localized_help.py:96
+msgid "Set a keyboard shortcut for the option **...is performed with a keyboard shortcut**."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:107
+msgid "Tweak based on a Cinnamon extension called [Custom Shadows](https://cinnamon-spices.linuxmint.com/extensions/view/43) created by [mikhail-ekzi](https://github.com/mikhail-ekzi). It allows to modify the shadows used by Cinnamon's window manager (Muffin)."
+msgstr ""
+
+#: __data__/create_localized_help.py:118
+msgid "This tweak is composed of two features that work in conjunction"
+msgstr ""
+
+#: __data__/create_localized_help.py:122
+msgid "Auto move application to specific workspaces"
+msgstr ""
+
+#: __data__/create_localized_help.py:123
+msgid "Tweak based on the gnome-shell extension called [Auto Move Windows](https://extensions.gnome.org/extension/16/auto-move-windows/) by [Florian Muellner](https://github.com/fmuellner). It enables the ability to set rules to open determined applications on specific workspaces."
+msgstr ""
+
+#: __data__/create_localized_help.py:127
+msgid "Tweak based on two gnome-shell extensions; one called [Fullscreen On New Workspace](https://extensions.gnome.org/extension/1502/fullscreen-on-new-workspace) by [Satyajit Ranjeev](https://github.com/satran) and another one called [Maximize To Workspace](https://extensions.gnome.org/extension/1181/maximize-to-workspace) by [rliang](https://github.com/rliang)."
+msgstr ""
+
+#: __data__/create_localized_help.py:130
+msgid "Usage"
+msgstr ""
+
+#: __data__/create_localized_help.py:132
+msgid "When an application is opened, it will be moved to the workspace that it is configured to be opened on."
+msgstr ""
+
+#: __data__/create_localized_help.py:133
+msgid "When an application enters full screen, it will be moved to the first empty workspace (a workspace that has no windows on it). Except when the application is configured to be opened into an specific workspace."
+msgstr ""
+
+#: __data__/create_localized_help.py:134
+msgid "If an application is not configured to be opened into an specific workspace, and there are no empty workspaces, when the application enters full screen, a new workspace will be created."
+msgstr ""
+
+#: __data__/create_localized_help.py:135
+msgid "When an application that entered into full screen exits that state, it will be moved back into the workspace from which the application was set to full screen."
+msgstr ""
+
+#: __data__/create_localized_help.py:136
+msgid "When an application that entered into full screen is closed, the first workspace will be activated."
+msgstr ""
+
+#: __data__/create_localized_help.py:137
+msgid "If an application needed to create a new workspace, that workspace will be removed when the application exits full screen or is closed, but only if there are no other windows in it."
+msgstr ""
+
+#: __data__/create_localized_help.py:140 __data__/create_localized_help.py:151
+#, python-format
+msgid "See %s."
+msgstr ""
+
+#: __data__/create_localized_help.py:141 __data__/create_localized_help.py:152 __data__/create_localized_help.py:222
+msgid "Applications not showing up on the applications chooser dialogs"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:148
+msgid "Tweak based on the extension called [Cinnamon Maximus](https://cinnamon-spices.linuxmint.com/extensions/view/29) by [Fatih Mete](https://github.com/fatihmete) with some options from the gnome-shell extension called [Maximus NG](https://github.com/luispabon/maximus-gnome-shell) by [Luis Pabon](https://github.com/luispabon). This tweak allows to remove the windows decorations from maximized/half-maximized/tiled windows."
+msgstr ""
+
+#: __data__/create_localized_help.py:155
+msgid "Dependencies"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:157
+msgid "This tweak requires two commands available on the system (**xprop** and **xwininfo**) for it to work."
+msgstr ""
+
+#: __data__/create_localized_help.py:159
+msgid "Debian based distributions"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:161
+msgid "These commands are provided by the **x11-utils** package. Linux Mint already has this package installed."
+msgstr ""
+
+#: __data__/create_localized_help.py:162
+msgid "Archlinux based distributions"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:164
+msgid "These commands are provided by the **xorg-xprop** and **xorg-xwininfo** packages."
+msgstr ""
+
+#: __data__/create_localized_help.py:165
+msgid "Fedora based distributions"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:167
+msgid "These commands are provided by the **xorg-x11-utils** package."
+msgstr ""
+
+#: __data__/create_localized_help.py:169
+msgid "Warnings"
+msgstr ""
+
+#: __data__/create_localized_help.py:172
+msgid "As a general rule to avoid issues, before enabling and configuring this tweak, close all windows currently opened, enable and configure this tweak and then log out and log back in."
+msgstr ""
+
+#: __data__/create_localized_help.py:174
+msgid "Known issues"
+msgstr ""
+
+#: __data__/create_localized_help.py:175
+msgid "Invisible windows"
+msgstr ""
+
+#: __data__/create_localized_help.py:175
+msgid "Sometimes, windows of applications that are configured to remove their decorations can become invisible. The application's icon can still be seen in the panel (taskbar) and when clicked to focus its respective window, the invisible window will block the clicks as if it were visible. To fix this, the window needs to be unmaximized (it will become visible again) and then closed. When reopened, the window should behave normally."
+msgstr ""
+
+#: __data__/create_localized_help.py:176
+msgid "Applications stuck undecorated"
+msgstr ""
+
+#: __data__/create_localized_help.py:177
+msgid "Some times, an application will get stuck undecorated even after unmaximizing it. Restarting the application will recover its ability to decorate and undecorate itself."
+msgstr ""
+
+#: __data__/create_localized_help.py:179
+msgid "Alternative"
+msgstr ""
+
+#: __data__/create_localized_help.py:180
+msgid "There is an alternative way of hiding the title bar of absolutely all maximized windows without exceptions. By editing your Metacity theme (window decorations theme). It works infinitely better and without any of the issues this tweak on this extension has."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:182
+msgid "Simply go to `/Path/To/Your/Theme/metacity-1` folder and edit with any text editor the file called **metacity-theme-3.xml**. If that file doesn't exists in your theme, then it should exist one called **metacity-theme-2.xml** or **metacity-theme-1.xml**. Choose the one with the bigger number."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:184
+msgid "Find the **frame_geometry** element named **max** (or **maximized** or **normal_max** or **normal_maximized**). Its exact name may vary depending on the theme."
+msgstr ""
+
+#: __data__/create_localized_help.py:185
+msgid "Basically, one has to set to that element the attribute **has_title** to false, and then set all sizes of all its properties to 0 (zero). Some themes might require to add more properties and set them to 0 (zero) to completely get rid of the title bar."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:187
+msgid "Next you will find examples on how to edit the Metacity themes found on the **Mint-X** and **Mint-Y** themes."
+msgstr ""
+
+#: __data__/create_localized_help.py:189
+msgid "For the Metacity theme found on the Mint-X theme"
+msgstr ""
+
+#: __data__/create_localized_help.py:203
+msgid "For the Metacity theme found on Mint-Y theme"
+msgstr ""
+
+#: __data__/create_localized_help.py:219
+msgid "General extension issues"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:225
+msgid "The application chooser dialog used by the settings window of this extension lists only those applications that have available .desktop files. Simply because these applications are the only ones that any of the tweaks that require an application ID (**Auto move windows** and **Windows decorations removal**) will recognize and handle."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:228
+msgid "Following the [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/index.html), one can create a .desktop file for any application that doesn't appear in the applications list."
+msgstr ""
+
+#: __data__/create_localized_help.py:239
+msgid "Notifications tweaks"
+msgstr ""
+
+#: __data__/create_localized_help.py:240
+msgid "Removed due to Cinnamon now having the option to display notifications at the bottom of the screen and also having a close button."
+msgstr ""
+
+#: __data__/create_localized_help.py:243
+msgid "Hot Corners tweaks"
+msgstr ""
+
+#: __data__/create_localized_help.py:244
+msgid "The ability to add a delay for the hot corners activation was added to Cinnamon around verison 3.2.x."
+msgstr ""
+
+#: __data__/create_localized_help.py:247
+msgid "Xlets tweaks"
+msgstr ""
+
+#: __data__/create_localized_help.py:248
+msgid "A confirmation dialog when deleting applets/desklets was added to Cinnamon around verison 4.2.x."
+msgstr ""
+
+#: extension.js:114
+msgid "No windows in the queue."
+msgstr ""
+
+#: extension.js:571
+msgid "If you updated this extension from an older version, you must check its settings window."
+msgstr ""
+
+#: extension.js:572
+msgid "Some preferences may have been changed to their default values."
+msgstr ""
+
+#: extension.js:573
+msgid "This message will not be displayed again."
+msgstr ""
+
+#. metadata.json->name
+msgid "Cinnamon Tweaks"
+msgstr ""
+
+#. metadata.json->description
+msgid "Several tweaks for Cinnamon."
+msgstr ""
+
+#. settings-schema.json->info_label_1->description
+msgid "This window isn't this xlet's \"real\" configuration window."
+msgstr ""
+
+#. settings-schema.json->settings_button->description
+msgid "Open the \"real\" preference window"
+msgstr ""

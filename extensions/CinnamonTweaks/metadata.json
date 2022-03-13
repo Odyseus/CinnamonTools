@@ -1,6 +1,5 @@
 {
     "external-configuration-app": "settings.py",
     "name": "Cinnamon Tweaks",
-    "contributors": "See this xlet help file.",
     "description": "Several tweaks for Cinnamon."
 }
