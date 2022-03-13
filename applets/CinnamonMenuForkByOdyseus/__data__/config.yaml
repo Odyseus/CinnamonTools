@@ -1,0 +1,15 @@
+%YAML 1.1
+---
+# NOTE: I'm not including the debugManagerSchema.xml file here because
+# this applet already uses an schema, so I added the keys used by the
+# debug manager into the existent schema.
+set_executable:
+    - launcher.py
+python_modules:
+    - xlets_settings
+javascript_modules:
+    - appletsUtils.js
+    - customFileUtils.js
+    - customTooltips.js
+    - debugManager.js
+    - globalUtils.js

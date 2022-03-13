@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="{{UUID}}">
+    <schema path="/org/cinnamon/applets/{{UUID}}/" id="org.cinnamon.applets.{{UUID}}">
+        <key type="as" name="recently-used-applications">
+            <default>[]</default>
+        </key>
+        <key type="b" name="debugger-enabled">
+            <default>false</default>
+        </key>
+        <key type="i" name="logging-level">
+            <default>0</default>
+        </key>
+    </schema>
+</schemalist>

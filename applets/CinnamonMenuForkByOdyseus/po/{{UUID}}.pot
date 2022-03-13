@@ -1,0 +1,1300 @@
+# This is a template file for translating the CinnamonMenuForkByOdyseus package.
+# Copyright (C) 2016-2022
+# This file is distributed under the same license as the CinnamonMenuForkByOdyseus package.
+# Odyseus <EMAIL@ADDRESS>, 2016-2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CinnamonMenuForkByOdyseus VERSION\n"
+"POT-Creation-Date: 2022-03-10 23:50-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Make Cinnamon Xlet POT 2020-04-11 06:23:52.163\n"
+
+#: ../../__app__/data/javascript_modules/appletsUtils.js:279
+msgid "Configure..."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:64
+msgid "Application Chooser"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:68 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:75 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:448 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1149 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1981 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2836 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1165 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1290 ../../__app__/data/python_modules/xlets_settings/__init__.py:1331 ../../__app__/data/python_modules/xlets_settings/__init__.py:1366 ../../__app__/data/python_modules/xlets_settings/common.py:452 ../../__app__/data/python_modules/xlets_settings/common.py:457
+msgid "_Cancel"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:69
+msgid "_OK"
+msgstr ""
+
+#. Can be programmatically changed if needed.
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:83 ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:708
+msgid "Choose an application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:206
+msgid "Total applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:344
+msgid "Applications list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:366
+msgid "Application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:396
+msgid "Add Applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:404
+msgid "Remove selected applications"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:412 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2565 ../../__app__/data/python_modules/xlets_settings/__init__.py:413 ../../__app__/python_modules/localized_help_creator.py:324 applet.js:168
+msgid "Help"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:450 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2603
+msgid "Duplicated entries will be automatically removed."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:451 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2604
+msgid "Entries will be also sorted alphabetically."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:453 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2606
+msgid "Basic information"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:471
+msgid "Choose one or more applications (Hold Ctrl key)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:663
+msgid "Clear application"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "Invalid app"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:771 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:548
+msgid "No app chosen"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/AppChooserWidgets.py:773
+#, python-format
+msgid "The application with ID '%s' might not be installed anymore."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:73 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:444
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:76 ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:449 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1982
+msgid "_Select"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:132
+msgid "Search..."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:134
+msgid "Browse"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:322
+msgid "Icons shown"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:453
+msgid "Image files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:576 settings.py:41 settings.py:156
+msgid "Icon"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/IconChooserWidgets.py:577
+msgid "The string representing the icon."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:292
+msgid "Click to set a new accelerator key."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:293
+msgid "Press Escape or click again to cancel the operation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:294
+msgid "Press Backspace to clear the existing keybinding."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:369
+msgid "unassigned"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:410
+msgid "Pick an accelerator"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:554
+#, python-format
+msgid ""
+"\n"
+"This key combination, '<b>%s</b>' cannot be used because it would become impossible to type using this key.\n"
+"\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/KeybindingWidgets.py:555
+msgid "Please try again with a modifier key such as Control, Alt or Super (Windows key) at the same time.\n"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:337
+msgid "Information related to this specific section"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1150 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1291 ../../__app__/data/python_modules/xlets_settings/__init__.py:1332 ../../__app__/data/python_modules/xlets_settings/__init__.py:1367 ../../__app__/data/python_modules/xlets_settings/common.py:453
+msgid "_Save"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1728
+msgid "Clear color"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1863
+msgid "Clear path"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1906
+msgid "Non-existent file/location"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1915
+msgid "(None)"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1918 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1970
+msgid "Select a folder"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1920 ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1973
+msgid "Select a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:1956
+msgid "Any files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2489
+msgid "Strings list"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2530
+msgid "Entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2557
+msgid "Remove selected entries"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2746
+msgid "Clear sound"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2837 ../../__app__/data/python_modules/xlets_settings/common.py:458
+msgid "_Open"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2853
+msgid "Sound files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2877
+msgid "Non-existent file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/SettingsWidgets.py:2883
+msgid "No sound"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:672
+msgid "Add new item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:682
+msgid "Remove selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:698
+msgid "Edit selected item"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:710
+msgid "Move selected item up"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:720
+msgid "Move selected item down"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:734
+msgid "Export data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:747 ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1162
+msgid "Import data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:757
+msgid "Apply changes"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:959
+msgid "Item removal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:962
+msgid "Are you sure that you want to remove the selected items?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:963
+msgid "Note"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:964
+msgid "Press and hold Control key to remove items without confirmation."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1166
+msgid "_Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1167
+msgid "_Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1188
+msgid "Overwrite"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1189
+msgid "replace the current data with the imported data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1190
+msgid "Append"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1191
+msgid "add the imported data to the current data."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1226
+#, python-format
+msgid "Wrong data type found on file '{%s}'"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1229
+msgid "Error importing data"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1280
+msgid "Add new entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/TreeListWidgets.py:1282
+msgid "Edit entry"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:406
+msgid "Import settings from a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:407
+msgid "Export settings to a file"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:408
+msgid "Reset settings to defaults"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:409
+msgid "Xlet settings"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:419
+msgid "Use headerbars on dialogs"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:421
+msgid "Application preferences"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:468
+msgid "Previous instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:476
+msgid "Next instance"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:835 settings.py:346
+msgid "Other"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1026
+#, python-format
+msgid "Settings for %s"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1327 ../../__app__/data/python_modules/xlets_settings/common.py:451
+msgid "Select or enter file to export to"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1338 ../../__app__/data/python_modules/xlets_settings/__init__.py:1372 ../../__app__/data/python_modules/xlets_settings/common.py:476
+msgid "JSON files"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1362
+msgid "Select a JSON file to import"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1399
+msgid "Trying to reset all settings!!!"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/__init__.py:1401
+msgid "Reset all settings to their default values?"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:52
+msgid "It enables the ability to log the output of several functions used by the extension."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54 ../../__app__/data/python_modules/xlets_settings/builder.py:246
+msgid "Normal"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:54
+msgid "Only log messages caused by non critical errors."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55
+msgid "Additionally log extra output messages and all HTTP responses."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:55 ../../__app__/data/python_modules/xlets_settings/builder.py:247
+msgid "Verbose"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:56 ../../__app__/data/python_modules/xlets_settings/builder.py:248
+msgid "Very verbose"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:57
+msgid "Additionally log all method calls from all JavaScript classes/prototypes along with their execution time."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:241
+msgid "Debugging"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:243
+msgid "Logging level"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:252
+msgid "Enable debugger"
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/builder.py:253
+msgid "It enables the ability to catch all exceptions that under normal use would not be caught."
+msgstr ""
+
+#: ../../__app__/data/python_modules/xlets_settings/common.py:456
+msgid "Select a file to import"
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:316
+msgid "See this xlet help file."
+msgstr ""
+
+#: ../../__app__/python_modules/app_data.py:317 ../../__app__/python_modules/localized_help_creator.py:413
+msgid "Bug reports, feature requests and contributions should be done on this xlet's repository linked next."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:253 ../../__app__/python_modules/localized_help_creator.py:327
+#, python-format
+msgid "Help for %s"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:325
+msgid "Contributors"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:326
+msgid "Changelogs"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:362
+msgid "The following sections are available only in English."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:382
+#, python-format
+msgid "This xlet is compatible with Cinnamon %s up to latest Cinnamon version."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:385
+#, python-brace-format
+msgid "This xlet is compatible with Cinnamon {0} up to {1}."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:391
+msgid "Cinnamon compatibility"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:408
+msgid "Warning"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:411
+msgid "Never delete any of the files found inside this xlet folder. It might break this xlet functionality."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:429
+msgid "Xlets localization"
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:433
+msgid "If this xlet was installed from Cinnamon Settings, all of this xlet's localizations were automatically installed."
+msgstr ""
+
+#: ../../__app__/python_modules/localized_help_creator.py:434
+msgid "If this xlet was installed manually and not trough Cinnamon Settings, localizations can be installed by executing the script called helper.py from a terminal opened inside the xlet's folder."
+msgstr ""
+
+#: settings.py:28
+msgid "Save settings"
+msgstr ""
+
+#: settings.py:29
+msgid ""
+"Most settings are not automatically saved when modified.\n"
+"Press this button for the settings to take effect."
+msgstr ""
+
+#: settings.py:36 settings.py:62
+msgid "Enabled"
+msgstr ""
+
+#: settings.py:45
+msgid "Title"
+msgstr ""
+
+#: settings.py:49
+msgid "Command"
+msgstr ""
+
+#: settings.py:53 __data__/create_localized_help.py:28
+msgid "Description"
+msgstr ""
+
+#: settings.py:67
+msgid "Menu item label"
+msgstr ""
+
+#: settings.py:70 js_modules/utils.js:686
+msgid "Add to panel"
+msgstr ""
+
+#: settings.py:71 js_modules/utils.js:696
+msgid "Add to desktop"
+msgstr ""
+
+#: settings.py:72
+msgid "Add/Remove to/from favorites"
+msgstr ""
+
+#: settings.py:73 js_modules/utils.js:726
+msgid "Uninstall"
+msgstr ""
+
+#: settings.py:74 js_modules/utils.js:737
+msgid "Run with NVIDIA GPU"
+msgstr ""
+
+#: settings.py:75 js_modules/utils.js:747
+msgid "Run as root"
+msgstr ""
+
+#: settings.py:76 js_modules/utils.js:756
+msgid "Edit .desktop file"
+msgstr ""
+
+#: settings.py:77 js_modules/utils.js:765
+msgid "Edit with menu editor"
+msgstr ""
+
+#: settings.py:78 js_modules/utils.js:774
+msgid "Open .desktop file folder"
+msgstr ""
+
+#: settings.py:79 js_modules/utils.js:783
+msgid "Run from terminal"
+msgstr ""
+
+#: settings.py:80 js_modules/utils.js:792
+msgid "Run from terminal as root"
+msgstr ""
+
+#: settings.py:89
+msgid "Menu element"
+msgstr ""
+
+#: settings.py:92
+msgid "Custom launchers box"
+msgstr ""
+
+#: settings.py:93
+msgid "Categories box"
+msgstr ""
+
+#: settings.py:94
+msgid "Applications box"
+msgstr ""
+
+#: settings.py:95
+msgid "Search entry"
+msgstr ""
+
+#: settings.py:96
+msgid "Search box"
+msgstr ""
+
+#: settings.py:100
+msgid "Top padding"
+msgstr ""
+
+#: settings.py:107 settings.py:117 settings.py:127 settings.py:137 settings.py:255 settings.py:263 settings.py:271 settings.py:278
+msgid "pixels"
+msgstr ""
+
+#: settings.py:110
+msgid "Right padding"
+msgstr ""
+
+#: settings.py:120
+msgid "Bottom padding"
+msgstr ""
+
+#: settings.py:130
+msgid "Left padding"
+msgstr ""
+
+#: settings.py:141 settings.py:339
+msgid "Mandatory fields"
+msgstr ""
+
+#: settings.py:145 settings.py:146
+msgid "Applet settings"
+msgstr ""
+
+#: settings.py:148
+msgid "Keyboard shortcut to open and close the menu"
+msgstr ""
+
+#: settings.py:152
+msgid "Use a custom icon"
+msgstr ""
+
+#: settings.py:153
+msgid "Unchecking this allows the theme to set the icon."
+msgstr ""
+
+#: settings.py:158
+msgid "Select an icon to show in the panel."
+msgstr ""
+
+#: settings.py:161
+msgid "Text"
+msgstr ""
+
+#: settings.py:162
+msgid "Enter custom text to show in the panel."
+msgstr ""
+
+#: settings.py:165 settings.py:166
+msgid "Menu settings"
+msgstr ""
+
+#: settings.py:168
+msgid "Enable autoscrolling in application list"
+msgstr ""
+
+#: settings.py:169
+msgid "Choose whether or not to enable smooth autoscrolling in the application list."
+msgstr ""
+
+#: settings.py:172
+msgid "Use menu animations"
+msgstr ""
+
+#: settings.py:173
+msgid "Allow the menu to animate on open and close."
+msgstr ""
+
+#: settings.py:176
+msgid "Open the menu when I move my mouse over it"
+msgstr ""
+
+#: settings.py:177
+msgid "Enable opening the menu when the mouse enters the applet."
+msgstr ""
+
+#: settings.py:180
+msgid "Strict search results"
+msgstr ""
+
+#: settings.py:181
+msgid "If enabled, low priority search results will not be displayed."
+msgstr ""
+
+#: settings.py:184
+msgid "Menu hover delay"
+msgstr ""
+
+#: settings.py:186
+msgid "Delay before the menu opens when hovered."
+msgstr ""
+
+#: settings.py:190
+msgid "milliseconds"
+msgstr ""
+
+#: settings.py:193
+msgid "Maximum search results"
+msgstr ""
+
+#: settings.py:194
+msgid "Set the maximum amount of search results to be displayed."
+msgstr ""
+
+#: settings.py:198
+msgid "items"
+msgstr ""
+
+#: settings.py:202 settings.py:204
+msgid "Menu layout"
+msgstr ""
+
+#: settings.py:206
+msgid "Show \"All Applications\" category"
+msgstr ""
+
+#: settings.py:209
+msgid "Show \"Recently Used\" category"
+msgstr ""
+
+#: settings.py:210
+msgid ""
+"From the moment this option is enabled, every application launched from the menu will be stored and displayed in the \"Recently Used\" category.\n"
+"Every time this option is disabled, the list of recently used applications will be cleared."
+msgstr ""
+
+#: settings.py:213
+msgid "Show separator below \"Recently Used\" category"
+msgstr ""
+
+#: settings.py:217
+msgid "Show category icons"
+msgstr ""
+
+#: settings.py:218
+msgid "Choose whether or not to show icons on categories."
+msgstr ""
+
+#: settings.py:221
+msgid "Show application icons"
+msgstr ""
+
+#: settings.py:222
+msgid "Choose whether or not to show icons on applications."
+msgstr ""
+
+#: settings.py:225
+msgid "Hide applications list scrollbar"
+msgstr ""
+
+#: settings.py:228
+msgid "Hide categories list scrollbar"
+msgstr ""
+
+#: settings.py:231
+msgid "Invert menu layout"
+msgstr ""
+
+#: settings.py:232
+msgid "By default, the search box is at the top of the menu and the custom launchers box is at the bottom. Enabling this preference will invert those elements in the menu."
+msgstr ""
+
+#: settings.py:235
+msgid "Swap categories box"
+msgstr ""
+
+#: settings.py:236
+msgid "By default, the categories box is to the left of the applications list. With this option enabled, the categories box will be placed to the right of the applications list."
+msgstr ""
+
+#: settings.py:239
+msgid "Invert custom launches box buttons order"
+msgstr ""
+
+#: settings.py:242
+msgid "Maximum button width"
+msgstr ""
+
+#: settings.py:243
+msgid "Define the maximum width of menu items inside the applications box."
+msgstr ""
+
+#: settings.py:250
+msgid "Categories icon size"
+msgstr ""
+
+#: settings.py:258
+msgid "Applications icon size"
+msgstr ""
+
+#: settings.py:266
+msgid "Search results icon size"
+msgstr ""
+
+#: settings.py:274
+msgid "Custom launchers icon size"
+msgstr ""
+
+#: settings.py:281
+msgid "Custom launchers button alignment"
+msgstr ""
+
+#: settings.py:284
+msgid "Left"
+msgstr ""
+
+#: settings.py:285
+msgid "Middle"
+msgstr ""
+
+#: settings.py:286
+msgid "Right"
+msgstr ""
+
+#: settings.py:290
+msgid "Recent applications"
+msgstr ""
+
+#: settings.py:293
+msgid "Ignore Favorites"
+msgstr ""
+
+#: settings.py:294
+msgid "If enabled, applications set as Favorite will not be displayed in the list of \"Recent Applications\"."
+msgstr ""
+
+#: settings.py:297
+msgid "Invert recently used applications order"
+msgstr ""
+
+#: settings.py:298
+msgid "By default, the most recently used application is at the top of the list. With this option enabled, the most recently used application will be at the bottom of the list."
+msgstr ""
+
+#: settings.py:301
+msgid "Maximum recently used applications to display"
+msgstr ""
+
+#: settings.py:305
+msgid "applications"
+msgstr ""
+
+#: settings.py:309 settings.py:310
+msgid "Context menu"
+msgstr ""
+
+#: settings.py:311
+msgid "Changes take effect immediately"
+msgstr ""
+
+#: settings.py:313
+msgid "Show additional application actions"
+msgstr ""
+
+#: settings.py:324
+msgid "Appearance"
+msgstr ""
+
+#: settings.py:325
+msgid "Menu elements padding"
+msgstr ""
+
+#: settings.py:337 settings.py:338
+msgid "Custom launchers"
+msgstr ""
+
+#: settings.py:348
+msgid "Advanced"
+msgstr ""
+
+#: settings.py:350
+msgid "Gain privileges of not owned files"
+msgstr ""
+
+#: settings.py:351
+msgid ""
+"If enabled, this options will open as root .desktop files that aren't owned by the current user.\n"
+"\n"
+"This isn't needed for all text editors. Some text editors will allow you to open and edit not owned files and will ask for the root password at the moment of saving the changes."
+msgstr ""
+
+#: settings.py:354
+msgid "Custom text editor"
+msgstr ""
+
+#: settings.py:355
+msgid ""
+"Set a custom text editor to open .desktop files (just the name of the text editor executable or the path to it).\n"
+"Leave it blank to let the system decide."
+msgstr ""
+
+#: settings.py:358
+msgid "Privileges elevator"
+msgstr ""
+
+#: settings.py:359
+msgid ""
+"The graphical front-end to use to run applications as root.\n"
+"This is used by the \"Open as Root\" context menu and the option \"Gain privileges of not owned files\"."
+msgstr ""
+
+#: settings.py:362
+msgid "Terminal emulator"
+msgstr ""
+
+#: settings.py:363
+msgid ""
+"Choose the terminal emulator used by all launch from terminal options.\n"
+"IMPORTANT!!! The terminal emulator has to support the -e argument (execute the argument to this option inside the terminal)."
+msgstr ""
+
+#: settings.py:366
+msgid "Command interpreter (shell)"
+msgstr ""
+
+#: settings.py:367
+msgid ""
+"The command interpreter (shell) used when launching programs from a terminal.\n"
+"IMPORTANT!!! The shell has to support the -c argument (take the argument passed by this option as a command to execute.)."
+msgstr ""
+
+#: __data__/create_localized_help.py:30
+msgid "This applet is a custom version of the default Cinnamon Menu applet, but more customizable and without things irrelevant to searching/launching applications."
+msgstr ""
+
+#: __data__/create_localized_help.py:32
+msgid "Options/Features"
+msgstr ""
+
+#: __data__/create_localized_help.py:34
+msgid "Implemented fuzzy search."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:36
+msgid "Removed **Favorites** box in favor of a **Favorites** category."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:38
+msgid "Removed **Places** category."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:40
+msgid "Removed **Recent Files** category."
+msgstr ""
+
+#: __data__/create_localized_help.py:41
+msgid "Removed file system search."
+msgstr ""
+
+#: __data__/create_localized_help.py:42
+msgid "Removed search providers."
+msgstr ""
+
+#: __data__/create_localized_help.py:43
+msgid "Removed applications info box in favor of tooltips."
+msgstr ""
+
+#: __data__/create_localized_help.py:44
+msgid "Removed drag&drop capabilities."
+msgstr ""
+
+#: __data__/create_localized_help.py:45
+msgid "Removed recently installed applications highlighting."
+msgstr ""
+
+#: __data__/create_localized_help.py:46
+msgid "Added a custom launchers box that can run any command/script/file."
+msgstr ""
+
+#: __data__/create_localized_help.py:47
+msgid "Custom launchers icons can have a custom size and can be symbolic or full color."
+msgstr ""
+
+#: __data__/create_localized_help.py:48
+msgid "Custom launchers can execute any command (as entered in a terminal) or a path to a file. If the file is an executable script, an attempt to execute it will be made. Otherwise, the file will be opened with the systems handler for that file type."
+msgstr ""
+
+#: __data__/create_localized_help.py:49
+msgid "The size of the Categories/Applications icons can be customized."
+msgstr ""
+
+#: __data__/create_localized_help.py:50
+msgid "The placement of the categories box and the applications box can be swapped."
+msgstr ""
+
+#: __data__/create_localized_help.py:51
+msgid "The placement of the custom launchers box and the search box can be swapped."
+msgstr ""
+
+#: __data__/create_localized_help.py:52
+msgid "Scrollbars in the applications box can be hidden."
+msgstr ""
+
+#: __data__/create_localized_help.py:53
+msgid "Recently used applications can be remembered and will be displayed on a category called **Recently Used**. The applications will be sorted by execution time. The order of these applications can be inverted and there is an option to exclude favorites from being listed."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:55
+msgid "The default **Add to panel**, **Add to desktop** and **Uninstall** context menu items can be hidden."
+msgstr ""
+
+#: __data__/create_localized_help.py:56
+msgid "The menu editor can be directly opened from this applet context menu without the need to open it from the settings windows of this applet."
+msgstr ""
+
+#: __data__/create_localized_help.py:57
+msgid "The context menu for applications has 5 new items:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:59
+msgid "**Run as root:** Executes application as root."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:61
+msgid "**Edit .desktop file:** Open the application's .desktop file with a text editor."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:63
+msgid "**Open .desktop file folder:** Open the folder where the application's .desktop file is stored."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:65
+msgid "**Run from terminal:** Open a terminal and run application from there."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:67
+msgid "**Run from terminal as root:** Same as above but the application is executed as root."
+msgstr ""
+
+#: __data__/create_localized_help.py:72 __data__/create_localized_help.py:76
+msgid "Menu emulating the Whisker menu (XFCE)"
+msgstr ""
+
+#: __data__/create_localized_help.py:79
+msgid "Keyboard navigation"
+msgstr ""
+
+#: __data__/create_localized_help.py:81
+msgid "Almost all keyboard shortcuts on this menu are the same as the original menu. There are just a couple of differences that I was forced to add to my menu to make some of its features to work."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:81
+msgid "Note:"
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:84
+msgid "[[Left Arrow]] and [[Right Arrow]] keys:"
+msgstr ""
+
+#: __data__/create_localized_help.py:86
+msgid "Cycles through the applications box and categories box if the focus is in one of these boxes."
+msgstr ""
+
+#: __data__/create_localized_help.py:88
+msgid "If the focus is on the custom launchers box, these keys will cycle through this box buttons."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:90
+msgid "[[Tab]] key:"
+msgstr ""
+
+#: __data__/create_localized_help.py:93
+msgid "If the applications box or categories box are currently focused, the [[Tab]] key will switch the focus to the custom launchers box."
+msgstr ""
+
+#: __data__/create_localized_help.py:95 __data__/create_localized_help.py:100
+msgid "If the focus is on the custom launchers box, the focus will go back to the categories box."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:97
+msgid "[[Up Arrow]] and [[Down Arrow]] keys:"
+msgstr ""
+
+#: __data__/create_localized_help.py:98
+msgid "If the applications box or categories box are currently focused, these keys will cycle through the items in the currently highlighted box."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:102
+msgid "[[Page Up]] and [[Page Down]] keys: Jumps to the first and last item of the currently selected box. This doesn't affect the custom launchers."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:104
+msgid "[[Menu]] or [[Alt]] + [[Enter]] keys: Opens and closes the context menu (if any) of the currently highlighted item."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:106
+msgid "[[Enter]] key: Executes the currently highlighted item."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:108
+msgid "[[Escape]] key: It closes the main menu. If a context menu is open, it will close the context menu instead and a second tap of this key will close the main menu."
+msgstr ""
+
+#: __data__/create_localized_help.py:111
+msgid "[[Shift]] + [[Enter]]: Executes the application as root. This doesn't affect the custom launchers."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:113
+msgid "[[Ctrl]] + [[Enter]]: Open a terminal and run application from there. This doesn't affect the custom launchers."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:115
+msgid "[[Ctrl]] + [[Shift]] + [[Enter]]: Open a terminal and run application from there, but the application is executed as root. This doesn't affect the custom launchers."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:118
+msgid "Applications left click extra actions"
+msgstr ""
+
+#: __data__/create_localized_help.py:119
+msgid "When left clicking an application on the menu, certain key modifiers can be pressed to execute an application in a special way."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:121
+msgid "[[Shift]] + **Left click**: Executes application as root."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:123
+msgid "[[Ctrl]] + **Left click**: Open a terminal and run application from there."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:125
+msgid "[[Ctrl]] + [[Shift]] + **Left click**: Open a terminal and run application from there, but the application is executed as root."
+msgstr ""
+
+#: __data__/create_localized_help.py:127
+msgid "About \"Run from terminal\" options"
+msgstr ""
+
+#: __data__/create_localized_help.py:128
+msgid "These options are meant for debugging purposes (to see the console output after opening/closing a program to detect possible errors, for example). Instead of opening a terminal to launch a program of which one might not know its command, one can do it directly from the menu and in just one step. Options to run from a terminal an application listed on the menu can be found on the applications context menu and can be hidden/shown from this applet settings window."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:131
+msgid "By default, these options will use the system's default terminal emulator (**x-terminal-emulator** on Debian based distributions). Any other terminal emulator can be specified inside the settings window of this applet, as long as said emulator has support for the **-e** argument. I did my tests with **gnome-terminal**, **xterm** and **terminator**. Additional arguments could be passed to the terminal emulator, but it's not supported by me."
+msgstr ""
+
+#: __data__/create_localized_help.py:133
+msgid "Favorites handling"
+msgstr ""
+
+#: __data__/create_localized_help.py:134
+msgid "**Note:** The favorites category will update its content after changing to another category and going back to the favorites category."
+msgstr ""
+
+#: __data__/create_localized_help.py:136
+msgid "Troubleshooting/extra information"
+msgstr ""
+
+#: __data__/create_localized_help.py:137
+msgid "Run from terminal."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:139
+msgid "Debian based distributions:"
+msgstr ""
+
+#: __data__/create_localized_help.py:140
+msgid "If the command **x-terminal-emulator** doesn't run the terminal emulator that one wants to be the default, run the following command to set a different default terminal emulator."
+msgstr ""
+
+#: __data__/create_localized_help.py:143
+msgid "Type in the number of the selection and hit enter."
+msgstr ""
+
+#: __data__/create_localized_help.py:145
+msgid "For other distributions:"
+msgstr ""
+
+#: __data__/create_localized_help.py:146
+msgid "Just set the terminal executable of your choice on this applet settings window."
+msgstr ""
+
+#. TO TRANSLATORS: MARKDOWN string. Respect formatting.
+#: __data__/create_localized_help.py:148
+msgid "There is a folder named **icons** inside this applet directory. It contains several symbolic icons (most of them are from the Faenza icon theme) and each icon can be used directly by name (on a custom launcher, for example)."
+msgstr ""
+
+#: applet.js:73
+msgid "Menu"
+msgstr ""
+
+#: applet.js:163
+msgid "Open the menu editor"
+msgstr ""
+
+#: applet.js:1081
+msgid "Favorites"
+msgstr ""
+
+#: applet.js:1107
+msgid "Recently Used"
+msgstr ""
+
+#: applet.js:1137
+msgid "All Applications"
+msgstr ""
+
+#: applet.js:1217
+msgid "No search results"
+msgstr ""
+
+#: applet.js:1239
+msgid "No recent applications"
+msgstr ""
+
+#: applet.js:1247
+msgid "Clear list"
+msgstr ""
+
+#: applet.js:1415
+msgid "Type to search..."
+msgstr ""
+
+#: applet.js:2115
+msgid "Categories"
+msgstr ""
+
+#: js_modules/utils.js:690
+msgid "Add this application to the Panel launchers applet."
+msgstr ""
+
+#: js_modules/utils.js:700
+msgid "Add this application to the Desktop."
+msgstr ""
+
+#: js_modules/utils.js:707
+msgid "Remove from favorites"
+msgstr ""
+
+#: js_modules/utils.js:711
+msgid "Remove application from your favorites."
+msgstr ""
+
+#: js_modules/utils.js:715
+msgid "Add to favorites"
+msgstr ""
+
+#: js_modules/utils.js:719
+msgid "Add application to your favorites."
+msgstr ""
+
+#: js_modules/utils.js:730
+msgid "Uninstall application from your system."
+msgstr ""
+
+#: js_modules/utils.js:741
+msgid "Run application through optirun command (Bumblebee)."
+msgstr ""
+
+#: js_modules/utils.js:751
+msgid "Run application as root."
+msgstr ""
+
+#: js_modules/utils.js:760
+msgid "Edit this application .desktop file with a text editor."
+msgstr ""
+
+#: js_modules/utils.js:769
+msgid "Edit this application with Cinnamon menu editor editor."
+msgstr ""
+
+#: js_modules/utils.js:778
+msgid "Open the folder containing this application .desktop file."
+msgstr ""
+
+#: js_modules/utils.js:787
+msgid "Run application from a terminal."
+msgstr ""
+
+#: js_modules/utils.js:796
+msgid "Run application from a terminal as root."
+msgstr ""
+
+#. metadata.json->name
+msgid "Cinnamon Menu (Fork By Odyseus)"
+msgstr ""
+
+#. metadata.json->description
+msgid "Custom version of the default Cinnamon Menu applet, but infinitely more customizable."
+msgstr ""
+
+#. settings-schema.json->info_label_1->description
+msgid "This window isn't this xlet's \"real\" configuration window."
+msgstr ""
+
+#. settings-schema.json->settings_button->description
+msgid "Open the \"real\" preference window"
+msgstr ""

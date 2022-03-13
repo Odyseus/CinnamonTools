@@ -1,0 +1,6 @@
+{
+    "external-configuration-app": "settings.py",
+    "name": "Cinnamon Menu (Fork By Odyseus)",
+    "description": "Custom version of the default Cinnamon Menu applet, but infinitely more customizable.",
+    "max-instances": -1
+}

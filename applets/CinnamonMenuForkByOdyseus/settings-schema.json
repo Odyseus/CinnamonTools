@@ -1,0 +1,292 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "toggle_menu_keybinding": {
+        "type": "generic",
+        "default": "Super_L::"
+    },
+    "use_a_custom_icon_for_applet": {
+        "type": "generic",
+        "default": true
+    },
+    "custom_icon_for_applet": {
+        "type": "generic",
+        "default": "custom-start-here-linux-mint-symbolic"
+    },
+    "custom_label_for_applet": {
+        "type": "generic",
+        "default": "Menu"
+    },
+    "enable_autoscroll": {
+        "type": "generic",
+        "default": false
+    },
+    "animate_menu": {
+        "type": "generic",
+        "default": false
+    },
+    "activate_on_hover": {
+        "type": "generic",
+        "default": true
+    },
+    "strict_search_results": {
+        "type": "generic",
+        "default": false
+    },
+    "menu_hover_delay": {
+        "type": "generic",
+        "default": 100
+    },
+    "max_search_results": {
+        "type": "generic",
+        "default": 15
+    },
+    "show_all_applications_category": {
+        "type": "generic",
+        "default": false
+    },
+    "recently_used_apps_enabled": {
+        "type": "generic",
+        "default": true
+    },
+    "recently_used_apps_show_separator": {
+        "type": "generic",
+        "default": false
+    },
+    "show_category_icons": {
+        "type": "generic",
+        "default": true
+    },
+    "show_application_icons": {
+        "type": "generic",
+        "default": true
+    },
+    "hide_applications_list_scrollbar": {
+        "type": "generic",
+        "default": true
+    },
+    "hide_categories_list_scrollbar": {
+        "type": "generic",
+        "default": true
+    },
+    "invert_menu_layout": {
+        "type": "generic",
+        "default": false
+    },
+    "swap_categories_box": {
+        "type": "generic",
+        "default": true
+    },
+    "custom_launchers_box_invert_buttons_order": {
+        "type": "generic",
+        "default": true
+    },
+    "max_width_for_buttons": {
+        "type": "generic",
+        "default": 12.0
+    },
+    "category_icon_size": {
+        "type": "generic",
+        "default": 22
+    },
+    "application_icon_size": {
+        "type": "generic",
+        "default": 22
+    },
+    "search_result_icon_size": {
+        "type": "generic",
+        "default": 16
+    },
+    "custom_launchers_icon_size": {
+        "type": "generic",
+        "default": 24
+    },
+    "custom_launchers_box_alignment": {
+        "type": "generic",
+        "default": 2
+    },
+    "recently_used_apps_ignore_favorites": {
+        "type": "generic",
+        "default": true
+    },
+    "recently_used_apps_invert_order": {
+        "type": "generic",
+        "default": false
+    },
+    "recently_used_apps_max_amount": {
+        "type": "generic",
+        "default": 20
+    },
+    "context_show_additional_application_actions": {
+        "type": "generic",
+        "default": true
+    },
+    "context_gain_privileges": {
+        "type": "generic",
+        "default": false
+    },
+    "context_custom_editor_for_edit_desktop_file": {
+        "type": "generic",
+        "default": ""
+    },
+    "privilege_elevator": {
+        "type": "generic",
+        "default": "/usr/bin/pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY"
+    },
+    "terminal_emulator": {
+        "type": "generic",
+        "default": "x-terminal-emulator"
+    },
+    "default_shell": {
+        "type": "generic",
+        "default": "bash"
+    },
+    "hard_refresh_menu": {
+        "type": "generic",
+        "default": true
+    },
+    "imp_exp_last_selected_directory": {
+        "type": "generic",
+        "default": ""
+    },
+    "custom_launchers_apply": {
+        "type": "generic",
+        "default": true
+    },
+    "menu_elements_padding": {
+        "type": "generic",
+        "default": [{
+            "element_id": "custom_launchers_box",
+            "top_padding": 5,
+            "right_padding": 5,
+            "bottom_padding": 5,
+            "left_padding": 5
+        }, {
+            "element_id": "categories_box",
+            "top_padding": 5,
+            "right_padding": 5,
+            "bottom_padding": 5,
+            "left_padding": 5
+        }, {
+            "element_id": "applications_box",
+            "top_padding": 5,
+            "right_padding": 5,
+            "bottom_padding": 5,
+            "left_padding": 5
+        }, {
+            "element_id": "search_entry",
+            "top_padding": 5,
+            "right_padding": 5,
+            "bottom_padding": 5,
+            "left_padding": 5
+        }, {
+            "element_id": "search_box",
+            "top_padding": 5,
+            "right_padding": 5,
+            "bottom_padding": 5,
+            "left_padding": 5
+        }]
+    },
+    "context_menu_items": {
+        "type": "generic",
+        "default": [{
+            "context_id": "add_to_panel",
+            "enabled": false
+        }, {
+            "context_id": "add_to_desktop",
+            "enabled": false
+        }, {
+            "context_id": "add_remove_favorite",
+            "enabled": true
+        }, {
+            "context_id": "uninstall",
+            "enabled": false
+        }, {
+            "context_id": "run_with_nvidia_gpu",
+            "enabled": false
+        }, {
+            "context_id": "run_as_root",
+            "enabled": false
+        }, {
+            "context_id": "edit_desktop_file",
+            "enabled": true
+        }, {
+            "context_id": "edit_with_menu_editor",
+            "enabled": false
+        }, {
+            "context_id": "desktop_file_folder",
+            "enabled": false
+        }, {
+            "context_id": "run_from_terminal",
+            "enabled": true
+        }, {
+            "context_id": "run_from_terminal_as_root",
+            "enabled": false
+        }]
+    },
+    "custom_launchers": {
+        "type": "generic",
+        "default": [{
+            "title": "Quit",
+            "command": "cinnamon-session-quit --power-off",
+            "icon": "custom-system-shutdown-symbolic",
+            "description": "Shutdown the computer",
+            "enabled": true
+        }, {
+            "title": "Logout",
+            "command": "cinnamon-session-quit --logout",
+            "icon": "custom-system-log-out-symbolic",
+            "description": "Leave the session",
+            "enabled": true
+        }, {
+            "title": "Lock screen",
+            "command": "cinnamon-screensaver-lock-dialog",
+            "icon": "custom-system-lock-screen-symbolic",
+            "description": "Lock the screen",
+            "enabled": true
+        }, {
+            "title": "System Settings",
+            "command": "cinnamon-settings",
+            "icon": "custom-preferences-system-symbolic",
+            "description": "System Settings",
+            "enabled": true
+        }, {
+            "title": "Update Manager",
+            "command": "mintupdate",
+            "icon": "custom-security-high-symbolic",
+            "description": "Linux Mint update manager",
+            "enabled": true
+        }, {
+            "title": "Cinnamon extensions",
+            "command": "cinnamon-settings extensions",
+            "icon": "custom-cs-extensions-symbolic",
+            "description": "Cinnamon extensions manager",
+            "enabled": true
+        }, {
+            "title": "Cinnamon themes",
+            "command": "cinnamon-settings themes",
+            "icon": "custom-cs-themes-symbolic",
+            "description": "Cinnamon themes manager",
+            "enabled": true
+        }, {
+            "title": "Cinnamon applets",
+            "command": "cinnamon-settings applets",
+            "icon": "custom-cs-applets-symbolic",
+            "description": "Cinnamon applets manager",
+            "enabled": true
+        }, {
+            "title": "Cinnamon desklets",
+            "command": "cinnamon-settings desklets",
+            "icon": "custom-cs-desklets-symbolic",
+            "description": "Cinnamon desklets manager",
+            "enabled": true
+        }]
+    }
+}
