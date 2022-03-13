@@ -1,0 +1,63 @@
+{
+    "info_label_1": {
+        "type": "label",
+        "description": "This window isn't this xlet's \"real\" configuration window."
+    },
+    "settings_button": {
+        "type": "button",
+        "callback": "__openXletSettings",
+        "description": "Open the \"real\" preference window"
+    },
+    "auto_hide": {
+        "type": "generic",
+        "default": true
+    },
+    "hide_delay": {
+        "type": "generic",
+        "default": 2
+    },
+    "disable_starttime_autohide": {
+        "type": "generic",
+        "default": false
+    },
+    "hover_activates": {
+        "type": "generic",
+        "default": true
+    },
+    "hover_activates_hide": {
+        "type": "generic",
+        "default": false
+    },
+    "hover_delay": {
+        "type": "generic",
+        "default": 100
+    },
+    "autohide_reshowing": {
+        "type": "generic",
+        "default": false
+    },
+    "autohide_reshowing_delay": {
+        "type": "generic",
+        "default": 1.25
+    },
+    "horizontal_expand_icon_name": {
+        "type": "generic",
+        "default": "pan-start-symbolic"
+    },
+    "horizontal_collapse_icon_name": {
+        "type": "generic",
+        "default": "pan-end-symbolic"
+    },
+    "vertical_expand_icon_name": {
+        "type": "generic",
+        "default": "pan-up-symbolic"
+    },
+    "vertical_collapse_icon_name": {
+        "type": "generic",
+        "default": "pan-down-symbolic"
+    },
+    "usage_notified": {
+        "type": "generic",
+        "default": false
+    }
+}

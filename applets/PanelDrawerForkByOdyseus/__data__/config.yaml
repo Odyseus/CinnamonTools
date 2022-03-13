@@ -1,0 +1,12 @@
+%YAML 1.1
+---
+python_modules:
+    - xlets_settings
+javascript_modules:
+    - appletsUtils.js
+    - debugManager.js
+    - notificationsUtils.js
+    - globalUtils.js
+extra_files:
+    - source: __app__/data/gschemas/debugManagerSchema.xml
+      destination: schemas/org.cinnamon.{{XLET_TYPE}}s.{{UUID}}.gschema.xml
